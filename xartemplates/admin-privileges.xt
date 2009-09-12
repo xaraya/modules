@@ -45,10 +45,10 @@
                         <xar:mlstring>Category</xar:mlstring>
                     </th>
                     <td>
-                        <!-- FIXME: this can't be right -->
-                        <xar:set name="basecids">array_keys($pubtypes)</xar:set>
-                        <xar:set name="onchange">"this.form.action='" . xarServer::getCurrentURL() . "';this.form.submit();"</xar:set>
-                        <xar:data-input type="categories" name="privcategories" basecids="$basecids" value="$cids" layout="vertical" returnitself="true" onchange="$onchange" />
+                        <xar:set name="firstline">xarML('Select Category')</xar:set>
+                        <xar:set name="onchange">"javascript:this.form.submit();"</xar:set>
+                        <!-- we only support a single cid in articles privileges for the moment -->
+                        <xar:data-input type="categories" name="privcategories" bases="single" value="$cids" layout="vertical" returnitself="true" firstline="$firstline" onchange="$onchange" />
                     </td>
                 </tr>
                 <xar:if condition="!empty($showauthor)">
@@ -61,8 +61,17 @@
                                 <option value="0">
                                     <xar:mlstring>All / Other --&gt;</xar:mlstring>
                                 </option>
+                                <xar:if condition="!empty($uid) and $uid eq 'Myself'">
+                                    <option value="Myself" selected="selected">
+                                        <xar:mlstring>Myself</xar:mlstring>
+                                    </option>
+                                <xar:else/>
+                                    <option value="Myself">
+                                        <xar:mlstring>Myself</xar:mlstring>
+                                    </option>
+                                </xar:if>
                                 <xar:foreach in="$authorlist" key="$id">
-                                    <xar:if condition="$auth eq $id">
+                                    <xar:if condition="$uid eq $id">
                                         <option value="#$id#" selected="selected">#xarVarPrepForDisplay($authorlist[$id])#</option>
                                         <xar:else />
                                         <option value="#$id#">#xarVarPrepForDisplay($authorlist[$id])#</option>

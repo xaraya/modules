@@ -36,13 +36,13 @@ function articles_admin_privileges($args)
     if (!xarVarFetch('extlevel',     'isset', $extlevel,     NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('pparentid',    'isset', $pparentid,    NULL, XARVAR_DONT_SET)) {return;}
 
-// FIXME: privileges for articles gives error because of
-// html/modules/privileges/xaradmin/new.php(55): xarModGetNameFromID('articles')
-
-// FIXME: returnInput was commented out ?
     sys::import('modules.dynamicdata.class.properties.master');
     $categories = DataPropertyMaster::getProperty(array('name' => 'categories'));
-    $cids = $categories->returnInput('privcategories');
+    if ($categories->checkInput('privcategories')) {
+        $cids = $categories->categories;
+    } else {
+        $cids = null;
+    }
 
     if (!empty($extinstance)) {
         $parts = explode(':',$extinstance);
@@ -65,7 +65,8 @@ function articles_admin_privileges($args)
     if (empty($cid) || $cid == 'All' || !is_numeric($cid)) {
         $cid = 0;
     }
-    if (empty($cid) && isset($cids) && is_array($cids)) {
+
+    if (isset($cids) && is_array($cids) && count($cids) > 0) {
         foreach ($cids as $catid) {
             if (!empty($catid)) {
                 $cid = $catid;
@@ -73,6 +74,8 @@ function articles_admin_privileges($args)
                 break;
             }
         }
+    } else {
+        $cids = array($cid);
     }
 
     if (empty($aid) || $aid == 'All' || !is_numeric($aid)) {
@@ -104,10 +107,10 @@ function articles_admin_privileges($args)
         }
     }
 
-// TODO: figure out how to handle groups of users and/or the current user (later)
-    if (strtolower($uid) == 'myself') {
+// TODO: figure out how to handle groups of users (later)
+    if (!empty($uid) && strtolower($uid) == 'myself') {
         $uid = 'Myself';
-        $author = 'Myself';
+        $author = '';
     } elseif (empty($uid) || $uid == 'All' || (!is_numeric($uid) && (strtolower($uid) != 'myself'))) {
         $uid = 0;
         if (!empty($author)) {
@@ -148,7 +151,7 @@ function articles_admin_privileges($args)
 
         // redirect to the privilege
         xarResponse::Redirect(xarModURL('privileges', 'admin', 'modifyprivilege',
-                                      array('pid' => $pid)));
+                                      array('id' => $pid)));
         return true;
     }
 
@@ -209,11 +212,14 @@ function articles_admin_privileges($args)
         }
         $data['showauthor'] = 1;
     }
+    $data['basecids'] = array_keys($catlist);
 
     $seencid = array();
     if (!empty($cid)) {
         $seencid[$cid] = 1;
     }
+
+    xarTplSetPageTitle(xarML('Privileges'));
 
     $data['cids'] = $cids;
     $data['cats'] = $catlist;

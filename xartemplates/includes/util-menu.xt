@@ -10,7 +10,7 @@
     <dt class="help" title="#xarML('Choose an action to perform')#">
       <xar:mlstring>Utility:</xar:mlstring>
     </dt>
-    <xar:sec mask="AdminArticles" catch="false">
+    <xar:sec mask="DeleteArticles" catch="false">
         <xar:set name="tabclass">$activetab=='stats'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-articles-admin-stats;">

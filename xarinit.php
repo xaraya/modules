@@ -358,19 +358,27 @@ function articles_init()
     * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
     *********************************************************************/
 
-    xarRegisterMask('ViewArticles','All','articles','Article','All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadArticles','All','articles','Article','All','ACCESS_READ');
-    xarRegisterMask('SubmitArticles','All','articles','Article','All','ACCESS_COMMENT');
+    xarRegisterMask('ViewArticles','All','articles','Article','All:All:All:All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadArticles','All','articles','Article','All:All:All:All','ACCESS_READ');
+    xarRegisterMask('SubmitArticles','All','articles','Article','All:All:All:All','ACCESS_COMMENT');
 // No special meaning here at the moment
-//    xarRegisterMask('ModerateArticles','All','articles','Article','All','ACCESS_MODERATE');
-    xarRegisterMask('EditArticles','All','articles','Article','All','ACCESS_EDIT');
+//    xarRegisterMask('ModerateArticles','All','articles','Article','All:All:All:All','ACCESS_MODERATE');
+    xarRegisterMask('EditArticles','All','articles','Article','All:All:All:All','ACCESS_EDIT');
 // Submitting articles only requires COMMENT privileges, not ADD privileges
-//    xarRegisterMask('AddArticles','All','articles','Article','All','ACCESS_ADD');
-    xarRegisterMask('DeleteArticles','All','articles','Article','All','ACCESS_DELETE');
-    xarRegisterMask('AdminArticles','All','articles','Article','All','ACCESS_ADMIN');
+//    xarRegisterMask('AddArticles','All','articles','Article','All:All:All:All','ACCESS_ADD');
+    xarRegisterMask('DeleteArticles','All','articles','Article','All:All:All:All','ACCESS_DELETE');
+    xarRegisterMask('AdminArticles','All','articles','Article','All:All:All:All','ACCESS_ADMIN');
 
 
     xarRegisterMask('ReadArticlesBlock','All','articles','Block','All','ACCESS_READ');
+
+    // Some interesting sample privileges
+    xarRegisterPrivilege('Submit Any Articles','All','articles','Article','All:All:All:All','ACCESS_COMMENT', 'Allow people to submit any type of articles');
+    xarRegisterPrivilege('Submit News Articles','All','articles','Article','1:All:All:All','ACCESS_COMMENT', 'Allow people to submit only news articles');
+    xarRegisterPrivilege('Edit Articles from Myself','All','articles','Article','All:All:Myself:All','ACCESS_EDIT', 'Allow people to edit their own articles');
+    xarRegisterPrivilege('Delete Articles in Category 1','All','articles','Article','All:1:All:All','ACCESS_DELETE', 'Allow people to delete articles in a particular category');
+    xarRegisterPrivilege('Manage Articles Content','All','articles','Article','All:All:All:All','ACCESS_DELETE', 'Allow people to manage the articles content');
+    xarRegisterPrivilege('Manage Articles Configuration','All','articles','Article','All:All:All:All','ACCESS_ADMIN', 'Allow people to manage the articles configuration');
 
     // Initialisation successful
     return true;

@@ -16,7 +16,7 @@
  */
 function articles_admin_importpages()
 {
-    if (!xarSecurityCheck('AdminArticles')) return;
+    if (!xarSecurityCheck('DeleteArticles')) return;
 
     // Get parameters
     if(!xarVarFetch('basedir',    'isset', $basedir,     NULL, XARVAR_DONT_SET)) {return;}

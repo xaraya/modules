@@ -16,7 +16,7 @@
  */
 function articles_admin_stats($args = array())
 {
-    if (!xarSecurityCheck('AdminArticles')) return;
+    if (!xarSecurityCheck('DeleteArticles')) return;
     if (!xarVarFetch('group','isset',$group,array(),XARVAR_NOT_REQUIRED)) return;
     extract($args);
 

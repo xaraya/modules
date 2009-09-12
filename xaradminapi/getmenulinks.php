@@ -24,7 +24,29 @@ function articles_adminapi_getmenulinks()
         return $menulinks;
     }
 
-    if (xarSecurityCheck('EditArticles',0)) {
+    if (xarSecurityCheck('AdminArticles',0)) {
+        $is_admin = 1;
+        $is_delete = 1;
+        $is_edit = 1;
+        $is_submit = 1;
+    } elseif (xarSecurityCheck('DeleteArticles',0)) {
+        $is_admin = 0;
+        $is_delete = 1;
+        $is_edit = 1;
+        $is_submit = 1;
+    } elseif (xarSecurityCheck('EditArticles',0)) {
+        $is_admin = 0;
+        $is_delete = 0;
+        $is_edit = 1;
+        $is_submit = 1;
+    } elseif (xarSecurityCheck('SubmitArticles',0)) {
+        $is_admin = 0;
+        $is_delete = 0;
+        $is_edit = 0;
+        $is_submit = 1;
+    }
+
+    if ($is_edit) {
         $menulinks[] = Array('url' => xarModURL('articles', 'admin', 'view')
             ,'active'=> array('main', 'view', 'modify', 'delete')
             ,'title' => xarML('View and edit all articles')
@@ -32,7 +54,7 @@ function articles_adminapi_getmenulinks()
         );
     }
 
-    if (xarSecurityCheck('SubmitArticles',0)) {
+    if ($is_submit) {
         $menulinks[] = Array('url' => xarModURL('articles', 'admin', 'new')
             ,'active'=> array('new')
             ,'title' => xarML('Add a new article')
@@ -40,17 +62,19 @@ function articles_adminapi_getmenulinks()
         );
     }
 
-    if (xarSecurityCheck('AdminArticles',0)) {
-        $menulinks[] = Array('url' => xarModURL('articles', 'admin', 'pubtypes')
-            ,'active'=> array('pubtypes', 'importpubtype', 'exportpubtype')
-            ,'title' => xarML('View and edit publication types')
-            ,'label' => xarML('Publication Types')
-        );
-
+    if ($is_delete) {
         $menulinks[] = Array('url' => xarModURL('articles', 'admin', 'stats')
             ,'active'=> array('stats', 'importpictures', 'importpages')
             ,'title' => xarML('View statistics, import pictures and import pages')
             ,'label' => xarML('Utilities')
+        );
+    }
+
+    if ($is_admin) {
+        $menulinks[] = Array('url' => xarModURL('articles', 'admin', 'pubtypes')
+            ,'active'=> array('pubtypes', 'importpubtype', 'exportpubtype')
+            ,'title' => xarML('View and edit publication types')
+            ,'label' => xarML('Publication Types')
         );
 
         $menulinks[] = Array('url' => xarModURL('articles', 'admin', 'modifyconfig')
@@ -58,7 +82,9 @@ function articles_adminapi_getmenulinks()
             ,'title' => xarML('Modify the articles module configuration')
             ,'label' => xarML('Modify Config')
         );
+    }
 
+    if ($is_submit) {
         $menulinks[] = array('url' => xarModURL('articles','admin','overview')
             ,'active' => array('overview')
             ,'title'  => xarML('Introduction on handling this module')
