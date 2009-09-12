@@ -170,6 +170,11 @@ function hitcount_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '2.0.0':
+            // intermediate versions from repository in jamaica 2.0.0-b2 may have wrong module id's
+            // stored in xar_hitcount
+
+        case '2.0.1':
+
             break;
     }
 
