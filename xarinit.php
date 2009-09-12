@@ -191,19 +191,19 @@ function hitcount_delete()
     // Remove module hooks
     if (!xarModUnregisterHook('item', 'display', 'GUI',
                              'hitcount', 'user', 'display')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook'));
+        xarSession::setVar('errormsg', xarML('Could not unregister hook'));
     }
     if (!xarModUnregisterHook('item', 'create', 'API',
                              'hitcount', 'admin', 'create')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook'));
+        xarSession::setVar('errormsg', xarML('Could not unregister hook'));
     }
     if (!xarModUnregisterHook('item', 'delete', 'API',
                              'hitcount', 'admin', 'delete')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook'));
+        xarSession::setVar('errormsg', xarML('Could not unregister hook'));
     }
     if (!xarModUnregisterHook('module', 'remove', 'API',
                              'hitcount', 'admin', 'deleteall')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook'));
+        xarSession::setVar('errormsg', xarML('Could not unregister hook'));
     }
 
     // Get database information

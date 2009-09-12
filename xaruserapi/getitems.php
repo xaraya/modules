@@ -31,14 +31,14 @@ function hitcount_userapi_getitems($args)
 
     // Argument check
     if (!isset($modname) && !isset($modid)) {
-        xarSessionSetVar('errormsg', _MODARGSERROR);
+        xarSession::setVar('errormsg', _MODARGSERROR);
         return;
     }
     if (!empty($modname)) {
         $modid = xarMod::getRegId($modname);
     }
     if (empty($modid)) {
-        xarSessionSetVar('errormsg', _MODARGSERROR);
+        xarSession::setVar('errormsg', _MODARGSERROR);
         return;
     } elseif (empty($modname)) {
         $modinfo = xarModGetInfo($modid);
