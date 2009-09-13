@@ -21,7 +21,9 @@
  */
 function translations_admin_updateconfig()
 {
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+    }        
 
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
