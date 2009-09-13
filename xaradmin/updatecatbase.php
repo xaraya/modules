@@ -20,7 +20,9 @@ function categories_admin_updatecatbase()
     if (!xarVarFetch('orderresult', 'str', $order, 'x', XARVAR_NOT_REQUIRED)) {return;}
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) {return;}
+    if (!xarSecConfirmAuthKey()) {
+        return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+    }        
 
     if (empty($pbid)) {
         // Creating a new category base.

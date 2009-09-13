@@ -14,7 +14,9 @@ function categories_admin_update()
     $data['itemid'] = !empty($data['itemid']) ? $data['itemid'] : $cid;
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+    }        
 
     //Reverses the order of cids with the 'last children' option:
     //Look at bug #997

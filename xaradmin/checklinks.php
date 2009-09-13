@@ -143,7 +143,9 @@ function categories_admin_checklinks()
 
         if(!xarVarFetch('confirm',  'str:1:', $confirm,    '', XARVAR_NOT_REQUIRED)) return;
         if (!empty($seencid) && !empty($confirm)) {
-            if (!xarSecConfirmAuthKey()) return;
+            if (!xarSecConfirmAuthKey()) {
+                return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+            }        
             if (!xarModAPIFunc('categories','admin','unlinkcids',
                                array('modid' => $modid,
                                      'itemtype' => $itemtype,

@@ -45,7 +45,9 @@ function categories_admin_unlink()
         return $data;
     } 
 
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+    }        
     // unlink API does not support deleting all category links for all modules
     if (!empty($modid)) {
         $modinfo = xarModGetInfo($modid);

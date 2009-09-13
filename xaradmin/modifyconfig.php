@@ -41,7 +41,9 @@
 
             case 'update':
                 // Confirm authorisation code
-                if (!xarSecConfirmAuthKey()) return;
+                if (!xarSecConfirmAuthKey()) {
+                    return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+                }        
                 if (!xarVarFetch('items_per_page', 'int', $items_per_page, xarModVars::get('categories', 'items_per_page'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                 if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('modulealias', 'checkbox', $use_module_alias,  xarModVars::get('categories', 'use_module_alias'), XARVAR_NOT_REQUIRED)) return;
