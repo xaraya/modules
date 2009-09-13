@@ -60,7 +60,9 @@ function hitcount_admin_delete()
         return $data;
     }
 
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+    }        
     if (!xarModAPIFunc('hitcount','admin','delete',
                        array('modid' => $modid,
                              'itemtype' => $itemtype,
