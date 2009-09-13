@@ -52,7 +52,9 @@ function xarpages_admin_deletetype($args)
     }
 
     // Confirm Auth Key
-    if (!xarSecConfirmAuthKey()) {return;}
+    if (!xarSecConfirmAuthKey()) {
+        return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+    }        
 
     // Pass to API
     if (!xarModAPIFunc(

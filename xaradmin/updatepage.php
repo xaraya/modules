@@ -78,7 +78,9 @@ function xarpages_admin_updatepage($args)
     $info['delete_access'] = $accessproperty->getValue();
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+    }        
 
     // Pass to API
     if (!$creating) {

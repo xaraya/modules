@@ -55,7 +55,9 @@ function xarpages_admin_modifyconfig($args)
         case 'update':
 
         // Confirm authorisation code.
-        if (!xarSecConfirmAuthKey()) {return;}
+            if (!xarSecConfirmAuthKey()) {
+                return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+            }        
 
             $isvalid = $data['module_settings']->checkInput();
             if (!$isvalid) {
