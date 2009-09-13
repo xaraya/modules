@@ -49,7 +49,9 @@ function dyn_example_admin_delete()
     if ($data['confirm']) {
 
         // Check for a valid confirmation key
-        if(!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+        }        
 
         $item = $data['object']->deleteItem();
         

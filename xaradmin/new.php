@@ -35,7 +35,9 @@ function dyn_example_admin_new()
     if ($data['confirm']) {
 
         // Check for a valid confirmation key. The value is automatically gotten from the template
-        if(!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+        }        
 
         // Get the data from the form and see if it is all valid
         // Either way the values are now stored in the object
