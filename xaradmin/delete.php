@@ -75,7 +75,9 @@ function articles_admin_delete()
     }
 
     // Confirmation present
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+    }        
 
     // Pass to API
     if (!xarModAPIFunc('articles',

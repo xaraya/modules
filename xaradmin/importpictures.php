@@ -97,7 +97,9 @@ function articles_admin_importpictures()
 
     if (isset($refresh) || isset($test) || isset($import)) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+        }        
     }
 
     $data['authid'] = xarSecGenAuthKey();

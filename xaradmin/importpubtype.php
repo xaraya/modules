@@ -45,7 +45,9 @@ function articles_admin_importpubtype($args)
     }
 
     if (!empty($import) || !empty($xml)) {
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+        }        
 
         if (!empty($import)) {
             $found = '';
