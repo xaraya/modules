@@ -24,7 +24,9 @@ function articles_admin_updatestatus()
 
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+    }        
 
     if (!isset($aids) || count($aids) == 0) {
         $msg = xarML('No articles selected');

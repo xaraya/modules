@@ -51,7 +51,9 @@ function articles_admin_pubtypes()
     // Take action if necessary
     if ($action == 'create' || $action == 'update' || $action == 'confirm') {
 
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) {
+            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+        }        
 
         // CREATE
         if ($action == 'create') {

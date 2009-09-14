@@ -70,7 +70,9 @@ function articles_admin_showpropval($args)
             // store the updated validation rule back in the value
             $validation = $property->validation;
             if (!empty($confirm)) {
-                if (!xarSecConfirmAuthKey()) return;
+                if (!xarSecConfirmAuthKey()) {
+                    return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+                }        
 
                 $name = $pubtypes[$ptid]['name'];
                 $descr = $pubtypes[$ptid]['descr'];
