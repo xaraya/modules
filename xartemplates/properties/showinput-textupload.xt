@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:if condition="empty($class)">
+        <xar:set name="class">''</xar:set>
+    </xar:if>
+    <xar:set name="textareasource">' textarea#'.$id.' { max-width: 99%; width: '. $cols.'em;
+    height: '. ($rows * 1.6) .'em; } '</xar:set>
+    <xar:style method="embed" source="'.$textareasource.'" media="all" />
+    <textarea name="#$name#_text" rows="#$rows#" cols="#$cols#" id="#$id#_text" tabindex="#$tabindex#"
+    class="#$class#">#$value#</textarea>
+    <xar:if condition="!empty($value)">
+        <!-- we're using a hidden field to keep track of any previously uploaded file here -->
+<!--
+        <span id="#$id#_text">Uploaded file: 
+        <xar:var name="value" />
+        <input type="button"
+        onClick="document.getElementById('#$id#_hidden').value='';document.getElementById('#$id#_text').innerHTML='';"
+        value="#xarML('Clear')#" />
+        <br /></span>
+        <input type="hidden" name="#$name#" id="#$id#_hidden" value="#$value#" />
+-->
+    </xar:if>
+    <xar:if condition="!empty($file_extensions)">
+    <br />
+    <label class="xar-form-label" for="#$id#_filter" title="" style="">
+        Allowed file types :
+    </label>#$file_extensions#
+    </xar:if>
+    <input type="hidden" name="MAX_FILE_SIZE" value="#$max_file_size#" />
+    <input type="file" name="#$name#" size="#$size#" id="#$id#" tabindex="#$tabindex#" />
+    <br />
+    <label class="xar-form-label" for="#$id#_filter" title="" style="">
+      Extract body from HTML documents ?
+    </label>
+    <input type="checkbox" name="#$name#_filter" value="1" id="#$id#_filter" tabindex="#$tabindex#" />
+    <xar:template file="dataproperty_additions" module="base" />
+</xar:template>

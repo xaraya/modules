@@ -123,7 +123,7 @@ function articles_admin_importpages()
     }
 
     if (!isset($filterhead)) {
-        $data['filterhead'] = '#^.*<body[^>]*>#is';
+        $data['filterhead'] = '#^.*?<body[^>]*>#is';
     } else {
         $data['filterhead'] = $filterhead;
     }
