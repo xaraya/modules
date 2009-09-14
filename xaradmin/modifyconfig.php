@@ -28,8 +28,8 @@ function dyn_example_admin_modifyconfig()
     sys::import('modules.dynamicdata.class.objects.master');
     // Get the object we'll be working with for dyn_example-specific configuration
     $data['object'] = DataObjectMaster::getObject(array('name' => 'modulesettings_dyn_example'));
-    // Get the appropriate item of the dataobject. Using itemid 1 is for illustration
-    $data['object']->getItem(array('itemid' => 1));
+    // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
+    $data['object']->getItem(array('itemid' => 0));
 
     // Get the object we'll be working with for common configuration settings
     $data['module_settings'] = xarModAPIFunc('base','admin','getmodulesettings',array('module' => 'dyn_example'));
