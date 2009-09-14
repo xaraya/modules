@@ -30,7 +30,7 @@ function dyn_example_admin_modifyconfig()
     $data['object'] = DataObjectMaster::getObject(array('name' => 'modulesettings_dyn_example'));
     // Get the appropriate item of the dataobject. Using itemid 1 is for illustration
     $data['object']->getItem(array('itemid' => 1));
-    
+
     // Get the object we'll be working with for common configuration settings
     $data['module_settings'] = xarModAPIFunc('base','admin','getmodulesettings',array('module' => 'dyn_example'));
     // Decide which fields are configurable in this module
@@ -54,15 +54,15 @@ function dyn_example_admin_modifyconfig()
             # handled in this module, the module-specific part at the end of the page is sent to be done by
             # the dynamicdata module, where the same check is done. Since both checks cannot simultaneously
             # be passed, (the act of checking resets the check) the one below is disabled in this example.
-            #  
-            //if (!xarSecConfirmAuthKey()) return;        
+            #
+            //if (!xarSecConfirmAuthKey()) return;
 
             # --------------------------------------------------------
             #
             # Updating the common configuration
             #
             # We do this before anything else, because the checkInput error checking might
-            # decide something is not right and redisplay the form. In such a case we don't want to 
+            # decide something is not right and redisplay the form. In such a case we don't want to
             # already have saved data. The module-specific code active at the bottom of the page does no
             # such error checking. This is not really a problem because you can't really get input errors
             # when you're dealing with checkboxes (they're either checked or they aren't)
@@ -70,7 +70,7 @@ function dyn_example_admin_modifyconfig()
 
             $isvalid = $data['module_settings']->checkInput();
             if (!$isvalid) {
-                return xarTplModule('dyn_example','admin','modifyconfig', $data);        
+                return xarTplModule('dyn_example','admin','modifyconfig', $data);
             } else {
                 $itemid = $data['module_settings']->updateItem();
             }
@@ -79,14 +79,14 @@ function dyn_example_admin_modifyconfig()
             #
             # Updating the dyn_example configuration without using DD
             #
-            # In this case we get each value from the template and set the appropriate modvar 
+            # In this case we get each value from the template and set the appropriate modvar
             # Note that in this case we are setting modvars, whereas in the other two ways below we are actually
             # setting moditemvars with the itemid = 1
             # This can work because in the absence of a moditemvar the corresponding modvar is returned
             # What we cannot do however is mix these methods, because once we have a moditemvar defined, we can
             # no longer default back to the modvar (unless called specifically as below).
             #
-            /* 
+            /*
                 // Get parameters from whatever input we need.  All arguments to this
                 // function should be obtained from xarVarFetch(), getting them
                 // from other places such as the environment is not allowed, as that makes
@@ -106,11 +106,11 @@ function dyn_example_admin_modifyconfig()
             #
             # Updating the dyn_example configuration with DD class calls
             #
-            # This is the same as the examples of creating, modifying or deleting an item 
+            # This is the same as the examples of creating, modifying or deleting an item
             # Note that, as in those examples, this code could be placed in the modifyconfig.php file
             # and this file dispensed with.
             #
-            /* 
+            /*
                 // Load the DD master object class. This line will likely disappear in future versions
                 sys::import('modules.dynamicdata.class.objects.master');
                 // Get the object we'll be working with
@@ -127,22 +127,6 @@ function dyn_example_admin_modifyconfig()
 
             # --------------------------------------------------------
             #
-            # Adjust the usermenu hook according to the setting
-            #
-            # The setting enable_user_menu is one of the common settings in the module_settings
-            # dataobject. The object stores the setting in the modvar we check below.
-
-            sys::import('xaraya.structures.hooks.observer');
-            $observer = new BasicObserver('dyn_example','user','usermenu');
-            $subject = new HookSubject('roles');
-            if (xarModVars::get('dyn_example','enable_user_menu')) {
-                $subject->attach($observer);
-            } else {
-                $subject->detach($observer);
-            }
-            
-            # --------------------------------------------------------
-            #
             # Updating the dyn_example configuration with a DD API call
             #
             # This is a special case using the dynamicdata_admin_update function.
@@ -153,7 +137,7 @@ function dyn_example_admin_modifyconfig()
             #
             # This needs to be the last thing happening on this page because it redirects. Code below
             # this point will not execute
-            
+
                 if (!xarModFunc('dynamicdata','admin','update')) return;
 
             break;
