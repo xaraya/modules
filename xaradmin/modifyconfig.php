@@ -49,7 +49,9 @@ function hitcount_admin_modifyconfig()
             if (!xarVarFetch('numstats', 'int', $numstats, 100, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('showtitle', 'checkbox', $showtitle, false, XARVAR_NOT_REQUIRED)) return;
             // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) return;
+            if (!xarSecConfirmAuthKey()) {
+                return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+            }        
             // Update module variables
             xarModVars::set('hitcount', 'countadmin', $countadmin);
             xarModVars::set('hitcount', 'numitems', $numitems);
