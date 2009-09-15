@@ -11,7 +11,7 @@
       <xar:template type="module" file="admin-menu" />
     <h2>
         <xar:mlstring>
-            Modify Configuration
+            Modify Articles Configuration
         </xar:mlstring>
     </h2>
     <xar:if condition="xarSession::getVar('statusmsg') ne ''">
