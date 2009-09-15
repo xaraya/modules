@@ -16,7 +16,7 @@
 
         <form method="post" action="#xarServer::getCurrentURL()#">
             <fieldset>
-                <legend>Modify Configuration</legend>
+                <legend>Modify Dyn_Example Configuration</legend>
                 <xar:data-form object="$module_settings" />
                 <xar:data-form object="$object" itemid="1" /> 
             </fieldset>
