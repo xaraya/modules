@@ -41,7 +41,7 @@ function articles_admin_exportpubtype($args)
     // Start the dynamic object definition (cfr. DD export)
     $data['xml'] = '<object name="' . $pubtype['name'] . '">
   <label>' . xarVarPrepForDisplay($pubtype['descr']) . '</label>
-  <moduleid>' . xarMod::getRegId('articles') . '</moduleid>
+  <module_id>' . xarMod::getRegId('articles') . '</module_id>
   <itemtype>' . $ptid . '</itemtype>
   <urlparam>aid</urlparam>
   <maxid>0</maxid>
@@ -71,23 +71,26 @@ function articles_admin_exportpubtype($args)
       <id>1</id>
       <label>Article ID</label>
       <type>itemid</type>
-      <default></default>
+      <defaultvalue></defaultvalue>
       <source>xar_articles.xar_aid</source>
       <status>1</status>
+      <seq>1</seq>
     </property>
     <property name="pubtypeid">
       <id>2</id>
       <label>Publication Type</label>
       <type>itemtype</type>
-      <default>1</default>
+      <defaultvalue>1</defaultvalue>
       <source>xar_articles.xar_pubtypeid</source>
       <status>1</status>
+      <seq>2</seq>
     </property>
 ';
 
     // Configurable fields for articles
     $fields = array('title','summary','body','notes','authorid','pubdate','status');
     $id = 3;
+    // FIXME: map status & input fields to DD state someday
     foreach ($fields as $field) {
         $specs = $pubtype['config'][$field];
         if (empty($specs['label'])) {
@@ -110,11 +113,12 @@ function articles_admin_exportpubtype($args)
       <id>' . $id . '</id>
       <label>' . $specs['label'] . '</label>
       <type>' . $specs['format'] . '</type>
-      <default></default>
+      <defaultvalue></defaultvalue>
       <source>xar_articles.xar_' . $field . '</source>
       <input>' . $specs['input'] . '</input>
       <status>' . $status . '</status>
-      <validation>' . xarVarPrepForDisplay($specs['validation']) . '</validation>
+      <seq>' . $id . '</seq>
+      <configuration>' . xarVarPrepForDisplay($specs['validation']) . '</configuration>
     </property>
 ';
         // $specs['type'] = fixed for articles fields + unused in DD
@@ -154,15 +158,17 @@ function articles_admin_exportpubtype($args)
             // replace local table prefix with default xar_* one
             $info['source'] = preg_replace("/^$prefix/",'xar_',$info['source']);
 
+            $info['order'] += $i;
+
             $data['xml'] .= '    <property name="' . $name . '">
       <id>' . $info['id'] . '</id>
       <label>' . $info['label'] . '</label>
       <type>' . $info['type'] . '</type>
-      <default>' . $info['default'] . '</default>
+      <defaultvalue>' . $info['default'] . '</defaultvalue>
       <source>' . $info['source'] . '</source>
       <status>' . $info['status'] . '</status>
-      <order>' . $info['order'] . '</order>
-      <validation>' . xarVarPrepForDisplay($info['validation']) . '</validation>
+      <seq>' . $info['order'] . '</seq>
+      <configuration>' . xarVarPrepForDisplay($info['validation']) . '</configuration>
     </property>
 ';
         }
@@ -178,6 +184,7 @@ function articles_admin_exportpubtype($args)
     if (count($object->properties) > 0) {
         $object->properties = array_reverse($object->properties);
     }
+    // FIXME: map status & input to DD state someday
     foreach ($fields as $field) {
         $specs = $pubtype['config'][$field];
         if (empty($specs['label'])) {

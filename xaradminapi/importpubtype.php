@@ -92,6 +92,9 @@ function articles_adminapi_importpubtype($args)
                 $config = array();
                 $what = 'config';
             } elseif (preg_match('#<properties>#',$line)) {
+                if (empty($object['moduleid']) && !empty($object['module_id'])) {
+                    $object['moduleid'] = $object['module_id'];
+                }
                 if (empty($object['name']) || empty($object['moduleid'])) {
                     if (!empty($file)) fclose($fp);
                     $msg = xarML('Missing keys in object definition');
@@ -174,6 +177,25 @@ function articles_adminapi_importpubtype($args)
                 $fields = array();
                 $extra = array();
                 foreach ($properties as $property) {
+                    // prepare transition to DD properties
+                    if (!isset($property['default'])) {
+                        $property['default'] = '';
+                    }
+                    if (!isset($property['defaultvalue'])) {
+                        $property['defaultvalue'] = $property['default'];
+                    }
+                    if (!isset($property['order'])) {
+                        $property['order'] = 0;
+                    }
+                    if (!isset($property['seq'])) {
+                        $property['seq'] = $property['order'];
+                    }
+                    if (!isset($property['validation'])) {
+                        $property['validation'] = '';
+                    }
+                    if (!isset($property['configuration'])) {
+                        $property['configuration'] = $property['validation'];
+                    }
                     $field = $property['name'];
                     switch($field) {
                         case 'aid':
@@ -200,13 +222,10 @@ function articles_adminapi_importpubtype($args)
                             if (empty($property['status'])) {
                                 $property['label'] = '';
                             }
-                            if (!isset($property['validation'])) {
-                                $property['validation'] = '';
-                            }
                             $fields[$field] = array('label' => $property['label'],
                                                     'format' => $property['type'],
                                                     'input' => $property['input'],
-                                                    'validation' => $property['validation'],
+                                                    'validation' => $property['configuration'],
                                                     );
                             break;
 

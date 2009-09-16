@@ -21,12 +21,20 @@
 function articles_userapi_showfield($args)
 {
     if (empty($args['type']) || $args['type'] != 'fieldtype') {
+        if (isset($args['validation']) && !isset($args['configuration'])) {
+            $args['configuration'] = $args['validation'];
+            unset($args['validation']);
+        }
         // TODO: check/fix display of username property in roles ?
         if ($args['type'] == 'username') {
             $property = & DataPropertyMaster::getProperty($args);
             $property->initialization_store_type = 'id';
 
             return $property->showOutput($args) . $property->showHidden($args);
+        }
+        // rename legacy type
+        if ($args['type'] == 'textarea_small') {
+            $args['type'] = 'textarea';
         }
         // let DynamicData handle it
         return xarModAPIFunc('dynamicdata','admin','showinput',$args);

@@ -585,14 +585,16 @@ function articles_user_view($args)
                         if (empty($value['validation'])) {
                             $value['validation'] = '';
                         }
-                        $article[$field] = xarModAPIFunc('dynamicdata','user','showoutput',
-                            array(
-                                'name' => $field,
-                                'type' => $value['format'],
-                                'validation' => $value['validation'],
-                                'value' => $article[$field]
-                            )
-                        );
+                        $propargs = array('name' => $field,
+                                          'type' => $value['format'],
+                                          'configuration' => $value['validation'],
+                                          'value' => $article[$field]);
+                        $property = xarModAPIFunc('dynamicdata','user','getproperty', $propargs);
+                        if ($property) {
+                            $article[$field] = $property->showOutput($propargs);
+                        } else {
+                            $article[$field] = '';
+                        }
                     }
                     break;
             }

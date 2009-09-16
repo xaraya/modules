@@ -492,6 +492,32 @@ function articles_upgrade($oldversion)
         case '2.0.1':
             // Code to upgrade from version 2.0.1 goes here
 
+            // Get current publication types
+            $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+            // Get configurable fields for articles
+            $pubfields = xarModAPIFunc('articles','user','getpubfields');
+            // Update the configuration of each publication type
+            foreach ($pubtypes as $ptid => $pubtype) {
+                $replace = 0;
+                // Update textarea_small format to textarea
+                foreach (array_keys($pubfields) as $field) {
+                    if ($pubtype['config'][$field]['format'] == 'textarea_small') {
+                        $pubtype['config'][$field]['format'] = 'textarea';
+                        $replace = 1;
+                    }
+                }
+                if ($replace && !xarModAPIFunc('articles', 'admin', 'updatepubtype',
+                                   array('ptid' => $ptid,
+                                         'name' => $pubtype['name'],
+                                         'descr' => $pubtype['descr'],
+                                         'config' => $pubtype['config']))) {
+                    return false;
+                }
+            }
+
+        case '2.0.2':
+            // Code to upgrade from version 2.0.2 goes here
+
         case '2.5.0':
             // Code to upgrade from version 2.5 goes here
             break;

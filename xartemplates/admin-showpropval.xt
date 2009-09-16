@@ -59,10 +59,10 @@
                 </tr>
                 <tr align="left" valign="middle">
                     <td align="right">
-                        <strong>Validation :</strong>
+                        <strong>Configuration :</strong>
                     </td>
                     <td align="left">
-                        #$validation#
+                        #$configuration#
                     </td>
                 </tr>
             </table>

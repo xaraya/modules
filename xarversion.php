@@ -19,7 +19,7 @@
  */
 $modversion['name']         = 'articles';
 $modversion['id']           = '151';
-$modversion['version']      = '2.0.1';
+$modversion['version']      = '2.0.2';
 $modversion['displayname']  = xarML('Articles');
 $modversion['description']  = xarML('Display articles');
 $modversion['credits']      = '';

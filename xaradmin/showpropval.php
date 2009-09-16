@@ -37,7 +37,7 @@ function articles_admin_showpropval($args)
 
     $fieldformatnums = xarModAPIFunc('articles','user','getfieldformatnums');
     $proptype = $fieldformatnums[$info['format']];
-    $validation = !empty($info['validation']) ? $info['validation'] : '';
+    $configuration = !empty($info['validation']) ? $info['validation'] : '';
     $id = 0;
 
     // check if the module+itemtype this property belongs to is hooked to the uploads module
@@ -62,13 +62,14 @@ function articles_admin_showpropval($args)
         if (!xarVarFetch($data['name'],'isset',$value,NULL,XARVAR_NOT_REQUIRED)) return;
 
         // pass the current value as validation rule
-        $data['validation'] = isset($value) ? $value : '';
+        $data['configuration'] = isset($value) ? $value : '';
 
-        $isvalid = $property->updateValidation($data);
+        $isvalid = $property->updateConfiguration($data);
 
         if ($isvalid) {
             // store the updated validation rule back in the value
-            $validation = $property->validation;
+            $configuration = $property->configuration;
+
             if (!empty($confirm)) {
                 if (!xarSecConfirmAuthKey()) {
                     return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
@@ -77,7 +78,7 @@ function articles_admin_showpropval($args)
                 $name = $pubtypes[$ptid]['name'];
                 $descr = $pubtypes[$ptid]['descr'];
                 $config = $pubtypes[$ptid]['config'];
-                $config[$field]['validation'] = $validation;
+                $config[$field]['validation'] = $configuration;
 
                 if (!xarModAPIFunc('articles', 'admin', 'updatepubtype',
                                    array('ptid' => $ptid,
@@ -108,15 +109,15 @@ function articles_admin_showpropval($args)
     $data['maxlength']  = !empty($maxlength) ? $maxlength : 254;
     $data['size']       = !empty($size) ? $size : 50;
     // pass the current value as validation rule
-    if (!empty($validation)) {
-        $value = $validation;
+    if (!empty($configuration)) {
+        $value = $configuration;
     } else {
         $value = null;
     }
-    $data['validation'] = $value;
+    $data['configuration'] = $value;
 
-    // call its showValidation() method and return
-    $data['showval'] = $property->showValidation($data);
+    // call its showConfiguration() method and return
+    $data['showval'] = $property->showConfiguration($data);
 
     $data['ptid'] = $ptid;
     $data['field'] = $field;

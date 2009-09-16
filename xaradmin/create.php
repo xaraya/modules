@@ -70,9 +70,10 @@ function articles_admin_create()
             $properties[$field] = xarModAPIFunc('dynamicdata','user','getproperty',
                                                  array('name' => $field,
                                                        'type' => $value['format'],
-                                                       'validation' => $value['validation']));
+                                                       'configuration' => $value['validation']));
             $check = $properties[$field]->checkInput($field);
             if (!$check) {
+echo var_dump($properties[$field]);
                 $article[$field] = '';
                 $invalid[$field] = $properties[$field]->invalid;
                 $preview = 1;

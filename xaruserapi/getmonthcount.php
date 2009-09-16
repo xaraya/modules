@@ -65,6 +65,18 @@ function articles_userapi_getmonthcount($args)
             $select = 'LEFT(CONVERT(VARCHAR,DATEADD(ss,xar_pubdate,\'1/1/1970\'),120),7) as mymonth, COUNT(' . $distinct . 'xar_aid)';
             $from = $articlesdef['table'];
             break;
+// CHECKME: for sqlite, it could be something like this
+//        case 'sqlite':
+//        case 'pdosqlite':
+//            if ($distinct) {
+//                // FIXME: how to support this in sqlite ?
+//                // replace SELECT ..., COUNT(DISTINCT xar_aid) FROM table(s) WHERE etc. GROUP BY more stuff
+//                // with SELECT ..., COUNT(*) FROM (SELECT DISTINCT xar_aid, ... FROM table(s) WHERE etc.) GROUP BY more stuff
+//            } else {
+//            }
+//            $select = 'substr(date(xar_pubdate, \'unixepoch\'),1,7) as mymonth, count(' . $distinct . 'xar_aid)';
+//            $from = $articlesdef['table'];
+//            break;
         default:
             return;
     }

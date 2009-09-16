@@ -193,7 +193,7 @@
                          'format' => 'textarea',
                          'input'  => 1),
         'body' => array('label'  => xarML('Description'),
-                         'format' => 'textarea_small',
+                         'format' => 'textarea_medium',
                          'input'  => 1),
         'notes' => array('label'  => xarML('Upload File'),
                          'format' => 'fileupload',

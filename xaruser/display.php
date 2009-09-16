@@ -365,11 +365,16 @@ function articles_user_display($args)
                     $value['validation'] = '';
                 }
                 if (!empty($article[$field])) {
-                    $data[$field] = xarModAPIFunc('dynamicdata','user','showoutput',
-                                                  array('name' => $field,
-                                                        'type' => $value['format'],
-                                                        'validation' => $value['validation'],
-                                                        'value' => $article[$field]));
+                    $propargs = array('name' => $field,
+                                      'type' => $value['format'],
+                                      'configuration' => $value['validation'],
+                                      'value' => $article[$field]);
+                    $property = xarModAPIFunc('dynamicdata','user','getproperty', $propargs);
+                    if ($property) {
+                        $data[$field] = $property->showOutput($propargs);
+                    } else {
+                        $data[$field] = '';
+                    }
                 } else {
                     $data[$field] = '';
                 }

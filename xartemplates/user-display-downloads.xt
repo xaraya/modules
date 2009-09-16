@@ -17,7 +17,7 @@
     <xar:if condition="!empty($body)">
         <h5><xar:mlstring>Body</xar:mlstring>:</h5>
         <p>#$body#</p>
-    <xar:if
+    </xar:if>
     <h5><xar:mlstring>Download</xar:mlstring>:</h5>
     <xar:if condition="empty($notes)">
     <xar:elseif condition="xarModIsHooked('uploads','articles',$pubtypeid) and substr($notes,0,1) eq ';'" />
