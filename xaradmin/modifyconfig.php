@@ -27,7 +27,7 @@ function dyn_example_admin_modifyconfig()
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
     // Get the object we'll be working with for dyn_example-specific configuration
-    $data['object'] = DataObjectMaster::getObject(array('name' => 'modulesettings_dyn_example'));
+    $data['object'] = DataObjectMaster::getObject(array('name' => 'dyn_example_module_settings'));
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
     $data['object']->getItem(array('itemid' => 0));
 
@@ -114,11 +114,11 @@ function dyn_example_admin_modifyconfig()
                 // Load the DD master object class. This line will likely disappear in future versions
                 sys::import('modules.dynamicdata.class.objects.master');
                 // Get the object we'll be working with
-                $data['object'] = DataObjectMaster::getObject(array('name' => 'modulesettings_dyn_example'));
+                $data['object'] = DataObjectMaster::getObject(array('name' => 'dyn_example_module_settings'));
                 // Get the data from the form
                 $isvalid = $data['object']->checkInput();
-                // Update the item with itemid = 1
-                $item = $data['object']->updateItem(array('itemid' => 1));
+                // Update the item with itemid = 0
+                $item = $data['object']->updateItem(array('itemid' => 0));
                 // This function generated no output, and so now it is complete we redirect
                 // the user to an appropriate page for them to carry on their work
                 xarResponse::redirect(xarModURL('dyn_example', 'admin', 'modifyconfig'));
@@ -131,7 +131,7 @@ function dyn_example_admin_modifyconfig()
             #
             # This is a special case using the dynamicdata_admin_update function.
             # It depends on finding all the relevant information on the template we are submitting, i.e.
-            # - objectid of the modulesettings_dyn_example object
+            # - objectid of the dyn_example_module_settings object
             # - itemid (1 in this case)
             # - returnurl, telling us where to jump to after update
             #

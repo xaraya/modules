@@ -45,7 +45,7 @@ function dyn_example_init()
     $module = 'dyn_example';
     $objects = array(
                 'dyn_example',
-                'modulesettings',
+                'dyn_example_module_settings',
                 'dyn_example_user_settings',
                 );
 
@@ -54,7 +54,7 @@ function dyn_example_init()
 #
 # Set up configuration modvars (module specific)
 #
-# Since this modvar is used as storage in a DD object dyn_example_modulesettings,
+# Since this modvar is used as storage in a DD object dyn_example_module_settings,
 # we could also let Xaraya define it, but that would mean we wouldn't have it until
 # we updated the modifyconfig page
 #

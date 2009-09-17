@@ -1,17 +1,17 @@
 <object name="dyn_example_user_settings">
-  <objectid>28</objectid>
+  <objectid>17</objectid>
   <label>User Settings For Dyn_example</label>
   <module_id>182</module_id>
-  <itemtype>17</itemtype>
-  <class>DataObject</class>
-  <filepath>auto</filepath>
+  <itemtype>11</itemtype>
+  <class>ModVarObject</class>
+  <filepath>modules/dynamicdata/class/modvarobject.php</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config>a:0:{}</config>
   <isalias>false</isalias>
   <properties>
     <property name="bold">
-      <id>240</id>
+      <id>106</id>
       <label>Show name in bold</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration></configuration>
     </property>
     <property name="items_per_page">
-      <id>241</id>
+      <id>107</id>
       <label>Items per page</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
