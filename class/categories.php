@@ -142,7 +142,7 @@
 
     class CategoryTree extends Tree
     {
-        function createnodes(CategoryTreeNode $node)
+        function createnodes(TreeNode $node)
         {
             if ($node->id != null) $node->cid = $node->id;
             $data = xarModAPIFunc('categories',
