@@ -25,7 +25,7 @@ function articles_userapi_generatekeywords($args)
     $htmlless = strip_tags($incomingkey);
 
     // Strip anything that isn't alphanumeric or _ -
-    $symbolLess = trim(ereg_replace('([^a-zA-Z0-9_-])+',' ',$htmlless));
+    $symbolLess = trim(preg_replace('/[^a-zA-Z0-9_-]+/',' ',$htmlless));
 
     // Remove duplicate words
     $keywords = explode(" ", strtolower($symbolLess));
