@@ -53,11 +53,11 @@
             <h3>Approach # 1 : the xar:data-view ... tag</h3>
 
             <p class="xar-form-input-wrapper-before">
-              This tag will automatically retrieve the list of items from DynamicData,
+              This tag will automatically retrieve the list of items in 'dyn_example' from DynamicData,
               and present them according to its default objects/showlist.xt template.
             </p>
 
-            <xar:data-view object="$mylist" numitems="$items_per_page" startnum="$startnum" tplmodule="dyn_example" />
+            <xar:data-view object="dyn_example" numitems="$items_per_page" startnum="$startnum" sort="$sort" tplmodule="dyn_example" />
 
             <p class="xar-form-input-wrapper-before">If you want to provide your own presentation here, you can specify a
              different <code>layout="..."</code> to use in the default template, or you can specify your
@@ -68,10 +68,10 @@
             <h3>Approach # 2 : the xar:data-getitems ... tag</h3>
 
             <p class="xar-form-input-wrapper-before">
-                This tag will retrieve the properties and values from DynamicData and make them available in the 'properties' and 'values' variables in your template.
+                This tag will retrieve the properties and values of the 'dyn_example' object from DynamicData and make them available in the 'properties' and 'values' variables in your template.
             </p>
 
-            <xar:data-getitems object="$mylist" value="values" name="properties" numitems="$items_per_page" startnum="$startnum" />
+            <xar:data-getitems object="dyn_example" name="$properties" value="$values" numitems="$items_per_page" startnum="$startnum" sort="$sort" />
 
             <p class="xar-form-input-wrapper-before">
                 You can then use those variables to build your own layout. The <code>&lt;xar:data-label...&gt;</code> and <code>&lt;xar:data-output...&gt;</code> tags allow you to show individual labels or value outputs in the template.
@@ -94,7 +94,7 @@
                             </xar:if>
                         </xar:foreach>
                         <td width="30%" class="xar-align-center">
-                            <a href="#xarModURL('dyn_example','user','display',array('itemid' => $itemid))#">View</a> |
+                            <a href="#xarModURL('dyn_example','user','display',array('itemid' => $itemid))#">Display</a> |
                             <a href="#xarModURL('dyn_example','admin','modify',array('itemid' => $itemid))#">Edit</a> |
                             <a href="#xarModURL('dyn_example','admin','delete',array('itemid' => $itemid))#">Delete</a>
                         </td>
@@ -116,7 +116,7 @@
                 After retrieving the object list via API, you can pass along the whole object list to the template and use:  <code>&lt;xar:data-list object="$mylist"&gt;,</code>
             </p>
 
-            <xar:data-view object="dyn_example" tplmodule="dyn_example" />
+            <xar:data-view object="$mylist" tplmodule="dyn_example" layout="list" />
 
             <p>
                 or pass along the properties and values and work like in Approach # 2 - see the user view for an example of that.
@@ -134,7 +134,7 @@
             <xar:if condition="!empty($items) and count($items) gt 0">
                 <table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2">
                     <tr>
-                        <xar:foreach in="$labels" value="$label">
+                        <xar:foreach in="$labels" key="$name" value="$label">
                             <th class="xar-align-center">#$label#</th>
                         </xar:foreach>
                     </tr>
@@ -144,7 +144,7 @@
                                 <td>#$value#</td>
                             </xar:foreach>
                             <td width="30%" class="xar-align-center">
-                                <a href="#xarModURL('dyn_example','user','display',array('itemid' => $itemid))#">View</a> |
+                                <a href="#xarModURL('dyn_example','user','display',array('itemid' => $itemid))#">Display</a> |
                                 <a href="#xarModURL('dyn_example','admin','modify',array('itemid' => $itemid))#">Edit</a> |
                                 <a href="#xarModURL('dyn_example','admin','delete',array('itemid' => $itemid))#">Delete</a>
                             </td>

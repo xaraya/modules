@@ -53,10 +53,10 @@
         <div id="page-1">
             <h3>Approach # 1a : the &lt;xar:data-view ...&gt; tag</h3>
            <p>        
-                This tag will automatically retrieve the list of items from DynamicData,
+                This tag will automatically retrieve the list of items in 'dyn_example' from DynamicData,
                 and present them according to its standard <strong>objects/showview.xt</strong> template.        
            </p>
-            <xar:data-view object="$mylist" numitems="$items_per_page" startnum="$startnum" />
+            <xar:data-view object="dyn_example" numitems="$items_per_page" startnum="$startnum" sort="$sort" />
             <p>        
                 If you want to provide your own presentation here, you can specify a
                 different <code>layout="..."</code> to use in the default template, or you can specify your
@@ -72,7 +72,7 @@
                 uses <code>fieldlist="name,age"</code> to show only a selected list of fields.        
             </p>
 
-            <xar:data-view object="$mylist" numitems="$items_per_page" startnum="$startnum" layout="list" linkfield="name" fieldlist="name,age" />
+            <xar:data-view object="dyn_example" numitems="$items_per_page" startnum="$startnum" sort="$sort" layout="list" linkfield="name" fieldlist="name,age" />
         </div>
         
         <div id="page-3" style="display: none">
