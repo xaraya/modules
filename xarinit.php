@@ -118,7 +118,7 @@ function hitcount_init()
     * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
     *********************************************************************/
 
-    $query1 = "SELECT DISTINCT $xartable[modules].name FROM $xartable[hitcount] LEFT JOIN $xartable[modules] ON $xartable[hitcount].module_id = $xartable[modules].id";
+    $query1 = "SELECT DISTINCT $xartable[modules].name FROM $xartable[hitcount] LEFT JOIN $xartable[modules] ON $xartable[hitcount].module_id = $xartable[modules].regid";
     $query2 = "SELECT DISTINCT itemtype FROM $xartable[hitcount]";
     $query3 = "SELECT DISTINCT itemid FROM $xartable[hitcount]";
     $instances = array(
@@ -170,6 +170,11 @@ function hitcount_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '2.0.0':
+            // intermediate versions from repository in jamaica 2.0.0-b2 may have wrong module id's
+            // stored in xar_hitcount
+
+        case '2.0.1':
+
             break;
     }
 
@@ -186,19 +191,19 @@ function hitcount_delete()
     // Remove module hooks
     if (!xarModUnregisterHook('item', 'display', 'GUI',
                              'hitcount', 'user', 'display')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook'));
+        xarSession::setVar('errormsg', xarML('Could not unregister hook'));
     }
     if (!xarModUnregisterHook('item', 'create', 'API',
                              'hitcount', 'admin', 'create')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook'));
+        xarSession::setVar('errormsg', xarML('Could not unregister hook'));
     }
     if (!xarModUnregisterHook('item', 'delete', 'API',
                              'hitcount', 'admin', 'delete')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook'));
+        xarSession::setVar('errormsg', xarML('Could not unregister hook'));
     }
     if (!xarModUnregisterHook('module', 'remove', 'API',
                              'hitcount', 'admin', 'deleteall')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook'));
+        xarSession::setVar('errormsg', xarML('Could not unregister hook'));
     }
 
     // Get database information

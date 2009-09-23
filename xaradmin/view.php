@@ -105,6 +105,7 @@ function hitcount_admin_view()
             $numstats = 100;
         }
         if ($numstats < $data['numitems']) {
+            sys::import('xaraya.pager');
             $data['pager'] = xarTplGetPager($startnum,
                                             $data['numitems'],
                                             xarModURL('hitcount','admin','view',

@@ -28,6 +28,11 @@ function hitcount_adminapi_getmenulinks()
                                                   'view'),
                               'title' => xarML('View hitcount statistics per module'),
                               'label' => xarML('View Statistics'));
+        $menulinks[] = Array('url'   => xarModURL('hitcount',
+                                                  'admin',
+                                                  'hooks'),
+                              'title' => xarML('Configure hitcount hooks for other modules'),
+                              'label' => xarML('Enable Hooks'));
         $menulinks[] = Array('url' => xarModURL('hitcount',
                                                 'admin',
                                                 'modifyconfig'),

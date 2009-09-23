@@ -31,7 +31,7 @@ function hitcount_adminapi_deleteall($args)
         throw new Exception($msg);
     }
 
-    $modid = xarMod::getID($objectid);
+    $modid = xarMod::getRegId($objectid);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module ID', 'admin', 'deleteall', 'Hitcount');

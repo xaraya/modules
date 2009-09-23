@@ -40,7 +40,7 @@ function hitcount_userapi_get($args)
             $modname = xarModGetName();
         }
     }
-    $modid = xarMod::getID($modname);
+    $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module name', 'user', 'get', 'Hitcount');

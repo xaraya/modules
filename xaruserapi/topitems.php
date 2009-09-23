@@ -28,12 +28,12 @@ function hitcount_userapi_topitems($args)
 
     // Argument check
     if (!isset($modname)) {
-        xarSessionSetVar('errormsg', _MODARGSERROR);
+        xarSession::setVar('errormsg', _MODARGSERROR);
         return;
     }
-    $modid = xarMod::getID($modname);
+    $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
-        xarSessionSetVar('errormsg', _MODARGSERROR);
+        xarSession::setVar('errormsg', _MODARGSERROR);
         return;
     }
     if (empty($itemtype)) {

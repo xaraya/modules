@@ -17,16 +17,16 @@
                 </legend>
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="phase" id="phase" value="update" />
-                <div class="xar-form-input-wrapper-after">
-                <xar:if condition="xarModVars::get('hitcount', 'countadmin')">
-                    <input type="checkbox" name="countadmin" id="countadmin" value="1" checked="checked" />
-                <xar:else />
-                    <input type="checkbox" name="countadmin" id="countadmin" value="1" />
-                 </xar:if>
-                    <label for="countadmin">
+                <div class="xar-form-input-wrapper">
+                    <label for="countadmin" class="xar-form-label">
                         Count Administrator Hits
                         :
                     </label>
+                    <xar:if condition="xarModVars::get('hitcount', 'countadmin')">
+                        <input type="checkbox" name="countadmin" id="countadmin" value="1" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="countadmin" id="countadmin" value="1" />
+                    </xar:if>
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="numitems" class="xar-form-label">
@@ -34,41 +34,31 @@
                         :
                     </label>
                     <input type="text" name="numitems" id="numitems" size="4" maxlength="4" value="#$numitems#" />
-                </div>
+                </div>&#160;
                 <div class="xar-form-input-wrapper">
                     <label for="numstats" class="xar-form-label">
                         Number of items shown in statistics
                         :
                     </label>
                     <input type="text" name="numstats" id="numstats" size="4" maxlength="4" value="#$numstats#" />
-                </div>
-                <div class="xar-form-input-wrapper-after">
-
-                    <xar:if condition="!empty($showtitle)">
-                      <input type="checkbox" name="showtitle" id="showtitle" value="1" checked="checked" />
-                    <xar:else/>
-                      <input type="checkbox" name="showtitle" id="showtitle" value="1" />
-                    </xar:if>
-                    <label for="showtitle">
+                </div>&#160;
+                <div class="xar-form-input-wrapper">
+                    <label for="showtitle" class="xar-form-label">
                         Show the item title in statistics
                         :
                     </label>
+                    <xar:if condition="!empty($showtitle)">
+                        <input type="checkbox" name="showtitle" id="showtitle" value="1" checked="checked" />
+                    <xar:else/>
+                        <input type="checkbox" name="showtitle" id="showtitle" value="1" />
+                    </xar:if>
                 </div>
             </fieldset>
             <fieldset>
-                <div class="xar-form-input-wrapper">
+                <div class="xar-form-input-wrapper-after">
                     <input type="submit" value="#xarML('Save config')#" />
                 </div>
             </fieldset>
         </form>
     </div>
-    <xar:comment>
-      <div style="margin: auto;">
-        <h2>
-          Configure Hooks
-        </h2>
-        <xar:set name="url">#xarModURL('hitcount','admin','modifyconfig')#</xar:set>
-        <xar:module main="false" module="modules" type="admin" func="hooks" curhook="hitcount" return_url="$url" />
-      </div>
-    </xar:comment>
 </xar:template>

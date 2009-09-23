@@ -24,6 +24,22 @@
         </xar:sec>
 
         <xar:sec mask="AdminHitcount" catch="false">
+            <xar:set name="tabclass">$activetab=='hooks'?'active':''</xar:set>
+            <xar:if condition="$activetab eq 'hooks'">
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+            </xar:if>
+            <li class="#$tabclass#">
+              <a href="&xar-modurl-hitcount-admin-hooks;" class="#$linkclass#">
+                Hooks
+              </a>
+            </li>
+        </xar:sec>
+
+        <xar:sec mask="AdminHitcount" catch="false">
             <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
             <xar:if condition="$activetab eq 'modifyconfig'">
                 <xar:set name="tabclass">'xar-tab-active'</xar:set>
@@ -38,7 +54,8 @@
               </a>
             </li>
         </xar:sec>
-        <xar:if condition="$activetab eq 'main'">
+
+        <xar:if condition="$activetab eq 'overview'">
             <xar:set name="tabclass">'xar-tab-active'</xar:set>
             <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
         <xar:else />
