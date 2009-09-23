@@ -307,7 +307,7 @@ function categories_init()
 #
 # Create DD objects
 #
-    PropertyRegistration::importPropertyTypes(false,array(sys::code() . 'modules/categories/xarproperties'));
+    PropertyRegistration::importPropertyTypes(false,array('modules/categories/xarproperties'));
 
     $module = 'categories';
     $objects = array(
