@@ -22,10 +22,10 @@ function translations_adminapi_get_module_phpfiles($args)
     assert('isset($moddir)');
 
     $names = array();
-    if (file_exists("modules/$moddir")) {
-        $dd = opendir("modules/$moddir");
+    if (file_exists(sys::code() . "modules/$moddir")) {
+        $dd = opendir(sys::code() . "modules/$moddir");
         while ($filename = readdir($dd)) {
-//            if (is_dir("modules/$moddir/$filename") && (substr($filename,0,3) == "xar")) {
+//            if (is_dir(sys::code() . "modules/$moddir/$filename") && (substr($filename,0,3) == "xar")) {
 //                $names[] = mb_ereg_replace("^xar","",$filename);
 //                continue;
 //            }

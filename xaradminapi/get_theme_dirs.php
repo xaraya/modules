@@ -58,24 +58,24 @@ function translations_adminapi_get_theme_dirs($args)
                 $dd2 = opendir("themes/$themedir/modules");
                 while ($moddir = readdir($dd2)) {
                     if (($moddir == '.') || ($moddir == '..') || ($moddir == 'SCCS')) continue;
-                    if (is_dir("themes/$themedir/modules/$moddir")) {
+                    if (is_dir(sys::code() . "themes/$themedir/modules/$moddir")) {
                         $force = 0;
                         $filesBlock = false;
                         $filesIncl = false;
-                        if (is_dir("themes/$themedir/modules/$moddir/blocks")) {
-                            $filesBlock = searchFiles("themes/$themedir/modules/$moddir/blocks", $prefix);
+                        if (is_dir(sys::code() . "themes/$themedir/modules/$moddir/blocks")) {
+                            $filesBlock = searchFiles(sys::code() . "themes/$themedir/modules/$moddir/blocks", $prefix);
                         }
-                        if (is_dir("themes/$themedir/modules/$moddir/includes")) {
-                            $filesIncl = searchFiles("themes/$themedir/modules/$moddir/includes", $prefix);
+                        if (is_dir(sys::code() . "themes/$themedir/modules/$moddir/includes")) {
+                            $filesIncl = searchFiles(sys::code() . "themes/$themedir/modules/$moddir/includes", $prefix);
                         }
-                        if (is_dir("themes/$themedir/modules/$moddir/properties")) {
-                            $filesIncl = searchFiles("themes/$themedir/modules/$moddir/properties", $prefix);
+                        if (is_dir(sys::code() . "themes/$themedir/modules/$moddir/properties")) {
+                            $filesIncl = searchFiles(sys::code() . "themes/$themedir/modules/$moddir/properties", $prefix);
                         }
-                        if (is_dir("themes/$themedir/modules/$moddir/objects")) {
-                            $filesIncl = searchFiles("themes/$themedir/modules/$moddir/objects", $prefix);
+                        if (is_dir(sys::code() . "themes/$themedir/modules/$moddir/objects")) {
+                            $filesIncl = searchFiles(sys::code() . "themes/$themedir/modules/$moddir/objects", $prefix);
                         }
                         if ($filesBlock || $filesIncl) $force = 1;
-                        searchFiles("themes/$themedir/modules/$moddir", $prefix, $force);
+                        searchFiles(sys::code() . "themes/$themedir/modules/$moddir", $prefix, $force);
                     }
                 }
                 closedir($dd2);

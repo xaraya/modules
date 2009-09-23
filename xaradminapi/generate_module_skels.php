@@ -61,7 +61,7 @@ function translations_adminapi_generate_module_skels($args)
 
     foreach ($subnames as $subname) {
         $module_contexts_list[] = 'modules:'.$modname.'::'.$subname;
-        $filename = "modules/$moddir/xar$subname.php";
+        $filename = sys::code() . "modules/$moddir/xar$subname.php";
 
         if (file_exists($filename)) {
             $parser = new PHPParser();
@@ -86,13 +86,13 @@ function translations_adminapi_generate_module_skels($args)
             $xtype = 'xd';
         }
         $subnames = xarModAPIFunc('translations','admin','get_module_files',
-                         array('moddir'=>"modules/$moddir/xar$dirname",'pattern'=>$pattern));
+                         array('moddir'=>sys::code() . "modules/$moddir/xar$dirname",'pattern'=>$pattern));
         xarLogVariable('subnames',$subnames);
         foreach ($subnames as $subname) {
             $module_contexts_list[] = 'modules:'.$modname.':'.$dirname.':'.$subname;
             if ($xtype == 'xd') $parser = new TPLParser();
             else $parser = new PHPParser();
-            $parser->parse("modules/$moddir/xar$dirname/$subname.$xtype");
+            $parser->parse(sys::code() . "modules/$moddir/xar$dirname/$subname.$xtype");
             ${$dirname . "names"}[] = $subname;
             $transEntriesCollection[$dirname.'::'.$subname] = $parser->getTransEntries();
             $transKeyEntriesCollection[$dirname.'::'.$subname] = $parser->getTransKeyEntries();
@@ -120,7 +120,7 @@ function translations_adminapi_generate_module_skels($args)
     }
 
     // Load KEYS
-    $filename = "modules/$moddir/KEYS";
+    $filename = sys::code() . "modules/$moddir/KEYS";
     $KEYS = array();
     if (file_exists($filename)) {
         $lines = file($filename);

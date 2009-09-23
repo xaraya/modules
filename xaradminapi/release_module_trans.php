@@ -40,7 +40,7 @@ function translations_adminapi_release_module_trans($args)
         throw new Exception($msg);
     }
 
-    $dirpath = "var/locales/$locale/php/modules/$modname/";
+    $dirpath = sys::code() . "var/locales/$locale/php/modules/$modname/";
     if (!file_exists($dirpath.'common.php')) {
         $msg = xarML('Before releasing translations package you must first generate translations.');
         $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype' => 'module')));

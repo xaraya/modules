@@ -34,24 +34,24 @@ function translations_adminapi_get_module_dirs($args)
         'xarjava',
         'xarjavascript',
         'xarstyles');
-    if (file_exists("modules/$moddir")) {
-        $dd = opendir("modules/$moddir");
+    if (file_exists(sys::code() . "modules/$moddir")) {
+        $dd = opendir(sys::code() . "modules/$moddir");
         while ($filename = readdir($dd)) {
-            if (!is_dir("modules/$moddir/$filename")) continue;
+            if (!is_dir(sys::code() . "modules/$moddir/$filename")) continue;
             if (substr($filename,0,3) != "xar") continue;
             if (in_array($filename, $dropit)) continue;
             $names[] = mb_ereg_replace("^xar","",$filename);
         }
         closedir($dd);
     }
-    if (file_exists("modules/$moddir/xartemplates")) {
-        if (file_exists("modules/$moddir/xartemplates/includes"))
+    if (file_exists(sys::code() . "modules/$moddir/xartemplates")) {
+        if (file_exists(sys::code() . "modules/$moddir/xartemplates/includes"))
             $names[] = 'templates/includes';
-        if (file_exists("modules/$moddir/xartemplates/blocks"))
+        if (file_exists(sys::code() . "modules/$moddir/xartemplates/blocks"))
             $names[] = 'templates/blocks';
-        if (file_exists("modules/$moddir/xartemplates/properties"))
+        if (file_exists(sys::code() . "modules/$moddir/xartemplates/properties"))
             $names[] = 'templates/properties';
-        if (file_exists("modules/$moddir/xartemplates/objects"))
+        if (file_exists(sys::code() . "modules/$moddir/xartemplates/objects"))
             $names[] = 'templates/objects';
     }
     return $names;

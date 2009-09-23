@@ -99,13 +99,13 @@ class PHPTranslationsGenerator
 
         switch ($dnType) {
             case XARMLS_DNTYPE_MODULE:
-            $this->baseDir = "$modules_dir/$dnName/";
+            $this->baseDir = sys::code() . "$modules_dir/$dnName/";
             if (!file_exists($this->baseDir)) mkdir($this->baseDir, 0777);
 
             $dirnames = xarModAPIFunc('translations','admin','get_module_dirs',array('moddir'=>$dnName));
             foreach ($dirnames as $dirname) {
                 if (file_exists($this->baseDir.$dirname)) continue;
-                if (!file_exists("modules/$dnName/xar$dirname")) continue;
+                if (!file_exists(sys::code() . "modules/$dnName/xar$dirname")) continue;
                 mkdir($this->baseDir.$dirname, 0777);
             }
             break;
