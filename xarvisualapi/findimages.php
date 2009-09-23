@@ -7,7 +7,7 @@
 function categories_visualapi_findimages()
 {
     // theme *overrides* are possible, but the original must reside here
-    $basedir = 'modules/categories/xarimages';
+    $basedir = sys::core() . 'modules/categories/xarimages';
     $basedir = realpath($basedir);
 
     $filetype = '(png|gif|jpg|jpeg)';
