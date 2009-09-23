@@ -18,9 +18,9 @@
                 <xar:if condition="empty($modname)">
                     Are you sure you want to delete all hitcounts ?
                 <xar:elseif condition="empty($itemid)"/>
-                    <xar:ml>Are you sure you want to delete all hitcounts for module <b>#(1)</b> ?<xar:mlvar>#$modname#</xar:mlvar></xar:ml>
+                    <xar:ml>Are you sure you want to delete all hitcounts for module #(1) ?<xar:mlvar>#$modname#</xar:mlvar></xar:ml>
                 <xar:else/>
-                    <xar:ml>Are you sure you want to delete all hitcounts for module <b>#(1)</b> item <b>#(2)</b> ?<xar:mlvar>#$modname#</xar:mlvar><xar:mlvar>#$itemid#</xar:mlvar></xar:ml>
+                    <xar:ml>Are you sure you want to delete all hitcounts for module #(1) item #(2) ?<xar:mlvar>#$modname#</xar:mlvar><xar:mlvar>#$itemid#</xar:mlvar></xar:ml>
                 </xar:if>
              </div>
         </fieldset>
