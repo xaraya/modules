@@ -352,12 +352,12 @@ function articles_user_display($args)
         // TEST ONLY
             case 'webpage':
                 if (empty($value['validation'])) {
-                    $value['validation'] = 'modules/articles';
+                    $value['validation'] = sys::code() . 'modules/articles';
                 }
                 // fall through
             case 'imagelist':
                 if (empty($value['validation'])) {
-                    $value['validation'] = 'modules/articles/xarimages';
+                    $value['validation'] = sys::code() . 'modules/articles/xarimages';
                 }
                 // fall through
             case 'dropdown':
