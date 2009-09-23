@@ -5,33 +5,39 @@
 
     # ---------------------------- Instantiation and Compilation
 
-    class testBLCompiler extends xarTestCase {
+    class testBLCompiler extends xarTestCase 
+    {
         var $myBLC;
 
-        function setup() {
+        function setup() 
+        {
             $GLOBALS['xarDebug'] = false;
             sys::import('blocklayout.compiler');
             $this->myBLC = xarBLCompiler::instance();
         }
 
-        function precondition() {
+        function precondition() 
+        {
             // Abort on bogus file: must not exist
-            if (file_exists('modules/xarayatesting/tests/core/doesntexist')) return false;
+            if (file_exists(sys::code() . 'modules/xarayatesting/tests/core/doesntexist')) return false;
             // Testdata for BL
-            if (!file_exists('modules/xarayatesting/tests/core/test.xt')) return false;
+            if (!file_exists(sys::code() . 'modules/xarayatesting/tests/core/test.xt')) return false;
             return true;
         }
 
-        function teardown () {
+        function teardown () 
+        {
             // not needed here
         }
 
 
-        function testnotNull() { 
+        function testnotNull() 
+        { 
             return $this->assertNotNull($this->myBLC,"BL Compiler Instantiation");
         }
 
-        function testnoData() {
+        function testnoData() 
+        {
             try{
                 $this->expected = '[exception]';
                 $this->actual   = $this->myBLC->compileFile('doesntexist');
@@ -42,8 +48,9 @@
             }
         }
 
-        function testCompilenotnull() {
-            return $this->assertnotNull($this->myBLC->compileFile('modules/xarayatesting/tests/core/test.xt'),"Return not null on compile of a valid file");
+        function testCompilenotnull() 
+        {
+            return $this->assertnotNull($this->myBLC->compileFile(sys::code() . 'modules/xarayatesting/tests/core/test.xt'),"Return not null on compile of a valid file");
         }
 
     }
@@ -52,25 +59,30 @@
 
     # ---------------------------- General Text Node Handling
 
-    class testBLCompilerTextNodes extends xarTestCase {
+    class testBLCompilerTextNodes extends xarTestCase 
+    {
         var $myBLC;
 
-        function setup() {
+        function setup() 
+        {
             $GLOBALS['xarDebug'] = false;
             sys::import('blocklayout.compiler');
             $this->myBLC = xarBLCompiler::instance();
         }
 
-        function precondition() {
+        function precondition()
+        {
             // not needed here
             return true;
         }
 
-        function teardown () {
+        function teardown () 
+        {
             // not needed here
         }
 
-        function testGeneralTagOpenForm() {
+        function testGeneralTagOpenForm() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "<foo>bar</foo>";
             $tplString .= '</xar:template>';
@@ -84,7 +96,8 @@
             return $this->assertSame($out,$expected,"The open form of a tag in general is untouched - the transform adds some whitespace before and after its contents");
         }
 
-        function testGeneralTagClosedForm() {
+        function testGeneralTagClosedForm() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "<foo/>";
             $tplString .= '</xar:template>';
@@ -95,7 +108,8 @@
             return $this->assertSame($out,$expected,"The closed form of a tag in general is untouched - nothing added here!");
         }
 
-        function testHashVariable() {
+        function testHashVariable() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "#\$foo#";
             $tplString .= '</xar:template>';
@@ -106,7 +120,8 @@
             return $this->assertSame($this->actual,$this->expected,"Variable inside hashes is resolved as PHP");
         }
 
-        function testSimpleStringTextNode() {
+        function testSimpleStringTextNode() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "foo";
             $tplString .= '</xar:template>';
@@ -117,7 +132,8 @@
             return $this->assertSame($this->actual,$this->expected,"A non-numeric text node containing no special chars is translatable");
         }
 
-        function testSimpleNumberTextNode() {
+        function testSimpleNumberTextNode() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "666";
             $tplString .= '</xar:template>';
@@ -128,7 +144,8 @@
             return $this->assertSame($this->actual,$this->expected,"A text node representing a number is untouched");
         }
 
-        function testTextBeforeHashVariable() {
+        function testTextBeforeHashVariable() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "foo#\$bar#";
             $tplString .= '</xar:template>';
@@ -139,7 +156,8 @@
             return $this->assertSame($this->actual,$this->expected,"Text + hashvar is translatable");
         }
 
-        function testTextAfterHashVariable() {
+        function testTextAfterHashVariable() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "#\$bar#foo";
             $tplString .= '</xar:template>';
@@ -150,7 +168,8 @@
             return $this->assertSame($this->actual,$this->expected,"Hashvar + text is translatable");
         }
 
-        function testTextBeforeAndAfterHashVariable() {
+        function testTextBeforeAndAfterHashVariable() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "foo#\$bar#oo";
             $tplString .= '</xar:template>';
@@ -161,7 +180,8 @@
             return $this->assertSame($this->actual,$this->expected,"Text + hashvar + text is translatable");
         }
 
-        function testHashVariableBeforeAndAfterText() {
+        function testHashVariableBeforeAndAfterText() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "#\$foo#bar#\$oo#";
             $tplString .= '</xar:template>';
@@ -172,7 +192,8 @@
             return $this->assertSame($this->actual,$this->expected,"Hashvar + text + hashvar is translatable");
         }
 
-        function testTextWithDoubleHash() {
+        function testTextWithDoubleHash() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "foobar ##cccooo";
             $tplString .= '</xar:template>';
@@ -183,7 +204,8 @@
             return $this->assertSame($this->actual,$this->expected,"Double hash in text should return 1 hash back");
         }
 
-        function testHashVarWithDoubleHash() {
+        function testHashVarWithDoubleHash() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "#\$foobar###cccooo";
             $tplString .= '</xar:template>';
@@ -194,7 +216,8 @@
             return $this->assertSame($this->actual,$this->expected,"Hashvar and double hash should resolve and return 1 hash back");
         }
 
-        function testDoubleHashWithHashVar() {
+        function testDoubleHashWithHashVar() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "##cccooo#\$foobar#";
             $tplString .= '</xar:template>';
@@ -205,7 +228,8 @@
             return $this->assertSame($this->actual,$this->expected,"Double hash and hashvar should resolve and return 1 hash back");
         }
 
-        function xtestDoubleHash() {
+        function xtestDoubleHash() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             // Test for bug 694 and 695
             $tplString .= "#\$foo##";
@@ -217,7 +241,8 @@
             return $this->assertSame($this->actual,$this->expected,"Double hash after variable should return 1 back");
         }
 
-        function xtestTripleHash() {
+        function xtestTripleHash() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             // Test for bug 694 and 695
             $tplString .= "foo###";
@@ -229,7 +254,8 @@
             return $this->assertSame($this->actual,$this->expected,"Triple hash after variable should return 1 back");
         }
 
-        function testMLSPlaceholders() {
+        function testMLSPlaceholders() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "foo #(1) bar #(2)";
             $tplString .= '</xar:template>';
@@ -244,25 +270,30 @@
 
     $suite->AddTestCase('testBLCompilerTextNodes','General text node handling');
 
-    class testBLCompilerComments extends xarTestCase {
+    class testBLCompilerComments extends xarTestCase 
+    {
         var $myBLC;
 
-        function setup() {
+        function setup() 
+        {
             $GLOBALS['xarDebug'] = false;
             sys::import('blocklayout.compiler');
             $this->myBLC = xarBLCompiler::instance();
         }
 
-        function precondition() {
+        function precondition() 
+        {
             // not needed here
             return true;
         }
 
-        function teardown () {
+        function teardown () 
+        {
             // not needed here
         }
 
-        function testHTMLComments() {
+        function testHTMLComments() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "<!-- \r\n sometext\r\n  -->";
             $tplString .= '</xar:template>';
@@ -273,7 +304,8 @@
             return $this->assertSame($out,$expected,"HTML comments are removed in the transform");
         }
 
-        function testxarComments() {
+        function testxarComments() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "<xar:comment> foo </xar:comment>";
             $tplString .= '</xar:template>';
@@ -284,7 +316,8 @@
             return $this->assertSame($out,$expected,"xar:comment tags become html comments");
         }
 
-        function testWinMultilineComments() {
+        function testWinMultilineComments() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "<xar:comment> \r\nfoo\r\n </xar:comment>";
             $tplString .= '</xar:template>';
@@ -295,7 +328,8 @@
             return $this->assertSame($out,$expected,"BL multiline comments windows CR");
         }
 
-        function testMacMultilineComments() {
+        function testMacMultilineComments() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .="<xar:comment> \rfoo\r </xar:comment>";
             $tplString .= '</xar:template>';
@@ -306,7 +340,8 @@
             return $this->assertSame($out,$expected,"BL multiline xar:comments mac CR");
         }
 
-        function testUnixMultilineComments() {
+        function testUnixMultilineComments() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .="<xar:comment> \nsometext\n </xar:comment>";
             $tplString .= '</xar:template>';
@@ -317,7 +352,8 @@
             return $this->assertSame($out,$expected,"BL multiline comments unix CR");
         }
 
-        function xtestWinBLComments() {
+        function xtestWinBLComments()
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .="<!-- \r\n#\$foo#\r\n  -->";
             $tplString .= '</xar:template>';
@@ -325,7 +361,8 @@
             $this->actual = $this->myBLC->compileString($tplString);
             return $this->assertSame($this->actual,$this->expected,"BL multiline comments with windows CR");
         }
-        function xtestMacBLComments() {
+        function xtestMacBLComments() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .="<!--\r#\$foo#\r  -->";
             $tplString .= '</xar:template>';
@@ -333,7 +370,8 @@
             $this->actual = $this->myBLC->compileString($tplString);
             return $this->assertSame($this->actual,$this->expected,"BL multiline comments with mac CR");
         }
-        function xtestUnixBLComments() {
+        function xtestUnixBLComments()
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "<!-- \n#\$foo#\n  -->";
             $tplString .= '</xar:template>';
@@ -342,7 +380,8 @@
             return $this->assertSame($this->actual,$this->expected,"BL multiline comments with unix CR");
         }
 
-        function testHashVariableInxarComments() {
+        function testHashVariableInxarComments() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "<xar:comment><xar:var name=\"foo\" value=\"666\"/></xar:comment>";
             $tplString .= '</xar:template>';
