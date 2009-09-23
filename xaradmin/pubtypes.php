@@ -65,9 +65,9 @@ function articles_admin_pubtypes()
                 $config[$field]['format'] = $value;
                 // some default basedirs for now...
                 if ($value == 'imagelist') {
-                    $config[$field]['validation'] = 'modules/articles/xarimages';
+                    $config[$field]['validation'] = sys::code() . 'modules/articles/xarimages';
                 } elseif ($value == 'webpage') {
-                    $config[$field]['validation'] = 'modules/articles';
+                    $config[$field]['validation'] = sys::code() . 'modules/articles';
                 }
             }
             foreach ($input as $field => $value) {

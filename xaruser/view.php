@@ -572,12 +572,12 @@ function articles_user_view($args)
 // Warning : changes might be needed in customized summary templates if we enable this
 //                case 'webpage':
 //                    if (empty($value['validation'])) {
-//                        $value['validation'] = 'modules/articles';
+//                        $value['validation'] = sys::code() . 'modules/articles';
 //                    }
 //                    // fall through
 //                case 'imagelist':
 //                    if (empty($value['validation'])) {
-//                        $value['validation'] = 'modules/articles/xarimages';
+//                        $value['validation'] = sys::code() . 'modules/articles/xarimages';
 //                    }
 //                    // fall through
                 case 'dropdown':

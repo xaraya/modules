@@ -8,8 +8,9 @@
     </span>
 </div>
 <div class="xar-mod-body">
-      <xar:template type="module" file="admin-menu" />
-    <img class="xar-module-icon" src="modules/articles/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+    <xar:template type="module" file="admin-menu" />
+    <xar:set name="$src">sys::code() . 'modules/articles/xarimages/admin.gif'</xar:set>
+    <img class="xar-module-icon" src="#$src#" alt="official icon" width="96" height="96" />
     <h2>
         <xar:mlstring>
             Overview

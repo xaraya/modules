@@ -145,8 +145,8 @@ function articles_init()
 // TODO: load configuration from file(s) ?
 
     // Load the initial setup of the publication types
-    if (file_exists('modules/articles/xarsetup.php')) {
-        include 'modules/articles/xarsetup.php';
+    if (file_exists(sys::code() . 'modules/articles/xarsetup.php')) {
+        include sys::code() . 'modules/articles/xarsetup.php';
     } else {
         // TODO: add some defaults here
         $pubtypes = array();

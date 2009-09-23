@@ -37,7 +37,7 @@ function articles_admin_importpictures()
     $data = array();
 
     if (!isset($baseurl)) {
-        $data['baseurl'] = 'modules/articles/xarimages/';
+        $data['baseurl'] = sys::code() . 'modules/articles/xarimages/';
     } else {
         $data['baseurl'] = $baseurl;
     }

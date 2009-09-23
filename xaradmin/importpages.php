@@ -40,7 +40,7 @@ function articles_admin_importpages()
     $data = array();
 
     if (empty($basedir)) {
-        $data['basedir'] = realpath('modules/articles');
+        $data['basedir'] = realpath(sys::code() . 'modules/articles');
     } else {
         $data['basedir'] = realpath($basedir);
     }
