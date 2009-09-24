@@ -14,7 +14,7 @@
             }
             $checked_modules = array();
             foreach ($items as $item) {
-                $basedir = 'modules/' . $item['name'];
+                $basedir = sys::code() . 'modules/' . $item['name'];
                 $files = get_php_files($basedir,'php');
                 foreach ($files as $file) {
                     include_once($file);

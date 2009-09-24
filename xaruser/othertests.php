@@ -23,7 +23,7 @@
     function xarayatesting_user_othertests()
     {
         $picker = DataPropertyMaster::getProperty(array('name' => 'filepicker'));
-        $picker->initialization_basedirectory = 'modules/xarayatesting/xarscans';
+        $picker->initialization_basedirectory = sys::code() . 'modules/xarayatesting/xarscans';
         $picker->validation_file_extensions = 'php';
         $data['tests'] = $picker->getOptions();
         return $data;
