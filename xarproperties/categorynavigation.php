@@ -180,11 +180,34 @@ class CategoryNavigationProperty extends SelectProperty
         // Specify the module to use as argument for xarModURL()
         if (empty($urlmodule)) $urlmodule = $modname;
 
-        // Specify the URL parameter to use as argument for xarModURL()
-        if (empty($urlparam)) $urlparam = 'itemtype';
+// TODO: check other URL parameters with DD (using objectid, tplmodule etc.) ?
 
-        // Specify the URL value to use as argument for xarModURL()
-        if (empty($urlvalue)) $urlvalue = $data['itemtype'];
+        // Get current DD object name (if any)
+        if ($modname == 'dynamicdata' && !isset($data['name'])) {
+            if (xarVarIsCached('Blocks.categories','name')) {
+                $data['name'] = xarVarGetCached('Blocks.categories','name');
+            } else {
+                // try to get name from input
+                xarVarFetch('name', 'str', $data['name'], NULL, XARVAR_DONT_SET);
+            }
+        }
+        if (empty($data['name'])) $data['name'] = null;
+        $name = $data['name'];
+
+        if ($modname == 'dynamicdata' && !empty($data['name'])) {
+            // Specify the URL parameter to use as argument for xarModURL()
+            if (empty($urlparam)) $urlparam = 'name';
+
+            // Specify the URL value to use as argument for xarModURL()
+            if (empty($urlvalue)) $urlvalue = $data['name'];
+
+        } else {
+            // Specify the URL parameter to use as argument for xarModURL()
+            if (empty($urlparam)) $urlparam = 'itemtype';
+
+            // Specify the URL value to use as argument for xarModURL()
+            if (empty($urlvalue)) $urlvalue = $data['itemtype'];
+        }
 
         // Specify additional arguments for xarModURL()
         if (empty($urlextra)) {
@@ -257,6 +280,9 @@ class CategoryNavigationProperty extends SelectProperty
                     }
                 }
             }
+        }
+        if (!empty($cids) && !is_array($cids)) {
+            $cids = array($cids);
         }
         if (count($cids) > 0) {
             $seencid = array();

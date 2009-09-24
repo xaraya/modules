@@ -46,6 +46,12 @@ function categories_adminapi_getmenulinks()
 
         $menulinks[] = Array('url'   => xarModURL('categories',
                                                    'admin',
+                                                   'hooks'),
+                              'title' => xarML('Configure categories hooks for other modules'),
+                              'label' => xarML('Enable Hooks'));
+
+        $menulinks[] = Array('url'   => xarModURL('categories',
+                                                   'admin',
                                                    'modifyconfig'),
                               'title' => xarML('Config the Categories module'),
                               'label' => xarML('Modify Config'));

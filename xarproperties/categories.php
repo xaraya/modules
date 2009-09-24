@@ -95,10 +95,10 @@ class CategoriesProperty extends DataProperty
         // Get the categories from the form
         list($isvalid, $categories) = $this->fetchValue($name . '_categories');
         if ($categories == null) {
-            if (!xarVarFetch($name . '_categories', 'array', $categories, array(), XARVAR_NOT_REQUIRED)) return;
-        } else {
-            if (!is_array($categories)) $categories = array($categories);
+            if (!xarVarFetch($name . '_categories', 'isset', $categories, array(), XARVAR_NOT_REQUIRED)) return;
         }
+        // Make sure we have an array
+        if (isset($categories) && !is_array($categories)) $categories = array($categories);
         $this->categories = $categories;
         
         // Get the base categories from the form
@@ -386,6 +386,10 @@ class CategoriesProperty extends DataProperty
 
         // Now make the value passed to the template the selected categories
         $data['value'] = $selectedcategories;
+
+        // Make sure we have an array
+        if (!empty($data['value']) && !is_array($data['value'])) $data['value'] = array($data['value']);
+
         return parent::showInput($data);
     }
 
@@ -446,6 +450,9 @@ class CategoriesProperty extends DataProperty
 
         // Now make the value passed to the template the selected categories
         $data['value'] = $selectedcategories;
+
+        // Make sure we have an array
+        if (!empty($data['value']) && !is_array($data['value'])) $data['value'] = array($data['value']);
 
         return parent::showOutput($data);
     }

@@ -32,6 +32,7 @@
     <xar:foreach in="$trees" value="$nodes">
         <input type="hidden" name="#$name#_categories_basecats[#$index#]" value="#$basecids[$index]#" />
         <xar:if condition="count($trees) eq 1">
+            <!-- Note: categorypicker expects a value, and categories expects an array - handled in code -->
             <xar:set name="dropdownname">$name . "_categories"</xar:set>
             <xar:set name="dropdownid">$id . "_categories"</xar:set>
         <xar:else />
