@@ -132,7 +132,7 @@ function categories_navigationblock_display($blockinfo)
     } else {
         // Get number of categories for this module + item type
 
-        $numcats = xarModAPIfunc(
+        $numcats = xarMod::apiFunc(
             'categories', 'user', 'countcatbases',
             array(
                 'module'=>$modname,
@@ -146,7 +146,7 @@ function categories_navigationblock_display($blockinfo)
         }
 
         // Get master cids for this module + item type
-        $mastercids = xarModAPIfunc(
+        $mastercids = xarMod::apiFunc(
             'categories', 'user', 'getallcatbases',
             array(
                 'module' => $modname,
@@ -187,7 +187,7 @@ function categories_navigationblock_display($blockinfo)
         if (xarVarIsCached('Blocks.categories', 'deepcount') && empty($startmodule)) {
             $deepcount = xarVarGetCached('Blocks.categories', 'deepcount');
         } else {
-            $deepcount = xarModAPIFunc(
+            $deepcount = xarMod::apiFunc(
                 'categories', 'user', 'deepcount',
                 array('modid' => $modid, 'itemtype' => $itemtype)
             );
@@ -204,7 +204,7 @@ function categories_navigationblock_display($blockinfo)
 
             if ($showcatcount == 1) {
                 // We want to display only children category counts.
-                $catcount = xarModAPIFunc(
+                $catcount = xarMod::apiFunc(
                     'categories','user', 'groupcount',
                     array('modid' => $modid, 'itemtype' => $itemtype)
                 );
@@ -276,7 +276,7 @@ function categories_navigationblock_display($blockinfo)
             if (empty($cids)) {
                 $cids = array();
                 if ((empty($module) || $module == $modname) && !empty($itemid)) {
-                    $links = xarModAPIFunc('categories','user','getlinks',
+                    $links = xarMod::apiFunc('categories','user','getlinks',
                                           array('modid' => $modid,
                                                 'itemtype' => $itemtype,
                                                 'iids' => array($itemid)));
@@ -328,12 +328,12 @@ function categories_navigationblock_display($blockinfo)
                         }
                     }
                 }
-                $cat = xarModAPIFunc('categories','user','getcatinfo',
+                $cat = xarMod::apiFunc('categories','user','getcatinfo',
                                 array('cid' => $cids[0]));
                 if (empty($cat)) {
                     return;
                 }
-                $neighbours = xarModAPIFunc('categories','user','getneighbours',
+                $neighbours = xarMod::apiFunc('categories','user','getneighbours',
                                            $cat);
                 if (empty($neighbours) || count($neighbours) == 0) {
                     return;
@@ -378,7 +378,7 @@ function categories_navigationblock_display($blockinfo)
                 $data['catitems'] = array();
 
                 // Get root categories
-                $catlist = xarModAPIFunc('categories','user','getcatinfo',
+                $catlist = xarMod::apiFunc('categories','user','getcatinfo',
                                         array('cids' => $mastercids));
                 $join = '';
                 if (empty($catlist) || !is_array($catlist)) {
@@ -409,7 +409,7 @@ function categories_navigationblock_display($blockinfo)
     // TODO: stop at root categories
                 foreach ($cids as $cid) {
                     // Get category information
-                    $parents = xarModAPIFunc('categories','user','getparents',
+                    $parents = xarMod::apiFunc('categories','user','getparents',
                                             array('cid' => $cid));
                     if (empty($parents)) {
                         continue;
@@ -545,7 +545,7 @@ function categories_navigationblock_display($blockinfo)
                 }
                 if ($showchildren == 2) {
                     // Get child categories (all sub-levels)
-                    $childlist = xarModAPIFunc('categories','visual','listarray',
+                    $childlist = xarMod::apiFunc('categories','visual','listarray',
                                               array('cid' => $cids[0]));
                     if (empty($childlist) || count($childlist) == 0) {
                         break;
@@ -584,7 +584,7 @@ function categories_navigationblock_display($blockinfo)
                     unset($childlist);
                 } elseif ($showchildren == 1) {
                     // Get child categories (1 level only)
-                    $children = xarModAPIFunc('categories','user','getchildren',
+                    $children = xarMod::apiFunc('categories','user','getchildren',
                                              array('cid' => $cids[0]));
                     if (empty($children) || count($children) == 0) {
                         break;
@@ -663,7 +663,7 @@ function categories_navigationblock_display($blockinfo)
                 }
                 if (empty($title) && !empty($itemtype)) {
                     // Get the list of all item types for this module (if any)
-                    $mytypes = xarModAPIFunc($modname,'user','getitemtypes',
+                    $mytypes = xarMod::apiFunc($modname,'user','getitemtypes',
                                              // don't throw an exception if this function doesn't exist
                                              array(), 0);
                     if (isset($mytypes) && !empty($mytypes[$itemtype])) {
@@ -684,7 +684,7 @@ function categories_navigationblock_display($blockinfo)
                     $catparents = array();
                     $catitems = array();
                     // Get child categories
-                    $children = xarModAPIFunc('categories','user','getchildren',
+                    $children = xarMod::apiFunc('categories','user','getchildren',
                                              array('cid' => $cid,
                                                    'return_itself' => true));
                     foreach ($children as $cat) {
@@ -728,7 +728,7 @@ function categories_navigationblock_display($blockinfo)
                     $catparents = array();
                     $catitems = array();
                     // Get child categories
-                    $children = xarModAPIFunc('categories','user','getchildren',
+                    $children = xarMod::apiFunc('categories','user','getchildren',
                                              array('cid' => $cid,
                                                    'return_itself' => true));
                     foreach ($children as $cat) {
@@ -776,7 +776,7 @@ function categories_navigationblock_display($blockinfo)
                     $catparents = array();
                     $catitems = array();
                     // Get category information
-                    $parents = xarModAPIFunc('categories','user','getparents',
+                    $parents = xarMod::apiFunc('categories','user','getparents',
                                             array('cid' => $cid));
                     if (empty($parents)) {
                         continue;
@@ -815,11 +815,11 @@ function categories_navigationblock_display($blockinfo)
                     }
 
                     // Get sibling categories
-                    $siblings = xarModAPIFunc('categories','user','getchildren',
+                    $siblings = xarMod::apiFunc('categories','user','getchildren',
                                              array('cid' => $parentid));
                     if ($showchildren && $parentid != $cid) {
                         // Get child categories
-                        $children = xarModAPIFunc('categories','user','getchildren',
+                        $children = xarMod::apiFunc('categories','user','getchildren',
                                                  array('cid' => $cid));
                     }
 

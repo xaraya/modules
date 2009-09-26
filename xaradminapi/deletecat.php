@@ -24,7 +24,7 @@ function categories_adminapi_deletecat($args)
                   'getchildren' => true,
                   'return_itself' => true
                  );
-    $cat = xarModAPIFunc('categories', 'user', 'getcatinfo', $args);
+    $cat = xarMod::apiFunc('categories', 'user', 'getcatinfo', $args);
     if ($cat == false) {
         $msg = xarML('Category does not exist. Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'category', 'admin', 'deletecat', 'categories');
@@ -34,7 +34,7 @@ function categories_adminapi_deletecat($args)
     $right = $cat['right'];
     $left = $cat['left'];
     $deslocation_inside = $right - $left + 1;
-    $categories = xarModAPIFunc('categories',
+    $categories = xarMod::apiFunc('categories',
                                 'user',
                                 'getcat',
                                 $args);

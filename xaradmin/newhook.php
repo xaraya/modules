@@ -111,7 +111,7 @@ function categories_admin_newhook($args)
         }
         $item = array();
         $item['num'] = $n + 1;
-        $item['select'] = xarModAPIFunc('categories', 'visual', 'makeselect',
+        $item['select'] = xarMod::apiFunc('categories', 'visual', 'makeselect',
                                        array('cid' => $mastercids[$n],
                                              'multiple' => 1,
                                              'name_prefix' => 'new_',

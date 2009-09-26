@@ -55,7 +55,7 @@ function categories_navigationblock_modify($blockinfo)
     // 4.       itemtype [base3]
     //          itemtype [base4]
 
-    $allcatbases = xarModAPIfunc(
+    $allcatbases = xarMod::apiFunc(
         'categories', 'user', 'getallcatbases',
         array('order'=>'module', 'format'=>'tree')
     );

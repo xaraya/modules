@@ -28,7 +28,7 @@ function categories_admin_unlink()
                 $data['modname'] = ucwords($modinfo['displayname']);
             } else {
                 // Get the list of all item types for this module (if any)
-                $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
+                $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                          // don't throw an exception if this function doesn't exist
                                          array(), 0);
                 if (isset($mytypes) && !empty($mytypes[$itemtype])) {
@@ -51,7 +51,7 @@ function categories_admin_unlink()
     // unlink API does not support deleting all category links for all modules
     if (!empty($modid)) {
         $modinfo = xarModGetInfo($modid);
-        if (!xarModAPIFunc('categories','admin','unlink',
+        if (!xarMod::apiFunc('categories','admin','unlink',
                            array('modid' => $modid,
                                  'itemtype' => $itemtype,
                                  'iid' => $itemid,

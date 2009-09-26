@@ -21,13 +21,13 @@ function categories_userapi_getorphanlinks($args)
         $itemtype = 0;
     }
 
-    $catbases = xarModAPIFunc('categories','user','getallcatbases',
+    $catbases = xarMod::apiFunc('categories','user','getallcatbases',
                               array('modid'    => $modid,
                                     'itemtype' => $itemtype));
     if (empty($catbases)) {
         $args['reverse'] = 1;
         // any link is an orphan here
-        return xarModAPIFunc('categories','user','getlinks', $args);
+        return xarMod::apiFunc('categories','user','getlinks', $args);
     }
 
     $seencid = array();
@@ -37,10 +37,10 @@ function categories_userapi_getorphanlinks($args)
     if (empty($seencid)) {
         $args['reverse'] = 1;
         // any link is an orphan here
-        return xarModAPIFunc('categories','user','getlinks', $args);
+        return xarMod::apiFunc('categories','user','getlinks', $args);
     }
 
-    $catlist = xarModAPIFunc('categories','user','getcatinfo',
+    $catlist = xarMod::apiFunc('categories','user','getcatinfo',
                              array('cids' => array_keys($seencid)));
     uasort($catlist,'categories_userapi_getorphanlinks_sortbyleft');
 

@@ -33,7 +33,7 @@ function categories_userapi_encode_shorturl($args)
         // check for required parameters
         if (isset($catid) && is_numeric($catid) && $catid > 0) {
 /* needs the full path to the Top here */
-            $name = xarModAPIFunc('categories','user','cid2name',
+            $name = xarMod::apiFunc('categories','user','cid2name',
                                  array('cid' => $catid,
                                        // for DMOZ-like URLs with the description field containing
                                        // the full path, use 1
@@ -56,7 +56,7 @@ function categories_userapi_encode_shorturl($args)
         //         if (isset($catcache[$catid])) {
         //             $cat = $catcache[$catid];
         //         } else {
-        //             $cat = xarModAPIFunc('categories','user','getcatinfo',
+        //             $cat = xarMod::apiFunc('categories','user','getcatinfo',
         //                                 array('cid' => $catid));
         //             // put the category in cache
         //             $catcache[$catid] = $cat;

@@ -30,7 +30,7 @@ function categories_userapi_getitemtypes($args)
                           'url'   => xarModURL('categories','admin','viewcats')
                          );
 
-    if ($extensionitemtypes = xarModAPIFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 147, 'native' =>false),0)) {
+    if ($extensionitemtypes = xarMod::apiFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 147, 'native' =>false),0)) {
         $types = array();
         foreach ($itemtypes as $key => $value) $types[$key] = $value;
         foreach ($extensionitemtypes as $key => $value) $types[$key] = $value;

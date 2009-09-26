@@ -59,7 +59,7 @@ function categories_admin_privileges($args)
             $newinstance[] = 'All';
             $newinstance[] = 'All';
         } else {
-            $catinfo = xarModAPIFunc('categories','user','getcatinfo',
+            $catinfo = xarMod::apiFunc('categories','user','getcatinfo',
                                      array('cid' => $cid));
             if (empty($catinfo)) {
                 $cid = 0;
@@ -120,7 +120,7 @@ function categories_admin_privileges($args)
     }
 
     // Get the list of all modules currently hooked to categories
-    $hookedmodlist = xarModAPIFunc('modules','admin','gethookedmodules',
+    $hookedmodlist = xarMod::apiFunc('modules','admin','gethookedmodules',
                                    array('hookModName' => 'categories'));
     if (!isset($hookedmodlist)) {
         $hookedmodlist = array();
@@ -136,7 +136,7 @@ function categories_admin_privileges($args)
         $modlist[$modid] = $modinfo['displayname'];
         if (!empty($moduleid) && $moduleid == $modid) {
             // Get the list of all item types for this module (if any)
-            $mytypes = xarModAPIFunc($modname,'user','getitemtypes',
+            $mytypes = xarMod::apiFunc($modname,'user','getitemtypes',
                                      // don't throw an exception if this function doesn't exist
                                      array(), 0);
             if (empty($mytypes)) {
@@ -205,7 +205,7 @@ function categories_admin_privileges($args)
     }
 
     if (!empty($moduleid)) {
-        $numitems = xarModAPIFunc('categories','user','countitems',
+        $numitems = xarMod::apiFunc('categories','user','countitems',
                                   array('modid' => $moduleid,
                                         'itemtype' => $itemtype,
                                         'cids'  => (empty($cid) ? null : array($cid))
@@ -236,12 +236,12 @@ function categories_admin_privileges($args)
         $modinfo = xarModGetInfo($moduleid);
         $modname = $modinfo['name'];
         if (!empty($itemtype)) {
-            $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $pubid));
+            $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $pubid));
             foreach ($basecats as $catid) {
                 $catlist[$catid['cid']] = 1;
             }
         } else {
-            $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles'));
+            $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'articles'));
             foreach ($basecats as $catid) {
                 $catlist[$catid['cid']] = 1;
             }
@@ -254,7 +254,7 @@ function categories_admin_privileges($args)
     if (!empty($cid)) {
         $seencid[$cid] = 1;
 /*
-        $data['catinfo'] = xarModAPIFunc('categories',
+        $data['catinfo'] = xarMod::apiFunc('categories',
                                          'user',
                                          'getcatinfo',
                                          array('cid' => $cid));

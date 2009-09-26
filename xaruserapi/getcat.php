@@ -90,7 +90,7 @@ function categories_userapi_getcat($args)
         {
             // We have the category ID but we need
             // to know its left and right values
-            $cat = xarModAPIFunc('categories','user','getcatinfo',Array('cid' => $cid));
+            $cat = xarMod::apiFunc('categories','user','getcatinfo',Array('cid' => $cid));
             if ($cat == false) {
                 xarSession::setVar('errormsg', xarML('Category does not exist'));
                 return Array();
@@ -145,7 +145,7 @@ function categories_userapi_getcat($args)
     }
 
     if (isset($eid) && !is_array($eid) && $eid != false) {
-       $ecat = xarModAPIFunc('categories', 'user', 'getcatinfo', Array('cid' => $eid));
+       $ecat = xarMod::apiFunc('categories', 'user', 'getcatinfo', Array('cid' => $eid));
        if ($ecat == false) {
            xarSession::setVar('errormsg', xarML('That category does not exist'));
            return Array();

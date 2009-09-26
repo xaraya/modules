@@ -11,7 +11,7 @@
  */
 function categories_userapi_countcatbases($args)
 {
-    return count(xarModAPIFunc('categories','user','getallcatbases',$args));
+    return count(xarMod::apiFunc('categories','user','getallcatbases',$args));
 
 /*
     // Expand arguments from argument array
@@ -53,7 +53,7 @@ function categories_userapi_countcatbases($args)
     if (!isset($itemtype)) {
         // Get list of item types.
         try{
-            $mytypes = xarModAPIFunc(
+            $mytypes = xarMod::apiFunc(
                 $module, 'user', 'getitemtypes',
                 array(), 0
             );

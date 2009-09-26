@@ -31,7 +31,7 @@ function categories_admin_updatecatbase()
 
         // If $order is set, then set the ordering of the category bases.
         if (!empty($order)) {
-            xarModAPIfunc(
+            xarMod::apiFunc(
                 'categories', 'admin', 'ordercatbases',
                 array(
                     'modid' => $modid,
@@ -42,7 +42,7 @@ function categories_admin_updatecatbase()
         }
 
         // Update the details for this category base.
-        xarModAPIfunc(
+        xarMod::apiFunc(
             'categories', 'admin', 'updatecatbase',
             array(
                 'bid' => $pbid,

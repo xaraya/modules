@@ -60,12 +60,12 @@ function categories_adminapi_createcat($args)
 
     if (isset($catexists) && ($catexists == 0)) {
 
-       $n = xarModAPIFunc('categories', 'user', 'countcats', Array());
+       $n = xarMod::apiFunc('categories', 'user', 'countcats', Array());
 
        if ($n == 0) {
                // Editing database doesn´t need to have a great performance
             // So the 2 extras updates are OK...
-            $cid = xarModAPIFunc('categories','admin','createcatdirectly',
+            $cid = xarMod::apiFunc('categories','admin','createcatdirectly',
                 Array
                 (
                     'point_of_insertion' => 1,
@@ -82,7 +82,7 @@ function categories_adminapi_createcat($args)
     } else {
 
        // Obtain current information on the reference category
-       $cat = xarModAPIFunc('categories', 'user', 'getcatinfo', Array('cid'=>$refcid));
+       $cat = xarMod::apiFunc('categories', 'user', 'getcatinfo', Array('cid'=>$refcid));
 
        if ($cat == false) {
            xarSession::setVar('errormsg', xarML('That category does not exist'));
@@ -95,7 +95,7 @@ function categories_adminapi_createcat($args)
        /* Find out where you should put the new category in */
        if (
            !($point_of_insertion =
-                xarModAPIFunc('categories','admin','find_point_of_insertion',
+                xarMod::apiFunc('categories','admin','find_point_of_insertion',
                    Array('inorout' => $inorout,
                            'rightorleft' => $rightorleft,
                            'right' => $right,
@@ -114,7 +114,7 @@ function categories_adminapi_createcat($args)
         } else {
             $parent_id = $cat['parent'];
         }
-        $cid = xarModAPIFunc('categories','admin','createcatdirectly',
+        $cid = xarMod::apiFunc('categories','admin','createcatdirectly',
                Array
             (
                 'point_of_insertion' => $point_of_insertion,

@@ -27,7 +27,7 @@ function categories_admin_checklinks()
 
     $data = array();
 
-    $modlist = xarModAPIFunc('categories','user','getmodules');
+    $modlist = xarMod::apiFunc('categories','user','getmodules');
 
     if (empty($modid)) {
         $data['moditems'] = array();
@@ -36,7 +36,7 @@ function categories_admin_checklinks()
         foreach ($modlist as $modid => $itemtypes) {
             $modinfo = xarModGetInfo($modid);
             // Get the list of all item types for this module (if any)
-            $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
+            $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                      // don't throw an exception if this function doesn't exist
                                      array(), 0);
             foreach ($itemtypes as $itemtype => $stats) {
@@ -77,7 +77,7 @@ function categories_admin_checklinks()
         } else {
             $data['itemtype'] = $itemtype;
             // Get the list of all item types for this module (if any)
-            $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
+            $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                      // don't throw an exception if this function doesn't exist
                                      array(), 0);
             if (isset($mytypes) && !empty($mytypes[$itemtype])) {
@@ -104,14 +104,14 @@ function categories_admin_checklinks()
         }
         $data['pager'] = '';
         $data['modid'] = $modid;
-        $getitems = xarModAPIFunc('categories','user','getorphanlinks',
+        $getitems = xarMod::apiFunc('categories','user','getorphanlinks',
                                   array('modid' => $modid,
                                         'itemtype' => $itemtype));
         $data['numorphans'] = count($getitems);
         $showtitle = xarModVars::get('categories','showtitle');
         if (!empty($getitems) && !empty($showtitle)) {
            $itemids = array_keys($getitems);
-           $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
+           $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
                                       array('itemtype' => $itemtype,
                                             'itemids' => $itemids),
                                       0); // don't throw an exception here
@@ -135,7 +135,7 @@ function categories_admin_checklinks()
         unset($getitems);
         unset($itemlinks);
         if (!empty($seencid)) {
-            $data['catinfo'] = xarModAPIFunc('categories','user','getcatinfo',
+            $data['catinfo'] = xarMod::apiFunc('categories','user','getcatinfo',
                                              array('cids' => array_keys($seencid)));
         } else {
             $data['catinfo'] = array();
@@ -146,7 +146,7 @@ function categories_admin_checklinks()
             if (!xarSecConfirmAuthKey()) {
                 return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
             }        
-            if (!xarModAPIFunc('categories','admin','unlinkcids',
+            if (!xarMod::apiFunc('categories','admin','unlinkcids',
                                array('modid' => $modid,
                                      'itemtype' => $itemtype,
                                      'cids' => array_keys($seencid)))) {

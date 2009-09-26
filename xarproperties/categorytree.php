@@ -37,7 +37,7 @@ class CategoryTreeProperty extends DataProperty
         if (isset($data['options'])) {
             $this->options = $data['options'];
         } else {
-            $this->options = xarModAPIFunc('categories','user','getchildren',array('cid' => 0));
+            $this->options = xarMod::apiFunc('categories','user','getchildren',array('cid' => 0));
         }
         $trees = array();
         $totalcount = 0;
@@ -51,7 +51,7 @@ class CategoryTreeProperty extends DataProperty
             $trees[] = $nodes;
 
             // Perhaps this should be in the classes?
-            $count = xarModAPIFunc('categories','user','countcats', $entry);
+            $count = xarMod::apiFunc('categories','user','countcats', $entry);
             $totalcount += $count;
         }
         $data['trees'] = $trees;

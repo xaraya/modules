@@ -204,11 +204,11 @@ function categories_init()
 
     // Not a good idea. Leads to duplicate entries for dd objects based on categories
     /*
-        xarModAPIFunc('modules','admin','enablehooks',
+        xarMod::apiFunc('modules','admin','enablehooks',
                   array('callerModName' => 'categories', 'hookModName' => 'dynamicdata'));
     */
     // Register blocks
-    if (!xarModAPIFunc('blocks',
+    if (!xarMod::apiFunc('blocks',
                        'admin',
                        'register_block_type',
                        array('modName'  => 'categories',
@@ -313,7 +313,7 @@ function categories_init()
     $objects = array(
                      'categories',
                      );
-    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
     // Initialisation successful
     return true;
@@ -365,7 +365,7 @@ function categories_upgrade($oldversion)
 */
 function categories_delete()
 {
-    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'categories'));
+    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => 'categories'));
 }
 
 ?>

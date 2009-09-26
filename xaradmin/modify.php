@@ -33,7 +33,7 @@ function categories_admin_modify()
 
     $data['category'] = $data['object']->getFieldValues();
 
-    $categories = xarModAPIFunc('categories',
+    $categories = xarMod::apiFunc('categories',
                                 'user',
                                 'getcat',
                                 array('cid' => false,

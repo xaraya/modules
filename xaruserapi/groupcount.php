@@ -32,7 +32,7 @@ function categories_userapi_groupcount($args)
     // Get the field names and LEFT JOIN ... ON ... parts from categories
     // By passing on the $args, we can let leftjoin() create the WHERE for
     // the categories-specific columns too now
-    $categoriesdef = xarModAPIFunc('categories','user','leftjoin',$args);
+    $categoriesdef = xarMod::apiFunc('categories','user','leftjoin',$args);
 
     // Collection of where-clause expressions.
     $where = array();

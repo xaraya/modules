@@ -145,7 +145,7 @@
         function createnodes(CategoryTreeNode $node)
         {
             if ($node->id != null) $node->cid = $node->id;
-            $data = xarModAPIFunc('categories',
+            $data = xarMod::apiFunc('categories',
                                     'user',
                                     'getcat',
                                   array('eid'           => $node->eid,

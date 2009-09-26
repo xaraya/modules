@@ -49,7 +49,7 @@ function categories_adminapi_linkcat($args)
         foreach ($args['cids'] as $cid) {
               $cidparts = explode('.',$cid);
               $cid = $cidparts[0];
-            $cat = xarModAPIFunc('categories',
+            $cat = xarMod::apiFunc('categories',
                                  'user',
                                  'getcatinfo',
                                  Array
@@ -72,7 +72,7 @@ function categories_adminapi_linkcat($args)
     if ($clean_first)
     {
         // Get current links
-        $childiids = xarModAPIFunc('categories',
+        $childiids = xarMod::apiFunc('categories',
                                    'user',
                                    'getlinks',
                                    array('iids' => $args['iids'],

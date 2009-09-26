@@ -70,7 +70,7 @@ function categories_userapi_getcatbyname($args)
     $result->Close();
 
     // Get category information
-    $category = xarModAPIFunc('categories',
+    $category = xarMod::apiFunc('categories',
                               'user',
                               'getcat',
                               Array('cid' => $cid,

@@ -39,7 +39,7 @@ function categories_adminapi_create ($args)
 
     if ($parent_id != 0)
     {
-       $cat = xarModAPIFunc('categories', 'user', 'getcatinfo', Array('cid'=>$parent_id));
+       $cat = xarMod::apiFunc('categories', 'user', 'getcatinfo', Array('cid'=>$parent_id));
 
        if ($cat == false)
        {
@@ -63,7 +63,7 @@ function categories_adminapi_create ($args)
             $point_of_insertion = 1;
         }
     }
-    return xarModAPIFunc('categories','admin','createcatdirectly',Array(
+    return xarMod::apiFunc('categories','admin','createcatdirectly',Array(
                     'point_of_insertion' => $point_of_insertion,
                     'name' => $name,
                     'description' => $description,

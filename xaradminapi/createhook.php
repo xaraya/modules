@@ -73,7 +73,7 @@ function categories_adminapi_createhook($args)
         $itemtype = 0;
     }
 
-    if (!xarModAPIFunc('categories', 'admin', 'linkcat',
+    if (!xarMod::apiFunc('categories', 'admin', 'linkcat',
                       array('cids'  => $cids,
                             'iids'  => array($objectid),
                             'itemtype' => $itemtype,

@@ -11,7 +11,7 @@
 function categories_userapi_getitemlinks($args)
 {
     $itemlinks = array();
-    $catlist = xarModAPIFunc('categories','user','getcatinfo',
+    $catlist = xarMod::apiFunc('categories','user','getcatinfo',
                              array('cids' => $args['itemids']));
     if (!isset($catlist) || !is_array($catlist) || count($catlist) == 0) {
        return $itemlinks;

@@ -229,7 +229,7 @@ function categories_userapi_leftjoin($args)
         }
     }
     if (!empty($cidtree)) {
-        $cat = xarModAPIFunc('categories','user','getcatinfo',Array('cid' => $cidtree));
+        $cat = xarMod::apiFunc('categories','user','getcatinfo',Array('cid' => $cidtree));
         if (!empty($cat)) {
             $where[] = $categoriestable . '.left_id >= ' . $cat['left'];
             $where[] = $categoriestable . '.left_id <= ' . $cat['right'];

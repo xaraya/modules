@@ -23,7 +23,7 @@ function categories_admin_modifycatbase()
         }
         if(!xarSecurityCheck('DeleteCategoryLink', 1, 'Link', "$modid:$modtype:All:All")) {return;}
 
-        $data['catbase'] = xarModAPIFunc(
+        $data['catbase'] = xarMod::apiFunc(
             'categories', 'user', 'getcatbase',
             array(
                 'bid' => $bid,
@@ -33,7 +33,7 @@ function categories_admin_modifycatbase()
         );
 
         // Form item for choosing the base category.
-        $data['cidselect'] = xarModAPIFunc(
+        $data['cidselect'] = xarMod::apiFunc(
             'categories', 'visual', 'makeselect',
             array(
                 'values' => array($data['catbase']['cid'] => 1),
@@ -54,7 +54,7 @@ function categories_admin_modifycatbase()
         $data['module'] = $module;
 
         // TODO: could do with this in the template, but there is no way to add it yet.
-        xarModAPIfunc('base', 'javascript', 'moduleinline',
+        xarMod::apiFunc('base', 'javascript', 'moduleinline',
             array(
                 'position' => 'head',
                 'code' => 'xar_base_reorder_warn = \'' . xarML('You must select the category base to move.') . '\''
@@ -62,13 +62,13 @@ function categories_admin_modifycatbase()
         );
 
         // Get count of category bases in this group (for module/itemtype)
-        $data['groupcount'] = xarModAPIfunc(
+        $data['groupcount'] = xarMod::apiFunc(
             'categories', 'user', 'countcatbases',
             array('modid' => $modid, 'itemtype' => $itemtype)
         );
 
         // Get the list of cat bases for the order list.
-        $data['catbases'] = xarModAPIfunc(
+        $data['catbases'] = xarMod::apiFunc(
             'categories', 'user', 'getallcatbases',
             array('modid' => $modid, 'itemtype' => $itemtype, 'order' => 'order')
         );

@@ -105,7 +105,7 @@ class CategoryNavigationProperty extends SelectProperty
 
         // Get base cids for this module + item type
 // CHECKME: getallcatbases has changed result format !
-        $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $modname, 'itemtype' =>$data['itemtype']));
+        $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => $modname, 'itemtype' =>$data['itemtype']));
         if (empty($basecats)) return ''; // no categories to show here -> return empty output
         $basecids = array();
         foreach ($basecats as $tempcat) {
@@ -130,7 +130,7 @@ class CategoryNavigationProperty extends SelectProperty
                 if (xarVarIsCached('Blocks.categories', 'deepcount')) {
                     $deepcount = xarVarGetCached('Blocks.categories', 'deepcount');
                 } else {
-                    $deepcount = xarModAPIFunc(
+                    $deepcount = xarMod::apiFunc(
                         'categories', 'user', 'deepcount',
                         array('modid' => $modid, 'itemtype' => $data['itemtype'])
                     );
@@ -146,7 +146,7 @@ class CategoryNavigationProperty extends SelectProperty
 
                 if ($data['showcatcount'] == 1) {
                     // We want to display only children category counts.
-                    $catcount = xarModAPIFunc(
+                    $catcount = xarMod::apiFunc(
                         'categories','user', 'groupcount',
                         array('modid' => $modid, 'itemtype' => $data['itemtype'])
                     );
@@ -247,7 +247,7 @@ class CategoryNavigationProperty extends SelectProperty
                 } else {
                     $cids = array();
                     if ((empty($module) || $module == $modname) && !empty($itemid)) {
-                        $links = xarModAPIFunc('categories','user','getlinks',
+                        $links = xarMod::apiFunc('categories','user','getlinks',
                                               array('modid' => $modid,
                                                     'itemtype' => $itemtype,
                                                     'iids' => array($itemid)));
@@ -296,7 +296,7 @@ class CategoryNavigationProperty extends SelectProperty
                         $catparents = array();
                         $catitems = array();
                         // Get child categories
-                        $children = xarModAPIFunc('categories','user','getchildren',
+                        $children = xarMod::apiFunc('categories','user','getchildren',
                                                  array('cid' => $cid,
                                                        'return_itself' => true));
 
@@ -351,7 +351,7 @@ class CategoryNavigationProperty extends SelectProperty
                         $catparents = array();
                         $catitems = array();
                         // Get child categories
-                        $children = xarModAPIFunc('categories','user','getchildren',
+                        $children = xarMod::apiFunc('categories','user','getchildren',
                                                  array('cid' => $cid,
                                                        'return_itself' => true));
                         foreach ($children as $cat) {
@@ -398,7 +398,7 @@ class CategoryNavigationProperty extends SelectProperty
                         $catparents = array();
                         $catitems = array();
                         // Get category information
-                        $parents = xarModAPIFunc('categories','user','getancestors',
+                        $parents = xarMod::apiFunc('categories','user','getancestors',
                                                 array('cid' => $cid));
                         if (empty($parents)) {
                             continue;
@@ -437,11 +437,11 @@ class CategoryNavigationProperty extends SelectProperty
                                                   'catcount' => $count);
                         }
                         // Get sibling categories
-                        $siblings = xarModAPIFunc('categories','user','getchildren',
+                        $siblings = xarMod::apiFunc('categories','user','getchildren',
                                                  array('cid' => $parentid));
                         if ($data['showchildren'] && $parentid != $cid) {
                             // Get child categories
-                            $children = xarModAPIFunc('categories','user','getchildren',
+                            $children = xarMod::apiFunc('categories','user','getchildren',
                                                      array('cid' => $cid));
                         }
 
@@ -501,7 +501,7 @@ class CategoryNavigationProperty extends SelectProperty
                     $data['catitems'] = array();
 
                     // Get root categories
-                    $catlist = xarModAPIFunc(
+                    $catlist = xarMod::apiFunc(
                         'categories','user','getcatinfo',
                         array('cids' => $basecids)
                     );
@@ -543,7 +543,7 @@ class CategoryNavigationProperty extends SelectProperty
                     // A separate trail will be created for each assigned.
                     foreach ($cids as $cid) {
                         // Get category information.
-                        $parents = xarModAPIFunc(
+                        $parents = xarMod::apiFunc(
                             'categories', 'user', 'getancestors',
                             array('cid' => $cid, 'self' => true)
                         );
@@ -761,7 +761,7 @@ class CategoryNavigationProperty extends SelectProperty
                                 // if we're viewing all items below a certain category, i.e. catid = _NN
                                 $cid = str_replace('_', '', $cid);
                                 // FIXME: if this fails, an exception will be set, so it needs to be cleared?
-                                xarModAPIFunc('hitcount','admin','update',
+                                xarMod::apiFunc('hitcount','admin','update',
                                               array('modname' => 'categories',
                                                     'objectid' => $cid));
                             }
@@ -828,7 +828,7 @@ class CategoryNavigationProperty extends SelectProperty
                     }
                     if ($data['showchildren'] == 2) {
                         // Get child categories (all sub-levels)
-                        $childlist = xarModAPIFunc(
+                        $childlist = xarMod::apiFunc(
                             'categories', 'visual', 'listarray',
                             array('cid' => $cids[0])
                         );
@@ -863,7 +863,7 @@ class CategoryNavigationProperty extends SelectProperty
                         unset($childlist);
                     } elseif ($data['showchildren'] == 1) {
                         // Get child categories (1 level only)
-                        $children = xarModAPIFunc(
+                        $children = xarMod::apiFunc(
                             'categories', 'user', 'getchildren',
                             array('cid' => $cids[0])
                         );
@@ -962,12 +962,12 @@ class CategoryNavigationProperty extends SelectProperty
                             }
                         }
                     }
-                    $cat = xarModAPIFunc('categories','user','getcatinfo',
+                    $cat = xarMod::apiFunc('categories','user','getcatinfo',
                                     array('cid' => $cids[0]));
                     if (empty($cat)) {
                         return '';
                     }
-                    $neighbours = xarModAPIFunc('categories','user','getneighbours',
+                    $neighbours = xarMod::apiFunc('categories','user','getneighbours',
                                                $cat);
                     if (empty($neighbours) || count($neighbours) == 0) {
                         return '';
@@ -1031,7 +1031,7 @@ class CategoryNavigationProperty extends SelectProperty
              if ($check) return true;
              return null;
         }
-        $result = xarModAPIFunc('categories','user','getcatinfo',array('cid' => $this->value));
+        $result = xarMod::apiFunc('categories','user','getcatinfo',array('cid' => $this->value));
         if (!empty($result)) {
             if ($check) return true;
             return $result['name'];
