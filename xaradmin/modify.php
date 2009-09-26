@@ -68,7 +68,7 @@ function articles_admin_modify($args)
     // Use articles user GUI function (not API) for preview, catch exceptions
     if (!xarModLoad('articles','user')) return;
     try {
-        $data['preview'] = xarModFunc('articles', 'user', 'display',
+        $data['preview'] = xarMod::guiFunc('articles', 'user', 'display',
                                       array('preview' => true, 'article' => $article));
     } catch (Exception $e) {
         // Catch errors from generating the preview

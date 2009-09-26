@@ -16,7 +16,7 @@
  */
 function articles_user_main($args)
 {
-    return xarModFunc('articles','user','view',$args);
+    return xarMod::guiFunc('articles','user','view',$args);
 // TODO: make this configurable someday ?
     // redirect to default view (with news articles)
     //xarResponse::Redirect(xarModURL('articles', 'user', 'view'));

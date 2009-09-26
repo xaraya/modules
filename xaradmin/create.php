@@ -12,7 +12,7 @@
  * @author mikespub
  */
 /**
- * create item from xarModFunc('articles','admin','new')
+ * create item from xarMod::guiFunc('articles','admin','new')
  *
  * @param id     ptid       The publication Type ID for this new article
  * @param array  new_cids   An array with the category ids for this new article (OPTIONAL)
@@ -137,7 +137,7 @@ echo var_dump($properties[$field]);
     $article['aid'] = 0;
 
     if ($preview || count($invalid) > 0) {
-        $data = xarModFunc('articles','admin','new',
+        $data = xarMod::guiFunc('articles','admin','new',
                              array('preview' => true,
                                    'article' => $article,
                                    'return_url' => $return_url,

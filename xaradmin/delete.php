@@ -55,7 +55,7 @@ function articles_admin_delete()
 
         // Use articles user GUI function (not API) for preview
         if (!xarModLoad('articles','user')) return;
-        $data['preview'] = xarModFunc('articles', 'user', 'display',
+        $data['preview'] = xarMod::guiFunc('articles', 'user', 'display',
                                       array('preview' => true, 'article' => $article));
 
         // Add some other data you'll want to display in the template

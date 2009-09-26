@@ -87,7 +87,7 @@ function articles_admin_new($args)
     if (!empty($preview)) {
         // Use articles user GUI function (not API) for preview
         if (!xarModLoad('articles','user')) return;
-        $preview = xarModFunc('articles', 'user', 'display',
+        $preview = xarMod::guiFunc('articles', 'user', 'display',
                              array('preview' => true, 'article' => $article));
     } else {
         $preview = '';

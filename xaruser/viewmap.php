@@ -18,7 +18,7 @@ function articles_user_viewmap($args)
 {
     // Don't use standard categories function for this
     //xarModLoad('categories', 'user');
-    //return xarModFunc('categories', 'user', 'viewmap');
+    //return xarMod::guiFunc('categories', 'user', 'viewmap');
 
     // Get parameters
     if(!xarVarFetch('ptid',  'id',    $ptid,   NULL, XARVAR_NOT_REQUIRED)) {return;}

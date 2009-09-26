@@ -147,7 +147,7 @@ function articles_admin_update()
     $article['aid'] = $aid;
 
     if ($preview || count($invalid) > 0) {
-        $data = xarModFunc('articles','admin','modify',
+        $data = xarMod::guiFunc('articles','admin','modify',
                              array('preview' => true,
                                    'article' => $article,
                                    'return_url' => $return_url,

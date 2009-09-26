@@ -52,7 +52,7 @@ function articles_schedulerapi_makedigest($args)
     }
 
     // create some HTML digest
-    $htmldigest = xarModFunc('articles','user','view',
+    $htmldigest = xarMod::guiFunc('articles','user','view',
                              array('ptid' => $ptid,
                                    'catid' => $catid,
                                    'startdate' => $lastdigest,

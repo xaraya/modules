@@ -241,7 +241,7 @@ function articles_admin_importpictures()
             }
             if (isset($test)) {
                 // preview the first file as a test
-                $data['preview'] = xarModFunc('articles','user','display',
+                $data['preview'] = xarMod::guiFunc('articles','user','display',
                                               array('article' => $article, 'preview' => true));
                 break;
             } else {
