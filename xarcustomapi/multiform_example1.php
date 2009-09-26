@@ -109,7 +109,7 @@ class xarpages_customapi_multiform_example1 extends xarpages_customapi_multiform
         //
         // We have passed in the workdata array, which means that data will be available
         // to the next page visited. It can be retrieved using:
-        // $workdata = xarModAPIfunc('xarpages', 'multiform', 'passdata');
+        // $workdata = xarMod::apiFunc('xarpages', 'multiform', 'passdata');
         // This connects the form sequence to the outside functionality, in a similar
         // way to a function returning a value.
         return $this->finish($this->workdata);

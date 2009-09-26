@@ -8,7 +8,7 @@ function xarpages_userapi_getpage($args)
     // then just return that cached page.
 
     // Get all matching pages. We are hoping we get back just one.
-    $pages = xarModAPIfunc('xarpages', 'user', 'getpages', $args);
+    $pages = xarMod::apiFunc('xarpages', 'user', 'getpages', $args);
 
     if (empty($pages) || count($pages) > 1) {
         // Too many or not enough pages.

@@ -39,7 +39,7 @@ function xarpages_admin_updatetype($args)
 
     // Pass to API
     if (!empty($id)) {
-        if (!xarModAPIFunc(
+        if (!xarMod::apiFunc(
             'xarpages', 'admin', 'updatetype',
             array(
                 'id'           => $id,
@@ -50,7 +50,7 @@ function xarpages_admin_updatetype($args)
         )) {return;}
     } else {
         // Pass to API
-        $id = xarModAPIFunc(
+        $id = xarMod::apiFunc(
             'xarpages', 'admin', 'createtype',
             array(
                 'name'         => $name,

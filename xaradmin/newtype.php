@@ -15,7 +15,7 @@
 
 function xarpages_admin_newtype($args)
 {
-    return(xarModFunc('xarpages', 'admin', 'modifytype', $args));
+    return(xarMod::guiFunc('xarpages', 'admin', 'modifytype', $args));
 }
 
 ?>

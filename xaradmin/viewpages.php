@@ -27,7 +27,7 @@ function xarpages_admin_viewpages($args)
     // Accept a parameter to allow selection of a single tree.
     xarVarFetch('contains', 'id', $contains, 0, XARVAR_NOT_REQUIRED);
 
-    $data = xarModAPIFunc(
+    $data = xarMod::apiFunc(
         'xarpages', 'user', 'getpagestree',
         array('key' => 'index', 'dd_flag' => false, 'tree_contains_pid' => $contains)
     );
@@ -36,7 +36,7 @@ function xarpages_admin_viewpages($args)
         // TODO: pass to template.
         return $data; //xarML('NO PAGES DEFINED');
     } else {
-        $data['pages'] = xarModAPIfunc('xarpages', 'tree', 'array_maptree', $data['pages']);
+        $data['pages'] = xarMod::apiFunc('xarpages', 'tree', 'array_maptree', $data['pages']);
     }
 
     $data['contains'] = $contains;

@@ -18,7 +18,7 @@
                 <!-- Choose just one icon from the categories -->
                 <xar:if condition="!empty($loop:item.image) and empty($image_displayed)">
                     <!-- In here, choose your own path and MIME type -->
-                    <enclosure url="#xarServer::getBaseURL()#modules/categories/xarimages/#$loop:item.image#" length="" type="image/JPEG" />
+                    <enclosure url="#xarServer::getBaseURL()##sys::code()#modules/categories/xarimages/#$loop:item.image#" length="" type="image/JPEG" />
                     <!-- Ensure only one image is displayed (the first one we get) -->
                     <xar:set name="image_displayed">true</xar:set>
                 </xar:if>

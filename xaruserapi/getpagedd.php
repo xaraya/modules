@@ -36,7 +36,7 @@ function xarpages_userapi_getpagedd($args)
             continue;
         }
 
-        $dd_data = xarModAPIfunc(
+        $dd_data = xarMod::apiFunc(
             'dynamicdata', 'user', 'getitems',
             array('module' => 'xarpages', 'itemtype' => $itemtype, 'itemids' => array_keys($items))
         );

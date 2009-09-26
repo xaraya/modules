@@ -141,7 +141,7 @@ function xarpages_menublock_display($blockinfo)
     // If necessary, check whether the current page is under one of the
     // of the allowed root pids.
     if (!empty($root_pids)) {
-        if (!xarModAPIfunc('xarpages', 'user', 'pageintrees', array('pid' => $pid, 'tree_roots' => $root_pids))) {
+        if (!xarMod::apiFunc('xarpages', 'user', 'pageintrees', array('pid' => $pid, 'tree_roots' => $root_pids))) {
             // Not under a root.
             // If the mode is AUTO then leave the menu blank.
             if ($vars['current_source'] == 'AUTO' || $vars['current_source'] == 'DEFAULT' || empty($vars['default_pid'])) {
@@ -157,7 +157,7 @@ function xarpages_menublock_display($blockinfo)
     // If we don't have any page data, then fetch it now.
     if (empty($pagedata)) {
         // Get the page data here now.
-        $pagedata = xarModAPIfunc(
+        $pagedata = xarMod::apiFunc(
             'xarpages', 'user', 'getpagestree',
             array(
                 'tree_contains_pid' => $pid,
@@ -240,7 +240,7 @@ function xarpages_menublock_display($blockinfo)
 
     // Here we add the various flags to the pagedata, based on
     // the current page.
-    $pagedata = xarModAPIfunc(
+    $pagedata = xarMod::apiFunc(
         'xarpages', 'user', 'addcurrentpageflags',
         array('pagedata' => $pagedata, 'pid' => $pid, 'root_pids' => $root_pids)
     );

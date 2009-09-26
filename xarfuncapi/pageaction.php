@@ -27,7 +27,7 @@
 function xarpages_funcapi_pageaction($args)
 {
     // Include the helper functions
-    xarModAPIfunc('xarpages', 'custom', 'pageform_helpers');
+    xarMod::apiFunc('xarpages', 'custom', 'pageform_helpers');
 
     // incoming post vars
     if (!xarVarFetch('pf','str', $pf,'',XARVAR_NOT_REQUIRED)) return; 
@@ -58,7 +58,7 @@ function xarpages_funcapi_pageaction($args)
     if (empty($in_object)) {
         // create empty one
         $objectid = $pages[$form_pid]['dd']['data'];
-        $in_object = xarModApiFunc('dynamicdata','user','getobject', array('objectid'=>$objectid ));
+        $in_object = xarMod::apiFunc('dynamicdata','user','getobject', array('objectid'=>$objectid ));
     }
     else {
         // clear invalids, we'll be checking them again now
@@ -117,7 +117,7 @@ function xarpages_funcapi_pageaction($args)
 
         if (!($dd['debug'] == 1 && $dd['dont_execute'] == 1)) {
             // load the functions (library)
-            xarModApiFunc('xarpages','custom',$current_page['name'] );      
+            xarMod::apiFunc('xarpages','custom',$current_page['name'] );      
             if (function_exists($validation_func)) {
                 $isvalid = $validation_func( $in_object );
             }
@@ -143,8 +143,8 @@ function xarpages_funcapi_pageaction($args)
             if (empty($out_object)) {
                 // create empty one
                 $objectid = $pages[$nextform_pid]['dd']['data'];
-                //$out_object = xarModApiFunc('dynamicdata','user','getobject', array('module'=>'dynamicdata', 'itemtype'=>$itemtype ));
-                $out_object = xarModApiFunc('dynamicdata','user','getobject', array('objectid'=>$objectid ));
+                //$out_object = xarMod::apiFunc('dynamicdata','user','getobject', array('module'=>'dynamicdata', 'itemtype'=>$itemtype ));
+                $out_object = xarMod::apiFunc('dynamicdata','user','getobject', array('objectid'=>$objectid ));
             }   
     
             // copy any common named values from in to out (especially if they're the same object ids!)
@@ -177,7 +177,7 @@ function xarpages_funcapi_pageaction($args)
         if ($isvalid && !empty($dd['processing_func']) &&
             !($dd['debug'] == 1 && $dd['dont_execute'] == 1)) {
             // load the functions (library)
-            xarModApiFunc('xarpages','custom',$current_page['name'] );      
+            xarMod::apiFunc('xarpages','custom',$current_page['name'] );      
             if (function_exists($processing_func)) {
                 $isvalid = $processing_func( $in_object, $out_object );
             }

@@ -18,7 +18,7 @@ function xarpages_adminapi_deletepage($args)
     }
 
     // Obtain current information on the page we are going to delete.
-    $page = xarModAPIFunc(
+    $page = xarMod::apiFunc(
         'xarpages', 'user', 'getpage',
         array('pid' => $pid, 'dd_flag' => false)
     );

@@ -8,7 +8,7 @@
         <xar:template type="module" file="admin-menu" />
         <h2>View Pages</h2>
 
-        <xar:set name="root_pages">#xarModAPIfunc('xarpages', 'user', 'getpages', array('parent'=&gt;0))#</xar:set>
+        <xar:set name="root_pages">#xarMod::apiFunc('xarpages', 'user', 'getpages', array('parent'=&gt;0))#</xar:set>
         <xar:if condition="!empty($root_pages)">
             <xar:set name="method">'get'</xar:set>
             <form method="#$method#" action="#xarModURL('xarpages','admin','viewpages')#">

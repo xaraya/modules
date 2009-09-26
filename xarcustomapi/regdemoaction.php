@@ -1,7 +1,7 @@
 <?php
 
 /* args for pageaction processing function
-    $ret = xarModApiFunc('xarpages','customapi','regdemo_process',array( 'in'=>&$inobject, 'inprop'=>&$inobject->properties, 'out'=>&$outobject, 'outprop'=>&$outobject->properties))
+    $ret = xarMod::apiFunc('xarpages','customapi','regdemo_process',array( 'in'=>&$inobject, 'inprop'=>&$inobject->properties, 'out'=>&$outobject, 'outprop'=>&$outobject->properties))
 
 */
 
@@ -20,13 +20,13 @@ function pageform_regdemoaction_process( &$inobj, &$outobj )
 //die();
 //return 1; 
     // determine state of this create user
-    $state = xarModApiFunc('registration','user','createstate' );
+    $state = xarMod::apiFunc('registration','user','createstate' );
     //echo "state [$state]"; die();
     
     // actually create the user
     $email = $inprop['email']->getValue();
     $pass = $inprop['password']->getValue();
-    $uid = xarModApiFunc('registration','user','createuser',
+    $uid = xarMod::apiFunc('registration','user','createuser',
         array(  'username'  => $email,
                 'realname'  => $email,
                 'email'     => $email,
@@ -38,7 +38,7 @@ function pageform_regdemoaction_process( &$inobj, &$outobj )
     }
 
     // send out notifications
-    $ret = xarModApiFunc('registration','user','createnotify',
+    $ret = xarMod::apiFunc('registration','user','createnotify',
         array(  'username'  => $email,
                 'realname'  => $email,
                 'email'     => $email,
@@ -52,7 +52,7 @@ function pageform_regdemoaction_process( &$inobj, &$outobj )
 /*
     if ($state==ROLES_STATE_ACTIVE) {
         // log in and redirect
-        xarModAPIFunc('authsystem', 'user', 'login', array( 'uname' => $email, 'pass' => $pass, 'rememberme' => 0));
+        xarMod::apiFunc('authsystem', 'user', 'login', array( 'uname' => $email, 'pass' => $pass, 'rememberme' => 0));
         $redirect=xarServer::getBaseURL();
         xarResponse::Redirect($redirect);
     }

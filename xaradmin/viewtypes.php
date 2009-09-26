@@ -20,7 +20,7 @@ function xarpages_admin_viewtypes($args)
     // Security check
     if (!xarSecurityCheck('EditXarpagesPage', 1)) {return false;}
 
-    $types = xarModAPIFunc(
+    $types = xarMod::apiFunc(
         'xarpages', 'user', 'get_types',
         array('key' => 'index', 'dd_flag' => false)
     );

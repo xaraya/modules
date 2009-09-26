@@ -15,7 +15,7 @@
 
 function xarpages_admin_delete($args)
 {
-    return xarModfunc('xarpages', 'admin', 'deletepage', $args);
+    return xarMod::guiFunc('xarpages', 'admin', 'deletepage', $args);
 }
 
 ?>

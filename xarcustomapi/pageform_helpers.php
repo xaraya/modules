@@ -4,7 +4,7 @@
  * author: jonathan linowes
 */
 
-// Initialisation function, so we can include this file using xarModAPIfunc()
+// Initialisation function, so we can include this file using xarMod::apiFunc()
 function xarpages_customapi_pageform_helpers($args)
 {
     return true;
@@ -25,8 +25,8 @@ function _pageform_getobject( $pf, $pagename )
         return;
     }
     $objectid = $var[$pagename . '_objectid'];
-    //$object = xarModApiFunc('dynamicdata','user','getobject', array('module'=>'dynamicdata', 'itemtype'=>$itemtype ));
-	$object = xarModApiFunc('dynamicdata','user','getobject', array('objectid'=>$objectid ));
+    //$object = xarMod::apiFunc('dynamicdata','user','getobject', array('module'=>'dynamicdata', 'itemtype'=>$itemtype ));
+    $object = xarMod::apiFunc('dynamicdata','user','getobject', array('objectid'=>$objectid ));
     $ser = $var[$pagename];
     $vals = unserialize( $ser );
     $object->checkInput($vals); // really just want to do a set value, not validate, oh well TODO:write a loop instead
@@ -54,7 +54,7 @@ function _pageform_setobject( $pf, $pagename, $object )
     $serinvals = serialize( $invals );
     
     $var = xarSessionGetVar( $pf );
-	
+    
     $var[$pagename] = $ser;
     $var[$pagename . '_objectid'] = $object->objectid;
     $var[$pagename . '_invalids'] = $serinvals;
@@ -70,12 +70,12 @@ function _pageform_setobject( $pf, $pagename, $object )
 function _pageform_unsetobject( $pf, $pagename )
 {
     $var = xarSessionGetVar( $pf );
-	if (empty($var)) return;
+    if (empty($var)) return;
     unset($var[$pagename]);
     unset($var[$pagename . '_objectid']);
     unset($var[$pagename . '_invalids']);
     xarSessionSetVar( $pf, $var );
-	return;
+    return;
 }
 
 /* extract array of 'invalid' strings from object properties

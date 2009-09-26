@@ -72,7 +72,7 @@
     </xar:if>
 
 
-    <xar:if condition="xarModAPIFunc('roles','user','checkprivilege', array('uid' =&gt; xarSessionGetVar('uid'), 'privilege' =&gt; 'grpEditorFlag'))">
+    <xar:if condition="xarMod::apiFunc('roles','user','checkprivilege', array('uid' =&gt; xarSessionGetVar('uid'), 'privilege' =&gt; 'grpEditorFlag'))">
         <div style="margin: 3em 1em 1em 1em">
             <span  style="background-color:#ccc; padding: 0 1em">Editors Options: <a href="#xarModURL('xarpages','admin','modifypage',array('pid' => $pid))#">Edit this page</a></span>
         </div>

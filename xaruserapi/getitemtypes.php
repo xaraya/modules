@@ -13,7 +13,7 @@ function xarpages_userapi_getitemtypes($args)
     $itemtypes = array();
 
     // Get publication types
-    $pagetypes = xarModAPIFunc('xarpages', 'user', 'get_types');
+    $pagetypes = xarMod::apiFunc('xarpages', 'user', 'get_types');
 
     foreach ($pagetypes as $pagetype) {
         // The description is multi-line, so only take the first line as the title.

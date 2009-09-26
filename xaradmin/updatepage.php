@@ -55,7 +55,7 @@ function xarpages_admin_updatepage($args)
     if (!xarVarFetch('return_url', 'str:0:200', $return_url, '', XARVAR_DONT_SET)) {return;}
 
     // Validate the status against the list available.
-    $statuses = xarModAPIfunc('xarpages', 'user', 'getstatuses');
+    $statuses = xarMod::apiFunc('xarpages', 'user', 'getstatuses');
     if (!xarVarFetch('status', 'pre:upper:enum:' . implode(':', array_keys($statuses)), $status, NULL, XARVAR_NOT_REQUIRED)) return;
 
     // Allow the admin to propagate the status to all child pages (when ACIVE or INACTIVE).
@@ -84,7 +84,7 @@ function xarpages_admin_updatepage($args)
 
     // Pass to API
     if (!$creating) {
-        if (!xarModAPIFunc(
+        if (!xarMod::apiFunc(
             'xarpages', 'admin', 'updatepage',
             array(
                 'pid'           => $pid,
@@ -108,7 +108,7 @@ function xarpages_admin_updatepage($args)
         )) {return;}
     } else {
         // Pass to API
-        $pid = xarModAPIFunc(
+        $pid = xarMod::apiFunc(
             'xarpages', 'admin', 'createpage',
             array(
                 'name'          => $name,

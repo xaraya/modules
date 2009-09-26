@@ -113,7 +113,7 @@ function xarpages_crumbblock_display($blockinfo)
     // If necessary, check whether the current page is under one of the
     // of the allowed root pids.
     if (!empty($root_pids)) {
-        if (!xarModAPIfunc('xarpages', 'user', 'pageintrees', array('pid' => $pid, 'tree_roots' => $root_pids))) {
+        if (!xarMod::apiFunc('xarpages', 'user', 'pageintrees', array('pid' => $pid, 'tree_roots' => $root_pids))) {
             return;
         }
     }
@@ -125,7 +125,7 @@ function xarpages_crumbblock_display($blockinfo)
 
     // Here we add the various flags to the pagedata, based on
     // the current page.
-    $pagedata = xarModAPIfunc(
+    $pagedata = xarMod::apiFunc(
         'xarpages', 'user', 'addcurrentpageflags',
         array('pagedata' => $pagedata, 'pid' => $pid, 'root_pids' => $root_pids)
     );

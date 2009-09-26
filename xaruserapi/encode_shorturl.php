@@ -28,7 +28,7 @@ function xarpages_userapi_encode_shorturl($args)
     // number of pages is not going to get too high.
     if (empty($pages)) {
         // Fetch all pages, with no DD required.
-        $pages = xarModAPIfunc(
+        $pages = xarMod::apiFunc(
             'xarpages', 'user', 'getpages',
             array('dd_flag' => false, 'key' => 'pid' /*, 'status' => 'ACTIVE'*/)
         );
@@ -73,7 +73,7 @@ function xarpages_userapi_encode_shorturl($args)
     // return two arrays: 'path' with path components and 'get' with
     // any unconsumed (or new) get parameters.
     if (!empty($pages[$pid]['encode_url'])) {
-        $extra = xarModAPIfunc('xarpages', 'encode', $pages[$pid]['encode_url'], $get, false);
+        $extra = xarMod::apiFunc('xarpages', 'encode', $pages[$pid]['encode_url'], $get, false);
 
         if (!empty($extra)) {
             // The handler has supplied some further short URL path components.

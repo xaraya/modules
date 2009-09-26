@@ -23,7 +23,7 @@ function xarpages_userapi_getitemlinks($args)
         $field = 'name';
     }
 
-    $pages = xarModAPIFunc(
+    $pages = xarMod::apiFunc(
         'xarpages','user','getpages',
         array(
             'itemtype' => $itemtype,

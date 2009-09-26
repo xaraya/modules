@@ -22,7 +22,7 @@ function xarpages_admin_deletepage($args)
     if (!xarVarFetch('return_url', 'str:0:200', $return_url, '', XARVAR_DONT_SET)) {return;}
 
     // Get page information
-    $page = xarModAPIFunc(
+    $page = xarMod::apiFunc(
         'xarpages', 'user', 'getpage',
         array('pid' => $pid)
     );
@@ -42,7 +42,7 @@ function xarpages_admin_deletepage($args)
         $data = array('page' => $page, 'return_url' => $return_url);
         $data['authkey'] = xarSecGenAuthKey();
 
-        $data['count'] = xarModAPIfunc(
+        $data['count'] = xarMod::apiFunc(
             'xarpages', 'user', 'getpages',
             array('count' => true, 'left_range' => array($page['left']+1, $page['right']-1))
         );
@@ -57,7 +57,7 @@ function xarpages_admin_deletepage($args)
     }        
 
     // Pass to API
-    if (!xarModAPIFunc(
+    if (!xarMod::apiFunc(
         'xarpages', 'admin', 'deletepage',
         array('pid' => $pid))
     ) return;

@@ -26,7 +26,7 @@ function xarpages_admin_deletetype($args)
     }
 
     // Get page type information
-    $type = xarModAPIFunc(
+    $type = xarMod::apiFunc(
         'xarpages', 'user', 'get_type',
         array('id' => $id)
     );
@@ -42,7 +42,7 @@ function xarpages_admin_deletetype($args)
         $data['authkey'] = xarSecGenAuthKey();
 
         // Get a count of pages that will also be deleted.
-        $data['count'] = xarModAPIfunc(
+        $data['count'] = xarMod::apiFunc(
             'xarpages', 'user', 'getpages',
             array('count' => true, 'itemtype' => $type['id'])
         );
@@ -57,7 +57,7 @@ function xarpages_admin_deletetype($args)
     }        
 
     // Pass to API
-    if (!xarModAPIFunc(
+    if (!xarMod::apiFunc(
         'xarpages', 'admin', 'deletetype',
         array('id' => $id))
     ) return;

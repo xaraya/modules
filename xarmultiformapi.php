@@ -157,7 +157,7 @@ function xarpages_multiformapi_getvalobject($args)
     // Call the object creation factory function.
     // Pass the args through, as it will contain initialisation data for the object.
     // Make sure errors are suppressed for this call, as the API may not exist.
-    $object = xarModAPIfunc('xarpages', 'custom', 'multiform_' . $name, $args, false);
+    $object = xarMod::apiFunc('xarpages', 'custom', 'multiform_' . $name, $args, false);
 
     return $object;
 }
@@ -211,7 +211,7 @@ function xarpages_multiformapi_get_object_populated($args)
 
     // Page name
     if (!empty($pagename)) {
-        $page = xarModAPIfunc('xarpages', 'user', 'getpage', array('name' => $pagename));
+        $page = xarMod::apiFunc('xarpages', 'user', 'getpage', array('name' => $pagename));
 
         // No page found.
         if (empty($page)) return;
@@ -226,7 +226,7 @@ function xarpages_multiformapi_get_object_populated($args)
     if (empty($objectid)) return;
 
     // Attempt to get the DD object.
-    $object = xarModApiFunc(
+    $object = xarMod::apiFunc(
         'dynamicdata', 'user', 'getobject',
         array('objectid' => $objectid)
     );
@@ -235,7 +235,7 @@ function xarpages_multiformapi_get_object_populated($args)
     if (empty($object)) return;
 
     // Populate the object from the session.
-    $session_vars = xarModAPIfunc('xarpages', 'multiform', 'sessionvar');
+    $session_vars = xarMod::apiFunc('xarpages', 'multiform', 'sessionvar');
     foreach($object->properties as $name => $property) {
         if (isset($session_vars['formdata'][$name])) $object->properties[$name]->setValue($session_vars['formdata'][$name]);
     }

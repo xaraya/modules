@@ -81,7 +81,7 @@ function xarpages_userapi_getpagebypath($args)
     // Now fetch pages that match the page name, along with their ancestors.
     // TODO: if there is no path (i.e. just a page name), then we don't have
     // to worry about ancestors.
-    $pages = xarModAPIfunc(
+    $pages = xarMod::apiFunc(
         'xarpages', 'user', 'getpages',
         array(
             'tree_contains_name' => $pagename,
@@ -138,7 +138,7 @@ function xarpages_userapi_getpagebypath($args)
         // A page was found.
         // If DD data is needed for the matched page, then fetch it.
         if (!empty($dd_flag)) {
-            $dd_data = xarModAPIfunc('xarpages', 'user', 'getpagedd', array('pages' => array($page_id => $page)));
+            $dd_data = xarMod::apiFunc('xarpages', 'user', 'getpagedd', array('pages' => array($page_id => $page)));
             $page['dd'] = $dd_data[$page_id];
         }
 

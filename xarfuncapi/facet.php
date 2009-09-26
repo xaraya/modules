@@ -127,7 +127,7 @@ function xarpages_funcapi_facet($args)
     $forced_cids_map = array();
     if (!empty($forced_cids)) {
         foreach($forced_cids as $forced_cid) {
-            $forced_ancestors = xarModAPIfunc(
+            $forced_ancestors = xarMod::apiFunc(
                 'categories', 'user', 'getancestors',
                 array('cid' => $forced_cid, 'return_itself' => false, 'order' => 'root')
             );
@@ -148,14 +148,14 @@ function xarpages_funcapi_facet($args)
                 if (!isset($global_edit_privs) || $global_edit_privs == true) $global_edit_privs = $edit_privs[$ptid];
             }
 
-            $itemtype_base_cids_count = xarModAPIfunc(
+            $itemtype_base_cids_count = xarMod::apiFunc(
                 'categories', 'user', 'countcatbases',
                 array('module' => 'articles', 'itemtype' => $ptid)
             );
 
             if ($itemtype_base_cids_count > 0) {
                 for($i = 1; $i <= $itemtype_base_cids_count; $i++) {
-                    $itemtype_base_cat = xarModAPIfunc(
+                    $itemtype_base_cat = xarMod::apiFunc(
                         'categories', 'user', 'getcatbase',
                         array('modid' => $modid, 'itemtype' => $ptid, 'bid' => $i)
                     );
@@ -235,7 +235,7 @@ function xarpages_funcapi_facet($args)
             // Get the ancestors for the filter category, right up to the root category.
             // We may need to trim off some of the root categories, because the facets may start
             // a little higher up.
-            $ancestors = xarModAPIfunc(
+            $ancestors = xarMod::apiFunc(
                 'categories', 'user', 'getancestors',
                 array('cid' => $filter_cid, 'return_itself' => true, 'order' => 'root')
             );
@@ -372,11 +372,11 @@ function xarpages_funcapi_facet($args)
             );
 
             // Fetch the categories query parts.
-            $catfilterdef = xarModAPIFunc('categories', 'user', 'leftjoin', $filter_params);
+            $catfilterdef = xarMod::apiFunc('categories', 'user', 'leftjoin', $filter_params);
 
             // Fetch the articles query parts.
             // This function does not select for categories, so we add that in ourselves.
-            $artfilterdef = xarModAPIFunc('articles', 'user', 'leftjoin', $articles_fetch_array);
+            $artfilterdef = xarMod::apiFunc('articles', 'user', 'leftjoin', $articles_fetch_array);
             //echo "<pre>Articles def:<br />"; var_dump($artfilterdef); echo "</pre>";
 
             $catfilterdef['where'] = (empty($catfilterdef['where']) ? $artfilterdef['where'] : $catfilterdef['where'] . ' AND ' . $artfilterdef['where']);
@@ -415,7 +415,7 @@ function xarpages_funcapi_facet($args)
             // in order to get the counts right.
 
             // Fetch the articles query parts.
-            $artfilterdef = xarModAPIFunc('articles', 'user', 'leftjoin', $articles_fetch_array);
+            $artfilterdef = xarMod::apiFunc('articles', 'user', 'leftjoin', $articles_fetch_array);
 
             $filter_sql = 'SELECT ' . $artfilterdef['field']
                 . ' FROM ' . $artfilterdef['table']
@@ -424,14 +424,14 @@ function xarpages_funcapi_facet($args)
             $deepcount_params['iidfilter'] = $filter_sql;
         }
 
-        $deep_counts = xarModAPIfunc('categories', 'user', 'deepcount', $deepcount_params);
+        $deep_counts = xarMod::apiFunc('categories', 'user', 'deepcount', $deepcount_params);
 
         //echo "<pre>Deep Counts for catid=".'_' . implode('-_', $base_cids).":<br />"; var_dump($deep_counts); echo "</pre>";
 
         // Get the category trees to put the counts onto.
         // We only need the trees from the base category IDs (i.e. the root or the filter for each facet).
         foreach($facets as $facet_key => $facet) {
-            $facet_cats = xarModAPIfunc(
+            $facet_cats = xarMod::apiFunc(
                 'categories', 'user', 'getcat',
                 array(
                     'cid' => $facet['base'],
@@ -499,7 +499,7 @@ function xarpages_funcapi_facet($args)
     $all_categories = array();
     $all_categories_cids = array();
     if (!empty($facets)) {
-        $article_count = xarModAPIfunc('articles', 'user', 'countitems', $articles_fetch_array);
+        $article_count = xarMod::apiFunc('articles', 'user', 'countitems', $articles_fetch_array);
 
         $articles_fetch_array['numitems'] = $numitems;
         $articles_fetch_array['startnum'] = $startnum;
@@ -509,7 +509,7 @@ function xarpages_funcapi_facet($args)
             $articles_fetch_array['sort'] = 'pubdate DESC';
         }
 
-        $articles = xarModAPIfunc('articles', 'user', 'getall', $articles_fetch_array);
+        $articles = xarMod::apiFunc('articles', 'user', 'getall', $articles_fetch_array);
         //if (!empty($articles)) foreach($articles as $article) echo "<p><strong>Article: " .$article['title']. "</strong></p>";
         //echo "<pre>Articles:<br />"; var_dump($articles); echo "</pre>";
 
@@ -540,7 +540,7 @@ function xarpages_funcapi_facet($args)
             }
 
             if (!empty($all_categories_cids)) {
-                $all_categories = xarModAPIfunc(
+                $all_categories = xarMod::apiFunc(
                     'categories', 'user', 'getcatinfo',
                     array('cids' => $all_categories_cids)
                 );
@@ -586,7 +586,7 @@ function xarpages_funcapi_facet($args)
     }
 
     // Pubtypes will be needed by the templates.
-    $pubtypes = xarModAPIFunc('articles', 'user', 'getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles', 'user', 'getpubtypes');
 
     $template_data = compact(
         'facets',

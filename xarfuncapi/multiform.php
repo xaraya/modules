@@ -38,7 +38,7 @@
 function xarpages_funcapi_multiform($args)
 {
     // Get the master page for the current page.
-    $master_page = xarModAPIfunc('xarpages', 'multiform', 'getmasterpage', $args);
+    $master_page = xarMod::apiFunc('xarpages', 'multiform', 'getmasterpage', $args);
     if (empty($master_page)) {
         // Without a master page, things get very difficult, so raise an error.
         $msg = xarML('No master page. A multiform sequence must sit under a type multiform_master page.');
@@ -73,7 +73,7 @@ function xarpages_funcapi_multiform($args)
     $child_keys = $master_page['child_keys'];
     $entry_page_pid = $master_page['first_pid'];
     $page_sequence = $master_page['page_sequence'];
-    $session_vars = xarModAPIfunc('xarpages', 'multiform', 'sessionvar');
+    $session_vars = xarMod::apiFunc('xarpages', 'multiform', 'sessionvar');
     $current_page = $args['current_page'];
     $dd = $current_page['dd'];
 
@@ -81,7 +81,7 @@ function xarpages_funcapi_multiform($args)
     $readonly = (!empty($dd['readonly']) ? true : false);
 
     // Get the current session key.
-    $session_key = xarModAPIfunc('xarpages', 'multiform', 'sessionkey');
+    $session_key = xarMod::apiFunc('xarpages', 'multiform', 'sessionkey');
 
     // The name of the key that follows a session (through every URL and form POST).
     // It can be set to whatever you like, just make sure it does not clash with any
@@ -194,7 +194,7 @@ function xarpages_funcapi_multiform($args)
             $formobjectid = $dd['formobject'];
 
             // Get the form object for this page
-            $formobject = xarModApiFunc(
+            $formobject = xarMod::apiFunc(
                 'dynamicdata', 'user', 'getobject',
                 array('objectid' => $formobjectid)
             );
@@ -241,7 +241,7 @@ function xarpages_funcapi_multiform($args)
                 $redirect_pid = $master_page['pid'];
                 $redirect_reason = 'error';
                 // Provide the error reason
-                xarModAPIfunc(
+                xarMod::apiFunc(
                     'xarpages', 'multiform', 'passdata',
                     array(
                         'reason_detail' => xarML('This session has already been 
@@ -293,7 +293,7 @@ function xarpages_funcapi_multiform($args)
                         $redirect_pid = $master_page['pid'];
                         $redirect_reason = 'error';
                         // Give a reason for the error.
-                        xarModAPIfunc(
+                        xarMod::apiFunc(
                             'xarpages', 'multiform', 'passdata',
                             array(
                                 'reason_detail' => xarML('To prevent multiple 
@@ -331,7 +331,7 @@ function xarpages_funcapi_multiform($args)
 
                         // Now call the 'initialise' function for this page, if there is one
                         // and allow it to further initialise the form data.
-                        $init_object = xarModAPIfunc(
+                        $init_object = xarMod::apiFunc(
                             'xarpages', 'multiform', 'getvalobject',
                             array(
                                 'name' => $master_page['name'],
@@ -392,7 +392,7 @@ function xarpages_funcapi_multiform($args)
                         // We need to pass the object enough data for it to work with.
                         // The 'workdata' is available for validation, but we don't allow the
                         // validation functions to change it.
-                        $validation_object = xarModAPIfunc(
+                        $validation_object = xarMod::apiFunc(
                             'xarpages', 'multiform', 'getvalobject',
                             array(
                                 'name' => $master_page['name'],
@@ -431,7 +431,7 @@ function xarpages_funcapi_multiform($args)
                         // The form is valid, and we are moving on, so we can do some custom processing.
                         // We only do the processing on submission of 'next', so processing happens only in a forward direction.
 
-                        $processing_object = xarModAPIfunc(
+                        $processing_object = xarMod::apiFunc(
                             'xarpages', 'multiform', 'getvalobject',
                             array(
                                 'name' => $master_page['name'],
@@ -475,7 +475,7 @@ function xarpages_funcapi_multiform($args)
                                         $redirect_pid = $master_page['pid'];
                                         $redirect_reason = 'error';
                                         // Provide the error reason (i.e. processing failed for some unexpected reason - with reason given).
-                                        xarModAPIfunc(
+                                        xarMod::apiFunc(
                                             'xarpages', 'multiform', 'passdata',
                                             array(
                                                 'reason_detail' => xarML('Unexpected error: #(1)', 
@@ -572,8 +572,8 @@ function xarpages_funcapi_multiform($args)
             // means that every page must contain a POST or GET session key; it is not sufficient
             // to just provide a link (e.g. 'skip') to the next page.
 
-            $session_key = xarModAPIfunc('xarpages', 'multiform', 'sessionkey', array('set' => true));
-            $session_vars = xarModAPIfunc('xarpages', 'multiform', 'sessionvar');
+            $session_key = xarMod::apiFunc('xarpages', 'multiform', 'sessionkey', array('set' => true));
+            $session_vars = xarMod::apiFunc('xarpages', 'multiform', 'sessionvar');
 
             $redirect_pid = $entry_page_pid;
         }
@@ -588,7 +588,7 @@ function xarpages_funcapi_multiform($args)
 
         // Fetch any additional data passed in from the previous page (within the form sequence).
         // It may be NULL, or it may have been set.
-        $passdata = xarModAPIfunc('xarpages', 'multiform', 'passdata');
+        $passdata = xarMod::apiFunc('xarpages', 'multiform', 'passdata');
         $multiform['passdata'] = $passdata;
     } else {
         // Any other page type.
@@ -645,7 +645,7 @@ function xarpages_funcapi_multiform($args)
     if (isset($session_vars['expires']) && !empty($timeout_seconds)) $session_vars['expires'] = time() + $timeout_seconds;
 
     // Write the session vars back to the session.
-    if (empty($last_page_flag)) xarModAPIfunc('xarpages', 'multiform', 'sessionvar', $session_vars);
+    if (empty($last_page_flag)) xarMod::apiFunc('xarpages', 'multiform', 'sessionvar', $session_vars);
 
     // Do the redirect, if there is one.
     if (!empty($redirect_url)) {
@@ -654,7 +654,7 @@ function xarpages_funcapi_multiform($args)
         // If the use presses the browser 'back' button on the 'thankyou' page, they will
         // end up back at the start of the sequence again.
         if (!empty($last_page_flag)) {
-            xarModAPIfunc('xarpages', 'multiform', 'sessionkey', array('reset' => true));
+            xarMod::apiFunc('xarpages', 'multiform', 'sessionkey', array('reset' => true));
         }
 
         // Set the redirect URL.

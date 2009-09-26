@@ -21,7 +21,7 @@ function xarpages_adminapi_updatetype($args)
     }
 
     // Get current information on the page type
-    $type = xarModAPIfunc('xarpages', 'user', 'get_type', array('id' => $id));
+    $type = xarMod::apiFunc('xarpages', 'user', 'get_type', array('id' => $id));
 
     if (empty($type)) {
         $msg = xarML('The page type "#(1)" does not exist', $id);
@@ -63,7 +63,7 @@ function xarpages_adminapi_updatetype($args)
     $result = $dbconn->execute($query, $bind);
     if (!$result) return;
 
-    $type_itemtype = xarModAPIfunc('xarpages', 'user', 'gettypeitemtype');
+    $type_itemtype = xarMod::apiFunc('xarpages', 'user', 'gettypeitemtype');
 
     // Call update hooks (for page type as a type).
     xarModCallHooks(

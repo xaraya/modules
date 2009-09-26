@@ -28,7 +28,7 @@ function xarpages_user_display($args)
     // Only fetch active or empty pages.
     // TODO: allow the administrator to display other statuses.
     if (!empty($pid)) {
-        $current_page = xarModAPIfunc(
+        $current_page = xarMod::apiFunc(
             'xarpages', 'user', 'getpage',
             array('pid' => $pid, 'status' => 'ACTIVE,EMPTY')
         );
@@ -41,7 +41,7 @@ function xarpages_user_display($args)
             $pid = xarModVars::get('xarpages', 'notfoundpage');
 
             if (!empty($pid)) {
-                $current_page = xarModAPIfunc(
+                $current_page = xarMod::apiFunc(
                     'xarpages', 'user', 'getpage',
                     array('pid' => $pid, 'status' => 'ACTIVE')
                 );
@@ -71,7 +71,7 @@ function xarpages_user_display($args)
         $pid = $noprivspage;
 
         if (!empty($pid)) {
-            $current_page = xarModAPIfunc(
+            $current_page = xarMod::apiFunc(
                 'xarpages', 'user', 'getpage',
                 array('pid' => $pid, 'status' => 'ACTIVE')
             );
@@ -85,7 +85,7 @@ function xarpages_user_display($args)
         $pid = xarModVars::get('xarpages', 'errorpage');
 
         if (!empty($pid)) {
-            $current_page = xarModAPIfunc(
+            $current_page = xarMod::apiFunc(
                 'xarpages', 'user', 'getpage',
                 array('pid' => $pid, 'status' => 'ACTIVE')
             );
@@ -102,7 +102,7 @@ function xarpages_user_display($args)
     // i.e. don't assume the site owner only wants to display ACTIVE
     // and EMPTY pages to every level of user.
     // Get the complete tree for this section of pages.
-    $data = xarModAPIfunc(
+    $data = xarMod::apiFunc(
         'xarpages', 'user', 'getpagestree',
         array(
             'tree_contains_pid' => $pid,
@@ -159,7 +159,7 @@ function xarpages_user_display($args)
 
     // Add in flags etc. to the data indicating where the current
     // page is in relation to the page tree.
-    $data = xarModAPIfunc(
+    $data = xarMod::apiFunc(
         'xarpages', 'user', 'addcurrentpageflags',
         array('pagedata' => $data, 'pid' => $pid)
     );
@@ -193,7 +193,7 @@ function xarpages_user_display($args)
     // just have a hunch it would be useful, but not sure how at this stage.
     $inherited = array();
     foreach ($data['ancestors'] as $ancestor) {
-        $inherited = xarModAPIfunc(
+        $inherited = xarMod::apiFunc(
             'xarpages', 'user', 'arrayoverlay',
             array($inherited, $ancestor)
         );
@@ -232,7 +232,7 @@ function xarpages_user_display($args)
         foreach($functions as $function) {
             // Call up the function, suppressing errors in case it does not exist.
             try {
-                $data2 = xarModAPIfunc('xarpages', 'func', $function, $data, false);
+                $data2 = xarMod::apiFunc('xarpages', 'func', $function, $data, false);
             } catch (Exception $e) {}
 
             if (!isset($data2)) {
