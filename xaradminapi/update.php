@@ -65,7 +65,7 @@ function hitcount_adminapi_update($args)
     if (!xarModAPILoad('hitcount', 'user')) return;
 
     // get current hit count
-    $oldhits = xarModAPIFunc('hitcount',
+    $oldhits = xarMod::apiFunc('hitcount',
                             'user',
                             'get',
                             array('objectid' => $objectid,
@@ -74,7 +74,7 @@ function hitcount_adminapi_update($args)
 
     // create the item if necessary
     if (!isset($oldhits)) {
-        $hcid = xarModAPIFunc('hitcount','admin','create',
+        $hcid = xarMod::apiFunc('hitcount','admin','create',
                              array('objectid' => $objectid,
                                    'itemtype' => $itemtype,
                                    'modname' => $modname));

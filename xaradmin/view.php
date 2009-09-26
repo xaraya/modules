@@ -29,7 +29,7 @@ function hitcount_admin_view()
 
     $data = array();
 
-    $modlist = xarModAPIFunc('hitcount','user','getmodules');
+    $modlist = xarMod::apiFunc('hitcount','user','getmodules');
 
     if (empty($modid)) {
         $data['moditems'] = array();
@@ -38,7 +38,7 @@ function hitcount_admin_view()
         foreach ($modlist as $modid => $itemtypes) {
             $modinfo = xarModGetInfo($modid);
             // Get the list of all item types for this module (if any)
-            $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
+            $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                      // don't throw an exception if this function doesn't exist
                                      array(), 0);
             foreach ($itemtypes as $itemtype => $stats) {
@@ -79,7 +79,7 @@ function hitcount_admin_view()
             }
         } else {
             // Get the list of all item types for this module (if any)
-            $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
+            $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                      // don't throw an exception if this function doesn't exist
                                      array(), 0);
             if (isset($mytypes) && !empty($mytypes[$itemtype])) {
@@ -119,7 +119,7 @@ function hitcount_admin_view()
             $data['pager'] = '';
         }
         $data['modid'] = $modid;
-        $getitems = xarModAPIFunc('hitcount','user','getitems',
+        $getitems = xarMod::apiFunc('hitcount','user','getitems',
                                   array('modid' => $modid,
                                         'itemtype' => $itemtype,
                                         'numitems' => $numstats,
@@ -130,7 +130,7 @@ function hitcount_admin_view()
         $showtitle = xarModVars::get('hitcount','showtitle');
         if (!empty($showtitle)) {
            $itemids = array_keys($getitems);
-           $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
+           $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
                                       array('itemtype' => $itemtype,
                                             'itemids' => $itemids),
                                       0); // don't throw an exception here

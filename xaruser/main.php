@@ -31,11 +31,11 @@ function hitcount_user_main()
     if (empty($numitems)) {
         $numitems = 10;
     }
-    $modlist = xarModAPIFunc('hitcount','user','getmodules');
+    $modlist = xarMod::apiFunc('hitcount','user','getmodules');
     foreach ($modlist as $modid => $itemtypes) {
         $modinfo = xarModGetInfo($modid);
         // Get the list of all item types for this module (if any)
-        $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
+        $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                  // don't throw an exception if this function doesn't exist
                                  array(), 0);
         if (!isset($moduleList[$modinfo['displayname']]['modid'])) {
@@ -64,7 +64,7 @@ function hitcount_user_main()
                     $moditem['link'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
                 }
             }
-            $moditem['tophits'] = xarModAPIFunc('hitcount','user','topitems',
+            $moditem['tophits'] = xarMod::apiFunc('hitcount','user','topitems',
                                                 array('modname'  => $modinfo['name'],
                                                       'itemtype' => $itemtype,
                                                       'numitems' => $numitems));
@@ -83,7 +83,7 @@ function hitcount_user_main()
                     $itemid2hits[$tophit['itemid']] = $tophit['hits'];
                 }
 
-                $moditem['toplinks'] = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
+                $moditem['toplinks'] = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
                                                      array('itemtype' => $itemtype,
                                                            'itemids' => $itemids),
                                                      0); // don't throw an exception here

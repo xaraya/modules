@@ -44,7 +44,7 @@ function hitcount_admin_delete()
                 $data['modname'] = ucwords($modinfo['displayname']);
             } else {
                 // Get the list of all item types for this module (if any)
-                $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
+                $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                          // don't throw an exception if this function doesn't exist
                                          array(), 0);
                 if (isset($mytypes) && !empty($mytypes[$itemtype])) {
@@ -63,7 +63,7 @@ function hitcount_admin_delete()
     if (!xarSecConfirmAuthKey()) {
         return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
     }        
-    if (!xarModAPIFunc('hitcount','admin','delete',
+    if (!xarMod::apiFunc('hitcount','admin','delete',
                        array('modid' => $modid,
                              'itemtype' => $itemtype,
                              'itemid' => $itemid,
