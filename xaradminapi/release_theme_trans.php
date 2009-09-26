@@ -30,7 +30,7 @@ function translations_adminapi_release_theme_trans($args)
     $themename = $themeinfo['osdirectory'];
     $themeversion = $themeinfo['version'];
 
-    if (!$bt = xarModAPIFunc('translations','admin','release_backend_type')) return;;
+    if (!$bt = xarMod::apiFunc('translations','admin','release_backend_type')) return;;
 
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
@@ -51,7 +51,7 @@ function translations_adminapi_release_theme_trans($args)
     $newargs['version'] = $themeversion;
     $newargs['dirpath'] = $dirpath;
     $newargs['locale'] = $locale;
-    $releaseBackend = xarModAPIFunc('translations','admin','make_package',$newargs);
+    $releaseBackend = xarMod::apiFunc('translations','admin','make_package',$newargs);
 
     return $releaseBackend;
 }

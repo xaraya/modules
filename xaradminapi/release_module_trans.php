@@ -30,7 +30,7 @@ function translations_adminapi_release_module_trans($args)
     $modname = $modinfo['name'];
     $modversion = $modinfo['version'];
 
-    if (!$bt = xarModAPIFunc('translations','admin','release_backend_type')) return;;
+    if (!$bt = xarMod::apiFunc('translations','admin','release_backend_type')) return;;
 
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
@@ -51,7 +51,7 @@ function translations_adminapi_release_module_trans($args)
     $newargs['version'] = $modversion;
     $newargs['dirpath'] = $dirpath;
     $newargs['locale'] = $locale;
-    $releaseBackend = xarModAPIFunc('translations','admin','make_package',$newargs);
+    $releaseBackend = xarMod::apiFunc('translations','admin','make_package',$newargs);
 
     return $releaseBackend;
 }

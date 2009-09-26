@@ -155,7 +155,7 @@ function &translations_create_opbar($currentOp, $dnType, $dnName, $extid)
     $locale = translations_working_locale();
     $args['interface'] = 'ReferencesBackend';
     $args['locale'] = $locale;
-    $backend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
+    $backend = xarMod::apiFunc('translations','admin','create_backend_instance',$args);
     if (!isset($backend)) return;
 
     if ($backend->bindDomain($dnType, $dnName)) {
@@ -164,7 +164,7 @@ function &translations_create_opbar($currentOp, $dnType, $dnName, $extid)
         $enabledOps[GEN_TRANS] = false; // Enables Generate translations
         $args['interface'] = 'TranslationsBackend';
         $args['locale'] = $locale;
-        $backend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
+        $backend = xarMod::apiFunc('translations','admin','create_backend_instance',$args);
         if (!isset($backend)) return;
         if ($backend->bindDomain($dnType, $dnName)) {
             // Enables Release translations package
@@ -199,7 +199,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
         $args['subname'] = 'core';
         $selectedsubtype = 'core:';
         $selectedsubname = 'core';
-        $entry = xarModAPIFunc('translations','admin','getcontextentries',$args);
+        $entry = xarMod::apiFunc('translations','admin','getcontextentries',$args);
         if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
              $entrydata[] = $entry;
              $subtypes[] = 'core:';
@@ -219,18 +219,18 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
 
         $module_contexts_list[] = 'modules:'.$modname.'::common';
 
-        $subnames = xarModAPIFunc('translations','admin','get_module_phpfiles',array('moddir'=>$moddir));
+        $subnames = xarMod::apiFunc('translations','admin','get_module_phpfiles',array('moddir'=>$moddir));
         foreach ($subnames as $subname) {
             $module_contexts_list[] = 'modules:'.$modname.'::'.$subname;
         }
 
-        $dirnames = xarModAPIFunc('translations','admin','get_module_dirs',array('moddir'=>$moddir));
+        $dirnames = xarMod::apiFunc('translations','admin','get_module_dirs',array('moddir'=>$moddir));
         foreach ($dirnames as $dirname) {
             if (!preg_match('!^templates!i', $dirname, $matches))
                 $pattern = '/^([a-z0-9\-_]+)\.php$/i';
             else 
                 $pattern = '/^([a-z0-9\-_]+)\.xd$/i';
-            $subnames = xarModAPIFunc('translations','admin','get_module_files',
+            $subnames = xarMod::apiFunc('translations','admin','get_module_files',
                                   array('moddir'=>sys::code() . "modules/$moddir/xar$dirname",'pattern'=>$pattern));
             foreach ($subnames as $subname) {
                 $module_contexts_list[] = 'modules:'.$modname.':'.$dirname.':'.$subname;
@@ -248,7 +248,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
             $args['dnname'] = $dnname1;
             $args['subtype'] = $ctxtype2;
             $args['subname'] = $ctxname1;
-            $entry = xarModAPIFunc('translations','admin','getcontextentries',$args);
+            $entry = xarMod::apiFunc('translations','admin','getcontextentries',$args);
             if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
                 $entrydata[] = $entry;
                 $subtypes[] = $ctxtype2;
@@ -272,10 +272,10 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
 
         $theme_contexts_list[] = 'themes:'.$themename.'::common';
 
-        $dirnames = xarModAPIFunc('translations','admin','get_theme_dirs',array('themedir'=>$themedir));
+        $dirnames = xarMod::apiFunc('translations','admin','get_theme_dirs',array('themedir'=>$themedir));
         foreach ($dirnames as $dirname) {
             $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
-            $subnames = xarModAPIFunc('translations','admin','get_theme_files',
+            $subnames = xarMod::apiFunc('translations','admin','get_theme_files',
                                   array('themedir'=>"themes/$themedir/$dirname",'pattern'=>$pattern));
             foreach ($subnames as $subname) {
                 $theme_contexts_list[] = 'themes:'.$themename.':'.$dirname.':'.$subname;
@@ -293,7 +293,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
             $args['dnname'] = $dnname1;
             $args['subtype'] = $ctxtype2;
             $args['subname'] = $ctxname1;
-            $entry = xarModAPIFunc('translations','admin','getcontextentries',$args);
+            $entry = xarMod::apiFunc('translations','admin','getcontextentries',$args);
             if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
                 $entrydata[] = $entry;
                 $subtypes[] = $ctxtype2;

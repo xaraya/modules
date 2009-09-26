@@ -21,9 +21,9 @@ function translations_adminapi_create_backend_instance($args)
     assert('isset($locale)');
 
     if ($interface == 'ReferencesBackend') {
-        $bt = xarModAPIFunc('translations','admin','work_backend_type');
+        $bt = xarMod::apiFunc('translations','admin','work_backend_type');
     } elseif ($interface == 'TranslationsBackend') {
-        $bt = xarModAPIFunc('translations','admin','release_backend_type');
+        $bt = xarMod::apiFunc('translations','admin','release_backend_type');
     }
     if (!$bt) return;
     switch ($bt) {

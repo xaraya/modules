@@ -28,7 +28,7 @@ function searchFiles($path, $prefix, $force=0)
     }
 
     $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
-    $subnames = xarModAPIFunc('translations','admin','get_theme_files',
+    $subnames = xarMod::apiFunc('translations','admin','get_theme_files',
                               array('themedir'=>"$path",'pattern'=>$pattern));
     if (count($subnames) > 0) {
         $staticNames[] = $path2;

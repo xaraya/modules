@@ -49,7 +49,7 @@ function translations_adminapi_generate_module_trans($args)
         $ref_locale = $locale;
     }
 
-    $backend = xarModAPIFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $ref_locale));
+    $backend = xarMod::apiFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $ref_locale));
     if (!isset($backend)) return;
     if (!$backend->bindDomain(XARMLS_DNTYPE_MODULE, $modname)) {
         $msg = xarML('Before generating translations you must first generate skels.');
@@ -57,24 +57,24 @@ function translations_adminapi_generate_module_trans($args)
         throw new Exception($msg);
     }
 
-    $gen = xarModAPIFunc('translations','admin','create_generator_instance',array('interface' => 'TranslationsGenerator', 'locale' => $locale));
+    $gen = xarMod::apiFunc('translations','admin','create_generator_instance',array('interface' => 'TranslationsGenerator', 'locale' => $locale));
     if (!isset($gen)) return;
     if (!$gen->bindDomain(XARMLS_DNTYPE_MODULE, $modname)) return;
 
     $module_contexts_list[] = 'modules:'.$modname.'::common';
 
-    $subnames = xarModAPIFunc('translations','admin','get_module_phpfiles',array('moddir'=>$moddir));
+    $subnames = xarMod::apiFunc('translations','admin','get_module_phpfiles',array('moddir'=>$moddir));
     foreach ($subnames as $subname) {
         $module_contexts_list[] = 'modules:'.$modname.'::'.$subname;
     }
 
-    $dirnames = xarModAPIFunc('translations','admin','get_module_dirs',array('moddir'=>$moddir));
+    $dirnames = xarMod::apiFunc('translations','admin','get_module_dirs',array('moddir'=>$moddir));
     foreach ($dirnames as $dirname) {
         if (!preg_match('!^templates!i', $dirname, $matches))
             $pattern = '/^([a-z0-9\-_]+)\.php$/i';
         else
             $pattern = '/^([a-z0-9\-_]+)\.xd$/i';
-        $subnames = xarModAPIFunc('translations','admin','get_module_files',
+        $subnames = xarMod::apiFunc('translations','admin','get_module_files',
                               array('moddir'=>sys::code() . "modules/$moddir/xar$dirname",'pattern'=>$pattern));
         foreach ($subnames as $subname) {
             $module_contexts_list[] = 'modules:'.$modname.':'.$dirname.':'.$subname;

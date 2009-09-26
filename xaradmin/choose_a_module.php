@@ -16,9 +16,9 @@ function translations_admin_choose_a_module()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    $installed = xarModAPIFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_INSTALLED)));
+    $installed = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_INSTALLED)));
     if (!isset($installed)) return;
-    $uninstalled = xarModAPIFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_UNINITIALISED)));
+    $uninstalled = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_UNINITIALISED)));
     if (!isset($uninstalled)) return;
 
     $modlist1 = array();

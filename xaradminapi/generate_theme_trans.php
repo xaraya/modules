@@ -47,7 +47,7 @@ function translations_adminapi_generate_theme_trans($args)
         $ref_locale = $locale;
     }
 
-    $backend = xarModAPIFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $ref_locale));
+    $backend = xarMod::apiFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $ref_locale));
     if (!isset($backend)) return;
     if (!$backend->bindDomain(XARMLS_DNTYPE_THEME, $themename)) {
         $msg = xarML('Before generating translations you must first generate skels.');
@@ -55,21 +55,21 @@ function translations_adminapi_generate_theme_trans($args)
         throw new Exception($msg);
     }
 
-    $gen = xarModAPIFunc('translations','admin','create_generator_instance',array('interface' => 'TranslationsGenerator', 'locale' => $locale));
+    $gen = xarMod::apiFunc('translations','admin','create_generator_instance',array('interface' => 'TranslationsGenerator', 'locale' => $locale));
     if (!isset($gen)) return;
     if (!$gen->bindDomain(XARMLS_DNTYPE_THEME, $themename)) return;
 
     $theme_contexts_list[] = 'themes:'.$themename.'::common';
 
-    //$subnames = xarModAPIFunc('translations','admin','get_theme_files',array('themedir'=>$themedir));
+    //$subnames = xarMod::apiFunc('translations','admin','get_theme_files',array('themedir'=>$themedir));
     //foreach ($subnames as $subname) {
     //    $theme_contexts_list[] = 'themes:'.$themename.'::'.$subname;
     //}
 
-    $dirnames = xarModAPIFunc('translations','admin','get_theme_dirs',array('themedir'=>$themedir));
+    $dirnames = xarMod::apiFunc('translations','admin','get_theme_dirs',array('themedir'=>$themedir));
     $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
     foreach ($dirnames as $dirname) {
-        $subnames = xarModAPIFunc('translations','admin','get_theme_files',
+        $subnames = xarMod::apiFunc('translations','admin','get_theme_files',
                               array('themedir'=>"themes/$themedir/$dirname",'pattern'=>$pattern));
         foreach ($subnames as $subname) {
             $theme_contexts_list[] = 'themes:'.$themename.':'.$dirname.':'.$subname;

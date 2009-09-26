@@ -50,7 +50,7 @@ function translations_adminapi_generate_core_skels($args)
     $transKeyEntries = $parser->getTransKeyEntries();
 
     // Load core translations
-    $core_backend = xarModAPIFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $locale));
+    $core_backend = xarMod::apiFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $locale));
     if (!isset($core_backend)) return;
     if ($core_backend->bindDomain(XARMLS_DNTYPE_CORE) &&
         !$core_backend->loadContext('core:', 'core')) return;
@@ -63,7 +63,7 @@ function translations_adminapi_generate_core_skels($args)
        $genLocale = $locale;
     }
 
-    $gen = xarModAPIFunc('translations','admin','create_generator_instance',array('interface' => 'ReferencesGenerator', 'locale' => $genLocale));
+    $gen = xarMod::apiFunc('translations','admin','create_generator_instance',array('interface' => 'ReferencesGenerator', 'locale' => $genLocale));
     if (!isset($gen)) return;
     if (!$gen->bindDomain(XARMLS_DNTYPE_CORE)) return;
     if (!$gen->create('core:', 'core')) return;

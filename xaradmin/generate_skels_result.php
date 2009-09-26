@@ -26,16 +26,16 @@ function translations_admin_generate_skels_result()
     $args = array('locale'=>$locale);
     switch ($dnType) {
         case XARMLS_DNTYPE_CORE:
-        $res = xarModAPIFunc('translations','admin','generate_core_skels',$args);
+        $res = xarMod::apiFunc('translations','admin','generate_core_skels',$args);
         break;
         case XARMLS_DNTYPE_MODULE:
 
             if ($dnTypeAll) {
 
                 // Get all modules
-                $installed = xarModAPIFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_INSTALLED)));
+                $installed = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_INSTALLED)));
                 if (!isset($installed)) return;
-                $uninstalled = xarModAPIFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_UNINITIALISED)));
+                $uninstalled = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_UNINITIALISED)));
                 if (!isset($uninstalled)) return;
                 // Add modules to the list
                 $modlist = array();
@@ -48,17 +48,17 @@ function translations_admin_generate_skels_result()
                 // Loop over the modlist and for each module generate the skels
                 foreach($modlist as $extid) {
                     $args['modid'] = $extid;
-                    $res = xarModAPIFunc('translations','admin','generate_module_skels',$args);
+                    $res = xarMod::apiFunc('translations','admin','generate_module_skels',$args);
                 }
 
             } else {
                 $args['modid'] = $extid;
-                $res = xarModAPIFunc('translations','admin','generate_module_skels',$args);
+                $res = xarMod::apiFunc('translations','admin','generate_module_skels',$args);
             }
         break;
         case XARMLS_DNTYPE_THEME:
         $args['themeid'] = $extid;
-        $res = xarModAPIFunc('translations','admin','generate_theme_skels',$args);
+        $res = xarMod::apiFunc('translations','admin','generate_theme_skels',$args);
         break;
     }
     if (!isset($res)) return;

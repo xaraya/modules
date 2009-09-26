@@ -44,7 +44,7 @@ function translations_admin_translate_update()
 
     $args['interface'] = 'ReferencesBackend';
     $args['locale'] = $locale;
-    $backend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
+    $backend = xarMod::apiFunc('translations','admin','create_backend_instance',$args);
     if (!isset($backend)) return;
     if (!$backend->bindDomain($dnType, $dnName)) {
         throw new Exception('Unknown');
@@ -53,7 +53,7 @@ function translations_admin_translate_update()
 
     $args['interface'] = 'ReferencesGenerator';
     $args['locale'] = $locale;
-    $gen = xarModAPIFunc('translations','admin','create_generator_instance',$args);
+    $gen = xarMod::apiFunc('translations','admin','create_generator_instance',$args);
     if (!isset($gen)) return;
     if (!$gen->bindDomain($dnType, $dnName)) return;
     if (!$gen->create($ctxType, $ctxName)) return;

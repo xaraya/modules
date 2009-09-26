@@ -38,7 +38,7 @@ function translations_admin_show_status()
     unset($tmp);
 
     // modules
-    if (!($mods = xarModAPIFunc('modules','admin','getlist', array('filter' => array('State' => XARMOD_STATE_ANY))))) return;
+    if (!($mods = xarMod::apiFunc('modules','admin','getlist', array('filter' => array('State' => XARMOD_STATE_ANY))))) return;
     $modentries = array();
     $mod_totalentries = 0; $mod_untranslated = 0; $mod_keytotalentries = 0; $mod_keyuntranslated =0;
     foreach($mods as $mod) {
@@ -47,7 +47,7 @@ function translations_admin_show_status()
 
         $args['interface'] = 'ReferencesBackend';
         $args['locale'] = translations_working_locale();
-        $testbackend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
+        $testbackend = xarMod::apiFunc('translations','admin','create_backend_instance',$args);
         if (isset($testbackend) && $testbackend->bindDomain(XARMLS_DNTYPE_MODULE, $modname)) {
             $tmp =  translations_create_trabar(XARMLS_DNTYPE_MODULE, $modname, $modid, 'modules',$modname);
             $modentries[$modname] =& count_entries($tmp['entrydata']);
@@ -66,7 +66,7 @@ function translations_admin_show_status()
     }
 
     // themes
-    if (!($themes = xarModAPIFunc('themes','admin','getthemelist', array('filter' => array('State' => XARTHEME_STATE_ANY))))) return;
+    if (!($themes = xarMod::apiFunc('themes','admin','getthemelist', array('filter' => array('State' => XARTHEME_STATE_ANY))))) return;
 
     $themeentries = array();
     $theme_totalentries = 0; $theme_untranslated =0; $theme_keytotalentries = 0; $theme_keyuntranslated = 0;
@@ -76,7 +76,7 @@ function translations_admin_show_status()
 
         $args['interface'] = 'ReferencesBackend';
         $args['locale'] = translations_working_locale();
-        $testbackend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
+        $testbackend = xarMod::apiFunc('translations','admin','create_backend_instance',$args);
         if (isset($testbackend) && $testbackend->bindDomain(XARMLS_DNTYPE_THEME, $themename)) {
             $tmp =  translations_create_trabar(XARMLS_DNTYPE_THEME, $themename, $themeid, 'themes', $themename);
             $themeentries[$themename] =& count_entries($tmp['entrydata']);

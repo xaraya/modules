@@ -39,7 +39,7 @@ function translations_adminapi_generate_core_trans($args)
     }
 
     // Load core translations
-    $backend = xarModAPIFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $ref_locale));
+    $backend = xarMod::apiFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $ref_locale));
     if (!isset($backend)) return;
 
     if (!$backend->bindDomain(XARMLS_DNTYPE_CORE, 'xaraya')) {
@@ -49,7 +49,7 @@ function translations_adminapi_generate_core_trans($args)
     }
     if (!$backend->loadContext('core:', 'core')) return;
 
-    $gen = xarModAPIFunc('translations','admin','create_generator_instance',array('interface' => 'TranslationsGenerator', 'locale' => $locale));
+    $gen = xarMod::apiFunc('translations','admin','create_generator_instance',array('interface' => 'TranslationsGenerator', 'locale' => $locale));
     if (!isset($gen)) return;
     if (!$gen->bindDomain(XARMLS_DNTYPE_CORE, 'xaraya')) return;
     if (!$gen->create('core:', 'core')) return;

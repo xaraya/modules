@@ -22,7 +22,7 @@ function translations_admin_generate_trans_info()
 
     $tplData['locales'] = xarConfigVars::get(null,'Site.MLS.AllowedLocales');
     $tplData['release_locale'] = translations_release_locale();
-    $tplData['archiver_path'] = xarModAPIFunc('translations','admin','archiver_path');
+    $tplData['archiver_path'] = xarMod::apiFunc('translations','admin','archiver_path');
 
     $druidbar = translations_create_druidbar(GENTRANS, $dnType, $dnName, $extid);
     $opbar = translations_create_opbar(GEN_TRANS, $dnType, $dnName, $extid);

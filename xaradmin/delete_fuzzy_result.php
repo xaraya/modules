@@ -21,7 +21,7 @@ function translations_admin_delete_fuzzy_result()
     if (!xarVarFetch('extid','int',$extid)) return;
 
     $locale = translations_working_locale(); 
-    $backend = xarModAPIFunc('translations', 'admin', 'create_backend_instance',
+    $backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance',
                              array('interface' => 'ReferencesBackend', 'locale' => $locale)); 
     if (!isset($backend)) return;
 

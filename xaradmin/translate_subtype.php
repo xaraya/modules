@@ -46,14 +46,14 @@ function translations_admin_translate_subtype()
     $args['dnname'] = $dnName;
     $args['subtype'] = $subtype;
     $args['subname'] = $subname;
-    $entries = xarModAPIFunc('translations','admin','getcontextentries',$args);
+    $entries = xarMod::apiFunc('translations','admin','getcontextentries',$args);
 
     $args = array();
     $args['dntype'] = $dnType;
     $args['dnname'] = $dnName;
     $args['subtype'] = 'modules:';
     $args['subname'] = 'fuzzy';
-    $fuzzyEntries = xarModAPIFunc('translations','admin','getcontextentries',$args);
+    $fuzzyEntries = xarMod::apiFunc('translations','admin','getcontextentries',$args);
 
     $entries['fuzzyEntries'] = $fuzzyEntries['entries'];
     $entries['fuzzyNumEntries'] = $fuzzyEntries['numEntries'];

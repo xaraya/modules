@@ -26,7 +26,7 @@ function translations_adminapi_getcontextentries($args)
 
     $args['interface'] = 'ReferencesBackend';
     $args['locale'] = $locale;
-    $backend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
+    $backend = xarMod::apiFunc('translations','admin','create_backend_instance',$args);
 
     if (!isset($backend)) return;
     if (!$backend->bindDomain($dnType, $dnName)) {
@@ -47,7 +47,7 @@ function translations_adminapi_getcontextentries($args)
         // Load an english backend for original key translations
         $args['interface'] = 'ReferencesBackend';
         $args['locale'] = 'en_US.utf-8';
-        $en_backend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
+        $en_backend = xarMod::apiFunc('translations','admin','create_backend_instance',$args);
         if (!isset($en_backend)) return;
         if ($en_backend->bindDomain($dnType, $dnName) &&
             !$en_backend->loadContext($ctxType, $ctxName)) return;

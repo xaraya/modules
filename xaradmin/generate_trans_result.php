@@ -24,15 +24,15 @@ function translations_admin_generate_trans_result()
     $args = array('locale'=>$locale);
     switch ($dnType) {
         case XARMLS_DNTYPE_CORE:
-        $res = xarModAPIFunc('translations','admin','generate_core_trans',$args);
+        $res = xarMod::apiFunc('translations','admin','generate_core_trans',$args);
         break;
         case XARMLS_DNTYPE_MODULE:
         $args['modid'] = $extid;
-        $res = xarModAPIFunc('translations','admin','generate_module_trans',$args);
+        $res = xarMod::apiFunc('translations','admin','generate_module_trans',$args);
         break;
         case XARMLS_DNTYPE_THEME:
         $args['themeid'] = $extid;
-        $res = xarModAPIFunc('translations','admin','generate_theme_trans',$args);
+        $res = xarMod::apiFunc('translations','admin','generate_theme_trans',$args);
         break;
     }
 
