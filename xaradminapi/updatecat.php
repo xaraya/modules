@@ -54,7 +54,7 @@ function categories_adminapi_updatecat($args)
     }
 
     // Obtain current information on the category
-    $cat = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid'=>$cid));
+    $cat = xarMod::apiFunc('categories', 'user', 'getcatinfo', array('cid'=>$cid));
 
     if ($cat == false) {
        xarSession::setVar('errormsg', xarML('That category does not exist'));
@@ -70,7 +70,7 @@ function categories_adminapi_updatecat($args)
     if ($moving == 1) {
 
        // Obtain current information on the reference category
-       $refcat = xarModAPIFunc('categories', 'user', 'getcatinfo', Array('cid'=>$refcid));
+       $refcat = xarMod::apiFunc('categories', 'user', 'getcatinfo', Array('cid'=>$refcid));
 
        if ($refcat == false) {
            xarSession::setVar('errormsg', xarML('That category does not exist'));
@@ -92,7 +92,7 @@ function categories_adminapi_updatecat($args)
 
        // Find the needed variables for moving things...
        $point_of_insertion =
-                   xarModAPIFunc('categories','admin','find_point_of_insertion',
+                   xarMod::apiFunc('categories','admin','find_point_of_insertion',
                        Array('inorout' => $inorout,
                                'rightorleft' => $rightorleft,
                                'right' => $refcat['right'],

@@ -36,7 +36,7 @@ function categories_userapi_decode_shorturl($params)
         $list = $params;
         array_shift($list);
         $name = join('/',$list);
-        $catid = xarModAPIFunc('categories','user','name2cid',
+        $catid = xarMod::apiFunc('categories','user','name2cid',
                                array('name' => $name,
                                      // for DMOZ-like URLs with the description field containing
                                      // the full path, use 1
@@ -52,7 +52,7 @@ function categories_userapi_decode_shorturl($params)
         // categories for this module, and compare against them...
         // $catid = xarModVars::get('example','cids');
         // if (xarModAPILoad('categories','user')) {
-        //     $cats = xarModAPIFunc('categories',
+        //     $cats = xarMod::apiFunc('categories',
         //                          'user',
         //                          'getcat',
         //                          array('cid' => $catid,

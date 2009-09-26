@@ -26,7 +26,7 @@
         }
 
         // Setting up necessary data.
-        $categories = xarModAPIFunc('categories',
+        $categories = xarMod::apiFunc('categories',
                                     'user',
                                     'getcat',
                                     array('cid' => false,

@@ -85,7 +85,7 @@ function categories_admin_modifyconfighook($args)
         }
         // TODO: improve memory usage
         // limit to some reasonable depth for now
-        $item['select'] = xarModAPIFunc('categories', 'visual', 'makeselect',
+        $item['select'] = xarMod::apiFunc('categories', 'visual', 'makeselect',
                                        array('values' => &$seencid,
                                              'name_prefix' => 'config_',
                                              'maximum_depth' => 4,

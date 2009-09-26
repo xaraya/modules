@@ -31,7 +31,7 @@ function categories_admin_deletecat()
     if (empty($confirm)) {
 
         // Get category information
-        $cat = xarModAPIFunc('categories',
+        $cat = xarMod::apiFunc('categories',
                              'user',
                              'getcatinfo',
                               array('cid' => $cid));
@@ -47,10 +47,10 @@ function categories_admin_deletecat()
         $data['yeslabel'] = xarML('Yes');
         $data['authkey'] = xarSecGenAuthKey();
 
-        $data['numcats'] = xarModAPIFunc('categories','user','countcats',
+        $data['numcats'] = xarMod::apiFunc('categories','user','countcats',
                                          $cat);
         $data['numcats'] -= 1;
-        $data['numitems'] = xarModAPIFunc('categories','user','countitems',
+        $data['numitems'] = xarMod::apiFunc('categories','user','countitems',
                                           array('cids' => array('_'.$cid),
                                                 'modid' => 0));
         // Return output
@@ -64,7 +64,7 @@ function categories_admin_deletecat()
     }        
 
     // Pass to API
-    if (!xarModAPIFunc('categories',
+    if (!xarMod::apiFunc('categories',
                        'admin',
                        'deletecat',
                        array('cid' => $cid))) return;

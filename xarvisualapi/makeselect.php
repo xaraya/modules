@@ -34,7 +34,7 @@
 function categories_visualapi_makeselect ($args)
 {
     // Getting categories Array
-    $args['categories'] = xarModAPIFunc('categories', 'user', 'getcat',
+    $args['categories'] = xarMod::apiFunc('categories', 'user', 'getcat',
                           array('eid' => (isset($args['eid']))?$args['eid']:false,
                                 'cid' => (isset($args['cid']))?$args['cid']:false,
                                 'return_itself' => (isset($args['return_itself']))?$args['return_itself']:false,

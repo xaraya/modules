@@ -22,7 +22,7 @@ function categories_visualapi_listarray ($args)
     if (!xarModAPILoad('categories', 'user')) return;
 
     // Getting categories Array
-    $categories = xarModAPIFunc
+    $categories = xarMod::apiFunc
     (
      'categories',
      'user',

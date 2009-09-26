@@ -24,7 +24,7 @@ function categories_visualapi_treearray ($args)
     }
 
     // Getting categories Array
-    $categories = xarModAPIFunc
+    $categories = xarMod::apiFunc
     (
      'categories',
      'user',

@@ -53,7 +53,7 @@ function categories_adminapi_setcatbases($args)
     }
 
 // CHECKME: allow passing base category name too someday ?
-    $catinfo = xarModAPIFunc('categories','user','getcatinfo',
+    $catinfo = xarMod::apiFunc('categories','user','getcatinfo',
                              array('cids' => $cids));
 
     foreach ($cids as $cid) {

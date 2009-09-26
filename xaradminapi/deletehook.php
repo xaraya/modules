@@ -41,7 +41,7 @@ function categories_adminapi_deletehook($args)
         $itemtype = 0;
     }
 
-    if (!xarModAPIFunc('categories', 'admin', 'unlink',
+    if (!xarMod::apiFunc('categories', 'admin', 'unlink',
                       array('iid' => $objectid,
                             'itemtype' => $itemtype,
                             'modid' => $modid))) {

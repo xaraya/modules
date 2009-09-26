@@ -1,7 +1,7 @@
 <?php
 
 /**
- * create item from xarModFunc('categories','admin','viewcat')
+ * create item from xarMod::guiFunc('categories','admin','viewcat')
  */
 function categories_admin_viewcatbases()
 {
@@ -20,7 +20,7 @@ function categories_admin_viewcatbases()
     );
 
     // TODO: add pager
-    $data['catbases'] = xarModAPIFunc(
+    $data['catbases'] = xarMod::apiFunc(
         'categories', 'user', 'getallcatbases',
         array(
             'modid' => $modid,
@@ -35,7 +35,7 @@ function categories_admin_viewcatbases()
     if (!empty($data['catbases'])) {
         foreach ($data['catbases'] as $itemtypekey => $catbase) {
             if (empty($itemtypes[$catbase['modid']])) {
-                $itemtypes[$catbase['modid']] = xarModAPIFunc(
+                $itemtypes[$catbase['modid']] = xarMod::apiFunc(
                     $catbase['module'], 'user', 'getitemtypes',
                     array(), 0
                 );

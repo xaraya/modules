@@ -113,7 +113,7 @@ class CategoriesProperty extends DataProperty
                     if (empty($category)) continue;
                     $catparts = explode('.',$category);
                     $category = $catparts[0];
-                    $validcat = xarModAPIFunc('categories','user','getcatinfo',array('cid' => $category));
+                    $validcat = xarMod::apiFunc('categories','user','getcatinfo',array('cid' => $category));
                     if (!$validcat) {
                         $this->invalid = xarML("The category #(1) is not valid", $category);
                         $this->value = null;
@@ -139,7 +139,7 @@ class CategoriesProperty extends DataProperty
         if (!isset($this->localmodule)) return true;
 
         if (!empty($itemid)) {
-            $result = xarModAPIFunc('categories', 'admin', 'unlink',
+            $result = xarMod::apiFunc('categories', 'admin', 'unlink',
                               array('iid' => $itemid,
                                     'itemtype' => $this->localitemtype,
                                     'modid' => xarMod::getRegId($this->localmodule)));
@@ -153,7 +153,7 @@ class CategoriesProperty extends DataProperty
         }
 
         if (count($cleancats) > 0) {
-            $result = xarModAPIFunc('categories', 'admin', 'linkcat',
+            $result = xarMod::apiFunc('categories', 'admin', 'linkcat',
                                   array('cids'        => $cleancats,
                                         'iids'        => array($itemid),
                                         'itemtype'    => $this->localitemtype,
@@ -213,12 +213,12 @@ class CategoriesProperty extends DataProperty
         if (!xarVarFetch($name . '_categories_itemid', 'int', $itemid, 0, XARVAR_NOT_REQUIRED)) return;
         if (!$itemid) $itemid = $value;
 
-        $result = xarModAPIFunc('categories', 'admin', 'unlink',
+        $result = xarMod::apiFunc('categories', 'admin', 'unlink',
                           array('iid' => $itemid,
                                 'itemtype' => $itemtype,
                                 'modid' => xarMod::getRegId($modname)));
         if (count($categories) > 0) {
-            $result = xarModAPIFunc('categories', 'admin', 'linkcat',
+            $result = xarMod::apiFunc('categories', 'admin', 'linkcat',
                                 array('cids'  => $categories,
                                       'iids'  => array($itemid),
                                       'itemtype' => $itemtype,
@@ -263,9 +263,9 @@ class CategoriesProperty extends DataProperty
             // Return an array where each toplevel category is a base category
             if (strtolower($data['bases']) == 'all') {
                 if (empty($data['categories_localitemtype'])) {
-                    $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule']));
+                    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule']));
                 } else {
-                    $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule'], 'itemtype' => $data['categories_localitemtype']));
+                    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule'], 'itemtype' => $data['categories_localitemtype']));
                 }
                 $data['basecids'] = array();
                 foreach ($basecats as $basecat) $data['basecids'][] = $basecat['category_id'];
@@ -301,7 +301,7 @@ class CategoriesProperty extends DataProperty
         $returnitself = (empty($data['returnitself'])) ? false : $data['returnitself'];
         $data['trees'] = array();
         if ($data['basecids'] == array(0)) {
-            $toplevel = xarModAPIFunc('categories','user','getchildren',array('cid' => 0));
+            $toplevel = xarMod::apiFunc('categories','user','getchildren',array('cid' => 0));
             $nodes = new BasicSet();
             foreach ($toplevel as $entry) {
                 $node = new CategoryTreeNode($entry['cid']);
@@ -347,7 +347,7 @@ class CategoriesProperty extends DataProperty
             $selectedcategories = $this->categories;
         } elseif (!empty($data['categories_itemid'])) {           
             // No checkInput has run, we are in an existing object or a standalone with an itemid given
-            $links = xarModAPIFunc('categories', 'user', 'getlinkage',
+            $links = xarMod::apiFunc('categories', 'user', 'getlinkage',
                                    array('itemid' => $data['categories_itemid'],
                                          'itemtype' => $data['categories_localitemtype'],
                                          'module' => $data['categories_localmodule'],
@@ -434,7 +434,7 @@ class CategoriesProperty extends DataProperty
             // No checkInput has run, we are in an existing object or a standalone with an itemid given
             if (empty($this->value)) {
                 $data['value'] = array();
-                $links = xarModAPIFunc('categories', 'user', 'getlinkage',
+                $links = xarMod::apiFunc('categories', 'user', 'getlinkage',
                                        array('itemid' => $data['categories_itemid'],
                                              'itemtype' => $data['categories_localitemtype'],
                                              'module' => $data['categories_localmodule'],
@@ -463,7 +463,7 @@ class CategoriesProperty extends DataProperty
              if ($check) return true;
              return null;
         }
-        $result = xarModAPIFunc('categories','user','getcatinfo',array('cid' => $this->value));
+        $result = xarMod::apiFunc('categories','user','getcatinfo',array('cid' => $this->value));
         if (!empty($result)) {
             if ($check) return true;
             return $result['name'];

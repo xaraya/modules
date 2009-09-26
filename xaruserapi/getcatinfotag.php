@@ -24,7 +24,7 @@ function categories_userapi_getcatinfotag($args)
     if (!empty($args['runtime'])) {
         // Runtime mode.
         // Get the categories.
-        $cats = xarModAPIfunc('categories', 'user', 'getitemcats', $args);
+        $cats = xarMod::apiFunc('categories', 'user', 'getitemcats', $args);
 
         // Determine whether we have selected a new template.
         if (empty($args['template'])) {
@@ -89,7 +89,7 @@ function categories_userapi_getcatinfotag($args)
     // details when executed from the tenplate.
     $params[] = "'runtime'=>true";
 
-    $out = "echo xarModAPIFunc("
+    $out = "echo xarMod::apiFunc("
         . "'categories', 'user', 'getcatinfotag', "
         . "array(" . implode(', ', $params) . ")); ";
 

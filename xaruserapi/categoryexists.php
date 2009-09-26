@@ -25,7 +25,7 @@ function categories_userapi_categoryexists( $args )
     foreach ($path_array as $cat_name) {
 
         // Getting categories Array
-        $categories = xarModAPIFunc('categories','user','getcat',Array
+        $categories = xarMod::apiFunc('categories','user','getcat',Array
             (
                 'eid'           => false,
                 'cid'           => $cid,

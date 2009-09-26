@@ -70,13 +70,13 @@ function categories_adminapi_updatehook($args)
     $cids = array_keys($seencid);
 
     if (count($cids) == 0) {
-        if (!xarModAPIFunc('categories', 'admin', 'unlink',
+        if (!xarMod::apiFunc('categories', 'admin', 'unlink',
                           array('iid' => $objectid,
                                 'itemtype' => $itemtype,
                                 'modid' => $modid))) {
             return;
         }
-    } elseif (!xarModAPIFunc('categories', 'admin', 'linkcat',
+    } elseif (!xarMod::apiFunc('categories', 'admin', 'linkcat',
                             array('cids'  => $cids,
                                   'iids'  => array($objectid),
                                   'itemtype' => $itemtype,

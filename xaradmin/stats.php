@@ -17,7 +17,7 @@ function categories_admin_stats()
 
     $data = array();
 
-    $modlist = xarModAPIFunc('categories','user','getmodules');
+    $modlist = xarMod::apiFunc('categories','user','getmodules');
 
     if (empty($modid)) {
         $data['moditems'] = array();
@@ -27,7 +27,7 @@ function categories_admin_stats()
             $modinfo = xarModGetInfo($modid);
             // Get the list of all item types for this module (if any)
             try{
-                $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes');
+                $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes');
             } catch (Exception $e) {
                 $mytypes = array();
             }
@@ -73,7 +73,7 @@ function categories_admin_stats()
         } else {
             $data['itemtype'] = $itemtype;
             // Get the list of all item types for this module (if any)
-            $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
+            $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                      // don't throw an exception if this function doesn't exist
                                      array(), 0);
             if (isset($mytypes) && !empty($mytypes[$itemtype])) {
@@ -99,7 +99,7 @@ function categories_admin_stats()
             $numstats = 100;
         }
         if (!empty($catid)) {
-            $data['numlinks'] = xarModAPIFunc('categories','user','countitems',
+            $data['numlinks'] = xarMod::apiFunc('categories','user','countitems',
                                               array('modid' => $modid,
                                                     'itemtype' => $itemtype,
                                                     'catid' => $catid));
@@ -119,7 +119,7 @@ function categories_admin_stats()
             $data['pager'] = '';
         }
         $data['modid'] = $modid;
-        $getitems = xarModAPIFunc('categories','user','getlinks',
+        $getitems = xarMod::apiFunc('categories','user','getlinks',
                                   array('modid' => $modid,
                                         'itemtype' => $itemtype,
                                         'reverse' => 1,
@@ -130,7 +130,7 @@ function categories_admin_stats()
         $showtitle = xarModVars::get('categories','showtitle');
         if (!empty($getitems) && !empty($showtitle)) {
            $itemids = array_keys($getitems);
-           $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
+           $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
                                       array('itemtype' => $itemtype,
                                             'itemids' => $itemids),
                                       0); // don't throw an exception here
@@ -158,7 +158,7 @@ function categories_admin_stats()
         unset($getitems);
         unset($itemlinks);
         if (!empty($seencid)) {
-            $data['catinfo'] = xarModAPIFunc('categories','user','getcatinfo',
+            $data['catinfo'] = xarMod::apiFunc('categories','user','getcatinfo',
                                              array('cids' => array_keys($seencid)));
         } else {
             $data['catinfo'] = array();

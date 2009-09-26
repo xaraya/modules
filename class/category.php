@@ -38,7 +38,7 @@
                 if (isset($args['parent_id'])) $this->parentindices[$args['id']] = $id;
 
                 // do the Celko dance and update all the left/right values
-                return xarModAPIFunc('categories','admin','updatecelkolinks',array('cid' => $id, 'type' => 'create'));
+                return xarMod::apiFunc('categories','admin','updatecelkolinks',array('cid' => $id, 'type' => 'create'));
             } else {
                 $id = parent::createItem($args);
             }
@@ -59,7 +59,7 @@
 
             // only update Celko if the parent has changed
             if (($old_parentid - $new_parentid) != 0) {
-                return xarModAPIFunc('categories','admin','updatecelkolinks',array('cid' => $id, 'type' => 'update'));
+                return xarMod::apiFunc('categories','admin','updatecelkolinks',array('cid' => $id, 'type' => 'update'));
             } else {
                 return true;
             }

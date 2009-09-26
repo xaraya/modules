@@ -18,7 +18,7 @@ function categories_user_main()
 
     if (!xarModAPILoad('categories','user')) return;
 
-    $parents = xarModAPIFunc('categories','user','getparents',
+    $parents = xarMod::apiFunc('categories','user','getparents',
                             array('cid' => $catid));
     $data['parents'] = array();
     $data['hooks'] = '';
@@ -51,7 +51,7 @@ function categories_user_main()
         xarTplSetPageTitle(xarVarPrepForDisplay($title));
     }
 
-    $children = xarModAPIFunc('categories','user','getchildren',
+    $children = xarMod::apiFunc('categories','user','getchildren',
                               array('cid' => $catid));
     $category = array();
     $letter = array();
@@ -115,13 +115,13 @@ function categories_user_main()
         return $data;
     }
 
-    $modlist = xarModAPIFunc('categories','user','getmodules',
+    $modlist = xarMod::apiFunc('categories','user','getmodules',
                              array('cid' => $catid));
     if (count($modlist) > 0) {
         foreach ($modlist as $modid => $itemtypes) {
             $modinfo = xarModGetInfo($modid);
             // Get the list of all item types for this module (if any)
-            $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
+            $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                      // don't throw an exception if this function doesn't exist
                                      array(), 0);
             foreach ($itemtypes as $itemtype => $stats) {
@@ -142,13 +142,13 @@ function categories_user_main()
                 $moditem['numcats'] = $stats['cats'];
                 $moditem['numlinks'] = $stats['links'];
 
-                $links = xarModAPIFunc('categories','user','getlinks',
+                $links = xarMod::apiFunc('categories','user','getlinks',
                                        array('modid' => $modid,
                                              'itemtype' => $itemtype,
                                              'cids' => array($catid)));
                 $moditem['items'] = array();
                 if (!empty($links[$catid])) {
-                    $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
+                    $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
                                                array('itemtype' => $itemtype,
                                                      'itemids' => $links[$catid]),
                                                // don't throw an exception if this function doesn't exist

@@ -62,7 +62,7 @@ class CategoryPickerProperty extends DataProperty
             $thiscid = isset($basecid[$i]) && is_numeric($basecid[$i]) ? $basecid[$i] : 0;
             $thisname = (isset($basename[$i]) && !empty($basename[$i])) ? $basename[$i] : xarML('Base Category #(1)',$i+1);
             $thisitemtype = isset($baseitemtype[$i]) ? $baseitemtype[$i] : $localitemtype;
-            $thisbasecat = xarModAPIFunc('categories','user','getcatbase',array('name' => $thisname, 'module' => $localmodule, 'itemtype' => $thisitemtype));
+            $thisbasecat = xarMod::apiFunc('categories','user','getcatbase',array('name' => $thisname, 'module' => $localmodule, 'itemtype' => $thisitemtype));
             $q = new xarQuery('INSERT', $xartable['categories_basecategories']);
             $q->addfield('module_id',xarMod::getRegId($localmodule));
             $q->addfield('itemtype',$thisitemtype);
@@ -89,7 +89,7 @@ class CategoryPickerProperty extends DataProperty
 
         if (!isset($data['basecids'])) {
     // CHECKME: if we have settings for several itemtypes, don't show them all at once (0 != 1 ... N)
-            $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule'], 'itemtype' => $data['categories_localitemtype']));
+            $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule'], 'itemtype' => $data['categories_localitemtype']));
         }
         if (!isset($data['categories_numberofbasecats'])) $data['categories_numberofbasecats'] = count($basecats);
         $seencid = array();

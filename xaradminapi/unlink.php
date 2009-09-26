@@ -28,7 +28,7 @@ function categories_adminapi_unlink($args)
         }
 
         // Confirm linkage exists
-        $childiids = xarModAPIFunc('categories',
+        $childiids = xarMod::apiFunc('categories',
                                   'user',
                                   'getlinks',
                                   array('iids' => array($iid),

@@ -97,7 +97,7 @@ function categories_admin_modifyhook($args)
             // try to get cids from input
             xarVarFetch('modify_cids', 'list:int:1:', $cids, NULL, XARVAR_NOT_REQUIRED);
             if (empty($cids) || !is_array($cids)) {
-                $links = xarModAPIFunc('categories', 'user', 'getlinks',
+                $links = xarMod::apiFunc('categories', 'user', 'getlinks',
                                        array('iids' => array($objectid),
                                              'itemtype' => $itemtype,
                                              'modid' => $modid,
@@ -132,7 +132,7 @@ function categories_admin_modifyhook($args)
         }
         $item = array();
         $item['num'] = $n + 1;
-        $item['select'] = xarModAPIFunc('categories', 'visual', 'makeselect',
+        $item['select'] = xarMod::apiFunc('categories', 'visual', 'makeselect',
                                        array('cid' => $mastercids[$n],
                                              'multiple' => 1,
                                              'name_prefix' => 'modify_',

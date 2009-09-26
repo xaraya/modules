@@ -34,7 +34,7 @@ function categories_userapi_getlinks($args)
     // Get the field names and LEFT JOIN ... ON ... parts from categories
     // By passing on the $args, we can let leftjoin() create the WHERE for
     // the categories-specific columns too now
-    $categoriesdef = xarModAPIFunc('categories','user','leftjoin',$args);
+    $categoriesdef = xarMod::apiFunc('categories','user','leftjoin',$args);
 
     // Get item IDs
     $sql = 'SELECT ' . $categoriesdef['category_id'] . ', ' . $categoriesdef['item_id'];

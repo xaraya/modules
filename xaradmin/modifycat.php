@@ -7,9 +7,9 @@ function categories_admin_modifycat()
 {
     if (!xarVarFetch('creating', 'bool', $creating, true, XARVAR_NOT_REQUIRED)) {return;}
     if ($creating) {
-        return xarModFunc('categories','admin','new');
+        return xarMod::guiFunc('categories','admin','new');
     } else {
-        return xarModFunc('categories','admin','modify');
+        return xarMod::guiFunc('categories','admin','modify');
     }
 }
 
