@@ -154,7 +154,7 @@ function dyn_example_admin_modifyconfig()
             # This needs to be the last thing happening on this page because it redirects. Code below
             # this point will not execute
             
-                if (!xarModFunc('dynamicdata','admin','update')) return;
+                if (!xarMod::guiFunc('dynamicdata','admin','update')) return;
 
             break;
     }
