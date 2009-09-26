@@ -12,6 +12,6 @@
 
 function translations_user_show_status()
 {
-    return xarModFunc('translations', 'admin', 'show_status');
+    return xarMod::guiFunc('translations', 'admin', 'show_status');
 }
 ?>
