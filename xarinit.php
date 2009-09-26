@@ -35,18 +35,18 @@ function dyn_example_init()
 # The second is a defintion file for the object's items, i.e. its data. This file can be omitted.
 #
 # You can create these files manually, for example by cutting and pasting from an existing example.
-# The easier way is to create an object (and perhaps its items) using the user interface of the 
-# DynamicData module. Once you have an object (and items), you can export it into an XML file using the 
+# The easier way is to create an object (and perhaps its items) using the user interface of the
+# DynamicData module. Once you have an object (and items), you can export it into an XML file using the
 # DD module's export facility.
 #
-# Note: the object(s) created below are automatically kept track of so that the module knows to remove them when 
+# Note: the object(s) created below are automatically kept track of so that the module knows to remove them when
 # you deinstall it.
 #
     $module = 'dyn_example';
     $objects = array(
                 'dyn_example',
-                'modulesettings',
-                'usersettings',
+                'dyn_example_module_settings',
+                'dyn_example_user_settings',
                 );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;    
@@ -54,7 +54,7 @@ function dyn_example_init()
 #
 # Set up configuration modvars (module specific)
 #
-# Since this modvar is used as storage in a DD object dyn_example_modulesettings, 
+# Since this modvar is used as storage in a DD object dyn_example_module_settings,
 # we could also let Xaraya define it, but that would mean we wouldn't have it until
 # we updated the modifyconfig page
 #
@@ -120,12 +120,6 @@ function dyn_example_init()
 #
 # Register hooks
 #
-    sys::import('xaraya.structures.hooks.observer');
-    $observer = new BasicObserver('dyn_example','user','usermenu');
-    $observer->register('item', 'usermenu', 'GUI');
-
-    $subject = new HookSubject('roles');
-    $subject->attach($observer);
 
     // Initialisation successful
     return true;

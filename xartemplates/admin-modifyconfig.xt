@@ -9,8 +9,8 @@
         <xar:template type="module" file="admin-menu" />
         <h2>Modify Default Configuration</h2>
         <p class="xar-form-input-before">
-          This uses dynamic module settings, i.e. you can add/remove settings for 
-              your module dynamically too. But you could use the 'normal' hard-coded approach 
+          This uses dynamic module settings, i.e. you can add/remove settings for
+              your module dynamically too. But you could use the 'normal' hard-coded approach
               here as well...
         </p>
 
@@ -18,14 +18,14 @@
             <fieldset>
                 <legend>Modify Dyn_Example Configuration</legend>
                 <xar:data-form object="$module_settings" />
-                <xar:data-form object="$object" itemid="1" /> 
+                <xar:data-form object="$object" itemid="0" />
             </fieldset>
 
             <div class="xar-form-input-after">
                 <input type="hidden" name="authid" value="#xarSecGenAuthKey('dyn_example')#" />
                 <xar:data-input type="hidden" name="phase" value="update" />
                 <input type="hidden" name="objectid" value="#$object->objectid#" />
-                <input type="hidden" name="itemid" value="1" />
+                <input type="hidden" name="itemid" value="0" />
                 <input type="hidden" name="return_url" value="#xarServer::getCurrentURL()#" />
                 <xar:var name="label">Update</xar:var>
                 <xar:button type="submit" label="$label" />

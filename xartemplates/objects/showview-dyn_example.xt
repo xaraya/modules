@@ -7,6 +7,15 @@
             This is a specific user view template for the dyn_example object (if you want this)
             in the dyn_example module (if you want that)            
         </p>
+        <p>
+            Sort by
+            <xar:foreach in="$properties" key="$name">
+                &#160;
+                <a href="#$sorturl#=#$name#">
+                    <xar:data-label property="$properties[$name]" />
+                </a>
+            </xar:foreach>
+        </p>
         <xar:foreach in="$items" key="$itemid" value="$fields">
             <table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2" >
                 <xar:foreach in="$properties" key="$name">
@@ -16,9 +25,9 @@
                         </td>
                         <xar:if condition="empty($fields[$name])">
                             <td>&#160;</td>
-                        <xar:elseif condition="!empty($linkfield) and $linkfield eq $name"/>
+                        <xar:elseif condition="!empty($linkfield) and $linkfield eq $name and !empty($links[$itemid]['display'])"/>
                             <td>
-                                <a href="#$links[$itemid]['display']['olink']#"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></a>
+                                <a href="#$links[$itemid]['display']['olink']#" title="#$links[$itemid]['display']['otitle']#"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></a>
                             </td>
                         <xar:else />
                                 <td>
@@ -60,7 +69,7 @@
         <table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2" >
             <tr>
                 <xar:foreach in="$properties" key="$name">
-                    <th class="xar-align-center"><xar:data-label property="$properties[$name]" /></th>
+                    <th class="xar-align-center"><a href="#$sorturl#=#$name#"><xar:data-label property="$properties[$name]" /></a></th>
                 </xar:foreach>
                 <xar:if condition="empty($linkfield)">
                     <th>
@@ -74,9 +83,9 @@
                     <xar:foreach in="$properties" key="$name">
                         <xar:if condition="empty($fields[$name])">
                             <td class="xar-valign-top">&#160;</td>
-                        <xar:elseif condition="!empty($linkfield) and $linkfield eq $name"/>
+                        <xar:elseif condition="!empty($linkfield) and $linkfield eq $name and !empty($links[$itemid]['display'])"/>
                             <td class="xar-valign-top">
-                                <a href="#$links[$itemid]['view']['olink']#">
+                                <a href="#$links[$itemid]['display']['olink']#" title="#$links[$itemid]['display']['otitle']#">
                                     <xar:data-output property="$properties[$name]" value="$fields[$name]" />
                                 </a>
                             </td>
@@ -136,8 +145,8 @@
                     <xar:foreach in="$properties" key="$name">
                         <xar:if condition="empty($fields[$name])">
                             <td valign="top">&#160;</td>
-                        <xar:elseif condition="!empty($linkfield) and $linkfield eq $name"/>
-                            <td valign="top"><a href="#$links[$itemid]['display']['olink']#"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></a></td>
+                        <xar:elseif condition="!empty($linkfield) and $linkfield eq $name and !empty($links[$itemid]['display'])"/>
+                            <td valign="top"><a href="#$links[$itemid]['display']['olink']#" title="#$links[$itemid]['display']['otitle']#"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></a></td>
                         <xar:else />
                             <td valign="top"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></td>
                         </xar:if>
@@ -178,6 +187,7 @@
             <xar:foreach in="$items" value="$item">
                 <li>
                     <xar:foreach in="$item['fields']" value="$field">
+                    <!-- CHECKME: where does $field['flink'] come from ? -->
                         <xar:if condition="!empty($field['flink'])">
                             <a href="#$field['flink']#">
                               <xar:data-output type="$field['type']" name="dd_'.$field['id'].'" value="$field['value']" />

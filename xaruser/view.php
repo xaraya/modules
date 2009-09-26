@@ -23,6 +23,7 @@
 function dyn_example_user_view()
 {
     if(!xarVarFetch('startnum', 'isset', $data['startnum'], NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('sort',     'isset', $data['sort'],     NULL, XARVAR_DONT_SET)) {return;}
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
@@ -54,6 +55,7 @@ function dyn_example_user_view()
     $filters = array('numitems'  => $data['items_per_page'],
                      'startnum'  => $data['startnum'],
                      'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
+                     'sort'      => $data['sort'],
                     );
     
     // Get the items 
