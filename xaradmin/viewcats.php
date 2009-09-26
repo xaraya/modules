@@ -1,7 +1,7 @@
 <?php
 
 /**
- * create item from xarModFunc('categories','admin','viewcat')
+ * create item from xarMod::guiFunc('categories','admin','viewcat')
  */
 function categories_admin_viewcats()
 {
