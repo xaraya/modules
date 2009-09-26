@@ -32,7 +32,7 @@ function dyn_example_userapi_getitemlinks($args)
         $field = 'name'; // adapt as needed for your own objects
     }
     // Get all the items
-    $items = xarModAPIFunc('dynamicdata','user','getitems',
+    $items = xarMod::apiFunc('dynamicdata','user','getitems',
                            array('module'    => 'dyn_example',
                                  'itemtype'  => $itemtype,
                                  'itemids'   => $itemids,

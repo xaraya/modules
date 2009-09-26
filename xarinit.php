@@ -49,7 +49,7 @@ function dyn_example_init()
                 'usersettings',
                 );
 
-    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;    
+    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;    
 # --------------------------------------------------------
 #
 # Set up configuration modvars (module specific)
@@ -69,14 +69,14 @@ function dyn_example_init()
 # The lines below corresponding to the initializeation of the core modules are found in modules/installer/xaradmin.php.
 # The module_settings dataobject itself is defined in the dynamicdata module.
 #
-        $module_settings = xarModAPIFunc('base','admin','getmodulesettings',array('module' => 'dyn_example'));
+        $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'dyn_example'));
         $module_settings->initialize();
 
 # --------------------------------------------------------
 #
 # Register blocks
 #
-    if (!xarModAPIFunc('blocks',
+    if (!xarMod::apiFunc('blocks',
                        'admin',
                        'register_block_type',
                        array('modName' => 'dyn_example',
@@ -159,7 +159,7 @@ function dyn_example_upgrade($oldversion)
 function dyn_example_delete()
 {
     // UnRegister blocks
-    if (!xarModAPIFunc('blocks',
+    if (!xarMod::apiFunc('blocks',
                        'admin',
                        'unregister_block_type',
                        array('modName' => 'dyn_example',
@@ -172,7 +172,7 @@ function dyn_example_delete()
 # The function below pretty much takes care of everything that needs to be removed
 #
     $module = 'dyn_example';
-    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => $module));
+    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
 }
 
 ?>

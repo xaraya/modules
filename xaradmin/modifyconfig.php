@@ -32,7 +32,7 @@ function dyn_example_admin_modifyconfig()
     $data['object']->getItem(array('itemid' => 1));
     
     // Get the object we'll be working with for common configuration settings
-    $data['module_settings'] = xarModAPIFunc('base','admin','getmodulesettings',array('module' => 'dyn_example'));
+    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'dyn_example'));
     // Decide which fields are configurable in this module
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_user_menu');
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
