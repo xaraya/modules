@@ -5,7 +5,7 @@
         if (!xarVarFetch('item','str',$item,0,XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('confirm','int',$data['confirm'],0,XARVAR_NOT_REQUIRED)) return;
 
-        $items = xarModAPIFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_ACTIVE)));
+        $items = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_ACTIVE)));
         if (!$data['confirm']) {
             $data['items'] = $items;
         } else {

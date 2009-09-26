@@ -61,7 +61,7 @@
     #
     # Set up configuration modvars (general)
     #
-            $module_settings = xarModAPIFunc('base','admin','getmodulesettings',array('module' => 'xarayatesting'));
+            $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'xarayatesting'));
             $module_settings->initialize();
 
     # --------------------------------------------------------
@@ -88,7 +88,7 @@
 //                       'xarayatesting_tests',
                          );
 
-        if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+        if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
         return true;
     }
@@ -123,7 +123,7 @@
         try {
             $dd_objects = unserialize(xarModVars::get($this_module,$this_module . '_objects'));
             foreach ($dd_objects as $key => $value)
-                $result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $value));
+                $result = xarMod::apiFunc('dynamicdata','admin','deleteobject',array('objectid' => $value));
         } catch (Exception $e) {}
 
     # --------------------------------------------------------
@@ -131,7 +131,7 @@
     # Remove the categories
     #
         try {
-            xarModAPIFunc('categories', 'admin', 'deletecat',
+            xarMod::apiFunc('categories', 'admin', 'deletecat',
                                  array('cid' => xarModVars::get($this_module, 'basecategory'))
                                 );
         } catch (Exception $e) {}

@@ -25,7 +25,7 @@
         if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'base', XARVAR_NOT_REQUIRED)) return;
 
         // Get the modules we can test
-        $installed = xarModAPIFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_INSTALLED)));
+        $installed = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_INSTALLED)));
         $data['coremodules'] = array();
         $data['modules'] = array();
         foreach ($installed as $module) {
