@@ -27,7 +27,7 @@ function articles_user_archive($args)
     extract($args);
 
     // Get publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
 
     // Check that the publication type is valid
     if (empty($ptid) || !isset($pubtypes[$ptid])) {
@@ -114,7 +114,7 @@ function articles_user_archive($args)
     }
 
     // Get monthly statistics
-    $monthcount = xarModAPIFunc('articles','user','getmonthcount',
+    $monthcount = xarMod::apiFunc('articles','user','getmonthcount',
                                array('ptid' => $ptid,
                                      'status' => $status,
                                      'enddate' => time()));
@@ -159,7 +159,7 @@ function articles_user_archive($args)
 
     // Get the list of root categories for this publication type
     $rootcids = array();
-    $catroots = xarModAPIFunc('articles', 'user', 'getrootcats',
+    $catroots = xarMod::apiFunc('articles', 'user', 'getrootcats',
                               array('ptid' => $ptid));
     foreach ($catroots as $rootcat) {
         $rootcids[] = $rootcat['catid'];
@@ -176,7 +176,7 @@ function articles_user_archive($args)
                 continue;
             }
             // save the name and root category for each child
-            $cats = xarModAPIFunc('categories',
+            $cats = xarMod::apiFunc('categories',
                                  'user',
                                  'getcat',
                                  array('cid' => $cid,
@@ -204,7 +204,7 @@ function articles_user_archive($args)
                 $catlist[] = array('cid' => $cid,
                                    'name' => $catinfo[$cid]['name'],
                                    'link' => $link);
-                $catsel[] = xarModAPIFunc('categories',
+                $catsel[] = xarMod::apiFunc('categories',
                                           'visual',
                                           'makeselect',
                                           Array('cid' => $cid,
@@ -219,7 +219,7 @@ function articles_user_archive($args)
 
     // Get articles
     if ($month == 'all' || ($startdate && $enddate)) {
-        $articles = xarModAPIFunc('articles',
+        $articles = xarMod::apiFunc('articles',
                                  'user',
                                  'getall',
                                  array('ptid' => (isset($ptid) ? $ptid : null),
@@ -392,7 +392,7 @@ function articles_user_archive($args)
                  'showdate' => $showdate,
                  'showpublinks' => $showpublinks,
                  'publabel' => xarML('Publication'),
-                 'publinks' => xarModAPIFunc('articles','user','getpublinks',
+                 'publinks' => xarMod::apiFunc('articles','user','getpublinks',
                                             array('ptid' => $ptid,
                                                   'status' => array(3,2),
                                                   'count' => $showpubcount,

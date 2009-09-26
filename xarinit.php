@@ -174,14 +174,14 @@ function articles_init()
     // Create articles categories
     $cids = array();
     foreach ($categories as $category) {
-        $cid[$category['name']] = xarModAPIFunc('categories',
+        $cid[$category['name']] = xarMod::apiFunc('categories',
                                                'admin',
                                                'create',
                         Array('name' => $category['name'],
                               'description' => $category['description'],
                               'parent_id' => 0));
         foreach ($category['children'] as $child) {
-            $cid[$child] = xarModAPIFunc('categories',
+            $cid[$child] = xarMod::apiFunc('categories',
                                         'admin',
                                         'create',
                         Array('name' => $child,
@@ -208,20 +208,20 @@ function articles_init()
             }
             unset($values['categories']);
             if (!empty($id)) {
-                xarModAPIFunc('articles','admin','setrootcats',
+                xarMod::apiFunc('articles','admin','setrootcats',
                               array('ptid' => $id,
                                     'cids' => $cidlist));
             } else {
-                xarModAPIFunc('articles','admin','setrootcats',
+                xarMod::apiFunc('articles','admin','setrootcats',
                               array('ptid' => null,
                                     'cids' => $cidlist));
             }
         } elseif (!empty($id)) {
-            xarModAPIFunc('articles','admin','setrootcats',
+            xarMod::apiFunc('articles','admin','setrootcats',
                           array('ptid' => $id,
                                 'cids' => null));
         } else {
-            xarModAPIFunc('articles','admin','setrootcats',
+            xarMod::apiFunc('articles','admin','setrootcats',
                           array('ptid' => null,
                                 'cids' => null));
         }
@@ -249,31 +249,31 @@ function articles_init()
     xarModVars::set('articles', 'ptypenamechange', '');
 
     // Register blocks
-    if (!xarModAPIFunc('blocks',
+    if (!xarMod::apiFunc('blocks',
                        'admin',
                        'register_block_type',
                        array('modName'  => 'articles',
                              'blockType'=> 'related'))) return;
 
-    if (!xarModAPIFunc('blocks',
+    if (!xarMod::apiFunc('blocks',
                        'admin',
                        'register_block_type',
                        array('modName'  => 'articles',
                              'blockType'=> 'topitems'))) return;
 
-    if (!xarModAPIFunc('blocks',
+    if (!xarMod::apiFunc('blocks',
                        'admin',
                        'register_block_type',
                        array('modName'  => 'articles',
                              'blockType'=> 'featureditems'))) return;
 
-    if (!xarModAPIFunc('blocks',
+    if (!xarMod::apiFunc('blocks',
                        'admin',
                        'register_block_type',
                        array('modName'  => 'articles',
                              'blockType'=> 'random'))) return;
 
-    if (!xarModAPIFunc('blocks',
+    if (!xarMod::apiFunc('blocks',
                        'admin',
                        'register_block_type',
                        array('modName'  => 'articles',
@@ -300,27 +300,27 @@ function articles_init()
 
     // Enable articles hooks for search
     if (xarModIsAvailable('search')) {
-        xarModAPIFunc('modules','admin','enablehooks',
+        xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'search', 'hookModName' => 'articles'));
     }
 
     // Enable categories hooks for articles
-    xarModAPIFunc('modules','admin','enablehooks',
+    xarMod::apiFunc('modules','admin','enablehooks',
                   array('callerModName' => 'articles', 'hookModName' => 'categories'));
 
     // Enable comments hooks for articles
     if (xarModIsAvailable('comments')) {
-        xarModAPIFunc('modules','admin','enablehooks',
+        xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'articles', 'hookModName' => 'comments'));
     }
     // Enable hitcount hooks for articles
     if (xarModIsAvailable('hitcount')) {
-        xarModAPIFunc('modules','admin','enablehooks',
+        xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'articles', 'hookModName' => 'hitcount'));
     }
     // Enable ratings hooks for articles
     if (xarModIsAvailable('ratings')) {
-        xarModAPIFunc('modules','admin','enablehooks',
+        xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'articles', 'hookModName' => 'ratings'));
     }
 
@@ -393,9 +393,9 @@ function articles_upgrade($oldversion)
     switch($oldversion) {
         case '1.4':
             // Get current publication types
-            $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+            $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
             // Get configurable fields for articles
-            $pubfields = xarModAPIFunc('articles','user','getpubfields');
+            $pubfields = xarMod::apiFunc('articles','user','getpubfields');
             // Update the configuration of each publication type
             foreach ($pubtypes as $ptid => $pubtype) {
                 // Map the (bodytext + bodyfile) fields to a single body field
@@ -411,7 +411,7 @@ function articles_upgrade($oldversion)
                 foreach (array_keys($pubfields) as $field) {
                     $config[$field] = $pubtype['config'][$field];
                 }
-                if (!xarModAPIFunc('articles', 'admin', 'updatepubtype',
+                if (!xarMod::apiFunc('articles', 'admin', 'updatepubtype',
                                    array('ptid' => $ptid,
                                          'name' => $pubtype['name'],
                                          'descr' => $pubtype['descr'],
@@ -424,7 +424,7 @@ function articles_upgrade($oldversion)
         case '1.5':
         case '1.5.0':
             // Upgrade the glossary block - we'll be kind :-)
-            if (!xarModAPIFunc(
+            if (!xarMod::apiFunc(
                 'blocks', 'admin', 'register_block_type',
                 array(
                     'modName'  => 'articles',
@@ -466,7 +466,7 @@ function articles_upgrade($oldversion)
             // Code to upgrade from version 2.0.0 goes here
 
             // Get current publication types
-            $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+            $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
             // get base categories for all publication types here
             $publist = array_keys($pubtypes);
             // add the defaults too, in case we have other base categories there
@@ -484,7 +484,7 @@ function articles_upgrade($oldversion)
                     $rootcids = array();
                 }
                 // update the base categories for each publication type
-                xarModAPIFunc('articles','admin','setrootcats',
+                xarMod::apiFunc('articles','admin','setrootcats',
                               array('ptid' => $pubid,
                                     'cids' => $rootcids));
             }
@@ -493,9 +493,9 @@ function articles_upgrade($oldversion)
             // Code to upgrade from version 2.0.1 goes here
 
             // Get current publication types
-            $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+            $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
             // Get configurable fields for articles
-            $pubfields = xarModAPIFunc('articles','user','getpubfields');
+            $pubfields = xarMod::apiFunc('articles','user','getpubfields');
             // Update the configuration of each publication type
             foreach ($pubtypes as $ptid => $pubtype) {
                 $replace = 0;
@@ -506,7 +506,7 @@ function articles_upgrade($oldversion)
                         $replace = 1;
                     }
                 }
-                if ($replace && !xarModAPIFunc('articles', 'admin', 'updatepubtype',
+                if ($replace && !xarMod::apiFunc('articles', 'admin', 'updatepubtype',
                                    array('ptid' => $ptid,
                                          'name' => $pubtype['name'],
                                          'descr' => $pubtype['descr'],
@@ -546,7 +546,7 @@ function articles_delete()
     if (!$result) return;
 
     // Get current publication types if necessary
-    //$pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    //$pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
     //foreach ($pubtypes as $ptid => $pubtype) {
     //    ... do something per pubtype ...
     //}
@@ -565,25 +565,25 @@ function articles_delete()
     xarModVars::delete_all('articles');
 
     // UnRegister blocks
-    if (!xarModAPIFunc('blocks',
+    if (!xarMod::apiFunc('blocks',
                        'admin',
                        'unregister_block_type',
                        array('modName'  => 'articles',
                              'blockType'=> 'related'))) return;
 
-    if (!xarModAPIFunc('blocks',
+    if (!xarMod::apiFunc('blocks',
                        'admin',
                        'unregister_block_type',
                        array('modName'  => 'articles',
                              'blockType'=> 'topitems'))) return;
 
-    if (!xarModAPIFunc('blocks',
+    if (!xarMod::apiFunc('blocks',
                        'admin',
                        'unregister_block_type',
                        array('modName'  => 'articles',
                              'blockType'=> 'featureditems'))) return;
 
-    if (!xarModAPIFunc('blocks',
+    if (!xarMod::apiFunc('blocks',
                        'admin',
                        'unregister_block_type',
                        array('modName'  => 'articles',

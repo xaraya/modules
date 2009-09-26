@@ -56,7 +56,7 @@ function articles_adminapi_updatepubtype($args)
     if (!xarModAPILoad('articles', 'user')) return;
 
     // Get current publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
     if (!isset($pubtypes[$ptid])) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'publication type ID', 'admin', 'updatepubtype',
@@ -65,7 +65,7 @@ function articles_adminapi_updatepubtype($args)
     }
 
     // Make sure we have all the configuration fields we need
-    $pubfields = xarModAPIFunc('articles','user','getpubfields');
+    $pubfields = xarMod::apiFunc('articles','user','getpubfields');
     foreach ($pubfields as $field => $value) {
         if (!isset($config[$field])) {
             $config[$field] = '';

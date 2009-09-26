@@ -38,7 +38,7 @@ function articles_userapi_getpubcatcount($args)
     $dbconn = xarDB::getConn();
 
     // Get the LEFT JOIN ... ON ...  and WHERE parts from articles
-    $articlesdef = xarModAPIFunc('articles','user','leftjoin',$args);
+    $articlesdef = xarMod::apiFunc('articles','user','leftjoin',$args);
 
     // Load API
     if (!xarModAPILoad('categories', 'user')) return;
@@ -48,7 +48,7 @@ function articles_userapi_getpubcatcount($args)
         $args['itemtype'] = $args['ptid'];
     }
     // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
-    $categoriesdef = xarModAPIFunc('categories','user','leftjoin',$args);
+    $categoriesdef = xarMod::apiFunc('categories','user','leftjoin',$args);
 
     // Get count
     $query = 'SELECT '. $articlesdef['pubtypeid'] .', '. $categoriesdef['category_id']

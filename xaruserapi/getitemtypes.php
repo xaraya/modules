@@ -25,7 +25,7 @@ function articles_userapi_getitemtypes($args)
                           'url'   => xarModURL('articles','user','view')
                          );
     // Get publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
 
     foreach ($pubtypes as $id => $pubtype) {
         $itemtypes[$id] = array('label' => xarVarPrepForDisplay($pubtype['descr']),
@@ -34,7 +34,7 @@ function articles_userapi_getitemtypes($args)
                                );
     }
 
-    $extensionitemtypes = xarModAPIFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 151, 'native' =>false));
+    $extensionitemtypes = xarMod::apiFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 151, 'native' =>false));
 
     /* TODO: activate this code when we move to php5
     $keys = array_merge(array_keys($itemtypes),array_keys($extensionitemtypes));

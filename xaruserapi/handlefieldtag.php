@@ -24,7 +24,7 @@
 function articles_userapi_handleFieldTag($args)
 {
     $out = "xarModAPILoad('articles','user');
-echo xarModAPIFunc('articles',
+echo xarMod::apiFunc('articles',
                    'user',
                    'showfield',\n";
     if (isset($args['definition'])) {

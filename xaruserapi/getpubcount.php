@@ -34,7 +34,7 @@ function articles_userapi_getpubcount($args)
     $dbconn = xarDB::getConn();
 
     // Get the LEFT JOIN ... ON ...  and WHERE parts from articles
-    $articlesdef = xarModAPIFunc('articles','user','leftjoin',$args);
+    $articlesdef = xarMod::apiFunc('articles','user','leftjoin',$args);
 
     $query = 'SELECT ' . $articlesdef['pubtypeid'] . ', COUNT(*)
             FROM ' . $articlesdef['table'];

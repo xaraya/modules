@@ -32,13 +32,13 @@ function articles_admin_updatestatus()
         $msg = xarML('No articles selected');
         throw new DataNotFoundException(null, $msg);
     }
-    $states = xarModAPIFunc('articles','user','getstates');
+    $states = xarMod::apiFunc('articles','user','getstates');
     if (!isset($status) || !is_numeric($status) || $status < -1 || ($status != -1 && !isset($states[$status]))) {
         $msg = xarML('Invalid status');
         throw new BadParameterException(null,$msg);
     }
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
     if (!empty($ptid)) {
         $descr = $pubtypes[$ptid]['descr'];
     } else {
@@ -56,7 +56,7 @@ function articles_admin_updatestatus()
             continue;
         }
         // Get original article information
-        $article = xarModAPIFunc('articles',
+        $article = xarMod::apiFunc('articles',
                                  'user',
                                  'get',
                                  array('aid' => $aid,
@@ -75,7 +75,7 @@ function articles_admin_updatestatus()
         } else {
             $input['mask'] = 'EditArticles';
         }
-        if (!xarModAPIFunc('articles','user','checksecurity',$input)) {
+        if (!xarMod::apiFunc('articles','user','checksecurity',$input)) {
             $msg = xarML('You have no permission to modify #(1) item #(2)',
                          $descr, xarVarPrepForDisplay($aid));
             throw new ForbiddenOperationException(null, $msg);
@@ -83,7 +83,7 @@ function articles_admin_updatestatus()
 
         if ($status < 0) {
             // Pass to API
-            if (!xarModAPIFunc('articles', 'admin', 'delete', $article)) {
+            if (!xarMod::apiFunc('articles', 'admin', 'delete', $article)) {
                 return; // throw back
             }
         } else {
@@ -91,7 +91,7 @@ function articles_admin_updatestatus()
             $article['status'] = $status;
 
             // Pass to API
-            if (!xarModAPIFunc('articles', 'admin', 'update', $article)) {
+            if (!xarMod::apiFunc('articles', 'admin', 'update', $article)) {
                 return; // throw back
             }
         }

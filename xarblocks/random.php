@@ -124,7 +124,7 @@ function articles_randomblock_display($blockinfo)
 
     if (empty($vars['numitems'])) $vars['numitems'] = 1;
 
-    $articles = xarModAPIFunc('articles','user','getrandom',
+    $articles = xarMod::apiFunc('articles','user','getrandom',
                               array('ptid'     => $vars['pubtypeid'],
                                     'cids'     => $cidsarray,
                                     'andcids'  => false,

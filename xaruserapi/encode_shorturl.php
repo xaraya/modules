@@ -68,7 +68,7 @@ function articles_userapi_encode_shorturl($args)
     // we can't rely on xarModGetName() here (yet) !
     $module = 'articles';
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
 
     // specify some short URLs relevant to your module
     if ($func == 'main') {
@@ -122,7 +122,7 @@ function articles_userapi_encode_shorturl($args)
                 if (isset($catcache[$cid])) {
                     $cat = $catcache[$cid];
                 } else {
-                    $cat = xarModAPIFunc('categories','user','getcatinfo',
+                    $cat = xarMod::apiFunc('categories','user','getcatinfo',
                                         array('cid' => $cid));
                     // put the category in cache
                     $catcache[$cid] = $cat;
@@ -322,7 +322,7 @@ function articles_userapi_encode_shorturl($args)
 function articles_encodeUsingTitle( $aid, $encodeUsingTitle = 1, $ptid = '' )
 {
     $searchArgs['aid'] = $aid;
-    $article = xarModAPIFunc('articles','user','get', $searchArgs);
+    $article = xarMod::apiFunc('articles','user','get', $searchArgs);
 
     if (empty($article)) {
         // default to just the article ID
@@ -357,7 +357,7 @@ function articles_encodeUsingTitle( $aid, $encodeUsingTitle = 1, $ptid = '' )
             $searchArgs['ptid'] = $article['pubtypeid'];
         }
 
-        $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
+        $articles = xarMod::apiFunc('articles', 'user', 'getall', $searchArgs);
     }
 
     if ( strpos($article['title'],'_') === FALSE )

@@ -43,7 +43,7 @@ function articles_userapi_getmenulinks()
             $ptid = null;
         }
     }
-    $publinks = xarModAPIFunc('articles','user','getpublinks',
+    $publinks = xarMod::apiFunc('articles','user','getpublinks',
                               //array('status' => array(3,2), 'ptid' => $ptid));
                               // we show all links here
                               array('status' => array(3,2)));

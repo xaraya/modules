@@ -9,7 +9,7 @@
     <dt class="help" title="#xarML('Choose an action to perform')#">
       <xar:mlstring>Actions:</xar:mlstring>
     </dt>
-    <xar:loop name="xarModAPIFunc($request.0, $request.1, 'getmenulinks')">
+    <xar:loop name="xarMod::apiFunc($request.0, $request.1, 'getmenulinks')">
         <xar:set name="tabclass">
           in_array($activetab, $loop->item['active'])?'active':''
         </xar:set>

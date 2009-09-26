@@ -32,7 +32,7 @@ function articles_userapi_decode_shorturl($params)
         $alias = xarModGetAlias($params[0]);
         if ($module == $alias) {
             // yup, looks like it
-            $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+            $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
             foreach ($pubtypes as $id => $pubtype) {
                 if ($params[0] == $pubtype['name']) {
                     $foundalias = 1;
@@ -102,7 +102,7 @@ function articles_userapi_decode_shorturl($params)
         $catid = $matches[1];
         $args['catid'] = $catid;
         if (!empty($params[2])) {
-            $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+            $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
             foreach ($pubtypes as $id => $pubtype) {
                 if ($params[1] == $pubtype['name']) {
                     $args['ptid'] = $id;
@@ -133,7 +133,7 @@ function articles_userapi_decode_shorturl($params)
             array_unshift($params, $module);
         }
         // Get all publication types present
-        $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+        $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
         foreach ($pubtypes as $id => $pubtype) {
             if ($params[1] == $pubtype['name']) {
                 $args['ptid'] = $id;
@@ -270,7 +270,7 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
     $searchArgs['searchfields'] = array('title');
     $searchArgs['searchtype'] = 'equal whole string';
 
-    $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
+    $articles = xarMod::apiFunc('articles', 'user', 'getall', $searchArgs);
 
     if( (count($articles) == 0) && (strpos($decodedTitle,'_') !== false) ) {
 
@@ -278,7 +278,7 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
 
         $searchArgs['searchfields'] = array('title');
         $searchArgs['searchtype'] = 'equal whole string';
-        $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
+        $articles = xarMod::apiFunc('articles', 'user', 'getall', $searchArgs);
     }
 
     if( count($articles) == 1 ) {

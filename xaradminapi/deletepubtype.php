@@ -39,7 +39,7 @@ function articles_adminapi_deletepubtype($args)
     if (!xarModAPILoad('articles', 'user')) return;
 
     // Get current publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
     if (!isset($pubtypes[$ptid])) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'publication type ID', 'admin', 'deletepubtype',
@@ -48,7 +48,7 @@ function articles_adminapi_deletepubtype($args)
     }
 
     // Clear base categories for this publication type
-    xarModAPIFunc('articles','admin','setrootcats',
+    xarMod::apiFunc('articles','admin','setrootcats',
                   array('ptid' => $ptid,
                         'cids' => null));
 

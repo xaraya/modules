@@ -62,7 +62,7 @@ function articles_userapi_checksecurity($args)
 
     // Get article information
     if (!isset($article) && !empty($aid) && $mask != 'SubmitArticles') {
-        $article = xarModAPIFunc('articles',
+        $article = xarMod::apiFunc('articles',
                                 'user',
                                 'get',
                                 array('aid' => $aid,
@@ -106,7 +106,7 @@ function articles_userapi_checksecurity($args)
 
     // Get root categories for this publication type
     if (!empty($ptid)) {
-        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $ptid));
+        $rootcats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $ptid));
         $rootcids = array();
         foreach ($rootcats as $rootcat) {
             $rootcids[] = $rootcat['category_id'];
@@ -116,7 +116,7 @@ function articles_userapi_checksecurity($args)
     }
     if (!isset($rootcids)) {
     // TODO: handle cross-pubtype views better
-        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles'));
+        $rootcats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'articles'));
         $rootcids = array();
         foreach ($rootcats as $rootcat) {
             $rootcids[] = $rootcat['category_id'];
@@ -127,7 +127,7 @@ function articles_userapi_checksecurity($args)
     if (!isset($article['cids']) && !empty($aid)) {
         if (!xarModAPILoad('categories', 'user')) return;
         $modid = xarMod::getRegId('articles');
-        $articlecids = xarModAPIFunc('categories',
+        $articlecids = xarMod::apiFunc('categories',
                                     'user',
                                     'getlinks',
                                     array('iids' => Array($aid),

@@ -51,7 +51,7 @@ function articles_admin_update()
         throw new BadParameterException(null,$msg);
     }
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
     if (empty($ptid) || !isset($pubtypes[$ptid])) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'publication type', 'admin', 'update', 'Articles');
@@ -59,7 +59,7 @@ function articles_admin_update()
     }
 
     // Get original article information
-    $article = xarModAPIFunc('articles', 'user', 'get',
+    $article = xarMod::apiFunc('articles', 'user', 'get',
                             array('aid' => $aid, 'withcids' => true)
     );
     if (!isset($article)) {
@@ -80,7 +80,7 @@ function articles_admin_update()
             if (!isset($value['validation'])) {
                 $value['validation'] = '';
             }
-            $properties[$field] = xarModAPIFunc('dynamicdata','user','getproperty',
+            $properties[$field] = xarMod::apiFunc('dynamicdata','user','getproperty',
                                                  array('name' => $field,
                                                        'type' => $value['format'],
                                                        'validation' => $value['validation'],
@@ -166,7 +166,7 @@ function articles_admin_update()
                                'articles', $ptid);
 
     // Pass to API
-    if (!xarModAPIFunc('articles', 'admin', 'update', $article)) {
+    if (!xarMod::apiFunc('articles', 'admin', 'update', $article)) {
         return;
     }
     unset($article);

@@ -121,7 +121,7 @@ class TextUploadProperty extends FileUploadProperty
             // show magic link #...:NN# to file in text (cfr. transform hook in uploads module)
             $magiclinks = '';
             if (!empty($this->value)) {
-                $magiclinks = xarModAPIFunc('uploads','user','showoutput',
+                $magiclinks = xarMod::apiFunc('uploads','user','showoutput',
                                             array('value' => $this->value,
                                                   'format' => 'textupload',
                                                   'style' => 'icon'));
@@ -193,7 +193,7 @@ class TextUploadProperty extends FileUploadProperty
             } else {
                 $override = null;
             }
-            $return = xarModAPIFunc('uploads','admin','validatevalue',
+            $return = xarMod::apiFunc('uploads','admin','validatevalue',
                                     array('id' => $name, // not $this->id
                                           'value' => null, // we don't keep track of values here
                                           // pass the module id, item type and item id (if available) for associations
@@ -221,7 +221,7 @@ class TextUploadProperty extends FileUploadProperty
             // show magic link #...:NN# to file in text (cfr. transform hook in uploads module)
             $magiclinks = '';
             if (!empty($return[1])) {
-                $magiclinks = xarModAPIFunc('uploads','user','showoutput',
+                $magiclinks = xarMod::apiFunc('uploads','user','showoutput',
                                             array('value' => $return[1],
                                                   'format' => 'textupload',
                                                   'style' => 'icon'));
@@ -307,7 +307,7 @@ class TextUploadProperty extends FileUploadProperty
             } else {
                 $override = null;
             }
-            $uploads = xarModAPIFunc('uploads','admin','showinput',
+            $uploads = xarMod::apiFunc('uploads','admin','showinput',
                                      array('id' => $name, // not $this->id
                                            'value' => null, // we don't keep track of values here
                                            'multiple' => FALSE, // not relevant here
@@ -355,7 +355,7 @@ class TextUploadProperty extends FileUploadProperty
         // Determine if the uploads module is hooked to the calling module
         // if so, we will use the uploads modules functionality
         if (xarVarGetCached('Hooks.uploads','ishooked')) {
-            list($multiple, $methods, $basedir, $importdir) = xarModAPIFunc('uploads', 'admin', 'dd_configure', $validation);
+            list($multiple, $methods, $basedir, $importdir) = xarMod::apiFunc('uploads', 'admin', 'dd_configure', $validation);
 
             // $multiple is not relevant here
             $this->methods = $methods;

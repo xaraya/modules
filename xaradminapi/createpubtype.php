@@ -55,7 +55,7 @@ function articles_adminapi_createpubtype($args)
     if (!xarModAPILoad('articles', 'user')) return;
 
     // Make sure we have all the configuration fields we need
-    $pubfields = xarModAPIFunc('articles','user','getpubfields');
+    $pubfields = xarMod::apiFunc('articles','user','getpubfields');
     foreach ($pubfields as $field => $value) {
         if (!isset($config[$field])) {
             $config[$field] = '';
@@ -86,7 +86,7 @@ function articles_adminapi_createpubtype($args)
 
     if (!empty($ptid)) {
         // Clear base categories for this publication type
-        xarModAPIFunc('articles','admin','setrootcats',
+        xarMod::apiFunc('articles','admin','setrootcats',
                       array('ptid' => $ptid,
                             'cids' => null));
     }

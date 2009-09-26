@@ -69,7 +69,7 @@ function articles_user_view($args)
     if (!isset($ptid) && !empty($itemtype) && is_numeric($itemtype)) $ptid = $itemtype;
 
     // Get publication types
-    $pubtypes = xarModAPIFunc('articles', 'user', 'getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles', 'user', 'getpubtypes');
 
     // Check that the publication type is valid
     if (!empty($ptid) && !isset($pubtypes[$ptid])) $ptid = null;
@@ -171,7 +171,7 @@ function articles_user_view($args)
     // TODO: show this *after* category list when we start from categories :)
     // Navigation links
     $data['publabel'] = xarML('Publication');
-    $data['publinks'] = xarModAPIFunc('articles', 'user', 'getpublinks',
+    $data['publinks'] = xarMod::apiFunc('articles', 'user', 'getpublinks',
         array(
             'ptid' => $ishome ? '' : $ptid,
             'status' => $c_posted,
@@ -296,7 +296,7 @@ function articles_user_view($args)
 
     // Get articles
     try {
-        $articles = xarModAPIFunc(
+        $articles = xarMod::apiFunc(
             'articles', 'user', 'getall',
             array(
                 'startnum' => $startnum,
@@ -390,7 +390,7 @@ function articles_user_view($args)
     // optional category count
     if ($showcatcount) {
         if (!empty($ptid)) {
-            $pubcatcount = xarModAPIFunc('articles', 'user', 'getpubcatcount',
+            $pubcatcount = xarMod::apiFunc('articles', 'user', 'getpubcatcount',
                 // frontpage or approved
                 array('status' => $c_posted, 'ptid' => $ptid)
             );
@@ -399,7 +399,7 @@ function articles_user_view($args)
             }
             unset($pubcatcount);
         } else {
-            $pubcatcount = xarModAPIFunc('articles', 'user', 'getpubcatcount',
+            $pubcatcount = xarMod::apiFunc('articles', 'user', 'getpubcatcount',
                 // frontpage or approved
                 array('status' => $c_posted, 'reverse' => 1)
             );
@@ -441,7 +441,7 @@ function articles_user_view($args)
         foreach ($articles as $article) {
             $aidlist[] = $article['aid'];
         }
-        $numcomments = xarModAPIFunc('comments', 'user', 'get_countlist',
+        $numcomments = xarMod::apiFunc('comments', 'user', 'get_countlist',
             array('modid' => $c_modid, 'objectids' => $aidlist)
         );
     }
@@ -453,7 +453,7 @@ function articles_user_view($args)
             $aidlist[] = $article['aid'];
         }
 
-        $keywords = xarModAPIFunc('keywords', 'user', 'getmultiplewords',
+        $keywords = xarMod::apiFunc('keywords', 'user', 'getmultiplewords',
             array(
                 'modid' => $c_modid,
                 'objectids' =>  $aidlist,
@@ -474,10 +474,10 @@ function articles_user_view($args)
             }
         }
         if (count($cidlist) > 0) {
-            $catinfo = xarModAPIFunc('categories','user','getcatinfo', array('cids' => array_keys($cidlist)));
+            $catinfo = xarMod::apiFunc('categories','user','getcatinfo', array('cids' => array_keys($cidlist)));
             // get root categories for this publication type
             // get base categories for all if needed
-            $catroots = xarModAPIFunc('articles', 'user', 'getrootcats',
+            $catroots = xarMod::apiFunc('articles', 'user', 'getrootcats',
                 array('ptid' => $ptid, 'all' => true)
             );
         }
@@ -589,7 +589,7 @@ function articles_user_view($args)
                                           'type' => $value['format'],
                                           'configuration' => $value['validation'],
                                           'value' => $article[$field]);
-                        $property = xarModAPIFunc('dynamicdata','user','getproperty', $propargs);
+                        $property = xarMod::apiFunc('dynamicdata','user','getproperty', $propargs);
                         if ($property) {
                             $article[$field] = $property->showOutput($propargs);
                         } else {
@@ -768,7 +768,7 @@ function articles_user_view($args)
     // Pager
     sys::import('xaraya.pager');
     $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('articles', 'user', 'countitems',
+        xarMod::apiFunc('articles', 'user', 'countitems',
             array(
                 'cids' => $cids,
                 'andcids' => $andcids,

@@ -16,7 +16,7 @@
  *
  * E.g. to specify the parent of an article for parent-child relationships,
  * add a dynamic data field of type Dropdown List with the validation rule
- * xarModAPIFunc('articles','user','dropdownlist',array('ptid' => 1))
+ * xarMod::apiFunc('articles','user','dropdownlist',array('ptid' => 1))
  *
  * Note : for additional optional parameters, see the getall() function
  *
@@ -59,7 +59,7 @@ function articles_userapi_dropdownlist($args)
     }
 
     // Get the articles
-    $articles = xarModAPIFunc('articles','user','getall',$args);
+    $articles = xarMod::apiFunc('articles','user','getall',$args);
     if (!$articles) return;
 
     // Fill in the dropdown list

@@ -37,7 +37,7 @@ function articles_userapi_showfield($args)
             $args['type'] = 'textarea';
         }
         // let DynamicData handle it
-        return xarModAPIFunc('dynamicdata','admin','showinput',$args);
+        return xarMod::apiFunc('dynamicdata','admin','showinput',$args);
     }
 
     extract($args);
@@ -63,7 +63,7 @@ function articles_userapi_showfield($args)
 
     // Note: if we want to re-use this for dynamic data, types are numeric there
     if (is_numeric($type)) {
-        $fieldformatnums = xarModAPIFunc('articles','user','getfieldformatnums');
+        $fieldformatnums = xarMod::apiFunc('articles','user','getfieldformatnums');
         foreach ($fieldformatnums as $fname => $fid) {
             if ($fid == $type) {
                 $type = $fname;
@@ -77,11 +77,11 @@ function articles_userapi_showfield($args)
     // yes, we auto-declare the allowed field types here too :-)
         case 'fieldtype':
             // Get the list of defined field formats
-            $pubfieldformats = xarModAPIFunc('articles','user','getpubfieldformats');
+            $pubfieldformats = xarMod::apiFunc('articles','user','getpubfieldformats');
 
         // Note: if we want to re-use this for dynamic data, id's need to be numeric
             if (!empty($numeric_id)) {
-                $fieldformatnums = xarModAPIFunc('articles','user','getfieldformatnums');
+                $fieldformatnums = xarMod::apiFunc('articles','user','getfieldformatnums');
             }
 
             $output .= '<select name="'.$name.'"'.$id.$tabindex.'>';

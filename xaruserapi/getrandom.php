@@ -33,7 +33,7 @@
 function articles_userapi_getrandom($args)
 {
     // 1. count the number of items that apply
-    $count = xarModAPIFunc('articles','user','countitems',$args);
+    $count = xarMod::apiFunc('articles','user','countitems',$args);
     if (empty($count)) {
         return array();
     }
@@ -58,7 +58,7 @@ function articles_userapi_getrandom($args)
     if ($count <= $numitems) {
         unset($args['numitems']);
         // retrieve all articles and randomize the order
-        $items = xarModAPIFunc('articles','user','getall',$args);
+        $items = xarMod::apiFunc('articles','user','getall',$args);
         $randomkeys = array_rand($items, $count);
         if (!is_array($randomkeys)) {
             $randomkeys = array($randomkeys);
@@ -77,7 +77,7 @@ function articles_userapi_getrandom($args)
                 $i--;
             } else {
                 $aidlist[] = $args['startnum'];
-                $items = xarModAPIFunc('articles','user','getall',$args);
+                $items = xarMod::apiFunc('articles','user','getall',$args);
                 if (empty($items)) break;
                 array_push($articles, array_pop($items));
             }

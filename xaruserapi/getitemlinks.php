@@ -48,7 +48,7 @@ function articles_userapi_getitemlinks($args)
         // get approved and frontpage articles only
         $status = array(2, 3);
     }
-    $articles = xarModAPIFunc('articles','user','getall',
+    $articles = xarMod::apiFunc('articles','user','getall',
                              array('aids' => $itemids,
                                    'ptid' => $itemtype,
                                    'fields' => $fields,

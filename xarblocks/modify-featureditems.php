@@ -84,7 +84,7 @@ function articles_featureditemsblock_modify($blockinfo)
     $article_args['fields'] = $vars['fields'];
     $article_args['sort'] = $vars['toptype'];
 
-    $vars['filtereditems'] = xarModAPIFunc(
+    $vars['filtereditems'] = xarMod::apiFunc(
         'articles', 'user', 'getall', $article_args );
 
     // Check for exceptions
@@ -99,8 +99,8 @@ function articles_featureditemsblock_modify($blockinfo)
         }
     }
 
-    $vars['pubtypes'] = xarModAPIFunc('articles', 'user', 'getpubtypes');
-    $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
+    $vars['pubtypes'] = xarMod::apiFunc('articles', 'user', 'getpubtypes');
+    $vars['categorylist'] = xarMod::apiFunc('categories', 'user', 'getcat');
     $vars['statusoptions'] = array(
         array('id' => '', 'name' => xarML('All Published')),
         array('id' => '3', 'name' => xarML('Frontpage')),

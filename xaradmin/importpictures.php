@@ -53,7 +53,7 @@ function articles_admin_importpictures()
         $data['thumbnail'] = $thumbnail;
     }
 
-    $data['filelist'] = xarModAPIFunc('articles','admin','browse',
+    $data['filelist'] = xarMod::apiFunc('articles','admin','browse',
                                       array('basedir' => $data['basedir'],
                                             'filetype' => '(gif|jpg|jpeg|png)'));
 
@@ -105,7 +105,7 @@ function articles_admin_importpictures()
     $data['authid'] = xarSecGenAuthKey();
 
     // Get current publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
 
     // Set default pubtype to Pictures (if it exists)
     if (!isset($ptid) && isset($pubtypes[5])) {
@@ -121,9 +121,9 @@ function articles_admin_importpictures()
     if (!empty($ptid)) {
         $data['ptid'] = $ptid;
 
-        $pubfields = xarModAPIFunc('articles','user','getpubfields');
-        $pubfieldtypes = xarModAPIFunc('articles','user','getpubfieldtypes');
-        $pubfieldformats = xarModAPIFunc('articles','user','getpubfieldformats');
+        $pubfields = xarMod::apiFunc('articles','user','getpubfields');
+        $pubfieldtypes = xarMod::apiFunc('articles','user','getpubfieldtypes');
+        $pubfieldformats = xarMod::apiFunc('articles','user','getpubfieldformats');
         foreach ($pubfields as $field => $dummy) {
             if (($pubfieldtypes[$field] == 'text' || $pubfieldtypes[$field] == 'string') &&
                 !empty($pubtypes[$ptid]['config'][$field]['label']) &&
@@ -135,7 +135,7 @@ function articles_admin_importpictures()
 
         // get the base categories for this pubtype
         $catlist = array();
-        $catroots = xarModAPIFunc('articles', 'user', 'getrootcats',
+        $catroots = xarMod::apiFunc('articles', 'user', 'getrootcats',
                                   array('ptid' => $ptid));
         foreach ($catroots as $rootcat) {
             $catlist[$rootcat['catid']] = 1;
@@ -151,7 +151,7 @@ function articles_admin_importpictures()
         }
         $cids = array_keys($seencid);
         foreach (array_keys($catlist) as $catid) {
-            $data['cats'][] = xarModAPIFunc('categories',
+            $data['cats'][] = xarMod::apiFunc('categories',
                                             'visual',
                                             'makeselect',
                                             Array('cid' => $catid,
@@ -245,7 +245,7 @@ function articles_admin_importpictures()
                                               array('article' => $article, 'preview' => true));
                 break;
             } else {
-                $aid = xarModAPIFunc('articles', 'admin', 'create', $article);
+                $aid = xarMod::apiFunc('articles', 'admin', 'create', $article);
                 if (empty($aid)) {
                     return; // throw back
                 } else {
