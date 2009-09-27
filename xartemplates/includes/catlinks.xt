@@ -1,6 +1,6 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="!empty($preview)">
-    <xar:set name="dummy">xarVarFetch('hookedcategories_categories', 'array', $categories, array(), XARVAR_NOT_REQUIRED)</xar:set>
+    <xar:set name="dummy">xarVarFetch('hookedcategories_categories', 'isset', $categories, array(), XARVAR_NOT_REQUIRED)</xar:set>
     <xar:if condition="!empty($categories)">
         <xar:set name="cids">$categories</xar:set>
     </xar:if>
