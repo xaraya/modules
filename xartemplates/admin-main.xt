@@ -9,7 +9,7 @@
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
-    <xar:set name="$src">sys::code() . 'modules/articles/xarimages/admin.gif'</xar:set>
+    <xar:set name="src">xarTplGetImage('admin.gif','articles')</xar:set>
     <img class="xar-module-icon" src="#$src#" alt="official icon" width="96" height="96" />
     <h2>
         <xar:mlstring>
