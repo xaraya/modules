@@ -25,7 +25,7 @@ function articles_admin_showpropval($args)
     if (!xarVarFetch('confirm', 'isset', $confirm, NULL, XARVAR_DONT_SET)) {return;}
 
     // Get current publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
 
     if (empty($pubtypes[$ptid]['config'][$field])) {
         $msg = xarML('Invalid item id');
@@ -35,7 +35,7 @@ function articles_admin_showpropval($args)
     // Get current configuration
     $info = $pubtypes[$ptid]['config'][$field];
 
-    $fieldformatnums = xarModAPIFunc('articles','user','getfieldformatnums');
+    $fieldformatnums = xarMod::apiFunc('articles','user','getfieldformatnums');
     $proptype = $fieldformatnums[$info['format']];
     $configuration = !empty($info['validation']) ? $info['validation'] : '';
     $id = 0;
@@ -55,7 +55,7 @@ function articles_admin_showpropval($args)
     $data['id']         = $field;
     // pass the original invalid value here
     $data['invalid']    = !empty($invalid) ? $invalid :'';
-    $property = xarModAPIFunc('dynamicdata','user','getproperty',$data);
+    $property = xarMod::apiFunc('dynamicdata','user','getproperty',$data);
     if (empty($property)) return;
 
     if (!empty($preview) || !empty($confirm)) {
@@ -80,7 +80,7 @@ function articles_admin_showpropval($args)
                 $config = $pubtypes[$ptid]['config'];
                 $config[$field]['validation'] = $configuration;
 
-                if (!xarModAPIFunc('articles', 'admin', 'updatepubtype',
+                if (!xarMod::apiFunc('articles', 'admin', 'updatepubtype',
                                    array('ptid' => $ptid,
                                          'name' => $name,
                                          'descr' => $descr,

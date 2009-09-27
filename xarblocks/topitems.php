@@ -139,7 +139,7 @@ function articles_topitemsblock_display($blockinfo)
         if (!empty($cid)) {
             // if we're viewing all items below a certain category, i.e. catid = _NN
             $cid = str_replace('_', '', $cid);
-            $thiscategory = xarModAPIFunc(
+            $thiscategory = xarMod::apiFunc(
                 'categories','user','getcat',
                 array('cid' => $cid, 'return_itself' => 'return_itself')
             );
@@ -151,7 +151,7 @@ function articles_topitemsblock_display($blockinfo)
 
     // Get publication types
     // MarieA - moved to always get pubtypes.
-    $pubtypes = xarModAPIFunc('articles', 'user', 'getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles', 'user', 'getpubtypes');
 
     if (!empty($vars['nopublimit'])) {
         //don't limit by pubtype
@@ -214,7 +214,7 @@ function articles_topitemsblock_display($blockinfo)
         array_push($fields, 'dynamicdata');
     }
 
-    $articles = xarModAPIFunc(
+    $articles = xarMod::apiFunc(
         'articles','user','getall',
         array(
             'ptid' => $ptid,

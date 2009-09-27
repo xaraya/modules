@@ -275,7 +275,7 @@
             </div>
         </form>
         <xar:if condition="xarModIsHooked('dynamicdata','articles',$ptid)">
-            #xarModFunc('dynamicdata','admin','modifyconfighook',array('extrainfo' => array('module' => 'articles','itemtype' => $ptid)))#
+            #xarMod::guiFunc('dynamicdata','admin','modifyconfighook',array('extrainfo' => array('module' => 'articles','itemtype' => $ptid)))#
         </xar:if>
         <h3 class="xar-align-left"><a href="#xarModURL('articles','admin','exportpubtype',array('ptid' => $ptid))#">
                 <xar:mlstring>

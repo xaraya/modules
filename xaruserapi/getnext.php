@@ -50,7 +50,7 @@ function articles_userapi_getnext($args)
     // Get the field names and LEFT JOIN ... ON ... parts from articles
     // By passing on the $args, we can let leftjoin() create the WHERE for
     // the articles-specific columns too now
-    $articlesdef = xarModAPIFunc('articles','user','leftjoin',$args);
+    $articlesdef = xarMod::apiFunc('articles','user','leftjoin',$args);
 
     // Create the query
     $query = "SELECT $articlesdef[aid], $articlesdef[title], $articlesdef[pubtypeid], $articlesdef[authorid]
@@ -62,7 +62,7 @@ function articles_userapi_getnext($args)
     }
 
     // Get current article
-    $current = xarModAPIFunc('articles','user','get',array('aid' => $aid));
+    $current = xarMod::apiFunc('articles','user','get',array('aid' => $aid));
 
      // Create the ORDER BY part
     switch($sort) {

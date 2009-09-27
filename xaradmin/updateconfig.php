@@ -122,7 +122,7 @@ function articles_admin_updateconfig()
     if (!empty($ptid)) {
         xarModVars::set('articles', 'settings.'.$ptid, serialize($settings));
 
-        $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+        $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
         if ($usealias) {
             xarModSetAlias($pubtypes[$ptid]['name'],'articles');
         } else {

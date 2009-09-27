@@ -34,8 +34,8 @@ function articles_topitemsblock_modify($blockinfo)
         $vars['linkcat'] = false;
     }
 
-    $vars['pubtypes'] = xarModAPIFunc('articles', 'user', 'getpubtypes');
-    $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
+    $vars['pubtypes'] = xarMod::apiFunc('articles', 'user', 'getpubtypes');
+    $vars['categorylist'] = xarMod::apiFunc('categories', 'user', 'getcat');
 
     $vars['sortoptions'] = array(
         array('id' => 'hits', 'name' => xarML('Hit Count')),

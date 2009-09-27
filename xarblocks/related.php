@@ -76,7 +76,7 @@ function articles_relatedblock_display($blockinfo)
         return;
     }
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
 
     $links = 0;
     // Show publication type (for now)
@@ -106,7 +106,7 @@ function articles_relatedblock_display($blockinfo)
             $vars['authorname'] = $author;
             $vars['authorid'] = $authorid;
             if (!empty($vars['showvalue'])) {
-                $vars['authorcount'] = xarModAPIFunc('articles','user','countitems',
+                $vars['authorcount'] = xarMod::apiFunc('articles','user','countitems',
                                                      array('ptid' => (!empty($ptid) ? $ptid : null),
                                                            'authorid' => $authorid,
                                                            // limit to approved / frontpage articles

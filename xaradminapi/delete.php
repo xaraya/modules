@@ -13,7 +13,7 @@
  */
 /**
  * Delete an article
- * Usage : if (xarModAPIFunc('articles', 'admin', 'delete', $article)) {...}
+ * Usage : if (xarMod::apiFunc('articles', 'admin', 'delete', $article)) {...}
  *
  * @param $args['aid'] ID of the article
  * @param $args['ptid'] publication type ID for the item (*cough*)
@@ -36,7 +36,7 @@ function articles_adminapi_delete($args)
     if (!xarModAPILoad('articles', 'user')) return;
 
     $args['mask'] = 'DeleteArticles';
-    if (!xarModAPIFunc('articles','user','checksecurity',$args)) {
+    if (!xarMod::apiFunc('articles','user','checksecurity',$args)) {
         $msg = xarML('Not authorized to delete #(1) items',
                     'Article');
         throw new BadParameterException(null,$msg);

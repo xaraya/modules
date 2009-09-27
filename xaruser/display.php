@@ -60,7 +60,7 @@ function articles_user_display($args)
 
     // Get article
     if (!$preview) {
-        $article = xarModAPIFunc('articles',
+        $article = xarMod::apiFunc('articles',
                                 'user',
                                 'get',
                                 array('aid' => $aid,
@@ -73,7 +73,7 @@ function articles_user_display($args)
     }
 
     // Get publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
 
     // Check that the publication type is valid, otherwise use the article's pubtype
     if (!empty($ptid) && !isset($pubtypes[$ptid])) {
@@ -123,14 +123,14 @@ function articles_user_display($args)
         $input = array();
         $input['article'] = $article;
         $input['mask'] = 'EditArticles';
-        if (xarModAPIFunc('articles','user','checksecurity',$input)) {
+        if (xarMod::apiFunc('articles','user','checksecurity',$input)) {
             $return_url = xarServer::getCurrentURL(array(), false);
             $data['editurl'] = xarModURL('articles', 'admin', 'modify',
                                          array('aid' => $article['aid'],
                                                'return_url' => $return_url));
         // don't show unapproved articles to non-editors
         } elseif ($article['status'] < 2) {
-            $status = xarModAPIFunc('articles', 'user', 'getstatusname',
+            $status = xarMod::apiFunc('articles', 'user', 'getstatusname',
                                     array('status' => $article['status']));
             return xarML('You have no permission to view this item [Status: #(1)]', $status);
         }
@@ -144,7 +144,7 @@ function articles_user_display($args)
     $data['topic_names'] = array();
     if (count($cids) > 0) {
         if (!xarModAPILoad('categories', 'user')) return;
-        $catlist = xarModAPIFunc('categories',
+        $catlist = xarMod::apiFunc('categories',
                                 'user',
                                 'getcatinfo',
                                 array('cids' => $cids));
@@ -251,7 +251,7 @@ function articles_user_display($args)
         if(!array_key_exists('defaultsort',$settings)) {
             $settings['defaultsort'] = 'aid';
         }
-        $prevart = xarModAPIFunc('articles','user','getprevious',
+        $prevart = xarMod::apiFunc('articles','user','getprevious',
                                  array('aid' => $aid,
                                        'ptid' => $ptid,
                                        'sort' => $settings['defaultsort'],
@@ -267,7 +267,7 @@ function articles_user_display($args)
         } else {
             $data['prevart'] = '';
         }
-        $nextart = xarModAPIFunc('articles','user','getnext',
+        $nextart = xarMod::apiFunc('articles','user','getnext',
                                  array('aid' => $aid,
                                        'ptid' => $ptid,
                                        'sort' => $settings['defaultsort'],
@@ -352,12 +352,12 @@ function articles_user_display($args)
         // TEST ONLY
             case 'webpage':
                 if (empty($value['validation'])) {
-                    $value['validation'] = 'modules/articles';
+                    $value['validation'] = sys::code() . 'modules/articles';
                 }
                 // fall through
             case 'imagelist':
                 if (empty($value['validation'])) {
-                    $value['validation'] = 'modules/articles/xarimages';
+                    $value['validation'] = sys::code() . 'modules/articles/xarimages';
                 }
                 // fall through
             case 'dropdown':
@@ -369,7 +369,7 @@ function articles_user_display($args)
                                       'type' => $value['format'],
                                       'configuration' => $value['validation'],
                                       'value' => $article[$field]);
-                    $property = xarModAPIFunc('dynamicdata','user','getproperty', $propargs);
+                    $property = xarMod::apiFunc('dynamicdata','user','getproperty', $propargs);
                     if ($property) {
                         $data[$field] = $property->showOutput($propargs);
                     } else {
@@ -391,7 +391,7 @@ function articles_user_display($args)
     }
     // temp. fix to include dynamic data fields without changing templates
     if (xarModIsHooked('dynamicdata','articles',$pubtypeid)) {
-        list($properties) = xarModAPIFunc('dynamicdata','user','getitemfordisplay',
+        list($properties) = xarMod::apiFunc('dynamicdata','user','getitemfordisplay',
                                           array('module'   => 'articles',
                                                 'itemtype' => $pubtypeid,
                                                 'itemid'   => $aid,
@@ -455,7 +455,7 @@ function articles_user_display($args)
 
     // Navigation links
     $data['publabel'] = xarML('Publication');
-    $data['publinks'] = xarModAPIFunc('articles','user','getpublinks',
+    $data['publinks'] = xarMod::apiFunc('articles','user','getpublinks',
                                      array('status' => array(3,2),
                                            'count' => $showpubcount));
     if (isset($showmap)) {
@@ -538,7 +538,7 @@ function articles_user_display($args)
 
     // Generating keywords from the API now instead of setting the entire
     // body into the cache.
-    $keywords = xarModAPIFunc('articles',
+    $keywords = xarMod::apiFunc('articles',
                               'user',
                               'generatekeywords',
                               array('incomingkey' => $data['body']));
@@ -567,7 +567,7 @@ function articles_user_display($args)
 
     // optional category count
     if ($showcatcount && !empty($ptid)) {
-        $pubcatcount = xarModAPIFunc('articles',
+        $pubcatcount = xarMod::apiFunc('articles',
                                     'user',
                                     'getpubcatcount',
                                     // frontpage or approved

@@ -41,8 +41,8 @@ function articles_randomblock_modify($blockinfo)
     if (empty($vars['showsubmit'])) {$vars['showsubmit'] = false;}
     if (empty($vars['showdynamic'])) {$vars['showdynamic'] = false;}
     if (empty($vars['linkpubtype'])) {$vars['linkpubtype'] = false;}
-    $vars['pubtypes'] = xarModAPIFunc('articles', 'user', 'getpubtypes');
-    $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
+    $vars['pubtypes'] = xarMod::apiFunc('articles', 'user', 'getpubtypes');
+    $vars['categorylist'] = xarMod::apiFunc('categories', 'user', 'getcat');
     $vars['statusoptions'] = array(
         array('id' => '', 'name' => xarML('All Published')),
         array('id' => '3', 'name' => xarML('Frontpage')),

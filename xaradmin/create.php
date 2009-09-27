@@ -12,7 +12,7 @@
  * @author mikespub
  */
 /**
- * create item from xarModFunc('articles','admin','new')
+ * create item from xarMod::guiFunc('articles','admin','new')
  *
  * @param id     ptid       The publication Type ID for this new article
  * @param array  new_cids   An array with the category ids for this new article (OPTIONAL)
@@ -47,7 +47,7 @@ function articles_admin_create()
         $preview = 1;
     }
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
     if (!isset($pubtypes[$ptid])) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'publication type', 'admin', 'create',
@@ -67,7 +67,7 @@ function articles_admin_create()
             if (!isset($value['validation'])) {
                 $value['validation'] = '';
             }
-            $properties[$field] = xarModAPIFunc('dynamicdata','user','getproperty',
+            $properties[$field] = xarMod::apiFunc('dynamicdata','user','getproperty',
                                                  array('name' => $field,
                                                        'type' => $value['format'],
                                                        'configuration' => $value['validation']));
@@ -137,7 +137,7 @@ echo var_dump($properties[$field]);
     $article['aid'] = 0;
 
     if ($preview || count($invalid) > 0) {
-        $data = xarModFunc('articles','admin','new',
+        $data = xarMod::guiFunc('articles','admin','new',
                              array('preview' => true,
                                    'article' => $article,
                                    'return_url' => $return_url,
@@ -157,7 +157,7 @@ echo var_dump($properties[$field]);
 
     // Pass to API
     try {
-        $aid = xarModAPIFunc('articles', 'admin', 'create', $article);
+        $aid = xarMod::apiFunc('articles', 'admin', 'create', $article);
         if (empty($aid)) return;
     } catch (Exception $e) {
         // TODO: Avoid dataloss with falling back to preview

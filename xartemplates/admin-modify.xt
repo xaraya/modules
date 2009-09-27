@@ -30,7 +30,7 @@
     </xar:comment>
     <!--
         <xar:set name="prevartinfo">
-            #xarModAPIFunc('articles','user','getprevious',array('ptid' => $ptid, 'aid' => $aid, 'status' => array(0,1,2,3)))#
+            #xarMod::apiFunc('articles','user','getprevious',array('ptid' => $ptid, 'aid' => $aid, 'status' => array(0,1,2,3)))#
         </xar:set>
     -->
     <xar:comment>
@@ -38,7 +38,7 @@
     </xar:comment>
     <!--
         <xar:set name="nextartinfo">
-            #xarModAPIFunc('articles','user','getnext',array('ptid' => $ptid, 'aid' => $aid, 'status' => array(0,1,2,3)))#
+            #xarMod::apiFunc('articles','user','getnext',array('ptid' => $ptid, 'aid' => $aid, 'status' => array(0,1,2,3)))#
         </xar:set>
     -->
     <xar:comment>

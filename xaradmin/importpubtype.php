@@ -34,9 +34,9 @@ function articles_admin_importpubtype($args)
     $data['warning'] = '';
     $data['options'] = array();
 
-    $basedir = 'modules/articles';
+    $basedir = sys::code() . 'modules/articles';
     $filetype = 'xml';
-    $files = xarModAPIFunc('dynamicdata','admin','browse',
+    $files = xarMod::apiFunc('dynamicdata','admin','browse',
                            array('basedir' => $basedir,
                                  'filetype' => $filetype));
     if (!isset($files) || count($files) < 1) {
@@ -61,10 +61,10 @@ function articles_admin_importpubtype($args)
                 $msg = xarML('File not found');
                 throw new BadParameterException(null,$msg);
             }
-            $ptid = xarModAPIFunc('articles','admin','importpubtype',
+            $ptid = xarMod::apiFunc('articles','admin','importpubtype',
                                   array('file' => $basedir . '/' . $file));
         } else {
-            $ptid = xarModAPIFunc('articles','admin','importpubtype',
+            $ptid = xarMod::apiFunc('articles','admin','importpubtype',
                                   array('xml' => $xml));
         }
         if (empty($ptid)) return;

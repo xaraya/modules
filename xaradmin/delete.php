@@ -22,7 +22,7 @@ function articles_admin_delete()
     if (!xarVarFetch('return_url', 'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Get article information
-    $article = xarModAPIFunc('articles',
+    $article = xarMod::apiFunc('articles',
                              'user',
                              'get',
                              array('aid' => $aid,
@@ -39,8 +39,8 @@ function articles_admin_delete()
     $input = array();
     $input['article'] = $article;
     $input['mask'] = 'DeleteArticles';
-    if (!xarModAPIFunc('articles','user','checksecurity',$input)) {
-        $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    if (!xarMod::apiFunc('articles','user','checksecurity',$input)) {
+        $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
         $msg = xarML('You have no permission to delete #(1) item #(2)',
                      $pubtypes[$ptid]['descr'], xarVarPrepForDisplay($aid));
         throw new ForbiddenOperationException(null, $msg);
@@ -55,7 +55,7 @@ function articles_admin_delete()
 
         // Use articles user GUI function (not API) for preview
         if (!xarModLoad('articles','user')) return;
-        $data['preview'] = xarModFunc('articles', 'user', 'display',
+        $data['preview'] = xarMod::guiFunc('articles', 'user', 'display',
                                       array('preview' => true, 'article' => $article));
 
         // Add some other data you'll want to display in the template
@@ -67,7 +67,7 @@ function articles_admin_delete()
 
         $data['return_url'] = $return_url;
 
-        $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+        $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
         $template = $pubtypes[$ptid]['name'];
 
         // Return the template variables defined in this function
@@ -80,7 +80,7 @@ function articles_admin_delete()
     }        
 
     // Pass to API
-    if (!xarModAPIFunc('articles',
+    if (!xarMod::apiFunc('articles',
                      'admin',
                      'delete',
                      array('aid' => $aid,

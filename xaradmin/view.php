@@ -29,7 +29,7 @@ function articles_admin_view($args)
 
     extract($args);
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
 
     // Default parameters
     if (!isset($ptid)) {
@@ -112,7 +112,7 @@ function articles_admin_view($args)
     }
 
     // Get item information
-    $articles = xarModAPIFunc('articles',
+    $articles = xarMod::apiFunc('articles',
                              'user',
                              'getall',
                              array('startnum' => $startnum,
@@ -143,7 +143,7 @@ function articles_admin_view($args)
             $labels[$field] = $value['label'];
         }
     } else {
-        $pubfields = xarModAPIFunc('articles','user','getpubfields');
+        $pubfields = xarMod::apiFunc('articles','user','getpubfields');
         foreach ($pubfields as $field => $value) {
             $labels[$field] = $value['label'];
         }
@@ -159,7 +159,7 @@ function articles_admin_view($args)
                   //&& (!is_array($status) || !isset($status[0]));
     $data['showstatus'] = $showstatus;
 
-    $data['states'] = xarModAPIFunc('articles','user','getstates');
+    $data['states'] = xarMod::apiFunc('articles','user','getstates');
 
     $items = array();
     if ($articles != false) {
@@ -197,7 +197,7 @@ function articles_admin_view($args)
             $input = array();
             $input['article'] = $article;
             $input['mask'] = 'DeleteArticles';
-            if (xarModAPIFunc('articles','user','checksecurity',$input)) {
+            if (xarMod::apiFunc('articles','user','checksecurity',$input)) {
                 $item['deleteurl'] = xarModURL('articles',
                                               'admin',
                                               'delete',
@@ -215,7 +215,7 @@ function articles_admin_view($args)
                 $item['deleteurl'] = '';
 
                 $input['mask'] = 'EditArticles';
-                if (xarModAPIFunc('articles','user','checksecurity',$input)) {
+                if (xarMod::apiFunc('articles','user','checksecurity',$input)) {
                     $item['editurl'] = xarModURL('articles',
                                                 'admin',
                                                 'modify',
@@ -229,7 +229,7 @@ function articles_admin_view($args)
                     $item['editurl'] = '';
 
                     $input['mask'] = 'ReadArticles';
-                    if (xarModAPIFunc('articles','user','checksecurity',$input)) {
+                    if (xarMod::apiFunc('articles','user','checksecurity',$input)) {
                         $item['viewurl'] = xarModURL('articles',
                                                     'user',
                                                     'display',
@@ -253,7 +253,7 @@ function articles_admin_view($args)
     // Add pager
     sys::import('xaraya.pager');
     $data['pager'] = xarTplGetPager($startnum,
-                            xarModAPIFunc('articles', 'user', 'countitems',
+                            xarMod::apiFunc('articles', 'user', 'countitems',
                                           array('ptid' => $ptid,
                                                 'authorid' => $authorid,
                                                 'language' => $lang,

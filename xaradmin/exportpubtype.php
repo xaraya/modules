@@ -23,7 +23,7 @@ function articles_admin_exportpubtype($args)
 
     if (!xarSecurityCheck('AdminArticles')) return;
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
 
     if (empty($ptid) || empty($pubtypes[$ptid])) {
         $msg = xarML('Invalid publication type #(1)',
@@ -126,7 +126,7 @@ function articles_admin_exportpubtype($args)
     }
 
     // Retrieve any dynamic object for this pubtype, or create a dummy one
-    $object = xarModAPIFunc('dynamicdata','user','getobject',
+    $object = xarMod::apiFunc('dynamicdata','user','getobject',
                              array('name'     => $pubtype['name'],
                                    'label'    => $pubtype['descr'],
                                    'moduleid' => xarMod::getRegId('articles'),
@@ -223,7 +223,7 @@ function articles_admin_exportpubtype($args)
     $object->properties = array_reverse($object->properties);
 
     // Export the (real or dummy) dynamic object
-    $data['xml'] = xarModAPIFunc('dynamicdata','util','export',
+    $data['xml'] = xarMod::apiFunc('dynamicdata','util','export',
                                  array('objectref' => & $object));
 */
 

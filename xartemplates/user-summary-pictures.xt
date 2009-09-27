@@ -15,7 +15,7 @@
 <div id="main-content">
     <ul>
         <xar:if condition="xarModIsHooked('uploads','articles',$pubtypeid) and substr($body,0,1) eq ';'">
-            <xar:set name="img_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $body, 'multiple' => true))</xar:set>
+            <xar:set name="img_output">xarMod::apiFunc('uploads','user','showoutput',array('value' => $body, 'multiple' => true))</xar:set>
             <xar:foreach in="$img_output" key="$fileId" value="$fileInfo">
                 <li>
                     <a href="#$link#">

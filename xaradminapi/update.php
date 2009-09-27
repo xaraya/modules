@@ -13,7 +13,7 @@
  */
 /**
  * Update an article
- * Usage : if (xarModAPIFunc('articles', 'admin', 'update', $article)) {...}
+ * Usage : if (xarMod::apiFunc('articles', 'admin', 'update', $article)) {...}
  *
  * @param id $args['aid'] ID of the item (mandatory argument)
  * @param string $args['title'] name of the item (mandatory argument)
@@ -53,7 +53,7 @@ function articles_adminapi_update($args)
     if (!xarModAPILoad('articles', 'user')) return;
 
     $args['mask'] = 'EditArticles';
-    if (!xarModAPIFunc('articles','user','checksecurity',$args)) {
+    if (!xarMod::apiFunc('articles','user','checksecurity',$args)) {
         $msg = xarML('Not authorized to update #(1) items',
                     'Article');
         throw new ForbiddenOperationException(null, $msg);
@@ -87,7 +87,7 @@ function articles_adminapi_update($args)
     }
 
     if (isset($status) && is_numeric($status)) {
-        $oldversion= xarModAPIFunc('articles','user','get',
+        $oldversion= xarMod::apiFunc('articles','user','get',
                                     array('aid'=>$aid,
                                           'fields'=>array('status')));
         $args['oldstatus'] = $oldversion['status'];

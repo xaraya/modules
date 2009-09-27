@@ -43,7 +43,7 @@ function articles_admin_modifyconfig()
     $data = array();
     $data['ptid'] = $ptid;
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
 
     if (isset($settings) && is_array($settings)) {
         $data['itemsperpage']           = empty($settings['itemsperpage']) ? 20 : $settings['itemsperpage'];
@@ -210,7 +210,7 @@ function articles_admin_modifyconfig()
 
     // get root categories for this publication type
     if (!empty($ptid)) {
-        $catlinks = xarModAPIFunc('articles',
+        $catlinks = xarMod::apiFunc('articles',
                                  'user',
                                  'getrootcats',
                                  array('ptid' => $ptid));
@@ -272,7 +272,7 @@ function articles_admin_modifyconfig()
     }
 
     $data['statusoptions'] = array();
-    $states = xarModAPIFunc('articles','user','getstates');
+    $states = xarMod::apiFunc('articles','user','getstates');
     foreach ($states as $id => $name) {
         $data['statusoptions'][] = array('value' => $id, 'label' => $name);
     }

@@ -27,7 +27,7 @@
           API function to retrieve the file information. For Dynamic Data fields
           you can use [fieldname]_output directly to access the file information.
         </xar:comment>
-        <xar:set name="notes_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $notes, 'multiple' => true))</xar:set>
+        <xar:set name="notes_output">xarMod::apiFunc('uploads','user','showoutput',array('value' => $notes, 'multiple' => true))</xar:set>
         <xar:foreach in="$notes_output" key="$fileid" value="$fileinfo">
             <p><a href="#$fileinfo['fileDownload']#">#$fileinfo['fileName']#</a></p>
         </xar:foreach>

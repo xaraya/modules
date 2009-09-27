@@ -32,7 +32,7 @@ function articles_userapi_getrootcats($args)
     $rootcids = array();
     if (!empty($ptid) || empty($all)) {
         // use categories API here
-        $catlist = xarModAPIFunc('categories', 'user', 'getallcatbases',
+        $catlist = xarMod::apiFunc('categories', 'user', 'getallcatbases',
                                  array('module'   => 'articles',
                                        'itemtype' => $ptid));
         // reformat into array expected by articles (for now)
@@ -59,7 +59,7 @@ function articles_userapi_getrootcats($args)
 
     } else {
         // Get publication types
-        $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+        $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
         // get base categories for all publication types here
         $publist = array_keys($pubtypes);
         // add the defaults too, in case we have other base categories there
@@ -95,7 +95,7 @@ function articles_userapi_getrootcats($args)
 
     $isfirst = 1;
     $catlinks = array();
-    $catlist = xarModAPIFunc('categories',
+    $catlist = xarMod::apiFunc('categories',
                             'user',
                             'getcatinfo',
                             array('cids' => $rootcids));

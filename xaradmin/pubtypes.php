@@ -40,7 +40,7 @@ function articles_admin_pubtypes()
     $data['pubtypes'] = array();
 
     // Get current config data for all publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
 
     // Verify the action
     if (!isset($action) || ($action != 'new' && $action != 'create' &&
@@ -65,15 +65,15 @@ function articles_admin_pubtypes()
                 $config[$field]['format'] = $value;
                 // some default basedirs for now...
                 if ($value == 'imagelist') {
-                    $config[$field]['validation'] = 'modules/articles/xarimages';
+                    $config[$field]['validation'] = sys::code() . 'modules/articles/xarimages';
                 } elseif ($value == 'webpage') {
-                    $config[$field]['validation'] = 'modules/articles';
+                    $config[$field]['validation'] = sys::code() . 'modules/articles';
                 }
             }
             foreach ($input as $field => $value) {
                 $config[$field]['input'] = 1;
             }
-            $ptid = xarModAPIFunc('articles', 'admin', 'createpubtype',
+            $ptid = xarMod::apiFunc('articles', 'admin', 'createpubtype',
                                  array('name' => $name,
                                        'descr' => $descr,
                                        'config' => $config));
@@ -132,7 +132,7 @@ function articles_admin_pubtypes()
                     $config[$field]['validation'] = $pubtypes[$ptid]['config'][$field]['validation'];
                 }
             }
-            if (!xarModAPIFunc('articles', 'admin', 'updatepubtype',
+            if (!xarMod::apiFunc('articles', 'admin', 'updatepubtype',
                               array('ptid' => $ptid,
                                     'name' => $name,
                                     'descr' => $descr,
@@ -148,7 +148,7 @@ function articles_admin_pubtypes()
 
         // CONFIRM
         } elseif ($action == 'confirm') {
-            if (!xarModAPIFunc('articles', 'admin', 'deletepubtype',
+            if (!xarMod::apiFunc('articles', 'admin', 'deletepubtype',
                               array('ptid' => $ptid))) {
                 return;
             } else {
@@ -197,7 +197,7 @@ function articles_admin_pubtypes()
 
 /*
     // Get the list of defined field formats
-    $pubfieldformats = xarModAPIFunc('articles','user','getpubfieldformats');
+    $pubfieldformats = xarMod::apiFunc('articles','user','getpubfieldformats');
     $data['formats'] = array();
     foreach ($pubfieldformats as $fname => $flabel) {
         $data['formats'][] = array('fname' => $fname, 'flabel' => $flabel);
@@ -211,9 +211,9 @@ function articles_admin_pubtypes()
                                  array('action' => 'create'));
 
         $data['fields'] = array();
-        $pubfieldtypes = xarModAPIFunc('articles','user','getpubfieldtypes');
+        $pubfieldtypes = xarMod::apiFunc('articles','user','getpubfieldtypes');
         // Fill in the *default* configuration fields
-        $pubfields = xarModAPIFunc('articles','user','getpubfields');
+        $pubfields = xarMod::apiFunc('articles','user','getpubfields');
         foreach ($pubfields as $field => $value) {
             $data['fields'][] = array('name'   => $field,
                                       'label'  => $value['label'],
@@ -230,11 +230,11 @@ function articles_admin_pubtypes()
                                  array('action' => 'update'));
 
         $data['fields'] = array();
-        $pubfieldtypes = xarModAPIFunc('articles','user','getpubfieldtypes');
+        $pubfieldtypes = xarMod::apiFunc('articles','user','getpubfieldtypes');
         // Fill in the *current* configuration fields
     // TODO: make order dependent on pubtype or not ?
     //    foreach ($pubtypes[$ptid]['config'] as $field => $value) {
-        $pubfields = xarModAPIFunc('articles','user','getpubfields');
+        $pubfields = xarMod::apiFunc('articles','user','getpubfields');
         foreach ($pubfields as $field => $dummy) {
             $value = $pubtypes[$ptid]['config'][$field];
             $data['fields'][] = array('name'   => $field,
@@ -248,7 +248,7 @@ function articles_admin_pubtypes()
         $data['item'] = $pubtypes[$ptid];
         $data['authid'] = xarSecGenAuthKey();
         $data['buttonlabel'] = xarML('Delete');
-        $data['numitems'] = xarModAPIFunc('articles','user','countitems',
+        $data['numitems'] = xarMod::apiFunc('articles','user','countitems',
                                           array('ptid' => $ptid));
         $data['link'] = xarModURL('articles','admin','pubtypes',
                                  array('action' => 'confirm'));

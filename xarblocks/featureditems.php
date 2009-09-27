@@ -106,7 +106,7 @@ function articles_featureditemsblock_display(& $blockinfo)
             xarVarSetCached('Hooks.uploads','ishooked',1);
         }
 
-          if($featart = xarModAPIFunc(
+          if($featart = xarMod::apiFunc(
             'articles','user','getall',
             array(
                 'aids' => array($featuredaid),
@@ -178,7 +178,7 @@ function articles_featureditemsblock_display(& $blockinfo)
     }
 
     if (!empty($vars['moreitems'])) {
-        $articles = xarModAPIFunc(
+        $articles = xarMod::apiFunc(
             'articles', 'user', 'getall',
             array(
                 'aids' => $vars['moreitems'],

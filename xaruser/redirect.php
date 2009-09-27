@@ -30,7 +30,7 @@ function articles_user_redirect($args)
     if (!xarModAPILoad('articles', 'user')) return;
 
     // Get article
-    $article = xarModAPIFunc('articles',
+    $article = xarMod::apiFunc('articles',
                             'user',
                             'get',
                             array('aid' => $aid));
@@ -43,7 +43,7 @@ function articles_user_redirect($args)
     $ptid = $article['pubtypeid'];
 
     // Get publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
 
 // TODO: improve this e.g. when multiple URL fields are present
     // Find an URL field based on the pubtype configuration

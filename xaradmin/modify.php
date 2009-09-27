@@ -28,7 +28,7 @@ function articles_admin_modify($args)
     if (isset($aid) && empty($preview)) {
         $preview = 0;
         // Get article information
-        $article = xarModAPIFunc('articles',
+        $article = xarMod::apiFunc('articles',
                                 'user',
                                 'get',
                                 array('aid' => $aid,
@@ -48,13 +48,13 @@ function articles_admin_modify($args)
     $data['ptid'] = $ptid;
     $data['aid'] = $aid;
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
 
     // Security check
     $input = array();
     $input['article'] = $article;
     $input['mask'] = 'EditArticles';
-    if (!xarModAPIFunc('articles','user','checksecurity',$input)) {
+    if (!xarMod::apiFunc('articles','user','checksecurity',$input)) {
         $msg = xarML('You have no permission to modify #(1) item #(2)',
                      $pubtypes[$ptid]['descr'], xarVarPrepForDisplay($aid));
         throw new ForbiddenOperationException(null, $msg);
@@ -68,7 +68,7 @@ function articles_admin_modify($args)
     // Use articles user GUI function (not API) for preview, catch exceptions
     if (!xarModLoad('articles','user')) return;
     try {
-        $data['preview'] = xarModFunc('articles', 'user', 'display',
+        $data['preview'] = xarMod::guiFunc('articles', 'user', 'display',
                                       array('preview' => true, 'article' => $article));
     } catch (Exception $e) {
         // Catch errors from generating the preview
@@ -103,7 +103,7 @@ function articles_admin_modify($args)
     // Get the labels from the pubtype configuration
 // TODO: make order dependent on pubtype or not ?
 //    foreach ($pubtypes[$ptid]['config'] as $field => $value) {}
-    $pubfields = xarModAPIFunc('articles','user','getpubfields');
+    $pubfields = xarMod::apiFunc('articles','user','getpubfields');
     foreach ($pubfields as $field => $dummy) {
         $value = $pubtypes[$ptid]['config'][$field];
         if (empty($value['label'])) {

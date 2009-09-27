@@ -23,12 +23,12 @@ function articles_userapi_getitemfields($args)
 
     $itemfields = array();
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
 
     if (!empty($itemtype) && !empty($pubtypes[$itemtype])) {
         $fields = $pubtypes[$itemtype]['config'];
     } else {
-        $fields = xarModAPIFunc('articles','user','getpubfields');
+        $fields = xarMod::apiFunc('articles','user','getpubfields');
     }
     foreach ($fields as $name => $info) {
         if (empty($info['label'])) continue;

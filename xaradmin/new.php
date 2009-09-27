@@ -52,7 +52,7 @@ function articles_admin_new($args)
         $article['cids'] = preg_split('/[ +-]/',$catid);
     }
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
 
     // Security check
     if (empty($ptid)) {
@@ -65,7 +65,7 @@ function articles_admin_new($args)
         if (isset($article['cids']) && count($article['cids']) > 0) {
             foreach ($article['cids'] as $cid) {
                 if (!xarSecurityCheck('SubmitArticles',1,'Article',"$ptid:$cid:All:All")) {
-                    $catinfo = xarModAPIFunc('categories', 'user', 'getcatinfo',
+                    $catinfo = xarMod::apiFunc('categories', 'user', 'getcatinfo',
                                              array('cid' => $cid));
                     if (empty($catinfo['name'])) {
                         $catinfo['name'] = $cid;
@@ -87,7 +87,7 @@ function articles_admin_new($args)
     if (!empty($preview)) {
         // Use articles user GUI function (not API) for preview
         if (!xarModLoad('articles','user')) return;
-        $preview = xarModFunc('articles', 'user', 'display',
+        $preview = xarMod::guiFunc('articles', 'user', 'display',
                              array('preview' => true, 'article' => $article));
     } else {
         $preview = '';
@@ -145,7 +145,7 @@ function articles_admin_new($args)
         $data['defaultstatus'] = $settings['defaultstatus'];
     // TODO: make order dependent on pubtype or not ?
     //    foreach ($pubtypes[$ptid]['config'] as $field => $value) {}
-        $pubfields = xarModAPIFunc('articles','user','getpubfields');
+        $pubfields = xarMod::apiFunc('articles','user','getpubfields');
         foreach ($pubfields as $field => $dummy) {
             $value = $pubtypes[$ptid]['config'][$field];
             if (empty($value['label']) || empty($value['input'])) {

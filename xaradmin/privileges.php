@@ -83,7 +83,7 @@ function articles_admin_privileges($args)
     }
     $title = '';
     if (!empty($aid)) {
-        $article = xarModAPIFunc('articles','user','get',
+        $article = xarMod::apiFunc('articles','user','get',
                                  array('aid'      => $aid,
                                        'withcids' => true));
         if (empty($article)) {
@@ -114,7 +114,7 @@ function articles_admin_privileges($args)
     } elseif (empty($uid) || $uid == 'All' || (!is_numeric($uid) && (strtolower($uid) != 'myself'))) {
         $uid = 0;
         if (!empty($author)) {
-            $user = xarModAPIFunc('roles', 'user', 'get',
+            $user = xarMod::apiFunc('roles', 'user', 'get',
                                   array('name' => $author));
             if (!empty($user) && !empty($user['uid'])) {
                 if (strtolower($author) == 'myself') $uid = 'Myself';
@@ -126,7 +126,7 @@ function articles_admin_privileges($args)
     } else {
         $author = '';
 /*
-        $user = xarModAPIFunc('roles', 'user', 'get',
+        $user = xarMod::apiFunc('roles', 'user', 'get',
                               array('uid' => $uid));
         if (!empty($user) && !empty($user['name'])) {
             $author = $user['name'];
@@ -156,7 +156,7 @@ function articles_admin_privileges($args)
     }
 
     // get the list of current authors
-    $authorlist =  xarModAPIFunc('articles','user','getauthors',
+    $authorlist =  xarMod::apiFunc('articles','user','getauthors',
                                  array('ptid' => $ptid,
                                        'cids' => empty($cid) ? array() : array($cid)));
     if (!empty($author) && isset($authorlist[$uid])) {
@@ -164,7 +164,7 @@ function articles_admin_privileges($args)
     }
 
     if (empty($aid)) {
-        $numitems = xarModAPIFunc('articles','user','countitems',
+        $numitems = xarMod::apiFunc('articles','user','countitems',
                                   array('ptid' => $ptid,
                                         'cids' => empty($cid) ? array() : array($cid),
                                         'authorid' => $uid));
@@ -192,11 +192,11 @@ function articles_admin_privileges($args)
                  );
 
     // Get publication types
-    $data['pubtypes'] = xarModAPIFunc('articles','user','getpubtypes');
+    $data['pubtypes'] = xarMod::apiFunc('articles','user','getpubtypes');
 
     $catlist = array();
     if (!empty($ptid)) {
-        $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $ptid));
+        $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $ptid));
         foreach ($basecats as $catid) $catlist[$catid['category_id']] = 1;
         if (empty($data['pubtypes'][$ptid]['config']['authorid']['label'])) {
             $data['showauthor'] = 0;
@@ -205,7 +205,7 @@ function articles_admin_privileges($args)
         }
     } else {
         foreach (array_keys($data['pubtypes']) as $pubid) {
-            $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $pubid));
+            $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $pubid));
             foreach ($basecats as $catid) {
                 $catlist[$catid['category_id']] = 1;
             }

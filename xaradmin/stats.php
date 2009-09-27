@@ -34,10 +34,10 @@ function articles_admin_stats($args = array())
 
     $data = array();
     $data['group'] = $group;
-    $data['stats'] = xarModAPIFunc('articles','admin','getstats',
+    $data['stats'] = xarMod::apiFunc('articles','admin','getstats',
                                    array('group' => $group));
-    $data['pubtypes'] = xarModAPIFunc('articles','user','getpubtypes');
-    $data['statuslist'] = xarModAPIFunc('articles','user','getstates');
+    $data['pubtypes'] = xarMod::apiFunc('articles','user','getpubtypes');
+    $data['statuslist'] = xarMod::apiFunc('articles','user','getstates');
     $data['fields'] = array('pubtypeid'     => xarML('Publication Type'),
                             'status'        => xarML('Status'),
                             'authorid'      => xarML('Author'),

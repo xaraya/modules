@@ -39,7 +39,7 @@ function articles_schedulerapi_makedigest($args)
     }
 
     // count the number of new items since the last digest
-    $count = xarModAPIFunc('articles','user','countitems',
+    $count = xarMod::apiFunc('articles','user','countitems',
                            array('ptid' => $ptid, // some publication type(s)
                                  'catid' => $catid, // some categories
                                  'status' => array(2,3), // approved or frontpage
@@ -52,7 +52,7 @@ function articles_schedulerapi_makedigest($args)
     }
 
     // create some HTML digest
-    $htmldigest = xarModFunc('articles','user','view',
+    $htmldigest = xarMod::guiFunc('articles','user','view',
                              array('ptid' => $ptid,
                                    'catid' => $catid,
                                    'startdate' => $lastdigest,
@@ -86,7 +86,7 @@ function articles_schedulerapi_makedigest($args)
     foreach ($userlist as $uid) {
         $name = xarUserGetVar('name',$uid);
         $email = xarUserGetVar('email',$uid);
-        if (!xarModAPIFunc('mail', 'admin', 'sendhtmlmail',
+        if (!xarMod::apiFunc('mail', 'admin', 'sendhtmlmail',
                            array('info' => $email,
                                  'name' => $name,
                                  'subject' => $subject,

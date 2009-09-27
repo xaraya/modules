@@ -94,7 +94,7 @@ function articles_user_search($args)
     if (!xarModAPILoad('articles', 'user')) return;
 
     // Get publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
 
     if (xarSecurityCheck('AdminArticles',0)) {
         $isadmin = true;
@@ -201,7 +201,7 @@ function articles_user_search($args)
     if (!empty($author)) {
         // Load API
         if (!xarModAPILoad('roles', 'user')) return;
-        $user = xarModAPIFunc('roles','user','get',
+        $user = xarMod::apiFunc('roles','user','get',
                              array('name' => $author));
         if (!empty($user['id'])) {
             $authorid = $user['id'];
@@ -252,7 +252,7 @@ function articles_user_search($args)
         $data['searchtype'] = $searchtype;
     }
     if ($isadmin) {
-        $states = xarModAPIFunc('articles','user','getstates');
+        $states = xarMod::apiFunc('articles','user','getstates');
         $data['statuslist'] = array();
         foreach ($states as $id => $name) {
             $data['statuslist'][] = array('id' => $id, 'name' => $name, 'checked' => in_array($id,$status));
@@ -283,7 +283,7 @@ function articles_user_search($args)
         $catarray = array();
         foreach ($ptids as $curptid) {
             // get root categories for this publication type
-            $catlinks = xarModAPIFunc('articles',
+            $catlinks = xarMod::apiFunc('articles',
                                      'user',
                                      'getrootcats',
                                      array('ptid' => $curptid));
@@ -293,7 +293,7 @@ function articles_user_search($args)
         }
 
         foreach ($catarray as $cid => $title) {
-            $select = xarModAPIFunc('categories',
+            $select = xarMod::apiFunc('categories',
                                     'visual',
                                     'makeselect',
                                     Array('cid' => $cid,
@@ -351,7 +351,7 @@ function articles_user_search($args)
         $count = 0;
         // TODO: allow combination of searches ?
         foreach ($ptids as $curptid) {
-            $articles = xarModAPIFunc('articles',
+            $articles = xarMod::apiFunc('articles',
                                      'user',
                                      'getall',
                                      array('startnum' => $startnum,
@@ -385,10 +385,10 @@ function articles_user_search($args)
                         }
                     }
                     if (count($cidlist) > 0) {
-                        $catinfo = xarModAPIFunc('categories','user','getcatinfo',
+                        $catinfo = xarMod::apiFunc('categories','user','getcatinfo',
                                                  array('cids' => array_keys($cidlist)));
                         // get root categories for this publication type
-                        $catroots = xarModAPIFunc('articles',
+                        $catroots = xarMod::apiFunc('articles',
                                                   'user',
                                                   'getrootcats',
                                                   array('ptid' => $curptid));
@@ -484,7 +484,7 @@ function articles_user_search($args)
 // TODO: make count depend on language in the future
                 sys::import('xaraya.pager');
                 $pager = xarTplGetPager($startnum,
-                                        xarModAPIFunc('articles', 'user', 'countitems',
+                                        xarMod::apiFunc('articles', 'user', 'countitems',
                                                       array('cids' => $cids,
                                                             'andcids' => $andcids,
                                                             'ptid' => $curptid,

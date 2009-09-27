@@ -44,7 +44,7 @@ function articles_adminapi_setrootcats($args)
         xarModVars::set('articles','number_of_categories',$numcids);
         xarModVars::set('articles','mastercids',$cidstring);
 
-        xarModAPIFunc('categories','admin','setcatbases',
+        xarMod::apiFunc('categories','admin','setcatbases',
                       array('module' => 'articles',
                             'itemtype' => 0,
                             'cids' => $cids));
@@ -52,7 +52,7 @@ function articles_adminapi_setrootcats($args)
         xarModVars::set('articles','number_of_categories.'.$ptid,$numcids);
         xarModVars::set('articles','mastercids.'.$ptid,$cidstring);
 
-        xarModAPIFunc('categories','admin','setcatbases',
+        xarMod::apiFunc('categories','admin','setcatbases',
                       array('module' => 'articles',
                             'itemtype' => $ptid,
                             'cids' => $cids));

@@ -86,7 +86,7 @@ function articles_glossaryblock_display($blockinfo)
     }
 
     // Attempt to find an article with this title and optional category/pubtype.
-    $article = xarModAPIfunc('articles', 'user', 'get', $articlecriteria);
+    $article = xarMod::apiFunc('articles', 'user', 'get', $articlecriteria);
 
     if (!empty($vars['cid']) && array_search($vars['cid'], $article['cids']) === NULL) {
         // Category not assigned to article.
@@ -133,10 +133,10 @@ function articles_glossaryblock_modify($blockinfo)
     }
 
     // Pub type drop-down list values.
-    $vars['pubtypes'] = xarModAPIFunc('articles', 'user', 'getpubtypes');
+    $vars['pubtypes'] = xarMod::apiFunc('articles', 'user', 'getpubtypes');
 
     // Categories drop-down list values.
-    $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
+    $vars['categorylist'] = xarMod::apiFunc('categories', 'user', 'getcat');
 
     // Defaults.
     if (empty($vars['ptid'])) {

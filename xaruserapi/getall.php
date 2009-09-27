@@ -85,7 +85,7 @@ function articles_userapi_getall($args)
             if (!xarModIsHooked('dynamicdata', 'articles', $dd_ptid)) continue;
 
             // (is it possible to determine ptid(s) from the other args? not easily)
-            $dditems = xarModApiFunc(
+            $dditems = xarMod::apiFunc(
                 'dynamicdata', 'user', 'getitems',
                 array('module' => 'articles', 'itemtype' => $dd_ptid, 'where' => $wheredd)
             );
@@ -107,7 +107,7 @@ function articles_userapi_getall($args)
         // Make sure we don't come back to this section the next time around.
         unset($args['wheredd']);
 
-        return xarModApiFunc('articles', 'user', 'getall', $args);
+        return xarMod::apiFunc('articles', 'user', 'getall', $args);
     }
 
     // Default fields in articles (for now)
@@ -172,7 +172,7 @@ function articles_userapi_getall($args)
     // Get the field names and LEFT JOIN ... ON ... parts from articles
     // By passing on the $args, we can let leftjoin() create the WHERE for
     // the articles-specific columns too now
-    $articlesdef = xarModAPIFunc('articles', 'user', 'leftjoin', $args);
+    $articlesdef = xarMod::apiFunc('articles', 'user', 'leftjoin', $args);
 
     // TODO : how to handle the case where xar_name is empty, but xar_uname isn't
 
@@ -181,14 +181,14 @@ function articles_userapi_getall($args)
         if (!xarModAPILoad('roles', 'user')) return;
 
         // Get the field names and LEFT JOIN ... ON ... parts from users
-        $usersdef = xarModAPIFunc('roles', 'user', 'leftjoin');
+        $usersdef = xarMod::apiFunc('roles', 'user', 'leftjoin');
         if (empty($usersdef)) return;
     }
 
     if (!empty($required['cids'])) {
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
         // This function supports itemtype arrays, so pass in ptids.
-        $categoriesdef = xarModAPIFunc(
+        $categoriesdef = xarMod::apiFunc(
             'categories', 'user', 'leftjoin',
             array(
                 'cids' => $cids,
@@ -222,7 +222,7 @@ function articles_userapi_getall($args)
             if (!xarModIsHooked('ratings', 'articles', $rate_ptid)) continue;
 
             // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from ratings
-            $ratingsdef = xarModAPIFunc('ratings','user','leftjoin',
+            $ratingsdef = xarMod::apiFunc('ratings','user','leftjoin',
                                     array('modid' => $modid,
 
                     'itemtype' => (isset($ptids) ? $ptids : null)
@@ -444,7 +444,7 @@ function articles_userapi_getall($args)
         }
 
         // Get the links for the Array of iids we have
-        $cids = xarModAPIFunc(
+        $cids = xarMod::apiFunc(
             'categories', 'user', 'getlinks',
             array(
                 'iids' => $aids,
@@ -518,7 +518,7 @@ function articles_userapi_getall($args)
         foreach ($itemids_per_type as $pubtype => $itemids) {
             if (!xarModIsHooked('dynamicdata', 'articles', $pubtype)) continue;
 
-            list($properties, $items) = xarModAPIFunc(
+            list($properties, $items) = xarMod::apiFunc(
                 'dynamicdata', 'user', 'getitemsforview',
                 array(
                     'module' => 'articles',
