@@ -26,7 +26,7 @@ function translations_adminapi_release_module_trans($args)
     // Argument check
     assert('isset($modid) && isset($locale)');
 
-    if (!($modinfo = xarModGetInfo($modid))) return;
+    if (!($modinfo = xarMod::getInfo($modid))) return;
     $modname = $modinfo['name'];
     $modversion = $modinfo['version'];
 

@@ -210,7 +210,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
 
         $modid = $extid;
 
-        if (!$modinfo = xarModGetInfo($modid)) return;
+        if (!$modinfo = xarMod::getInfo($modid)) return;
         $modname = $modinfo['name'];
         $moddir = $modinfo['osdirectory'];
 
@@ -259,7 +259,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
 
         case XARMLS_DNTYPE_THEME:
         $themeid = $extid;
-        if (!$themeinfo = xarModGetInfo($themeid,'theme')) return;
+        if (!$themeinfo = xarMod::getInfo($themeid,'theme')) return;
 
         // FIXME this is because bug 
         //$themename = $themeinfo['name'];

@@ -18,7 +18,7 @@ function translations_admin_module_overview()
 
     if (!xarVarFetch('extid', 'id', $modid)) return;
 
-    if (!($tplData = xarModGetInfo($modid))) return;
+    if (!($tplData = xarMod::getInfo($modid))) return;
     $tplData['dnType'] = XARMLS_DNTYPE_MODULE;
     $tplData['dnName'] = $tplData['name'];
     $tplData['modid'] = $modid;

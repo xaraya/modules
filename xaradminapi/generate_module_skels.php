@@ -28,7 +28,7 @@ function translations_adminapi_generate_module_skels($args)
     // Argument check
     assert('isset($modid) && isset($locale)');
 
-    if (!$modinfo = xarModGetInfo($modid)) return;
+    if (!$modinfo = xarMod::getInfo($modid)) return;
     $modname = $modinfo['name'];
     $moddir = $modinfo['osdirectory'];
 

@@ -25,7 +25,7 @@ function translations_adminapi_generate_theme_trans($args)
     // Argument check
     assert('isset($themeid) && isset($locale)');
 
-    if (!($modinfo = xarModGetInfo($themeid,'theme'))) return;
+    if (!($modinfo = xarMod::getInfo($themeid,'theme'))) return;
     $themename = $modinfo['name'];
     $themedir = $modinfo['osdirectory'];
 
