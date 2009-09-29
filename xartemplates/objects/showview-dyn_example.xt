@@ -2,20 +2,23 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:if condition="empty($layout) or $layout eq 'default'">
-        <p class="xar-accent xar-fullwidth">            
-            Template : <strong>modules/dyn_example/xartemplates/objects/showview-dyn_example.xt</strong><br/>
-            This is a specific user view template for the dyn_example object (if you want this)
-            in the dyn_example module (if you want that)            
-        </p>
-        <p>
-            Sort by
-            <xar:foreach in="$properties" key="$name">
-                &#160;
-                <a href="#$sorturl#=#$name#">
-                    <xar:data-label property="$properties[$name]" />
-                </a>
-            </xar:foreach>
-        </p>
+
+    <style>
+    pre {
+    display: inline;
+    }
+    </style>
+    
+    <p><strong>Template invoked by the tag:</strong></p>
+
+        <blockquote>               
+        <strong>
+        <a href="javascript:void(window.open('#sys::code()#modules/dyn_example/xartemplates/objects/showview-dyn_example.xt', 'Template', 'width=700,height=580,toolbar=0,status=0,location=0,scrollbars=1, left=200,top=200')) ">modules/dyn_example/xartemplates/objects/showview-dyn_example.xt</a></strong>
+        </blockquote>
+
+    <p><strong>Output:</strong></p>
+    
+
         <xar:foreach in="$items" key="$itemid" value="$fields">
             <table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2" >
                 <xar:foreach in="$properties" key="$name">
@@ -96,7 +99,7 @@
                         </xar:if>
                     </xar:foreach>
                     <xar:if condition="empty($linkfield)">
-                        <td class="xar-align-center xar-valign-top">
+                        <td class="xar-align-center xar-valign-top">TEST
                             <xar:if condition="!empty($links[$itemid]) and count($links[$itemid]) gt 0">
                                 <xar:foreach in="$links[$itemid]" value="$option">
                                     #$option['ojoin']# <a href="#$option['olink']#">#$option['otitle']#</a>
@@ -126,7 +129,7 @@
             </div>
         </xar:if>
 
-    <xar:elseif condition="$layout eq 'subform'" />
+    <xar:elseif condition="$layout eq 'subform'" />subform
         <table class="xar-norm">
             <tr>
                 <xar:foreach in="$properties" key="$name">
@@ -227,4 +230,5 @@
         <br /><br />
         You can also specify a separate template, e.g. if you want to handle individual fields differently for a particular module / itemtype
     </xar:if>
+
 </xar:template>

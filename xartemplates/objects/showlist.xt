@@ -12,7 +12,7 @@
     </p>
 
     <!-- Use the subtemplate for the layout specified -->
-    <xar:template file="objectlist-$layout" module="dynamicdata"/>
+    <xar:template file="objectlist-$layout" module="dynamicdata"  />
 
     <!-- Conditionally add pager stuff -->
     <xar:if condition="!empty($prevurl) or !empty($nexturl)">

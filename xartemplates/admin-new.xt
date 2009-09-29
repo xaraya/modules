@@ -3,12 +3,12 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- common admin menu for this module - remove link to the current function -->
     <div class="xar-mod-head">
-      <span class="xar-mod-title">Dynamic Example Administration</span>
+      <span class="xar-mod-title">Dynamic Data Example Administration</span>
     </div>
     <div class="xar-mod-body">
-      <xar:template type="module" file="admin-menu" />
+      <xar:template type="module" file="admintabs" />
 
-        <h2>Add a Dynamic Example</h2>
+        <h2>Add an Item</h2>
         <xar:set name="withupload">#$object->upload#</xar:set>
         <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
         <xar:if condition="!empty($withupload)">
@@ -22,6 +22,21 @@
             </fieldset>
         </xar:if>
 
+    <p><strong>Important tag in admin-new.xt:</strong></p>
+
+    <blockquote><pre>&lt;xar:data-form object="$object" tplmodule="dyn_example" /&gt;</pre></blockquote>
+
+     <p><strong>Template invoked by the tag:</strong></p>
+
+        <blockquote>                  
+        <strong>
+        <a href="javascript:void(window.open('#sys::code()#modules/dyn_example/xartemplates/objects/showform.xt', 'Template', 'width=700,height=580,toolbar=0,status=0,location=0,scrollbars=1, left=200,top=200')) ">modules/dyn_example/xartemplates/objects/showform.xt</a></strong>
+        </blockquote>
+
+<p><strong>Output:</strong></p>
+
+  <p>Have a look at <a href="javascript:void(window.open('#sys::code()#modules/dyn_example/xartemplates/admin-new.xt', 'Template', 'width=700,height=580,toolbar=0,status=0,location=0,scrollbars=1, left=200,top=200')) ">admin-new.xt</a>, and you'll see that both it and showform.xt handle parts of the form below.  The property labels and inputs are all handled by showform.xt.</p>
+
         <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
           <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
           <input type="hidden" name="confirm" id="confirm" value="true" />
@@ -29,7 +44,9 @@
               <legend>
                   Create new
               </legend>
-                <!-- this does most of the hard work :) -->
+
+                <xar:comment>The default template for the xar:data-form tag is
+        dyn_example/xartemplates/objects/showform.xt</xar:comment>
                 <xar:data-form object="$object" tplmodule="dyn_example" />
 
                 <div class="xar-form-input-wrapper-after">

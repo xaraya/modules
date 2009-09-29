@@ -1,0 +1,885 @@
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><meta name="Generator" content="Jamaica :: unknown"/><meta name="Keywords" content=""/><meta name="Description" content=""/><meta name="rating" content="General"/><link rel="alternate" type="application/rss+xml" title="RSS" href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;func=view&amp;theme=rss"/><link rel="alternate" type="text/html" title="Print" href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;func=view&amp;theme=print"/><link rel="pingback" href="http://xar2.webcommunicate.net/html/ws.php"/><link rel="Top" type="text/html" href="http://xar2.webcommunicate.net/html/"/><link rel="Parent" type="text/html" href="http://xar2.webcommunicate.net/html/"/><link rel="author" href="Your Site Name"/>    <title>
+Your Site Name :: DynamicData Example :: View Dynamic Examples    </title>
+    <link rel="icon" href="favicon.ico"/>
+<!-- the following styles were supplied from component theme -->
+<!-- link style -->
+<link rel="stylesheet" type="text/css" href="http://xar2.webcommunicate.net/html/themes/default/style/style.css" media="screen" title="Xaraya Default Stylesheet"/><!-- the following styles were supplied from component module -->
+<!-- link style -->
+<link rel="stylesheet" type="text/css" href="http://xar2.webcommunicate.net/html/modules/base/xarstyles/tabs.css" media="screen"/><!-- the following styles were supplied from component common -->
+<!-- link style -->
+<link rel="stylesheet" type="text/css" href="http://xar2.webcommunicate.net/html/modules/base/xarstyles/xarcore-xhtml1-strict.css" media="screen"/>  </head>
+
+  <body>
+    <div id="wrapper">
+      <div id="main">
+        <div id="logo">
+          <a href="index.php" title="home">
+            <img src="themes/default/images/xarLogo2.png" width="90" height="90" alt="Xaraya Logo" title="home"/>
+          </a>
+          <p>
+Your Site Slogan          </p>
+
+        </div>
+<script type="text/javascript">
+function showtab (selectedindex, items)
+{
+for (i=1;i<=items;i++) {
+document.getElementById('page-' + i).style.display = "none";
+document.getElementById('tab-' + i).className = "xar-tab";
+document.getElementById('href-' + i).className = "xar-norm xar-norm-outline";
+}
+document.getElementById('page-' + selectedindex).style.display = "block";
+document.getElementById('tab-' + selectedindex).className = "xar-tab-active";
+document.getElementById('href-' + selectedindex).className = "xar-accent xar-accent-outline";
+}
+</script><style>
+    pre {
+    display: inline;
+    }
+    </style><div class="xar-mod-head">
+  <span class="xar-mod-title">
+Dynamic Example  </span>
+</div><div class="xar-mod-body">
+  <h2>
+List of Dynamic Examples  </h2>
+  <p>
+Below, four different approaches to listing items are demonstrated.  </p>
+
+  <ul class="xar-tabs xar-alt xar-norm-outline" style="clear:both">
+    <li id="tab-1">
+      <a id="href-1" href="javascript:showtab(1,4)">
+Approach 1      </a>
+    </li>
+    <li id="tab-2">
+      <a id="href-2" href="javascript:showtab(2,4)">
+Approach 2      </a>
+    </li>
+
+    <li id="tab-3">
+      <a id="href-3" href="javascript:showtab(3,4)">
+Approach 3      </a>
+    </li>
+    <li id="tab-4">
+      <a id="href-4" href="javascript:showtab(4,4)">
+Approach 4      </a>
+    </li>
+  </ul>
+
+<!--######1######-->
+  <div id="page-1" style="display: none">
+    <h3>
+Reference a dataobject by name in      <pre>&lt;xar:data-view /&gt;</pre>
+    </h3>
+    <p>
+This approach involves the least amount of code in <a href="javascript:void(window.open('http://xar2.webcommunicate.net/html/modules/dyn_example/xartemplates/user-view.xt', 'Template', 'width=700,height=580,toolbar=0,status=0,location=0,scrollbars=1, left=200,top=200'))">user-view.xt</a>.    </p>
+    <p>
+
+      <strong>
+Tag in user-view.xt:      </strong>
+    </p>
+    <pre>&lt;xar:data-view object="dyn_example" tplmodule="dyn_example" /&gt;</pre>
+<p>
+  <strong>
+Template invoked by the tag:  </strong>
+</p><blockquote>
+  <strong>
+
+    <a href="javascript:void(window.open('http://xar2.webcommunicate.net/html/modules/dyn_example/xartemplates/objects/showview-dyn_example.xt', 'Template', 'width=700,height=580,toolbar=0,status=0,location=0,scrollbars=1, left=200,top=200')) ">
+modules/dyn_example/xartemplates/objects/showview-dyn_example.xt    </a>
+  </strong>
+</blockquote><p>
+  <strong>
+Output:  </strong>
+</p><table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2">
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+
+Id</label>:    </td>
+    <td>
+5    </td>
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Name</label>:    </td>
+
+    <td>
+Johnny    </td>
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Age</label>:    </td>
+    <td>
+32    </td>
+
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Picture</label>:    </td>
+    <td>
+<img src="http://mikespub.net/xaraya/images/cuernos1.jpg" alt="Image"/>    </td>
+  </tr>
+  <tr>
+
+    <td class="xar-align-right  xar-alt xar-valign-middle">
+     </td>
+    <td>
+      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;func=display&amp;itemid=5&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Display      </a>
+|      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;type=admin&amp;func=modify&amp;itemid=5&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Edit      </a>
+|      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;type=admin&amp;func=delete&amp;itemid=5&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Delete      </a>
+
+    </td>
+  </tr>
+</table><table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2">
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Id</label>:    </td>
+    <td>
+6    </td>
+
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Name</label>:    </td>
+    <td>
+Nancy    </td>
+  </tr>
+  <tr>
+
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Age</label>:    </td>
+    <td>
+29    </td>
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+
+Picture</label>:    </td>
+    <td>
+<img src="http://mikespub.net/xaraya/images/agra1.jpg" alt="Image"/>    </td>
+  </tr>
+  <tr>
+    <td class="xar-align-right  xar-alt xar-valign-middle">
+     </td>
+    <td>
+
+      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;func=display&amp;itemid=6&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Display      </a>
+|      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;type=admin&amp;func=modify&amp;itemid=6&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Edit      </a>
+|      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;type=admin&amp;func=delete&amp;itemid=6&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Delete      </a>
+    </td>
+  </tr>
+</table><table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2">
+
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Id</label>:    </td>
+    <td>
+7    </td>
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+
+<label class="" title="" style="">
+Name</label>:    </td>
+    <td>
+Baby    </td>
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Age</label>:    </td>
+
+    <td>
+1    </td>
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Picture</label>:    </td>
+    <td>
+<img src="http://mikespub.net/xaraya/images/sydney1.jpg" alt="Image"/>    </td>
+
+  </tr>
+  <tr>
+    <td class="xar-align-right  xar-alt xar-valign-middle">
+     </td>
+    <td>
+      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;func=display&amp;itemid=7&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Display      </a>
+|      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;type=admin&amp;func=modify&amp;itemid=7&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Edit      </a>
+
+|      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;type=admin&amp;func=delete&amp;itemid=7&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Delete      </a>
+    </td>
+  </tr>
+</table><table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2">
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Id</label>:    </td>
+
+    <td>
+8    </td>
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Name</label>:    </td>
+    <td>
+Your Name    </td>
+
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Age</label>:    </td>
+    <td>
+     </td>
+  </tr>
+  <tr>
+
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Picture</label>:    </td>
+    <td>
+     </td>
+  </tr>
+  <tr>
+    <td class="xar-align-right  xar-alt xar-valign-middle">
+     </td>
+
+    <td>
+      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;func=display&amp;itemid=8&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Display      </a>
+|      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;type=admin&amp;func=modify&amp;itemid=8&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Edit      </a>
+|      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;type=admin&amp;func=delete&amp;itemid=8&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Delete      </a>
+    </td>
+  </tr>
+
+</table>  </div>
+<!--######2######-->
+  <div id="page-2">
+    <h3>
+Pass values to      <pre>&lt;xar:data-view /&gt;</pre>
+    </h3>
+    <p>
+Return an array from your module function and the values will be available in your template.    </p>
+
+    <p>
+In the case of this page, the module function is in      <strong>
+dyn_example/xaruser/view.php      </strong>
+. It returns $data. Thus, if you set a value for $data['something'] in the module function, you can use $something in the template to output that value.    </p>
+    <p>
+Have a look in view.php, and you'll see that our $data array supplies the values for variables we use in <a href="javascript:void(window.open('http://xar2.webcommunicate.net/html/modules/dyn_example/xartemplates/user-view.xt', 'Template', 'width=700,height=580,toolbar=0,status=0,location=0,scrollbars=1, left=200,top=200'))">user-view.xt</a>, specifically $mylist, $items_per_page and $startnum.    </p>
+    <p>
+      <strong>
+
+Tag in user-view.xt:      </strong>
+    </p>
+    <pre>    &lt;xar:data-view object="$mylist" numitems="$items_per_page"
+        startnum="$startnum" tplmodule="dyn_example" /&gt;</pre>
+<p>
+  <strong>
+Template invoked by the tag:  </strong>
+</p><blockquote>
+  <strong>
+    <a href="javascript:void(window.open('http://xar2.webcommunicate.net/html/modules/dyn_example/xartemplates/objects/showview-dyn_example.xt', 'Template', 'width=700,height=580,toolbar=0,status=0,location=0,scrollbars=1, left=200,top=200')) ">
+
+modules/dyn_example/xartemplates/objects/showview-dyn_example.xt    </a>
+  </strong>
+</blockquote><p>
+  <strong>
+Output:  </strong>
+</p><table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2">
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Id</label>:    </td>
+
+    <td>
+5    </td>
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Name</label>:    </td>
+    <td>
+Johnny    </td>
+
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Age</label>:    </td>
+    <td>
+32    </td>
+  </tr>
+  <tr>
+
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Picture</label>:    </td>
+    <td>
+<img src="http://mikespub.net/xaraya/images/cuernos1.jpg" alt="Image"/>    </td>
+  </tr>
+  <tr>
+    <td class="xar-align-right  xar-alt xar-valign-middle">
+     </td>
+
+    <td>
+      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;func=display&amp;itemid=5&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Display      </a>
+|      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;type=admin&amp;func=modify&amp;itemid=5&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Edit      </a>
+|      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;type=admin&amp;func=delete&amp;itemid=5&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Delete      </a>
+    </td>
+  </tr>
+
+</table><table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2">
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Id</label>:    </td>
+    <td>
+6    </td>
+  </tr>
+  <tr>
+
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Name</label>:    </td>
+    <td>
+Nancy    </td>
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+
+Age</label>:    </td>
+    <td>
+29    </td>
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Picture</label>:    </td>
+
+    <td>
+<img src="http://mikespub.net/xaraya/images/agra1.jpg" alt="Image"/>    </td>
+  </tr>
+  <tr>
+    <td class="xar-align-right  xar-alt xar-valign-middle">
+     </td>
+    <td>
+      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;func=display&amp;itemid=6&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Display      </a>
+
+|      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;type=admin&amp;func=modify&amp;itemid=6&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Edit      </a>
+|      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;type=admin&amp;func=delete&amp;itemid=6&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Delete      </a>
+    </td>
+  </tr>
+</table><table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2">
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+
+<label class="" title="" style="">
+Id</label>:    </td>
+    <td>
+7    </td>
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Name</label>:    </td>
+
+    <td>
+Baby    </td>
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Age</label>:    </td>
+    <td>
+1    </td>
+
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Picture</label>:    </td>
+    <td>
+<img src="http://mikespub.net/xaraya/images/sydney1.jpg" alt="Image"/>    </td>
+  </tr>
+  <tr>
+
+    <td class="xar-align-right  xar-alt xar-valign-middle">
+     </td>
+    <td>
+      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;func=display&amp;itemid=7&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Display      </a>
+|      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;type=admin&amp;func=modify&amp;itemid=7&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Edit      </a>
+|      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;type=admin&amp;func=delete&amp;itemid=7&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Delete      </a>
+
+    </td>
+  </tr>
+</table><table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2">
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Id</label>:    </td>
+    <td>
+8    </td>
+
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Name</label>:    </td>
+    <td>
+Your Name    </td>
+  </tr>
+  <tr>
+
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+Age</label>:    </td>
+    <td>
+     </td>
+  </tr>
+  <tr>
+    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+<label class="" title="" style="">
+
+Picture</label>:    </td>
+    <td>
+     </td>
+  </tr>
+  <tr>
+    <td class="xar-align-right  xar-alt xar-valign-middle">
+     </td>
+    <td>
+
+      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;func=display&amp;itemid=8&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Display      </a>
+|      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;type=admin&amp;func=modify&amp;itemid=8&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Edit      </a>
+|      <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;type=admin&amp;func=delete&amp;itemid=8&amp;tplmodule=dyn_example&amp;name=dyn_example">
+Delete      </a>
+    </td>
+  </tr>
+</table>  </div>
+
+<!--######3######-->
+  <div id="page-3" style="display: none">
+    <h3>
+Get items in the template with      <pre>&lt;xar:data-getitems /&gt;</pre>
+    </h3>
+As in Approach #2, we have set some variables in view.php for use in user-view.xt. Those variables serve as arguments in    <pre>&lt;xar:data-getitems/&gt;</pre>
+    <p>
+      <strong>
+
+Tag in user-view.xt:      </strong>
+    </p>
+    <p>
+In <a href="javascript:void(window.open('http://xar2.webcommunicate.net/html/modules/dyn_example/xartemplates/user-view.xt', 'Template', 'width=700,height=580,toolbar=0,status=0,location=0,scrollbars=1, left=200,top=200'))">user-view.xt</a>, we retrieve items with...    </p>
+    <blockquote>
+      <pre>&lt;xar:data-getitems object="$mylist" value="values" name="properties"
+    numitems="$items_per_page" startnum="$startnum" /&gt;
+</pre>
+    </blockquote>
+
+...and then iterate over the items with    <pre>&lt;xar:foreach /&gt;</pre>
+.    <p>
+      <strong>
+Output:      </strong>
+    </p>
+    <table>
+      <tr>
+        <th>
+
+<label class="" title="" style="">
+Id</label>        </th>
+        <th>
+<label class="" title="" style="">
+Name</label>        </th>
+        <th>
+<label class="" title="" style="">
+Age</label>        </th>
+        <th>
+
+<label class="" title="" style="">
+Picture</label>        </th>
+        <th>
+Options        </th>
+      </tr>
+      <tr>
+        <td>
+5        </td>
+        <td>
+
+Johnny        </td>
+        <td>
+32        </td>
+        <td>
+<img src="http://mikespub.net/xaraya/images/cuernos1.jpg" alt="Image"/>        </td>
+        <td>
+          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;func=display&amp;itemid=5">
+View          </a>
+|          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=modify&amp;itemid=5">
+
+Edit          </a>
+|          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=delete&amp;itemid=5">
+Delete          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+6        </td>
+        <td>
+
+Nancy        </td>
+        <td>
+29        </td>
+        <td>
+<img src="http://mikespub.net/xaraya/images/agra1.jpg" alt="Image"/>        </td>
+        <td>
+          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;func=display&amp;itemid=6">
+View          </a>
+|          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=modify&amp;itemid=6">
+
+Edit          </a>
+|          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=delete&amp;itemid=6">
+Delete          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+7        </td>
+        <td>
+
+Baby        </td>
+        <td>
+1        </td>
+        <td>
+<img src="http://mikespub.net/xaraya/images/sydney1.jpg" alt="Image"/>        </td>
+        <td>
+          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;func=display&amp;itemid=7">
+View          </a>
+|          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=modify&amp;itemid=7">
+
+Edit          </a>
+|          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=delete&amp;itemid=7">
+Delete          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+8        </td>
+        <td>
+
+Your Name        </td>
+        <td>
+         </td>
+        <td>
+         </td>
+        <td>
+          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;func=display&amp;itemid=8">
+View          </a>
+|          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=modify&amp;itemid=8">
+
+Edit          </a>
+|          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=delete&amp;itemid=8">
+Delete          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+         </td>
+        <td>
+
+         </td>
+        <td>
+         </td>
+        <td>
+         </td>
+        <td class="xar-align-center">
+          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=new">
+New          </a>
+        </td>
+
+      </tr>
+    </table>
+  </div>
+<!--######4######-->
+  <div id="page-4" style="display: none">
+    <h3>
+Iterate over arrays to the template    </h3>
+Our module function passes a labels array and an items array to user-view.xt, and we iterate through the arrays with    <pre>&lt;xar:foreach /&gt;</pre>
+    <table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2">
+
+      <tr>
+        <th class="xar-align-center">
+Id        </th>
+        <th class="xar-align-center">
+Name        </th>
+        <th class="xar-align-center">
+Age        </th>
+        <th class="xar-align-center">
+Picture        </th>
+
+      </tr>
+      <tr>
+        <td>
+5        </td>
+        <td>
+Johnny        </td>
+        <td>
+32        </td>
+        <td>
+
+http://mikespub.net/xaraya/images/cuernos1.jpg        </td>
+        <td width="30%" class="xar-align-center">
+          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;func=display&amp;itemid=5">
+View          </a>
+|          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=modify&amp;itemid=5">
+Edit          </a>
+|          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=delete&amp;itemid=5">
+Delete          </a>
+        </td>
+
+      </tr>
+      <tr>
+        <td>
+6        </td>
+        <td>
+Nancy        </td>
+        <td>
+29        </td>
+        <td>
+
+http://mikespub.net/xaraya/images/agra1.jpg        </td>
+        <td width="30%" class="xar-align-center">
+          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;func=display&amp;itemid=6">
+View          </a>
+|          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=modify&amp;itemid=6">
+Edit          </a>
+|          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=delete&amp;itemid=6">
+Delete          </a>
+        </td>
+
+      </tr>
+      <tr>
+        <td>
+7        </td>
+        <td>
+Baby        </td>
+        <td>
+1        </td>
+        <td>
+
+http://mikespub.net/xaraya/images/sydney1.jpg        </td>
+        <td width="30%" class="xar-align-center">
+          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;func=display&amp;itemid=7">
+View          </a>
+|          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=modify&amp;itemid=7">
+Edit          </a>
+|          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=delete&amp;itemid=7">
+Delete          </a>
+        </td>
+
+      </tr>
+      <tr>
+        <td>
+8        </td>
+        <td>
+Your Name        </td>
+        <td>
+        </td>
+        <td>
+
+        </td>
+        <td width="30%" class="xar-align-center">
+          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;func=display&amp;itemid=8">
+View          </a>
+|          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=modify&amp;itemid=8">
+Edit          </a>
+|          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=delete&amp;itemid=8">
+Delete          </a>
+        </td>
+
+      </tr>
+      <tr>
+        <td>
+         </td>
+        <td>
+         </td>
+        <td>
+         </td>
+        <td>
+
+         </td>
+        <td class="xar-align-center">
+          <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=new">
+New          </a>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div><script type="text/javascript">
+        showtab (1,4)
+    </script>
+
+      </div>
+      <div id="sideInfo1" class="sideInfo">
+<div class="xar-blockgroup-left">
+  <div class="xar-block-title">
+Main Menu  </div>
+  <div class="xar-block-body">
+<ul class="xar-menu-section">
+  <li class="xar-menu-section">
+    <h4>
+Modules    </h4>
+
+    <ul class="xar-menu-item">
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=base" title="Home Page">
+Base        </a>
+      </li>
+      <li class="xar-menu-item-current">
+        <a name="activeitem" title="Dynamic Data Example for new modules">
+DynamicData Example        </a>
+        <ul class="xar-menu-subitem">
+
+          <li class="xar-menu-subitem-current">
+            <a name="activesubitem" title="View all dynamic example items">
+View Items [x]            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=roles" title="User and Group management">
+Roles        </a>
+
+      </li>
+    </ul>
+  </li>
+</ul>  </div>
+</div>
+<div class="xar-blockgroup-left">
+  <div class="xar-block-title">
+Admin  </div>
+  <div class="xar-block-body">
+<ul class="xar-menu-section">
+
+  <li class="xar-menu-section">
+    <h4>
+Content    </h4>
+    <ul class="xar-menu-item">
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;type=admin" title="Show administration options for module Dynamic Data">
+Dynamic Data        </a>
+      </li>
+      <li class="xar-menu-item">
+
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin" title="Show administration options for module DynamicData Example">
+DynamicData Example        </a>
+      </li>
+    </ul>
+  </li>
+</ul><ul class="xar-menu-section">
+  <li class="xar-menu-section">
+    <h4>
+System    </h4>
+
+    <ul class="xar-menu-item">
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=authsystem&amp;type=admin" title="Show administration options for module Authsystem">
+Authsystem        </a>
+      </li>
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=base&amp;type=admin" title="Show administration options for module Base">
+Base        </a>
+      </li>
+
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=blocks&amp;type=admin" title="Show administration options for module Blocks">
+Blocks        </a>
+      </li>
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=mail&amp;type=admin" title="Show administration options for module Mail">
+Mail        </a>
+      </li>
+      <li class="xar-menu-item">
+
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=modules&amp;type=admin" title="Show administration options for module Modules">
+Modules        </a>
+      </li>
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=themes&amp;type=admin" title="Show administration options for module Themes">
+Themes        </a>
+      </li>
+    </ul>
+  </li>
+
+</ul><ul class="xar-menu-section">
+  <li class="xar-menu-section">
+    <h4>
+Users &amp; Groups    </h4>
+    <ul class="xar-menu-item">
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=privileges&amp;type=admin" title="Show administration options for module Privileges">
+Privileges        </a>
+
+      </li>
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=roles&amp;type=admin" title="Show administration options for module Roles">
+Roles        </a>
+      </li>
+    </ul>
+  </li>
+</ul><ul class="xar-menu-section">
+  <li class="xar-menu-section">
+
+    <h4>
+Controls    </h4>
+    <ul class="xar-menu-item">
+      <li class="xar-menu-item">
+        <a title="Logout as administrator" href="http://xar2.webcommunicate.net/html/index.php?module=base&amp;type=admin&amp;func=confirmlogout">
+Admin logout        </a>
+      </li>
+    </ul>
+  </li>
+
+</ul>  </div>
+</div>
+      </div>
+      <div id="sideInfo2" class="sideInfo">
+      </div>
+    </div>
+  </body>
+</html>

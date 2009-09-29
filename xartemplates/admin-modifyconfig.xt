@@ -3,12 +3,13 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- common admin menu for this module - remove link to the current function -->
     <div class="xar-mod-head">
-      <span class="xar-mod-title">Dynamic Example Administration</span>
+      <span class="xar-mod-title">Dynamic Data Example Administration</span>
     </div>
     <div class="xar-mod-body">
-        <xar:template type="module" file="admin-menu" />
+        <xar:template type="module" file="admintabs" />
         <h2>Modify Default Configuration</h2>
         <p class="xar-form-input-before">
+          This text here is TBD<br />
           This uses dynamic module settings, i.e. you can add/remove settings for
               your module dynamically too. But you could use the 'normal' hard-coded approach
               here as well...

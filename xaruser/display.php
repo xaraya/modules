@@ -13,16 +13,16 @@
  */
 /**
  * display an item
- * This is a standard function to provide detailed informtion on a single item
- * available from the module.
+ * This is a standard function to display an item
  *
  * @param $args an array of arguments (if called by other modules)
  * @param $args['objectid'] a generic object id (if called by other modules)
- * @param $args['itemid'] the item id used for this dyn_example module
+ * @param $args['itemid'] the itemid used for this dyn_example module
  * @return array $data
  */
 function dyn_example_user_display($args)
 {
+
     // TODO: add reason for DONT_SET
     if(!xarVarFetch('itemid',   'id', $itemid,   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('objectid', 'id', $objectid, NULL, XARVAR_DONT_SET)) {return;}
@@ -38,70 +38,60 @@ function dyn_example_user_display($args)
                     'item id', 'user', 'display', 'dyn_example');
         throw new Exception($msg);
     }
-    // Add the user menu to the data array
 
-/* start APPROACH # 1 and # 2 : retrieve the item directly in the template */
-    // Note: we don't retrieve any item here ourselves - we'll let the
-    //       <xar:data-display ... /> tag do that in the template itself
-    $data['itemid'] = $itemid;
-/* end APPROACH # 1 and # 2 : retrieve the item directly in the template */
-
+// Make sure user has read privileges for the item
     if (!xarSecurityCheck('ReadDynExample',1,'Item',$itemid)) return;
 
-/* start APPROACH # 3 : getting the object via API */
-    // Load the DD master object class. This line will likely disappear in future versions
+  // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
-    // Get the object we'll be working with
-    $object = DataObjectMaster::getObject(array('name' => 'dyn_example', 'itemid' => $itemid));
+    // Get the object definition we'll be working with
+    $object = DataObjectMaster::getObject(array('name' => 'dyn_example'));
 
-    // get the values for this item
-    $newid = $object->getItem();
-    if (!isset($newid) || $newid != $itemid) return;
+    //We'll need $object in the template for both Approach #1 and #2, so let's go ahead and add it to the $tdata array.  At the end of this function, we'll return $tdata to the template.
+    $tdata['object'] = $object;
 
-    // pick whatever properties are relevant to be transformed (e.g. the 'name' property here)
-    $name = $object->properties['name']->getValue();
-    // tranform those values
-    list($name) = xarModCallHooks('item',
-                                  'transform',
-                                  $itemid,
-                                  array($name));
-    // update the properties with the transformed values
-    $object->properties['name']->setValue($name);
+    //We don't really have the item until we call getItem()
+    $some_id = $object->getItem(array('itemid' => $itemid));
 
-    // use some property for the page title below too
-    $title = $name;
+    //Make sure we got something
+    if (!isset($some_id) || $some_id != $itemid) return;
 
-    // pass along the whole object to the template, for use in <xar:data-display ... />
-    $data['object'] =& $object;
-    // or pass along only the properties instead of the object, and do the layout ourselves
-    //$data['properties'] =& $object->getProperties();
-/* end APPROACH # 3 : getting the object via API */
+/* start APPROACH #1: data-display */
+    // All we really need for this approach is an $itemid and $object 
+    $tdata['itemid'] = $itemid;
+/* end APPROACH #1  */
 
+/* start APPROACH #2  make the values available in template variables  */
 
-/* start APPROACH # 4 : getting only the raw item values via API */
+    //Get the property names and values for the item with the getFieldValues() method
     $values = $object->getFieldValues();
-    $data['labels'] = array();
-    $data['values'] = array();
+
+    //$values is an associative array of property names and values, so...
     foreach ($values as $name => $value) {
-        $data['values'][$name] = xarVarPrepForDisplay($value);
-        // do some other processing here...
-
-        // define in some labels
-        $data['labels'][$name] = xarML(ucfirst($name));
+        $tdata[$name] = xarVarPrepForDisplay($value);
     }
-/* end APPROACH # 4 : getting only the raw item values via API */
 
-    // get user settings for 'bold'
-    $data['is_bold'] = xarModUserVars::get('dyn_example', 'bold');
+    //We're dealing with people's names in this example, so we have a property named "name."  But "$name" might be confusing to use as a variable in the template, so let's make a slight adjustment here...
+    $tdata['person_name'] = $tdata['name'];
+
+    //Now we have our item values to return to the template, like so... $tdata['person_name'], $tdata['age'] and $tdata['picture'].  In the template these become #$person_name#, #$age#, #$picture#.  
+    //At the end of this function, we're going to return $tdata to the template.  There is no real significance to calling the variable $tdata, as long as we're consistent.  The template won't know and won't care if we've returned the array as $tdata, $apples, $frogs, etc.
+
+/* end APPROACH # 2 */
+
+    
+/* start APPROACH #3:  data-getitem  */
+  /* This approach doesn't require that we do anything further here.  We've already loaded $object into the $tdata array and called getItem(), so we're all set */
+/* end APPROACH #3 */
 
     xarVarSetCached('Blocks.dyn_example', 'itemid', $itemid);
 
-    // Once again, we are changing the name of the title for better
-    // Search engine capability.
+    // Let's use the person's name as the page title.  We can use this in the title tag of our HTML document
+    $title = $tdata['name'];
     xarTplSetPageTitle(xarVarPrepForDisplay($title));
 
     // Return the template variables defined in this function
-    return $data;
+    return $tdata;
 
 }
 

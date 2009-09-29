@@ -33,7 +33,7 @@ function dyn_example_userapi_getmenulinks()
                                                    'view'),
                               // In order to display the tool tips and label in any language,
                               // we must encapsulate the calls in the xarML in the API.
-                              'title' => xarML('View all dynamic example items'),
+                              'title' => xarML('View all dynamic data example items'),
                               'label' => xarML('View Items'));
     }
     // Return all the links to the menu

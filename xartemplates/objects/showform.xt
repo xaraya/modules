@@ -2,10 +2,6 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:if condition="empty($layout) or $layout eq 'default'">
-        <p class="xar-accent">        
-            Template : <strong>modules/dyn_example/xartemplates/objects/showform.xt</strong><br/>
-            This is a generic form template for objects in the dyn_example module (if you want that)        
-        </p>
         <xar:foreach in="$properties" key="$name" value="$property">
             <div class="xar-form-input-wrapper">
                 <xar:data-label property="$properties[$name]" for="id" />

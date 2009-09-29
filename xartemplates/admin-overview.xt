@@ -3,11 +3,65 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- common admin menu for this module - remove link to the current function -->
     <div class="xar-mod-head">
-        <span class="xar-mod-title">Dynamic Example Administration</span>
+        <span class="xar-mod-title">Dynamic Data Example Administration</span>
     </div>
     <div class="xar-mod-body">
-        <xar:template type="module" file="admin-menu" />
-        <h2>Welcome to the Administration of Dynamic Example</h2>
+        <xar:template type="module" file="admintabs" />
+        <h2>Dynamic Data Example Overview</h2>
+
+<xar:template file="audience" type="module" />
+
+<p>The purpose of the <strong>Dynamic Data Example (DDE)</strong> module is to demonstrate some best practices for writing a module in Xaraya 2.  It can serve as a template for your own modules.</p>
+
+<p>You'll find many comments in the PHP files and templates that document the code.</p>
+
+<p>The module demonstrates some operations that are common to most modules, such as creating new items, editing and deleting items and viewing lists of items.  In this particular module, the items happen to be people; the items' properties are Id, Name, Age and Picture.  In your module, items may be news articles, events, products in a catalogue, songs, lakes, etc.  The properties may be anything you want.</p>
+
+<p>The DDE module doesn't aim to demonstrate <em>everything</em> that could be involved in writing a module.  It focuses on just the most common tasks so that developers new to Xaraya can quickly get oriented.</p>
+
+<strong>The Dynamic Data module</strong>
+
+<p>The DDE module shows how to take advantage of the many time-saving features of Xaraya's <strong>Dynamic Data (DD)</strong> module.  The DD module is Xaraya's data abstraction layer; it makes it easier to write cleaner, more standardized modules in less time without sacrificing flexibility.  The DD module handles data storage and retrieval for the DDE module and can provide a centralized place to manage data for all your modules.</p>
+ 
+ 
+
+<h3>The admin tabs</h3>
+
+<p>What you'll find under the four tabs that appear at the top of this page:</p>
+
+<style>
+td {
+vertical-align: top;
+padding-top: 5px;
+padding-bottom: 13px;
+}
+td.demotab {
+width: 100px;
+vertical-align: top;
+padding-top: 10px;
+}
+.demotab div { 
+display: inline; 
+padding: 5px 8px 8px 8px; 
+border: 1px solid #002200; 
+}
+</style>
+<table style="border:none; display: inline;"><tbody>
+<tr><td class="demotab"><div>Add Item</div></td><td>The Add Item page demonstrates how to provide a form for your users to create new items.</td></tr>
+
+<tr><td class="demotab"><div>List All</div></td><td> Here you'll find an example of one way to list items and provide links to disply, edit or delete the items.</td></tr>
+
+<tr><td class="demotab"><div>Modify Config</div></td><td> This page demonstrates one way to provide configuration settings for your module.  Note that data storage for the settings is handled by the DD module.</td></tr>
+
+<tr><td class="demotab"><div>Overview</div></td><td>  You're reading it.  In your own module, use this space any way you deem appropriate, whether it be to summarize the workings of your module, provide links to documentation, etc.</td></tr>
+</tbody></table>
+
+<h3>XML for object definitions</h3>
+
+<p>You'll find four XML files in the xardata directory of this module.  These XML files define DataObjects and configuration settings.  In the case of this module, there is an XML file that created a few sample items when you installed the module.  If you've just installed this module, you'll see the three sample items under the <a href="#xarModURL('dyn_example','admin','view')#">List All</a> tab.</p>
+
+<p>When you are defining objects for your own module, you can do so without writing code.  Just define one or more DataObjects using the <a href="#xarModURL('dynamicdata','admin','new')#">DD module interface</a>, export the object definition(s) as XML, and place the XML file(s) in the xardata directory of your module.  That way, when your module is initialized, the appropriate DataObjects -- and, optionally, some items -- are created in the database automatically. </p>
+
 
     </div>
 </xar:template>

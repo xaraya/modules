@@ -1,12 +1,16 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:if condition="empty($layout) or $layout eq 'default'">
-        <p class="xar-accent xar-padding-topthick">            
-            Template : <strong>modules/dyn_example/xartemplates/objects/showdisplay-dyn_example.xt</strong><br/>
-            This is a specific display template for the dyn_example object (if you want this)
-            in the dyn_example module (if you want that)            
-        </p>
+
+<p><strong>Template invoked by the tag:</strong></p>
+
+        <blockquote>                  
+        <strong>
+        <a href="javascript:void(window.open('#sys::code()#modules/dyn_example/xartemplates/objects/showview-dyn_example.xt', 'Template', 'width=700,height=580,toolbar=0,status=0,location=0,scrollbars=1, left=200,top=200')) ">modules/dyn_example/xartemplates/objects/showdisplay-dyn_example.xt</a></strong>
+        </blockquote>
+
+    <p><strong>Output:</strong></p>
+
         <table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2">
         <xar:foreach in="$properties" key="$name" value="$property">
             <tr class="xar-align-center xar-valign-middle">
@@ -15,13 +19,5 @@
             </tr>
         </xar:foreach>
         </table>
-    <xar:else />
-        <p>
-            Specify your own layout here...
-        </p>
-        <p>        
-            You can also specify a separate template, e.g. if you want to
-            handle individual fields differently for a particular module / itemtype        
-        </p>
-    </xar:if>
+
 </xar:template>

@@ -2,10 +2,34 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
-        <span class="xar-mod-title">Dynamic Example Administration</span>
+    <span class="xar-mod-title">Dynamic Data Example</span>
     </div>
     <div class="xar-mod-body">
 
-    #$welcome#
+ 
+<xar:if condition="$seccheck">
+
+    <h2>Welcome to the Dynamic Data Example module</h2>
+
+    <xar:template file="audience" type="module" />
+
+    <p>For more information about the purpose of this module and how to write a module for  Xaraya, please <strong>begin by reading the <a href="#xarModURL('dyn_example','admin')#">overview page</a></strong>  in the module's admin interface.</p>
+
+    <p>Or, if you like, <a href="#xarModURL('dyn_example','user','view')#">view the sample items on the frontend</a>.</p>
+
+    <p>If you have questions along the way, please post to the <a href="http://www.xaraya.com/index.php/xarbb">Xaraya.com support forum</a>.  If you haven't done so already, please <a href="http://www.xaraya.com/index.php/registration/register">register for the support forum and other Xaraya.com community features</a>.</p>
+
+    <xar:comment>
+    If you wanted, you could uncomment this...
+    <xar:data-view object="dyn_example" tplmodule="dyn_example" numitems="2" startnum="$startnum" />
+    </xar:comment>
+
+<xar:else />
+
+    <p>Sorry, looks like you don't have the necessary privileges to view this content.</p>
+
+</xar:if>
+
+
     </div>
 </xar:template>

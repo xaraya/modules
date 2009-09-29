@@ -38,7 +38,7 @@ function dyn_example_userapi_decode_shorturl($params)
         // -> we'll go to the main function
         return array('main', $args);
 
-    } elseif (preg_match('/^list/i',$params[1])) {
+    } elseif (preg_match('/^list$/i',$params[1])) {
         // something that starts with 'list' is probably for the view function
         // Note : make sure your encoding/decoding is consistent ! :-)
         return array('view', $args);

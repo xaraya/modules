@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><meta name="Generator" content="Jamaica :: unknown"/><meta name="Keywords" content=""/><meta name="Description" content=""/><meta name="rating" content="General"/><link rel="alternate" type="application/rss+xml" title="RSS" href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;theme=rss"/><link rel="alternate" type="text/html" title="Print" href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;theme=print"/><link rel="pingback" href="http://xar2.webcommunicate.net/html/ws.php"/><link rel="Top" type="text/html" href="http://xar2.webcommunicate.net/html/"/><link rel="Parent" type="text/html" href="http://xar2.webcommunicate.net/html/"/><link rel="author" href="Your Site Name"/>    <title>
+Your Site Name :: DynamicData Example :: Your Site Slogan    </title>
+    <link rel="icon" href="favicon.ico"/>
+<!-- the following styles were supplied from component theme -->
+<!-- link style -->
+<link rel="stylesheet" type="text/css" href="http://xar2.webcommunicate.net/html/themes/default/style/style.css" media="screen" title="Xaraya Default Stylesheet"/><!-- the following styles were supplied from component module -->
+<!-- link style -->
+<link rel="stylesheet" type="text/css" href="http://xar2.webcommunicate.net/html/modules/base/xarstyles/tabs.css" media="screen"/><!-- the following styles were supplied from component common -->
+<!-- link style -->
+<link rel="stylesheet" type="text/css" href="http://xar2.webcommunicate.net/html/modules/base/xarstyles/xarcore-xhtml1-strict.css" media="screen"/>  </head>
+
+  <body>
+    <div id="wrapper">
+      <div id="main">
+        <div id="logo">
+          <a href="index.php" title="home">
+            <img src="themes/default/images/xarLogo2.png" width="90" height="90" alt="Xaraya Logo" title="home"/>
+          </a>
+          <p>
+Your Site Slogan          </p>
+
+        </div>
+<div class="xar-mod-head">
+  <span class="xar-mod-title">
+Dynamic Example Administration  </span>
+</div><div class="xar-mod-body">
+<!--Common Administration menu-->
+<div>
+  <ul class="xar-tabs">
+    <li class="xar-tab">
+      <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=new" class="xar-norm xar-norm-outline">
+Add Item      </a>
+
+    </li>
+    <li class="xar-tab">
+      <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=view" class="xar-norm xar-norm-outline">
+List all      </a>
+    </li>
+    <li class="xar-tab">
+      <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=modifyconfig" class="xar-norm xar-norm-outline">
+Modify Config      </a>
+    </li>
+
+    <li class="xar-tab-active">
+      <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin" class="xar-accent xar-accent-outline">
+Overview      </a>
+    </li>
+  </ul>
+</div>
+  <h2>
+Dynamic Data Example Overview  </h2>
+  <p>
+
+The purpose of the    <strong>
+Dynamic Data Example (DDE)    </strong>
+module is to demonstrate some best practices for writing a module in Xaraya 2. It can serve as a template for your own modules.  </p>
+  <p>
+You'll find many comments in the PHP files and templates that document the code.  </p>
+  <p>
+The module demonstrates some operations that are common to most modules, such as creating new items, editing and deleting items and viewing lists of items. In this particular module, the items happen to be people; the items' properties are Id, Name, Age and Picture. In your module, items may be news articles, events, products in a catalogue, songs, lakes, etc. The properties may be anything you want.  </p>
+  <p>
+The DDE module shows how to take advantage of the many time-saving features of Xaraya's    <strong>
+
+Dynamic Data (DD)    </strong>
+module. The DD module is Xaraya's data abstraction layer; it makes it easier to write cleaner, more standardized modules in less time without sacrificing flexibility. The DD module handles data storage for the DDE module and can provide a centralized place to manage dataobjects, properties and data storage for all your modules.  </p>
+  <p>
+The DDE module doesn't aim to demonstrate everything that could be involved in writing a module. It focuses on just the most common tasks so that developers new to Xaraya can quickly get oriented.  </p>
+  <h3>
+The admin tabs  </h3>
+  <p>
+What you'll find under the module's four admin tabs:  </p>
+  <p>
+
+    <em>
+Add Item    </em>
+-- This tab demonstrates how to provide a form for your users to create new objects.  </p>
+  <p>
+    <em>
+List All    </em>
+-- Here you'll find examples of different ways to list items. The approaches vary with respect to the template code used and the output. By referring to these examples, and looking at the files in the xartemplates directory, you will understand how to display lists of items, whether it be for public consumption or in your backend interfaces.  </p>
+  <p>
+    <em>
+
+Modify Config    </em>
+-- This tab demonstrates one way to provide config options for your module. Note that data storage for the settings is handled by the DD module.  </p>
+  <p>
+    <em>
+Overview    </em>
+-- You're reading it. In your own module, use this space any way you deem appropriate, whether it be to summarize the workings of your module, provide links to documentation, etc.  </p>
+  <h3>
+XML for object definitions  </h3>
+  <p>
+
+You'll find four XML files in the xardata directory of this module. These XML files define objects and settings for the module. In the case of this module, there is an XML file that created a few sample items when you installed the module. If you've just installed this module, you'll see the three sample items under the List All tab.  </p>
+  <p>
+When you are defining objects for your own module, you can do so without writing code. Just define one or more objects using the DD module interface, export the object definition(s) as XML, and place the XML file(s) in the xardata directory of your module. That way, when your module is initialized, the appropriate objects -- and, optionally, some object items -- are created in the database automatically.  </p>
+</div>
+      </div>
+      <div id="sideInfo1" class="sideInfo">
+<div class="xar-blockgroup-left">
+  <div class="xar-block-title">
+Main Menu  </div>
+  <div class="xar-block-body">
+
+<ul class="xar-menu-section">
+  <li class="xar-menu-section">
+    <h4>
+Modules    </h4>
+    <ul class="xar-menu-item">
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=base" title="Home Page">
+Base        </a>
+      </li>
+
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example" title="Dynamic Data Example for new modules">
+DynamicData Example        </a>
+      </li>
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=roles" title="User and Group management">
+Roles        </a>
+      </li>
+    </ul>
+
+  </li>
+</ul>  </div>
+</div>
+<div class="xar-blockgroup-left">
+  <div class="xar-block-title">
+Admin  </div>
+  <div class="xar-block-body">
+<ul class="xar-menu-section">
+  <li class="xar-menu-section">
+    <h4>
+
+Content    </h4>
+    <ul class="xar-menu-item">
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=dynamicdata&amp;type=admin" title="Show administration options for module Dynamic Data">
+Dynamic Data        </a>
+      </li>
+      <li class="xar-menu-item-current">
+        <a name="activeitem" title="DynamicData Example">
+DynamicData Example        </a>
+
+        <ul class="xar-menu-subitem">
+          <li class="xar-menu-subitem">
+            <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=new" title="Adds a new item to system.">
+Add Item            </a>
+          </li>
+          <li class="xar-menu-subitem">
+            <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=view" title="View all example items that have been added.">
+List Items            </a>
+
+          </li>
+          <li class="xar-menu-subitem">
+            <a href="http://xar2.webcommunicate.net/html/index.php?module=dyn_example&amp;type=admin&amp;func=modifyconfig" title="Modify the configuration for the module">
+Modify Config            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+
+</ul><ul class="xar-menu-section">
+  <li class="xar-menu-section">
+    <h4>
+System    </h4>
+    <ul class="xar-menu-item">
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=authsystem&amp;type=admin" title="Show administration options for module Authsystem">
+Authsystem        </a>
+      </li>
+
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=base&amp;type=admin" title="Show administration options for module Base">
+Base        </a>
+      </li>
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=blocks&amp;type=admin" title="Show administration options for module Blocks">
+Blocks        </a>
+      </li>
+      <li class="xar-menu-item">
+
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=mail&amp;type=admin" title="Show administration options for module Mail">
+Mail        </a>
+      </li>
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=modules&amp;type=admin" title="Show administration options for module Modules">
+Modules        </a>
+      </li>
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=themes&amp;type=admin" title="Show administration options for module Themes">
+
+Themes        </a>
+      </li>
+    </ul>
+  </li>
+</ul><ul class="xar-menu-section">
+  <li class="xar-menu-section">
+    <h4>
+Users &amp; Groups    </h4>
+
+    <ul class="xar-menu-item">
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=privileges&amp;type=admin" title="Show administration options for module Privileges">
+Privileges        </a>
+      </li>
+      <li class="xar-menu-item">
+        <a href="http://xar2.webcommunicate.net/html/index.php?module=roles&amp;type=admin" title="Show administration options for module Roles">
+Roles        </a>
+      </li>
+
+    </ul>
+  </li>
+</ul><ul class="xar-menu-section">
+  <li class="xar-menu-section">
+    <h4>
+Controls    </h4>
+    <ul class="xar-menu-item">
+      <li class="xar-menu-item">
+        <a title="Logout as administrator" href="http://xar2.webcommunicate.net/html/index.php?module=base&amp;type=admin&amp;func=confirmlogout">
+
+Admin logout        </a>
+      </li>
+    </ul>
+  </li>
+</ul>  </div>
+</div>
+      </div>
+      <div id="sideInfo2" class="sideInfo">
+      </div>
+
+    </div>
+  </body>
+</html>

@@ -14,7 +14,7 @@
 $modversion['name']         = 'Dynamic Data Example';
 $modversion['id']           = '66';
 $modversion['version']      = '2.0.0';
-$modversion['displayname']  = xarML('DynamicData Example');
+$modversion['displayname']  = xarML('Dynamic Data Example');
 $modversion['description']  = 'Dynamic Data Example for new modules';
 $modversion['credits']      = 'xardocs/credits.txt';
 $modversion['help']         = 'xardocs/help.txt';

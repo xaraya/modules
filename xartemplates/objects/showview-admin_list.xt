@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+       <p><strong>Template invoked by the tag:</strong></p>
+
+        <blockquote>                  
+        <strong>
+        <a href="javascript:void(window.open('#sys::code()#modules/dyn_example/xartemplates/objects/showview-admin_list.xt', 'Template', 'width=700,height=580,toolbar=0,status=0,location=0,scrollbars=1, left=200,top=200')) ">modules/dyn_example/xartemplates/objects/showview-admin_list.xt</a></strong>
+        </blockquote>
+
+<a name="output" />
+
+    <p><strong>Output:</strong></p>
+ 
+        <table class="xar-norm">
+            <tr>
+                <xar:foreach in="$properties" key="$name">
+                    <th>
+
+        <xar:comment>just to emphasize that the key in the $properties array is the property name</xar:comment>
+        <xar:set name="propname">$name</xar:set>
+
+        <xar:comment>if we're already sorting on this column, we want to show the arrow and don't need to make the column head a link</xar:comment>
+        <xar:if condition="$propname eq $sortfield">
+
+            <xar:data-label property="$properties[$name]" />
+    
+            <xar:comment>if $_GET['ascdesc'] is set, we want that to take precedence over the default in view.php so the arrow will always point the right way</xar:comment>
+            <xar:if condition="isset($_GET['ascdesc'])">
+                <xar:set name="ascdesc">$_GET['ascdesc']</xar:set>
+            </xar:if>
+
+            <xar:if condition="$ascdesc eq 'DESC'">
+                <xar:set name="arrow">'asc'</xar:set>
+            <xar:else />
+                <xar:set name="arrow">'desc'</xar:set>
+            </xar:if>
+
+            <a href="#xarModURL('dyn_example','admin','view', array('sortfield' => $propname, 'ascdesc' => strtoupper($arrow)))##output"><img src="&xar-baseurl;modules/base/xarimages/icons/sort-#$arrow#.png" width="16" height="16" alt="reverse order" /></a>
+
+        <xar:else />
+
+        <xar:comment>we're not sorting on this column, so we should make the column head a link</xar:comment>
+            <a href="#xarModURL('dyn_example','admin','view', array('sortfield' => $propname))##output"><xar:data-label property="$properties[$name]" /></a>
+
+        </xar:if>
+
+                    </th>
+                </xar:foreach>
+                <xar:if condition="empty($linkfield)">
+                    <th>
+                        &#160;
+                    </th>
+                </xar:if>
+            </tr>
+            <xar:foreach in="$items" key="$itemid" value="$fields">
+                <tr>
+                    <xar:foreach in="$properties" key="$name">
+                        <xar:if condition="empty($fields[$name])">
+                            <td valign="top">&#160;</td>
+                        <xar:elseif condition="!empty($linkfield) and $linkfield eq $name"/>
+                            <td valign="top"><a href="#$links[$itemid]['display']['olink']#"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></a></td>
+                        <xar:else />
+                            <td valign="top"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></td>
+                        </xar:if>
+                    </xar:foreach>
+                    <xar:if condition="empty($linkfield)">
+                        <td valign="top">
+                            <xar:if condition="!empty($links[$itemid]) and count($links[$itemid]) gt 0">
+                                <xar:foreach in="$links[$itemid]" value="$option">
+                                    #$option['ojoin']# <a href="#$option['olink']#">#$option['otitle']#</a>
+                                </xar:foreach>
+                            <xar:else />
+                                &#160;
+                            </xar:if>
+                        </td>
+                    </xar:if>
+                </tr>
+            </xar:foreach>
+        </table>
+</xar:template>

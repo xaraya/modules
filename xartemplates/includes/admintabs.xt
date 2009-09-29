@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="tabs" />
+
+<xar:set name="info">xarRequest::getInfo()</xar:set>
+<xar:set name="activetab">$info[2]</xar:set>
+<div>
+  <ul class="xar-tabs">
+    <xar:sec mask="AddDynExample" catch="false">
+        <xar:if condition="$activetab eq 'new'">
+            <xar:set name="tabclass">'xar-tab-active'</xar:set>
+            <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">'xar-tab'</xar:set>
+            <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+          <a href="#xarModURL('dyn_example','admin','new')#" class="#$linkclass#">
+            Add Item
+          </a>
+        </li>
+    </xar:sec>
+    <xar:sec mask="EditDynExample" catch="false">
+        <xar:if condition="$activetab eq 'view' or $activetab eq 'delete' or $activetab eq 'modify'">
+            <xar:set name="tabclass">'xar-tab-active'</xar:set>
+            <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">'xar-tab'</xar:set>
+            <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+          <a href="#xarModURL('dyn_example','admin','view')#" class="#$linkclass#">
+            List all
+          </a>
+        </li>
+    </xar:sec>
+    <xar:sec mask="AdminDynExample" catch="false">
+        <xar:if condition="$activetab eq 'modifyconfig'">
+            <xar:set name="tabclass">'xar-tab-active'</xar:set>
+            <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">'xar-tab'</xar:set>
+            <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+          <a href="#xarModURL('dyn_example','admin','modifyconfig')#" class="#$linkclass#">
+            Modify Config
+          </a>
+        </li>
+    </xar:sec>
+    <xar:sec mask="EditDynExample" catch="false">
+        <xar:if condition="$activetab eq 'main'">
+            <xar:set name="tabclass">'xar-tab-active'</xar:set>
+            <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">'xar-tab'</xar:set>
+            <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+          <a href="#xarModURL('dyn_example','admin','main')#" class="#$linkclass#">
+            Overview
+          </a>
+        </li>
+    </xar:sec>
+  </ul>
+</div>
+</xar:template>
