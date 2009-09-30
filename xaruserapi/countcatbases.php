@@ -23,7 +23,7 @@ function categories_userapi_countcatbases($args)
 
     // Only modid supplied
     if (empty($module) && !empty($modid) && is_numeric($modid)) {
-        $modinfo = xarModGetInfo($modid);
+        $modinfo = xarMod::getInfo($modid);
         $module = $modinfo['name'];
     }
 

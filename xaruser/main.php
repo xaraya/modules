@@ -119,7 +119,7 @@ function categories_user_main()
                              array('cid' => $catid));
     if (count($modlist) > 0) {
         foreach ($modlist as $modid => $itemtypes) {
-            $modinfo = xarModGetInfo($modid);
+            $modinfo = xarMod::getInfo($modid);
             // Get the list of all item types for this module (if any)
             $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                      // don't throw an exception if this function doesn't exist

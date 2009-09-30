@@ -24,7 +24,7 @@ function categories_admin_stats()
         $data['numitems'] = 0;
         $data['numlinks'] = 0;
         foreach ($modlist as $modid => $itemtypes) {
-            $modinfo = xarModGetInfo($modid);
+            $modinfo = xarMod::getInfo($modid);
             // Get the list of all item types for this module (if any)
             try{
                 $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes');
@@ -61,7 +61,7 @@ function categories_admin_stats()
         }
         $data['delete'] = xarModURL('categories','admin','unlink');
     } else {
-        $modinfo = xarModGetInfo($modid);
+        $modinfo = xarMod::getInfo($modid);
         $data['module'] = $modinfo['name'];
         if (empty($itemtype)) {
             $data['itemtype'] = 0;

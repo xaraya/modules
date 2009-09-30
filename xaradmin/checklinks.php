@@ -34,7 +34,7 @@ function categories_admin_checklinks()
         $data['numitems'] = 0;
         $data['numlinks'] = 0;
         foreach ($modlist as $modid => $itemtypes) {
-            $modinfo = xarModGetInfo($modid);
+            $modinfo = xarMod::getInfo($modid);
             // Get the list of all item types for this module (if any)
             $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                      // don't throw an exception if this function doesn't exist
@@ -65,7 +65,7 @@ function categories_admin_checklinks()
             }
         }
     } else {
-        $modinfo = xarModGetInfo($modid);
+        $modinfo = xarMod::getInfo($modid);
         $data['module'] = $modinfo['name'];
         if (empty($itemtype)) {
             $data['itemtype'] = 0;

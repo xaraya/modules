@@ -23,7 +23,7 @@ function categories_admin_unlink()
 
         $what = '';
         if (!empty($modid)) {
-            $modinfo = xarModGetInfo($modid);
+            $modinfo = xarMod::getInfo($modid);
             if (empty($itemtype)) {
                 $data['modname'] = ucwords($modinfo['displayname']);
             } else {
@@ -50,7 +50,7 @@ function categories_admin_unlink()
     }        
     // unlink API does not support deleting all category links for all modules
     if (!empty($modid)) {
-        $modinfo = xarModGetInfo($modid);
+        $modinfo = xarMod::getInfo($modid);
         if (!xarMod::apiFunc('categories','admin','unlink',
                            array('modid' => $modid,
                                  'itemtype' => $itemtype,

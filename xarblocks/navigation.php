@@ -671,7 +671,7 @@ function categories_navigationblock_display($blockinfo)
                     }
                 }
                 if (empty($title)) {
-                    $modinfo = xarModGetInfo($modid);
+                    $modinfo = xarMod::getInfo($modid);
                     $title = ucwords($modinfo['displayname']);
                 }
                 $blockinfo['title'] = xarML('Browse in #(1)', $title);

@@ -132,7 +132,7 @@ function categories_admin_privileges($args)
         if (empty($modname)) continue;
         $modid = xarMod::getRegId($modname);
         if (empty($modid)) continue;
-        $modinfo = xarModGetInfo($modid);
+        $modinfo = xarMod::getInfo($modid);
         $modlist[$modid] = $modinfo['displayname'];
         if (!empty($moduleid) && $moduleid == $modid) {
             // Get the list of all item types for this module (if any)
@@ -233,7 +233,7 @@ function categories_admin_privileges($args)
 
     $catlist = array();
     if (!empty($moduleid)) {
-        $modinfo = xarModGetInfo($moduleid);
+        $modinfo = xarMod::getInfo($moduleid);
         $modname = $modinfo['name'];
         if (!empty($itemtype)) {
             $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $pubid));
