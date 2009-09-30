@@ -49,7 +49,7 @@
       <source>xar_categories.image</source>
       <status>34</status>
       <seq>4</seq>
-      <configuration>a:11:{s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:0:"";s:26:"validation_file_extensions";s:0:"";s:18:"validation_matches";s:0:"";s:28:"initialization_basedirectory";s:28:"modules/categories/xarimages";s:24:"initialization_firstline";s:15:",-- No Image --";s:23:"initialization_function";s:0:"";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:0:"";s:25:"initialization_other_rule";s:0:"";}</configuration>
+      <configuration>a:4:{s:14:"display_layout";s:7:"default";s:26:"validation_file_extensions";s:20:"gif,jpg,jpeg,png,bmp";s:28:"initialization_basedirectory";s:44:"sys::code() . 'modules/categories/xarimages'";s:24:"initialization_firstline";s:15:",-- No Image --";}</configuration>
     </property>
     <property name="child_categories">
       <id>3121</id>
