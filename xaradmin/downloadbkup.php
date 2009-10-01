@@ -22,7 +22,7 @@ function sitetools_admin_downloadbkup ($args)
  // Security check
  if (!xarSecurityCheck('AdminSiteTools')) return;
 
- 
+
   if ((!isset($savefile)) || (empty($savefile))) {
        // Handle the user exceptions yourself
        $status = xarML('The file to download does not exist.');
@@ -37,7 +37,7 @@ function sitetools_admin_downloadbkup ($args)
 
 
   //check the file exists
- $pathtofile=xarModGetVar('sitetools','backuppath');
+ $pathtofile=xarModVars::get('sitetools','backuppath');
 
   $filetodownload = $pathtofile.'/'.$savefile;
 
@@ -77,7 +77,7 @@ function sitetools_admin_downloadbkup ($args)
         }
     }
     fclose($fp);
- 
+
  //ob_end_flush;
 
    exit();

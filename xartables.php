@@ -16,22 +16,22 @@
  *
  * This function is called internally by the core whenever the module is
  * loaded.  It is loaded by xarMod__loadDbInfo().
- * 
- * @access private 
- * @return array 
+ *
+ * @access private
+ * @return array
  */
 function sitetools_xartables()
-{ 
+{
     /* Initialise table array */
-    $xarTables = array(); 
+    $xarTables = array();
     /* Get the name for the example item table.  This is not necessary
      * but helps in the following statements and keeps them readable
      */
-    $sitetoolsTable = xarDBGetSiteTablePrefix() . '_sitetools';
+    $sitetoolsTable = xarDB::getPrefix() . '_sitetools';
     /* Set the table name */
     $xarTables['sitetools'] = $sitetoolsTable;
 
-    $xarTables['sitetools_links'] = xarDBGetSiteTablePrefix() . '_sitetools_links';
+    $xarTables['sitetools_links'] = xarDB::getPrefix() . '_sitetools_links';
     /* Return the table information */
     return $xarTables;
 }

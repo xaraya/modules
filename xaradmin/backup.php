@@ -35,9 +35,9 @@ function sitetools_admin_backup($args)
     $data['screen']=$screen;
       $data['startbackup']=$startbackup;
 
-    $data['number_of_cols'] = xarModGetVar('sitetools','colnumber');
+    $data['number_of_cols'] = xarModVars::get('sitetools','colnumber');
     $number_of_cols=$data['number_of_cols'];
-    $backupabsolutepath= xarModGetVar('sitetools','backuppath').'/';
+    $backupabsolutepath= xarModVars::get('sitetools','backuppath').'/';
     $data['warning']=0;
     $data['warningmessage']='<span class="xar-accent">'
                             .xarML('WARNING: directory does not exist or is not writeable: ').$backupabsolutepath.'</span><br /><br />'
@@ -50,9 +50,9 @@ function sitetools_admin_backup($args)
     $data['authid']     = xarSecGenAuthKey();
     /* Setup the current database for backup - until there is option to choose it TODO */
     if (($dbname='') || (empty($dbname))){
-        $dbconn =& xarDBGetConn();
-            $dbname= xarDBGetName();
-            $dbtype= xarDBGetType();
+        $dbconn = xarDB::getConn();
+            $dbname= xarDB::GetName();
+            $dbtype= xarDB::GetType();
     }
 
     $data['confirm']=$confirm;

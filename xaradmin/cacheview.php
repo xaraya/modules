@@ -30,9 +30,9 @@ function sitetools_admin_cacheview($args)
         return;
     }
 
-    $cachedir  = xarModGetVar('sitetools','templcachepath');
-    $cachefile = xarModGetVar('sitetools','templcachepath').'/CACHEKEYS';
-    $scriptcache=xarModGetVar('sitetools','templcachepath').'/d4609360b2e77516aabf27c1f468ee33.php';
+    $cachedir  = xarModVars::get('sitetools','templcachepath');
+    $cachefile = xarModVars::get('sitetools','templcachepath').'/CACHEKEYS';
+    $scriptcache=xarModVars::get('sitetools','templcachepath').'/d4609360b2e77516aabf27c1f468ee33.php';
     $data=array();
           $data['popup']=false;
     /* Check for confirmation. */
@@ -64,7 +64,7 @@ function sitetools_admin_cacheview($args)
                $templn=htmlspecialchars($filen[1]);
                $fullnurl=xarModURL('sitetools','admin','cacheview',
                                   array('action'=>'show','templn'=>$templn,'hashn'=>$hashn));
-               $cachenames[]=array('hashn'=>$hashn,
+               $cachenames[$hashn]=array('hashn'=>$hashn,
                                    'templn'=>$templn,
                                    'fullnurl'=>$fullnurl);
             }
@@ -96,7 +96,7 @@ function sitetools_admin_cacheview($args)
         return $data;
     }
 
-    xarResponseRedirect(xarModURL('sitetools', 'admin', 'cacheview'));
+    xarResponse::Redirect(xarModURL('sitetools', 'admin', 'cacheview'));
     /*  Return */
     return true;
 }

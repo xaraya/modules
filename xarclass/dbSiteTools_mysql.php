@@ -14,7 +14,7 @@
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  * @access private
  */
-include_once('modules/sitetools/xarclass/dbSiteTools.php');
+sys::import('modules.sitetools.xarclass.dbSiteTools');
 
 class dbSiteTools_mysql extends dbSiteTools
 {

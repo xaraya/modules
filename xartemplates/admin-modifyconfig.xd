@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:set name="updatebutton"><xar:mlstring>Update configuration</xar:mlstring></xar:set>
 <xar:set name="adocachel"><xar:mlstring>ADOdb Cache Path:</xar:mlstring></xar:set>
 <xar:set name="rsscachel"><xar:mlstring>RSS Cache Path:</xar:mlstring></xar:set>
@@ -34,7 +35,7 @@
 <xar:set name="schedulingoptions"><xar:mlstring>Scheduling Options</xar:mlstring></xar:set>
 <xar:set name="schedulingoff"><xar:mlstring>not scheduled</xar:mlstring></xar:set>
 <xar:set name="schedulinghelp"><xar:mlstring>Specify how often this job should be executed</xar:mlstring></xar:set>
-<xar:set name="schedulingnote"><xar:mlstring>Please note that if you stop the scheduler or if it isn't triggered, these jobs will not be executed.</xar:mlstring></xar:set>
+<xar:set name="schedulingnote"><xar:mlstring>Please note that if you stop the scheduler or if it isn&#92;t triggered, these jobs will not be executed.</xar:mlstring></xar:set>
 
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Site Tools Administration</xar:mlstring></span>
@@ -119,15 +120,15 @@
                        #$lineopl#
                   </label>
                   <select name="lineterm" id="lineterm" size="1" tabindex="1">
-                  <xar:if condition="xarModGetVar('sitetools', 'lineterm') eq '\n'">
+                  <xar:if condition="xarModVars::get('sitetools', 'lineterm') eq '\n'">
                       <option value="\n" selected="selected">#$lineoption1#</option>
                       <option value="\n\r">#$lineoption2#</option>
                       <option value="\r">#$lineoption3#</option>
-                   <xar:elseif condition="xarModGetVar('sitetools', 'lineterm') eq '\n\r'" />
+                   <xar:elseif condition="xarModVars::get('sitetools', 'lineterm') eq '\n\r'" />
                        <option value="\n">#$lineoption1#</option>
                        <option value="\n\r" selected="selected">#$lineoption2#</option>
                        <option value="\r">#$lineoption3#</option>
-                   <xar:elseif condition="xarModGetVar('sitetools', 'lineterm') eq '\r'" />
+                   <xar:elseif condition="xarModVars::get('sitetools', 'lineterm') eq '\r'" />
                        <option value="\n">#$lineoption1#</option>
                        <option value="\n\r">#$lineoption2#</option>
                        <option value="\r" selected="selected">#$lineoption3#</option>
@@ -144,15 +145,15 @@
                         #$defaultbktypel#
                 </label>
                 <select name="defaultbktype" id="defaultbktype">
-                <xar:if condition="xarModGetVar('sitetools', 'defaultbktype') eq 'complete'">
+                <xar:if condition="xarModVars::get('sitetools', 'defaultbktype') eq 'complete'">
                     <option value="complete" selected="selected">#$bkoption1#</option>
                     <option value="standard">#$bkoption2#</option>
                     <option value="structure">#$bkoption3#</option>
-                <xar:elseif condition="xarModGetVar('sitetools', 'defaultbktype') eq 'standard'" />
+                <xar:elseif condition="xarModVars::get('sitetools', 'defaultbktype') eq 'standard'" />
                     <option value="complete">#$bkoption1#</option>
                     <option value="standard" selected="selected">#$bkoption2#</option>
                     <option value="structure">#$bkoption3#</option>
-                <xar:elseif condition="xarModGetVar('sitetools', 'defaultbktype') eq 'structure'" />
+                <xar:elseif condition="xarModVars::get('sitetools', 'defaultbktype') eq 'structure'" />
                     <option value="complete">#$bkoption1#</option>
                     <option value="standard">#$bkoption2#</option>
                     <option value="structure" selected="selected">#$bkoption3#</option>
@@ -192,3 +193,4 @@
         </fieldset>
     </form>
 </div>
+</xar:template>

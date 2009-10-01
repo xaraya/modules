@@ -13,7 +13,7 @@
  */
 /**
  * optimize the database (executed by the scheduler module)
- * 
+ *
  * @author jojodee <http://xaraya.athomeandabout.com >
  * @access private
  */
@@ -25,8 +25,8 @@ function sitetools_schedulerapi_optimize($args)
      * for now lets just use current database
      */
     if (empty($dbname)){
-        $dbconn =& xarDBGetConn();
-            $dbname= xarDBGetName();
+        $dbconn = xarDB::getConn();
+        $dbname= xarDB::getName();
     }
 
     /*   It may return true (or some logging text) if it succeeds, and null if it fails
@@ -42,7 +42,7 @@ function sitetools_schedulerapi_optimize($args)
                               'admin',
                               'create',
                               array('totalgain' => $total_gain));
-                              
+
     return true;
 }
 

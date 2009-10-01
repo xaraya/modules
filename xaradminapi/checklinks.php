@@ -23,16 +23,16 @@
  * @raise DATABASE_ERROR
 */
 function sitetools_adminapi_checklinks($args)
-{ 
+{
     extract($args);
 
     if (!isset($skiplocal)) $skiplocal = false;
     if (!isset($method)) $method = 'HEAD';
     if (!isset($follow)) $follow = true;
-   
+
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables(); 
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $linkstable = $xartable['sitetools_links'];
 
@@ -45,7 +45,7 @@ function sitetools_adminapi_checklinks($args)
     } elseif (!empty($where)) {
         $query .= $where;
     }
-    $result = $dbconn->Execute($query); 
+    $result = $dbconn->Execute($query);
     if (!$result) return;
     list($numitems) = $result->fields;
     $result->Close();
@@ -60,7 +60,7 @@ function sitetools_adminapi_checklinks($args)
     } elseif (!empty($where)) {
         $query .= $where;
     }
-    $result = $dbconn->Execute($update); 
+    $result = $dbconn->Execute($update);
     if (!$result) return;
 
     // check all distinct URLs
@@ -73,13 +73,13 @@ function sitetools_adminapi_checklinks($args)
     } elseif (!empty($where)) {
         $query .= 'WHERE xar_status=0';
     }
-    $result = $dbconn->Execute($query); 
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $count = 0;
     $date = xarLocaleFormatDate('%x %X %z',time());
     $msg = xarML('#(1) : #(2)/#(3) links checked',$date,$count,$numitems);
-    xarModSetVar('sitetools','links_checked',$msg);
+    xarModVars::set('sitetools','links_checked',$msg);
     $update = "UPDATE $linkstable SET xar_status=? WHERE xar_link=?";
     for (; !$result->EOF; $result->MoveNext()) {
         list($link) = $result->fields;
@@ -91,7 +91,7 @@ function sitetools_adminapi_checklinks($args)
         if (!is_numeric($status)) {
             $date = xarLocaleFormatDate('%x %X %z',time());
             $msg = xarML('#(1) : #(2)/#(3) links checked - #(4)',$date,$count,$numitems,$status);
-            xarModSetVar('sitetools','links_checked',$msg);
+            xarModVars::set('sitetools','links_checked',$msg);
             $status = -1;
         }
         $dbconn->Execute($update,array($status,$link));
@@ -99,7 +99,7 @@ function sitetools_adminapi_checklinks($args)
         if ($status > 0 && $count % 10 == 0) {
             $date = xarLocaleFormatDate('%x %X %z',time());
             $msg = xarML('#(1) : #(2)/#(3) links checked',$date,$count,$numitems);
-            xarModSetVar('sitetools','links_checked',$msg);
+            xarModVars::set('sitetools','links_checked',$msg);
         }
     }
     $result->Close();

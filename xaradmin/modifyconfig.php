@@ -17,7 +17,7 @@
  * module
  */
 function sitetools_admin_modifyconfig()
-{ 
+{
     /* Initialise the $data variable that will hold the data to be used in
      * the blocklayout template, and get the common menu configuration
      */
@@ -27,20 +27,20 @@ function sitetools_admin_modifyconfig()
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
     /* Specify some labels and values for display */
-    $data['adopath']     = xarModGetVar('sitetools','adocachepath');
-    $data['rsspath']     = xarModGetVar('sitetools','rsscachepath');
-    $data['templpath']   = xarModGetVar('sitetools','templcachepath');
-    $data['backuppath']  = xarModGetVar('sitetools','backuppath');
-    $data['usetimestamp']= xarModGetVar('sitetools','timestamp');
-    $data['lineterm']    = xarModGetVar('sitetools','lineterm');
-    $data['colnumber']    = xarModGetVar('sitetools','colnumber');
-    $data['defaultbktype'] = xarModGetVar('sitetools','defaultbktype');
-    $data['defaultbktype'] = xarModGetVar('sitetools','defaultbktype');
-    $data['usedbprefix']    = xarModGetVar('sitetools','usedbprefix');
+    $data['adopath']     = xarModVars::get('sitetools','adocachepath');
+    $data['rsspath']     = xarModVars::get('sitetools','rsscachepath');
+    $data['templpath']   = xarModVars::get('sitetools','templcachepath');
+    $data['backuppath']  = xarModVars::get('sitetools','backuppath');
+    $data['usetimestamp']= xarModVars::get('sitetools','timestamp');
+    $data['lineterm']    = xarModVars::get('sitetools','lineterm');
+    $data['colnumber']    = xarModVars::get('sitetools','colnumber');
+    $data['defaultbktype'] = xarModVars::get('sitetools','defaultbktype');
+    $data['defaultbktype'] = xarModVars::get('sitetools','defaultbktype');
+    $data['usedbprefix']    = xarModVars::get('sitetools','usedbprefix');
 
-    $data['defadopath']   = xarCoreGetVarDirPath()."/cache/adodb";
-    $data['defrsspath']   = xarCoreGetVarDirPath()."/cache/rss";
-    $data['deftemplpath'] = xarCoreGetVarDirPath()."/cache/templates";
+    $data['defadopath']   = sys::varpath()."/cache/adodb";
+    $data['defrsspath']   = sys::varpath()."/cache/rss";
+    $data['deftemplpath'] = sys::varpath()."/cache/templates";
 
     /* scheduler functions available in sitetools at the moment */
     $schedulerapi = array('optimize','backup');
@@ -77,7 +77,7 @@ function sitetools_admin_modifyconfig()
         $data['hooks'] = join('', $hooks);
     } else {
         $data['hooks'] = $hooks;
-    } 
+    }
 
    /*Return the template variables defined in this function */
  return $data;

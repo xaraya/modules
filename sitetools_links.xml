@@ -1,7 +1,7 @@
 <object name="sitetools_links">
   <objectid>22</objectid>
   <label>Sitetools Links</label>
-  <moduleid>887</moduleid>
+  <module_id>887</module_id>
   <itemtype>3</itemtype>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>

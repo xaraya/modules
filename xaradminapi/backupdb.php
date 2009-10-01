@@ -21,7 +21,7 @@ function sitetools_adminapi_backupdb ($args)
     extract($args);
     // Security check - allow scheduler api funcs to run as anon bug #2802
     //if (!xarSecurityCheck('AdminSiteTools')) return;
- 
+
     $items=array();
     $items['startbackup']=$startbackup;
     $items['usegz']=$usegz;
@@ -37,9 +37,9 @@ function sitetools_adminapi_backupdb ($args)
     if ($screen=='') $screen==false;
 
     if (!isset($dbname) || ($dbname='') || (empty($dbname))){
-        $dbconn =& xarDBGetConn();
-            $dbname= xarDBGetName();
-            $dbtype= xarDBGetType();
+        $dbconn = xarDB::getConn();
+            $dbname= xarDB::getName();
+            $dbtype= xarDB::getType();
     }
     //setup variables
     $items['usegz']=$usegz;
@@ -47,13 +47,13 @@ function sitetools_adminapi_backupdb ($args)
     $backtickchar   = '';
     $quotechar      = '\'';
     $buffer_size    = 32768;
-    $usedbprefix = xarModGetVar('sitetools','usedbprefix');
-    $items['number_of_cols'] = xarModGetVar('sitetools','colnumber');
+    $usedbprefix = xarModVars::get('sitetools','usedbprefix');
+    $items['number_of_cols'] = xarModVars::get('sitetools','colnumber');
     $number_of_cols=$items['number_of_cols'];
-    $lineterminator = xarModGetVar('sitetools','lineterm'); // not in use  --hard coded with \n for now
-    $backupabsolutepath= xarModGetVar('sitetools','backuppath').'/';
+    $lineterminator = xarModVars::get('sitetools','lineterm'); // not in use  --hard coded with \n for now
+    $backupabsolutepath= xarModVars::get('sitetools','backuppath').'/';
     $items['warning']=0;
-    
+
     //Let's make dbname as a prefix configurable
     if ($usedbprefix==1) {
         $thedbprefix=$dbname.'.';
@@ -61,7 +61,7 @@ function sitetools_adminapi_backupdb ($args)
         $thedbprefix='';
     }
 
-    if (xarModGetVar('sitetools','timestamp') ==1) {
+    if (xarModVars::get('sitetools','timestamp') ==1) {
         $items['backuptimestamp'] = '.'.date('Y-m-d');
     } else {
         $items['backuptimestamp'] = '';
@@ -86,14 +86,14 @@ function sitetools_adminapi_backupdb ($args)
     $runningstatus=array();
 
     if (!function_exists('getmicrotime')) {
-        function getmicrotime() 
+        function getmicrotime()
         {
             list($usec, $sec) = explode(' ', microtime());
             return ((float) $usec + (float) $sec);
         }
     }
     // Instantiation of SiteTools class
-     include_once("modules/sitetools/xarclass/dbSiteTools_".$dbtype.".php");
+     sys::import('modules.sitetools.xarclass.dbSiteTools_'.$dbtype);
      $classname="dbSiteTools_".$dbtype;
      $bkitems= new $classname();
 
@@ -209,7 +209,7 @@ function sitetools_adminapi_backupdb ($args)
 
         //Put this here for now - format output later
         $overallrows = 0;
-        $overallrows = $bkitems-> bkcountoverallrows($SelectedTables);        
+        $overallrows = $bkitems-> bkcountoverallrows($SelectedTables);
         //Count up the overall number of rows in the selected table list
         /* Move to classes
         foreach ($SelectedTables as $dbname => $value) {
@@ -443,7 +443,7 @@ end the backup that is moved to class
    return $items;
 }
  //A few formatting functions
- function FormattedTimeRemaining($seconds, $precision=1) 
+ function FormattedTimeRemaining($seconds, $precision=1)
  {
     if ($seconds > 86400) {
         return number_format($seconds / 86400, $precision).' days';
@@ -454,7 +454,7 @@ end the backup that is moved to class
     }
     return number_format($seconds, $precision).' seconds';
 }
-function FileSizeNiceDisplay($filesize, $precision=2) 
+function FileSizeNiceDisplay($filesize, $precision=2)
 {
     if ($filesize < 1000) {
         $sizeunit  = 'bytes';

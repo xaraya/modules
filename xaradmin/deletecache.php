@@ -23,7 +23,7 @@ function sitetools_admin_deletecache($args)
     if (!xarVarFetch('delrss', 'checkbox', $delrss, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('delado', 'checkbox', $delado, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('deltempl', 'checkbox', $deltempl, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     /* Security check - important to do this as early as possible */
     if (!xarSecurityCheck('DeleteSiteTools')) {
@@ -37,9 +37,9 @@ function sitetools_admin_deletecache($args)
          */
 
         $data = xarModAPIFunc('sitetools', 'admin', 'menu');
-        $data['adopath']   = xarModGetVar('sitetools','adocachepath');
-        $data['rsspath']   = xarModGetVar('sitetools','rsscachepath');
-        $data['templpath'] = xarModGetVar('sitetools','templcachepath');
+        $data['adopath']   = xarModVars::get('sitetools','adocachepath');
+        $data['rsspath']   = xarModVars::get('sitetools','rsscachepath');
+        $data['templpath'] = xarModVars::get('sitetools','templcachepath');
         $data['delado']    = 0;
         $data['delrss']    = 0;
         $data['deltempl']  = 0;
@@ -58,8 +58,8 @@ function sitetools_admin_deletecache($args)
         /* recursively delete all adodb cache files
          * Get site folder name
          */
-        $adopath = xarModGetVar('sitetools','adocachepath');
-      
+        $adopath = xarModVars::get('sitetools','adocachepath');
+
         $var = is_dir($adopath);
         if ($var) {
             if (!is_writable($adopath)) {
@@ -88,11 +88,11 @@ function sitetools_admin_deletecache($args)
                 $data['delfin']    = true;
             }
         }
-     }  
+     }
      if ($delrss==1) {
         /* delete all rss cache files */
         /* Get site folder name */
-        $rsspath = xarModGetVar('sitetools','rsscachepath');
+        $rsspath = xarModVars::get('sitetools','rsscachepath');
 
         $var = is_dir($rsspath);
         if ($var) {
@@ -121,7 +121,7 @@ function sitetools_admin_deletecache($args)
         /*  delete all template cache files
          * Get site folder name
          */
-        $templpath = xarModGetVar('sitetools','templcachepath');
+        $templpath = xarModVars::get('sitetools','templcachepath');
 
         $var = is_dir($templpath);
         if ($var) {
@@ -149,7 +149,7 @@ function sitetools_admin_deletecache($args)
     }
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work */
-   xarResponseRedirect(xarModURL('sitetools', 'admin', 'deletecache'));
+   xarResponse::Redirect(xarModURL('sitetools', 'admin', 'deletecache'));
 
     return true;
 }

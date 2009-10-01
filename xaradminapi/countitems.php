@@ -15,10 +15,10 @@
  * @raise DATABASE_ERROR
 */
 function sitetools_adminapi_countitems()
-{ 
+{
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables(); 
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $sitetoolstable = $xartable['sitetools'];
 

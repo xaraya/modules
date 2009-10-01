@@ -28,15 +28,15 @@ function sitetools_adminapi_optimizedb($dbname,$dbtype='')
        $items=array();
 
     if (($dbname='') || (empty($dbname))){
-        $dbconn =& xarDBGetConn();
-            $dbname= xarDBGetName();
+        $dbconn = xarDB::getConn();
+            $dbname= xarDB::getName();
     }
 
     $rowinfo=array();//bug #2595
   // Instantiation of SiteTools class
 
-     include_once("modules/sitetools/xarclass/dbSiteTools_".$dbtype.".php");
-  
+    sys::import('modules.sitetools.xarclass.dbSiteTools_'.$dbtype);
+
      $classname="dbSiteTools_".$dbtype;
      $items= new $classname();
      if (!$rowdata= $items->_optimize($dbname)) {return;}

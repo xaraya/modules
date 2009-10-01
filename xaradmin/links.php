@@ -26,7 +26,7 @@ function sitetools_admin_links()
 
     $data = array();
 
-    $data['checked'] = xarModGetVar('sitetools','links_checked');
+    $data['checked'] = xarModVars::get('sitetools','links_checked');
     if (!xarVarFetch('startnum', 'str:1:', $data['startnum'], '1', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sort', 'str:1:', $data['sort'], '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('filter', 'str:1:', $filter, '', XARVAR_NOT_REQUIRED)) return;
@@ -44,11 +44,11 @@ function sitetools_admin_links()
     if (!isset($data['modules'])) return;
 
     if (empty($find)) {
-        $todo = xarModGetVar('sitetools','links_todo');
+        $todo = xarModVars::get('sitetools','links_todo');
         if (!empty($todo)) {
             $data['todo'] = unserialize($todo);
         }
-        $count = xarModGetVar('sitetools','links_count');
+        $count = xarModVars::get('sitetools','links_count');
         $data['total'] = 0;
         if (!empty($count)) {
             $data['count'] = unserialize($count);
@@ -127,11 +127,11 @@ function sitetools_admin_links()
 
     $data['todo'] = $todo;
 
-    xarModSetVar('sitetools','links_todo',serialize($data['todo']));
-    xarModSetVar('sitetools','links_count',serialize($data['count']));
-    xarModSetVar('sitetools','links_skiplocal',$skiplocal);
-    xarModSetVar('sitetools','links_method',$method);
-    xarModSetVar('sitetools','links_follow',$follow);
+    xarModVars::set('sitetools','links_todo',serialize($data['todo']));
+    xarModVars::set('sitetools','links_count',serialize($data['count']));
+    xarModVars::set('sitetools','links_skiplocal',$skiplocal);
+    xarModVars::set('sitetools','links_method',$method);
+    xarModVars::set('sitetools','links_follow',$follow);
 
     /* some clean-up of previous link checks */
     if (!empty($data['checked'])) {
@@ -158,9 +158,9 @@ function sitetools_admin_startcheck()
         chdir($GLOBALS['xarSitetools_BaseDir']);
     }
 
-    $skiplocal = xarModGetVar('sitetools','links_skiplocal');
-    $method = xarModGetVar('sitetools','links_method');
-    $follow = xarModGetVar('sitetools','links_follow');
+    $skiplocal = xarModVars::get('sitetools','links_skiplocal');
+    $method = xarModVars::get('sitetools','links_method');
+    $follow = xarModVars::get('sitetools','links_follow');
     xarModAPIFunc('sitetools','admin','checklinks',
                   array('skiplocal' => $skiplocal,
                         'method' => $emthod,

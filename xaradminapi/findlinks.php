@@ -19,7 +19,7 @@
  * @raise DATABASE_ERROR
 */
 function sitetools_adminapi_findlinks($args)
-{ 
+{
     extract($args);
 
     if (!isset($skiplocal)) $skiplocal = false;
@@ -31,8 +31,8 @@ function sitetools_adminapi_findlinks($args)
         xarModAPILoad('articles','user');
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $linkstable = $xartable['sitetools_links'];
 
@@ -47,7 +47,7 @@ function sitetools_adminapi_findlinks($args)
 
     // find links for articles
     if (!empty($fields['articles']) && xarModIsAvailable('articles')) {
-        $modid = xarModGetIDFromName('articles');
+        $modid = xarMod::getRegID('articles');
         $articlestable = $xartable['articles'];
         $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
 
@@ -159,7 +159,7 @@ function sitetools_adminapi_findlinks($args)
 
     // find links for roles
     if (!empty($fields['roles'])) {
-        $modid = xarModGetIDFromName('roles');
+        $modid = xarMod::getRegID('roles');
         $rolestable = $xartable['roles'];
         // only 1 itemtype for now, but groups might have separate DD fields later on
         $descr = array(0 => xarML('Users'),

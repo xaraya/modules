@@ -36,7 +36,7 @@ function sitetools_admin_downloaddel ($args)
   }
    $info=array();
    /*check the file exists */
-   $pathtofile=xarModGetVar('sitetools','backuppath');
+   $pathtofile=xarModVars::get('sitetools','backuppath');
 
   $filetodelete = $pathtofile.'/'.$savefile;
 

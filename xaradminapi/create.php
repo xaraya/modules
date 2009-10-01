@@ -16,7 +16,7 @@
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function sitetools_adminapi_create($args)
-{ 
+{
 extract($args);
     // Argument check - make sure that all required arguments are present
     // and in the right format, if not then set an appropriate error
@@ -39,13 +39,13 @@ extract($args);
         return;
     }
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $sitetoolstable = $xartable['sitetools'];
 
     // Get next ID in table
     $nextId = $dbconn->GenId($sitetoolstable);
-    // Add item 
+    // Add item
 
     $query = "INSERT INTO $sitetoolstable (
               xar_stid,
@@ -55,7 +55,7 @@ extract($args);
     $result = &$dbconn->Execute($query,$bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
-    if (!$result) return; 
+    if (!$result) return;
     // Get the ID of the item that we inserted.
     $stid = $dbconn->PO_Insert_ID($sitetoolstable, 'xar_stid');
     // Let any hooks know that we have created a new item.
@@ -66,6 +66,6 @@ extract($args);
     xarModCallHooks('item', 'create', $stid, $item);
     // Return the id of the newly created item to the calling process
     return $stid;
-} 
+}
 
 ?>

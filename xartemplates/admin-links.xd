@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <a name="top"></a>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Site Tools Administration</xar:mlstring></span></div>
@@ -7,10 +8,18 @@
 
 <form action="&xar-modurl-sitetools-admin-links;" method="post">
 <table border="0" cellpadding="4" cellspacing="0">
+<input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+<xar:set name="keys">array_keys($modules)</xar:set>
+<xar:set name="i">0</xar:set>
+ <xar:while condition="1 eq 1">
  <tr>
-  <input type="hidden" name="authid" id="authid" value="#$authid#" />
-  <xar:set name="$i">0</xar:set>
-  <xar:foreach in="$modules" key="$name" value="$fields">
+ <xar:while condition="1 eq 1">
+   <xar:if condition="$i++ and $i % 4 == 0">
+    <xar:break />
+   </xar:if>
+  <xar:set name="fields">array_pop($modules)</xar:set>
+  <xar:set name="name">array_pop($keys)</xar:set>
    <td valign="top">
     <h3>
       #$name#
@@ -26,30 +35,34 @@
       </xar:if>
     </xar:foreach>
    </td>
-   <xar:if condition="$i++ and $i % 4 == 0">
-    </tr><tr>
+   <xar:if condition="empty($modules)">
+    <xar:break />
    </xar:if>
-  </xar:foreach>
+ </xar:while>
  </tr>
+   <xar:if condition="empty($modules)">
+    <xar:break />
+   </xar:if>
+ </xar:while>
 </table>
 <p>
-  <xar:set name="$findbutton"><xar:mlstring>Find Links</xar:mlstring></xar:set>
+  <xar:set name="findbutton"><xar:mlstring>Find Links</xar:mlstring></xar:set>
   <input type="submit" name="find" value="#$findbutton#"  />
   <label for="skiplocal">
-  <xar:if condition="xarModGetVar('sitetools','links_skiplocal')">
+  <xar:if condition="xarModVars::get('sitetools','links_skiplocal')">
     <input type="checkbox" name="skiplocal" value="1" id="skiplocal" checked="checked" />
   <xar:else/>
     <input type="checkbox" name="skiplocal" value="1" id="skiplocal" />
   </xar:if>
   <xar:mlstring>Skip local links</xar:mlstring></label>
   <label for="follow">
-  <xar:if condition="xarModGetVar('sitetools','links_follow')">
+  <xar:if condition="xarModVars::get('sitetools','links_follow')">
     <input type="checkbox" name="follow" value="1" id="follow" checked="checked" />
   <xar:else/>
     <input type="checkbox" name="follow" value="1" id="follow" />
   </xar:if>
   <xar:mlstring>Follow redirects</xar:mlstring></label>
-  <xar:set name="method">xarModGetVar('sitetools','links_method')</xar:set>
+  <xar:set name="method">xarModVars::get('sitetools','links_method')</xar:set>
   <label for="method1">
   <xar:if condition="!empty($method) and $method eq 'HEAD'">
     <input type="radio" name="method" id="method1" value="HEAD" checked="checked" />
@@ -74,7 +87,7 @@
     <b>#$checked#</b> [<a href="&xar-modurl-sitetools-admin-links;"><xar:mlstring>Refresh</xar:mlstring></a>]
   <xar:else/>
     <a href="&xar-modurl-sitetools-admin-links;&amp;check=1&amp;authid=#$authid#"><xar:mlstring>Start Link Check</xar:mlstring></a>
-    <xar:set name="$proxyhost">#xarModGetVar('base','proxyhost')#</xar:set>
+    <xar:set name="proxyhost">xarModVars::get('base','proxyhost')</xar:set>
     <xar:if condition="!empty($proxyhost)">
       (<a href="&xar-modurl-base-admin-modifyconfig;&amp;tab=other"><xar:ml><xar:mlstring>via #(1)</xar:mlstring><xar:mlvar>#$proxyhost#</xar:mlvar></xar:ml></a>)
     <xar:else/>
@@ -83,7 +96,7 @@
   </xar:if>
 
   <h2><xar:mlstring>Link Status</xar:mlstring></h2>
-  <xar:data-getitems name="$props" value="$stats" module="sitetools" itemtype="3" fieldlist="status,COUNT(id)" groupby="status" />
+  <xar:data-getitems name="props" value="stats" module="sitetools" itemtype="3" fieldlist="status,COUNT(id)" groupby="status" />
   <table border="1" cellpadding="4" cellspacing="0">
     <tr>
       <th><xar:mlstring>Status</xar:mlstring></th>
@@ -104,8 +117,8 @@
     <a href="&xar-modurl-sitetools-admin-links;"><xar:mlstring>Show All Links</xar:mlstring></a>
   </xar:if>
 
-  <xar:set name="$numitems">100</xar:set>
-  <xar:data-getitems name="$properties" value="$items" module="sitetools" itemtype="3" numitems="$numitems" startnum="$startnum" sort="$sort" where="$where" />
+  <xar:set name="numitems">100</xar:set>
+  <xar:data-getitems name="properties" value="items" module="sitetools" itemtype="3" numitems="$numitems" startnum="$startnum" sort="$sort" where="$where" />
   <table border="1" cellpadding="4" cellspacing="0">
     <tr>
       <th><a href="&xar-modurl-sitetools-admin-links;&amp;sort=link"><xar:mlstring>Link</xar:mlstring></a></th>
@@ -129,19 +142,20 @@
   <p align="center">
   <xar:if condition="(!empty($startnum) and $startnum gt 1) or (!empty($items) and count($items) eq $numitems)">
     <xar:if condition="!empty($startnum) and $startnum gt 1">
-      <a href="#xarServerGetCurrentURL(array('startnum' => $startnum - $numitems))#">&lt;&lt; </a>
+      <a href="#xarServer::getCurrentURL(array('startnum' => $startnum - $numitems))#">&lt;&lt; </a>
     <xar:else/>
       ---
     </xar:if>
-    &nbsp;&nbsp;&nbsp;
+    &#160;&#160;&#160;
     <xar:if condition="!empty($items) and count($items) eq $numitems">
-      <a href="#xarServerGetCurrentURL(array('startnum' => $startnum + $numitems))#"> &gt;&gt;</a>
+      <a href="#xarServer::getCurrentURL(array('startnum' => $startnum + $numitems))#"> &gt;&gt;</a>
     <xar:else/>
       ---
     </xar:if>
   </xar:if>
   </p>
-  <a href="#xarServerGetCurrentURL()##top"><xar:mlstring>Back to top</xar:mlstring></a>
+  <a href="#xarServer::getCurrentURL()##top"><xar:mlstring>Back to top</xar:mlstring></a>
 </xar:if>
 
 </div>
+</xar:template>

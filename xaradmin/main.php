@@ -25,7 +25,7 @@ function sitetools_admin_main()
         $data = xarModAPIFunc('sitetools', 'admin', 'menu');
         $data['welcome'] = '';
   
-        xarResponseRedirect(xarModURL('sitetools', 'admin', 'modifyconfig'));
+        xarResponse::Redirect(xarModURL('sitetools', 'admin', 'modifyconfig'));
 
     return true;
 }

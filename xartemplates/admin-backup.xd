@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     License: GPL http://www.gnu.org/copyleft/gpl.html
 </xar:comment>
@@ -17,34 +18,34 @@
             Backup Database Tables 
         </xar:mlstring>
     </h2>
-    <xar:set name="$confirmbutton">
+    <xar:set name="confirmbutton">
         <xar:mlstring>Backup</xar:mlstring>
     </xar:set>
-    <xar:set name="$backuptitle">
+    <xar:set name="backuptitle">
         <xar:mlstring>Backing Up Database:</xar:mlstring>
     </xar:set>
-    <xar:set name="$goback">
+    <xar:set name="goback">
         <xar:mlstring>Go Back</xar:mlstring>
     </xar:set>
-    <xar:set name="$checktrue">
+    <xar:set name="checktrue">
         <xar:mlstring>Select All</xar:mlstring>
     </xar:set>
-    <xar:set name="$checkfalse">
+    <xar:set name="checkfalse">
         <xar:mlstring>Deselect All</xar:mlstring>
     </xar:set>
-    <xar:set name="$screenlabel">
+    <xar:set name="screenlabel">
         <xar:mlstring>Running status display:</xar:mlstring>
     </xar:set>
-    <xar:set name="$screenhelp">
+    <xar:set name="screenhelp">
         <xar:mlstring>If checked, a running status of backup progress is displayed.</xar:mlstring>
     </xar:set>
-    <xar:set name="$usegzlabel">
+    <xar:set name="usegzlabel">
         <xar:mlstring>Create GZ backup file(if gz available)?</xar:mlstring>
     </xar:set>
-    <xar:set name="$usegzhelp">
+    <xar:set name="usegzhelp">
         <xar:mlstring>If checked the backup file will be in GZ format, if available. Otherwise, a text sql file will be created.</xar:mlstring>
     </xar:set>
-    <xar:set name="$securitymessage">
+    <xar:set name="securitymessage">
         <xar:mlstring><strong>SECURITY WARNING:</strong><br />
             Do not leave your backup file in a web browsable directory.<br />
             Remember to delete it, or move it to a secure directory.
@@ -123,38 +124,28 @@
                     <th nowrap="nowrap" colspan="#$number_of_cols#">
                         <label class="xar-mod-title">
                             <xar:mlstring>
-                                Tables for:&nbsp;
+                                Tables for:&#160;
                             </xar:mlstring>
-                            #$dbname# &nbsp;&nbsp;
+                            #$dbname# &#160;&#160;
                             <xar:mlstring>
                                 (records)
                             </xar:mlstring>
                         </label>
                     </th>
                 </tr>
-                <tr>
-                    <xar:set name="$i">
+                    <xar:set name="i">
                         1
                     </xar:set>
                     <xar:foreach in="$dbtables" value="$dbtable">
-                        <xar:if condition="$i++ lt $number_of_cols">
+                        <tr>
+                        <xar:if condition="$i++ le $number_of_cols">
                           <td class="xar-norm-outline" style="text-align: left;margin-left:2px; margin-top:2px; margin-bottom:2px;width:4%;border-width: 0px 0px 1px 0px;border-style: dotted;">
                             <input type="checkbox" name="#$checkboxname#" value="#$dbtable['tablename']#" checked="checked" />
                             #$dbtable['tablename']# (#$dbtable['tablerecs']#)
                           </td>
-                        <xar:else />
-                          <td class="xar-norm-outline" style="text-align: left;margin-left:2px; margin-top:2px; margin-bottom:2px;width:4%;border-width: 0px 0px 1px 0px;border-style: dotted;">
-                            <input type="checkbox" name="#$checkboxname#" value="#$dbtable['tablename']#" checked="checked" />
-                            #$dbtable['tablename']# (#$dbtable['tablerecs']#)
-                            <xar:set name="$i">
-                                    1
-                            </xar:set>
-                          </td>
-                          </tr>
-                          <tr>
                         </xar:if>
+                          </tr>
                     </xar:foreach>
-                </tr>
             </table>
             <span style="float: left; padding-top: 30px; width: 98%; text-align: center;">
                 <input type="button" OnClick="CheckAll(true)" value="#$checktrue#" />
@@ -234,3 +225,4 @@
     </div>
 </xar:if>
 </div>
+</xar:template>

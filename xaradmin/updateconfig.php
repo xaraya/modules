@@ -35,15 +35,15 @@ function sitetools_admin_updateconfig()
      * xarVarFetch when recieving the incoming values, so no extra processing
      * is needed when setting the variables here.
      */
-    xarModSetVar('sitetools','adocachepath',$adopath);
-    xarModSetVar('sitetools','rsscachepath', $rsspath);
-    xarModSetVar('sitetools','templcachepath', $templpath);
-    xarModSetVar('sitetools','backuppath', $backuppath);
-    /*    xarModSetVar('sitetools','lineterm', $lineterm);  */
-    xarModSetVar('sitetools','timestamp', $usetimestamp);
-    xarModSetVar('sitetools','usedbprefix', $usedbprefix);    
-    xarModSetVar('sitetools','colnumber',$colnumber);
-    xarModSetVar('sitetools','defaultbktype',$defaultbktype);
+    xarModVars::set('sitetools','adocachepath',$adopath);
+    xarModVars::set('sitetools','rsscachepath', $rsspath);
+    xarModVars::set('sitetools','templcachepath', $templpath);
+    xarModVars::set('sitetools','backuppath', $backuppath);
+    /*    xarModVars::set('sitetools','lineterm', $lineterm);  */
+    xarModVars::set('sitetools','timestamp', $usetimestamp);
+    xarModVars::set('sitetools','usedbprefix', $usedbprefix);
+    xarModVars::set('sitetools','colnumber',$colnumber);
+    xarModVars::set('sitetools','defaultbktype',$defaultbktype);
 
     if (xarModIsAvailable('scheduler')) {
         if (!xarVarFetch('interval', 'isset', $interval, array(), XARVAR_NOT_REQUIRED)) return;
@@ -86,7 +86,7 @@ function sitetools_admin_updateconfig()
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
      */
-    xarResponseRedirect(xarModURL('sitetools', 'admin', 'modifyconfig'));
+    xarResponse::Redirect(xarModURL('sitetools', 'admin', 'modifyconfig'));
 
     /* Return */
     return true;

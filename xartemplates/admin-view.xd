@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <!-- common admin menu for this module - remove link to the current function -->
 <!-- the variables used in this menu come from example_admin_menu() -->
@@ -43,3 +44,4 @@
     #$pager#
     </div>
 </div>
+</xar:template>

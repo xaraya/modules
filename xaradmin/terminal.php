@@ -24,7 +24,7 @@ function sitetools_admin_terminal()
     $output = array();
     if($term_input != '') {
         /* Pass verbatim to database; */
-        $dbconn =& xarDBGetConn();
+        $dbconn = xarDB::getConn();
         $result =& $dbconn->Execute($term_input);
         if(!$result) {
             $error = xarCurrentError();

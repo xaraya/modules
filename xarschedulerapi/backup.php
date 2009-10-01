@@ -13,7 +13,7 @@
  */
 /**
  * take a backup of the database(s) (executed by the scheduler module)
- * 
+ *
  * @author jojodee <http://xaraya.athomeandabout.com >
  * @access private
  */
@@ -22,13 +22,13 @@ function sitetools_schedulerapi_backup($args)
     extract ($args);
 
     if (!isset($dbname) || ($dbname='') || (empty($dbname))){
-        $dbconn =& xarDBGetConn();
-            $dbname= xarDBGetName();
-            $dbtype= xarDBGetType();
+        $dbconn = xarDB::getConn();
+            $dbname= xarDB::getName();
+            $dbtype= xarDB::getType();
     }
     $SelectedTables=''; //Todo: setup a default array of selected tables for partial backups
 
-    $startbackup=xarModGetVar('sitetools','defaultbktype');
+    $startbackup=xarModVars::get('sitetools','defaultbktype');
 
     if ((!isset($startbackup)) || (empty($startbackup))) {
       $startbackup='complete';

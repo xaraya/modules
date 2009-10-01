@@ -16,13 +16,14 @@
  * @return array of module titles and their link fields
  * @raise DATABASE_ERROR
 */
+sys::import('modules.dynamicdata.class.properties.master');
 function sitetools_adminapi_getlinkfields($args)
 { 
     extract($args);
 
     $modules = array();
 
-    $proptypes = xarModAPIFunc('dynamicdata','user','getproptypes');
+    $proptypes = DataPropertyMaster::getPropertyTypes();
 
     // find relevant fields for articles
     if (xarModIsAvailable('articles')) {

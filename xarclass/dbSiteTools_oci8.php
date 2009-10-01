@@ -16,7 +16,7 @@
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  * @access private
  */
-require_once('modules/sitetools/xarclass/dbSiteTools.php');
+sys::import('modules.sitetools.xarclass.dbSiteTools');
 
 class dbSiteTools_oci8 extends dbSiteTools
 {
