@@ -302,7 +302,7 @@ class testxarModgetBaseInfo extends xarTestCase {
         return $res;
     }
     function testgetBaseInfoWithTypeParam2() {
-        $this->expected = '[array]';
+        $this->expected = '[array]'; 
         $this->actual   = xarMod::getBaseInfo('default','theme');
         $res = $this->assertTrue(is_array($this->actual) && (count($this->actual) == 8),"Call with theme name param and type = 'theme' returns an array of 8 elements");
         return $res;
