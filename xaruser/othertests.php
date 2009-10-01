@@ -18,7 +18,7 @@
  * @author Jan Schrage <jan@xaraya.com>
  * @author Frank Besler <besfred@xaraya.com>
 */
-    sys::import('modules.dynamicdata.class.objects.master');
+    sys::import('modules.dynamicdata.class.properties.master');
 
     function xarayatesting_user_othertests()
     {
