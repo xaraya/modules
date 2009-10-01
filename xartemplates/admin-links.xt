@@ -20,6 +20,9 @@
    </xar:if>
   <xar:set name="fields">array_pop($modules)</xar:set>
   <xar:set name="name">array_pop($keys)</xar:set>
+   <xar:if condition="empty($fields)">
+    <xar:set name="fields">array()</xar:set>
+   </xar:if>
    <td valign="top">
     <h3>
       #$name#

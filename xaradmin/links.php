@@ -113,7 +113,6 @@ function sitetools_admin_links()
         if (!isset($fields[$matches[1]][$matches[2]])) $fields[$matches[1]][$matches[2]] = array();
         $fields[$matches[1]][$matches[2]][] = $matches[3];
     }
-
     /* find the links in the different fields and save them to the database */
     $data['count'] = xarModAPIFunc('sitetools','admin','findlinks',
                                    array('fields' => $fields,

@@ -43,7 +43,7 @@ function sitetools_adminapi_findlinks($args)
 
     $count = array();
 
-    $server = xarServerGetHost();
+    $server = xarServer::getHost();
 
     // find links for articles
     if (!empty($fields['articles']) && xarModIsAvailable('articles')) {
