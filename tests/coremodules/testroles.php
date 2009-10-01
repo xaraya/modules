@@ -10,7 +10,7 @@
         {
             try{
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'admin', 'addmember');
+                $this->actual = xarMod::apiFunc('roles', 'admin', 'addmember');
                 $res = $this->assertSame($this->actual,$this->expected,"Call with no params throws an exception");
                 return $res;
             } catch(Exception $e) {
@@ -28,7 +28,7 @@
         {
             try{
                 $this->expected = true;
-                $this->actual = xarModAPIFunc('roles', 'admin', 'clearsessions');
+                $this->actual = xarMod::apiFunc('roles', 'admin', 'clearsessions');
                 return $this->assertTrue($this->actual,"Call with no params returns true");
             } catch(Exception $e) {
                 return $this->assertTrue(true,"Call with no params throws an exception");
@@ -46,15 +46,15 @@
         function testGetgroupmenulinks()
         {
             $this->expected = '[array]';
-            $this->actual = xarModAPIFunc('roles','admin','getgroupmenulinks');
+            $this->actual = xarMod::apiFunc('roles','admin','getgroupmenulinks');
             return $this->assertTrue(is_array($this->actual),'Call with no params returns an array');
         }
 
         function testGetgroupmenulinksWithParams()
         {
             $args = array('foo' => 'bar');
-            $this->expected = xarModAPIFunc('roles','admin','getgroupmenulinks');
-            $this->actual =xarModAPIFunc('roles','admin','getgroupmenulinks', $args);
+            $this->expected = xarMod::apiFunc('roles','admin','getgroupmenulinks');
+            $this->actual =xarMod::apiFunc('roles','admin','getgroupmenulinks', $args);
             return $this->assertSame($this->actual,$this->expected,'Call with params returns the same array as without');
         }
 
@@ -67,15 +67,15 @@
         function testGetmenulinks()
         {
             $this->expected = '[array]';
-            $this->actual = xarModAPIFunc('roles','admin','getmenulinks');
+            $this->actual = xarMod::apiFunc('roles','admin','getmenulinks');
             return $this->assertTrue(is_array($this->actual),'Call with no params returns an array');
         }
 
         function testGetmenulinksWithParams()
         {
             $args = array('foo' => 'bar');
-            $this->expected = xarModAPIFunc('roles','admin','getmenulinks');
-            $this->actual = xarModAPIFunc('roles','admin','getmenulinks', $args);
+            $this->expected = xarMod::apiFunc('roles','admin','getmenulinks');
+            $this->actual = xarMod::apiFunc('roles','admin','getmenulinks', $args);
             return $this->assertSame($this->actual,$this->expected,'Call with params returns the same array as without');
         }
 
@@ -89,7 +89,7 @@
         {
             try{
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'admin', 'getmessageincludestring');
+                $this->actual = xarMod::apiFunc('roles', 'admin', 'getmessageincludestring');
                 $res = $this->assertSame($this->actual,$this->expected,"Call with no params throws an exception");
                 return $res;
             } catch(Exception $e) {
@@ -102,7 +102,7 @@
             try{
                 $args = array('template' => 'someinvalidtemplate');
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'admin', 'getmessageincludestring',$args);
+                $this->actual = xarMod::apiFunc('roles', 'admin', 'getmessageincludestring',$args);
                 $res =  $this->assertSame($this->actual,$this->expected,'Call with an invalid template param throws an exception');
                 return $res;
             } catch(Exception $e) {
@@ -115,7 +115,7 @@
             try{
                 $args = array('module' => 'someinvalidmodule', 'template' => 'message-vars');
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'admin', 'getmessageincludestring',$args);
+                $this->actual = xarMod::apiFunc('roles', 'admin', 'getmessageincludestring',$args);
                 $res =  $this->assertSame($this->actual,$this->expected,'Call with an invalid module param throws an exception');
                 return $res;
             } catch(Exception $e) {
@@ -127,7 +127,7 @@
         {
             $args = array('module' => 'mail', 'template' => 'message-vars');
             $this->expected = '[string]';
-            $this->actual = xarModAPIFunc('roles', 'admin', 'getmessageincludestring',$args);
+            $this->actual = xarMod::apiFunc('roles', 'admin', 'getmessageincludestring',$args);
             return $this->assertTrue(is_string($this->actual),'Call with valid module name and template params returns a string');
         }
 
@@ -141,7 +141,7 @@
         {
             try{
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'admin', 'getmessagestrings');
+                $this->actual = xarMod::apiFunc('roles', 'admin', 'getmessagestrings');
                 $res = $this->assertSame($this->actual,$this->expected,"Call with no params throws an exception");
                 return $res;
             } catch(Exception $e) {
@@ -154,7 +154,7 @@
             try{
                 $args = array('template' => 'someinvalidtemplate');
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'admin', 'getmessagestrings',$args);
+                $this->actual = xarMod::apiFunc('roles', 'admin', 'getmessagestrings',$args);
                 $res =  $this->assertSame($this->actual,$this->expected,'Call with an invalid template param throws an exception');
                 return $res;
             } catch(Exception $e) {
@@ -167,7 +167,7 @@
             try{
                 $args = array('module' => 'someinvalidmodule', 'template' => 'welcome');
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'admin', 'getmessagestrings',$args);
+                $this->actual = xarMod::apiFunc('roles', 'admin', 'getmessagestrings',$args);
                 $res =  $this->assertSame($this->actual,$this->expected,'Call with an invalid module param throws an exception');
                 return $res;
             } catch(Exception $e) {
@@ -179,7 +179,7 @@
         {
             $args = array('module' => 'roles', 'template' => 'welcome');
             $this->expected = '[array]';
-            $this->actual = xarModAPIFunc('roles', 'admin', 'getmessagestrings',$args);
+            $this->actual = xarMod::apiFunc('roles', 'admin', 'getmessagestrings',$args);
             return $this->assertTrue(is_array($this->actual),'Call with valid module name and template params returns an array');
         }
 
@@ -192,15 +192,15 @@
         function testMenu()
         {
             $this->expected = '[array]';
-            $this->actual = xarModAPIFunc('roles','admin','menu');
+            $this->actual = xarMod::apiFunc('roles','admin','menu');
             return $this->assertTrue(is_array($this->actual),'Call with no params returns an array');
         }
 
         function testMenuWithParams()
         {
             $args = array('foo' => 'bar');
-            $this->expected = xarModAPIFunc('roles','admin','menu');
-            $this->actual = xarModAPIFunc('roles','admin','menu', $args);
+            $this->expected = xarMod::apiFunc('roles','admin','menu');
+            $this->actual = xarMod::apiFunc('roles','admin','menu', $args);
             return $this->assertSame($this->actual,$this->expected,'Call with params returns the same array as without');
         }
 
@@ -214,7 +214,7 @@
         {
             try{
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'admin', 'purge');
+                $this->actual = xarMod::apiFunc('roles', 'admin', 'purge');
                 $res = $this->assertSame($this->actual,$this->expected,"Call with no params throws an exception");
                 return $res;
             } catch(Exception $e) {
@@ -227,7 +227,7 @@
             try{
                 $this->expected = '[exception]';
                 $args = array('state' => ROLES_STATE_ACTIVE);
-                $this->actual = xarModAPIFunc('roles', 'admin', 'purge', $args);
+                $this->actual = xarMod::apiFunc('roles', 'admin', 'purge', $args);
                 $res = $this->assertSame($this->actual,$this->expected,"Call with bad state param throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -245,7 +245,7 @@
         {
             try{
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'admin', 'recall');
+                $this->actual = xarMod::apiFunc('roles', 'admin', 'recall');
                 $res = $this->assertSame($this->actual,$this->expected,"Call with no params throws an exception");
                 return $res;
             } catch(Exception $e) {
@@ -263,7 +263,7 @@
         {
             try{
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'admin', 'sendusermail');
+                $this->actual = xarMod::apiFunc('roles', 'admin', 'sendusermail');
                 $res = $this->assertSame($this->actual,$this->expected,"Call with no params throws an exception");
                 return $res;
             } catch(Exception $e) {
@@ -280,7 +280,7 @@
         {
             try{
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'admin', 'stateupdate');
+                $this->actual = xarMod::apiFunc('roles', 'admin', 'stateupdate');
                 $res = $this->assertSame($this->actual,$this->expected,"Call with no params throws an exception");
                 return $res;
             } catch(Exception $e) {
@@ -292,7 +292,7 @@
             try{
                 $this->expected = '[exception]';
                 $args = array('state' => ROLES_STATE_ACTIVE, 'id' => 12345678);
-                $this->actual = xarModAPIFunc('roles', 'admin', 'stateupdate', $args);
+                $this->actual = xarMod::apiFunc('roles', 'admin', 'stateupdate', $args);
                 $res = $this->assertSame($this->actual,$this->expected,"Call with bad id param throws an exception");
                 return $res;
             } catch(Exception $e) {
@@ -312,7 +312,7 @@
         {
             try{
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'addmember');
+                $this->actual = xarMod::apiFunc('roles', 'user', 'addmember');
                 $res = $this->assertSame($this->actual,$this->expected,"Call with no params throws an exception");
                 return $res;
             } catch(Exception $e) {
@@ -330,7 +330,7 @@
         {
             try{
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'checkprivilege');
+                $this->actual = xarMod::apiFunc('roles', 'user', 'checkprivilege');
                 $res = $this->assertSame($this->actual,$this->expected,"Call with no params throws an exception");
                 return $res;
             } catch(Exception $e) {
@@ -347,7 +347,7 @@
         {
             try {
                 $this->expected = '[integer]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'countall');
+                $this->actual = xarMod::apiFunc('roles', 'user', 'countall');
                 $res = $this->assertTrue(is_numeric($this->actual),"Call with no params returns integer");
                 return $res;
             } catch(Exception $e) {
@@ -359,7 +359,7 @@
             try {
                 $this->expected = '[integer]';
                 $args = array('state' => 3);
-                $this->actual = xarModAPIFunc('roles', 'user', 'countall', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'countall', $args);
                 $res = $this->assertTrue(is_numeric($this->actual),"Call with state param returns integer");
                 return $res;
             } catch(Exception $e) {
@@ -371,7 +371,7 @@
             try {
                 $this->expected = '[integer]';
                 $args = array('include_anonymous' => false);
-                $this->actual = xarModAPIFunc('roles', 'user', 'countall', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'countall', $args);
                 $res = $this->assertTrue(is_numeric($this->actual),"Call with include_anonymous param returns integer");
                 return $res;
             } catch(Exception $e) {
@@ -383,7 +383,7 @@
             try {
                 $this->expected = '[integer]';
                 $args = array('selection' => ' AND uname = "Admin"');
-                $this->actual = xarModAPIFunc('roles', 'user', 'countall', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'countall', $args);
                 $res = $this->assertTrue(is_numeric($this->actual),"Call with selection param returns integer");
                 return $res;
             } catch(Exception $e) {
@@ -395,7 +395,7 @@
             try {
                 $this->expected = '[exception]';
                 $args = array('selection' => 'something');
-                $this->actual = xarModAPIFunc('roles', 'user', 'countall', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'countall', $args);
                 $res = $this->assertSame($this->actual,$this->expected,"Call with bad selection param throws an exception");
                 return $res;
             } catch(Exception $e) {
@@ -411,7 +411,7 @@
         {
             try {
                 $this->expected = '[integer]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'countallactive');
+                $this->actual = xarMod::apiFunc('roles', 'user', 'countallactive');
                 $res = $this->assertTrue(is_numeric($this->actual),"Call with no params returns integer");
                 return $res;
             } catch(Exception $e) {
@@ -423,7 +423,7 @@
             try {
                 $this->expected = '[integer]';
                 $args = array('include_anonymous' => false);
-                $this->actual = xarModAPIFunc('roles', 'user', 'countallactive', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'countallactive', $args);
                 $res = $this->assertTrue(is_numeric($this->actual),"Call with include_anonymous param returns integer");
                 return $res;
             } catch(Exception $e) {
@@ -435,7 +435,7 @@
             try {
                 $this->expected = '[integer]';
                 $args = array('selection' => ' AND a.uname = "Admin"');
-                $this->actual = xarModAPIFunc('roles', 'user', 'countall', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'countall', $args);
                 $res = $this->assertTrue(is_numeric($this->actual),"Call with selection param returns integer");
                 return $res;
             } catch(Exception $e) {
@@ -447,7 +447,7 @@
             try {
                 $this->expected = '[exception]';
                 $args = array('selection' => 'something');
-                $this->actual = xarModAPIFunc('roles', 'user', 'countall', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'countall', $args);
                 $res = $this->assertSame($this->actual,$this->expected,"Call with bad selection param throws an exception");
                 return $res;
             } catch(Exception $e) {
@@ -462,14 +462,14 @@
         function testCountgroups()
         {
             $this->expected = '[integer]';
-            $this->actual = xarModAPIFunc('roles','user','countgroups');
+            $this->actual = xarMod::apiFunc('roles','user','countgroups');
             return $this->assertTrue(is_numeric($this->actual),'Call with no params returns integer');
         }
         function testCountgroupsWithParams()
         {
             $args = array('foo' => 'bar');
-            $this->expected = xarModAPIFunc('roles','user','countgroups');
-            $this->actual = xarModAPIFunc('roles','user','countgroups', $args);
+            $this->expected = xarMod::apiFunc('roles','user','countgroups');
+            $this->actual = xarMod::apiFunc('roles','user','countgroups', $args);
             return $this->assertSame($this->actual,$this->expected,'Call with params returns the same as without');
         }
     }
@@ -480,14 +480,14 @@
         function testCountitems()
         {
             $this->expected = '[integer]';
-            $this->actual = xarModAPIFunc('roles','user','countitems');
+            $this->actual = xarMod::apiFunc('roles','user','countitems');
             return $this->assertTrue(is_numeric($this->actual),'Call with no params returns integer');
         }
         function testCountitemsWithParams()
         {
             $args = array('foo' => 'bar');
-            $this->expected = xarModAPIFunc('roles','user','countitems');
-            $this->actual = xarModAPIFunc('roles','user','countitems', $args);
+            $this->expected = xarMod::apiFunc('roles','user','countitems');
+            $this->actual = xarMod::apiFunc('roles','user','countitems', $args);
             return $this->assertSame($this->actual,$this->expected,'Call with params returns the same as without');
         }
     }
@@ -498,7 +498,7 @@
         function testDecode_shorturl()
         {
             $this->expected = '[array]';
-            $this->actual = xarModAPIFunc('roles','user','decode_shorturl');
+            $this->actual = xarMod::apiFunc('roles','user','decode_shorturl');
             return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
         }
     }
@@ -509,14 +509,14 @@
         function testEncode_shorturl()
         {
             $this->expected = '';
-            $this->actual = xarModAPIFunc('roles','user','encode_shorturl');
+            $this->actual = xarMod::apiFunc('roles','user','encode_shorturl');
             return $this->assertTrue(empty($this->actual),'Call with no params returns empty');
         }
         function testEncode_shorturlfuncParam()
         {
             $args = array('func' => 'view');
             $this->expected = '[array]';
-            $this->actual = xarModAPIFunc('roles','user','encode_shorturl', $args);
+            $this->actual = xarMod::apiFunc('roles','user','encode_shorturl', $args);
             return $this->assertTrue(is_array($this->actual),'Call with func param returns array');
         }
     }
@@ -528,7 +528,7 @@
         {
             try {
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'get');
+                $this->actual = xarMod::apiFunc('roles', 'user', 'get');
                 $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -540,7 +540,7 @@
             try {
                 $args = array('id' => 3);
                 $this->expected = '[array]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'get', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'get', $args);
                 $res = $this->assertTrue(is_array($this->actual),"Call with id param returns array");
                 return $res;
             } catch(Exception $e) {
@@ -552,7 +552,7 @@
             try {
                 $args = array('id' => 'foo');
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'get', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'get', $args);
                 $res = $this->assertSame($this->expected,$this->actual,"Call with bad id param throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -564,7 +564,7 @@
             try {
                 $args = array('name' => 'Administrator');
                 $this->expected = '[array]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'get', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'get', $args);
                 $res = $this->assertTrue(is_array($this->actual),"Call with name param returns array");
                 return $res;
             } catch(Exception $e) {
@@ -576,7 +576,7 @@
             try {
                 $args = array('name' => 'someunknowname');
                 $this->expected = false;
-                $this->actual = xarModAPIFunc('roles', 'user', 'get', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'get', $args);
                 $res = $this->assertSame($this->expected,$this->actual,"Call with bad name param returns false");
                 return $res;
             } catch(Exception $e) {
@@ -588,7 +588,7 @@
             try {
                 $args = array('uname' => 'Admin');
                 $this->expected = '[array]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'get', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'get', $args);
                 $res = $this->assertTrue(is_array($this->actual),"Call with uname param returns array");
                 return $res;
             } catch(Exception $e) {
@@ -600,7 +600,7 @@
             try {
                 $args = array('uname' => 'someunknowuname');
                 $this->expected = false;
-                $this->actual = xarModAPIFunc('roles', 'user', 'get', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'get', $args);
                 $res = $this->assertSame($this->expected,$this->actual,"Call with bad uname param returns false");
                 return $res;
             } catch(Exception $e) {
@@ -612,7 +612,7 @@
             try {
                 $args = array('email' => xarModVars::get('mail', 'adminmail'));
                 $this->expected = '[array]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'get', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'get', $args);
                 $res = $this->assertTrue(is_array($this->actual),"Call with email param returns array");
                 return $res;
             } catch(Exception $e) {
@@ -624,7 +624,7 @@
             try {
                 $args = array('email' => 'invalid@emailaddress.com');
                 $this->expected = false;
-                $this->actual = xarModAPIFunc('roles', 'user', 'get', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'get', $args);
                 $res = $this->assertSame($this->expected,$this->actual,"Call with bad email param returns false");
                 return $res;
             } catch(Exception $e) {
@@ -640,7 +640,7 @@
         {
             try {
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getactive');
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getactive');
                 $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -652,7 +652,7 @@
             try {
                 $args = array('id' => xarModUserVars::get('id'));
                 $this->expected = '[array]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getactive', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getactive', $args);
                 $res = $this->assertTrue(is_array($this->actual),"Call with id param returns array");
                 return $res;
             } catch(Exception $e) {
@@ -664,7 +664,7 @@
             try {
                 $args = array('id' => 'foo');
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getactive', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getactive', $args);
                 $res = $this->assertSame($this->expected,$this->actual,"Call with bad id param throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -679,7 +679,7 @@
         function testGetall()
         {
             $this->expected = '[array]';
-            $this->actual = xarModAPIFunc('roles','user','getall');
+            $this->actual = xarMod::apiFunc('roles','user','getall');
             return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
         }
     }
@@ -690,7 +690,7 @@
         function testGetallactive()
         {
             $this->expected = '[array]';
-            $this->actual = xarModAPIFunc('roles','user','getallactive');
+            $this->actual = xarMod::apiFunc('roles','user','getallactive');
             return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
         }
     }
@@ -701,7 +701,7 @@
         function testGetallgroups()
         {
             $this->expected = '[array]';
-            $this->actual = xarModAPIFunc('roles','user','getallgroups');
+            $this->actual = xarMod::apiFunc('roles','user','getallgroups');
             return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
         }
     }
@@ -713,7 +713,7 @@
         function testGetallroles()
         {
             $this->expected = '[array]';
-            $this->actual = xarModAPIFunc('roles','user','getallroles');
+            $this->actual = xarMod::apiFunc('roles','user','getallroles');
             return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
         }
     }
@@ -726,7 +726,7 @@
         {
             try {
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getancestors');
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getancestors');
                 $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -738,7 +738,7 @@
             try {
                 $args = array('id' => xarModUserVars::get('id'));
                 $this->expected = '[array]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getancestors', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getancestors', $args);
                 $res = $this->assertTrue(is_array($this->actual),"Call with id param returns array");
                 return $res;
             } catch(Exception $e) {
@@ -750,7 +750,7 @@
             try {
                 $args = array('id' => 'foo');
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getancestors', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getancestors', $args);
                 $res = $this->assertSame($this->expected,$this->actual,"Call with bad id param throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -764,7 +764,7 @@
         function testGetdefaultauthdata()
         {
             $this->expected = '[array]';
-            $this->actual = xarModAPIFunc('roles','user','getdefaultauthdata');
+            $this->actual = xarMod::apiFunc('roles','user','getdefaultauthdata');
             return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
         }
     }
@@ -775,7 +775,7 @@
         function testGetdefaultregdata()
         {
             $this->expected = '[array]';
-            $this->actual = xarModAPIFunc('roles','user','getdefaultregdata');
+            $this->actual = xarMod::apiFunc('roles','user','getdefaultregdata');
             return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
         }
     }
@@ -787,7 +787,7 @@
         {
             try {
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getdeleteduser');
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getdeleteduser');
                 $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -799,7 +799,7 @@
             try {
                 $args = array('id' => xarModUserVars::get('id'));
                 $this->expected = '[array]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getdeleteduser', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getdeleteduser', $args);
                 $res = $this->assertTrue(is_array($this->actual),"Call with id param returns array");
                 return $res;
             } catch(Exception $e) {
@@ -811,7 +811,7 @@
             try {
                 $args = array('id' => 'foo');
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getdeleteduser', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getdeleteduser', $args);
                 $res = $this->assertSame($this->expected,$this->actual,"Call with bad id param throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -827,7 +827,7 @@
         {
             try {
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getitemlinks');
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getitemlinks');
                 $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -839,7 +839,7 @@
             try {
                 $args = array('itemids' => array(xarModUserVars::get('id')));
                 $this->expected = '[array]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getitemlinks', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getitemlinks', $args);
                 $res = $this->assertTrue(is_array($this->actual),"Call with itemids param returns array");
                 return $res;
             } catch(Exception $e) {
@@ -854,14 +854,14 @@
         function testGetitemtypes()
         {
             $this->expected = '[array]';
-            $this->actual = xarModAPIFunc('roles','user','getitemtypes');
+            $this->actual = xarMod::apiFunc('roles','user','getitemtypes');
             return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
         }
         function testGetitemtypesParams()
         {
             $args = array('foo' => 'bar');
-            $this->expected = xarModAPIFunc('roles','user','getitemtypes');
-            $this->actual =xarModAPIFunc('roles','user','getitemtypes', $args);
+            $this->expected = xarMod::apiFunc('roles','user','getitemtypes');
+            $this->actual =xarMod::apiFunc('roles','user','getitemtypes', $args);
             return $this->assertSame($this->actual,$this->expected,'Call with params returns the same array as without');
         }
     }
@@ -872,14 +872,14 @@
         function testGetmenulinks()
         {
             $this->expected = '[array]';
-            $this->actual = xarModAPIFunc('roles','user','getmenulinks');
+            $this->actual = xarMod::apiFunc('roles','user','getmenulinks');
             return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
         }
         function testGetmenulinksParams()
         {
             $args = array('foo' => 'bar');
-            $this->expected = xarModAPIFunc('roles','user','getmenulinks');
-            $this->actual =xarModAPIFunc('roles','user','getmenulinks', $args);
+            $this->expected = xarMod::apiFunc('roles','user','getmenulinks');
+            $this->actual =xarMod::apiFunc('roles','user','getmenulinks', $args);
             return $this->assertSame($this->actual,$this->expected,'Call with params returns the same array as without');
         }
     }
@@ -891,7 +891,7 @@
         {
             try {
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getprimaryparent');
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getprimaryparent');
                 $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -903,7 +903,7 @@
             try {
                 $args = array('itemid' => xarModUserVars::get('id'));
                 $this->expected = '[array]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getprimaryparent', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getprimaryparent', $args);
                 $res = $this->assertTrue(is_array($this->actual),"Call with itemid param returns array");
                 return $res;
             } catch(Exception $e) {
@@ -915,7 +915,7 @@
             try {
                 $args = array('itemid' => 'foo');
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getprimaryparent', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getprimaryparent', $args);
                 $res = $this->assertSame($this->expected,$this->actual,"Call with bad itemid param throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -930,14 +930,14 @@
         function testGetstates()
         {
             $this->expected = '[array]';
-            $this->actual = xarModAPIFunc('roles','user','getstates');
+            $this->actual = xarMod::apiFunc('roles','user','getstates');
             return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
         }
         function testGetstatesParams()
         {
             $args = array('foo' => 'bar');
-            $this->expected = xarModAPIFunc('roles','user','getstates');
-            $this->actual =xarModAPIFunc('roles','user','getstates', $args);
+            $this->expected = xarMod::apiFunc('roles','user','getstates');
+            $this->actual =xarMod::apiFunc('roles','user','getstates', $args);
             return $this->assertSame($this->actual,$this->expected,'Call with params returns the same array as without');
         }
     }
@@ -949,7 +949,7 @@
         {
             try {
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getuserhome');
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getuserhome');
                 $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -961,7 +961,7 @@
             try {
                 $args = array('itemid' => xarModUserVars::get('id'));
                 $this->expected = '[string]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getuserhome', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getuserhome', $args);
                 $res = $this->assertTrue(is_string($this->actual),"Call with itemid param returns string");
                 return $res;
             } catch(Exception $e) {
@@ -973,7 +973,7 @@
             try {
                 $args = array('itemid' => 'foo');
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getuserhome', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getuserhome', $args);
                 $res = $this->assertSame($this->expected,$this->actual,"Call with bad itemid param throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -989,7 +989,7 @@
         {
             try {
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getusers');
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getusers');
                 $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -1001,7 +1001,7 @@
             try {
                 $args = array('id' => xarModUserVars::get('id'));
                 $this->expected = '[array]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getusers', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getusers', $args);
                 $res = $this->assertTrue(is_array($this->actual),"Call with id param returns array");
                 return $res;
             } catch(Exception $e) {
@@ -1014,7 +1014,7 @@
             try {
                 $args = array('id' => 'foo');
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'getusers', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'getusers', $args);
                 $res = $this->assertSame($this->expected,$this->actual,"Call with bad id param throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -1030,7 +1030,7 @@
         function testLeftjoin()
         {
             $this->expected = '[array]';
-            $this->actual = xarModAPIFunc('roles','user','leftjoin');
+            $this->actual = xarMod::apiFunc('roles','user','leftjoin');
             return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
         }
     }
@@ -1041,13 +1041,13 @@
         function testMakepass()
         {
             $this->expected = '[array]';
-            $this->actual = xarModAPIFunc('roles','user','makepass');
+            $this->actual = xarMod::apiFunc('roles','user','makepass');
             return $this->assertTrue(is_string($this->actual),'Call with no params returns string');
         }
         function testMakepassParams()
         {
             $args = array('foo' => 'bar');
-            $this->actual =xarModAPIFunc('roles','user','makepass', $args);
+            $this->actual =xarMod::apiFunc('roles','user','makepass', $args);
             return $this->assertTrue(is_string($this->actual),'Call with params returns string');
         }
     }
@@ -1059,7 +1059,7 @@
         {
             try {
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'parseuserhome');
+                $this->actual = xarMod::apiFunc('roles', 'user', 'parseuserhome');
                 $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -1071,7 +1071,7 @@
             try {
                 $args = array('url' => '/');
                 $this->expected = '[array]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'parseuserhome', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'parseuserhome', $args);
                 $res = $this->assertTrue(is_array($this->actual),"Call with url param returns array");
                 return $res;
             } catch(Exception $e) {
@@ -1083,7 +1083,7 @@
             try {
                 $args = array('truecurrenturl' => '/');
                 $this->expected = '[array]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'parseuserhome', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'parseuserhome', $args);
                 $res = $this->assertTrue(is_array($this->actual),"Call with truecurrenturl param returns array");
                 return $res;
             } catch(Exception $e) {
@@ -1099,7 +1099,7 @@
         {
             try {
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'removemember');
+                $this->actual = xarMod::apiFunc('roles', 'user', 'removemember');
                 $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -1111,7 +1111,7 @@
             try {
                 $args = array('id' => 'foo');
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'removemember', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'removemember', $args);
                 $res = $this->assertSame($this->expected,$this->actual,"Call with bad id param throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -1123,7 +1123,7 @@
             try {
                 $args = array('gid' => 'foo');
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'removemember', $args);
+                $this->actual = xarMod::apiFunc('roles', 'user', 'removemember', $args);
                 $res = $this->assertSame($this->expected,$this->actual,"Call with bad gid param throws exception");
                 return $res;
             } catch(Exception $e) {
@@ -1139,7 +1139,7 @@
         {
             try {
                 $this->expected = '[exception]';
-                $this->actual = xarModAPIFunc('roles', 'user', 'updatestatus');
+                $this->actual = xarMod::apiFunc('roles', 'user', 'updatestatus');
                 $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
                 return $res;
             } catch(Exception $e) {

@@ -13,7 +13,7 @@
         if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
         if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
 
-        $data['module_settings'] = xarModAPIFunc('base','admin','getmodulesettings',array('module' => 'xarayatesting'));
+        $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'xarayatesting'));
         $data['module_settings']->setFieldList('items_per_page,');
         $data['module_settings']->getItem();
 

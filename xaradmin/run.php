@@ -21,7 +21,7 @@
 
     sys::import('modules.xarayatesting.class.xarUnitTest');
 
-    define('UT_TESTSDIR','modules/xarayatesting/lib/xartests'); // subdirectory holding tests
+    define('UT_TESTSDIR',sys::code() . 'modules/xarayatesting/lib/xartests'); // subdirectory holding tests
 
     function xarayatesting_admin_run() 
     {
@@ -67,7 +67,8 @@
             }
         }
     }
-    function get_files($start_path) {
+    function get_files($start_path) 
+    {
         static $paths = array();
         $rdi = new RecursiveDirectoryIterator($start_path);
         foreach (new RecursiveIteratorIterator($rdi) as $path) {

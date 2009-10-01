@@ -25,17 +25,17 @@
         if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'base', XARVAR_NOT_REQUIRED)) return;
 
         // Get the modules we can test
-        $installed = xarModAPIFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_INSTALLED)));
+        $installed = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_INSTALLED)));
         $data['coremodules'] = array();
         $data['modules'] = array();
         foreach ($installed as $module) {
             if (!isset($module['class'])) {
-//                if (file_exists('modules/'. $module['name'] . '/xartest.php')) 
+//                if (file_exists(sys::code() . 'modules/'. $module['name'] . '/xartest.php')) 
                     $data['modules']['modules.test'.$module['name']] = $module;
             } elseif (substr($module['class'],0,4) == 'Core' || $module['name'] == 'authsystem') {
                 $data['coremodules']['coremodules.test'.$module['name']] = $module;
             } else {
-                if (file_exists('modules/'. $module['name'] . '/xartest.php')) 
+                if (file_exists(sys::code() . 'modules/'. $module['name'] . '/xartest.php')) 
                     $data['modules']['modules.test'.$module['name']] = $module;
             }
         }
@@ -43,10 +43,10 @@
         try {
             if (substr($data['tab'],0,7) == 'modules') {
                 $modulename = substr($data['tab'],12);
-                $location = 'modules/'. $modulename . '/xartest.php';
+                $location = sys::code() . 'modules/'. $modulename . '/xartest.php';
                 include_once($location);
             } else {
-                $location = 'modules/xarayatesting/tests/'. str_replace('.','/',$data['tab']) .'.php';
+                $location = sys::code() . 'modules/xarayatesting/tests/'. str_replace('.','/',$data['tab']) .'.php';
                 include_once($location);
             }
         } catch (Exception $e) {$data['message'] = xarML('No test file found at #(1)',$location);}
@@ -80,7 +80,7 @@
         // For each tests directory include the tests found
         $filematch = "";
         $filetype = "php";
-        $basedir = "modules/xarayatesting/tests/core";
+        $basedir = sys::code() . "modules/xarayatesting/tests/core";
         $suites = array();
         $basedir = realpath($basedir);
         $filelist = array();

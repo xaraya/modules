@@ -70,7 +70,8 @@ class xarTestSuite
         }
     }
 
-    function _parentdir($dir) {
+    function _parentdir($dir) 
+    {
         // FIXME :Get the parent dir of the dir inserted, dirty hack
         chdir('..');
         $toreturn=getcwd();
@@ -99,7 +100,7 @@ class xarTestReport
      * the subclasses
      *
      */
-     function present(array $testsuites=array()) {}
+     function present(Array $testsuites=array(),$show_results=true) {}
 
     /**
      * Constructor instantiates the right type of object
@@ -149,7 +150,7 @@ class xarTextTestReport extends xarTestReport
     }
 
     // Presentation function
-    function present($testsuites,$show_results=true) 
+    function present(Array $testsuites=array(),$show_results=true) 
     {
         foreach($testsuites as $testsuite) {
             // Only include suites with testcases
@@ -195,7 +196,7 @@ class xarHTMLTestReport extends xarTestReport
     }
 
     // Presentation function
-    function present($testsuites,$show_results=true) 
+    function present(Array $testsuites=array(),$show_results=true) 
     {
         foreach($testsuites as $testsuite) {
             // Only include suites with testcases
@@ -264,7 +265,8 @@ class xarTestCase extends xarTestAssert
     }
 
     // Abstract functions, these should be implemented in the actual test class
-    function setup() {} 
+    function setup() 
+    {} 
     // Precondition for a testcase default to true when not defined 
     function precondition() { return true; }
     function teardown() {}
@@ -358,28 +360,29 @@ class xarTestResult
 {
     public $message;
 
-    function __construct($result) 
-    {
-    }
+    function __construct($result) {}
 }
 
 class xarTestSuccess extends xarTestResult 
 {
-    function __construct($msg) { 
+    function __construct($msg) 
+    { 
         $this->message=$msg;
     }
 }
 
 class xarTestFailure extends xarTestResult 
 {
-    function __construct($msg) {
+    function __construct($msg) 
+    {
         $this->message=$msg;
     }
 }
 
 class xarTestException extends xarTestResult 
 {
-    function __construct($result) { 
+    function __construct($result) 
+    { 
         $this->message=$result['msg'];
     }
 }
