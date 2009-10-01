@@ -19,7 +19,7 @@
 
         <h2>Admin List of Items</h2>
 
-<p>If you haven't already, you may want to have a look at the <a href="&xar-modurl-dyn_example-user-view;">List of Items</a> page for demonstrations of four approaches to listing items.  You may recognize that this admin page uses Approach #2.  We could have used any of the other approaches here as well.</p>
+<p>If you haven't already, you may want to have a look at the <a href="#xarModURL('dyn_example','user','view')#">List of Items</a> page for demonstrations of four approaches to listing items.  You may recognize that this admin page uses Approach #2.  We could have used any of the other approaches here as well.</p>
 
 <p>Though our admin list below uses the same tag as we did in Approach #2, the output is different here because of the template specified in the tag.</p>
 
