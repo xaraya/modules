@@ -2,19 +2,22 @@
 
 sys::import('modules.xarayatesting.class.xarUnitTest');
 
-class testBLCompiler1 extends xarTestCase {
+class testBLCompiler1 extends xarTestCase 
+{
     var $myBLC;
     
-    function setup() {
+    function setup() 
+    {
         $GLOBALS['xarDebug'] = false;
         include_once 'xarCore.php';
         include_once 'xarVar.php';
         include_once 'xarException.php';
-        include_once 'xarBLCompiler.php';
+        include_once 'XarayaCompiler.php';
         $this->myBLC = new xarTpl__Compiler;
     }
     
-    function precondition() {
+    function precondition() 
+    {
         // Abort on bogus file: must not exist
         if (file_exists('xartests/doesntexist')) return false;
         // Testdata for BL
@@ -22,64 +25,75 @@ class testBLCompiler1 extends xarTestCase {
         return true;
     }
 
-    function teardown () {
+    function teardown () 
+    {
         // not needed here
     }
     
     
-    function testnotNull() { 
+    function testnotNull() 
+    { 
         return $this->assertNotNull($this->myBLC,"BL Compiler Instantiation");
     }
     
-    function testnoData() {
+    function testnoData() 
+    {
         return $this->assertNull($this->myBLC->compileFile('doesntexist'),"Don't compile on bogus file");
     }
     
-    function testCompilenotnull() {
+    function testCompilenotnull() 
+    {
         return $this->assertnotNull($this->myBLC->compileFile('xartests/test.xt'),"Return not null on compile of a valid file");
     }
 
-    function testWinHTMLComments() {
+    function testWinHTMLComments() 
+    {
         $tplString="<!-- \r\n#\$foo#\r\n  -->";
         $expected="<!-- \r\n#\$foo#\r\n  --><?php return true;?>";
         $out = $this->myBLC->compile($tplString);
         return $this->assertSame($out,$expected,"HTML multiline comments windows CR");
     }
 
-    function testMacHTMLComments() {
+    function testMacHTMLComments() 
+    {
         $tplString="<!-- \r#\$foo#\r  -->";
         $expected="<!-- \r#\$foo#\r  --><?php return true;?>";
         $out = $this->myBLC->compile($tplString);
         return $this->assertSame($out,$expected,"HTML multiline comments mac CR");
     }
 
-    function testUnixHTMLComments() {
+    function testUnixHTMLComments() 
+    {
         $tplString="<!-- \n#\$foo#\n  -->";
         $expected="<!-- \n#\$foo#\n  --><?php return true;?>";
         $out = $this->myBLC->compile($tplString);
         return $this->assertSame($out,$expected,"HTML multiline comments unix CR");
     }
 
-    function testWinBLComments() {
+    function testWinBLComments() 
+    {
         $tplString="<!--- \r\n#\$foo#\r\n  --->";
         $expected="<?php return true;?>";
         $out = $this->myBLC->compile($tplString);
         return $this->assertSame($out,$expected,"BL multiline comments windows CR");
     }
-    function testMacBLComments() {
+    function testMacBLComments() 
+    {
         $tplString="<!--- \r#\$foo#\r  --->";
         $expected="<?php return true;?>";
         $out = $this->myBLC->compile($tplString);
         return $this->assertSame($out,$expected,"BL multiline comments mac CR");
     }
-    function testUnixBLComments() {
+    function testUnixBLComments() 
+    {
         $tplString="<!--- \n#\$foo#\n  --->";
         $expected="<?php return true;?>";
         $out = $this->myBLC->compile($tplString);
         return $this->assertSame($out,$expected,"BL multiline comments unix CR");
     }
 
-    function testDoubleHash() {
+    function testDoubleHash() 
+    {
         // Test for bug 694 and 695
         $tplString="#\$foo##";
         $expected="<?php echo \$foo; ?>#<?php return true;?>";
@@ -87,7 +101,8 @@ class testBLCompiler1 extends xarTestCase {
         return $this->assertSame($out,$expected,"Double hash after variable should return 1 back");
     }
 
-    function testTripleHash() {
+    function testTripleHash() 
+    {
         // Test for bug 694 and 695
         $tplString="#\$foo###";
         $expected="<?php echo \$foo; ?>#<?php return true;?>";

@@ -12,8 +12,8 @@
         function setup() 
         {
             $GLOBALS['xarDebug'] = false;
-            sys::import('blocklayout.compiler');
-            $this->myBLC = xarBLCompiler::instance();
+            sys::import('xaraya.templating.compiler');
+            $this->myBLC = XarayaCompiler::instance();
         }
 
         function precondition() 
@@ -67,7 +67,7 @@
         {
             $GLOBALS['xarDebug'] = false;
             sys::import('blocklayout.compiler');
-            $this->myBLC = xarBLCompiler::instance();
+            $this->myBLC = XarayaCompiler::instance();
         }
 
         function precondition()
@@ -86,14 +86,11 @@
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "<foo>bar</foo>";
             $tplString .= '</xar:template>';
-            $expected   = "<foo>
-  <?php echo xarML('bar');?>
-</foo>";
-            $expected1   = "<foo>\r\n  <?php echo xarML('bar');?>\r\n</foo>";
+            $expected   = "<foo><?php echo xarML('bar');?></foo>\n";
             $out = $this->myBLC->compileString($tplString);
             $this->expected = "Hex ".bin2hex($expected);
             $this->actual   = "Hex ".bin2hex($out);
-            return $this->assertSame($out,$expected,"The open form of a tag in general is untouched - the transform adds some whitespace before and after its contents");
+            return $this->assertSame($out,$expected,"The open form of a tag in general is untouched - nothing added here!");
         }
 
         function testGeneralTagClosedForm() 
@@ -101,7 +98,7 @@
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "<foo/>";
             $tplString .= '</xar:template>';
-            $expected   = "<foo/>";
+            $expected   = "<foo/>\n";
             $out = $this->myBLC->compileString($tplString);
             $this->expected = "Hex ".bin2hex($expected);
             $this->actual   = "Hex ".bin2hex($out);
@@ -113,7 +110,7 @@
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "#\$foo#";
             $tplString .= '</xar:template>';
-            $this->expected   = "<?php echo xarML(\$foo);?>";
+            $this->expected   = "<?php echo xarML(\$foo);?>\n";
             $this->actual = $this->myBLC->compileString($tplString);
             $this->expected = "Hex ".bin2hex($this->expected);
             $this->actual   = "Hex ".bin2hex($this->actual);
@@ -125,7 +122,7 @@
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "foo";
             $tplString .= '</xar:template>';
-            $this->expected   = "<?php echo xarML('foo');?>";
+            $this->expected   = "<?php echo xarML('foo');?>\n";
             $this->actual = $this->myBLC->compileString($tplString);
             $this->expected = "Hex ".bin2hex($this->expected);
             $this->actual   = "Hex ".bin2hex($this->actual);
@@ -137,7 +134,7 @@
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "666";
             $tplString .= '</xar:template>';
-            $this->expected   = "666";
+            $this->expected   = "666\n";
             $this->actual = $this->myBLC->compileString($tplString);
             $this->expected = "Hex ".bin2hex($this->expected);
             $this->actual   = "Hex ".bin2hex($this->actual);
@@ -149,7 +146,7 @@
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "foo#\$bar#";
             $tplString .= '</xar:template>';
-            $this->expected   = "<?php echo xarML('foo'.\$bar);?>";
+            $this->expected   = "<?php echo xarML('foo'.\$bar);?>\n";
             $this->actual = $this->myBLC->compileString($tplString);
             $this->expected = "Hex ".bin2hex($this->expected);
             $this->actual   = "Hex ".bin2hex($this->actual);
@@ -161,7 +158,7 @@
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "#\$bar#foo";
             $tplString .= '</xar:template>';
-            $this->expected   = "<?php echo xarML(\$bar.'foo');?>";
+            $this->expected   = "<?php echo xarML(\$bar.'foo');?>\n";
             $this->actual = $this->myBLC->compileString($tplString);
             $this->expected = "Hex ".bin2hex($this->expected);
             $this->actual   = "Hex ".bin2hex($this->actual);
@@ -173,7 +170,7 @@
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "foo#\$bar#oo";
             $tplString .= '</xar:template>';
-            $this->expected   = "<?php echo xarML('foo'.\$bar.'oo');?>";
+            $this->expected   = "<?php echo xarML('foo'.\$bar.'oo');?>\n";
             $this->actual = $this->myBLC->compileString($tplString);
             $this->expected = "Hex ".bin2hex($this->expected);
             $this->actual   = "Hex ".bin2hex($this->actual);
@@ -185,7 +182,7 @@
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "#\$foo#bar#\$oo#";
             $tplString .= '</xar:template>';
-            $this->expected   = "<?php echo xarML(\$foo.'bar'.\$oo);?>";
+            $this->expected   = "<?php echo xarML(\$foo.'bar'.\$oo);?>\n";
             $this->actual = $this->myBLC->compileString($tplString);
             $this->expected = "Hex ".bin2hex($this->expected);
             $this->actual   = "Hex ".bin2hex($this->actual);
@@ -197,7 +194,7 @@
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "foobar ##cccooo";
             $tplString .= '</xar:template>';
-            $this->expected   = "<?php echo xarML('foobar #cccooo');?>";
+            $this->expected   = "<?php echo xarML('foobar #cccooo');?>\n";
             $this->actual = $this->myBLC->compileString($tplString);
             $this->expected = "Hex ".bin2hex($this->expected);
             $this->actual   = "Hex ".bin2hex($this->actual);
@@ -209,7 +206,7 @@
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "#\$foobar###cccooo";
             $tplString .= '</xar:template>';
-            $this->expected   = "<?php echo xarML(\$foobar.'#cccooo');?>";
+            $this->expected   = "<?php echo xarML(\$foobar.'#cccooo');?>\n";
             $this->actual = $this->myBLC->compileString($tplString);
             $this->expected = "Hex ".bin2hex($this->expected);
             $this->actual   = "Hex ".bin2hex($this->actual);
@@ -221,7 +218,7 @@
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "##cccooo#\$foobar#";
             $tplString .= '</xar:template>';
-            $this->expected   = "<?php echo xarML('#cccooo'.\$foobar);?>";
+            $this->expected   = "<?php echo xarML('#cccooo'.\$foobar);?>\n";
             $this->actual = $this->myBLC->compileString($tplString);
             $this->expected = "Hex ".bin2hex($this->expected);
             $this->actual   = "Hex ".bin2hex($this->actual);
@@ -247,7 +244,7 @@
             // Test for bug 694 and 695
             $tplString .= "foo###";
             $tplString .= '</xar:template>';
-            $this->expected   = "<?php echo xarML('foo#'); ?>";
+            $this->expected   = "<?php echo xarML('foo#'); ?>\n";
             $this->actual = $this->myBLC->compileString($tplString);
             $this->expected = "Hex ".bin2hex($this->expected);
             $this->actual   = "Hex ".bin2hex($this->actual);
@@ -259,7 +256,7 @@
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "foo #(1) bar #(2)";
             $tplString .= '</xar:template>';
-            $this->expected   = "<?php echo xarML('foo #(1) bar #(2)');?>";
+            $this->expected   = "<?php echo xarML('foo #(1) bar #(2)');?>\n";
             $this->actual = $this->myBLC->compileString($tplString);
             $this->expected = "Hex ".bin2hex($this->expected);
             $this->actual   = "Hex ".bin2hex($this->actual);
@@ -278,7 +275,7 @@
         {
             $GLOBALS['xarDebug'] = false;
             sys::import('blocklayout.compiler');
-            $this->myBLC = xarBLCompiler::instance();
+            $this->myBLC = XarayaCompiler::instance();
         }
 
         function precondition() 
@@ -309,7 +306,7 @@
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "<xar:comment> foo </xar:comment>";
             $tplString .= '</xar:template>';
-            $expected   = "<!-- foo -->";
+            $expected   = "<!-- foo -->\n";
             $out = $this->myBLC->compileString($tplString);
             $this->expected = "Hex ".bin2hex($expected);
             $this->actual   = "Hex ".bin2hex($out);
@@ -321,7 +318,7 @@
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "<xar:comment> \r\nfoo\r\n </xar:comment>";
             $tplString .= '</xar:template>';
-            $expected   = "<!-- \r\nfoo\r\n -->";
+            $expected   = "<!-- \rfoo\r -->\n";
             $out = $this->myBLC->compileString($tplString);
             $this->expected = "Hex ".bin2hex($expected);
             $this->actual   = "Hex ".bin2hex($out);
@@ -333,7 +330,7 @@
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .="<xar:comment> \rfoo\r </xar:comment>";
             $tplString .= '</xar:template>';
-            $expected   = "<!-- \rfoo\r -->";
+            $expected   = "<!-- \rfoo\r -->\n";
             $out = $this->myBLC->compileString($tplString);
             $this->expected = "Hex ".bin2hex($expected);
             $this->actual   = "Hex ".bin2hex($out);

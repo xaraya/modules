@@ -9,7 +9,7 @@ class testBLCompilerTextNodes1 extends xarTestCase
         $GLOBALS['xarDebug'] = false;
         sys::import('blocklayout.compiler');
         $xslFile = 'blocklayout/xslt/xar2php.xsl';
-        $this->myBLC = xarBLCompiler::instance();
+        $this->myBLC = XarayaCompiler::instance();
     }
     
     function precondition() 
