@@ -212,13 +212,6 @@ function publications_init()
         return false;
     }
 
-// TODO: move this to some common place in Xaraya (base module ?)
-    // Register BL tags
-    xarTplRegisterTag('publications', 'publications-field',
-                      //array(new xarTemplateAttribute('bid', XAR_TPL_STRING|XAR_TPL_REQUIRED)),
-                      array(),
-                      'publications_userapi_handlefieldtag');
-
 # --------------------------------------------------------
 #
 # Set up hooks
@@ -410,10 +403,6 @@ function publications_delete()
                        'unregister_block_type',
                        array('modName'  => 'publications',
                              'blockType'=> 'glossary'))) return;
-
-// TODO: move this to some common place in Xaraya (base module ?)
-    // Unregister BL tags
-    xarTplUnregisterTag('publications-field');
 
     /**
      * Remove instances
