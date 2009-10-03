@@ -43,6 +43,8 @@ function articles_admin_exportpubtype($args)
   <label>' . xarVarPrepForDisplay($pubtype['descr']) . '</label>
   <module_id>' . xarMod::getRegId('articles') . '</module_id>
   <itemtype>' . $ptid . '</itemtype>
+  <class>ArticleObject</class>
+  <filepath>modules/articles/class/article.php</filepath>
   <urlparam>aid</urlparam>
   <maxid>0</maxid>
   <config>
@@ -64,6 +66,8 @@ function articles_admin_exportpubtype($args)
         $isalias = 0;
     }
 
+    sys::import('modules.dynamicdata.class.properties.master');
+
     $data['xml'] .= '  </config>
   <isalias>' . $isalias . '</isalias>
   <properties>
@@ -73,16 +77,16 @@ function articles_admin_exportpubtype($args)
       <type>itemid</type>
       <defaultvalue></defaultvalue>
       <source>xar_articles.xar_aid</source>
-      <status>1</status>
+      <status>' . (DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE + DataPropertyMaster::DD_INPUTSTATE_NOINPUT) . '</status>
       <seq>1</seq>
     </property>
     <property name="pubtypeid">
       <id>2</id>
       <label>Publication Type</label>
       <type>itemtype</type>
-      <defaultvalue>1</defaultvalue>
+      <defaultvalue>'.$ptid.'</defaultvalue>
       <source>xar_articles.xar_pubtypeid</source>
-      <status>1</status>
+      <status>' . (DataPropertyMaster::DD_DISPLAYSTATE_HIDDEN + DataPropertyMaster::DD_INPUTSTATE_NOINPUT) . '</status>
       <seq>2</seq>
     </property>
 ';
@@ -95,16 +99,18 @@ function articles_admin_exportpubtype($args)
         $specs = $pubtype['config'][$field];
         if (empty($specs['label'])) {
             $specs['label'] = ucwords($field);
-            $status = 0;
+            $status = DataPropertyMaster::DD_DISPLAYSTATE_DISABLED;
         } elseif ($field == 'body') {
-            $status = 2;
+            $status = DataPropertyMaster::DD_DISPLAYSTATE_DISPLAYONLY;
         } else {
-            $status = 1;
+            $status = DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE;
         }
         if (empty($specs['input'])) {
             $specs['input'] = 0;
+            $status += DataPropertyMaster::DD_INPUTSTATE_NOINPUT;
         } else {
             $specs['input'] = 1;
+            $status += DataPropertyMaster::DD_INPUTSTATE_ADDMODIFY;
         }
         if (!isset($specs['validation'])) {
             $specs['validation'] = '';
@@ -118,7 +124,7 @@ function articles_admin_exportpubtype($args)
       <input>' . $specs['input'] . '</input>
       <status>' . $status . '</status>
       <seq>' . $id . '</seq>
-      <configuration>' . xarVarPrepForDisplay($specs['validation']) . '</configuration>
+      <configuration>' . $specs['validation'] . '</configuration>
     </property>
 ';
         // $specs['type'] = fixed for articles fields + unused in DD
@@ -140,7 +146,7 @@ function articles_admin_exportpubtype($args)
         $proptypes = DataPropertyMaster::getPropertyTypes();
         $prefix = xarDB::getPrefix();
         $prefix .= '_';
-        $keys = array('id','label','type','default','source','status','order','validation');
+        $keys = array('id','label','type','defaultvalue','source','status','seq','configuration');
 
         foreach (array_keys($object->properties) as $name) {
             $info = array();
@@ -158,17 +164,20 @@ function articles_admin_exportpubtype($args)
             // replace local table prefix with default xar_* one
             $info['source'] = preg_replace("/^$prefix/",'xar_',$info['source']);
 
-            $info['order'] += $i;
+            // we've already got those properties :-)
+            if (preg_match('/^xar_articles\./',$info['source'])) continue;
+
+            $info['seq'] += $id;
 
             $data['xml'] .= '    <property name="' . $name . '">
       <id>' . $info['id'] . '</id>
       <label>' . $info['label'] . '</label>
       <type>' . $info['type'] . '</type>
-      <defaultvalue>' . $info['default'] . '</defaultvalue>
+      <defaultvalue>' . $info['defaultvalue'] . '</defaultvalue>
       <source>' . $info['source'] . '</source>
       <status>' . $info['status'] . '</status>
-      <seq>' . $info['order'] . '</seq>
-      <configuration>' . xarVarPrepForDisplay($info['validation']) . '</configuration>
+      <seq>' . $info['seq'] . '</seq>
+      <configuration>' . $info['configuration'] . '</configuration>
     </property>
 ';
         }

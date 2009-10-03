@@ -1,0 +1,54 @@
+<object name="articles_field_config">
+  <objectid>21</objectid>
+  <label>Articles Field Configuration</label>
+  <module_id>182</module_id>
+  <itemtype>14</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:1:{s:10:&quot;visibility&quot;;s:6:&quot;static&quot;;}</config>
+  <isalias>false</isalias>
+  <properties>
+    <property name="label">
+      <id>118</id>
+      <label>Label</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dummy</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="format">
+      <id>119</id>
+      <label>Format</label>
+      <type>fieldtype</type>
+      <defaultvalue>textbox</defaultvalue>
+      <source>dummy</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration>a:4:{s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:7:"objects";s:25:"initialization_store_prop";s:4:"name";s:27:"initialization_display_prop";s:5:"label";}</configuration>
+    </property>
+    <property name="input">
+      <id>120</id>
+      <label>Input</label>
+      <type>checkbox</type>
+      <defaultvalue>1</defaultvalue>
+      <source>dummy</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration></configuration>
+    </property>
+    <property name="validation">
+      <id>121</id>
+      <label>Validation</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>dummy</source>
+      <status>67</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
+  </properties>
+</object>
