@@ -16,7 +16,7 @@
       <type>itemid</type>
       <defaultvalue></defaultvalue>
       <source>xar_publication_types.xar_pubtypeid</source>
-      <status>33</status>
+      <status>34</status>
       <seq>1</seq>
       <configuration></configuration>
     </property>
@@ -56,7 +56,7 @@
       <type>array</type>
       <defaultvalue></defaultvalue>
       <source>module variable: articles</source>
-      <status>67</status>
+      <status>64</status>
       <seq>5</seq>
       <configuration>a:10:{s:15:"display_columns";s:2:"30";s:12:"display_rows";s:1:"4";s:17:"display_key_label";s:0:"";s:19:"display_value_label";s:0:"";s:14:"display_layout";s:7:"default";s:19:"initialization_rows";s:1:"0";s:32:"initialization_associative_array";s:1:"1";s:24:"initialization_prop_type";s:7:"textbox";s:26:"initialization_prop_config";s:0:"";s:25:"initialization_fixed_keys";s:1:"1";}</configuration>
     </property>
