@@ -29,6 +29,11 @@ function changelog_adminapi_getmenulinks()
                               'label' => xarML('View Changes'));
         $menulinks[] = Array('url'   => xarModURL('changelog',
                                                   'admin',
+                                                  'hooks'),
+                              'title' => xarML('Configure changelog hooks for other modules'),
+                              'label' => xarML('Enable Hooks'));
+        $menulinks[] = Array('url'   => xarModURL('changelog',
+                                                  'admin',
                                                   'modifyconfig'),
                               'title' => xarML('Modify the changelog configuration'),
                               'label' => xarML('Modify Config'));

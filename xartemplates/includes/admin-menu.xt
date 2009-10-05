@@ -26,6 +26,13 @@
           </a>
         </dd>
 
+        <xar:set name="tabclass">$activetab=='hooks'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-changelog-admin-hooks;">
+            <xar:mlstring>Hooks</xar:mlstring>
+          </a>
+        </dd>
+
         <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-changelog-admin-modifyconfig;">

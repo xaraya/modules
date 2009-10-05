@@ -36,7 +36,7 @@ function changelog_admin_showdiff($args)
     if (empty($logids)) {
         $logidlist = array();
     } elseif (is_string($logids)) {
-        $logidlist = split('-',$logids);
+        $logidlist = explode('-',$logids);
     } else {
         $logidlist = $logids;
     }
@@ -150,7 +150,7 @@ function changelog_admin_showdiff($args)
         $getlist = xarModVars::get('changelog',$modinfo['name']);
     }
     if (!empty($getlist)) {
-        $fieldlist = split(',',$getlist);
+        $fieldlist = explode(',',$getlist);
     }
 
     $old = xarModAPIFunc('changelog','admin','getversion',
@@ -220,7 +220,7 @@ function changelog_admin_showdiff($args)
     $fieldlist = array_unique(array_merge(array_keys($old['fields']),array_keys($new['fields'])));
     ksort($fieldlist);
 
-    include 'modules/changelog/xarincludes/difflib.php';
+    sys::import('modules.changelog.xarincludes.difflib');
 
     $data['fields'] = array();
     foreach ($fieldlist as $field) {
@@ -230,7 +230,7 @@ function changelog_admin_showdiff($args)
         if (!isset($new['fields'][$field])) {
             $new['fields'][$field] = '';
         }
-        $diff = new Diff( split("\n",$old['fields'][$field]), split("\n",$new['fields'][$field]));
+        $diff = new Diff( explode("\n",$old['fields'][$field]), explode("\n",$new['fields'][$field]));
         if ($diff->isEmpty()) {
             $data['fields'][$field] = nl2br(xarVarPrepForDisplay($old['fields'][$field]));
         } else {

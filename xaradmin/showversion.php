@@ -109,7 +109,7 @@ function changelog_admin_showversion($args)
             $getlist = xarModVars::get('changelog',$modinfo['name']);
         }
         if (!empty($getlist)) {
-            $fieldlist = split(',',$getlist);
+            $fieldlist = explode(',',$getlist);
         }
         ksort($fields);
         foreach ($fields as $field => $value) {

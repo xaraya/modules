@@ -56,10 +56,10 @@ function changelog_adminapi_getchanges($args)
                      $changelogtable.xar_date,
                      $changelogtable.xar_status,
                      $changelogtable.xar_remark,
-                     $rolestable.xar_name
+                     $rolestable.name
                 FROM $changelogtable
            LEFT JOIN $rolestable
-                  ON $changelogtable.xar_editor = $rolestable.xar_uid
+                  ON $changelogtable.xar_editor = $rolestable.id
                WHERE $changelogtable.xar_moduleid = ?
                  AND $changelogtable.xar_itemtype = ?
                  AND $changelogtable.xar_itemid = ?

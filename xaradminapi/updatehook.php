@@ -111,7 +111,7 @@ function changelog_adminapi_updatehook($args)
         $getlist = xarModVars::get('changelog',$modname);
     }
     if (!empty($getlist)) {
-        $fieldlist = split(',',$getlist);
+        $fieldlist = explode(',',$getlist);
     }
     $fields = array();
     foreach ($extrainfo as $field => $value) {
