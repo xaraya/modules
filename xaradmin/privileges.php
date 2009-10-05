@@ -50,7 +50,7 @@ function changelog_admin_privileges($args)
     $modlist = array();
     foreach ($hookedmodlist as $modname => $val) {
         if (empty($modname)) continue;
-        $modid = xarModGetIDFromName($modname);
+        $modid = xarMod::getRegId($modname);
         if (empty($modid)) continue;
         $modinfo = xarModGetInfo($modid);
         $modlist[$modid] = $modinfo['displayname'];
@@ -80,7 +80,7 @@ function changelog_admin_privileges($args)
         }
 
         // redirect to the privilege
-        xarResponseRedirect(xarModURL('privileges', 'admin', 'modifyprivilege',
+        xarResponse::Redirect(xarModURL('privileges', 'admin', 'modifyprivilege',
                                       array('pid' => $pid)));
         return true;
     }

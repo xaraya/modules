@@ -1,3 +1,5 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Change Log Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <xar:template module="changelog" type="module" file="admin-menu" />
@@ -89,3 +91,4 @@ Press "Finish and Apply to Privilege", and then assign that privilege to the 'Fr
 
 </div>
 </div>
+</xar:template>

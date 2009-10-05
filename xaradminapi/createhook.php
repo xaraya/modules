@@ -47,7 +47,7 @@ function changelog_adminapi_createhook($args)
             $modname = xarModGetName();
         }
     }
-    $modid = xarModGetIDFromName($modname);
+    $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module name', 'admin', 'createhook', 'changelog');
@@ -69,11 +69,11 @@ function changelog_adminapi_createhook($args)
     $changelogtable = $xartable['changelog'];
 
     $editor = xarUserGetVar('uid');
-    $forwarded = xarServerGetVar('HTTP_X_FORWARDED_FOR');
+    $forwarded = xarServer::getVar('HTTP_X_FORWARDED_FOR');
     if (!empty($forwarded)) {
         $hostname = preg_replace('/,.*/', '', $forwarded);
     } else {
-        $hostname = xarServerGetVar('REMOTE_ADDR');
+        $hostname = xarServer::getVar('REMOTE_ADDR');
     }
     $date = time();
     $status = 'created';
@@ -87,10 +87,10 @@ function changelog_adminapi_createhook($args)
     }
 
     if (!empty($itemtype)) {
-        $getlist = xarModGetVar('changelog',$modname.'.'.$itemtype);
+        $getlist = xarModVars::get('changelog',$modname.'.'.$itemtype);
     }
     if (!isset($getlist)) {
-        $getlist = xarModGetVar('changelog',$modname);
+        $getlist = xarModVars::get('changelog',$modname);
     }
     if (!empty($getlist)) {
         $fieldlist = split(',',$getlist);
@@ -109,7 +109,7 @@ function changelog_adminapi_createhook($args)
         $fields[$field] = $value;
     }
     // Check if we need to include any DD fields
-    $withdd = xarModGetVar('changelog','withdd');
+    $withdd = xarModVars::get('changelog','withdd');
     if (empty($withdd)) {
         $withdd = '';
     }

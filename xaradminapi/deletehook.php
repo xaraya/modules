@@ -50,7 +50,7 @@ function changelog_adminapi_deletehook($args)
         $modname = $extrainfo['module'];
     }
 
-    $modid = xarModGetIDFromName($modname);
+    $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module name', 'admin', 'deletehook', 'changelog');
@@ -87,11 +87,11 @@ function changelog_adminapi_deletehook($args)
     $changelogtable = $xartable['changelog'];
 
     $editor = xarUserGetVar('uid');
-    $forwarded = xarServerGetVar('HTTP_X_FORWARDED_FOR');
+    $forwarded = xarServer::getVar('HTTP_X_FORWARDED_FOR');
     if (!empty($forwarded)) {
         $hostname = preg_replace('/,.*/', '', $forwarded);
     } else {
-        $hostname = xarServerGetVar('REMOTE_ADDR');
+        $hostname = xarServer::getVar('REMOTE_ADDR');
     }
     $date = time();
     $status = 'deleted';

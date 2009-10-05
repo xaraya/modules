@@ -26,7 +26,7 @@ function changelog_admin_main()
     // Security Check
     if (!xarSecurityCheck('AdminChangeLog')) return;
 
-    xarResponseRedirect(xarModURL('changelog', 'admin', 'view'));
+    xarResponse::Redirect(xarModURL('changelog', 'admin', 'view'));
     // success
     return array(); //true;
 }

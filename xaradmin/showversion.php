@@ -103,10 +103,10 @@ function changelog_admin_showversion($args)
         $data['content'] = '';
 
         if (!empty($itemtype)) {
-            $getlist = xarModGetVar('changelog',$modinfo['name'].'.'.$itemtype);
+            $getlist = xarModVars::get('changelog',$modinfo['name'].'.'.$itemtype);
         }
         if (!isset($getlist)) {
-            $getlist = xarModGetVar('changelog',$modinfo['name']);
+            $getlist = xarModVars::get('changelog',$modinfo['name']);
         }
         if (!empty($getlist)) {
             $fieldlist = split(',',$getlist);
@@ -185,7 +185,7 @@ function changelog_admin_showversion($args)
                             new SystemException($msg));
                 return false;
         }
-        xarResponseRedirect(xarModURL('changelog', 'admin', 'showlog',
+        xarResponse::Redirect(xarModURL('changelog', 'admin', 'showlog',
                                       array('modid' => $modid,
                                             'itemtype' => $itemtype,
                                             'itemid' => $itemid)));

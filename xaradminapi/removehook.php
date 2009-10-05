@@ -39,7 +39,7 @@ function changelog_adminapi_removehook($args)
         return $extrainfo;
     }
 
-    $modid = xarModGetIDFromName($objectid);
+    $modid = xarMod::getRegId($objectid);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module ID', 'admin', 'removehook', 'changelog');

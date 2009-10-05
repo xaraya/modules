@@ -38,7 +38,7 @@ function changelog_userapi_getitems($args)
         return;
     }
     if (!empty($modname)) {
-        $modid = xarModGetIDFromName($modname);
+        $modid = xarMod::getRegId($modname);
     }
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',

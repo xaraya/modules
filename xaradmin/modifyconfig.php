@@ -29,11 +29,11 @@ function changelog_admin_modifyconfig()
     $data = array();
     $data['settings'] = array();
 
-    $changelog = xarModGetVar('changelog','default');
+    $changelog = xarModVars::get('changelog','default');
     $data['settings']['default'] = array('label' => xarML('Default configuration'),
                                          'changelog' => $changelog,
                                          'includedd' => 0);
-    $withdd = xarModGetVar('changelog','withdd');
+    $withdd = xarModVars::get('changelog','withdd');
     if (empty($withdd)) {
         $withdd = '';
     }
@@ -50,7 +50,7 @@ function changelog_admin_modifyconfig()
                                          // don't throw an exception if this function doesn't exist
                                          array(), 0);
                 foreach ($value as $itemtype => $val) {
-                    $changelog = xarModGetVar('changelog', "$modname.$itemtype");
+                    $changelog = xarModVars::get('changelog', "$modname.$itemtype");
                     if (empty($changelog)) {
                         $changelog = '';
                     }
@@ -75,7 +75,7 @@ function changelog_admin_modifyconfig()
                                                                     'includedd' => $includedd);
                 }
             } else {
-                $changelog = xarModGetVar('changelog', $modname);
+                $changelog = xarModVars::get('changelog', $modname);
                 if (empty($changelog)) {
                     $changelog = '';
                 }
@@ -96,11 +96,11 @@ function changelog_admin_modifyconfig()
         }
     }
 
-    $data['numstats'] = xarModGetVar('changelog','numstats');
+    $data['numstats'] = xarModVars::get('changelog','numstats');
     if (empty($data['numstats'])) {
         $data['numstats'] = 100;
     }
-    $data['showtitle'] = xarModGetVar('changelog','showtitle');
+    $data['showtitle'] = xarModVars::get('changelog','showtitle');
     if (!empty($data['showtitle'])) {
         $data['showtitle'] = 1;
     }

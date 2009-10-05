@@ -70,7 +70,7 @@ function changelog_admin_delete()
                              'confirm' => $confirm))) {
         return;
     }
-    xarResponseRedirect(xarModURL('changelog', 'admin', 'view'));
+    xarResponse::Redirect(xarModURL('changelog', 'admin', 'view'));
     return true;
 }
 

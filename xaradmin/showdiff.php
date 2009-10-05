@@ -144,10 +144,10 @@ function changelog_admin_showdiff($args)
     }
 
     if (!empty($itemtype)) {
-        $getlist = xarModGetVar('changelog',$modinfo['name'].'.'.$itemtype);
+        $getlist = xarModVars::get('changelog',$modinfo['name'].'.'.$itemtype);
     }
     if (!isset($getlist)) {
-        $getlist = xarModGetVar('changelog',$modinfo['name']);
+        $getlist = xarModVars::get('changelog',$modinfo['name']);
     }
     if (!empty($getlist)) {
         $fieldlist = split(',',$getlist);

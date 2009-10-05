@@ -1,3 +1,5 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Change Log</xar:mlstring></span>
 </div>
@@ -5,7 +7,7 @@
     <xar:template module="changelog" type="module" file="admin-menu" />
     <h2><xar:mlstring>Changelog Version Listing</xar:mlstring></h2>
     <xar:if condition="!empty($itemlink)">
-        <h3><a href="#$itemlink#">#$itemtitle# &nbsp; &quot;#$itemlabel#&quot;</a></h3>
+        <h3><a href="#$itemlink#">#$itemtitle# &#160; &quot;#$itemlabel#&quot;</a></h3>
     </xar:if>
         <form method="POST" action="&xar-modurl-changelog-admin-showdiff;">
     <fieldset>
@@ -72,6 +74,7 @@
         <input type="hidden" name="itemtype" value="#$itemtype#" />
         <input type="hidden" name="itemid" value="#$itemid#" />
         <input type="submit" value="#xarML('Diff')#" />
-        </form>
     </div>
+    </form>
 </div>
+</xar:template>

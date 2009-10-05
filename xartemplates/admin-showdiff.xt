@@ -1,3 +1,5 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Change Log</xar:mlstring></span>
 </div>
@@ -8,7 +10,7 @@
     </h2>
     <h3>
         <xar:if condition="!empty($itemlink)">
-            <a href="#$itemlink#">#$itemtitle#&nbsp;&quot;#$itemlabel#&quot;</a>
+            <a href="#$itemlink#">#$itemtitle#&#160;&quot;#$itemlabel#&quot;</a>
         </xar:if>
 
     </h3>
@@ -91,4 +93,4 @@
         </table>
         </fieldset>
 
-</div>
+</div></xar:template>

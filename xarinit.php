@@ -99,9 +99,9 @@ function changelog_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    xarModSetVar('changelog', 'SupportShortURLs', 0);
-    xarModSetVar('changelog', 'numstats', 100);
-    xarModSetVar('changelog', 'showtitle', false);
+    xarModVars::set('changelog', 'SupportShortURLs', 0);
+    xarModVars::set('changelog', 'numstats', 100);
+    xarModVars::set('changelog', 'showtitle', false);
 
 /* // nothing to do here
     if (!xarModRegisterHook('item', 'new', 'GUI',
@@ -205,7 +205,7 @@ function changelog_delete()
     if (!$result) return;
 
     // Delete any module variables
-    xarModDelVar('changelog', 'SupportShortURLs');
+    xarModVars::delete('changelog', 'SupportShortURLs');
 
     // Remove module hooks
 /* // nothing to do here
