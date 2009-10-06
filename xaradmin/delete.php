@@ -40,7 +40,7 @@ function changelog_admin_delete()
                 $data['modname'] = ucwords($modinfo['displayname']);
             } else {
                 // Get the list of all item types for this module (if any)
-                $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
+                $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                          // don't throw an exception if this function doesn't exist
                                          array(), 0);
                 if (isset($mytypes) && !empty($mytypes[$itemtype])) {
@@ -62,7 +62,7 @@ function changelog_admin_delete()
 // comment out the following line if you want this
     return xarML('This feature is currently disabled for security reasons');
 
-    if (!xarModAPIFunc('changelog','admin','delete',
+    if (!xarMod::apiFunc('changelog','admin','delete',
                        array('modid' => $modid,
                              'itemtype' => $itemtype,
                              'itemid' => $itemid,

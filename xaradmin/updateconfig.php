@@ -42,8 +42,8 @@ function changelog_admin_updateconfig()
 // FIXME: change hook order in 2.x core
 
         } else {
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn = xarDB::getConn();
+            $xartable = xarDB::getTables();
             $query = "UPDATE $xartable[hooks]
                          SET xar_order = 999
                        WHERE xar_tmodule = 'changelog'";

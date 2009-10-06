@@ -14,7 +14,7 @@ function changelog_admin_showlog($args)
     if (!xarSecurityCheck('ReadChangeLog',1,'Item',"$modid:$itemtype:$itemid")) return;
 
     $data = array();
-    $data['changes'] = xarModAPIFunc('changelog','admin','getchanges',
+    $data['changes'] = xarMod::apiFunc('changelog','admin','getchanges',
                                      array('modid' => $modid,
                                            'itemtype' => $itemtype,
                                            'itemid' => $itemid));
@@ -29,7 +29,7 @@ function changelog_admin_showlog($args)
     $data['numversions'] = $numchanges;
     foreach (array_keys($data['changes']) as $logid) {
         $data['changes'][$logid]['profile'] = xarModURL('roles','user','display',
-                                                        array('uid' => $data['changes'][$logid]['editor']));
+                                                        array('id' => $data['changes'][$logid]['editor']));
         if (!$data['showhost']) {
             $data['changes'][$logid]['hostname'] = '';
             $data['changes'][$logid]['link'] = '';
@@ -91,7 +91,7 @@ function changelog_admin_showlog($args)
     if (empty($modinfo['name'])) {
         return $data;
     }
-    $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
+    $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
                                array('itemtype' => $itemtype,
                                      'itemids' => array($itemid)),
                                0);

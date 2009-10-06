@@ -83,11 +83,11 @@ function changelog_adminapi_updatehook($args)
         return $extrainfo;
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $changelogtable = $xartable['changelog'];
 
-    $editor = xarUserGetVar('uid');
+    $editor = xarUserGetVar('id');
     $forwarded = xarServer::getVar('HTTP_X_FORWARDED_FOR');
     if (!empty($forwarded)) {
         $hostname = preg_replace('/,.*/', '', $forwarded);
@@ -135,8 +135,8 @@ function changelog_adminapi_updatehook($args)
     if (xarModIsHooked('dynamicdata',$modname,$itemtype) && !empty($withdd) &&
         (in_array($modname,$withdd) || in_array("$modname.$itemtype",$withdd))) {
         // Note: we need to make sure the DD hook is called before the changelog hook here
-        $ddfields = xarModAPIFunc('dynamicdata','user','getitem',
-                                  array('modid' => $modid,
+        $ddfields = xarMod::apiFunc('dynamicdata','user','getitem',
+                                  array('module_id' => $modid,
                                         'itemtype' => $itemtype,
                                         'itemid' => $itemid));
         if (!empty($ddfields)) {

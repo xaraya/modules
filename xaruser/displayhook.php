@@ -68,7 +68,7 @@ function changelog_user_displayhook($args)
         $itemid = $objectid;
     }
 
-    $changes = xarModAPIFunc('changelog','admin','getchanges',
+    $changes = xarMod::apiFunc('changelog','admin','getchanges',
                              array('modid' => $modid,
                                    'itemtype' => $itemtype,
                                    'itemid' => $itemid,
@@ -85,7 +85,7 @@ function changelog_user_displayhook($args)
     }
 
     $data['profile'] = xarModURL('roles','user','display',
-                                 array('uid' => $data['editor']));
+                                 array('id' => $data['editor']));
     if (!$data['showhost']) {
         $data['hostname'] = '';
     }

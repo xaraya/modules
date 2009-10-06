@@ -29,7 +29,7 @@
                 <td class="xar-norm">
                     <xar:if condition="!empty($change['link'])">
                     <input type="checkbox" name="logids[]" value="#$logid#" />
-                        <a href="#$change['link']#">#$change['version']#</a>
+                        &#160;<a href="#$change['link']#">#$change['version']#</a>
                     <xar:else />
                         #$change['version']#
                     </xar:if>

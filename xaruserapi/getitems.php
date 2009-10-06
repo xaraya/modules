@@ -68,8 +68,8 @@ function changelog_userapi_getitems($args)
    if (!xarSecurityCheck('ReadChangeLog',1,"$modid:$itemtype:All")) return;
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $changelogtable = $xartable['changelog'];
 
     // Get items

@@ -31,7 +31,7 @@ function changelog_admin_showversion($args)
 
     if (!xarSecurityCheck('AdminChangeLog',1,'Item',"$modid:$itemtype:$itemid")) return;
 
-    $data = xarModAPIFunc('changelog','admin','getversion',
+    $data = xarMod::apiFunc('changelog','admin','getversion',
                           array('modid' => $modid,
                                 'itemtype' => $itemtype,
                                 'itemid' => $itemid,
@@ -45,7 +45,7 @@ function changelog_admin_showversion($args)
     }
 
     $data['profile'] = xarModURL('roles','user','display',
-                                 array('uid' => $data['editor']));
+                                 array('id' => $data['editor']));
     if (!$data['showhost']) {
         $data['hostname'] = '';
     }
@@ -88,7 +88,7 @@ function changelog_admin_showversion($args)
     // Check for confirmation
     if (!empty($confirm) && !xarSecConfirmAuthKey()) return;
 
-    $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
+    $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
                                array('itemtype' => $itemtype,
                                      'itemids' => array($itemid)),
                                0);
@@ -151,15 +151,15 @@ function changelog_admin_showversion($args)
                 }
 */
                 // Call the update API function
-                $result = xarModAPIFunc('articles','admin','update',
+                $result = xarMod::apiFunc('articles','admin','update',
                                         $data['fields']);
                 if (empty($result)) return;
                 break;
 
             case 'dynamicdata':
                 // Call the update API function
-                $result = xarModAPIFunc('dynamicdata','admin','update',
-                                        array('modid' => $modid,
+                $result = xarMod::apiFunc('dynamicdata','admin','update',
+                                        array('module_id' => $modid,
                                               'itemtype' => $itemtype,
                                               'itemid' => $itemid,
                                               'values' => $data['fields']));
@@ -172,7 +172,7 @@ function changelog_admin_showversion($args)
                     $data['fields']['pid'] = $itemid;
                 }
                 // Call the update API function
-                $result = xarModAPIFunc('xarpages','admin','updatepage',
+                $result = xarMod::apiFunc('xarpages','admin','updatepage',
                                         $data['fields']);
                 if (empty($result)) return;
                 break;
@@ -193,7 +193,7 @@ function changelog_admin_showversion($args)
     }
 
     // get all changes
-    $changes = xarModAPIFunc('changelog','admin','getchanges',
+    $changes = xarMod::apiFunc('changelog','admin','getchanges',
                              array('modid' => $modid,
                                    'itemtype' => $itemtype,
                                    'itemid' => $itemid));

@@ -27,7 +27,7 @@ function changelog_admin_showdiff($args)
     if (!xarSecurityCheck('AdminChangeLog',1,'Item',"$modid:$itemtype:$itemid")) return;
 
     // get all changes
-    $changes = xarModAPIFunc('changelog','admin','getchanges',
+    $changes = xarMod::apiFunc('changelog','admin','getchanges',
                              array('modid' => $modid,
                                    'itemtype' => $itemtype,
                                    'itemid' => $itemid));
@@ -106,7 +106,7 @@ function changelog_admin_showdiff($args)
 
     foreach (array_keys($data['changes']) as $logid) {
         $data['changes'][$logid]['profile'] = xarModURL('roles','user','display',
-                                                        array('uid' => $data['changes'][$logid]['editor']));
+                                                        array('id' => $data['changes'][$logid]['editor']));
         if (!$data['showhost']) {
             $data['changes'][$logid]['hostname'] = '';
             $data['changes'][$logid]['link'] = '';
@@ -133,7 +133,7 @@ function changelog_admin_showdiff($args)
     if (empty($modinfo['name'])) {
         return $data;
     }
-    $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
+    $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
                                array('itemtype' => $itemtype,
                                      'itemids' => array($itemid)),
                                0);
@@ -153,7 +153,7 @@ function changelog_admin_showdiff($args)
         $fieldlist = explode(',',$getlist);
     }
 
-    $old = xarModAPIFunc('changelog','admin','getversion',
+    $old = xarMod::apiFunc('changelog','admin','getversion',
                          array('modid' => $modid,
                                'itemtype' => $itemtype,
                                'itemid' => $itemid,
@@ -185,7 +185,7 @@ function changelog_admin_showdiff($args)
         $old['fields'] = array();
     }
 
-    $new = xarModAPIFunc('changelog','admin','getversion',
+    $new = xarMod::apiFunc('changelog','admin','getversion',
                          array('modid' => $modid,
                                'itemtype' => $itemtype,
                                'itemid' => $itemid,

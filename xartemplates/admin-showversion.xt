@@ -103,7 +103,7 @@
                 <xar:comment>
                     Hint: we retrieve the DD object and then pass the $fields to checkinput(), to update the object values
                 </xar:comment>
-                <xar:set name="ddobject">xarModAPIFunc('dynamicdata','user','getitem',array('modid' => $modid, 'itemtype' => $itemtype, 'itemid' => $itemid, 'getobject' => true)); $ddobject->checkinput($fields)</xar:set>
+                <xar:set name="ddobject">xarMod::apiFunc('dynamicdata','user','getitem',array('module_id' => $modid, 'itemtype' => $itemtype, 'itemid' => $itemid, 'getobject' => true)); $ddobject->checkinput($fields)</xar:set>
                 <xar:data-display object="$ddobject" />
 
             <xar:elseif condition="$modname eq 'xarpages'"/>

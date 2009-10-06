@@ -18,8 +18,8 @@
  */
 function changelog_init()
 {
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $changelogtable = $xartable['changelog'];
 
@@ -73,7 +73,7 @@ function changelog_init()
     if (!$result) return;
 
     $index = array(
-        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_changelog_combo',
+        'name'      => 'i_' . xarDB::getPrefix() . '_changelog_combo',
         'fields'    => array('xar_moduleid','xar_itemtype','xar_itemid'),
         'unique'    => false
     );
@@ -82,7 +82,7 @@ function changelog_init()
     if (!$result) return;
 
     $index = array(
-        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_changelog_editor',
+        'name'      => 'i_' . xarDB::getPrefix() . '_changelog_editor',
         'fields'    => array('xar_editor'),
         'unique'    => false
     );
@@ -91,7 +91,7 @@ function changelog_init()
     if (!$result) return;
 
     $index = array(
-        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_changelog_status',
+        'name'      => 'i_' . xarDB::getPrefix() . '_changelog_status',
         'fields'    => array('xar_status'),
         'unique'    => false
     );
@@ -191,8 +191,8 @@ function changelog_upgrade($oldversion)
  */
 function changelog_delete()
 {
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     xarDBLoadTableMaintenanceAPI();
 

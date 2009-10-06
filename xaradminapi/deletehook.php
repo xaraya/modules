@@ -82,11 +82,11 @@ function changelog_adminapi_deletehook($args)
         return $extrainfo;
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $changelogtable = $xartable['changelog'];
 
-    $editor = xarUserGetVar('uid');
+    $editor = xarUserGetVar('id');
     $forwarded = xarServer::getVar('HTTP_X_FORWARDED_FOR');
     if (!empty($forwarded)) {
         $hostname = preg_replace('/,.*/', '', $forwarded);

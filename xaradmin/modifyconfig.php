@@ -39,14 +39,14 @@ function changelog_admin_modifyconfig()
     }
     $withdd = explode(';',$withdd);
 
-    $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
+    $hookedmodules = xarMod::apiFunc('modules', 'admin', 'gethookedmodules',
                                    array('hookModName' => 'changelog'));
     if (isset($hookedmodules) && is_array($hookedmodules)) {
         foreach ($hookedmodules as $modname => $value) {
             // we have hooks for individual item types here
             if (!isset($value[0])) {
                 // Get the list of all item types for this module (if any)
-                $mytypes = xarModAPIFunc($modname,'user','getitemtypes',
+                $mytypes = xarMod::apiFunc($modname,'user','getitemtypes',
                                          // don't throw an exception if this function doesn't exist
                                          array(), 0);
                 foreach ($value as $itemtype => $val) {

@@ -44,8 +44,8 @@ function changelog_adminapi_getchanges($args)
         return;
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $changelogtable = $xartable['changelog'];
     $rolestable = $xartable['roles'];
 

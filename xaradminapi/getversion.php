@@ -50,8 +50,8 @@ function changelog_adminapi_getversion($args)
         return;
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $changelogtable = $xartable['changelog'];
     $rolestable = $xartable['roles'];
 

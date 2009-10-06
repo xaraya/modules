@@ -51,8 +51,8 @@ function changelog_adminapi_removehook($args)
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $changelog = $xartable['changelog'];
 
