@@ -4,6 +4,7 @@
         <span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span>
     </div>
     <div class="xar-mod-body">
+       <xar:template type="module" file="admin-menu" />
         <h2><xar:mlstring>View Categories</xar:mlstring></h2>
         <div style="margin: auto;">
             <div style="text-align: right">
