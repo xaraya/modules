@@ -1,24 +1,11 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="$showhost">
-    <xar:ml>
-        <xar:mlstring><a href="#(1)">Last modified</a> on #(2) #(3) by <a href="#(4)">#(5)</a> [#(6)]</xar:mlstring>
-        <xar:mlvar>#$link#</xar:mlvar>
-        <xar:mlvar>#xarLocaleGetFormattedDate('medium',$date)#</xar:mlvar>
-        <xar:mlvar>#xarLocaleGetFormattedTime('medium',$date)#</xar:mlvar>
-        <xar:mlvar>#$profile#</xar:mlvar>
-        <xar:mlvar>#$editorname#</xar:mlvar>
-        <xar:mlvar>#$hostname#</xar:mlvar>
-    </xar:ml>
+    <a href="#$link#">Last modified</a> on #xarLocaleGetFormattedDate('medium',$date)# #xarLocaleGetFormattedTime('medium',$date)# by <a href="#$profile#">#$editorname#</a> [#$hostname#]
     <xar:if condition="!empty($remark)">
-        <div><xar:mlstring>Remark</xar:mlstring>: #$remark#</div>
+        <div>Remark: #$remark#</div>
     </xar:if>
 <xar:else />
-    <xar:ml>
-        <xar:mlstring>Last modified on #(1) #(2) by <a href="#(3)">#(4)</a></xar:mlstring>
-        <xar:mlvar>#xarLocaleGetFormattedDate('medium',$date)#</xar:mlvar>
-        <xar:mlvar>#xarLocaleGetFormattedTime('medium',$date)#</xar:mlvar>
-        <xar:mlvar>#$profile#</xar:mlvar>
-        <xar:mlvar>#$editorname#</xar:mlvar>
-    </xar:ml>
-</xar:if></xar:template>
+    Last modified on #xarLocaleGetFormattedDate('medium',$date)# #xarLocaleGetFormattedTime('medium',$date)# by <a href="#$profile#">#$editorname#</a>
+</xar:if>
+</xar:template>
