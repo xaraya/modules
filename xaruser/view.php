@@ -71,13 +71,13 @@ function publications_user_view($args)
 
     // Check if we want the default 'front page'
     if (!isset($catid) && !isset($cids) && empty($ptid) && !isset($owner)) {
-        $ishome = 1;
+        $ishome = true;
         // default publication type
         $ptid = xarModVars::get('publications', 'defaultpubtype');
         // frontpage state
         $state = array(PUBLICATIONS_STATE_FRONTPAGE);
     } else {
-        $ishome = 0;
+        $ishome = false;
         // frontpage or approved state
         $state = $c_posted;
     }
@@ -377,7 +377,7 @@ function publications_user_view($args)
             )
         );
     }
-/*
+/* -------------------------------------------------------------------------------
     // retrieve the categories for each article
     $catinfo = array();
     if ($showcategories) {
@@ -423,8 +423,8 @@ function publications_user_view($args)
         // needed for sort function below
         $GLOBALS['artviewcatinfo'] = $catinfo;
     }
-*/
-/*    $number = 0;
+
+    $number = 0;
     foreach ($publications as $article)
     {
         // TODO: don't include ptid and catid if we don't use short URLs
@@ -498,7 +498,7 @@ function publications_user_view($args)
         $summary_template = $pubtypes[$article['pubtype_id']]['name'];
         $number++;echo $number;
     }
-*/
+------------------------------------------------------------ */
     unset($publications);
 
 

@@ -119,7 +119,7 @@
       <type>objectref</type>
       <defaultvalue>9</defaultvalue>
       <source>publication.pubtype_id</source>
-      <status>34</status>
+      <status>33</status>
       <seq>24</seq>
       <configuration>a:4:{s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:18:"publications_types";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:11:"description";}</configuration>
     </property>
