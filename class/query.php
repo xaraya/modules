@@ -707,12 +707,12 @@ class Query
     {
         if (!isset($this->dbconn)) $this->dbconn = xarDB::getConn();
         $binding = $this->binding[$key];
-        if (gettype($binding['field2']) == 'string' && !eregi('JOIN', $binding['op'])) {
+        if (gettype($binding['field2']) == 'string' && !stristr($binding['op'], 'JOIN')) {
             $sqlfield = $this->dbconn->qstr($binding['field2']);
         }
         else {
             $sqlfield = $condition['field2'];
-            $binding['op'] = eregi('JOIN', $binding['op']) ? '=' : $binding['op'];
+            $binding['op'] = stristr($binding['op'], 'JOIN') ? '=' : $binding['op'];
         }
         return $binding['field1'] . " " . $binding['op'] . " " . $sqlfield;
     }
@@ -721,7 +721,7 @@ class Query
     {
         $this->bstring = "";
         foreach ($this->bindings as $binding) {
-           $binding['op'] = eregi('JOIN', $binding['op']) ? '=' : $binding['op'];
+           $binding['op'] = stristr($binding['op'], 'JOIN') ? '=' : $binding['op'];
            $this->bstring .= $binding['field1'] . " " . $binding['op'] . " " . $binding['field2'] . " " . $this->andoperator . " ";
         }
         if ($this->bstring != "") $this->bstring = substr($this->bstring,0,strlen($this->bstring)-5);
@@ -756,7 +756,7 @@ class Query
                 $sqlfield = '(' . $condition['field2'] . ')';
             }
         } else {
-            if (gettype($condition['field2']) == 'string' && !eregi('JOIN', $condition['op'])) {
+            if (gettype($condition['field2']) == 'string' && !stristr($condition['op'], 'JOIN')) {
                 if ($this->usebinding) {
                     $this->bindvars[] = $condition['field2'];
                     $sqlfield = '?';
@@ -765,13 +765,13 @@ class Query
                 }
             }
             else {
-                if ($this->usebinding && !eregi('JOIN', $condition['op'])) {
+                if ($this->usebinding && !stristr($condition['op'], 'JOIN')) {
                     $this->bindvars[] = $condition['field2'];
                     $sqlfield = '?';
                 } else {
                     $sqlfield = $condition['field2'];
                 }
-                $condition['op'] = eregi('JOIN', $condition['op']) ? '=' : $condition['op'];
+                $condition['op'] = stristr($condition['op'], 'JOIN') ? '=' : $condition['op'];
             }
         }
         return $condition['field1'] . " " . $condition['op'] . " " . $sqlfield;
