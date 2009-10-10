@@ -27,23 +27,29 @@ function crispbb_admin_modify($args)
     if (!xarVarFetch('phase', 'enum:form:update', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
     // allow return url to be over-ridden
     if (!xarVarFetch('return_url', 'str:1:', $return_url, '', XARVAR_NOT_REQUIRED)) return;
-
     if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_NOT_REQUIRED)) return;
-    $data = xarMod::apiFunc('crispbb', 'user', 'getforum', array('fid' => $fid, 'privcheck' => true));
-    if ($data == 'NO_PRIVILEGES' || $data == 'BAD_DATA' || empty($data['addforumurl'])) {
-        $errorMsg['message'] = xarML('You do not have the privileges required for this action');
-        $errorMsg['return_url'] = xarModURL('crispbb', 'user', 'main');
-        $errorMsg['type'] = 'NO_PRIVILEGES';
-        $errorMsg['pageTitle'] = xarML('No Privileges');
-        xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
-        return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
-    }
 
-    $userLevel = $data['forumLevel'];
-    $secLevels = $data['fprivileges'];
+    sys::import('modules.dynamicdata.class.objects.master');
+    $data['forum'] = DataObjectMaster::getObject(array('name' => 'crispbb_forums'));
+    //$data['forum']->joinCategories();
+    $fieldlist = array('fname','fdesc','fstatus','ftype','category');
+    $data['forum']->setFieldlist($fieldlist);
+    $data['forum']->userAction = 'editforum';
+    $itemid = $data['forum']->getItem(array('itemid' => $fid));
+
+    if ($itemid != $fid)
+        return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+
+    if (empty($data['forum']->userLevel))
+        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+
+    $data['forum']->getItemLinks();
+
+    $userLevel = $data['forum']->userLevel;
+    $secLevels = $data['forum']->fprivileges;
 
     $invalid = array();
-    $pageTitle = $data['fname'];
+    $pageTitle = $data['forum']->properties['fname']->value;
     $now = time();
     $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
     // End Tracking
@@ -53,122 +59,57 @@ function crispbb_admin_modify($args)
     }
     switch($sublink) {
         case 'edit':
-            sys::import('modules.dynamicdata.class.objects.master');
-            $data['forum'] = DataObjectMaster::getObject(array('name' => 'crispbb_forums'));
-            //$data['forum']->setCategories();
-            $fieldlist = array('fname','fdesc','fstatus','ftype','category');
-            $data['forum']->setFieldlist($fieldlist);
-            $data['forum']->getItem(array('itemid' => $data['fid']));
-            //$data['fname'] = $data['forum']->properties['fname']->value;
-            //$data['fdesc'] = $data['forum']->properties['fdesc']->value;
-
-            if (!xarVarFetch('fname', 'str:1:', $fname, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('fdesc', 'str:1:', $fdesc, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('fstatus', 'int:0:', $fstatus, 0, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('ftype', 'int:0:', $ftype, 0, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('fowner', 'id', $fowner, NULL, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('catid', 'id', $catid, NULL, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('cids', 'list:id', $cids, NULL, XARVAR_DONT_SET)) return;
-            if (!xarVarFetch('modify_cids', 'list:id', $cids, NULL, XARVAR_DONT_SET)) return;
-            if (!xarVarFetch('redirecturl', 'str:1:255', $redirecturl, '', XARVAR_NOT_REQUIRED)) return;
-            if (empty($data['editforumurl'])) {
-                $errorMsg['message'] = xarML('You do not have the privileges required for this action');
-                $errorMsg['return_url'] = xarModURL('crispbb', 'user', 'main');
-                $errorMsg['type'] = 'NO_PRIVILEGES';
-                $errorMsg['pageTitle'] = xarML('No Privileges');
-                xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
-                return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+            $ftype = $data['forum']->properties['ftype']->value;
+            if ($ftype == 1) {
+                $settingsfields = array('redirected');
+                $layout = 'redirected';
+            } else {
+                $settingsfields = array('topicsperpage', 'topicsortorder', 'topicsortfield', 'postsperpage', 'postsortorder', 'hottopicposts', 'hottopichits', 'showstickies', 'showannouncements', 'showfaqs', 'topictitlemin', 'topictitlemax', 'topicdescmin', 'topicdescmax', 'topicpostmin', 'topicpostmax', 'floodcontrol', 'postbuffer', 'topicapproval', 'replyapproval');
+                $layout = 'normal';
             }
+            $data['settings'] = DataObjectMaster::getObject(array('name' => 'crispbb_forum_settings'));
+            $data['settings']->setFieldlist($settingsfields);
+            $data['settings']->tplmodule = 'crispbb';
+            $data['settings']->layout = $layout;
+            $data['values'] = $data['forum']->fsettings;
+
             $presets = xarMod::apiFunc('crispbb', 'user', 'getpresets',
                 array('preset' => 'forumstatusoptions,topicsortoptions,sortorderoptions,pagedisplayoptions,ftransfields,ttransfields,ptransfields,ftypeoptions'));
-            if (!$confirm) {
-                if ($phase == 'update') {
-                    $data['ftype'] = $ftype;
-                }
-                $phase = 'form';
-            }
 
             // handle update
             if ($phase == 'update') {
-
-                $settings = array();
-                if (!xarVarFetch('topicsperpage', 'int:1:100', $settings['topicsperpage'], $data['topicsperpage'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('topicsortorder', 'enum:ASC:DESC', $settings['topicsortorder'], $data['topicsortorder'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('topicsortfield', 'enum:ptime', $settings['topicsortfield'], $data['topicsortfield'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('postsperpage', 'int:1:100', $settings['postsperpage'], $data['postsperpage'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('postsortorder', 'enum:ASC:DESC', $settings['postsortorder'], $data['postsortorder'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('hottopicposts', 'int:0:100', $settings['hottopicposts'], $data['hottopicposts'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('hottopichits', 'int:0:100', $settings['hottopichits'], $data['hottopichits'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('hottopicratings', 'int:0', $settings['hottopicratings'], $data['hottopicratings'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('topictitlemin', 'int:0:254', $settings['topictitlemin'], $data['topictitlemin'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('topictitlemax', 'int:0:254', $settings['topictitlemax'], $data['topictitlemax'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('topicdescmin', 'int:0:100', $settings['topicdescmin'], $data['topicdescmin'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('topicdescmax', 'int:0:100', $settings['topicdescmax'], $data['topicdescmax'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('topicpostmin', 'int:0:65535', $settings['topicpostmin'], $data['topicpostmin'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('topicpostmax', 'int:0:65535', $settings['topicpostmax'], $data['topicpostmax'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('showstickies', 'int:0:1', $settings['showstickies'], $data['showstickies'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('showannouncements', 'int:0:1', $settings['showannouncements'], $data['showannouncements'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('showfaqs', 'int:0:1', $settings['showfaqs'], $data['showfaqs'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('iconfolder', 'str:0', $settings['iconfolder'], $data['iconfolder'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icondefault', 'str:0', $settings['icondefault'], $data['icondefault'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('floodcontrol', 'int:0:3600', $settings['floodcontrol'], $data['floodcontrol'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('postbuffer', 'int:0:60', $settings['postbuffer'], $data['postbuffer'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('topicapproval', 'checkbox', $settings['topicapproval'], $data['topicapproval'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('replyapproval', 'checkbox', $settings['replyapproval'], $data['replyapproval'], XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('ftransforms', 'list', $settings['ftransforms'], array(), XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('ttransforms', 'list', $settings['ttransforms'], array(), XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('ptransforms', 'list', $settings['ptransforms'], array(), XARVAR_NOT_REQUIRED)) return;
-                foreach ($presets['ftransfields'] as $field => $option) {
-                    if (!isset($settings['ftransforms'][$field]))
-                        $settings['ftransforms'][$field] = array();
-                }
-                foreach ($presets['ttransfields'] as $field => $option) {
-                    if (!isset($settings['ttransforms'][$field]))
-                        $settings['ttransforms'][$field] = array();
-                }
-                foreach ($presets['ptransfields'] as $field => $option) {
-                    if (!isset($settings['ptransforms'][$field]))
-                        $settings['ptransforms'][$field] = array();
-                }
                 $isvalid = $data['forum']->checkInput();
-
-                switch ($ftype) {
-                    case '0': // regular forum type
-                    default:
-                    break;
-                    case '1': // redirected forum
-                        if (strlen($redirecturl) < 1 || strlen($redirecturl) > 255) {
-                            $invalid['redirecturl'] = xarML('URL must be 255 characters or less');
-                        }
-                        if (empty($invalid)) {
-                            if (strstr($redirecturl,'://')) {
-                                if (!ereg("^http://|https://|ftp://", $redirecturl)) {
-                                    $invalid['redirecturl'] = 'URLs of this type are not allowed';
-                                }
-                            } elseif (substr($redirecturl,0,1) == '/') {
-                                $server = xarServerGetHost();
-                                $protocol = xarServerGetProtocol();
-                                $redirecturl = $protocol . '://' . $server . $redirecturl;
-                            } else {
-                                $baseurl = xarServer::getBaseURL();
-                                $redirecturl = $baseurl . $redirecturl;
-                            }
-                        }
-                    break;
+                $andvalid = false;
+                // see if user switched forum types
+                if ($data['forum']->properties['ftype']->value == $ftype) {
+                    if (!empty($settingsfields)) {
+                        $data['settings']->setFieldList($settingsfields);
+                    }
+                    $andvalid = $data['settings']->checkInput();
+                    $settings = array();
+                    foreach ($data['settings']->properties as $name => $value) {
+                        $settings[$name] = $data['settings']->properties[$name]->value;
+                    }
+                    // @TODO: make these properties somehow
+                    foreach ($presets['ftransfields'] as $field => $option) {
+                        if (!isset($settings['ftransforms'][$field]))
+                            $settings['ftransforms'][$field] = array();
+                    }
+                    foreach ($presets['ttransfields'] as $field => $option) {
+                        if (!isset($settings['ttransforms'][$field]))
+                            $settings['ttransforms'][$field] = array();
+                    }
+                    foreach ($presets['ptransfields'] as $field => $option) {
+                        if (!isset($settings['ptransforms'][$field]))
+                            $settings['ptransforms'][$field] = array();
+                    }
                 }
                 if (empty($invalid) && $isvalid) {
                     if (!xarSecConfirmAuthKey()) return;
-                    $redirected = !empty($data['redirected']['redirecturl']) ? $data['redirected']['redirecturl'] : '';
-                    if ($redirected != $redirecturl) {
-                        $settings['redirected'] = array('redirecturl' => $redirecturl);
-                    } else {
-                        $settings['redirected'] = $data['redirected'];
-                    }
-                    $data['forum']->properties['fsettings']->setValue(serialize($settings));
+                    $extra = array('fsettings' => serialize($settings));
                     $data['forum']->updateHooks(true);
-                    $data['forum']->updateItem();
-                    xarSessionSetVar('crispbb_statusmsg', xarML('#(1) settings updated', $fname));
+                    $data['forum']->updateItem($extra);
+                    xarSessionSetVar('crispbb_statusmsg', xarML('#(1) settings updated', $pageTitle));
                     if (empty($return_url)) {
                         $return_url = xarModURL('crispbb', 'admin', 'modify',
                             array('fid' => $fid, 'sublink' => 'edit'));
@@ -176,45 +117,21 @@ function crispbb_admin_modify($args)
                     xarMod::apiFunc('crispbb', 'user', 'getitemtypes');
                     xarResponse::Redirect($return_url);
                 }
-                // failed validation, pass back the input
-                $data['fname'] = $fname;
-                $data['fdesc'] = $fdesc;
-                $data['fstatus'] = $fstatus;
-                $data['fowner'] = $fowner;
-                foreach ($settings as $k => $v) {
-                    if (!isset($data[$k])) continue;
-                    $data[$k] = $v;
-                }
+                $data['values'] = $settings;
             }
             // handle form
             $item = array();
             $item['module'] = 'crispbb';
-            $item['itemtype'] = $data['itemtype'];
+            $item['itemtype'] = $data['forum']->itemtype;
             $item['itemid'] = $fid;
             $hooks = xarModCallHooks('item', 'modify', $fid, $item);
-            if (xarVarIsCached('Hooks.dynamicdata','withupload') || xarModIsHooked('uploads', 'crispbb', $data['itemtype'])) {
+            if (xarVarIsCached('Hooks.dynamicdata','withupload') || xarModIsHooked('uploads', 'crispbb', $item['itemtype'])) {
                 $data['withupload'] = 1;
             } else {
                 $data['withupload'] = 0;
             }
             // change categories display to a dropdown list
             if (isset($hooks['categories'])) $hooks['categories'] = '';
-
-            switch ($data['ftype']) {
-                case '0':
-                default:
-                break;
-                case '1':
-                    if (empty($redirecturl)) {
-                        $redirecturl = !empty($data['redirected']['redirecturl']) ? $data['redirected']['redirecturl'] : '';
-                    }
-                break;
-            }
-            $ftypes = array();
-            $ftypes[0] = array('id' => 0, 'name' => xarML('Normal Forum'));
-            $ftypes[1] = array('id' => 1, 'name' => xarML('Redirected Forum'));
-            $data['ftypeoptions'] = $ftypes; // $presets['ftypeoptions'];
-            $data['redirecturl'] = !empty($redirecturl) ? $redirecturl : '';
 
             if (!empty($data['iconfolder'])) {
                 $iconlist = xarMod::apiFunc('crispbb', 'user', 'gettopicicons',
@@ -224,23 +141,8 @@ function crispbb_admin_modify($args)
                 $data['iconlist'] = array();
             }
 
-            $forumtype = $data['itemtype'];
-            $topicstype = xarMod::apiFunc('crispbb', 'user', 'getitemtype',
-                array('fid' => $fid, 'component' => 'topics'));
-            $poststype = xarMod::apiFunc('crispbb', 'user', 'getitemtype',
-                array('fid' => $fid, 'component' => 'posts'));
-            $data['ftranshooks'] = xarModGetHookList('crispbb', 'item', 'transform', $forumtype);
-            $data['ttranshooks'] = xarModGetHookList('crispbb', 'item', 'transform', $topicstype);
-            $data['ptranshooks'] = xarModGetHookList('crispbb', 'item', 'transform', $poststype);
-            $data['statusoptions'] = $presets['forumstatusoptions'];
-            $tsortoptions = $presets['topicsortoptions'];
-            if (!xarModIsAvailable('ratings') || !xarModIsHooked('ratings', 'crispbb', $topicstype)) {
-                unset($tsortoptions['numratings']);
-            }
-            $data['topicfields'] = $tsortoptions;
-            $data['orderoptions'] = $presets['sortorderoptions'];
-            $data['pageoptions'] = $presets['pagedisplayoptions'];
-            $pageTitle = 'Edit ' . $data['fname'];
+
+            $pageTitle = 'Edit ' . $pageTitle;
             xarMod::apiFunc('crispbb', 'user', 'getitemtypes');
         break;
 
@@ -426,7 +328,7 @@ function crispbb_admin_modify($args)
                 array('preset' => 'privactionlabels,fprivileges,privleveloptions'));
             $defaults = $presets['fprivileges'];
             if (empty($privs)) {
-                $privs = $data['fprivileges'];
+                $privs = $data['forum']->fprivileges;
             } else {
                 // format privs for storage
                 foreach ($defaults as $level => $actions) {
@@ -444,14 +346,13 @@ function crispbb_admin_modify($args)
                 if ($resetprivs) {
                     $privs = $defaults;
                 }
+                $fieldlist = array('fprivileges');
+                $data['forum']->setFieldList($fieldlist);
                 if (empty($invalid)) {
                     if (!xarSecConfirmAuthKey()) return;
-                    if (!xarMod::apiFunc('crispbb', 'admin', 'update',
-                        array(
-                            'fid' => $fid,
-                            'fprivileges' => $privs,
-                            'nohooks' => true
-                        ))) return;
+                    $extra = array('fprivileges' => serialize($privs));
+                    $data['forum']->updateHooks(false);
+                    $data['forum']->updateItem($extra);
                     // update the status message
                     xarSessionSetVar('crispbb_statusmsg', xarML('Forum privileges updated'));
                     // if no returnurl specified, return to forumconfig
@@ -493,6 +394,7 @@ function crispbb_admin_modify($args)
         break;
     }
 
+    $data['fid'] = $fid;
     $data['invalid'] = $invalid;
     $data['sublink'] = $sublink;
     $data['menulinks'] = xarMod::apiFunc('crispbb', 'admin', 'getmenulinks',
@@ -501,7 +403,7 @@ function crispbb_admin_modify($args)
             'current_func' => 'modify',
             'current_sublink' => $sublink,
             'fid' => $fid,
-            'catid' => $data['catid'],
+            //'catid' => $data['catid'],
             'secLevels' => $secLevels
     ));
     $data['pageTitle'] = $pageTitle;

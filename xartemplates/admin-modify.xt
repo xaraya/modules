@@ -19,114 +19,17 @@
     <xar:if condition="!empty($statusmsg)">
         <p class="xar-align-center xar-error">#$statusmsg#</p>
     </xar:if>
-    <h3>#$transformed_fname#</h3>
+    <h3>#$forum:properties.fname:value#</h3>
     <xar:if condition="$sublink eq 'edit'">
         <form method="post" id="crispbb_admin_modify" action="#xarModURL('crispbb', 'admin', 'modify')#" enctype="#$enctype#">
             <fieldset>
                 <xar:data-form object="$forum" />
-                <!--
-                <div class="xar-form-input-wrapper">
-                    <label for="fname" class="xar-form-label" title="#xarML('Forum name')#">
-                        <xar:mlstring>Forum Name</xar:mlstring>:
-                    </label>
-                    <input type="text" name="fname" id="fname" value="#$fname#" maxlength="100" class="xar-form-textlong" />
-                </div>
-                <xar:if condition="!empty($invalid['fname'])">
-                    <div class="xar-form-input-wrapper-after xar-error">
-                        #$invalid['fname']#
-                    </div>
-                </xar:if>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label help" title="#xarML('Select transforms to apply to this field')#"><xar:mlstring>Forum Name Transforms</xar:mlstring>:</label>
-                    <xar:if condition="empty($ftranshooks)">
-                        <xar:mlstring>No transforms are hooked</xar:mlstring>
-                    <xar:else />
-                        <xar:foreach in="$ftranshooks" value="$ftranshook">
-                            <xar:set name="fnamename">'ftransforms[fname]['.$ftranshook['module'].']'</xar:set>
-                            <xar:set name="fnameid">'ftransforms_fname_'.$ftranshook['module']</xar:set>
-                            <xar:set name="fnameval">!empty($ftransforms['fname'][$ftranshook['module']]) ? true :false</xar:set>
-                            <label for="#$fnameid#">#$ftranshook['module']#</label>
-                            <xar:data-input type="checkbox" name="$fnamename" id="$fnameid" value="$fnameval" />
-                        </xar:foreach>
-                    </xar:if>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="fdesc" class="xar-form-label" title="#xarML('Description for this forum')#">
-                        <xar:mlstring>Description:</xar:mlstring>
-                    </label>
-                    <textarea name="fdesc" id="fdesc" rows="3" cols="40">#$fdesc#</textarea>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label help" title="#xarML('Select transforms to apply to this field')#"><xar:mlstring>Description Transforms</xar:mlstring>:</label>
-                    <xar:if condition="empty($ftranshooks)">
-                        <xar:mlstring>No transforms are hooked</xar:mlstring>
-                    <xar:else />
-                        <xar:foreach in="$ftranshooks" value="$ftranshook">
-                            <xar:set name="fdescname">'ftransforms[fdesc]['.$ftranshook['module'].']'</xar:set>
-                            <xar:set name="fdescid">'ftransforms_fdesc_'.$ftranshook['module']</xar:set>
-                            <xar:set name="fdescval">!empty($ftransforms['fdesc'][$ftranshook['module']]) ? true :false</xar:set>
-                            <label for="#$fdescid#">#$ftranshook['module']#</label>
-                            <xar:data-input type="checkbox" name="$fdescname" id="$fdescid" value="$fdescval" />
-                        </xar:foreach>
-                    </xar:if>
-                </div>
-                <xar:if condition="!empty($invalid['fdesc'])">
-                    <div class="xar-form-input-wrapper-after xar-error">
-                        #$invalid['fdesc']#
-                    </div>
-                </xar:if>
-                <xar:if condition="count($statusoptions) gt 1 and $ftype eq 0">
-                <div class="xar-form-input-wrapper">
-                    <label for="fstatus" class="xar-form-label" title="#xarML('Set the status for this forum')#">
-                        <xar:mlstring>Forum Status:</xar:mlstring>
-                    </label>
-                    <xar:data-input type="dropdown" name="fstatus" id="fstatus" value="$fstatus" options="$statusoptions" />
-                </div>
-                </xar:if>
-                <xar:if condition="!empty($ftypeoptions) and count($ftypeoptions) gt 1">
-                <div class="xar-form-input-wrapper">
-                    <label for="ftype" class="xar-form-label" title="#xarML('Select the type of forum')#">
-                        <xar:mlstring>Forum Type:</xar:mlstring>
-                    </label>
-                    <xar:data-input type="dropdown" name="ftype" id="ftype" value="$ftype" options="$ftypeoptions" onchange="this.form.submit();"/>
-                </div>
-                </xar:if>
-                <xar:if condition="xarModVars::get('crispbb', 'hasuserforums')">
-                <div class="xar-form-input-wrapper">
-                    <label for="fowner" class="xar-form-label" title="#xarML('Set the user that owns this forum')#">
-                        <xar:mlstring>Owner:</xar:mlstring>
-                    </label>
-                    <xar:data-input type="userlist" name="fowner" id="fowner" value="$fowner" />
-                </div>
-                </xar:if>
-                -->
                 <xar:if condition="!empty($hookoutput)">
                     <xar:foreach in="$hookoutput" key="$hookmodule">
                         #$hookoutput[$hookmodule]#
                     </xar:foreach>
                 </xar:if>
-                <xar:if condition="$ftype eq 0">
-                <xar:template type="module" module="crispbb" file="admin-forumconfig" />
-                <xar:elseif condition="$ftype eq 1" />
-                <div class="xar-form-input-wrapper">
-                    <p class="xar-form-container-after">
-                        <xar:mlstring>A redirected forum allows you to list a link to somewhere else as if it was a forum, so it will show in the forum index. Enter the url you'd like the forum to point to below. The forum name is used as the link title. Users clicking the link will be taken to the url you entered.</xar:mlstring>
-                    </p>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="redirecturl" class="xar-form-label">
-                        <xar:mlstring>Redirect URL</xar:mlstring>:
-                    </label>
-                    <input type="text" name="redirecturl" id="redirecturl" value="#$redirecturl#" maxlength="255" class="xar-form-textlong" />
-                </div>
-                <xar:if condition="!empty($invalid['redirecturl'])">
-                    <div class="xar-form-input-wrapper-after xar-error">
-                        #$invalid['redirecturl']#
-                    </div>
-                </xar:if>
-                <xar:else />
-
-                </xar:if>
+                <xar:data-form object="$settings" values="$values" />
                 <div class="xar-form-input-wrapper-after">
                     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthkey()#" />
                     <input type="hidden" name="fid" id="fid" value="#$fid#" />
