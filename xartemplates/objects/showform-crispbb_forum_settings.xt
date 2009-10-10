@@ -11,6 +11,80 @@
                 <xar:data-input property="$properties[$name]" />
             </div>
         </xar:foreach>
+    <xar:elseif condition="$layout eq 'normal'" />
+        <!-- layout for a normal forum type (ftype = 0) -->
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['topicapproval']" for="id" />
+            <xar:data-input property="$properties['topicapproval']" value="$values['topicapproval']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['replyapproval']" for="id" />
+            <xar:data-input property="$properties['replyapproval']" value="$values['replyapproval']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['topicsperpage']" for="id" />
+            <xar:data-input property="$properties['topicsperpage']" value="$values['topicsperpage']" />
+            <xar:data-label property="$properties['topicsortorder']" />
+            <xar:data-input property="$properties['topicsortorder']" value="$values['topicsortorder']" />
+            <xar:data-label property="$properties['topicsortfield']" />
+            <xar:data-input property="$properties['topicsortfield']" value="$values['topicsortfield']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['postsperpage']" for="id" />
+            <xar:data-input property="$properties['postsperpage']" value="$values['postsperpage']" />
+            <xar:data-label property="$properties['postsortorder']" />
+            <xar:data-input property="$properties['postsortorder']" value="$values['postsortorder']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['hottopicposts']" for="id" />
+            <xar:data-input property="$properties['hottopicposts']" value="$values['hottopicposts']" />
+            <xar:data-label property="$properties['hottopichits']" />
+            <xar:data-input property="$properties['hottopichits']" value="$values['hottopichits']" />
+            <!--
+            <xar:data-label property="$properties['hottopicratings']" />
+            <xar:data-input property="$properties['hottopicratings']" value="$values['hottopicratings']" />
+            -->
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['topictitlemin']" for="id" />
+            <xar:data-input property="$properties['topictitlemin']" value="$values['topictitlemin']" />
+            <xar:data-label property="$properties['topictitlemax']" />
+            <xar:data-input property="$properties['topictitlemax']" value="$values['topictitlemax']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['topicdescmin']" for="id" />
+            <xar:data-input property="$properties['topicdescmin']" value="$values['topicdescmin']" />
+            <xar:data-label property="$properties['topicdescmax']" />
+            <xar:data-input property="$properties['topicdescmax']" value="$values['topicdescmax']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['topicpostmin']" for="id" />
+            <xar:data-input property="$properties['topicpostmin']" value="$values['topicpostmin']" />
+            <xar:data-label property="$properties['topicpostmax']" />
+            <xar:data-input property="$properties['topicpostmax']" value="$values['topicpostmax']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['showstickies']" for="id" />
+            <xar:data-input property="$properties['showstickies']" value="$values['showstickies']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['showannouncements']" for="id" />
+            <xar:data-input property="$properties['showannouncements']" value="$values['showannouncements']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['showfaqs']" for="id" />
+            <xar:data-input property="$properties['showfaqs']" value="$values['showfaqs']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['floodcontrol']" for="id" />
+            <xar:data-input property="$properties['floodcontrol']" value="$values['floodcontrol']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['postbuffer']" for="id" />
+            <xar:data-input property="$properties['postbuffer']" value="$values['postbuffer']" />
+        </div>
+    <xar:elseif condition="$layout eq 'redirected'" />
+    <!-- layout for a redirected forum type (ftype = 1)-->
     <xar:else />
         Unknown Layout
     </xar:if>

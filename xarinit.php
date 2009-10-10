@@ -277,10 +277,10 @@ function crispbb_init()
                 'crispbb_forums',
                 //'crispbb_topics',
                 //'crispbb_posts',
-                //'crispbb_itemtypes',
+                'crispbb_itemtypes',
                 //'crispbb_hooks',
                 //'crispbb_user_settings',
-                //'crispbb_forum_settings',
+                'crispbb_forum_settings',
                 //'crispbb_posters',
                 );
 

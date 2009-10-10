@@ -1,0 +1,44 @@
+<object name="crispbb_itemtypes">
+  <objectid>16</objectid>
+  <label>crispBB Itemtypes</label>
+  <module_id>970</module_id>
+  <itemtype>8</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:0:{}</config>
+  <isalias>true</isalias>
+  <properties>
+    <property name="id">
+      <id>155</id>
+      <label>id</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_crispbb_itemtypes.id</source>
+      <status>33</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="fid">
+      <id>156</id>
+      <label>fid</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_crispbb_itemtypes.fid</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="component">
+      <id>157</id>
+      <label>component</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_crispbb_itemtypes.component</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:82:"xarMod::apiFunc('crispbb', 'user', 'getoptions', array('options' => 'components'))";}</configuration>
+    </property>
+  </properties>
+</object>
