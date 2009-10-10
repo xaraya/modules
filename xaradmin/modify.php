@@ -30,7 +30,7 @@ function crispbb_admin_modify($args)
 
     if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_NOT_REQUIRED)) return;
     $data = xarMod::apiFunc('crispbb', 'user', 'getforum', array('fid' => $fid, 'privcheck' => true));
-    if ($data == 'NO_PRIVILEGES' || empty($data['addforumurl'])) {
+    if ($data == 'NO_PRIVILEGES' || $data == 'BAD_DATA' || empty($data['addforumurl'])) {
         $errorMsg['message'] = xarML('You do not have the privileges required for this action');
         $errorMsg['return_url'] = xarModURL('crispbb', 'user', 'main');
         $errorMsg['type'] = 'NO_PRIVILEGES';
@@ -138,7 +138,7 @@ function crispbb_admin_modify($args)
                     default:
                     break;
                     case '1': // redirected forum
-                        if (strlen($redirecturl) < 1 || strlen($redirecturl) > 100) {
+                        if (strlen($redirecturl) < 1 || strlen($redirecturl) > 255) {
                             $invalid['redirecturl'] = xarML('URL must be 255 characters or less');
                         }
                         if (empty($invalid)) {
@@ -166,59 +166,8 @@ function crispbb_admin_modify($args)
                         $settings['redirected'] = $data['redirected'];
                     }
                     $data['forum']->properties['fsettings']->setValue(serialize($settings));
-                     // keep counts in synch when updating the forum
-                    $numtopics = xarMod::apiFunc('crispbb', 'user', 'counttopics',
-                        array(
-                            'fid' => $fid,
-                            'tstatus' => array(0,1)
-                        ));
-                    $data['forum']->properties['numtopics']->setValue($numtopics);
-
-
-                    $numreplies = xarMod::apiFunc('crispbb', 'user', 'countposts',
-                        array(
-                            'fid' => $fid,
-                            'tstatus' => array(0,1),
-                            'pstatus' => 0
-                        ));
-                    $numreplies = !empty($numreplies) ? $numreplies - $numtopics : 0;
-                    $data['forum']->properties['numreplies']->setValue($numreplies);
-
-
-                    $numtopicsubs = xarMod::apiFunc('crispbb', 'user', 'counttopics',
-                        array(
-                            'fid' => $fid,
-                            'tstatus' => 2
-                        ));
-                    $data['forum']->properties['numtopicsubs']->setValue($numtopicsubs);
-
-
-                    $numtopicdels = xarMod::apiFunc('crispbb', 'user', 'counttopics',
-                        array(
-                            'fid' => $fid,
-                            'tstatus' => 5
-                        ));
-                    $data['forum']->properties['numtopicdels']->setValue($numtopicdels);
-
-
-                    $numreplysubs = xarMod::apiFunc('crispbb', 'user', 'countposts',
-                        array(
-                            'fid' => $fid,
-                            'tstatus' => array(0,1),
-                            'pstatus' => 2
-                        ));
-                    $data['forum']->properties['numreplysubs']->setValue($numreplysubs);
-
-
-                    $numreplydels = xarMod::apiFunc('crispbb', 'user', 'countposts',
-                        array(
-                            'fid' => $fid,
-                            'tstatus' => array(0,1),
-                            'pstatus' => 5
-                        ));
-                    $data['forum']->properties['numreplydels']->setValue($numreplydels);
+                    $data['forum']->updateHooks(true);
                     $data['forum']->updateItem();
-
                     xarSessionSetVar('crispbb_statusmsg', xarML('#(1) settings updated', $fname));
                     if (empty($return_url)) {
                         $return_url = xarModURL('crispbb', 'admin', 'modify',
