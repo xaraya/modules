@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">crispBB Administration</span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:template type="module" module="crispbb" file="menutabs" />
+        <h2>Delete Forum Category</h2>
+        <form action="&xar-modurl-crispbb-admin-deletecat;" method="post">
+        <fieldset>
+            <legend>Delete Category</legend>
+            <xar:if condition="$basecid eq $itemid">
+            <p><span class="xar-error">Warning</span>: You are about to delete the Base Forum Category</p>
+            </xar:if>
+            <xar:data-display object="$object" />
+            <div class="xar-form-input-wrapper">
+                <div class="xar-form-container-after">
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+                    <input type="submit" id="confirm" name="confirm" value="#xarML('Confirm Delete')#" />
+                </div>
+            </div>
+        </fieldset>
+        </form>
+    </div>
+</xar:template>

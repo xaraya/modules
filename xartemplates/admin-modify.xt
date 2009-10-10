@@ -1,0 +1,282 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:if condition="!empty($withupload)">
+    <xar:set name="enctype">
+        'multipart/form-data'
+    </xar:set>
+    <xar:else />
+    <xar:set name="enctype">
+        'application/x-www-form-urlencoded'
+    </xar:set>
+</xar:if>
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>crispBB Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <xar:set name="statusmsg">#xarSessionGetVar('crispbb_statusmsg')#</xar:set>
+    <xar:if condition="!empty($statusmsg)">
+        <p class="xar-align-center xar-error">#$statusmsg#</p>
+    </xar:if>
+    <h3>#$transformed_fname#</h3>
+    <xar:if condition="$sublink eq 'edit'">
+        <form method="post" id="crispbb_admin_modify" action="#xarModURL('crispbb', 'admin', 'modify')#" enctype="#$enctype#">
+            <fieldset>
+                <xar:data-form object="$forum" />
+                <!--
+                <div class="xar-form-input-wrapper">
+                    <label for="fname" class="xar-form-label" title="#xarML('Forum name')#">
+                        <xar:mlstring>Forum Name</xar:mlstring>:
+                    </label>
+                    <input type="text" name="fname" id="fname" value="#$fname#" maxlength="100" class="xar-form-textlong" />
+                </div>
+                <xar:if condition="!empty($invalid['fname'])">
+                    <div class="xar-form-input-wrapper-after xar-error">
+                        #$invalid['fname']#
+                    </div>
+                </xar:if>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label help" title="#xarML('Select transforms to apply to this field')#"><xar:mlstring>Forum Name Transforms</xar:mlstring>:</label>
+                    <xar:if condition="empty($ftranshooks)">
+                        <xar:mlstring>No transforms are hooked</xar:mlstring>
+                    <xar:else />
+                        <xar:foreach in="$ftranshooks" value="$ftranshook">
+                            <xar:set name="fnamename">'ftransforms[fname]['.$ftranshook['module'].']'</xar:set>
+                            <xar:set name="fnameid">'ftransforms_fname_'.$ftranshook['module']</xar:set>
+                            <xar:set name="fnameval">!empty($ftransforms['fname'][$ftranshook['module']]) ? true :false</xar:set>
+                            <label for="#$fnameid#">#$ftranshook['module']#</label>
+                            <xar:data-input type="checkbox" name="$fnamename" id="$fnameid" value="$fnameval" />
+                        </xar:foreach>
+                    </xar:if>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="fdesc" class="xar-form-label" title="#xarML('Description for this forum')#">
+                        <xar:mlstring>Description:</xar:mlstring>
+                    </label>
+                    <textarea name="fdesc" id="fdesc" rows="3" cols="40">#$fdesc#</textarea>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label help" title="#xarML('Select transforms to apply to this field')#"><xar:mlstring>Description Transforms</xar:mlstring>:</label>
+                    <xar:if condition="empty($ftranshooks)">
+                        <xar:mlstring>No transforms are hooked</xar:mlstring>
+                    <xar:else />
+                        <xar:foreach in="$ftranshooks" value="$ftranshook">
+                            <xar:set name="fdescname">'ftransforms[fdesc]['.$ftranshook['module'].']'</xar:set>
+                            <xar:set name="fdescid">'ftransforms_fdesc_'.$ftranshook['module']</xar:set>
+                            <xar:set name="fdescval">!empty($ftransforms['fdesc'][$ftranshook['module']]) ? true :false</xar:set>
+                            <label for="#$fdescid#">#$ftranshook['module']#</label>
+                            <xar:data-input type="checkbox" name="$fdescname" id="$fdescid" value="$fdescval" />
+                        </xar:foreach>
+                    </xar:if>
+                </div>
+                <xar:if condition="!empty($invalid['fdesc'])">
+                    <div class="xar-form-input-wrapper-after xar-error">
+                        #$invalid['fdesc']#
+                    </div>
+                </xar:if>
+                <xar:if condition="count($statusoptions) gt 1 and $ftype eq 0">
+                <div class="xar-form-input-wrapper">
+                    <label for="fstatus" class="xar-form-label" title="#xarML('Set the status for this forum')#">
+                        <xar:mlstring>Forum Status:</xar:mlstring>
+                    </label>
+                    <xar:data-input type="dropdown" name="fstatus" id="fstatus" value="$fstatus" options="$statusoptions" />
+                </div>
+                </xar:if>
+                <xar:if condition="!empty($ftypeoptions) and count($ftypeoptions) gt 1">
+                <div class="xar-form-input-wrapper">
+                    <label for="ftype" class="xar-form-label" title="#xarML('Select the type of forum')#">
+                        <xar:mlstring>Forum Type:</xar:mlstring>
+                    </label>
+                    <xar:data-input type="dropdown" name="ftype" id="ftype" value="$ftype" options="$ftypeoptions" onchange="this.form.submit();"/>
+                </div>
+                </xar:if>
+                <xar:if condition="xarModVars::get('crispbb', 'hasuserforums')">
+                <div class="xar-form-input-wrapper">
+                    <label for="fowner" class="xar-form-label" title="#xarML('Set the user that owns this forum')#">
+                        <xar:mlstring>Owner:</xar:mlstring>
+                    </label>
+                    <xar:data-input type="userlist" name="fowner" id="fowner" value="$fowner" />
+                </div>
+                </xar:if>
+                -->
+                <xar:if condition="!empty($hookoutput)">
+                    <xar:foreach in="$hookoutput" key="$hookmodule">
+                        #$hookoutput[$hookmodule]#
+                    </xar:foreach>
+                </xar:if>
+                <xar:if condition="$ftype eq 0">
+                <xar:template type="module" module="crispbb" file="admin-forumconfig" />
+                <xar:elseif condition="$ftype eq 1" />
+                <div class="xar-form-input-wrapper">
+                    <p class="xar-form-container-after">
+                        <xar:mlstring>A redirected forum allows you to list a link to somewhere else as if it was a forum, so it will show in the forum index. Enter the url you'd like the forum to point to below. The forum name is used as the link title. Users clicking the link will be taken to the url you entered.</xar:mlstring>
+                    </p>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="redirecturl" class="xar-form-label">
+                        <xar:mlstring>Redirect URL</xar:mlstring>:
+                    </label>
+                    <input type="text" name="redirecturl" id="redirecturl" value="#$redirecturl#" maxlength="255" class="xar-form-textlong" />
+                </div>
+                <xar:if condition="!empty($invalid['redirecturl'])">
+                    <div class="xar-form-input-wrapper-after xar-error">
+                        #$invalid['redirecturl']#
+                    </div>
+                </xar:if>
+                <xar:else />
+
+                </xar:if>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthkey()#" />
+                    <input type="hidden" name="fid" id="fid" value="#$fid#" />
+                    <input type="hidden" name="phase" id="phase" value="update" />
+                    <input type="hidden" name="sublink" id="sublink" value="edit" />
+                    <input type="submit" name="confirm" id="confirm" value="#xarML('Update Forum')#" />
+                </div>
+            </fieldset>
+        </form>
+    <xar:elseif condition="!empty($hooksettings)" />
+        <form method="post" action="#xarModURL('crispbb', 'admin', 'modify')#">
+            <xar:foreach in="$hooksettings" key="$hookmodname" value="$hookconfig">
+                <fieldset>
+                    <div class="xar-form-input-wrapper">
+                        <label class="xar-form-label">
+                            #$hookconfig['displayname']# <xar:mlstring>Hooks</xar:mlstring>
+                        </label>:
+                        <xar:if condition="$hookconfig['status'] eq 2">
+                            <xar:if condition="$hookconfig['ishooked']">
+                                <input name="hooked_#$hookmodname#[2]" id="hooked_#$hookmodname#_2" type="checkbox" value="1" checked="checked" disabled="disabled" />
+                            <xar:else />
+                                <input name="hooked_#$hookmodname#[2]" id="hooked_#$hookmodname#_2" type="checkbox" value="1" disabled="disabled" />
+                            </xar:if>
+                        <xar:elseif condition="$hookconfig['status'] eq 1" />
+                            <xar:if condition="$hookconfig['ishooked']">
+                                <input name="hooked_#$hookmodname#[1]" id="hooked_#$hookmodname#_1" type="checkbox" value="1" checked="checked" />
+                            <xar:else />
+                                <input name="hooked_#$hookmodname#[1]" id="hooked_#$hookmodname#_1" type="checkbox" value="1" />
+                            </xar:if>
+                        <xar:else />
+                            <input name="hooked_#$hookmodname#[0]" id="hooked_#$hookmodname#_0" type="checkbox" value="1" checked="checked" disabled="disabled" />
+                        </xar:if>
+                        #$hookconfig['message']#
+                    </div>
+                    #$hookconfig['output']#
+                </fieldset>
+            </xar:foreach>
+            <xar:if condition="!isset($hooks['nohooks'])">
+                <fieldset>
+                    <div class="xar-form-input-wrapper-after">
+                        <input type="hidden" name="sublink" id="sublink" value="#$sublink#" />
+                        <input type="hidden" name="fid" id="fid" value="#$fid#" />
+                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                        <input type="hidden" name="phase" id="phase" value="update" />
+                        <input type="submit" value="#xarML('Update Configuration')#" />
+                    </div>
+                </fieldset>
+            </xar:if>
+        </form>
+    <xar:elseif condition="$sublink eq 'privileges'" />
+        <p>
+            <img src="#xarTPLGetImage('icons/information.png', 'crispbb')#" alt="#xarML('info')#" />
+            <xar:mlstring>These settings apply to privileges for this forum.</xar:mlstring>
+        </p>
+        <form method="post" action="#xarModURL('crispbb', 'admin', 'modify')#">
+            <fieldset>
+                <table class="xar-fullwidth">
+                    <thead>
+                        <tr>
+                            <th><xar:mlstring>Action</xar:mlstring></th>
+                            <xar:loop name="$levels"><th>#$loop:item.name#</th></xar:loop>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <xar:set name="rowclass">'xar-norm'</xar:set>
+                    <xar:set name="rowcount">0</xar:set>
+                    <xar:foreach in="$actions" key="$action" value="$label">
+                        <tr class="#$rowclass#">
+                            <td>
+                                <label><strong>#$label#</strong></label>
+                            </td>
+                            <xar:foreach in="$levels" key="$level">
+                            <td>
+                                <xar:if condition="isset($privs[$level][$action])">
+                                    <xar:if condition="$privs[$level][$action] == 2">
+                                        <input type="checkbox" name="privs[#$level#][#$action#][1]" id="privs_#$level#_#$action#_1" value="1" checked="checked" disabled="disabled" />
+                                        <input type="hidden" name="privs[#$level#][#$action#]" id="privs_#$level#_#$action#" value="1" />
+                                    <xar:elseif condition="$privs[$level][$action] == 1" />
+                                        <input type="checkbox" name="privs[#$level#][#$action#]" id="privs_#$level#_#$action#" value="1" checked="checked" />
+                                    <xar:else />
+                                        <input type="checkbox" name="privs[#$level#][#$action#]" id="privs_#$level#_#$action#" value="1" />
+                                    </xar:if>
+                                <xar:else />
+                                    &#160;
+                                </xar:if>
+                            </td>
+                            </xar:foreach>
+                        </tr>
+                        <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+                        <xar:set name="dummy">$rowcount++</xar:set>
+                        <xar:if condition="$rowcount eq 20">
+                            <th><xar:mlstring>Action</xar:mlstring></th>
+                            <xar:loop name="$levels"><th>#$loop:item.name#</th></xar:loop>
+                        </xar:if>
+                    </xar:foreach>
+                    </tbody>
+                </table>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="fid" id="fid" value="#$fid#" />
+                    <input type="hidden" name="sublink" id="sublink" value="privileges" />
+                    <input type="hidden" name="phase" id="phase" value="update" />
+                    <input type="submit" value="#xarML('Update Privileges')#" />
+                </div>
+            </fieldset>
+        </form>
+        <xar:template type="module" module="crispbb" file="privileges-info" />
+    <xar:else />
+        <div>#$transformed_fdesc#</div>
+        <hr />
+        <ul>
+            <li>
+                <h4>Forum Stats</h4>
+                <ul>
+                    <li>
+                        Total Topics: #$numtopics#
+                    </li>
+                    <li>
+                        Total Replies: #$numreplies#
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h4>Privileges</h4>
+                <ul>
+                <xar:foreach in="$levels" key="$level" value="$values">
+                    <xar:if condition="$ftype eq 1 and $level gt 100"><xar:break /></xar:if>
+                    <li>
+                        <xar:ml>
+                            <xar:mlstring>Users with #(1) privilege</xar:mlstring>
+                            <xar:mlvar>#$values['name']#</xar:mlvar>
+                        </xar:ml>
+                        <ul>
+                        <xar:foreach in="$fprivileges[$level]" key="$action" value="$allowed">
+                            <xar:if condition="$allowed and !empty($actions[$action])">
+                            <li>
+                                <xar:ml>
+                                    <xar:mlstring>Can #(1)</xar:mlstring>
+                                    <xar:mlvar>#$actions[$action]#</xar:mlvar>
+                                </xar:ml>
+                            </li>
+                            </xar:if>
+                        </xar:foreach>
+                        </ul>
+                    </li>
+                </xar:foreach>
+                </ul>
+            </li>
+        </ul>
+    </xar:if>
+</div>
+<xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>
+</xar:template>

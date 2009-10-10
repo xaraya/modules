@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<!--Forum config-->
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="topicapproval" id="topicapproval" value="$topicapproval" />
+    <label for="topicapproval" class="help" title="#xarML('When checked all new topics in the forum require approval')#"><strong><xar:mlstring>New topics require approval</xar:mlstring>?</strong></label>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="replyapproval" id="replyapproval" value="$replyapproval" />
+    <label for="replyapproval" class="help" title="#xarML('When checked all new replies in the forum require approval')#"><strong><xar:mlstring>New replies require approval</xar:mlstring>?</strong></label>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="topicsperpage" class="xar-form-label" title="#xarML('Number of topics to display per forum page')#">
+        <xar:mlstring>Forum Topics per page</xar:mlstring>:
+    </label>
+    <input type="text" name="topicsperpage" id="topicsperpage" value="#$topicsperpage#" maxlength="3" class="xar-form-textshort" />
+    <label for="topicsortorder" title="#xarML('Direction to sort topics in')#">
+        <strong><xar:mlstring>Sort order</xar:mlstring>:</strong>
+    </label>
+    <xar:data-input type="dropdown" name="topicsortorder" id="topicsortorder" value="$topicsortorder" options="$orderoptions" />
+    <label for="topicsortfield" title="#xarML('Field to sort topics on')#">
+        <strong><xar:mlstring>Sort field</xar:mlstring>:</strong>
+    </label>
+    <xar:data-input type="dropdown" id="topicsortfield" name="topicsortfield" value="$topicsortfield" options="$topicfields" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="postsperpage" class="xar-form-label" title="#xarML('Number of posts to display per topic page')#">
+        <xar:mlstring>Topic Posts per page</xar:mlstring>:
+    </label>
+    <input type="text" name="postsperpage" id="postsperpage" value="#$postsperpage#" maxlength="3" class="xar-form-textshort" />
+    <label for="postsortorder" title="#xarML('Direction to sort posts in')#">
+        <strong><xar:mlstring>Sort order</xar:mlstring>:</strong>
+    </label>
+    <xar:data-input type="dropdown" id="postsortorder" name="postsortorder" value="$postsortorder" options="$orderoptions" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="hottopicposts" class="xar-form-label" title="#xarML('The number of replies required for a topic to be hot')#">
+        <xar:mlstring>Hot Topic Replies</xar:mlstring>:
+    </label>
+    <input type="text" name="hottopicposts" id="hottopicposts" value="#$hottopicposts#" maxlength="3" class="xar-form-textshort" />
+    <label for="hottopichits" title="#xarML('The number of hits required for a topic to be hot')#">
+        <strong><xar:mlstring>Views</xar:mlstring>:</strong>
+    </label>
+    <input type="text" name="hottopichits" id="hottopichits" value="#$hottopichits#" maxlength="3" class="xar-form-textshort" />
+    <!--
+    <label for="hottopicratings" title="#xarML('The rating required for a topic to be hot')#">
+        <strong><xar:mlstring>Rating</xar:mlstring>:</strong>
+    </label>
+    <input type="text" name="hottopicratings" id="hottopicratings" value="#$hottopicratings#" maxlength="3" class="xar-form-textshort" />
+    -->
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="topictitlemin" class="xar-form-label help" title="#xarML('The minimum length of the topic title in characters')#">
+        <xar:mlstring>Title Length Min</xar:mlstring>:
+    </label>
+    <input type="text" name="topictitlemin" id="topictitlemin" value="#$topictitlemin#" maxlength="3" class="xar-form-textshort" />
+    <label for="topictitlemax" title="#xarML('The maximum length of the topic title in characters')#">
+        <strong><xar:mlstring>Max</xar:mlstring>:</strong>
+    </label>
+    <input type="text" name="topictitlemax" id="topictitlemax" value="#$topictitlemax#" maxlength="3" class="xar-form-textshort" />
+    <strong><xar:mlstring>characters (1:100)</xar:mlstring></strong>
+</div>
+<div class="xar-form-input-wrapper">
+    <label class="xar-form-label help" title="#xarML('Select transforms to apply to this field')#"><xar:mlstring>Topic Title Transforms</xar:mlstring>:</label>
+    <xar:if condition="empty($ttranshooks)">
+        <xar:mlstring>No transforms are hooked</xar:mlstring>
+    <xar:else />
+        <xar:foreach in="$ttranshooks" value="$ttranshook">
+            <xar:set name="ttitlename">'ttransforms[ttitle]['.$ttranshook['module'].']'</xar:set>
+            <xar:set name="ttitleid">'ttransforms_ttitle_'.$ttranshook['module']</xar:set>
+            <xar:set name="ttitleval">!empty($ttransforms['ttitle'][$ttranshook['module']]) ? true :false</xar:set>
+            <label for="#$ttitleid#">#$ttranshook['module']#</label>
+            <xar:data-input type="checkbox" name="$ttitlename" id="$ttitleid" value="$ttitleval" />
+        </xar:foreach>
+    </xar:if>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="topicdescmin" class="xar-form-label help" title="#xarML('The minimum length of the topic desc in characters')#">
+        <xar:mlstring>Description Length Min</xar:mlstring>:
+    </label>
+    <input type="text" name="topicdescmin" id="topicdescmin" value="#$topicdescmin#" maxlength="3" class="xar-form-textshort" />
+    <label for="topicdescmax" title="#xarML('The maximum length of the topic description in characters')#">
+        <strong><xar:mlstring>Max</xar:mlstring>:</strong>
+    </label>
+    <input type="text" name="topicdescmax" id="topicdescmax" value="#$topicdescmax#" maxlength="3" class="xar-form-textshort" />
+    <strong><xar:mlstring>characters (0:255 both 0 = disabled)</xar:mlstring></strong>
+</div>
+<div class="xar-form-input-wrapper">
+    <label class="xar-form-label help" title="#xarML('Select transforms to apply to this field')#"><xar:mlstring>Topic Description Transforms</xar:mlstring>:</label>
+    <xar:if condition="empty($ttranshooks)">
+        <xar:mlstring>No transforms are hooked</xar:mlstring>
+    <xar:else />
+        <xar:foreach in="$ttranshooks" value="$ttranshook">
+            <xar:set name="tdescname">'ttransforms[tdesc]['.$ttranshook['module'].']'</xar:set>
+            <xar:set name="tdescid">'ttransforms_tdesc_'.$ttranshook['module']</xar:set>
+            <xar:set name="tdescval">!empty($ttransforms['tdesc'][$ttranshook['module']]) ? true :false</xar:set>
+            <label for="#$tdescid#">#$ttranshook['module']#</label>
+            <xar:data-input type="checkbox" name="$tdescname" id="$tdescid" value="$tdescval" />
+        </xar:foreach>
+    </xar:if>
+</div>
+<div class="xar-form-input-wrapper">
+    <label class="xar-form-label help" title="#xarML('Select transforms to apply to this field')#"><xar:mlstring>Post Description Transforms</xar:mlstring>:</label>
+    <xar:if condition="empty($ptranshooks)">
+        <xar:mlstring>No transforms are hooked</xar:mlstring>
+    <xar:else />
+        <xar:foreach in="$ptranshooks" value="$ptranshook">
+            <xar:set name="pdescname">'ptransforms[pdesc]['.$ptranshook['module'].']'</xar:set>
+            <xar:set name="pdescid">'ptransforms_pdesc_'.$ptranshook['module']</xar:set>
+            <xar:set name="pdescval">!empty($ptransforms['pdesc'][$ptranshook['module']]) ? true :false</xar:set>
+            <label for="#$pdescid#">#$ptranshook['module']#</label>
+            <xar:data-input type="checkbox" name="$pdescname" id="$pdescid" value="$pdescval" />
+        </xar:foreach>
+    </xar:if>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="topicpostmin" class="xar-form-label help" title="#xarML('The minimum length of the topic post in characters')#">
+        <xar:mlstring>Post Length Min</xar:mlstring>:
+    </label>
+    <input type="text" name="topicpostmin" id="topicpostmin" value="#$topicpostmin#" maxlength="5" class="xar-form-textshort" />
+    <label for="topicpostmax" title="#xarML('The maximum length of the topic post in characters')#">
+        <strong><xar:mlstring>Max</xar:mlstring>:</strong>
+    </label>
+    <input type="text" name="topicpostmax" id="topicpostmax" value="#$topicpostmax#" maxlength="5" class="xar-form-textshort" />
+    <strong><xar:mlstring>characters (1:128m)</xar:mlstring></strong>
+</div>
+<div class="xar-form-input-wrapper">
+    <label class="xar-form-label help" title="#xarML('Select transforms to apply to this field')#"><xar:mlstring>Topic Text Transforms</xar:mlstring>:</label>
+    <xar:if condition="empty($ttranshooks)">
+        <xar:mlstring>No transforms are hooked</xar:mlstring>
+    <xar:else />
+        <xar:foreach in="$ttranshooks" value="$ttranshook">
+            <xar:set name="ttextname">'ttransforms[ttext]['.$ttranshook['module'].']'</xar:set>
+            <xar:set name="ttextid">'ttransforms_ttext_'.$ttranshook['module']</xar:set>
+            <xar:set name="ttextval">!empty($ttransforms['ttext'][$ttranshook['module']]) ? true :false</xar:set>
+            <label for="#$ttextid#">#$ttranshook['module']#</label>
+            <xar:data-input type="checkbox" name="$ttextname" id="$ttextid" value="$ttextval" />
+        </xar:foreach>
+    </xar:if>
+</div>
+<div class="xar-form-input-wrapper">
+    <label class="xar-form-label help" title="#xarML('Select transforms to apply to this field')#"><xar:mlstring>Post Text Transforms</xar:mlstring>:</label>
+    <xar:if condition="empty($ptranshooks)">
+        <xar:mlstring>No transforms are hooked</xar:mlstring>
+    <xar:else />
+        <xar:foreach in="$ptranshooks" value="$ptranshook">
+            <xar:set name="ptextname">'ptransforms[ptext]['.$ptranshook['module'].']'</xar:set>
+            <xar:set name="ptextid">'ptransforms_ptext_'.$ptranshook['module']</xar:set>
+            <xar:set name="ptextval">!empty($ptransforms['ptext'][$ptranshook['module']]) ? true :false</xar:set>
+            <label for="#$ptextid#">#$ptranshook['module']#</label>
+            <xar:data-input type="checkbox" name="$ptextname" id="$ptextid" value="$ptextval" />
+        </xar:foreach>
+    </xar:if>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="showstickies" class="xar-form-label" title="#xarML('Stickies can be shown on every page of forum listings, or just on the first page')#">
+        <xar:mlstring>Show Stickies</xar:mlstring>:
+    </label>
+    <xar:data-input type="dropdown" id="showstickies" name="showstickies" value="$showstickies" options="$pageoptions" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="showannouncements" class="xar-form-label" title="#xarML('Announcements can be shown on every page of forum listings, or just on the first page')#">
+        <xar:mlstring>Show Announcements</xar:mlstring>:
+    </label>
+    <xar:data-input type="dropdown" id="showannouncements" name="showannouncements" value="$showannouncements" options="$pageoptions" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="showfaqs" class="xar-form-label" title="#xarML('FAQs can be shown on every page of forum listings, or just on the first page')#">
+        <xar:mlstring>Show FAQs</xar:mlstring>:
+    </label>
+    <xar:data-input type="dropdown" id="showfaqs" name="showfaqs" value="$showfaqs" options="$pageoptions" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="iconfolder" class="xar-form-label help" title="#xarML('Folder to serve topic and post icons from')#">
+        <xar:mlstring>Icon Folder</xar:mlstring>:
+    </label>
+    <input type="text" name="iconfolder" id="iconfolder" value="#$iconfolder#" class="xar-form-textmedium" />
+    <strong><xar:mlstring>(empty = disabled)</xar:mlstring></strong>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="icondefault" class="xar-form-label help" title="#xarML('Pre-select an icon for new topics')#"><xar:mlstring>Default Icon</xar:mlstring>:</label>
+    <xar:data-input type="dropdown" name="icondefault" id="icondefault" value="$icondefault" options="$iconlist" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="floodcontrol" class="xar-form-label help" title="#xarML('The minimum length of time users must wait between posts')#">
+        <xar:mlstring>Flood Control:</xar:mlstring>
+    </label>
+    <input type="text" name="floodcontrol" id="floodcontrol" value="#$floodcontrol#" maxlength="3" class="xar-form-textshort" />
+    <strong><xar:mlstring>seconds (0 = disabled)</xar:mlstring></strong>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="postbuffer" class="xar-form-label help" title="#xarML('The length of time buffer displays for before redirecting')#">
+        <xar:mlstring>Post Return Buffer:</xar:mlstring>
+    </label>
+    <input type="text" name="postbuffer" id="postbuffer" value="#$postbuffer#" maxlength="3" class="xar-form-textshort" />
+    <strong><xar:mlstring>seconds (0 = disabled)</xar:mlstring></strong>
+</div>
+</xar:template>

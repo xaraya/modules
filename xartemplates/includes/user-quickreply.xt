@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:if condition="(xarModVars::get('crispbb', 'showquickreply') or !empty($quickreply)) and !empty($newreplyurl)">
+<form method="post" action="#xarModURL('crispbb', 'user', 'newreply')#">
+    <xar:comment>
+    <xar:if condition="!empty($topicdescmax)">
+        <div class="xar-form-input-wrapper">
+            <xar:set name="pdesclabel">xarML('Enter a description between #(1) and #(2) characters', $topicdescmin, $topicdescmax)</xar:set>
+            <label for="pdesc" class="help" title="#$pdesclabel#"><xar:mlstring>Description</xar:mlstring>:</label>
+            <input type="text" name="pdesc" id="pdesc" value="" maxlength="100" class="xar-form-textxxlong" />
+        </div>
+    <xar:else />
+        <input type="hidden" name="pdesc" id="pdesc" value="" />
+    </xar:if>
+    </xar:comment>
+    <div>
+    <label for="ptext" class="help" title="#xarML('Enter your post here')#"><xar:mlstring>Quick Reply</xar:mlstring></label><br />
+    <xar:set name="ptext">''</xar:set>
+    <textarea name="ptext" id="ptext" cols="50" rows="8">#$ptext#</textarea>
+    </div>
+    <div class="xar-form-input-wrapper-after">
+        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('crispbb')#" />
+        <input type="hidden" name="tid" id="tid" value="#$tid#" />
+        <input type="hidden" name="phase" id="phase" value="quickreply" />
+        <xar:if condition="!empty($return_url)">
+            <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
+        </xar:if>
+        <input type="submit" value="#xarML('Post Reply')#" />&#160;&#160;<input type="submit" id="preview" name="preview" value="#xarML('Preview')#" />
+    </div>
+</form>
+</xar:if>
+</xar:template>

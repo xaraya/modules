@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:style scope="module" module="crispbb" />
+<xar:if condition="!empty($withupload)">
+    <xar:set name="enctype">
+        'multipart/form-data'
+    </xar:set>
+    <xar:else />
+    <xar:set name="enctype">
+        'application/x-www-form-urlencoded'
+    </xar:set>
+</xar:if>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>crispBB Forums</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="user-breadcrumbs" />
+    <div class="xar-margin-thickends xar-padding-thickends">
+        <div class="xar-twothirdswidth xar-floatleft">
+            <h2>#$pageTitle#</h2>
+        </div>
+        <div class="xar-thirdwidth xar-floatright xar-sub xar-padding-thick">
+            <xar:template type="module" module="crispbb" file="user-userpanel" />
+        </div>
+        <br class="xar-clearboth" />
+    </div>
+    <xar:template type="module" module="crispbb" file="admin-waitingcontent" />
+    <hr />
+    <xar:if condition="!empty($preview)">
+        <table class="xar-fullwidth">
+            <caption class="xar-align-left">
+                <h3>#$preview['ttitle']#</h3>
+            </caption>
+            <thead>
+                <tr>
+                    <th style="width:16em;">
+                        <xar:mlstring>Poster</xar:mlstring>
+                    </th>
+                    <th>
+                        <xar:mlstring>Post</xar:mlstring>
+                    </th>
+                </tr>
+             </thead>
+             <tbody>
+                <tr>
+                    <td class="xar-valign-top">
+                        <a href="#xarModURL('roles', 'user', 'account')#" title="#xarML('View your profile')#">#xarUserGetVar('name')#</a>
+                    </td>
+                    <td>
+
+                        <div class="xar-border-thinbottom">
+                            <xar:if condition="$topicicon ne 'none' and !empty($iconlist)">
+                                <img src="#xarTPLGetImage($iconlist[$topicicon]['imagepath'],'crispbb')#" alt="topic icon" />
+                            </xar:if>
+                            <em>#$preview['tdesc']#</em>
+                        </div>
+                        <div class="xar-sub xar-align-right">
+                            <xar:template type="module" module="crispbb" file="user-timestamp" />
+                        </div>
+                        <div class="xar-standard-box-padding xar-margin-thicktop xar-padding-thicktop">#$preview['ttext']#</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </xar:if>
+    <form method="post" name="post" id="post" action="#xarModURL('crispbb', 'user', 'modifytopic')#" enctype="#$enctype#" #$formaction#>
+        <fieldset>
+            <div class="xar-form-input-wrapper">
+                <xar:set name="ttitlelabel">xarML('Enter a topic title between #(1) and #(2) characters', $topictitlemin, $topictitlemax)</xar:set>
+                <label for="ttitle" class="xar-form-label help" title="#$ttitlelabel#"><xar:mlstring>Topic Title</xar:mlstring>:</label>
+                <input type="text" name="ttitle" id="ttitle" value="#$ttitle#" maxlength="255" class="xar-form-textxxlong" tabindex="1" />
+            </div>
+            <xar:if condition="!empty($invalid['ttitle'])">
+            <div class="xar-form-input-wrapper-after">
+                <span class="xar-error">#$invalid['ttitle']#</span>
+            </div>
+            </xar:if>
+            <xar:if condition="!empty($topicdescmax)">
+            <div class="xar-form-input-wrapper">
+                <xar:set name="pdesclabel">xarML('Enter a description between #(1) and #(2) characters', $topicdescmin, $topicdescmax)</xar:set>
+                <label for="pdesc" class="xar-form-label help" title="#$pdesclabel#"><xar:mlstring>Description</xar:mlstring>:</label>
+                <input type="text" name="pdesc" id="pdesc" value="#$pdesc#" maxlength="100" class="xar-form-textxxlong" tabindex="2" />
+            </div>
+            <xar:if condition="!empty($invalid['pdesc'])">
+            <div class="xar-form-input-wrapper-after">
+                <span class="xar-error">#$invalid['pdesc']#</span>
+            </div>
+            </xar:if>
+            </xar:if>
+            <div class="xar-form-input-wrapper">
+                <label for="ptext" class="xar-form-label help" title="#xarML('Enter your post here')#"><xar:mlstring>Post</xar:mlstring></label>
+                <ul class="xar-floatleft xar-clearleft xar-margin-none" style="width:15em;">
+                <xar:if condition="$privs['html']">
+                    <li><xar:mlstring>HTML is </xar:mlstring><span style="color:green;"><xar:mlstring>On</xar:mlstring></span></li>
+                    <xar:if condition="$privs['htmldeny']">
+                        <li>
+                        <label for="htmldeny" class="help" title="#xarML('Disable HTML in this topic and all replies')#"><xar:mlstring>Disable HTML</xar:mlstring></label>
+                        <xar:data-input type="checkbox" name="htmldeny" id="htmldeny" value="$htmldeny" tabindex="7" />
+                        </li>
+                    </xar:if>
+                <xar:else />
+                    <li><xar:mlstring>HTML is </xar:mlstring><span style="color:red;"><xar:mlstring>Off</xar:mlstring></span></li>
+                </xar:if>
+                <xar:if condition="$privs['bbcode']">
+                    <li><xar:mlstring>BBCode is </xar:mlstring><span style="color:green;"><xar:mlstring>On</xar:mlstring></span></li>
+                    <xar:if condition="$privs['bbcodedeny']">
+                        <li>
+                        <label for="bbcodedeny" class="help" title="#xarML('Disable BBCode in this topic and all replies')#"><xar:mlstring>Disable BBCode</xar:mlstring></label>
+                        <xar:data-input type="checkbox" name="bbcodedeny" id="bbcodedeny" value="$bbcodedeny" tabindex="8" />
+                        </li>
+                    </xar:if>
+                <xar:else />
+                    <li><xar:mlstring>BBCode is </xar:mlstring><span style="color:red;"><xar:mlstring>Off</xar:mlstring></span></li>
+                </xar:if>
+                <xar:if condition="$privs['smilies']">
+                    <li><xar:mlstring>Smilies are </xar:mlstring><span style="color:green;"><xar:mlstring>On</xar:mlstring></span></li>
+                    <xar:if condition="$privs['smiliesdeny']">
+                        <li>
+                        <label for="smiliesdeny" class="help" title="#xarML('Disable Smilies in this topic and all replies')#"><xar:mlstring>Disable Smilies</xar:mlstring></label>
+                        <xar:data-input type="checkbox" name="smiliesdeny" id="smiliesdeny" value="$smiliesdeny" tabindex="9" />
+                        </li>
+                    </xar:if>
+                <xar:else />
+                    <li><xar:mlstring>Smilies are </xar:mlstring><span style="color:red;"><xar:mlstring>Off</xar:mlstring></span></li>
+                </xar:if>
+                </ul>
+                <div class="xar-form-container-after">
+                    #$formdisplay#
+                </div>
+                <textarea name="ptext" id="ptext" cols="60" rows="15" tabindex="3">#$ptext#</textarea>
+            </div>
+            <xar:if condition="!empty($invalid['ptext'])">
+            <div class="xar-form-input-wrapper-after">
+                <span class="xar-error">#$invalid['ptext']#</span>
+            </div>
+            </xar:if>
+            <xar:if condition="!empty($iconlist)">
+            <div class="xar-form-input-wrapper">
+                <label for="topicicon" class="xar-form-label help" title="#xarML('Select an optional icon for this topic')#"><xar:mlstring>Topic Icon</xar:mlstring>:</label>
+                <p class="xar-form-container-after">
+                    <xar:template type="module" module="crispbb" file="user-topicicons" />
+                </p>
+            </div>
+            </xar:if>
+            <xar:if condition="count($ttypeoptions) gt 1">
+            <div class="xar-form-input-wrapper">
+                <label for="ttype" class="xar-form-label help" title="#xarML('Set the type of topic to create')#"><xar:mlstring>Topic Type</xar:mlstring>:</label>
+                <xar:data-input type="dropdown" name="ttype" id="ttype" value="$ttype" options="$ttypeoptions" tabindex="4" />
+            </div>
+            <xar:else />
+                <input type="hidden" name="ttype" id="ttype" value="#$ttype#" />
+            </xar:if>
+            <xar:if condition="count($tstatusoptions) gt 1">
+            <div class="xar-form-input-wrapper">
+                <label for="tstatus" class="xar-form-label help" title="#xarML('Set the status for this topic')#"><xar:mlstring>Topic Status</xar:mlstring>:</label>
+                <xar:data-input type="dropdown" name="tstatus" id="tstatus" value="$tstatus" options="$tstatusoptions" tabindex="5" />
+            </div>
+            <xar:else />
+                <input type="hidden" name="tstatus" id="tstatus" value="#$tstatus#" />
+            </xar:if>
+            <xar:if condition="!empty($privs['approvereplies'])">
+                <div class="xar-form-input-wrapper-after">
+                <xar:data-input type="checkbox" name="approvereplies" id="approvereplies" value="$approvereplies" tabindex="6" />
+                <label for="approvereplies" class="help" title="#xarML('When checked, all replies to this topic will require approval')#"><xar:mlstring>All replies to this topic require approval?</xar:mlstring></label>
+                </div>
+            <xar:else />
+                <input type="hidden" name="approvereplies" id="approvereplies" value="#$approvereplies#" />
+            </xar:if>
+            <xar:if condition="!empty($hookoutput)">
+                <xar:foreach in="$hookoutput" key="$hookmod">
+                    #$hookoutput[$hookmod]#
+                </xar:foreach>
+            </xar:if>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                <input type="hidden" name="tid" id="tid" value="#$tid#" />
+                <input type="hidden" name="phase" id="phase" value="update" />
+                <input type="submit" value="#xarML('Update Topic')#" tabindex="10">&#160;&#160;<input type="submit" id="preview" name="preview" value="#xarML('Preview')#" tabindex="11" />
+            </div>
+        </fieldset>
+    </form>
+    <xar:template type="module" file="user-breadcrumbs" />
+</div>
+<div class="xar-mod-foot xar-align-center">
+    <div class="xar-accent-outline xar-margin-thick xar-padding-thick">
+    </div>
+</div>
+</xar:template>

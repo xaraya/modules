@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:set name="now">time()</xar:set>
+<xar:if condition="empty($timestamp)">
+    <xar:set name="timestamp">#$now#</xar:set>
+</xar:if>
+<xar:if condition="empty($timeformat)">
+    <xar:set name="timeformat">'medium'</xar:set>
+</xar:if>
+<xar:if condition="empty($dateformat)">
+    <xar:set name="dateformat">'medium'</xar:set>
+</xar:if>
+<xar:if condition="empty($timeorder)">
+    <xar:set name="timeorder">'timedate'</xar:set>
+</xar:if>
+<xar:if condition="empty($timelayout)">
+    <xar:set name="timelayout">xarModUserVars::get('crispbb', 'timelayout')</xar:set>
+</xar:if>
+<xar:if condition="empty($timelayout) or $timelayout eq 'default'">
+    <xar:if condition="$timestamp ne $now">
+        <xar:set name="oneday">60*60*24</xar:set>
+        <xar:set name="today">xarLocaleGetFormattedDate('long', $now)</xar:set>
+        <xar:set name="yesterday">xarLocaleGetFormattedDate('long', $now-$oneday)</xar:set>
+        <xar:set name="compare">xarLocaleGetFormattedDate('long', $timestamp)</xar:set>
+        <xar:if condition="$compare eq $today">
+            <xar:set name="when">'Today at'</xar:set>
+        <xar:elseif condition="$compare eq $yesterday" />
+            <xar:set name="when">'Yesterday at'</xar:set>
+        <xar:else />
+            <xar:set name="when">''</xar:set>
+        </xar:if>
+    </xar:if>
+    <xar:if condition="!empty($when)">
+         <xar:ml>
+            <xar:mlstring>#(1) #(2)</xar:mlstring>
+            <xar:mlvar>#$when#</xar:mlvar>
+            <xar:mlvar>#xarLocaleGetFormattedTime($timeformat, $timestamp)#</xar:mlvar>
+        </xar:ml>
+    <xar:elseif condition="$timeorder eq 'timedate'" />
+        <xar:ml>
+            <xar:mlstring>#(1), #(2)</xar:mlstring>
+            <xar:mlvar>#xarLocaleGetFormattedTime($timeformat, $timestamp)#</xar:mlvar>
+            <xar:mlvar>#xarLocaleGetFormattedDate($dateformat, $timestamp)#</xar:mlvar>
+        </xar:ml>
+    <xar:elseif condition="$timeorder eq 'datetime'" />
+        <xar:ml>
+            <xar:mlstring>#(1), #(2)</xar:mlstring>
+            <xar:mlvar>#xarLocaleGetFormattedDate($dateformat, $timestamp)#</xar:mlvar>
+            <xar:mlvar>#xarLocaleGetFormattedTime($timeformat, $timestamp)#</xar:mlvar>
+        </xar:ml>
+    <xar:elseif condition="$timeorder eq 'timeonly'" />
+        #xarLocaleGetFormattedTime($timeformat, $timestamp)#
+    <xar:elseif condition="$timeorder eq 'dateonly'" />
+        #xarLocaleGetFormattedDate($dateformat, $timestamp)#
+    </xar:if>
+<xar:elseif condition="$timelayout eq 'timesince'" />
+    <xar:base-timesince stamp="$timestamp" /> <xar:mlstring>ago</xar:mlstring>
+</xar:if>
+</xar:template>

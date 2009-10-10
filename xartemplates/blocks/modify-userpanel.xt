@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<div class="xar-form-input-wrapper">
+    <p class="xar-form-container-after">
+        <xar:mlstring>This block provides the same data found in includes/userpanel.xd. It is recommended that you don't cache this block if you select any of the time options.</xar:mlstring>
+    </p>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="showusername" id="showusername" value="$showusername" />
+    <label for="showusername"><xar:mlstring>Show user name</xar:mlstring>?</label>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="showaccount" id="showaccount" value="$showaccount" />
+    <label for="showaccount"><xar:mlstring>Show link to user account</xar:mlstring>?</label>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="showtimenow" id="showtimenow" value="$showtimenow" />
+    <label for="showtimenow"><xar:mlstring>Show current time</xar:mlstring>?</label>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="showlastvisit" id="showlastvisit" value="$showlastvisit" />
+    <label for="showlastvisit"><xar:mlstring>Show last visit time</xar:mlstring>?</label>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="showthisvisit" id="showthisvisit" value="$showthisvisit" />
+    <label for="showthisvisit"><xar:mlstring>Show current visit duration</xar:mlstring>?</label>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="showtotalvisit" id="showtotalvisit" value="$showtotalvisit" />
+    <label for="showtotalvisit"><xar:mlstring>Show total visits duration</xar:mlstring>?</label>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="showwaiting" id="showwaiting" value="$showwaiting" />
+    <label for="showwaiting"><xar:mlstring>Show waiting content link</xar:mlstring>?</label>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="showlogout" id="showlogout" value="$showlogout" />
+    <label for="showlogout"><xar:mlstring>Show logout link</xar:mlstring>?</label>
+</div>
+</xar:template>

@@ -1,0 +1,186 @@
+/**
+ * crispBB Forum Module - changelog.txt
+ *
+ * @package modules
+ * @copyright (C) 2008-2009 The Digital Development Foundation
+ * @license GPL {@link http//www.gnu.org/licenses/gpl.html}
+ * @link http//www.xaraya.com
+ *
+ * @subpackage crispBB Forum Module
+ * @link http//xaraya.com/index.php/release/970.html
+ * @author crisp <crisp@crispcreations.co.uk>
+ */
+0.1.3
+// rewritten admin modifyconfig
+0.1.4
+// rewritten admin view
+0.1.5
+// re-written admin new
+// re-written admin modify
+0.1.6
+// re-written hook handling
+0.1.7
+// re-written privs handling
+0.1.8
+// backend code clean up from 0.1.3
+0.1.9
+// front end code clean up from 0.1.3
+0.2.0
+// signifies stable codebase, all deprecated functions and files removed
+0.2.1
+// added open,close,lock,unlock,delete functions
+0.2.2
+// added move/merge function
+// added split/merge function
+0.2.3
+// cleaned up init function, initial prep for beta release
+0.2.4
+// added icons for admin view function (review when xar 1.2.0 hits the shelves)
+// fixed a couple of bugs
+// added some api functions
+// more GUI cleanup, some new functions
+// added search hook
+0.2.5
+// privileges review and resulting API/GUI clean up
+0.2.6
+// final clean up takes us to beta release at 0.3.0
+0.3.0
+// added admin posters function
+// fixed a couple of bugs
+0.3.1
+// added FAQ topic type
+// updates to user-display.xd, getpresets.php, newtopic.php, admin-modify.xd
+// modifyconfig.php, forumconfig.php, admin-forumconfig.xd, modifytopic.php
+// display.php, view.php, user-view.xd
+0.3.2
+// register topitems block, block instance, and mask
+0.3.3
+// added user stats page
+0.3.4
+// added admin topics function
+// bugfixes previously released between versions
+0.3.5
+// merged split, move, update topic, plus, update reply, and admin topics
+// into user moderate function
+// included tango icons, attribution
+// included crispbb logo, attribution for famfamfam
+// bugfix for forum description validation mis-match
+// added checkseclevel api func
+// simplified, more consistent sec checks and urls in get api funcs
+// multiple GUI updates to include moderate funcs in user GUIs
+// multiple GUI updates to include admin icons in user GUIs
+// all resulting in minor version update to 0.4.0
+0.4.0
+// added rss support for the following functions
+// user display
+// user view
+// user main
+// user search
+// updated search template to new icons (missed in last update)
+// fixed a bug in search which returned links to shadow topics
+0.4.5
+// Added BL tag to show topic replies
+0.4.6
+// Fixed a bug induced in 0.4.0 causing locked topics to display
+// to users without adequate privs
+0.4.7
+// Fix MySQL group by bug in gettopics function
+0.4.8
+// Added BBCode quote button
+0.4.9
+// Final code clean up for commit to repository as 0.5.0
+0.5.0 - 21 July 2009
+// bugfix correct links to purge topics
+0.5.1 
+// add some checks on unserialize operations in getforums api function
+0.5.2 - 22 July 2009
+// updated user main, view and display templates (and includes) to validate xhtml strict
+// fixed a bug preventing last reply url displaying to guests
+// updated admin overview
+------- 23 July 2009
+// added check for updates to admin modifyconfig
+0.5.6 - 24 July 2009
+// moved timeimages to xarimages/timeimages
+// updated templates using timeimages 
+// removed unnecessary images from xarimages/icons
+// replaced inline styles with module specific classes
+// some updates to fix minor display issues
+0.5.7
+------- 25 July 2009
+// added xarimages/topicicons-crispbb folder
+// made folder default for new installs
+// add admin configurable display settings
+// micro version update to...
+0.5.9
+// added topic-reply-row.xd
+// added userpanel block
+// fixed display when userpanel not selected
+// minor version update to...
+0.6.0 
+------- 26 July 2009
+// cleaned up some admin templates
+------- 27 July 2009
+// added redirected forum type
+// micro version update to...
+0.6.1
+// Fix For Bug 6393
+// version 0.6.1 repackaged
+------- 29 July 2009
+// Update to quickreply template to prevent display to users with no privs and make valid xhtml
+------- 30 July 2009
+// Clean up user-return.xd. 
+// Fix showreplies tag so it displays topicicon for first post (no bug filed)
+------- 01 August 2009
+// fix search showing locked topics
+// Added option to make all topics in a forum require approval
+// Added option to make all replies to topics in a forum require approval
+// Added waitingcontent hook
+// Added waitingcontent moderator overview
+// Added Approve topics moderator function and permissions
+// Added Approve replies moderator function and permissions
+// Added visual cues to items awaiting approval in admin and user displays
+// Added status selection, sort and layout options to moderate replies function
+// Added tabindexes to forms
+// minor version update to...
+0.7.0
+------- 02 August 2009
+// fix reply count when viewing a topic with submitted or deleted replies
+// update waiting content link in GUIs
+// add option to display waitingcontent link in userpanel block
+------- 03 August 2009
+// Added modifyconfig, updateconfig, display, delete and remove hook functions
+// Added createhook function (not currently a registered hook, but used by module)
+// micro version update to...
+0.7.2
+// Minor bugfixes to previous update
+// Added displayreply function
+------- 04 August 2009
+//Added admin modifyhooks function, overview of items associated with crispBB
+// micro version update to...
+0.7.4
+// bugfix for mismatched topic count in search (showing pager on non-paged results)
+// Add links to deleted replies in user display and moderate GUIs
+// Add links to deleted topics in user view and admin view GUIs
+// micro version update to...
+0.7.5
+Updates to include templates user-timestamp and topic-reply-row
+GUIs now show status (online|offline) for each poster
+Update to admin posters function. Now displays poster
+topic and reply counts, as well as current status
+Update fixes several issues discovered which affect sites with 
+high (1000s) topic reply counts (caused by some ambitious db queries on my part :-P )
+Fixes incorrect ordering of top 10 forums
+Fixes incorrect ordering of top 10 posters
+0.7.8
+Fix for Bug 6398: incorrect var used in last update
+Update to xartemplates/includes/user-timestamp
+Some changes missed in last update
+0.7.9
+Some minor updates
+add gettopicicons function.
+Make default icon selectable in admin forum options
+Add missing topic sort options to admin forum options
+Add topic sort options to user forum views
+Add admin config option to disable sort options in forum views
+0.8.0
+**** Current Version ****

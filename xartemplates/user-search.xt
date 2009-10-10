@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:style scope="module" module="crispbb" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>crispBB Forums</xar:mlstring></span>
+</div>
+<div class="xar-mod-body crispbb-main">
+    <xar:template type="module" file="user-breadcrumbs" />
+    <div class="xar-margin-thickends xar-padding-thickends">
+        <div class="xar-twothirdswidth xar-floatleft">
+            <h2>Search Forums</h2>
+            <em>#$condition#</em>
+        </div>
+        <div class="xar-thirdwidth xar-floatright xar-sub xar-padding-thick">
+            <xar:template type="module" module="crispbb" file="user-userpanel" />
+        </div>
+        <div class="xar-align-right xar-padding-thicktop xar-clearboth">
+            <xar:set name="formid">1</xar:set>
+            <xar:template type="module" module="crispbb" file="user-forumjump" />
+            <xar:template type="module" module="crispbb" file="user-topicjump" />
+        </div>
+    </div>
+    <hr />
+    <xar:if condition="!empty($forums)">
+    <form action="index.php" method="get">
+        <input type="hidden" name="module" value="crispbb" />
+        <input type="hidden" name="type" value="user" />
+        <input type="hidden" name="func" value="search" />
+        <p><label for="q"><xar:mlstring>Search for</xar:mlstring>:</label> <input type="text" name="q" id="q" size="20" value="#$q#" />
+        &#160;&#160;&#160; <input type="submit" value="#xarML('Search')#" />
+        &#160;&#160;&#160;<a href="&xar-modurl-crispbb-user-search;"><xar:mlstring>Reset Form</xar:mlstring></a></p>
+        <p><label for="author"><xar:mlstring>Posted by</xar:mlstring>:</label> <input type="text" name="author" id="author" size="20" value="#$author#" /></p>
+        <p>
+            <xar:mlstring>
+                Search
+            </xar:mlstring>
+            :
+            <xar:if condition="empty($component) || $component eq 'topics'">
+            <input type="radio" name="crispbb_component" id="component_topics" value="topics" checked="checked" />
+            <label><xar:mlstring>Topic Only</xar:mlstring></label>
+            <input type="radio" name="crispbb_component" id="component_replies" value="replies" />
+            <label><xar:mlstring>All Posts</xar:mlstring></label>
+            <xar:else />
+            <input type="radio" name="crispbb_component" id="component_topics" value="topics" />
+            <label><xar:mlstring>Topic Only</xar:mlstring></label>
+            <input type="radio" name="crispbb_component" id="component_replies" value="replies" checked="checked" />
+            <label><xar:mlstring>All Posts</xar:mlstring></label>
+            </xar:if>
+        </p>
+        <p>
+            <xar:mlstring>
+                Search field
+            </xar:mlstring>
+            :
+            <xar:if condition="isset($crispbb_fields['ttitle']) and !empty($crispbb_fields['ttitle'])">
+                <input type="checkbox" name="crispbb_fields[ttitle]" id="crispbb_fields_ttitle" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="crispbb_fields[ttitle]" id="crispbb_fields_ttitle" value="1" />
+            </xar:if>
+            <label><xar:mlstring>Title</xar:mlstring></label>
+            <xar:comment>
+            <xar:if condition="isset($crispbb_fields['tdesc']) and !empty($crispbb_fields['tdesc'])">
+                <input type="checkbox" name="crispbb_fields[tdesc]" id="crispbb_fields_tdesc" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="crispbb_fields[tdesc]" id="crispbb_fields_tdesc" value="1" />
+            </xar:if>
+            <label><xar:mlstring>Topic Description</xar:mlstring></label>
+            </xar:comment>
+            <xar:if condition="isset($crispbb_fields['pdesc']) and !empty($crispbb_fields['pdesc'])">
+                <input type="checkbox" name="crispbb_fields[pdesc]" id="crispbb_fields_pdesc" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="crispbb_fields[pdesc]" id="crispbb_fields_pdesc" value="1" />
+            </xar:if>
+            <label><xar:mlstring>Description</xar:mlstring></label>
+            <xar:if condition="isset($crispbb_fields['ptext']) and !empty($crispbb_fields['ptext'])">
+                <input type="checkbox" name="crispbb_fields[ptext]" id="crispbb_fields_ptext" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="crispbb_fields[ptext]" id="crispbb_fields_ptext" value="1" />
+            </xar:if>
+            <label><xar:mlstring>Text</xar:mlstring></label>
+        </p>
+        <p>
+            <xar:mlstring>
+                Search forum
+            </xar:mlstring>
+            :
+            <xar:foreach in="$forums" key="$fid" value="$forum">
+                <xar:if condition="isset($crispbb_fids[$fid]) and !empty($crispbb_fids[$fid])">
+                    <input type="checkbox" name="crispbb_fids[#$fid#]" id="crispbb_fids_#$fid#" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="crispbb_fids[#$fid#]" id="crispbb_fids_#$fid#" value="1" />
+                </xar:if>
+                <label for="crispbb_fids_#$fid#">#$forum['transformed_fname']#</label>
+            </xar:foreach>
+        </p>
+        <p>
+            <xar:mlstring>Posted</xar:mlstring>:
+            <label for="crispbb_start"><xar:mlstring>between</xar:mlstring></label> <xar:data-input name="crispbb_start" value="$crispbb_start" type="calendar" /> &#160;<label for="crispbb_end"><xar:mlstring>and</xar:mlstring></label>  <xar:data-input name="crispbb_end" value="$crispbb_end" type="calendar" />
+        </p>
+    </form>
+</xar:if>
+
+<xar:if condition="!empty($results)">
+    <table class="xar-fullwidth xar-margin-none xar-alt-outline">
+        <caption class="xar-padding-thick xar-alt-outline xar-align-left">
+            <span class="xar-floatleft">
+                <a href="#xarServer::getCurrentURL()#"><xar:mlstring>Found</xar:mlstring> #$component#</a>
+            </span>
+            <xar:if condition="!empty($pager)">
+            <span class="xar-floatright xar-align-right">
+                #$pager#
+            </span>
+            </xar:if>
+            <br class="xar-clearboth" />
+        </caption>
+        <thead>
+            <xar:if condition="$component eq 'topics'">
+            <xar:set name="tfootcols">'5'</xar:set>
+            <tr>
+                <th scope="col" style="width:24px;"></th>
+                <th scope="col" style="width:24px;"></th>
+                <th scope="col"><xar:mlstring>Topic</xar:mlstring></th>
+                <th scope="col" style="width:72px;"><xar:mlstring>Info</xar:mlstring></th>
+                <th scope="col" class="xar-thirdwidth"><xar:mlstring>Last Post</xar:mlstring></th>
+            </tr>
+            <xar:else />
+            <xar:set name="tfootcols">'2'</xar:set>
+            <tr>
+                <th style="width:16em;">
+                    <xar:mlstring>Poster</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Post</xar:mlstring>
+                </th>
+            </tr>
+            </xar:if>
+        </thead>
+        <tfoot><tr><td colspan="#$tfootcols#" class="xar-align-center xar-sub">#$condition#</td></tr></tfoot>
+        <tbody>
+            <xar:if condition="$component eq 'topics'">
+                <xar:set name="rowclass">'xar-norm'</xar:set>
+                <xar:foreach in="$results" value="$topic">
+                    <tr class="#$rowclass#">
+                        <xar:template type="module" module="crispbb" file="forum-topic-row" subdata="array('posterlist' =&gt; $posterlist, 'topic' =&gt; $topic, 'showforum' =&gt; true)" />
+                    </tr>
+                <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+                </xar:foreach>
+            <xar:else />
+                <xar:data-getitems name="$userprops" value="$userdd" module="roles" itemids="$uidlist" fieldlist="website,avatar,location,signature,icq,msnm,yim,aim" />
+                <xar:set name="rowclass">'xar-norm'</xar:set>
+                <xar:foreach in="$results" key="$pid" value="$post">
+                <tr class="#$rowclass#">
+                    <xar:template type="module" module="crispbb" file="topic-reply-row" subdata="array('posterlist' =&gt; $posterlist, 'userprops' =&gt; $userprops, 'post' =&gt; $post, 'noform' =&gt; true)" />
+                </tr>
+                <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+            </xar:foreach>
+            </xar:if>
+        </tbody>
+
+    </table>
+    <div class="xar-alt-outline xar-align-left xar-padding-thick xar-margin-thickbottom">
+        <div class="xar-floatleft">
+        <a href="#xarServer::getCurrentURL()#"><xar:mlstring>Found</xar:mlstring> #$component#</a>
+        </div>
+        <xar:if condition="!empty($pager)">
+            <div class="xar-align-right xar-floatright">
+                #$pager#
+            </div>
+        </xar:if>
+        <br class="xar-clearboth" />
+    </div>
+<xar:else />
+    <xar:if condition="!empty($status)">
+        <p>
+            #$status#
+        </p>
+    </xar:if>
+</xar:if>
+    <hr />
+    <div class="xar-align-right xar-padding-thick xar-margin-thickends">
+        <xar:template type="module" module="crispbb" file="user-forumjump" />
+        <xar:template type="module" module="crispbb" file="user-topicjump" />
+    </div>
+    <xar:template type="module" file="user-breadcrumbs" />
+</div>
+</xar:template>

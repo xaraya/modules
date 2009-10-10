@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>crispBB Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <xar:set name="statusmsg">xarSessionGetVar('crispbb_statusmsg')</xar:set>
+    <xar:if condition="!empty($statusmsg)">
+        <p class="xar-align-center xar-error">
+            #xarVarPrepForDisplay($statusmsg)#
+        </p>
+    </xar:if>
+    <h3><xar:mlstring>Modify Module Configuration</xar:mlstring></h3>
+    <form method="post" action="#xarModURL('crispbb', 'admin', 'modifyconfig')#">
+        <fieldset>
+            <div class="xar-form-input-wrapper">
+                <label for="checkupdate" class="xar-form-label help" title="#xarML('Check now for updates to crispbb')#"><xar:mlstring>crispBB v.</xar:mlstring>#$version#</label>
+                <input type="submit" name="checkupdate" id="checkupdate" value="#xarML('Check for Updates')#" />
+            </div>
+            <xar:if condition="!empty($newversion)">
+                <div class="xar-form-input-wrapper-after">
+                    <img src="#xarTPLGetImage('tango/software-update-available.png', 'crispbb')#" title="#xarML('Update Available')#" />
+                    <xar:mlstring>crispBB v.</xar:mlstring>#$newversion# <xar:mlstring> is now </xar:mlstring><a href="http://www.crispbb.com/forums/crispbb-releases/t3?action=lastreply" title="#xarML('Latest release')#">available for download</a>
+                </div>
+            <xar:elseif condition="!empty($checkupdate)" />
+                <div class="xar-form-input-wrapper-after">
+                     <img src="#xarTPLGetImage('tango/activate.png', 'crispbb')#" title="#xarML('Up to date')#" alt="active" />
+                    <span><xar:mlstring>You are using the latest version of crispBB. Please check again later.</xar:mlstring></span>
+                </div>
+            </xar:if>
+        </fieldset>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <xar:set name="selval">$shorturls ? 'checked="checked"' : ''</xar:set>
+                <xar:data-input type="checkbox" name="shorturls" id="shorturls" value="$shorturls" />
+                <label for="shorturls" title="#xarML('Support Short URLs.')#">
+                  <xar:mlstring>Support Short URLs?</xar:mlstring>
+                </label>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="aliasname" class="xar-form-label" title="#xarML('Module alias name')#">
+                  <xar:mlstring>Alias Name:</xar:mlstring>
+                </label>
+                <input type="text" name="aliasname" id="aliasname" value="#$aliasname#" maxlength="60" class="xar-form-textmedium" />
+                 <xar:set name="$selval">$usealias ? 'checked="checked"' : '';</xar:set>
+                <xar:data-input type="checkbox" name="usealias" id="usealias" value="$usealias" />
+                <label for="usealias" title="#xarML('Use a module alias.')#">
+                  <xar:mlstring>Use module alias?</xar:mlstring>
+                </label>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <xar:data-input type="checkbox" name="showuserpanel" id="showuserpanel" value="$showuserpanel" />
+                <label for="showuserpanel" title="#xarML('Show the user information panel in user displays')#"><xar:mlstring>Show user panel?</xar:mlstring></label>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <xar:data-input type="checkbox" name="showsearchbox" id="showsearchbox" value="$showsearchbox" />
+                <label for="showsearchbox" title="#xarML('Show the search box in user displays')#"><xar:mlstring>Show search box?</xar:mlstring></label>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <xar:data-input type="checkbox" name="showforumjump" id="showforumjump" value="$showforumjump" />
+                <label for="showforumjump" title="#xarML('Show the forum jump dropdown in user displays')#"><xar:mlstring>Show forum jump?</xar:mlstring></label>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <xar:data-input type="checkbox" name="showtopicjump" id="showtopicjump" value="$showtopicjump" />
+                <label for="showtopicjump" title="#xarML('Show the topic jump dropdown in user displays')#"><xar:mlstring>Show topic jump?</xar:mlstring></label>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <xar:data-input type="checkbox" name="showquickreply" id="showquickreply" value="$showquickreply" />
+                <label for="showquickreply" title="#xarML('Show the quick reply input in user displays')#"><xar:mlstring>Show quickreply?</xar:mlstring></label>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <xar:data-input type="checkbox" name="showpermissions" id="showpermissions" value="$showpermissions" />
+                <label for="showpermissions" title="#xarML('Show the current users permissions in user displays')#"><xar:mlstring>Show user permissions?</xar:mlstring></label>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <xar:data-input type="checkbox" name="showsortbox" id="showsortbox" value="$showsortbox" />
+                <label for="showsortbox" title="#xarML('Show the topic sort options in forum views')#"><xar:mlstring>Show sort box?</xar:mlstring></label>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="phase" id="phase" value="update" />
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('crispbb')#" />
+                <input type="submit" value="#xarML('Update Configuration')#" />
+            </div>
+        </fieldset>
+    </form>
+
+
+</div>
+<xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>
+</xar:template>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<div class="xar-padding-thick">
+    <xar:if condition="!empty($newtopicurl)">
+        <a href="#$newtopicurl#"><xar:mlstring>Click here</xar:mlstring></a> <xar:mlstring>to start a discussion on this item in the forums</xar:mlstring>
+    <xar:elseif condition="!empty($viewtopicurl)" />
+        <xar:mlstring>Discuss this item in the forums</xar:mlstring> <a href="#$viewtopicurl#">#$transformed_ttitle#</a>
+    </xar:if>
+</div>
+<xar:if condition="!empty($postsperpage) and !empty($numreplies)">
+    <xar:if condition="($numreplies + 1) lt $postsperpage">
+    <xar:set name="showing">$numreplies+1</xar:set>
+    <xar:else />
+    <xar:set name="showing">$postsperpage</xar:set>
+    </xar:if>
+    <xar:set name="grammar">$showing == 1 ? 'reply' : 'replies'</xar:set>
+    <div class="xar-padding-thick">
+    <em><xar:ml>
+        <xar:mlstring>Showing last #(1) #(2) of forum discussion</xar:mlstring>
+        <xar:mlvar>#$showing#</xar:mlvar>
+        <xar:mlvar>#$grammar#</xar:mlvar>
+    </xar:ml></em>
+    </div>
+    <xar:crispbb-showreplies tid="$tid" sort="ptime" order="ASC" startnum="$startnum" numitems="$postsperpage" />
+</xar:if>
+<xar:if condition="!empty($quickreply)">
+    <xar:template type="module" module="crispbb" file="user-quickreply" />
+</xar:if>
+</xar:template>

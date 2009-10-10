@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="!empty($newtopicurl)">
+    <a href="#$newtopicurl#" title="#xarML('Post a new topic')#">
+        <img src="#xarTPLGetImage('icons/comment_add.png', 'crispbb')#" alt="#xarML('Add')#" />
+        <xar:mlstring>New Topic</xar:mlstring>
+    </a>
+</xar:if>
+<xar:if condition="!empty($newreplyurl)">
+    <a href="#$newreplyurl#" title="#xarML('Post a reply to this topic')#">
+        <img src="#xarTPLGetImage('icons/comments_add.png', 'crispbb')#" alt="#xarML('Add')#" />
+        <xar:mlstring>New Reply</xar:mlstring>
+    </a>
+</xar:if>
+<xar:if condition="$fstatus eq 1">
+    <img src="#xarTPLGetImage('timeimages/forum_lock.png', 'crispbb')#" alt="#xarML('Forum Closed')#" />
+    <xar:mlstring>Forum Closed</xar:mlstring>
+<xar:elseif condition="!empty($tstatus) and $tstatus eq 1" />
+    <img src="#xarTPLGetImage('timeimages/comment_lock.png', 'crispbb')#" alt="#xarML('Topic Closed')#" />
+    <xar:mlstring>Topic Closed</xar:mlstring>
+<xar:elseif condition="!empty($tstatus) and $tstatus eq 2" />
+    <img src="#xarTPLGetImage('timeimages/comment_warning.png', 'crispbb')#" alt="#xarML('Awaiting Approval')#" />
+    <xar:mlstring>Topic Awaiting Approval</xar:mlstring>
+<xar:elseif condition="!empty($tstatus) and $tstatus eq 4" />
+    <img src="#xarTPLGetImage('tango/lock.png', 'crispbb')#" alt="#xarML('Topic Locked')#" />
+    <xar:mlstring>Topic Locked</xar:mlstring>
+</xar:if>
+</xar:template>

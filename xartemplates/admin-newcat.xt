@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>crispBB Administration</xar:mlstring>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:template type="module" module="crispbb" file="admin-menu" />
+
+        <h2>
+            Create New Forum Category
+        </h2>
+        <xar:if condition="empty($basecid)">
+            <p>You must select a base category for crispBB before you can add forum categories</p>
+        <xar:else />
+        <form action="#xarModURL('crispbb','admin','newcat')#" method="post" enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <xar:for iter="$i++" start="$i=1" test="$i le $repeat">
+                <fieldset class="xar-norm">
+                    <legend>
+                        <strong>
+                        <xar:mlstring>Category</xar:mlstring>&#160;#$i#</strong>
+                    </legend>
+                    <xar:set name="object">$objects[$i]</xar:set>
+                    <xar:data-form object="$object" />
+                    <xar:if condition="!empty($hooks)">
+                        <xar:foreach in="$hooks" key="$module" value="$output">#$output#</xar:foreach>
+                    </xar:if>
+                </fieldset>
+            </xar:for>
+            <fieldset class="xar-norm">
+                <div class="xar-form-input-wrapper">
+                    <div class="xar-form-container-after">
+                        <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
+                        <input type="hidden" name="phase" value="update" />
+                        <input type="submit" value="#xarML('Add')#" />
+                        <!--
+                            <input type="reset" value="#xarML('Reset')#" />
+                        -->
+                    </div>
+                </div>
+            </fieldset>
+            <xar:if condition="xarModVars::get('categories','allowbatch')">
+                <fieldset class="xar-norm">
+                    <legend>
+                        <strong>
+                            <xar:mlstring>Batch Processing</xar:mlstring>
+                        </strong>
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="repeat" class="xar-form-label help" title="#xarML('Input and save a set of categories at the same time.')#">
+                            <xar:mlstring>Category forms to display</xar:mlstring>
+                        </label>
+                        <input class="xar-form-textlong" type="text" name="repeat" id="repeat" value="#$repeat#" />
+                    </div>
+                </fieldset>
+                <fieldset class="xar-norm">
+                    <div class="xar-form-input-wrapper">
+                        <div class="xar-form-container-after">
+                            <input type="submit" name="reassign" id="reassign" size="3" value="#xarML('Submit')#" />
+                            <!--
+                                <input type="reset" value="#xarML('Reset')#" />
+                            -->
+                        </div>
+                    </div>
+                </fieldset>
+            </xar:if>
+        </form>
+        </xar:if>
+    </div>
+</xar:template>

@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:style scope="module" module="crispbb" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>crispBB Forums</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="user-breadcrumbs" />
+    <div class="xar-margin-thickends xar-padding-thickends">
+        <div class="xar-twothirdswidth xar-floatleft">
+            <h2>#$pageTitle#</h2>
+        </div>
+        <div class="xar-thirdwidth xar-floatright xar-sub xar-padding-thick">
+            <xar:template type="module" module="crispbb" file="user-userpanel" />
+        </div>
+        <br class="xar-clearboth" />
+    </div>
+    <hr />
+    <xar:if condition="!empty($message)">
+    <h4>#$message#</h4>
+    </xar:if>
+    <xar:set name="defaultModule">xarConfigVars::get(null,'Site.Core.DefaultModuleName')</xar:set>
+    <xar:set name="pageSeparator">xarModVars::get('themes', 'SiteTitleSeparator')</xar:set>
+    <xar:if condition="$defaultModule ne 'crispbb'">
+        <div class="xar-form-input-wrapper-after">
+        <a href="&xar-baseurl;" title="#xarML('Go to site index')#"><xar:mlstring>Home</xar:mlstring></a>
+        </div>
+        <div class="xar-form-input-wrapper-after">
+        <a href="#xarModURL('crispbb', 'user', 'main')#" title="#xarML('Go to main forum index')#"><xar:mlstring>Forum Index</xar:mlstring></a>
+        </div>
+    <xar:else />
+        <div class="xar-form-input-wrapper-after">
+        <a href="&xar-baseurl;" title="#xarML('Go to main forum index')#"><xar:mlstring>Forum Index</xar:mlstring></a>
+        </div>
+    </xar:if>
+
+    <xar:if condition="!empty($catid) and isset($categories[$catid])">
+        <div class="xar-form-input-wrapper-after">
+        <a href="#xarModURL('crispbb', 'user', 'main', array('catid' => $catid))#" title="#$categories[$catid]['description']#">#$categories[$catid]['name']#</a>
+        </div>
+    </xar:if>
+    <xar:if condition="!empty($fid) and !empty($fname) and !empty($fdesc)">
+        <div class="xar-form-input-wrapper-after">
+        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#" title="#$fname#">#$fname#</a>
+        </div>
+    </xar:if>
+    <xar:if condition="!empty($tid) and !empty($ttitle)">
+        <div class="xar-form-input-wrapper-after">
+        <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'pid' => $pid))#" title="#$ttitle#">#$ttitle#</a>
+        </div>
+    </xar:if>
+
+    <xar:template type="module" file="user-breadcrumbs" />
+</div>
+<div class="xar-mod-foot xar-align-center">
+    <div class="xar-accent-outline xar-margin-thick xar-padding-thick">
+    </div>
+</div>
+</xar:template>

@@ -1,0 +1,273 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:style scope="module" module="crispbb" />
+<xar:comment>If you want to display some roles dd items for your users, you can use the list of uids contained in $uidlist to get all the dd for the users back at once, like so...</xar:comment>
+<xar:data-getitems name="userprops" value="userdd" module="roles" itemids="$uidlist" fieldlist="website,avatar,location,signature,icq,msnm,yim,aim" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>crispBB Forums</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="user-breadcrumbs" />
+    <div class="xar-margin-thickends xar-padding-thickends">
+        <div class="xar-twothirdswidth xar-floatleft">
+            <h2>#$transformed_ttitle#</h2>
+            <xar:if condition="!empty($topicicon)">
+                <img src="#xarTPLGetImage($topicicon,'crispbb')#" alt="#xarML('icon')#" title="" />
+            </xar:if>
+            <xar:if condition="!empty($transformed_tdesc)">
+            <em>#$transformed_tdesc#</em>
+            </xar:if>
+            <xar:if condition="!empty($hookitem)">
+                <p><xar:mlstring>Discussion of </xar:mlstring><a href="#$hookitem['url']#" title="#$hookitem['title']#">#$hookitem['label']#</a></p>
+            </xar:if>
+        </div>
+        <div class="xar-thirdwidth xar-floatright xar-sub xar-padding-thick">
+            <xar:template type="module" module="crispbb" file="user-userpanel" />
+        </div>
+        <div class="xar-align-right xar-padding-thicktop xar-clearboth">
+            <xar:set name="formid">'1'</xar:set>
+            <xar:template type="module" module="crispbb" file="user-searchbox" />
+            <xar:template type="module" module="crispbb" file="user-forumjump" />
+            <xar:template type="module" module="crispbb" file="user-topicjump" />
+        </div>
+    </div>
+    <xar:template type="module" module="crispbb" file="admin-waitingcontent" />
+    <hr />
+    <xar:comment>FAQ topic type</xar:comment>
+    <xar:if condition="$ttype eq 3">
+        <ul>
+            <xar:foreach in="$posts" key="$faqid" value="$faq">
+                <li><a href="#xarServer::getCurrentURL()###post#$faq['pid']#">#$faq['pdesc']#</a></li>
+            </xar:foreach>
+        </ul>
+    </xar:if>
+    <xar:comment>Topic hooks are contained in $hookoutput here and in the topic's $post['hookoutput'] when the first post is being displayed. This allows you to show some hooks before the posts begin, such as polls and ratings (hooks which you wouldn't normally want in every post). You can also show hooks after the topic posts too the same way</xar:comment>
+    <xar:if condition="!empty($hookoutput['polls'])">
+        #$hookoutput['polls']#
+    </xar:if>
+    <xar:if condition="!empty($hookoutput['ratings'])">
+        #$hookoutput['ratings']#
+    </xar:if>
+    <xar:if condition="!empty($hookoutput['crispsubs'])">
+        <xar:comment>
+        Show a link to subscribe or unsubscribe from this topic
+        </xar:comment>
+        #$hookoutput['crispsubs']#
+    </xar:if>
+    <xar:comment>If you hooked dynamic data to topics, you may want to retrieve it, below is an example of how. NOTE: this is the same data that will be shown in the first topic post, but, like the other hooks, you may have occasion to show some dd here instead of in the post itself (eg, when not displaying the first page).</xar:comment>
+    <xar:if condition="xarModIsHooked('dynamicdata','crispbb',$topicstype)">
+        <xar:data-getitem name="$topicprops" module="crispbb" itemtype="$topicstype" itemid="$tid" />
+        <xar:if condition="!empty($topicprops)">
+            <div>
+                <xar:foreach in="$topicprops" key="$propname">
+                    <p><xar:data-label property="$topicprops[$propname]" /> :
+                    <xar:data-output property="$topicprops[$propname]" /></p>
+                </xar:foreach>
+            </div>
+         </xar:if>
+    </xar:if>
+    <div>
+    <span class="xar-floatleft">
+    <xar:template type="module" file="user-view-menu" />
+    </span>
+    <span class="xar-floatright xar-nowrap">
+        <xar:if condition="!empty($approvetopicurl)">
+             <a href="#$approvetopicurl#">
+            <img src="#xarTPLGetImage('icons/comment_tick.png', 'crispbb')#" alt="Approve" title="#xarML('Approve this topic')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($modtrashcanurl)">
+             <a href="#$modtrashcanurl#">
+            <img src="#xarTPLGetImage('icons/bin.png', 'crispbb')#" alt="Deleted" title="#xarML('Deleted Replies')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($edittopicurl)">
+            <a href="#$edittopicurl#">
+            <img src="#xarTPLGetImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit this topic')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($closetopicurl)">
+            <a href="#$closetopicurl#">
+            <img src="#xarTPLGetImage('icons/comment_lock.png', 'crispbb')#" alt="Close" title="#xarML('Close this topic')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($opentopicurl)">
+            <a href="#$opentopicurl#">
+            <img src="#xarTPLGetImage('icons/comment_lock_break.png', 'crispbb')#" alt="Open" title="#xarML('Re-open this topic')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($locktopicurl)">
+            <a href="#$locktopicurl#">
+            <img src="#xarTPLGetImage('icons/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock this topic')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($unlocktopicurl)">
+            <a href="#$unlocktopicurl#">
+            <img src="#xarTPLGetImage('icons/lock_open.png', 'crispbb')#" alt="Unlock" title="#xarML('Unlock this topic')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($movetopicurl)">
+            <a href="#$movetopicurl#">
+            <img src="#xarTPLGetImage('icons/comments_go.png', 'crispbb')#" alt="Move" title="#xarML('Move this topic')#" />
+            </a>
+        </xar:if>
+        <xar:comment>
+        <xar:if condition="!empty($splittopicurl)">
+            <a href="#$splittopicurl#">
+            <img src="#xarTPLGetImage('icons/comments_disconnect.png', 'crispbb')#" alt="Split" title="#xarML('Split this topic')#" />
+            </a>
+        </xar:if>
+        </xar:comment>
+        <xar:if condition="!empty($modtopicurl)">
+            <a href="#$modtopicurl#">
+            <img src="#xarTPLGetImage('icons/comments_wrench_orange.png', 'crispbb')#" alt="Moderate" title="#xarML('Moderate this topic')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($deletetopicurl)">
+            <a href="#$deletetopicurl#">
+            <img src="#xarTPLGetImage('icons/comments_delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete this topic')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($purgetopicurl)">
+            <a href="#$purgetopicurl#">
+            <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Purge" title="#xarML('Purge this topic')#" />
+            </a>
+        </xar:if>
+    </span>
+    <br class="xar-clearboth" />
+    </div>
+    <form method="post" action="#xarModURL('crispbb', 'user', 'moderate')#">
+    <table class="xar-fullwidth xar-alt-outline xar-margin-none">
+        <caption class="xar-alt-outline xar-padding-thick xar-align-left xar-margin-thicktop">
+            <span class="xar-halfwidth xar-floatleft">
+            <a href="#$viewtopicurl#">#$transformed_ttitle#</a>
+            </span>
+            <xar:if condition="!empty($pager)">
+                <span class="xar-align-right xar-floatright xar-halfwidth">
+                    #$pager#
+                </span>
+            </xar:if>
+            <br class="xar-clearboth" />
+        </caption>
+        <thead>
+            <tr>
+                <th class="posterinfo" scope="col">
+                    <xar:mlstring>Poster</xar:mlstring>
+                </th>
+                <th class="replyinfo" scope="col">
+                    <xar:mlstring>Post</xar:mlstring>
+                </th>
+            </tr>
+        </thead>
+        <xar:comment>Accessible tables like the footer before the body</xar:comment>
+        <xar:comment>Footer shows a summary of the items displayed</xar:comment>
+        <tfoot>
+            <tr><td colspan="2" class="xar-sub xar-align-center">
+                <xar:set name="numposts">count($posts)+$startnum-1</xar:set>
+                <xar:ml>
+                    <xar:mlstring>Showing posts #(1) to #(2) of #(3) in #(4)</xar:mlstring>
+                    <xar:mlvar>#$startnum#</xar:mlvar>
+                    <xar:mlvar>#$numposts#</xar:mlvar>
+                    <xar:mlvar>#$totalposts#</xar:mlvar>
+                    <xar:mlvar>#$transformed_ttitle#</xar:mlvar>
+                </xar:ml>
+            </td></tr>
+        </tfoot>
+        <tbody>
+            <xar:if condition="!empty($posts)">
+            <xar:comment>Set the row class to start zebra striping with</xar:comment>
+            <xar:set name="rowclass">'xar-norm'</xar:set>
+            <xar:comment>Keep track of the row number</xar:comment>
+            <xar:set name="rownumber">!empty($startnum) ? $startnum : 1</xar:set>
+            <xar:foreach in="$posts" key="$pid" value="$post">
+            <tr class="#$rowclass#">
+                <xar:template type="module" module="crispbb" file="topic-reply-row" subdata="array('posterlist' =&gt; $posterlist, 'userprops' =&gt; $userprops, 'post' =&gt; $post, 'rownumber' =&gt; $rownumber)" />
+            </tr>
+            <xar:comment>Add some zebra striping, and set the next rownumber</xar:comment>
+            <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+            <xar:set name="rownumber">$rownumber+1</xar:set>
+            </xar:foreach>
+            </xar:if>
+        </tbody>
+    </table>
+    <div class="xar-alt-outline xar-align-left xar-padding-thick xar-margin-thickbottom">
+        <div class="xar-halfwidth xar-floatleft">
+        <a href="#$viewtopicurl#">#$transformed_ttitle#</a>
+        </div>
+        <xar:if condition="!empty($pager)">
+            <div class="xar-align-right xar-floatright xar-halfwidth">
+                #$pager#
+            </div>
+        </xar:if>
+        <br class="xar-clearboth" />
+    </div>
+    <div>
+        <span class="xar-floatleft">
+        <xar:template type="module" file="user-view-menu" />
+        </span>
+        <xar:if condition="!empty($modforumurl) and ($startnum ne 1 or count($posts) gt 1) ">
+        <span class="xar-floatright xar-nowrap">
+            <label for="modaction"><xar:mlstring>With Selected</xar:mlstring>:</label>
+            <xar:data-input type="dropdown" name="modaction" id="modaction" options="$modactions" />
+            <input type="hidden" name="component" id="component" value="posts" />
+            <input type="hidden" name="phase" id="phase" value="update" />
+            <input type="hidden" name="tid" id="tid" value="#$tid#" />
+            <input type="submit" value="#xarML('Update')#" />
+        </span>
+        </xar:if>
+        <br class="xar-clearboth" />
+    </div>
+    </form>
+    <hr />
+    <div class="xar-align-right xar-padding-thicktop">
+        <xar:set name="formid">'2'</xar:set>
+        <xar:template type="module" module="crispbb" file="user-forumjump" />
+        <xar:template type="module" module="crispbb" file="user-topicjump" />
+    </div>
+    <xar:template type="module" module="crispbb" file="user-quickreply" />
+    <div class="xar-margin-thickends xar-padding-thickends xar-sub">
+        <xar:if condition="empty($showtopicstats)">
+        <h4 class="xar-margin-none"><xar:mlstring>Topic Statistics</xar:mlstring></h4>
+        <ul>
+            <li>
+                <xar:mlstring>Started by</xar:mlstring>
+                <a href="#xarModURL('roles', 'user', 'display', array('uid' => $towner))#" title="#xarML('View Profile')#">#$posterlist[$towner]['name']#</a>
+            </li>
+            <li>
+            <xar:template type="module" module="crispbb" file="user-timestamp" subdata="array('timestamp' =&gt; $ttime)" />
+            </li>
+            <li>
+            <xar:set name="grammar">$numviews == 1 ? 'time' : 'times'</xar:set>
+            <xar:ml>
+                <xar:mlstring>This topic has been viewed #(1) #(2)</xar:mlstring>
+                <xar:mlvar>#$numviews#</xar:mlvar>
+                <xar:mlvar>#$grammar#</xar:mlvar>
+            </xar:ml>
+            </li>
+            <li>
+            <xar:set name="grammar">$numreplies == 1 ? 'reply' : 'replies'</xar:set>
+            <xar:ml>
+                <xar:mlstring>This topic has #(1) #(2)</xar:mlstring>
+                <xar:mlvar>#$numreplies#</xar:mlvar>
+                <xar:mlvar>#$grammar#</xar:mlvar>
+            </xar:ml>
+            </li>
+            <xar:if condition="!empty($viewstatsurl)">
+            <li>
+                [ <a href="#$viewstatsurl#" title="#xarML('More Statistics')#">More Stats</a> ]
+            </li>
+            </xar:if>
+        </ul>
+        </xar:if>
+    </div>
+    <xar:template type="module" file="user-breadcrumbs" />
+</div>
+<div class="xar-mod-foot">
+    <div class="xar-accent-outline xar-margin-thick xar-padding-thick xar-align-center">
+    </div>
+    <div class="xar-sub">
+    <xar:template type="module" module="crispbb" file="privileges-user" />
+    </div>
+</div>
+</xar:template>

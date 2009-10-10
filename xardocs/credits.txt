@@ -1,0 +1,25 @@
+/**
+ * crispBB Forum Module - credits.txt
+ *
+ * @package modules
+ * @copyright (C) 2008-2009 The Digital Development Foundation
+ * @license GPL {@link http//www.gnu.org/licenses/gpl.html}
+ * @link http//www.xaraya.com
+ *
+ * @subpackage crispBB Forum Module
+ * @link http//xaraya.com/index.php/release/970.html
+ * @author crisp <crisp@crispcreations.co.uk>
+ */
+
+ Most icons in modules/crispbb/xarimages/tango/ courtesy of the 
+ Tango Desktop Project and are in the public domain.
+ (see http://tango.freedesktop.org/Tango_Desktop_Project)
+ The remaining icons in modules/crispbb/xarimages/tango/ 
+ created by Xaraya developers, licensed under the GPL (see http//www.gnu.org/licenses/gpl.html).
+
+ Icons in modules/crispbb/xarimages/icons/ are courtesy of 
+ FamFamFam Silk Icons by Mark James (see http://www.famfamfam.com/lab/icons/silk/) 
+ and are licensed under Creative Commons Attribution 3.0 License. 
+ (see http://creativecommons.org/licenses/by/3.0/)
+
+ Special thanks to Marty Vance (Dracos) for the crispBB logo.

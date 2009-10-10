@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+crispBB modifyconfig hook
+<fieldset>
+    <legend><xar:mlstring>crispBB Hooks</xar:mlstring></legend>
+    <div class="xar-form-input-wrapper">
+        <label for="crispbb_fid" class="xar-form-label"><xar:mlstring>Create Topic in</xar:mlstring>:</label>
+        <xar:data-input type="dropdown" name="crispbb_fid" id="crispbb_fid" value="$fid" options="$foptions" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Display Last</xar:mlstring>:</label>
+        <input type="text" name="crispbb_postsperpage" id="crispbb_postsperpage" value="#$postsperpage#" maxlength="3" class="xar-form-textshort" />
+        <label for="crispbb_postsperpage"><xar:mlstring>Replies</xar:mlstring>
+        <xar:data-input type="checkbox" name="crispbb_quickreply" id="crispbb_quickreply" value="$quickreply" />
+        <label for="crispbb_quickreply"><xar:mlstring>Show Quick Reply</xar:mlstring>?</label>
+    </div>
+</fieldset>
+</xar:template>

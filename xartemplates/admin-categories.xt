@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">crispBB</span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:template type="module" module="crispbb" file="admin-menu" />
+        <xar:if condition="empty($sublink) or ($sublink eq 'categories')">
+            <h2>View Forum Categories</h2>
+            <div style="margin: auto;">
+                <div style="clear: both">
+                    <xar:if condition="empty($options)" >
+                        <div align="center">
+                            <h3>No base category chosen</h3><br />
+                        </div>
+                    <xar:else />
+                        <xar:data-input type="categorytree" options="$options" tplmodule="crispbb" />
+                    </xar:if>
+                </div>
+            </div>
+        <xar:elseif condition="$sublink eq 'mastercat'" />
+            <h2>Base Forum Category</h2>
+            <p>The base forum category is never actually displayed within forum listings.
+            The categories you add to this category will be used as your forum categories.</p>
+            <form action="&xar-modurl-crispbb-admin-categories;" method="post">
+            <xar:data-input type="categorypicker" module="crispbb" categories_numberofbasecats="1" tplmodule="crispbb" name="basecid" />
+            <p>NOTE: If you change this, any existing forums belonging to categories which are not children
+            of the new base category will no longer be displayed in forum listings.</p>
+            <input type="hidden" name="phase" id="phase" value="update" />
+            <input type="hidden" name="sublink" id="sublink" value="mastercat" />
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="submit" value="#xarML('Change Base Category')#" />
+            </form>
+        <!--
+        <xar:elseif condition="$sublink eq 'confirm'" />
+            <h2>Confirm Change Base Category</h2>
+            <p>WARNING: You are about to change the base forum category. Any existing forums which do not belong to a child category of the new base category will no longer be displayed</p>
+        -->
+        </xar:if>
+    </div>
+</xar:template>

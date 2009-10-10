@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:if condition="xarModVars::get('crispbb','showsortbox')">
+<xar:if condition="!empty($tsortoptions)">
+<form class="xar-margin-none xar-displayinline" action="index.php" method="get">
+    <div class="xar-nowrap xar-displayinline">
+    <input type="hidden" name="module" value="crispbb" />
+    <input type="hidden" name="type" value="user" />
+    <input type="hidden" name="func" value="view" />
+    <input type="hidden" name="fid" value="#$fid#" />
+    <label for="sort"><xar:mlstring>Sort by</xar:mlstring>:</label>
+    <xar:data-input type="dropdown" name="sort" id="sort" value="$sortfield" options="$tsortoptions" />
+    <label for="order"><xar:mlstring>Order</xar:mlstring>:</label>
+    <xar:data-input type="dropdown" name="order" id="order" value="$sortorder" options="$orderoptions" />
+    <label for="period"><xar:mlstring>From the</xar:mlstring>:</label>
+    <xar:data-input type="dropdown" name="period" id="period" value="$period" options="$timeoptions" />
+    &#160;&#160;&#160; <input type="submit" value="#xarML('Sort')#" />
+    </div>
+</form>
+</xar:if>
+</xar:if>
+</xar:template>

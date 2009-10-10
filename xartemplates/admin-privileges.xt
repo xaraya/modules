@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>crispBB Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:ml>
+            <xar:mlstring>Select Forums for Privilege '#(1)'</xar:mlstring>
+            <xar:mlvar>#$extname#</xar:mlvar>
+        </xar:ml>
+    </h2>
+    <form method="post" action="&xar-modurl-crispbb-admin-privileges;">
+    <input type="hidden" name="extpid" id="extpid" value="#$extpid#" />
+    <input type="hidden" name="extname" id="extname" value="#$extname#" />
+    <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#" />
+    <input type="hidden" name="extmodule" id="extmodule" value="#$extmodule#" />
+    <input type="hidden" name="extcomponent" id="extcomponent" value="#$extcomponent#" />
+    <input type="hidden" name="pparentid" id="pparentid" value="#$pparentid#" />
+    <table border="1" cellpadding="8" cellspacing="0">
+        <tr>
+            <th class="xar-align-right xar-valign-top">
+                <xar:mlstring>Category</xar:mlstring>
+            </th>
+            <td>
+                <select name="catid" onchange="submit()">
+                    <option value="0">
+                        <xar:mlstring>All</xar:mlstring>
+                    </option>
+                    <xar:foreach in="$categories" key="$cid" value="$category">
+                        <xar:if condition="!empty($catid) and $catid eq $cid">
+                            <option value="#$cid#" selected="selected">#$category['name']#</option>
+                            <xar:else />
+                            <option value="#$cid#">#$category['name']#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th class="xar-align-right xar-valign-top">
+                <xar:mlstring>Forum</xar:mlstring>
+            </th>
+            <td>
+                <select name="fid" onchange="submit()">
+                    <option value="0">
+                        <xar:mlstring>All</xar:mlstring>
+                    </option>
+                    <xar:foreach in="$forums" key="$fkey" value="$forum">
+                        <xar:if condition="!empty($fid) and $fid eq $fkey">
+                            <option value="#$fkey#" selected="selected">#$forum['fname']#</option>
+                            <xar:else />
+                            <option value="#$fkey#">#$forum['fname']#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th class="xar-align-right xar-valign-top">
+                <xar:mlstring>Access Level</xar:mlstring>
+            </th>
+            <td>
+                <select name="extlevel" id="extlevel">
+                    <xar:if condition="$extlevel eq 0">
+                        <option value="0" selected="selected">
+                            <xar:mlstring>None</xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="0">
+                            <xar:mlstring>None</xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$extlevel eq 100">
+                        <option value="100" selected="selected">
+                            <xar:mlstring>View</xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="100">
+                            <xar:mlstring>View</xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$extlevel eq 200">
+                        <option value="200" selected="selected">
+                            <xar:mlstring>Read</xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="200">
+                            <xar:mlstring>Read</xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$extlevel eq 300">
+                        <option value="300" selected="selected">
+                            <xar:mlstring>Post</xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="300">
+                            <xar:mlstring>Post</xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$extlevel eq 300">
+                        <option value="400" selected="selected">
+                            <xar:mlstring>Moderate</xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="400">
+                            <xar:mlstring>Moderate</xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$extlevel eq 500">
+                        <option value="500" selected="selected">
+                            <xar:mlstring>Edit</xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="500">
+                            <xar:mlstring>Edit</xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$extlevel eq 600">
+                        <option value="600" selected="selected">
+                            <xar:mlstring>Add</xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="600">
+                            <xar:mlstring>Add</xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$extlevel eq 700">
+                        <option value="700" selected="selected">
+                            <xar:mlstring>Delete</xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="700">
+                            <xar:mlstring>Delete</xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$extlevel eq 800">
+                        <option value="800" selected="selected">
+                            <xar:mlstring>Admin</xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="800">
+                            <xar:mlstring>Admin</xar:mlstring>
+                        </option>
+                    </xar:if>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="xar-align-center">
+                <input type="submit" value="#$refreshlabel#" />
+            </td>
+        </tr>
+    </table>
+    <p>
+        <xar:set name="grammar">$numitems == 1 ? 'forum' : 'forums'</xar:set>
+        <xar:ml>
+            <xar:mlstring>Found #(1) #(2) matching these selection criteria</xar:mlstring>
+            <xar:mlvar>#$numitems#</xar:mlvar>
+            <xar:mlvar>#$grammar#</xar:mlvar>
+        </xar:ml>
+        <hr />
+        (Instance Definition #$extinstance#)
+    </p>
+    <input type="submit" name="apply" value="#$applylabel#" /></form>
+    <xar:template type="module" module="crispbb" file="privileges-info" />
+</div>
+</xar:template>

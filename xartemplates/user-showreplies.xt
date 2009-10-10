@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:style scope="module" module="crispbb" />
+<xar:data-getitems name="$userprops" value="$userdd" module="roles" itemids="$uidlist" fieldlist="website,avatar,location,signature,icq,msnm,yim,aim" />
+<table class="xar-fullwidth">
+    <tbody>
+        <xar:if condition="!empty($posts)">
+        <xar:comment>Set the row class to start zebra striping with</xar:comment>
+        <xar:set name="rowclass">'xar-norm'</xar:set>
+        <xar:foreach in="$posts" key="$pid" value="$post">
+        <tr class="#$rowclass#">
+             <xar:template type="module" module="crispbb" file="topic-reply-row" subdata="array('posterlist' =&gt; $posterlist, 'userprops' =&gt; $userprops, 'post' =&gt; $post, 'noform' =&gt; true)" />
+        </tr>
+        <xar:comment>Add some zebra striping, and set the next rownumber</xar:comment>
+        <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+        </xar:foreach>
+        </xar:if>
+    </tbody>
+</table>
+</xar:template>

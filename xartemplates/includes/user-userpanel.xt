@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:if condition="xarModVars::get('crispbb', 'showuserpanel')">
+<div class="xar-alt">
+<xar:if condition="xarUserIsLoggedIn()">
+    <xar:set name="userid">xarUserGetVar('id')</xar:set>
+    <xar:set name="username">xarUserGetVar('name')</xar:set>
+    <xar:mlstring>Welcome back,</xar:mlstring>
+    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $userid))#">#$username#</a>
+<xar:else />
+    <xar:mlstring>Welcome, Guest</xar:mlstring>
+</xar:if>
+<xar:set name="now">time()</xar:set>
+<ul>
+    <xar:if condition="!empty($lastvisit)">
+    <li>
+        <xar:mlstring>Last Visit</xar:mlstring>:
+        <strong>
+        #xarLocaleGetFormattedTime('short', $lastvisit)#,
+        #xarLocaleGetFormattedDate('medium', $lastvisit)#
+        </strong>
+    </li>
+    </xar:if>
+    <li>
+        <xar:mlstring>Time Now</xar:mlstring>:
+        <strong>
+        #xarLocaleGetFormattedTime('short', time())#,
+        #xarLocaleGetFormattedDate('medium', time())#
+        </strong>
+    </li>
+    <xar:if condition="!empty($visitstart)">
+    <li>
+        <xar:mlstring>Visit Start</xar:mlstring>:
+        <strong>
+        <xar:base-timesince stamp="$visitstart" /> <xar:mlstring>ago</xar:mlstring>
+        </strong>
+    </li>
+    </xar:if>
+    <xar:if condition="!empty($totalvisit)">
+    <li>
+        <xar:mlstring>Visits Total</xar:mlstring>:
+        <strong>
+        <xar:base-timesince stamp="$totalvisit" />
+        </strong>
+    </li>
+    </xar:if>
+    <xar:comment>
+    <xar:set name="waitingcontent">xarMod::guiFunc('crispbb', 'admin', 'waitingcontent')</xar:set>
+    <xar:if condition="!empty($waitingcontent)">
+        <li>
+            <a class="xar-error" href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'waiting'))#" title="#xarML('View Waiting Content')#"><xar:mlstring>Waiting Content</xar:mlstring></a>
+        </li>
+    </xar:if>
+    </xar:comment>
+</ul>
+</div>
+</xar:if>
+</xar:template>

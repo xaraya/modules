@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<div class="xar-alt-outline xar-alt xar-padding-thick xar-margin-thickbottom">
+    <xar:set name="defaultModule">xarModVars::get('modules', 'defaultmodule')</xar:set>
+    <xar:set name="pageSeparator">xarModVars::get('themes', 'SiteTitleSeparator')</xar:set>
+    <xar:if condition="$defaultModule ne 'crispbb'">
+        <a href="&xar-baseurl;" title="#xarML('Go to site index')#"><xar:mlstring>Home</xar:mlstring></a>
+        #$pageSeparator#
+        <a href="#xarModURL('crispbb', 'user', 'main')#" title="#xarML('Go to main forum index')#"><xar:mlstring>Forum Index</xar:mlstring></a>
+    <xar:else />
+        <a href="&xar-baseurl;" title="#xarML('Go to main forum index')#"><xar:mlstring>Forum Index</xar:mlstring></a>
+    </xar:if>
+
+    <xar:if condition="!empty($catid) and isset($categories[$catid])">
+        #$pageSeparator#
+        <a href="#xarModURL('crispbb', 'user', 'main', array('catid' => $catid))#" title="#xarVarPrepForDisplay($categories[$catid]['description'])#">#xarVarPrepForDisplay($categories[$catid]['name'])#</a>
+    </xar:if>
+    <xar:if condition="!empty($fid) and !empty($fname)">
+        #$pageSeparator#
+        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#" title="#$transformed_fname#">#$transformed_fname#</a>
+    </xar:if>
+    <xar:if condition="!empty($tid) and !empty($ttitle)">
+        #$pageSeparator#
+        <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#" title="#$transformed_ttitle#">#$transformed_ttitle#</a>
+    </xar:if>
+    <xar:if condition="!empty($q) and !empty($searchtitle)">
+        #$pageSeparator#
+        <a href="#xarModURL('crispbb', 'user', 'search', array('q' => $q))#" title="#$searchtitle#">#$searchtitle#</a>
+    </xar:if>
+</div>
+</xar:template>

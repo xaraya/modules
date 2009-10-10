@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:style scope="module" module="crispbb" />
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>crispBB Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <xar:set name="statusmsg">xarSessionGetVar('crispbb_statusmsg')</xar:set>
+    <xar:if condition="!empty($statusmsg)">
+        <p class="xar-align-center xar-error">
+            #xarVarPrepForDisplay($statusmsg)#
+        </p>
+    </xar:if>
+    <xar:if condition="!empty($uid)">
+        <table class="xar-fullwidth xar-alt-outline xar-margin-none">
+            <caption class="xar-align-left xar-alt-outline xar-padding-thick">
+                <span class="xar-floatleft"><xar:mlstring>IP Addresses used by</xar:mlstring>
+                    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $uid))#" title="#xarML('View Profile')#">#$name#</a>
+                </span>
+                <xar:if condition="!empty($pager)">
+                    <span class="xar-align-right xar-floatright">
+                        #$pager#
+                    </span>
+                </xar:if>
+                <br class="xar-clearboth" />
+            </caption>
+            <thead>
+                <tr>
+                    <th scope="col"><xar:mlstring>IP Address</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Actions</xar:mlstring></th>
+                </tr>
+            </thead>
+            <tbody>
+            <xar:if condition="!empty($items)">
+                <xar:set name="rowclass">'xar-norm'</xar:set>
+                <xar:foreach in="$items" value="$item">
+                    <tr class="#$rowclass#">
+                        <td>#$item['phostname']#</td>
+                        <td><a href="#xarModURL('crispbb', 'admin', 'posters', array('ip' => $item['phostname']))#" title="#xarML('View users posting from this ip address')#">View Users</a></td>
+                    </tr>
+                    <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+                </xar:foreach>
+            </xar:if>
+            </tbody>
+        </table>
+        <div class="xar-align-left xar-alt-outline xar-padding-thick">
+            <span class="xar-floatleft"><xar:mlstring>IP Addresses used by</xar:mlstring>
+                <a href="#xarModURL('roles', 'user', 'display', array('uid' => $uid))#" title="#xarML('View Profile')#">#$name#</a>
+            </span>
+            <xar:if condition="!empty($pager)">
+                <span class="xar-align-right xar-floatright">
+                    #$pager#
+                </span>
+            </xar:if>
+            <br class="xar-clearboth" />
+        </div>
+    <xar:elseif condition="!empty($ip)" />
+        <table class="xar-fullwidth xar-alt-outline xar-margin-none">
+            <caption class="xar-align-left xar-alt-outline xar-padding-thick">
+                <span class="xar-floatleft"><xar:mlstring>Users posting from </xar:mlstring> #$ip#
+                </span>
+                <xar:if condition="!empty($pager)">
+                    <span class="xar-align-right xar-floatright">
+                        #$pager#
+                    </span>
+                </xar:if>
+                <br class="xar-clearboth" />
+            </caption>
+            <thead>
+                <tr>
+                    <th scope="col"><xar:mlstring>User</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Topics</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Replies</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Status</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Actions</xar:mlstring></th>
+                </tr>
+            </thead>
+            <tbody>
+            <xar:if condition="!empty($items)">
+                <xar:set name="rowclass">'xar-norm'</xar:set>
+                <xar:foreach in="$items" value="$poster">
+                    <tr class="#$rowclass#">
+                        <td><a href="#xarModURL('roles', 'user', 'display', array('uid' => $poster['uid']))#">#$poster['name']#</a></td>
+                        <td>#$poster['numtopics']#</td>
+                        <td>#$poster['numreplies']#</td>
+                        <td><xar:if condition="!empty($poster['online'])">
+                            <xar:mlstring>Online</xar:mlstring>
+                            <xar:else />
+                            <xar:mlstring>Offline</xar:mlstring>
+                            </xar:if></td>
+                        <td><a href="#xarModURL('crispbb', 'admin', 'posters', array('uid' => $poster['uid']))#" title="#xarML('View IP Addresses this user has posted from')#">View IPs</a></td>
+                    </tr>
+                    <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+                </xar:foreach>
+            </xar:if>
+            </tbody>
+        </table>
+        <div class="xar-align-left xar-alt-outline xar-padding-thick">
+            <span class="xar-floatleft"><xar:mlstring>Users posting from </xar:mlstring> #$ip#</span>
+            <xar:if condition="!empty($pager)">
+                <span class="xar-align-right xar-floatright">
+                    #$pager#
+                </span>
+            </xar:if>
+            <br class="xar-clearboth" />
+        </div>
+    <xar:else />
+        <table class="xar-fullwidth xar-alt-outline xar-margin-none">
+            <caption class="xar-align-left xar-alt-outline xar-padding-thick">
+                <span class="xar-floatleft"><xar:mlstring>List of users who have posted in the forums</xar:mlstring></span>
+                <xar:if condition="!empty($pager)">
+                    <span class="xar-align-right xar-floatright">
+                        #$pager#
+                    </span>
+                </xar:if>
+                <br class="xar-clearboth" />
+            </caption>
+            <thead>
+                <tr>
+                    <th scope="col"><xar:mlstring>User</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Topics</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Replies</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Status</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Actions</xar:mlstring></th>
+                </tr>
+            </thead>
+            <tbody>
+            <xar:if condition="!empty($items)">
+                <xar:set name="rowclass">'xar-norm'</xar:set>
+                <xar:foreach in="$items" value="$poster">
+                    <tr class="#$rowclass#">
+                        <td><a href="#xarModURL('roles', 'user', 'display', array('uid' => $poster['uid']))#">#$poster['name']#</a></td>
+                        <td>#$poster['numtopics']#</td>
+                        <td>#$poster['numreplies']#</td>
+                        <td><xar:if condition="!empty($poster['online'])">
+                            <xar:mlstring>Online</xar:mlstring>
+                            <xar:else />
+                            <xar:mlstring>Offline</xar:mlstring>
+                            </xar:if></td>
+                        <td><a href="#xarModURL('crispbb', 'admin', 'posters', array('uid' => $poster['uid']))#" title="#xarML('View IP Addresses this user has posted from')#">View IPs</a></td>
+                    </tr>
+                    <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+                </xar:foreach>
+            </xar:if>
+            </tbody>
+        </table>
+        <div class="xar-align-left xar-alt-outline xar-padding-thick">
+            <span class="xar-floatleft"><xar:mlstring>List of users who have posted in the forums</xar:mlstring></span>
+            <xar:if condition="!empty($pager)">
+                <span class="xar-align-right xar-floatright">
+                    #$pager#
+                </span>
+            </xar:if>
+            <br class="xar-clearboth" />
+        </div>
+    </xar:if>
+</div>
+<xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>
+</xar:template>

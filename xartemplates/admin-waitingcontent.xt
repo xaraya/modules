@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<strong><xar:mlstring>In crispBB</xar:mlstring>:</strong>
+<xar:if condition="empty($forums) and empty($topics) and empty($isupdated)">
+    <p><xar:mlstring>No Waiting Content</xar:mlstring></p>
+<xar:else />
+    <xar:if condition="!empty($forums)">
+    <p><xar:mlstring>Topics awaiting approval</xar:mlstring></p>
+    <xar:foreach in="$forums" value="$forum">
+        <xar:if condition="!empty($forum['modforumurl'])">
+            <a href="#$forum['modforumurl']#">#$forum['transformed_fname']#</a> : <strong>#$forum['subtopics']#</strong>
+        </xar:if>
+        <br />
+    </xar:foreach>
+    </xar:if>
+    <xar:if condition="!empty($topics)">
+    <p><xar:mlstring>Replies awaiting approval</xar:mlstring></p>
+    <xar:foreach in="$topics" value="$topic">
+        <xar:if condition="!empty($topic['modtopicurl'])">
+            <a href="#$topic['modtopicurl']#">#$topic['transformed_ttitle']#</a> : <strong>#$topic['numsubs']#</strong>
+        </xar:if>
+        <br />
+    </xar:foreach>
+    </xar:if>
+    <xar:if condition="!empty($isupdated)">
+    <p>
+        <xar:ml>
+            <xar:mlstring>New Version v.#(1) Available</xar:mlstring>
+            <xar:mlvar>#$isupdated#</xar:mlvar>
+        </xar:ml>
+    </p>
+    <a href="http://www.crispbb.com/forums/crispbb-releases/t3?action=lastreply" title="#xarML('Download latest version')#"><xar:mlstring>Download Now</xar:mlstring></a>
+    </xar:if>
+</xar:if>
+</xar:template>

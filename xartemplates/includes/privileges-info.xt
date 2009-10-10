@@ -1,0 +1,192 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<h4>View</h4>
+<ul>
+    <li>
+        <strong>Can View Forum(s)</strong> -
+        Users with this privilege can see an overview of open and closed forums. That means they can see the forum(s) linked in forum listings (crispBB user main) and view a list of topics in the forum(s) (crispBB user view {fid}).
+    </li>
+</ul>
+<h4>Read</h4>
+<ul>
+    <li><strong>Can View Forum(s)</strong></li>
+    <li>
+        <strong>Can Read Topics</strong> -
+        Users with read privileges can read open and closed topics (crispBB user display {tid}) in open and closed forums.
+    </li>
+</ul>
+<h4>Post</h4>
+<ul>
+    <li><strong>Can View Forum(s)</strong></li>
+    <li><strong>Can Read Topics</strong></li>
+    <li>Can optionally perform any of the following...<em>(options selected here are inherited by Moderate privilege)</em>
+        <ul>
+            <li>
+                <strong>Post New Topics</strong> -
+                User can create new open topics in open forums
+            </li>
+            <li>
+                <strong>Post Replies</strong> -
+                User can post replies to open topics in open forums
+            </li>
+            <li>
+                <strong>Edit Own Topics</strong> -
+                User can edit their own open topics in open forums
+            </li>
+            <li>
+                <strong>Edit Own Replies</strong> -
+                User can edit their own replies in open topics, in open forums
+            </li>
+            <li>
+                <strong>Close Own Topics</strong> -
+                User can close their own open topics in open forums
+            </li>
+            <li>
+                <strong>Post Stickies</strong> -
+                User can create new sticky topics in open forums
+            </li>
+            <li>
+                <strong>Post Announcements</strong> -
+                User can create new announcement topics in open forums
+            </li>
+            <li>
+                <strong>Post BBCode</strong> -
+                User posted BBCode will be transformed
+            </li>
+            <li>
+                <strong>Deny BBCode</strong> -
+                User can disable BBCode in topic and replies
+            </li>
+
+            <li>
+                <strong>Post Smilies</strong> -
+                User posted Smilies will be transformed
+            </li>
+
+            <li>
+                <strong>Deny Smilies</strong> -
+                User can disable Smilies in topic and replies
+            </li>
+            <li>
+                <strong>Add Changelog Remark</strong> -
+                User can add a changelog remark when editing topics and replies
+            </li>
+            <li>
+                <strong>Post Poll</strong> -
+                User can post a poll when creating a new topic
+            </li>
+            <li>
+                <strong>Post HTML</strong> -
+                User posted HTML will be transformed
+            </li>
+
+            <li>
+                <strong>Deny HTML</strong> -
+                User can disable HTML in topic and replies
+            </li>
+
+
+        </ul>
+    </li>
+</ul>
+<h4>Moderate</h4>
+<ul>
+    <li><strong>Can View Forum(s)</strong></li>
+    <li><strong>Can Read Topics</strong></li>
+    <li><strong>Can Perform All Checked Options from Post Privilege</strong></li>
+    <li>Can optionally perform any of the following...<em>(options selected here are inherited by Add privilege)</em>
+        <ul>
+            <li>
+                <strong>Any unchecked options from Post privilege</strong>
+            </li>
+            <li>
+                <strong>Edit Topics</strong> -
+                User can edit topics in open forums
+            </li>
+            <li>
+                <strong>Edit Replies</strong> -
+                User can edit replies to topics in open forums
+            </li>
+            <li>
+                <strong>Close Topics</strong> -
+                User can close topics in open forums
+            </li>
+            <li>
+                <strong>Lock Topics</strong> -
+                User can lock topics in open forums
+            </li>
+            <li>
+                <strong>Move Topics</strong> -
+                User can move topics in open forums
+            </li>
+            <li>
+                <strong>Split Topics</strong> -
+                User can split topics in open forums
+            </li>
+            <li>
+                <strong>Delete Topics</strong> -
+                User can delete topics in open forums
+            </li>
+            <li>
+                <strong>Delete Replies</strong> -
+                User can delete replies to topics in open forums
+            </li>
+        </ul>
+    </li>
+</ul>
+<h4>Add</h4>
+<ul>
+    <li><strong>Can View Forum(s)</strong></li>
+    <li><strong>Can Read Topics</strong></li>
+    <li><strong>Can Perform All Checked Options from Moderate Privilege</strong></li>
+    <li>Can optionally perform any of the following...
+        <ul>
+            <li>
+                <strong>Any unchecked options from Moderate privilege</strong>
+            </li>
+            <li>
+                <strong>Add Forum</strong> -
+                User can add forums to the system <em>(this option is inherited by Edit privilege)</em>
+            </li>
+        </ul>
+    </li>
+</ul>
+<h4>Edit</h4>
+<ul>
+    <li><strong>Can View Forum(s)</strong></li>
+    <li><strong>Can Read Topics</strong></li>
+    <li><strong>Can Perform All Options available to Post and Moderate privileges</strong></li>
+    <li>Can optionally perform any of the following...<em>(options selected here are inherited by Delete privilege)</em>
+        <ul>
+            <li>
+                <strong>Add Forum</strong> -
+                <em>(if not already checked in Add privilege)</em>
+            </li>
+            <li>
+                <strong>Edit Forum</strong> -
+                User can edit forums
+            </li>
+        </ul>
+    </li>
+</ul>
+<h4>Delete</h4>
+<ul>
+    <li><strong>Can View Forum(s)</strong></li>
+    <li><strong>Can Read Topics</strong></li>
+    <li><strong>Can Perform All Checked Options from Edit Privilege</strong></li>
+    <li>Can optionally perform any of the following...<em></em>
+        <ul>
+            <li>
+                <strong>Any unchecked options from Edit privilege</strong>
+            </li>
+            <li>
+                <strong>Delete Forum</strong> -
+                User can delete forums from the system
+            </li>
+        </ul>
+    </li>
+</ul>
+<h4>Admin</h4>
+<p>Users with admin privilege have no restrictions on their actions.</p>
+</xar:template>
