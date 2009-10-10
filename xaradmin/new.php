@@ -28,16 +28,9 @@ function crispbb_admin_new($args)
     if (!xarVarFetch('phase', 'enum:form:update', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
     // allow return url to be over-ridden
     if (!xarVarFetch('returnurl', 'str:1:', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
-
-    // fetch any input from form
-    if (!xarVarFetch('fname', 'str:1:', $fname, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('fdesc', 'str:1:', $fdesc, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('fstatus', 'int:0:', $fstatus, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('fowner', 'id', $fowner, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('catid', 'id', $catid, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('ftype', 'int:0:', $ftype, 0, XARVAR_NOT_REQUIRED)) return;
+    // @CHECKME: is this still needed?
     if (!xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('redirecturl', 'str:1:255', $redirecturl, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!xarSecurityCheck('AddCrispBB', 0)) {
         return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
@@ -91,7 +84,7 @@ function crispbb_admin_new($args)
         xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
     }
 
-    if (!$confirm) {
+    if (!$confirm) { // @CHECKME: still necessary?
         $phase = 'form';
     }
 
@@ -149,7 +142,7 @@ function crispbb_admin_new($args)
     }
     if (empty($settings)) {
         $settings = array();
-        foreach ($data['settings']->properties as $name => $value) {
+        foreach (array_keys($data['settings']->properties) as $name) {
             $settings[$name] = $data['settings']->properties[$name]->value;
         }
     }
