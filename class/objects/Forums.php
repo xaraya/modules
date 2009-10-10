@@ -8,6 +8,11 @@ class Forums extends DataObject
     // ie in admin modify the function specifically calls
     // updateHooks(true), all other updates ignore hooks completely
     public $updatehooks = false;
+    public $fsettings = array(); // settings for this forum
+    public $fprivileges = array(); // all permissions for this forum
+    public $itemlinks = array(); // itemlinks based on permissions
+    public $userLevel = 0; // maximum level for current user
+    public $userAction = 'viewforum'; // minimum requirement
 
     function __construct(DataObjectDescriptor $descriptor)
     {
@@ -19,9 +24,92 @@ class Forums extends DataObject
         $this->tplmodule = 'crispbb';
     }
 
+    /**
+     * Retrieve the values for this item
+    **/
+    public function getItem(Array $args = array())
+    {
+        $itemid = parent::getItem($args);
+        if (empty($itemid)) return;
+        $fsettings = unserialize($this->properties['fsettings']->value);
+        $this->fsettings = $fsettings;
+        $fprivileges = unserialize($this->properties['fprivileges']->value);
+        $this->fprivileges = $fprivileges;
+        $check = $this->getFieldValues();
+        $check['fid'] = $this->itemid;
+        $check['fprivileges'] = $this->fprivileges;
+        $this->userLevel = xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
+            array('check' => $check, 'priv' => $this->userAction));
+        $this->secLevels = $this->fprivileges[$this->userLevel];
+        return $this->itemid;
+    }
+    /**
+     * populate itemlinks for this forum
+    **/
+    public function getItemLinks(Array $args = array())
+    {
+        extract($args);
+        $itemlinks = array();
+        if (empty($this->userLevel)) return;
+        $check = $this->getFieldValues();
+        $check['fid'] = $this->itemid;
+        $check['fprivileges'] = $this->fprivileges;
+        $privs = $this->fprivileges[$this->userLevel];
+        // deleteforum permissions
+        if (!empty($privs['deleteforum'])) {
+            $itemlinks['delete'] = xarModURL('crispbb', 'admin', 'delete', array('fid' => $this->itemid));
+        }
+        if (!empty($privs['editforum'])) {
+            $itemlinks['modify'] = xarModURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'edit'));
+            $itemlinks['overview'] = xarModURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid));
+        }
+        // forum viewers
+        if ($check['ftype'] != 1) {
+            $itemlinks['view'] = xarModURL('crispbb', 'user', 'view', array('fid' => $this->itemid));
+            // forum readers
+            if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel', array('check' => $check, 'priv' => 'readforum'))) {
+                if (!empty($check['lasttid'])) {
+                    //@TODO:
+                }
+                // Logged in users
+                if (xarUserIsLoggedIn()) {
+                    $itemlinks['read'] = xarModURL('crispbb', 'user', 'view',
+                        array('fid' => $this->itemid, 'action' => 'read'));
+                    // forum posters
+                    if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
+                        array('check' => $check, 'priv' => 'newtopic'))) {
+                        $itemlinks['newtopic'] = xarModURL('crispbb', 'user', 'newtopic',
+                            array('fid' => $this->itemid));
+                    }
+                    // forum moderators
+                    if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
+                        array('check' => $check, 'priv' => 'ismoderator'))) {
+                        $itemlinks['moderate'] = xarModURL('crispbb', 'user', 'moderate',
+                            array('component' => 'topics', 'fid' => $this->itemid));
+                    }
+                    if (!empty($privs['editforum'])) {
+                        $itemlinks['forumhooks'] = xarModURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'forumhooks'));
+                        $itemlinks['topichooks'] = xarModURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'topichooks'));
+                        $itemlinks['posthooks'] = xarModURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'posthooks'));
+                        $itemlinks['privileges'] = xarModURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'privileges'));
+                    }
+                }
+            }
+        } else {
+            $redirecturl = !empty($this->fsettings['redirecturl']) ? $this->fsettings['redirecturl'] : '';
+            if (!empty($redirecturl)) {
+                $itemlinks['view'] = $redirecturl;
+            }
+        }
+
+        $this->itemlinks = $itemlinks;
+    }
+
     // update a forum, we don't call parent here, otherwise nohooks will be ignored
     public function updateItem(Array $args = array())
     {
+        // updating anything other than forum counts requires elevated privs
+        // @TODO: wrap this in a sec check
         if(count($args) > 0) {
             if(!empty($args['itemid']))
                 $this->itemid = $args['itemid'];
@@ -92,6 +180,7 @@ class Forums extends DataObject
     }
     public function createItem(Array $args = array())
     {
+        // @TODO: sec check
         // The id of the item^to be created is
         //  1. An itemid arg passed
         //  2. An id arg passed ot the primary index
@@ -213,6 +302,7 @@ class Forums extends DataObject
             'categories','user','leftjoin',
             array(
                 'modid' => $this->moduleid,
+                'itemtype' => $this->itemtype,
                 'cids' => $cids
             )
         );
