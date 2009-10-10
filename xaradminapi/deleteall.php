@@ -41,11 +41,13 @@ function hitcount_adminapi_deleteall($args)
 // TODO: re-evaluate this for hook calls !!
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if(!xarSecurityCheck('DeleteHitcountItem',1,'Item',"All:All:$objectid")) return;
+    if(!xarSecurityCheck('DeleteHitcountItem',1,'Item',"$objectid:All:All")) return;
 
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
     $hitcounttable = $xartable['hitcount'];
+
+// FIXME: delete only for a particular module + itemtype (e.g. dd object, articles pubtype, ...)
 
     $query = "DELETE FROM $hitcounttable
             WHERE module_id = ?";

@@ -86,31 +86,15 @@ function hitcount_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // Set up module hooks
+    // Set up module hooks - using hook call handlers now
 
-    // when a module item is displayed
+    // when a module item is displayed, created or deleted
     // (use xarVarSetCached('Hooks.hitcount','save', 1) to tell hitcount *not*
     // to display the hit count, but to save it in 'Hooks.hitcount', 'value')
-    if (!xarModRegisterHook('item', 'display', 'GUI',
-                           'hitcount', 'user', 'display')) {
-        return false;
-    }
-    // when a module item is created (set extrainfo to the module name ?)
-    if (!xarModRegisterHook('item', 'create', 'API',
-                           'hitcount', 'admin', 'create')) {
-        return false;
-    }
-    // when a module item is deleted (set extrainfo to the module name ?)
-    if (!xarModRegisterHook('item', 'delete', 'API',
-                           'hitcount', 'admin', 'delete')) {
-        return false;
-    }
+    xarHooks::registerHookCallHandler('hitcount', 'HitcountItemHooks', 'modules.hitcount.class.itemhooks');
+
     // when a whole module is removed, e.g. via the modules admin screen
-    // (set object ID to the module name !)
-    if (!xarModRegisterHook('module', 'remove', 'API',
-                           'hitcount', 'admin', 'deleteall')) {
-        return false;
-    }
+    xarHooks::registerHookCallHandler('hitcount', 'HitcountConfigHooks', 'modules.hitcount.class.confighooks');
 
     /*********************************************************************
     * Define instances for this module
@@ -151,10 +135,6 @@ function hitcount_init()
 
     xarRegisterPrivilege('ViewHitcount','All','hitcount','All','All','ACCESS_OVERVIEW');
     xarRegisterPrivilege('ReadHitcount','All','hitcount','All','All','ACCESS_READ');
-    xarRegisterPrivilege('CommmentHitcount','All','hitcount','All','All','ACCESS_COMMENT');
-    xarRegisterPrivilege('ModerateHitcount','All','hitcount','All','All','ACCESS_MODERATE');
-    xarRegisterPrivilege('EditHitcount','All','hitcount','All','All','ACCESS_EDIT');
-    xarRegisterPrivilege('AddHitcount','All','hitcount','All','All','ACCESS_ADD');
     xarRegisterPrivilege('ManageHitcount','All','hitcount','All','All:All','ACCESS_DELETE');
     xarRegisterPrivilege('AdminHitcount','All','hitcount','All','All','ACCESS_ADMIN');
 
@@ -174,7 +154,32 @@ function hitcount_upgrade($oldversion)
             // stored in xar_hitcount
 
         case '2.0.1':
+            // this is only supported for versions *after* jamaica 2.0.0-b4 !
 
+            // switch from hook functions to hook class handlers
+            $dbconn = xarDB::getConn();
+            $xartable = xarDB::getTables();
+
+            $tmodInfo = xarMod_GetBaseInfo('hitcount');
+            $tmodId = $tmodInfo['systemid'];
+
+            $sql = "UPDATE $xartable[hooks]
+                    SET t_type = ?,
+                        t_func = ?,
+                        t_file = ?
+                    WHERE t_module_id = ?
+                      AND object = ?";
+            $stmt = $dbconn->prepareStatement($sql);
+
+            // update item hooks
+            $bindvars = array('class','HitcountItemHooks','modules.hitcount.class.itemhooks',$tmodId,'item');
+            $stmt->executeUpdate($bindvars);
+
+            // update module hooks
+            $bindvars = array('class','HitcountConfigHooks','modules.hitcount.class.confighooks',$tmodId,'module');
+            $stmt->executeUpdate($bindvars);
+
+        case '2.1.0':
             break;
     }
 
@@ -186,45 +191,14 @@ function hitcount_upgrade($oldversion)
  */
 function hitcount_delete()
 {
+    // ...
+    // Unregister all hooks for a hook module (recommend to use the standard deinstall for modules instead)
+    //xarHooks::unregisterHookModule('hitcount');
+    // ...
 
-    xarModVars::delete('hitcount', 'countadmin');
-    // Remove module hooks
-    if (!xarModUnregisterHook('item', 'display', 'GUI',
-                             'hitcount', 'user', 'display')) {
-        xarSession::setVar('errormsg', xarML('Could not unregister hook'));
-    }
-    if (!xarModUnregisterHook('item', 'create', 'API',
-                             'hitcount', 'admin', 'create')) {
-        xarSession::setVar('errormsg', xarML('Could not unregister hook'));
-    }
-    if (!xarModUnregisterHook('item', 'delete', 'API',
-                             'hitcount', 'admin', 'delete')) {
-        xarSession::setVar('errormsg', xarML('Could not unregister hook'));
-    }
-    if (!xarModUnregisterHook('module', 'remove', 'API',
-                             'hitcount', 'admin', 'deleteall')) {
-        xarSession::setVar('errormsg', xarML('Could not unregister hook'));
-    }
-
-    // Get database information
-    $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
-
-    //Load Table Maintenance API
-    sys::import('xaraya.tableddl');
-
-    // Delete tables
-    $query = xarDBDropTable($xartable['hitcount']);
-
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    // Remove Masks and Instances
-    xarRemoveMasks('hitcount');
-    xarRemoveInstances('hitcount');
-
-    // Deletion successful
-    return true;
+    // nothing special to do here - rely on standard deinstall
+    $module = 'hitcount';
+    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
 }
 
 ?>
