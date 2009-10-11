@@ -18,28 +18,32 @@
  */
 function crispbb_admin_delete($args)
 {
-
     extract($args);
     if (!xarVarFetch('fid', 'id', $fid)) return;
     if (!xarVarFetch('sublink', 'str:1:', $sublink, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('phase', 'enum:form:update', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) return;
     // allow return url to be over-ridden
-    if (!xarVarFetch('returnurl', 'str:1:', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('return_url', 'str:1:', $data['return_url'], '', XARVAR_NOT_REQUIRED)) return;
 
     $data = xarMod::apiFunc('crispbb', 'user', 'getforum', array('fid' => $fid, 'privcheck' => true));
 
-    if ($data == 'NO_PRIVILEGES' || empty($data['deleteforumurl'])) {
-        $errorMsg['message'] = xarML('You do not have the privileges required for this action');
-        $errorMsg['return_url'] = xarModURL('crispbb', 'user', 'main');
-        $errorMsg['type'] = 'NO_PRIVILEGES';
-        $errorMsg['pageTitle'] = xarML('No Privileges');
-        xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
-        return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
-    }
+    sys::import('modules.dynamicdata.class.objects.master');
+    $data['forum'] = DataObjectMaster::getObject(array('name' => 'crispbb_forums'));
+    //$data['forum']->joinCategories();
+    $fieldlist = array('fname','fdesc','fstatus','ftype','category','numtopics','numreplies');
+    $data['forum']->setFieldlist($fieldlist);
+    $data['forum']->userAction = 'deleteforum';
+    $itemid = $data['forum']->getItem(array('itemid' => $fid));
 
-    $userLevel = $data['forumLevel'];
-    $secLevels = $data['fprivileges'];
+    if ($itemid != $fid)
+        return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+
+    if (empty($data['forum']->userLevel))
+        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+
+    $userLevel = $data['forum']->userLevel;
+    $secLevels = $data['forum']->fprivileges;
     $invalid = array();
     $now = time();
     $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
@@ -48,19 +52,18 @@ function crispbb_admin_delete($args)
         xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
         xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
     }
-    $pageTitle = xarML('Delete #(1)', $data['fname']);
+    $pageTitle = xarML('Delete #(1)', $data['forum']->properties['fname']->value);
 
-    if ($phase == 'update' && $confirm) {
-        if (empty($invalid)) {
-            if (!xarSecConfirmAuthKey()) return;
-            if (!xarMod::apiFunc('crispbb', 'admin', 'delete',
-                array('fid' => $fid))) return;
-            xarSessionSetVar('crispbb_statusmsg', xarML('Forum #(1) deleted', $data['fname']));
-            // if no returnurl specified, return to the modify function for the newly created forum
-            if (empty($returnurl)) {
-                $returnurl = xarModURL('crispbb', 'admin', 'view');
+    if ($phase == 'update') {
+        if ($confirm) {
+            if (!xarSecConfirmAuthKey()) {
+                return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
             }
-            xarResponse::Redirect($returnurl);
+            $data['forum']->deleteItem(array('itemid' => $fid));
+            if (empty($data['return_url'])) {
+                $data['return_url'] = xarModURL('crispbb', 'admin', 'view');
+            }
+            xarResponse::Redirect($data['return_url']);
             return true;
         }
     }

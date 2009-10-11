@@ -13,29 +13,7 @@
     <h3>#$pageTitle#</h3>
     <form method="post" action="#xarModURL('crispbb', 'admin','delete')#">
         <fieldset>
-            <div class="xar-form-input-wrapper">
-                <label class="xar-form-label">
-                    <xar:mlstring>Delete Forum</xar:mlstring>:
-                </label>
-                <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#" title="#xarML('View Forum')#">#$transformed_fname#</a>
-            </div>
-            <div class="xar-form-input-wrapper">
-                <p class="xar-form-container-after">
-                    <xar:if condition="!empty($numtopics)">
-                    <xar:set name="gram1">$numtopics == 1 ? 'topic' : 'topics'</xar:set>
-                    <xar:set name="gram2">$numreplies == 1 ? 'reply' : 'replies'</xar:set>
-                    <xar:ml>
-                        <xar:mlstring>This forum has #(1) #(2) and #(3) #(4) which will also be deleted</xar:mlstring>
-                        <xar:mlvar>#$numtopics#</xar:mlvar>
-                        <xar:mlvar>#$gram1#</xar:mlvar>
-                        <xar:mlvar>#$numreplies#</xar:mlvar>
-                        <xar:mlvar>#$gram2#</xar:mlvar>
-                    </xar:ml>
-                    <xar:else />
-                        <xar:mlstring>This forum has no topics</xar:mlstring>
-                    </xar:if>
-                </p>
-            </div>
+            <xar:data-display object="$forum" />
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                 <input type="hidden" name="fid" id="fid" value="#$fid#" />

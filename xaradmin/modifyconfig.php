@@ -28,7 +28,7 @@ function crispbb_admin_modifyconfig()
     if (!xarVarFetch('sublink', 'str:1:', $sublink, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('phase', 'enum:form:update', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
     // allow return url to be over-ridden
-    if (!xarVarFetch('returnurl', 'str:1:', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('return_url', 'str:1:', $data['return_url'], '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('checkupdate', 'checkbox', $checkupdate, false, XARVAR_NOT_REQUIRED)) return;
 
     $now = time();
@@ -86,10 +86,10 @@ function crispbb_admin_modifyconfig()
             // update the status message
             xarSessionSetVar('crispbb_statusmsg', xarML('Module configuration updated'));
             // if no returnurl specified, return to the modify function for the newly created forum
-            if (empty($returnurl)) {
-                $returnurl = xarModURL('crispbb', 'admin', 'modifyconfig');
+            if (empty($data['return_url'])) {
+                $data['return_url'] = xarModURL('crispbb', 'admin', 'modifyconfig');
             }
-            xarResponse::Redirect($returnurl);
+            xarResponse::Redirect($data['return_url']);
             return true;
         }
 
@@ -103,9 +103,6 @@ function crispbb_admin_modifyconfig()
             'current_sublink' => $sublink
         ));
 
-    $data['shorturls'] = xarModVars::get('crispbb', 'SupportShortURLs');
-    $data['usealias'] = xarModVars::get('crispbb', 'useModuleAlias');
-    $data['aliasname'] = xarModVars::get('crispbb', 'aliasname');
     // display controls
     $data['showuserpanel'] = xarModVars::get('crispbb', 'showuserpanel');
     $data['showsearchbox'] = xarModVars::get('crispbb', 'showsearchbox');
@@ -118,7 +115,6 @@ function crispbb_admin_modifyconfig()
     $data['version'] = $modinfo['version'];
     $data['newversion'] = !empty($hasupdate) ? $hasupdate : NULL;
     $data['checkupdate'] = $checkupdate;
-
 
     // store function name for use by admin-main as an entry point
     xarSessionSetVar('crispbb_adminstartpage', 'modifyconfig');

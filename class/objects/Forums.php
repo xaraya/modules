@@ -40,7 +40,68 @@ class Forums extends DataObject
         $check['fprivileges'] = $this->fprivileges;
         $this->userLevel = xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
             array('check' => $check, 'priv' => $this->userAction));
-        $this->secLevels = $this->fprivileges[$this->userLevel];
+        return $this->itemid;
+    }
+    /**
+     * Delete this forum (and its topics and posts)
+    **/
+    public function deleteItem(Array $args = array())
+    {
+        if(!empty($args['itemid']))
+            $this->itemid = $args['itemid'];
+
+        if(empty($this->itemid))
+        {
+            $msg = 'Invalid item id in method #(1)() for dynamic object [#(2)] #(3)';
+            $vars = array('deleteItem',$this->objectid,$this->name);
+            throw new BadParameterException($vars, $msg);
+        }
+
+        // @TODO: replace these api calls with objectlists
+        $topics = xarMod::apiFunc('crispbb', 'user', 'gettopics', array('fid' => $this->itemid));
+        $tids = !empty($topics) ? array_keys($topics) : array();
+        $posts = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $this->itemid));
+        $pids = !empty($posts) ? array_keys($posts) : array();
+        $dbconn =& xarDB::getConn();
+        $xartable =& xarDB::getTables();
+        $topicstable = $xartable['crispbb_topics'];
+        $poststable = $xartable['crispbb_posts'];
+        $itemtypestable = $xartable['crispbb_itemtypes'];
+        $hookstable = $xartable['crispbb_hooks'];
+        try {
+            $dbconn->begin();
+            // remove posts
+            if (!empty($pids)) {
+                $query = "DELETE FROM $poststable WHERE id IN (" . join(',', $pids) . ")";
+                $result = &$dbconn->Execute($query,array());
+            }
+            // remove topics
+            if (!empty($tids)) {
+                // first from topics table
+                $query = "DELETE FROM $topicstable WHERE id IN (" . join(',', $tids) . ")";
+                $result = &$dbconn->Execute($query,array());
+                // then from hooks table
+                $query = "DELETE FROM $hookstable WHERE tid IN (" . join(',', $tids) . ")";
+                $result = &$dbconn->Execute($query,array());
+            }
+            // remove forum itemtype
+            $query = "DELETE FROM $itemtypestable WHERE fid = ? AND component = 'Forum'";
+            $result = &$dbconn->Execute($query,array($this->itemid));
+            // We're done, commit
+            $dbconn->commit();
+        } catch (Exception $e) {
+            $dbconn->rollback();
+            throw $e;
+        }
+        // remove forum from ftracker
+        $string = xarModVars::get('crispbb', 'ftracker');
+        $ftracker = (!empty($string) && is_string($string)) ? unserialize($string) : array();
+        if (isset($ftracker[$this->itemid])) unset($ftracker[$this->itemid]);
+        xarModVars::set('crispbb', 'ftracker', serialize($ftracker));
+        // and finally, remove the forum itself :)
+        $itemid = parent::deleteItem($args);
+        if(empty($itemid)) return;
+
         return $this->itemid;
     }
     /**
