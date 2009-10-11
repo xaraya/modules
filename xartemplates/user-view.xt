@@ -71,14 +71,13 @@
 
 <p>In the case of this page, the module function is in <strong>dyn_example/xaruser/view.php</strong>.  It returns this array: $data.  Thus, if you set a value for $data['age'] in the module function, you can use $age in the <strong>user-view.xt</strong> template to output that value.</p>
 
-<p>Have a look in view.php, and you'll see that our $data array supplies the values for variables we use in #$userviewlink#, specifically $mylist, $items_per_page and $startnum.</p>
+<p>Have a look in view.php, and you'll see that our $data array supplies the values for variables we use in #$userviewlink#, specifically $mylist here. In this approach, the list is already prepared by the module function, so this requires the least amount of template code in <strong>user-view.xt</strong>.</p>
 
 <p><strong>Important tag in user-view.xt:</strong></p>
 
-<pre>   &lt;xar:data-view object="$mylist" numitems="$items_per_page" 
-        startnum="$startnum" tplmodule="dyn_example" /&gt;</pre>
+<pre>   &lt;xar:data-view object="$mylist" tplmodule="dyn_example" /&gt;</pre>
 
-<xar:data-view object="$mylist" numitems="$items_per_page" startnum="$startnum" tplmodule="dyn_example" />
+<xar:data-view object="$mylist" tplmodule="dyn_example" />
 
         </div>
 
@@ -88,13 +87,15 @@
 
 <h3>Reference a dataobject by name in <pre>&lt;xar:data-view /&gt;</pre></h3>
 
-<p>This involves the least amount of #$userviewlink# template code.</p>
+<p>This involves the least amount of processing in <strong>dyn_example/xaruser/view.php</strong>, but you'll need to pass more variables to the #$userviewlink# template code, specifically $items_per_page, $numitems and $sort here.</p>
 
 <p><strong>Important tag in user-view.xt:</strong></p>
 
-<pre>&lt;xar:data-view object="dyn_example" tplmodule="dyn_example" /&gt;</pre>
+<pre>&lt;xar:data-view object="dyn_example" sort="$sort"
+ startnum="$startnum" numitems="$items_per_page"
+ tplmodule="dyn_example" layout="list" /&gt;</pre>
 
-<xar:data-view object="dyn_example" tplmodule="dyn_example" />
+<xar:data-view object="dyn_example" numitems="$items_per_page" startnum="$startnum" sort="$sort" tplmodule="dyn_example" layout="list" />
 
         </div>
         
@@ -104,21 +105,23 @@
 
 <h3>Get items in the template with <pre>&lt;xar:data-getitems /&gt;</pre></h3>
 
-As in Approach ##1, we have set some variables in view.php for use in #$userviewlink#.  Those variables serve as arguments in <pre>&lt;xar:data-getitems/&gt;</pre>
+As in Approach ##2, we have set some variables in view.php for use in #$userviewlink#.  Those variables serve as arguments in <pre>&lt;xar:data-getitems/&gt;</pre>
 
 <p><strong>Important tag in user-view.xt:</strong></p>
 
 <p>In #$userviewlink#, we retrieve items with... </p>
 
 <blockquote><pre>&lt;xar:data-getitems object="$mylist" value="values" name="properties" 
-    numitems="$items_per_page" startnum="$startnum" /&gt;
+    numitems="$items_per_page" startnum="$startnum" sort="$sort" /&gt;
 </pre></blockquote>
 
 ...and then iterate over the items with <pre>&lt;xar:foreach /&gt;</pre>.
 
 <p><strong>Output:</strong></p>
 
-<xar:data-getitems object="$mylist" value="values" name="properties" numitems="$items_per_page" startnum="$startnum" />
+<!-- FIXME: this tag should work with object[name]="dyn_example", but there you need name="$properties" value="$values" with $ -->
+
+<xar:data-getitems object="$mylist" value="values" name="properties" numitems="$items_per_page" startnum="$startnum" sort="$sort" />
 
             <table>
                 <tr>
@@ -150,6 +153,7 @@ As in Approach ##1, we have set some variables in view.php for use in #$userview
                     <td class="xar-align-center"><a href="#xarModURL('dyn_example','admin','new')#">New</a></td>
                 </tr>
             </table>
+            <p>Here you'll need to provide your own pager...</p>
         </div>
 
 

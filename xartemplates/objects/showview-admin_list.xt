@@ -79,4 +79,23 @@
                 </tr>
             </xar:foreach>
         </table>
+        <xar:if condition="!empty($pager)">
+            <div class="xar-align-center">
+                #$pager#
+            </div>
+        <xar:elseif condition="!empty($prevurl) or !empty($nexturl)"/>
+            <div class="xar-align-center">
+                <xar:if condition="!empty($prevurl)">
+                    <a href="#$prevurl#">&lt;&lt;</a>
+                <xar:else />
+                    &lt;&lt;
+                </xar:if>
+                &#160;&#160;&#160;
+                <xar:if condition="!empty($nexturl)">
+                    <a href="#$nexturl#">&gt;&gt;</a>
+                <xar:else />
+                    &gt;&gt;
+                </xar:if>
+            </div>
+        </xar:if>
 </xar:template>

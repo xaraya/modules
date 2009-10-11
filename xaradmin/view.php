@@ -41,6 +41,9 @@ function dyn_example_admin_view()
                      'sort'      => $data['sort'],
                     );
     
+    // Count the items first if you want a full pager - otherwise you'll get simple previous/next links
+    $mylist->countItems($filters);
+
     // Get the items 
     $items = $mylist->getItems($filters);
     

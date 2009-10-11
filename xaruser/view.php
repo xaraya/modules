@@ -33,21 +33,23 @@ function dyn_example_user_view()
     // get user settings for 'items_per_page'
     $data['items_per_page'] = xarModUserVars::get('dyn_example','items_per_page');
 
-/* start APPROACH # 1 and # 2 : retrieve the items directly in the template */
-    // Note: we don't retrieve any items here ourselves - we'll let the
-    //       <xar:data-view ... /> tag do that in the template itself
-/* end APPROACH # 1 and # 2 : retrieve the items directly in the template */
-
-/* start APPROACH # 3 : getting the object list via API
+/* start APPROACH # 1 and # 3 : getting the object list via API
  *
- * Here we retreive all items via an API call to dynamic data itself
- * We need to pass all variables we need to get a correct listing
+ * Here we retrieve the object list via an API call to dynamic data itself
  */
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
+
     // Get the object we'll be working with. Note this is a so called object list
     $mylist = DataObjectMaster::getObjectList(array('name' => 'dyn_example'));
 
+/* end APPROACH # 1 and # 3 : getting the object list via API */
+
+/* start APPROACH # 1 : getting the items via API
+ *
+ * Here we retrieve all items via an API call to dynamic data itself
+ * We need to pass all variables we need to get a correct listing
+ */
     // Load the DD master property class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.properties.master');
 
@@ -58,6 +60,9 @@ function dyn_example_user_view()
                      'sort'      => $data['sort'],
                     );
     
+    // Count the items first if you want a full pager - otherwise you'll get simple previous/next links
+    $mylist->countItems($filters);
+
     // Get the items 
     $items = $mylist->getItems($filters);
 
@@ -69,7 +74,12 @@ function dyn_example_user_view()
     $data['properties'] =& $mylist->getProperties();
     $data['values'] =& $mylist->items;
     // TODO: add a pager here (needed for this approach)
-/* end APPROACH # 3 : getting the object list via API */
+/* end APPROACH # 1 : getting the items via API */
+
+/* start APPROACH # 2 : retrieve the items directly in the template */
+    // Note: we don't retrieve any items here ourselves - we'll let the
+    //       <xar:data-view ... /> tag do that in the template itself
+/* end APPROACH # 2 : retrieve the items directly in the template */
 
 /* start APPROACH # 4 : getting only the raw item values via API */
     $data['labels'] = array();
