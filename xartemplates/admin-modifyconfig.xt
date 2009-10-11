@@ -14,6 +14,7 @@
     </xar:if>
     <h3><xar:mlstring>Modify Module Configuration</xar:mlstring></h3>
     <form method="post" action="#xarModURL('crispbb', 'admin', 'modifyconfig')#">
+        <!--
         <fieldset>
             <div class="xar-form-input-wrapper">
                 <label for="checkupdate" class="xar-form-label help" title="#xarML('Check now for updates to crispbb')#"><xar:mlstring>crispBB v.</xar:mlstring>#$version#</label>
@@ -31,25 +32,9 @@
                 </div>
             </xar:if>
         </fieldset>
+        -->
         <fieldset>
-            <div class="xar-form-input-wrapper-after">
-                <xar:set name="selval">$shorturls ? 'checked="checked"' : ''</xar:set>
-                <xar:data-input type="checkbox" name="shorturls" id="shorturls" value="$shorturls" />
-                <label for="shorturls" title="#xarML('Support Short URLs.')#">
-                  <xar:mlstring>Support Short URLs?</xar:mlstring>
-                </label>
-            </div>
-            <div class="xar-form-input-wrapper">
-                <label for="aliasname" class="xar-form-label" title="#xarML('Module alias name')#">
-                  <xar:mlstring>Alias Name:</xar:mlstring>
-                </label>
-                <input type="text" name="aliasname" id="aliasname" value="#$aliasname#" maxlength="60" class="xar-form-textmedium" />
-                 <xar:set name="$selval">$usealias ? 'checked="checked"' : '';</xar:set>
-                <xar:data-input type="checkbox" name="usealias" id="usealias" value="$usealias" />
-                <label for="usealias" title="#xarML('Use a module alias.')#">
-                  <xar:mlstring>Use module alias?</xar:mlstring>
-                </label>
-            </div>
+            <xar:data-form object="$module_settings" />
             <div class="xar-form-input-wrapper-after">
                 <xar:data-input type="checkbox" name="showuserpanel" id="showuserpanel" value="$showuserpanel" />
                 <label for="showuserpanel" title="#xarML('Show the user information panel in user displays')#"><xar:mlstring>Show user panel?</xar:mlstring></label>
