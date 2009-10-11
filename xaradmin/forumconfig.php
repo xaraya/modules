@@ -35,13 +35,11 @@ function crispbb_admin_forumconfig($args)
     // Admin only function
     if (!xarSecurityCheck('AdminCrispBB')) return;
 
-    if (!xarVarFetch('sublink', 'str:1:', $sublink, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('phase', 'enum:form:update', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sublink', 'pre:trim:lower:str:1:', $sublink, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase', 'pre:trim:lower:enum:form:update', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
     // allow return url to be over-ridden
-    if (!xarVarFetch('returnurl', 'str:1:', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('return_url', 'pre:trim:str:1:', $data['return_url'], '', XARVAR_NOT_REQUIRED)) return;
 
-    //if (!xarVarFetch('', '', $, , XARVAR_NOT_REQUIRED)) return;
-    //if (!xarVarFetch('', '', $settings[''], $defaults[''], XARVAR_NOT_REQUIRED)) return;
     $invalid = array();
     $now = time();
     $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
@@ -53,111 +51,47 @@ function crispbb_admin_forumconfig($args)
     $pageTitle = '';
     switch (strtolower($sublink)) {
         case 'forum':
-        default:
-            $presets = xarMod::apiFunc('crispbb', 'user', 'getpresets',
-                array('preset' => 'topicsortoptions,sortorderoptions,pagedisplayoptions,fsettings,ftransfields,ttransfields,ptransfields'));
+            default:
+            sys::import('modules.dynamicdata.class.objects.master');
+            $data['settings'] = DataObjectMaster::getObject(array('name' => 'crispbb_forum_settings'));
+            $fieldlist = array('topicsperpage', 'topicsortorder', 'topicsortfield', 'postsperpage', 'postsortorder', 'hottopicposts', 'hottopichits', 'showstickies', 'showannouncements', 'showfaqs', 'topictitlemin', 'topictitlemax', 'topicdescmin', 'topicdescmax', 'topicpostmin', 'topicpostmax', 'floodcontrol', 'postbuffer', 'topicapproval', 'replyapproval');
+            $data['settings']->setFieldlist($fieldlist);
+            $data['settings']->tplmodule = 'crispbb';
+            $data['settings']->layout = 'normal';
             if ($phase == 'update') {
-                // get factory defaults
-                $defaults = $presets['fsettings'];
-                // check for factory reset
-                if (!xarVarFetch('resetdefaults', 'checkbox', $resetdefaults, false, XARVAR_NOT_REQUIRED));
-                // perform factory reset
-                if ($resetdefaults) {
-                    $settings = $defaults;
-                // fetch settings from input, falling back to factory defaults if invalid
-                } else {
-                    $settings = array();
-                    if (!xarVarFetch('topicsperpage', 'int:1:100', $settings['topicsperpage'], $defaults['topicsperpage'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('topicsortorder', 'enum:ASC:DESC', $settings['topicsortorder'], $defaults['topicsortorder'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('topicsortfield', 'enum:ptime', $settings['topicsortfield'], $defaults['topicsortfield'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('postsperpage', 'int:1:100', $settings['postsperpage'], $defaults['postsperpage'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('postsortorder', 'enum:ASC:DESC', $settings['postsortorder'], $defaults['postsortorder'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('hottopicposts', 'int:1:100', $settings['hottopicposts'], $defaults['hottopicposts'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('hottopichits', 'int:1:100', $settings['hottopichits'], $defaults['hottopichits'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('hottopicratings', 'int:1', $settings['hottopicratings'], $defaults['hottopicratings'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('topictitlemin', 'int:0:254', $settings['topictitlemin'], $defaults['topictitlemin'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('topictitlemax', 'int:0:254', $settings['topictitlemax'], $defaults['topictitlemax'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('topicdescmin', 'int:0:100', $settings['topicdescmin'], $defaults['topicdescmin'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('topicdescmax', 'int:0:100', $settings['topicdescmax'], $defaults['topicdescmax'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('topicpostmin', 'int:0:65535', $settings['topicpostmin'], $defaults['topicpostmin'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('topicpostmax', 'int:0:65535', $settings['topicpostmax'], $defaults['topicpostmax'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('showstickies', 'int:0:1', $settings['showstickies'], $defaults['showstickies'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('showannouncements', 'int:0:1', $settings['showannouncements'], $defaults['showannouncements'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('iconfolder', 'str:0', $settings['iconfolder'], $defaults['iconfolder'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('icondefault', 'str:0', $settings['icondefault'], $defaults['icondefault'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('floodcontrol', 'int:0:3600', $settings['floodcontrol'], $defaults['floodcontrol'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('postbuffer', 'int:0:60', $settings['postbuffer'], $defaults['postbuffer'], XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('topicapproval', 'checkbox', $settings['topicapproval'], false, XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('replyapproval', 'checkbox', $settings['replyapproval'], false, XARVAR_NOT_REQUIRED)) return;
-                    // perform any validations here
-                    // TODO: check icon folder
-                    // TODO: check available hooks (hits, ratings)
+                // validate input
+                $isvalid = $data['settings']->checkInput();
+                // get the property values back from the object
+                $settings = array();
+                foreach ($data['settings']->properties as $name => $value) {
+                    if (!in_array($name, $fieldlist)) continue;
+                    $settings[$name] = $data['settings']->properties[$name]->value;
                 }
-                /*
-                foreach ($presets['ftransfields'] as $field => $option) {
-                    if (!isset($settings['ftransforms'][$field]))
-                        $settings['ftransforms'][$field] = array();
-                }
-                foreach ($presets['ttransfields'] as $field => $option) {
-                    if (!isset($settings['ttransforms'][$field]))
-                        $settings['ttransforms'][$field] = array();
-                }
-                foreach ($presets['ptransfields'] as $field => $option) {
-                    if (!isset($settings['ptransforms'][$field]))
-                        $settings['ptransforms'][$field] = array();
-                }
-                */
-                if (empty($invalid)) {
-                    if (!xarSecConfirmAuthKey()) return;
+                // passed validation, call static updateSettings method to store new settings
+                if ($isvalid) {
+                    if (!xarSecConfirmAuthKey()) {
+                        return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+                    }
                     xarModVars::set('crispbb', 'forumsettings', serialize($settings));
-                    // check for apply to all forums
-                    if (!xarVarFetch('applydefaults', 'checkbox', $applydefaults, false, XARVAR_NOT_REQUIRED)) return;
-                    if ($applydefaults) {
-                        $forums = xarMod::apiFunc('crispbb', 'user', 'getforums');
-                        if (!empty($forums)) {
-                            foreach ($forums as $fid => $forum) {
-                                $thissettings = $forum['fsettings'];
-                                foreach ($settings as $k => $v) {
-                                    $thissettings[$k] = $v;
-                                }
-                                if (!xarMod::apiFunc('crispbb', 'admin', 'update',
-                                    array(
-                                        'fid' => $fid,
-                                        'fsettings' => $thissettings,
-                                        'nohooks' => true
-                                    ))) return;
-                                unset($thissettings);
-                            }
-                        }
+                    if (empty($data['return_url'])) {
+                        $data['return_url'] = xarModURL('crispbb', 'admin', 'forumconfig');
                     }
-                    // update the status message
-                    xarSessionSetVar('crispbb_statusmsg', xarML('Default forum configuration updated'));
-                    // if no returnurl specified, return to forumconfig
-                    if (empty($returnurl)) {
-                        $returnurl = xarModURL('crispbb', 'admin', 'forumconfig');
-                    }
-                    xarResponse::Redirect($returnurl);
+                    xarResponse::Redirect($data['return_url']);
                     return true;
                 }
-            }
-            // get current default settings
-            $data = xarMod::apiFunc('crispbb', 'user', 'getsettings', array('setting' => 'fsettings'));
-
-            if (!empty($data['iconfolder'])) {
-                $iconlist = xarMod::apiFunc('crispbb', 'user', 'gettopicicons',
-                    array('iconfolder' => $data['iconfolder'], 'shownone' => true));
-                $data['iconlist'] = $iconlist;
+                // failed validation, pass input back to form
+                $data['values'] = $settings;
             } else {
-                $data['iconlist'] = array();
+                $data['values'] = xarMod::apiFunc('crispbb', 'user', 'getsettings', array('setting' => 'fsettings'));
             }
-            $tsortoptions = $presets['topicsortoptions'];
-            $alltopicstype = xarMod::apiFunc('crispbb', 'user', 'getitemtype', array('fid' => 0, 'component' => 'topics'));
-            if (!xarModIsAvailable('ratings') || !xarModIsHooked('ratings', 'crispbb', $alltopicstype)) {
-                unset($tsortoptions['numratings']);
+            // propagate any new property values
+            // CHANGEME: this is a convenience function, any property updates in new releases
+            // should really be dealt with in the upgrade function of xarinit();
+            // Leaving it for now, 'cos it sure is 'convenient' :D
+            foreach ($data['settings']->properties as $name => $value) {
+                if (!isset($data['values'][$name]) && in_array($name, $fieldlist)) // only add missing property values
+                    $data['values'][$name] = $data['settings']->properties[$name]->value;
             }
-            $data['topicfields'] = $tsortoptions;
-            $data['orderoptions'] = $presets['sortorderoptions'];
-            $data['pageoptions'] = $presets['pagedisplayoptions'];
             $pageTitle = xarML('Default Forum Configuration');
         break;
 
@@ -295,10 +229,10 @@ function crispbb_admin_forumconfig($args)
                     // update the status message
                     xarSessionSetVar('crispbb_statusmsg', xarML('Default #(1) hooks configuration updated', $component));
                     // if no returnurl specified, return to forumconfig, this sublink
-                    if (empty($returnurl)) {
-                        $returnurl = xarModURL('crispbb', 'admin', 'forumconfig', array('sublink' => $sublink));
+                    if (empty($data['return_url'])) {
+                        $data['return_url'] = xarModURL('crispbb', 'admin', 'forumconfig', array('sublink' => $sublink));
                     }
-                    xarResponse::Redirect($returnurl);
+                    xarResponse::Redirect($data['return_url']);
                     return true;
                 }
             }
@@ -361,10 +295,10 @@ function crispbb_admin_forumconfig($args)
                     // update the status message
                     xarSessionSetVar('crispbb_statusmsg', xarML('Default privileges configuration updated'));
                     // if no returnurl specified, return to forumconfig
-                    if (empty($returnurl)) {
-                        $returnurl = xarModURL('crispbb', 'admin', 'forumconfig', array('sublink' => 'privileges'));
+                    if (empty($data['return_url'])) {
+                        $data['return_url'] = xarModURL('crispbb', 'admin', 'forumconfig', array('sublink' => 'privileges'));
                     }
-                    xarResponse::Redirect($returnurl);
+                    xarResponse::Redirect($data['return_url']);
                     return true;
                 }
             }
