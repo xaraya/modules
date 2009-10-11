@@ -138,17 +138,17 @@
         </form>
         <xar:template type="module" module="crispbb" file="privileges-info" />
     <xar:else />
-        <div>#$transformed_fdesc#</div>
+        <xar:data-display object="$forum" />
         <hr />
         <ul>
             <li>
                 <h4>Forum Stats</h4>
                 <ul>
                     <li>
-                        Total Topics: #$numtopics#
+                        Total Topics: #$forum:properties.numtopics:value#
                     </li>
                     <li>
-                        Total Replies: #$numreplies#
+                        Total Replies: #$forum:properties.numreplies:value#
                     </li>
                 </ul>
             </li>
@@ -156,14 +156,14 @@
                 <h4>Privileges</h4>
                 <ul>
                 <xar:foreach in="$levels" key="$level" value="$values">
-                    <xar:if condition="$ftype eq 1 and $level gt 100"><xar:break /></xar:if>
+                    <xar:if condition="$forum:properties.ftype:value eq 1 and $level gt 100"><xar:break /></xar:if>
                     <li>
                         <xar:ml>
                             <xar:mlstring>Users with #(1) privilege</xar:mlstring>
                             <xar:mlvar>#$values['name']#</xar:mlvar>
                         </xar:ml>
                         <ul>
-                        <xar:foreach in="$fprivileges[$level]" key="$action" value="$allowed">
+                        <xar:foreach in="$forum:fprivileges[$level]" key="$action" value="$allowed">
                             <xar:if condition="$allowed and !empty($actions[$action])">
                             <li>
                                 <xar:ml>
