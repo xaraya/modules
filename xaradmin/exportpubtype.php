@@ -68,6 +68,8 @@ function articles_admin_exportpubtype($args)
 
     sys::import('modules.dynamicdata.class.properties.master');
 
+//   <serialconfig>' . $settings . '</serialconfig>
+
     $data['xml'] .= '  </config>
   <isalias>' . $isalias . '</isalias>
   <properties>
