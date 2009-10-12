@@ -13,14 +13,15 @@
  */
 /**
  * get overview of all articles
- * Note : the following parameters are all optional
+ * Note : the following parameters are all optional - TODO: find other "hidden" arguments
  *
  * @param $args['numitems'] number of articles to get
  * @param $args['sort'] sort order ('pubdate','title','hits','rating','author','aid','summary','notes',...)
  * @param $args['startnum'] starting article number
  * @param $args['aids'] array of article ids to get
  * @param $args['authorid'] the ID of the author
- * @param $args['ptid'] publication type ID (for news, sections, reviews, ...)
+ * @param $args['ptid'] publication type ID (for news, sections, reviews, ...), or
+ * @param $args['ptids'] list of publication type IDs (for news, sections, reviews, ...)
  * @param $args['status'] array of requested status(es) for the articles
  * @param $args['search'] search parameter(s)
  * @param $args['searchfields'] array of fields to search in
@@ -194,7 +195,7 @@ function articles_userapi_getall($args)
                 'cids' => $cids,
                 'andcids' => $andcids,
                 'itemtype' => (isset($ptids) ? $ptids : null),
-                                            'modid' => $modid));
+                'modid' => $modid));
         if (empty($categoriesdef)) return;
     }
 
@@ -450,7 +451,7 @@ function articles_userapi_getall($args)
                 'iids' => $aids,
                 'reverse' => 1,
                 // Note : we don't need to specify the item type here for articles, since we use unique ids anyway
-                                   'modid' => $modid));
+                'modid' => $modid));
 
         // Inserting the corresponding Category ID in the Article Description
         //also check pubdate security based on all article instances as we have cid here as well
