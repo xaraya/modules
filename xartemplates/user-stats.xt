@@ -29,7 +29,7 @@
                 <li><xar:mlstring>Total Unanswered</xar:mlstring>: <strong>#$totalunanswered#</strong></li>
                 <li><xar:mlstring>Total Members</xar:mlstring>: <strong>#$totalusers#</strong></li>
                 <xar:if condition="!empty($lastuser)">
-                <li><xar:mlstring>Latest Member</xar:mlstring>: <a href="#xarModURL('roles', 'user', 'display', array('uid' => $lastuser['uid']))#" title="#xarML('View Profile')#">#$lastuser['name']#</a></li>
+                <li><xar:mlstring>Latest Member</xar:mlstring>: <a href="#xarModURL('roles', 'user', 'display', array('id' => $lastuser['id']))#" title="#xarML('View Profile')#">#$lastuser['name']#</a></li>
                 </xar:if>
                 <li><xar:mlstring>Members Online Now</xar:mlstring>: <strong>#$totalonline#</strong></li>
                 <li><xar:mlstring>Guests Online Now</xar:mlstring>: <strong>#$totalguests#</strong></li>
@@ -54,7 +54,7 @@
              <xar:if condition="!empty($topstarters)">
             <ul class="xar-alt-outline xar-padding-thick">
             <xar:foreach in="$topstarters" value="$topstarter">
-                <li><a href="#xarModURL('roles', 'user', 'display', array('uid' => $topstarter['uid']))#" title="#xarML('View Profile')#">#$topstarter['name']#</a> (#$topstarter['numtopics']#)</li>
+                <li><a href="#xarModURL('roles', 'user', 'display', array('id' => $topstarter['id']))#" title="#xarML('View Profile')#">#$topstarter['name']#</a> (#$topstarter['numtopics']#)</li>
             </xar:foreach>
             </ul>
             </xar:if>
@@ -64,7 +64,7 @@
              <xar:if condition="!empty($topposters)">
             <ul class="xar-alt-outline xar-padding-thick">
             <xar:foreach in="$topposters" value="$topposter">
-                <li><a href="#xarModURL('roles', 'user', 'display', array('uid' => $topposter['uid']))#" title="#xarML('View Profile')#">#$topposter['name']#</a> (#$topposter['numreplies']#)</li>
+                <li><a href="#xarModURL('roles', 'user', 'display', array('id' => $topposter['id']))#" title="#xarML('View Profile')#">#$topposter['name']#</a> (#$topposter['numreplies']#)</li>
             </xar:foreach>
             </ul>
             </xar:if>
