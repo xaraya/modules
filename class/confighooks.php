@@ -29,13 +29,12 @@ class HitcountConfigHooks extends ConfigHookCallHandler
     public function remove($subject)
     {
     // TODO: validate this way of working in tricky situations
-        // do some processing with $subject->hookinput or other properties in this API method
-        $hookoutput = xarMod::apiFunc('hitcount','admin','deleteall',
+        // do some processing with $subject->hookvalues or other properties in this API method
+        $hookvalues = xarMod::apiFunc('hitcount','admin','deleteall',
                                       array('objectid'  => $subject->itemid,
-                                            'extrainfo' => $subject->hookinput));
+                                            'extrainfo' => $subject->hookvalues));
 
-        // update the current $subject->hookinput values in the API method if needed
-        // put the updated values in $subject->hookoutput
+        // update the current $subject->hookvalues in the API method if needed
         // no need to return anything here
     }
 }

@@ -40,21 +40,18 @@ class HitcountItemHooks extends ItemHookCallHandler
         $fixedlist = array('module','itemtype','itemid','returnurl','transform');
 
     // TODO: validate this way of working in tricky situations
-        // do some processing with $subject->hookinput or other properties in this API method
-        $hookoutput = xarMod::apiFunc('hitcount','admin','create',
+        // do some processing with $subject->hookvalues or other properties in this API method
+        $hookvalues = xarMod::apiFunc('hitcount','admin','create',
                                       array('objectid'  => $subject->itemid,
-                                            'extrainfo' => $subject->hookinput));
+                                            'extrainfo' => $subject->hookvalues));
 
-        // update the current $subject->hookinput values in the API method if needed
-        if (!empty($hookoutput) && is_array($hookoutput)) {
-            foreach (array_keys($hookoutput) as $name) {
+        // update the current $subject->hookvalues in the API method if needed
+        if (!empty($hookvalues) && is_array($hookvalues)) {
+            foreach (array_keys($hookvalues) as $name) {
                 if (in_array($name, $fixedlist)) continue;
-                $subject->hookinput[$name] = $hookoutput[$name];
+                $subject->hookvalues[$name] = $hookvalues[$name];
             }
         }
-
-        // put the updated values in $subject->hookoutput
-        $subject->hookoutput = $subject->hookinput;
         // no need to return anything here
     }
 
@@ -69,21 +66,18 @@ class HitcountItemHooks extends ItemHookCallHandler
         $fixedlist = array('module','itemtype','itemid','returnurl','transform');
 
     // TODO: validate this way of working in tricky situations
-        // do some processing with $subject->hookinput or other properties in this API method
-        $hookoutput = xarMod::apiFunc('hitcount','admin','delete',
+        // do some processing with $subject->hookvalues or other properties in this API method
+        $hookvalues = xarMod::apiFunc('hitcount','admin','delete',
                                       array('objectid'  => $subject->itemid,
-                                            'extrainfo' => $subject->hookinput));
+                                            'extrainfo' => $subject->hookvalues));
 
-        // update the current $subject->hookinput values in the API method if needed
-        if (!empty($hookoutput) && is_array($hookoutput)) {
-            foreach (array_keys($hookoutput) as $name) {
+        // update the current $subject->hookvalues in the API method if needed
+        if (!empty($hookvalues) && is_array($hookvalues)) {
+            foreach (array_keys($hookvalues) as $name) {
                 if (in_array($name, $fixedlist)) continue;
-                $subject->hookinput[$name] = $hookoutput[$name];
+                $subject->hookvalues[$name] = $hookvalues[$name];
             }
         }
-
-        // put the updated values in $subject->hookoutput
-        $subject->hookoutput = $subject->hookinput;
         // no need to return anything here
     }
 
@@ -95,16 +89,47 @@ class HitcountItemHooks extends ItemHookCallHandler
     public function display($subject)
     {
     // TODO: validate this way of working in tricky situations
-        // generate some GUI output with $subject->hookinput or other properties in this method
+        // generate some GUI output with $subject->hookvalues or other properties in this method
         $hookoutput = xarMod::guiFunc('hitcount','user','display',
                                       array('objectid'  => $subject->itemid,
-                                            'extrainfo' => $subject->hookinput));
+                                            'extrainfo' => $subject->hookvalues));
 
         // add the output of the GUI method to the $subject->hookoutput array, using the hook modname as key
         if (isset($hookoutput)) {
             $subject->hookoutput[$this->modname] = $hookoutput;
         }
         // no need to return anything here
+
+// CHECKME: and/or add property to $subject with hitcount output for this item ?
+        $name = 'hitcount_hook';
+        $propinfo = array('name' => $name,
+                          'label' => 'Hitcount',
+                          'type' => 'textbox',
+                          //'id' => null,
+                          'defaultvalue' => '',
+                          'source' => 'dummy',
+                          'status' => 33,
+                          //'seq' => null,
+                          //'configuration' => null,
+                         );
+        $subject->addProperty($propinfo);
+        if (!empty($subject->fieldlist)) {
+            $subject->fieldlist[] = $name;
+        }
+        // set the output of the GUI method as value for the $subject property
+        if (isset($hookoutput)) {
+            $subject->properties[$name]->value = $hookoutput;
+        }
+    }
+
+    /**
+     * Run the 'view' items GUI action - move to separate action handler later
+     *
+     * @param subject mixed the dataobject for object calls, or the dummy object (= based on extraInfo) for module calls
+     */
+    public function view($subjectlist)
+    {
+// CHECKME: add property to $subjectlist with hitcount for all $subjectlist->itemids, and/or adapt $subjectlist->items ?
     }
 }
 
