@@ -21,20 +21,23 @@
  */
 function crispbb_admin_ordercats($args)
 {
-    if (!crispBB::userCan('admincrispbb')) {
+    if (!xarSecurityCheck('AdminCrispBB', 0) || !xarSecurityCheck('ManageCategories', 0)) {
          return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
     }
     extract($args);
     if (!xarVarFetch('itemid', 'int:1', $itemid, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('direction', 'pre:trim:lower:enum:up:down', $direction, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('return_url', 'pre:trim:lower:str:1', $return_url, '', XARVAR_NOT_REQUIRED)) return;
-    $basecid = crispBB::getBasecid();
+    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'crispbb'));
+    $basecid = count($basecats) > 0 ? $basecats[0]['category_id'] : null;
     $categories = xarMod::apiFunc('categories', 'user', 'getchildren', array('cids' => array($basecid)));
     $cids = array_keys($categories);
     if (empty($itemid) || !in_array($itemid, $cids)) $invalid[] = 'itemid';
     if (empty($direction)) $invalid[] = 'direction';
     if (!empty($invalid)) {
-        throw new Exception(xarML('Invalid #(1) for #(2) function #(3) in module #(4)', join(', ', $invalid), 'admin', 'ordercats', 'crispBB'));
+        $msg = 'Invalid #(1) for #(2) function #(3) in module #(4)';
+        $vars = array(join(', ', $invalid), 'admin', 'ordercats', 'crispBB');
+        throw new BadParameterException($vars, $msg);
     }
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) {

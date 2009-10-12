@@ -34,7 +34,6 @@ function crispbb_admin_deletecat($args)
     if(!xarSecurityCheck('ManageCategories', 0, "All:$data[itemid]")) {
          return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
     }
-    crispBB::startTracker('admin', 'deletecat');
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => xarModVars::get('categories','categoriesobject')));
     $data['object']->getItem(array('itemid' => $data['itemid']));
@@ -47,7 +46,6 @@ function crispbb_admin_deletecat($args)
         if (empty($data['return_url'])) {
             $data['return_url'] = xarModURL('crispbb', 'admin', 'categories');
         }
-        crispBB::endTracker();
         xarResponse::Redirect($data['return_url']);
         return true;
     }
@@ -82,7 +80,6 @@ function crispbb_admin_deletecat($args)
 
     $data['basecid'] = $basecid;
     $data['basecatinfo'] = $basecats[0];
-    crispBB::endTracker();
     return $data;
 
 }

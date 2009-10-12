@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:if condition="empty($layout)">
+        <xar:set name="layout">'user'</xar:set>
+    </xar:if>
+    <xar:if condition="$layout eq 'user'">
+    <!-- View for users - used in user GUI function -->
+    <xar:elseif condition="$layout eq 'admin'" />
+        <!-- View for forum admins - used in admin GUI functions -->
+        <xar:set name="upicon">xarTPLGetImage('icons/go-up.png', 'base')</xar:set>
+        <xar:set name="downicon">xarTPLGetImage('icons/go-down.png', 'base')</xar:set>
+        <xar:set name="modifyicon">xarTPLGetImage('icons/modify.png', 'base')</xar:set>
+        <xar:set name="deleteicon">xarTPLGetImage('icons/delete.png', 'base')</xar:set>
+        <xar:set name="hooksicon">xarTPLGetImage('icons/hooks.png', 'base')</xar:set>
+        <xar:set name="privsicon">xarTPLGetImage('icons/privileges.png', 'base')</xar:set>
+        <xar:set name="infoicon">xarTPLGetImage('icons/info.png', 'base')</xar:set>
+        <xar:set name="subsicon">xarTPLGetImage('icons/comment_warning.png', 'crispbb')</xar:set>
+        <xar:set name="delsicon">xarTPLGetImage('icons/bin.png', 'crispbb')</xar:set>
+        <xar:set name="moderateicon">xarTPLGetImage('icons/comments_wrench_orange.png', 'crispbb')</xar:set>
+        <thead>
+            <tr>
+                <xar:foreach in="$properties" key="$name">
+                    <th>
+                        <!--
+                        <a href="#$sorturl#=#$name#">
+                            <xar:data-label property="$properties[$name]" />
+                        </a>
+                        -->
+                        <xar:data-label property="$properties[$name]" />
+                    </th>
+                </xar:foreach>
+                <th class="xar-align-right">Actions</th>
+            </tr>
+       </thead>
+       <tbody>
+            <xar:set name="item_no">0</xar:set>
+            <xar:set name="numforums">count($items)</xar:set>
+            <xar:foreach in="$items" key="$itemid" value="$fields">
+                <xar:set name="item_no">$item_no+1</xar:set>
+                <xar:set name="rowclass">'xar-norm'</xar:set>
+                <xar:if condition="$item_no % 2 eq 0">
+                    <xar:set name="rowclass">'xar-alt'</xar:set>
+                </xar:if>
+                <tr class="#$rowclass#">
+                    <!-- we could use xar:data-display here too, instead of looping over fields ourselves -->
+                    <xar:foreach in="$properties" key="$name">
+                        <td>
+                            <xar:if condition="empty($fields[$name])">&#160;
+                            <xar:elseif condition="!empty($linkfield) and $linkfield eq $name and !empty($links[$itemid]['view'])" />
+                                <a href="#$links[$itemid]['view']['link']#" title="#$links[$itemid]['view']['title']#">
+                                    <xar:data-output property="$properties[$name]" value="$fields[$name]" />
+                                </a>
+                            <xar:else />
+                                <xar:data-output property="$properties[$name]" value="$fields[$name]" />
+                            </xar:if>
+                        </td>
+                    </xar:foreach>
+                    <td class="xar-align-right">
+                        <xar:if condition="!empty($links[$itemid]) and count($links[$itemid]) gt 0">
+                            <xar:if condition="!empty($links[$itemid]['submitted'])">
+                                <a class="xar-icon" href="#$links[$itemid]['submitted']['link']#" title="#$links[$itemid]['submitted']['title']#">
+                                    <img class="xar-icon" src="#$subsicon#" alt="#$links[$itemid]['submitted']#" />
+                                </a>
+                            <xar:else />
+                                <img class="xar-icon-disabled" src="#$subsicon#" alt="#xarML('Submitted')#" />
+                            </xar:if>
+                            <xar:if condition="!empty($links[$itemid]['deleted'])">
+                                <a class="xar-icon" href="#$links[$itemid]['deleted']['link']#" title="#$links[$itemid]['deleted']['title']#">
+                                    <img class="xar-icon" src="#$delsicon#" alt="#$links[$itemid]['deleted']['label']#" />
+                                </a>
+                            <xar:else />
+                                <img class="xar-icon-disabled" src="#$delsicon#" alt="#xarML('Deleted')#" />
+                            </xar:if>
+                            <xar:if condition="!empty($links[$itemid]['overview'])">
+                                <a class="xar-icon" href="#$links[$itemid]['overview']['link']#" title="#$links[$itemid]['overview']['title']#">
+                                    <img class="xar-icon" src="#$infoicon#" alt="#$links[$itemid]['overview']['label']#" />
+                                </a>
+                            <xar:else />
+                                <img class="xar-icon-disabled" src="#$infoicon#" alt="#xarML('Info')#" />
+                            </xar:if>
+                            <xar:if condition="!empty($links[$itemid]['moderate'])">
+                                <a class="xar-icon" href="#$links[$itemid]['moderate']['link']#" title="#$links[$itemid]['moderate']['title']#">
+                                    <img class="xar-icon" src="#$moderateicon#" alt="#$links[$itemid]['moderate']['label']#" />
+                                </a>
+                            <xar:else />
+                                <img class="xar-icon-disabled" src="#$moderateicon#" alt="#xarML('Moderate')#" />
+                            </xar:if>
+                            <xar:if condition="!empty($links[$itemid]['modify'])">
+                                <a class="xar-icon" href="#$links[$itemid]['modify']['link']#" title="#$links[$itemid]['modify']['title']#">
+                                    <img class="xar-icon" src="#$modifyicon#" alt="#$links[$itemid]['modify']['label']#" />
+                                </a>
+                            <xar:else />
+                                <img class="xar-icon-disabled" src="#$modifyicon#" alt="#xarML('Modify')#" />
+                            </xar:if>
+                            <xar:if condition="!empty($links[$itemid]['forumhooks'])">
+                                <a class="xar-icon" href="#$links[$itemid]['forumhooks']['link']#" title="#$links[$itemid]['forumhooks']['title']#">
+                                    <img class="xar-icon" src="#$hooksicon#" alt="#$links[$itemid]['forumhooks']['label']#" />
+                                </a>
+                            <xar:else />
+                                <img class="xar-icon-disabled" src="#$hooksicon#" alt="#xarML('Hooks')#" />
+                            </xar:if>
+                            <xar:if condition="!empty($links[$itemid]['topichooks'])">
+                                <a class="xar-icon" href="#$links[$itemid]['topichooks']['link']#" title="#$links[$itemid]['topichooks']['title']#">
+                                    <img class="xar-icon" src="#$hooksicon#" alt="#$links[$itemid]['topichooks']['label']#" />
+                                </a>
+                            <xar:else />
+                                <img class="xar-icon-disabled" src="#$hooksicon#" alt="#xarML('Hooks')#" />
+                            </xar:if>
+                            <xar:if condition="!empty($links[$itemid]['posthooks'])">
+                                <a class="xar-icon" href="#$links[$itemid]['posthooks']['link']#" title="#$links[$itemid]['posthooks']['title']#">
+                                    <img class="xar-icon" src="#$hooksicon#" alt="#$links[$itemid]['posthooks']['label']#" />
+                                </a>
+                            <xar:else />
+                                <img class="xar-icon-disabled" src="#$hooksicon#" alt="#xarML('Hooks')#" />
+                            </xar:if>
+                            <xar:if condition="!empty($links[$itemid]['privileges'])">
+                                <a class="xar-icon" href="#$links[$itemid]['privileges']['link']#" title="#$links[$itemid]['privileges']['title']#">
+                                    <img class="xar-icon" src="#$privsicon#" alt="#$links[$itemid]['privileges']['label']#" />
+                                </a>
+                            <xar:else />
+                                <img class="xar-icon-disabled" src="#$privsicon#" alt="#xarML('Privileges')#" />
+                            </xar:if>
+                            <xar:if condition="!empty($links[$itemid]['delete'])">
+                                <a class="xar-icon" href="#$links[$itemid]['delete']['link']#" title="#$links[$itemid]['delete']['title']#">
+                                    <img class="xar-icon" src="#$deleteicon#" alt="#$links[$itemid]['delete']['label']#" />
+                                </a>
+                            <xar:else />
+                                <img class="xar-icon-disabled" src="#$deleteicon#" alt="#xarML('Delete')#" />
+                            </xar:if>
+                            <xar:if condition="!empty($links[$itemid]['moveup'])">
+                                <a class="xar-icon" href="#$links[$itemid]['moveup']['link']#" title="#$links[$itemid]['moveup']['title']#">
+                                    <img class="xar-icon" src="#$upicon#" alt="#$links[$itemid]['moveup']['label']#" />
+                                </a>
+                            <xar:else />
+                                <img class="xar-icon-disabled" src="#$upicon#" alt="#xarML('Up')#" />
+                            </xar:if>
+                            <xar:if condition="!empty($links[$itemid]['movedown'])">
+                                <a class="xar-icon" href="#$links[$itemid]['movedown']['link']#" title="#$links[$itemid]['movedown']['title']#">
+                                    <img class="xar-icon" src="#$downicon#" alt="#$links[$itemid]['movedown']['label']#" />
+                                </a>
+                            <xar:else />
+                                <img class="xar-icon-disabled" src="#$downicon#" alt="#xarML('Down')#" />
+                            </xar:if>
+                        <xar:else />&#160;</xar:if>
+                    </td>
+                </tr>
+            </xar:foreach>
+        </tbody>
+    </xar:if>
+</xar:template>
