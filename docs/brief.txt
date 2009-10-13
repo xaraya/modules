@@ -1,5 +1,6 @@
 1. Designation: CKEditor module
 
-2. Purpose: to be added
+2. Purpose: Wrapper for the CKEditor WYSIWYG web editor
 
-3. Description: to be added
+3. Description: 
+Details of CKEditor can be found at www.ckeditor.com
