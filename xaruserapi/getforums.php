@@ -256,10 +256,11 @@ function crispbb_userapi_getforums($args)
             } else {
                 if ($field == 'id') {
                     $field = 'fid';
+                } elseif ($field == 'category_id') {
+                    $field = 'catid';
                 }
                 $forum[$field] = $value;
             }
-            $forum['catid'] = 2;
         }
         if (!$secLevel = xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
             array('check' => $forum, 'priv' => 'viewforum'))) {
