@@ -1,6 +1,6 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:base-include-javascript filename="ckeditor/ckeditor.js" module="ckeditor" position="head" />
+    <xar:javascript filename="ckeditor/ckeditor.js" module="ckeditor" position="head" />
 
     <xar:if condition="$version eq 'fckeditor'">
         #$editor->Create()#

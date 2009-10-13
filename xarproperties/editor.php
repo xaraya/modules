@@ -39,7 +39,7 @@ class EditorProperty extends TextAreaProperty
     {
         if ($this->version == 'fckeditor') {
             sys::import('modules.ckeditor.xartemplates.includes.fckeditor.fckeditor');
-            $editorpath = 'modules/ckeditor/xartemplates/includes/fckeditor/';
+            $editorpath = sys::code() . 'modules/ckeditor/xartemplates/includes/fckeditor/';
             $name = $this->getCanonicalName($data);
             $this->editor = new FCKeditor($name) ;
             $this->editor->BasePath = $editorpath;

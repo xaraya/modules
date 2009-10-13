@@ -1,212 +1,22 @@
-<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<xar:style scope="module" module="crispbb" />
-<div class="xar-mod-head">
-    <span class="xar-mod-title">crispBB Forums</span>
-</div>
-<div class="xar-mod-body crispbb-main">
-    <xar:template type="module" file="user-breadcrumbs" />
-    <div class="xar-margin-thickends xar-padding-thickends">
-        <div class="xar-twothirdswidth xar-floatleft">
-            <h2>#$pageTitle#</h2>
-        </div>
-        <div class="xar-thirdwidth xar-floatright xar-sub xar-padding-thick">
-            <xar:template type="module" module="crispbb" file="user-userpanel" />
-        </div>
-        <div class="xar-align-right xar-padding-thicktop xar-clearboth">
-            <xar:set name="formid">'1'</xar:set>
-            <xar:template type="module" module="crispbb" file="user-searchbox" />
-            <xar:template type="module" module="crispbb" file="user-forumjump"  />
-            <xar:template type="module" module="crispbb" file="user-topicjump"  />
-        </div>
-    </div>
-    <!--<xar:template type="module" module="crispbb" file="admin-waitingcontent" />-->
-    <hr />
-    <xar:if condition="!empty($categories)">
-        <xar:foreach in="$categories" key="$cid" value="$catinfo">
-        <table class="xar-fullwidth xar-alt-outline xar-margin-nonetop">
-            <caption class="xar-padding-thick xar-alt-outline xar-align-left">
-                <xar:if condition="!empty($catinfo['viewurl'])">
-                    <a href="#$catinfo['viewurl']#" title="#xarVarPrepForDisplay($catinfo['description'])#">#xarVarPrepForDisplay($catinfo['name'])#</a>
-                <xar:else />
-                    <strong>#xarVarPrepForDisplay($catinfo['name'])#</strong>
-                </xar:if>
-            </caption>
-            <thead>
-                <tr>
-                    <th scope="col" class="timeimage">&#160;</th>
-                    <th scope="col" class="foruminfo xar-halfwidth">Forum</th>
-                    <th scope="col" class="postinfo">Posts</th>
-                    <th scope="col" class="lastpost">Last Post</th>
-                </tr>
-            </thead>
-            <tfoot>
-                <tr>
-                    <td colspan="4" class="xar-align-center">
-                        <span class="xar-sub">
-                            <xar:set name="grammar">$catinfo['numforums'] == 1 ? 'forum' : 'forums'</xar:set>
-                                Showing #$catinfo['numforums']# #$grammar# in category #xarVarPrepForDisplay($catinfo['name'])#
-                        </span>
-                    </td>
-                </tr>
-            </tfoot>
-            <tbody>
-            <xar:set name="rowclass">'xar-norm'</xar:set>
-            <xar:if condition="isset($forums[$cid]) and !empty($forums[$cid])">
-                <xar:foreach in="$forums[$cid]" key="$fid" value="$forum">
-                <xar:if condition="$forum['ftype'] eq 0">
-                <tr class="#$rowclass#">
-                    <td class="timeimage xar-align-center xar-valign-middle">
-                        <xar:if condition="!empty($forum['forumreadurl'])">
-                            <a href="#xarModURL('crispbb', 'user','main', array('fid' => $forum['fid'], 'action' => 'read'))#" title="#xarML('Mark this forum read')#"><xar:template type="module" module="crispbb" file="forum-timeimage" subdata="array('forum' =&gt; $forum)" /></a>
-                        <xar:else />
-                            <xar:template type="module" module="crispbb" file="forum-timeimage" subdata="array('forum' =&gt; $forum)" />
-                        </xar:if>
-                    </td>
-                    <td class="foruminfo xar-valign-top">
-                        <xar:if condition="!empty($forum['modtopicsurl'])">
-                            <span class="xar-floatright xar-nowrap">
-                                <a href="#$forum['modtopicsurl']#" title="#xarML('Topics Awaiting Approval')#"><img src="#xarTPLGetImage('icons/comment_warning.png')#" alt="Submitted" />
-                                </a>
-                            </span>
-                        </xar:if>
-                        <xar:if condition="!empty($forum['forumviewurl'])">
-                            <a href="#$forum['forumviewurl']#" title="#$forum['fname']#">#$forum['fname']#</a>
-                        <xar:else />
-                            <strong>#$forum['fname']#</strong>
-                        </xar:if>
-                        <p>#$forum['fdesc']#</p>
-                    </td>
-                    <td class="postinfo xar-align-center xar-valign-middle">
-                        <p class="xar-sub xar-nowrap">Topics: <strong>#$forum['numtopics']#</strong></p>
-                        <p class="xar-sub xar-nowrap">Replies: <strong>#$forum['numreplies']#</strong></p>
-                    </td>
-                    <td class="lastpost xar-valign-top">
-                        <xar:if condition="!empty($forum['lasttid'])">
-                            <span class="xar-sub">In:</span>
-                            <xar:if condition="!empty($forum['lasttopicurl'])">
-                                <a href="#$forum['lasttopicurl']#">#$forum['ttitle']#</a>
-                            <xar:else />
-                                <strong>#$forum['ttitle']#</strong>
-                            </xar:if>
-                            <p>
-                                <span class="xar-sub"><xar:template type="module" module="crispbb" file="user-timestamp" subdata="array('timestamp' =&gt; $forum['ptime'])" /></span>
-                                <xar:if condition="!empty($forum['lastreplyurl'])">
-                                    <a href="#$forum['lastreplyurl']#" title="#xarML('Go to the last post in this topic')#"><img src="#xarTPLGetImage('icons/resultset_last.png', 'crispbb')#" alt="Last Post" /></a>
-                                </xar:if>
-                            </p>
-                            <p>
-                                <span class="xar-sub">By:</span>
-                                <xar:if condition="!empty($forum['pownerurl'])">
-                                <a href="#$forum['pownerurl']#" title="#xarML('View profile')#">#$posterlist[$forum['powner']]['name']#</a>
-                                </xar:if>
-                            </p>
-                        <xar:else />
-                            No Topics
-                        </xar:if>
-                    </td>
-                </tr>
-                <xar:elseif condition="$forum['ftype'] eq 1" />
-                <tr class="#$rowclass#">
-                    <td class="timeimage xar-align-center xar-valign-middle">
-                        <xar:template type="module" module="crispbb" file="forum-timeimage" subdata="array('forum' =&gt; $forum)" />
-                    </td>
-                    <td class="foruminfo xar-valign-top">
-                        <xar:if condition="!empty($forum['forumviewurl'])">
-                            <a href="#$forum['forumviewurl']#" title="#$forum['fname']#">#$forum['fname']#</a>
-                        <xar:else />
-                            <strong>#$forum['fname']#</strong>
-                        </xar:if>
-                        <p>#$forum['fdesc']#</p>
-                    </td>
-                    <td colspan="3">
-                        &#160;
-                    </td>
-                </tr>
-                </xar:if>
-                <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
-                </xar:foreach>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:if condition="xarModVars::get('ckeditor','useModuleAlias')">
+                <xar:var scope="module" module="ckeditor" name="aliasname" />
             <xar:else />
-                <tr>
-                    <td></td>
-                    <td colspan="4">No Forums Found</td>
-                </tr>
+                <xar:mlstring>CKEditor</xar:mlstring>
             </xar:if>
-            </tbody>
-        </table>
-        </xar:foreach>
-    <xar:else />
-        <p>No Forums Found</p>
-    </xar:if>
-    <hr />
-    <div class="xar-align-right xar-padding-thicktop xar-clearboth">
-        <xar:set name="formid">'2'</xar:set>
-        <xar:template type="module" module="crispbb" file="user-forumjump" />
-        <xar:template type="module" module="crispbb" file="user-topicjump" />
-    </div>
-    <xar:if condition="!empty($readurl)">
-    <div class="xar-align-center xar-margin-thick xar-padding-thick">
-        <a href="#$readurl#">Mark All Forums Read</a>
-    </div>
-    </xar:if>
-    <div class="xar-margin-thickends xar-padding-thickends xar-sub">
-        <div class="xar-thirdwidth xar-floatleft">
-        <h4 class="xar-margin-none">Board Statistics</h4>
-        <ul>
-            <li>
-                <xar:set name="grammar">$totaltopics == 1 ? 'topic' : 'topics'</xar:set>
-                    The board has a total of #$totaltopics# #$grammar#
-            </li>
-            <li>
-                <xar:set name="grammar">$totalreplies == 1 ? 'reply' : 'replies'</xar:set>
-                    The board has a total of #$totalreplies# #$grammar#
-            </li>
-            <li>
-            <xar:set name="grammar">$totalunanswered == 1 ? 'topic' : 'topics'</xar:set>
-                This board has #$totalunanswered# unanswered #$grammar#
-            </li>
-            <xar:if condition="!empty($viewstatsurl)">
-            <li>
-                [ <a href="#$viewstatsurl#" title="#xarML('More Statistics')#">More Stats</a> ]
-            </li>
-            </xar:if>
-        </ul>
-        </div>
-        <!--
-        <xar:set name="waitingcontent">xarMod::guiFunc('crispbb', 'admin', 'waitingcontent')</xar:set>
-        <xar:if condition="!empty($waitingcontent)">
-        <div class="xar-accent xar-accent-outline xar-floatleft xar-thirdwidth xar-padding-thick">
-            <h4>Waiting Content</h4>
-            #$waitingcontent#
-        </div>
-        </xar:if>
-        -->
-        <br class="xar-clearboth" />
-    </div>
-    <xar:template type="module" file="user-breadcrumbs" />
-</div>
-<div class="xar-mod-foot xar-align-center">
-    <div class="xar-accent-outline xar-margin-thick xar-padding-thick">
-        <xar:if condition="!empty($readurl)">
-            <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('timeimages/folder.png', 'crispbb')#" alt="#xarML('No Replies')#" title="#xarML('Forum has no new replies')#" />
-                No Replies
-            </span>
-            <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('timeimages/folder_comments.png', 'crispbb')#" alt="#xarML('New Replies')#" title="#xarML('Forum has new replies')#" />
-                New Replies
-            </span>
-        <xar:else />
-            <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('timeimages/folder.png', 'crispbb')#" alt="#xarML('Open')#" title="#xarML('Open forum')#" />
-                Open
-            </span>
-        </xar:if>
-        <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('timeimages/folder_lock.png', 'crispbb')#" alt="#xarML('Closed')#" title="#xarML('Closed forum')#" />
-            Closed
         </span>
     </div>
-</div>
+    <div class="xar-mod-body">
+        <h2>
+            <xar:mlstring>Overview</xar:mlstring>
+        </h2>
+
+        <p>
+            <xar:mlstring>Dummy ckeditor text</xar:mlstring>
+        </p>
+        <div style="clear:both">&#160;</div>
+    </div>
 </xar:template>
