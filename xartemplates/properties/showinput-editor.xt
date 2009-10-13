@@ -8,7 +8,7 @@
         <div style="clear: both">
             <textarea class="ckeditor" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
         </div>
-    </xar:if>
+    </xar:if> 
 
     <xar:template file="dataproperty_additions" module="base" />
 </xar:template>
