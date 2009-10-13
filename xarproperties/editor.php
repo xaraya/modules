@@ -25,7 +25,7 @@ class EditorProperty extends TextAreaProperty
     public $reqmodules = array('ckeditor');
     
     public $editor     = null;
-    public $version    = 'fckeditor';
+    public $version    = 'ckeditor';
     
     function __construct(ObjectDescriptor $descriptor)
     {
