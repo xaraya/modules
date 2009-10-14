@@ -174,7 +174,7 @@ function crispbb_init()
             'phostname' => array('type' => 'varchar','size' => 255,'null' => false, 'charset' => $charset),
             'pdesc' => array('type' => 'varchar','size' => 255,'null' => false, 'charset' => $charset),
             'ptext' => array('type' => 'text', 'charset' => $charset),
-            'psettings' => array('type' => 'test', 'charset' => $charset),
+            'psettings' => array('type' => 'text', 'charset' => $charset),
         );
         $query = xarDBCreateTable($poststable,$fields);
         $dbconn->Execute($query);
