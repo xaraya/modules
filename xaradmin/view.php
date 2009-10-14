@@ -72,7 +72,7 @@ function crispbb_admin_view($args)
             $catinfo['forums']->getItems($filter);
             $catinfo['numforums'] = count($catinfo['forums']->items);
             $catinfo['newforum'] = xarModURL('crispbb', 'admin', 'new', array('catid' => $cid));
-            $catinfo['viewurl'] = xarModURL('crispbb', 'admin', 'view', array('catid' => $cid));
+            $catinfo['view'] = xarModURL('crispbb', 'admin', 'view', array('catid' => $cid));
             if ($userLevel == 800 && xarSecurityCheck('ManageCategories', 0)) {
                $catinfo['moveup'] = ($ci > 1) ? xarModURL('crispbb', 'admin', 'ordercats', array('itemid' => $cid, 'direction' => 'up', 'authid' => $data['authid'])) : '';
                $catinfo['movedown'] = ($ci < count($categories)) ? xarModURL('crispbb','admin', 'ordercats', array('itemid' => $cid, 'direction' => 'down', 'authid' => $data['authid'])) : '';
