@@ -92,9 +92,9 @@
 
 <p><strong>Important tag in user-view.xt:</strong></p>
 
-<pre>&lt;xar:data-view object="dyn_example" tplmodule="dyn_example" /&gt;</pre>
+<pre>&lt;xar:data-view objectname="dyn_example" tplmodule="dyn_example" /&gt;</pre>
 
-<xar:data-view object="dyn_example" tplmodule="dyn_example" />
+<xar:data-view objectname="dyn_example" tplmodule="dyn_example" />
 
         </div>
         
@@ -110,15 +110,16 @@ As in Approach ##1, we have set some variables in view.php for use in #$userview
 
 <p>In #$userviewlink#, we retrieve items with... </p>
 
-<blockquote><pre>&lt;xar:data-getitems object="$mylist" value="values" name="properties" 
-    numitems="$items_per_page" startnum="$startnum" /&gt;
+<blockquote><pre>&lt;xar:data-getitems object="$mylist" values="$values"
+    properties="$properties" numitems="$items_per_page" 
+    startnum="$startnum" /&gt;
 </pre></blockquote>
 
 ...and then iterate over the items with <pre>&lt;xar:foreach /&gt;</pre>.
 
 <p><strong>Output:</strong></p>
 
-<xar:data-getitems object="$mylist" value="values" name="properties" numitems="$items_per_page" startnum="$startnum" />
+<xar:data-getitems object="$mylist" values="$values" properties="$properties" numitems="$items_per_page" startnum="$startnum" />
 
             <table>
                 <tr>
