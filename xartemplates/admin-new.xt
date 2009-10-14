@@ -19,23 +19,29 @@
     <xar:if condition="!empty($statusmsg)">
         <p class="xar-align-center xar-error">#$statusmsg#</p>
     </xar:if>
-    <h3><xar:mlstring>Add New Forum</xar:mlstring></h3>
-    <form method="post" id="crispbb_admin_new" action="#xarModURL('crispbb', 'admin', 'new')#" enctype="#$enctype#">
-        <fieldset>
-            <xar:data-form object="$forum" />
-            <xar:if condition="!empty($hookoutput)">
-                <xar:foreach in="$hookoutput" key="$hookmodule">
-                    #$hookoutput[$hookmodule]#
-                </xar:foreach>
-            </xar:if>
-            <xar:data-form object="$settings" values="$values" />
-            <div class="xar-form-input-wrapper-after">
-                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthkey()#" />
-                <input type="hidden" name="phase" id="phase" value="update" />
-                <input type="submit" id="confirm" name="confirm" value="#xarML('Add Forum')#" />
-            </div>
-        </fieldset>
-    </form>
+    <xar:if condition="empty($basecid)">
+        <p class="xar-error xar-align-center">You must select a base category before you can add forums</p>
+    <xar:elseif condition="empty($categories)" />
+        <p class="xar-error xar-align-center">You must create a forum category before you can add forums</p>
+    <xar:else />
+        <h3>Add New Forum</h3>
+        <form method="post" id="crispbb_admin_new" action="#xarModURL('crispbb', 'admin', 'new')#" enctype="#$enctype#">
+            <fieldset>
+                <xar:data-form object="$forum" />
+                <xar:if condition="!empty($hookoutput)">
+                    <xar:foreach in="$hookoutput" key="$hookmodule">
+                        #$hookoutput[$hookmodule]#
+                    </xar:foreach>
+                </xar:if>
+                <xar:data-form object="$settings" values="$values" />
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthkey()#" />
+                    <input type="hidden" name="phase" id="phase" value="update" />
+                    <input type="submit" id="confirm" name="confirm" value="#xarML('Add Forum')#" />
+                </div>
+            </fieldset>
+        </form>
+    </xar:if>
 </div>
 <xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>
 </xar:template>

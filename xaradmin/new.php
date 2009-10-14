@@ -44,10 +44,19 @@ function crispbb_admin_new($args)
     // @CHECKME: is this necessary?
     // Load the DD master property class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.properties.master');
-    if (!empty($catid)) {
-        // pre-select the category if we found one
-        $data['forum']->properties['category']->categories = array($catid);
+    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'crispbb'));
+    $basecid = count($basecats) > 0 ? $basecats[0]['category_id'] : null;
+    if (!empty($basecid)) {
+        $categories = xarMod::apiFunc('categories', 'user', 'getchildren',
+            array('cid' => $basecid));
+        if (!empty($catid) && isset($categories[$catid])) {
+            // pre-select the category if we found one
+            $data['forum']->properties['category']->categories = array($catid);
+        }
     }
+    $data['basecid'] = $basecid;
+    $data['basecatinfo'] = !empty($basecid) ? $basecats[0] : array();
+    $data['categories'] = !empty($categories) ? $categories : array();
 
     // present different settings fields and layout depending on the type of forum :)
     $ftype = $data['forum']->properties['ftype']->value;
