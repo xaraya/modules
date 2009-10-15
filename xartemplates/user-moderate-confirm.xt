@@ -124,7 +124,7 @@
                 <input type="hidden" name="fid" id="fid" value="#$fid#" />
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                 <input type="hidden" name="phase" id="phase" value="update" />
-                <input type="hidden" name="modaction" id="modaction" value="#$modaction#">
+                <input type="hidden" name="modaction" id="modaction" value="#$modaction#" />
                 <input type="hidden" name="movefid" id="movefid" value="#$movefid#" />
                 <input type="hidden" name="movetid" id="movetid" value="#$movetid#" />
                 <input type="hidden" name="mergetid" id="mergetid" value="#$mergetid#" />
