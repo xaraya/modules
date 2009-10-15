@@ -53,8 +53,6 @@ function crispbb_userapi_updateposter($args)
         $bindvars[] = $numreplies;
         $result = &$dbconn->Execute($query,$bindvars);
         if (!$result) return;
-        $uid = $dbconn->PO_Insert_ID($posterstable, 'uid');
-        return $uid;
     } else {
         // update poster
         $set = array();
