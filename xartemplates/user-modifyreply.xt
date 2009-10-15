@@ -61,7 +61,7 @@
             </tbody>
         </table>
     </xar:if>
-    <form method="post" id="post" name="post" action="#xarModURL('crispbb', 'user', 'modifyreply')#" enctype="#$enctype#" #$formaction#>
+    <form method="post" id="post" name="post" action="#xarModURL('crispbb', 'user', 'modifyreply')#" enctype="#$enctype#">
         <fieldset>
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label help"><xar:mlstring>Topic Title</xar:mlstring>:</label>

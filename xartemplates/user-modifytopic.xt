@@ -64,7 +64,7 @@
             </tbody>
         </table>
     </xar:if>
-    <form method="post" name="post" id="post" action="#xarModURL('crispbb', 'user', 'modifytopic')#" enctype="#$enctype#" #$formaction#>
+    <form method="post" name="post" id="post" action="#xarModURL('crispbb', 'user', 'modifytopic')#" enctype="#$enctype#">
         <fieldset>
             <div class="xar-form-input-wrapper">
                 <xar:set name="ttitlelabel">xarML('Enter a topic title between #(1) and #(2) characters', $topictitlemin, $topictitlemax)</xar:set>
@@ -176,7 +176,7 @@
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                 <input type="hidden" name="tid" id="tid" value="#$tid#" />
                 <input type="hidden" name="phase" id="phase" value="update" />
-                <input type="submit" value="#xarML('Update Topic')#" tabindex="10">&#160;&#160;<input type="submit" id="preview" name="preview" value="#xarML('Preview')#" tabindex="11" />
+                <input type="submit" value="#xarML('Update Topic')#" tabindex="10" />&#160;&#160;<input type="submit" id="preview" name="preview" value="#xarML('Preview')#" tabindex="11" />
             </div>
         </fieldset>
     </form>
