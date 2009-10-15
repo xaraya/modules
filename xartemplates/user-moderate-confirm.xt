@@ -40,9 +40,9 @@
                 <xar:set name="grammar">'un-deleting'</xar:set>
             </xar:if>
             <xar:if condition="$component eq 'posts'">
-                <xar:set name="$compstr">'post(s)'</xar:set>
+                <xar:set name="compstr">'post(s)'</xar:set>
             <xar:else />
-                <xar:set name="$compstr">'topic(s)'</xar:set>
+                <xar:set name="compstr">'topic(s)'</xar:set>
             </xar:if>
             <h2>
             <xar:ml>
