@@ -77,11 +77,11 @@
                             </span>
                         </xar:if>
                         <xar:if condition="!empty($forum['forumviewurl'])">
-                            <a href="#$forum['forumviewurl']#" title="#$forum['transformed_fname']#">#$forum['transformed_fname']#</a>
+                            <a href="#$forum['forumviewurl']#" title="#$forum['fname']#">#$forum['fname']#</a>
                         <xar:else />
-                            <strong>#$forum['transformed_fname']#</strong>
+                            <strong>#$forum['fname']#</strong>
                         </xar:if>
-                        <p>#$forum['transformed_fdesc']#</p>
+                        <p>#$forum['fdesc']#</p>
                     </td>
                     <td class="postinfo xar-align-center xar-valign-middle">
                         <p class="xar-sub xar-nowrap">Topics: <strong>#$forum['numtopics']#</strong></p>
@@ -91,9 +91,9 @@
                         <xar:if condition="!empty($forum['lasttid'])">
                             <span class="xar-sub">In:</span>
                             <xar:if condition="!empty($forum['lasttopicurl'])">
-                                <a href="#$forum['lasttopicurl']#">#$forum['transformed_ttitle']#</a>
+                                <a href="#$forum['lasttopicurl']#">#$forum['ttitle']#</a>
                             <xar:else />
-                                <strong>#$forum['transformed_ttitle']#</strong>
+                                <strong>#$forum['ttitle']#</strong>
                             </xar:if>
                             <p>
                                 <span class="xar-sub"><xar:template type="module" module="crispbb" file="user-timestamp" subdata="array('timestamp' =&gt; $forum['ptime'])" /></span>
@@ -119,11 +119,11 @@
                     </td>
                     <td class="foruminfo xar-valign-top">
                         <xar:if condition="!empty($forum['forumviewurl'])">
-                            <a href="#$forum['forumviewurl']#" title="#$forum['transformed_fname']#">#$forum['transformed_fname']#</a>
+                            <a href="#$forum['forumviewurl']#" title="#$forum['fname']#">#$forum['fname']#</a>
                         <xar:else />
-                            <strong>#$forum['transformed_fname']#</strong>
+                            <strong>#$forum['fname']#</strong>
                         </xar:if>
-                        <p>#$forum['transformed_fdesc']#</p>
+                        <p>#$forum['fdesc']#</p>
                     </td>
                     <td colspan="3">
                         &#160;

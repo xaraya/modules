@@ -12,8 +12,8 @@
                     <author>#xarVarTransform($posterlist[$forum['towner']]['name'], 'HTML', 'XML')#</author>
                     <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$forum['ptime'])#</pubDate>
                     <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
-                    <content:encoded><![CDATA[ #xarVarTransform(xarVarPrepHTMLDisplay($forum['transformed_tdesc']), 'HTML', 'XML')# ]]></content:encoded>
-                    <description>#xarVarTransform(xarVarPrepForDisplay($forum['transformed_tdesc']), 'HTML', 'XML')#</description>
+                    <content:encoded><![CDATA[ #xarVarTransform(xarVarPrepHTMLDisplay($forum['tdesc']), 'HTML', 'XML')# ]]></content:encoded>
+                    <description>#xarVarTransform(xarVarPrepForDisplay($forum['tdesc']), 'HTML', 'XML')#</description>
                     <guid isPermaLink="true">#xarVarTransform($forum['lasttopicurl'], 'HTML', 'XML')#</guid>
                 </item>
                 </xar:if>

@@ -5,7 +5,7 @@
     <xar:if condition="!empty($newtopicurl)">
         <a href="#$newtopicurl#"><xar:mlstring>Click here</xar:mlstring></a> <xar:mlstring>to start a discussion on this item in the forums</xar:mlstring>
     <xar:elseif condition="!empty($viewtopicurl)" />
-        <xar:mlstring>Discuss this item in the forums</xar:mlstring> <a href="#$viewtopicurl#">#$transformed_ttitle#</a>
+        <xar:mlstring>Discuss this item in the forums</xar:mlstring> <a href="#$viewtopicurl#">#$ttitle#</a>
     </xar:if>
 </div>
 <xar:if condition="!empty($postsperpage) and !empty($numreplies)">

@@ -34,7 +34,7 @@
                 <li><xar:mlstring>Members Online Now</xar:mlstring>: <strong>#$totalonline#</strong></li>
                 <li><xar:mlstring>Guests Online Now</xar:mlstring>: <strong>#$totalguests#</strong></li>
                 <xar:if condition="!empty($lastpost)">
-                <li><xar:mlstring>Latest Post</xar:mlstring>: <a href="#$lastpost['viewreplyurl']#">#$lastpost['transformed_ttitle']#</a></li>
+                <li><xar:mlstring>Latest Post</xar:mlstring>: <a href="#$lastpost['viewreplyurl']#">#$lastpost['ttitle']#</a></li>
                 </xar:if>
             </ul>
         </div>
@@ -43,7 +43,7 @@
             <xar:if condition="!empty($topforums)">
             <ul class="xar-alt-outline xar-padding-thick">
             <xar:foreach in="$topforums" value="$topforum">
-                <li><a href="#$topforum['forumviewurl']#">#$topforum['transformed_fname']#</a> (#$topforum['totalitems']#)</li>
+                <li><a href="#$topforum['forumviewurl']#">#$topforum['fname']#</a> (#$topforum['totalitems']#)</li>
             </xar:foreach>
             </ul>
             </xar:if>
@@ -75,7 +75,7 @@
             <xar:if condition="!empty($topreplies)">
             <ul class="xar-alt-outline xar-padding-thick">
             <xar:foreach in="$topreplies" value="$topreply">
-                <li><a href="#$topreply['viewtopicurl']#">#$topreply['transformed_ttitle']#</a> (#$topreply['numreplies']#)</li>
+                <li><a href="#$topreply['viewtopicurl']#">#$topreply['ttitle']#</a> (#$topreply['numreplies']#)</li>
             </xar:foreach>
             </ul>
             </xar:if>
@@ -85,7 +85,7 @@
             <xar:if condition="!empty($tophits)">
             <ul class="xar-alt-outline xar-padding-thick">
             <xar:foreach in="$tophits" value="$tophit">
-                <li><a href="#$tophit['viewtopicurl']#">#$tophit['transformed_ttitle']#</a> (#$tophit['numviews']#)</li>
+                <li><a href="#$tophit['viewtopicurl']#">#$tophit['ttitle']#</a> (#$tophit['numviews']#)</li>
             </xar:foreach>
             </ul>
             </xar:if>

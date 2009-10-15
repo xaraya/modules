@@ -67,7 +67,7 @@
             <xar:else />
                 <input type="checkbox" name="crispbb_fids[#$fid#]" id="crispbb_fids_#$fid#" value="1" />
             </xar:if>
-            <label for="crispbb_fids_#$fid#">#$forum['transformed_fname']#</label>
+            <label for="crispbb_fids_#$fid#">#$forum['fname']#</label>
         </xar:foreach>
     </p>
   <p>
@@ -81,9 +81,9 @@
         <xar:foreach in="$results" value="$result">
             <li>
             <xar:if condition="$component eq 'topics'">
-                <a href="#$result['viewtopicurl']#">#$result['transformed_ttitle']#</a>
+                <a href="#$result['viewtopicurl']#">#$result['ttitle']#</a>
             <xar:else />
-                <a href="#$result['viewreplyurl']#">#$result['transformed_ttitle']# <xar:mlstring>Post</xar:mlstring> #$result['pid']#</a>
+                <a href="#$result['viewreplyurl']#">#$result['ttitle']# <xar:mlstring>Post</xar:mlstring> #$result['pid']#</a>
             </xar:if>
             </li>
         </xar:foreach>

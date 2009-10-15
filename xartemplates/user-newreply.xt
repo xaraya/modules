@@ -65,7 +65,7 @@
         <fieldset>
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label help"><xar:mlstring>Topic Title</xar:mlstring>:</label>
-                #$transformed_ttitle#
+                #$ttitle#
             </div>
             <xar:if condition="!empty($topicdescmax)">
             <div class="xar-form-input-wrapper">

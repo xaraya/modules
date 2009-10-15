@@ -11,12 +11,12 @@
     <xar:template type="module" file="user-breadcrumbs" />
     <div class="xar-margin-thickends xar-padding-thickends">
         <div class="xar-twothirdswidth xar-floatleft">
-            <h2>#$transformed_ttitle#</h2>
+            <h2>#$ttitle#</h2>
             <xar:if condition="!empty($topicicon)">
                 <img src="#xarTPLGetImage($topicicon,'crispbb')#" alt="#xarML('icon')#" title="" />
             </xar:if>
-            <xar:if condition="!empty($transformed_tdesc)">
-            <em>#$transformed_tdesc#</em>
+            <xar:if condition="!empty($tdesc)">
+            <em>#$tdesc#</em>
             </xar:if>
             <xar:if condition="!empty($hookitem)">
                 <p><xar:mlstring>Discussion of </xar:mlstring><a href="#$hookitem['url']#" title="#$hookitem['title']#">#$hookitem['label']#</a></p>
@@ -141,7 +141,7 @@
     <table class="xar-fullwidth xar-alt-outline xar-margin-none">
         <caption class="xar-alt-outline xar-padding-thick xar-align-left xar-margin-thicktop">
             <span class="xar-halfwidth xar-floatleft">
-            <a href="#$viewtopicurl#">#$transformed_ttitle#</a>
+            <a href="#$viewtopicurl#">#$ttitle#</a>
             </span>
             <xar:if condition="!empty($pager)">
                 <span class="xar-align-right xar-floatright xar-halfwidth">
@@ -170,7 +170,7 @@
                     <xar:mlvar>#$startnum#</xar:mlvar>
                     <xar:mlvar>#$numposts#</xar:mlvar>
                     <xar:mlvar>#$totalposts#</xar:mlvar>
-                    <xar:mlvar>#$transformed_ttitle#</xar:mlvar>
+                    <xar:mlvar>#$ttitle#</xar:mlvar>
                 </xar:ml>
             </td></tr>
         </tfoot>
@@ -193,7 +193,7 @@
     </table>
     <div class="xar-alt-outline xar-align-left xar-padding-thick xar-margin-thickbottom">
         <div class="xar-halfwidth xar-floatleft">
-        <a href="#$viewtopicurl#">#$transformed_ttitle#</a>
+        <a href="#$viewtopicurl#">#$ttitle#</a>
         </div>
         <xar:if condition="!empty($pager)">
             <div class="xar-align-right xar-floatright xar-halfwidth">

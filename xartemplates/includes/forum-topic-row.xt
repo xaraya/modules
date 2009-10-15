@@ -18,9 +18,9 @@
 <xar:if condition="$topic['tstatus'] == 3">
 <td colspan="3" class="xar-valign-top">
     <xar:if condition="!empty($topic['viewtopicurl'])">
-        <a href="#$topic['viewtopicurl']#" title="#xarML('Go to the first post in this topic')#">#$topic['transformed_ttitle']#</a>
+        <a href="#$topic['viewtopicurl']#" title="#xarML('Go to the first post in this topic')#">#$topic['ttitle']#</a>
     <xar:else />
-        <strong>#$topic['transformed_ttitle']#</strong>
+        <strong>#$topic['ttitle']#</strong>
     </xar:if>
     <xar:if condition="!empty($topic['deletetopicurl'])">
         <span class="xar-floatright">
@@ -55,12 +55,12 @@
         </span>
     </xar:if>
     <xar:if condition="!empty($topic['viewtopicurl'])">
-        <a href="#$topic['viewtopicurl']#" title="#xarML('Go to the first post in this topic')#">#$topic['transformed_ttitle']#</a>
+        <a href="#$topic['viewtopicurl']#" title="#xarML('Go to the first post in this topic')#">#$topic['ttitle']#</a>
     <xar:else />
-        <strong>#$topic['transformed_ttitle']#</strong>
+        <strong>#$topic['ttitle']#</strong>
     </xar:if>
-    <xar:if condition="!empty($topic['transformed_tdesc'])">
-    <p><em>#$topic['transformed_tdesc']#</em></p>
+    <xar:if condition="!empty($topic['tdesc'])">
+    <p><em>#$topic['tdesc']#</em></p>
     </xar:if>
     <p>
     <span class="xar-sub"><xar:mlstring>By</xar:mlstring>:</span>
@@ -69,7 +69,7 @@
     <xar:if condition="!empty($showforum)">
         <p>
         <span class="xar-sub"><xar:mlstring>In</xar:mlstring>:</span>
-        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $topic['fid']))#" title="#xarML('View forum')#">#$topic['transformed_fname']#</a>
+        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $topic['fid']))#" title="#xarML('View forum')#">#$topic['fname']#</a>
         </p>
     </xar:if>
 </td>

@@ -8,10 +8,10 @@
             <li>
                 <xar:if condition="!empty($topic['lastreplyurl'])">
                     <a href="#$topic['lastreplyurl']#">
-                        #$topic['transformed_ttitle']#
+                        #$topic['ttitle']#
                     </a>
                 <xar:else />
-                    #$topic['transformed_ttitle']#
+                    #$topic['ttitle']#
                 </xar:if>
             </li>
         </xar:foreach>

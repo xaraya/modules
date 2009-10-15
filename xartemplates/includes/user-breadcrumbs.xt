@@ -18,11 +18,11 @@
     </xar:if>
     <xar:if condition="!empty($fid) and !empty($fname)">
         #$pageSeparator#
-        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#" title="#$transformed_fname#">#$transformed_fname#</a>
+        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#" title="#$fname#">#$fname#</a>
     </xar:if>
     <xar:if condition="!empty($tid) and !empty($ttitle)">
         #$pageSeparator#
-        <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#" title="#$transformed_ttitle#">#$transformed_ttitle#</a>
+        <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#" title="#$ttitle#">#$ttitle#</a>
     </xar:if>
     <xar:if condition="!empty($q) and !empty($searchtitle)">
         #$pageSeparator#

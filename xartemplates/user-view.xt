@@ -9,8 +9,8 @@
     <xar:template type="module" file="user-breadcrumbs" />
     <div class="xar-margin-thickends xar-padding-thickends">
         <div class="xar-twothirdswidth xar-floatleft">
-            <h2>#$transformed_fname#</h2>
-            #$transformed_fdesc#
+            <h2>#$fname#</h2>
+            #$fdesc#
         </div>
         <div class="xar-thirdwidth xar-floatright xar-sub xar-padding-thick">
             <xar:template type="module" module="crispbb" file="user-userpanel" />
@@ -68,7 +68,7 @@
     <table class="xar-fullwidth xar-alt-outline xar-margin-none">
         <caption class="xar-alt-outline xar-padding-thick xar-align-left xar-margin-thicktop">
             <span class="xar-floatleft">
-            <a href="#$forumviewurl#" title="#$transformed_fname#">#$transformed_fname#</a>
+            <a href="#$forumviewurl#" title="#$fname#">#$fname#</a>
             </span>
             <xar:if condition="!empty($pager)">
                 <span class="xar-align-right xar-floatright">
@@ -154,7 +154,7 @@
     </table>
     <div class="xar-alt-outline xar-align-left xar-padding-thick xar-margin-thickbottom">
         <div class="xar-halfwidth xar-floatleft">
-        <a href="#$forumviewurl#" title="#$transformed_fname#">#$transformed_fname#</a>
+        <a href="#$forumviewurl#" title="#$fname#">#$fname#</a>
         </div>
         <xar:if condition="!empty($pager)">
             <div class="xar-align-right xar-floatright xar-halfwidth">

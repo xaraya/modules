@@ -67,7 +67,7 @@
                     <label for="tids" class="xar-form-label help" title="#xarML('Topics this action will be performed upon')#"><xar:mlstring>Topics</xar:mlstring>:</label>
                     <xar:foreach in="$topics" key="$tid" value="$topic">
                         <p class="xar-form-container-after">
-                            <a href="#$topic['viewtopicurl']#" title="#xarML('View topic')#">#$topic['transformed_ttitle']#</a>
+                            <a href="#$topic['viewtopicurl']#" title="#xarML('View topic')#">#$topic['ttitle']#</a>
                             <input type="hidden" name="tids[#$tid#]" id="tids_#$tid#" value="1" />
                         </p>
                     </xar:foreach>
@@ -98,7 +98,7 @@
                     </label>
                     <xar:foreach in="$topics" key="$tid" value="$topic">
                         <p class="xar-form-container-after">
-                            <a href="#$topic['viewtopicurl']#" title="#xarML('View topic')#">#$topic['transformed_ttitle']#</a>
+                            <a href="#$topic['viewtopicurl']#" title="#xarML('View topic')#">#$topic['ttitle']#</a>
                             <input type="hidden" name="tids[#$tid#]" id="tids_#$tid#" value="1" />
                         </p>
                     </xar:foreach>
@@ -107,16 +107,16 @@
             <xar:if condition="empty($mergetid)">
                 <div class="xar-form-input-wrapper">
                     <label for="fid" class="xar-form-label help" title="#xarML('The forum selected topics will be moved from')#"><xar:mlstring>From Forum</xar:mlstring>:</label>
-                    <a href="#$viewforumurl#" title="#xarML('View Forum')#">#$transformed_fname#</a>
+                    <a href="#$viewforumurl#" title="#xarML('View Forum')#">#$fname#</a>
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="movefid" class="xar-form-label help" title="#xarML('The forum selected topics will be moved to')#"><xar:mlstring>To Forum</xar:mlstring>:</label>
-                    <a href="#$targetfid['viewforumurl']#" title="#xarML('View Forum')#">#$targetfid['transformed_fname']#</a>
+                    <a href="#$targetfid['viewforumurl']#" title="#xarML('View Forum')#">#$targetfid['fname']#</a>
                 </div>
             <xar:else />
                 <div class="xar-form-input-wrapper">
                     <label for="movetid" class="xar-form-label help" title="#xarML('The topic selected topics will be merged into')#"><xar:mlstring>Into Topic</xar:mlstring>:</label>
-                    <a href="#$targettid['viewtopicurl']#" title="#xarML('View Topic')#">#$targettid['transformed_ttitle']#</a>
+                    <a href="#$targettid['viewtopicurl']#" title="#xarML('View Topic')#">#$targettid['ttitle']#</a>
                 </div>
             </xar:if>
             <div class="xar-form-input-wrapper-after">
@@ -140,7 +140,7 @@
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label"><xar:mlstring>From Topic</xar:mlstring>:</label>
                 <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#">
-                #$transformed_ttitle#
+                #$ttitle#
                 </a>
             </div>
             <xar:if condition="!empty($posts)">
@@ -148,7 +148,7 @@
                     <label for="pids" class="xar-form-label help" title="#xarML('Posts this action will be performed upon')#"><xar:mlstring>Posts</xar:mlstring>:</label>
                     <xar:foreach in="$posts" key="$pid" value="$post">
                         <p class="xar-form-container-after">
-                            <a href="#$post['viewreplyurl']#" title="#xarML('View post')#">#$post['transformed_ttitle']# <xar:mlstring>Post ID:</xar:mlstring> #$post['pid']#</a>
+                            <a href="#$post['viewreplyurl']#" title="#xarML('View post')#">#$post['ttitle']# <xar:mlstring>Post ID:</xar:mlstring> #$post['pid']#</a>
                             <input type="hidden" name="pids[#$pid#]" id="pids_#$pid#" value="1" />
                         </p>
                     </xar:foreach>
@@ -169,7 +169,7 @@
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label"><xar:mlstring>From Topic</xar:mlstring>:</label>
                 <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#">
-                #$transformed_ttitle#
+                #$ttitle#
                 </a>
             </div>
             <xar:if condition="!empty($posts)">
@@ -184,7 +184,7 @@
                     </label>
                     <xar:foreach in="$posts" key="$pid" value="$post">
                         <p class="xar-form-container-after">
-                            <a href="#$post['viewreplyurl']#" title="#xarML('View post')#">#$post['transformed_ttitle']# <xar:mlstring>Post ID</xar:mlstring>: #$post['pid']#</a>
+                            <a href="#$post['viewreplyurl']#" title="#xarML('View post')#">#$post['ttitle']# <xar:mlstring>Post ID</xar:mlstring>: #$post['pid']#</a>
                             <input type="hidden" name="pids[#$pid#]" id="pids_#$pid#" value="1" />
                         </p>
                     </xar:foreach>
@@ -202,13 +202,13 @@
                     <label class="xar-form-label">
                         <xar:mlstring>In Forum</xar:mlstring>:
                     </label>
-                    #$targetfid['transformed_fname']#
+                    #$targetfid['fname']#
                     <input type="hidden" name="movefid" id="movefid" value="#$movefid#" />
                 </div>
             <xar:else />
                 <div class="xar-form-input-wrapper">
                     <label for="movetid" class="xar-form-label help" title="#xarML('The topic selected topics will be merged into')#"><xar:mlstring>Into Topic</xar:mlstring>:</label>
-                    <a href="#$targettid['viewtopicurl']#" title="#xarML('View Topic')#">#$targettid['transformed_ttitle']#</a>
+                    <a href="#$targettid['viewtopicurl']#" title="#xarML('View Topic')#">#$targettid['ttitle']#</a>
                     <input type="hidden" name="movetid" id="movetid" value="#$movetid#" />
                 </div>
             </xar:if>

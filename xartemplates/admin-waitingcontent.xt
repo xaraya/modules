@@ -9,7 +9,7 @@
     <p><xar:mlstring>Topics awaiting approval</xar:mlstring></p>
     <xar:foreach in="$forums" value="$forum">
         <xar:if condition="!empty($forum['modforumurl'])">
-            <a href="#$forum['modforumurl']#">#$forum['transformed_fname']#</a> : <strong>#$forum['subtopics']#</strong>
+            <a href="#$forum['modforumurl']#">#$forum['fname']#</a> : <strong>#$forum['subtopics']#</strong>
         </xar:if>
         <br />
     </xar:foreach>
@@ -18,7 +18,7 @@
     <p><xar:mlstring>Replies awaiting approval</xar:mlstring></p>
     <xar:foreach in="$topics" value="$topic">
         <xar:if condition="!empty($topic['modtopicurl'])">
-            <a href="#$topic['modtopicurl']#">#$topic['transformed_ttitle']#</a> : <strong>#$topic['numsubs']#</strong>
+            <a href="#$topic['modtopicurl']#">#$topic['ttitle']#</a> : <strong>#$topic['numsubs']#</strong>
         </xar:if>
         <br />
     </xar:foreach>

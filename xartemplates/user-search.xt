@@ -91,7 +91,7 @@
                 <xar:else />
                     <input type="checkbox" name="crispbb_fids[#$fid#]" id="crispbb_fids_#$fid#" value="1" />
                 </xar:if>
-                <label for="crispbb_fids_#$fid#">#$forum['transformed_fname']#</label>
+                <label for="crispbb_fids_#$fid#">#$forum['fname']#</label>
             </xar:foreach>
         </p>
         <p>

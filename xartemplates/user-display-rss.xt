@@ -5,13 +5,13 @@
     <xar:set name="rownumber">!empty($startnum) ? $startnum : 1</xar:set>
     <xar:foreach in="$posts" key="$pid" value="$post">
         <item>
-            <title>#xarVarTransform($post['transformed_ttitle'], 'HTML', 'XML')#</title>
+            <title>#xarVarTransform($post['ttitle'], 'HTML', 'XML')#</title>
             <link>#xarVarTransform($post['viewreplyurl'], 'HTML', 'XML')#</link>
             <author>#xarVarTransform($posterlist[$post['powner']]['name'], 'HTML', 'XML')#</author>
             <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$post['ptime'])#</pubDate>
             <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
-            <content:encoded><![CDATA[ #xarVarTransform(xarVarPrepHTMLDisplay($post['transformed_ptext']), 'HTML', 'XML')# ]]></content:encoded>
-            <description>#xarVarTransform(xarVarPrepForDisplay($post['transformed_ptext']), 'HTML', 'XML')#</description>
+            <content:encoded><![CDATA[ #xarVarTransform(xarVarPrepHTMLDisplay($post['ptext']), 'HTML', 'XML')# ]]></content:encoded>
+            <description>#xarVarTransform(xarVarPrepForDisplay($post['ptext']), 'HTML', 'XML')#</description>
             <guid isPermaLink="true">#xarVarTransform($post['viewreplyurl'], 'HTML', 'XML')#</guid>
         </item>
     </xar:foreach>

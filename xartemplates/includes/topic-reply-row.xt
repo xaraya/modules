@@ -10,7 +10,7 @@
 <td class="replyinfo xar-padding-none">
     <xar:comment>First we display the permalink to this post</xar:comment>
     <div class="xar-sub xar-padding-thick">
-        <a name="post#$post['pid']#" href="#$post['viewreplyurl']#" title="#xarML('permalink')#">#$post['transformed_ttitle']#</a>
+        <a name="post#$post['pid']#" href="#$post['viewreplyurl']#" title="#xarML('permalink')#">#$post['ttitle']#</a>
         <xar:if condition="!empty($rownumber)">
         <em>##(#$rownumber#)</em>
         </xar:if>
@@ -85,7 +85,7 @@
     <xar:comment>The actual post is in this cell</xar:comment>
     <xar:comment>First we display the permalink to this post</xar:comment>
     <div class="#$rowclass# xar-sub xar-padding-thick">
-        <a name="post#$post['pid']#" href="#$post['viewreplyurl']#" title="#xarML('permalink')#">#$post['transformed_ttitle']#</a>
+        <a name="post#$post['pid']#" href="#$post['viewreplyurl']#" title="#xarML('permalink')#">#$post['ttitle']#</a>
         <xar:if condition="!empty($rownumber)">
         <em>##(#$rownumber#)</em>
         </xar:if>
@@ -98,7 +98,7 @@
         <xar:if condition="!empty($post['topicicon'])">
             <img src="#xarTPLGetImage($post['topicicon'],'crispbb')#" alt="topic icon" />
         </xar:if>
-        <em>#$post['transformed_pdesc']#</em>
+        <em>#$post['pdesc']#</em>
     </div>
     <xar:comment>Display the time of this post</xar:comment>
     <div class="xar-sub xar-align-right xar-padding-thicksides">
@@ -113,7 +113,7 @@
     <xar:comment>Display the post text itself</xar:comment>
     <div class="xar-standard-box-padding xar-margin-thicktop xar-padding-thicktop">
         <xar:if condition="!empty($post['quotereplyurl'])"><span class="xar-floatright"><a href="#$post['quotereplyurl']#" title="#xarML('Reply quoting this post')#"><img src="#xarTPLGetImage('tango/quote.png', 'crispbb')#" alt="quote" /></a></span></xar:if>
-        #$post['transformed_ptext']#
+        #$post['ptext']#
     </div>
     <xar:comment>Display any post hooks</xar:comment>
     <xar:comment>NOTE: if this is the first topic post, the hooks here will be topic hooks, not post hooks</xar:comment>

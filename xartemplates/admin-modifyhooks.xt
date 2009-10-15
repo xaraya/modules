@@ -161,7 +161,7 @@
                             </xar:if>
                         </td>
                         <td>
-                            <a href="#$topic['viewtopicurl']#" title="#$topic['transformed_ttitle']#">#$topic['transformed_ttitle']#</a>
+                            <a href="#$topic['viewtopicurl']#" title="#$topic['ttitle']#">#$topic['ttitle']#</a>
                         </td>
                         <td class="xar-align-right" width="20%">
                             <a href="#$topic['unlinkhookurl']#"><img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="#xarML('Delete')#" title="#xarML('Delete this association')#" /></a>
