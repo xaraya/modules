@@ -147,7 +147,7 @@
                 <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
                 </xar:foreach>
             <xar:else />
-                <xar:data-getitems name="$userprops" value="$userdd" module="roles" itemids="$uidlist" fieldlist="website,avatar,location,signature,icq,msnm,yim,aim" />
+                <xar:data-getitems name="userprops" value="userdd" module="roles" itemids="$uidlist" fieldlist="website,avatar,location,signature,icq,msnm,yim,aim" />
                 <xar:set name="rowclass">'xar-norm'</xar:set>
                 <xar:foreach in="$results" key="$pid" value="$post">
                 <tr class="#$rowclass#">

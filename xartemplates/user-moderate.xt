@@ -411,7 +411,7 @@
         </xar:if>
     <xar:elseif condition="$component eq 'posts'" />
         <xar:if condition="$modaction ne 'split'">
-            <xar:data-getitems name="$userprops" value="$userdd" module="roles" itemids="$uidlist" fieldlist="website,avatar,location,signature,icq,msnm,yim,aim" />
+            <xar:data-getitems name="userprops" value="userdd" module="roles" itemids="$uidlist" fieldlist="website,avatar,location,signature,icq,msnm,yim,aim" />
             <div>
                 <form method="get" action="index.php" class="xar-align-center">
                     <div>

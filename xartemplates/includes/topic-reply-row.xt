@@ -134,7 +134,7 @@
         'pictures' templates for examples. NOTE: if this is the first topic post, the dd will belong to the topic component, not the posts component and vice-versa.
     </xar:comment>
     <xar:if condition="xarModIsHooked('dynamicdata','crispbb',$post['itemtype'])">
-        <xar:data-getitem name="$postprops" module="crispbb" itemtype="$post['itemtype']" itemid="$post['itemid']" />
+        <xar:data-getitem name="postprops" module="crispbb" itemtype="$post['itemtype']" itemid="$post['itemid']" />
         <xar:if condition="!empty($postprops)">
             <div>
                 <xar:foreach in="$postprops" key="$propname">

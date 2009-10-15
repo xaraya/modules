@@ -57,7 +57,7 @@
     </xar:if>
     <xar:comment>If you hooked dynamic data to topics, you may want to retrieve it, below is an example of how. NOTE: this is the same data that will be shown in the first topic post, but, like the other hooks, you may have occasion to show some dd here instead of in the post itself (eg, when not displaying the first page).</xar:comment>
     <xar:if condition="xarModIsHooked('dynamicdata','crispbb',$topicstype)">
-        <xar:data-getitem name="$topicprops" module="crispbb" itemtype="$topicstype" itemid="$tid" />
+        <xar:data-getitem name="topicprops" module="crispbb" itemtype="$topicstype" itemid="$tid" />
         <xar:if condition="!empty($topicprops)">
             <div>
                 <xar:foreach in="$topicprops" key="$propname">
