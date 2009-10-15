@@ -11,7 +11,7 @@ crispBB modifyconfig hook
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label"><xar:mlstring>Display Last</xar:mlstring>:</label>
         <input type="text" name="crispbb_postsperpage" id="crispbb_postsperpage" value="#$postsperpage#" maxlength="3" class="xar-form-textshort" />
-        <label for="crispbb_postsperpage"><xar:mlstring>Replies</xar:mlstring>
+        <label for="crispbb_postsperpage"><xar:mlstring>Replies</xar:mlstring></label>
         <xar:data-input type="checkbox" name="crispbb_quickreply" id="crispbb_quickreply" value="$quickreply" />
         <label for="crispbb_quickreply"><xar:mlstring>Show Quick Reply</xar:mlstring>?</label>
     </div>

@@ -78,7 +78,7 @@
                 <input type="hidden" name="fid" id="fid" value="#$fid#" />
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                 <input type="hidden" name="phase" id="phase" value="update" />
-                <input type="hidden" name="modaction" id="modaction" value="#$modaction#">
+                <input type="hidden" name="modaction" id="modaction" value="#$modaction#" />
                 <input type="hidden" name="tstatus" id="tstatus" value="#$tstatus#" />
                 <input type="submit" name="confirm" id="confirm" value="#xarML('Confirm Action')#" />
                 <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
@@ -159,7 +159,7 @@
                 <input type="hidden" name="tid" id="tid" value="#$tid#" />
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                 <input type="hidden" name="phase" id="phase" value="update" />
-                <input type="hidden" name="modaction" id="modaction" value="#$modaction#">
+                <input type="hidden" name="modaction" id="modaction" value="#$modaction#" />
                 <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
                 <input type="submit" name="confirm" id="confirm" value="#xarML('Confirm Action')#" />
             </div>
@@ -218,7 +218,7 @@
                 <input type="hidden" name="mergetid" id="mergetid" value="#$mergetid#" />
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                 <input type="hidden" name="phase" id="phase" value="update" />
-                <input type="hidden" name="modaction" id="modaction" value="split">
+                <input type="hidden" name="modaction" id="modaction" value="split" />
                 <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
                 <input type="submit" name="confirm" id="confirm" value="#xarML('Confirm Action')#" />
             </div>
