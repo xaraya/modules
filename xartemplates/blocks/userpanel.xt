@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:if condition="$showusername">
-Welcome back, 
+Welcome back,
 <xar:if condition="$showaccount">
 <a href="#xarModURL('roles', 'user', 'display', array('id' => $id))#">#$name#</a>
 <xar:else />
@@ -32,10 +32,11 @@ Welcome back,
     <li>
         Visit Start:
         <strong>
-        <xar:base-timesince stamp="$visitstart" /> ago
+        #xarLocaleGetFormattedTime('short', $visitstart)#
         </strong>
     </li>
     </xar:if>
+    <!--
     <xar:if condition="!empty($totalvisit)">
     <li>
         Visits Total:
@@ -44,6 +45,7 @@ Welcome back,
         </strong>
     </li>
     </xar:if>
+    -->
     <xar:if condition="!empty($showwaiting)">
     <li>
         <a class="xar-error" href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'waiting'))#" title="#xarML('View Waiting Content')#">Waiting Content</a>
