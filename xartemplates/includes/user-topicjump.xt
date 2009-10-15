@@ -9,7 +9,7 @@
     <select name="topicjump" id="topicjump#$formid#" onchange="this.form.submit();">
         <optgroup label="#xarML('All forums')#">
             <option value="0">-----------------</option>
-            <xar:if condition="!empty($lastvisit)">
+            <xar:if condition="!empty($userpanel['lastvisit'])">
                 <option value="lastvisit"><xar:mlstring>Topics since last visit</xar:mlstring></option>
             </xar:if>
             <option value="latest"><xar:mlstring>Latest topics</xar:mlstring></option>
@@ -25,7 +25,7 @@
         </optgroup>
         <xar:if condition="!empty($fid)">
         <optgroup label="#xarML('This forum')#">
-            <xar:if condition="!empty($lastvisit)">
+            <xar:if condition="!empty($userpanel['lastvisit'])">
                 <option value="lastvisit#$fid#"><xar:mlstring>Topics since last visit</xar:mlstring></option>
             </xar:if>
             <option value="latest#$fid#"><xar:mlstring>Latest topics</xar:mlstring></option>
