@@ -20,7 +20,7 @@
     <xar:if condition="!empty($message)">
     <h4>#$message#</h4>
     </xar:if>
-    <xar:set name="defaultModule">xarConfigVars::get(null,'Site.Core.DefaultModuleName')</xar:set>
+    <xar:set name="defaultModule">xarModVars::get('modules', 'defaultmodule')</xar:set>
     <xar:set name="pageSeparator">xarModVars::get('themes', 'SiteTitleSeparator')</xar:set>
     <xar:if condition="$defaultModule ne 'crispbb'">
         <div class="xar-form-input-wrapper-after">
