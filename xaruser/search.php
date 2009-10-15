@@ -98,9 +98,9 @@ function crispbb_user_search()
         $user = xarMod::apiFunc('roles', 'user', 'get', array('name' => $author));
         if (!empty($user)) {
             if ($component == 'topics') {
-                $towner = $user['uid'];
+                $towner = $user['id'];
             } else {
-                $powner = $user['uid'];
+                $powner = $user['id'];
             }
             //$authorid = $user['uid'];
             $data['author'] = $author;
@@ -153,7 +153,7 @@ function crispbb_user_search()
     if (!empty($towner) && is_numeric($towner)) {
         $user = xarMod::apiFunc('roles','user','get',
                              array('id' => $towner));
-        if (empty($user['uid'])) {
+        if (empty($user['id'])) {
             unset($towner);
         }
         unset($user);
@@ -162,7 +162,7 @@ function crispbb_user_search()
     if (!empty($powner) && is_numeric($powner)) {
         $user = xarMod::apiFunc('roles','user','get',
                              array('id' => $powner));
-        if (empty($user['uid'])) {
+        if (empty($user['id'])) {
             unset($powner);
         }
         unset($user);
