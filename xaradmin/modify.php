@@ -310,7 +310,7 @@ function crispbb_admin_modify($args)
         break;
 
         case 'privileges':
-            if (empty($data['privsforumurl'])) {
+            if (empty($data['forum']->itemlinks['privileges'])) {
                 $errorMsg['message'] = xarML('You do not have the privileges required for this action');
                 $errorMsg['return_url'] = xarModURL('crispbb', 'user', 'main');
                 $errorMsg['type'] = 'NO_PRIVILEGES';
