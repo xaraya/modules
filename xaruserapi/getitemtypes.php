@@ -151,7 +151,7 @@ function crispbb_userapi_getitemtypes($args)
                 foreach ($components as $component) {
                     if ($v['component'] == $component) {
                         // All {component} itemtypes (id = 0)
-                        if ($v['id'] == 0) {
+                        if ($v['fid'] == 0) {
                             $types[$component] = $k;
                             // if module is categories
                             if ($hookmod == 'categories') {
