@@ -25,10 +25,9 @@ function crispbb_userapi_createhook($args)
     }
 
     if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID', 'userapi', 'createhook', 'crispBB');
-        xarErrorSet(USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('object ID', 'userapi', 'createhook', 'crispBB');
+        //throw new BadParameterException($vars, $msg);
         return $extrainfo;
     }
 
@@ -43,10 +42,9 @@ function crispbb_userapi_createhook($args)
 
     $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module name', 'userapi', 'createhook', 'crispBB');
-        xarErrorSet(USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('module name', 'userapi', 'createhook', 'crispBB');
+        //throw new BadParameterException($vars, $msg);
         return $extrainfo;
     }
 

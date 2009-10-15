@@ -28,10 +28,9 @@ function crispbb_userapi_getitemtype($args)
         array('fid' => $fid, 'component' => $component));
 
     if (count($itemtypes) <> 1) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'itemtype', 'user', 'getitemtype', 'crispBB');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('itemtype', 'user', 'getitemtype', 'crispBB');
+        throw new BadParameterException($vars, $msg);
         return;
     }
 

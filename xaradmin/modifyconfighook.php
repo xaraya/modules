@@ -40,8 +40,9 @@ function crispbb_admin_modifyconfighook($args)
 
     $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'module name', 'admin', 'modifyconfighook', 'crispBB');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('module name', 'admin', 'modifyconfighook', 'crispBB');
+        // throw new BadParameterException($vars, $msg);
         // don't throw an error here, life in hooks goes on...
         return;
     }

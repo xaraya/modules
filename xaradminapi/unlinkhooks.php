@@ -38,11 +38,10 @@ function crispbb_adminapi_unlinkhooks($args)
 
     if (!empty($modid)) {
         if (!is_numeric($modid)) {
-            $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                         'module id', 'admin', 'unlinkhooks', 'crispbb');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                            new SystemException($msg));
-            return false;
+            $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+            $vars = array('module id', 'admin', 'unlinkhooks', 'crispbb');
+            throw new BadParameterException($vars, $msg);
+            return;
         }
         if (empty($itemtype) || !is_numeric($itemtype)) {
             $itemtype = 0;

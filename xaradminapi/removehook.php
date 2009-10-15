@@ -32,8 +32,9 @@ function crispbb_adminapi_removehook($args)
 
     $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)','module name', 'adminapi', 'removehook', 'crispBB');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('module name', 'adminapi', 'removehook', 'crispBB');
+        //throw new BadParameterException($vars, $msg);
         return $extrainfo;
     }
 

@@ -89,11 +89,10 @@ function crispbb_userapi_updatepost($args)
     }
 
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'userapi', 'updatepost', 'crispBB');
-        xarErrorSet(SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
-        return $msg;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array(join(', ', $invalid), 'userapi', 'updatepost', 'crispBB');
+        throw new BadParameterException($vars, $msg);
+        return;
     }
 
     $dbconn =& xarDB::getConn();

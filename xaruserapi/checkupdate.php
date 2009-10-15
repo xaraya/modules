@@ -112,9 +112,9 @@ function crispbb_userapi_checkupdate($args)
 
     if(intval($responseInfo['http_code'])!=200){
       if (!$superrors){
-        $msg = xarML('URL #(1) returned response #(2)', $url, $responseInfo['http_code']);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                        new SystemException($msg));
+        $msg = 'URL #(1) returned response #(2)';
+        $vars = array($url, $responseInfo['http_code']);
+        throw new BadParameterException($vars, $msg);
         return;
       }
       $response = false;
@@ -123,18 +123,18 @@ function crispbb_userapi_checkupdate($args)
       $fp = @fopen($file,'wb');
       if (!$fp) {
           if (!$superrors){
-          $msg = xarML('Error saving URL #(1) to cache file #(2)', $url, $file);
-          xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                          new SystemException($msg));
+          $msg = 'Error saving URL #(1) to cache file #(2)';
+          $vars = array($url, $file);
+          throw new BadParameterException($vars, $msg);
           }
           return;
       }
       $size = fwrite($fp, $response);
       if (!$size || $size < strlen($response)) {
           if (!$superrors){
-              $msg = xarML('URL #(1) truncated to #(2) bytes when saving to cache file #(3)', $url, $size, $file);
-              xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                              new SystemException($msg));
+              $msg = 'URL #(1) truncated to #(2) bytes when saving to cache file #(3)';
+              $vars = array($url, $size, $file);
+              throw new BadParameterException($vars, $msg);
           }
           return;
       }

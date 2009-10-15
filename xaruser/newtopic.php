@@ -234,14 +234,16 @@ function crispbb_user_newtopic($args)
     if (!empty($modname)) {
         $modid = xarMod::getRegID($modname);
         if (empty($modid)) {
-            $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'module name', 'user', 'newtopic', 'crispBB');
-            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-            return $msg;
+            $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+            $vars = array('module name', 'user', 'newtopic', 'crispBB');
+            throw new BadParameterException($vars, $msg);
+            return;
         }
         if (empty($itemid)) {
-            $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'item id', 'user', 'newtopic', 'crispBB');
-            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-            return $msg;
+            $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+            $vars = array('item id', 'user', 'newtopic', 'crispBB');
+            throw new BadParameterException($vars, $msg);
+            return;
         }
         $var_to_look_for = $modname;
         if (!empty($itemtype)) {
@@ -254,9 +256,10 @@ function crispbb_user_newtopic($args)
         }
         $settings = !empty($string) && is_string($string) ? unserialize($string) : array();
         if (empty($settings['fid']) || $settings['fid'] != $fid) {
-            $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'fid', 'user', 'newtopic', 'crispBB');
-            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-            return $msg;
+            $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+            $vars = array('fid', 'user', 'newtopic', 'crispBB');
+            throw new BadParameterException($vars, $msg);
+            return;
         }
         $itemlinks = xarMod::apiFunc($modname, 'user', 'getitemlinks', array('itemids' => array($itemid), ), 0);
         if (!empty($itemlinks[$itemid])) {

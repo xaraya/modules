@@ -23,10 +23,9 @@ function crispbb_userapi_gettopic($args)
     $topics = xarMod::apiFunc('crispbb', 'user', 'gettopics', $args);
 
     if (count($topics) <> 1) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'parameters', 'user', 'gettopic', 'crispBB');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('parameters', 'user', 'gettopic', 'crispBB');
+        throw new BadParameterException($vars, $msg);
         return;
     }
 

@@ -21,10 +21,9 @@ function crispbb_adminapi_deletepost($args)
 
     extract($args);
     if (!isset($pid) || !is_numeric($pid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'post ID', 'admin', 'deletepost', 'crispbb');
-        xarErrorSet(SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('post ID', 'admin', 'deletepost', 'crispbb');
+        throw new BadParameterException($vars, $msg);
         return;
     }
 

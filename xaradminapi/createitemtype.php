@@ -31,10 +31,9 @@ function crispbb_adminapi_createitemtype($args)
     if (empty($component) || !in_array($component, $components)) $invalid[] = 'component';
 
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'admin', 'createitemtype', 'crispBB');
-        xarErrorSet(SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array(join(', ', $invalid), 'admin', 'createitemtype', 'crispBB');
+        throw new BadParameterException($vars, $msg);
         return;
     }
 

@@ -92,11 +92,10 @@ function crispbb_adminapi_update($args)
     }
 
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'adminapi', 'update', 'crispBB');
-        xarErrorSet(SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
-        return $msg;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array(join(', ', $invalid), 'adminapi', 'update', 'crispBB');
+        throw new BadParameterException($vars, $msg);
+        return;
     }
 
     if (!empty($cids) && count($cids) > 0) {
