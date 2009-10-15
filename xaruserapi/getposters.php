@@ -164,6 +164,7 @@ function crispbb_userapi_getposters($args)
                 $field = 'uid';
                 $poster['powner'] = $value;
                 $poster['towner'] = $value;
+                $poster['id'] = $value;
             }
             $poster[$field] = $value;
         }
