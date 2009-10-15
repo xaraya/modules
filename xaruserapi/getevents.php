@@ -338,10 +338,9 @@ function ievents_userapi_getevents($args)
                 // Add flags for new and/or updated events
                 // Put these flags at the beginning by reversing the array
                 $event['flags_arr'] = array_reverse($event['flags_arr'], true);
-                if ($event['created_time'] < (time() + ($days_new * 86400))) {
+                if ($event['created_time'] > (strtotime('-' . $days_new . ' days'))) {
                     $event['flags_arr']['E'] = xarML('New');
-                }
-                elseif ($event['updated_time'] < (time() + ($days_updated * 86400))) {
+                } elseif ($event['updated_time'] > (strtotime('-' . $days_updated  . ' days'))) {
                     $event['flags_arr']['U'] = xarML('Updated');
                 }
                 $event['flags_arr'] = array_reverse($event['flags_arr'], true);
