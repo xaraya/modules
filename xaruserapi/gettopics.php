@@ -555,7 +555,6 @@ function crispbb_userapi_gettopics($args)
                 $value = unserialize($value);
             }
             $topic[$field] = $value;
-            $topic['catid'] = 2;
         }
         if (!$secLevel = xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
             array('check' => $topic, 'priv' => 'viewforum'))) {
