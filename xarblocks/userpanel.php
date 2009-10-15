@@ -59,6 +59,7 @@ function crispbb_userpanelblock_info()
 **/
 function crispbb_userpanelblock_display($blockinfo)
 {
+    sys::import('modules.crispbb.class.tracker');
 
     if (!xarSecurityCheck('ReadCrispBBBlock', 0, 'Block', $blockinfo['name'])) {return;}
 
@@ -85,23 +86,22 @@ function crispbb_userpanelblock_display($blockinfo)
     $data['showlogout'] = isset($vars['showlogout']) ? $vars['showlogout'] : $defaults['showlogout'];
 
     $now = time();
-    if (xarVarIsCached('Blocks.crispbb', 'tracking')) {
-        $tracking = xarVarGetCached('Blocks.crispbb', 'tracking');
+    if (xarVarIsCached('Blocks.crispbb', 'tracker')) {
+        $tracker = xarVarGetCached('Blocks.crispbb', 'tracker_object');
     } else {
-        $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
-        xarModDelUserVar('crispbb', 'tracking');
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
+        $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
     }
-    $data['uid'] = xarUserGetVar('id');
-    $data['name'] = xarUserGetVar('name');
+    $userpanel = $tracker->getUserPanelInfo();
+    $data['uid'] = $userpanel['id'];
+    $data['name'] = $userpanel['name'];
     if ($data['showlastvisit']) {
-    $data['lastvisit'] = $tracking[0]['lastvisit'];
+    $data['lastvisit'] = $userpanel['lastvisit'];
     }
     if ($data['showthisvisit']) {
-    $data['visitstart'] = $tracking[0]['visitstart'];
+    $data['visitstart'] = $userpanel['visitstart'];
     }
     if ($data['showtotalvisit']) {
-    $data['totalvisit'] = $tracking[0]['totalvisit'];
+    $data['totalvisit'] = $userpanel['timeonline'];
     }
     if ($data['showtimenow']) {
         $data['timenow'] = $now;

@@ -349,13 +349,18 @@ function crispbb_init()
     xarModVars::set($module, 'useModuleAlias', false);
     xarModVars::set($module, 'aliasname', '');
 
-    // module settings (storage for forums, users, and module default settings)
-    xarModVars::set($module, 'tracking', serialize(array()));
+    // module settings (storage for forums and module default settings)
     xarModVars::set($module, 'ftracking', serialize(array()));
     xarModVars::set($module, 'forumsettings', serialize(array()));
     xarModVars::set($module, 'privilegesettings', serialize(array()));
 
+    // the tracker class takes care of creating the tracker object
+    sys::import('modules.crispbb.class.tracker');
+    $tracker = new Tracker(true);
+    unset($tracker); // unsetting here causes the modvar to be stored with default values :)
+
     // display options
+    xarModVars::set($module, 'visit_timeout', 15);
     xarModVars::set($module, 'showuserpanel', true);
     xarModVars::set($module, 'showsearchbox', true);
     xarModVars::set($module, 'showforumjump', true);

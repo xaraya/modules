@@ -19,7 +19,6 @@
  * @return array
  * @throws none
  */
- sys::import('xaraya.pager');
 function crispbb_user_display($args)
 {
     extract($args);
@@ -41,7 +40,12 @@ function crispbb_user_display($args)
     }
 
     $data = $topic;
-
+    // Logged in user
+    if (xarUserIsLoggedIn()) {
+        // Start Tracking
+        $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
+        $data['userpanel'] = $tracker->getUserPanelInfo();
+    }
     $forumLevel = $data['forumLevel'];
     $privs = $data['privs'];
     $uid = xarUserGetVar('id');
@@ -68,10 +72,7 @@ function crispbb_user_display($args)
         $lastpid = $data['lastpid'];
 
         if ($action == 'unread') {
-            $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
-            $lastvisit = $tracking[0]['lastvisit'];
-            $lastreadforum = !empty($tracking[$data['fid']][0]['lastread']) ? $tracking[$data['fid']][0]['lastread'] : $lastvisit;
-            $lastreadtopic = !empty($tracking[$data['fid']][$tid]) ? $tracking[$data['fid']][$tid] : $lastreadforum;
+            $lastreadtopic = $tracker->lastRead($data['fid'], $tid);
             if ($data['ptime'] > $lastreadtopic) {
                 $totalunread = xarMod::apiFunc('crispbb', 'user', 'countposts',
                     array('tid' => $tid, 'starttime' => $lastreadtopic, 'pstatus' => $pstatuses));
@@ -139,12 +140,10 @@ function crispbb_user_display($args)
     $pageTitle = $data['ttitle'];
     $categories[$data['catid']] = xarMod::apiFunc('categories', 'user', 'getcatinfo',
             array('cid' => $data['catid']));
-    $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
-    // Start Tracking
-    if (!empty($tracking)) {
-        $tracking[$data['fid']][$tid] = $now; // mark topic read
-        $lastreadforum = !empty($tracking[$data['fid']][0]['lastread']) ? $tracking[$data['fid']][0]['lastread'] : xarUserGetVar('date_reg');
-        $lastupdate = !empty($tracking[$data['fid']][0]['lastupdate']) ? $tracking[$data['fid']][0]['lastupdate'] : $now;
+    if (!empty($tracker)) {
+        $tracker->markRead($data['fid'], $tid);
+        $lastreadforum = $tracker->lastRead($data['fid']);
+        $lastupdate = $tracker->lastUpdate($data['fid']);
         $unread = false;
         $thiststatus = array(0,1,2);
         if (!empty($privs['locktopics'])) $thiststatus[] = 4;
@@ -153,7 +152,7 @@ function crispbb_user_display($args)
                 array('fid' => $data['fid'], 'starttime' => $lastreadforum, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => $thiststatus));
             if (!empty($topicssince)) {
                 $tids = array_keys($topicssince);
-                $readtids = array_keys($tracking[$data['fid']]);
+                $readtids = $tracker->seenTids($data['fid']);
                 foreach ($tids as $seentid) {
                     if (in_array($seentid, $readtids)) continue;
                     $unread = true;
@@ -162,16 +161,8 @@ function crispbb_user_display($args)
             }
         }
         if (!$unread) { // user has read all other topics in the forum
-            $tracking[$data['fid']] = array();
-            $tracking[$data['fid']][0] = array();
-            $tracking[$data['fid']][0]['lastread'] = $now;
+            $tracker->markRead($fid);
         }
-        $tracking[$data['fid']][0]['lastview'] = $now;
-        $data['lastvisit'] = $tracking[0]['lastvisit'];
-        $data['visitstart'] = $tracking[0]['visitstart'];
-        $data['totalvisit'] = $tracking[0]['totalvisit'];
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
     }
 
     if (!empty($data['iconfolder'])) {
@@ -282,6 +273,7 @@ function crispbb_user_display($args)
         ));
     $data['totalunanswered'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('tstatus' => $tstatus, 'noreplies' => true));
     $pagerTpl = ($data['totalposts'] > (10*$data['postsperpage'])) ? 'multipage' : 'default';
+    sys::import('xaraya.pager');
     $data['pager'] = xarTplGetPager($startnum,
         $data['totalposts'],
         xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => '%%')),

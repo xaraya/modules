@@ -42,7 +42,12 @@ function crispbb_user_displayreply($args)
 
     $data = $topic;
     $tid = $data['tid'];
-
+    // Logged in user
+    if (xarUserIsLoggedIn()) {
+        // Start Tracking
+        $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
+        $data['userpanel'] = $tracker->getUserPanelInfo();
+    }
     $forumLevel = $data['forumLevel'];
     $privs = $data['privs'];
     $uid = xarUserGetVar('id');
@@ -65,12 +70,11 @@ function crispbb_user_displayreply($args)
     $pageTitle = $data['ttitle'] . ' - Post ' . $pid;
     $categories[$data['catid']] = xarMod::apiFunc('categories', 'user', 'getcatinfo',
             array('cid' => $data['catid']));
-    $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
-    // Start Tracking
-    if (!empty($tracking)) {
-        $tracking[$data['fid']][$tid] = $now; // mark topic read
-        $lastreadforum = !empty($tracking[$data['fid']][0]['lastread']) ? $tracking[$data['fid']][0]['lastread'] : 1;
-        $lastupdate = !empty($tracking[$data['fid']][0]['lastupdate']) ? $tracking[$data['fid']][0]['lastupdate'] : $now;
+
+    if (!empty($tracker)) {
+        $tracker->markRead($data['fid'], $tid);
+        $lastreadforum = $tracker->lastRead($data['fid']);
+        $lastupdate = $tracker->lastUpdate($data['fid']);
         $unread = false;
         $thiststatus = array(0,1,2);
         if (!empty($privs['locktopics'])) $thiststatus[] = 4;
@@ -79,7 +83,7 @@ function crispbb_user_displayreply($args)
                 array('fid' => $data['fid'], 'starttime' => $lastreadforum, 'sort' => 'ptime', 'order' => 'DESC', 'tstatus' => $thiststatus));
             if (!empty($topicssince)) {
                 $tids = array_keys($topicssince);
-                $readtids = array_keys($tracking[$data['fid']]);
+                $readtids = $tracker->seenTids($data['fid']);
                 foreach ($tids as $seentid) {
                     if (in_array($seentid, $readtids)) continue;
                     $unread = true;
@@ -88,16 +92,8 @@ function crispbb_user_displayreply($args)
             }
         }
         if (!$unread) { // user has read all other topics in the forum
-            $tracking[$data['fid']] = array();
-            $tracking[$data['fid']][0] = array();
-            $tracking[$data['fid']][0]['lastread'] = $now;
+            $tracker->markRead($data['fid']);
         }
-        $tracking[$data['fid']][0]['lastview'] = $now;
-        $data['lastvisit'] = $tracking[0]['lastvisit'];
-        $data['visitstart'] = $tracking[0]['visitstart'];
-        $data['totalvisit'] = $tracking[0]['totalvisit'];
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
     }
 
     if (!empty($data['iconfolder'])) {

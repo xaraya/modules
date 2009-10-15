@@ -34,12 +34,7 @@ function crispbb_admin_overview()
     $data['version'] = $modinfo['version'];
     $pageTitle = xarML('Module Overview');
     $now = time();
-    $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
-    // End Tracking
-    if (!empty($tracking)) {
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-    }
+
     // store function name for use by admin-main as an entry point
     xarSessionSetVar('crispbb_adminstartpage', 'overview');
     xarTPLSetPageTitle(xarVarPrepForDisplay($pageTitle));

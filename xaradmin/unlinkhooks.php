@@ -30,12 +30,7 @@ function crispbb_admin_unlinkhooks()
     if(!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     $now = time();
-    $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
-    // End Tracking
-    if (!empty($tracking)) {
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-    }
+
     $pageTitle = xarML('Delete Associations');
 
     $data = array();

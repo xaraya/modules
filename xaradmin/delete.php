@@ -46,12 +46,7 @@ function crispbb_admin_delete($args)
     $secLevels = $data['forum']->fprivileges;
     $invalid = array();
     $now = time();
-    $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
-    // End Tracking
-    if (!empty($tracking)) {
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-    }
+
     $pageTitle = xarML('Delete #(1)', $data['forum']->properties['fname']->value);
 
     if ($phase == 'update') {

@@ -52,7 +52,7 @@ function crispbb_user_main()
     // Logged in user
     if (xarUserIsLoggedIn()) {
         // Start Tracking
-        $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
+        $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
         $data['readurl'] = xarModURL('crispbb', 'user', 'main', array('action' => 'read'));
     } else {
         $data['readurl'] = '';
@@ -99,20 +99,17 @@ function crispbb_user_main()
                     $seenLevel = $forum['forumLevel'];
                     $minLevel = isset($minLevel) && $seenLevel >= $minLevel ? $minLevel : $seenLevel;
                     if (!empty($seenLevel)) $seenLevels[$seenLevel] = $forum['fprivileges'][$seenLevel];
-                    if (!empty($tracking)) {
-                        $lastupdated = !empty($tracking[$fid][0]['lastupdate']) ?  $tracking[$fid][0]['lastupdate'] : 1;
+                    if (!empty($tracker)) {
+                        $lastupdate = $tracker->lastUpdate($fid);
                         if ($action == 'read' && (empty($readfid) || $fid == $readfid)) {
-                            $tracking[$fid] = array(); // clear topics
-                            $tracking[$fid][0] = array(); // 0 = view forum
-                            $tracking[$fid][0]['lastread'] = $now; // set forum read now
-                            $tracking[$fid][0]['lastview'] = $now; // set forum view now
+                            $tracker->markRead($fid);
                         }
-                        $lastreadforum = !empty($tracking[$fid][0]['lastread']) ? $tracking[$fid][0]['lastread'] : $now;
+                        $lastread = $tracker->lastRead($fid);
                     } else {
-                        $lastupdated = 1;
-                        $lastreadforum = $now;
+                        $lastupdate = $lastread = time();
                     }
-                    $unread = ($lastreadforum < $lastupdated) ? true : false;
+                    $unread = $lastread < $lastupdate ? true : false;
+
                     switch ($forum['fstatus']) {
                         case '0': // open
                         default:
@@ -173,15 +170,10 @@ function crispbb_user_main()
     $pageTitle = empty($catid) ? xarML('Forum Index') : $categories[$catid]['name'];
     $data['pageTitle'] = $pageTitle;
 
-    // End Tracking
-    if (!empty($tracking)) {
-        $data['lastvisit'] = $tracking['0']['lastvisit'];
-        $data['visitstart'] = $tracking[0]['visitstart'];
-        $data['totalvisit'] = $tracking[0]['totalvisit'];
-        // xarModDelUserVar('crispbb', 'tracking', $uid); // TODO: Bug in moduservars
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
+    if (!empty($tracker)) {
+        $data['userpanel'] = $tracker->getUserPanelInfo();
     }
+
     $data['viewstatsurl'] = !empty($seenLevels[$minLevel]['readforum']) ? xarModURL('crispbb', 'user', 'stats') : '';
     xarTPLSetPageTitle(xarVarPrepForDisplay($pageTitle));
     if (!xarVarFetch('theme', 'enum:rss:atom:xml:json', $theme, '', XARVAR_NOT_REQUIRED)) return;

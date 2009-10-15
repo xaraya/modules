@@ -42,12 +42,7 @@ function crispbb_admin_forumconfig($args)
 
     $invalid = array();
     $now = time();
-    $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
-    // End Tracking
-    if (!empty($tracking)) {
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-    }
+
     $pageTitle = '';
     switch (strtolower($sublink)) {
         case 'forum':

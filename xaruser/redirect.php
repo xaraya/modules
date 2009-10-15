@@ -52,10 +52,12 @@ function crispbb_user_redirect($args)
             }
             switch ($topicjump) {
                 case 'lastvisit':
-                    $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
-                    if (!empty($tracking[0]['lastvisit'])) {
-                    $lastvisit = $tracking[0]['lastvisit'];
-                    $return_args['start'] = $lastvisit;
+                    if (xarUserIsLoggedIn()) {
+                        $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
+                        $userpanel = $tracker->getUserPanelInfo();
+                        if (!empty($userpanel['lastvisit'])) {
+                            $return_args['start'] = $userpanel['lastvisit'];
+                        }
                     }
                 break;
                 case 'latest':

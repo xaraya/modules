@@ -26,12 +26,7 @@ function crispbb_admin_view($args)
         return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
     }
     $now = time();
-    $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
-    // End Tracking
-    if (!empty($tracking)) {
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-    }
+
     // get forum categories
     $mastertype = xarMod::apiFunc('crispbb', 'user', 'getitemtype', array('fid' => 0, 'component' => 'forum'));
     $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'crispbb'));

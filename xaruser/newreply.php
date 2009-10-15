@@ -102,16 +102,9 @@ function crispbb_user_newreply($args)
 
     $data['categories'] = $categories;
 
-    $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
-    // End Tracking
-    if (!empty($tracking)) {
-        $tracking[$data['fid']][0]['lastview'] = $now;
-        $data['lastvisit'] = $tracking[0]['lastvisit'];
-        $data['visitstart'] = $tracking[0]['visitstart'];
-        $data['totalvisit'] = $tracking[0]['totalvisit'];
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-    }
+    $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
+    $data['userpanel'] = $tracker->getUserPanelInfo();
+
     $presets = xarMod::apiFunc('crispbb', 'user', 'getpresets',
         array('preset' => 'privactionlabels,privleveloptions,tstatusoptions,ttypeoptions,pstatusoptions'));
     $poststype = xarMod::apiFunc('crispbb', 'user', 'getitemtype',
@@ -291,16 +284,17 @@ function crispbb_user_newreply($args)
                     'fid' => $data['fid']
                 ))) return;
              // End Tracking
-            if (!empty($tracking)) {
-                $tracking[$data['fid']][$tid] = $now; // mark topic read
-                $lastreadforum = !empty($tracking[$data['fid']][0]['lastread']) ? $tracking[$data['fid']][0]['lastread'] : $now;
+            if (!empty($tracker)) {
+                $tracker->markRead($data['fid'], $tid);
+                $lastreadforum = $tracker->lastRead($data['fid']);
+
                 $unread = false;
                 // get any topics since forum was last read
                 $topicssince = xarMod::apiFunc('crispbb', 'user', 'gettopics',
                     array('fid' => $data['fid'], 'starttime' => $lastreadforum));
                 if (!empty($topicssince)) {
                     $tids = array_keys($topicssince);
-                    $readtids = array_keys($tracking[$data['fid']]);
+                    $readtids = $tracker->seenTids($data['fid']);
                     foreach ($tids as $newtid) { // look for any posts still unread
                         if (in_array($newtid, $readtids)) continue; // read it, skip it
                         $unread = true; // found an unread post
@@ -308,12 +302,8 @@ function crispbb_user_newreply($args)
                     }
                 }
                 if (!$unread) { // didn't find any unread posts, mark forum read
-                    $tracking[$data['fid']] = array();
-                    $tracking[$data['fid']][0] = array();
-                    $tracking[$data['fid']][0]['lastread'] = $now;
+                    $tracker->markRead($data['fid']);
                 }
-                $tracking[$data['fid']][0]['lastview'] = $now;
-                xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
             }
             if (!xarMod::apiFunc('crispbb', 'user', 'updateposter',
                 array('uid' => $powner))) return;

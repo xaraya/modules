@@ -26,12 +26,6 @@ function crispbb_admin_privileges($args)
     // Security Check
     if (!xarSecurityCheck('AdminCrispBB')) return;
     $now = time();
-    $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
-    // End Tracking
-    if (!empty($tracking)) {
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-    }
     if (!xarVarFetch('catid', 'str', $catid, 0, XARVAR_NOT_REQUIRED)) return; // empty, 'All', numeric or modulename
     if (!xarVarFetch('fid', 'str', $fid, 0, XARVAR_NOT_REQUIRED)) return; // empty, 'All', numeric
     if (!xarVarFetch('apply', 'str' , $apply , false, XARVAR_NOT_REQUIRED)) return; // boolean?

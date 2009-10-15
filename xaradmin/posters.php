@@ -31,12 +31,7 @@ function crispbb_admin_posters($args)
 
     $numitems = 20;
     $now = time();
-    $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
-    // End Tracking
-    if (!empty($tracking)) {
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-    }
+
     if (!empty($uid)) {
         $posters = xarMod::apiFunc('crispbb', 'user', 'getipsbyposter',
             array(

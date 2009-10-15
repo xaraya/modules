@@ -51,12 +51,7 @@ function crispbb_admin_modify($args)
     $invalid = array();
     $pageTitle = $data['forum']->properties['fname']->value;
     $now = time();
-    $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
-    // End Tracking
-    if (!empty($tracking)) {
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-    }
+
     switch($sublink) {
         case 'edit':
             $ftype = $data['forum']->properties['ftype']->value;

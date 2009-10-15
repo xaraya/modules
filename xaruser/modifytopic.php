@@ -46,16 +46,8 @@ function crispbb_user_modifytopic($args)
 
     $categories[$data['catid']] = xarMod::apiFunc('categories', 'user', 'getcatinfo',
             array('cid' => $data['catid']));
-    $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
-    // End Tracking
-    if (!empty($tracking)) {
-        $tracking[$data['fid']][0]['lastview'] = $now;
-        $data['lastvisit'] = $tracking[0]['lastvisit'];
-        $data['visitstart'] = $tracking[0]['visitstart'];
-        $data['totalvisit'] = $tracking[0]['totalvisit'];
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-    }
+    $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
+    $data['userpanel'] = $tracker->getUserPanelInfo();
 
     $presets = xarMod::apiFunc('crispbb', 'user', 'getpresets',
         array('preset' => 'privactionlabels,privleveloptions,tstatusoptions,ttypeoptions'));

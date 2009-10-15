@@ -59,20 +59,10 @@ function crispbb_user_moderate($args)
     $numitems = 10;
     $presets = xarMod::apiFunc('crispbb', 'user', 'getpresets',
         array('preset' => 'tstatusoptions,pstatusoptions,sortorderoptions'));
-    $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
-    if (!empty($tracking)) {
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-    }
+    $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
+
     switch ($component) {
         case 'waiting':
-            // End Tracking
-            if (!empty($tracking)) {
-                $data['lastvisit'] = $tracking[0]['lastvisit'];
-                $data['visitstart'] = $tracking[0]['visitstart'];
-                $data['totalvisit'] = $tracking[0]['totalvisit'];
-                // xarModDelUserVar('crispbb', 'tracking', $uid); // TODO: Bug in moduservars
-                xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-            }
             $pageTitle = xarML('Waiting Content');
         break;
         case 'topics':
@@ -97,14 +87,7 @@ function crispbb_user_moderate($args)
                     return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
                 }
                 $data = $forums[$fid];
-                // End Tracking
-                if (!empty($tracking)) {
-                    $data['lastvisit'] = $tracking[0]['lastvisit'];
-                    $data['visitstart'] = $tracking[0]['visitstart'];
-                    $data['totalvisit'] = $tracking[0]['totalvisit'];
-                    // xarModDelUserVar('crispbb', 'tracking', $uid); // TODO: Bug in moduservars
-                    xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-                }
+
                 if ($phase == 'update') {
                     // do validations for current action
                     $seentids = array();
@@ -476,14 +459,6 @@ function crispbb_user_moderate($args)
                     return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
                 }
                 $data = $forums[$fid];
-                // End Tracking
-                if (!empty($tracking)) {
-                    $data['lastvisit'] = $tracking[0]['lastvisit'];
-                    $data['visitstart'] = $tracking[0]['visitstart'];
-                    $data['totalvisit'] = $tracking[0]['totalvisit'];
-                    // xarModDelUserVar('crispbb', 'tracking', $uid); // TODO: Bug in moduservars
-                    xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-                }
                 $seentids = array();
                 if (!empty($tids) && is_array($tids)) {
                     foreach ($tids as $seentid => $checked) {
@@ -708,7 +683,7 @@ function crispbb_user_moderate($args)
                                     // the forum update will rectify that, but we need to reset the tracker
                                     $fstring = xarModVars::get('crispbb', 'ftracking');
                                     $ftracking = (!empty($fstring)) ? unserialize($fstring) : array();
-                                    $ftracking[$topic['fid']] = $tracking[$topic['fid']][0]['lastupdate'];
+                                    $ftracking[$topic['fid']] = $tracker->lastUpdate($topic['fid']);
                                     xarModVars::set('crispbb', 'ftracking', serialize($ftracking));
                                 }
                             }
@@ -814,14 +789,7 @@ function crispbb_user_moderate($args)
                 xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
                 return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
             }
-            // End Tracking
-            if (!empty($tracking)) {
-                $data['lastvisit'] = $tracking[0]['lastvisit'];
-                $data['visitstart'] = $tracking[0]['visitstart'];
-                $data['totalvisit'] = $tracking[0]['totalvisit'];
-                // xarModDelUserVar('crispbb', 'tracking', $uid); // TODO: Bug in moduservars
-                xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-            }
+
             if (empty($pids)) $modaction = '';
             if ($modaction != 'split') {
                 if ($sort == 'ttime') $sort = 'ptime';
@@ -1101,14 +1069,7 @@ function crispbb_user_moderate($args)
                     xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
                     return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
                 }
-                // End Tracking
-                if (!empty($tracking)) {
-                    $data['lastvisit'] = $tracking[0]['lastvisit'];
-                    $data['visitstart'] = $tracking[0]['visitstart'];
-                    $data['totalvisit'] = $tracking[0]['totalvisit'];
-                    // xarModDelUserVar('crispbb', 'tracking', $uid); // TODO: Bug in moduservars
-                    xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-                }
+
                 $seenpids = array();
                 if (!empty($pids) && is_array($pids)) {
                     foreach ($pids as $seenpid => $checked) {
@@ -1408,6 +1369,7 @@ function crispbb_user_moderate($args)
         break;
     }
 
+    $data['userpanel'] = $tracker->getUserPanelInfo();
 
     $data['invalid'] = $invalid;
     $data['pageTitle'] = $pageTitle;

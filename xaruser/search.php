@@ -57,8 +57,9 @@ function crispbb_user_search()
     $reqfields = array('ttitle', 'pdesc', 'ptext');
     list($current_module) = xarRequest::getInfo();
     $data['searchactive'] = $current_module == 'search' ? true : false;
-    $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
 
+    $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
+    $data['userpanel'] = $tracker->getUserPanelInfo();
     $forums = xarMod::apiFunc('crispbb', 'user', 'getforums');
 
     if (!isset($q) && !empty($forums)) { // no search performed, pre-select some options
@@ -277,13 +278,16 @@ function crispbb_user_search()
                     if (!empty($item['powner'])) $seenposters[$item['powner']] = 1;
                     // tracking
                     $unread = false;
-                    if (!empty($tracking)) { // only do this for relevent users
-                        $lastreadforum = !empty($tracking[$item['fid']][0]['lastread']) ? $tracking[$item['fid']][0]['lastread'] : $tracking[0]['lastvisit'];
+
+                    if (!empty($tracker)) {
+                        $lastreadforum = $tracker->lastRead($item['fid']);
+
                         $item['unreadurl'] = !empty($item['privs']['readforum']) ? xarModURL('crispbb', 'user', 'display', array('tid' => $item['tid'], 'action' => 'unread')) : '';
                         // has topic been updated since this forum was marked read?
                         if ($lastreadforum < $item['ptime']) {
                             // has user read this topic since forum was marked read?
-                            if (empty($tracking[$item['fid']][$key]) || ($tracking[$item['fid']][$key] < $item['ptime'])) {
+
+                            if ($tracker->lastRead($item['fid'], $item['tid']) < $item['ptime']) {
                                 $unread = true;
                             }
                         }
@@ -441,13 +445,7 @@ function crispbb_user_search()
     } elseif (!empty($search) && empty($results)) {
         $data['status'] = xarML('No #(1) found matching your criteria', $component);
     }
-    if (!empty($tracking)) {
-        $data['lastvisit'] = $tracking[0]['lastvisit'];
-        $data['visitstart'] = $tracking[0]['visitstart'];
-        $data['totalvisit'] = $tracking[0]['totalvisit'];
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-    }
+
     if ($data['searchactive']) {
         return xarTPLModule('crispbb', 'user', 'searchhook', $data);
     } else {

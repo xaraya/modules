@@ -47,8 +47,9 @@ function crispbb_user_stats($args)
             xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
             return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
     }
-    $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
 
+    $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
+    $data['userpanel'] = $tracker->getUserPanelInfo();
     // get forum categories
     $mastertype = xarMod::apiFunc('crispbb', 'user', 'getitemtype',
         array('fid' => 0, 'component' => 'forum'));
@@ -116,14 +117,6 @@ function crispbb_user_stats($args)
 
     $data['pageTitle'] = $pageTitle;
 
-    // End Tracking
-    if (!empty($tracking)) {
-        $data['lastvisit'] = $tracking['0']['lastvisit'];
-        $data['visitstart'] = $tracking[0]['visitstart'];
-        $data['totalvisit'] = $tracking[0]['totalvisit'];
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-    }
 
     xarTplSetPageTitle(xarVarPrepForDisplay($pageTitle));
 

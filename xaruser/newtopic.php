@@ -87,8 +87,8 @@ function crispbb_user_newtopic($args)
     if (!xarVarFetch('itemtype', 'id', $itemtype, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemid', 'id', $itemid, NULL, XARVAR_NOT_REQUIRED)) return;
 
-    // Start Tracking
-    $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
+    $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
+    $data['userpanel'] = $tracker->getUserPanelInfo();
 
     $categories[$data['catid']] = xarMod::apiFunc('categories', 'user', 'getcatinfo',
             array('cid' => $data['catid']));
@@ -349,16 +349,16 @@ function crispbb_user_newtopic($args)
                 ))) return;
 
             // End Tracking
-            if (!empty($tracking)) {
-                $tracking[$fid][$tid] = $now; // mark topic read
-                $lastreadforum = !empty($tracking[$data['fid']][0]['lastread']) ? $tracking[$data['fid']][0]['lastread'] : $now;
+            if (!empty($tracker)) {
+                $tracker->markRead($data['fid'], $tid);
+                $lastreadforum = $tracker->lastRead($data['fid']);
                 $unread = false;
                 // get any topics since forum was last read
                 $topicssince = xarMod::apiFunc('crispbb', 'user', 'gettopics',
                     array('fid' => $fid, 'starttime' => $lastreadforum));
                 if (!empty($topicssince)) {
                     $tids = array_keys($topicssince);
-                    $readtids = array_keys($tracking[$fid]);
+                    $readtids = $tracker->seenTids($data['fid']);
                     foreach ($tids as $newtid) { // look for any posts still unread
                         if (in_array($newtid, $readtids)) continue; // read it, skip it
                         $unread = true; // found an unread post
@@ -366,12 +366,8 @@ function crispbb_user_newtopic($args)
                     }
                 }
                 if (!$unread) { // didn't find any unread posts, mark forum read
-                    $tracking[$fid] = array();
-                    $tracking[$fid][0] = array();
-                    $tracking[$fid][0]['lastread'] = $now;
+                    $tracker->markRead($data['fid']);
                 }
-                $tracking[$fid][0]['lastview'] = $now;
-                xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
             }
             if (!xarMod::apiFunc('crispbb', 'user', 'updateposter',
                 array('uid' => $uid))) return;
@@ -474,16 +470,6 @@ function crispbb_user_newtopic($args)
         $data['withupload'] = 0;
     }
     xarTplSetPageTitle(xarVarPrepForDisplay($pageTitle));
-
-    // End Tracking
-    if (!empty($tracking)) {
-        $data['lastvisit'] = $tracking[0]['lastvisit'];
-        $tracking[$fid][0]['lastview'] = $now;
-        $data['visitstart'] = $tracking[0]['visitstart'];
-        $data['totalvisit'] = $tracking[0]['totalvisit'];
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-    }
 
     return $data;
 }

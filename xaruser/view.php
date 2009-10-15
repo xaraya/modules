@@ -64,15 +64,12 @@ function crispbb_user_view($args)
         array('preset' => 'privactionlabels,privleveloptions,tstatusoptions,topicsortoptions,sortorderoptions'));
     // user links
     if (xarUserIsLoggedIn()) {
-        // Start Tracking
-        $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
+        $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
+        $data['userpanel'] = $tracker->getUserPanelInfo();
         if ($action == 'read') {
-            $tracking[$fid] = array(); // clear topics
-            $tracking[$fid][0] = array(); // 0 = view forum
-            $tracking[$fid][0]['lastread'] = $now; // set forum read now
+            $tracker->markRead($fid);
         }
-        $lastreadforum = !empty($tracking[$fid][0]['lastread']) ? $tracking[$fid][0]['lastread'] : 1;
-        $tracking[$fid][0]['lastview'] = $now; // last view is now
+        $lastreadforum = $tracker->lastRead($fid);
     } else {
         $lastreadforum = $now;
     }
@@ -251,12 +248,13 @@ function crispbb_user_view($args)
             if (!empty($item['powner'])) $seenposters[$item['powner']] = 1;
             // tracking
             $unread = false;
-            if (!empty($tracking)) { // only do this for relevent users
+
+            if (!empty($tracker)) {
                 $item['unreadurl'] = !empty($privs['readforum']) ? xarModURL('crispbb', 'user', 'display', array('tid' => $item['tid'], 'action' => 'unread')) : '';
                 // has topic been updated since this forum was marked read?
                 if ($lastreadforum < $item['ptime']) {
                     // has user read this topic since forum was marked read?
-                    if (empty($tracking[$item['fid']][$key]) || ($tracking[$item['fid']][$key] < $item['ptime'])) {
+                    if ($tracker->lastRead($item['fid'], $item['tid']) < $item['ptime']) {
                         $unread = true;
                     }
                 }
@@ -333,14 +331,6 @@ function crispbb_user_view($args)
             'noreplies' => true
         ));
     $data['totalunanswered'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('tstatus' => $tstatus, 'noreplies' => true));
-    // End Tracking
-    if (!empty($tracking)) {
-        $data['lastvisit'] = $tracking[0]['lastvisit'];
-        $data['visitstart'] = $tracking[0]['visitstart'];
-        $data['totalvisit'] = $tracking[0]['totalvisit'];
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-    }
 
     $pagerTpl = $data['numtopics'] > (10*$data['topicsperpage']) ? 'multipage' : 'default';
     $data['pager'] = xarTplGetPager($startnum,

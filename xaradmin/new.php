@@ -86,12 +86,6 @@ function crispbb_admin_new($args)
 
     $invalid = array();
     $now = time();
-    $tracking = xarMod::apiFunc('crispbb', 'user', 'tracking', array('now' => $now));
-    // End Tracking
-    if (!empty($tracking)) {
-        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
-        xarModUserVars::set('crispbb', 'tracking', serialize($tracking));
-    }
 
     if (!$confirm) { // @CHECKME: still necessary?
         $phase = 'form';
