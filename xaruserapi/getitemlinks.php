@@ -31,7 +31,7 @@ function crispbb_userapi_getitemlinks($args)
             $thistype = reset($itemtypes);
             $fid = $thistype['fid'];
             $component = $thistype['component'];
-            $itemtype = $thistype['itemtype'];
+            $itemtype = $thistype['id'];
         }
     }
 
