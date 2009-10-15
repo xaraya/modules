@@ -92,7 +92,7 @@ function crispbb_userpanelblock_display($blockinfo)
         $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
     }
     $userpanel = $tracker->getUserPanelInfo();
-    $data['uid'] = $userpanel['id'];
+    $data['id'] = $userpanel['id'];
     $data['name'] = $userpanel['name'];
     if ($data['showlastvisit']) {
     $data['lastvisit'] = $userpanel['lastvisit'];

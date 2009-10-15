@@ -161,7 +161,7 @@ function crispbb_user_display($args)
             }
         }
         if (!$unread) { // user has read all other topics in the forum
-            $tracker->markRead($fid);
+            $tracker->markRead($data['fid']);
         }
     }
 
