@@ -39,13 +39,7 @@ function crispbb_user_stats($args)
             ));
     // if the error was no privs, we should have an error message
     if (!empty($forums['error'])) {
-            $msg = xarML('You do not have the privileges required for this action');
-            $errorMsg['message'] = $msg;
-            $errorMsg['return_url'] = xarServer::getBaseURL();
-            $errorMsg['type'] = $forums['error'];
-            $errorMsg['pageTitle'] = xarML('No Privileges');
-            xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
-            return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
     }
 
     $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));

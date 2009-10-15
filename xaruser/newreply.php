@@ -27,13 +27,7 @@ function crispbb_user_newreply($args)
     $data = xarMod::apiFunc('crispbb', 'user', 'gettopic', array('tid' => $tid, 'privcheck' => true));
 
     if ($data == 'NO_PRIVILEGES' || empty($data['newreplyurl'])) {
-        $errorMsg = array();
-        $errorMsg['message'] = xarML('You do not have the privileges required for this action');
-        $errorMsg['return_url'] = xarModURL('crispbb', 'user', 'main');
-        $errorMsg['type'] = 'NO_PRIVILEGES';
-        $errorMsg['pageTitle'] = xarML('No Privileges');
-        xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
-        return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
     }
 
     $forumLevel = $data['forumLevel'];
@@ -258,7 +252,8 @@ function crispbb_user_newreply($args)
         $psettings['smiliesdeny'] = empty($privs['smilies']) || $smiliesdeny ? true : false;
 
         if (empty($invalid) && !$preview) {
-            if (!xarSecConfirmAuthKey()) return;
+            if (!xarSecConfirmAuthKey())
+                return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
             // log ip
             if (!isset($phostname) || empty($phostname)) {
                 $forwarded = xarServer::getVar('HTTP_X_FORWARDED_FOR');

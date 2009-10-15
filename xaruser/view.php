@@ -38,13 +38,7 @@ function crispbb_user_view($args)
     $forums = xarMod::apiFunc('crispbb', 'user', 'getforums', array('tstatus' => $tstatus));
 
     if (empty($forums[$fid]['privs'])) {
-        $msg = xarML('You do not have the privileges required for this action');
-        $errorMsg['message'] = $msg;
-        $errorMsg['return_url'] = xarModURL('crispbb', 'user', 'main');
-        $errorMsg['type'] = $data['error'];
-        $errorMsg['pageTitle'] = xarML('No Privileges');
-        xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
-        return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
     }
 
     if ($forums[$fid]['ftype'] == 1) {

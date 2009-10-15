@@ -36,20 +36,10 @@ function crispbb_user_moderate($args)
         array('tstatus' => array(1,2,3,4,5), 'privcheck' => true));
     if (isset($forums['error'])) {
         if ($forums['error'] == 'BAD_DATA') {
-            $msg = xarML('No forums found for this action');
-            $ertype = 'NO_FORUMS';
-            $pageTitle = xarML('No forums found');
+            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
         } else {
-            $msg = xarML('You do not have the privileges required for this action');
-            $ertype = 'NO_PRIVILEGES';
-            $pageTitle = xarML('No privileges');
+            return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
         }
-        $errorMsg['message'] = $msg;
-        $errorMsg['return_url'] = xarServer::getBaseURL();
-        $errorMsg['type'] = $ertype;
-        $errorMsg['pageTitle'] = $pageTitle;
-        xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
-        return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
     }
 
     $uid = xarUserGetVar('id');
@@ -78,13 +68,7 @@ function crispbb_user_moderate($args)
                     $forumoptions[$fkey] = array('id' => $fkey, 'name' => $fval['fname']);
                 }
                 if (empty($forumoptions[$fid])) {
-                    $msg = xarML('You do not have the privileges required for this action');
-                    $errorMsg['message'] = $msg;
-                    $errorMsg['return_url'] = xarServer::getBaseURL();
-                    $errorMsg['type'] = 'NO_PRIVILEGES';
-                    $errorMsg['pageTitle'] = xarML('No Privileges');
-                    xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
-                    return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+                    return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
                 }
                 $data = $forums[$fid];
 
@@ -154,13 +138,7 @@ function crispbb_user_moderate($args)
 
                     // a failure here generally means the user manually changed params somewhere
                     if (!$allowed) {
-                        $msg = xarML('You do not have the privileges required for this action');
-                        $errorMsg['message'] = $msg;
-                        $errorMsg['return_url'] = xarServer::getBaseURL();
-                        $errorMsg['type'] = 'NO_PRIVILEGES';
-                        $errorMsg['pageTitle'] = xarML('No Privileges');
-                        xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
-                        return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+                        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
                     }
 
                     if (empty($invalid)) {
@@ -450,13 +428,7 @@ function crispbb_user_moderate($args)
                     $forumoptions[$fkey] = array('id' => $fkey, 'name' => $fval['fname']);
                 }
                 if (empty($forumoptions[$fid]) || (!empty($movefid) && empty($forumoptions[$movefid]))) {
-                    $msg = xarML('You do not have the privileges required for this action');
-                    $errorMsg['message'] = $msg;
-                    $errorMsg['return_url'] = xarServer::getBaseURL();
-                    $errorMsg['type'] = 'NO_PRIVILEGES';
-                    $errorMsg['pageTitle'] = xarML('No Privileges');
-                    xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
-                    return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+                    return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
                 }
                 $data = $forums[$fid];
                 $seentids = array();
@@ -525,13 +497,7 @@ function crispbb_user_moderate($args)
 
                     // a failure here generally means the user manually changed params somewhere
                     if (!$allowed) {
-                        $msg = xarML('You do not have the privileges required for this action');
-                        $errorMsg['message'] = $msg;
-                        $errorMsg['return_url'] = xarServer::getBaseURL();
-                        $errorMsg['type'] = 'NO_PRIVILEGES';
-                        $errorMsg['pageTitle'] = xarML('No Privileges');
-                        xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
-                        return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+                        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
                     }
 
                     if (empty($invalid)) {
@@ -553,7 +519,9 @@ function crispbb_user_moderate($args)
                             return xarTPLModule('crispbb', 'user', 'moderate-confirm', $data);
                         }
                         // finally, perform requested action
-                        if (!xarSecConfirmAuthKey()) return;
+                        if (!xarSecConfirmAuthKey())
+                            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+
                         if ($mergetid) {
                             // topic we're merging into
                             $target = $checkt;
@@ -759,20 +727,10 @@ function crispbb_user_moderate($args)
             if (empty($data['modtopicurl'])) $data = 'NO_PRIVILEGES';
             if (!is_array($data)) {
                 if ($data == 'BAD_DATA') {
-                    $msg = xarML('No topic found for this action');
-                    $ertype = 'NO_TOPIC';
-                    $pageTitle = xarML('No topic found');
+                    return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
                 } else {
-                    $msg = xarML('You do not have the privileges required for this action');
-                    $ertype = 'NO_PRIVILEGES';
-                    $pageTitle = xarML('No privileges');
+                    return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
                 }
-                $errorMsg['message'] = $msg;
-                $errorMsg['return_url'] = xarServer::getBaseURL();
-                $errorMsg['type'] = $ertype;
-                $errorMsg['pageTitle'] = $pageTitle;
-                xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
-                return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
             }
             $forumoptions = array();
             //$forumoptions[0] = array('id' => '0', 'name' => xarML('All Forums'));
@@ -781,13 +739,7 @@ function crispbb_user_moderate($args)
                 $forumoptions[$fkey] = array('id' => $fkey, 'name' => $fval['fname']);
             }
             if (empty($forumoptions[$data['fid']])) {
-                $msg = xarML('You do not have the privileges required for this action');
-                $errorMsg['message'] = $msg;
-                $errorMsg['return_url'] = xarServer::getBaseURL();
-                $errorMsg['type'] = 'NO_PRIVILEGES';
-                $errorMsg['pageTitle'] = xarML('No Privileges');
-                xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
-                return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+                return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
             }
 
             if (empty($pids)) $modaction = '';
@@ -845,13 +797,7 @@ function crispbb_user_moderate($args)
 
                     // a failure here generally means the user manually changed params somewhere
                     if (!$allowed) {
-                        $msg = xarML('You do not have the privileges required for this action');
-                        $errorMsg['message'] = $msg;
-                        $errorMsg['return_url'] = xarServer::getBaseURL();
-                        $errorMsg['type'] = 'NO_PRIVILEGES';
-                        $errorMsg['pageTitle'] = xarML('No Privileges');
-                        xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
-                        return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+                        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
                     }
 
                     if (empty($invalid)) {
@@ -864,7 +810,8 @@ function crispbb_user_moderate($args)
                             $data['return_url'] = $return_url;
                             return xarTPLModule('crispbb', 'user', 'moderate-confirm', $data);
                         }
-                        if (!xarSecConfirmAuthKey()) return;
+                        if (!xarSecConfirmAuthKey())
+                            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
                         $seenposters = array();
                         // perform action on each post in turn
                         foreach ($posts as $pid => $post) {
@@ -1061,13 +1008,7 @@ function crispbb_user_moderate($args)
                     $forumoptions[$fkey] = array('id' => $fkey, 'name' => $fval['fname']);
                 }
                 if (empty($forumoptions[$data['fid']]) || (!empty($movefid) && empty($forumoptions[$movefid]))) {
-                    $msg = xarML('You do not have the privileges required for this action');
-                    $errorMsg['message'] = $msg;
-                    $errorMsg['return_url'] = xarServer::getBaseURL();
-                    $errorMsg['type'] = 'NO_PRIVILEGES';
-                    $errorMsg['pageTitle'] = xarML('No Privileges');
-                    xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
-                    return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+                    return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
                 }
 
                 $seenpids = array();
@@ -1141,13 +1082,7 @@ function crispbb_user_moderate($args)
 
                     // a failure here generally means the user manually changed params somewhere
                     if (!$allowed) {
-                        $msg = xarML('You do not have the privileges required for this action');
-                        $errorMsg['message'] = $msg;
-                        $errorMsg['return_url'] = xarServer::getBaseURL();
-                        $errorMsg['type'] = 'NO_PRIVILEGES';
-                        $errorMsg['pageTitle'] = xarML('No Privileges');
-                        xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
-                        return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
+                        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
                     }
                     if (empty($invalid)) {
                         if (!$confirm) {
@@ -1165,7 +1100,9 @@ function crispbb_user_moderate($args)
                             $data['return_url'] = $return_url;
                             return xarTPLModule('crispbb', 'user', 'moderate-confirm', $data);
                         }
-                        if (!xarSecConfirmAuthKey()) return;
+                        if (!xarSecConfirmAuthKey())
+                            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+
                         if ($mergetid) {
                             // topic we're merging into
                             $target = $checkt;
