@@ -370,16 +370,20 @@ function crispbb_user_newtopic($args)
             if (!xarMod::apiFunc('crispbb', 'user', 'updateposter',
                 array('uid' => $uid))) return;
             // if this topic was created via hooks, we return user to a newreply to the topic
-            if (!empty($modname) && !empty($itemtype)) {
+            if (!empty($modname)) {
                 // create the hook
                 if (!xarMod::apiFunc('crispbb', 'user', 'createhook',
                     array('modname' => $modname, 'itemtype' => $itemtype, 'objectid' => $itemid, 'tid' => $tid
                     ))) return;
+                $return_url = xarModURL('crispbb', 'user', 'newreply',
+                    array('modname' => $modname, 'itemtype' => $itemtype, 'objectid' => $itemid, 'tid' => $tid));
+                /*
                 // preserve the return url (links to the hooked module item)
                 $real_return_url = xarModURL('crispbb', 'user', 'newreply',
                     array('tid' => $tid, 'return_url' => $return_url));
                 xarSessionSetVar('crispbb_hook_active', $now);
                 $return_url = $real_return_url;
+                */
             } elseif (!empty($data['postbuffer']) || $tstatus == 2) {
                 if ($tstatus == 2) {
                     $return_url = xarModURL('crispbb', 'user', 'view',

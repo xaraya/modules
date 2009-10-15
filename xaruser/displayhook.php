@@ -75,15 +75,15 @@ function crispbb_user_displayhook($args)
     $select = array();
     $where = array();
     $bindvars = array();
-    $select[] = $hookstable . '.xar_tid';
+    $select[] = $hookstable . '.tid';
     $from = $hookstable;
-    $where[] = $hookstable . '.xar_moduleid = ?';
+    $where[] = $hookstable . '.moduleid = ?';
     $bindvars[] = $modid;
     if (!empty($itemtype)) {
-    $where[] = $hookstable . '.xar_itemtype = ?';
+    $where[] = $hookstable . '.itemtype = ?';
     $bindvars[] = $itemtype;
     }
-    $where[] = $hookstable . '.xar_itemid = ?';
+    $where[] = $hookstable . '.itemid = ?';
     $bindvars[] = $itemid;
 
     $query = 'SELECT ' . join(', ', $select);
@@ -133,7 +133,7 @@ function crispbb_user_displayhook($args)
                     'modname' => $modname,
                     'itemtype' => $itemtype,
                     'itemid' => $itemid,
-                    'return_url' => xarServer::getCurrentURL(),
+                    //'return_url' => xarServer::getCurrentURL(),
                     'authid' => xarSecGenAuthKey('crispbb')
                 ));
         }
@@ -146,7 +146,6 @@ function crispbb_user_displayhook($args)
     if (!empty($data['quickreply'])) {
         $data['return_url'] = xarServer::getCurrentURL();
     }
-
     return xarTPLModule('crispbb', 'user', 'displayhook', $data);
 }
 ?>

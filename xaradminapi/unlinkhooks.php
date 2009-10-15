@@ -46,10 +46,10 @@ function crispbb_adminapi_unlinkhooks($args)
         if (empty($itemtype) || !is_numeric($itemtype)) {
             $itemtype = 0;
         }
-        $query .= " WHERE xar_moduleid = ? AND xar_itemtype = ?";
+        $query .= " WHERE moduleid = ? AND itemtype = ?";
         $bindvars[] = $modid; $bindvars[] = $itemtype;
         if (!empty($itemid)) {
-            $query .= " AND xar_itemid = ?";
+            $query .= " AND itemid = ?";
             $bindvars[] =  $itemid;
         }
     }

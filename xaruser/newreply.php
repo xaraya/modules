@@ -90,6 +90,9 @@ function crispbb_user_newreply($args)
     if (!xarVarFetch('smiliesdeny', 'checkbox', $smiliesdeny, false, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('return_url', 'str:1', $return_url, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('modname', 'str:1', $modname, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemtype', 'id', $itemtype, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid', 'id', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
 
     $categories[$data['catid']] = xarMod::apiFunc('categories', 'user', 'getcatinfo',
             array('cid' => $data['catid']));
@@ -317,7 +320,6 @@ function crispbb_user_newreply($args)
                         ));
                 }
             }
-            xarSessionSetVar('crispbb_hook_active', false);
             if (!empty($data['postbuffer']) || $pstatus == 2) {
                 if ($pstatus == 2) {
                     if (empty($return_url)) {
@@ -376,6 +378,16 @@ function crispbb_user_newreply($args)
     $item['itemtype'] = $poststype;
     $hooks = xarModCallHooks('item', 'new', '', $item);
     $data['hookoutput'] = !empty($hooks) ? $hooks : array();
+    // coming from create hook, get the itemlink
+    if (isset($modname) && isset($objectid)) {
+         $itemlinks = xarMod::apiFunc($modname, 'user', 'getitemlinks',
+             array('itemtype' => $itemtype, 'itemids' => array($objectid), ), 0);
+        if (!empty($itemlinks[$objectid])) {
+            $return_url = $itemlinks[$objectid]['url'];
+        } else {
+            $return_url = xarModURL($modname, 'user', 'display', array('itemtype' => $itemtype, 'itemid' => $objectid));
+        }
+    }
     $data['return_url'] = $return_url;
 
     $formaction =  xarModCallHooks('item', 'formaction', '', array(), 'crispbb', $poststype);
