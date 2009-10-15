@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>crispBB Administration</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title">crispBB Administration</span></div>
 <div class="xar-mod-body">
 <xar:template type="module" file="admin-menu" />
-<h2><xar:mlstring>Delete Topic Associations</xar:mlstring></h2>
+<h2>Delete Topic Associations</h2>
 <form method="post" action="&xar-modurl-crispbb-admin-unlinkhooks;">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="modid" id="modid" value="#$modid#" />
@@ -12,18 +12,15 @@
     <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
     <fieldset>
         <legend>
-            <xar:mlstring>Confirm deletion</xar:mlstring>
+            Confirm deletion
      </legend>
     <div class="xar-form-input-wrapper-before">
 <xar:if condition="empty($modname)">
-        <xar:mlstring>Confirm deleting all topic associations ?</xar:mlstring>
+        Confirm deleting all topic associations ?
 <xar:elseif condition="empty($itemid)"/>
-        <xar:ml>
-            <xar:mlstring>Confirm deleting all topic associations for module <strong>#(1)</strong> ?</xar:mlstring>
-            <xar:mlvar>#$modname#</xar:mlvar>
-        </xar:ml>
+        Confirm deleting all topic associations for module <strong>#$modname#</strong> ?
 <xar:else/>
-    <xar:ml><xar:mlstring>Are you sure you want to delete topic association for module <strong>#(1)</strong> item <strong>#(2)</strong> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar><xar:mlvar>#$itemid#</xar:mlvar></xar:ml>
+    Are you sure you want to delete topic association for module <strong>#$modname#</strong> item <strong>#$itemid#</strong>?
 </xar:if>
     </div>
     </fieldset>

@@ -3,16 +3,13 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:if condition="xarModVars::get('crispbb', 'showpermissions')">
 <xar:if condition="!empty($fprivileges) and !empty($actions) and !empty($forumLevel)">
-    <h4><xar:mlstring>You have the following permissions in this forum</xar:mlstring></h4>
+    <h4>You have the following permissions in this forum</h4>
     <xar:set name="counter">'1'</xar:set>
         <ul>
     <xar:foreach in="$fprivileges[$forumLevel]" key="$action" value="$allowed">
         <xar:if condition="$allowed and isset($actions[$action])">
         <li class="xar-thirdwidth xar-floatleft">
-            <xar:ml>
-                <xar:mlstring>Can #(1)</xar:mlstring>
-                <xar:mlvar>#$actions[$action]#</xar:mlvar>
-            </xar:ml>
+            Can #$actions[$action]#
         </li>
         <xar:set name="counter">$counter+1</xar:set>
         </xar:if>

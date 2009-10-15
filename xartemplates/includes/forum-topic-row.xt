@@ -31,7 +31,7 @@
     </xar:if>
     <xar:comment>
     <p>
-    <span class="xar-sub"><xar:mlstring>By</xar:mlstring>:</span>
+    <span class="xar-sub">By:</span>
     <a href="#xarModURL('roles', 'user', 'display', array('uid' => $topic['towner']))#" title="#xarML('View profile')#">#$posterlist[$topic['towner']]['name']#</a>
     </p>
     </xar:comment>
@@ -63,12 +63,12 @@
     <p><em>#$topic['tdesc']#</em></p>
     </xar:if>
     <p>
-    <span class="xar-sub"><xar:mlstring>By</xar:mlstring>:</span>
+    <span class="xar-sub">By:</span>
     <a href="#xarModURL('roles', 'user', 'display', array('uid' => $topic['towner']))#" title="#xarML('View profile')#">#$posterlist[$topic['towner']]['name']#</a>
     </p>
     <xar:if condition="!empty($showforum)">
         <p>
-        <span class="xar-sub"><xar:mlstring>In</xar:mlstring>:</span>
+        <span class="xar-sub">In:</span>
         <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $topic['fid']))#" title="#xarML('View forum')#">#$topic['fname']#</a>
         </p>
     </xar:if>
@@ -85,7 +85,7 @@
         </xar:if>
     </span>
     <p>
-    <span class="xar-sub"><xar:mlstring>By</xar:mlstring>:</span>
+    <span class="xar-sub">By:</span>
     <a href="#xarModURL('roles', 'user', 'display', array('uid' => $topic['powner']))#" title="#xarML('View profile')#">#$posterlist[$topic['powner']]['name']#</a>
     </p>
 </td>

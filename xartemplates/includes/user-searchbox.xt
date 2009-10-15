@@ -15,7 +15,7 @@
     <input type="hidden" name="crispbb_fields[pdesc]" id="crispbb_fields_pdesc" value="1" />
     <input type="hidden" name="crispbb_fields[ptext]" id="crispbb_fields_ptext" value="1" />
     <input type="hidden" name="crispbb_component" id="crispbb_component" value="replies" />
-    <label for="q"><xar:mlstring>Search</xar:mlstring>:</label> <input type="text" name="q" id="q" size="20" value="" />&#160;&#160;&#160; <input type="submit" value="#xarML('Search')#" />
+    <label for="q">Search:</label> <input type="text" name="q" id="q" size="20" value="" />&#160;&#160;&#160; <input type="submit" value="#xarML('Search')#" />
     </div>
 </form>
 </xar:if>

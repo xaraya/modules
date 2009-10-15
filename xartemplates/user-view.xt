@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:style scope="module" module="crispbb" />
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>crispBB Forums</xar:mlstring></span>
+    <span class="xar-mod-title">crispBB Forums</span>
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="user-breadcrumbs" />
@@ -81,9 +81,9 @@
             <tr>
                 <th scope="col" class="timeimage"></th>
                 <th scope="col" class="topicicon"></th>
-                <th scope="col" class="topicinfo"><xar:mlstring>Topic</xar:mlstring></th>
-                <th scope="col" class="postinfo"><xar:mlstring>Info</xar:mlstring></th>
-                <th scope="col" class="replyinfo xar-thirdwidth"><xar:mlstring>Last Post</xar:mlstring></th>
+                <th scope="col" class="topicinfo">Topic</th>
+                <th scope="col" class="postinfo">Info</th>
+                <th scope="col" class="replyinfo xar-thirdwidth">Last Post</th>
                 <xar:if condition="!empty($modforumurl)">
                 <th scope="col" id="checkall#$fid#">&#160;</th>
                 <xar:set name="numcols">'6'</xar:set>
@@ -125,9 +125,9 @@
                     <tr>
                         <th scope="col" class="timeimage"></th>
                         <th scope="col" class="topicicon"></th>
-                        <th scope="col" class="topicinfo"><xar:mlstring>Topic</xar:mlstring></th>
-                        <th scope="col" class="postinfo"><xar:mlstring>Info</xar:mlstring></th>
-                        <th scope="col" class="replyinfo xar-thirdwidth"><xar:mlstring>Last Post</xar:mlstring></th>
+                        <th scope="col" class="topicinfo">Topic</th>
+                        <th scope="col" class="postinfo">Info</th>
+                        <th scope="col" class="replyinfo xar-thirdwidth">Last Post</th>
                         <xar:if condition="!empty($modforumurl)">
                         <th scope="col" id="checkall#$fid#">&#160;</th>
                         <xar:set name="numcols">'5'</xar:set>
@@ -147,7 +147,7 @@
                 <tr>
                     <td class="xar-align-center xar-valign-middle"></td>
                     <td class="xar-align-center xar-valign-middle"></td>
-                    <td colspan="#$numcols#"><xar:mlstring>No topics found</xar:mlstring></td>
+                    <td colspan="#$numcols#">No topics found</td>
                 </tr>
             </xar:if>
         </tbody>
@@ -170,7 +170,7 @@
         <xar:if condition="!empty($modforumurl)">
             <span class="xar-floatright xar-align-right">
                 <label for="modaction" title="#xarML('Select action to perform on selected topics')#">
-                    <xar:mlstring>With Selected</xar:mlstring>:
+                    With Selected:
                 </label>
                 <xar:data-input type="dropdown" name="modaction" id="modaction" options="$modactions" />
                 <input type="hidden" name="fid" id="fid" value="#$fid#" />
@@ -210,42 +210,30 @@
     </div>
     <xar:if condition="!empty($forumreadurl)">
     <div class="xar-align-center xar-margin-thick xar-padding-thick">
-        <a href="#$forumreadurl#"><xar:mlstring>Mark All Topics Read</xar:mlstring></a>
+        <a href="#$forumreadurl#">Mark All Topics Read</a>
     </div>
     </xar:if>
     <div class="xar-padding-thicktop xar-clearboth">
         <xar:template type="module" module="crispbb" file="user-sortbox" />
     </div>
     <div class="xar-margin-thickends xar-padding-thickends xar-sub">
-        <h4 class="xar-margin-none"><xar:mlstring>Forum Statistics</xar:mlstring></h4>
+        <h4 class="xar-margin-none">Forum Statistics</h4>
         <ul>
             <li>
             <xar:set name="grammar">$numtopics == 1 ? 'topic' : 'topics'</xar:set>
-            <xar:ml>
-                <xar:mlstring>This forum has #(1) #(2)</xar:mlstring>
-                <xar:mlvar>#$numtopics#</xar:mlvar>
-                <xar:mlvar>#$grammar#</xar:mlvar>
-            </xar:ml>
+                This forum has #$numtopics# #$grammar#
             </li>
             <li>
             <xar:set name="grammar">$numreplies == 1 ? 'reply' : 'replies'</xar:set>
-            <xar:ml>
-                <xar:mlstring>This forum has #(1) #(2)</xar:mlstring>
-                <xar:mlvar>#$numreplies#</xar:mlvar>
-                <xar:mlvar>#$grammar#</xar:mlvar>
-            </xar:ml>
+                This forum has #$numreplies# #$grammar#
             </li>
             <li>
             <xar:set name="grammar">$unanswered == 1 ? 'topic' : 'topics'</xar:set>
-            <xar:ml>
-                <xar:mlstring>This forum has #(1) unanswered #(2)</xar:mlstring>
-                <xar:mlvar>#$unanswered#</xar:mlvar>
-                <xar:mlvar>#$grammar#</xar:mlvar>
-            </xar:ml>
+                This forum has #$unanswered# unanswered #$grammar#
             </li>
             <xar:if condition="!empty($powner) and !empty($ptime)">
             <li>
-                <xar:mlstring>Last post by</xar:mlstring>
+                Last post by
                 <a href="#$pownerurl#" title="#xarML('View Profile')#">#$posterlist[$powner]['name']#</a>
             </li>
             <li>
@@ -293,7 +281,7 @@
         <xar:if condition="!empty($privs['approvetopics'])">
         <span class="xar-nowrap">
             <img src="#xarTPLGetImage('timeimages/comment_warning.png', 'crispbb')#" alt="#xarML('Submitted')#" title="#xarML('Topic Awaiting Approval')#" />
-            <xar:mlstring>Submitted</xar:mlstring>
+            Submitted
         </span>
         </xar:if>
         <xar:if condition="!empty($privs['locktopics'])">

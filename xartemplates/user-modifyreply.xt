@@ -12,7 +12,7 @@
     </xar:set>
 </xar:if>
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>crispBB Forums</xar:mlstring></span>
+    <span class="xar-mod-title">crispBB Forums</span>
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="user-breadcrumbs" />
@@ -32,10 +32,10 @@
             <thead>
                 <tr>
                     <th style="width:16em;">
-                        <xar:mlstring>Poster</xar:mlstring>
+                        Poster
                     </th>
                     <th>
-                        <xar:mlstring>Post</xar:mlstring>
+                        Post
                     </th>
                 </tr>
              </thead>
@@ -64,13 +64,13 @@
     <form method="post" id="post" name="post" action="#xarModURL('crispbb', 'user', 'modifyreply')#" enctype="#$enctype#">
         <fieldset>
             <div class="xar-form-input-wrapper">
-                <label class="xar-form-label help"><xar:mlstring>Topic Title</xar:mlstring>:</label>
+                <label class="xar-form-label help">Topic Title:</label>
                 #$ttitle#
             </div>
             <xar:if condition="!empty($topicdescmax)">
             <div class="xar-form-input-wrapper">
                 <xar:set name="pdesclabel">xarML('Enter a description between #(1) and #(2) characters', $topicdescmin, $topicdescmax)</xar:set>
-                <label for="pdesc" class="xar-form-label help" title="#$pdesclabel#"><xar:mlstring>Description</xar:mlstring>:</label>
+                <label for="pdesc" class="xar-form-label help" title="#$pdesclabel#">Description:</label>
                 <input type="text" name="pdesc" id="pdesc" value="#$pdesc#" maxlength="100" class="xar-form-textxxlong" tabindex="1" />
             </div>
             <xar:if condition="!empty($invalid['pdesc'])">
@@ -80,40 +80,40 @@
             </xar:if>
             </xar:if>
             <div class="xar-form-input-wrapper">
-                <label for="ptext" class="xar-form-label help" title="#xarML('Enter your post here')#"><xar:mlstring>Post</xar:mlstring></label>
+                <label for="ptext" class="xar-form-label help" title="#xarML('Enter your post here')#">Post</label>
                 <ul class="xar-floatleft xar-clearleft xar-margin-none" style="width:15em;">
                 <xar:if condition="$privs['html']">
-                    <li><xar:mlstring>HTML is </xar:mlstring><span style="color:green;"><xar:mlstring>On</xar:mlstring></span></li>
+                    <li>HTML is <span style="color:green;">On</span></li>
                     <xar:if condition="$privs['htmldeny']">
                         <li>
-                        <label for="htmldeny" class="help" title="#xarML('Disable HTML in this topic and all replies')#"><xar:mlstring>Disable HTML</xar:mlstring></label>
+                        <label for="htmldeny" class="help" title="#xarML('Disable HTML in this topic and all replies')#">Disable HTML</label>
                         <xar:data-input type="checkbox" name="htmldeny" id="htmldeny" value="$htmldeny" tabindex="3" />
                         </li>
                     </xar:if>
                 <xar:else />
-                    <li><xar:mlstring>HTML is </xar:mlstring><span style="color:red;"><xar:mlstring>Off</xar:mlstring></span></li>
+                    <li>HTML is <span style="color:red;">Off</span></li>
                 </xar:if>
                 <xar:if condition="$privs['bbcode']">
-                    <li><xar:mlstring>BBCode is </xar:mlstring><span style="color:green;"><xar:mlstring>On</xar:mlstring></span></li>
+                    <li>BBCode is <span style="color:green;">On</span></li>
                     <xar:if condition="$privs['bbcodedeny']">
                         <li>
-                        <label for="bbcodedeny" class="help" title="#xarML('Disable BBCode in this topic and all replies')#"><xar:mlstring>Disable BBCode</xar:mlstring></label>
+                        <label for="bbcodedeny" class="help" title="#xarML('Disable BBCode in this topic and all replies')#">Disable BBCode</label>
                         <xar:data-input type="checkbox" name="bbcodedeny" id="bbcodedeny" value="$bbcodedeny" tabindex="4" />
                         </li>
                     </xar:if>
                 <xar:else />
-                    <li><xar:mlstring>BBCode is </xar:mlstring><span style="color:red;"><xar:mlstring>Off</xar:mlstring></span></li>
+                    <li>BBCode is <span style="color:red;">Off</span></li>
                 </xar:if>
                 <xar:if condition="$privs['smilies']">
-                    <li><xar:mlstring>Smilies are </xar:mlstring><span style="color:green;"><xar:mlstring>On</xar:mlstring></span></li>
+                    <li>Smilies are <span style="color:green;">On</span></li>
                     <xar:if condition="$privs['smiliesdeny']">
                         <li>
-                        <label for="smiliesdeny" class="help" title="#xarML('Disable Smilies in this topic and all replies')#"><xar:mlstring>Disable Smilies</xar:mlstring></label>
+                        <label for="smiliesdeny" class="help" title="#xarML('Disable Smilies in this topic and all replies')#">Disable Smilies</label>
                         <xar:data-input type="checkbox" name="smiliesdeny" id="smiliesdeny" value="$smiliesdeny" tabindex="5" />
                         </li>
                     </xar:if>
                 <xar:else />
-                    <li><xar:mlstring>Smilies are </xar:mlstring><span style="color:red;"><xar:mlstring>Off</xar:mlstring></span></li>
+                    <li>Smilies are <span style="color:red;">Off</span></li>
                 </xar:if>
                 </ul>
                 <div class="xar-form-container-after">
@@ -128,7 +128,7 @@
             </xar:if>
             <xar:if condition="!empty($iconlist)">
             <div class="xar-form-input-wrapper">
-                <label for="topicicon" class="xar-form-label help" title="#xarML('Select an optional icon for this topic')#"><xar:mlstring>Topic Icon</xar:mlstring>:</label>
+                <label for="topicicon" class="xar-form-label help" title="#xarML('Select an optional icon for this topic')#">Topic Icon:</label>
                 <p class="xar-form-container-after">
                     <xar:template type="module" module="crispbb" file="user-topicicons" />
                 </p>

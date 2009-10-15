@@ -2,123 +2,123 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
-  <span class="xar-mod-title"><xar:mlstring>crispBB Administration</xar:mlstring></span>
+  <span class="xar-mod-title">crispBB Administration</span>
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" module="crispbb" file="admin-menu" />
     <img src="#xarTplGetImage('crispbb.png','crispbb')#" class="xar-module-icon" alt="official icon" width="96" height="96" title="crispBB" />
-    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
-    <xar:mlstring>crispBB is a feature-rich forum module for Xaraya</xar:mlstring>
+    <h3>What is it?</h3>
+    crispBB is a feature-rich forum module for Xaraya
 
-    <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+    <h3>How to use it?</h3>
     <xar:comment>
-    <xar:mlstring>If this is your first visit to this part of your Xaraya site, please take a minute to read through the following introduction, in order to explore the different possibilities offered by the crispBB module.</xar:mlstring>
+    If this is your first visit to this part of your Xaraya site, please take a minute to read through the following introduction, in order to explore the different possibilities offered by the crispBB module.
     </xar:comment>
     <ul>
-        <li><xar:mlstring>Create categories for your forums.</xar:mlstring></li>
+        <li>Create categories for your forums.</li>
         <xar:comment>
         <li>
-            <h4><xar:mlstring>Categories</xar:mlstring></h4>
-            <xar:mlstring>A couple of categories will have been created for you when you installed crispBB. Before creating forums, you might want to create categories for your forums, or rename the ones already there. Unless you have particular reason to, it's not recommended that you change the base category for crispBB once you have created forums, so if you don't want to take the default, now's the time to change it. You can add, edit, re-order and remove categories from the categories administration pages at any time. You can also re-order categories used by crispBB from the crispBB module itself.</xar:mlstring>
+            <h4>Categories</h4>
+            A couple of categories will have been created for you when you installed crispBB. Before creating forums, you might want to create categories for your forums, or rename the ones already there. Unless you have particular reason to, it's not recommended that you change the base category for crispBB once you have created forums, so if you don't want to take the default, now's the time to change it. You can add, edit, re-order and remove categories from the categories administration pages at any time. You can also re-order categories used by crispBB from the crispBB module itself.
         </li>
         </xar:comment>
-        <li><xar:mlstring>Create forums for your users to post in.</xar:mlstring></li>
-        <li><xar:mlstring>Assign privileges and permissions to your users.</xar:mlstring></li>
-        <li><xar:mlstring>Build your community...</xar:mlstring></li>
+        <li>Create forums for your users to post in.</li>
+        <li>Assign privileges and permissions to your users.</li>
+        <li>Build your community...</li>
     </ul>
-    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+    <h3>Included Blocks</h3>
     <ul>
         <li>
-            <strong><xar:mlstring>Topitems Block</xar:mlstring></strong> -
-            <xar:mlstring>The topitems block allows you to list topics from the forums. You can choose to list topics from any or all of the forums available, optionally specifiying the field to sort topics on, the direction they should be sorted and the number of topics to display.</xar:mlstring>
+            <strong>Topitems Block</strong> -
+            The topitems block allows you to list topics from the forums. You can choose to list topics from any or all of the forums available, optionally specifiying the field to sort topics on, the direction they should be sorted and the number of topics to display.
         </li>
         <li>
-            <strong><xar:mlstring>Userpanel Block</xar:mlstring></strong> -
-            <xar:mlstring>The userpanel block displays any combination of the data contained in the user info panel.</xar:mlstring> <em><xar:mlstring>NOTE: if you choose to display any of the time options in the block it's recommended that you don't cache the block.</xar:mlstring></em>
+            <strong>Userpanel Block</strong> -
+            The userpanel block displays any combination of the data contained in the user info panel. <em>NOTE: if you choose to display any of the time options in the block it's recommended that you don't cache the block.</em>
         </li>
     </ul>
 
-    <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
-    <em><xar:mlstring>crispBB has the following hooks</xar:mlstring></em>
+    <h3>Included Hooks</h3>
+    <em>crispBB has the following hooks</em>
     <ul>
         <li>
-            <strong><xar:mlstring>Search Hook</xar:mlstring></strong> -
-            <xar:mlstring>If you have the search module activated, this hook allows crispBB's search options and results to be displayed in the search module. To use it, hook crispBB to the Search module.</xar:mlstring>
+            <strong>Search Hook</strong> -
+            If you have the search module activated, this hook allows crispBB's search options and results to be displayed in the search module. To use it, hook crispBB to the Search module.
         </li>
         <li>
-            <strong><xar:mlstring>Waiting Content Hook</xar:mlstring></strong> -
-            <xar:mlstring>If you have the waitingcontent block of the Base module activated, this hook will display any forum topics and topic replies awaiting approval in the block. To use it, hook crispBB to the Base module.</xar:mlstring>
+            <strong>Waiting Content Hook</strong> -
+            If you have the waitingcontent block of the Base module activated, this hook will display any forum topics and topic replies awaiting approval in the block. To use it, hook crispBB to the Base module.
         </li>
         <li>
-            <strong><xar:mlstring>Modifyconfig Hook</xar:mlstring></strong> -
-            <xar:mlstring>Shows hook configuration options in modify config screen of hooked modules. Allows you to set the following options...</xar:mlstring>
+            <strong>Modifyconfig Hook</strong> -
+            Shows hook configuration options in modify config screen of hooked modules. Allows you to set the following options...
             <ul>
-                <li><xar:mlstring>Set the forum to create related topics in for current module/itemtype.</xar:mlstring></li>
-                <li><xar:mlstring>Optionally choose to display latest X replies if a topic has already been created. (see display hook)</xar:mlstring></li>
-                <li><xar:mlstring>Optionally display the quick reply if a topic has already been created. (see display hook)</xar:mlstring></li>
+                <li>Set the forum to create related topics in for current module/itemtype.</li>
+                <li>Optionally choose to display latest X replies if a topic has already been created. (see display hook)</li>
+                <li>Optionally display the quick reply if a topic has already been created. (see display hook)</li>
             </ul>
         </li>
         <li>
-            <strong><xar:mlstring>Display Hook</xar:mlstring></strong> -
-            <xar:mlstring>Displays the following</xar:mlstring>
+            <strong>Display Hook</strong> -
+            Displays the following
             <ul>
-                <li><xar:mlstring>Displays a link to create a topic to discuss the current item. When clicked a new topic will be created, linking to the module item, and the user will be redirected to make a reply to the newly created topic. or...</xar:mlstring>
+                <li>Displays a link to create a topic to discuss the current item. When clicked a new topic will be created, linking to the module item, and the user will be redirected to make a reply to the newly created topic. or...
                 </li>
-                <li><xar:mlstring>If a topic has already been created, displays a link to the topic.</xar:mlstring></li>
-                <li><xar:mlstring>Optionally display the last X replies if a topic has already been created. (see modifyconfig hook)</xar:mlstring></li>
-                <li><xar:mlstring>Optionally display the quick reply form if a topic has already been created. (see modifyconfig hook)</xar:mlstring></li>
+                <li>If a topic has already been created, displays a link to the topic.</li>
+                <li>Optionally display the last X replies if a topic has already been created. (see modifyconfig hook)</li>
+                <li>Optionally display the quick reply form if a topic has already been created. (see modifyconfig hook)</li>
             </ul>
         </li>
     <xar:comment>
         <li>
-            <strong><xar:mlstring>New / Create Hook</xar:mlstring></strong> -
-            <xar:mlstring>Allows a new related topic to be created when creating a new hooked module item, topic will include link to, and optional excerpt from the created item. Optionally, an existing topic can be associated with the newly created item</xar:mlstring>
+            <strong>New / Create Hook</strong> -
+            Allows a new related topic to be created when creating a new hooked module item, topic will include link to, and optional excerpt from the created item. Optionally, an existing topic can be associated with the newly created item
         </li>
         <li>
-            <strong><xar:mlstring>Modify / Update Hook</xar:mlstring></strong> -
-            <xar:mlstring>Allows the associated topic to be specified or changed when editing a hooked module item</xar:mlstring>
+            <strong>Modify / Update Hook</strong> -
+            Allows the associated topic to be specified or changed when editing a hooked module item
         </li>
         <li>
-            <strong><xar:mlstring>Delete Hook</xar:mlstring></strong> -
-            <xar:mlstring>Deletes the associated hook entry when a hooked module item is deleted. This does not remove the related topic.</xar:mlstring>
+            <strong>Delete Hook</strong> -
+            Deletes the associated hook entry when a hooked module item is deleted. This does not remove the related topic.
         </li>
         <li>
-            <strong><xar:mlstring>Remove Hook</xar:mlstring></strong> -
-            <xar:mlstring>Removes associated hook entries from the database when a hooked module is removed from the system. This does not remove related topics.</xar:mlstring>
+            <strong>Remove Hook</strong> -
+            Removes associated hook entries from the database when a hooked module is removed from the system. This does not remove related topics.
         </li>
     </xar:comment>
     </ul>
 
-    <h3><xar:mlstring>Included Dynamic Data Properties</xar:mlstring></h3>
-    <em><xar:mlstring>crispBB has no included properties at present</xar:mlstring></em>
+    <h3>Included Dynamic Data Properties</h3>
+    <em>crispBB has no included properties at present</em>
 
-    <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+    <h3>Further Information</h3>
     <ul>
-        <li><xar:mlstring>Official crispBB home page at</xar:mlstring> <a href="http://www.crispbb.com" title="#xarML('crispBB website')#">http://www.crispbb.com</a>
+        <li>Official crispBB home page at <a href="http://www.crispbb.com" title="#xarML('crispBB website')#">http://www.crispbb.com</a>
         </li>
-        <li><xar:mlstring>Latest release can always be found at</xar:mlstring> <a href="http://www.crispbb.com/forums/crispbb-releases/t3?action=lastreply" title="#xarML('crispBB Releases')#"><xar:mlstring>crispBB Releases</xar:mlstring></a>
+        <li>Latest release can always be found at <a href="http://www.crispbb.com/forums/crispbb-releases/t3?action=lastreply" title="#xarML('crispBB Releases')#">crispBB Releases</a>
         </li>
-        <li><xar:mlstring>crispBB Extension page at</xar:mlstring> <a title="#xarML('crispBB Module - Xaraya Extension 970')#" href="http://www.xaraya.com/index.php/release/970.html"><xar:mlstring>Xaraya Extensions and Releases</xar:mlstring></a>.
+        <li>crispBB Extension page at <a title="#xarML('crispBB Module - Xaraya Extension 970')#" href="http://www.xaraya.com/index.php/release/970.html">Xaraya Extensions and Releases</a>.
         </li>
-        <li><xar:mlstring>Related tutorials and documentation on crispBB found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/crispbb/" title="#xarML('Related documentation on crispBB')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+        <li>Related tutorials and documentation on crispBB found at <a href="http://www.xaraya.com/index.php/keywords/crispbb/" title="#xarML('Related documentation on crispBB')#">Xaraya Documentation.</a>
         </li>
     </ul>
-    <h3><xar:mlstring>Additional credits</xar:mlstring></h3>
+    <h3>Additional credits</h3>
     <ul>
         <li>
-            <xar:mlstring>Most icons in modules/crispbb/xarimages/tango/ courtesy of the </xar:mlstring>
-            <a href="http://tango.freedesktop.org/Tango_Desktop_Project" rel="external">Tango Desktop Project</a><xar:mlstring> and are in the public domain.  The remaining icons created by Xaraya developers, licensed under the GPL.</xar:mlstring>
+            Most icons in modules/crispbb/xarimages/tango/ courtesy of the 
+            <a href="http://tango.freedesktop.org/Tango_Desktop_Project" rel="external">Tango Desktop Project</a> and are in the public domain.  The remaining icons created by Xaraya developers, licensed under the GPL.
         </li>
         <li>
-            <xar:mlstring>Icons in modules/crispbb/xarimages/icons/ are courtesy of </xar:mlstring>
-            <a href="http://www.famfamfam.com/lab/icons/silk/" rel="external">FamFamFam Silk Icons</a><xar:mlstring> by Mark James and are licensed under <a href="http://creativecommons.org/licenses/by/3.0/" rel="external">Creative Commons Attribution 3.0 License</a>.</xar:mlstring>
+            Icons in modules/crispbb/xarimages/icons/ are courtesy of 
+            <a href="http://www.famfamfam.com/lab/icons/silk/" rel="external">FamFamFam Silk Icons</a> by Mark James and are licensed under <a href="http://creativecommons.org/licenses/by/3.0/" rel="external">Creative Commons Attribution 3.0 License</a>.
         </li>
     </ul>
 </div>
 <div class="xar-mod-foot">
     <p class="xar-sub xar-align-center">
-        <strong>&#160;<xar:mlstring>crispBB - Overview</xar:mlstring></strong>
-        &#160;<xar:mlstring>Version</xar:mlstring> - #$version#
+        <strong>&#160;crispBB - Overview</strong>
+        &#160;Version - #$version#
     </p>
 </div>
 <xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>

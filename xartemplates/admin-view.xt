@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:style scope="module" module="crispbb" />
 <div class="xar-mod-head">
-  <span class="xar-mod-title"><xar:mlstring>crispBB Administration</xar:mlstring></span>
+  <span class="xar-mod-title">crispBB Administration</span>
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
@@ -35,7 +35,7 @@
                 <caption class="xar-padding-thick xar-alt-outline xar-align-left">
                     <span class="xar-floatleft">
                     <a href="#xarModURL('crispbb', 'admin', 'view', array('catid' => $cid))#" title="#$catinfo['description']#">
-                        <xar:mlstring>All forums in</xar:mlstring> #$catinfo['name']#
+                        All forums in #$catinfo['name']#
                     </a>
                     </span>
                     <span class="xar-floatright">
@@ -76,18 +76,18 @@
             </table>
         </xar:foreach>
     <xar:else />
-        <xar:mlstring>No Categories Found!</xar:mlstring>
+        No Categories Found!
     </xar:if>
 </div>
 <div class="xar-mod-foot xar-align-center">
     <div class="xar-accent-outline xar-margin-thick xar-padding-thick">
         <span class="xar-nowrap">
             <img src="#xarTPLGetImage('icons/comment_warning.png', 'crispbb')#" alt="Waiting" title="#xarML('Waiting Content')#" />
-            <xar:mlstring>Waiting</xar:mlstring>
+            Waiting
         </span>
         <span class="xar-nowrap">
             <img src="#xarTPLGetImage('icons/bin.png', 'crispbb')#" alt="Deleted" title="#xarML('View deleted topics in this forum')#" />
-            <xar:mlstring>Deleted</xar:mlstring>
+            Deleted
         </span>
         <span class="xar-nowrap">
             <img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('Info')#" title="#xarML('View information about this forum')#" />

@@ -9,7 +9,7 @@
     <div>
         <dl class="xar-tabs">
             <dt class="help" title="#xarML('Choose an action to perform')#">
-                <xar:mlstring>Actions</xar:mlstring>:
+                Actions:
             </dt>
             <xar:loop name="$menulinks">
                 <xar:set name="tabclass">

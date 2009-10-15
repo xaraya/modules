@@ -3,9 +3,9 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-padding-thick">
     <xar:if condition="!empty($newtopicurl)">
-        <a href="#$newtopicurl#"><xar:mlstring>Click here</xar:mlstring></a> <xar:mlstring>to start a discussion on this item in the forums</xar:mlstring>
+        <a href="#$newtopicurl#">Click here</a> to start a discussion on this item in the forums
     <xar:elseif condition="!empty($viewtopicurl)" />
-        <xar:mlstring>Discuss this item in the forums</xar:mlstring> <a href="#$viewtopicurl#">#$ttitle#</a>
+        Discuss this item in the forums <a href="#$viewtopicurl#">#$ttitle#</a>
     </xar:if>
 </div>
 <xar:if condition="!empty($postsperpage) and !empty($numreplies)">
@@ -16,11 +16,9 @@
     </xar:if>
     <xar:set name="grammar">$showing == 1 ? 'reply' : 'replies'</xar:set>
     <div class="xar-padding-thick">
-    <em><xar:ml>
-        <xar:mlstring>Showing last #(1) #(2) of forum discussion</xar:mlstring>
-        <xar:mlvar>#$showing#</xar:mlvar>
-        <xar:mlvar>#$grammar#</xar:mlvar>
-    </xar:ml></em>
+    <em>
+        Showing last #$showing# #$grammar# of forum discussion
+    </em>
     </div>
     <xar:crispbb-showreplies tid="$tid" sort="ptime" order="ASC" startnum="$startnum" numitems="$postsperpage" />
 </xar:if>

@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:style scope="module" module="crispbb" />
 <div class="xar-mod-head">
-  <span class="xar-mod-title"><xar:mlstring>crispBB Administration</xar:mlstring></span>
+  <span class="xar-mod-title">crispBB Administration</span>
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
@@ -13,34 +13,34 @@
     </xar:if>
     <xar:if condition="empty($modid)">
         <div class="xar-form-input-wrapper-before xar-padding-thick">
-            <xar:mlstring>
+
              By clicking on <strong>Delete</strong> you can delete all topic
              associations for a particular module. Clicking on a module will take
              you to that module's statistics page containing a list
              of that module's items that have topics associated with them.
              From there you can delete topic associations for individual items.
-            </xar:mlstring>
+
         </div>
         <table class="xar-fullwidth xar-alt-outline xar-margin-none">
             <caption class="xar-padding-thick xar-alt-outline xar-align-left">
-                    <xar:mlstring>Modules crispBB has topics associated with</xar:mlstring>
+                    Modules crispBB has topics associated with
             </caption>
             <thead>
             <tr>
                 <th valign="center" width="40%">
-                    <xar:mlstring>Module - Itemtype</xar:mlstring>
+                    Module - Itemtype
                 </th>
                 <th align="center" valign="center" width="15%">
-                    <xar:mlstring>Module Items</xar:mlstring>
+                    Module Items
                 </th>
                 <th align="center" valign="center" width="15%">
-                    <xar:mlstring>Topics</xar:mlstring>
+                    Topics
                 </th>
                 <th align="center" valign="center" width="15%">
-                    <xar:mlstring>Associations</xar:mlstring>
+                    Associations
                 </th>
                 <th class="xar-align-right" width="15%">
-                    <xar:mlstring>Action</xar:mlstring>
+                    Action
                 </th>
             </tr>
             </thead>
@@ -49,9 +49,9 @@
                 <tr>
                     <td colspan="5" align="center">
                         <p>
-                        <xar:mlstring>
+
                             There are currently no topic associations in the database...
-                        </xar:mlstring>
+
                         </p>
                     </td>
                 </tr>
@@ -79,7 +79,7 @@
                 </xar:foreach>
                 <tr class="#$rowclass#">
                     <td valign="center" width="40%">
-                        <b><xar:mlstring>Grand Total</xar:mlstring></b>
+                        <b>Grand Total</b>
                     </td>
                     <td align="center" valign="center" width="15%">
                         <b>#$numitems#</b>
@@ -98,22 +98,22 @@
             </tbody>
         </table>
         <div class="xar-alt-outline xar-align-left xar-padding-thick xar-margin-thickbottom">
-                <xar:mlstring>Modules crispBB has topics associated with</xar:mlstring>
+                Modules crispBB has topics associated with
         </div>
     <xar:else/>
         <xar:comment>
-        <a href="#xarModURL('crispbb','admin','checkhooks',array('modid' => $modid, 'itemtype' => $itemtype))#"><xar:mlstring>Check Orphaned Associations</xar:mlstring></a>
+        <a href="#xarModURL('crispbb','admin','checkhooks',array('modid' => $modid, 'itemtype' => $itemtype))#">Check Orphaned Associations</a>
         </xar:comment>
         <div class="xar-form-input-wrapper-before xar-padding-thick">
-            <xar:mlstring>
+
                 By clicking on <strong>Delete</strong> you can delete topic association with individual module items.
-            </xar:mlstring>
+
         </div>
 
         <table class="xar-fullwidth xar-alt-outline xar-margin-none">
             <caption class="xar-padding-thick xar-alt-outline xar-align-left">
                 <span class="xar-floatleft">
-                    <xar:ml><xar:mlstring>Module #(1)</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar></xar:ml>
+                    Module #$modname#
                 </span>
                 <xar:if condition="!empty($pager)">
                     <span class="xar-align-right xar-floatright">
@@ -126,16 +126,16 @@
             <tr>
                 <th valign="center" width="40%">
                     <xar:if condition="empty($sortlink['itemid'])">
-                        <xar:mlstring>Module Item</xar:mlstring>
+                        Module Item
                     <xar:else/>
-                        <a href="#$sortlink['itemid']#"><xar:mlstring>Module Item</xar:mlstring></a>
+                        <a href="#$sortlink['itemid']#">Module Item</a>
                     </xar:if>
                 </th>
                 <th valign="center" width="40%">
-                    <xar:mlstring>Associated Topic</xar:mlstring>
+                    Associated Topic
                 </th>
                 <th class="xar-align-right" width="20%">
-                    <xar:mlstring>Action</xar:mlstring>
+                    Action
                 </th>
             </tr>
             </thead>
@@ -144,9 +144,9 @@
                 <tr>
                     <td colspan="3" align="center">
                         <p>
-                        <xar:mlstring>
+
                             There are currently no topic associations for this module...
-                        </xar:mlstring>
+
                         </p>
                     </td>
                 </tr>
@@ -171,7 +171,7 @@
                 </xar:foreach>
                 <tr class="#$rowclass#">
                     <td valign="center" width="40%">
-                        <b><xar:mlstring>Grand Total</xar:mlstring></b>:
+                        <b>Grand Total</b>:
                     </td>
                     <td align="center" valign="center" width="40%">
                         <b>#$numlinks#</b>
@@ -185,7 +185,7 @@
         </table>
         <div class="xar-alt-outline xar-align-left xar-padding-thick xar-margin-thickbottom">
             <div class="xar-floatleft">
-                <xar:ml><xar:mlstring>Module #(1)</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar></xar:ml>
+                Module #$modname#
             </div>
             <xar:if condition="!empty($pager)">
                 <div class="xar-align-right xar-floatright">

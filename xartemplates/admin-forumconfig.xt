@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:style scope="module" module="crispbb" />
 <div class="xar-mod-head">
-  <span class="xar-mod-title"><xar:mlstring>crispBB Administration</xar:mlstring></span>
+  <span class="xar-mod-title">crispBB Administration</span>
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
@@ -16,22 +16,22 @@
         <p>
             <img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('info')#" />
             <xar:if condition="$sublink eq 'posthooks'">
-                <xar:mlstring>The following settings apply to modules which are hooked to all items in crispbb, or hooked to all posts in crispbb</xar:mlstring>
+                The following settings apply to modules which are hooked to all items in crispbb, or hooked to all posts in crispbb
             <xar:elseif condition="$sublink eq 'topichooks'" />
-                <xar:mlstring>The following settings apply to modules which are hooked to all items in crispBB, or hooked to all topics in crispBB</xar:mlstring>
+                The following settings apply to modules which are hooked to all items in crispBB, or hooked to all topics in crispBB
             <xar:else />
-                <xar:mlstring>The following settings apply to modules which are hooked to all items in crispBB, or hooked to all forums in crispBB</xar:mlstring>
+                The following settings apply to modules which are hooked to all items in crispBB, or hooked to all forums in crispBB
             </xar:if>
             <br />
             <img src="#xarTPLGetImage('icons/dialog-warning.png', 'base')#" alt="#xarML('dialog-warning')#" />
-            <xar:mlstring>Hooks apply to Transform, Display, New, Modify and Delete posts functions</xar:mlstring>
+            Hooks apply to Transform, Display, New, Modify and Delete posts functions
         </p>
         <form method="post" action="#xarModURL('crispbb', 'admin', 'forumconfig')#">
             <xar:foreach in="$hooksettings" key="$hookmodname" value="$hookconfig">
                 <fieldset>
                     <div class="xar-form-input-wrapper">
                         <label class="xar-form-label">
-                            #$hookconfig['displayname']# <xar:mlstring>Hooks</xar:mlstring>
+                            #$hookconfig['displayname']# Hooks
                         </label>:
                         <xar:if condition="$hookconfig['status'] eq 2">
                             <xar:if condition="$hookconfig['ishooked']">
@@ -67,14 +67,14 @@
     <xar:elseif condition="$sublink eq 'privileges'" />
         <p>
             <img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('Information')#" />
-            <xar:mlstring>The following settings will be applied to privileges for new forums added to the system.</xar:mlstring>
+            The following settings will be applied to privileges for new forums added to the system.
         </p>
         <form method="post" action="#xarModURL('crispbb', 'admin', 'forumconfig')#">
             <fieldset>
                 <table class="xar-fullwidth">
                     <thead>
                         <tr>
-                            <th><xar:mlstring>Action</xar:mlstring></th>
+                            <th>Action</th>
                             <xar:loop name="$levels"><th>#$loop:item.name#</th></xar:loop>
                         </tr>
                     </thead>
@@ -107,7 +107,7 @@
                         <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
                         <xar:set name="dummy">$rowcount++</xar:set>
                         <xar:if condition="$rowcount eq 20">
-                            <th><xar:mlstring>Action</xar:mlstring></th>
+                            <th>Action</th>
                             <xar:loop name="$levels"><th>#$loop:item.name#</th></xar:loop>
                         </xar:if>
                     </xar:foreach>
@@ -117,14 +117,14 @@
                 <div class="xar-form-input-wrapper-after">
                     <xar:data-input type="checkbox" name="resetprivs" id="resetprivs" />
                     <label for="resetprivs" title="#xarML('Reset default configuration to factory settings')#">
-                        <strong><xar:mlstring>Reset these settings to factory defaults</xar:mlstring></strong>
+                        <strong>Reset these settings to factory defaults</strong>
                     </label>
                 </div>
                 -->
                 <div class="xar-form-input-wrapper-after">
                     <xar:data-input type="checkbox" name="applyprivs" id="applyprivs" />
                     <label for="applyprivs" title="#xarML('Apply these settings to all forums')#">
-                        <strong><xar:mlstring>Apply these settings to all forums</xar:mlstring></strong>
+                        <strong>Apply these settings to all forums</strong>
                     </label>
                 </div>
                 <div class="xar-form-input-wrapper-after">
@@ -139,7 +139,7 @@
         <xar:template type="module" module="crispbb" file="privileges-info" />
     <xar:else />
         <p>
-            <img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('info')#" /> <xar:mlstring>These settings will be used when a new forum is added to the system.</xar:mlstring>
+            <img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('info')#" /> These settings will be used when a new forum is added to the system.
         </p>
         <form method="post" action="#xarModURL('crispbb', 'admin', 'forumconfig')#">
             <fieldset>
@@ -148,13 +148,13 @@
                 <div class="xar-form-input-wrapper-after">
                     <xar:data-input type="checkbox" name="resetdefaults" id="resetdefaults" />
                     <label for="resetdefaults" title="#xarML('Reset default configuration to factory settings')#">
-                        <strong><xar:mlstring>Reset these settings to factory defaults</xar:mlstring></strong>
+                        <strong>Reset these settings to factory defaults</strong>
                     </label>
                 </div>
                 <div class="xar-form-input-wrapper-after">
                     <xar:data-input type="checkbox" name="applydefaults" id="applydefaults" />
                     <label for="applydefaults" title="#xarML('Apply these settings to all forums')#">
-                        <strong><xar:mlstring>Apply these settings to all existing forums</xar:mlstring></strong>
+                        <strong>Apply these settings to all existing forums</strong>
                     </label>
                 </div>
                 -->

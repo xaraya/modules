@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:style scope="module" module="crispbb" />
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>crispBB Forums</xar:mlstring></span>
+    <span class="xar-mod-title">crispBB Forums</span>
 </div>
 <div class="xar-mod-body crispbb-main">
     <xar:template type="module" file="user-breadcrumbs" />
@@ -36,9 +36,9 @@
             <thead>
                 <tr>
                     <th scope="col" class="timeimage">&#160;</th>
-                    <th scope="col" class="foruminfo xar-halfwidth"><xar:mlstring>Forum</xar:mlstring></th>
-                    <th scope="col" class="postinfo"><xar:mlstring>Posts</xar:mlstring></th>
-                    <th scope="col" class="lastpost"><xar:mlstring>Last Post</xar:mlstring></th>
+                    <th scope="col" class="foruminfo xar-halfwidth">Forum</th>
+                    <th scope="col" class="postinfo">Posts</th>
+                    <th scope="col" class="lastpost">Last Post</th>
                 </tr>
             </thead>
             <tfoot>
@@ -46,12 +46,7 @@
                     <td colspan="4" class="xar-align-center">
                         <span class="xar-sub">
                             <xar:set name="grammar">$catinfo['numforums'] == 1 ? 'forum' : 'forums'</xar:set>
-                            <xar:ml>
-                                <xar:mlstring>Showing #(1) #(2) in category #(3)</xar:mlstring>
-                                <xar:mlvar>#$catinfo['numforums']#</xar:mlvar>
-                                <xar:mlvar>#$grammar#</xar:mlvar>
-                                <xar:mlvar>#xarVarPrepForDisplay($catinfo['name'])#</xar:mlvar>
-                            </xar:ml>
+                                Showing #$catinfo['numforums']# #$grammar# in category #xarVarPrepForDisplay($catinfo['name'])#
                         </span>
                     </td>
                 </tr>
@@ -108,7 +103,7 @@
                                 </xar:if>
                             </p>
                         <xar:else />
-                            <xar:mlstring>No Topics</xar:mlstring>
+                            No Topics
                         </xar:if>
                     </td>
                 </tr>
@@ -135,14 +130,14 @@
             <xar:else />
                 <tr>
                     <td></td>
-                    <td colspan="4"><xar:mlstring>No Forums Found</xar:mlstring></td>
+                    <td colspan="4">No Forums Found</td>
                 </tr>
             </xar:if>
             </tbody>
         </table>
         </xar:foreach>
     <xar:else />
-        <p><xar:mlstring>No Forums Found</xar:mlstring></p>
+        <p>No Forums Found</p>
     </xar:if>
     <hr />
     <div class="xar-align-right xar-padding-thicktop xar-clearboth">
@@ -152,36 +147,24 @@
     </div>
     <xar:if condition="!empty($readurl)">
     <div class="xar-align-center xar-margin-thick xar-padding-thick">
-        <a href="#$readurl#"><xar:mlstring>Mark All Forums Read</xar:mlstring></a>
+        <a href="#$readurl#">Mark All Forums Read</a>
     </div>
     </xar:if>
     <div class="xar-margin-thickends xar-padding-thickends xar-sub">
         <div class="xar-thirdwidth xar-floatleft">
-        <h4 class="xar-margin-none"><xar:mlstring>Board Statistics</xar:mlstring></h4>
+        <h4 class="xar-margin-none">Board Statistics</h4>
         <ul>
             <li>
                 <xar:set name="grammar">$totaltopics == 1 ? 'topic' : 'topics'</xar:set>
-                <xar:ml>
-                    <xar:mlstring>The board has a total of #(1) #(2)</xar:mlstring>
-                    <xar:mlvar>#$totaltopics#</xar:mlvar>
-                    <xar:mlvar>#$grammar#</xar:mlvar>
-                </xar:ml>
+                    The board has a total of #$totaltopics# #$grammar#
             </li>
             <li>
                 <xar:set name="grammar">$totalreplies == 1 ? 'reply' : 'replies'</xar:set>
-                <xar:ml>
-                    <xar:mlstring>The board has a total of #(1) #(2)</xar:mlstring>
-                    <xar:mlvar>#$totalreplies#</xar:mlvar>
-                    <xar:mlvar>#$grammar#</xar:mlvar>
-                </xar:ml>
+                    The board has a total of #$totalreplies# #$grammar#
             </li>
             <li>
             <xar:set name="grammar">$totalunanswered == 1 ? 'topic' : 'topics'</xar:set>
-            <xar:ml>
-                <xar:mlstring>This board has #(1) unanswered #(2)</xar:mlstring>
-                <xar:mlvar>#$totalunanswered#</xar:mlvar>
-                <xar:mlvar>#$grammar#</xar:mlvar>
-            </xar:ml>
+                This board has #$totalunanswered# unanswered #$grammar#
             </li>
             <xar:if condition="!empty($viewstatsurl)">
             <li>
@@ -194,7 +177,7 @@
         <xar:set name="waitingcontent">xarMod::guiFunc('crispbb', 'admin', 'waitingcontent')</xar:set>
         <xar:if condition="!empty($waitingcontent)">
         <div class="xar-accent xar-accent-outline xar-floatleft xar-thirdwidth xar-padding-thick">
-            <h4><xar:mlstring>Waiting Content</xar:mlstring></h4>
+            <h4>Waiting Content</h4>
             #$waitingcontent#
         </div>
         </xar:if>

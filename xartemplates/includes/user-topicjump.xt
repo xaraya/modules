@@ -5,38 +5,38 @@
 <form method="post" action="#xarModURL('crispbb', 'user', 'redirect')#" class="xar-margin-none xar-displayinline">
     <xar:if condition="empty($formid)"><xar:set name="$formid">'1'</xar:set></xar:if>
     <div class="xar-nowrap xar-displayinline">
-    <label for="topicjump#$formid#" class="xar-margin-nonebottom xar-padding-nonebottom"><xar:mlstring>Topics</xar:mlstring>:</label>
+    <label for="topicjump#$formid#" class="xar-margin-nonebottom xar-padding-nonebottom">Topics:</label>
     <select name="topicjump" id="topicjump#$formid#" onchange="this.form.submit();">
         <optgroup label="#xarML('All forums')#">
             <option value="0">-----------------</option>
             <xar:if condition="!empty($userpanel['lastvisit'])">
-                <option value="lastvisit"><xar:mlstring>Topics since last visit</xar:mlstring></option>
+                <option value="lastvisit">Topics since last visit</option>
             </xar:if>
-            <option value="latest"><xar:mlstring>Latest topics</xar:mlstring></option>
+            <option value="latest">Latest topics</option>
             <xar:if condition="!empty($totalunanswered)">
-            <option value="unanswered"><xar:mlstring>Unanswered topics</xar:mlstring></option>
+            <option value="unanswered">Unanswered topics</option>
             </xar:if>
             <xar:if condition="xarUserIsLoggedIn()">
             <xar:comment>
-                <option value="unread"><xar:mlstring>Unread topics</xar:mlstring></option>
+                <option value="unread">Unread topics</option>
             </xar:comment>
-                <option value="towner"><xar:mlstring>My topics</xar:mlstring></option>
+                <option value="towner">My topics</option>
             </xar:if>
         </optgroup>
         <xar:if condition="!empty($fid)">
         <optgroup label="#xarML('This forum')#">
             <xar:if condition="!empty($userpanel['lastvisit'])">
-                <option value="lastvisit#$fid#"><xar:mlstring>Topics since last visit</xar:mlstring></option>
+                <option value="lastvisit#$fid#">Topics since last visit</option>
             </xar:if>
-            <option value="latest#$fid#"><xar:mlstring>Latest topics</xar:mlstring></option>
+            <option value="latest#$fid#">Latest topics</option>
             <xar:if condition="!empty($unanswered)">
-            <option value="unanswered#$fid#"><xar:mlstring>Unanswered topics</xar:mlstring></option>
+            <option value="unanswered#$fid#">Unanswered topics</option>
             </xar:if>
             <xar:if condition="xarUserIsLoggedIn()">
             <xar:comment>
-               <option value="unread#$fid#"><xar:mlstring>Unread topics</xar:mlstring></option>
+               <option value="unread#$fid#">Unread topics</option>
             </xar:comment>
-                <option value="towner#$fid#"><xar:mlstring>My topics</xar:mlstring></option>
+                <option value="towner#$fid#">My topics</option>
             </xar:if>
         </optgroup>
         </xar:if>

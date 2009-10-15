@@ -11,7 +11,7 @@
     </xar:set>
 </xar:if>
 <div class="xar-mod-head">
-  <span class="xar-mod-title"><xar:mlstring>crispBB Administration</xar:mlstring></span>
+  <span class="xar-mod-title">crispBB Administration</span>
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
@@ -45,7 +45,7 @@
                 <fieldset>
                     <div class="xar-form-input-wrapper">
                         <label class="xar-form-label">
-                            #$hookconfig['displayname']# <xar:mlstring>Hooks</xar:mlstring>
+                            #$hookconfig['displayname']# Hooks
                         </label>:
                         <xar:if condition="$hookconfig['status'] eq 2">
                             <xar:if condition="$hookconfig['ishooked']">
@@ -82,14 +82,14 @@
     <xar:elseif condition="$sublink eq 'privileges'" />
         <p>
             <img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('info')#" />
-            <xar:mlstring>These settings apply to privileges for this forum.</xar:mlstring>
+            These settings apply to privileges for this forum.
         </p>
         <form method="post" action="#xarModURL('crispbb', 'admin', 'modify')#">
             <fieldset>
                 <table class="xar-fullwidth">
                     <thead>
                         <tr>
-                            <th><xar:mlstring>Action</xar:mlstring></th>
+                            <th>Action</th>
                             <xar:loop name="$levels"><th>#$loop:item.name#</th></xar:loop>
                         </tr>
                     </thead>
@@ -121,7 +121,7 @@
                         <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
                         <xar:set name="dummy">$rowcount++</xar:set>
                         <xar:if condition="$rowcount eq 20">
-                            <th><xar:mlstring>Action</xar:mlstring></th>
+                            <th>Action</th>
                             <xar:loop name="$levels"><th>#$loop:item.name#</th></xar:loop>
                         </xar:if>
                     </xar:foreach>
@@ -158,18 +158,12 @@
                 <xar:foreach in="$levels" key="$level" value="$values">
                     <xar:if condition="$forum:properties.ftype:value eq 1 and $level gt 100"><xar:break /></xar:if>
                     <li>
-                        <xar:ml>
-                            <xar:mlstring>Users with #(1) privilege</xar:mlstring>
-                            <xar:mlvar>#$values['name']#</xar:mlvar>
-                        </xar:ml>
+                        Users with #$values['name']# privilege
                         <ul>
                         <xar:foreach in="$forum:fprivileges[$level]" key="$action" value="$allowed">
                             <xar:if condition="$allowed and !empty($actions[$action])">
                             <li>
-                                <xar:ml>
-                                    <xar:mlstring>Can #(1)</xar:mlstring>
-                                    <xar:mlvar>#$actions[$action]#</xar:mlvar>
-                                </xar:ml>
+                                Can #$actions[$action]#
                             </li>
                             </xar:if>
                         </xar:foreach>

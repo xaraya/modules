@@ -7,7 +7,7 @@
     <xar:if condition="!empty($topicdescmax)">
         <div class="xar-form-input-wrapper">
             <xar:set name="pdesclabel">xarML('Enter a description between #(1) and #(2) characters', $topicdescmin, $topicdescmax)</xar:set>
-            <label for="pdesc" class="help" title="#$pdesclabel#"><xar:mlstring>Description</xar:mlstring>:</label>
+            <label for="pdesc" class="help" title="#$pdesclabel#">Description:</label>
             <input type="text" name="pdesc" id="pdesc" value="" maxlength="100" class="xar-form-textxxlong" />
         </div>
     <xar:else />
@@ -15,7 +15,7 @@
     </xar:if>
     </xar:comment>
     <div>
-    <label for="ptext" class="help" title="#xarML('Enter your post here')#"><xar:mlstring>Quick Reply</xar:mlstring></label><br />
+    <label for="ptext" class="help" title="#xarML('Enter your post here')#">Quick Reply</label><br />
     <xar:set name="ptext">''</xar:set>
     <textarea name="ptext" id="ptext" cols="50" rows="8">#$ptext#</textarea>
     </div>

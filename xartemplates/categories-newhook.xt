@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-form-input-wrapper">
     <label class="xar-form-label help" title="#xarML('Select the category for this forum')#">
-        <xar:mlstring>Category</xar:mlstring>:
+        Category:
     </label>
     <xar:loop name="$items">
       #$loop:item['select']#

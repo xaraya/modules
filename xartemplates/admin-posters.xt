@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:style scope="module" module="crispbb" />
 <div class="xar-mod-head">
-  <span class="xar-mod-title"><xar:mlstring>crispBB Administration</xar:mlstring></span>
+  <span class="xar-mod-title">crispBB Administration</span>
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
@@ -16,7 +16,7 @@
     <xar:if condition="!empty($uid)">
         <table class="xar-fullwidth xar-alt-outline xar-margin-none">
             <caption class="xar-align-left xar-alt-outline xar-padding-thick">
-                <span class="xar-floatleft"><xar:mlstring>IP Addresses used by</xar:mlstring>
+                <span class="xar-floatleft">IP Addresses used by
                     <a href="#xarModURL('roles', 'user', 'display', array('uid' => $uid))#" title="#xarML('View Profile')#">#$name#</a>
                 </span>
                 <xar:if condition="!empty($pager)">
@@ -28,8 +28,8 @@
             </caption>
             <thead>
                 <tr>
-                    <th scope="col"><xar:mlstring>IP Address</xar:mlstring></th>
-                    <th scope="col"><xar:mlstring>Actions</xar:mlstring></th>
+                    <th scope="col">IP Address</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,7 +46,7 @@
             </tbody>
         </table>
         <div class="xar-align-left xar-alt-outline xar-padding-thick">
-            <span class="xar-floatleft"><xar:mlstring>IP Addresses used by</xar:mlstring>
+            <span class="xar-floatleft">IP Addresses used by
                 <a href="#xarModURL('roles', 'user', 'display', array('uid' => $uid))#" title="#xarML('View Profile')#">#$name#</a>
             </span>
             <xar:if condition="!empty($pager)">
@@ -59,7 +59,7 @@
     <xar:elseif condition="!empty($ip)" />
         <table class="xar-fullwidth xar-alt-outline xar-margin-none">
             <caption class="xar-align-left xar-alt-outline xar-padding-thick">
-                <span class="xar-floatleft"><xar:mlstring>Users posting from </xar:mlstring> #$ip#
+                <span class="xar-floatleft">Users posting from  #$ip#
                 </span>
                 <xar:if condition="!empty($pager)">
                     <span class="xar-align-right xar-floatright">
@@ -70,11 +70,11 @@
             </caption>
             <thead>
                 <tr>
-                    <th scope="col"><xar:mlstring>User</xar:mlstring></th>
-                    <th scope="col"><xar:mlstring>Topics</xar:mlstring></th>
-                    <th scope="col"><xar:mlstring>Replies</xar:mlstring></th>
-                    <th scope="col"><xar:mlstring>Status</xar:mlstring></th>
-                    <th scope="col"><xar:mlstring>Actions</xar:mlstring></th>
+                    <th scope="col">User</th>
+                    <th scope="col">Topics</th>
+                    <th scope="col">Replies</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -86,9 +86,9 @@
                         <td>#$poster['numtopics']#</td>
                         <td>#$poster['numreplies']#</td>
                         <td><xar:if condition="!empty($poster['online'])">
-                            <xar:mlstring>Online</xar:mlstring>
+                            Online
                             <xar:else />
-                            <xar:mlstring>Offline</xar:mlstring>
+                            Offline
                             </xar:if></td>
                         <td><a href="#xarModURL('crispbb', 'admin', 'posters', array('uid' => $poster['uid']))#" title="#xarML('View IP Addresses this user has posted from')#">View IPs</a></td>
                     </tr>
@@ -98,7 +98,7 @@
             </tbody>
         </table>
         <div class="xar-align-left xar-alt-outline xar-padding-thick">
-            <span class="xar-floatleft"><xar:mlstring>Users posting from </xar:mlstring> #$ip#</span>
+            <span class="xar-floatleft">Users posting from  #$ip#</span>
             <xar:if condition="!empty($pager)">
                 <span class="xar-align-right xar-floatright">
                     #$pager#
@@ -109,7 +109,7 @@
     <xar:else />
         <table class="xar-fullwidth xar-alt-outline xar-margin-none">
             <caption class="xar-align-left xar-alt-outline xar-padding-thick">
-                <span class="xar-floatleft"><xar:mlstring>List of users who have posted in the forums</xar:mlstring></span>
+                <span class="xar-floatleft">List of users who have posted in the forums</span>
                 <xar:if condition="!empty($pager)">
                     <span class="xar-align-right xar-floatright">
                         #$pager#
@@ -119,11 +119,11 @@
             </caption>
             <thead>
                 <tr>
-                    <th scope="col"><xar:mlstring>User</xar:mlstring></th>
-                    <th scope="col"><xar:mlstring>Topics</xar:mlstring></th>
-                    <th scope="col"><xar:mlstring>Replies</xar:mlstring></th>
-                    <th scope="col"><xar:mlstring>Status</xar:mlstring></th>
-                    <th scope="col"><xar:mlstring>Actions</xar:mlstring></th>
+                    <th scope="col">User</th>
+                    <th scope="col">Topics</th>
+                    <th scope="col">Replies</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -135,9 +135,9 @@
                         <td>#$poster['numtopics']#</td>
                         <td>#$poster['numreplies']#</td>
                         <td><xar:if condition="!empty($poster['online'])">
-                            <xar:mlstring>Online</xar:mlstring>
+                            Online
                             <xar:else />
-                            <xar:mlstring>Offline</xar:mlstring>
+                            Offline
                             </xar:if></td>
                         <td><a href="#xarModURL('crispbb', 'admin', 'posters', array('uid' => $poster['uid']))#" title="#xarML('View IP Addresses this user has posted from')#">View IPs</a></td>
                     </tr>
@@ -147,7 +147,7 @@
             </tbody>
         </table>
         <div class="xar-align-left xar-alt-outline xar-padding-thick">
-            <span class="xar-floatleft"><xar:mlstring>List of users who have posted in the forums</xar:mlstring></span>
+            <span class="xar-floatleft">List of users who have posted in the forums</span>
             <xar:if condition="!empty($pager)">
                 <span class="xar-align-right xar-floatright">
                     #$pager#

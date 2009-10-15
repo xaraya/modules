@@ -6,10 +6,10 @@
     <xar:set name="defaultModule">xarConfigVars::get('Site.Core.DefaultModuleName')</xar:set>
     <xar:set name="pageSeparator">xarModVars::get('themes', 'SiteTitleSeparator')</xar:set>
     <xar:if condition="$defaultModule ne 'crispbb'">
-        <a href="&xar-baseurl;" title="#xarML('Go to site index')#"><xar:mlstring>Home</xar:mlstring></a>
+        <a href="&xar-baseurl;" title="#xarML('Go to site index')#">Home</a>
         #$pageSeparator#
     </xar:if>
-    <a href="#xarModURL('crispbb', 'user', 'main')#" title="#xarML('Go to main forum index')#"><xar:mlstring>Forum Index</xar:mlstring></a>
+    <a href="#xarModURL('crispbb', 'user', 'main')#" title="#xarML('Go to main forum index')#">Forum Index</a>
     <xar:if condition="!empty($catid) and isset($categories[$catid])">
         #$pageSeparator#
         <a href="#xarModURL('crispbb', 'user', 'main', array('catid' => $catid))#" title="#$categories[$catid]['description']#">#$categories[$catid]['name']#</a>

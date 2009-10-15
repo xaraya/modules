@@ -4,7 +4,7 @@
 <xar:style scope="module" module="crispbb" />
 <xar:comment>This is the error template used by crispBB. It is displayed when a user has no privileges or when flood control is in effect.</xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>crispBB Forums</xar:mlstring></span>
+    <span class="xar-mod-title">crispBB Forums</span>
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="user-breadcrumbs" />
@@ -21,7 +21,7 @@
     <xar:comment>Set a report link if you want you users to be able to report a problem. Best used with sitecontact module and a custom form</xar:comment>
     <xar:if condition="!empty($report_link)">
         <p>
-            <xar:mlstring>If you believe you shouldn't be seeing this message</xar:mlstring> <a href="#$report_link#"><xar:mlstring>please report the problem</xar:mlstring></a>
+            If you believe you shouldn't be seeing this message <a href="#$report_link#">please report the problem</a>
         </p>
     </xar:if>
     <xar:comment>In most cases crispBB will link to an appropriate page the user has access to, if all else fails though, the main user function is linked, change this if you'd prefer them go somewhere else, eg for guests, you might prefer a link to login</xar:comment>
@@ -29,7 +29,7 @@
         <xar:set name="return_url">#xarModURL('crispbb', 'user','main')#</xar:set>
     </xar:if>
     <p>
-    <a href="#$return_url#"><xar:mlstring>Click here to go back</xar:mlstring></a>
+    <a href="#$return_url#">Click here to go back</a>
     </p>
     <xar:template type="module" file="user-breadcrumbs" />
 </div>

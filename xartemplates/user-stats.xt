@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:style scope="module" module="crispbb" />
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>crispBB Forums</xar:mlstring></span>
+    <span class="xar-mod-title">crispBB Forums</span>
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="user-breadcrumbs" />
@@ -20,26 +20,26 @@
     <hr />
     <div>
         <div class="xar-floatleft xar-halfwidth">
-            <h4 class="xar-alt-outline xar-alt xar-padding-thick"><xar:mlstring>General Statistics</xar:mlstring></h4>
+            <h4 class="xar-alt-outline xar-alt xar-padding-thick">General Statistics</h4>
             <ul class="xar-alt-outline xar-padding-thick">
-                <li><xar:mlstring>Total Categories</xar:mlstring>: <strong>#$totalcats#</strong></li>
-                <li><xar:mlstring>Total Forums</xar:mlstring>: <strong>#$totalforums#</strong></li>
-                <li><xar:mlstring>Total Topics</xar:mlstring>: <strong>#$totaltopics#</strong></li>
-                <li><xar:mlstring>Total Posts</xar:mlstring>: <strong>#$totalposts#</strong></li>
-                <li><xar:mlstring>Total Unanswered</xar:mlstring>: <strong>#$totalunanswered#</strong></li>
-                <li><xar:mlstring>Total Members</xar:mlstring>: <strong>#$totalusers#</strong></li>
+                <li>Total Categories: <strong>#$totalcats#</strong></li>
+                <li>Total Forums: <strong>#$totalforums#</strong></li>
+                <li>Total Topics: <strong>#$totaltopics#</strong></li>
+                <li>Total Posts: <strong>#$totalposts#</strong></li>
+                <li>Total Unanswered: <strong>#$totalunanswered#</strong></li>
+                <li>Total Members: <strong>#$totalusers#</strong></li>
                 <xar:if condition="!empty($lastuser)">
-                <li><xar:mlstring>Latest Member</xar:mlstring>: <a href="#xarModURL('roles', 'user', 'display', array('id' => $lastuser['id']))#" title="#xarML('View Profile')#">#$lastuser['name']#</a></li>
+                <li>Latest Member: <a href="#xarModURL('roles', 'user', 'display', array('id' => $lastuser['id']))#" title="#xarML('View Profile')#">#$lastuser['name']#</a></li>
                 </xar:if>
-                <li><xar:mlstring>Members Online Now</xar:mlstring>: <strong>#$totalonline#</strong></li>
-                <li><xar:mlstring>Guests Online Now</xar:mlstring>: <strong>#$totalguests#</strong></li>
+                <li>Members Online Now: <strong>#$totalonline#</strong></li>
+                <li>Guests Online Now: <strong>#$totalguests#</strong></li>
                 <xar:if condition="!empty($lastpost)">
-                <li><xar:mlstring>Latest Post</xar:mlstring>: <a href="#$lastpost['viewreplyurl']#">#$lastpost['ttitle']#</a></li>
+                <li>Latest Post: <a href="#$lastpost['viewreplyurl']#">#$lastpost['ttitle']#</a></li>
                 </xar:if>
             </ul>
         </div>
         <div class="xar-floatright xar-halfwidth">
-            <h4 class="xar-alt-outline xar-alt xar-padding-thick"><xar:mlstring>Top 10 Forums</xar:mlstring></h4>
+            <h4 class="xar-alt-outline xar-alt xar-padding-thick">Top 10 Forums</h4>
             <xar:if condition="!empty($topforums)">
             <ul class="xar-alt-outline xar-padding-thick">
             <xar:foreach in="$topforums" value="$topforum">
@@ -50,7 +50,7 @@
         </div>
         <br class="xar-clearboth" />
         <div class="xar-floatleft xar-halfwidth">
-            <h4 class="xar-alt-outline xar-alt xar-padding-thick"><xar:mlstring>Top 10 Topic Starters</xar:mlstring></h4>
+            <h4 class="xar-alt-outline xar-alt xar-padding-thick">Top 10 Topic Starters</h4>
              <xar:if condition="!empty($topstarters)">
             <ul class="xar-alt-outline xar-padding-thick">
             <xar:foreach in="$topstarters" value="$topstarter">
@@ -60,7 +60,7 @@
             </xar:if>
         </div>
         <div class="xar-floatright xar-halfwidth">
-            <h4 class="xar-alt-outline xar-alt xar-padding-thick"><xar:mlstring>Top 10 Posters</xar:mlstring></h4>
+            <h4 class="xar-alt-outline xar-alt xar-padding-thick">Top 10 Posters</h4>
              <xar:if condition="!empty($topposters)">
             <ul class="xar-alt-outline xar-padding-thick">
             <xar:foreach in="$topposters" value="$topposter">
@@ -71,7 +71,7 @@
         </div>
         <br class="xar-clearboth" />
         <div class="xar-floatleft xar-halfwidth">
-            <h4 class="xar-alt-outline xar-alt xar-padding-thick"><xar:mlstring>Top 10 Topics (by Replies)</xar:mlstring></h4>
+            <h4 class="xar-alt-outline xar-alt xar-padding-thick">Top 10 Topics (by Replies)</h4>
             <xar:if condition="!empty($topreplies)">
             <ul class="xar-alt-outline xar-padding-thick">
             <xar:foreach in="$topreplies" value="$topreply">
@@ -81,7 +81,7 @@
             </xar:if>
         </div>
         <div class="xar-floatright xar-halfwidth">
-            <h4 class="xar-alt-outline xar-alt xar-padding-thick"><xar:mlstring>Top 10 Topics (by Views)</xar:mlstring></h4>
+            <h4 class="xar-alt-outline xar-alt xar-padding-thick">Top 10 Topics (by Views)</h4>
             <xar:if condition="!empty($tophits)">
             <ul class="xar-alt-outline xar-padding-thick">
             <xar:foreach in="$tophits" value="$tophit">

@@ -5,7 +5,7 @@
 <xar:comment>If you want to display some roles dd items for your users, you can use the list of uids contained in $uidlist to get all the dd for the users back at once, like so...</xar:comment>
 <xar:data-getitems name="userprops" value="userdd" module="roles" itemids="$uidlist" fieldlist="website,avatar,location,signature,icq,msnm,yim,aim" />
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>crispBB Forums</xar:mlstring></span>
+    <span class="xar-mod-title">crispBB Forums</span>
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="user-breadcrumbs" />
@@ -19,7 +19,7 @@
             <em>#$tdesc#</em>
             </xar:if>
             <xar:if condition="!empty($hookitem)">
-                <p><xar:mlstring>Discussion of </xar:mlstring><a href="#$hookitem['url']#" title="#$hookitem['title']#">#$hookitem['label']#</a></p>
+                <p>Discussion of <a href="#$hookitem['url']#" title="#$hookitem['title']#">#$hookitem['label']#</a></p>
             </xar:if>
         </div>
         <div class="xar-thirdwidth xar-floatright xar-sub xar-padding-thick">
@@ -153,10 +153,10 @@
         <thead>
             <tr>
                 <th class="posterinfo" scope="col">
-                    <xar:mlstring>Poster</xar:mlstring>
+                    Poster
                 </th>
                 <th class="replyinfo" scope="col">
-                    <xar:mlstring>Post</xar:mlstring>
+                    Post
                 </th>
             </tr>
         </thead>
@@ -165,13 +165,7 @@
         <tfoot>
             <tr><td colspan="2" class="xar-sub xar-align-center">
                 <xar:set name="numposts">count($posts)+$startnum-1</xar:set>
-                <xar:ml>
-                    <xar:mlstring>Showing posts #(1) to #(2) of #(3) in #(4)</xar:mlstring>
-                    <xar:mlvar>#$startnum#</xar:mlvar>
-                    <xar:mlvar>#$numposts#</xar:mlvar>
-                    <xar:mlvar>#$totalposts#</xar:mlvar>
-                    <xar:mlvar>#$ttitle#</xar:mlvar>
-                </xar:ml>
+                    Showing posts #$startnum# to #$numposts# of #$totalposts# in #$ttitle#
             </td></tr>
         </tfoot>
         <tbody>
@@ -208,7 +202,7 @@
         </span>
         <xar:if condition="!empty($modforumurl) and ($startnum ne 1 or count($posts) gt 1) ">
         <span class="xar-floatright xar-nowrap">
-            <label for="modaction"><xar:mlstring>With Selected</xar:mlstring>:</label>
+            <label for="modaction">With Selected:</label>
             <xar:data-input type="dropdown" name="modaction" id="modaction" options="$modactions" />
             <input type="hidden" name="component" id="component" value="posts" />
             <input type="hidden" name="phase" id="phase" value="update" />
@@ -228,10 +222,10 @@
     <xar:template type="module" module="crispbb" file="user-quickreply" />
     <div class="xar-margin-thickends xar-padding-thickends xar-sub">
         <xar:if condition="empty($showtopicstats)">
-        <h4 class="xar-margin-none"><xar:mlstring>Topic Statistics</xar:mlstring></h4>
+        <h4 class="xar-margin-none">Topic Statistics</h4>
         <ul>
             <li>
-                <xar:mlstring>Started by</xar:mlstring>
+                Started by
                 <a href="#xarModURL('roles', 'user', 'display', array('uid' => $towner))#" title="#xarML('View Profile')#">#$posterlist[$towner]['name']#</a>
             </li>
             <li>
@@ -239,19 +233,11 @@
             </li>
             <li>
             <xar:set name="grammar">$numviews == 1 ? 'time' : 'times'</xar:set>
-            <xar:ml>
-                <xar:mlstring>This topic has been viewed #(1) #(2)</xar:mlstring>
-                <xar:mlvar>#$numviews#</xar:mlvar>
-                <xar:mlvar>#$grammar#</xar:mlvar>
-            </xar:ml>
+                This topic has been viewed #$numviews# #$grammar#
             </li>
             <li>
             <xar:set name="grammar">$numreplies == 1 ? 'reply' : 'replies'</xar:set>
-            <xar:ml>
-                <xar:mlstring>This topic has #(1) #(2)</xar:mlstring>
-                <xar:mlvar>#$numreplies#</xar:mlvar>
-                <xar:mlvar>#$grammar#</xar:mlvar>
-            </xar:ml>
+                This topic has #$numreplies# #$grammar#
             </li>
             <xar:if condition="!empty($viewstatsurl)">
             <li>

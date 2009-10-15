@@ -3,63 +3,63 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:if condition="!empty($forums)">
     <h2>
-        <xar:mlstring>
+        
             Search in Forums
-        </xar:mlstring>
+        
     </h2>
     <p>
-        <xar:mlstring>
+        
             Search
-        </xar:mlstring>
+        
         :
         <xar:if condition="empty($component) || $component eq 'topics'">
         <input type="radio" name="crispbb_component" id="component_topics" value="topics" checked="checked" />
-        <label><xar:mlstring>Topic Only</xar:mlstring></label>
+        <label>Topic Only</label>
         <input type="radio" name="crispbb_component" id="component_replies" value="replies" />
-        <label><xar:mlstring>All Posts</xar:mlstring></label>
+        <label>All Posts</label>
         <xar:else />
         <input type="radio" name="crispbb_component" id="component_topics" value="topics" />
-        <label><xar:mlstring>Topic Only</xar:mlstring></label>
+        <label>Topic Only</label>
         <input type="radio" name="crispbb_component" id="component_replies" value="replies" checked="checked" />
-        <label><xar:mlstring>All Posts</xar:mlstring></label>
+        <label>All Posts</label>
         </xar:if>
     </p>
     <p>
-        <xar:mlstring>
+        
             Search field
-        </xar:mlstring>
+        
         :
         <xar:if condition="isset($crispbb_fields['ttitle']) and !empty($crispbb_fields['ttitle'])">
             <input type="checkbox" name="crispbb_fields[ttitle]" id="crispbb_fields_ttitle" value="1" checked="checked" />
         <xar:else />
             <input type="checkbox" name="crispbb_fields[ttitle]" id="crispbb_fields_ttitle" value="1" />
         </xar:if>
-        <label><xar:mlstring>Title</xar:mlstring></label>
+        <label>Title</label>
         <xar:comment>
         <xar:if condition="isset($crispbb_fields['tdesc']) and !empty($crispbb_fields['tdesc'])">
             <input type="checkbox" name="crispbb_fields[tdesc]" id="crispbb_fields_tdesc" value="1" checked="checked" />
         <xar:else />
             <input type="checkbox" name="crispbb_fields[tdesc]" id="crispbb_fields_tdesc" value="1" />
         </xar:if>
-        <label><xar:mlstring>Topic Description</xar:mlstring></label>
+        <label>Topic Description</label>
         </xar:comment>
         <xar:if condition="isset($crispbb_fields['pdesc']) and !empty($crispbb_fields['pdesc'])">
             <input type="checkbox" name="crispbb_fields[pdesc]" id="crispbb_fields_pdesc" value="1" checked="checked" />
         <xar:else />
             <input type="checkbox" name="crispbb_fields[pdesc]" id="crispbb_fields_pdesc" value="1" />
         </xar:if>
-        <label><xar:mlstring>Description</xar:mlstring></label>
+        <label>Description</label>
         <xar:if condition="isset($crispbb_fields['ptext']) and !empty($crispbb_fields['ptext'])">
             <input type="checkbox" name="crispbb_fields[ptext]" id="crispbb_fields_ptext" value="1" checked="checked" />
         <xar:else />
             <input type="checkbox" name="crispbb_fields[ptext]" id="crispbb_fields_ptext" value="1" />
         </xar:if>
-        <label><xar:mlstring>Text</xar:mlstring></label>
+        <label>Text</label>
     </p>
     <p>
-        <xar:mlstring>
+        
             Search forum
-        </xar:mlstring>
+        
         :
         <xar:foreach in="$forums" key="$fid" value="$forum">
             <xar:if condition="isset($crispbb_fids[$fid]) and !empty($crispbb_fids[$fid])">
@@ -71,19 +71,19 @@
         </xar:foreach>
     </p>
   <p>
-        <xar:mlstring>Posted</xar:mlstring>:
-        <label for="crispbb_start"><xar:mlstring>between</xar:mlstring></label> <xar:data-input name="crispbb_start" value="$crispbb_start" type="calendar" /> &#160;<label for="crispbb_end"><xar:mlstring>and</xar:mlstring></label>  <xar:data-input name="crispbb_end" value="$crispbb_end" type="calendar" />
+        Posted:
+        <label for="crispbb_start">between</label> <xar:data-input name="crispbb_start" value="$crispbb_start" type="calendar" /> &#160;<label for="crispbb_end">and</label>  <xar:data-input name="crispbb_end" value="$crispbb_end" type="calendar" />
   </p>
 </xar:if>
 <xar:if condition="!empty($results)">
-    <h4><xar:mlstring>Found</xar:mlstring> #$component#</h4>
+    <h4>Found #$component#</h4>
     <ul>
         <xar:foreach in="$results" value="$result">
             <li>
             <xar:if condition="$component eq 'topics'">
                 <a href="#$result['viewtopicurl']#">#$result['ttitle']#</a>
             <xar:else />
-                <a href="#$result['viewreplyurl']#">#$result['ttitle']# <xar:mlstring>Post</xar:mlstring> #$result['pid']#</a>
+                <a href="#$result['viewreplyurl']#">#$result['ttitle']# Post #$result['pid']#</a>
             </xar:if>
             </li>
         </xar:foreach>

@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:style scope="module" module="crispbb" />
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>crispBB Forums</xar:mlstring></span>
+    <span class="xar-mod-title">crispBB Forums</span>
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="user-breadcrumbs" />
@@ -22,11 +22,11 @@
         <xar:set name="waitingcontent">xarMod::guiFunc('crispbb', 'admin', 'waitingcontent')</xar:set>
         <xar:if condition="!empty($waitingcontent)">
         <div class="xar-accent xar-accent-outline xar-padding-thick">
-            <h4><xar:mlstring>Waiting Content</xar:mlstring></h4>
+            <h4>Waiting Content</h4>
             #$waitingcontent#
         </div>
         <xar:else />
-            <p><strong><xar:mlstring>No Waiting Content</xar:mlstring></strong></p>
+            <p><strong>No Waiting Content</strong></p>
         </xar:if>
     <xar:elseif condition="$component eq 'topics'" />
         <xar:if condition="$modaction ne 'move'">
@@ -36,9 +36,9 @@
                     <input type="hidden" name="type" id="type" value="user" />
                     <input type="hidden" name="func" id="func" value="moderate" />
                     <input type="hidden" name="component" id="component" value="topics" />
-                    <label for="status"><xar:mlstring>Topic Status</xar:mlstring>:</label>
+                    <label for="status">Topic Status:</label>
                     <xar:data-input type="dropdown" name="tstatus" id="tstatus" onchange="this.form.submit();" value="$tstatus" options="$tstatusoptions" />
-                    <label for="fid"><xar:mlstring>Forum</xar:mlstring>:</label>
+                    <label for="fid">Forum:</label>
                     <xar:data-input type="dropdown" name="fid" id="fid" onchange="this.form.submit();" value="$fid" options="$forumoptions" />
                 </form>
             </div>
@@ -53,11 +53,7 @@
                         <xar:elseif condition="$tstatus eq 4" /><xar:set name="thisstatus">'Locked'</xar:set>
                         <xar:elseif condition="$tstatus eq 5" /><xar:set name="thisstatus">'Deleted'</xar:set>
                         </xar:if>
-                        <xar:ml>
-                            <xar:mlstring>Manage #(1) Topics in #(2)</xar:mlstring>
-                            <xar:mlvar>#$thisstatus#</xar:mlvar>
-                            <xar:mlvar>#$fname#</xar:mlvar>
-                        </xar:ml>
+                            Manage #$thisstatus# Topics in #$fname#
                         </span>
                         <xar:if condition="!empty($pager)">
                             <span class="xar-align-right xar-floatright">
@@ -72,7 +68,7 @@
                     <xar:set name="ondownicon">#xarTPLGetImage('icons/sorted-desc.png', 'base')#</xar:set>
                     <thead>
                         <th>
-                            <xar:mlstring>Topic</xar:mlstring>
+                            Topic
                             <xar:if condition="$sort == 'ttitle' and $order == 'ASC'">
                                 <img src="#$onupicon#" alt="up" title="#xarML('Sort ASC')#" />
                             <xar:else />
@@ -85,7 +81,7 @@
                             </xar:if>
                         </th>
                         <th>
-                            <xar:mlstring>Starter</xar:mlstring>
+                            Starter
                             <xar:if condition="$sort == 'towner' and $order == 'ASC'">
                                 <img src="#$onupicon#" alt="up" title="#xarML('Sort ASC')#" />
                             <xar:else />
@@ -98,7 +94,7 @@
                             </xar:if>
                         </th>
                         <th>
-                            <xar:mlstring>Started</xar:mlstring>
+                            Started
                             <xar:if condition="$sort == 'ttime' and $order == 'ASC'">
                                 <img src="#$onupicon#" alt="up" title="#xarML('Sort ASC')#" />
                             <xar:else />
@@ -110,7 +106,7 @@
                                 <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics','fid' => $fid, 'tstatus' => $tstatus, 'sort' => 'ttime', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
                             </xar:if>
                         </th>
-                        <th class="xar-align-right"><xar:mlstring>Actions</xar:mlstring></th>
+                        <th class="xar-align-right">Actions</th>
                     </thead>
                     <tfoot><tr><td colspan="4"></td></tr></tfoot>
                     <tbody>
@@ -218,11 +214,7 @@
                 </table>
                 <div class="xar-alt-outline xar-padding-thick xar-margin-thickbottom">
                     <span class="xar-floatleft">
-                    <xar:ml>
-                        <xar:mlstring>Manage #(1) Topics in #(2)</xar:mlstring>
-                        <xar:mlvar>#$thisstatus#</xar:mlvar>
-                        <xar:mlvar>#$fname#</xar:mlvar>
-                    </xar:ml>
+                        Manage #$thisstatus# Topics in #$fname#
                     </span>
                     <xar:if condition="!empty($pager)">
                         <span class="xar-align-right xar-floatright">
@@ -232,7 +224,7 @@
                     <br class="xar-clearboth" />
                 </div>
                 <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label help" for="tidaction"><xar:mlstring>With Selected</xar:mlstring>:</label>
+                    <label class="xar-form-label help" for="tidaction">With Selected:</label>
                     <xar:data-input type="dropdown" name="modaction" id="modaction" options="$modactions" />
                 </div>
                 <xar:if condition="!empty($invalid['tids'])">
@@ -255,7 +247,7 @@
                 <fieldset>
                     <xar:if condition="!empty($topics)">
                         <div class="xar-form-input-wrapper">
-                            <label for="tids" class="xar-form-label help" title="#xarML('Topics this action will be performed upon')#"><xar:mlstring>Move topic(s)</xar:mlstring>:</label>
+                            <label for="tids" class="xar-form-label help" title="#xarML('Topics this action will be performed upon')#">Move topic(s):</label>
                             <xar:foreach in="$topics" key="$tid" value="$topic">
                                 <p class="xar-form-container-after">
                                     <a href="#$topic['viewtopicurl']#" title="#xarML('View topic')#">#$topic['ttitle']#</a>
@@ -265,19 +257,19 @@
                         </div>
                     </xar:if>
                     <div class="xar-form-input-wrapper">
-                        <label class="xar-form-label"><xar:mlstring>From Forum</xar:mlstring>:</label>
+                        <label class="xar-form-label">From Forum:</label>
                         <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#">
                         #$fname#
                         </a>
                         <xar:if condition="empty($mergetid)">
                             <xar:data-input type="checkbox" name="shadow" id="shadow" value="$shadow" />
-                            <label for="shadow" class="help" title="#xarML('Optionally leave a shadow topic in this forum linking to the moved topic')#"><xar:mlstring>Create shadow topic(s)</xar:mlstring></label>
+                            <label for="shadow" class="help" title="#xarML('Optionally leave a shadow topic in this forum linking to the moved topic')#">Create shadow topic(s)</label>
                         <xar:else />
                             <input type="hidden" name="shadow" id="shadow" value="#$shadow#" />
                         </xar:if>
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="movefid" class="xar-form-label help" title="#xarML('Move the topic to this forum')#"><xar:mlstring>To Forum</xar:mlstring>:</label>
+                        <label for="movefid" class="xar-form-label help" title="#xarML('Move the topic to this forum')#">To Forum:</label>
                         <xar:if condition="empty($mergetid)">
                         <xar:data-input type="dropdown" name="movefid" id="movefid" value="$movefid" options="$forumoptions" />
                         <xar:else />
@@ -291,7 +283,7 @@
                     </xar:if>
                     <div class="xar-form-input-wrapper-after">
                         <xar:data-input type="checkbox" name="mergetid" id="mergetid" onchange="this.form.submit();" value="$mergetid" />
-                        <label for="mergetid" class="help" title="#xarML('Optionally merge posts from selected topic(s) into another topic')#"><xar:mlstring>Merge topic(s) into another topic in selected forum</xar:mlstring></label>
+                        <label for="mergetid" class="help" title="#xarML('Optionally merge posts from selected topic(s) into another topic')#">Merge topic(s) into another topic in selected forum</label>
                     </div>
                     <xar:if condition="!empty($invalid['mergetid'])">
                         <div class="xar-form-input-wrapper-after">
@@ -302,7 +294,7 @@
                         <table class="xar-fullwidth xar-alt-outline xar-margin-none">
                             <caption class="xar-alt-outline xar-padding-thick xar-align-left xar-margin-thicktop">
                                 <div class="xar-halfwidth xar-floatleft">
-                                    <xar:mlstring>Topics In</xar:mlstring>
+                                    Topics In
                                     <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $movefid))#" title="#$fdesc#">#$forumoptions[$movefid]['name']#</a>
                                 </div>
                                 <xar:if condition="!empty($pager)">
@@ -319,7 +311,7 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        <xar:mlstring>Topic</xar:mlstring>
+                                        Topic
                                         <xar:if condition="$sort == 'ttitle' and $order == 'ASC'">
                                             <img src="#$onupicon#" alt="up" title="#xarML('Sort ASC')#" />
                                         <xar:else />
@@ -332,7 +324,7 @@
                                         </xar:if>
                                     </th>
                                     <th>
-                                        <xar:mlstring>Starter</xar:mlstring>
+                                        Starter
                                         <xar:if condition="$sort == 'towner' and $order == 'ASC'">
                                             <img src="#$onupicon#" alt="up" title="#xarML('Sort ASC')#" />
                                         <xar:else />
@@ -345,7 +337,7 @@
                                         </xar:if>
                                     </th>
                                     <th>
-                                        <xar:mlstring>Started</xar:mlstring>
+                                        Started
                                         <xar:if condition="$sort == 'ttime' and $order == 'ASC'">
                                             <img src="#$onupicon#" alt="up" title="#xarML('Sort ASC')#" />
                                         <xar:else />
@@ -357,7 +349,7 @@
                                             <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'modaction' => 'move', 'phase' => 'update','fid' => $fid, 'movefid' => $movefid, 'tids' => $tids, 'mergetid' => $mergetid, 'sort' => 'ttime', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
                                         </xar:if>
                                     </th>
-                                    <th><xar:mlstring>Merge</xar:mlstring></th>
+                                    <th>Merge</th>
                                  </tr>
                             </thead>
                             <tbody>
@@ -379,14 +371,14 @@
                                 </xar:foreach>
                                 <xar:else />
                                     <tr><td colspan="4">
-                                    <xar:mlstring>No topics to merge with!</xar:mlstring>
+                                    No topics to merge with!
                                     </td></tr>
                                 </xar:if>
                             </tbody>
                         </table>
                         <div class="xar-alt-outline xar-padding-thick xar-margin-thickbottom">
                             <div class="xar-floatleft">
-                                <xar:mlstring>Topics In</xar:mlstring>
+                                Topics In
                                 <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $movefid))#" title="#$fdesc#">#$forumoptions[$movefid]['name']#</a>
                             </div>
                             <xar:if condition="!empty($pager)">
@@ -420,13 +412,13 @@
                     <input type="hidden" name="func" id="func" value="moderate" />
                     <input type="hidden" name="component" id="component" value="posts" />
                     <input type="hidden" name="tid" id="tid" value="#$tid#" />
-                    <label for="pstatus"><xar:mlstring>Status</xar:mlstring>:</label>
+                    <label for="pstatus">Status:</label>
                     <xar:data-input type="dropdown" name="pstatus" id="pstatus" onchange="this.form.submit();" value="$pstatus" options="$pstatusoptions" />
-                    <label for="layout"><xar:mlstring>Layout</xar:mlstring>:</label>
+                    <label for="layout">Layout:</label>
                     <xar:data-input type="dropdown" name="layout" id="layout" onchange="this.form.submit();" value="$layout" options="$layouts" />
-                    <label for="sort"><xar:mlstring>Sort</xar:mlstring>:</label>
+                    <label for="sort">Sort:</label>
                     <xar:data-input type="dropdown" name="sort" id="sort_replies" onchange="this.form.submit();" value="$sort" options="$psortfields" />
-                    <label for="order"><xar:mlstring>Order</xar:mlstring>:</label>
+                    <label for="order">Order:</label>
                     <xar:data-input type="dropdown" name="order" id="order_replies" onchange="this.form.submit();" value="$order" options="$sortorders" />
                     </div>
                 </form>
@@ -434,7 +426,7 @@
             <form method="post" action="#xarModURL('crispbb', 'user', 'moderate')#">
                 <fieldset>
                     <div class="xar-form-input-wrapper">
-                        <label class="xar-form-label"><xar:mlstring>Topic</xar:mlstring>:</label>
+                        <label class="xar-form-label">Topic:</label>
                         <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#">
                         #$ttitle#
                         </a>
@@ -446,10 +438,7 @@
                         <xar:elseif condition="$pstatus eq 5" /><xar:set name="thisstatus">'Deleted'</xar:set>
                         </xar:if>
                         <span class="xar-floatleft">
-                        <xar:ml>
-                            <xar:mlstring>#(1) Replies to </xar:mlstring>
-                            <xar:mlvar>#$thisstatus#</xar:mlvar>
-                        </xar:ml>
+                            #$thisstatus# Replies to
                         <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#" title="#xarML('View topic')#">#$ttitle#</a>
                         </span>
                         <xar:if condition="!empty($pager)">
@@ -462,18 +451,18 @@
                         <thead>
                         <xar:if condition="empty($layout) or ($layout eq 'list')">
                            <tr>
-                                <th><xar:mlstring>Reply</xar:mlstring></th>
-                                <th><xar:mlstring>Poster</xar:mlstring></th>
-                                <th><xar:mlstring>Posted</xar:mlstring></th>
-                                <th class="xar-align-right"><xar:mlstring>Actions</xar:mlstring></th>
+                                <th>Reply</th>
+                                <th>Poster</th>
+                                <th>Posted</th>
+                                <th class="xar-align-right">Actions</th>
                             </tr>
                         <xar:elseif condition="$layout eq 'replies'" />
                             <tr>
                                 <th class="posterinfo" scope="col">
-                                    <xar:mlstring>Poster</xar:mlstring>
+                                    Poster
                                 </th>
                                 <th class="replyinfo" scope="col">
-                                    <xar:mlstring>Post</xar:mlstring>
+                                    Post
                                 </th>
                             </tr>
                         </xar:if>
@@ -486,7 +475,7 @@
                                     <tr class="#$rowclass#">
                                         <td>
                                             <a href="#$post['viewreplyurl']#" title="#xarML('View Post')#">
-                                            <xar:mlstring>Post ID</xar:mlstring>: #$post['pid']#
+                                            Post ID: #$post['pid']#
                                             </a>
                                         </td>
                                         <td>
@@ -604,10 +593,7 @@
                     </table>
                     <div class="xar-alt-outline xar-padding-thick xar-margin-thickbottom">
                         <span class="xar-floatleft">
-                        <xar:ml>
-                            <xar:mlstring>#(1) Replies to </xar:mlstring>
-                            <xar:mlvar>#$thisstatus#</xar:mlvar>
-                        </xar:ml>
+                            #$thisstatus# Replies to
                         <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#" title="#xarML('View topic')#">#$ttitle#</a>
                         </span>
                         <xar:if condition="!empty($pager)">
@@ -618,7 +604,7 @@
                         <br class="xar-clearboth" />
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label class="xar-form-label help" for="tidaction"><xar:mlstring>With Selected</xar:mlstring>:</label>
+                        <label class="xar-form-label help" for="tidaction">With Selected:</label>
                         <xar:data-input type="dropdown" name="modaction" id="modaction_posts" options="$modactions" />
                     </div>
                     <xar:if condition="!empty($invalid['pids'])">
@@ -639,7 +625,7 @@
         <xar:else />
         <form method="post" action="#xarModURL('crispbb', 'user', 'moderate')#">
             <div class="xar-form-input-wrapper">
-                <label class="xar-form-label"><xar:mlstring>Topic</xar:mlstring>:</label>
+                <label class="xar-form-label">Topic:</label>
                 <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#">
                 #$ttitle#
                 </a>
@@ -648,15 +634,15 @@
                 <div class="xar-form-input-wrapper">
                     <label for="pids" class="xar-form-label help" title="#xarML('Posts this action will be performed upon')#">
                         <xar:if condition="empty($mergetid)">
-                            <xar:mlstring>Split </xar:mlstring>
+                            Split
                         <xar:else />
-                            <xar:mlstring>Merge </xar:mlstring>
+                            Merge
                         </xar:if>
-                        <xar:mlstring>Post(s)</xar:mlstring>:
+                        Post(s):
                     </label>
                     <xar:foreach in="$posts" key="$pid" value="$post">
                         <p class="xar-form-container-after">
-                            <a href="#$post['viewreplyurl']#" title="#xarML('View post')#">#$post['ttitle']# <xar:mlstring>Post ID</xar:mlstring>: #$post['pid']#</a>
+                            <a href="#$post['viewreplyurl']#" title="#xarML('View post')#">#$post['ttitle']# Post ID: #$post['pid']#</a>
                             <input type="hidden" name="pids[#$pid#]" id="pids_#$pid#" value="1" />
                         </p>
                     </xar:foreach>
@@ -669,7 +655,7 @@
                 <xar:else />
                 <input type="radio" name="mergetid" id="mergetid_0" value="0" onchange="this.form.submit();" />
                 </xar:if>
-                <label class="help" title="#xarML('Create a new topic from the oldest post')#"><xar:mlstring>Create new topic from oldest post</xar:mlstring></label>
+                <label class="help" title="#xarML('Create a new topic from the oldest post')#">Create new topic from oldest post</label>
             </div>
             <div class="xar-form-input-wrapper-after">
                 <xar:set name="checked">!empty($mergetid) ? 'checked="checked"' : ''</xar:set>
@@ -678,10 +664,10 @@
                 <xar:else />
                 <input type="radio" name="mergetid" id="mergetid_1" value="1" onchange="this.form.submit();" />
                 </xar:if>
-                <label class="help" title="#xarML('Merge selected posts into another topic')#"><xar:mlstring>Merge posts into another topic</xar:mlstring></label>
+                <label class="help" title="#xarML('Merge selected posts into another topic')#">Merge posts into another topic</label>
             </div>
             <div class="xar-form-input-wrapper">
-                <label for="movefid" class="xar-form-label help" title="#xarML('Select a forum')#"><xar:mlstring>In Forum</xar:mlstring>:</label>
+                <label for="movefid" class="xar-form-label help" title="#xarML('Select a forum')#">In Forum:</label>
                 <xar:if condition="empty($mergetid)">
                 <xar:data-input type="dropdown" name="movefid" id="movefid_split" value="$movefid" options="$forumoptions"  />
                 <xar:else />
@@ -701,7 +687,7 @@
             <xar:if condition="empty($mergetid)">
                 <div class="xar-form-input-wrapper">
                     <xar:set name="ttitlelabel">xarML('Enter a topic title between #(1) and #(2) characters', $topictitlemin,$topictitlemax)</xar:set>
-                    <label for="ttitle" class="xar-form-label help" title="#$ttitlelabel#"><xar:mlstring>New Topic Title</xar:mlstring>:</label>
+                    <label for="ttitle" class="xar-form-label help" title="#$ttitlelabel#">New Topic Title:</label>
                     <input type="text" name="ttitle" id="ttitle" value="#$ttitle#" maxlength="255" class="xar-form-textxxlong" />
                 </div>
                 <xar:if condition="!empty($invalid['ttitle'])">
@@ -713,7 +699,7 @@
                 <table class="xar-fullwidth xar-alt-outline xar-margin-none">
                     <caption class="xar-alt-outline xar-padding-thick xar-align-left xar-margin-thicktop">
                         <div class="xar-halfwidth xar-floatleft">
-                            <xar:mlstring>Topics In</xar:mlstring>
+                            Topics In
                             <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $movefid))#" title="#$fdesc#">#$forumoptions[$movefid]['name']#</a>
                         </div>
                         <xar:if condition="!empty($pager)">
@@ -728,7 +714,7 @@
                     <thead>
                         <tr>
                             <th>
-                                <xar:mlstring>Topic</xar:mlstring>
+                                Topic
                                 <xar:if condition="$sort == 'ttitle' and $order == 'ASC'">
                                     <img src="#$upicon#" class="xar-icon-disabled" alt="up" title="#xarML('Sort ASC')#" />
                                 <xar:else />
@@ -741,7 +727,7 @@
                                 </xar:if>
                             </th>
                             <th>
-                                <xar:mlstring>Starter</xar:mlstring>
+                                Starter
                                 <xar:if condition="$sort == 'towner' and $order == 'ASC'">
                                     <img src="#$upicon#" class="xar-icon-disabled" alt="up" title="#xarML('Sort ASC')#" />
                                 <xar:else />
@@ -754,7 +740,7 @@
                                 </xar:if>
                             </th>
                             <th>
-                                <xar:mlstring>Started</xar:mlstring>
+                                Started
                                 <xar:if condition="$sort == 'ttime' and $order == 'ASC'">
                                     <img src="#$upicon#" class="xar-icon-disabled" alt="up" title="#xarML('Sort ASC')#" />
                                 <xar:else />
@@ -766,7 +752,7 @@
                                     <a href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'posts', 'modaction' => 'split', 'phase' => 'update','tid' => $tid, 'movefid' => $movefid, 'pids' => $pids, 'mergetid' => $mergetid, 'sort' => 'ttime', 'order' => 'DESC'))#"><img src="#$downicon#" alt="down" title="#xarML('Sort DESC')#" /></a>
                                 </xar:if>
                             </th>
-                            <th><xar:mlstring>Merge</xar:mlstring></th>
+                            <th>Merge</th>
                          </tr>
                     </thead>
                     <tbody>
@@ -788,14 +774,14 @@
                         </xar:foreach>
                         <xar:else />
                             <tr><td colspan="4">
-                            <xar:mlstring>No topics to merge with!</xar:mlstring>
+                            No topics to merge with!
                             </td></tr>
                         </xar:if>
                     </tbody>
                 </table>
                 <div class="xar-alt-outline xar-padding-thick xar-margin-thickbottom">
                     <div class="xar-floatleft">
-                        <xar:mlstring>Topics In</xar:mlstring>
+                        Topics In
                         <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $movefid))#" title="#$fdesc#">#$forumoptions[$movefid]['name']#</a>
                     </div>
                     <xar:if condition="!empty($pager)">
@@ -826,59 +812,59 @@
         <xar:if condition="$component eq 'topics' or $component eq 'posts'">
             <span class="xar-nowrap">
                 <img src="#xarTPLGetImage('icons/comment_tick.png', 'crispbb')#" alt="Approve" title="#xarML('Approve')#" />
-                <xar:mlstring>Approve</xar:mlstring>
+                Approve
             </span>
             <span class="xar-nowrap">
                 <img src="#xarTPLGetImage('icons/comment_warning.png', 'crispbb')#" alt="Waiting" title="#xarML('Waiting Content')#" />
-                <xar:mlstring>Waiting</xar:mlstring>
+                Waiting
             </span>
             <span class="xar-nowrap">
                 <img src="#xarTPLGetImage('icons/bin.png', 'crispbb')#" alt="Deleted" title="#xarML('Deleted Replies')#" />
-                <xar:mlstring>Deleted</xar:mlstring>
+                Deleted
             </span>
             <span class="xar-nowrap">
                 <img src="#xarTPLGetImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit')#" />
-                <xar:mlstring>Edit</xar:mlstring>
+                Edit
             </span>
             <span class="xar-nowrap">
                 <img src="#xarTPLGetImage('icons/comment_lock.png', 'crispbb')#" alt="Close" title="#xarML('Close')#" />
-                <xar:mlstring>Close</xar:mlstring>
+                Close
             </span>
             <span class="xar-nowrap">
                 <img src="#xarTPLGetImage('icons/comment_lock_break.png', 'crispbb')#" alt="Open" title="#xarML('Re-open')#" />
-                <xar:mlstring>Open</xar:mlstring>
+                Open
             </span>
             <span class="xar-nowrap">
                 <img src="#xarTPLGetImage('icons/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock')#" />
-                <xar:mlstring>Lock</xar:mlstring>
+                Lock
             </span>
             <span class="xar-nowrap">
                 <img src="#xarTPLGetImage('icons/lock_open.png', 'crispbb')#" alt="Unlock" title="#xarML('Unlock')#" />
-                <xar:mlstring>Unlock</xar:mlstring>
+                Unlock
             </span>
             <span class="xar-nowrap">
                 <img src="#xarTPLGetImage('icons/comments_go.png', 'crispbb')#" alt="Move" title="#xarML('Move')#" />
-                <xar:mlstring>Move</xar:mlstring>
+                Move
             </span>
             <span class="xar-nowrap">
                 <img src="#xarTPLGetImage('icons/comments_disconnect.png', 'crispbb')#" alt="Split" title="#xarML('Split')#" />
-                <xar:mlstring>Split</xar:mlstring>
+                Split
             </span>
             <span class="xar-nowrap">
                 <img src="#xarTPLGetImage('icons/comments_wrench_orange.png', 'crispbb')#" alt="Moderate" title="#xarML('Moderate')#" />
-                <xar:mlstring>Moderate</xar:mlstring>
+                Moderate
             </span>
             <span class="xar-nowrap">
                 <img src="#xarTPLGetImage('icons/comments_delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete')#" />
-                <xar:mlstring>Delete</xar:mlstring>
+                Delete
             </span>
             <span class="xar-nowrap">
                 <img src="#xarTPLGetImage('icons/delete_arrow_undo.png', 'crispbb')#" alt="Delete" title="#xarML('Un-delete')#" />
-                <xar:mlstring>Un-delete</xar:mlstring>
+                Un-delete
             </span>
             <span class="xar-nowrap">
                 <img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="Delete" title="#xarML('Delete permanently')#" />
-                <xar:mlstring>Purge</xar:mlstring>
+                Purge
             </span>
         </xar:if>
     </div>

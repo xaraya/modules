@@ -5,7 +5,7 @@
 <xar:if condition="!empty($waitingcontent)">
 <xar:if condition="empty($layout) or ($layout eq 'link')">
 <div class="xar-align-center">
-    <a class="xar-error" href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'waiting'))#" title="#xarML('View Waiting Content')#"><xar:mlstring>Waiting Content</xar:mlstring></a>
+    <a class="xar-error" href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'waiting'))#" title="#xarML('View Waiting Content')#">Waiting Content</a>
 </div>
 <xar:elseif condition="$layout eq 'content'" />
 <!--

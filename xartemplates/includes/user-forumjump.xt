@@ -7,7 +7,7 @@
 <xar:if condition="empty($formid)"><xar:set name="formid">'1'</xar:set></xar:if>
 <form method="post" action="#xarModURL('crispbb', 'user', 'redirect')#" class="xar-margin-none xar-displayinline">
     <div class="xar-nowrap xar-displayinline">
-    <label for="forumjump_userpanel#$formid#" class="xar-margin-nonebottom xar-padding-nonebottom"><xar:mlstring>Forums</xar:mlstring>:</label>
+    <label for="forumjump_userpanel#$formid#" class="xar-margin-nonebottom xar-padding-nonebottom">Forums:</label>
     <select name="forumjump" id="forumjump_userpanel#$formid#" onchange="this.form.submit();">
         <optgroup label="#xarML('Jump to ...')#">
             <option value="0">-----------------</option>

@@ -4,9 +4,9 @@
 <xar:loop name="$items">
     <div class="xar-form-input-wrapper">
         <label for="config_cids" class="xar-form-label help" title="#xarML('Choose the parent for all forum categories')#">
-            <xar:mlstring>
+            
                 Parent category for crispBB
-            </xar:mlstring>
+            
         </label> #$loop:item['select']#
     </div>
 </xar:loop>

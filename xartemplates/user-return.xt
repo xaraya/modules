@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:style scope="module" module="crispbb" />
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>crispBB Forums</xar:mlstring></span>
+    <span class="xar-mod-title">crispBB Forums</span>
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="user-breadcrumbs" />
@@ -24,14 +24,14 @@
     <xar:set name="pageSeparator">xarModVars::get('themes', 'SiteTitleSeparator')</xar:set>
     <xar:if condition="$defaultModule ne 'crispbb'">
         <div class="xar-form-input-wrapper-after">
-        <a href="&xar-baseurl;" title="#xarML('Go to site index')#"><xar:mlstring>Home</xar:mlstring></a>
+        <a href="&xar-baseurl;" title="#xarML('Go to site index')#">Home</a>
         </div>
         <div class="xar-form-input-wrapper-after">
-        <a href="#xarModURL('crispbb', 'user', 'main')#" title="#xarML('Go to main forum index')#"><xar:mlstring>Forum Index</xar:mlstring></a>
+        <a href="#xarModURL('crispbb', 'user', 'main')#" title="#xarML('Go to main forum index')#">Forum Index</a>
         </div>
     <xar:else />
         <div class="xar-form-input-wrapper-after">
-        <a href="&xar-baseurl;" title="#xarML('Go to main forum index')#"><xar:mlstring>Forum Index</xar:mlstring></a>
+        <a href="&xar-baseurl;" title="#xarML('Go to main forum index')#">Forum Index</a>
         </div>
     </xar:if>
 

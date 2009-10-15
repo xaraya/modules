@@ -15,7 +15,7 @@
         <em>##(#$rownumber#)</em>
         </xar:if>
         <img src="#xarTPLGetImage('icons/comment_delete.png', 'crispbb')#" alt="#xarML('Deleted')#" />
-         -- <xar:mlstring>Reply Deleted</xar:mlstring> --
+         -- Reply Deleted --
          <xar:if condition="!empty($post['displayreplyurl'])">
             <a href="#$post['displayreplyurl']#" title="#xarML('View this post')#"><img src="#xarTPLGetImage('icons/bullet_go_blue.png', 'crispbb')#" alt="display" /></a>
          </xar:if>
@@ -57,27 +57,27 @@
     <xar:comment>Show posters name, linking to their profile</xar:comment>
     <a href="#xarModURL('roles', 'user', 'display', array('uid' => $post['powner']))#" title="#xarML('View Profile')#">#$posterlist[$post['powner']]['name']#</a>
     <br />
-    <xar:mlstring>Joined:</xar:mlstring>
+    Joined:
     <xar:template type="module" module="crispbb" file="user-timestamp" subdata="array('timestamp' =&gt; $posterlist[$post['powner']]['date_reg'], 'timeorder' =&gt; 'dateonly')" />
     <xar:comment>If we found some dd for this user we can display it here</xar:comment>
     <xar:if condition="isset($userprops.location) and !empty($userdd[$post['powner']]['location'])">
         <br />
-        <xar:mlstring>Location:</xar:mlstring>
+        Location:
         <xar:data-output property="$userprops['location']" value="$userdd[$post['powner']]['location']" />
     </xar:if>
     <br />
     <a href="#xarModURL('crispbb', 'user', 'search', array('towner' => $post['powner']))#">
-        <xar:mlstring>Other Topics</xar:mlstring>
+        Other Topics
     </a>
     <br />
-    <xar:mlstring>Status: </xar:mlstring>
+    Status: 
     <xar:if condition="!empty($posterlist[$post['powner']]['online'])">
-        <span style="color:green;"><xar:mlstring>Online Now</xar:mlstring></span>
+        <span style="color:green;">Online Now</span>
     <xar:else />
-        <span style="color:gray;"><xar:mlstring>Offline</xar:mlstring></span>
+        <span style="color:gray;">Offline</span>
         <xar:if condition="isset($posterlist[$post['powner']]['lastseen'])">
         <br />
-        <span class="xar-sub"><em><xar:mlstring>Last seen </xar:mlstring><xar:template type="module" module="crispbb" file="user-timestamp" subdata="array('timestamp' =&gt; $posterlist[$post['powner']]['lastseen'], 'timeorder' =&gt; 'dateonly')" /></em></span>
+        <span class="xar-sub"><em>Last seen <xar:template type="module" module="crispbb" file="user-timestamp" subdata="array('timestamp' =&gt; $posterlist[$post['powner']]['lastseen'], 'timeorder' =&gt; 'dateonly')" /></em></span>
         </xar:if>
     </xar:if>
 </td>
@@ -102,12 +102,12 @@
     </div>
     <xar:comment>Display the time of this post</xar:comment>
     <div class="xar-sub xar-align-right xar-padding-thicksides">
-        <xar:mlstring>Posted</xar:mlstring>
+        Posted
         <xar:template type="module" module="crispbb" file="user-timestamp" subdata="array('timestamp' =&gt; $post['ptime'])" />
         <xar:if condition="!empty($post['phostname'])">
             [ <a href="#xarModURL('crispbb', 'admin', 'posters', array('ip' => $post['phostname']))#" title="#xarML('Show users posting from this ip address')#">#$post['phostname']#</a> ]
         <xar:else />
-            [ <xar:mlstring>ip logged</xar:mlstring> ]
+            [ ip logged ]
         </xar:if>
     </div>
     <xar:comment>Display the post text itself</xar:comment>

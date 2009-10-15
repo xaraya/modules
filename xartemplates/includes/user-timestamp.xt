@@ -32,29 +32,19 @@
         </xar:if>
     </xar:if>
     <xar:if condition="!empty($when)">
-         <xar:ml>
-            <xar:mlstring>#(1) #(2)</xar:mlstring>
-            <xar:mlvar>#$when#</xar:mlvar>
-            <xar:mlvar>#xarLocaleGetFormattedTime($timeformat, $timestamp)#</xar:mlvar>
-        </xar:ml>
+        #$when# #xarLocaleGetFormattedTime($timeformat, $timestamp)#
     <xar:elseif condition="$timeorder eq 'timedate'" />
-        <xar:ml>
-            <xar:mlstring>#(1), #(2)</xar:mlstring>
-            <xar:mlvar>#xarLocaleGetFormattedTime($timeformat, $timestamp)#</xar:mlvar>
-            <xar:mlvar>#xarLocaleGetFormattedDate($dateformat, $timestamp)#</xar:mlvar>
-        </xar:ml>
+            #xarLocaleGetFormattedTime($timeformat, $timestamp)#,
+            #xarLocaleGetFormattedDate($dateformat, $timestamp)#
     <xar:elseif condition="$timeorder eq 'datetime'" />
-        <xar:ml>
-            <xar:mlstring>#(1), #(2)</xar:mlstring>
-            <xar:mlvar>#xarLocaleGetFormattedDate($dateformat, $timestamp)#</xar:mlvar>
-            <xar:mlvar>#xarLocaleGetFormattedTime($timeformat, $timestamp)#</xar:mlvar>
-        </xar:ml>
+            #xarLocaleGetFormattedDate($dateformat, $timestamp)#,
+            #xarLocaleGetFormattedTime($timeformat, $timestamp)#
     <xar:elseif condition="$timeorder eq 'timeonly'" />
         #xarLocaleGetFormattedTime($timeformat, $timestamp)#
     <xar:elseif condition="$timeorder eq 'dateonly'" />
         #xarLocaleGetFormattedDate($dateformat, $timestamp)#
     </xar:if>
 <xar:elseif condition="$timelayout eq 'timesince'" />
-    <xar:base-timesince stamp="$timestamp" /> <xar:mlstring>ago</xar:mlstring>
+    <xar:base-timesince stamp="$timestamp" /> ago
 </xar:if>
 </xar:template>

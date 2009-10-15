@@ -9,11 +9,11 @@
     <input type="hidden" name="type" value="user" />
     <input type="hidden" name="func" value="view" />
     <input type="hidden" name="fid" value="#$fid#" />
-    <label for="sort"><xar:mlstring>Sort by</xar:mlstring>:</label>
+    <label for="sort">Sort by:</label>
     <xar:data-input type="dropdown" name="sort" id="sort" value="$sortfield" options="$tsortoptions" />
-    <label for="order"><xar:mlstring>Order</xar:mlstring>:</label>
+    <label for="order">Order:</label>
     <xar:data-input type="dropdown" name="order" id="order" value="$sortorder" options="$orderoptions" />
-    <label for="period"><xar:mlstring>From the</xar:mlstring>:</label>
+    <label for="period">From the:</label>
     <xar:data-input type="dropdown" name="period" id="period" value="$period" options="$timeoptions" />
     &#160;&#160;&#160; <input type="submit" value="#xarML('Sort')#" />
     </div>
