@@ -88,11 +88,11 @@
 
 <p><strong>Important tag in user-display.xt:</strong></p>
 
-<pre>   &lt;xar:data-getitem name="properties" object="$object" /&gt;</pre>
+<pre>   &lt;xar:data-getitem properties="$properties" object="$object" /&gt;</pre>
 
 <p><strong>Output:</strong></p>
 
-            <xar:data-getitem name="properties" object="$object" />
+            <xar:data-getitem properties="$properties" object="$object" />
 
             <table class="xar-noborder" cellspacing="1" cellpadding="2">
                 <xar:foreach in="$properties" key="$name">
