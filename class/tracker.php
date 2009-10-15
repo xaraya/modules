@@ -122,14 +122,13 @@ class Tracker extends Object
             'visitstart' => $this->visitstart,
             'visitend' => $this->visitend,
             'now' => $this->now,
-            'tracker' => $this->tracker,
         );
     }
 
     public function __wakeup()
     {
         $this->filter = xarModVars::get('crispbb', 'visit_timeout');
-        $this->ftracker = unserialize(xarModVars::get('crispbb', 'ftracker'));
+        $this->ftracker = unserialize(xarModVars::get('crispbb', 'ftracking'));
         $this->setUserData();
     }
 
