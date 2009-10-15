@@ -43,7 +43,7 @@
         </xar:if>
         <xar:if condition="!empty($post['purgereplyurl'])">
             <a href="#$post['purgereplyurl']#">
-            <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Purge" title="#xarML('Purge this reply')#" />
+            <img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="Purge" title="#xarML('Purge this reply')#" />
             </a>
         </xar:if>
         <xar:if condition="!empty($post['modtopicurl']) and $post['pid'] != $post['firstpid'] and empty($noform)">
@@ -211,7 +211,7 @@
         </xar:if>
         <xar:if condition="!empty($post['purgetopicurl'])">
             <a href="#$post['purgetopicurl']#">
-            <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Purge" title="#xarML('Purge this topic')#" />
+            <img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="Purge" title="#xarML('Purge this topic')#" />
             </a>
         </xar:if>
         <xar:if condition="!empty($post['editreplyurl'])">
@@ -236,7 +236,7 @@
         </xar:if>
         <xar:if condition="!empty($post['purgereplyurl'])">
             <a href="#$post['purgereplyurl']#">
-            <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Purge" title="#xarML('Purge this reply')#" />
+            <img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="Purge" title="#xarML('Purge this reply')#" />
             </a>
         </xar:if>
 

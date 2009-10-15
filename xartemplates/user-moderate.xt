@@ -66,10 +66,10 @@
                         </xar:if>
                         <br class="xar-clearboth" />
                     </caption>
-                    <xar:set name="upicon">#xarTPLGetImage('tango/sort-asc.png', 'crispbb')#</xar:set>
-                    <xar:set name="downicon">#xarTPLGetImage('tango/sort-desc.png', 'crispbb')#</xar:set>
-                    <xar:set name="onupicon">#xarTPLGetImage('tango/sorted-asc.png', 'crispbb')#</xar:set>
-                    <xar:set name="ondownicon">#xarTPLGetImage('tango/sorted-desc.png', 'crispbb')#</xar:set>
+                    <xar:set name="upicon">#xarTPLGetImage('icons/sort-asc.png', 'base')#</xar:set>
+                    <xar:set name="downicon">#xarTPLGetImage('icons/sort-desc.png', 'base')#</xar:set>
+                    <xar:set name="onupicon">#xarTPLGetImage('icons/sorted-asc.png', 'base')#</xar:set>
+                    <xar:set name="ondownicon">#xarTPLGetImage('icons/sorted-desc.png', 'base')#</xar:set>
                     <thead>
                         <th>
                             <xar:mlstring>Topic</xar:mlstring>
@@ -205,7 +205,7 @@
 
                                 <xar:if condition="!empty($topic['purgetopicurl'])">
                                     <a href="#$topic['purgetopicurl']#">
-                                    <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete this topic permanently')#" />
+                                    <img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="Delete" title="#xarML('Delete this topic permanently')#" />
                                     </a>
                                 </xar:if>
                                 <input type="checkbox" name="tids[#$tid#]" id="tids_#$tid#" value="1" />
@@ -312,10 +312,10 @@
                                 </xar:if>
                                 <br class="xar-clearboth" />
                             </caption>
-                            <xar:set name="upicon">#xarTPLGetImage('tango/sort-asc.png', 'crispbb')#</xar:set>
-                            <xar:set name="downicon">#xarTPLGetImage('tango/sort-desc.png', 'crispbb')#</xar:set>
-                            <xar:set name="onupicon">#xarTPLGetImage('tango/sorted-asc.png', 'crispbb')#</xar:set>
-                            <xar:set name="ondownicon">#xarTPLGetImage('tango/sorted-desc.png', 'crispbb')#</xar:set>
+                            <xar:set name="upicon">#xarTPLGetImage('icons/sort-asc.png', 'base')#</xar:set>
+                            <xar:set name="downicon">#xarTPLGetImage('icons/sort-desc.png', 'base')#</xar:set>
+                            <xar:set name="onupicon">#xarTPLGetImage('icons/sorted-asc.png', 'base')#</xar:set>
+                            <xar:set name="ondownicon">#xarTPLGetImage('icons/sorted-desc.png', 'base')#</xar:set>
                             <thead>
                                 <tr>
                                     <th>
@@ -558,7 +558,7 @@
         </xar:if>
         <xar:if condition="!empty($post['purgetopicurl'])">
             <a href="#$post['purgetopicurl']#">
-            <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Purge" title="#xarML('Purge this topic')#" />
+            <img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="Purge" title="#xarML('Purge this topic')#" />
             </a>
         </xar:if>
         <xar:if condition="!empty($post['editreplyurl'])">
@@ -583,7 +583,7 @@
         </xar:if>
         <xar:if condition="!empty($post['purgereplyurl'])">
             <a href="#$post['purgereplyurl']#">
-            <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Purge" title="#xarML('Purge this reply')#" />
+            <img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="Purge" title="#xarML('Purge this reply')#" />
             </a>
         </xar:if>
 
@@ -877,7 +877,7 @@
                 <xar:mlstring>Un-delete</xar:mlstring>
             </span>
             <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete permanently')#" />
+                <img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="Delete" title="#xarML('Delete permanently')#" />
                 <xar:mlstring>Purge</xar:mlstring>
             </span>
         </xar:if>

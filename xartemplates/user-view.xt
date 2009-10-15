@@ -38,7 +38,7 @@
         <span class="xar-floatright xar-nowrap">
             <xar:comment>
             <xar:if condition="!empty($addforumurl)">
-                <a href="#$addforumurl#" title="#xarML('View information about this forum')#"><img src="#xarTPLGetImage('tango/info.png', 'crispbb')#" alt="#xarML('Information')#" title="#xarML('View information about this forum')#" /></a>
+                <a href="#$addforumurl#" title="#xarML('View information about this forum')#"><img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('Information')#" title="#xarML('View information about this forum')#" /></a>
             </xar:if>
             </xar:comment>
             <xar:if condition="!empty($modtopicsurl)">
@@ -52,13 +52,13 @@
             <a href="#$modforumurl#" title="#xarML('Moderate topics')#"><img src="#xarTPLGetImage('icons/comments_wrench_orange.png')#" alt="Moderate" />
             </a>
             <xar:if condition="!empty($editforumurl)">
-                <a href="#$editforumurl#"><img src="#xarTPLGetImage('tango/modify.png', 'crispbb')#" alt="#xarML('Modify')#" title="#xarML('Modify this forum')#" /></a>
+                <a href="#$editforumurl#"><img src="#xarTPLGetImage('icons/modify.png', 'base')#" alt="#xarML('Modify')#" title="#xarML('Modify this forum')#" /></a>
             </xar:if>
             <xar:if condition="!empty($hooksforumurl)">
-                <a href="#$hooksforumurl#"><img src="#xarTPLGetImage('tango/hooks.png', 'crispbb')#" alt="#xarML('Hooks')#" title="#xarML('Modify forum hooks configuration')#" /></a>
+                <a href="#$hooksforumurl#"><img src="#xarTPLGetImage('icons/hooks.png', 'base')#" alt="#xarML('Hooks')#" title="#xarML('Modify forum hooks configuration')#" /></a>
             </xar:if>
             <xar:if condition="!empty($privsforumurl)">
-                <a href="#$privsforumurl#"><img src="#xarTPLGetImage('tango/privileges.png', 'crispbb')#" alt="#xarML('Privileges')#" title="#xarML('Modify privileges for this forum')#" /></a>
+                <a href="#$privsforumurl#"><img src="#xarTPLGetImage('icons/privileges.png', 'base')#" alt="#xarML('Privileges')#" title="#xarML('Modify privileges for this forum')#" /></a>
             </xar:if>
         </span>
         </xar:if>

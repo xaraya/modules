@@ -81,7 +81,7 @@
         </form>
     <xar:elseif condition="$sublink eq 'privileges'" />
         <p>
-            <img src="#xarTPLGetImage('icons/information.png', 'crispbb')#" alt="#xarML('info')#" />
+            <img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('info')#" />
             <xar:mlstring>These settings apply to privileges for this forum.</xar:mlstring>
         </p>
         <form method="post" action="#xarModURL('crispbb', 'admin', 'modify')#">

@@ -131,7 +131,7 @@
         </xar:if>
         <xar:if condition="!empty($purgetopicurl)">
             <a href="#$purgetopicurl#">
-            <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Purge" title="#xarML('Purge this topic')#" />
+            <img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="Purge" title="#xarML('Purge this topic')#" />
             </a>
         </xar:if>
     </span>

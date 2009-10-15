@@ -90,7 +90,7 @@
             <xar:mlstring>Deleted</xar:mlstring>
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('tango/info.png', 'crispbb')#" alt="#xarML('Info')#" title="#xarML('View information about this forum')#" />
+            <img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('Info')#" title="#xarML('View information about this forum')#" />
             Information
         </span>
         <span class="xar-nowrap">
@@ -98,19 +98,19 @@
              Moderate
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('tango/modify.png', 'crispbb')#" alt="#xarML('Modify')#" title="#xarML('Modify this forum')#" />
+            <img src="#xarTPLGetImage('icons/modify.png', 'base')#" alt="#xarML('Modify')#" title="#xarML('Modify this forum')#" />
             Modify
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('tango/hooks.png', 'crispbb')#" alt="#xarML('Hooks')#" title="#xarML('Modify forum hooks configuration')#" />
+            <img src="#xarTPLGetImage('icons/hooks.png', 'base')#" alt="#xarML('Hooks')#" title="#xarML('Modify forum hooks configuration')#" />
             Hooks
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('tango/privileges.png', 'crispbb')#" alt="#xarML('Privileges')#" title="#xarML('Modify privileges for this forum')#" />
+            <img src="#xarTPLGetImage('icons/privileges.png', 'base')#" alt="#xarML('Privileges')#" title="#xarML('Modify privileges for this forum')#" />
             Privileges
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="#xarML('Delete')#" title="#xarML('Delete this forum')#" />
+            <img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="#xarML('Delete')#" title="#xarML('Delete this forum')#" />
             Delete
         </span>
     </div>

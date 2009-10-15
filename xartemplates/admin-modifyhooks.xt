@@ -72,7 +72,7 @@
                             #$moditem['numlinks']#
                         </td>
                         <td class="xar-align-right" width="15%">
-                            <a href="#$moditem['delete']#"><img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="#xarML('Delete')#" title="#xarML('Delete all associations for this module/itemtype')#" /></a>
+                            <a href="#$moditem['delete']#"><img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="#xarML('Delete')#" title="#xarML('Delete all associations for this module/itemtype')#" /></a>
                         </td>
                     </tr>
                     <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
@@ -91,7 +91,7 @@
                         <b>#$numlinks#</b>
                     </td>
                     <td class="xar-align-right" width="15%">
-                        <a href="#$delete#"><img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="#xarML('Delete')#" title="#xarML('Delete all associations')#" /></a>
+                        <a href="#$delete#"><img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="#xarML('Delete')#" title="#xarML('Delete all associations')#" /></a>
                     </td>
                 </tr>
             </xar:if>
@@ -164,7 +164,7 @@
                             <a href="#$topic['viewtopicurl']#" title="#$topic['transformed_ttitle']#">#$topic['transformed_ttitle']#</a>
                         </td>
                         <td class="xar-align-right" width="20%">
-                            <a href="#$topic['unlinkhookurl']#"><img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="#xarML('Delete')#" title="#xarML('Delete this association')#" /></a>
+                            <a href="#$topic['unlinkhookurl']#"><img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="#xarML('Delete')#" title="#xarML('Delete this association')#" /></a>
                         </td>
                     </tr>
                     <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
@@ -177,7 +177,7 @@
                         <b>#$numlinks#</b>
                     </td>
                     <td class="xar-align-right" width="20%">
-                        <a href="#$unlinkhooksurl#"><img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="#xarML('Delete')#" title="#xarML('Delete all associations for this module/itemtype')#" /></a>
+                        <a href="#$unlinkhooksurl#"><img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="#xarML('Delete')#" title="#xarML('Delete all associations for this module/itemtype')#" /></a>
                     </td>
                 </tr>
             </xar:if>
@@ -199,7 +199,7 @@
 <div class="xar-mod-foot xar-align-center">
     <div class="xar-accent-outline xar-margin-thick xar-padding-thick">
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="#xarML('Delete')#" title="#xarML('Delete Associations')#" />
+            <img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="#xarML('Delete')#" title="#xarML('Delete Associations')#" />
             Delete
         </span>
     </div>

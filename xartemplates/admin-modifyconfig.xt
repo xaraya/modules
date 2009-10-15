@@ -22,12 +22,12 @@
             </div>
             <xar:if condition="!empty($newversion)">
                 <div class="xar-form-input-wrapper-after">
-                    <img src="#xarTPLGetImage('tango/software-update-available.png', 'crispbb')#" title="#xarML('Update Available')#" />
+                    <img src="#xarTPLGetImage('icons/software-update-available.png', 'base')#" title="#xarML('Update Available')#" />
                     <xar:mlstring>crispBB v.</xar:mlstring>#$newversion# <xar:mlstring> is now </xar:mlstring><a href="http://www.crispbb.com/forums/crispbb-releases/t3?action=lastreply" title="#xarML('Latest release')#">available for download</a>
                 </div>
             <xar:elseif condition="!empty($checkupdate)" />
                 <div class="xar-form-input-wrapper-after">
-                     <img src="#xarTPLGetImage('tango/activate.png', 'crispbb')#" title="#xarML('Up to date')#" alt="active" />
+                     <img src="#xarTPLGetImage('icons/activate.png', 'base')#" title="#xarML('Up to date')#" alt="active" />
                     <span><xar:mlstring>You are using the latest version of crispBB. Please check again later.</xar:mlstring></span>
                 </div>
             </xar:if>
