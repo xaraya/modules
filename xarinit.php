@@ -405,6 +405,16 @@ function crispbb_init()
                     );
     xarDefineInstance($module, 'Forum', $instances);
 
+    $info = xarMod::getBaseInfo($module);
+    $sysid = $info['systemid'];
+    $query = "SELECT DISTINCT instances.title FROM $xartable[block_instances] as instances LEFT JOIN $xartable[block_types] as btypes ON btypes.id = instances.type_id WHERE module_id = $sysid";
+    $instances = array(
+                        array('header' => 'crispBB Block Title:',
+                                'query' => $query,
+                                'limit' => 20
+                            )
+                    );
+    xarDefineInstance($module,'Block',$instances);
 
 # --------------------------------------------------------
 #
@@ -418,7 +428,8 @@ function crispbb_init()
     xarRegisterMask('AddCrispBB','All',$module,'Item','All:All','ACCESS_ADD');
     xarRegisterMask('DeleteCrispBB','All',$module,'Item','All:All','ACCESS_DELETE');
     xarRegisterMask('AdminCrispBB','All',$module,'Item','All:All','ACCESS_ADMIN');
-    // @TODO: mask for blocks
+
+    xarRegisterMask('ReadCrispBBBlock','All',$module,'Block','All:All:All','ACCESS_READ');
 
 # --------------------------------------------------------
 #
@@ -477,16 +488,6 @@ function crispbb_init()
                       array('callerModName' => 'search', 'hookModName' => $module));
     }
 
-
-
-    // Added BL tag to show topic replies
-    // @TODO: replace this
-    /*
-    xarTplRegisterTag($module, 'crispbb-showreplies',
-                      array(),
-                      'crispbb_userapi_showrepliestag');
-
-    */
     return crispbb_upgrade('2.0.0');
 }
 
