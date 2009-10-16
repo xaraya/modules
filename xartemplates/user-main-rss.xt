@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout" xmlns:rdf="http://w3.org/TR/1999/PR-rdf-syntax-19990105#" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:if condition="!empty($categories)">
     <xar:foreach in="$categories" key="$cid" value="$catinfo">
@@ -7,14 +7,14 @@
             <xar:foreach in="$forums[$cid]" key="$fid" value="$forum">
                 <xar:if condition="!empty($forum['lasttopicurl'])">
                 <item>
-                    <title>#xarVarTransform($forum['ttitle'], 'HTML', 'XML')#</title>
-                    <link>#xarVarTransform($forum['lasttopicurl'], 'HTML', 'XML')#</link>
-                    <author>#xarVarTransform($posterlist[$forum['towner']]['name'], 'HTML', 'XML')#</author>
+                    <title>#$forum['ttitle']#</title>
+                    <link>#$forum['lasttopicurl']#</link>
+                    <author>#$posterlist[$forum['towner']]['name']#</author>
                     <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$forum['ptime'])#</pubDate>
                     <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
-                    <content:encoded><![CDATA[ #xarVarTransform(xarVarPrepHTMLDisplay($forum['tdesc']), 'HTML', 'XML')# ]]></content:encoded>
-                    <description>#xarVarTransform(xarVarPrepForDisplay($forum['tdesc']), 'HTML', 'XML')#</description>
-                    <guid isPermaLink="true">#xarVarTransform($forum['lasttopicurl'], 'HTML', 'XML')#</guid>
+                    <content:encoded><![CDATA[ #xarVarPrepHTMLDisplay($forum['tdesc'])# ]]></content:encoded>
+                    <description>#xarVarPrepForDisplay($forum['tdesc'])#</description>
+                    <guid isPermaLink="true">#$forum['lasttopicurl']#</guid>
                 </item>
                 </xar:if>
             </xar:foreach>

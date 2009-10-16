@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout" xmlns:rdf="http://w3.org/TR/1999/PR-rdf-syntax-19990105#" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:if condition="!empty($posts)">
     <xar:set name="rownumber">!empty($startnum) ? $startnum : 1</xar:set>
     <xar:foreach in="$posts" key="$pid" value="$post">
         <item>
-            <title>#xarVarTransform($post['ttitle'], 'HTML', 'XML')#</title>
-            <link>#xarVarTransform($post['viewreplyurl'], 'HTML', 'XML')#</link>
-            <author>#xarVarTransform($posterlist[$post['powner']]['name'], 'HTML', 'XML')#</author>
+            <title>#$post['ttitle']#</title>
+            <link>#$post['viewreplyurl']#</link>
+            <author>#$posterlist[$post['powner']]['name']#</author>
             <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$post['ptime'])#</pubDate>
             <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
-            <content:encoded><![CDATA[ #xarVarTransform(xarVarPrepHTMLDisplay($post['ptext']), 'HTML', 'XML')# ]]></content:encoded>
-            <description>#xarVarTransform(xarVarPrepForDisplay($post['ptext']), 'HTML', 'XML')#</description>
-            <guid isPermaLink="true">#xarVarTransform($post['viewreplyurl'], 'HTML', 'XML')#</guid>
+            <content:encoded><![CDATA[ #xarVarPrepHTMLDisplay($post['ptext'])# ]]></content:encoded>
+            <description>#xarVarPrepForDisplay($post['ptext'])#</description>
+            <guid isPermaLink="true">#$post['viewreplyurl']#</guid>
         </item>
     </xar:foreach>
 </xar:if>
