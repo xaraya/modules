@@ -122,6 +122,7 @@ class Tracker extends Object
             'visitstart' => $this->visitstart,
             'visitend' => $this->visitend,
             'now' => $this->now,
+            'onlinestamp' => $this->now - $this->timeonline
         );
     }
 

@@ -36,7 +36,6 @@ Welcome back,
         </strong>
     </li>
     </xar:if>
-    <!--
     <xar:if condition="!empty($totalvisit)">
     <li>
         Visits Total:
@@ -45,7 +44,6 @@ Welcome back,
         </strong>
     </li>
     </xar:if>
-    -->
     <xar:if condition="!empty($showwaiting)">
     <li>
         <a class="xar-error" href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'waiting'))#" title="#xarML('View Waiting Content')#">Waiting Content</a>
