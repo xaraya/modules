@@ -83,6 +83,14 @@
             <xar:data-label property="$properties['postbuffer']" for="id" />
             <xar:data-input property="$properties['postbuffer']" value="$values['postbuffer']" />
         </div>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['iconfolder']" for="id" />
+            <xar:data-input property="$properties['iconfolder']" value="$values['iconfolder']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['icondefault']" for="id" />
+            <xar:data-input property="$properties['icondefault']" value="$values['icondefault']" />
+        </div>
     <xar:elseif condition="$layout eq 'redirected'" />
     <!-- layout for a redirected forum type (ftype = 1)-->
     <xar:else />

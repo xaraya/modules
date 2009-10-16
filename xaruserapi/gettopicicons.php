@@ -29,8 +29,8 @@ function crispbb_userapi_gettopicicons($args)
             $iconlist['none'] = array('id' => 'none', 'name' => xarML('None'));
         }
         $moduleicons = xarMod::apiFunc('crispbb', 'user', 'browse_files',
-            array('module' => 'crispbb',
-                'basedir' => 'xarimages/'.$iconfolder,
+            array(
+                'basedir' => 'code/modules/crispbb/xarimages/'.$iconfolder,
                 'match_re' => '/(gif|png|jpg)$/'));
         $themeicons = xarMod::apiFunc('crispbb', 'user', 'browse_files',
             array('basedir' => xarTPLGetThemeDir() . '/modules/crispbb/images/'.$iconfolder,

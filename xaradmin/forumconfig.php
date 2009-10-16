@@ -49,13 +49,23 @@ function crispbb_admin_forumconfig($args)
             default:
             sys::import('modules.dynamicdata.class.objects.master');
             $data['settings'] = DataObjectMaster::getObject(array('name' => 'crispbb_forum_settings'));
-            $fieldlist = array('topicsperpage', 'topicsortorder', 'topicsortfield', 'postsperpage', 'postsortorder', 'hottopicposts', 'hottopichits', 'showstickies', 'showannouncements', 'showfaqs', 'topictitlemin', 'topictitlemax', 'topicdescmin', 'topicdescmax', 'topicpostmin', 'topicpostmax', 'floodcontrol', 'postbuffer', 'topicapproval', 'replyapproval');
+            $fieldlist = array('topicsperpage', 'topicsortorder', 'topicsortfield', 'postsperpage', 'postsortorder', 'hottopicposts', 'hottopichits', 'showstickies', 'showannouncements', 'showfaqs', 'topictitlemin', 'topictitlemax', 'topicdescmin', 'topicdescmax', 'topicpostmin', 'topicpostmax', 'floodcontrol', 'postbuffer', 'topicapproval', 'replyapproval', 'iconfolder', 'icondefault');
             $data['settings']->setFieldlist($fieldlist);
             $data['settings']->tplmodule = 'crispbb';
             $data['settings']->layout = 'normal';
             if ($phase == 'update') {
                 // validate input
                 $isvalid = $data['settings']->checkInput();
+                if (!$isvalid) {
+                    $invalids = $data['settings']->getInvalids();
+                    if (count($invalids) == 1 && key($invalids) == 'icondefault') {
+                        $iconfolder = $data['settings']->properties['iconfolder']->value;
+                        $iconlist = xarMod::apiFunc('crispbb', 'user', 'gettopicicons',
+                            array('iconfolder' => $iconfolder, 'shownone' => true));
+                        $data['settings']->properties['icondefault']->options = $iconlist;
+                        $isvalid = $data['settings']->checkInput();
+                    }
+                }
                 // get the property values back from the object
                 $settings = array();
                 foreach ($data['settings']->properties as $name => $value) {
@@ -87,6 +97,15 @@ function crispbb_admin_forumconfig($args)
                 if (!isset($data['values'][$name]) && in_array($name, $fieldlist)) // only add missing property values
                     $data['values'][$name] = $data['settings']->properties[$name]->value;
             }
+            if (!empty($data['values']['iconfolder'])) {
+                $iconlist = xarMod::apiFunc('crispbb', 'user', 'gettopicicons',
+                    array('iconfolder' => $data['values']['iconfolder'], 'shownone' => true));
+                $data['settings']->properties['icondefault']->options = $iconlist;
+                $data['iconlist'] = $iconlist;
+            } else {
+                $data['iconlist'] = array();
+            }
+
             $pageTitle = xarML('Default Forum Configuration');
         break;
 
