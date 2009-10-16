@@ -16,6 +16,11 @@ function categories_userapi_getcatinfo($args)
        return false;
     }
 
+    if (empty($cid) && empty($cids)) {
+       // nothing to see here, return empty catinfo array
+       return array();
+    }
+
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
 
