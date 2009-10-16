@@ -1,17 +1,4 @@
 /*
-icon related styling (not needed for Xaraya 1.2.x)
--------------------------------------------------------------------------[comment] */
-img.xar-icon-disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-}
-/*
-table related styling (not needed for Xaraya 1.2.x)
--------------------------------------------------------------------------[comment] */
-tr td {
-    background-color: inherit;
-}
-/*
 table related styling (all Xaraya versions)
 -------------------------------------------------------------------------[comment] */
 td.checkbox {
@@ -43,3 +30,7 @@ td.posterinfo {
 }
 
 td.replyinfo {}
+
+.xar-sub {
+	font-size: 80%;
+}
