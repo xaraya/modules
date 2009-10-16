@@ -25,30 +25,19 @@ function crispbb_userapi_encode_shorturl($args)
     $path = array();
     $get = $args;
 
-    static $aliascache;
-    static $aliasisset;
-    static $aliasname;
     // This module name.
     $module = 'crispbb';
-    if (!isset($aliasisset))
-        $aliasisset = xarModVars::get($module, 'use_module_alias');
-    if ((bool)$aliasisset == true)
-        if (!isset($aliasname))
-            $aliasname = xarModVars::get($module,'module_alias_name');
+    $aliasisset = xarModVars::get($module, 'use_module_alias');
+    $aliasname = xarModVars::get($module,'module_alias_name');
 
     if (!empty($aliasisset) && !empty($aliasname)) {
         // Check this alias really is a module alias, by mapping
         // it back to its module name.
-        if (isset($aliascache[$aliasname])) {
-            $module_for_alias = $aliascache[$aliasname];
-        } else {
-            $module_for_alias = xarModAlias::resolve($aliasname);
-        }
+        $module_for_alias = xarModAlias::resolve($aliasname);
         if ($module_for_alias == $module) {
             // Yes, we have a valid module alias, so use it
             // now instead of the module name.
             $module = $aliasname;
-            $aliascache[$aliasname] = $module;
         }
     }
 
