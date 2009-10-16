@@ -44,11 +44,11 @@ function crispbb_admin_modifyconfig()
             xarModVars::set('crispbb', 'latestversion', $hasupdate);
         }
     }
-
+    /* Removed for now, since shorturls and mod alias aren't working properly with this
     $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'crispbb'));
     $data['module_settings']->setFieldList('use_module_alias, module_alias_name, enable_short_urls');
     $data['module_settings']->getItem();
-
+    */
     $invalid = array();
     if ($phase == 'update') {
         if (!xarVarFetch('showuserpanel', 'checkbox', $showuserpanel, false, XARVAR_NOT_REQUIRED)) return;
@@ -59,12 +59,44 @@ function crispbb_admin_modifyconfig()
         if (!xarVarFetch('showpermissions', 'checkbox', $showpermissions, false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showsortbox', 'checkbox', $showsortbox, false, XARVAR_NOT_REQUIRED)) return;
 
-        $isvalid = $data['module_settings']->checkInput();
+        if (!xarVarFetch('shorturls',    'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('aliasname',    'str:1:',   $aliasname, '', XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('usealias',  'checkbox', $usealias,false,XARVAR_NOT_REQUIRED)) return;
+
+        $isvalid = true;//$data['module_settings']->checkInput();
         if ($isvalid) {
             if (!xarSecConfirmAuthKey()) {
                 return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
             }
-            $itemid = $data['module_settings']->updateItem();
+            // $itemid = $data['module_settings']->updateItem();
+
+            xarModVars::set('crispbb', 'SupportShortURLs', $shorturls);
+            if (isset($aliasname) && trim($aliasname)<>'') {
+                xarModVars::set('crispbb', 'useModuleAlias', $usealias);
+            } else{
+                 xarModVars::set('crispbb', 'useModuleAlias', 0);
+            }
+            $currentalias = xarModVars::get('crispbb','aliasname');
+            $newalias = trim($aliasname);
+            /* Get rid of the spaces if any, it's easier here and use that as the alias*/
+            if ( strpos($newalias,'_') === FALSE )
+            {
+                $newalias = str_replace(' ','_',$newalias);
+            }
+            $hasalias= xarModAlias::resolve($currentalias);
+            $useAliasName= xarModVars::get('crispbb','useModuleAlias');
+
+            if (($useAliasName==1) && !empty($newalias)){
+                /* we want to use an aliasname */
+                /* First check for old alias and delete it */
+                if (isset($hasalias) && ($hasalias =='crispbb')){
+                    xarModAlias::delete($currentalias,'crispbb');
+                }
+                /* now set the new alias if it's a new one */
+                  xarModAlias::set($newalias,'crispbb');
+            }
+            /* now set the alias modvar */
+            xarModVars::set('crispbb', 'aliasname', $newalias);
 
             xarModCallHooks('module','updateconfig','crispbb',
                            array('module' => 'crispbb'));
@@ -109,6 +141,10 @@ function crispbb_admin_modifyconfig()
     $data['version'] = $modinfo['version'];
     $data['newversion'] = !empty($hasupdate) ? $hasupdate : NULL;
     $data['checkupdate'] = $checkupdate;
+
+    $data['shorturls'] = xarModVars::get('crispbb', 'SupportShortURLs');
+    $data['usealias'] = xarModVars::get('crispbb', 'useModuleAlias');
+    $data['aliasname'] = xarModVars::get('crispbb', 'aliasname');
 
     // store function name for use by admin-main as an entry point
     xarSessionSetVar('crispbb_adminstartpage', 'modifyconfig');

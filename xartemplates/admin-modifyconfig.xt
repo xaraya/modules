@@ -34,7 +34,25 @@
         </fieldset>
         -->
         <fieldset>
+            <!-- Removed pending changes
             <xar:data-form object="$module_settings" />
+            -->
+            <div class="xar-form-input-wrapper-after">
+                 <xar:data-input type="checkbox" name="shorturls" id="shorturls" value="$shorturls" />
+                 <label for="shorturls" title="#xarML('Enable shorturls for this module?')#">
+                  <xar:mlstring>Support Short URLs?</xar:mlstring>
+                </label>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="aliasname" class="xar-form-label" title="#xarML('Module alias name')#">
+                  <xar:mlstring>Alias Name:</xar:mlstring>
+                </label>
+                <input type="text" name="aliasname" id="aliasname" value="#$aliasname#" maxlength="60" class="xar-form-textmedium" />
+                 <xar:data-input type="checkbox" name="usealias" id="usealias" value="$usealias" />
+                <label for="usealias" title="#xarML('Use a module alias.')#">
+                  <xar:mlstring>Use module alias?</xar:mlstring>
+                </label>
+            </div>
             <div class="xar-form-input-wrapper-after">
                 <xar:data-input type="checkbox" name="showuserpanel" id="showuserpanel" value="$showuserpanel" />
                 <label for="showuserpanel" title="#xarML('Show the user information panel in user displays')#">Show user panel?</label>
