@@ -68,7 +68,7 @@ function crispbb_admin_modifyconfig()
             }
             $currentalias = xarModVars::get('crispbb','module_alias_name');
             $itemid = $data['module_settings']->updateItem();
-
+            $module = 'crispbb';
             $newalias = trim(xarModVars::get('crispbb', 'module_alias_name'));
             if (empty($newalias)) {
                 xarModVars::set('crispbb', 'use_module_alias', 0);
