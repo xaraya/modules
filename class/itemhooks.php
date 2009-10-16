@@ -14,6 +14,7 @@ class HitcountItemHooks extends ItemHookCallHandler
         'create'  => array('type' => 'admin', 'area' => 'API'),
         'delete'  => array('type' => 'admin', 'area' => 'API'),
         'display' => array('type' => 'user',  'area' => 'GUI'),
+        'view'    => array('type' => 'user',  'area' => 'GUI'),
     );
 
     // specify an optional method mapper e.g. if you have several actions to support, and you want to import them only on demand
@@ -93,43 +94,79 @@ class HitcountItemHooks extends ItemHookCallHandler
         $hookoutput = xarMod::guiFunc('hitcount','user','display',
                                       array('objectid'  => $subject->itemid,
                                             'extrainfo' => $subject->hookvalues));
+        if (!isset($hookoutput)) {
+            return;
+        }
 
         // add the output of the GUI method to the $subject->hookoutput array, using the hook modname as key
-        if (isset($hookoutput)) {
-            $subject->hookoutput[$this->modname] = $hookoutput;
-        }
+        $subject->hookoutput[$this->modname] = $hookoutput;
         // no need to return anything here
 
 // CHECKME: and/or add property to $subject with hitcount output for this item ?
         $name = 'hitcount_hook';
         $propinfo = array('name' => $name,
                           'label' => 'Hitcount',
-                          'type' => 'textbox',
+                          'type' => 'textbox', // we'll show the GUI output here
                           //'id' => null,
                           'defaultvalue' => '',
                           'source' => 'dummy',
                           'status' => 33,
                           //'seq' => null,
-                          //'configuration' => null,
+                          'configuration' => serialize(array('display_tooltip' => 'Number of times this item was displayed')),
                          );
         $subject->addProperty($propinfo);
         if (!empty($subject->fieldlist)) {
             $subject->fieldlist[] = $name;
         }
         // set the output of the GUI method as value for the $subject property
-        if (isset($hookoutput)) {
-            $subject->properties[$name]->value = $hookoutput;
-        }
+        $subject->properties[$name]->value = $hookoutput;
     }
 
     /**
-     * Run the 'view' items GUI action - move to separate action handler later
+     * Run the 'view' items GUI action - this only gets called by the dd ui handler for now
      *
      * @param subject mixed the dataobject for object calls, or the dummy object (= based on extraInfo) for module calls
      */
     public function view($subjectlist)
     {
+        if (strtolower(get_class($subjectlist)) == 'dummyhookedobject') {
+            // there's nothing we can do for traditional modules calling hooks with extraInfo
+            return;
+        }
+
 // CHECKME: add property to $subjectlist with hitcount for all $subjectlist->itemids, and/or adapt $subjectlist->items ?
+        $name = 'hitcount_hook';
+        $propinfo = array('name' => $name,
+                          'label' => 'Hitcount',
+                          'type' => 'integerbox', // we'll set the hitcount values here
+                          //'id' => null,
+                          'defaultvalue' => '',
+                          'source' => 'dummy',    // force using the dummy datastore here
+// CHECKME: status should be configurable here !?
+                          'status' => 33,
+                          //'seq' => null,
+                          'configuration' => serialize(array('display_tooltip' => 'Number of times this item was displayed')),
+                         );
+        $subjectlist->addProperty($propinfo);
+        if (!empty($subjectlist->fieldlist)) {
+            $subjectlist->fieldlist[] = $name;
+        }
+
+        // get the hitcount for all the items in the subjectlist
+        $hits = xarMod::apiFunc('hitcount','user','getitems',
+                                array('modid'    => $subjectlist->moduleid,
+                                      'itemtype' => $subjectlist->itemtype,
+                                      'itemids'  => $subjectlist->itemids));
+        // set the hitcount for all the items in the subjectlist
+        foreach ($subjectlist->itemids as $itemid) {
+            if (isset($hits[$itemid])) {
+                $subjectlist->items[$itemid][$name] = $hits[$itemid];
+            } else {
+                $subjectlist->items[$itemid][$name] = 0;
+            }
+        }
+        // tell the subjectlist to calculate the sum of the hitcounts, just for fun ;-)
+        $subjectlist->fieldsummary[$name] = 'Sum';
     }
 }
 
