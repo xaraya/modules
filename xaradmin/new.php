@@ -93,6 +93,13 @@ function crispbb_admin_new($args)
 
     if ($phase == 'update') {
         $isvalid = $data['forum']->checkInput();
+        $cids = $data['forum']->properties['category']->categories;
+        if (is_array($cids) && in_array($basecid, $cids)) {
+            $isvalid = false;
+            $data['forum']->properties['category']->categories = array();
+            $data['forum']->properties['category']->invalid = xarML("Forums cannot be added to the base forum category");
+        }
+
         $andvalid = false;
         // see if user switched forum types
         if ($data['forum']->properties['ftype']->value == $ftype) {
