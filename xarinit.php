@@ -11,7 +11,8 @@
     #
     # Set up tables
     #
-        $q = new xarQuery();
+        sys::import('xaraya.structures.query');
+        $q = new Query();
         $prefix = xarDB::getPrefix();
 
         $query = "DROP TABLE IF EXISTS " . $prefix . "_xarayatesting_test";
