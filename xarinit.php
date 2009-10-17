@@ -407,7 +407,7 @@ function crispbb_init()
 
     $info = xarMod::getBaseInfo($module);
     $sysid = $info['systemid'];
-    $query = "SELECT DISTINCT instances.title FROM $xartable[block_instances] as instances LEFT JOIN $xartable[block_types] as btypes ON btypes.id = instances.type_id WHERE module_id = $sysid";
+    $query = "SELECT DISTINCT instances.title FROM $tables[block_instances] as instances LEFT JOIN $tables[block_types] as btypes ON btypes.id = instances.type_id WHERE module_id = $sysid";
     $instances = array(
                         array('header' => 'crispBB Block Title:',
                                 'query' => $query,
