@@ -5,9 +5,9 @@
         <span class="xar-mod-title">crispBB Administration</span>
     </div>
     <div class="xar-mod-body">
-        <xar:template type="module" module="crispbb" file="menutabs" />
+        <xar:template type="module" module="crispbb" file="admin-menu" />
         <h2>Delete Forum Category</h2>
-        <form action="&xar-modurl-crispbb-admin-deletecat;" method="post">
+        <form action="#xarModURL('crispbb', 'admin', 'deletecat')#" method="post">
         <fieldset>
             <legend>Delete Category</legend>
             <xar:if condition="$basecid eq $itemid">

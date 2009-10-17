@@ -1,23 +1,21 @@
 <?php
 /**
- * Pass individual menu items to the admin menu
+ * crispBB Forum Module
  *
  * @package modules
- * @copyright (C) 2002-2009 The Digital Development Foundation
+ * @copyright (C) 2008-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
- * @link http://xaraya.com/index.php/release/36.html
- * @author Example Module Development Team
- */
-
-/**
- * Pass individual menu items to the admin  menu
- * This function delivers the in-page admin menu items too
+ * @subpackage crispBB Forum Module
+ * @link http://xaraya.com/index.php/release/970.html
+ * @author crisp <crisp@crispcreations.co.uk>
+ *//**
+ * Standard function to pass menu links to whoever
+ * used by base admin menu block, crispBB admin GUI functions
  *
- * @author the Example module development team
- * @return array containing the menulinks for the main and the in-page admin menus.
+ * @author crisp <crisp@crispcreations.co.uk>
+ * @return array
  */
 function crispbb_adminapi_getmenulinks($args)
 {
@@ -256,7 +254,7 @@ function crispbb_adminapi_getmenulinks($args)
                     'active' => in_array($modfunc, $activelinks) ? true : false
                 );
                 $activelinks = array('categories', 'newcat', 'modifycat', 'deletecat');
-                $sublinks['categories'] = array(
+                $sublinks[in_array($modfunc, $activelinks)?$modfunc:'categories'] = array(
                     'url' => xarModURL('crispbb', 'admin', 'categories'),
                     'title' => xarML('Category configuration for forums'),
                     'label' => xarML('Categories'),
@@ -268,7 +266,7 @@ function crispbb_adminapi_getmenulinks($args)
                         'url' => xarModURL('crispbb', 'admin', 'categories'),
                         'title' => xarML('View forum categories'),
                         'label' => xarML('View'),
-                        'active' => empty($current_sublink) ? true : false
+                        'active' =>  $modfunc == 'deletecat' || ($modfunc == 'categories' && empty($current_sublink)) ? true : false
                     );
                     $tablinks['newcat'] = array(
                         'url' => xarModURL('crispbb', 'admin', 'newcat'),

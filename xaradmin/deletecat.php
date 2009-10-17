@@ -21,9 +21,9 @@
  */
 function crispbb_admin_deletecat($args)
 {
-    if (!crispBB::userCan('admincrispbb')) {
-         return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
-    }
+    if (!xarSecurityCheck('AdminCrispBB'))
+        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+
     extract($args);
 
     $data = array();
@@ -50,29 +50,12 @@ function crispbb_admin_deletecat($args)
         return true;
     }
 
-    $data['tabblocks'] = xarMod::apiFunc('crispbb', 'admin', 'getmenulinks',
-        array('func' => 'deletecat', 'layout' => 'tabblocks'));
-
-    $tabblock = array();
-    $tabblock['categories'] = array(
-        'url' => xarModURL('crispbb', 'admin', 'categories'),
-        'label' => xarML('View Categories'),
-        'title' => xarML('View/Manage Forum Categories'),
-        'active' => true
-    );
-    $tabblock['newcat'] = array(
-        'url' => xarModURL('crispbb', 'admin', 'newcat'),
-        'label' => xarML('Add Category'),
-        'title' => xarML('Add a new forum category'),
-        'active' => false
-    );
-    $tabblock['mastercat'] = array(
-        'url' => xarModURL('crispbb', 'admin', 'categories', array('sublink' => 'mastercat')),
-        'label' => xarML('Base Category'),
-        'title' => xarML('Set Base Category for crispBB Forums'),
-        'active' => false
-    );
-    $data['tabblocks'][] = $tabblock;
+    $data['menulinks'] = xarMod::apiFunc('crispbb', 'admin', 'getmenulinks',
+        array(
+            'current_module' => 'crispbb',
+            'current_type' => 'admin',
+            'current_func' => 'deletecat',
+        ));
 
     $data['layout'] = 'confirm';
     $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'crispbb'));
