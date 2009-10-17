@@ -36,7 +36,8 @@ function crispbb_admin_modify($args)
     $data['forum']->setFieldlist($fieldlist);
     $data['forum']->userAction = 'editforum';
     $itemid = $data['forum']->getItem(array('itemid' => $fid));
-
+    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'crispbb'));
+    $basecid = count($basecats) > 0 ? $basecats[0]['category_id'] : null;
     if ($itemid != $fid)
         return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
 
@@ -74,6 +75,12 @@ function crispbb_admin_modify($args)
             // handle update
             if ($phase == 'update') {
                 $isvalid = $data['forum']->checkInput();
+                $cids = $data['forum']->properties['category']->categories;
+                if (is_array($cids) && in_array($basecid, $cids)) {
+                    $isvalid = false;
+                    $data['forum']->properties['category']->categories = array();
+                    $data['forum']->properties['category']->invalid = xarML("Forums cannot be added to the base forum category");
+                }
                 $andvalid = false;
                 // see if user switched forum types
                 if ($data['forum']->properties['ftype']->value == $ftype) {
