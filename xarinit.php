@@ -291,38 +291,10 @@ function crispbb_init()
 # Create Base Itemtypes
 #
 
+    $itemtypes = DataObjectMaster::getObject(array('name' => 'crispbb_itemtypes'));
     $components = array('forum', 'topics', 'posts');
-    // @TODO: create using crispbb_itemtypes object
-    try {
-        $dbconn->begin();
-        foreach ($components as $component) {
-            $query = "INSERT INTO $itemtypestable (
-                      fid,
-                      component
-                      )
-                    VALUES (?,?)";
-            $bindvars = array();
-            $bindvars[] = (int)0;
-            $bindvars[] = (string)$component;
-            $dbconn->Execute($query, $bindvars);
-        }
-        // We're done, commit
-        $dbconn->commit();
-    } catch (Exception $e) {
-        $dbconn->rollback();
-        throw $e;
-    }
-    $basetypes = array();
-    // get all itemtypes back
-    $query = "SELECT id, fid, component";
-    $query .= " FROM $itemtypestable";
-    $result = $dbconn->SelectLimit($query, -1, 0, array());
-    if (!$result) return;
-    for (; !$result->EOF; $result->MoveNext()) {
-        list ($id, $fid, $component) = $result->fields;
-        $basetypes[$component] = $id;
-    }
-    $result->Close();
+    foreach ($components as $component => $label)
+        $basetypes[$component] = $itemtypes->createItem(array('fid' => 0, 'component' => $component));
 
 # --------------------------------------------------------
 #
@@ -335,19 +307,14 @@ function crispbb_init()
             'parent_id' => 0,
         ));
 
+    if (!xarMod::apiFunc('categories', 'admin', 'setcatbases',
+        array('module' => $module, 'cids' => array($basecid)))) return;
 
 
 # --------------------------------------------------------
 #
 # Set up configuration modvars (module specific)
 #
-    // store base category for the module
-    xarModVars::set($module, 'basecategory', $basecid);
-
-    // module config
-    xarModVars::set($module, 'SupportShortURLs', false);
-    xarModVars::set($module, 'useModuleAlias', false);
-    xarModVars::set($module, 'aliasname', '');
 
     // module settings (storage for forums and module default settings)
     xarModVars::set($module, 'ftracking', serialize(array()));
