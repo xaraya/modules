@@ -35,6 +35,11 @@
         -->
         <fieldset>
             <xar:data-form object="$module_settings" />
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" for="visit_timeout" title="#xarML('The amount of minutes since last visit before a users visit is considered new')#">Visit Timeout</label>
+                <xar:data-input type="integerbox" name="visit_timeout" id="visit_timeout" value="$visit_timeout" /> (in minutes)
+                <p class="xar-form-container-after">This sets the length of time since a users last visit before a visit is considered 'new'. Used in tracking user visit count, time online and last visit values.<br />The maximum value is determined by the Session Inactivity Timout (set in the base module). The recommended value for visit timeout is 15 minutes (this value has no effect on site session timeout).</p>
+            </div>
             <div class="xar-form-input-wrapper-after">
                 <xar:data-input type="checkbox" name="showuserpanel" id="showuserpanel" value="$showuserpanel" />
                 <label for="showuserpanel" title="#xarML('Show the user information panel in user displays')#">Show user panel?</label>

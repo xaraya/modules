@@ -326,8 +326,9 @@ function crispbb_init()
     $tracker = new Tracker(true);
     unset($tracker); // unsetting here causes the modvar to be stored with default values :)
 
+    $sessionTimeout = xarConfigVars::get(null, 'Site.Session.InactivityTimeout');
     // display options
-    xarModVars::set($module, 'visit_timeout', 15);
+    xarModVars::set($module, 'visit_timeout', $sessionTimeout);
     xarModVars::set($module, 'showuserpanel', true);
     xarModVars::set($module, 'showsearchbox', true);
     xarModVars::set($module, 'showforumjump', true);

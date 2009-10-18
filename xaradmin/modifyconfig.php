@@ -49,6 +49,8 @@ function crispbb_admin_modifyconfig()
     $data['module_settings']->getItem();
     $invalid = array();
     if ($phase == 'update') {
+        $sessionTimeout = xarConfigVars::get(null, 'Site.Session.InactivityTimeout');
+        if (!xarVarFetch('visit_timeout', "int:1:$sessionTimeout", $visit_timeout, $sessionTimeout, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showuserpanel', 'checkbox', $showuserpanel, false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showsearchbox', 'checkbox', $showsearchbox, false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showforumjump', 'checkbox', $showforumjump, false, XARVAR_NOT_REQUIRED)) return;
@@ -56,10 +58,6 @@ function crispbb_admin_modifyconfig()
         if (!xarVarFetch('showquickreply', 'checkbox', $showquickreply, false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showpermissions', 'checkbox', $showpermissions, false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showsortbox', 'checkbox', $showsortbox, false, XARVAR_NOT_REQUIRED)) return;
-
-        if (!xarVarFetch('shorturls',    'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('aliasname',    'str:1:',   $aliasname, '', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('usealias',  'checkbox', $usealias,false,XARVAR_NOT_REQUIRED)) return;
 
         $isvalid = $data['module_settings']->checkInput();
         if ($isvalid) {
@@ -95,9 +93,7 @@ function crispbb_admin_modifyconfig()
                 }
             }
 
-            xarModCallHooks('module','updateconfig','crispbb',
-                           array('module' => 'crispbb'));
-
+            xarModVars::set('crispbb', 'visit_timeout', $visit_timeout);
             xarModVars::set('crispbb', 'showuserpanel', $showuserpanel);
             xarModVars::set('crispbb', 'showsearchbox', $showsearchbox);
             xarModVars::set('crispbb', 'showforumjump', $showforumjump);
@@ -106,6 +102,8 @@ function crispbb_admin_modifyconfig()
             xarModVars::set('crispbb', 'showpermissions', $showpermissions);
             xarModVars::set('crispbb', 'showsortbox', $showsortbox);
 
+            xarModCallHooks('module','updateconfig','crispbb',
+                           array('module' => 'crispbb'));
             // update the status message
             xarSessionSetVar('crispbb_statusmsg', xarML('Module configuration updated'));
             // if no returnurl specified, return to the modify function for the newly created forum
@@ -127,6 +125,7 @@ function crispbb_admin_modifyconfig()
         ));
 
     // display controls
+    $data['visit_timeout'] = xarModVars::get('crispbb', 'visit_timeout');
     $data['showuserpanel'] = xarModVars::get('crispbb', 'showuserpanel');
     $data['showsearchbox'] = xarModVars::get('crispbb', 'showsearchbox');
     $data['showforumjump'] = xarModVars::get('crispbb', 'showforumjump');
