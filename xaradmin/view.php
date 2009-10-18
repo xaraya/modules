@@ -40,6 +40,9 @@ function crispbb_admin_view($args)
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
+    sys::import('modules.crispbb.class.cache.links');
+    $cachedLinks = xarSessionGetVar('crispbb_linkcache');
+    LinkCache::setCachedLinks($cachedLinks);
     // add links for cats and forums
     $numcats = count($categories);
     $ci = 1;
@@ -66,14 +69,42 @@ function crispbb_admin_view($args)
             $filter = array('sort' => 'forder ASC', 'linkfield' => 'fname', 'catid' => $cid);
             $catinfo['forums']->getItems($filter);
             $catinfo['numforums'] = count($catinfo['forums']->items);
-            $catinfo['newforum'] = xarModURL('crispbb', 'admin', 'new', array('catid' => $cid));
-            $catinfo['view'] = xarModURL('crispbb', 'admin', 'view', array('catid' => $cid));
+            $catinfo['newforum'] = LinkCache::getCached('admin_new_catid', 'catid', $cid);
+            if (!$catinfo['newforum']) {
+                $catinfo['newforum'] = xarModURL('crispbb', 'admin', 'new', array('catid' => $cid));
+                LinkCache::setCached('admin_new_catid', 'catid', $cid, $catinfo['newforum']);
+            }
+            $catinfo['view'] = LinkCache::getCached('admin_view_catid', 'catid', $cid);
+            if (!$catinfo['view']) {
+                $catinfo['view'] = xarModURL('crispbb', 'admin', 'view', array('catid' => $cid));
+                LinkCache::setCached('admin_view_catid', 'catid', $cid, $catinfo['view']);
+            }
             if ($userLevel == 800 && xarSecurityCheck('ManageCategories', 0)) {
-               $catinfo['moveup'] = ($ci > 1) ? xarModURL('crispbb', 'admin', 'ordercats', array('itemid' => $cid, 'direction' => 'up', 'authid' => $data['authid'])) : '';
-               $catinfo['movedown'] = ($ci < count($categories)) ? xarModURL('crispbb','admin', 'ordercats', array('itemid' => $cid, 'direction' => 'down', 'authid' => $data['authid'])) : '';
-               $catinfo['modifycat'] = xarModURL('crispbb', 'admin', 'modifycat', array('itemid' => $cid));
+               if ($ci > 1) {
+                    $catinfo['moveup'] = LinkCache::getCached('admin_ordercats_up', 'itemid', $cid);
+                    if (!$catinfo['moveup']) {
+                        $catinfo['moveup'] = xarModURL('crispbb', 'admin', 'ordercats', array('itemid' => $cid, 'direction' => 'up', 'authid' => $data['authid']));
+                        LinkCache::setCached('admin_ordercats_up', 'itemid', $cid, $catinfo['moveup']);
+                    }
+               }
+               if ($ci < count($categories)) {
+                    $catinfo['movedown'] = LinkCache::getCached('admin_ordercats_down', 'itemid', $cid);
+                    if (!$catinfo['movedown']) {
+                        $catinfo['movedown'] = xarModURL('crispbb', 'admin', 'ordercats', array('itemid' => $cid, 'direction' => 'up', 'authid' => $data['authid']));
+                        LinkCache::setCached('admin_order_cats_down', 'itemid', $cid, $catinfo['movedown']);
+                    }
+               }
+               $catinfo['modifycat'] = LinkCache::getCached('admin_modifycat', 'itemid', $cid);
+               if (!$catinfo['modifycat']) {
+                   $catinfo['modifycat'] = xarModURL('crispbb', 'admin', 'modifycat', array('itemid' => $cid));
+                   LinkCache::setCached('admin_modifycat', 'itemid', $cid, $catinfo['modifycat']);
+               }
                if (xarSecurityCheck('AdminCategories', 0)) {
-                   $catinfo['deletecat'] = xarModURL('crispbb', 'admin', 'deletecat', array('itemid' => $cid));
+                   $catinfo['deletecat'] = LinkCache::getCached('admin_deletecat', 'itemid', $cid);
+                   if (!$catinfo['deletecat']) {
+                       $catinfo['deletecat'] = xarModURL('crispbb', 'admin', 'deletecat', array('itemid' => $cid));
+                       LinkCache::setCached('admin_deletecat', 'itemid', $cid, $catinfo['deletecat']);
+                   }
                }
             }
             $ci++;
@@ -82,7 +113,7 @@ function crispbb_admin_view($args)
         } // end categories loop
     }
     $data['categories'] = $categories;
-
+    xarSessionSetVar('crispbb_linkcache', LinkCache::getCachedLinks());
     $data['menulinks'] = xarMod::apiFunc('crispbb', 'admin', 'getmenulinks',
         array(
             'current_module' => 'crispbb',

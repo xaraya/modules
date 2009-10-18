@@ -85,7 +85,9 @@ class Forums extends DataObject
                 $query = "DELETE FROM $hookstable WHERE tid IN (" . join(',', $tids) . ")";
                 $result = &$dbconn->Execute($query,array());
             }
-            // remove forum itemtype
+            // remove forum itemtype.
+            // @TODO check for existence of topic and post components for this forum
+            // in other forums (moved/merged topics and posts) and remove if none found
             $query = "DELETE FROM $itemtypestable WHERE fid = ? AND component = 'Forum'";
             $result = &$dbconn->Execute($query,array($this->itemid));
             // We're done, commit
@@ -99,6 +101,7 @@ class Forums extends DataObject
         $ftracker = (!empty($string) && is_string($string)) ? unserialize($string) : array();
         if (isset($ftracker[$this->itemid])) unset($ftracker[$this->itemid]);
         xarModVars::set('crispbb', 'ftracker', serialize($ftracker));
+        // @TODO: Itemtype Delete Hooks
         // and finally, remove the forum itself :)
         return parent::deleteItem($args);
     }
@@ -107,6 +110,9 @@ class Forums extends DataObject
     **/
     public function getItemLinks(Array $args = array())
     {
+        sys::import('modules.crispbb.class.cache.links');
+        $cachedLinks = xarSessionGetVar('crispbb_linkcache');
+        LinkCache::setCachedLinks($cachedLinks);
         extract($args);
         $itemlinks = array();
         if (empty($this->userLevel)) return;
@@ -116,15 +122,35 @@ class Forums extends DataObject
         $privs = $this->fprivileges[$this->userLevel];
         // deleteforum permissions
         if (!empty($privs['deleteforum'])) {
-            $itemlinks['delete'] = xarModURL('crispbb', 'admin', 'delete', array('fid' => $this->itemid));
+            $link = LinkCache::getCached('admin_delete', 'fid', $this->itemid);
+            if (!$link) {
+                $link = xarModURL('crispbb', 'admin', 'delete', array('fid' => $this->itemid));
+                LinkCache::setCached('admin_delete', 'fid', $this->itemid, $link);
+            }
+            $itemlinks['delete'] = $link;
         }
         if (!empty($privs['editforum'])) {
-            $itemlinks['modify'] = xarModURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'edit'));
-            $itemlinks['overview'] = xarModURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid));
+            $link = LinkCache::getCached('admin_modify_edit', 'fid', $this->itemid);
+            if (!$link) {
+                $link = xarModURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'edit'));
+                LinkCache::setCached('admin_modify_edit', 'fid', $this->itemid, $link);
+            }
+            $itemlinks['modify'] = $link;
+            $link = LinkCache::getCached('admin_modify', 'fid', $this->itemid);
+            if (!$link) {
+                $link = xarModURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid));
+                LinkCache::setCached('admin_modify', 'fid', $this->itemid, $link);
+            }
+            $itemlinks['overview'] = $link;
         }
         // forum viewers
         if ($check['ftype'] != 1) {
-            $itemlinks['view'] = xarModURL('crispbb', 'user', 'view', array('fid' => $this->itemid));
+            $link = LinkCache::getCached('user_view', 'fid', $this->itemid);
+            if (!$link) {
+                $link = xarModURL('crispbb', 'user', 'view', array('fid' => $this->itemid));
+                LinkCache::setCached('user_view', 'fid', $this->itemid, $link);
+            }
+            $itemlinks['view'] = $link;
             // forum readers
             if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel', array('check' => $check, 'priv' => 'readforum'))) {
                 if (!empty($check['lasttid'])) {
@@ -132,25 +158,57 @@ class Forums extends DataObject
                 }
                 // Logged in users
                 if (xarUserIsLoggedIn()) {
-                    $itemlinks['read'] = xarModURL('crispbb', 'user', 'view',
-                        array('fid' => $this->itemid, 'action' => 'read'));
+                    $link = LinkCache::getCached('user_view_read', 'fid', $this->itemid);
+                    if (!$link) {
+                        $link = xarModURL('crispbb', 'user', 'view', array('fid' => $this->itemid, 'action' => 'read'));
+                        LinkCache::setCached('user_view_read', 'fid', $this->itemid, $link);
+                    }
+                    $itemlinks['read'] = $link;
                     // forum posters
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $check, 'priv' => 'newtopic'))) {
-                        $itemlinks['newtopic'] = xarModURL('crispbb', 'user', 'newtopic',
-                            array('fid' => $this->itemid));
+                        $link = LinkCache::getCached('user_newtopic', 'fid', $this->itemid);
+                        if (!$link) {
+                            $link = xarModURL('crispbb', 'user', 'newtopic', array('fid' => $this->itemid));
+                            LinkCache::setCached('user_newtopic', 'fid', $this->itemid, $link);
+                        }
+                        $itemlinks['newtopic'] = $link;
                     }
                     // forum moderators
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $check, 'priv' => 'ismoderator'))) {
-                        $itemlinks['moderate'] = xarModURL('crispbb', 'user', 'moderate',
-                            array('component' => 'topics', 'fid' => $this->itemid));
+                        $link = LinkCache::getCached('user_moderate_topics', 'fid', $this->itemid);
+                        if (!$link) {
+                            $link = xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $this->itemid));
+                            LinkCache::setCached('user_moderate_topics', 'fid', $this->itemid, $link);
+                        }
+                        $itemlinks['moderate'] = $link;
                     }
                     if (!empty($privs['editforum'])) {
-                        $itemlinks['forumhooks'] = xarModURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'forumhooks'));
-                        $itemlinks['topichooks'] = xarModURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'topichooks'));
-                        $itemlinks['posthooks'] = xarModURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'posthooks'));
-                        $itemlinks['privileges'] = xarModURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'privileges'));
+                        $link = LinkCache::getCached('admin_modify_forumhooks', 'fid', $this->itemid);
+                        if (!$link) {
+                            $link = xarModURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'forumhooks'));
+                            LinkCache::setCached('admin_modify_forumhooks', 'fid', $this->itemid, $link);
+                        }
+                        $itemlinks['forumhooks'] = $link;
+                        $link = LinkCache::getCached('admin_modify_topichooks', 'fid', $this->itemid);
+                        if (!$link) {
+                            $link = xarModURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'topichooks'));
+                            LinkCache::setCached('admin_modify_topichooks', 'fid', $this->itemid, $link);
+                        }
+                        $itemlinks['topichooks'] = $link;
+                        $link = LinkCache::getCached('admin_modify_posthooks', 'fid', $this->itemid);
+                        if (!$link) {
+                            $link = xarModURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'posthooks'));
+                            LinkCache::setCached('admin_modify_posthooks', 'fid', $this->itemid, $link);
+                        }
+                        $itemlinks['posthooks'] = $link;
+                        $link = LinkCache::getCached('admin_modify_privileges', 'fid', $this->itemid);
+                        if (!$link) {
+                            $link = xarModURL('crispbb', 'admin', 'modify', array('fid' => $this->itemid, 'sublink' => 'privileges'));
+                            LinkCache::setCached('admin_modify_privileges', 'fid', $this->itemid, $link);
+                        }
+                        $itemlinks['privileges'] = $link;
                     }
                 }
             }
@@ -160,7 +218,7 @@ class Forums extends DataObject
                 $itemlinks['view'] = $redirecturl;
             }
         }
-
+        xarSessionSetVar('crispbb_linkcache', LinkCache::getCachedLinks());
         $this->itemlinks = $itemlinks;
     }
 
@@ -395,6 +453,11 @@ class ForumsList extends DataObjectList
       */
     public function getViewOptions(Array $args = array())
     {
+        // import our own class to handle link cache (less code required)
+        sys::import('modules.crispbb.class.cache.links');
+        $cachedLinks = xarSessionGetVar('crispbb_linkcache');
+        LinkCache::setCachedLinks($cachedLinks);
+        unset($cachedLinks);
         // insist on using fid in urlargs (for now)
         $args['param'] = 'fid';
         $urlargs = array();
@@ -418,21 +481,15 @@ class ForumsList extends DataObjectList
         $privs = $check['fprivileges'][$userLevel];
         // deleteforum permissions
         if (!empty($privs['deleteforum'])) {
-            if (!empty($this->cachedlinks['delete'])) {
-                $link = str_replace('<fid>',$args['itemid'],$this->cachedlinks['delete']);
-            } else {
-                // if $linktype == 'object' use getObjectURL()
+            $link = LinkCache::getCached('admin_delete', $args['param'], $args['itemid']);
+            if ($link === false) {
+                 // if $linktype == 'object' use getObjectURL()
                 if ($this->linktype == 'object') {
                     $link = xarServer::getObjectURL($args['objectname'], 'delete', $urlargs);
                 } else {
                     $link = xarServer::getModuleURL('crispbb','admin','delete',$urlargs);
                 }
-                // check if we're using short URLs here, before trying to cache the display link
-                if (!xarMod::$genShortUrls && strpos($link, $args['param'].'='.$args['itemid']) !== false) {
-                    $this->cachedlinks['delete'] = str_replace($args['param'].'='.$args['itemid'], $args['param'].'=<fid>', $link);
-                } elseif (strpos($link, 'f'.$args['itemid']) !== false) {
-                    $this->cachedlinks['delete'] = str_replace('f'.$args['itemid'], 'f<fid>', $link);
-                }
+                LinkCache::setCached('admin_delete', $args['param'], $args['itemid'], $link);
             }
             // make the links a little more friendly than the dd ones
             $itemlinks['delete'] = array(
@@ -442,24 +499,17 @@ class ForumsList extends DataObjectList
             );
         }
         if (!empty($privs['editforum'])) {
-            static $authid;
-
             $itemargs = $urlargs;
-            if (!empty($this->cachedlinks['overview'])) {
-                $link = str_replace('<fid>',$args['itemid'],$this->cachedlinks['overview']);
-            } else {
+            static $authid;
+            $link = LinkCache::getCached('admin_modify', $args['param'], $args['itemid']);
+            if ($link === false) {
                 // if $linktype == 'object' use getObjectURL()
                 if ($this->linktype == 'object') {
                     $link = xarServer::getObjectURL($args['objectname'], 'modify', $itemargs);
                 } else {
                     $link = xarServer::getModuleURL('crispbb','admin','modify',$itemargs);
                 }
-                // check if we're using short URLs here, before trying to cache the display link
-                if (!xarMod::$genShortUrls && strpos($link, $args['param'].'='.$args['itemid']) !== false) {
-                    $this->cachedlinks['overview'] = str_replace($args['param'].'='.$args['itemid'], $args['param'].'=<fid>', $link);
-                } elseif (strpos($link, 'f'.$args['itemid']) !== false) {
-                    $this->cachedlinks['overview'] = str_replace('f'.$args['itemid'], 'f<fid>', $link);
-                }
+                LinkCache::setCached('admin_modify', $args['param'], $args['itemid'], $link);
             }
             // make the links a little more friendly than the dd ones
             $itemlinks['overview'] = array(
@@ -467,22 +517,17 @@ class ForumsList extends DataObjectList
                 'title' => xarML('View information about this forum'),
                 'label' => xarML('Overview'),
             );
-            if (!empty($this->cachedlinks['modify'])) {
-                $link = str_replace('<fid>',$args['itemid'],$this->cachedlinks['modify']);
-            } else {
-                $itemargs['sublink'] = 'edit';
+            $itemargs = $urlargs;
+            $itemargs['sublink'] = 'edit';
+            $link = LinkCache::getCached('admin_modify_edit', $args['param'], $args['itemid']);
+            if ($link === false) {
                 // if $linktype == 'object' use getObjectURL()
                 if ($this->linktype == 'object') {
                     $link = xarServer::getObjectURL($args['objectname'], 'modify', $itemargs);
                 } else {
                     $link = xarServer::getModuleURL('crispbb','admin','modify',$itemargs);
                 }
-                // check if we're using short URLs here, before trying to cache the display link
-                if (!xarMod::$genShortUrls && strpos($link, $args['param'].'='.$args['itemid']) !== false) {
-                    $this->cachedlinks['modify'] = str_replace($args['param'].'='.$args['itemid'], $args['param'].'=<fid>', $link);
-                } elseif (strpos($link, 'f'.$args['itemid']) !== false) {
-                    $this->cachedlinks['modify'] = str_replace('f'.$args['itemid'], 'f<fid>', $link);
-                }
+                LinkCache::setCached('admin_modify_edit', $args['param'], $args['itemid'], $link);
             }
             // make the links a little more friendly than the dd ones
             $itemlinks['modify'] = array(
@@ -496,21 +541,16 @@ class ForumsList extends DataObjectList
             $itemargs['direction'] = 'up';
             $itemargs['authid'] = $authid;
             if ($currentindex > 0) {
-                if (!empty($this->cachedlinks['moveup'])) {
-                    $link = str_replace('<fid>',$args['itemid'],$this->cachedlinks['moveup']);
-                } else {
+                // @TODO figure out replacing multiple params and values (fid, catid here)
+                $link = false; //LinkCache::getCached('admin_order_up', $args['param'], $args['itemid']);
+                if ($link === false) {
                     // if $linktype == 'object' use getObjectURL()
                     if ($this->linktype == 'object') {
                         $link = xarServer::getObjectURL($args['objectname'], 'order', $itemargs);
                     } else {
                         $link = xarServer::getModuleURL('crispbb','admin','order',$itemargs);
                     }
-                    // check if we're using short URLs here, before trying to cache the display link
-                    if (!xarMod::$genShortUrls && strpos($link, $args['param'].'='.$args['itemid']) !== false) {
-                        $this->cachedlinks['moveup'] = str_replace($args['param'].'='.$args['itemid'], $args['param'].'=<fid>', $link);
-                    } elseif (strpos($link, 'f'.$args['itemid']) !== false) {
-                        $this->cachedlinks['moveup'] = str_replace('f'.$args['itemid'], 'f<fid>', $link);
-                    }
+                    //LinkCache::setCached('admin_order_up', $args['param'], $args['itemid'], $link);
                 }
                 // make the links a little more friendly than the dd ones
                 $itemlinks['moveup'] = array(
@@ -524,21 +564,16 @@ class ForumsList extends DataObjectList
             $itemargs['direction'] = 'down';
             $itemargs['authid'] = $authid;
             if ($currentindex < $numforums-1) {
-                if (!empty($this->cachedlinks['movedown'])) {
-                    $link = str_replace('<fid>',$args['itemid'],$this->cachedlinks['movedown']);
-                } else {
+                // @TODO figure out replacing multiple params and values (fid, catid here)
+                $link = false; //LinkCache::getCached('admin_order_down', $args['param'], $args['itemid']);
+                if ($link === false) {
                     // if $linktype == 'object' use getObjectURL()
                     if ($this->linktype == 'object') {
                         $link = xarServer::getObjectURL($args['objectname'], 'order', $itemargs);
                     } else {
                         $link = xarServer::getModuleURL('crispbb','admin','order',$itemargs);
                     }
-                    // check if we're using short URLs here, before trying to cache the display link
-                    if (!xarMod::$genShortUrls && strpos($link, $args['param'].'='.$args['itemid']) !== false) {
-                        $this->cachedlinks['movedown'] = str_replace($args['param'].'='.$args['itemid'], $args['param'].'=<fid>', $link);
-                    } elseif (strpos($link, 'f'.$args['itemid']) !== false) {
-                        $this->cachedlinks['movedown'] = str_replace('f'.$args['itemid'], 'f<fid>', $link);
-                    }
+                    //LinkCache::setCached('admin_order_down', $args['param'], $args['itemid'], $link);
                 }
                 // make the links a little more friendly than the dd ones
                 $itemlinks['movedown'] = array(
@@ -550,21 +585,15 @@ class ForumsList extends DataObjectList
         }
         // forum viewers
         if ($check['ftype'] != 1) {
-            if (!empty($this->cachedlinks['view'])) {
-                $link = str_replace('<fid>',$args['itemid'],$this->cachedlinks['view']);
-            } else {
+            $link = LinkCache::getCached('user_view', $args['param'], $args['itemid']);
+            if ($link === false) {
                 // if $linktype == 'object' use getObjectURL()
                 if ($this->linktype == 'object') {
                     $link = xarServer::getObjectURL($args['objectname'], 'view', $urlargs);
                 } else {
                     $link = xarServer::getModuleURL('crispbb','user','view',$urlargs);
                 }
-                // check if we're using short URLs here, before trying to cache the display link
-                if (!xarMod::$genShortUrls && strpos($link, $args['param'].'='.$args['itemid']) !== false) {
-                    $this->cachedlinks['view'] = str_replace($args['param'].'='.$args['itemid'], $args['param'].'=<fid>', $link);
-                } elseif (strpos($link, 'f'.$args['itemid']) !== false) {
-                    $this->cachedlinks['view'] = str_replace('f'.$args['itemid'], 'f<fid>', $link);
-                }
+                LinkCache::setCached('user_view', $args['param'], $args['itemid'], $link);
             }
             // make the links a little more friendly than the dd ones
             $itemlinks['view'] = array(
@@ -581,21 +610,15 @@ class ForumsList extends DataObjectList
                 if (xarUserIsLoggedIn()) {
                     $itemargs = $urlargs;
                     $itemargs['action'] = 'read';
-                     if (!empty($this->cachedlinks['read'])) {
-                        $link = str_replace('<fid>',$args['itemid'],$this->cachedlinks['read']);
-                    } else {
+                    $link = LinkCache::getCached('user_view_read', $args['param'], $args['itemid']);
+                    if ($link === false) {
                         // if $linktype == 'object' use getObjectURL()
                         if ($this->linktype == 'object') {
                             $link = xarServer::getObjectURL($args['objectname'], 'view', $itemargs);
                         } else {
                             $link = xarServer::getModuleURL('crispbb','user','view',$itemargs);
                         }
-                        // check if we're using short URLs here, before trying to cache the display link
-                        if (!xarMod::$genShortUrls && strpos($link, $args['param'].'='.$args['itemid']) !== false) {
-                            $this->cachedlinks['read'] = str_replace($args['param'].'='.$args['itemid'], $args['param'].'=<fid>', $link);
-                        } elseif (strpos($link, 'f'.$args['itemid']) !== false) {
-                            $this->cachedlinks['read'] = str_replace('f'.$args['itemid'], 'f<fid>', $link);
-                        }
+                        LinkCache::setCached('user_view_read', $args['param'], $args['itemid'], $link);
                     }
                     // make the links a little more friendly than the dd ones
                     $itemlinks['read'] = array(
@@ -606,21 +629,15 @@ class ForumsList extends DataObjectList
                     // forum posters
                     if (xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $check, 'priv' => 'newtopic'))) {
-                        if (!empty($this->cachedlinks['newtopic'])) {
-                            $link = str_replace('<fid>',$args['itemid'],$this->cachedlinks['newtopic']);
-                        } else {
+                        $link = LinkCache::getCached('user_newtopic', $args['param'], $args['itemid']);
+                        if ($link === false) {
                             // if $linktype == 'object' use getObjectURL()
                             if ($this->linktype == 'object') {
                                 $link = xarServer::getObjectURL($args['objectname'], 'newtopic', $urlargs);
                             } else {
                                 $link = xarServer::getModuleURL('crispbb','user','newtopic',$urlargs);
                             }
-                            // check if we're using short URLs here, before trying to cache the display link
-                            if (!xarMod::$genShortUrls && strpos($link, $args['param'].'='.$args['itemid']) !== false) {
-                                $this->cachedlinks['newtopic'] = str_replace($args['param'].'='.$args['itemid'], $args['param'].'=<fid>', $link);
-                            } elseif (strpos($link, 'f'.$args['itemid']) !== false) {
-                                $this->cachedlinks['newtopic'] = str_replace('f'.$args['itemid'], 'f<fid>', $link);
-                            }
+                            LinkCache::setCached('user_newtopic', $args['param'], $args['itemid'], $link);
                         }
                         // make the links a little more friendly than the dd ones
                         $itemlinks['newtopic'] = array(
@@ -634,21 +651,15 @@ class ForumsList extends DataObjectList
                         array('check' => $check, 'priv' => 'ismoderator'))) {
                         $itemargs = $urlargs;
                         $itemargs['component'] = 'topics';
-                        if (!empty($this->cachedlinks['moderate'])) {
-                            $link = str_replace('<fid>',$args['itemid'],$this->cachedlinks['moderate']);
-                        } else {
+                        $link = LinkCache::getCached('user_moderate_topics', $args['param'], $args['itemid']);
+                        if ($link === false) {
                             // if $linktype == 'object' use getObjectURL()
                             if ($this->linktype == 'object') {
                                 $link = xarServer::getObjectURL($args['objectname'], 'moderate', $itemargs);
                             } else {
                                 $link = xarServer::getModuleURL('crispbb','user','moderate',$itemargs);
                             }
-                            // check if we're using short URLs here, before trying to cache the display link
-                            if (!xarMod::$genShortUrls && strpos($link, $args['param'].'='.$args['itemid']) !== false) {
-                                $this->cachedlinks['moderate'] = str_replace($args['param'].'='.$args['itemid'], $args['param'].'=<fid>', $link);
-                            } elseif (strpos($link, 'f'.$args['itemid']) !== false) {
-                                $this->cachedlinks['moderate'] = str_replace('f'.$args['itemid'], 'f<fid>', $link);
-                            }
+                            LinkCache::setCached('user_moderate_topics', $args['param'], $args['itemid'], $link);
                         }
                         // make the links a little more friendly than the dd ones
                         $itemlinks['moderate'] = array(
@@ -661,21 +672,15 @@ class ForumsList extends DataObjectList
                                 $itemargs = $urlargs;
                                 $itemargs['component'] = 'topics';
                                 $itemargs['tstatus'] = 2;
-                                if (!empty($this->cachedlinks['submitted'])) {
-                                    $link = str_replace('<fid>',$args['itemid'],$this->cachedlinks['submitted']);
-                                } else {
+                                $link = LinkCache::getCached('user_moderate_topics_subs', $args['param'], $args['itemid']);
+                                if ($link === false) {
                                     // if $linktype == 'object' use getObjectURL()
                                     if ($this->linktype == 'object') {
                                         $link = xarServer::getObjectURL($args['objectname'], 'moderate', $urlargs);
                                     } else {
                                         $link = xarServer::getModuleURL('crispbb','user','moderate',$urlargs);
                                     }
-                                    // check if we're using short URLs here, before trying to cache the display link
-                                    if (!xarMod::$genShortUrls && strpos($link, $args['param'].'='.$args['itemid']) !== false) {
-                                        $this->cachedlinks['submitted'] = str_replace($args['param'].'='.$args['itemid'], $args['param'].'=<fid>', $link);
-                                    } elseif (strpos($link, 'f'.$args['itemid']) !== false) {
-                                        $this->cachedlinks['submitted'] = str_replace('f'.$args['itemid'], 'f<fid>', $link);
-                                    }
+                                    LinkCache::setCached('user_moderate_topics_subs', $args['param'], $args['itemid'], $link);
                                 }
                                 // make the links a little more friendly than the dd ones
                                 $itemlinks['submitted'] = array(
@@ -690,21 +695,15 @@ class ForumsList extends DataObjectList
                                 $itemargs = $urlargs;
                                 $itemargs['component'] = 'topics';
                                 $itemargs['tstatus'] = 5;
-                                if (!empty($this->cachedlinks['deleted'])) {
-                                    $link = str_replace('<fid>',$args['itemid'],$this->cachedlinks['deleted']);
-                                } else {
+                                $link = LinkCache::getCached('user_moderate_topics_dels', $args['param'], $args['itemid']);
+                                if ($link === false) {
                                     // if $linktype == 'object' use getObjectURL()
                                     if ($this->linktype == 'object') {
-                                        $link = xarServer::getObjectURL($args['objectname'], 'moderate', $urlargs);
+                                        $link = xarServer::getObjectURL($args['objectname'], 'moderate', $itemargs);
                                     } else {
-                                        $link = xarServer::getModuleURL('crispbb','user','moderate',$urlargs);
+                                        $link = xarServer::getModuleURL('crispbb','user','moderate',$itemargs);
                                     }
-                                    // check if we're using short URLs here, before trying to cache the display link
-                                    if (!xarMod::$genShortUrls && strpos($link, $args['param'].'='.$args['itemid']) !== false) {
-                                        $this->cachedlinks['deleted'] = str_replace($args['param'].'='.$args['itemid'], $args['param'].'=<fid>', $link);
-                                    } elseif (strpos($link, 'f'.$args['itemid']) !== false) {
-                                        $this->cachedlinks['deleted'] = str_replace('f'.$args['itemid'], 'f<fid>', $link);
-                                    }
+                                    LinkCache::setCached('user_moderate_topics_dels', $args['param'], $args['itemid'], $link);
                                 }
                                 // make the links a little more friendly than the dd ones
                                 $itemlinks['deleted'] = array(
@@ -719,21 +718,15 @@ class ForumsList extends DataObjectList
                     if (!empty($privs['editforum'])) {
                         $itemargs = $urlargs;
                         $itemargs['sublink'] = 'forumhooks';
-                        if (!empty($this->cachedlinks['forumhooks'])) {
-                            $link = str_replace('<fid>',$args['itemid'],$this->cachedlinks['forumhooks']);
-                        } else {
+                        $link = LinkCache::getCached('admin_modify_forumhooks', $args['param'], $args['itemid']);
+                        if ($link === false) {
                             // if $linktype == 'object' use getObjectURL()
                             if ($this->linktype == 'object') {
                                 $link = xarServer::getObjectURL($args['objectname'], 'modify', $itemargs);
                             } else {
                                 $link = xarServer::getModuleURL('crispbb','admin','modify',$itemargs);
                             }
-                            // check if we're using short URLs here, before trying to cache the display link
-                            if (!xarMod::$genShortUrls && strpos($link, $args['param'].'='.$args['itemid']) !== false) {
-                                $this->cachedlinks['forumhooks'] = str_replace($args['param'].'='.$args['itemid'], $args['param'].'=<fid>', $link);
-                            } elseif (strpos($link, 'f'.$args['itemid']) !== false) {
-                                $this->cachedlinks['forumhooks'] = str_replace('f'.$args['itemid'], 'f<fid>', $link);
-                            }
+                            LinkCache::setCached('admin_modify_forumhooks', $args['param'], $args['itemid'], $link);
                         }
                         // make the links a little more friendly than the dd ones
                         $itemlinks['forumhooks'] = array(
@@ -743,21 +736,15 @@ class ForumsList extends DataObjectList
                         );
                         $itemargs = $urlargs;
                         $itemargs['sublink'] = 'topichooks';
-                        if (!empty($this->cachedlinks['topichooks'])) {
-                            $link = str_replace('<fid>',$args['itemid'],$this->cachedlinks['topichooks']);
-                        } else {
+                        $link = LinkCache::getCached('admin_modify_topichooks', $args['param'], $args['itemid']);
+                        if ($link === false) {
                             // if $linktype == 'object' use getObjectURL()
                             if ($this->linktype == 'object') {
                                 $link = xarServer::getObjectURL($args['objectname'], 'modify', $itemargs);
                             } else {
                                 $link = xarServer::getModuleURL('crispbb','admin','modify',$itemargs);
                             }
-                            // check if we're using short URLs here, before trying to cache the display link
-                            if (!xarMod::$genShortUrls && strpos($link, $args['param'].'='.$args['itemid']) !== false) {
-                                $this->cachedlinks['topichooks'] = str_replace($args['param'].'='.$args['itemid'], $args['param'].'=<fid>', $link);
-                            } elseif (strpos($link, 'f'.$args['itemid']) !== false) {
-                                $this->cachedlinks['topichooks'] = str_replace('f'.$args['itemid'], 'f<fid>', $link);
-                            }
+                            LinkCache::setCached('admin_modify_topichooks', $args['param'], $args['itemid'], $link);
                         }
                         // make the links a little more friendly than the dd ones
                         $itemlinks['topichooks'] = array(
@@ -767,21 +754,15 @@ class ForumsList extends DataObjectList
                         );
                         $itemargs = $urlargs;
                         $itemargs['sublink'] = 'posthooks';
-                        if (!empty($this->cachedlinks['posthooks'])) {
-                            $link = str_replace('<fid>',$args['itemid'],$this->cachedlinks['posthooks']);
-                        } else {
+                        $link = LinkCache::getCached('admin_modify_posthooks', $args['param'], $args['itemid']);
+                        if ($link === false) {
                             // if $linktype == 'object' use getObjectURL()
                             if ($this->linktype == 'object') {
                                 $link = xarServer::getObjectURL($args['objectname'], 'modify', $itemargs);
                             } else {
                                 $link = xarServer::getModuleURL('crispbb','admin','modify',$itemargs);
                             }
-                            // check if we're using short URLs here, before trying to cache the display link
-                            if (!xarMod::$genShortUrls && strpos($link, $args['param'].'='.$args['itemid']) !== false) {
-                                $this->cachedlinks['posthooks'] = str_replace($args['param'].'='.$args['itemid'], $args['param'].'=<fid>', $link);
-                            } elseif (strpos($link, 'f'.$args['itemid']) !== false) {
-                                $this->cachedlinks['posthooks'] = str_replace('f'.$args['itemid'], 'f<fid>', $link);
-                            }
+                            LinkCache::setCached('admin_modify_posthooks', $args['param'], $args['itemid'], $link);
                         }
                         // make the links a little more friendly than the dd ones
                         $itemlinks['posthooks'] = array(
@@ -791,21 +772,15 @@ class ForumsList extends DataObjectList
                         );
                         $itemargs = $urlargs;
                         $itemargs['sublink'] = 'privileges';
-                        if (!empty($this->cachedlinks['privileges'])) {
-                            $link = str_replace('<fid>',$args['itemid'],$this->cachedlinks['privileges']);
-                        } else {
+                        $link = LinkCache::getCached('admin_modify_privileges', $args['param'], $args['itemid']);
+                        if ($link === false) {
                             // if $linktype == 'object' use getObjectURL()
                             if ($this->linktype == 'object') {
                                 $link = xarServer::getObjectURL($args['objectname'], 'modify', $itemargs);
                             } else {
                                 $link = xarServer::getModuleURL('crispbb','admin','modify',$itemargs);
                             }
-                            // check if we're using short URLs here, before trying to cache the display link
-                            if (!xarMod::$genShortUrls && strpos($link, $args['param'].'='.$args['itemid']) !== false) {
-                                $this->cachedlinks['privileges'] = str_replace($args['param'].'='.$args['itemid'], $args['param'].'=<fid>', $link);
-                            } elseif (strpos($link, 'f'.$args['itemid']) !== false) {
-                                $this->cachedlinks['privileges'] = str_replace('f'.$args['itemid'], 'f<fid>', $link);
-                            }
+                            LinkCache::setCached('admin_modify_privileges', $args['param'], $args['itemid'], $link);
                         }
                         // make the links a little more friendly than the dd ones
                         $itemlinks['privileges'] = array(
@@ -817,8 +792,7 @@ class ForumsList extends DataObjectList
                 }
             }
         } else {
-            /* @TODO: fix this
-            $redirecturl = !empty($this->items[$args['itemid']]['fsettings']['redirecturl']) ? $this->fsettings['redirecturl'] : '';
+            $redirecturl = $this->fsettings['redirecturl'];
             if (!empty($redirecturl)) {
                 $itemlinks['view'] = array(
                     $link => $redirecturl,
@@ -826,9 +800,9 @@ class ForumsList extends DataObjectList
                     'label' => 'View'
                 );
             }
-            */
         }
-
+        $this->cachedlinks = LinkCache::getCachedLinks();
+        xarSessionSetVar('crispbb_linkcache', $this->cachedlinks);
         return $itemlinks;
     }
 
