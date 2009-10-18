@@ -70,7 +70,7 @@
         Other Topics
     </a>
     <br />
-    Status: 
+    Status:
     <xar:if condition="!empty($posterlist[$post['powner']]['online'])">
         <span style="color:green;">Online Now</span>
     <xar:else />
@@ -133,6 +133,7 @@
         display an icon or the image in-line - see articles 'downloads' and
         'pictures' templates for examples. NOTE: if this is the first topic post, the dd will belong to the topic component, not the posts component and vice-versa.
     </xar:comment>
+    <!--
     <xar:if condition="xarModIsHooked('dynamicdata','crispbb',$post['itemtype'])">
         <xar:data-getitem name="postprops" module="crispbb" itemtype="$post['itemtype']" itemid="$post['itemid']" />
         <xar:if condition="!empty($postprops)">
@@ -144,6 +145,7 @@
             </div>
          </xar:if>
     </xar:if>
+    -->
     <xar:comment>You might want to show the posters signature here</xar:comment>
     <xar:if condition="isset($userprops['signature']) and !empty($userdd[$post['powner']]['signature'])">
         <p class="xar-border-thintop xar-border-dotted xar-border-nonesides xar-border-nonebottom">

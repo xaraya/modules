@@ -32,9 +32,9 @@
         &#160;&#160;&#160;<a href="&xar-modurl-crispbb-user-search;">Reset Form</a></p>
         <p><label for="author">Posted by:</label> <input type="text" name="author" id="author" size="20" value="#$author#" /></p>
         <p>
-            
+
                 Search
-            
+
             :
             <xar:if condition="empty($component) || $component eq 'topics'">
             <input type="radio" name="crispbb_component" id="component_topics" value="topics" checked="checked" />
@@ -49,9 +49,9 @@
             </xar:if>
         </p>
         <p>
-            
+
                 Search field
-            
+
             :
             <xar:if condition="isset($crispbb_fields['ttitle']) and !empty($crispbb_fields['ttitle'])">
                 <input type="checkbox" name="crispbb_fields[ttitle]" id="crispbb_fields_ttitle" value="1" checked="checked" />
@@ -81,9 +81,9 @@
             <label>Text</label>
         </p>
         <p>
-            
+
                 Search forum
-            
+
             :
             <xar:foreach in="$forums" key="$fid" value="$forum">
                 <xar:if condition="isset($crispbb_fids[$fid]) and !empty($crispbb_fids[$fid])">
@@ -147,11 +147,13 @@
                 <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
                 </xar:foreach>
             <xar:else />
+                <!--
                 <xar:data-getitems name="userprops" value="userdd" module="roles" itemids="$uidlist" fieldlist="website,avatar,location,signature,icq,msnm,yim,aim" />
+                -->
                 <xar:set name="rowclass">'xar-norm'</xar:set>
                 <xar:foreach in="$results" key="$pid" value="$post">
                 <tr class="#$rowclass#">
-                    <xar:template type="module" module="crispbb" file="topic-reply-row" subdata="array('posterlist' =&gt; $posterlist, 'userprops' =&gt; $userprops, 'post' =&gt; $post, 'noform' =&gt; true)" />
+                    <xar:template type="module" module="crispbb" file="topic-reply-row" subdata="array('posterlist' =&gt; $posterlist, 'userprops' =&gt; array(), 'post' =&gt; $post, 'noform' =&gt; true)" />
                 </tr>
                 <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
             </xar:foreach>

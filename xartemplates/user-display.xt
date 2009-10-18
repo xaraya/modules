@@ -3,7 +3,9 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:style scope="module" module="crispbb" />
 <xar:comment>If you want to display some roles dd items for your users, you can use the list of uids contained in $uidlist to get all the dd for the users back at once, like so...</xar:comment>
+<!--
 <xar:data-getitems name="userprops" value="userdd" module="roles" itemids="$uidlist" fieldlist="website,avatar,location,signature,icq,msnm,yim,aim" />
+-->
 <div class="xar-mod-head">
     <span class="xar-mod-title">crispBB Forums</span>
 </div>
@@ -56,6 +58,7 @@
         #$hookoutput['crispsubs']#
     </xar:if>
     <xar:comment>If you hooked dynamic data to topics, you may want to retrieve it, below is an example of how. NOTE: this is the same data that will be shown in the first topic post, but, like the other hooks, you may have occasion to show some dd here instead of in the post itself (eg, when not displaying the first page).</xar:comment>
+    <!--
     <xar:if condition="xarModIsHooked('dynamicdata','crispbb',$topicstype)">
         <xar:data-getitem name="topicprops" module="crispbb" itemtype="$topicstype" itemid="$tid" />
         <xar:if condition="!empty($topicprops)">
@@ -67,6 +70,7 @@
             </div>
          </xar:if>
     </xar:if>
+    -->
     <div>
     <span class="xar-floatleft">
     <xar:template type="module" file="user-view-menu" />
