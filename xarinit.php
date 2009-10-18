@@ -293,7 +293,7 @@ function crispbb_init()
 
     $itemtypes = DataObjectMaster::getObject(array('name' => 'crispbb_itemtypes'));
     $components = array('forum', 'topics', 'posts');
-    foreach ($components as $component => $label)
+    foreach ($components as $component)
         $basetypes[$component] = $itemtypes->createItem(array('fid' => 0, 'component' => $component));
 
 # --------------------------------------------------------
