@@ -128,8 +128,9 @@ function categories_init()
 
     # --------------------------------------------------
 
+    sys::import('xaraya.structures.query');
     /* Don't implement for now
-    $q = new xarQuery();
+    $q = new Query();
     $query = "DROP TABLE IF EXISTS " . $prefix . "_categories_linkage_summary";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_categories_linkage_summary (
@@ -142,7 +143,7 @@ function categories_init()
     if (!$q->run($query)) return;
     */
 
-    $q = new xarQuery();
+    $q = new Query();
     $query = "DROP TABLE IF EXISTS " . $prefix . "_categories_basecategories";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_categories_basecategories (
