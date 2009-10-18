@@ -42,7 +42,7 @@ function crispbb_user_view($args)
     }
 
     if ($forums[$fid]['ftype'] == 1) {
-        $redirecturl = $forums[$fid]['redirected']['redirecturl'];
+        $redirecturl = $forums[$fid]['redirected'];
         xarResponse::Redirect($redirecturl);
     }
 

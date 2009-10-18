@@ -40,7 +40,6 @@ function crispbb_admin_modify($args)
     $basecid = count($basecats) > 0 ? $basecats[0]['category_id'] : null;
     if ($itemid != $fid)
         return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
-
     if (empty($data['forum']->userLevel))
         return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
 
@@ -82,12 +81,12 @@ function crispbb_admin_modify($args)
                     $data['forum']->properties['category']->invalid = xarML("Forums cannot be added to the base forum category");
                 }
                 $andvalid = false;
+                if (!empty($settingsfields)) {
+                    $data['settings']->setFieldList($settingsfields);
+                }
+                $andvalid = $data['settings']->checkInput(array(), true);
                 // see if user switched forum types
                 if ($data['forum']->properties['ftype']->value == $ftype) {
-                    if (!empty($settingsfields)) {
-                        $data['settings']->setFieldList($settingsfields);
-                    }
-                    $andvalid = $data['settings']->checkInput();
                     if (in_array('icondefault', $settingsfields)) {
                         $iconfolder = $data['settings']->properties['iconfolder']->value;
                         $iconlist = xarMod::apiFunc('crispbb', 'user', 'gettopicicons',
@@ -95,25 +94,37 @@ function crispbb_admin_modify($args)
                         $data['settings']->properties['icondefault']->options = $iconlist;
                         $andvalid = $data['settings']->checkInput();
                     }
-                    $settings = array();
-                    foreach ($data['settings']->properties as $name => $value) {
-                        $settings[$name] = $data['settings']->properties[$name]->value;
+                } else {
+                    $andvalid = false;
+                    if ($data['forum']->properties['ftype']->value == 1) {
+                        $settingsfields = array('redirected');
+                        $layout = 'redirected';
+                    } else {
+                        $settingsfields = array('topicsperpage', 'topicsortorder', 'topicsortfield', 'postsperpage', 'postsortorder', 'hottopicposts', 'hottopichits', 'showstickies', 'showannouncements', 'showfaqs', 'topictitlemin', 'topictitlemax', 'topicdescmin', 'topicdescmax', 'topicpostmin', 'topicpostmax', 'floodcontrol', 'postbuffer', 'topicapproval', 'replyapproval','iconfolder','icondefault');
+                        $layout = 'normal';
                     }
-                    // @TODO: make these properties somehow
-                    foreach ($presets['ftransfields'] as $field => $option) {
-                        if (!isset($settings['ftransforms'][$field]))
-                            $settings['ftransforms'][$field] = array();
-                    }
-                    foreach ($presets['ttransfields'] as $field => $option) {
-                        if (!isset($settings['ttransforms'][$field]))
-                            $settings['ttransforms'][$field] = array();
-                    }
-                    foreach ($presets['ptransfields'] as $field => $option) {
-                        if (!isset($settings['ptransforms'][$field]))
-                            $settings['ptransforms'][$field] = array();
-                    }
+                    $data['settings']->setFieldList($settingsfields);
+                    $data['settings']->layout = $layout;
+                    $andvalid = $data['settings']->checkInput(array(), true);
                 }
-                if (empty($invalid) && $isvalid) {
+                $settings = array();
+                foreach ($data['settings']->properties as $name => $value) {
+                    $settings[$name] = $data['settings']->properties[$name]->value;
+                }
+                // @TODO: make these properties somehow
+                foreach ($presets['ftransfields'] as $field => $option) {
+                    if (!isset($settings['ftransforms'][$field]))
+                        $settings['ftransforms'][$field] = array();
+                }
+                foreach ($presets['ttransfields'] as $field => $option) {
+                    if (!isset($settings['ttransforms'][$field]))
+                        $settings['ttransforms'][$field] = array();
+                }
+                foreach ($presets['ptransfields'] as $field => $option) {
+                    if (!isset($settings['ptransforms'][$field]))
+                        $settings['ptransforms'][$field] = array();
+                }
+                if ($isvalid && $andvalid) {
                     if (!xarSecConfirmAuthKey()) return;
                     $extra = array('fsettings' => serialize($settings));
                     $data['forum']->updateHooks(true);

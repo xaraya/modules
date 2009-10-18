@@ -213,7 +213,7 @@ class Forums extends DataObject
                 }
             }
         } else {
-            $redirecturl = !empty($this->fsettings['redirecturl']) ? $this->fsettings['redirecturl'] : '';
+            $redirecturl = !empty($this->fsettings['redirected']) ? $this->fsettings['redirected'] : '';
             if (!empty($redirecturl)) {
                 $itemlinks['view'] = $redirecturl;
             }
@@ -792,10 +792,11 @@ class ForumsList extends DataObjectList
                 }
             }
         } else {
-            $redirecturl = $this->fsettings['redirecturl'];
+            $check['fsettings'] = unserialize($this->items[$args['itemid']]['fsettings']);
+            $redirecturl = $check['fsettings']['redirected'];
             if (!empty($redirecturl)) {
                 $itemlinks['view'] = array(
-                    $link => $redirecturl,
+                    'link' => $redirecturl,
                     'title' => xarML('View this forum'),
                     'label' => 'View'
                 );

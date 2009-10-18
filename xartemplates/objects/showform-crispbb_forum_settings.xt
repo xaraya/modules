@@ -93,6 +93,10 @@
         </div>
     <xar:elseif condition="$layout eq 'redirected'" />
     <!-- layout for a redirected forum type (ftype = 1)-->
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['redirected']" for="id" />
+            <xar:data-input property="$properties['redirected']" value="$values['redirected']" />
+        </div>
     <xar:else />
         Unknown Layout
     </xar:if>

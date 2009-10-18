@@ -240,5 +240,15 @@
       <seq>23</seq>
       <configuration></configuration>
     </property>
+    <property name="redirected">
+      <id>151</id>
+      <label>redirected</label>
+      <type>url</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>24</seq>
+      <configuration></configuration>
+    </property>
   </properties>
 </object>

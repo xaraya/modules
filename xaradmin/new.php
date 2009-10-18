@@ -100,13 +100,9 @@ function crispbb_admin_new($args)
             $data['forum']->properties['category']->invalid = xarML("Forums cannot be added to the base forum category");
         }
 
-        $andvalid = false;
+        $andvalid = $data['settings']->checkInput(array(), true);
         // see if user switched forum types
         if ($data['forum']->properties['ftype']->value == $ftype) {
-            if (!empty($settingsfields)) {
-                $data['settings']->setFieldList($settingsfields);
-            }
-            $andvalid = $data['settings']->checkInput();
             if (!$andvalid) {
                 $invalids = $data['settings']->getInvalids();
                 if (count($invalids) == 1 && key($invalids) == 'icondefault') {
@@ -117,23 +113,35 @@ function crispbb_admin_new($args)
                     $andvalid = $data['settings']->checkInput();
                 }
             }
-            $settings = array();
-            foreach ($data['settings']->properties as $name => $value) {
-                $settings[$name] = $data['settings']->properties[$name]->value;
+        } else {
+            $andvalid = false;
+            if ($data['forum']->properties['ftype']->value == 1) {
+                $settingsfields = array('redirected');
+                $layout = 'redirected';
+            } else {
+                $settingsfields = array('topicsperpage', 'topicsortorder', 'topicsortfield', 'postsperpage', 'postsortorder', 'hottopicposts', 'hottopichits', 'showstickies', 'showannouncements', 'showfaqs', 'topictitlemin', 'topictitlemax', 'topicdescmin', 'topicdescmax', 'topicpostmin', 'topicpostmax', 'floodcontrol', 'postbuffer', 'topicapproval', 'replyapproval','iconfolder','icondefault');
+                $layout = 'normal';
             }
-            // @TODO: make these properties somehow
-            foreach ($presets['ftransfields'] as $field => $option) {
-                if (!isset($settings['ftransforms'][$field]))
-                    $settings['ftransforms'][$field] = array();
-            }
-            foreach ($presets['ttransfields'] as $field => $option) {
-                if (!isset($settings['ttransforms'][$field]))
-                    $settings['ttransforms'][$field] = array();
-            }
-            foreach ($presets['ptransfields'] as $field => $option) {
-                if (!isset($settings['ptransforms'][$field]))
-                    $settings['ptransforms'][$field] = array();
-            }
+            $data['settings']->setFieldList($settingsfields);
+            $data['settings']->layout = $layout;
+            $andvalid = $data['settings']->checkInput(array(), true);
+        }
+        $settings = array();
+        foreach ($data['settings']->properties as $name => $value) {
+            $settings[$name] = $data['settings']->properties[$name]->value;
+        }
+        // @TODO: make these properties somehow
+        foreach ($presets['ftransfields'] as $field => $option) {
+            if (!isset($settings['ftransforms'][$field]))
+                $settings['ftransforms'][$field] = array();
+        }
+        foreach ($presets['ttransfields'] as $field => $option) {
+            if (!isset($settings['ttransforms'][$field]))
+                $settings['ttransforms'][$field] = array();
+        }
+        foreach ($presets['ptransfields'] as $field => $option) {
+            if (!isset($settings['ptransforms'][$field]))
+                $settings['ptransforms'][$field] = array();
         }
         // only update if both the forum and settings objects are valid
         if ($isvalid && $andvalid) {

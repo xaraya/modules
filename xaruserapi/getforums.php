@@ -279,7 +279,7 @@ function crispbb_userapi_getforums($args)
                 // TODO: deprecate this, use viewforumurl instead
                 $forum['forumviewurl'] = xarModURL('crispbb', 'user', 'view', array('fid' => $forum['fid']));
             } else {
-                $redirecturl = !empty($forum['redirected']['redirecturl']) ? $forum['redirected']['redirecturl'] : '';
+                $redirecturl = !empty($forum['redirected']) ? $forum['redirected'] : '';
                 if (!empty($redirecturl)) {
                     $forum['viewforumurl'] = $redirecturl;
                     $forum['forumviewurl'] = $redirecturl;
