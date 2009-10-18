@@ -92,10 +92,12 @@
 <p><strong>Important tag in user-view.xt:</strong></p>
 
 <pre>&lt;xar:data-view object="dyn_example" sort="$sort"
+<pre>&lt;xar:data-view objectname="dyn_example" tplmodule="dyn_example" /&gt;</pre>
  startnum="$startnum" numitems="$items_per_page"
  tplmodule="dyn_example" layout="list" /&gt;</pre>
 
 <xar:data-view object="dyn_example" numitems="$items_per_page" startnum="$startnum" sort="$sort" tplmodule="dyn_example" layout="list" />
+<xar:data-view objectname="dyn_example" tplmodule="dyn_example" />
 
         </div>
         
@@ -111,8 +113,10 @@ As in Approach ##2, we have set some variables in view.php for use in #$userview
 
 <p>In #$userviewlink#, we retrieve items with... </p>
 
-<blockquote><pre>&lt;xar:data-getitems object="$mylist" value="values" name="properties" 
+<blockquote><pre>&lt;xar:data-getitems object="$mylist" values="$values"
     numitems="$items_per_page" startnum="$startnum" sort="$sort" /&gt;
+    properties="$properties" numitems="$items_per_page" 
+    startnum="$startnum" /&gt;
 </pre></blockquote>
 
 ...and then iterate over the items with <pre>&lt;xar:foreach /&gt;</pre>.
@@ -120,6 +124,7 @@ As in Approach ##2, we have set some variables in view.php for use in #$userview
 <p><strong>Output:</strong></p>
 
 <!-- FIXME: this tag should work with object[name]="dyn_example", but there you need name="$properties" value="$values" with $ -->
+<xar:data-getitems object="$mylist" values="$values" properties="$properties" numitems="$items_per_page" startnum="$startnum" />
 
 <xar:data-getitems object="$mylist" value="values" name="properties" numitems="$items_per_page" startnum="$startnum" sort="$sort" />
 
@@ -200,4 +205,4 @@ Our module function passes a labels array and an items array to #$userviewlink#,
         showtab (1,4)
     </script>
 
-</xar:template>
+</xar:template>

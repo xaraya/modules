@@ -7,7 +7,7 @@
         Note that here we usethe object's name in the tag rather than the object itself.
     </xar:comment>
 
-    <xar:data-getitems name="$properties" value="$items" object="dyn_example" numitems="$numitems" sort="name" />
+    <xar:data-getitems properties="$properties" values="$items" objectname="dyn_example" numitems="$numitems" sort="name" />
 
     <p>
         <xar:if condition="count($items) ge 1">
