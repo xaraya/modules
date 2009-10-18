@@ -128,8 +128,8 @@ function categories_init()
 
     # --------------------------------------------------
 
-    /* Don't implement for now
     sys::import('xaraya.structures.query');
+    /* Don't implement for now
     $q = new Query();
     $query = "DROP TABLE IF EXISTS " . $prefix . "_categories_linkage_summary";
     if (!$q->run($query)) return;
