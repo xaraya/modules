@@ -43,12 +43,17 @@ function crispbb_init()
     $hookstable     = $tables['crispbb_hooks'];
     $posterstable   = $tables['crispbb_posters'];
 
+
+
     // Create tables inside a transaction
     try {
         $charset = xarSystemVars::get(sys::CONFIG, 'DB.Charset');
         $dbconn->begin();
-
+        sys::import('xaraya.structures.query');
+        $q = new Query();
         // forums table
+        $query = "DROP TABLE IF EXISTS " . $forumstable;
+        if (!$q->run($query)) return;
         $fields = array(
             'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
             'fstatus' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
@@ -92,6 +97,8 @@ function crispbb_init()
         $dbconn->Execute($query);
 
         // itemtypes table
+        $query = "DROP TABLE IF EXISTS " . $itemtypestable;
+        if (!$q->run($query)) return;
         $fields = array(
             'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
             'fid' => array('type' => 'integer', 'unsigned' => true, 'null' => false),
@@ -109,6 +116,8 @@ function crispbb_init()
         $dbconn->Execute($query);
 
         // topics table
+        $query = "DROP TABLE IF EXISTS " . $topicstable;
+        if (!$q->run($query)) return;
         $fields = array(
             'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
             'fid' => array('type' => 'integer', 'unsigned' => true, 'null' => false),
@@ -164,6 +173,8 @@ function crispbb_init()
         $dbconn->Execute($query);
 
         // posts table
+        $query = "DROP TABLE IF EXISTS " . $poststable;
+        if (!$q->run($query)) return;
         $fields = array(
             'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
             'tid' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
@@ -208,6 +219,8 @@ function crispbb_init()
         $dbconn->Execute($query);
 
         // hooks table
+        $query = "DROP TABLE IF EXISTS " . $hookstable;
+        if (!$q->run($query)) return;
         $fields = array(
             'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
             'moduleid' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
@@ -247,6 +260,8 @@ function crispbb_init()
         $dbconn->Execute($query);
 
         // posters table
+        $query = "DROP TABLE IF EXISTS " . $posterstable;
+        if (!$q->run($query)) return;
         // @TODO: this could be waaaaay more useful (ranking, karma, etc)
         $fields = array(
             'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
