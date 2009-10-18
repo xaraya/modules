@@ -35,7 +35,7 @@
         </xar:if>
         <xar:if condition="!empty($userpanel['timeonline'])">
         <li>
-            Visits Total:
+            Visits (#$userpanel['numvisits']#):
             <strong>
             <xar:base-timesince stamp="$userpanel['onlinestamp']" />
             </strong>

@@ -38,7 +38,7 @@ Welcome back,
     </xar:if>
     <xar:if condition="!empty($totalvisit)">
     <li>
-        Visits Total:
+        Visits<xar:if condition="!empty($numvisits)"> (#$numvisits#)</xar:if>:
         <strong>
         <xar:base-timesince stamp="$totalvisit" />
         </strong>

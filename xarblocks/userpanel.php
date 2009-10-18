@@ -71,6 +71,7 @@ class UserPanelBlock extends BasicBlock implements iBlock
         $vars['visitstart'] = $userpanel['visitstart'];
         }
         if ($vars['showtotalvisit']) {
+        $vars['numvisits'] = $userpanel['numvisits'];
         $vars['totalvisit'] = $userpanel['onlinestamp'];
         }
         if ($vars['showtimenow']) {
