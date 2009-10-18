@@ -34,7 +34,9 @@
     <div class="xar-mod-body">
         <h2>List of Items</h2>
 
-<p>Below, four different approaches to listing items are demonstrated.  The approaches vary with respect to the template code used and the output.  By referring to these examples, and looking at the files in the xartemplates directory, you will understand how to display lists of items, whether it be for public consumption or in your backend interfaces.</p>
+        <p>
+            Below, four different approaches to listing items are demonstrated.  The approaches vary with respect to the template code used and the output.  By referring to these examples, and looking at the files in the xartemplates directory, you will understand how to display lists of items, whether it be for public consumption or in your backend interfaces.
+        </p>
 
         <ul class="xar-tabs xar-alt xar-norm-outline" style="clear:both">
             <li id="tab-1">
@@ -91,13 +93,11 @@
 
 <p><strong>Important tag in user-view.xt:</strong></p>
 
-<pre>&lt;xar:data-view object="dyn_example" sort="$sort"
-<pre>&lt;xar:data-view objectname="dyn_example" tplmodule="dyn_example" /&gt;</pre>
+<pre>&lt;xar:data-view objectname="dyn_example" sort="$sort"
  startnum="$startnum" numitems="$items_per_page"
  tplmodule="dyn_example" layout="list" /&gt;</pre>
 
-<xar:data-view object="dyn_example" numitems="$items_per_page" startnum="$startnum" sort="$sort" tplmodule="dyn_example" layout="list" />
-<xar:data-view objectname="dyn_example" tplmodule="dyn_example" />
+<xar:data-view objectname="dyn_example" numitems="$items_per_page" startnum="$startnum" sort="$sort" tplmodule="dyn_example" layout="list" />
 
         </div>
         
@@ -113,20 +113,17 @@ As in Approach ##2, we have set some variables in view.php for use in #$userview
 
 <p>In #$userviewlink#, we retrieve items with... </p>
 
-<blockquote><pre>&lt;xar:data-getitems object="$mylist" values="$values"
-    numitems="$items_per_page" startnum="$startnum" sort="$sort" /&gt;
+<blockquote><pre>&lt;xar:data-getitems objectname="dyn_example" values="$values"
     properties="$properties" numitems="$items_per_page" 
-    startnum="$startnum" /&gt;
+    startnum="$startnum" sort="$sort" /&gt;
 </pre></blockquote>
 
 ...and then iterate over the items with <pre>&lt;xar:foreach /&gt;</pre>.
 
 <p><strong>Output:</strong></p>
 
-<!-- FIXME: this tag should work with object[name]="dyn_example", but there you need name="$properties" value="$values" with $ -->
-<xar:data-getitems object="$mylist" values="$values" properties="$properties" numitems="$items_per_page" startnum="$startnum" />
+<xar:data-getitems objectname="dyn_example" values="$values" properties="$properties" numitems="$items_per_page" startnum="$startnum" sort="$sort" />
 
-<xar:data-getitems object="$mylist" value="values" name="properties" numitems="$items_per_page" startnum="$startnum" sort="$sort" />
 
             <table>
                 <tr>
@@ -205,4 +202,4 @@ Our module function passes a labels array and an items array to #$userviewlink#,
         showtab (1,4)
     </script>
 
-</xar:template>
+</xar:template>
