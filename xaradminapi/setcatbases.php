@@ -30,7 +30,8 @@ function categories_adminapi_setcatbases($args)
     $xartable = xarDB::getTables();
 
     // Remove all the entries for this module and itemtype
-    $q = new xarQuery('DELETE', $xartable['categories_basecategories']);
+    sys::import('xaraya.structures.query');
+    $q = new Query('DELETE', $xartable['categories_basecategories']);
     $q->eq('module_id',xarMod::getRegId($module));
     if (isset($itemtype)) {
         $q->eq('itemtype',$itemtype);
@@ -59,7 +60,7 @@ function categories_adminapi_setcatbases($args)
     foreach ($cids as $cid) {
         if (empty($catinfo[$cid])) continue;
 
-        $q = new xarQuery('INSERT', $xartable['categories_basecategories']);
+        $q = new Query('INSERT', $xartable['categories_basecategories']);
         $q->addfield('module_id',xarMod::getRegId($module));
         $q->addfield('itemtype',$itemtype);
 // CHECKME: allow passing base category name too someday ?
