@@ -36,6 +36,7 @@ function categories_userapi_getallcatbases($args)
     }
 */
 
+    sys::import('xaraya.structures.query');
     $q = new Query('SELECT');
     $q->addtable($xartable['categories_basecategories'],'base');
     $q->addtable($xartable['categories'],'category');
