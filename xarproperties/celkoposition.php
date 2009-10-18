@@ -318,8 +318,9 @@ class CelkoPositionProperty extends DataProperty
         return $point_of_insertion;
     }
     
-    function getiteminfo($id) {
-        sys::import('modules.query.class.query');
+    function getiteminfo($id) 
+    {
+        sys::import('xaraya.structures.query');
         $q = new Query('SELECT', $this->initialization_itemstable);
         $q->eq('id',$id);
         if (!$q->run()) return;

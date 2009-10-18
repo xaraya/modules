@@ -25,7 +25,6 @@ function categories_adminapi_setcatbases($args)
         $cids = array();
     }
 
-    sys::import('modules.query.class.query');
     xarMod::loadDbInfo('categories');
     $xartable = xarDB::getTables();
 

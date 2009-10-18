@@ -18,7 +18,6 @@
 
 function categories_userapi_getallcatbases($args)
 {
-    sys::import('modules.query.class.query');
     extract($args);
     $xartable = xarDB::getTables();
 
