@@ -124,6 +124,9 @@ function crispbb_admin_view($args)
             'secLevels' => $secLevels
         ));
 
+    if (empty($categories) && ($userLevel == 800 && xarSecurityCheck('ManageCategories', 0)))
+        $data['newcat'] = xarModURL('crispbb', 'admin', 'newcat');
+
     $pageTitle = xarML('Manage Forums');
     // store function name for use by admin-main as an entry point
     xarSessionSetVar('crispbb_adminstartpage', 'view');

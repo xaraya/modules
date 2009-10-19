@@ -76,7 +76,7 @@
             </table>
         </xar:foreach>
     <xar:else />
-        No Categories Found!
+        No Categories Found! <xar:if condition="!empty($newcat)"><a href="#$newcat#" title="#xarML('Create a new forum category')#">Create a category</a></xar:if>
     </xar:if>
 </div>
 <div class="xar-mod-foot xar-align-center">
