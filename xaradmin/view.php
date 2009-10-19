@@ -90,7 +90,7 @@ function crispbb_admin_view($args)
                if ($ci < count($categories)) {
                     $catinfo['movedown'] = LinkCache::getCached('admin_ordercats_down', 'itemid', $cid);
                     if (!$catinfo['movedown']) {
-                        $catinfo['movedown'] = xarModURL('crispbb', 'admin', 'ordercats', array('itemid' => $cid, 'direction' => 'up', 'authid' => $data['authid']));
+                        $catinfo['movedown'] = xarModURL('crispbb', 'admin', 'ordercats', array('itemid' => $cid, 'direction' => 'down', 'authid' => $data['authid']));
                         LinkCache::setCached('admin_order_cats_down', 'itemid', $cid, $catinfo['movedown']);
                     }
                }
