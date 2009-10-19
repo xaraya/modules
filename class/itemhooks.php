@@ -102,6 +102,10 @@ class HitcountItemHooks extends ItemHookCallHandler
         $subject->hookoutput[$this->modname] = $hookoutput;
         // no need to return anything here
 
+        // restrict fun & games to dd ui handler for now :-)
+        list($modName, $modType, $funcName) = xarRequest::getInfo();
+        if (empty($modType) || $modType != 'object') return;
+
 // CHECKME: and/or add property to $subject with hitcount output for this item ?
         $name = 'hitcount_hook';
         $propinfo = array('name' => $name,
@@ -133,6 +137,10 @@ class HitcountItemHooks extends ItemHookCallHandler
             // there's nothing we can do for traditional modules calling hooks with extraInfo
             return;
         }
+
+        // restrict fun & games to dd ui handler for now :-)
+        list($modName, $modType, $funcName) = xarRequest::getInfo();
+        if (empty($modType) || $modType != 'object') return;
 
 // CHECKME: add property to $subjectlist with hitcount for all $subjectlist->itemids, and/or adapt $subjectlist->items ?
         $name = 'hitcount_hook';
