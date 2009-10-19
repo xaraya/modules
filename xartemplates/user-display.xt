@@ -180,7 +180,7 @@
             <xar:set name="rownumber">!empty($startnum) ? $startnum : 1</xar:set>
             <xar:foreach in="$posts" key="$pid" value="$post">
             <tr class="#$rowclass#">
-                <xar:template type="module" module="crispbb" file="topic-reply-row" subdata="array('posterlist' =&gt; $posterlist, 'userprops' =&gt; $userprops, 'post' =&gt; $post, 'rownumber' =&gt; $rownumber)" />
+                <xar:template type="module" module="crispbb" file="topic-reply-row" subdata="array('posterlist' =&gt; $posterlist, 'userprops' =&gt; array(), 'post' =&gt; $post, 'rownumber' =&gt; $rownumber)" />
             </tr>
             <xar:comment>Add some zebra striping, and set the next rownumber</xar:comment>
             <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>

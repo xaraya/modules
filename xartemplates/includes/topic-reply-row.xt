@@ -60,11 +60,13 @@
     Joined:
     <xar:template type="module" module="crispbb" file="user-timestamp" subdata="array('timestamp' =&gt; $posterlist[$post['powner']]['date_reg'], 'timeorder' =&gt; 'dateonly')" />
     <xar:comment>If we found some dd for this user we can display it here</xar:comment>
+    <!--
     <xar:if condition="isset($userprops.location) and !empty($userdd[$post['powner']]['location'])">
         <br />
         Location:
         <xar:data-output property="$userprops['location']" value="$userdd[$post['powner']]['location']" />
     </xar:if>
+    -->
     <br />
     <a href="#xarModURL('crispbb', 'user', 'search', array('towner' => $post['powner']))#">
         Other Topics
@@ -147,11 +149,13 @@
     </xar:if>
     -->
     <xar:comment>You might want to show the posters signature here</xar:comment>
+    <!--
     <xar:if condition="isset($userprops['signature']) and !empty($userdd[$post['powner']]['signature'])">
         <p class="xar-border-thintop xar-border-dotted xar-border-nonesides xar-border-nonebottom">
             <xar:data-output property="$userprops['signature']" value="$userdd[$post['powner']]['signature']" />
         </p>
     </xar:if>
+    -->
     <xar:comment>Display available options for this post</xar:comment>
     <div class="xar-align-right xar-padding-thicksides">
         <xar:if condition="!empty($post['approvetopicurl'])">
