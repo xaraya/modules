@@ -81,14 +81,14 @@ function crispbb_admin_view($args)
             }
             if ($userLevel == 800 && xarSecurityCheck('ManageCategories', 0)) {
                if ($ci > 1) {
-                    $catinfo['moveup'] = LinkCache::getCached('admin_ordercats_up', 'itemid', $cid);
+                    $catinfo['moveup'] = false;//LinkCache::getCached('admin_ordercats_up', 'itemid', $cid);
                     if (!$catinfo['moveup']) {
                         $catinfo['moveup'] = xarModURL('crispbb', 'admin', 'ordercats', array('itemid' => $cid, 'direction' => 'up', 'authid' => $data['authid']));
                         LinkCache::setCached('admin_ordercats_up', 'itemid', $cid, $catinfo['moveup']);
                     }
                }
                if ($ci < count($categories)) {
-                    $catinfo['movedown'] = LinkCache::getCached('admin_ordercats_down', 'itemid', $cid);
+                    $catinfo['movedown'] = false;//LinkCache::getCached('admin_ordercats_down', 'itemid', $cid);
                     if (!$catinfo['movedown']) {
                         $catinfo['movedown'] = xarModURL('crispbb', 'admin', 'ordercats', array('itemid' => $cid, 'direction' => 'down', 'authid' => $data['authid']));
                         LinkCache::setCached('admin_order_cats_down', 'itemid', $cid, $catinfo['movedown']);
