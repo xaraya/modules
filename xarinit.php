@@ -315,13 +315,22 @@ function crispbb_init()
 #
 # Create Base Category
 #
-    $basecid = xarMod::apiFunc('categories', 'admin', 'create',
-        array(
-            'name' => 'crispBB Forums',
-            'description' => 'crispBB Base Category',
-            'parent_id' => 0,
-        ));
-
+    $catName = 'crispBB Forums';
+    try {
+        $catExists = xarModAPIFunc('categories', 'user', 'getcatbyname', array('name' => $catName));
+        if (!empty($catExists[0]))
+            $basecid = $catExists[0]['cid'];
+    } catch (Exception $e) {
+        $basecid = 0;
+    }
+    if (empty($basecid)) {
+        $basecid = xarMod::apiFunc('categories', 'admin', 'create',
+            array(
+                'name' => $catName,
+                'description' => 'crispBB Base Category',
+                'parent_id' => 0,
+            ));
+    }
     if (!xarMod::apiFunc('categories', 'admin', 'setcatbases',
         array('module' => $module, 'cids' => array($basecid)))) return;
 
