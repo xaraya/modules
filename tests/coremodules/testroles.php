@@ -226,7 +226,7 @@
         {
             try{
                 $this->expected = '[exception]';
-                $args = array('state' => ROLES_STATE_ACTIVE);
+                $args = array('state' => Roles_Master::ROLES_RSTATE_ACTIVE);
                 $this->actual = xarMod::apiFunc('roles', 'admin', 'purge', $args);
                 $res = $this->assertSame($this->actual,$this->expected,"Call with bad state param throws exception");
                 return $res;
@@ -291,7 +291,7 @@
         {
             try{
                 $this->expected = '[exception]';
-                $args = array('state' => ROLES_STATE_ACTIVE, 'id' => 12345678);
+                $args = array('state' => Roles_Master::ROLES_RSTATE_ACTIVE, 'id' => 12345678);
                 $this->actual = xarMod::apiFunc('roles', 'admin', 'stateupdate', $args);
                 $res = $this->assertSame($this->actual,$this->expected,"Call with bad id param throws an exception");
                 return $res;
