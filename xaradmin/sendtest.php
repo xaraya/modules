@@ -8,7 +8,7 @@ function registration_admin_sendtest()
     $data['realname'] = xarUserGetVar('name');
     if (xarModIsAvailable('mailer')) {
         if ($data['for'] == 'admin') {
-            $data['result'] = xarModAPIFunc('mailer','user','send',
+            $data['result'] = xarMod::apiFunc('mailer','user','send',
                             array(
                                 'name'               => xarModVars::get('registration', 'adminmessage'),
                                 'recipientname'      => xarModVars::get('mail', 'adminname'),
@@ -16,7 +16,7 @@ function registration_admin_sendtest()
                             )
                         );
         } elseif ($data['for'] == 'user') {
-            $data['result'] = xarModAPIFunc('mailer','user','send',
+            $data['result'] = xarMod::apiFunc('mailer','user','send',
                             array(
                                 'name'               => xarModVars::get('registration', 'usermessage'),
                                 'recipientname'      => $data['realname'],

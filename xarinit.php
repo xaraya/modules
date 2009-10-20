@@ -48,7 +48,7 @@ function registration_init()
                    'registration_users',
                      );
 
-    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
 /** --------------------------------------------------------
  * Define modvars
@@ -89,7 +89,7 @@ function registration_init()
         xarModVars::set('roles','defaultregmodule','registration');
     }
 
-    xarModVars::set('registration','defaultuserstate',xarRoles::ROLES_STATE_ACTIVE);
+    xarModVars::set('registration','defaultuserstate',Roles_Master::ROLES_RSTATE_ACTIVE);
 
     $regobject = DataObjectMaster::getObjectInfo(array('name' => 'registration_users'));
     xarModVars::set('registration', 'registrationobject', $regobject['name']);
@@ -118,7 +118,7 @@ president@whitehouse.gov';
     $disallowedips = serialize($ips);
     xarModVars::set('registration', 'disallowedips', $disallowedips);
    // Register blocks - same as authsystem but has a registration link
-    $tid = xarModAPIFunc('blocks',
+    $tid = xarMod::apiFunc('blocks',
             'admin',
             'register_block_type',
             array('modName' => 'registration',
@@ -163,7 +163,7 @@ function registration_upgrade($oldVersion)
 function registration_delete()
 {
    // UnRegister blocks
-    if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type',
+    if (!xarMod::apiFunc('blocks', 'admin', 'unregister_block_type',
                        array('modName'  => 'registration',
                              'blockType'=> 'rlogin'))) return;
 
@@ -175,7 +175,7 @@ function registration_delete()
     }
 
     $module = 'registration';
-    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => $module));
+    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
 }
 
 ?>

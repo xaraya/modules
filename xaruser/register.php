@@ -120,7 +120,7 @@ function registration_user_register()
 //            if (!xarSecConfirmAuthKey()) return;
 
             $ip = xarServerGetVar('REMOTE_ADDR');
-            $invalid = xarModApiFunc('registration','user','checkvar', array('type'=>'ip', 'var'=>$ip));
+            $invalid = xarMod::apiFunc('registration','user','checkvar', array('type'=>'ip', 'var'=>$ip));
             if (!empty($invalid)) {
                 xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($invalid));
                 return;
@@ -156,20 +156,20 @@ function registration_user_register()
 
             $values = $object->getFieldValues();
             if (xarModVars::get('roles','uniqueemail')) {
-                $user = xarModAPIFunc('roles','user', 'get', array('email' => $email));
+                $user = xarMod::apiFunc('roles','user', 'get', array('email' => $email));
                 if ($user) throw new DuplicateException(array('email',$email));
             }
 
             // agree to terms (kind of dumb, but for completeness)
-            $invalid['agreetoterms'] = xarModApiFunc('registration','user','checkvar', array('type'=>'agreetoterms', 'var'=>$agreetoterms));
+            $invalid['agreetoterms'] = xarMod::apiFunc('registration','user','checkvar', array('type'=>'agreetoterms', 'var'=>$agreetoterms));
 
             // Check password and set
             // @todo find a better way to turn choose own password on and off that works nicely with dd objects
             //$pass = '';
             if (xarModVars::get('registration', 'chooseownpassword')) {
-                /*$invalid['pass1'] = xarModApiFunc('registration','user','checkvar', array('type'=>'pass1', 'var'=>$pass1 ));
+                /*$invalid['pass1'] = xarMod::apiFunc('registration','user','checkvar', array('type'=>'pass1', 'var'=>$pass1 ));
                 if (empty($invalid['pass1'])) {
-                    $invalid['pass2'] = xarModApiFunc('registration','user','checkvar', array('type'=>'pass2', 'var'=>array($pass1,$pass2) ));
+                    $invalid['pass2'] = xarMod::apiFunc('registration','user','checkvar', array('type'=>'pass2', 'var'=>array($pass1,$pass2) ));
                 }
                 if (empty($invalid['pass1']) && empty($invalid['pass2']))   {
                     $pass = $pass1;
@@ -246,13 +246,13 @@ function registration_user_register()
 
             // Do we need admin activation of the account?
             if (xarModVars::get('registration', 'explicitapproval')) {
-                $fieldvalues['state'] = xarRoles::ROLES_STATE_PENDING;
+                $fieldvalues['state'] = Roles_Master::ROLES_RSTATE_PENDING;
             }
 
             //Get the default auth module data
             //this 'authmodule' was introduced previously (1.1 merge ?)
             // - the column in roles re default auth module that this apparently used to refer to is redundant
-            $defaultauthdata     = xarModAPIFunc('roles', 'user', 'getdefaultauthdata');
+            $defaultauthdata     = xarMod::apiFunc('roles', 'user', 'getdefaultauthdata');
             $defaultloginmodname = $defaultauthdata['defaultloginmodname'];
             $authmodule          = $defaultauthdata['defaultauthmodname'];
 
@@ -265,10 +265,10 @@ function registration_user_register()
 
             // Do we require user validation of account by email?
             if (xarModVars::get('registration', 'requirevalidation')) {
-                $fieldvalues['state'] = xarRoles::ROLES_STATE_NOTVALIDATED;
+                $fieldvalues['state'] = Roles_Master::ROLES_RSTATE_NOTVALIDATED;
 
                 // Create confirmation code
-                $confcode = xarModAPIFunc('roles', 'user', 'makepass');
+                $confcode = xarMod::apiFunc('roles', 'user', 'makepass');
             } else {
                 $confcode = '';
             }
@@ -278,7 +278,7 @@ function registration_user_register()
 
             // Create a password and add it if the user can't create one himself
             if (!xarModVars::get('registration', 'chooseownpassword')){
-                $pass = xarModAPIFunc('roles', 'user', 'makepass');
+                $pass = xarMod::apiFunc('roles', 'user', 'makepass');
                 $fieldvalues['password'] = $pass;
                 $object->setFieldValues($fieldvalues);
             }
@@ -293,7 +293,7 @@ function registration_user_register()
             xarModUserVars::set('roles','allowemail', false, $id);
 
             $hookdata = $fieldvalues;
-            $hookdata['itemtype'] = xarRoles::ROLES_USERTYPE;
+            $hookdata['itemtype'] = Roles_Master::ROLES_RUSERTYPE;
             $hookdata['module'] = 'registration';
             $hookdata['itemid'] = $id;
             xarModCallHooks('item', 'create', $id, $hookdata);
@@ -308,23 +308,23 @@ function registration_user_register()
             } 
             
             // go to appropriate page, based on state
-            if ($fieldvalues['state'] == xarRoles::ROLES_STATE_ACTIVE) {
+            if ($fieldvalues['state'] == Roles_Master::ROLES_RSTATE_ACTIVE) {
                 // log in and redirect
 
                 /* Need a more general definition of what it means to "log in"
-                xarModAPIFunc('authsystem', 'user', 'login',
+                xarMod::apiFunc('authsystem', 'user', 'login',
                         array('uname'      => $uname,
                               'pass'       => $pass,
                               'rememberme' => 0));
                 */
                 $data = xarTplModule('registration','user', 'accountstate', array('state' => $fieldvalues['state']));
 
-            } else if ($fieldvalues['state'] == xarRoles::ROLES_STATE_PENDING) {
+            } else if ($fieldvalues['state'] == Roles_Master::ROLES_RSTATE_PENDING) {
                 // If we are still waiting on admin to review pending accounts send the user to a page to notify them
                 // This page is for options of validation alone, validation and pending, and pending alone
                 $data = xarTplModule('roles','user', 'getvalidation', $data);
 
-            } else { // $state == xarRoles::ROLES_STATE_NOTVALIDATED
+            } else { // $state == Roles_Master::ROLES_RSTATE_NOTVALIDATED
                 $data = xarTplModule('registration','user', 'waitingconfirm');
             }
 

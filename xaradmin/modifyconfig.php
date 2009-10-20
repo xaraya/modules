@@ -30,7 +30,7 @@ function registration_admin_modifyconfig()
                     // create the dropdown of groups for the template display
                     // get the array of all groups
                     // remove duplicate entries from the list of groups
-                    $roles  = new xarRoles();
+                    $roles  = new Roles_Master();
                     $groups = array();
                     $names  = array();
                     foreach($roles->getgroups() as $temp) {

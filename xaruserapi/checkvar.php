@@ -64,7 +64,7 @@ function registration_userapi_checkvar($args)
                 $invalid = xarML('Your username is too long.');
             } else {
                 // check for duplicate usernames
-                $user = xarModAPIFunc('roles', 'user', 'get',
+                $user = xarMod::apiFunc('roles', 'user', 'get',
                                 array('uname' => $username));
 
                 if ($user != false) {
@@ -115,7 +115,7 @@ function registration_userapi_checkvar($args)
 
                 if (xarModVars::get('registration','uniqueemail')) {
                     // check for duplicate email address
-                    $user = xarModAPIFunc('roles', 'user', 'get',
+                    $user = xarMod::apiFunc('roles', 'user', 'get',
                                array('email' => $email));
                     if ($user != false) {
                         unset($user);

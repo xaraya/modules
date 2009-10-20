@@ -39,7 +39,7 @@ function registration_userapi_notifyuser ($args)
     
     //send the email
     try {
-        xarModAPIFunc('mail', 'admin', 'sendmail',
+        xarMod::apiFunc('mail', 'admin', 'sendmail',
                            array('info'         => $args['email'],
                                  'name'         => $args['name'],
                                  'subject'      => $messagetitle,
