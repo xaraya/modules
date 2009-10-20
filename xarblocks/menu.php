@@ -117,7 +117,7 @@ function xarpages_menublock_display($blockinfo)
         // Set the current page to be the default.
         $pid = $vars['default_pid'];
     }
-
+echo $pid;
     // The page details *may* have been cached, if
     // we are in the xarpages module, or have several
     // blocks on the same page showing the same tree.
