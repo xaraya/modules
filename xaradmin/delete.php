@@ -39,7 +39,7 @@ function hitcount_admin_delete()
 
         $what = '';
         if (!empty($modid)) {
-            $modinfo = xarModGetInfo($modid);
+            $modinfo = xarMod::getInfo($modid);
             if (empty($itemtype)) {
                 $data['modname'] = ucwords($modinfo['displayname']);
             } else {
