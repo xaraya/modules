@@ -284,7 +284,7 @@ function crispbb_userapi_getitemtypes($args)
         // if any changes were made, the admin hooks display will be out of synch
         // first we check if the current request module, type and func is modules admin hooks
         list ($modname, $modtype, $modfunc) = xarRequest::getInfo();
-        if ($modname == 'modules' && $modtype == 'admin' && $modfunc == 'hooks') {
+        if (($modname == 'modules' || $modname == 'hitcount') && $modtype == 'admin' && $modfunc == 'hooks') {
             // we tag a flag onto the redirected url, so we can keep track on redirects
             if (!xarVarFetch('hookupdate', 'isset', $hookupdate, 0, XARVAR_NOT_REQUIRED)) return;
             // 2 is the maximum redirects it should take to get back in synch
@@ -294,7 +294,7 @@ function crispbb_userapi_getitemtypes($args)
                 // indicating the hook module to list, so we fetch that for the return url
                 if (!xarVarFetch('hook', 'isset', $hookarg, NULL, XARVAR_NOT_REQUIRED)) return;
                 // and finally we redirect to the function
-                xarResponse::Redirect(xarModURL('modules', 'admin', 'hooks', array('hook' => $hookarg, 'hookupdate' => $hookupdate++)));
+                xarResponse::Redirect(xarModURL($modname, 'admin', 'hooks', array('hook' => $hookarg, 'hookupdate' => $hookupdate++)));
                 return;
             }
         }
