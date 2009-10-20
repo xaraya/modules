@@ -36,7 +36,7 @@ function hitcount_admin_view()
         $data['numitems'] = 0;
         $data['numhits'] = 0;
         foreach ($modlist as $modid => $itemtypes) {
-            $modinfo = xarModGetInfo($modid);
+            $modinfo = xarMod::getInfo($modid);
             // Get the list of all item types for this module (if any)
             $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                      // don't throw an exception if this function doesn't exist
@@ -70,7 +70,7 @@ function hitcount_admin_view()
         }
         $data['delete'] = xarModURL('hitcount','admin','delete');
     } else {
-        $modinfo = xarModGetInfo($modid);
+        $modinfo = xarMod::getInfo($modid);
         if (empty($itemtype)) {
             $data['modname'] = ucwords($modinfo['displayname']);
             $itemtype = null;

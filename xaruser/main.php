@@ -33,7 +33,7 @@ function hitcount_user_main()
     }
     $modlist = xarMod::apiFunc('hitcount','user','getmodules');
     foreach ($modlist as $modid => $itemtypes) {
-        $modinfo = xarModGetInfo($modid);
+        $modinfo = xarMod::getInfo($modid);
         // Get the list of all item types for this module (if any)
         $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                  // don't throw an exception if this function doesn't exist
