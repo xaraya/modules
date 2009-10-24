@@ -1,0 +1,20 @@
+TODO
+
+comments in...
+
+xaradmin/view.php
+xaradmin/new.php
+xaradmin/modify.php
+
+xaruser/view.php
+xaruser/display.php
+
+
+check interfaces and edit templates as needed for...
+
+admin view
+admin new
+admin modify
+
+user view
+user display

@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- common admin menu for this module - remove link to the current function -->
@@ -25,12 +25,12 @@
 
     <p><strong>Important tag in admin-view.xt:</strong></p>
 
-    <blockquote><pre>&lt;xar:data-view object="$mylist" numitems="$items_per_page" 
+    <blockquote><pre>&lt;xar:data-view objectname="dyn_example" numitems="$items_per_page" 
 startnum="$startnum" tplmodule="dyn_example" 
 template="admin_list" sort="$sortfield . $ascdesc" 
 sortfield="$sortfield" ascdesc="$ascdesc" /&gt;</pre></blockquote>
 
-       <xar:data-view object="$mylist" numitems="$items_per_page" startnum="$startnum" tplmodule="dyn_example" template="admin_list" sort="$sortfield . $ascdesc" sortfield="$sortfield" ascdesc="$ascdesc"  />
+       <xar:data-view objectname="dyn_example" numitems="$items_per_page" startnum="$startnum" tplmodule="dyn_example" template="admin_list" sort="$sortfield . $ascdesc" sortfield="$sortfield" ascdesc="$ascdesc"  />
 
     </div>
 </xar:template>
