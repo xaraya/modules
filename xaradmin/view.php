@@ -17,7 +17,7 @@
 function dyn_example_admin_view()
 {
     if(!xarVarFetch('startnum', 'isset', $data['startnum'], NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('sort',     'isset', $data['sort'],     NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('sortfield',     'isset', $sortfield,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('ascdesc', 'isset', $ascdesc, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Security check - important to do this as early as possible to avoid
@@ -34,11 +34,22 @@ function dyn_example_admin_view()
     // Load the DD master property class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.properties.master');
 
+	if (isset($sortfield)) {
+        $data['sortfield'] = $sortfield;
+    } else {
+        $data['sortfield'] = 'id';
+    }
+
+    if (isset($ascdesc)) {
+        $data['ascdesc'] = ' ' . $ascdesc;
+    } else {
+        $data['ascdesc'] = ' ASC';
+    }
+
     // We have some filters for the items
-    $filters = array('numitems'  => $data['items_per_page'],
-                     'startnum'  => $data['startnum'],
+    $filters = array(
                      'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
-                     'sort'      => $data['sort'],
+					'sort' => $data['sortfield'] . ' ' . $data['ascdesc']
                     );
     
     // Count the items first if you want a full pager - otherwise you'll get simple previous/next links
@@ -50,16 +61,7 @@ function dyn_example_admin_view()
     // pass along the whole object list to the template
     $data['mylist'] = & $mylist;
 
-    if (isset($sortfield)) {
-        $data['sortfield'] = $sortfield;
-    } else {
-        $data['sortfield'] = 'id';
-    }
-    if (isset($ascdesc)) {
-        $data['ascdesc'] = ' ' . $ascdesc;
-    } else {
-        $data['ascdesc'] = ' ASC';
-    }
+
 
     // Return the template variables defined in this function
     return $data;

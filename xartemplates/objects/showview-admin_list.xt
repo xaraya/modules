@@ -37,7 +37,7 @@
                 <xar:set name="arrow">'desc'</xar:set>
             </xar:if>
 
-            <a href="#xarModURL('dyn_example','admin','view', array('sortfield' => $propname, 'ascdesc' => strtoupper($arrow)))##output"><img src="&xar-baseurl;modules/base/xarimages/icons/sort-#$arrow#.png" width="16" height="16" alt="reverse order" /></a>
+            <a href="#xarModURL('dyn_example','admin','view', array('sortfield' => $propname, 'ascdesc' => strtoupper($arrow)))##output"><img src="#sys::code()#modules/base/xarimages/icons/sort-#$arrow#.png" width="16" height="16" alt="reverse order" /></a>
 
         <xar:else />
 
