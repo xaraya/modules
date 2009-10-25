@@ -18,7 +18,6 @@
     </script>
     ]]>
 
-    <xar:set name="baseurl">&xar-baseurl;</xar:set>
     <xar:set name="userdisplaylink">'&lt;a href="javascript:void(window.open(\'' . sys::code() . 'modules/dyn_example/xartemplates/user-display.xt\', \'Template\', \'width=700,height=580,toolbar=0,status=0,location=0,scrollbars=1, left=200,top=200\'))">user-display.xt&lt;/a>'</xar:set>
 
     <style>
@@ -54,43 +53,48 @@
             </li>
         </ul>
 
+<xar:comment>  ~~~~~~~~~   Approach 1   ~~~~~~~~~ </xar:comment>
+
         <div id="page-1">
             <h3>Pass $object and $itemid to <pre>&lt;xar:data-display /&gt;</pre></h3>
 
-        <p><strong>Important tag in user-display.xt:</strong></p>
+		<p><strong>Important tag in user-display.xt:</strong></p>
 
-<pre>   &lt;xar:data-display object="$object" itemid="$itemid" tplmodule="dyn_example" /&gt;</pre>
+		<pre>   &lt;xar:data-display object="$object" itemid="$itemid" tplmodule="dyn_example"/&gt;</pre>
 
-
-            <xar:data-display object="$object" itemid="$itemid" tplmodule="dyn_example"  />
+		<xar:data-display object="$object" itemid="$itemid" tplmodule="dyn_example"/>
 
         </div>
 
-    <div id="page-2" style="display: none">
+<xar:comment>  ~~~~~~~~~   Approach 2   ~~~~~~~~~ </xar:comment>
+
+	<div id="page-2" style="display: none">
             <h3>Make the values available in template variables</h3>
 
-        <p><strong>Output:</strong></p>
+		<p><strong>Output:</strong></p>
 
-            <div>
-        Name: #$person_name# 
-            </div>
-        <div>
-        Age: #$age#
-        </div>
-        <div>
-        <img src="#$picture#" width="" height="" alt="#$person_name#"/>
-        </div>
+		<div>
+			Name: #$person_name# 
+		</div>
+		<div>
+			Age: #$age#
+		</div>
+		<div>
+			<img src="#$picture#" width="" height="" alt="#$person_name#"/>
+		</div>
 
-        </div>
-        
-        <div id="page-3" style="display: none">
+	</div>
+
+<xar:comment>  ~~~~~~~~~   Approach 3   ~~~~~~~~~ </xar:comment>
+
+	<div id="page-3" style="display: none">
             <h3>Get the item in the template with <pre>&lt;xar:data-getitem /&gt;</pre></h3>
 
-<p><strong>Important tag in user-display.xt:</strong></p>
+		<p><strong>Important tag in user-display.xt:</strong></p>
 
-<pre>   &lt;xar:data-getitem properties="$properties" object="$object" /&gt;</pre>
+		<pre>   &lt;xar:data-getitem properties="$properties" object="$object" /&gt;</pre>
 
-<p><strong>Output:</strong></p>
+		<p><strong>Output:</strong></p>
 
             <xar:data-getitem properties="$properties" object="$object"/>
 
@@ -111,9 +115,6 @@
                 </xar:foreach>
             </table>
         </div>
-        
-    
-        
         
     </div>
     <script type="text/javascript">

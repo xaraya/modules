@@ -16,7 +16,6 @@
         </blockquote>
 
     <p><strong>Output:</strong></p>
-    
 
     <xar:if condition="empty($layout) or $layout eq 'default'">
 

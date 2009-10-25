@@ -22,42 +22,36 @@
  */
 function dyn_example_user_view()
 {
-    if(!xarVarFetch('startnum', 'isset', $data['startnum'], NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('sort',     'isset', $data['sort'],     NULL, XARVAR_DONT_SET)) {return;}
 
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing
-    // We check here to see that the current user has the privilege to view items in the module
+	// Check here to see that the current user has the privilege to view items in the module
     if (!xarSecurityCheck('ViewDynExample')) return;
 
-    // get user settings for 'items_per_page'
-    $data['items_per_page'] = xarModUserVars::get('dyn_example','items_per_page');
+	// Get this value from the URL query string
+	// TODO: why XARVAR_DONT_SET ?
+    if(!xarVarFetch('startnum', 'isset', $tdata['startnum'], NULL, XARVAR_DONT_SET)) {return;}
 
-/* start APPROACH # 1 and # 3 : getting the object list via API
- *
- * Here we retrieve the object list via an API call to dynamic data itself
- */
+    // Get user setting for 'items_per_page'
+    $tdata['items_per_page'] = xarModUserVars::get('dyn_example','items_per_page');
+
+/* APPROACH #1 and #3 */
+
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
 
-    // Get the object we'll be working with. Note this is a so called object list
+    // Get the object we'll be working with
     $mylist = DataObjectMaster::getObjectList(array('name' => 'dyn_example'));
 
-/* end APPROACH # 1 and # 3 : getting the object list via API */
-
-/* start APPROACH # 1 : getting the items via API
- *
- * Here we retrieve all items via an API call to dynamic data itself
- * We need to pass all variables we need to get a correct listing
- */
-    // Load the DD master property class. This line will likely disappear in future versions
-    sys::import('modules.dynamicdata.class.properties.master');
+	$tdata['sort'] = xarMod::ApiFunc('dyn_example','admin','sort',array(
+		//how to sort if the URL doesn't say otherwise...
+		'sortfield_fallback' => 'id', 
+		'ascdesc_fallback' => 'ASC'
+	));
 
     // We have some filters for the items
-    $filters = array('numitems'  => $data['items_per_page'],
-                     'startnum'  => $data['startnum'],
+    $filters = array('numitems'  => $tdata['items_per_page'],
+                     'startnum'  => $tdata['startnum'],
                      'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
-                     'sort'      => $data['sort'],
+                     'sort'      => $tdata['sort']
                     );
     
     // Count the items first if you want a full pager - otherwise you'll get simple previous/next links
@@ -66,46 +60,50 @@ function dyn_example_user_view()
     // Get the items 
     $items = $mylist->getItems($filters);
 
-    // pass along the whole object list to the template
-    $data['mylist'] = & $mylist;
-    
-/* here we use a different variation than in xaradmin.php */
-    // or pass along the properties and values instead of the object list
-    $data['properties'] =& $mylist->getProperties();
-    $data['values'] =& $mylist->items;
-    // TODO: add a pager here (needed for this approach)
-/* end APPROACH # 1 : getting the items via API */
+    // Pass along the whole object list to the template.  Only needed in Approach #1
+    $tdata['mylist'] = & $mylist;
 
-/* start APPROACH # 2 : retrieve the items directly in the template */
+/* end APPROACH #1 and #3 */
+
+/* start APPROACH #2 : retrieve the items directly in the template */
+
     // Note: we don't retrieve any items here ourselves - we'll let the
     //       <xar:data-view ... /> tag do that in the template itself
-/* end APPROACH # 2 : retrieve the items directly in the template */
 
-/* start APPROACH # 4 : getting only the raw item values via API */
-    $data['labels'] = array();
-    $data['items'] = array();
+/* end APPROACH #2 : retrieve the items directly in the template */
+
+/* start APPROACH #3 */
+
+    $tdata['properties'] =& $mylist->getProperties();
+    $tdata['values'] =& $mylist->items;
+
+/* end APPROACH #3  */
+
+/* start APPROACH #4 : getting only the raw item values via API */
+    $tdata['labels'] = array();
+    $tdata['items'] = array();
     foreach ($items as $itemid => $fields) {
-        $data['items'][$itemid] = array();
+        $tdata['items'][$itemid] = array();
         foreach ($fields as $name => $value) {
-            $data['items'][$itemid][$name] = xarVarPrepForDisplay($value);
+            $tdata['items'][$itemid][$name] = xarVarPrepForDisplay($value);
             // do some other processing here...
         }
         // define in some labels
-        if (count($data['labels']) == 0) {
+        if (count($tdata['labels']) == 0) {
             foreach (array_keys($fields) as $name) {
-                $data['labels'][$name] = xarML(ucfirst($name));
+                $tdata['labels'][$name] = xarML(ucfirst($name));
             }
         }
     }
     // TODO: add a pager here (needed for this approach)
-/* end APPROACH # 4 : getting only the raw item values via API */
+/* end APPROACH #4 : getting only the raw item values via API */
 
     // We are changing the name of the page to raise
     // better search engine compatibility.
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View Dynamic Examples')));
 
     // Return the template variables defined in this function
-    return $data;
+    return $tdata;
 }
 
 ?>
