@@ -6,10 +6,10 @@
         <span class="xar-mod-title">Dynamic Data Example Administration</span>
     </div>
     <div class="xar-mod-body">
-        <xar:template type="module" file="admintabs" />
+        <xar:template type="module" file="admintabs"/>
         <h2>Dynamic Data Example Overview</h2>
 
-<xar:template file="audience" type="module" />
+<xar:template file="audience" type="module"/>
 
 <p>The purpose of the <strong>Dynamic Data Example (DDE)</strong> module is to demonstrate some best practices for writing a module in Xaraya 2.  It can serve as a template for your own modules.</p>
 

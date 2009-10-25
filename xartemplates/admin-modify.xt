@@ -19,22 +19,22 @@
                 <legend>
                     Preview
                 </legend>
-                <xar:data-display object="$object" tplmodule="dyn_example" />
+                <xar:data-display object="$object" tplmodule="dyn_example"/>
             </fieldset>
             <fieldset>
                 <legend>
                     Modify
                 </legend>
                 <!-- this does most of the hard work :) -->
-                <xar:data-form object="$object" tplmodule="dyn_example" />
+                <xar:data-form object="$object" tplmodule="dyn_example"/>
              </fieldset>
             <div class="xar-form-input-wrapper-after">
-                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
-                <input type="hidden" name="confirm" id="confirm" value="true" />
-                <input type="submit" name="preview" value="#xarML('Preview')#" />
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                <input type="hidden" name="itemid" id="itemid" value="#$itemid#"/>
+                <input type="hidden" name="confirm" id="confirm" value="true"/>
+                <input type="submit" name="preview" value="#xarML('Preview')#"/>
                 &#160;&#160;&#160;
-                <input type="submit" value="#xarML('Update')#" />
+                <input type="submit" value="#xarML('Update')#"/>
             </div>
         </form>
     </div>

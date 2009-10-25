@@ -8,7 +8,7 @@
         <span class="help" title="#xarML('Enter the number of items to display.')#"><label for="numitems#$blockid#">Number of Items</label>:</span>
     </span>
     <span style="float: right; width: 78%; text-align: left;">
-         <input type="text" name="numitems" id="numitems#$blockid#" value="5" size="5" maxlength="5" />
+         <input type="text" name="numitems" id="numitems#$blockid#" value="5" size="5" maxlength="5"/>
     </span>
     </div>
     <!-- No further action is required for this block.  The blocks admin will display this form element in a consistant manner throughout Xaraya -->

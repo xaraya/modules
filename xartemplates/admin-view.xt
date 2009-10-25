@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- common admin menu for this module - remove link to the current function -->
-    <xar:style scope="module" module="base" file="tabs" />
+    <xar:style scope="module" module="base" file="tabs"/>
 
     <style>
     pre {
@@ -15,7 +15,7 @@
     </div>
    
     <div class="xar-mod-body">
-        <xar:template type="module" file="admintabs" />
+        <xar:template type="module" file="admintabs"/>
 
         <h2>Admin List of Items</h2>
 

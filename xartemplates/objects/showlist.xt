@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html< -->
-    <xar:style scope="module" module="dynamicdata" file="dd" />
+    <xar:style scope="module" module="dynamicdata" file="dd"/>
     <xar:if condition="empty($layout)">
         <xar:set name="layout">'default'</xar:set>
     </xar:if>

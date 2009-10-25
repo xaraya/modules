@@ -11,7 +11,7 @@
 
     <h2>Welcome to the Dynamic Data Example module</h2>
 
-    <xar:template file="audience" type="module" />
+    <xar:template file="audience" type="module"/>
 
     <p>For more information about the purpose of this module and how to write a module for  Xaraya, please <strong>begin by reading the <a href="#xarModURL('dyn_example','admin')#">overview page</a></strong>  in the module's admin interface.</p>
 
@@ -21,7 +21,7 @@
 
     <xar:comment>
     If you wanted, you could uncomment this...
-    <xar:data-view object="dyn_example" tplmodule="dyn_example" numitems="2" startnum="$startnum" />
+    <xar:data-view object="dyn_example" tplmodule="dyn_example" numitems="2" startnum="$startnum"/>
     </xar:comment>
 
 <xar:else />

@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- common admin menu for this module - remove link to the current function -->
-    <xar:style scope="module" module="base" file="tabs" />
+    <xar:style scope="module" module="base" file="tabs"/>
     <![CDATA[
     <script type="text/javascript">
         function showtab (selectedindex, items)
@@ -79,7 +79,7 @@
 
 <pre>   &lt;xar:data-view object="$mylist" tplmodule="dyn_example" /&gt;</pre>
 
-<xar:data-view object="$mylist" tplmodule="dyn_example" />
+<xar:data-view object="$mylist" tplmodule="dyn_example"/>
 
         </div>
 
@@ -97,7 +97,7 @@
  startnum="$startnum" numitems="$items_per_page"
  tplmodule="dyn_example" layout="list" /&gt;</pre>
 
-<xar:data-view objectname="dyn_example" numitems="$items_per_page" startnum="$startnum" sort="$sort" tplmodule="dyn_example" layout="list" />
+<xar:data-view objectname="dyn_example" numitems="$items_per_page" startnum="$startnum" sort="$sort" tplmodule="dyn_example" layout="list"/>
 
         </div>
         
@@ -122,13 +122,13 @@ As in Approach ##2, we have set some variables in view.php for use in #$userview
 
 <p><strong>Output:</strong></p>
 
-<xar:data-getitems objectname="dyn_example" values="$values" properties="$properties" numitems="$items_per_page" startnum="$startnum" sort="$sort" />
+<xar:data-getitems objectname="dyn_example" values="$values" properties="$properties" numitems="$items_per_page" startnum="$startnum" sort="$sort"/>
 
 
             <table>
                 <tr>
                     <xar:foreach in="$properties" key="$name">
-                        <th><xar:data-label property="$properties[$name]" /></th>
+                        <th><xar:data-label property="$properties[$name]"/></th>
                     </xar:foreach>
                     <th>Options</th>
                 </tr>
@@ -136,7 +136,7 @@ As in Approach ##2, we have set some variables in view.php for use in #$userview
                     <tr>
                         <xar:foreach in="$properties" key="$name">
                             <xar:if condition="!empty($fields[$name])">
-                              <td><xar:data-output property="$properties[$name]" value="$fields[$name]" /></td>
+                              <td><xar:data-output property="$properties[$name]" value="$fields[$name]"/></td>
                             <xar:else />
                               <td>&#160;</td>
                             </xar:if>

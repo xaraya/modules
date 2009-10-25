@@ -6,7 +6,7 @@
       <span class="xar-mod-title">Dynamic Example Administration</span>
     </div>
     <div class="xar-mod-body">
-      <xar:template type="module" file="admin-menu" />
+      <xar:template type="module" file="admin-menu"/>
       <h2>Delete Dynamic Example Item</h2>
         <form method="post" action="#xarServer::getCurrentURL()#">
         <fieldset>
@@ -18,19 +18,19 @@
                     Confirm deleting this item ?
                 </label>
 
-                <xar:data-display object="$object" tplmodule="dyn_example" />
+                <xar:data-display object="$object" tplmodule="dyn_example"/>
             </div>
         </fieldset>
 
         <div class="xar-form-input-wrapper-after">
-            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-            <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
-            <input type="hidden" name="confirm" id="confirm" value="true" />
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+            <input type="hidden" name="itemid" id="itemid" value="#$itemid#"/>
+            <input type="hidden" name="confirm" id="confirm" value="true"/>
             <xar:var name="label">Yes</xar:var>
-            <xar:button type="submit" label="$label" />
+            <xar:button type="submit" label="$label"/>
             &#160;&#160;&#160;&#160;
             <xar:var name="label">No</xar:var>
-            <xar:button type="cancel" label="$label" />
+            <xar:button type="cancel" label="$label"/>
         </div>
         </form>
     </div>

@@ -6,7 +6,7 @@
       <span class="xar-mod-title">Dynamic Data Example Administration</span>
     </div>
     <div class="xar-mod-body">
-        <xar:template type="module" file="admintabs" />
+        <xar:template type="module" file="admintabs"/>
         <h2>Modify Default Configuration</h2>
         <p class="xar-form-input-before">
           This text here is TBD<br />
@@ -18,18 +18,18 @@
         <form method="post" action="#xarServer::getCurrentURL()#">
             <fieldset>
                 <legend>Modify Dyn_Example Configuration</legend>
-                <xar:data-form object="$module_settings" />
-                <xar:data-form object="$object" itemid="0" />
+                <xar:data-form object="$module_settings"/>
+                <xar:data-form object="$object" itemid="0"/>
             </fieldset>
 
             <div class="xar-form-input-after">
-                <input type="hidden" name="authid" value="#xarSecGenAuthKey('dyn_example')#" />
-                <xar:data-input type="hidden" name="phase" value="update" />
-                <input type="hidden" name="objectid" value="#$object->objectid#" />
-                <input type="hidden" name="itemid" value="0" />
-                <input type="hidden" name="return_url" value="#xarServer::getCurrentURL()#" />
+                <input type="hidden" name="authid" value="#xarSecGenAuthKey('dyn_example')#"/>
+                <xar:data-input type="hidden" name="phase" value="update"/>
+                <input type="hidden" name="objectid" value="#$object->objectid#"/>
+                <input type="hidden" name="itemid" value="0"/>
+                <input type="hidden" name="return_url" value="#xarServer::getCurrentURL()#"/>
                 <xar:var name="label">Update</xar:var>
-                <xar:button type="submit" label="$label" />
+                <xar:button type="submit" label="$label"/>
             </div>
         </form>
 
