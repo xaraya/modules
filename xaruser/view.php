@@ -41,17 +41,10 @@ function dyn_example_user_view()
     // Get the object we'll be working with
     $mylist = DataObjectMaster::getObjectList(array('name' => 'dyn_example'));
 
-	$tdata['sort'] = xarMod::ApiFunc('dyn_example','admin','sort',array(
-		//how to sort if the URL doesn't say otherwise...
-		'sortfield_fallback' => 'id', 
-		'ascdesc_fallback' => 'ASC'
-	));
-
     // We have some filters for the items
     $filters = array('numitems'  => $tdata['items_per_page'],
                      'startnum'  => $tdata['startnum'],
-                     'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
-                     'sort'      => $tdata['sort']
+                     'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE
                     );
     
     // Count the items first if you want a full pager - otherwise you'll get simple previous/next links

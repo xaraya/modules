@@ -35,7 +35,7 @@ function dyn_example_admin_view()
     // Load the DD master property class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.properties.master');
 
-	$tdata['sort'] = xarMod::ApiFunc('dyn_example','admin','sort',array(
+	$tdata['sort'] = xarMod::ApiFunc('dyn_example','admin','sort', array(
 		//how to sort if the URL doesn't say otherwise...
 		'sortfield_fallback' => 'id', 
 		'ascdesc_fallback' => 'ASC'

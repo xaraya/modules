@@ -23,11 +23,11 @@ function dyn_example_admin_delete()
     // from other places such as the environment is not allowed, as that makes
     // assumptions that will not hold in future versions of Xaraya
     if (!xarVarFetch('name',       'str:1',  $name,    'dyn_example',     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid' ,     'int',    $data['itemid'] , '' ,          XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemid' ,     'int',    $tdata['itemid'] , '' ,          XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm',    'bool',   $tdata['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
 
     // Show an error when the itemid is still not set
-    if (empty($data['itemid'])) {
+    if (empty($tdata['itemid'])) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'item id', 'admin', 'delete', 'dyn_example');
         throw new Exception($msg);
@@ -38,28 +38,28 @@ function dyn_example_admin_delete()
     // in this case we had to wait until we could obtain the item name to
     // complete the instance information so this is the first chance we get to
     // do the check
-    if (!xarSecurityCheck('DeleteDynExample',1,'Item',$data['itemid'])) return;
+    if (!xarSecurityCheck('DeleteDynExample',1,'Item',$tdata['itemid'])) return;
 
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
     // Get the object we'll be working with
-    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
-    $data['object']->getItem(array('itemid' => $data['itemid']));
+    $tdata['object'] = DataObjectMaster::getObject(array('name' => $name));
+    $tdata['object']->getItem(array('itemid' => $tdata['itemid']));
     
-    if ($data['confirm']) {
+    if ($tdata['confirm']) {
 
         // Check for a valid confirmation key
         if (!xarSecConfirmAuthKey()) {
             return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
         }        
 
-        $item = $data['object']->deleteItem();
+        $item = $tdata['object']->deleteItem();
         
         // Jump to the next page
         xarResponse::Redirect(xarModURL('dyn_example','admin','view'));
         return true;
     }
-    return $data;
+    return $tdata;
 }
 
 ?>

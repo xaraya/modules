@@ -22,18 +22,18 @@
 function dyn_example_user_main()
 {
 
-    if(!xarVarFetch('startnum', 'isset', $data['startnum'], NULL, XARVAR_DONT_SET)) {return;} 
+    if(!xarVarFetch('startnum', 'isset', $tdata['startnum'], NULL, XARVAR_DONT_SET)) {return;} 
 
-    $data['seccheck'] = FALSE;
+    $tdata['seccheck'] = FALSE;
 
     if (!xarSecurityCheck('ViewDynExample')) {
         return;
     } else {
-        $data['seccheck'] = TRUE;
+        $tdata['seccheck'] = TRUE;
     }
 
     // Return the template variables defined in this function
-    return $data;
+    return $tdata;
 
 }
 

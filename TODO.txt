@@ -1,7 +1,5 @@
 TODO
 
-user $tdata instead of $data
-sorting in user-view
 $layout in showview-dyn_example.xt
 URLs / alias
 

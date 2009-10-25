@@ -18,7 +18,7 @@
  * @param $args an array of arguments (if called by other modules)
  * @param $args['objectid'] a generic object id (if called by other modules)
  * @param $args['itemid'] the itemid used for this dyn_example module
- * @return array $data
+ * @return array $tdata
  */
 function dyn_example_user_display()
 {
