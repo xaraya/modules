@@ -42,6 +42,7 @@
         xarModVars::set('ckeditor', 'useModuleAlias',0);
         xarModVars::set('ckeditor', 'aliasname','CKEditor');
         xarModVars::set('ckeditor', 'defaultmastertable','ckeditor_ckeditor');
+        xarModVars::set('ckeditor', 'editorversion', 'ckeditor');
 
         // Add variables like this next one when creating utility modules
         // This variable is referenced in the xaradmin/modifyconfig-utility.php file

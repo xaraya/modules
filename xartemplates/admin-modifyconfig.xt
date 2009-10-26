@@ -128,6 +128,17 @@
                         <xar:set name="value"><xar:var scope="module" module="ckeditor" name="aliasname" /></xar:set>
                         <xar:data-input type="textbox" name="aliasname" value="$value" size="32" maxlength="100" />
                     </div>
+                    <div class="xar-form-input-wrapper">
+                      <label for="editorversion" class="xar-form-label"><xar:mlstring>Editor Version</xar:mlstring></label>
+                        <xar:set name="options">
+                            array(
+                                array('id' => 'ckeditor', 'name' => xarML('CKEditor')),
+                                array('id' => 'fckeditor', 'name' => xarML('FCKEditor')),
+                            )
+                        </xar:set>
+                         <xar:set name="editorversion">xarModVars::get('ckeditor','editorversion')</xar:set>
+                        <xar:data-input type="dropdown" name="editorversion" value="$editorversion" options="$options"/>
+                    </div>
                 </fieldset>
                 <fieldset>
                     <div class="xar-form-input-wrapper-after">
