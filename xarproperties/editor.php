@@ -25,7 +25,7 @@ class EditorProperty extends TextAreaProperty
     public $reqmodules = array('ckeditor');
     
     public $editor     = null;
-    public $version    = 'ckeditor';
+    public $version;
     
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -33,6 +33,7 @@ class EditorProperty extends TextAreaProperty
         $this->tplmodule = 'ckeditor';
         $this->template  = 'editor';
         $this->filepath  = 'modules/ckeditor/xarproperties';        
+        $this->version = xarModVars::get('ckeditor', 'editorversion');
     }
 
     public function showInput(Array $data = array())

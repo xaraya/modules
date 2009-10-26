@@ -37,11 +37,13 @@
                         if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
                         if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('ckeditor', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
                         if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('ckeditor', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
+                        if (!xarVarFetch('editorversion', 'str', $editorversion,  xarModVars::get('ckeditor', 'editorversion'), XARVAR_NOT_REQUIRED)) return;
 
                         xarModVars::set('ckeditor', 'itemsperpage', $itemsperpage);
                         xarModVars::set('ckeditor', 'SupportShortURLs', $shorturls);
                         xarModVars::set('ckeditor', 'useModuleAlias', $useModuleAlias);
                         xarModVars::set('ckeditor', 'aliasname', $aliasname);
+                        xarModVars::set('ckeditor', 'editorversion', $editorversion);
                         break;
                     case 'tab2':
                         break;
