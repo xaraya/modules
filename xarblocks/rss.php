@@ -3,7 +3,7 @@
  * Displays an RSS Display.
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -60,7 +60,7 @@ function headlines_rssblock_info()
         'show_preview' => true
     );
 }
- 
+
 /**
  * Display func.
  * @param $blockinfo array containing title,content
@@ -69,22 +69,22 @@ function headlines_rssblock_display($blockinfo)
 {
     // Keep all the default values in one place.
     $defaults = headlines_rssblock_init();
- 
+
     // Break out options from our content field.
     if (!is_array($blockinfo['content'])) {
         $vars = unserialize($blockinfo['content']);
     } else {
         $vars = $blockinfo['content'];
     }
- 
+
     $blockinfo['content'] = '';
-    
+
     // Check and see if a feed has been supplied to us.
     if (empty($vars['rssurl'])) {
         $blockinfo['title'] = xarML('Headlines');
         $blockinfo['content'] = xarML('No Feed URL Specified');
         return $blockinfo;
-    } 
+    }
     // bug[ 5322 ]
     if (is_numeric($vars['rssurl'])) {
         $headline = xarModAPIFunc('headlines', 'user', 'get', array('hid' => $vars['rssurl']));
@@ -99,32 +99,34 @@ function headlines_rssblock_display($blockinfo)
     } else {
         $feedfile = $vars['rssurl'];
     }
- 
+
     if (!isset($vars['maxitems'])) $vars['maxitems'] = $defaults['maxitems'];
     if (!isset($vars['show_chantitle'])) $vars['show_chantitle'] = $defaults['show_chantitle'];
     if (!isset($vars['show_chandesc'])) $vars['show_chandesc'] = $defaults['show_chandesc'];
     if (empty($vars['refresh'])) $vars['refresh'] = $defaults['refresh'];
     if (!isset($vars['linkhid'])) $vars['linkhid'] = $defaults['linkhid'];
-    
+    if (!isset($vars['show_warning'])) $vars['show_warning'] = $defaults['show_warning'];
+
     // CHECKME: this forces early refresh regardless of caching options, why do we do that? old code below
     // define('MAGPIE_CACHE_AGE', round($refresh/2)); // set lower than block cache so we always get something
     // simplepie'cache_max_minutes' => round($refresh/2*60) - bug, simplepie caching is in seconds
-    // this only happens in the rss block, need to work out if it's necessary 
+    // this only happens in the rss block, need to work out if it's necessary
     $refresh = $vars['refresh']/2;
     if (!$vars['showdescriptions']) {
         $vars['truncate'] = 0; // no point doing extra work for nothing :)
     }
     // call api function to get the parsed feed (or warning)
-    $data = xarModAPIFunc('headlines', 'user', 'getparsed', 
-                array('feedfile' => $feedfile, 'refresh' => $refresh, 
+    $data = xarModAPIFunc('headlines', 'user', 'getparsed',
+                array('feedfile' => $feedfile, 'refresh' => $refresh,
                       'numitems' => $vars['maxitems'], 'truncate' => $vars['truncate']));
     // TODO: option to hide block here instead
     if (!empty($data['warning'])) {
+        if (empty($vars['show_warning'])) return;
 		$blockinfo['title'] = xarML('Headlines');
         $blockinfo['content'] = xarVarPrepForDisplay($data['warning']);
         return $blockinfo;
 	} else {
-        // here we see if this feed has been updated by comparing the stored hash against the 
+        // here we see if this feed has been updated by comparing the stored hash against the
         // hash provided by the getparsed function, if they're different, we update the feed
         // with the new hash, and the time of the last item in the feed, or the current time
         // this means the feeds can now be sorted reliably by date ala. the cloud block
@@ -133,7 +135,7 @@ function headlines_rssblock_display($blockinfo)
             if (!xarModAPIFunc('headlines', 'user', 'update', array('hid' => $headline['hid'], 'date' => $data['lastitem'], 'string' => $data['compare']))) return;
         }
     }
-    
+
     // FR: add alt channel title/desc/link
     if (!isset($vars['alt_chantitle'])) $vars['alt_chantitle'] = $defaults['alt_chantitle'];
     if (!isset($vars['alt_chandesc'])) $vars['alt_chandesc'] = $defaults['alt_chandesc'];
@@ -154,6 +156,7 @@ function headlines_rssblock_display($blockinfo)
     if ($vars['linkhid'] && (isset($thishid)&& !empty($thishid))) {
         $vars['linkhid'] = $thishid;
     }
+    if (!isset($vars['show_warning'])) $vars['show_warning'] = $defaults['show_warning'];
 
     $blockinfo['content'] = array(
         'feedcontent'  => $data['feedcontent'],
@@ -168,9 +171,10 @@ function headlines_rssblock_display($blockinfo)
         'show_chanimage' => $vars['show_chanimage'],
         'show_itemimage' => $vars['show_itemimage'],
         'show_itemcats' => $vars['show_itemcats'],
+        'show_warning' => $vars['show_warning'],
         'linkhid' => $vars['linkhid']
     );
- 
+
     return $blockinfo;
 }
 
@@ -196,14 +200,14 @@ function headlines_rssblock_modify($blockinfo)
         $vars['rssurl'] = $vars['url'];
         unset($vars['url']);
     }
-     
+
     // Get parameters from whatever input we need
     $vars['items'] = array();
 
     // The user API function is called
     $links = xarModAPIFunc('headlines', 'user', 'getall');
     $vars['items'] = $links;
-    
+
     // Defaults
     if (!isset($vars['rssurl'])) $vars['rssurl'] = $defaults['rssurl'];
 
@@ -212,11 +216,11 @@ function headlines_rssblock_modify($blockinfo)
         $headline = xarModAPIFunc('headlines', 'user', 'get', array('hid' => $vars['rssurl']));
         if (!empty($headline)) { // found headline, use that url
             $vars['rssurl'] = $headline['url'];
-        } else { 
+        } else {
             $vars['rssurl'] = $defaults['rssurl'];
         }
-    } 
-    
+    }
+
     // If the current URL is not in the headlines list, then pass it in as 'custom'
     $vars['otherrssurl'] = $vars['rssurl'];
     if (is_array($links) && $vars['rssurl'] != $defaults['rssurl']) {
@@ -227,7 +231,7 @@ function headlines_rssblock_modify($blockinfo)
             }
         }
     }
- 
+
     // Defaults
     if (!isset($vars['show_chantitle'])) $vars['show_chantitle'] = $defaults['show_chantitle'];
     if (!isset($vars['show_chandesc'])) $vars['show_chandesc'] = $defaults['show_chandesc'];
@@ -236,7 +240,7 @@ function headlines_rssblock_modify($blockinfo)
     if (!isset($vars['refresh'])) $vars['refresh'] = $defaults['refresh'];
     // bug [4545]
     if (!isset($vars['truncate'])) $vars['truncate'] = $defaults['truncate'];
-    // FR: add alt title/description/link 
+    // FR: add alt title/description/link
     if (!isset($vars['alt_chantitle'])) $vars['alt_chantitle'] = $defaults['alt_chantitle'];
     if (!isset($vars['alt_chandesc'])) $vars['alt_chandesc'] = $defaults['alt_chandesc'];
     if (!isset($vars['alt_chanlink'])) $vars['alt_chanlink'] = $defaults['alt_chanlink'];
@@ -258,14 +262,15 @@ function headlines_rssblock_modify($blockinfo)
         $vars['show_itemimage'] = $defaults['show_itemimage'];
         $vars['show_itemcats'] = $defaults['show_itemcats'];
     }
+    if (!isset($vars['show_warning'])) $vars['show_warning'] = $defaults['show_warning'];
 
- 
+
     $vars['blockid'] = $blockinfo['bid'];
- 
+
     // Just return the template variables.
     return $vars;
 }
- 
+
 /**
  * Updates the Block config from the Blocks Admin
  * @param $blockinfo array containing title,content
@@ -274,18 +279,18 @@ function headlines_rssblock_insert($blockinfo)
 {
     // Keep all the default values in one place.
     $defaults = headlines_rssblock_init();
- 
+
     $vars = array();
- 
+
     if (!xarVarFetch('rssurl', 'str:1:', $vars['rssurl'], $defaults['rssurl'], XARVAR_NOT_REQUIRED)) {return;}
     // The 'otherrssurl' can override the 'rssurl'
     if (!xarVarFetch('otherrssurl', 'str:1:', $otherrssurl, $defaults['rssurl'], XARVAR_NOT_REQUIRED)) {return;}
     // FR: added check for correct url format, including local urls
     if (!empty($otherrssurl) && $otherrssurl != $defaults['rssurl']) {
         if (strstr($otherrssurl,'://')) {
-            if (ereg("^http://|https://|ftp://", $otherrssurl)) {            
+            if (ereg("^http://|https://|ftp://", $otherrssurl)) {
                 $vars['rssurl'] = $otherrssurl;
-            } 
+            }
         } elseif (substr($otherrssurl,0,1) == '/') {
             $server = xarServerGetHost();
             $protocol = xarServerGetProtocol();
@@ -295,14 +300,14 @@ function headlines_rssblock_insert($blockinfo)
             $vars['rssurl'] = $baseurl . $otherrssurl;
         }
     }
-    // bug[ 5322 ] replace url value with numeric hid 
+    // bug[ 5322 ] replace url value with numeric hid
     // allowing changes to module feeds to be reflected in blocks
     if (is_numeric($vars['rssurl'])) {
         $headline = xarModAPIFunc('headlines', 'user', 'get', array('hid' => $vars['rssurl']));
         if (empty($headline)) {
             $vars['rssurl'] = $defaults['rssurl'];
         }
-    } 
+    }
     // TODO: check for duplicates
     // TODO: check otherrssurl against stored headlines
 
@@ -313,7 +318,7 @@ function headlines_rssblock_insert($blockinfo)
     if (!xarVarFetch('refresh', 'int:0', $vars['refresh'], $defaults['refresh'], XARVAR_NOT_REQUIRED)) {return;}
     // bug [4545]
     if (!xarVarFetch('truncate', 'int:0', $vars['truncate'], $defaults['truncate'], XARVAR_NOT_REQUIRED)) return;
-    // FR: add alt title/description/link 
+    // FR: add alt title/description/link
     if (!xarVarFetch('alt_chantitle', 'str:1:', $vars['alt_chantitle'], $defaults['alt_chantitle'], XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('alt_chandesc', 'str:1:', $vars['alt_chandesc'], $defaults['alt_chandesc'], XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('alt_chanlink', 'str:1:', $vars['alt_chanlink'], $defaults['alt_chanlink'], XARVAR_NOT_REQUIRED)) return;
@@ -322,9 +327,10 @@ function headlines_rssblock_insert($blockinfo)
     if (!xarVarFetch('show_chanimage', 'checkbox', $vars['show_chanimage'], $defaults['show_chanimage'], XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('show_itemimage', 'checkbox', $vars['show_itemimage'], $defaults['show_itemimage'], XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('show_itemcats', 'checkbox', $vars['show_itemcats'], $defaults['show_itemcats'], XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('show_warning', 'checkbox', $vars['show_warning'], false, XARVAR_NOT_REQUIRED)) return;
 
     $blockinfo['content'] = $vars;
     return $blockinfo;
 }
- 
+
 ?>

@@ -113,6 +113,12 @@
     </label>
     <input type="text" name="refresh" id="refresh#$blockid#" size="5" maxlength="5" value="#$refresh#" />
 </div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="show_warning" value="$show_warning" />
+    <label for="show_warning#$blockid#" class="help" title="#xarML('Show warning message when the feed fails to load')#">
+        <xar:mlstring>Show a 'Feed failed to load' message if the feed fails</xar:mlstring>?
+    </label> (<xar:mlstring>When unchecked the block isn't displayed</xar:mlstring>)
+</div>
 <xar:if condition="$parser eq 'simplepie'">
     <fieldset>
         <legend>
