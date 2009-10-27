@@ -16,7 +16,7 @@
 
 $modversion['name']           = 'simplepie';
 $modversion['id']             = '821';
-$modversion['version']        = '0.1.0';
+$modversion['version']        = '2.0.0';
 $modversion['displayname']    = xarML('SimplePie');
 $modversion['description']    = 'SimplePie RSS parser';
 $modversion['credits']        = 'xardocs/credits.txt';
