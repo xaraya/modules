@@ -13,10 +13,8 @@ function simplepie_userapi_newfeed($args)
     // SimplePie assumes PHP 5.1.0
     // Define some required constants if we aren't there yet.
     if (!defined('CURLOPT_ENCODING')) define('CURLOPT_ENCODING', 999);
-
     // Include the main class file
-    include_once('modules/simplepie/xarclass/simplepie.inc');
-
+    sys::import('modules.simplepie.xarclass.simplepie');
     extract($args);
 
     // Assume cache will be used.
@@ -29,7 +27,7 @@ function simplepie_userapi_newfeed($args)
     if ($enable_cache) {
         if (empty($cache_location)) {
             // No alternative cache specified, so use the var root.
-            $cache_location = xarCoreGetVarDirPath() . '/cache/simplepie';
+            $cache_location = sys::varpath() . '/cache/simplepie';
 
             // Create the simplepie directory if it does not already exist.
             if (!is_dir($cache_location)) {
