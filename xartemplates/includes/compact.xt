@@ -1,3 +1,6 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:comment> Legend </xar:comment>
 <div class="xar-accent-outline xar-sub" style="margin-top:5px;margin-bottom:5px;padding:3px;text-align:center;">
     <xar:mlstring>
@@ -42,3 +45,4 @@
             </xar:if>
     </xar:loop>
 </div>
+</xar:template>

@@ -1,4 +1,6 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 <script type="text/javascript">
 <!--
@@ -8,8 +10,8 @@
     var fieldDescription = Array("URL");
 //-->
 </script>
-<xar:if condition="xarModGetVar('headlines', 'adminajax')">
-  <xar:if condition="!xarModIsAvailable('dojo')">
+<xar:if condition="xarModVars::get('headlines', 'adminajax')">
+  <xar:if condition="!xarMod::isAvailable('dojo')">
     <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
   </xar:if>
   <xar:set name="onclick">"return loadContent(this.href,'notsogoodbutok');"</xar:set>
@@ -83,6 +85,7 @@
             </legend>
             <div class="xar-form-input-wrapper-before">
                 <em><xar:mlstring>These settings over-ride global settings</xar:mlstring></em>
+            </div>
             <div class="xar-form-input-wrapper">
                 <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of items per page to show')#">
                     <xar:mlstring>Maximum Items Per Feed</xar:mlstring>
@@ -142,3 +145,4 @@
             </div>
     </form>
 </div>
+</xar:template>

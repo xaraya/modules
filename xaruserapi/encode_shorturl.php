@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -36,8 +36,8 @@ function headlines_userapi_encode_shorturl($args)
     $module = 'headlines';
 
     // Alias for the module, set in the config screen.
-    $aliasisset = xarModGetVar($module, 'useModuleAlias');
-    $aliasname = xarModGetVar($module, 'aliasname');
+    $aliasisset = xarModVars::get($module, 'useModuleAlias');
+    $aliasname = xarModVars::get($module, 'aliasname');
 
     if (!empty($aliasisset) && isset($aliasname)) {
         $module_for_alias = xarModGetAlias($aliasname);

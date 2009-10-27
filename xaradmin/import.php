@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -21,22 +21,22 @@ function headlines_admin_import()
     // Headline id (optional)
     if (!xarVarFetch('iid', 'str:1:', $iid, '', XARVAR_NOT_REQUIRED)) return;
 
-    $importpubtype = xarModGetVar('headlines','importpubtype');
+    $importpubtype = xarModVars::get('headlines','importpubtype');
     if (empty($importpubtype)) {
-        xarResponseRedirect(xarModURL('headlines', 'admin', 'modifyconfig'));
+        xarResponse::Redirect(xarModURL('headlines', 'admin', 'modifyconfig'));
         return true;
     }
 
-    $imported = xarModAPIFunc('headlines','admin','import',
+    $imported = xarMod::apiFunc('headlines','admin','import',
                               array('hid' => $hid,
                                     'iid' => $iid,
                                     'importpubtype' => $importpubtype));
     if (!isset($imported)) return;
 
     if (empty($imported)) {
-        xarResponseRedirect(xarModURL('headlines', 'user', 'view', array('hid' => $hid)));
+        xarResponse::Redirect(xarModURL('headlines', 'user', 'view', array('hid' => $hid)));
     } else {
-        xarResponseRedirect(xarModURL('articles', 'admin', 'view', array('ptid' => $importpubtype)));
+        xarResponse::Redirect(xarModURL('articles', 'admin', 'view', array('ptid' => $importpubtype)));
     }
     return true;
 }

@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -23,5 +23,10 @@ $modversion['admin']        = 1;
 $modversion['user']         = 1;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
-$modversion['dependency']   = array(151); //Articles dependency for import
+$modversion['dependency'] = array(
+                                  151
+                                  );
+$modversion['dependencyinfo'] = array(
+                                      151  => 'articles',
+                                      );
 ?>

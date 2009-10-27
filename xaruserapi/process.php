@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -21,10 +21,10 @@ function headlines_userapi_process($args)
      extract($args);
 
     // Require the xmlParser class
-    require_once('modules/base/xarclass/xmlParser.php');
+    //require_once('modules/base/xarclass/xmlParser.php');
     // Require the feedParser class
-    require_once('modules/base/xarclass/feedParser.php');
-
+    //require_once('modules/base/xarclass/feedParser.php');
+    sys::import('modules.base.class.feedParser');
     // Sanitize the URL provided to us since
     // some people can be very mean.
     $feedfile = preg_replace("/\.\./", "donthackthis", $feedfile);
@@ -32,7 +32,7 @@ function headlines_userapi_process($args)
     // don't suppress errors by default
     $superrors = isset($superrors) ? $superrors : false;
     // Get the feed file (from cache or from the remote site)
-    $feeddata = xarModAPIFunc('base', 'user', 'getfile',
+    $feeddata = xarMod::apiFunc('base', 'user', 'getfile',
         array(
             'url' => $feedfile,
             'cached' => true,
@@ -49,9 +49,9 @@ function headlines_userapi_process($args)
     }
 
     // Check what makes a headline unique
-    $uniqueid = xarModGetVar('headlines', 'uniqueid');
+    $uniqueid = xarModVars::get('headlines', 'uniqueid');
     if (!empty($uniqueid)) {
-        $uniqueid = split(';', $uniqueid);
+        $uniqueid = explode(';', $uniqueid);
     } else {
         $uniqueid = array();
     }

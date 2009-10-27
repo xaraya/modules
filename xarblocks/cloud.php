@@ -3,7 +3,7 @@
  * Displays an RSS Display.
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -61,7 +61,7 @@ function headlines_cloudblock_display($blockinfo)
     // TODO: provide config options, link to last item, link to headline, show image/cats/date
     $maxitems = isset($vars['maxitems']) ? $vars['maxitems'] : $defaults['maxitems'];
     $showdescriptions = isset($vars['showdescriptions']) ? $vars['showdescriptions'] : $defaults['showdescriptions'];
-    $links = xarModAPIFunc('headlines', 'user', 'getall',
+    $links = xarMod::apiFunc('headlines', 'user', 'getall',
         array(
             'numitems' => $maxitems,
             'sort' => 'date'
@@ -78,7 +78,7 @@ function headlines_cloudblock_display($blockinfo)
         }
         $feedfile = $link['url'];
         // TODO: make refresh configurable
-        $links[$i] = xarModAPIFunc(
+        $links[$i] = xarMod::apiFunc(
             'headlines', 'user', 'getparsed',
             array('feedfile' => $feedfile)
         );

@@ -1,3 +1,6 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:comment>Keep the markup simple and the inline styles to a minimum.</xar:comment>
 <div class="xar-form-input-wrapper">
     <label for="rssurl#$blockid#" class="xar-form-label help" title="#xarML('Select the RSS file to syndicate.  This option is configured within the Headlines module')#">
@@ -150,3 +153,4 @@
         </div>
     </fieldset>
 </xar:if>
+</xar:template>

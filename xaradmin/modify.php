@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -25,7 +25,7 @@ function headlines_admin_modify($args)
     if(!xarSecurityCheck('EditHeadlines')) return;
     $data = array();
 
-    $data = xarModAPIFunc('headlines',
+    $data = xarMod::apiFunc('headlines',
                           'user',
                           'get',
                           array('hid' => $hid));
@@ -54,14 +54,14 @@ function headlines_admin_modify($args)
     }
     // if we didn't find settings, this is first run > v1.2.1 upgrade
     // so we just take the module defaults
-    $data['itemsperpage'] = isset($settings['itemsperpage']) ? $settings['itemsperpage'] : xarModGetVar('headlines', 'feeditemsperpage');
-    $data['maxdescription'] = isset($settings['maxdescription']) ? $settings['maxdescription'] : xarModGetVar('headlines', 'maxdescription');
-    $data['parser'] = xarModGetVar('headlines', 'parser');
+    $data['itemsperpage'] = isset($settings['itemsperpage']) ? $settings['itemsperpage'] : xarModVars::get('headlines', 'feeditemsperpage');
+    $data['maxdescription'] = isset($settings['maxdescription']) ? $settings['maxdescription'] : xarModVars::get('headlines', 'maxdescription');
+    $data['parser'] = xarModVars::get('headlines', 'parser');
     // see if we're using simplepie
     if ($data['parser'] == 'simplepie') {
-        $data['showchanimage'] = isset($settings['showchanimage']) ? $settings['showchanimage'] : xarModGetVar('headlines', 'showchanimage');
-        $data['showitemimage'] = isset($settings['showitemimage']) ? $settings['showitemimage'] : xarModGetVar('headlines', 'showitemimage');
-        $data['showitemcats'] = isset($settings['showitemcats']) ? $settings['showitemcats'] : xarModGetVar('headlines', 'showitemcats');
+        $data['showchanimage'] = isset($settings['showchanimage']) ? $settings['showchanimage'] : xarModVars::get('headlines', 'showchanimage');
+        $data['showitemimage'] = isset($settings['showitemimage']) ? $settings['showitemimage'] : xarModVars::get('headlines', 'showitemimage');
+        $data['showitemcats'] = isset($settings['showitemcats']) ? $settings['showitemcats'] : xarModVars::get('headlines', 'showitemcats');
     }
     $data['submitlabel']    = xarML('Submit');
     $data['authid']         = xarSecGenAuthKey();

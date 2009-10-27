@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -31,24 +31,24 @@ function headlines_user_my()
             }
             $feeds = serialize($feeds);
             if (xarUserIsLoggedIn()) {
-                xarModSetUserVar('headlines','showfeeds',$feeds);
+                xarModUserVars::set('headlines','showfeeds',$feeds);
             } else {
                 xarSessionSetVar('headlines_showfeeds',$feeds);
             }
-            xarResponseRedirect(xarModURL('headlines', 'user', 'my'));
+            xarResponse::Redirect(xarModURL('headlines', 'user', 'my'));
             return true;
         }
     }
 
     $data = array();
 
-    $default = xarModGetVar('headlines','showfeeds');
+    $default = xarModVars::get('headlines','showfeeds');
     if (!isset($default)) {
-        xarModSetVar('headlines','showfeeds','');
+        xarModVars::set('headlines','showfeeds','');
         $default = '';
     }
     if (xarUserIsLoggedIn()) {
-        $feeds = xarModGetUserVar('headlines','showfeeds');
+        $feeds = xarModUserVars::get('headlines','showfeeds');
     } else {
         $feeds = xarSessionGetVar('headlines_showfeeds');
     }
@@ -64,7 +64,7 @@ function headlines_user_my()
     $data['config'] = $config;
     $data['feedlist'] = $feedlist;
 
-    $links = xarModAPIFunc('headlines', 'user', 'getall');
+    $links = xarMod::apiFunc('headlines', 'user', 'getall');
     if (empty($links)) return $data;
 
     $hid2url = array();

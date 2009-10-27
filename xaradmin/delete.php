@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -27,7 +27,7 @@ function headlines_admin_delete()
     if(!xarSecurityCheck('DeleteHeadlines')) return;
 
     // The user API function is called
-    $link = xarModAPIFunc('headlines',
+    $link = xarMod::apiFunc('headlines',
                           'user',
                           'get',
                           array('hid' => $hid));
@@ -49,12 +49,12 @@ function headlines_admin_delete()
     if (!xarSecConfirmAuthKey()) return;
 
     // The API function is called
-    if (!xarModAPIFunc('headlines',
+    if (!xarMod::apiFunc('headlines',
                        'admin',
                        'delete',
                        array('hid' => $hid))) return;
 
-    xarResponseRedirect(xarModURL('headlines', 'admin', 'view'));
+    xarResponse::Redirect(xarModURL('headlines', 'admin', 'view'));
 
     // Return
     return true;

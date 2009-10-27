@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -30,7 +30,7 @@ function headlines_admin_create($args)
     if (!xarSecConfirmAuthKey()) return;
 
     // call api function to get the parsed feed (or warning)
-    $data = xarModAPIFunc('headlines', 'user', 'getparsed', 
+    $data = xarMod::apiFunc('headlines', 'user', 'getparsed', 
             array('feedfile' => $url));
 
     if (!empty($data['warning'])){
@@ -65,14 +65,14 @@ function headlines_admin_create($args)
     // set the date to the time of the last item if we have it, otherwise, set it to now
     $date = !empty($data['lastitem']) ? $data['lastitem'] : time();
     // The API function is called
-    $hid = xarModAPIFunc('headlines', 'admin', 'create', array('url' => $url, 'title' => $title, 'desc' => $desc, 'settings' => $data['settings'], 'string' => $data['compare'], 'date' => $date));
+    $hid = xarMod::apiFunc('headlines', 'admin', 'create', array('url' => $url, 'title' => $title, 'desc' => $desc, 'settings' => $data['settings'], 'string' => $data['compare'], 'date' => $date));
 
     if ($hid == false) return;
     
     if (empty($return_url)) {
         $return_url = xarModURL('headlines', 'admin', 'view');
     }
-    xarResponseRedirect($return_url);
+    xarResponse::Redirect($return_url);
 
     // Return
     return true;

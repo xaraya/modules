@@ -3,17 +3,13 @@
  * Xaraya Headlines
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @copyright (C) 2005-2009 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.org
  *
  * @subpackage Headlines Module
  * @author John Cox
  */
-
-// Load Table Maintaince API
-xarDBLoadTableMaintenanceAPI();
-
 /**
  * Initialise the headlines module
  *
@@ -22,93 +18,109 @@ xarDBLoadTableMaintenanceAPI();
  */
 function headlines_init()
 {
+    $module = 'headlines';
 
-    // Get database information
-    $dbconn =& xarDBGetConn();
-    $table =& xarDBGetTables();
+# --------------------------------------------------------
+#
+# Create tables
+#
+    $dbconn =& xarDB::getConn();
+    $tables =& xarDB::getTables();
+    $prefix = xarDB::getPrefix();
+    //Load Table Maintenance API
+    sys::import('xaraya.tableddl');
 
-    xarDBLoadTableMaintenanceAPI();
+    $headlinesTable = $tables['headlines'];
 
-    // Create tables
-    $headlinesTable = xarDBGetSiteTablePrefix() . '_headlines';
+    // Create tables inside a transaction
+    try {
+        $charset = xarSystemVars::get(sys::CONFIG, 'DB.Charset');
+        $dbconn->begin();
+        sys::import('xaraya.structures.query');
+        $q = new Query();
+        // forums table
+        $query = "DROP TABLE IF EXISTS " . $headlinesTable;
+        if (!$q->run($query)) return;
+        $fields = array(
+            'xar_hid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+            'xar_title' => array('type' => 'varchar','size' => 255,'null' => false, 'charset' => $charset),
+            'xar_desc' => array('type' => 'varchar','size' => 255,'null' => false, 'charset' => $charset),
+            'xar_url' => array('type' => 'varchar','size' => 255,'null' => false, 'charset' => $charset),
+            'xar_order' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
+            'xar_string' => array('type' => 'varchar','size' => 255,'null' => false, 'charset' => $charset),
+            'xar_date' => array('type' => 'integer', 'unsigned' => true, 'null' => false,'default' => '0'),
+            'xar_settings' => array('type' => 'text', 'charset' => $charset),
+        );
+        $query = xarDBCreateTable($headlinesTable,$fields);
+        $dbconn->Execute($query);
+        // hid
+        $index = array('name' => $prefix . '_headlines_xar_hid',
+                       'fields' => array('xar_hid')
+                       );
+        $query = xarDBCreateIndex($headlinesTable, $index);
+        $dbconn->Execute($query);
 
-    $query = xarDBCreateTable($headlinesTable,
-                             array('xar_hid'        => array('type'        => 'integer',
-                                                             'null'        => false,
-                                                             'default'     => '0',
-                                                             'increment'   => true,
-                                                             'primary_key' => true),
-                                   'xar_title'      => array('type'        => 'varchar',
-                                                             'size'        => 255,
-                                                             'null'        => false,
-                                                             'default'     => ''),
-                                   'xar_desc'       => array('type'        => 'varchar',
-                                                             'size'        => 255,
-                                                             'null'        => false,
-                                                             'default'     => ''),
-                                   'xar_url'        => array('type'        => 'varchar',
-                                                             'size'        => 255,
-                                                             'null'        => false,
-                                                             'default'     => ''),
-                                   'xar_order'      => array('type'        => 'integer',
-                                                             'null'        => false,
-                                                             'default'     => '0',
-                                                             'increment'   => false),
-                                   'xar_string'     => array('type'        => 'varchar',
-                                                             'size'        => 255,
-                                                             'null'        => false,
-                                                             'default'     => ''),
-                                   'xar_date'       => array('type'        => 'integer',
-                                                             'unsigned'    => TRUE,
-                                                             'null'        => FALSE,
-                                                             'default'     => '0'),
-                                   'xar_settings'   => array ('type' => 'text')));
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
+        // We're done, commit
+        $dbconn->commit();
+    } catch (Exception $e) {
+        $dbconn->rollback();
+        throw $e;
+    }
 
-    $index = array('name'      => 'i_' . $headlinesTable . '_hid',
-                   'fields'    => array('xar_hid'),
-                   'unique'    => FALSE);
-    $query = xarDBCreateIndex($headlinesTable,$index);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
+# --------------------------------------------------------
+#
+# Set up configuration modvars (module specific)
+#
 
-    // Register blocks
-    if (!xarModAPIFunc('blocks',
+    xarModVars::set('headlines', 'itemsperpage', 20);
+    xarModVars::set('headlines','importpubtype', 0);
+    xarModVars::set('headlines','showfeeds', '');
+    xarModVars::set('headlines', 'uniqueid', 'feed;link');
+    // added in 0.9.0
+    xarModVars::set('headlines', 'SupportShortURLs', 1);
+    // added in 1.1.0
+    xarModVars::set('headlines', 'parser', 'default');
+    // added > 1.1.0
+    xarModVars::set('headlines', 'feeditemsperpage', 20);
+    xarModVars::set('headlines','maxdescription', 0);
+    xarModVars::set('headlines','showcomments', 0);
+    xarModVars::set('headlines', 'showratings', 0);
+    xarModVars::set('headlines', 'showhitcount', 0);
+    xarModVars::set('headlines','showkeywords', 0);
+    xarModVars::set('headlines','useModuleAlias', 0);
+    xarModVars::set('headlines', 'aliasname', '');
+    // added in 1.2.1
+    xarModVars::set('headlines', 'adminajax', 0);
+    xarModVars::set('headlines', 'userajax', 0);
+
+# --------------------------------------------------------
+#
+# Set up configuration modvars (common)
+#
+    $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => $module));
+    $module_settings->initialize();
+
+# --------------------------------------------------------
+#
+# Register blocks
+#
+    if (!xarMod::apiFunc('blocks',
                        'admin',
                        'register_block_type',
                        array('modName'  => 'headlines',
                              'blockType'=> 'rss'))) return;
 
-    if (!xarModAPIFunc('blocks',
+    if (!xarMod::apiFunc('blocks',
                        'admin',
                        'register_block_type',
                        array('modName'  => 'headlines',
                              'blockType'=> 'cloud'))) return;
 
-    // Set up module variables
-    xarModSetVar('headlines', 'itemsperpage', 20);
-    xarModSetVar('headlines','importpubtype', 0);
-    xarModSetVar('headlines','showfeeds', '');
-    xarModSetVar('headlines', 'uniqueid', 'feed;link');
-    // added in 0.9.0
-    xarModSetVar('headlines', 'SupportShortURLs', 1);    
-    // added in 1.1.0
-    xarModSetVar('headlines', 'parser', 'default');
-    // added > 1.1.0
-    xarModSetVar('headlines', 'feeditemsperpage', 20);
-    xarModSetVar('headlines','maxdescription', 0);
-    xarModSetVar('headlines','showcomments', 0);
-    xarModSetVar('headlines', 'showratings', 0);
-    xarModSetVar('headlines', 'showhitcount', 0);
-    xarModSetVar('headlines','showkeywords', 0);
-    xarModSetVar('headlines','useModuleAlias', 0);
-    xarModSetVar('headlines', 'aliasname', '');
-    // added in 1.2.1
-    xarModSetVar('headlines', 'adminajax', 0);
-    xarModSetVar('headlines', 'userajax', 0);
+# --------------------------------------------------------
+#
+# Register masks
+#
 
-    // Register Masks
     xarRegisterMask('OverviewHeadlines','All','headlines','All','All','ACCESS_OVERVIEW');
     xarRegisterMask('ReadHeadlines','All','headlines','All','All','ACCESS_READ');
     xarRegisterMask('EditHeadlines','All','headlines','All','All','ACCESS_EDIT');
@@ -130,110 +142,18 @@ function headlines_init()
  */
 function headlines_upgrade($oldVersion)
 {
-    // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    $headlinesTable = $xartable['headlines'];
+    $dbconn =& xarDB::getConn();
+    $tables =& xarDB::getTables();
+    $prefix = xarDB::getPrefix();
+    //Load Table Maintenance API
+    sys::import('xaraya.tableddl');
 
-    xarDBLoadTableMaintenanceAPI();
+    $headlinesTable = $tables['headlines'];
 
     // Upgrade dependent on old version number
     switch($oldVersion) {
-        case '0.1':
-            // Version 0.1 didn't have a 'order' field, it was added
-            // in version 0.2
+        case '2.0.0':
 
-            // Add a column to the table
-            $query = xarDBAlterTable(array('table' => $headlinesTable,
-                                           'command' => 'add',
-                                           'field' => 'xar_order',
-                                           'type' => 'integer',
-                                           'null' => false,
-                                           'default' => '0'));
-
-            // Pass to ADODB, and send exception if the result isn't valid.
-            $result =& $dbconn->Execute($query);
-            if (!$result) return;
-            // fall through to next upgrade
-
-        case '0.2':
-        case '0.2.0':
-            xarModSetVar('headlines', 'SupportShortURLs', 1);
-            // fall through to next upgrade
-
-        case '0.9':
-        case '0.9.0':
-            // Index the hid field
-            $index = array('name'      => 'i_' . $headlinesTable . '_hid',
-                           'fields'    => array('xar_hid'),
-                           'unique'    => FALSE);
-            $query = xarDBCreateIndex($headlinesTable,$index);
-            $result =& $dbconn->Execute($query);
-            if (!$result) return;
-
-            // Two New Fields for the Cloud
-            $query = xarDBAlterTable($headlinesTable,
-                              array('command' => 'add',
-                                    'field'   => 'xar_string',
-                                    'type'    => 'varchar',
-                                    'size'        => 255,
-                                    'null'        => false,
-                                    'default'     => ''));
-            $result = &$dbconn->Execute($query);
-            if (!$result) return;
-
-            // Two New Fields for the Cloud
-            $query = xarDBAlterTable($headlinesTable,
-                              array('command'     => 'add',
-                                    'field'       => 'xar_date',
-                                    'type'        => 'integer',
-                                    'unsigned'    => TRUE,
-                                    'null'        => FALSE,
-                                    'default'     => '0'));
-            $result = &$dbconn->Execute($query);
-            if (!$result) return;
-
-            if (!xarModAPIFunc('blocks',
-                               'admin',
-                               'register_block_type',
-                               array('modName'  => 'headlines',
-                                     'blockType'=> 'cloud'))) return;
-            // fall through to next upgrade
-
-       case '1.0.0':
-            // fall through to next upgrade
-
-       case '1.0.1': // To 1.1.0
-           // Replace the 'magpie' variable with a more general 'parser' variable.
-           $magpie = xarModGetVar('headlines', 'magpie');
-           xarModSetVar('headlines', 'parser', (!empty($magpie) ? $magpie : 'default'));
-           xarModDelVar('headlines', 'magpie');
-
-       case '1.1.0': // To 1.2.0
-            // Added module variables for new options
-            xarModSetVar('headlines', 'feeditemsperpage', 20);
-            xarModSetVar('headlines','maxdescription', 0);
-            xarModSetVar('headlines','showcomments', 0);
-            xarModSetVar('headlines', 'showratings', 0);
-            xarModSetVar('headlines', 'showhitcount', 0);
-            xarModSetVar('headlines','showkeywords', 0);
-            xarModSetVar('headlines','useModuleAlias', 0);
-            xarModSetVar('headlines', 'aliasname', '');
-       case '1.2.0': // To 1.2.1
-            xarModSetVar('headlines', 'adminajax', 0);
-            xarModSetVar('headlines', 'userajax', 0);
-            // New column for per feed settings
-            $query = xarDBAlterTable($headlinesTable,array(
-                                           'command' => 'add',
-                                           'field' => 'xar_settings',
-                                           'type' => 'text'));
-
-            // Pass to ADODB, and send exception if the result isn't valid.
-            $result =& $dbconn->Execute($query);
-            if (!$result) return;
-        case '1.2.1': // Current Version To 1.2.2  
-
-        case '1.2.2': // Next Version
            break;
     }
     // Update successful
@@ -246,15 +166,16 @@ function headlines_upgrade($oldVersion)
  */
 function headlines_delete()
 {
-    // need to drop the module tables too
-    // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $tables =& xarDB::getTables();
+    $prefix = xarDB::getPrefix();
+    //Load Table Maintenance API
+    sys::import('xaraya.tableddl');
 
-    xarDBLoadTableMaintenanceAPI();
+    $headlinesTable = $tables['headlines'];
 
     // Generate the SQL to drop the table using the API
-    $query = xarDBDropTable($xartable['headlines']);
+    $query = xarDB::dropTable($headlinesTable);
     if (empty($query)) return; // throw back
 
     // Drop the table and send exception if returns false.
@@ -262,12 +183,12 @@ function headlines_delete()
     if (!$result) return;
 
     // UnRegister blocks
-    if (!xarModAPIFunc('blocks',
+    if (!xarMod::apiFunc('blocks',
                        'admin',
                        'unregister_block_type',
                        array('modName'  => 'headlines',
                              'blockType'=> 'rss'))) return;
-    if (!xarModAPIFunc('blocks',
+    if (!xarMod::apiFunc('blocks',
                        'admin',
                        'unregister_block_type',
                        array('modName'  => 'headlines',

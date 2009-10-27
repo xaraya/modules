@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -40,7 +40,7 @@ function headlines_admin_update()
     if (!xarSecConfirmAuthKey()) return;
 
     // call api function to get the parsed feed (or warning)
-    $getfeed = xarModAPIFunc('headlines', 'user', 'getparsed', 
+    $getfeed = xarMod::apiFunc('headlines', 'user', 'getparsed', 
             array('feedfile' => $data['url']));
 
     if (!empty($getfeed['warning'])) {
@@ -71,7 +71,7 @@ function headlines_admin_update()
     
     $data['settings'] = serialize($settings);
 
-    if(!xarModAPIFunc('headlines',
+    if(!xarMod::apiFunc('headlines',
                       'admin',
                       'update',
                       array('hid'   => $data['hid'],
@@ -86,7 +86,7 @@ function headlines_admin_update()
     if (empty($return_url)) {
         $return_url = xarModURL('headlines', 'admin', 'view');
     }
-    xarResponseRedirect($return_url);
+    xarResponse::Redirect($return_url);
 
     // Return
     return true;

@@ -1,3 +1,6 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:if condition="empty($warning)">
     <xar:if condition="!empty($show_chantitle) or ($show_chandesc and !empty($chandesc))">
         <div>
@@ -8,7 +11,7 @@
             <xar:if condition="$show_chandesc and !empty($chandesc)">
                 <p class="xar-sub">#$chandesc#</p>
             </xar:if>
-            <xar:if condition="$show_chanimage && !empty($chanimage)">
+            <xar:if condition="$show_chanimage and !empty($chanimage)">
                 <div>
                     <a href="#$chanimage['link']#" title="#$chanimage['title']#" rel="external">
                         <img src="#$chanimage['url']#" alt="#$chanimage['title']#" />
@@ -23,11 +26,11 @@
             <xar:loop name="$feedcontent">
                 <li>
                    <xar:if condition="$show_itemimage">
-                        <xar:if condition="isset($loop:item['thumbnails']) && !empty($loop:item['thumbnails'])">
+                        <xar:if condition="isset($loop:item['thumbnails']) and !empty($loop:item['thumbnails'])">
                             <xar:foreach in="$loop:item['thumbnails']" value="$thumblink">
                                 <img src="#$thumblink#" alt="#$loop:item['title']#" />
                             </xar:foreach>
-                        <xar:elseif condition="isset($loop:item['image']) && !empty($loop:item['image'])" />
+                        <xar:elseif condition="isset($loop:item['image']) and !empty($loop:item['image'])" />
                             <img src="#$loop:item['image']#" alt="#$loop:item['title']#" />
                         </xar:if>
                     </xar:if>
@@ -41,7 +44,7 @@
                         #xarLocaleGetFormattedDate('long',$loop:item.date)#
                         </p>
                     </xar:if>
-                    <xar:if condition="!empty($loop:item['categories']) && $show_itemcats">
+                    <xar:if condition="!empty($loop:item['categories']) and $show_itemcats">
                     <p class="xar-sub">|
                     <xar:foreach in="$loop:item['categories']" key="$catkey" value="$chancat">
                         <xar:if condition="!empty($chancat['term'])">
@@ -59,7 +62,7 @@
             </xar:loop>
         </ul>
     </xar:if>
-    <xar:if condition="isset($linkhid) && !empty($linkhid)">
+    <xar:if condition="isset($linkhid) and !empty($linkhid)">
         <div class="xar-align-right xar-sub">
             [<a href="#xarModURL('headlines', 'user', 'view', array('hid' => $linkhid))#"><xar:mlstring>Browse Headlines</xar:mlstring></a>]
         </div>
@@ -67,3 +70,4 @@
 <xar:else />
     <div>#xarVarPrepForDisplay($warning)#</div>
 </xar:if>
+</xar:template>

@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -22,7 +22,7 @@ function headlines_schedulerapi_compare()
     // Security Check
     if(!xarSecurityCheck('OverviewHeadlines')) return;
     // get all headlines from module
-    $links  = xarModAPIFunc('headlines', 'user', 'getall');
+    $links  = xarMod::apiFunc('headlines', 'user', 'getall');
 
     if (empty($links)) return;
 
@@ -33,7 +33,7 @@ function headlines_schedulerapi_compare()
             continue;
         }
         $feedfile = $link['url'];
-        $links[$i] = xarModAPIFunc(
+        $links[$i] = xarMod::apiFunc(
             'headlines', 'user', 'getparsed',
             array('feedfile' => $feedfile)
         );
@@ -44,7 +44,7 @@ function headlines_schedulerapi_compare()
         // with the new hash, and the time of the last item in the feed, or the current time
         if (isset($links[$i]['compare']) && ($link['string'] != $links[$i]['compare'])) {
             // call api function to update our feed item
-            if (!xarModAPIFunc('headlines', 'user', 'update', array('hid' => $link['hid'], 'date' => $links[$i]['lastitem'], 'string' => $links[$i]['compare']))) return;
+            if (!xarMod::apiFunc('headlines', 'user', 'update', array('hid' => $link['hid'], 'date' => $links[$i]['lastitem'], 'string' => $links[$i]['compare']))) return;
         }
     }
 

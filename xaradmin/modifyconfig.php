@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -23,42 +23,42 @@ function headlines_admin_modifyconfig()
         $data['hooks'] = $hooks;
     }
     $data['shorturlslabel']     = xarML('Enable short URLs?');
-    $data['shorturlschecked']   = xarModGetVar('headlines', 'SupportShortURLs') ? true : false;
-    $data['modulealias'] = xarModGetVar('headlines', 'useModuleAlias');
-    $data['aliasname'] = xarModGetVar('headlines', 'aliasname');
-    $data['showcomments'] = xarModGetVar('headlines', 'showcomments');
-    if (!xarModIsAvailable('comments') || !xarModIsHooked('comments', 'headlines')) {
+    $data['shorturlschecked']   = xarModVars::get('headlines', 'SupportShortURLs') ? true : false;
+    $data['modulealias'] = xarModVars::get('headlines', 'useModuleAlias');
+    $data['aliasname'] = xarModVars::get('headlines', 'aliasname');
+    $data['showcomments'] = xarModVars::get('headlines', 'showcomments');
+    if (!xarMod::isAvailable('comments') || !xarModIsHooked('comments', 'headlines')) {
         $data['showcomments'] = 0;
     }
-    $data['showratings'] = xarModGetVar('headlines', 'showratings');
-    if (!xarModIsAvailable('ratings') || !xarModIsHooked('ratings', 'headlines')) {
+    $data['showratings'] = xarModVars::get('headlines', 'showratings');
+    if (!xarMod::isAvailable('ratings') || !xarModIsHooked('ratings', 'headlines')) {
         $data['showratings'] = 0;
     }
-    $data['showhitcount'] = xarModGetVar('headlines', 'showhitcount');
-    if (!xarModIsAvailable('hitcount') || !xarModIsHooked('hitcount', 'headlines')) {
+    $data['showhitcount'] = xarModVars::get('headlines', 'showhitcount');
+    if (!xarMod::isAvailable('hitcount') || !xarModIsHooked('hitcount', 'headlines')) {
         $data['showhitcount'] = 0;
     }
-    $data['showkeywords'] = xarModGetVar('headlines', 'showkeywords');
-    if (!xarModIsAvailable('keywords') || !xarModIsHooked('keywords', 'headlines')) {
+    $data['showkeywords'] = xarModVars::get('headlines', 'showkeywords');
+    if (!xarMod::isAvailable('keywords') || !xarModIsHooked('keywords', 'headlines')) {
         $data['showkeywords'] = 0;
     }
-    $data['maxdescription'] = xarModGetVar('headlines', 'maxdescription');
+    $data['maxdescription'] = xarModVars::get('headlines', 'maxdescription');
     // Magpie modvar deprecated
-    $data['magpiechecked']      = xarModGetVar('headlines', 'magpie') ? true : false;
+    $data['magpiechecked']      = xarModVars::get('headlines', 'magpie') ? true : false;
 
-    $data['parser']             = xarModGetVar('headlines', 'parser');
+    $data['parser']             = xarModVars::get('headlines', 'parser');
     if (empty($data['parser'])) $data['parser'] = ($data['magpiechecked'] ? 'magpie' : 'default');
     // build array of available parsers
     $data['parsers'] = array();
     $data['parsers']['default'] = 'Default';
-    if (xarModIsAvailable('magpie')) { // only add parser if available
+    if (xarMod::isAvailable('magpie')) { // only add parser if available
         $data['parsers']['magpie'] = 'Magpie';
     } else { // if not available, check parser isn't selected (ie module removed)
         if ($data['parser'] == 'magpie') { 
             $data['parser'] = 'default';
         }
     }
-    if (xarModIsAvailable('simplepie')) { // ony show parser if available
+    if (xarMod::isAvailable('simplepie')) { // ony show parser if available
         $data['parsers']['simplepie'] = 'SimplePie';
     } else { // if not available, check parser isn't selected (ie module removed)
         if ($data['parser'] == 'simplepie') { 
@@ -67,8 +67,8 @@ function headlines_admin_modifyconfig()
     }
 
     $data['authid']             = xarSecGenAuthKey();
-    $data['pubtypes']           = xarModAPIFunc('articles', 'user', 'getpubtypes');
-    $data['importpubtype']      = xarModGetVar('headlines', 'importpubtype');
+    $data['pubtypes']           = xarMod::apiFunc('articles', 'user', 'getpubtypes');
+    $data['importpubtype']      = xarModVars::get('headlines', 'importpubtype');
     return $data;
 }
 ?>

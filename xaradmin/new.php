@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -33,14 +33,14 @@ function headlines_admin_new()
     $data['title'] = '';
     $data['desc'] = '';
     // show per feed options when adding a feed
-    $data['itemsperpage'] = xarModGetVar('headlines', 'feeditemsperpage');
-    $data['maxdescription'] = xarModGetVar('headlines', 'maxdescription');
-    $data['parser'] = xarModGetVar('headlines', 'parser');
+    $data['itemsperpage'] = xarModVars::get('headlines', 'feeditemsperpage');
+    $data['maxdescription'] = xarModVars::get('headlines', 'maxdescription');
+    $data['parser'] = xarModVars::get('headlines', 'parser');
     // see if we're using simplepie
     if ($data['parser'] == 'simplepie') {
-        $data['showchanimage'] = xarModGetVar('headlines', 'showchanimage');
-        $data['showitemimage'] = xarModGetVar('headlines', 'showitemimage');
-        $data['showitemcats'] = xarModGetVar('headlines', 'showitemcats');
+        $data['showchanimage'] = xarModVars::get('headlines', 'showchanimage');
+        $data['showitemimage'] = xarModVars::get('headlines', 'showitemimage');
+        $data['showitemcats'] = xarModVars::get('headlines', 'showitemcats');
     }    
     
     $data['submitlabel'] = xarML('Submit');

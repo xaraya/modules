@@ -1,5 +1,8 @@
-<xar:if condition="xarModGetVar('headlines', 'userajax')">
-  <xar:if condition="!xarModIsAvailable('dojo')">
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:if condition="xarModVars::get('headlines', 'userajax')">
+  <xar:if condition="!xarMod::isAvailable('dojo')">
     <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
   </xar:if>
   <xar:set name="onclick">"return loadContent(this.href,'notsogoodbutok');"</xar:set>
@@ -15,7 +18,7 @@
     <xar:template type="module" file="admin-menu" />
     <xar:if condition="empty($warning)">
     <div class="xar-fullwidth">
-         <xar:if condition="isset($image) && !empty($image) && $showchanimage">
+         <xar:if condition="isset($image) and !empty($image) and $showchanimage">
             <div class="xar-floatright">
                 <a href="#$image['link']#" title="#$image['title']#">
                     <img src="#$image['url']#" alt="#$image['title']#" />
@@ -46,23 +49,23 @@
     <xar:if condition="xarModIsHooked('categories','headlines')">
          <xar:categories-navigation layout="trails" showchildren="1" module="headlines" func="main" showcatcount="1" catid="$catid" itemid="$hid" />
     </xar:if>
-    <xar:if condition="xarSecurityCheck('EditHeadlines', 0) and xarModGetVar('headlines','importpubtype')">
+    <xar:if condition="xarSecurityCheck('EditHeadlines', 0) and xarModVars::get('headlines','importpubtype')">
          <xar:set name="showimport">1</xar:set>
     <xar:else/>
          <xar:set name="showimport">0</xar:set>
     </xar:if>
-    <xar:set name="magpie">xarModGetVar('headlines','magpie')</xar:set>
+    <xar:set name="magpie">xarModVars::get('headlines','magpie')</xar:set>
 
     <xar:if condition="!empty($feedcontent)">
         <xar:loop name="$feedcontent">
             <div class="xar-accent-outline xar-margin-thickbottom">
                 <div class="xar-standard-box-padding">
                 <xar:if condition="$showitemimage">
-                    <xar:if condition="isset($loop:item['thumbnails']) && !empty($loop:item['thumbnails'])">
+                    <xar:if condition="isset($loop:item['thumbnails']) and !empty($loop:item['thumbnails'])">
                         <xar:foreach in="$loop:item['thumbnails']" value="$thumblink">
                             <img class="xar-floatleft"  style="padding:0px 1em 1em 0px;" src="#$thumblink#" alt="#$loop:item['title']#" />
                         </xar:foreach>
-                    <xar:elseif condition="isset($loop:item['image']) && !empty($loop:item['image'])" />
+                    <xar:elseif condition="isset($loop:item['image']) and !empty($loop:item['image'])" />
                         <img class="xar-floatleft" style="padding:0px 1em 1em 0px;"  src="#$loop:item['image']#" alt="#$loop:item['title']#" />
                     </xar:if>
                 </xar:if>
@@ -74,7 +77,7 @@
                 <xar:else />
                     <h3>#$loop:item['title']#</h3>
                 </xar:if>
-                    <xar:if condition="isset($loop:item['categories']) && !empty($loop:item['categories']) && $showitemcats">
+                    <xar:if condition="isset($loop:item['categories']) and !empty($loop:item['categories']) and $showitemcats">
                     |
                     <xar:foreach in="$loop:item['categories']" key="$catkey" value="$chancat">
                         <xar:if condition="!empty($chancat['term'])">
@@ -105,14 +108,6 @@
             </xar:if>
 
             </div>
-            <xar:comment>
-            <xar:sec mask="AdminPanel" catch="false">
-            <xar:if condition="isset($loop:item['embed'])">
-                #$loop:item['embed']#
-            </xar:if>
-            </xar:sec>
-            </xar:comment>
-
         </xar:loop>
     </xar:if>
 <xar:else />
@@ -133,3 +128,4 @@
         #$hooks#
     </xar:if>
 </div>
+</xar:template>

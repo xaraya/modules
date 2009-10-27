@@ -87,7 +87,7 @@ function headlines_rssblock_display($blockinfo)
     }
     // bug[ 5322 ]
     if (is_numeric($vars['rssurl'])) {
-        $headline = xarModAPIFunc('headlines', 'user', 'get', array('hid' => $vars['rssurl']));
+        $headline = xarMod::apiFunc('headlines', 'user', 'get', array('hid' => $vars['rssurl']));
         if (!empty($headline)) {
             $feedfile = $headline['url'];
             $thishid = $headline['hid'];
@@ -116,7 +116,7 @@ function headlines_rssblock_display($blockinfo)
         $vars['truncate'] = 0; // no point doing extra work for nothing :)
     }
     // call api function to get the parsed feed (or warning)
-    $data = xarModAPIFunc('headlines', 'user', 'getparsed',
+    $data = xarMod::apiFunc('headlines', 'user', 'getparsed',
                 array('feedfile' => $feedfile, 'refresh' => $refresh,
                       'numitems' => $vars['maxitems'], 'truncate' => $vars['truncate']));
     // TODO: option to hide block here instead
@@ -132,7 +132,7 @@ function headlines_rssblock_display($blockinfo)
         // this means the feeds can now be sorted reliably by date ala. the cloud block
         if (isset($headline['string']) && ($headline['string'] != $data['compare'])) {
             // call api function to update our feed item
-            if (!xarModAPIFunc('headlines', 'user', 'update', array('hid' => $headline['hid'], 'date' => $data['lastitem'], 'string' => $data['compare']))) return;
+            if (!xarMod::apiFunc('headlines', 'user', 'update', array('hid' => $headline['hid'], 'date' => $data['lastitem'], 'string' => $data['compare']))) return;
         }
     }
 
@@ -148,7 +148,7 @@ function headlines_rssblock_display($blockinfo)
     if (!isset($vars['show_itemimage'])) $vars['show_itemimage'] = $defaults['show_itemimage'];
     if (!isset($vars['show_itemcats'])) $vars['show_itemcats'] = $defaults['show_itemcats'];
     // make sure SimplePie's available
-    if (!xarModIsAvailable('simplepie')) {
+    if (!xarMod::isAvailable('simplepie')) {
         $vars['show_chanimage'] = $defaults['show_chanimage'];
         $vars['show_itemimage'] = $defaults['show_itemimage'];
         $vars['show_itemcats'] = $defaults['show_itemcats'];
@@ -205,7 +205,7 @@ function headlines_rssblock_modify($blockinfo)
     $vars['items'] = array();
 
     // The user API function is called
-    $links = xarModAPIFunc('headlines', 'user', 'getall');
+    $links = xarMod::apiFunc('headlines', 'user', 'getall');
     $vars['items'] = $links;
 
     // Defaults
@@ -213,7 +213,7 @@ function headlines_rssblock_modify($blockinfo)
 
     // bug[ 5322 ] - check for hid
     if (is_numeric($vars['rssurl'])) {
-        $headline = xarModAPIFunc('headlines', 'user', 'get', array('hid' => $vars['rssurl']));
+        $headline = xarMod::apiFunc('headlines', 'user', 'get', array('hid' => $vars['rssurl']));
         if (!empty($headline)) { // found headline, use that url
             $vars['rssurl'] = $headline['url'];
         } else {
@@ -246,11 +246,11 @@ function headlines_rssblock_modify($blockinfo)
     if (!isset($vars['alt_chanlink'])) $vars['alt_chanlink'] = $defaults['alt_chanlink'];
     if (!isset($vars['linkhid'])) $vars['linkhid'] = $defaults['linkhid'];
     // get the current parser
-    $vars['parser'] = xarModGetVar('headlines', 'parser');
+    $vars['parser'] = xarModVars::get('headlines', 'parser');
     // check for legacy magpie code, checkme: is this still necessary?
-    if (xarModGetVar('headlines', 'magpie')) $vars['parser'] = 'magpie';
+    if (xarModVars::get('headlines', 'magpie')) $vars['parser'] = 'magpie';
     // check module available if not default parser
-    if ($vars['parser'] != 'default' && !xarModIsAvailable($vars['parser'])) $vars['parser'] = 'default';
+    if ($vars['parser'] != 'default' && !xarMod::isAvailable($vars['parser'])) $vars['parser'] = 'default';
     if ($vars['parser'] == 'simplepie') {
         // optionally show images and cats if available (SimplePie only)
         if (!isset($vars['show_chanimage'])) $vars['show_chanimage'] = $defaults['show_chanimage'];
@@ -288,7 +288,7 @@ function headlines_rssblock_insert($blockinfo)
     // FR: added check for correct url format, including local urls
     if (!empty($otherrssurl) && $otherrssurl != $defaults['rssurl']) {
         if (strstr($otherrssurl,'://')) {
-            if (ereg("^http://|https://|ftp://", $otherrssurl)) {
+            if (preg_match("!^http://|https://|ftp://!", $otherrssurl)) {
                 $vars['rssurl'] = $otherrssurl;
             }
         } elseif (substr($otherrssurl,0,1) == '/') {
@@ -303,7 +303,7 @@ function headlines_rssblock_insert($blockinfo)
     // bug[ 5322 ] replace url value with numeric hid
     // allowing changes to module feeds to be reflected in blocks
     if (is_numeric($vars['rssurl'])) {
-        $headline = xarModAPIFunc('headlines', 'user', 'get', array('hid' => $vars['rssurl']));
+        $headline = xarMod::apiFunc('headlines', 'user', 'get', array('hid' => $vars['rssurl']));
         if (empty($headline)) {
             $vars['rssurl'] = $defaults['rssurl'];
         }
@@ -322,7 +322,7 @@ function headlines_rssblock_insert($blockinfo)
     if (!xarVarFetch('alt_chantitle', 'str:1:', $vars['alt_chantitle'], $defaults['alt_chantitle'], XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('alt_chandesc', 'str:1:', $vars['alt_chandesc'], $defaults['alt_chandesc'], XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('alt_chanlink', 'str:1:', $vars['alt_chanlink'], $defaults['alt_chanlink'], XARVAR_NOT_REQUIRED)) return;
-    if (!ereg("^http://|https://|ftp://", $vars['alt_chanlink'])) $vars['alt_chanlink'] = $defaults['alt_chanlink'];
+    if (!preg_match("!^http://|https://|ftp://!", $vars['alt_chanlink'])) $vars['alt_chanlink'] = $defaults['alt_chanlink'];
     if (!xarVarFetch('linkhid', 'checkbox', $vars['linkhid'], $defaults['linkhid'], XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('show_chanimage', 'checkbox', $vars['show_chanimage'], $defaults['show_chanimage'], XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('show_itemimage', 'checkbox', $vars['show_itemimage'], $defaults['show_itemimage'], XARVAR_NOT_REQUIRED)) return;

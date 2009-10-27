@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -19,13 +19,13 @@ function headlines_user_main()
 
     // Security Check
     if(!xarSecurityCheck('OverviewHeadlines')) return;
-    
-    $numitems = xarModGetVar('headlines', 'itemsperpage');
+
+    $numitems = xarModVars::get('headlines', 'itemsperpage');
     // TODO: admin configurable sort
-    // $showsort = xarModGetVar('headlines', 'showsort'); // show sort options to users
-    $sort = !empty($sort) ? $sort : xarModGetVar('headlines', 'sortorder'); // default sort order
+    // $showsort = xarModVars::get('headlines', 'showsort'); // show sort options to users
+    $sort = !empty($sort) ? $sort : xarModVars::get('headlines', 'sortorder'); // default sort order
     // The user API function is called
-    $links = xarModAPIFunc('headlines', 'user', 'getall',
+    $links = xarMod::apiFunc('headlines', 'user', 'getall',
         array(
             'catid' => $data['catid'],
             'startnum' => $startnum,
@@ -43,7 +43,7 @@ function headlines_user_main()
         }
         $feedfile = $link['url'];
         // TODO: make refresh configurable
-        $links[$i] = xarModAPIFunc(
+        $links[$i] = xarMod::apiFunc(
             'headlines', 'user', 'getparsed',
             array('feedfile' => $feedfile, 'refresh' => 7200)
         );
@@ -91,19 +91,19 @@ function headlines_user_main()
                                              array('hid' => $link['hid']));
         /* TODO: use the correct api funcs (getall etc) to grab lists of comments, hits, ratings, keywords */
 
-        $showcomments = xarModGetVar('headlines', 'showcomments');
+        $showcomments = xarModVars::get('headlines', 'showcomments');
 
         if ($showcomments) {
-            if (!xarModIsAvailable('comments') || !xarModIsHooked('comments', 'headlines')) {
+            if (!xarMod::isAvailable('comments') || !xarModIsHooked('comments', 'headlines')) {
                 $showcomments = 0;
             }
         }
 
         if ($showcomments) {
-            $links[$i]['comments'] = xarModAPIFunc('comments',
+            $links[$i]['comments'] = xarMod::apiFunc('comments',
                                                    'user',
                                                    'get_count',
-                                                   array('modid' => xarModGetIDFromName('headlines'),
+                                                   array('modid' => xarMod::getRegID('headlines'),
                                                          'objectid' => $link['hid']));
 
             if (!$links[$i]['comments']) {
@@ -117,19 +117,19 @@ function headlines_user_main()
             $links[$i]['comments'] = '';
         }
 
-        $showratings = xarModGetVar('headlines', 'showratings');
+        $showratings = xarModVars::get('headlines', 'showratings');
 
         if ($showratings) {
-            if (!xarModIsAvailable('ratings') || !xarModIsHooked('ratings', 'headlines')) {
+            if (!xarMod::isAvailable('ratings') || !xarModIsHooked('ratings', 'headlines')) {
                 $showratings = 0;
             }
         }
 
         if ($showratings) {
-            $links[$i]['ratings'] = xarModAPIFunc('ratings',
+            $links[$i]['ratings'] = xarMod::apiFunc('ratings',
                                                    'user',
                                                    'get',
-                                                   array('modid' => xarModGetIDFromName('headlines'),
+                                                   array('modid' => xarMod::getRegID('headlines'),
                                                          'objectid' => $link['hid']));
 
             if (!$links[$i]['ratings']) {
@@ -140,20 +140,20 @@ function headlines_user_main()
         } else {
             $links[$i]['ratings'] = '';
         }
-        
-        $showhitcount = xarModGetVar('headlines', 'showhitcount');
+
+        $showhitcount = xarModVars::get('headlines', 'showhitcount');
 
         if ($showhitcount) {
-            if (!xarModIsAvailable('hitcount') || !xarModIsHooked('hitcount', 'headlines')) {
+            if (!xarMod::isAvailable('hitcount') || !xarModIsHooked('hitcount', 'headlines')) {
                 $showhitcount = 0;
             }
         }
 
         if ($showhitcount) {
-            $links[$i]['hitcount'] = xarModAPIFunc('hitcount',
+            $links[$i]['hitcount'] = xarMod::apiFunc('hitcount',
                                                    'user',
                                                    'get',
-                                                   array('modid' => xarModGetIDFromName('headlines'),
+                                                   array('modid' => xarMod::getRegID('headlines'),
                                                          'objectid' => $link['hid']));
 
             if (!$links[$i]['hitcount']) {
@@ -167,23 +167,24 @@ function headlines_user_main()
             $links[$i]['hitcount'] = '';
         }
 
-        $showkeywords = xarModGetVar('headlines', 'showkeywords');
+        $showkeywords = xarModVars::get('headlines', 'showkeywords');
 
         if ($showkeywords) {
-            if (!xarModIsAvailable('keywords') || !xarModIsHooked('keywords', 'headlines')) {
+            if (!xarMod::isAvailable('keywords') || !xarModIsHooked('keywords', 'headlines')) {
                 $showkeywords = 0;
             }
         }
         if ($showkeywords) {
-            $links[$i]['keywords'] = xarModAPIFunc('keywords', 'user', 'getwords', 
-                                                    array('modid' => xarModGetIDFromName('headlines'),
+            $links[$i]['keywords'] = xarMod::apiFunc('keywords', 'user', 'getwords',
+                                                    array('modid' => xarMod::getRegID('headlines'),
                                                             'itemid' => $link['hid']));
         }
     }
 
     $data['indlinks'] = $links;
+    sys::import('xaraya.pager');
     $data['pager'] = xarTplGetPager($startnum,
-                                    xarModAPIFunc('headlines', 'user', 'countitems'),
+                                    xarMod::apiFunc('headlines', 'user', 'countitems'),
                                     xarModURL('headlines', 'user', 'main', array('startnum' => '%%')),
                                     $numitems);
 

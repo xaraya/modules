@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -26,7 +26,7 @@ function headlines_userapi_getitemlinks($args)
     }
 
     foreach ($args['itemids'] as $itemid) {
-        $item = xarModAPIFunc('headlines', 'user', 'get',
+        $item = xarMod::apiFunc('headlines', 'user', 'get',
                               array('hid' => $itemid));
         if (!isset($item)) return;
         $itemlinks[$itemid] = array('url' => xarModURL('headlines', 'user', 'view',array('hid' => $itemid)),

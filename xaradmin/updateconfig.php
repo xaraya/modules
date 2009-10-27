@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -33,50 +33,50 @@ function headlines_admin_updateconfig()
     if (!xarVarFetch('userajax', 'checkbox', $userajax, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortorder', 'enum:default:date', $sortorder, 'default', XARVAR_NOT_REQUIRED)) return;
 
-    xarModSetVar('headlines', 'itemsperpage', $itemsperpage);
-    xarModSetVar('headlines', 'SupportShortURLs', $shorturls);
-    xarModSetVar('headlines', 'useModuleAlias', $modulealias);
-    xarModSetVar('headlines', 'feeditemsperpage', $feeditems);
-    xarModSetVar('headlines', 'maxdescription', $maxdescription);
-    xarModSetVar('headlines', 'adminajax', $adminajax);
-    xarModSetVar('headlines', 'userajax', $userajax);
-    xarModSetVar('headlines', 'sortorder', $sortorder);
+    xarModVars::set('headlines', 'itemsperpage', $itemsperpage);
+    xarModVars::set('headlines', 'SupportShortURLs', $shorturls);
+    xarModVars::set('headlines', 'useModuleAlias', $modulealias);
+    xarModVars::set('headlines', 'feeditemsperpage', $feeditems);
+    xarModVars::set('headlines', 'maxdescription', $maxdescription);
+    xarModVars::set('headlines', 'adminajax', $adminajax);
+    xarModVars::set('headlines', 'userajax', $userajax);
+    xarModVars::set('headlines', 'sortorder', $sortorder);
     // The magpie var is no longer needed
-    if (xarModGetVar('headlines', 'magpie')) xarModDelVar('headlines', 'magpie');
+    if (xarModVars::get('headlines', 'magpie')) xarModDelVar('headlines', 'magpie');
     // make sure we don't set a parser that isn't available
     if ($parser != 'default') {
-        if (!xarModIsAvailable($parser)) $parser = 'default';
+        if (!xarMod::isAvailable($parser)) $parser = 'default';
         if ($parser == 'simplepie') { // take advantage of SimplePie 
             if (!xarVarFetch('showchanimage', 'checkbox', $showchanimage, 0, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('showitemimage', 'checkbox', $showitemimage, 0, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('showitemcats', 'checkbox', $showitemcats, 0, XARVAR_NOT_REQUIRED)) return;
-            xarModSetVar('headlines', 'showchanimage', $showchanimage);
-            xarModSetVar('headlines', 'showitemimage', $showitemimage);
-            xarModSetVar('headlines', 'showitemcats', $showitemcats);
+            xarModVars::set('headlines', 'showchanimage', $showchanimage);
+            xarModVars::set('headlines', 'showitemimage', $showitemimage);
+            xarModVars::set('headlines', 'showitemcats', $showitemcats);
         }
     }
-    xarModSetVar('headlines', 'parser', $parser);
-    xarModSetVar('headlines', 'importpubtype', $importpubtype);
-    xarModSetVar('headlines', 'uniqueid', $uniqueid);
+    xarModVars::set('headlines', 'parser', $parser);
+    xarModVars::set('headlines', 'importpubtype', $importpubtype);
+    xarModVars::set('headlines', 'uniqueid', $uniqueid);
     
-    if (!xarModIsAvailable('comments') || !xarModIsHooked('comments', 'headlines')) {
+    if (!xarMod::isAvailable('comments') || !xarModIsHooked('comments', 'headlines')) {
         $showcomments = 0;
     }
-    xarModSetVar('headlines', 'showcomments', $showcomments);
-    if (!xarModIsAvailable('ratings') || !xarModIsHooked('ratings', 'headlines')) {
+    xarModVars::set('headlines', 'showcomments', $showcomments);
+    if (!xarMod::isAvailable('ratings') || !xarModIsHooked('ratings', 'headlines')) {
         $showratings = 0;
     }
-    xarModSetVar('headlines', 'showratings', $showratings);
-    if (!xarModIsAvailable('hitcount') || !xarModIsHooked('hitcount', 'headlines')) {
+    xarModVars::set('headlines', 'showratings', $showratings);
+    if (!xarMod::isAvailable('hitcount') || !xarModIsHooked('hitcount', 'headlines')) {
         $showhitcount = 0;
     }
-    xarModSetVar('headlines', 'showhitcount', $showhitcount);
-    if (!xarModIsAvailable('keywords') || !xarModIsHooked('keywords', 'headlines')) {
+    xarModVars::set('headlines', 'showhitcount', $showhitcount);
+    if (!xarMod::isAvailable('keywords') || !xarModIsHooked('keywords', 'headlines')) {
         $showkeywords = 0;
     }
-    xarModSetVar('headlines', 'showkeywords', $showkeywords);
+    xarModVars::set('headlines', 'showkeywords', $showkeywords);
     // Module alias for short URLs
-   $currentalias = xarModGetVar('headlines','aliasname');
+   $currentalias = xarModVars::get('headlines','aliasname');
    $newalias = trim($aliasname);
    /* Get rid of the spaces if any, it's easier here and use that as the alias*/
    if ( strpos($newalias,'_') === FALSE )
@@ -84,7 +84,7 @@ function headlines_admin_updateconfig()
        $newalias = str_replace(' ','_',$newalias);
    }
    $hasalias= xarModGetAlias($currentalias);
-   $useAliasName= xarModGetVar('headlines','useModuleAlias');
+   $useAliasName= xarModVars::get('headlines','useModuleAlias');
 
    if (($useAliasName==1) && !empty($newalias)){
        /* we want to use an aliasname */
@@ -99,10 +99,10 @@ function headlines_admin_updateconfig()
        xarModDelAlias($currentalias,'headlines');
    }
    /* now set the alias modvar */
-   xarModSetVar('headlines', 'aliasname', $newalias);
+   xarModVars::set('headlines', 'aliasname', $newalias);
 
     xarModCallHooks('module','updateconfig','headlines', array('module' => 'headlines'));
-    xarResponseRedirect(xarModURL('headlines', 'admin', 'modifyconfig'));
+    xarResponse::Redirect(xarModURL('headlines', 'admin', 'modifyconfig'));
     return true;
 }
 

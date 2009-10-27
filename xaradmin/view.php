@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * @copyright (C) 2005-2009 by the Xaraya Development Team.
  * @link http://www.xaraya.com
  *
  * @subpackage headlines module
@@ -21,22 +21,23 @@ function headlines_admin_view()
     $data['warninglabel'] = xarVarPrepForDisplay(xarML('Status'));
     $data['optionslabel'] = xarVarPrepForDisplay(xarML('Options'));
     $data['authid'] = xarSecGenAuthKey();
+    sys::import('xaraya.pager');
     $data['pager'] = xarTplGetPager($startnum,
-                                    xarModAPIFunc('headlines', 'user', 'countitems'),
+                                    xarMod::apiFunc('headlines', 'user', 'countitems'),
                                     xarModURL('headlines', 'admin', 'view', array('startnum' => '%%')),
-                                    xarModGetVar('headlines', 'itemsperpage'));
+                                    xarModVars::get('headlines', 'itemsperpage'));
 
     // Security Check
     if(!xarSecurityCheck('EditHeadlines')) return;
     // The user API function is called
-    $links = xarModAPIFunc('headlines',
+    $links = xarMod::apiFunc('headlines',
                           'user',
                           'getall',
                           array('startnum' => $startnum,
-                                'numitems' => xarModGetVar('headlines',
+                                'numitems' => xarModVars::get('headlines',
                                                            'itemsperpage')));
     if (empty($links)){
-        xarResponseRedirect(xarModURL('headlines', 'admin', 'new'));
+        //xarResponse::Redirect(xarModURL('headlines', 'admin', 'new'));
     }
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($links); $i++) {
@@ -64,7 +65,7 @@ function headlines_admin_view()
     }
     // Add the array of items to the template variables
     $data['items'] = $links;
-    $data['selstyle']  = xarModGetUserVar('headlines', 'selstyle');
+    $data['selstyle']  = xarModUserVars::get('headlines', 'selstyle');
     if (empty($data['selstyle'])){
         $data['selstyle'] = 'plain';
     }

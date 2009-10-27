@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -19,7 +19,7 @@ function headlines_adminapi_import($args)
     if (empty($hid) || empty($importpubtype)) return 0;
 
     // The user API function is called
-    $links = xarModAPIFunc('headlines', 'user', 'get',
+    $links = xarMod::apiFunc('headlines', 'user', 'get',
                           array('hid' => $hid));
 
 
@@ -28,12 +28,12 @@ function headlines_adminapi_import($args)
 
     $feedfile = $links['url'];
 
-    if (xarModGetVar('headlines', 'magpie')){
-        $imports = xarModAPIFunc('magpie',  'user', 'process',
+    if (xarModVars::get('headlines', 'magpie')){
+        $imports = xarMod::apiFunc('magpie',  'user', 'process',
                            array('feedfile' => $feedfile));
 
     } else {
-        $imports = xarModAPIFunc('headlines', 'user', 'process',
+        $imports = xarMod::apiFunc('headlines', 'user', 'process',
                            array('feedfile' => $feedfile));
     }
 
@@ -44,7 +44,7 @@ function headlines_adminapi_import($args)
     }
 
 // FIXME: store this elsewhere to avoid bloat on module variables
-    $importhistory = xarModGetVar('headlines','importhistory');
+    $importhistory = xarModVars::get('headlines','importhistory');
     if (empty($importhistory)) {
         $importhistory = '';
     }
@@ -66,7 +66,7 @@ function headlines_adminapi_import($args)
         $article['ptid']     = $importpubtype;
         $article['authorid'] = xarUserGetVar('uid');
         //$article['status'] = 2;
-        if (!xarModAPIFunc('articles', 'admin', 'create', $article)) return;
+        if (!xarMod::apiFunc('articles', 'admin', 'create', $article)) return;
         $imported++;
         if (!empty($import['id'])) {
             $importhistory .= ';' . $import['id'];
@@ -74,7 +74,7 @@ function headlines_adminapi_import($args)
     }
 
     // save the import list, truncating it to max history number
-    $historynum = 200;//(int)xarModGetVar('headlines','historynum');
+    $historynum = 200;//(int)xarModVars::get('headlines','historynum');
 
     if (!empty($imported) && !empty($importhistory)) {
         $importlist = split(';',$importhistory);
@@ -84,7 +84,7 @@ function headlines_adminapi_import($args)
             $importhistory = join(';',$importlist);
         }
         unset($importlist);
-        xarModSetVar('headlines','importhistory',$importhistory);
+        xarModVars::set('headlines','importhistory',$importhistory);
     }
 
     return $imported;

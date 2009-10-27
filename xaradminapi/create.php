@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -30,15 +30,15 @@ function headlines_adminapi_create($args)
     // Security Check
     if(!xarSecurityCheck('AddHeadlines')) return;
 
-    $order = xarModAPIFunc('headlines', 'user', 'countitems');
+    $order = xarMod::apiFunc('headlines', 'user', 'countitems');
     $title = !isset($title) || empty($title) || !is_string($title) || strlen($title) > 100 ? '' : $title;
     $desc = !isset($desc) || empty($desc) || !is_string($desc) || strlen($desc) > 254 ? '' : $desc;
     $settings = isset($settings) ? $settings : serialize(array());
     $date = !isset($date) || empty($date) || !is_numeric($date) ? time() : $date;
     $string = !isset($string) || !is_string($string) ? '' : $string;
     // Get datbase setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $headlinestable = $xartable['headlines'];
     // Get next ID in table
     $nextId = $dbconn->GenId($headlinestable);

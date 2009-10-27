@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -29,8 +29,8 @@ function headlines_userapi_get($args)
     // Security Check
     if(!xarSecurityCheck('OverviewHeadlines')) return;
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $headlinestable = $xartable['headlines'];
 
     // Get headline
@@ -62,10 +62,10 @@ function headlines_userapi_get($args)
 
     // Get categories (if any)
     if (xarModIsHooked('categories','headlines')) {
-        $cids = xarModAPIFunc('categories','user','getlinks',
+        $cids = xarMod::apiFunc('categories','user','getlinks',
                               array('iids' => array($hid),
                                     //'itemtype' => 0, // not needed here
-                                    'modid' => xarModGetIDFromName('headlines'),
+                                    'modid' => xarMod::getRegID('headlines'),
                                     'reverse' => 1));
         if (isset($cids[$hid]) && is_array($cids[$hid])) {
             $link['cids'] = $cids[$hid];

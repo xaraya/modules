@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -28,12 +28,12 @@ function headlines_user_view($args)
     }
 
     // The user API function is called
-    $links = xarModAPIFunc('headlines', 'user', 'get', array('hid' => $hid));
+    $links = xarMod::apiFunc('headlines', 'user', 'get', array('hid' => $hid));
     if (empty($links)) return;
 
     // Check and see if a feed has been supplied to us.
     if (empty($links['url'])) {
-        xarResponseRedirect(xarModURL('headlines', 'user', 'main'));
+        xarResponse::Redirect(xarModURL('headlines', 'user', 'main'));
         return true;
     }
     
@@ -48,8 +48,8 @@ function headlines_user_view($args)
         }
     } 
     // set params based on feed settings falling back to module defaults if none found
-    $maxdescription = isset($settings['maxdescription']) ? $settings['maxdescription'] : xarModGetVar('headlines', 'maxdescription');
-    $itemsperpage = isset($settings['itemsperpage']) ? $settings['itemsperpage'] : xarModGetVar('headlines', 'feeditemsperpage'); 
+    $maxdescription = isset($settings['maxdescription']) ? $settings['maxdescription'] : xarModVars::get('headlines', 'maxdescription');
+    $itemsperpage = isset($settings['itemsperpage']) ? $settings['itemsperpage'] : xarModVars::get('headlines', 'feeditemsperpage'); 
     $refresh = isset($settings['refresh']) ? $settings['refresh'] : 3600;
     // TODO: admin only force cache refresh option
     if ($renew) {
@@ -59,13 +59,13 @@ function headlines_user_view($args)
     $feedfile = $links['url'];
 
     // call api function to get the parsed feed (or warning)
-    $data = xarModAPIFunc('headlines', 'user', 'getparsed', 
+    $data = xarMod::apiFunc('headlines', 'user', 'getparsed', 
         array('feedfile' => $feedfile, 'numitems' => $itemsperpage, 'truncate' => $maxdescription, 'refresh' => $refresh));
     
 
-        $data['showchanimage'] = isset($settings['showchanimage']) ? $settings['showchanimage'] : xarModGetVar('headlines', 'showchanimage');
-        $data['showitemimage'] = isset($settings['showitemimage']) ? $settings['showitemimage'] : xarModGetVar('headlines', 'showitemimage');
-        $data['showitemcats'] = isset($settings['showitemcats']) ? $settings['showitemcats'] : xarModGetVar('headlines', 'showitemcats');
+        $data['showchanimage'] = isset($settings['showchanimage']) ? $settings['showchanimage'] : xarModVars::get('headlines', 'showchanimage');
+        $data['showitemimage'] = isset($settings['showitemimage']) ? $settings['showitemimage'] : xarModVars::get('headlines', 'showitemimage');
+        $data['showitemcats'] = isset($settings['showitemcats']) ? $settings['showitemcats'] : xarModVars::get('headlines', 'showitemcats');
 
 
     if (!empty($data['warning'])){
@@ -80,7 +80,7 @@ function headlines_user_view($args)
         // this means the feeds can now be sorted reliably by date ala. the cloud block
         if (isset($data['compare']) && ($links['string'] != $data['compare'])) {
             // call api function to update our feed item
-            if (!xarModAPIFunc('headlines', 'user', 'update', array('hid' => $links['hid'], 'date' => $data['lastitem'], 'string' => $data['compare']))) return;
+            if (!xarMod::apiFunc('headlines', 'user', 'update', array('hid' => $links['hid'], 'date' => $data['lastitem'], 'string' => $data['compare']))) return;
         }
     }
     // if the feed hasn't changed we display the last time it did
@@ -116,7 +116,7 @@ function headlines_user_view($args)
     }
 
     // only generate authid when the user is allowed to import
-    $importpubtype = xarModGetVar('headlines','importpubtype');
+    $importpubtype = xarModVars::get('headlines','importpubtype');
     if (!empty($importpubtype) && xarSecurityCheck('EditHeadlines', 0)) {
         $data['authid'] = xarSecGenAuthKey();
     } else {

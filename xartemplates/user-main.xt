@@ -1,5 +1,8 @@
-<xar:if condition="xarModGetVar('headlines', 'userajax')">
-  <xar:if condition="!xarModIsAvailable('dojo')">
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:if condition="xarModVars::get('headlines', 'userajax')">
+  <xar:if condition="!xarMod::isAvailable('dojo')">
     <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
   </xar:if>
   <xar:set name="onclick">"return loadContent(this.href,'notsogoodbutok');"</xar:set>
@@ -17,7 +20,7 @@
     <xar:if condition="xarModIsHooked('categories','headlines')">
         <xar:categories-navigation layout="trails" showchildren="1" module="headlines" func="main" showcatcount="1" catid="$catid" />
     </xar:if>
-    <xar:if condition="xarSecurityCheck('EditHeadlines', 0) and xarModGetVar('headlines','importpubtype')">
+    <xar:if condition="xarSecurityCheck('EditHeadlines', 0) and xarModVars::get('headlines','importpubtype')">
         <xar:set name="showimport">1</xar:set>
     <xar:else/>
         <xar:set name="showimport">0</xar:set>
@@ -25,7 +28,7 @@
     <xar:loop name="$indlinks">
         <div class="xar-alt-outline xar-margin-thickbottom">
         <div class="xar-standard-box-padding xar-clearboth">
-        <xar:if condition="isset($loop:item['image']) && !empty($loop:item['image']) && xarModGetVar('headlines', 'showchanimage')">
+        <xar:if condition="isset($loop:item['image']) and !empty($loop:item['image']) and xarModVars::get('headlines', 'showchanimage')">
             <a href="#$loop:item['image']['link']#" title="#$loop:item['image']['title']#">
                 <img class="xar-floatleft" style="padding:0px 1em 1em 0px;" src="#$loop:item['image']['url']#" alt="#$loop:item['image']['title']#" />
             </a>
@@ -80,7 +83,7 @@
                 </xar:if>
             </xar:loop>
         </xar:if>
-        &nbsp;]</div>
+        &#160;]</div>
         </div>
     </xar:loop>
     <div class="xar-align-center">#$pager#</div>
@@ -91,3 +94,4 @@
     </p>
     </xar:comment>
 </div>
+</xar:template>

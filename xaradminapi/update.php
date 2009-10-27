@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -30,7 +30,7 @@ function headlines_adminapi_update($args)
     }
 
     // The user API function is called
-    $link = xarModAPIFunc('headlines',
+    $link = xarMod::apiFunc('headlines',
                           'user',
                           'get',
                           array('hid' => $hid));
@@ -43,8 +43,8 @@ function headlines_adminapi_update($args)
     // Security Check
     if(!xarSecurityCheck('EditHeadlines')) return;
     // Get datbase setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $headlinestable = $xartable['headlines'];
 
     // Update the link

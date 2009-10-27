@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -36,8 +36,8 @@ function headlines_userapi_getall($args)
 
     // Security Check
     if(!xarSecurityCheck('OverviewHeadlines')) return;
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $headlinestable = $xartable['headlines'];
     // CHECKME: will any functions need xar_settings while we're here?
     // Get links
@@ -51,9 +51,9 @@ function headlines_userapi_getall($args)
             FROM $headlinestable";
 
     if (!empty($catid) && xarModIsHooked('categories','headlines')) {
-        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
+        $categoriesdef = xarMod::apiFunc('categories','user','leftjoin',
                                        array('cids' => array($catid),
-                                            'modid' => xarModGetIDFromName('headlines')));
+                                            'modid' => xarMod::getRegID('headlines')));
         if (!empty($categoriesdef)) {
             $query .= ' LEFT JOIN ' . $categoriesdef['table'];
             $query .= ' ON ' . $categoriesdef['field'] . ' = xar_hid';

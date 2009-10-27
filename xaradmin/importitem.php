@@ -3,7 +3,7 @@
  * Headlines - Generates a list of feeds
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -20,9 +20,9 @@ function headlines_admin_importitem()
     if (!xarVarFetch('title','str:1:', $title)) return;
     if (!xarVarFetch('description','str:1:', $description)) return;
     if (!xarVarFetch('hid','int', $hid)) return;
-    $importpubtype = xarModGetVar('headlines','importpubtype');
+    $importpubtype = xarModVars::get('headlines','importpubtype');
     if (empty($importpubtype)) {
-        xarResponseRedirect(xarModURL('headlines', 'user', 'view', array('hid' => $hid)));
+        xarResponse::Redirect(xarModURL('headlines', 'user', 'view', array('hid' => $hid)));
         return true;
     }
     $article['title'] = $title;
@@ -30,7 +30,7 @@ function headlines_admin_importitem()
     $article['aid'] = 0;
     $article['ptid'] = $importpubtype;
     $article['status'] = 2;
-    xarModAPIFunc('articles', 'admin', 'create', $article);
-    xarResponseRedirect(xarModURL('headlines', 'user', 'view', array('hid' => $hid)));
+    xarMod::apiFunc('articles', 'admin', 'create', $article);
+    xarResponse::Redirect(xarModURL('headlines', 'user', 'view', array('hid' => $hid)));
 }
 ?>

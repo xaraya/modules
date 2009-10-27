@@ -1,3 +1,6 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:comment>Keep the markup simple and the inline styles to a minimum.</xar:comment>
 <div class="xar-form-input-wrapper">
     <label for="maxitems#$blockid#" class="xar-form-label help" title="#xarML('Number of items to show.')#">
@@ -15,3 +18,4 @@
         <xar:mlstring>Display descriptions</xar:mlstring>
     </label>
 </div>
+</xar:template>

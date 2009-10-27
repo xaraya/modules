@@ -1,3 +1,6 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:if condition="!empty($feedcontent)">
 <ul>
     <xar:loop name="$feedcontent">
@@ -7,7 +10,7 @@
             <xar:else />
                 <strong>#xarVarPrepHTMLDisplay($loop:item['title'])#</strong>
             </xar:if>
-            <xar:if condition="!empty($loop:item['channel']) && $showdescriptions">
+            <xar:if condition="!empty($loop:item['channel']) and $showdescriptions">
                 <p class="xar-sub">
                     <xar:mlstring>
                         From
@@ -19,3 +22,4 @@
     </xar:loop>
 </ul>
 </xar:if>
+</xar:template>
