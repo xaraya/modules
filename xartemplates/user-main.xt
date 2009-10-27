@@ -47,7 +47,7 @@
             <div class="xar-standard-box-padding">#$loop:item['chandesc']#</div>
         </xar:if>
         <div class="xar-sub">
-            <xar:set name="$lastseen">#$loop:item['lastitem']#</xar:set>
+            <xar:set name="lastseen">#$loop:item['lastitem']#</xar:set>
             <xar:mlstring>Last updated</xar:mlstring> #xarLocaleGetFormattedDate('medium',$lastseen)# #xarLocaleGetFormattedTime('medium',$lastseen)#
         </div>
         </div>

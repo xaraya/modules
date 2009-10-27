@@ -93,7 +93,7 @@
                     #$loop:item['description']#
                 </div>
                 <xar:if condition="!empty($showimport)">
-                    <xar:set name="$implabel"><xar:mlstring>Import to News Queue</xar:mlstring></xar:set>
+                    <xar:set name="implabel"><xar:mlstring>Import to News Queue</xar:mlstring></xar:set>
                     <p class="xar-sub">
                     <xar:if condition="!empty($magpie)">
                     <xar:comment>
