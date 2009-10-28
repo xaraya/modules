@@ -92,11 +92,11 @@ function dyn_example_init()
     $xartable =& xarDB::getTables();
     $dynproptable = $xartable['dynamic_properties'];
     $dyndatatable = $xartable['dynamic_data'];
-    $query = "SELECT DISTINCT xar_dd_itemid
-                FROM $dynproptable
-           LEFT JOIN $dyndatatable
-                  ON xar_prop_id=xar_dd_propid
-               WHERE xar_prop_objectid= $objectid";
+	$query = "SELECT DISTINCT $dynproptable.id
+	FROM $dynproptable
+	LEFT JOIN $dyndatatable
+	ON $dyndatatable.id=property_id
+	WHERE object_id= $objectid";
 
     // Note : we could add some other fields in here too, based on the properties we imported above
     $instances = array(
