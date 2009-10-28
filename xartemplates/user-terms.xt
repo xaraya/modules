@@ -4,6 +4,6 @@
         <span class="xar-mod-title">User Information</span>
     </div>
     <div class="xar-mod-body">
-        <xar:template file="terms" />
+        <xar:template file="terms"/>
     </div>
 </xar:template>

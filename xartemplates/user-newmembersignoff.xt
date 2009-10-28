@@ -10,7 +10,7 @@
         <p>
             A user has been created with the following registration data:
         </p>
-        <xar:data-display object="$object" />
+        <xar:data-display object="$object"/>
         <div style="clear: both">&#160;</div>
         <h2>Instructions Sent</h2>
         <p>
@@ -25,6 +25,6 @@
                 <xar:mlvar>#$adminemail#</xar:mlvar>
             </xar:ml>
         </p>
-        <xar:module module="registration" func="terms" />
+        <xar:module module="registration" func="terms"/>
     </div>
 </xar:template>

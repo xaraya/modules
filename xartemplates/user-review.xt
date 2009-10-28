@@ -17,7 +17,7 @@
     <form method="post" action="&xar-modurl-dynamicdata-admin-update;" enctype="#$enc_type#">
         <fieldset>
         <legend>Review Registration Profile</legend>
-            <xar:data-form object="$object" tplmodule="registration" />
+            <xar:data-form object="$object" tplmodule="registration"/>
         </fieldset>
         <xar:if condition="!empty($hookoutput)">
             <fieldset>
@@ -38,16 +38,16 @@
         </xar:if>
         <fieldset>
             <div class="xar-align-center">
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="hidden" name="modid" id="modid" value="#$object:moduleid#" />
-                <input type="hidden" name="itemtype" id="itemtype" value="#$object:itemtype#" />
-                <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#" />
-                <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#" />
-                <input type="hidden" name="tplmodule" id="tplmodule" value="registration" />
+                <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                <input type="hidden" name="modid" id="modid" value="#$object:moduleid#"/>
+                <input type="hidden" name="itemtype" id="itemtype" value="#$object:itemtype#"/>
+                <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#"/>
+                <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#"/>
+                <input type="hidden" name="tplmodule" id="tplmodule" value="registration"/>
                 <xar:if condition="!empty($return_url)">
-                  <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
+                  <input type="hidden" name="return_url" id="return_url" value="#$return_url#"/>
                 </xar:if>
-                <input type="submit" value="#xarML('Update')#" class="xar-margin-thickleft" />
+                <input type="submit" value="#xarML('Update')#" class="xar-margin-thickleft"/>
             </div>
         </fieldset>
     </form>
