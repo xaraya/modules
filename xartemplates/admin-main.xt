@@ -26,7 +26,7 @@
                 How to use it?
         </h3>
         <p>
-                Simply set the configuration as you would like, and the hitcount module will begin collecting data on the hooks that you configure.
+                Simply set the configuration as you would like, and the hitcount module will begin collecting data on the hooked items or properties that you configure.
         </p>
         <h3>
                 Included Blocks
@@ -38,7 +38,13 @@
                 Included Hooks
         </h3>
         <p>
-                The hitcount must be hooked into the items that you want to count up.
+                The hitcount module must be hooked into the items that you want to count up.
+        </p>
+        <h3>
+                Included Properties
+        </h3>
+        <p>
+                Or you can add the Hit Count property directly to your dynamic data objects.
         </p>
 
     </div>
