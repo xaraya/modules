@@ -27,6 +27,9 @@ function dyn_example_user_view()
     if (!xarSecurityCheck('ViewDynExample')) return;
 
 	// Get this value from the URL query string
+	if(!xarVarFetch('tab', 'isset', $tab, NULL, XARVAR_DONT_SET)) {return;}
+
+	// Get this value from the URL query string
 	// TODO: why XARVAR_DONT_SET ?
     if(!xarVarFetch('startnum', 'isset', $data['startnum'], NULL, XARVAR_DONT_SET)) {return;}
 
@@ -90,6 +93,12 @@ function dyn_example_user_view()
     }
     // TODO: add a pager here (needed for this approach)
 /* end APPROACH #4 : getting only the raw item values via API */
+
+	if (isset($tab)) {
+		$data['tab'] = $tab;
+	} else {
+		$data['tab'] = 1;
+	}
 
     // We are changing the name of the page to raise
     // better search engine compatibility.
