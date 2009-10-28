@@ -113,7 +113,8 @@
         [ <a href="http://www.doubleclick.net">DoubleClick</a> ]<br />
         [ <a href="http://www.linkshare.com">Linkshare</a> ]<br /></p>
 
-    <xar:if condition="xarModVars::get('registration', 'minage') gt '0'">
+    <xar:set name="mina">xarModVars::get('registration', 'minage')</xar:set>
+    <xar:if condition="$mina gt 0">
         <xar:set name="curnum">++$curnum</xar:set>
         <h3 id="children">#$curnum#.&#160;Children</h3>
             <p><xar:ml>
