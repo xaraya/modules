@@ -28,10 +28,10 @@ function dyn_example_user_view()
 
 	// Get this value from the URL query string
 	// TODO: why XARVAR_DONT_SET ?
-    if(!xarVarFetch('startnum', 'isset', $tdata['startnum'], NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('startnum', 'isset', $data['startnum'], NULL, XARVAR_DONT_SET)) {return;}
 
     // Get user setting for 'items_per_page'
-    $tdata['items_per_page'] = xarModUserVars::get('dyn_example','items_per_page');
+    $data['items_per_page'] = xarModUserVars::get('dyn_example','items_per_page');
 
 /* APPROACH #1 and #3 */
 
@@ -42,8 +42,8 @@ function dyn_example_user_view()
     $mylist = DataObjectMaster::getObjectList(array('name' => 'dyn_example'));
 
     // We have some filters for the items
-    $filters = array('numitems'  => $tdata['items_per_page'],
-                     'startnum'  => $tdata['startnum'],
+    $filters = array('numitems'  => $data['items_per_page'],
+                     'startnum'  => $data['startnum'],
                      'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE
                     );
     
@@ -54,7 +54,7 @@ function dyn_example_user_view()
     $items = $mylist->getItems($filters);
 
     // Pass along the whole object list to the template.  Only needed in Approach #1
-    $tdata['mylist'] = & $mylist;
+    $data['mylist'] = & $mylist;
 
 /* end APPROACH #1 and #3 */
 
@@ -67,24 +67,24 @@ function dyn_example_user_view()
 
 /* start APPROACH #3 */
 
-    $tdata['properties'] =& $mylist->getProperties();
-    $tdata['values'] =& $mylist->items;
+    $data['properties'] =& $mylist->getProperties();
+    $data['values'] =& $mylist->items;
 
 /* end APPROACH #3  */
 
 /* start APPROACH #4 : getting only the raw item values via API */
-    $tdata['labels'] = array();
-    $tdata['items'] = array();
+    $data['labels'] = array();
+    $data['items'] = array();
     foreach ($items as $itemid => $fields) {
-        $tdata['items'][$itemid] = array();
+        $data['items'][$itemid] = array();
         foreach ($fields as $name => $value) {
-            $tdata['items'][$itemid][$name] = xarVarPrepForDisplay($value);
+            $data['items'][$itemid][$name] = xarVarPrepForDisplay($value);
             // do some other processing here...
         }
         // define in some labels
-        if (count($tdata['labels']) == 0) {
+        if (count($data['labels']) == 0) {
             foreach (array_keys($fields) as $name) {
-                $tdata['labels'][$name] = xarML(ucfirst($name));
+                $data['labels'][$name] = xarML(ucfirst($name));
             }
         }
     }
@@ -96,7 +96,7 @@ function dyn_example_user_view()
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View Dynamic Examples')));
 
     // Return the template variables defined in this function
-    return $tdata;
+    return $data;
 }
 
 ?>

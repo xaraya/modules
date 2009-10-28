@@ -21,10 +21,10 @@ function dyn_example_admin_view()
     if (!xarSecurityCheck('EditDynExample')) return;
 
 	// Get this value from the URL query string
-    if(!xarVarFetch('startnum', 'isset', $tdata['startnum'], NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('startnum', 'isset', $data['startnum'], NULL, XARVAR_DONT_SET)) {return;}
 
 	// Get the setting for 'items_per_page'
-    $tdata['items_per_page'] = xarModVars::get('dyn_example','items_per_page');
+    $data['items_per_page'] = xarModVars::get('dyn_example','items_per_page');
 
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
@@ -35,7 +35,7 @@ function dyn_example_admin_view()
     // Load the DD master property class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.properties.master');
 
-	$tdata['sort'] = xarMod::ApiFunc('dyn_example','admin','sort', array(
+	$data['sort'] = xarMod::ApiFunc('dyn_example','admin','sort', array(
 		//how to sort if the URL doesn't say otherwise...
 		'sortfield_fallback' => 'id', 
 		'ascdesc_fallback' => 'ASC'
@@ -44,7 +44,7 @@ function dyn_example_admin_view()
     // We have some filters for the items
     $filters = array(
                      'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
-					'sort' => $tdata['sort']
+					'sort' => $data['sort']
                     );
     
     // Count the items first if you want a full pager - otherwise you'll get simple previous/next links
@@ -54,12 +54,12 @@ function dyn_example_admin_view()
     $items = $mylist->getItems($filters);
     
     // pass along the whole object list to the template
-    $tdata['mylist'] = & $mylist;
+    $data['mylist'] = & $mylist;
 
 
 
     // Return the template variables defined in this function
-    return $tdata;
+    return $data;
 }
 
 ?>

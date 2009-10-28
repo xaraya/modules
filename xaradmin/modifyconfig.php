@@ -27,16 +27,16 @@ function dyn_example_admin_modifyconfig()
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
     // Get the object we'll be working with for dyn_example-specific configuration
-    $tdata['object'] = DataObjectMaster::getObject(array('name' => 'dyn_example_module_settings'));
+    $data['object'] = DataObjectMaster::getObject(array('name' => 'dyn_example_module_settings'));
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
-    $tdata['object']->getItem(array('itemid' => 0));
+    $data['object']->getItem(array('itemid' => 0));
 
     // Get the object we'll be working with for common configuration settings
-    $tdata['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'dyn_example'));
+    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'dyn_example'));
     // Decide which fields are configurable in this module
-    $tdata['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_user_menu, user_menu_link');
+    $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_user_menu, user_menu_link');
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
-    $tdata['module_settings']->getItem();
+    $data['module_settings']->getItem();
 
     // Run the appropriate code depending on whether the template was submitted or not
     switch (strtolower($phase)) {
@@ -68,11 +68,11 @@ function dyn_example_admin_modifyconfig()
             # when you're dealing with checkboxes (they're either checked or they aren't)
             #
 
-            $isvalid = $tdata['module_settings']->checkInput();
+            $isvalid = $data['module_settings']->checkInput();
             if (!$isvalid) {
-                return xarTplModule('dyn_example','admin','modifyconfig', $tdata);
+                return xarTplModule('dyn_example','admin','modifyconfig', $data);
             } else {
-                $itemid = $tdata['module_settings']->updateItem();
+                $itemid = $data['module_settings']->updateItem();
             }
 
             # --------------------------------------------------------
@@ -114,11 +114,11 @@ function dyn_example_admin_modifyconfig()
                 // Load the DD master object class. This line will likely disappear in future versions
                 sys::import('modules.dynamicdata.class.objects.master');
                 // Get the object we'll be working with
-                $tdata['object'] = DataObjectMaster::getObject(array('name' => 'dyn_example_module_settings'));
+                $data['object'] = DataObjectMaster::getObject(array('name' => 'dyn_example_module_settings'));
                 // Get the data from the form
-                $isvalid = $tdata['object']->checkInput();
+                $isvalid = $data['object']->checkInput();
                 // Update the item with itemid = 0
-                $item = $tdata['object']->updateItem(array('itemid' => 0));
+                $item = $data['object']->updateItem(array('itemid' => 0));
                 // This function generated no output, and so now it is complete we redirect
                 // the user to an appropriate page for them to carry on their work
                 xarResponse::redirect(xarModURL('dyn_example', 'admin', 'modifyconfig'));
@@ -144,7 +144,7 @@ function dyn_example_admin_modifyconfig()
     }
 
     // Return the template variables defined in this function
-    return $tdata;
+    return $data;
 }
 
 ?>

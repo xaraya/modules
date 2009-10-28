@@ -72,9 +72,9 @@
 
 <p>Return an array from your module function and the array's values will be available in your template.  For example, $somearray['apple'] in <strong>xaruser/somefunction.php</strong> would become $apple in <strong>xartemplates/user-somefunction.xt</strong>. Note how the file and directory naming conventions enable a particular module function to "find" the template that handles its output.</p>
 
-<p>In the case of this page, the module function is in <strong>dyn_example/xaruser/view.php</strong>.  It returns this array: $tdata.  Thus, if you set a value for $tdata['age'] in the module function, you can use $age in the <strong>user-view.xt</strong> template to output that value.</p>
+<p>In the case of this page, the module function is in <strong>dyn_example/xaruser/view.php</strong>.  It returns this array: $data.  Thus, if you set a value for $data['age'] in the module function, you can use $age in the <strong>user-view.xt</strong> template to output that value.</p>
 
-<p>Have a look in view.php, and you'll see that our $tdata array supplies the values for variables we use in #$userviewlink#, specifically $mylist here. In this approach, the list is already prepared by the module function, so this requires the least amount of template code in <strong>user-view.xt</strong>.</p>
+<p>Have a look in view.php, and you'll see that our $data array supplies the values for variables we use in #$userviewlink#, specifically $mylist here. In this approach, the list is already prepared by the module function, so this requires the least amount of template code in <strong>user-view.xt</strong>.</p>
 
 <p><strong>Important tag in user-view.xt:</strong></p>
 

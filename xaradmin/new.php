@@ -22,17 +22,17 @@ function dyn_example_admin_new()
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
     // Get the object we'll be working with
-    $tdata['object'] = DataObjectMaster::getObject(array('name' => 'dyn_example'));
+    $data['object'] = DataObjectMaster::getObject(array('name' => 'dyn_example'));
 
     // Check if we are in 'preview' mode from the input here - the rest is handled by checkInput()
     // Here we are testing for a button clicked, so we test for a string
-    if(!xarVarFetch('preview', 'str', $tdata['preview'],  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('preview', 'str', $data['preview'],  NULL, XARVAR_DONT_SET)) {return;}
 
     // Check if we are submitting the form
     // Here we are testing for a hidden field we define as true on the template, so we can use a boolean (true/false)
-    if (!xarVarFetch('confirm',    'bool',   $tdata['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
 
-    if ($tdata['confirm']) {
+    if ($data['confirm']) {
 
         // Check for a valid confirmation key. The value is automatically gotten from the template
         if (!xarSecConfirmAuthKey()) {
@@ -41,17 +41,17 @@ function dyn_example_admin_new()
 
         // Get the data from the form and see if it is all valid
         // Either way the values are now stored in the object
-        $isvalid = $tdata['object']->checkInput();
+        $isvalid = $data['object']->checkInput();
 
         if (!$isvalid) {
             // Bad data: redisplay the form with the data we picked up and with error messages
-            return xarTplModule('dyn_example','admin','new', $tdata);        
-        } elseif (isset($tdata['preview'])) {
+            return xarTplModule('dyn_example','admin','new', $data);        
+        } elseif (isset($data['preview'])) {
             // Show a preview, same thing as the above essentially
-            return xarTplModule('dyn_example','admin','new', $tdata);        
+            return xarTplModule('dyn_example','admin','new', $data);        
         } else {
             // Good data: create the item
-            $item = $tdata['object']->createItem();
+            $item = $data['object']->createItem();
 
             // Jump to the next page
             xarResponse::Redirect(xarModURL('dyn_example','admin','view'));
@@ -61,7 +61,7 @@ function dyn_example_admin_new()
     }
 
     // Return the template variables defined in this function
-    return $tdata;
+    return $data;
 }
 
 ?>

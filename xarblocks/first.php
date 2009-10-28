@@ -52,21 +52,21 @@ function dyn_example_firstblock_display($blockinfo)
     // Content is a serialized array for legacy support, but will be
     // an array (not serialized) once all blocks have been converted.
     if (!is_array($blockinfo['content'])) {
-        $tdata = @unserialize($blockinfo['content']);
+        $data = @unserialize($blockinfo['content']);
     } else {
-        $tdata = $blockinfo['content'];
+        $data = $blockinfo['content'];
     }
 
     // Defaults
-    if (empty($tdata['numitems'])) {
-        $tdata['numitems'] = 5;
+    if (empty($data['numitems'])) {
+        $data['numitems'] = 5;
     }
-    $tdata['blockid'] = $blockinfo['bid'];
+    $data['blockid'] = $blockinfo['bid'];
 
     // we'll retrieve the items directly in the template here
 
     // Just return the template data.
-    $blockinfo['content'] = $tdata;
+    $blockinfo['content'] = $data;
 
     return $blockinfo;
 }
