@@ -5,8 +5,8 @@
         <span class="xar-mod-title">Hitcount Administration</span>
             </div>
     <div class="xar-mod-body">
-        <xar:template type="module" file="admin-menu" />
-       <img src="#xarTplGetImage('hitcount.png')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+        <xar:template type="module" file="admin-menu"/>
+       <img src="#xarTplGetImage('hitcount.png')#" class="xar-module-icon" alt="official icon" width="96" height="96"/>
         <h2>
             Overview
         </h2>
