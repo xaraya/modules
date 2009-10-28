@@ -220,8 +220,6 @@ function changelog_admin_showdiff($args)
     $fieldlist = array_unique(array_merge(array_keys($old['fields']),array_keys($new['fields'])));
     ksort($fieldlist);
 
-    sys::import('modules.changelog.xarincludes.difflib');
-
     $data['fields'] = array();
     foreach ($fieldlist as $field) {
         if (!isset($old['fields'][$field])) {
@@ -231,16 +229,45 @@ function changelog_admin_showdiff($args)
             $new['fields'][$field] = '';
         }
         $diff = new Diff( explode("\n",$old['fields'][$field]), explode("\n",$new['fields'][$field]));
+        $data['fields'][$field] = array();
         if ($diff->isEmpty()) {
-            $data['fields'][$field] = nl2br(xarVarPrepForDisplay($old['fields'][$field]));
+            $data['fields'][$field]['diff'] = '';
         } else {
-            $fmt = new UnifiedDiffFormatter;
+            $fmt = new XarayaDiffFormatter;
             $difference = $fmt->format($diff);
-            $data['fields'][$field] = nl2br(xarVarPrepForDisplay($difference));
+            $data['fields'][$field]['diff'] = nl2br($difference);
         }
+        $data['fields'][$field]['old'] = nl2br(xarVarPrepForDisplay($old['fields'][$field]));
+        $data['fields'][$field]['new'] = nl2br(xarVarPrepForDisplay($new['fields'][$field]));
     }
 
     return $data;
+}
+
+sys::import('modules.changelog.xarincludes.difflib');
+
+class XarayaDiffFormatter extends UnifiedDiffFormatter
+{
+    function _block_header($xbeg, $xlen, $ybeg, $ylen)
+    {
+        return parent::_block_header($xbeg, $xlen, $ybeg, $ylen);
+    }
+
+    function _lines($lines, $prefix = '', $postfix = '')
+    {
+        foreach ($lines as $line)
+            echo $prefix . xarVarPrepForDisplay($line) . $postfix . "\n";
+    }
+
+    function _added($lines)
+    {
+        $this->_lines($lines, '<ins>', '</ins>');
+    }
+
+    function _deleted($lines)
+    {
+        $this->_lines($lines, '<del>', '</del>');
+    }
 }
 
 ?>

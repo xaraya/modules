@@ -79,6 +79,11 @@
             <xar:mlstring>Field listing</xar:mlstring>
          </legend>
 
+        <style>
+            del{background:##FFCCCC;}
+            ins{background:##CCFFCC;}
+        </style>
+
         <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
             <tr>
                 <th><xar:mlstring>Fields</xar:mlstring></th>
@@ -87,10 +92,17 @@
             <xar:foreach in="$fields" key="$field" value="$value">
             <tr>
                 <td class="xar-norm">#$field#</td>
-                <td class="xar-norm">#$value#</td>
+                <td class="xar-norm">
+                    <xar:if condition="!empty($value['diff'])">
+                        #$value['diff']#
+                    <xar:else/>
+                        #$value['old']#
+                    </xar:if>
+                </td>
             </tr>
             </xar:foreach>
         </table>
         </fieldset>
 
-</div></xar:template>
+</div>
+</xar:template>

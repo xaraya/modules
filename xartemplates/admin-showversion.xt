@@ -87,23 +87,24 @@
             </p>
         </div>
     </fieldset>
-    <xar:if condition="!empty($restore)">
+    <xar:if condition="!empty($restore) or $modname eq 'articles' or $modname eq 'dynamicdata'">
     <fieldset>
         <legend>
             <xar:mlstring>Preview Version</xar:mlstring>
         </legend>
         <div class="xar-form-input-wrapper">
-            <xar:if condition="$modname eq 'articles'">
+            <xar:if condition="!empty($fields) and $modname eq 'articles'">
                 <xar:comment>
                     Hint: we use the articles preview feature of the display function here
                 </xar:comment>
                 <xar:module main="false" module="articles" func="display" preview="1" article="$fields" />
 
-            <xar:elseif condition="$modname eq 'dynamicdata'"/>
+            <xar:elseif condition="!empty($fields) and $modname eq 'dynamicdata'"/>
                 <xar:comment>
                     Hint: we retrieve the DD object and then pass the $fields to checkinput(), to update the object values
                 </xar:comment>
-                <xar:set name="ddobject">xarMod::apiFunc('dynamicdata','user','getitem',array('module_id' => $modid, 'itemtype' => $itemtype, 'itemid' => $itemid, 'getobject' => true)); $ddobject->checkinput($fields)</xar:set>
+                <xar:set name="ddobject">xarMod::apiFunc('dynamicdata','user','getobject',array('module_id' => $modid, 'itemtype' => $itemtype, 'itemid' => $itemid))</xar:set>
+                <xar:set name="dummy">$ddobject->checkinput($fields, 1)</xar:set>
                 <xar:data-display object="$ddobject" />
 
             <xar:elseif condition="$modname eq 'xarpages'"/>
@@ -117,7 +118,7 @@
                 </xar:comment>
 
             </xar:if>
-            </div>
+        </div>
     </fieldset>
     </xar:if>
 
