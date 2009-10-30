@@ -96,6 +96,13 @@ function registration_init()
     xarModVars::set('registration', 'allowreview', 0);
     xarModVars::set('registration', 'reviewobject', $regobject['name']);
 
+# --------------------------------------------------------
+#
+# Set up configuration modvars (common)
+#
+    $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'registration'));
+    $module_settings->initialize();
+
 /** ---------------------------------------------------------------
  * Set disallowed names
  */
