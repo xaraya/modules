@@ -52,6 +52,32 @@
                 <input type="text" name="cachesizelimit" id="cachesizelimit" value="#$settings.OutputSizeLimit#" size="4" maxlength="4" />
                 <xar:mlstring> (in MB)</xar:mlstring>
             </div>
+            <div class="xar-form-input-wrapper">
+                <label for="defaultcookiename" class="xar-form-label" title="#xarML('This is the site default cookie name used to determine if sessionless caching is appropriate. ')#">
+                    <xar:mlstring>Cache cookie name:</xar:mlstring>
+                </label>
+                #$settings.OutputCookieName#
+                &#160;
+                <xar:set name="updatecookielink">'<a href="'.$cookieupdatelink.'">'.xarML('Global Cookie Name').'</a>'</xar:set>
+                <xar:ml>
+                    <xar:mlstring>[On update this will be saved as <strong>#(1)</strong> from current #(2)]</xar:mlstring>
+                    <xar:mlvar>#$CookieName#</xar:mlvar>
+                    <xar:mlvar>#$updatecookielink#</xar:mlvar>
+                </xar:ml>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="defaultlocale" class="xar-form-label" title="#xarML('This is the site default locale used for headers in cached pages')#">
+                    <xar:mlstring>Cache locale setting:</xar:mlstring>
+                </label>
+                #$settings.OutputDefaultLocale#
+                &#160;
+                <xar:set name="updatelink">'<a href="'.$localeupdatelink.'">'.xarML('Global Site Locale').'</a>'</xar:set>
+                <xar:ml>
+                    <xar:mlstring>[On update this will be saved as <strong>#(1)</strong> from current #(2)]</xar:mlstring>
+                    <xar:mlvar>#$defaultlocale#</xar:mlvar>
+                    <xar:mlvar>#$updatelink#</xar:mlvar>
+                </xar:ml>
+            </div>                        
     </fieldset>
     <fieldset>
         <legend><xar:mlstring>Page Output Cache Settings</xar:mlstring></legend>

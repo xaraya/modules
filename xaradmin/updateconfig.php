@@ -112,6 +112,8 @@ function xarcachemanager_admin_updateconfig()
     $configSettings = array();
     $configSettings['Output.DefaultTheme'] = $cachetheme;
     $configSettings['Output.SizeLimit'] = $cachesizelimit;
+    $configSettings['Output.CookieName'] = xarConfigGetVar('Site.Session.CookieName'); 
+    $configSettings['Output.DefaultLocale'] = xarMLSGetSiteLocale();  
     $configSettings['Page.TimeExpiration'] = $pageexpiretime;
     $configSettings['Page.DisplayView'] = $cachedisplayview;
     $configSettings['Page.ShowTime'] = $cachetimestamp;

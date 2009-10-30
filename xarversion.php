@@ -3,7 +3,7 @@
  * xarCacheManager version information
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'xarCacheManager';
 $modversion['id']             = '1652';
-$modversion['version']        = '0.3.4';
+$modversion['version']        = '0.3.5';
 $modversion['displayname']    = xarML('xarCacheManager');
 $modversion['description']    = 'Manage the output cache system of Xaraya';
 $modversion['credits']        = '';

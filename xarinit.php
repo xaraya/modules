@@ -271,15 +271,17 @@ function xarcachemanager_upgrade($oldversion)
                     array('configSettings' => $configSettings,
                           'cachingConfigFile' => $cachingConfigFile));
             }
-
-        case '0.4.0':
-            // Code to upgrade from the 0.4.0 version (base module level caching)
-            break;
-        case '1.0.0':
-            // Code to upgrade from version 1.0.0 goes here
-            break;
-        case '2.0.0':
-            // Code to upgrade from version 2.0.0 goes here
+        case '0.3.4' :
+            $configSettings = xarModAPIFunc('xarcachemanager',
+                                                'admin',
+                                                'get_cachingconfig',
+                                                array('from' => 'db',
+                                                      'cachingConfigFile' => $cachingConfigFile));
+                copy($defaultConfigFile, $cachingConfigFile); 
+                xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
+                    array('configSettings' => $configSettings,
+                          'cachingConfigFile' => $cachingConfigFile));        
+        case '0.3.5' : //current version
             break;
     }
     // Update successful

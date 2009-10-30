@@ -49,6 +49,11 @@ function xarcachemanager_admin_modifyconfig()
     } else {
         $data['blockCachingEnabled'] = 0;
     }
+    
+    $data['CookieName'] =  (xarConfigGetVar('Site.Session.CookieName') != '')? xarConfigGetVar('Site.Session.CookieName'): 'XARAYASID';
+    $data['cookieupdatelink'] = xarModURL('base','admin','modifyconfig',array('tab'=>'security'));
+    $data['defaultlocale'] = xarMLSGetSiteLocale();
+    $data['localeupdatelink'] = xarModURL('base','admin','modifyconfig',array('tab'=>'locales'));
 
     // get the caching config settings from the config file
     $data['settings'] = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
@@ -58,6 +63,12 @@ function xarcachemanager_admin_modifyconfig()
     if(!isset($data['settings']['OutputSizeLimit'])) {
         $data['settings']['OutputSizeLimit'] = 262144;
     }
+    if(!isset($data['settings']['OutputCookieName'])) {
+        $data['settings']['OutputCookieName'] = $data['CookieName'];
+    }
+    if(!isset($data['settings']['OutputDefaultLocale'])) {
+        $data['settings']['OutputDefaultLocale'] = $data['defaultlocale'];
+    }          
     if(!isset($data['settings']['PageTimeExpiration'])) {
         $data['settings']['PageTimeExpiration'] = 1800;
     }
@@ -110,8 +121,8 @@ function xarcachemanager_admin_modifyconfig()
     $data['themes'] = xarModAPIFunc('themes',
         'admin',
         'getlist', $filter);
-
-    $data['authid'] = xarSecGenAuthKey();
+        
+      $data['authid'] = xarSecGenAuthKey();
     return $data;
 }
 
