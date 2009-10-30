@@ -18,77 +18,20 @@
  * initialise block
  * @return array
  */
-function registration_rloginblock_init()
+sys::import('xaraya.structures.containers.blocks.basicblock');
+sys::import('modules.authsystem.xarblocks.login');
+class rLoginBlock extends LoginBlock implements iBlock
 {
-    return array(
-        'showlogout' => 0,
-        'logouttitle' => '',
-        'nocache' => 1, // don't cache by default
-        'pageshared' => 1, // if you do, share across pages
-        'usershared' => 0, // but don't share for different users
-        'cacheexpire' => null
-    );
+    public $no_cache            = 1;
+
+    public $name                = 'rLoginBlock';
+    public $module              = 'registration';
+    public $text_type           = 'Login';
+    public $text_type_long      = 'Registration and Login';
+    public $pageshared          = 1;
+
+    public $showlogout          = 0;
+    public $logouttitle         = '';
+
 }
-
-/**
- * get information on block
- * @return array
- */
-function registration_rloginblock_info()
-{
-    return array(
-        'text_type' => 'Login',
-        'module' => 'registration',
-        'text_type_long' => 'Registration and login'
-    );
-}
-
-/**
- * Display func.
- * @param $blockinfo array containing title,content
- * @return array $blockinfo
- */
-function registration_rloginblock_display($blockinfo)
-{
-    // Security Check
-    if(!xarSecurityCheck('ViewRegistrationLogin',0,'Block',"rlogin:" . $blockinfo['title'] . ":" . $blockinfo['bid'],'All')) return;
-
-    // Get variables from content block
-    if (!is_array($blockinfo['content'])) {
-        $vars = unserialize($blockinfo['content']);
-    } else {
-        $vars = $blockinfo['content'];
-    }
-
-    // Display logout block if user is already logged in
-    // e.g. when the login/logout block also contains a search box
-    if (xarUserIsLoggedIn()) {
-        if (!empty($vars['showlogout'])) {
-            $args['name'] = xarUserGetVar('name');
-
-            // Since we are logged in, set the template base to 'logout'.
-            // FIXME: not allowed to set BL variables directly
-            $blockinfo['_bl_template_base'] = 'logout';
-
-            if (!empty($vars['logouttitle'])) {
-                $blockinfo['title'] = $vars['logouttitle'];
-            }
-        } else {
-            return;
-        }
-    } elseif (xarServer::getVar('REQUEST_METHOD') == 'GET') {
-        // URL of this page
-        $args['return_url'] = xarServer::getCurrentURL();
-    } else {
-        // Base URL of the site
-        $args['return_url'] = xarServer::getBaseURL();
-    }
-
-    // Used in the templates.
-    $args['blockid'] = $blockinfo['bid'];
-
-    $blockinfo['content'] = $args;
-    return $blockinfo;
-}
-
 ?>
