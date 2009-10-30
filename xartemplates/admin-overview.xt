@@ -23,8 +23,6 @@
 
 <p>The DDE module shows how to take advantage of the many time-saving features of Xaraya's <strong>Dynamic Data (DD)</strong> module.  The DD module is Xaraya's data abstraction layer; it makes it easier to write cleaner, more standardized modules in less time without sacrificing flexibility.  The DD module handles data storage and retrieval for the DDE module and can provide a centralized place to manage data for all your modules.</p>
  
- 
-
 <h3>The admin tabs</h3>
 
 <p>What you'll find under the four tabs that appear at the top of this page:</p>
@@ -42,10 +40,11 @@ padding-top: 10px;
 }
 .demotab div { 
 display: inline; 
-padding: 5px 8px 8px 8px; 
+padding: 4px 8px 7px 8px; 
 border: 1px solid #002200; 
 }
 </style>
+
 <table style="border:none; display: inline;"><tbody>
 <tr><td class="demotab"><div>Add Item</div></td><td>The Add Item page demonstrates how to provide a form for your users to create new items.</td></tr>
 

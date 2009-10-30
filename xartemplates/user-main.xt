@@ -15,7 +15,7 @@
 
     <p>For more information about the purpose of this module and how to write a module for  Xaraya, please <strong>begin by reading the <a href="#xarModURL('dyn_example','admin')#">overview page</a></strong>  in the module's admin interface.</p>
 
-    <p>Or, if you like, <a href="#xarModURL('dyn_example','user','view')#">view the sample items on the frontend</a>.</p>
+    <p>Or, if you like, <a href="#xarModURL('dyn_example','user','view')#">view the sample items on the front end</a>.</p>
 
     <p>If you have questions along the way, please post to the <a href="http://www.xaraya.com/index.php/xarbb">Xaraya.com support forum</a>.  If you haven't done so already, please <a href="http://www.xaraya.com/index.php/registration/register">register for the support forum and other Xaraya.com community features</a>.</p>
 

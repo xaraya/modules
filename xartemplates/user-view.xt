@@ -23,60 +23,10 @@
             Below, four different approaches to listing items are demonstrated.  The approaches vary with respect to the template code used and the output.  By referring to these examples, and looking at the files in the xartemplates directory, you will understand how to display lists of items, whether it be for public consumption or in your backend interfaces.
         </p>
 
-<xar:set name="li_class">'xar-tab'</xar:set>
-<xar:set name="a_class">'xar-norm xar-norm-outline'</xar:set>
-<xar:if condition="$tab eq 1">
-	<xar:set name="li_class">'xar-tab-active'</xar:set>
-	<xar:set name="a_class">'xar-accent xar-accent-outline'</xar:set>
-</xar:if>
-
-        <ul class="xar-tabs xar-alt xar-norm-outline" style="clear:both">
-            <li id="tab-1" class="#$li_class#">
-                <a id="href-1" class="#$a_class#" href="#xarModURL('dyn_example','user','view',array('tab' => 1))#">
-                    Approach 1
-                </a>
-            </li>
-
-<xar:set name="li_class">'xar-tab'</xar:set>
-<xar:set name="a_class">'xar-norm xar-norm-outline'</xar:set>
-<xar:if condition="$tab eq 2">
-	<xar:set name="li_class">'xar-tab-active'</xar:set>
-	<xar:set name="a_class">'xar-accent xar-accent-outline'</xar:set>
-</xar:if>
-
-	   <li id="tab-2" class="#$li_class#"> 
-                <a id="href-2" class="#$a_class#"
-		href="#xarModURL('dyn_example','user','view',array('tab' => 2))#">
-                    Approach 2
-                </a>
-            </li>
-
-<xar:set name="li_class">'xar-tab'</xar:set>
-<xar:set name="a_class">'xar-norm xar-norm-outline'</xar:set>
-<xar:if condition="$tab eq 3">
-	<xar:set name="li_class">'xar-tab-active'</xar:set>
-	<xar:set name="a_class">'xar-accent xar-accent-outline'</xar:set>
-</xar:if>
-
-            <li id="tab-3" class="#$li_class#">
-                <a id="href-3" class="#$a_class#" href="#xarModURL('dyn_example','user','view',array('tab' => 3))#">
-                    Approach 3
-                </a>
-            </li>
-
-<xar:set name="li_class">'xar-tab'</xar:set>
-<xar:set name="a_class">'xar-norm xar-norm-outline'</xar:set>
-<xar:if condition="$tab eq 4">
-	<xar:set name="li_class">'xar-tab-active'</xar:set>
-	<xar:set name="a_class">'xar-accent xar-accent-outline'</xar:set>
-</xar:if>
-
-            <li id="tab-4" class="#$li_class#">
-                <a id="href-4" class="#$a_class#" href="#xarModURL('dyn_example','user','view',array('tab' => 4))#">
-                    Approach 4
-                </a>
-            </li>
-        </ul>
+<xar:comment>
+See dyn_example/xartemplates/includes/userviewtabs.xt.  Note how we pass $tab to the include...
+</xar:comment>
+<xar:template file="userviewtabs" subdata="array('tab' => $tab)" />
 
 <xar:comment>  ~~~~~~~~~   Approach 1   ~~~~~~~~~ </xar:comment>
 
@@ -94,7 +44,7 @@
 
 <p><strong>Important tag in user-view.xt:</strong></p>
 
-<pre>   &lt;xar:data-view object="$mylist" tplmodule="dyn_example" /&gt;</pre>
+<pre>   &lt;xar:data-view object="$mylist" tplmodule="dyn_example"/&gt;</pre>
 
 <xar:data-view object="$mylist" tplmodule="dyn_example"/>
 

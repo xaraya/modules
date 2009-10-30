@@ -12,7 +12,7 @@
 
         <blockquote>               
         <strong>
-        <a href="javascript:void(window.open('#sys::code()#modules/dyn_example/xartemplates/objects/showview-dyn_example.xt', 'Template', 'width=700,height=580,toolbar=0,status=0,location=0,scrollbars=1, left=200,top=200')) ">modules/dyn_example/xartemplates/objects/showview-dyn_example.xt</a></strong>
+        <a href="javascript:void(window.open('#sys::code()#modules/dyn_example/xartemplates/objects/showview.xt', 'Template', 'width=700,height=580,toolbar=0,status=0,location=0,scrollbars=1, left=200,top=200')) ">modules/dyn_example/xartemplates/objects/showview.xt</a></strong>
         </blockquote>
 
     <p><strong>Output:</strong></p>
