@@ -40,7 +40,7 @@ function registration_userapi_checkvar($args)
             // TODO: check behind proxies too ?
             // check if the IP address is banned, and if so, throw an exception :)
             if (!isset($var))
-                $ip = xarServerGetVar('REMOTE_ADDR');
+                $ip = xarServer::getVar('REMOTE_ADDR');
             else
                 $ip = $var;
             $disallowedips = xarModVars::get('registration','disallowedips');

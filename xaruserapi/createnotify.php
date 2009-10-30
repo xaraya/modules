@@ -36,7 +36,7 @@ function registration_userapi_createnotify($args)
         // TODO: make sending mail configurable too, depending on the other options ?
         $emailargs = array( 'id'           => array($id => '1'),
                             'mailtype'     => 'confirmation',
-                            'ip'           => xarServerGetVar('REMOTE_ADDR'),
+                            'ip'           => xarServer::getVar('REMOTE_ADDR'),
                             'pass'         => $password );
 
         if (!xarModAPIFunc('roles', 'admin', 'senduseremail', $emailargs)) {

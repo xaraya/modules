@@ -119,7 +119,7 @@ function registration_user_register()
 
 //            if (!xarSecConfirmAuthKey()) return;
 
-            $ip = xarServerGetVar('REMOTE_ADDR');
+            $ip = xarServer::getVar('REMOTE_ADDR');
             $invalid = xarModApiFunc('registration','user','checkvar', array('type'=>'ip', 'var'=>$ip));
             if (!empty($invalid)) {
                 xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($invalid));
