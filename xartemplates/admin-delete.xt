@@ -6,7 +6,8 @@
       <span class="xar-mod-title">Dynamic Example Administration</span>
     </div>
     <div class="xar-mod-body">
-      <xar:template type="module" file="admin-menu"/>
+      <xar:template type="module" file="admintabs" />
+
       <h2>Delete Dynamic Example Item</h2>
         <form method="post" action="#xarServer::getCurrentURL()#">
         <fieldset>
