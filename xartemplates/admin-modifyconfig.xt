@@ -12,50 +12,39 @@
         Modify Configuration
     </h2>
     <div>
-        <dl class="xar-tabs">
-            <dt class="help">
-                Configure:
-            </dt>
+        <ul class="xar-tabs xar-alt xar-norm-outline">
+            <li class="xar-tabs-label help" title="#xarML('Choose an action to perform')#">Configure:</li>
             <xar:if condition="$tab eq 'general'">
-                <dd class="active">
-                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=general">
-                        General
-                    </a>
-                </dd>
-                <xar:else />
-                <dd>
-                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=general">
-                        General
-                    </a>
-                </dd>
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
             </xar:if>
+            <li class="#$tabclass#">
+                <a href="#xarModURL('registration', 'admin', 'modifyconfig', array('tab' => 'general'))#" class="#$linkclass#">General</a>
+            </li>
             <xar:if condition="$tab eq 'registration'">
-                <dd class="active">
-                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=registration">
-                        Registration
-                    </a>
-                </dd>
-                <xar:else />
-                <dd>
-                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=registration">
-                        Registration
-                    </a>
-                </dd>
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
             </xar:if>
+            <li class="#$tabclass#">
+                <a href="#xarModURL('registration', 'admin', 'modifyconfig', array('tab' => 'registration'))#" class="#$linkclass#">Registration</a>
+            </li>
             <xar:if condition="$tab eq 'filtering'">
-                <dd class="active">
-                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=filtering">
-                        Filtering
-                    </a>
-                </dd>
-                <xar:else />
-                <dd>
-                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=filtering">
-                        Filtering
-                    </a>
-                </dd>
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
             </xar:if>
-        </dl>
+            <li class="#$tabclass#">
+                <a href="#xarModURL('registration', 'admin', 'modifyconfig', array('tab' => 'filtering'))#" class="#$linkclass#">Filtering</a>
+            </li>
+        </ul>
     </div>
     <xar:comment> Begin General Options
     </xar:comment>
