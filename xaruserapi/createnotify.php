@@ -41,7 +41,7 @@ function registration_userapi_createnotify($args)
 
         if (!xarModAPIFunc('roles', 'admin', 'senduseremail', $emailargs)) {
             $msg = xarML('Problem sending confirmation email');
-            xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+            throw new BadParameterException('email', $msg);
         }
     }
 
@@ -98,7 +98,7 @@ function registration_userapi_createnotify($args)
 
                 if (!xarModAPIFunc('roles',  'admin', 'senduseremail', $emailargs)) {
                     $msg = xarML('Problem sending welcome email');
-                    xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+                    throw new BadParameterException('email', $msg);
                 }
             }
         }

@@ -39,23 +39,19 @@ function registration_user_register()
     //If a user is already logged in, no reason to see this.
     //We are going to send them to their account.
     if (xarUserIsLoggedIn()) {
-        xarResponse::Redirect(xarModURL('roles', 'user', 'account'));
-       return true;
+        //xarResponse::Redirect(xarModURL('roles', 'user', 'account'));
+       //return true;
     }
     $allowregistration = xarModVars::get('registration', 'allowregistration');
     if ($allowregistration != true) {
         $msg = xarML('Registration has been suspended');
-        xarErrorSet(XAR_USER_EXCEPTION, 'NO_PERMISSION', new DefaultUserException($msg));
-        return;
+        return xarResponse::Forbidden($msg);
     }
 
     //we could turn of registration, but let's check for site lock . We don't want people  registering during this period
      $lockvars = unserialize(xarModVars::get('roles','lockdata'));
      if ($lockvars['locked'] ==1) {
-        xarErrorSet(XAR_SYSTEM_MESSAGE,
-       'SITE_LOCKED',
-        new SystemMessage($lockvars['message']));
-        return;
+        return xarResponse::Forbidden($lockvars['message']);
      }
 
     xarTplSetPageTitle(xarML('New Account'));
@@ -83,7 +79,7 @@ function registration_user_register()
 
         case 'registerformcycle':
             $fieldvalues = xarSession::getVar('Registration.UserInfo');
-        case 'registerform': 
+        case 'registerform':
         default:
 
             $object = DataObjectMaster::getObject(array('name' => $regobjectname));
@@ -122,8 +118,7 @@ function registration_user_register()
             $ip = xarServer::getVar('REMOTE_ADDR');
             $invalid = xarModApiFunc('registration','user','checkvar', array('type'=>'ip', 'var'=>$ip));
             if (!empty($invalid)) {
-                xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($invalid));
-                return;
+                return xarResponse::Forbidden($invalid);
             }
 
             $object = DataObjectMaster::getObject(array('name' => $regobjectname));
@@ -202,7 +197,7 @@ function registration_user_register()
             break;
 
         case 'createuser':
-        
+
             // Branch off to payment here if required
             $module = xarMod::getRegID('registration');
             if (xarModIsAvailable('payments') && xarModItemVars::get('payments','payments_active', $module)) {
@@ -218,7 +213,7 @@ function registration_user_register()
 
                 $data['allowEdit_Payment'] = false;
                 $data['authid'] = xarSecGenAuthKey();
-    
+
                 $process = xarModItemVars::get('payments','process',$module);
                 switch ($process) {
                     case 0:
@@ -236,9 +231,9 @@ function registration_user_register()
                 // If we don't branch off to payments do the check
                 if (!xarSecConfirmAuthKey()) return;
             }
-            
+
         case 'confirmcreateuser':
-        
+
             $fieldvalues = xarSessionGetVar('Registration.UserInfo');
 
             $object = DataObjectMaster::getObject(array('name' => $regobjectname));
@@ -305,8 +300,8 @@ function registration_user_register()
                 } else {
                     throw new Exception("Missing a 'state' property for the registration data");
                 }
-            } 
-            
+            }
+
             // go to appropriate page, based on state
             if ($fieldvalues['state'] == xarRoles::ROLES_STATE_ACTIVE) {
                 // log in and redirect
