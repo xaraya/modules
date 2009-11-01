@@ -31,7 +31,7 @@ function xarcachemanager_adminapi_getmenulinks()
                                                   'flushcache'),
                              'title' => xarML('Flush the output cache of xarCache'),
                              'label' => xarML('Flush Cache'));
-        $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+        $varCacheDir = sys::varpath() . '/cache';
         if (file_exists($varCacheDir . '/output/cache.pagelevel')) {
             $menulinks[] = Array('url'   => xarModURL('xarcachemanager',
                                                       'admin',

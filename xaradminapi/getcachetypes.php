@@ -24,7 +24,7 @@ function xarcachemanager_adminapi_getcachetypes()
     $typelist = array('page', 'mod', 'block');
 
     // get the caching config settings from the config file
-    $settings = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
+    $settings = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
                               array('from' => 'file'));
 
     // map the settings to the right cache type

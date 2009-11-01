@@ -24,7 +24,7 @@ function xarcachemanager_adminapi_getcachekeys($type = '')
     $cachekeys = array();
 
     // get cache type settings
-    $cachetypes = xarModAPIFunc('xarcachemanager','admin','getcachetypes');
+    $cachetypes = xarMod::apiFunc('xarcachemanager','admin','getcachetypes');
 
     // check if we have some settings for this cache type
     if (empty($type) || empty($cachetypes[$type])) {
@@ -36,7 +36,7 @@ function xarcachemanager_adminapi_getcachekeys($type = '')
     if (!empty($xarOutput_cacheCollection)) {
         $cachedir = $xarOutput_cacheCollection;
     } else {
-        $cachedir = xarCoreGetVarDirPath() . '/cache/output';
+        $cachedir = sys::varpath() . '/cache/output';
     }
 
     // default cache storage is 'filesystem' if necessary

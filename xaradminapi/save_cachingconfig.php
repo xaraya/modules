@@ -26,7 +26,7 @@ function xarcachemanager_adminapi_save_cachingconfig($args)
     if (empty($configSettings) || !is_array($configSettings)) { return FALSE; }
 
     if (!isset($cachingConfigFile)) {
-         $cachingConfigFile = xarCoreGetVarDirPath() . '/cache/config.caching.php';
+         $cachingConfigFile = sys::varpath() . '/cache/config.caching.php';
     }
 
     if (!is_writable($cachingConfigFile)) {
@@ -44,15 +44,15 @@ function xarcachemanager_adminapi_save_cachingconfig($args)
     // and replace the cachingConfig with the new values
     foreach ($configSettings as $configKey => $configValue) {
         if (is_numeric($configValue)) {
-            xarModSetVar('xarcachemanager', $configKey, $configValue);
+            xarModVars::set('xarcachemanager', $configKey, $configValue);
             $cachingConfig = preg_replace('/\[\'' . $configKey . '\'\]\s*=\s*(|\")(.*)\\1;/', "['$configKey'] = $configValue;", $cachingConfig);
         } elseif (is_array($configValue)) {
-            xarModSetVar('xarcachemanager', $configKey, 'array-' . serialize($configValue));
+            xarModVars::set('xarcachemanager', $configKey, 'array-' . serialize($configValue));
             $configValue = str_replace("'","\\'",$configValue);
             $configValue = "'" . join("','",$configValue) . "'";
             $cachingConfig = preg_replace('/\[\'' . $configKey . '\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['$configKey'] = array($configValue);", $cachingConfig);
         } else {
-            xarModSetVar('xarcachemanager', $configKey, $configValue);
+            xarModVars::set('xarcachemanager', $configKey, $configValue);
             $configValue = str_replace("'","\\'",$configValue);
             $cachingConfig = preg_replace('/\[\'' . $configKey . '\'\]\s*=\s*(\'|\")(.*)\\1;/', "['$configKey'] = '$configValue';", $cachingConfig);
         }

@@ -22,7 +22,7 @@ function xarcachemanager_adminapi_getcachesize($type = '')
     $cachesize = 0;
 
     // get cache type settings
-    $cachetypes = xarModAPIFunc('xarcachemanager','admin','getcachetypes');
+    $cachetypes = xarMod::apiFunc('xarcachemanager','admin','getcachetypes');
 
     // check if we have some settings for this cache type
     if (empty($type) || empty($cachetypes[$type])) {

@@ -19,7 +19,7 @@ function xarcachemanager_admin_blocks($args)
 
     if (!xarSecurityCheck('AdminXarCache')) { return; }
 
-    $cacheOutputDir = xarCoreGetVarDirPath() . '/cache/output';
+    $cacheOutputDir = sys::varpath() . '/cache/output';
 
     $data = array();
     if (!file_exists($cacheOutputDir . '/cache.blocklevel')) {
@@ -58,7 +58,7 @@ function xarcachemanager_admin_blocks($args)
                 $newblocks[$bid]['usershared'] = 0;
             }
             if (!empty($expire)) {
-                $expire = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
+                $expire = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                           array('starttime' => $expire,
                                                 'direction' => 'to'));
             } elseif ($expire === '0') {
@@ -68,9 +68,9 @@ function xarcachemanager_admin_blocks($args)
             }
             $newblocks[$bid]['cacheexpire'] = $expire;
         }
-        $systemPrefix = xarDBGetSystemTablePrefix();
+        $systemPrefix = xarDB::getPrefix();
         $blocksettings = $systemPrefix . '_cache_blocks';
-        $dbconn =& xarDBGetConn();
+        $dbconn = xarDB::getConn();
 
         // delete the whole cache blocks table and insert the new values
         $query = "DELETE FROM $blocksettings";
@@ -102,8 +102,8 @@ function xarcachemanager_admin_blocks($args)
         xarOutputFlushCached('', $cacheOutputDir . '/page');
         // and flush the blocks
         xarOutputFlushCached('', $cacheOutputDir . '/block');
-        if (xarModGetVar('xarcachemanager','AutoRegenSessionless')) {
-            xarModAPIFunc( 'xarcachemanager', 'admin', 'regenstatic');
+        if (xarModVars::get('xarcachemanager','AutoRegenSessionless')) {
+            xarMod::apiFunc( 'xarcachemanager', 'admin', 'regenstatic');
         }
     }
 

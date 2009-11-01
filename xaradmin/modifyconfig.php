@@ -27,7 +27,7 @@ function xarcachemanager_admin_modifyconfig()
 
     $data = array();
 
-    $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+    $varCacheDir = sys::varpath() . '/cache';
 
     // is output caching enabled?
     if (file_exists($varCacheDir . '/output/cache.touch')) {
@@ -50,13 +50,13 @@ function xarcachemanager_admin_modifyconfig()
         $data['blockCachingEnabled'] = 0;
     }
     
-    $data['CookieName'] =  (xarConfigGetVar('Site.Session.CookieName') != '')? xarConfigGetVar('Site.Session.CookieName'): 'XARAYASID';
+    $data['CookieName'] =  (xarConfigVars::get(null, 'Site.Session.CookieName') != '')? xarConfigVars::get(null, 'Site.Session.CookieName'): 'XARAYASID';
     $data['cookieupdatelink'] = xarModURL('base','admin','modifyconfig',array('tab'=>'security'));
     $data['defaultlocale'] = xarMLSGetSiteLocale();
     $data['localeupdatelink'] = xarModURL('base','admin','modifyconfig',array('tab'=>'locales'));
 
     // get the caching config settings from the config file
-    $data['settings'] = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
+    $data['settings'] = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
                                          array('from' => 'file', 'tpl_prep' => TRUE));
 
     // set some default values
@@ -109,16 +109,16 @@ function xarcachemanager_admin_modifyconfig()
     $data['settings']['BlockSizeLimit'] /= 1048576;
 
     // reformat seconds as hh:mm:ss
-    $data['settings']['PageTimeExpiration'] = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
+    $data['settings']['PageTimeExpiration'] = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                                              array('starttime' => $data['settings']['PageTimeExpiration'],
                                                                    'direction' => 'from'));
-    $data['settings']['BlockTimeExpiration'] = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
+    $data['settings']['BlockTimeExpiration'] = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                                              array('starttime' => $data['settings']['BlockTimeExpiration'],
                                                                    'direction' => 'from'));
 
     // get the themes list
     $filter['Class'] = 2;
-    $data['themes'] = xarModAPIFunc('themes',
+    $data['themes'] = xarMod::apiFunc('themes',
         'admin',
         'getlist', $filter);
         

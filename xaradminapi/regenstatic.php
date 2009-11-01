@@ -19,7 +19,7 @@
 function xarcachemanager_adminapi_regenstatic($nolimit = NULL)
 {
     $urls = array();
-    $outputCacheDir = xarCoreGetVarDirPath() . '/cache/output/';
+    $outputCacheDir = sys::varpath() . '/cache/output/';
 
     // make sure output caching is really enabled, and that we are caching pages
     if (!defined('XARCACHE_IS_ENABLED') || !defined('XARCACHE_PAGE_IS_ENABLED')) {
@@ -28,7 +28,7 @@ function xarcachemanager_adminapi_regenstatic($nolimit = NULL)
 
     xarOutputFlushCached('static', $outputCacheDir . 'page');
     $configKeys = array('Page.SessionLess');
-    $sessionlessurls = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
+    $sessionlessurls = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
                                      array('keys' => $configKeys, 'from' => 'file', 'viahook' => TRUE));
 
     $urls = $sessionlessurls['Page.SessionLess'];
@@ -46,7 +46,7 @@ function xarcachemanager_adminapi_regenstatic($nolimit = NULL)
     foreach ($urls as $url) {
         // Make sure the url isn't empty before calling getfile()
         if (strlen(trim($url))) {
-            xarModAPIFunc('base', 'user', 'getfile', array('url' => $url, 'superrors' => true));
+            xarMod::apiFunc('base', 'user', 'getfile', array('url' => $url, 'superrors' => true));
         }
         if (!$nolimit && time() > $timelimit) break;
     }

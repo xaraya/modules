@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Administration - xarCacheManager</xar:mlstring></span>
@@ -70,7 +72,7 @@
             </p>
             <ul>
                 <li><xar:mlstring>Add module output caching functions, reutilizing xarBlock*Cached functions when appropriate.</xar:mlstring></li>
-                <li><xar:mlstring>Add xarMod*Cached() calls in xarModFunc().</xar:mlstring></li>
+                <li><xar:mlstring>Add xarMod*Cached() calls in xarMod::guiFunc().</xar:mlstring></li>
                 <li><xar:mlstring>Provide Admin GUI hooks to modules beyond Blocks for the configuration of per module output cache settings.</xar:mlstring></li>
             </ul>
 
@@ -88,6 +90,7 @@
             </li>
         </ul>
         <p class="xar-sub">
-            <strong>&nbsp;<xar:mlstring>xarcachemanager Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; 2006-04-12
+            <strong>&#160;<xar:mlstring>xarcachemanager Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 1.0.1&#160; 2006-04-12
         </p>
 </div>
+</xar:template>

@@ -45,7 +45,7 @@ function xarcachemanager_admin_updateconfig()
     if (!xarSecurityCheck('AdminXarCache')) return;
 
     // set the cache dir
-    $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+    $varCacheDir = sys::varpath() . '/cache';
     $outputCacheDir = $varCacheDir . '/output';
 
     // turn output caching system on or off
@@ -99,10 +99,10 @@ function xarcachemanager_admin_updateconfig()
     $blocksizelimit = (intval($blocksizelimit * 1048576));
 
     //turn hh:mm:ss back into seconds
-    $pageexpiretime = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
+    $pageexpiretime = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                  array('starttime' => $pageexpiretime,
                                         'direction' => 'to'));
-    $blockexpiretime = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
+    $blockexpiretime = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                  array('starttime' => $blockexpiretime,
                                        'direction' => 'to'));
 
@@ -112,7 +112,7 @@ function xarcachemanager_admin_updateconfig()
     $configSettings = array();
     $configSettings['Output.DefaultTheme'] = $cachetheme;
     $configSettings['Output.SizeLimit'] = $cachesizelimit;
-    $configSettings['Output.CookieName'] = xarConfigGetVar('Site.Session.CookieName'); 
+    $configSettings['Output.CookieName'] = xarConfigVars::get(null, 'Site.Session.CookieName'); 
     $configSettings['Output.DefaultLocale'] = xarMLSGetSiteLocale();  
     $configSettings['Page.TimeExpiration'] = $pageexpiretime;
     $configSettings['Page.DisplayView'] = $cachedisplayview;
@@ -128,42 +128,42 @@ function xarcachemanager_admin_updateconfig()
     $configSettings['Block.LogFile'] = $blocklogfile;
     $configSettings['Block.SizeLimit'] = $blocksizelimit;
 
-    xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig',
+    xarMod::apiFunc('xarcachemanager', 'admin', 'save_cachingconfig',
                   array('configSettings' => $configSettings,
                         'cachingConfigFile' => $cachingConfigFile));
 
     // see if we need to flush the cache when a new comment is added for some item
     xarVarFetch('cacheflushcomment','isset',$cacheflushcomment,0,XARVAR_NOT_REQUIRED);
     if ($cacheflushcomment && $cachedisplayview) {
-        xarModSetVar('xarcachemanager','FlushOnNewComment', 1);
+        xarModVars::set('xarcachemanager','FlushOnNewComment', 1);
     } else {
-        xarModSetVar('xarcachemanager','FlushOnNewComment', 0);
+        xarModVars::set('xarcachemanager','FlushOnNewComment', 0);
     }
 
     // see if we need to flush the cache when a new rating is added for some item
     xarVarFetch('cacheflushrating','isset',$cacheflushrating,0,XARVAR_NOT_REQUIRED);
     if ($cacheflushrating  && $cachedisplayview) {
-        xarModSetVar('xarcachemanager','FlushOnNewRating', 1);
+        xarModVars::set('xarcachemanager','FlushOnNewRating', 1);
     } else {
-        xarModSetVar('xarcachemanager','FlushOnNewRating', 0);
+        xarModVars::set('xarcachemanager','FlushOnNewRating', 0);
     }
 
     // see if we need to flush the cache when a new vote is cast on a poll hooked to some item
     xarVarFetch('cacheflushpollvote','isset',$cacheflushpollvote,0,XARVAR_NOT_REQUIRED);
     if ($cacheflushpollvote && $cachedisplayview) {
-        xarModSetVar('xarcachemanager','FlushOnNewPollvote', 1);
+        xarModVars::set('xarcachemanager','FlushOnNewPollvote', 1);
     } else {
-        xarModSetVar('xarcachemanager','FlushOnNewPollvote', 0);
+        xarModVars::set('xarcachemanager','FlushOnNewPollvote', 0);
     }
 
     // set option for auto regeneration of session-less url list cache on event invalidation
     if ($autoregenerate) {
-        xarModSetVar('xarcachemanager','AutoRegenSessionless', 1);
+        xarModVars::set('xarcachemanager','AutoRegenSessionless', 1);
     } else {
-        xarModSetVar('xarcachemanager','AutoRegenSessionless', 0);
+        xarModVars::set('xarcachemanager','AutoRegenSessionless', 0);
     }
 
-    xarResponseRedirect(xarModURL('xarcachemanager', 'admin', 'modifyconfig'));
+    xarResponse::Redirect(xarModURL('xarcachemanager', 'admin', 'modifyconfig'));
 
     return true;
 }

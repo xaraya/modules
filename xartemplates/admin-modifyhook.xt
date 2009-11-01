@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <fieldset>
     <legend><xar:mlstring>Cache Options</xar:mlstring></legend>
     <div class="xar-form-input-wrapper">
@@ -52,4 +54,4 @@
        </label>
        <input type="text" name="cacheexpire" id="cacheexpire" value="#$cacheExpire#" size="9" maxlength="9" />
    </div>
-</fieldset>
+</fieldset></xar:template>

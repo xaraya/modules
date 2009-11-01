@@ -37,14 +37,14 @@ function xarcachemanager_admin_queries($args)
                 // stored in module variables (for now ?)
                 foreach ($querylist as $query => $time) {
                     if (empty($time) || !is_numeric($time)) {
-                        xarModSetVar($module,'cache.'.$query, 0);
+                        xarModVars::set($module,'cache.'.$query, 0);
                     } else {
-                        xarModSetVar($module,'cache.'.$query, $time);
+                        xarModVars::set($module,'cache.'.$query, $time);
                     }
                 }
             }
         }
-        xarResponseRedirect(xarModURL('xarcachemanager','admin','queries'));
+        xarResponse::Redirect(xarModURL('xarcachemanager','admin','queries'));
         return true;
     }
 

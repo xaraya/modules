@@ -20,11 +20,11 @@
  */
 function xarcachemanager_adminapi_restore_cachingconfig()
 {
-    $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+    $varCacheDir = sys::varpath() . '/cache';
     $defaultConfigFile = 'modules/xarcachemanager/config.caching.php.dist';
     $cachingConfigFile = $varCacheDir . '/config.caching.php';
 
-    $configSettings = xarModAPIFunc('xarcachemanager',
+    $configSettings = xarMod::apiFunc('xarcachemanager',
                                     'admin',
                                     'get_cachingconfig',
                                     array('from' => 'db',
@@ -59,7 +59,7 @@ function xarcachemanager_adminapi_restore_cachingconfig()
         @unlink($cachingConfigFile);
     }
     copy($defaultConfigFile, $cachingConfigFile);
-    xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig',
+    xarMod::apiFunc('xarcachemanager', 'admin', 'save_cachingconfig',
         array('configSettings' => $configSettings));
 
     return true;

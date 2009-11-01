@@ -24,7 +24,7 @@ function xarcachemanager_admin_main()
     // Security Check
     if (!xarSecurityCheck('AdminXarCache')) return;
 
-        xarResponseRedirect(xarModURL('xarcachemanager', 'admin', 'modifyconfig'));
+        xarResponse::Redirect(xarModURL('xarcachemanager', 'admin', 'modifyconfig'));
     // success
     return true;
 } 

@@ -6,6 +6,6 @@ if (xarCache_init()) {
 }
 include 'includes/xarCore.php';
 xarCoreInit(XARCORE_SYSTEM_ALL);
-xarModAPIFunc( 'xarcachemanager', 'admin', 'regenstatic');
+xarMod::apiFunc( 'xarcachemanager', 'admin', 'regenstatic');
 
 ?>

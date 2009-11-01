@@ -23,7 +23,7 @@ function xarcachemanager_schedulerapi_prefetch($args)
 
     // default start page is the homepage
     if (empty($starturl)) {
-        $starturl = xarServerGetBaseURL();
+        $starturl = xarServer::getBaseURL();
     }
     // default is go 1 level deep
     if (!isset($maxlevel)) {
@@ -34,7 +34,7 @@ function xarcachemanager_schedulerapi_prefetch($args)
         $wait = 2;
     }
     // avoid the current page just in case...
-    $avoid = xarServerGetCurrentURL(array(), false);
+    $avoid = xarServer::getCurrentURL(array(), false);
 
     $level = 0;
     $seen = array();
@@ -47,12 +47,12 @@ function xarcachemanager_schedulerapi_prefetch($args)
             $seen[$url] = 1;
 
             // get the current page
-            $page = xarModAPIFunc('base','user','getfile',
+            $page = xarMod::apiFunc('base','user','getfile',
                                   array('url' => $url));
             if (empty($page)) continue;
 
             // extract local links only (= default)
-            $links = xarModAPIFunc('base','user','extractlinks',
+            $links = xarMod::apiFunc('base','user','extractlinks',
                                    array('content' => $page));
             foreach ($links as $link) {
                 $found[$link] = 1;

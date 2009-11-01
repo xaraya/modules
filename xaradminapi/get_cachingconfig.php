@@ -51,7 +51,7 @@ function xarcachemanager_adminapi_get_cachingconfig($args)
         if (!empty($keys)) {
 
             foreach ($keys as $key) {
-                $value = xarModGetVar('xarcachemanager', $key);
+                $value = xarModVars::get('xarcachemanager', $key);
                 if (substr($value, 0, 6) == 'array-') {
                     $value = substr($value, 6);
                     $value = unserialize($value);
@@ -67,8 +67,8 @@ function xarcachemanager_adminapi_get_cachingconfig($args)
             $modBaseInfo = xarMod_getBaseInfo('xarcachemanager');
             //if (!isset($modBaseInfo)) return; // throw back
 
-            $dbconn =& xarDBGetConn();
-            $tables =& xarDBGetTables();
+            $dbconn = xarDB::getConn();
+            $tables = xarDB::getTables();
 
             // Takes the right table basing on module mode
             if ($modBaseInfo['mode'] == XARMOD_MODE_SHARED) {
@@ -99,12 +99,12 @@ function xarcachemanager_adminapi_get_cachingconfig($args)
     default:
 
         if (!isset($cachingConfigFile)) {
-             $cachingConfigFile = xarCoreGetVarDirPath() . '/cache/config.caching.php';
+             $cachingConfigFile = sys::varpath() . '/cache/config.caching.php';
         }
 
         if (!file_exists($cachingConfigFile)) {
             // try to restore the missing file
-            if (!xarModAPIFunc('xarcachemanager', 'admin', 'restore_cachingconfig')) {
+            if (!xarMod::apiFunc('xarcachemanager', 'admin', 'restore_cachingconfig')) {
                 $msg=xarML('The #(1) file is missing.  Please restore #(1)
                             from backup, or the xarcachemanager/config.caching.php.dist
                             file.', $cachingConfigFile);
@@ -127,7 +127,7 @@ function xarcachemanager_adminapi_get_cachingconfig($args)
     }
 
     if ($tpl_prep) {
-        $settings = xarModAPIFunc('xarcachemanager', 'admin', 'config_tpl_prep',
+        $settings = xarMod::apiFunc('xarcachemanager', 'admin', 'config_tpl_prep',
                                   $cachingConfiguration);
     } else {
         $settings = $cachingConfiguration;

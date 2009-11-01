@@ -30,7 +30,7 @@ function xarcachemanager_admin_stats($args)
     if (!xarVarFetch('startnum', 'int', $startnum,          1, XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('withlog',  'int',  $withlog,          0, XARVAR_NOT_REQUIRED)) { return; }
 
-    $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+    $varCacheDir = sys::varpath() . '/cache';
     $outputCacheDir = $varCacheDir . '/output';
 
     //Make sure xarCache is included so you can view stats even if caching is disabled
@@ -39,10 +39,10 @@ function xarcachemanager_admin_stats($args)
         xarCache_init();
     }
 
-    $numitems = xarModGetVar('xarcachemanager','itemsperpage');
+    $numitems = xarModVars::get('xarcachemanager','itemsperpage');
     if (empty($numitems)) {
         $numitems = 100;
-        xarModSetVar('xarcachemanager','itemsperpage',$numitems);
+        xarModVars::set('xarcachemanager','itemsperpage',$numitems);
     }
 
     $data = array();
@@ -50,7 +50,7 @@ function xarcachemanager_admin_stats($args)
     $data['itemsperpage'] = $numitems;
 
     // get the caching config settings from the config file
-    $data['settings'] = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
+    $data['settings'] = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
                                       array('from' => 'file', 'tpl_prep' => TRUE));
 
     $data['PageCachingEnabled'] = 0;
@@ -91,7 +91,7 @@ function xarcachemanager_admin_stats($args)
                     if (!empty($fh)) fclose($fh);
                 }
 
-                xarResponseRedirect(xarModURL('xarcachemanager','admin','stats',
+                xarResponse::Redirect(xarModURL('xarcachemanager','admin','stats',
                                               array('tab' => $tab)));
                 return true;
             }
@@ -132,6 +132,7 @@ function xarcachemanager_admin_stats($args)
                     $data['items'] = $items;
                     unset($keys);
                     unset($items);
+//    sys::import('xaraya.pager');
                     $data['pager'] = xarTplGetPager($startnum,
                                                     $count,
                                                     xarModURL('xarcachemanager','admin','stats',
@@ -166,7 +167,7 @@ function xarcachemanager_admin_stats($args)
                     if (!empty($fh)) fclose($fh);
                 }
 
-                xarResponseRedirect(xarModURL('xarcachemanager','admin','stats',
+                xarResponse::Redirect(xarModURL('xarcachemanager','admin','stats',
                                               array('tab' => 'autocache')));
                 return true;
             }
@@ -227,7 +228,7 @@ function xarcachemanager_admin_stats($args)
             // set items per page
             if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, 0, XARVAR_NOT_REQUIRED)) { return; }
             if (!empty($itemsperpage)) {
-                xarModSetVar('xarcachemanager','itemsperpage',$itemsperpage);
+                xarModVars::set('xarcachemanager','itemsperpage',$itemsperpage);
                 $data['itemsperpage'] = $itemsperpage;
             }
             // list of cache types to check

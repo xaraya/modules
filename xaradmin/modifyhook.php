@@ -25,7 +25,7 @@ function xarcachemanager_admin_modifyhook($args)
     if (!xarSecurityCheck('AdminXarCache', 0)) { return ''; }
 
     // If we are disabled, nothing to do here
-    $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+    $varCacheDir = sys::varpath() . '/cache';
     $outputCacheDir = $varCacheDir . '/output';
     if (!file_exists($outputCacheDir.'/cache.touch')) {return '';}
 
@@ -61,11 +61,11 @@ function xarcachemanager_admin_modifyhook($args)
     // only display config hooks if block level output caching has been enabled
     // (check for the file rather than the constant so config options can be tweaked
     //  even when output caching has been temporarily disabled)
-    if (!file_exists(xarCoreGetVarDirPath() . '/cache/output/cache.blocklevel')) {
+    if (!file_exists(sys::varpath() . '/cache/output/cache.blocklevel')) {
         return '';
     }
 
-    $modid = xarModGetIDFromName($modname);
+    $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module name', 'admin', 'modifyhook', 'changelog');
@@ -86,9 +86,9 @@ function xarcachemanager_admin_modifyhook($args)
         $itemid = $objectid;
     }
 
-    $systemPrefix = xarDBGetSystemTablePrefix();
+    $systemPrefix = xarDB::getPrefix();
     $blocksettings = $systemPrefix . '_cache_blocks';
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDB::getConn();
     $query = "SELECT xar_nocache,
              xar_page,
              xar_user,
@@ -126,7 +126,7 @@ function xarcachemanager_admin_modifyhook($args)
         }
     }
     if (!empty($blockCacheExpireTime)) {
-        $blockCacheExpireTime = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
+        $blockCacheExpireTime = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                                array('starttime' => $blockCacheExpireTime,
                                                      'direction' => 'from'));
     }

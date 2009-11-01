@@ -20,15 +20,15 @@
 function xarcachemanager_init()
 {
     // set up the config.caching file and output cache directory structure
-    $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+    $varCacheDir = sys::varpath() . '/cache';
     if (!xarcachemanager_fs_setup(array('varCacheDir' => $varCacheDir))) {
         return false;
     }
 
     // Set up module variables
-    xarModSetVar('xarcachemanager','FlushOnNewComment', 0);
-    xarModSetVar('xarcachemanager','FlushOnNewRating', 0);
-    xarModSetVar('xarcachemanager','FlushOnNewPollvote', 0);
+    xarModVars::set('xarcachemanager','FlushOnNewComment', 0);
+    xarModVars::set('xarcachemanager','FlushOnNewRating', 0);
+    xarModVars::set('xarcachemanager','FlushOnNewPollvote', 0);
 
     if (!xarModRegisterHook('item', 'create', 'API',
                             'xarcachemanager', 'admin', 'createhook')) {
@@ -53,32 +53,32 @@ function xarcachemanager_init()
 
     // Enable xarcachemanager hooks for articles
     if (xarModIsAvailable('articles')) {
-        xarModAPIFunc('modules','admin','enablehooks',
+        xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'articles', 'hookModName' => 'xarcachemanager'));
     }
     // Enable xarcachemanager hooks for base
     if (xarModIsAvailable('base')) {
-        xarModAPIFunc('modules','admin','enablehooks',
+        xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'base', 'hookModName' => 'xarcachemanager'));
     }
     // Enable xarcachemanager hooks for blocks
     if (xarModIsAvailable('blocks')) {
-        xarModAPIFunc('modules','admin','enablehooks',
+        xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'blocks', 'hookModName' => 'xarcachemanager'));
     }
     // Enable xarcachemanager hooks for categories
     if (xarModIsAvailable('categories')) {
-        xarModAPIFunc('modules','admin','enablehooks',
+        xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'categories', 'hookModName' => 'xarcachemanager'));
     }
     // Enable xarcachemanager hooks for roles
     if (xarModIsAvailable('roles')) {
-        xarModAPIFunc('modules','admin','enablehooks',
+        xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'roles', 'hookModName' => 'xarcachemanager'));
     }
     // Enable xarcachemanager hooks for privileges
     if (xarModIsAvailable('privileges')) {
-        xarModAPIFunc('modules','admin','enablehooks',
+        xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'privileges', 'hookModName' => 'xarcachemanager'));
     }
 
@@ -89,11 +89,11 @@ function xarcachemanager_init()
     if (xarCore_getSystemVar('DB.UseADODBCache')){
         // Enable query caching for categories getcat
         if (xarModIsAvailable('categories')) {
-            xarModSetVar('categories','cache.userapi.getcat',60);
+            xarModVars::set('categories','cache.userapi.getcat',60);
         }
         // Enable query caching for comments get_author_count
         if (xarModIsAvailable('comments')) {
-            xarModSetVar('comments','cache.userapi.get_author_count',60);
+            xarModVars::set('comments','cache.userapi.get_author_count',60);
         }
     }
     
@@ -110,7 +110,7 @@ function xarcachemanager_init()
  */
 function xarcachemanager_upgrade($oldversion)
 {
-    $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+    $varCacheDir = sys::varpath() . '/cache';
     $defaultConfigFile = 'modules/xarcachemanager/config.caching.php.dist';
     $cachingConfigFile = $varCacheDir . '/config.caching.php';
     
@@ -137,7 +137,7 @@ function xarcachemanager_upgrade($oldversion)
             // Do conversion of MB to bytes in config file
             include($cachingConfigFile);
             $cachingConfiguration['Output.SizeLimit'] = $cachingConfiguration['Output.SizeLimit'] * 1048576;
-            xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
+            xarMod::apiFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
                 array('configSettings' => $cachingConfiguration,
                       'cachingConfigFile' => $cachingConfigFile));
         case 0.2:
@@ -145,7 +145,7 @@ function xarcachemanager_upgrade($oldversion)
             // Code to upgrade from the 0.2 version (cleaned-up page level caching)
             // Bring the config file up to current version
             if (file_exists($cachingConfigFile)) {
-                $configSettings = xarModAPIFunc('xarcachemanager',
+                $configSettings = xarMod::apiFunc('xarcachemanager',
                                                 'admin',
                                                 'get_cachingconfig',
                                                 array('from' => 'file',
@@ -155,7 +155,7 @@ function xarcachemanager_upgrade($oldversion)
                 }
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile); 
-                xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
+                xarMod::apiFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
                     array('configSettings' => $configSettings,
                           'cachingConfigFile' => $cachingConfigFile));
             } else {
@@ -170,39 +170,39 @@ function xarcachemanager_upgrade($oldversion)
             // Code to upgrade from the 0.3.0
             // Bring the config file up to current version
             if (file_exists($cachingConfigFile)) {
-                $configSettings = xarModAPIFunc('xarcachemanager',
+                $configSettings = xarMod::apiFunc('xarcachemanager',
                                                 'admin',
                                                 'get_cachingconfig',
                                                 array('from' => 'file',
                                                       'cachingConfigFile' => $cachingConfigFile));
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile); 
-                xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
+                xarMod::apiFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
                     array('configSettings' => $configSettings,
                           'cachingConfigFile' => $cachingConfigFile));                
             } else {
                 copy($defaultConfigFile, $cachingConfigFile);
             }
             // switch to the file based block caching enabler
-            if (xarModGetVar('xarcachemanager', 'CacheBlockOutput')) {
+            if (xarModVars::get('xarcachemanager', 'CacheBlockOutput')) {
                 $outputCacheDir = $varCacheDir . '/output/';
                 if(!file_exists($outputCacheDir . 'cache.blocklevel')) {
                     touch($outputCacheDir . 'cache.blocklevel');
                 }
-                xarModDelVar('xarcachemanager', 'CacheBlockOutput');
+                xarModVars::delete('xarcachemanager', 'CacheBlockOutput');
             }
         case '0.3.1':
             // Code to upgrade from the 0.3.1 version (base block level caching)
             // Bring the config file up to current version
             if (file_exists($cachingConfigFile)) {
-                $configSettings = xarModAPIFunc('xarcachemanager',
+                $configSettings = xarMod::apiFunc('xarcachemanager',
                                                 'admin',
                                                 'get_cachingconfig',
                                                 array('from' => 'file',
                                                       'cachingConfigFile' => $cachingConfigFile));
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile); 
-                xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
+                xarMod::apiFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
                     array('configSettings' => $configSettings,
                           'cachingConfigFile' => $cachingConfigFile));                
             } else {
@@ -229,14 +229,14 @@ function xarcachemanager_upgrade($oldversion)
             }
             // Bring the config file up to current version
             if (file_exists($cachingConfigFile)) {
-                $configSettings = xarModAPIFunc('xarcachemanager',
+                $configSettings = xarMod::apiFunc('xarcachemanager',
                                                 'admin',
                                                 'get_cachingconfig',
                                                 array('from' => 'file',
                                                       'cachingConfigFile' => $cachingConfigFile));
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile); 
-                xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
+                xarMod::apiFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
                     array('configSettings' => $configSettings,
                           'cachingConfigFile' => $cachingConfigFile));                
             } else {
@@ -249,36 +249,36 @@ function xarcachemanager_upgrade($oldversion)
 
             // Bring the config file up to current version
             if (file_exists($cachingConfigFile)) {
-                $configSettings = xarModAPIFunc('xarcachemanager',
+                $configSettings = xarMod::apiFunc('xarcachemanager',
                                                 'admin',
                                                 'get_cachingconfig',
                                                 array('from' => 'file',
                                                       'cachingConfigFile' => $cachingConfigFile));
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile); 
-                xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
+                xarMod::apiFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
                     array('configSettings' => $configSettings,
                           'cachingConfigFile' => $cachingConfigFile));                
             } else {
                 // as of version 0.3.3 we can restore the config from modvars
-                $configSettings = xarModAPIFunc('xarcachemanager',
+                $configSettings = xarMod::apiFunc('xarcachemanager',
                                                 'admin',
                                                 'get_cachingconfig',
                                                 array('from' => 'db',
                                                       'cachingConfigFile' => $cachingConfigFile));
                 copy($defaultConfigFile, $cachingConfigFile); 
-                xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
+                xarMod::apiFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
                     array('configSettings' => $configSettings,
                           'cachingConfigFile' => $cachingConfigFile));
             }
         case '0.3.4' :
-            $configSettings = xarModAPIFunc('xarcachemanager',
+            $configSettings = xarMod::apiFunc('xarcachemanager',
                                                 'admin',
                                                 'get_cachingconfig',
                                                 array('from' => 'db',
                                                       'cachingConfigFile' => $cachingConfigFile));
                 copy($defaultConfigFile, $cachingConfigFile); 
-                xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
+                xarMod::apiFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
                     array('configSettings' => $configSettings,
                           'cachingConfigFile' => $cachingConfigFile));        
         case '0.3.5' : //current version
@@ -295,7 +295,7 @@ function xarcachemanager_upgrade($oldversion)
  */
 function xarcachemanager_delete()
 {
-    $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+    $varCacheDir = sys::varpath() . '/cache';
     $cacheOutputDir = $varCacheDir . '/output';
     if (is_dir($cacheOutputDir)) {
         //if still there, remove the cache.touch file, this turns everything off
@@ -335,7 +335,7 @@ function xarcachemanager_delete()
     }
 
     // Remove module variables
-    xarModDelAllVars('xarcachemanager');
+    xarModVars::delete_all('xarcachemanager');
 
     // Remove Masks and Instances
     xarRemoveMasks('xarcachemanager');
@@ -358,7 +358,7 @@ function xarcachemanager_fs_setup($args)
     
     // default var cache directory
     if (!isset($varCacheDir)) { 
-        $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+        $varCacheDir = sys::varpath() . '/cache';
     }
     
     // output cache directory
@@ -477,8 +477,8 @@ function xarcachemanager_rmdirr($dirname)
 function xarcachemanager_create_cache_data()
 {
     // Set up database tables
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     // optional database storage for cached data (instead of filesystem)
     $cachedatatable = $xartable['cache_data'];
@@ -532,7 +532,7 @@ function xarcachemanager_create_cache_data()
 
     // TODO: verify if separate indexes work better here or not (varchar)
         $query = xarDBCreateIndex($cachedatatable,
-                                  array('name'   => 'i_' . xarDBGetSiteTablePrefix() . '_cachedata_combo',
+                                  array('name'   => 'i_' . xarDB::getPrefix() . '_cachedata_combo',
                                         'fields' => array('xar_type',
                                                           'xar_key',
                                                           'xar_code')));

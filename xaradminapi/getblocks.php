@@ -19,9 +19,9 @@ function xarcachemanager_adminapi_getblocks($args)
 {
     extract($args);
 
-    $systemPrefix = xarDBGetSystemTablePrefix();
+    $systemPrefix = xarDB::getPrefix();
     $blocksettings = $systemPrefix . '_cache_blocks';
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDB::getConn();
     $query = "SELECT xar_bid,
              xar_nocache,
              xar_page,
@@ -57,7 +57,7 @@ function xarcachemanager_adminapi_getblocks($args)
             $cacheexpire = 0;
         }*/
         if ($cacheexpire > 0 ) {
-            $cacheexpire = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
+            $cacheexpire = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                           array('starttime' => $cacheexpire,
                                                 'direction' => 'from'));
         }

@@ -11,9 +11,9 @@
  * @link http://xaraya.com/index.php/release/1652.html
  * @author jsb | mikespub
  */
-$modversion['name']           = 'xarCacheManager';
+$modversion['name']           = 'xarcachemanager';
 $modversion['id']             = '1652';
-$modversion['version']        = '0.3.5';
+$modversion['version']        = '2.0.0';
 $modversion['displayname']    = xarML('xarCacheManager');
 $modversion['description']    = 'Manage the output cache system of Xaraya';
 $modversion['credits']        = '';

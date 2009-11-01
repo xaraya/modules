@@ -23,7 +23,7 @@ function xarcachemanager_adminapi_updateconfighook($args)
 {
     extract($args);
 
-    $outputCacheDir = xarCoreGetVarDirPath() . '/cache/output/';
+    $outputCacheDir = sys::varpath() . '/cache/output/';
 
     if (!function_exists('xarOutputFlushCached')) {
         // caching is on, but the function isn't available
@@ -48,7 +48,7 @@ function xarcachemanager_adminapi_updateconfighook($args)
             $modname = xarModGetName();
         }
     }
-    $modid = xarModGetIDFromName($modname);
+    $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module name', 'admin', 'updatehook', 'xarcachemanager');
@@ -78,7 +78,7 @@ function xarcachemanager_adminapi_updateconfighook($args)
         case 'comments': // keep falling through
         case 'keywords': // keep falling through
             // delete cachekey of each module autolinks is hooked to.
-            $hooklist = xarModAPIFunc('modules','admin','gethooklist');
+            $hooklist = xarMod::apiFunc('modules','admin','gethooklist');
             $modhooks = reset($hooklist[$modname]);
 
             foreach ($modhooks as $hookedmodname => $hookedmod) {
@@ -99,8 +99,8 @@ function xarcachemanager_adminapi_updateconfighook($args)
             break;
     }
 
-    if (xarModGetVar('xarcachemanager','AutoRegenSessionless')) {
-        xarModAPIFunc( 'xarcachemanager', 'admin', 'regenstatic');
+    if (xarModVars::get('xarcachemanager','AutoRegenSessionless')) {
+        xarMod::apiFunc( 'xarcachemanager', 'admin', 'regenstatic');
     }
 
     // Return the extra info

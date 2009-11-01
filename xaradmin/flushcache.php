@@ -26,7 +26,7 @@ function xarcachemanager_admin_flushcache($args)
     if (!xarVarFetch('flushkey', 'isset', $flushkey, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
-    $cachetypes = xarModAPIFunc('xarcachemanager','admin','getcachetypes');
+    $cachetypes = xarMod::apiFunc('xarcachemanager','admin','getcachetypes');
 
     //Make sure xarCache is included so you can delete cacheKeys even if caching is disabled
     if (!defined('XARCACHE_IS_ENABLED')) {
@@ -42,7 +42,7 @@ function xarcachemanager_admin_flushcache($args)
         $data['cachetypes'] = $cachetypes;
         $data['cachekeys'] = array();
         foreach (array_keys($cachetypes) as $type) {
-            $data['cachekeys'][$type] = xarModAPIFunc('xarcachemanager', 'admin', 'getcachekeys', $type);
+            $data['cachekeys'][$type] = xarMod::apiFunc('xarcachemanager', 'admin', 'getcachekeys', $type);
         }
 
         $data['instructions'] = xarML("Please select a cache key to be flushed.");
@@ -82,7 +82,7 @@ function xarcachemanager_admin_flushcache($args)
 
     $data['cachesize'] = array();
     foreach (array_keys($cachetypes) as $type) {
-        $cachesize = xarModAPIFunc('xarcachemanager', 'admin', 'getcachesize', $type);
+        $cachesize = xarMod::apiFunc('xarcachemanager', 'admin', 'getcachesize', $type);
         if (!empty($cachesize)) {
             $data['cachesize'][$type] = round($cachesize / 1048576, 2);
         } else {

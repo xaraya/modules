@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <a name="config"></a>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span></div>
@@ -24,7 +26,7 @@
       </th>
     </tr>
     <tr>
-      <td>&nbsp;</td>
+      <td>&#160;</td>
       <td><xar:mlstring>Modules</xar:mlstring></td>
       <xar:if condition="empty($settings['PageHookedOnly'])">
         <td><xar:mlstring>All</xar:mlstring></td>
@@ -87,8 +89,8 @@
         <xar:mlstring>Enable session-less page caching of the following URLs for your first-time visitors</xar:mlstring>
         <br/>
         <xar:mlstring>Example :</xar:mlstring><br/>
-        #xarServerGetBaseURL()#<br/>
-        #xarServerGetBaseURL()#index.php<br/>
+        #xarServer::getBaseURL()#<br/>
+        #xarServer::getBaseURL()#index.php<br/>
         <textarea name="sessionless" id="sessionless" rows="10" cols="80">#$sessionless#</textarea>
       </td>
     </tr>
@@ -97,7 +99,7 @@
         <label for="autoregenerate"><xar:mlstring>Auto-regenerate session-less URL cache</xar:mlstring></label>
       </td>
       <td>
-        <xar:if condition="xarModGetVar('xarcachemanager','AutoRegenSessionless')">
+        <xar:if condition="xarModVars::get('xarcachemanager','AutoRegenSessionless')">
           <input type="checkbox" name="autoregenerate" id="autoregenerate" value="1" checked="checked" />
         <xar:else/>
           <input type="checkbox" name="autoregenerate" id="autoregenerate" value="1" />
@@ -121,7 +123,7 @@
   <td>
     <input type="text" name="autocache[period]" id="autocache_period" size="9" value="#$settings['AutoCachePeriod']#" />
     <xar:mlstring>hh:mm:ss</xar:mlstring>
-    [ <a href="#xarServerGetCurrentURL()##viewlog"><xar:mlstring>view log</xar:mlstring></a> ]
+    [ <a href="#xarServer::getCurrentURL()##viewlog"><xar:mlstring>view log</xar:mlstring></a> ]
   </td>
     </tr>
     <tr>
@@ -184,7 +186,7 @@
     </form>
 
 <a name="viewlog"></a>
-    <h2><xar:mlstring>Current Auto-Cache Log</xar:mlstring> [ <a href="#xarServerGetCurrentURL()##config"><xar:mlstring>up</xar:mlstring></a> ]</h2>
+    <h2><xar:mlstring>Current Auto-Cache Log</xar:mlstring> [ <a href="#xarServer::getCurrentURL()##config"><xar:mlstring>up</xar:mlstring></a> ]</h2>
     <xar:if condition="!empty($autocachepages)">
     <p><xar:ml>
       <xar:mlstring>From #(1) to #(2)</xar:mlstring>
@@ -230,3 +232,4 @@
     </xar:if>
 
 </div>
+</xar:template>

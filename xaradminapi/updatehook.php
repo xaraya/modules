@@ -24,7 +24,7 @@ function xarcachemanager_adminapi_updatehook($args)
 {
     extract($args);
 
-    $outputCacheDir = xarCoreGetVarDirPath() . '/cache/output/';
+    $outputCacheDir = sys::varpath() . '/cache/output/';
 
     if (!function_exists('xarOutputFlushCached')) {
         // caching is on, but the function isn't available
@@ -56,7 +56,7 @@ function xarcachemanager_adminapi_updatehook($args)
             $modname = xarModGetName();
         }
     }
-    $modid = xarModGetIDFromName($modname);
+    $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module name', 'admin', 'updatehook', 'xarcachemanager');
@@ -95,14 +95,14 @@ function xarcachemanager_adminapi_updatehook($args)
                     $cacheexpire = NULL;
                 }
                 if (!empty($cacheexpire)) {
-                    $cacheexpire = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
+                    $cacheexpire = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                                   array('starttime' => $cacheexpire,
                                                         'direction' => 'to'));
                 }
 
-                $systemPrefix = xarDBGetSystemTablePrefix();
+                $systemPrefix = xarDB::getPrefix();
                 $blocksettings = $systemPrefix . '_cache_blocks';
-                $dbconn =& xarDBGetConn();
+                $dbconn = xarDB::getConn();
                 $query = "SELECT xar_nocache
                             FROM $blocksettings WHERE xar_bid = $objectid ";
                 $result =& $dbconn->Execute($query);
@@ -143,7 +143,7 @@ function xarcachemanager_adminapi_updatehook($args)
         case 'keywords': // keep falling through
         case 'html': // keep falling through
             // delete cachekey of each module autolinks is hooked to.
-            $hooklist = xarModAPIFunc('modules','admin','gethooklist');
+            $hooklist = xarMod::apiFunc('modules','admin','gethooklist');
             $modhooks = reset($hooklist[$modname]);
 
             foreach ($modhooks as $hookedmodname => $hookedmod) {
@@ -160,8 +160,8 @@ function xarcachemanager_adminapi_updatehook($args)
             break;
     }
 
-    if (xarModGetVar('xarcachemanager','AutoRegenSessionless')) {
-        xarModAPIFunc( 'xarcachemanager', 'admin', 'regenstatic');
+    if (xarModVars::get('xarcachemanager','AutoRegenSessionless')) {
+        xarMod::apiFunc( 'xarcachemanager', 'admin', 'regenstatic');
     }
 
     // Return the extra info

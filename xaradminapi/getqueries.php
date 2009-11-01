@@ -46,7 +46,7 @@ function xarcachemanager_adminapi_getqueries($args)
         $queries[$module] = array();
         foreach ($querylist as $query) {
 // stored in module variables (for now ?)
-            $queries[$module][$query] = xarModGetVar($module,'cache.'.$query);
+            $queries[$module][$query] = xarModVars::get($module,'cache.'.$query);
         }
     }
 
