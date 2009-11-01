@@ -89,11 +89,11 @@ function xarcachemanager_admin_modifyhook($args)
     $systemPrefix = xarDB::getPrefix();
     $blocksettings = $systemPrefix . '_cache_blocks';
     $dbconn = xarDB::getConn();
-    $query = "SELECT xar_nocache,
-             xar_page,
-             xar_user,
-             xar_expire
-             FROM $blocksettings WHERE xar_bid = $itemid ";
+    $query = "SELECT nocache,
+             page,
+             theuser,
+             expire
+             FROM $blocksettings WHERE blockinstance_id = $itemid ";
     $result =& $dbconn->Execute($query);
     if ($result && !$result->EOF) {
         list ($noCache, $pageShared, $userShared, $blockCacheExpireTime) = $result->fields;
@@ -112,6 +112,8 @@ function xarcachemanager_admin_modifyhook($args)
             if (!empty($initresult) && is_array($initresult)) {
                 if (isset($initresult['nocache'])) {
                     $noCache = $initresult['nocache'];
+                } elseif (isset($initresult['no_cache'])) {
+                    $noCache = $initresult['no_cache'];
                 }
                 if (isset($initresult['pageshared'])) {
                     $pageShared = $initresult['pageshared'];

@@ -42,6 +42,24 @@ function xarcachemanager_adminapi_getmenulinks()
                                  'label' => xarML('Block Caching'));
         }
 /*
+        if (file_exists($varCacheDir . '/output/cache.modulelevel')) {
+            $menulinks[] = Array('url'   => xarModURL('xarcachemanager',
+                                                      'admin',
+                                                      'modules'),
+                                 'title' => xarML('Configure the caching options for modules'),
+                                 'label' => xarML('Module Caching'));
+        }
+*/
+/*
+        if (file_exists($varCacheDir . '/output/cache.objectlevel')) {
+            $menulinks[] = Array('url'   => xarModURL('xarcachemanager',
+                                                      'admin',
+                                                      'objects'),
+                                 'title' => xarML('Configure the caching options for objects'),
+                                 'label' => xarML('Object Caching'));
+        }
+*/
+/*
         $menulinks[] = Array('url'   => xarModURL('xarcachemanager',
                                                   'admin',
                                                   'queries'),

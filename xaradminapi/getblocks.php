@@ -70,6 +70,35 @@ function xarcachemanager_adminapi_getblocks($args)
     }
     foreach ($blocks as $key => $block) {
         if (!isset($block['nocache'])) {
+            // Try loading some defaults from the block init array (cfr. articles/random)
+            if (!empty($block['module']) && !empty($block['type'])) {
+                $initresult = xarModAPIfunc('blocks', 'user', 'read_type_init',
+                                            array('module' => $block['module'],
+                                                  'type' => $block['type']));
+                if (!empty($initresult) && is_array($initresult)) {
+                    if (isset($initresult['nocache'])) {
+                        $block['nocache'] = $initresult['nocache'];
+                        $blocks[$key]['nocache'] = $initresult['nocache'];
+                    } elseif (isset($initresult['no_cache'])) {
+                        $block['nocache'] = $initresult['no_cache'];
+                        $blocks[$key]['nocache'] = $initresult['no_cache'];
+                    }
+                    if (isset($initresult['pageshared'])) {
+                        $block['pageshared'] = $initresult['pageshared'];
+                        $blocks[$key]['pageshared'] = $initresult['pageshared'];
+                    }
+                    if (isset($initresult['usershared'])) {
+                        $block['usershared'] = $initresult['usershared'];
+                        $blocks[$key]['usershared'] = $initresult['usershared'];
+                    }
+                    if (isset($initresult['cacheexpire'])) {
+                        $block['cacheexpire'] = $initresult['cacheexpire'];
+                        $blocks[$key]['cacheexpire'] = $initresult['cacheexpire'];
+                    }
+                }
+            }
+        }
+        if (!isset($block['nocache'])) {
             $blocks[$key]['nocache'] = 0;
         }
         if (!isset($block['pageshared'])) {

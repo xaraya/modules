@@ -5,6 +5,8 @@
 <xar:style scope="module" module="base" file="navtabs" />
 <xar:set name="pagevarCacheDir">file_exists(sys::varpath() . '/cache/output/cache.pagelevel');</xar:set>
 <xar:set name="blockvarCacheDir">file_exists(sys::varpath() . '/cache/output/cache.blocklevel');</xar:set>
+<xar:set name="modulevarCacheDir">file_exists(sys::varpath() . '/cache/output/cache.modulelevel');</xar:set>
+<xar:set name="objectvarCacheDir">file_exists(sys::varpath() . '/cache/output/cache.objectlevel');</xar:set>
 <xar:set name="request">xarRequest::getInfo()</xar:set>
 <xar:set name="activetab">#$request.2#</xar:set>
 <div>
@@ -37,6 +39,26 @@
                 </a>
             </dd>
         </xar:if>
+<!-- TODO
+        <xar:if condition="$modulevarCacheDir">
+            <xar:set name="tabclass">$activetab=='modules'?'active':''</xar:set>
+            <dd class="#$tabclass#">
+                <a href="&xar-modurl-xarcachemanager-admin-modules;" >
+                    <xar:mlstring>Module Caching</xar:mlstring>
+                </a>
+            </dd>
+        </xar:if>
+-->
+<!-- TODO
+        <xar:if condition="$objectvarCacheDir">
+            <xar:set name="tabclass">$activetab=='objects'?'active':''</xar:set>
+            <dd class="#$tabclass#">
+                <a href="&xar-modurl-xarcachemanager-admin-objects;" >
+                    <xar:mlstring>Object Caching</xar:mlstring>
+                </a>
+            </dd>
+        </xar:if>
+-->
 <!-- Not supported with Creole
        <xar:set name="tabclass">$activetab=='queries'?'active':''</xar:set>
         <dd class="#$tabclass#">

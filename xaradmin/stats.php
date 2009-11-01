@@ -105,10 +105,13 @@ function xarcachemanager_admin_stats($args)
                 $cachestorage = xarCache_getStorage(array('storage'  => $data['settings'][$storage],
                                                           'type'     => $tab,
                                                           'cachedir' => $outputCacheDir));
-                // get size of the cache
-                $data['size'] = $cachestorage->getCacheSize(true);
-                // get number of items in cache
-                $data['numitems'] = $cachestorage->getCacheItems();
+                $data['cacheinfo'] = $cachestorage->getCacheInfo();
+                $data['cacheinfo']['total'] = $data['cacheinfo']['hits'] + $data['cacheinfo']['misses'];
+                if (!empty($data['cacheinfo']['total'])) {
+                    $data['cacheinfo']['ratio'] = sprintf("%.1f",100.0 * $data['cacheinfo']['hits'] / $data['cacheinfo']['total']);
+                } else {
+                    $data['cacheinfo']['ratio'] = 0.0;
+                }
                 // get a list of items in cache
                 $data['items'] = $cachestorage->getCachedList();
                 // analyze logfile
@@ -118,6 +121,9 @@ function xarcachemanager_admin_stats($args)
                     xarcachemanager_stats_logfile($data['items'], $data['totals'], $data['settings'][$logfile], $tab);
                 } else {
                     $data['withlog'] = null;
+                    $data['loginfo'] = array();
+                    // status field = 1
+                    xarcachemanager_stats_filestats($data['loginfo'], $data['settings'][$logfile], 1, 1);
                 }
                 // sort items
                 if (empty($sort) || $sort == 'id') {
@@ -137,7 +143,7 @@ function xarcachemanager_admin_stats($args)
                     $data['items'] = $items;
                     unset($keys);
                     unset($items);
-//    sys::import('xaraya.pager');
+                    sys::import('xaraya.pager');
                     $data['pager'] = xarTplGetPager($startnum,
                                                     $count,
                                                     xarModURL('xarcachemanager','admin','stats',
@@ -258,8 +264,9 @@ function xarcachemanager_admin_stats($args)
                                                               'cachedir' => $outputCacheDir));
                     $data[$cachevar] = $cachestorage->getCacheInfo();
                 }
-                if (!empty($data[$cachevar]['hits']) || !empty($data[$cachevar]['misses'])) {
-                    $data[$cachevar]['ratio'] = sprintf("%.1f",100.0 * $data[$cachevar]['hits'] / ($data[$cachevar]['hits'] + $data[$cachevar]['misses']));
+                $data[$cachevar]['total'] = $data[$cachevar]['hits'] + $data[$cachevar]['misses'];
+                if (!empty($data[$cachevar]['total'])) {
+                    $data[$cachevar]['ratio'] = sprintf("%.1f",100.0 * $data[$cachevar]['hits'] / $data[$cachevar]['total']);
                 } else {
                     $data[$cachevar]['ratio'] = 0.0;
                 }

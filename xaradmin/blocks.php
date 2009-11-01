@@ -78,11 +78,11 @@ function xarcachemanager_admin_blocks($args)
         if (!$result) return;
 
         foreach ($newblocks as $block) {
-            $query = "INSERT INTO $blocksettings (xar_bid,
-                                                  xar_nocache,
-                                                  xar_page,
-                                                  xar_user,
-                                                  xar_expire)
+            $query = "INSERT INTO $blocksettings (blockinstance_id,
+                                                  nocache,
+                                                  page,
+                                                  theuser,
+                                                  expire)
                         VALUES (?,?,?,?,?)";
             $bindvars = array($block['bid'], $block['nocache'], $block['pageshared'], $block['usershared'], $block['cacheexpire']);
             $result =& $dbconn->Execute($query,$bindvars);
@@ -90,18 +90,26 @@ function xarcachemanager_admin_blocks($args)
         }
 
         // make sure we can flush blocks, even if caching is currently disabled
-        if (!function_exists('xarOutputFlushCached')) {
-            include_once 'includes/xarCache.php';
-            if (!xarCache_init(array('cacheDir' => $cacheOutputDir))) {
-                // somethings wrong, caching should be disabled now
-                return;
-            }
+        if (!xarCache::$outputCacheIsEnabled) {
+            sys::import('xaraya.caching.output');
+            //xarCache::$outputCacheIsEnabled = xarOutputCache::init();
+            xarOutputCache::init();
         }
+
         // blocks could be anywhere, we're not smart enough not know exactly where yet
+        $key = '';
         // so just flush all pages
-        xarOutputFlushCached('', $cacheOutputDir . '/page');
+        if (!xarOutputCache::$pageCacheIsEnabled) {
+            sys::import('xaraya.caching.output.page');
+            xarPacheCache::init($config);
+        }
+        xarPageCache::flushCached($key);
         // and flush the blocks
-        xarOutputFlushCached('', $cacheOutputDir . '/block');
+        if (!xarOutputCache::$blockCacheIsEnabled) {
+            sys::import('xaraya.caching.output.block');
+            xarBlockCache::init($config);
+        }
+        xarBlockCache::flushCached($key);
         if (xarModVars::get('xarcachemanager','AutoRegenSessionless')) {
             xarMod::apiFunc( 'xarcachemanager', 'admin', 'regenstatic');
         }

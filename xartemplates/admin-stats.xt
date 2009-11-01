@@ -40,21 +40,6 @@
                     </a>
                 </dd>    
             </xar:if>
-<!-- TODO
-            <xar:if condition="$tab eq 'mod'">
-                <dd class="active">
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'mod'))#">
-                        <xar:mlstring>Module</xar:mlstring>
-                    </a>
-                </dd>    
-            <xar:else />
-                <dd>
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'mod'))#">    
-                        <xar:mlstring>Module</xar:mlstring>
-                    </a>
-                </dd>    
-            </xar:if>
--->
             <xar:if condition="$tab eq 'block'">
                 <dd class="active">
                     <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'block'))#">
@@ -68,6 +53,36 @@
                     </a>
                 </dd>    
             </xar:if>
+<!-- TODO
+            <xar:if condition="$tab eq 'module'">
+                <dd class="active">
+                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'module'))#">
+                        <xar:mlstring>Module</xar:mlstring>
+                    </a>
+                </dd>    
+            <xar:else />
+                <dd>
+                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'module'))#">    
+                        <xar:mlstring>Module</xar:mlstring>
+                    </a>
+                </dd>    
+            </xar:if>
+-->
+<!-- TODO
+            <xar:if condition="$tab eq 'object'">
+                <dd class="active">
+                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'object'))#">
+                        <xar:mlstring>Object</xar:mlstring>
+                    </a>
+                </dd>    
+            <xar:else />
+                <dd>
+                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'object'))#">    
+                        <xar:mlstring>Object</xar:mlstring>
+                    </a>
+                </dd>    
+            </xar:if>
+-->
 <!-- Not supported with Creole
             <xar:if condition="$tab eq 'query'">
                 <dd class="active">
@@ -149,7 +164,7 @@
                 </th>
                 <td>
                     <xar:if condition="!empty($pagecache['ratio'])">
-                        <strong>#$pagecache['ratio']#%</strong>
+                        <strong>#$pagecache['ratio']#%</strong>&#160;of&#160;#$pagecache['total']#
                     <xar:else/>
                         <strong>N/A</strong>
                     </xar:if>
@@ -240,7 +255,7 @@
                 </th>
                 <td>
                     <xar:if condition="!empty($modcache['ratio'])">
-                        <strong>#$modcache['ratio']#%</strong>
+                        <strong>#$modcache['ratio']#%</strong>&#160;of&#160;#$modcache['total']#
                     <xar:else/>
                         <strong>N/A</strong>
                     </xar:if>
@@ -331,7 +346,7 @@
                 </th>
                 <td>
                     <xar:if condition="!empty($blockcache['ratio'])">
-                        <strong>#$blockcache['ratio']#%</strong>
+                        <strong>#$blockcache['ratio']#%</strong>&#160;of&#160;#$blockcache['total']#
                     <xar:else/>
                         <strong>N/A</strong>
                     </xar:if>
@@ -519,24 +534,39 @@
     </form>
 
     <!--  Begin Page / Module / Block Statistics -->
-    <xar:elseif condition="$tab eq 'page' or $tab eq 'mod' or $tab eq 'block'" />
+    <xar:elseif condition="$tab eq 'page' or $tab eq 'block' or $tab eq 'module' or $tab eq 'object'" />
 
         <xar:if condition="$tab eq 'page'">
           <h3><xar:mlstring>Page Cache Statistics</xar:mlstring></h3>
-        <xar:elseif condition="$tab eq 'mod'"/>
-          <h3><xar:mlstring>Module Cache Statistics</xar:mlstring></h3>
         <xar:elseif condition="$tab eq 'block'"/>
           <h3><xar:mlstring>Block Cache Statistics</xar:mlstring></h3>
+        <xar:elseif condition="$tab eq 'module'"/>
+          <h3><xar:mlstring>Module Cache Statistics</xar:mlstring></h3>
+        <xar:elseif condition="$tab eq 'object'"/>
+          <h3><xar:mlstring>Object Cache Statistics</xar:mlstring></h3>
         </xar:if>
 
         <xar:if condition="empty($withlog)">
+            <xar:if condition="!empty($cacheinfo['ratio'])">
+                <strong>Overall Cache Hit Ratio : #$cacheinfo['ratio']#%</strong>&#160;of&#160;#$cacheinfo['total']#
+            <xar:else/>
+                <strong>Overall Cache Hit Ratio : N/A</strong>
+            </xar:if>
+            <xar:if condition="!empty($loginfo['ratio'])">
+                <br/><strong>Overall Log Hit Ratio : #$loginfo['ratio']#%</strong>&#160;of&#160;#$loginfo['total']#
+            </xar:if>
             <a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab, 'withlog' => 1))#"><xar:mlstring>Analyze Logfile</xar:mlstring></a>
         <xar:else/>
             <form method="post" action="#xarModURL('xarcachemanager', 'admin', 'stats')#">
-              <strong><xar:ml><xar:mlstring>Overall Cache Hit Ratio : #(1)%</xar:mlstring><xar:mlvar>#$totals['ratio']#</xar:mlvar></xar:ml></strong>
+            <xar:if condition="!empty($cacheinfo['ratio'])">
+                <strong>Overall Cache Hit Ratio : #$cacheinfo['ratio']#%</strong>&#160;of&#160;#$cacheinfo['total']#
+            <xar:else/>
+                <strong>Overall Cache Hit Ratio : N/A</strong>
+            </xar:if>
+              <br/><strong>Overall Log Hit Ratio : #$totals['ratio']#%</strong>&#160;of&#160;#$totals['total']#
               <input type="hidden" name="tab" id="tab" value="#$tab#" />
               <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-              <input type="submit" name="reset" value="#xarML('Reset')#" />
+              <input type="submit" name="reset" value="#xarML('Reset Logfile')#" />
             </form>
         </xar:if>
 
