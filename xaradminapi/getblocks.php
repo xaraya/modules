@@ -22,11 +22,11 @@ function xarcachemanager_adminapi_getblocks($args)
     $systemPrefix = xarDB::getPrefix();
     $blocksettings = $systemPrefix . '_cache_blocks';
     $dbconn = xarDB::getConn();
-    $query = "SELECT xar_bid,
-             xar_nocache,
-             xar_page,
-             xar_user,
-             xar_expire
+    $query = "SELECT blockinstance_id,
+             nocache,
+             page,
+             theuser,
+             expire
              FROM $blocksettings";
     $result =& $dbconn->Execute($query);
     if (!$result) return;

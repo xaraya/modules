@@ -10,7 +10,7 @@
     <xar:if condition="empty($pages) or count($pages) lt 1">
         <xar:mlstring>Page caching is currently disabled...</xar:mlstring>
     <xar:else/>
-    <form action="&xar-modurl-xarcachemanager-admin-pages;"" method="post">
+    <form action="&xar-modurl-xarcachemanager-admin-pages;" method="post">
 
     <xar:comment>this just shows the current rules for now</xar:comment>
     <fieldset>
@@ -66,15 +66,15 @@
       <td>
           <xar:mlstring>Anonymous</xar:mlstring>
           <xar:foreach in="$groups" value="$group">
-              <xar:if condition="$group['uid'] eq 1">
+              <xar:if condition="$group['id'] eq 1">
                   <xar:comment>skip Everybody</xar:comment>
                   <xar:continue/>
               </xar:if>
               <br/>
               <xar:if condition="!empty($group['checked'])">
-                 <input type="checkbox" name="groups[#$group['uid']#]" id="groups_#$group['uid']#" value="1" checked="checked">#$group['name']# (#$group['users']#)</input>
+                 <input type="checkbox" name="groups[#$group['id']#]" id="groups_#$group['id']#" value="1" checked="checked">#$group['name']# (#$group['users']#)</input>
               <xar:else/>
-                 <input type="checkbox" name="groups[#$group['uid']#]" id="groups_#$group['uid']#" value="1">#$group['name']# (#$group['users']#)</input>
+                 <input type="checkbox" name="groups[#$group['id']#]" id="groups_#$group['id']#" value="1">#$group['name']# (#$group['users']#)</input>
               </xar:if>
           </xar:foreach>
       </td>

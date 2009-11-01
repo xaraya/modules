@@ -29,9 +29,9 @@ function xarcachemanager_admin_flushcache($args)
     $cachetypes = xarMod::apiFunc('xarcachemanager','admin','getcachetypes');
 
     //Make sure xarCache is included so you can delete cacheKeys even if caching is disabled
-    if (!defined('XARCACHE_IS_ENABLED')) {
-        include_once('includes/xarCache.php');
-        xarCache_init();
+    if (!class_exists('xarOutputCache')) {
+        sys::import('xaraya.caching');
+        xarOutputCache::init();
     }
 
     if (empty($confirm)) {

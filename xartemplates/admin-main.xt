@@ -31,6 +31,7 @@
                 <li><xar:mlstring>Block Caching - provides a single view and management point of the output caching settings of all block instances.</xar:mlstring></li>
                 <li><xar:mlstring>Modify Config - allows you to set the values for the output cache system. Mouse over the setting titles for more information.</xar:mlstring></li>
             </ul>
+        </p>
 
         <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
             <p><xar:mlstring>The xarCacheManager Module has no blocks included at this time.</xar:mlstring></p>

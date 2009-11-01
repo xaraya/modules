@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!--  License: GPL http://www.gnu.org/copyleft/gpl.html  -->
 <xar:style scope="module" module="base" file="navtabs" />
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
@@ -40,7 +40,7 @@
                     </a>
                 </dd>    
             </xar:if>
-<xar:comment> TODO
+<!-- TODO
             <xar:if condition="$tab eq 'mod'">
                 <dd class="active">
                     <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'mod'))#">
@@ -54,7 +54,7 @@
                     </a>
                 </dd>    
             </xar:if>
-</xar:comment>
+-->
             <xar:if condition="$tab eq 'block'">
                 <dd class="active">
                     <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'block'))#">
@@ -99,7 +99,7 @@
     
     
     <div style="border: 1px solid #ccc; text-align: left; width: 100%; border-top: none; padding-left: 5px;">
-    <xar:comment> ------------------- Begin Overview Statistics --------------------- </xar:comment>
+    <!-- Begin Overview Statistics -->
     <br />
     <xar:if condition="empty($tab) or $tab eq 'overview'">
 
@@ -477,7 +477,7 @@
       <input type="submit" name="change" id="change" value="#xarML('Change')#" />
     </form>
 
-    <xar:comment> ----------------- Begin Page / Module / Block Statistics ------------------- </xar:comment>
+    <!--  Begin Page / Module / Block Statistics -->
     <xar:elseif condition="$tab eq 'page' or $tab eq 'mod' or $tab eq 'block'" />
 
         <xar:if condition="$tab eq 'page'">
@@ -554,13 +554,13 @@
         </xar:if>
         </table>
 
-    <xar:comment> ----------------- Begin Query Statistics ------------------- </xar:comment>
+    <!--  Begin Query Statistics -->
     <xar:elseif condition="$tab eq 'query'" />
 
         <h3><xar:mlstring>Query Cache Statistics</xar:mlstring></h3>
         <xar:mlstring>to be defined</xar:mlstring>
 
-    <xar:comment> ----------------- Begin Auto-Cache Statistics ------------------- </xar:comment>
+    <!--  Begin Auto-Cache Statistics -->
     <xar:elseif condition="$tab eq 'autocache'" />
 
         <h3><xar:mlstring>Auto-Cache Statistics</xar:mlstring></h3>

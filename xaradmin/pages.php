@@ -54,9 +54,9 @@ function xarcachemanager_admin_pages($args)
         xarVarFetch('groups','isset',$groups,array(),XARVAR_NOT_REQUIRED);
         $grouplist = array();
         foreach ($data['groups'] as $idx => $group) {
-            if (!empty($groups[$group['uid']])) {
+            if (!empty($groups[$group['id']])) {
                 $data['groups'][$idx]['checked'] = 1;
-                $grouplist[] = $group['uid'];
+                $grouplist[] = $group['id'];
             }
         }
         $cachegroups = join(';', $grouplist);
@@ -173,7 +173,7 @@ function xarcachemanager_admin_pages($args)
     } elseif (!empty($data['settings']['PageCacheGroups'])) {
         $grouplist = explode(';',$data['settings']['PageCacheGroups']);
         foreach ($data['groups'] as $idx => $group) {
-            if (in_array($group['uid'],$grouplist)) {
+            if (in_array($group['id'],$grouplist)) {
                 $data['groups'][$idx]['checked'] = 1;
             }
         }

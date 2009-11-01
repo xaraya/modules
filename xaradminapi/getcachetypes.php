@@ -21,7 +21,7 @@ function xarcachemanager_adminapi_getcachetypes()
     if (!empty($cachetypes)) return $cachetypes;
 
     // list of currently supported cache types
-    $typelist = array('page', 'mod', 'block');
+    $typelist = array('page', 'block', 'object', 'module');
 
     // get the caching config settings from the config file
     $settings = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',

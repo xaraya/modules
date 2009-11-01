@@ -34,9 +34,9 @@ function xarcachemanager_admin_stats($args)
     $outputCacheDir = $varCacheDir . '/output';
 
     //Make sure xarCache is included so you can view stats even if caching is disabled
-    if (!defined('XARCACHE_IS_ENABLED')) {
-        include_once('includes/xarCache.php');
-        xarCache_init();
+    if (!class_exists('xarOutputCache')) {
+        sys::import('xaraya.caching');
+        xarOutputCache::init();
     }
 
     $numitems = xarModVars::get('xarcachemanager','itemsperpage');
