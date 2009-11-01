@@ -21,7 +21,7 @@ include 'bootstrap.php';
  */
 sys::import('xaraya.caching');
 // Note : we may already exit here if session-less page caching is enabled
-xarOutputCache::init();
+xarCache::init();
 
 /**
  * Load the Xaraya core

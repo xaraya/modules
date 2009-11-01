@@ -122,7 +122,10 @@ function xarcachemanager_admin_modifyconfig()
         'admin',
         'getlist', $filter);
         
-      $data['authid'] = xarSecGenAuthKey();
+    // get the storage types supported on this server
+    $data['storagetypes'] = xarMod::apiFunc('xarcachemanager', 'admin', 'getstoragetypes');
+
+    $data['authid'] = xarSecGenAuthKey();
     return $data;
 }
 

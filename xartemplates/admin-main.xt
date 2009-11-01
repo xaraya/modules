@@ -6,7 +6,7 @@
 </div>
 <div class="xar-mod-body">
   <xar:template type="module" file="admin-menu" module="xarcachemanager" />
-  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+  <img src="#xarTplGetImage('admin_generic.gif','xarcachemanager')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
@@ -25,10 +25,13 @@
                 The xarCacheManager module has several tools for managing the xarCache system and your cached output files. The tools are organized under the following menu links:
             </xar:mlstring>
             <ul>
+<!-- Not supported with Creole
                 <li><xar:mlstring>Query Caching - Queries in the certain functions could be quite expensive for large sites. You can use this tool to set query caching to save the results of some expensive queries for reuse.  Please note that cached query results will only be invalidated based on expiration time.</xar:mlstring></li>
+-->
                 <li><xar:mlstring>Flush Cache - allows you to flush (delete) the output cache of specific Cache Keys. Page output Cache Keys are define by module, type, and function. Block output Cache Keys are define by module, block instance id, and block group.</xar:mlstring></li>
                 <li><xar:mlstring>Page Caching - allows you to enable page caching for certain user groups, set up session-less page caching, and configure auto-cache settings.  Session-less page caching allows cached pages to be served before loading xarCore to users who do not have a session (new/first-time visitors). Auto-cache allows you to configure your site to dynamically enable session-less page caching for pages that hit certain page view thresholds.</xar:mlstring></li>
                 <li><xar:mlstring>Block Caching - provides a single view and management point of the output caching settings of all block instances.</xar:mlstring></li>
+                <li><xar:mlstring>View Statistics - shows a summary with the cache hit ratio and size for the different cache types, and the details on how the output cache system is performing.</xar:mlstring></li>
                 <li><xar:mlstring>Modify Config - allows you to set the values for the output cache system. Mouse over the setting titles for more information.</xar:mlstring></li>
             </ul>
         </p>

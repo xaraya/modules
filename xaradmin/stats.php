@@ -33,9 +33,10 @@ function xarcachemanager_admin_stats($args)
     $varCacheDir = sys::varpath() . '/cache';
     $outputCacheDir = $varCacheDir . '/output';
 
-    //Make sure xarCache is included so you can view stats even if caching is disabled
-    if (!class_exists('xarOutputCache')) {
-        sys::import('xaraya.caching');
+    //Make sure xarOutputCache is included so you can view stats even if caching is disabled
+    if (!xarCache::$outputCacheIsEnabled) {
+        sys::import('xaraya.caching.output');
+        //xarCache::$outputCacheIsEnabled = xarOutputCache::init();
         xarOutputCache::init();
     }
 
@@ -55,28 +56,32 @@ function xarcachemanager_admin_stats($args)
 
     $data['PageCachingEnabled'] = 0;
     $data['BlockCachingEnabled'] = 0;
-    $data['ModCachingEnabled'] = 0;
-    $data['QueryCachingEnabled'] = 0;
+    $data['ModuleCachingEnabled'] = 0;
+    $data['ObjectCachingEnabled'] = 0;
     $data['AutoCachingEnabled'] = 0;
-    if (defined('XARCACHE_PAGE_IS_ENABLED')) {
+    if (xarOutputCache::$pageCacheIsEnabled) {
         $data['PageCachingEnabled'] = 1;
         if (file_exists($outputCacheDir . '/autocache.log')) {
             $data['AutoCachingEnabled'] = 1;
         }
     }
-    if (defined('XARCACHE_BLOCK_IS_ENABLED')) {
+    if (xarOutputCache::$blockCacheIsEnabled) {
         $data['BlockCachingEnabled'] = 1;
     }
-    if (defined('XARCACHE_MOD_IS_ENABLED')) {
-        $data['ModCachingEnabled'] = 1;
+    if (xarOutputCache::$moduleCacheIsEnabled) {
+        $data['ModuleCachingEnabled'] = 1;
+    }
+    if (xarOutputCache::$objectCacheIsEnabled) {
+        $data['ObjectCachingEnabled'] = 1;
     }
     // TODO: bring in line with other cache systems ?
-    $data['QueryCachingEnabled'] = 1;
+    $data['QueryCachingEnabled'] = 0;
 
     switch ($tab) {
         case 'page':
         case 'block':
-        case 'mod':
+        case 'module':
+        case 'object':
             $upper = ucfirst($tab);
             $enabled = $upper . 'CachingEnabled'; // e.g. PageCachingEnabled
             $storage = $upper . 'CacheStorage'; // e.g. BlockCacheStorage
@@ -232,7 +237,7 @@ function xarcachemanager_admin_stats($args)
                 $data['itemsperpage'] = $itemsperpage;
             }
             // list of cache types to check
-            $typelist = array('page', 'block', 'mod');
+            $typelist = array('page', 'block', 'module', 'object');
             foreach ($typelist as $type) {
                 $upper = ucfirst($type);
                 $enabled = $upper . 'CachingEnabled'; // e.g. PageCachingEnabled

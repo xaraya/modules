@@ -22,11 +22,13 @@ function xarcachemanager_adminapi_regenstatic($nolimit = NULL)
     $outputCacheDir = sys::varpath() . '/cache/output/';
 
     // make sure output caching is really enabled, and that we are caching pages
-    if (!defined('XARCACHE_IS_ENABLED') || !defined('XARCACHE_PAGE_IS_ENABLED')) {
+    if (!xarCache::$outputCacheIsEnabled || !xarOutputCache::$pageCacheIsEnabled) {
         return;
     }
 
-    xarOutputFlushCached('static', $outputCacheDir . 'page');
+    // flush the static pages
+    xarPageCache::flushCached('static');
+
     $configKeys = array('Page.SessionLess');
     $sessionlessurls = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
                                      array('keys' => $configKeys, 'from' => 'file', 'viahook' => TRUE));

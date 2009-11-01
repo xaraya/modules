@@ -29,6 +29,7 @@ function xarcachemanager_init()
     xarModVars::set('xarcachemanager','FlushOnNewComment', 0);
     xarModVars::set('xarcachemanager','FlushOnNewRating', 0);
     xarModVars::set('xarcachemanager','FlushOnNewPollvote', 0);
+    xarModVars::set('xarcachemanager','AutoRegenSessionless', 0);
 
     if (!xarModRegisterHook('item', 'create', 'API',
                             'xarcachemanager', 'admin', 'createhook')) {
@@ -299,6 +300,8 @@ function xarcachemanager_delete()
 {
     $varCacheDir = sys::varpath() . '/cache';
     $cacheOutputDir = $varCacheDir . '/output';
+
+/* do not deactivate output caching when xarcachemanager is removed
     if (is_dir($cacheOutputDir)) {
         //if still there, remove the cache.touch file, this turns everything off
         if (file_exists($cacheOutputDir . '/cache.touch')) {
@@ -313,6 +316,7 @@ function xarcachemanager_delete()
     if (file_exists($varCacheDir . '/config.caching.php')) {
         @unlink($varCacheDir . '/config.caching.php');
     }
+*/
 
     // Remove module hooks
     if (!xarModUnregisterHook('item', 'create', 'API',
@@ -408,7 +412,7 @@ function xarcachemanager_fs_setup($args)
     
     // set up the directories
     $outputCacheDirs = array($cacheOutputDir);
-    $additionalDirs = array('page', 'block', 'object', 'module');
+    $additionalDirs = array('page', 'block', 'module', 'object');
     foreach ($additionalDirs as $addDir) {
         $outputCacheDirs[] = $cacheOutputDir . '/' . $addDir;
     }

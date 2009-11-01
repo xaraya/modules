@@ -37,13 +37,14 @@
                 </a>
             </dd>
         </xar:if>
+<!-- Not supported with Creole
        <xar:set name="tabclass">$activetab=='queries'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-xarcachemanager-admin-queries;">
             <xar:mlstring>Query Caching</xar:mlstring>
           </a>
         </dd>
-        
+-->
         <xar:set name="tabclass">$activetab=='stats'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-xarcachemanager-admin-stats;">

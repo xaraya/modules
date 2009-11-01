@@ -34,7 +34,7 @@ function xarcachemanager_adminapi_getcachesize($type = '')
     if (!empty($xarOutput_cacheCollection)) {
         $cachedir = $xarOutput_cacheCollection;
     } else {
-        $cachedir = xarCoregetVarDirPath() . '/cache/output';
+        $cachedir = sys::varpath() . '/cache/output';
     }
 
     // default cache storage is 'filesystem' if necessary

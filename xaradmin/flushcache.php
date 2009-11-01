@@ -28,9 +28,10 @@ function xarcachemanager_admin_flushcache($args)
 
     $cachetypes = xarMod::apiFunc('xarcachemanager','admin','getcachetypes');
 
-    //Make sure xarCache is included so you can delete cacheKeys even if caching is disabled
-    if (!class_exists('xarOutputCache')) {
-        sys::import('xaraya.caching');
+    //Make sure xarOutputCache is included so you delete cacheKeys even if caching is disabled
+    if (!xarCache::$outputCacheIsEnabled) {
+        sys::import('xaraya.caching.output');
+        //xarCache::$outputCacheIsEnabled = xarOutputCache::init();
         xarOutputCache::init();
     }
 
@@ -60,12 +61,36 @@ function xarcachemanager_admin_flushcache($args)
         if (empty($flushkey) || !is_array($flushkey)) {
             $data['notice'] = xarML("You must select a cache key to flush.  If there is no cache key to select the output cache is empty.");
         } else {
+
+            // get the caching config settings from the config file
+            $config = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
+                                      array('from' => 'file', 'tpl_prep' => TRUE));
+
             foreach ($flushkey as $type => $key) {
                 if (empty($key) || $key == '-') continue;
                 if ($key == '*') {
-                    xarOutputFlushCached('',$type);
-                } else {
-                    xarOutputFlushCached($key,$type);
+                    $key = '';
+                }
+                switch($type)
+                {
+                    case 'page':
+                        if (!xarOutputCache::$pageCacheIsEnabled) {
+                            sys::import('xaraya.caching.output.page');
+                            xarPacheCache::init($config);
+                        }
+                        xarPageCache::flushCached($key);
+                        break;
+                    case 'block':
+                        if (!xarOutputCache::$blockCacheIsEnabled) {
+                            sys::import('xaraya.caching.output.block');
+                            xarBlockCache::init($config);
+                        }
+                        xarBlockCache::flushCached($key);
+                        break;
+                    case 'module':
+                        break;
+                    case 'object':
+                        break;
                 }
             }
             $data['notice'] = xarML("Cached files have been successfully flushed.");

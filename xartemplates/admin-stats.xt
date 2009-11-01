@@ -68,6 +68,7 @@
                     </a>
                 </dd>    
             </xar:if>
+<!-- Not supported with Creole
             <xar:if condition="$tab eq 'query'">
                 <dd class="active">
                     <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'query'))#">
@@ -81,6 +82,7 @@
                     </a>
                 </dd>    
             </xar:if>
+-->
             <xar:if condition="$tab eq 'autocache'">
                 <dd class="active">
                     <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'autocache'))#">
@@ -182,8 +184,8 @@
             <xar:mlstring>Disabled</xar:mlstring>
         </xar:if>
 
-<!-- TODO
       </td>
+<!-- TODO
       <td valign="top">
 
         <h3><xar:mlstring>Module Cache</xar:mlstring></h3>
@@ -260,8 +262,9 @@
         <xar:else/>
             <xar:mlstring>Disabled</xar:mlstring>
         </xar:if>
--->
+
       </td>
+-->
       <td valign="top">
 
         <h3><xar:mlstring>Block Cache</xar:mlstring></h3>
@@ -342,6 +345,7 @@
       </td>
     </tr>
     <tr>
+<!-- Not supported with Creole
       <td valign="top">
 
         <h3><xar:mlstring>Query Cache</xar:mlstring></h3>
@@ -380,10 +384,11 @@
             </tr>
         </table>
         <xar:else/>
-            <!-- xar:mlstring>Disabled</xar:mlstring -->
+            Disabled
         </xar:if>
 
       </td>
+-->
       <td valign="top">
 
         <h3><xar:mlstring>Auto-Cache</xar:mlstring></h3>
