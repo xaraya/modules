@@ -115,27 +115,17 @@
         <table class="xar-norm">
             <tr>
                 <th>
-                    <xar:mlstring>Storage</xar:mlstring>
+                    <xar:mlstring>Cache Storage</xar:mlstring>
                 </th>
                 <td>
                     <xar:if condition="!empty($settings['PageCacheStorage'])">
-                        #$settings['PageCacheStorage']#
+                        <strong>#$settings['PageCacheStorage']#</strong>
                     </xar:if>
                 </td>
             </tr>
             <tr>
                 <th>
-                    <xar:mlstring>Items</xar:mlstring>
-                </th>
-                <td>
-                    <xar:if condition="!empty($pagecache['items'])">
-                        #$pagecache['items']#
-                    </xar:if>
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <xar:mlstring>Size</xar:mlstring>
+                    <xar:mlstring>Cache Size</xar:mlstring>
                 </th>
                 <td>
                     <xar:if condition="!empty($pagecache['size'])">
@@ -145,7 +135,29 @@
             </tr>
             <tr>
                 <th>
-                    <xar:mlstring>Logfile</xar:mlstring>
+                    <xar:mlstring>Cache Items</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($pagecache['items'])">
+                        #$pagecache['items']#
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <xar:mlstring>Cache Ratio</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($pagecache['ratio'])">
+                        <strong>#$pagecache['ratio']#%</strong>
+                    <xar:else/>
+                        <strong>N/A</strong>
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <xar:mlstring>Log File</xar:mlstring>
                 </th>
                 <td>
                     <xar:if condition="!empty($settings['PageLogFile'])">
@@ -156,15 +168,15 @@
             <xar:if condition="!empty($settings['PageLogFile'])">
                 <tr>
                     <th>
-                        <xar:mlstring>Ratio</xar:mlstring>
+                        <xar:mlstring>Log Size</xar:mlstring>
                     </th>
                     <td>
-                        <strong>#$pagelog['ratio']#%</strong>
+                        #$pagelog['size']#
                     </td>
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>Lines</xar:mlstring>
+                        <xar:mlstring>Log Lines</xar:mlstring>
                     </th>
                     <td>
                         #$pagelog['lines']#
@@ -172,10 +184,10 @@
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>Logsize</xar:mlstring>
+                        <xar:mlstring>Log Ratio</xar:mlstring>
                     </th>
                     <td>
-                        #$pagelog['size']#
+                        <strong>#$pagelog['ratio']#%</strong>
                     </td>
                 </tr>
             </xar:if>
@@ -194,27 +206,17 @@
         <table class="xar-norm">
             <tr>
                 <th>
-                    <xar:mlstring>Storage</xar:mlstring>
+                    <xar:mlstring>Cache Storage</xar:mlstring>
                 </th>
                 <td>
                     <xar:if condition="!empty($settings['ModCacheStorage'])">
-                        #$settings['ModCacheStorage']#
+                        <strong>#$settings['ModCacheStorage']#</strong>
                     </xar:if>
                 </td>
             </tr>
             <tr>
                 <th>
-                    <xar:mlstring>Items</xar:mlstring>
-                </th>
-                <td>
-                    <xar:if condition="!empty($modcache['items'])">
-                        #$modcache['items']#
-                    </xar:if>
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <xar:mlstring>Size</xar:mlstring>
+                    <xar:mlstring>Cache Size</xar:mlstring>
                 </th>
                 <td>
                     <xar:if condition="!empty($modcache['size'])">
@@ -224,7 +226,29 @@
             </tr>
             <tr>
                 <th>
-                    <xar:mlstring>Logfile</xar:mlstring>
+                    <xar:mlstring>Cache Items</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($modcache['items'])">
+                        #$modcache['items']#
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <xar:mlstring>Cache Ratio</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($modcache['ratio'])">
+                        <strong>#$modcache['ratio']#%</strong>
+                    <xar:else/>
+                        <strong>N/A</strong>
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <xar:mlstring>Log File</xar:mlstring>
                 </th>
                 <td>
                     <xar:if condition="!empty($settings['ModLogFile'])">
@@ -235,15 +259,15 @@
             <xar:if condition="!empty($settings['ModLogFile'])">
                 <tr>
                     <th>
-                        <xar:mlstring>Ratio</xar:mlstring>
+                        <xar:mlstring>Log Size</xar:mlstring>
                     </th>
                     <td>
-                        <strong>#$modlog['ratio']#%</strong>
+                        #$modlog['size']#
                     </td>
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>Lines</xar:mlstring>
+                        <xar:mlstring>Log Lines</xar:mlstring>
                     </th>
                     <td>
                         #$modlog['lines']#
@@ -251,10 +275,10 @@
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>Logsize</xar:mlstring>
+                        <xar:mlstring>Log Ratio</xar:mlstring>
                     </th>
                     <td>
-                        #$modlog['size']#
+                        <strong>#$modlog['ratio']#%</strong>
                     </td>
                 </tr>
             </xar:if>
@@ -273,27 +297,17 @@
         <table class="xar-norm">
             <tr>
                 <th>
-                    <xar:mlstring>Storage</xar:mlstring>
+                    <xar:mlstring>Cache Storage</xar:mlstring>
                 </th>
                 <td>
                     <xar:if condition="!empty($settings['BlockCacheStorage'])">
-                        #$settings['BlockCacheStorage']#
+                        <strong>#$settings['BlockCacheStorage']#</strong>
                     </xar:if>
                 </td>
             </tr>
             <tr>
                 <th>
-                    <xar:mlstring>Items</xar:mlstring>
-                </th>
-                <td>
-                    <xar:if condition="!empty($blockcache['items'])">
-                        #$blockcache['items']#
-                    </xar:if>
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <xar:mlstring>Size</xar:mlstring>
+                    <xar:mlstring>Cache Size</xar:mlstring>
                 </th>
                 <td>
                     <xar:if condition="!empty($blockcache['size'])">
@@ -303,7 +317,29 @@
             </tr>
             <tr>
                 <th>
-                    <xar:mlstring>Logfile</xar:mlstring>
+                    <xar:mlstring>Cache Items</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($blockcache['items'])">
+                        #$blockcache['items']#
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <xar:mlstring>Cache Ratio</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($blockcache['ratio'])">
+                        <strong>#$blockcache['ratio']#%</strong>
+                    <xar:else/>
+                        <strong>N/A</strong>
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <xar:mlstring>Log File</xar:mlstring>
                 </th>
                 <td>
                     <xar:if condition="!empty($settings['BlockLogFile'])">
@@ -314,15 +350,15 @@
             <xar:if condition="!empty($settings['BlockLogFile'])">
                 <tr>
                     <th>
-                        <xar:mlstring>Ratio</xar:mlstring>
+                        <xar:mlstring>Log Size</xar:mlstring>
                     </th>
                     <td>
-                        <strong>#$blocklog['ratio']#%</strong>
+                        #$blocklog['size']#
                     </td>
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>Lines</xar:mlstring>
+                        <xar:mlstring>Log Lines</xar:mlstring>
                     </th>
                     <td>
                         #$blocklog['lines']#
@@ -330,10 +366,10 @@
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>Logsize</xar:mlstring>
+                        <xar:mlstring>Log Ratio</xar:mlstring>
                     </th>
                     <td>
-                        #$blocklog['size']#
+                        <strong>#$blocklog['ratio']#%</strong>
                     </td>
                 </tr>
             </xar:if>
@@ -397,7 +433,7 @@
         <table class="xar-norm">
             <tr>
                 <th>
-                    <xar:mlstring>Logfile</xar:mlstring>
+                    <xar:mlstring>Log File</xar:mlstring>
                 </th>
                 <td>
                     <xar:if condition="!empty($settings['AutoCacheLogFile'])">
@@ -408,15 +444,15 @@
             <xar:if condition="!empty($settings['AutoCacheLogFile'])">
                 <tr>
                     <th>
-                        <xar:mlstring>Ratio</xar:mlstring>
+                        <xar:mlstring>Log Size</xar:mlstring>
                     </th>
                     <td>
-                        <strong>#$autocachelog['ratio']#%</strong>
+                        #$autocachelog['size']#
                     </td>
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>Lines</xar:mlstring>
+                        <xar:mlstring>Log Lines</xar:mlstring>
                     </th>
                     <td>
                         #$autocachelog['lines']#
@@ -424,16 +460,16 @@
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>Logsize</xar:mlstring>
+                        <xar:mlstring>Log Ratio</xar:mlstring>
                     </th>
                     <td>
-                        #$autocachelog['size']#
+                        <strong>#$autocachelog['ratio']#%</strong>
                     </td>
                 </tr>
             </xar:if>
             <tr>
                 <th>
-                    <xar:mlstring>Statfile</xar:mlstring>
+                    <xar:mlstring>Stats File</xar:mlstring>
                 </th>
                 <td>
                     <xar:if condition="!empty($settings['AutoCacheStatFile'])">
@@ -444,15 +480,15 @@
             <xar:if condition="!empty($settings['AutoCacheStatFile'])">
                 <tr>
                     <th>
-                        <xar:mlstring>Ratio</xar:mlstring>
+                        <xar:mlstring>Stats Size</xar:mlstring>
                     </th>
                     <td>
-                        <strong>#$autocachestat['ratio']#%</strong>
+                        #$autocachestat['size']#
                     </td>
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>Lines</xar:mlstring>
+                        <xar:mlstring>Stats Lines</xar:mlstring>
                     </th>
                     <td>
                         #$autocachestat['lines']#
@@ -460,10 +496,10 @@
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>Statsize</xar:mlstring>
+                        <xar:mlstring>Stats Ratio</xar:mlstring>
                     </th>
                     <td>
-                        #$autocachestat['size']#
+                        <strong>#$autocachestat['ratio']#%</strong>
                     </td>
                 </tr>
             </xar:if>

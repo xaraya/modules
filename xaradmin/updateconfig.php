@@ -81,12 +81,23 @@ function xarcachemanager_admin_updateconfig()
         if(!file_exists($outputCacheDir . '/cache.blocklevel')) {
             touch($outputCacheDir . '/cache.blocklevel');
         }
-        // flush adminpanels blocks to show new options if necessary
-        if (!function_exists('xarOutputFlushCached')) {
-            include_once('includes/xarCache.php');
-            xarCache_init(array('cacheDir' => $outputCacheDir));
+        //Make sure xarOutputCache is included so you delete cacheKeys even if caching is disabled
+        if (!xarCache::$outputCacheIsEnabled) {
+            sys::import('xaraya.caching.output');
+            //xarCache::$outputCacheIsEnabled = xarOutputCache::init();
+            xarOutputCache::init();
         }
-        xarOutputFlushCached('adminpanels-block');
+        if (!xarOutputCache::$blockCacheIsEnabled) {
+            sys::import('xaraya.caching.output.block');
+            // get the caching config settings from the config file
+            $config = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
+                                      array('from' => 'file', 'tpl_prep' => TRUE));
+            xarBlockCache::init($config);
+        }
+        // flush adminpanels and base blocks to show new menu options if necessary
+        xarBlockCache::flushCached('base-block');
+        // CHECKME: no longer used ?
+        xarBlockCache::flushCached('adminpanels-block');
     } else {
         if(file_exists($outputCacheDir . '/cache.blocklevel')) {
             unlink($outputCacheDir . '/cache.blocklevel');

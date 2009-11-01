@@ -247,14 +247,21 @@ function xarcachemanager_admin_stats($args)
                 $logvar = $type . 'log'; // e.g. blocklog
 
                 // get cache stats
-                $data[$cachevar] = array('size'  => 0,
-                                         'items' => 0);
+                $data[$cachevar] = array('size'    => 0,
+                                         'items'   => 0,
+                                         'hits'    => 0,
+                                         'misses'  => 0,
+                                         'modtime' => 0);
                 if ($data[$enabled] && !empty($data['settings'][$storage])) {
                     $cachestorage = xarCache_getStorage(array('storage'  => $data['settings'][$storage],
                                                               'type'     => $type,
                                                               'cachedir' => $outputCacheDir));
-                    $data[$cachevar]['size'] = $cachestorage->getCacheSize(true);
-                    $data[$cachevar]['items'] = $cachestorage->getCacheItems();
+                    $data[$cachevar] = $cachestorage->getCacheInfo();
+                }
+                if (!empty($data[$cachevar]['hits']) || !empty($data[$cachevar]['misses'])) {
+                    $data[$cachevar]['ratio'] = sprintf("%.1f",100.0 * $data[$cachevar]['hits'] / ($data[$cachevar]['hits'] + $data[$cachevar]['misses']));
+                } else {
+                    $data[$cachevar]['ratio'] = 0.0;
                 }
                 // get logfile stats
                 if ($data[$enabled] && !empty($data['settings'][$logfile])) {
