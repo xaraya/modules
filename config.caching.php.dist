@@ -3,8 +3,13 @@
 // The idea is to keep the overhead low when doing page
 // level caching.
 
+// Flag files to enable caching:
+// sys::varpath() . '/cache/output/cache.touch' : activate output caching in general
+// sys::varpath() . '/cache/output/cache.pagelevel' : enable page caching
+// sys::varpath() . '/cache/output/cache.blocklevel' : enable block caching
+
 // Only cache this theme
-$cachingConfiguration['Output.DefaultTheme'] = 'Xaraya_Classic';
+$cachingConfiguration['Output.DefaultTheme'] = 'default';
 // Size in bytes to limit the output cache to
 $cachingConfiguration['Output.SizeLimit'] = 2097152;
 // Default site cookie name 
@@ -12,8 +17,6 @@ $cachingConfiguration['Output.CookieName'] = 'XARAYASID';
 // Default site locale
 $cachingConfiguration['Output.DefaultLocale'] = 'en_US.utf-8';
 
-// Size in bytes to limit the output cache to
-$cachingConfiguration['Output.SizeLimit'] = 2097152;
 // Cached page expiration time in seconds
 $cachingConfiguration['Page.TimeExpiration'] = 1800;
 // Should we cache display view, or not

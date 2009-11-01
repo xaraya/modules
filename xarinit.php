@@ -85,7 +85,7 @@ function xarcachemanager_init()
     // set up permissions masks.
     xarRegisterMask('ReadXarCache', 'All', 'xarcachemanager', 'Item', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('AdminXarCache', 'All', 'xarcachemanager', 'Item', 'All:All:All', 'ACCESS_ADMIN');
-
+/*
     if (xarCore_getSystemVar('DB.UseADODBCache')){
         // Enable query caching for categories getcat
         if (xarModIsAvailable('categories')) {
@@ -96,7 +96,7 @@ function xarcachemanager_init()
             xarModVars::set('comments','cache.userapi.get_author_count',60);
         }
     }
-    
+*/    
     // add the database storage table
     xarcachemanager_create_cache_data();
 
@@ -281,7 +281,9 @@ function xarcachemanager_upgrade($oldversion)
                 xarMod::apiFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
                     array('configSettings' => $configSettings,
                           'cachingConfigFile' => $cachingConfigFile));        
-        case '0.3.5' : //current version
+        case '0.3.5' :
+
+        case '2.0.0' : //current version
             break;
     }
     // Update successful
@@ -406,7 +408,7 @@ function xarcachemanager_fs_setup($args)
     
     // set up the directories
     $outputCacheDirs = array($cacheOutputDir);
-    $additionalDirs = array('page', 'mod', 'block');
+    $additionalDirs = array('page', 'block', 'object', 'module');
     foreach ($additionalDirs as $addDir) {
         $outputCacheDirs[] = $cacheOutputDir . '/' . $addDir;
     }
