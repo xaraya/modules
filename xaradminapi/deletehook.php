@@ -36,11 +36,6 @@ function xarcachemanager_adminapi_deletehook($args)
         $extrainfo = array();
     }
 
-    if (!xarCache::$outputCacheIsEnabled) {
-        // nothing more to do here
-        return $extrainfo;
-    }
-
     // When called via hooks, modname wil be empty, but we get it from the
     // extrainfo or the current module
     if (empty($modname)) {
@@ -86,23 +81,23 @@ function xarcachemanager_adminapi_deletehook($args)
 
             // blocks could be anywhere, we're not smart enough not know exactly where yet
             // so just flush all pages
-            if (xarOutputCache::$pageCacheIsEnabled) {
+            if (xarCache::$outputCacheIsEnabled && xarOutputCache::$pageCacheIsEnabled) {
                 xarPageCache::flushCached('');
             }
             // and flush the block
         // FIXME: we can't filter on the middle of the key, only on the start of it
             $cacheKey = "-blockid" . $objectid;
-            if (xarOutputCache::$blockCacheIsEnabled) {
+            if (xarCache::$outputCacheIsEnabled && xarOutputCache::$blockCacheIsEnabled) {
                 xarBlockCache::flushCached('');
             }
             break;
         case 'articles':
-            if (xarOutputCache::$pageCacheIsEnabled) {
+            if (xarCache::$outputCacheIsEnabled && xarOutputCache::$pageCacheIsEnabled) {
                 xarPageCache::flushCached('articles-');
                 // a status update might mean a new menulink and new base homepage
                 xarPageCache::flushCached('base');
             }
-            if (xarOutputCache::$blockCacheIsEnabled) {
+            if (xarCache::$outputCacheIsEnabled && xarOutputCache::$blockCacheIsEnabled) {
                 // a status update might mean a new menulink and new base homepage
                 xarBlockCache::flushCached('base');
             }
@@ -110,10 +105,10 @@ function xarcachemanager_adminapi_deletehook($args)
         case 'privileges': // fall-through all modules that should flush the entire cache
         case 'roles':
             // if security changes, flush everything, just in case.
-            if (xarOutputCache::$pageCacheIsEnabled) {
+            if (xarCache::$outputCacheIsEnabled && xarOutputCache::$pageCacheIsEnabled) {
                 xarPageCache::flushCached('');
             }
-            if (xarOutputCache::$blockCacheIsEnabled) {
+            if (xarCache::$outputCacheIsEnabled && xarOutputCache::$blockCacheIsEnabled) {
                 xarBlockCache::flushCached('');
             }
             break;
@@ -122,7 +117,7 @@ function xarcachemanager_adminapi_deletehook($args)
         case 'keywords': // keep falling through
         case 'html': // keep falling through
             // delete cachekey of each module autolinks is hooked to.
-            if (xarOutputCache::$pageCacheIsEnabled) {
+            if (xarCache::$outputCacheIsEnabled && xarOutputCache::$pageCacheIsEnabled) {
                 $hooklist = xarMod::apiFunc('modules','admin','gethooklist');
                 $modhooks = reset($hooklist[$modname]);
 
@@ -138,17 +133,17 @@ function xarcachemanager_adminapi_deletehook($args)
             // identify pages that include the updated item and delete the cached files
             // nothing fancy yet, just flush it out
             $cacheKey = "$modname-";
-            if (xarOutputCache::$pageCacheIsEnabled) {
+            if (xarCache::$outputCacheIsEnabled && xarOutputCache::$pageCacheIsEnabled) {
                 xarPageCache::flushCached($cacheKey);
             }
             // a deleted item might mean a menulink goes away
-            if (xarOutputCache::$blockCacheIsEnabled) {
+            if (xarCache::$outputCacheIsEnabled && xarOutputCache::$blockCacheIsEnabled) {
                 xarBlockCache::flushCached('base-block');
             }
             break;
     }
 
-    if (xarModVars::get('xarcachemanager','AutoRegenSessionless')) {
+    if (xarCache::$outputCacheIsEnabled && xarModVars::get('xarcachemanager','AutoRegenSessionless')) {
         xarMod::apiFunc( 'xarcachemanager', 'admin', 'regenstatic');
     }
 

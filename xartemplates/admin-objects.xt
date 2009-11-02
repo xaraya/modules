@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" module="xarcachemanager" />
+    <h2><xar:mlstring>Configure Object Output Caching</xar:mlstring></h2>
+
+    <xar:if condition="empty($objects) or count($objects) lt 1">
+        <xar:mlstring>Object caching is currently disabled</xar:mlstring>
+    <xar:else/>
+        <form action="&xar-modurl-xarcachemanager-admin-objects;" method="post">
+        <fieldset>
+            <legend>
+            <xar:mlstring>
+                Object Caching Options
+            </xar:mlstring>
+        </legend>
+        <table border="1" cellpadding="4" cellspacing="0">
+        <tr>
+          <th class="xar-align-center"><xar:mlstring>Object</xar:mlstring></th>
+          <th class="xar-align-center"><xar:mlstring>Module</xar:mlstring></th>
+          <th class="xar-align-center"><xar:mlstring>Type</xar:mlstring></th>
+          <th class="xar-align-center"><label title="Do you want to disable caching for this object ?">Disable Caching</label></th>
+          <th class="xar-align-center"><label title="Do you want to cache the item display for this object too ?">Cache Item Display</label></th>
+          <th class="xar-align-center"><label title="Is the output of this object identical for all users, or for all members of the same group ?">User Sharing</label></th>
+          <th class="xar-align-center"><label title="Do you want to override the default expiration time ?">Expiration Time<br />(hh:mm:ss)</label></th>
+        </tr>
+        <xar:foreach in="$objects" value="$object">
+        <tr>
+          <td>
+              <a href="&xar-modurl-dynamicdata-admin-modifyprop;&amp;itemid=#$object['objectid']#" title="Object name: #$object['name']#">#$object['label']#</a>
+          </td>
+          <td>#xarMod::getName($object['moduleid'])#</td>
+          <td class="xar-align-right">#$object['itemtype']#</td>
+          <td  class="xar-align-center"><xar:if condition="!empty($object['nocache'])">
+                <input type="checkbox" name="nocache[#$object['objectid']#]" id="nocache_#$object['objectid']#" value="1" checked="checked"/>
+             <xar:else/>
+                <input type="checkbox" name="nocache[#$object['objectid']#]" id="nocache_#$object['objectid']#" value="1"/>
+              </xar:if></td>
+          <td  class="xar-align-center"><xar:if condition="!empty($object['displaycache'])">
+                <input type="checkbox" name="displaycache[#$object['objectid']#]" id="displaycache_#$object['objectid']#" value="1" checked="checked"/>
+              <xar:else/>
+                <input type="checkbox" name="displaycache[#$object['objectid']#]" id="displaycache_#$object['objectid']#" value="1"/>
+              </xar:if></td>
+          <td  class="xar-align-center"><select name="usershared[#$object['objectid']#]" id="usershared_#$object['objectid']#" size="1">
+                <option value="0"> <xar:mlstring>No Sharing</xar:mlstring></option>
+                <xar:if condition="$object['usershared'] eq 1">
+                  <option value="1" selected="selected">
+                    <xar:mlstring>Group Members</xar:mlstring></option>
+                <xar:else />
+                  <option value="1">
+                    <xar:mlstring>Group Members</xar:mlstring></option>
+                </xar:if>
+                <xar:if condition="$object['usershared'] eq 2">
+                  <option value="2" selected="selected">
+                    <xar:mlstring>All Users</xar:mlstring></option>
+                <xar:else />
+                  <option value="2">
+                    <xar:mlstring>All Users</xar:mlstring></option>
+                </xar:if>
+              </select></td>
+          <td  class="xar-align-center"><input type="text" name="cacheexpire[#$object['objectid']#]" id="cacheexpire_#$object['objectid']#" value="#$object['cacheexpire']#" size="9" maxlength="9" /></td>
+        </tr>
+        </xar:foreach>
+        </table>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+          <input type="hidden" name="authid" value="#$authid#" />
+          <input type="submit" name="submit" value="#xarML('Submit')#" />
+        </div>
+        </form>
+    </xar:if>
+
+</div>
+</xar:template>
