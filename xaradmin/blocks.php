@@ -96,6 +96,10 @@ function xarcachemanager_admin_blocks($args)
             xarOutputCache::init();
         }
 
+        // get the caching config settings from the config file
+        $config = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
+                                  array('from' => 'file'));
+
         // blocks could be anywhere, we're not smart enough not know exactly where yet
         $key = '';
         // so just flush all pages

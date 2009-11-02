@@ -25,16 +25,6 @@ function xarcachemanager_adminapi_createhook($args)
 
     $outputCacheDir = sys::varpath() . '/cache/output/';
 
-    if (!function_exists('xarOutputFlushCached')) {
-        // caching is on, but the function isn't available
-        // load xarCache to make it so
-        include_once 'includes/xarCache.php';
-        if (xarCache_init(array('cacheDir' => $outputCacheDir)) == false) {
-            // somethings wrong, caching should be off now
-            return;
-        }
-    }
-
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'object ID', 'admin', 'createhook', 'xarcachemanager');
@@ -44,6 +34,11 @@ function xarcachemanager_adminapi_createhook($args)
     }
     if (!isset($extrainfo) || !is_array($extrainfo)) {
         $extrainfo = array();
+    }
+
+    if (!xarCache::$outputCacheIsEnabled) {
+        // nothing more to do here
+        return $extrainfo;
     }
 
     // When called via hooks, modname wil be empty, but we get it from the
@@ -78,42 +73,61 @@ function xarcachemanager_adminapi_createhook($args)
         case 'blocks':
             // blocks could be anywhere, we're not smart enough not know exactly where yet
             // so just flush all pages
-            xarOutputFlushCached('', $outputCacheDir . 'page');
+            if (xarOutputCache::$pageCacheIsEnabled) {
+                xarPageCache::flushCached('');
+            }
             break;
         case 'privileges': // fall-through all modules that should flush the entire cache
         case 'roles':
             // if security changes, flush everything, just in case.
-            xarOutputFlushCached('');
+            if (xarOutputCache::$pageCacheIsEnabled) {
+                xarPageCache::flushCached('');
+            }
+            if (xarOutputCache::$blockCacheIsEnabled) {
+                xarBlockCache::flushCached('');
+            }
             break;
         case 'articles':
             if (isset($extrainfo['status']) && $extrainfo['status'] == 0) {
                 break;
             }
-            xarOutputFlushCached('articles-');
-            // a status update might mean a new menulink and new base homepage
-            xarOutputFlushCached('base');
+            if (xarOutputCache::$pageCacheIsEnabled) {
+                xarPageCache::flushCached('articles-');
+                // a status update might mean a new menulink and new base homepage
+                xarPageCache::flushCached('base');
+            }
+            if (xarOutputCache::$blockCacheIsEnabled) {
+                // a status update might mean a new menulink and new base homepage
+                xarBlockCache::flushCached('base');
+            }
             break;
         case 'autolinks': // fall-through all hooked utility modules that are admin modified
         case 'categories': // keep falling through
         case 'html': // keep falling through
         case 'keywords': // keep falling through
-                     // delete cachekey of each module autolinks is hooked to.
-            $hooklist = xarMod::apiFunc('modules','admin','gethooklist');
-            $modhooks = reset($hooklist[$modname]);
+            // delete cachekey of each module autolinks is hooked to.
+            if (xarOutputCache::$pageCacheIsEnabled) {
+                $hooklist = xarMod::apiFunc('modules','admin','gethooklist');
+                $modhooks = reset($hooklist[$modname]);
 
-            foreach ($modhooks as $hookedmodname => $hookedmod) {
-                $cacheKey = "$hookedmodname-";
-                xarOutputFlushCached($cacheKey);
+                foreach ($modhooks as $hookedmodname => $hookedmod) {
+                    $cacheKey = "$hookedmodname-";
+                    xarPageCache::flushCached($cacheKey);
+                }
             }
-                // no break because we want it to keep going and flush it's own cacheKey too
-                // incase it's got a user view, like categories.
+            // no break because we want it to keep going and flush it's own cacheKey too
+            // incase it's got a user view, like categories.
         default:
             // identify pages that include the updated item and delete the cached files
             // nothing fancy yet, just flush it out
             $cacheKey = "$modname-";
-            xarOutputFlushCached($cacheKey);
+            if (xarOutputCache::$pageCacheIsEnabled) {
+                xarPageCache::flushCached($cacheKey);
+            }
             // a new item might mean a new menulink
-            xarOutputFlushCached('base-block');
+            if (xarOutputCache::$blockCacheIsEnabled) {
+                xarBlockCache::flushCached('base-block');
+            }
             break;
     }
 

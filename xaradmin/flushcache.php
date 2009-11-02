@@ -64,7 +64,7 @@ function xarcachemanager_admin_flushcache($args)
 
             // get the caching config settings from the config file
             $config = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
-                                      array('from' => 'file', 'tpl_prep' => TRUE));
+                                      array('from' => 'file'));
 
             foreach ($flushkey as $type => $key) {
                 if (empty($key) || $key == '-') continue;

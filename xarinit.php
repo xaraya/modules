@@ -216,12 +216,7 @@ function xarcachemanager_upgrade($oldversion)
             }
             
             // since we've moved around where output will be cached, flush everything out
-            if (!function_exists('xarOutputFlushCached')) {
-                include_once('includes/xarCache.php');
-                xarCache_init(array('cacheDir' => $varCacheDir . '/output'));
-            }
-            xarOutputFlushCached('');
-            break;
+
         case '0.3.2':
             // Code to upgrade from the 0.3.2 version (base block level caching)
             // Double check the file system setup

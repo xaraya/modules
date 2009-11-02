@@ -79,9 +79,6 @@ function xarcachemanager_adminapi_getblocks($args)
                     if (isset($initresult['nocache'])) {
                         $block['nocache'] = $initresult['nocache'];
                         $blocks[$key]['nocache'] = $initresult['nocache'];
-                    } elseif (isset($initresult['no_cache'])) {
-                        $block['nocache'] = $initresult['no_cache'];
-                        $blocks[$key]['nocache'] = $initresult['no_cache'];
                     }
                     if (isset($initresult['pageshared'])) {
                         $block['pageshared'] = $initresult['pageshared'];

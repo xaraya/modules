@@ -91,7 +91,7 @@ function xarcachemanager_admin_updateconfig()
             sys::import('xaraya.caching.output.block');
             // get the caching config settings from the config file
             $config = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
-                                      array('from' => 'file', 'tpl_prep' => TRUE));
+                                      array('from' => 'file'));
             xarBlockCache::init($config);
         }
         // flush adminpanels and base blocks to show new menu options if necessary

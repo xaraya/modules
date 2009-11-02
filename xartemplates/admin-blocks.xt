@@ -21,10 +21,10 @@
           <th class="xar-align-center"><xar:mlstring>Name</xar:mlstring></th>
           <th class="xar-align-center"><xar:mlstring>Module</xar:mlstring></th>
           <th class="xar-align-center"><xar:mlstring>Type</xar:mlstring></th>
-          <th class="xar-align-center"><xar:mlstring>Disable</xar:mlstring></th>
-          <th class="xar-align-center"><xar:mlstring>Page Sharing</xar:mlstring></th>
-          <th class="xar-align-center"><xar:mlstring>User Sharing</xar:mlstring></th>
-          <th class="xar-align-center"><xar:mlstring>Expiration Time<br />(hh:mm:ss)</xar:mlstring></th>
+          <th class="xar-align-center"><label title="Do you want to disable caching for this block ?">Disable Caching</label></th>
+          <th class="xar-align-center"><label title="Is the output of this block identical for all pages ?">Page Sharing</label></th>
+          <th class="xar-align-center"><label title="Is the output of this block identical for all users, or for all members of the same group ?">User Sharing</label></th>
+          <th class="xar-align-center"><label title="Do you want to override the default expiration time ?">Expiration Time<br />(hh:mm:ss)</label></th>
         </tr>
         <xar:foreach in="$blocks" value="$block">
         <tr>

@@ -26,16 +26,6 @@ function xarcachemanager_adminapi_updatehook($args)
 
     $outputCacheDir = sys::varpath() . '/cache/output/';
 
-    if (!function_exists('xarOutputFlushCached')) {
-        // caching is on, but the function isn't available
-        // load xarCache to make it so
-        include_once 'includes/xarCache.php';
-        if (xarCache_init(array('cacheDir' => $outputCacheDir)) == false) {
-            // somethings wrong, caching should be off now
-            return;
-        }
-    }
-
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'object ID', 'admin', 'updatehook', 'xarcachemanager');
@@ -45,6 +35,11 @@ function xarcachemanager_adminapi_updatehook($args)
     }
     if (!isset($extrainfo) || !is_array($extrainfo)) {
         $extrainfo = array();
+    }
+
+    if (!xarCache::$outputCacheIsEnabled) {
+        // nothing more to do here
+        return $extrainfo;
     }
 
     // When called via hooks, modname wil be empty, but we get it from the
@@ -103,19 +98,19 @@ function xarcachemanager_adminapi_updatehook($args)
                 $systemPrefix = xarDB::getPrefix();
                 $blocksettings = $systemPrefix . '_cache_blocks';
                 $dbconn = xarDB::getConn();
-                $query = "SELECT xar_nocache
-                            FROM $blocksettings WHERE xar_bid = $objectid ";
+                $query = "SELECT nocache
+                            FROM $blocksettings WHERE blockinstance_id = $objectid ";
                 $result =& $dbconn->Execute($query);
                 if (count($result) > 0) {
                     $query = "DELETE FROM
-                             $blocksettings WHERE xar_bid = $objectid ";
+                             $blocksettings WHERE blockinstance_id = $objectid ";
                     $result =& $dbconn->Execute($query);
                 }
-                $query = "INSERT INTO $blocksettings (xar_bid,
-                                                      xar_nocache,
-                                                      xar_page,
-                                                      xar_user,
-                                                      xar_expire)
+                $query = "INSERT INTO $blocksettings (blockinstance_id,
+                                                      nocache,
+                                                      page,
+                                                      theuser,
+                                                      expire)
                             VALUES (?,?,?,?,?)";
                 $bindvars = array($objectid, $nocache, $pageshared, $usershared, $cacheexpire);
                 $result =& $dbconn->Execute($query,$bindvars);
@@ -123,32 +118,50 @@ function xarcachemanager_adminapi_updatehook($args)
 
             // blocks could be anywhere, we're not smart enough not know exactly where yet
             // so just flush all pages
-            xarOutputFlushCached('', $outputCacheDir . 'page');
+            if (xarOutputCache::$pageCacheIsEnabled) {
+                xarPageCache::flushCached('');
+            }
             // and flush the block
+        // FIXME: we can't filter on the middle of the key, only on the start of it
             $cacheKey = "-blockid" . $objectid;
-            xarOutputFlushCached($cacheKey, $outputCacheDir . 'block');
+            if (xarOutputCache::$blockCacheIsEnabled) {
+                xarBlockCache::flushCached('');
+            }
             break;
         case 'articles':
-            xarOutputFlushCached('articles');
-            // a status update might mean a new menulink and new base homepage
-            xarOutputFlushCached('base');
+            if (xarOutputCache::$pageCacheIsEnabled) {
+                xarPageCache::flushCached('articles-');
+                // a status update might mean a new menulink and new base homepage
+                xarPageCache::flushCached('base');
+            }
+            if (xarOutputCache::$blockCacheIsEnabled) {
+                // a status update might mean a new menulink and new base homepage
+                xarBlockCache::flushCached('base');
+            }
             break;
         case 'privileges': // fall-through all modules that should flush the entire cache
         case 'roles':
             // if security changes, flush everything, just in case.
-            xarOutputFlushCached('');
+            if (xarOutputCache::$pageCacheIsEnabled) {
+                xarPageCache::flushCached('');
+            }
+            if (xarOutputCache::$blockCacheIsEnabled) {
+                xarBlockCache::flushCached('');
+            }
             break;
         case 'autolinks': // fall-through all hooked utility modules that are admin modified
         case 'categories': // keep falling through
         case 'keywords': // keep falling through
         case 'html': // keep falling through
             // delete cachekey of each module autolinks is hooked to.
-            $hooklist = xarMod::apiFunc('modules','admin','gethooklist');
-            $modhooks = reset($hooklist[$modname]);
+            if (xarOutputCache::$pageCacheIsEnabled) {
+                $hooklist = xarMod::apiFunc('modules','admin','gethooklist');
+                $modhooks = reset($hooklist[$modname]);
 
-            foreach ($modhooks as $hookedmodname => $hookedmod) {
-                $cacheKey = "$hookedmodname-";
-                xarOutputFlushCached($cacheKey);
+                foreach ($modhooks as $hookedmodname => $hookedmod) {
+                    $cacheKey = "$hookedmodname-";
+                    xarPageCache::flushCached($cacheKey);
+                }
             }
             // no break because we want it to keep going and flush it's own cacheKey too
             // incase it's got a user view, like categories.
@@ -156,7 +169,9 @@ function xarcachemanager_adminapi_updatehook($args)
             // identify pages that include the updated item and delete the cached files
             // nothing fancy yet, just flush it out
             $cacheKey = "$modname-";
-            xarOutputFlushCached($cacheKey);
+            if (xarOutputCache::$pageCacheIsEnabled) {
+                xarPageCache::flushCached($cacheKey);
+            }
             break;
     }
 

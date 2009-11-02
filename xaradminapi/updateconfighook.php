@@ -25,18 +25,13 @@ function xarcachemanager_adminapi_updateconfighook($args)
 
     $outputCacheDir = sys::varpath() . '/cache/output/';
 
-    if (!function_exists('xarOutputFlushCached')) {
-        // caching is on, but the function isn't available
-        // load xarCache to make it so
-        include_once 'includes/xarCache.php';
-        if (xarCache_init(array('cacheDir' => $outputCacheDir)) == false) {
-            // somethings wrong, caching should be off now
-            return;
-        }
-    }
-
     if (!isset($extrainfo) || !is_array($extrainfo)) {
         $extrainfo = array();
+    }
+
+    if (!xarCache::$outputCacheIsEnabled) {
+        // nothing more to do here
+        return $extrainfo;
     }
 
     // When called via hooks, modname wil be empty, but we get it from the
@@ -71,19 +66,25 @@ function xarcachemanager_adminapi_updateconfighook($args)
 
         case 'base': // who knows what global impact a config change to base might make
             // flush everything.
-            $cacheKey = "";
-            xarOutputFlushCached($cacheKey);
+            if (xarOutputCache::$pageCacheIsEnabled) {
+                xarPageCache::flushCached('');
+            }
+            if (xarOutputCache::$blockCacheIsEnabled) {
+                xarBlockCache::flushCached('');
+            }
             break;
         case 'autolinks': // fall-through all hooked utility modules that are admin config modified
         case 'comments': // keep falling through
         case 'keywords': // keep falling through
             // delete cachekey of each module autolinks is hooked to.
-            $hooklist = xarMod::apiFunc('modules','admin','gethooklist');
-            $modhooks = reset($hooklist[$modname]);
+            if (xarOutputCache::$pageCacheIsEnabled) {
+                $hooklist = xarMod::apiFunc('modules','admin','gethooklist');
+                $modhooks = reset($hooklist[$modname]);
 
-            foreach ($modhooks as $hookedmodname => $hookedmod) {
-                $cacheKey = "$hookedmodname-";
-                xarOutputFlushCached($cacheKey);
+                foreach ($modhooks as $hookedmodname => $hookedmod) {
+                    $cacheKey = "$hookedmodname-";
+                    xarPageCache::flushCached($cacheKey);
+                }
             }
             // no break because we want it to keep going and flush it's own cacheKey too
             // incase it's got a user view, like categories.
@@ -93,9 +94,13 @@ function xarcachemanager_adminapi_updateconfighook($args)
             // identify pages that include the updated item and delete the cached files
             // nothing fancy yet, just flush it out
             $cacheKey = "$modname-";
-            xarOutputFlushCached($cacheKey);
+            if (xarOutputCache::$pageCacheIsEnabled) {
+                xarPageCache::flushCached($cacheKey);
+            }
             // since we're modifying the config, we might get a new admin menulink
-            xarOutputFlushCached('adminpanels');
+            if (xarOutputCache::$blockCacheIsEnabled) {
+                xarBlockCache::flushCached('base-block');
+            }
             break;
     }
 

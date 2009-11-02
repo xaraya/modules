@@ -112,8 +112,6 @@ function xarcachemanager_admin_modifyhook($args)
             if (!empty($initresult) && is_array($initresult)) {
                 if (isset($initresult['nocache'])) {
                     $noCache = $initresult['nocache'];
-                } elseif (isset($initresult['no_cache'])) {
-                    $noCache = $initresult['no_cache'];
                 }
                 if (isset($initresult['pageshared'])) {
                     $pageShared = $initresult['pageshared'];
