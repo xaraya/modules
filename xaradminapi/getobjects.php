@@ -29,7 +29,7 @@ function xarcachemanager_adminapi_getobjects($args)
     // Get all objects
     $objects = xarMod::apiFunc('dynamicdata', 'user', 'getobjects');
 
-    // Get default object methods
+    // Get default object methods to cache
     $defaultobjectmethods = unserialize(xarModVars::get('xarcachemanager','DefaultObjectCacheMethods'));
 
 // CHECKME: do we want to support settings for non-objects (like tables) ?

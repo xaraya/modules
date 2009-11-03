@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" module="xarcachemanager" />
+    <h2><xar:mlstring>Configure Module Output Caching</xar:mlstring></h2>
+
+    <xar:if condition="empty($modules) or count($modules) lt 1">
+      <xar:mlstring>Module caching is currently disabled</xar:mlstring>
+    <xar:else/>
+      <xar:javascript module="base" filename="checkall.js" />
+      <form action="&xar-modurl-xarcachemanager-admin-modules;" name="modulecache_form" id="modulecache_form" method="post">
+        <fieldset>
+        <legend>
+            Module Caching Options
+        </legend>
+        <table border="1" cellpadding="4" cellspacing="0">
+          <tr>
+            <th class="xar-align-center"><label title="Do you want to enable caching for this module function ?">Enable<br/>Caching</label></th>
+            <th class="xar-align-center">Module</th>
+            <th class="xar-align-center">User GUI<br/>Function</th>
+            <th class="xar-align-center"><label title="Which parameters will affect the output of this module function ?">Parameters</label></th>
+            <th class="xar-align-center"><label title="Is the output of this module function identical for all users, or for all members of the same group ?">User Sharing</label></th>
+            <th class="xar-align-center"><label title="Do you want to override the default expiration time for this module function ?">Expiration Time<br />(hh:mm:ss)</label></th>
+          </tr>
+        <!-- use the module name as key for easy lookup in xarModuleCache -->
+        <xar:foreach in="$modules" value="$module">
+          <!-- show the cache configuration for each module function -->
+          <xar:foreach in="$module.cachesettings" key="$func" value="$settings">
+          <tr>
+            <td class="xar-align-center">
+              <!-- flip from nocache in settings to docache in template -->
+              <xar:if condition="empty($settings['nocache'])">
+                <input type="checkbox" name="docache[#$module['name']#][#$func#]" id="docache_#$module['name']#_#$func#" value="1" checked="checked"/>
+              <xar:else/>
+                <input type="checkbox" name="docache[#$module['name']#][#$func#]" id="docache_#$module['name']#_#$func#" value="1"/>
+              </xar:if>
+            </td>
+            <td>
+              <a href="#xarModURL($module['name'],'admin','main')#" title="#$module['name']# module (#$module['regid']#)">#$module['displayname']#</a>
+            </td>
+            <td>
+              #$func#
+            </td>
+            <td class="xar-align-center">
+              <input type="text" name="params[#$module['name']#][#$func#]" id="params_#$module['name']#_#$func#" value="#$settings['params']#" size="20" />
+            </td>
+            <td class="xar-align-center">
+              <select name="usershared[#$module['name']#][#$func#]" id="usershared_#$module['name']#_#$func#" size="1">
+                <option value="0"> <xar:mlstring>No Sharing</xar:mlstring></option>
+                <xar:if condition="$settings['usershared'] eq 1">
+                  <option value="1" selected="selected">
+                    <xar:mlstring>Group Members</xar:mlstring></option>
+                <xar:else />
+                  <option value="1">
+                    <xar:mlstring>Group Members</xar:mlstring></option>
+                </xar:if>
+                <xar:if condition="$settings['usershared'] eq 2">
+                  <option value="2" selected="selected">
+                    <xar:mlstring>All Users</xar:mlstring></option>
+                <xar:else />
+                  <option value="2">
+                    <xar:mlstring>All Users</xar:mlstring></option>
+                </xar:if>
+              </select>
+            </td>
+            <td class="xar-align-center">
+              <input type="text" name="cacheexpire[#$module['name']#][#$func#]" id="cacheexpire_#$module['name']#_#$func#" value="#$settings['cacheexpire']#" size="9" maxlength="9" />
+            </td>
+          </tr>
+          </xar:foreach>
+        </xar:foreach>
+        <tr>
+          <td class="xar-align-center">
+            <a href="javascript:xar_base_checkall(document.forms['modulecache_form'],true)"><xar:mlstring>Check All</xar:mlstring></a><br/>
+            <a href="javascript:xar_base_checkall(document.forms['modulecache_form'],false)"><xar:mlstring>Clear All</xar:mlstring></a>
+          </td>
+          <td>
+            <input type="hidden" name="authid" value="#$authid#" />
+            <input type="submit" name="submit" value="#xarML('Submit')#" />
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+        </tr>
+        </table>
+        </fieldset>
+      </form>
+    </xar:if>
+
+</div>
+</xar:template>

@@ -323,17 +323,9 @@
                     <input type="checkbox" name="modulefunctions[#$func#]" id="modulefunctions_#$func#" value="1" />
                 </xar:if>
                 <label for="modulefunctions_#$func#" title="#xarML('If selected, the output of this module function will be cached by default. This is overridden by the specific module caching configuration.')#">
-                    &#160;Cache <strong>#$func#</strong> function by default?
+                    &#160;Cache function <strong>#$func#</strong> by default?
                 </label>
             </div>
-            <xar:if condition="!empty($docache)">
-            <div class="xar-form-input-wrapper">
-                <label for="moduleparams_#$func#" class="xar-form-label" title="#xarML('Specify the default parameters that will affect the output of this module function.')#">
-                    Parameters for <strong>#$func#</strong> function:
-                </label>
-                <input type="text" name="moduleparams[#$func#]" id="moduleparams_#$func#" value="#$settings['ModuleFunctionParams'][$func]#" size="50" />
-            </div>
-            </xar:if>
             </xar:foreach>
 <!--
             <div class="xar-form-input-wrapper-after">
@@ -347,6 +339,14 @@
                 </label>
             </div>
 -->
+            <xar:set name="checkconfig">xarModVars::get('modules','modulecache_settings')</xar:set>
+            <xar:if condition="$moduleCachingEnabled eq 1 and empty($checkconfig)">
+            <div class="xar-form-input-wrapper">
+                <p>
+                    <strong>Please configure the specific <a href="#xarModURL('xarcachemanager','admin','modules')#">module caching options</a> now.</strong>
+                </p>
+            </div>
+            </xar:if>
         </fieldset>
         <fieldset>
             <legend><xar:mlstring>Object Output Cache Settings</xar:mlstring></legend>
@@ -404,10 +404,18 @@
                     <input type="checkbox" name="objectmethods[#$method#]" id="objectmethods_#$method#" value="1" />
                 </xar:if>
                 <label for="objectmethods_#$method#" title="#xarML('If selected, the output of this object method will be cached by default. This is overridden by the specific object caching configuration.')#">
-                    &#160;Cache <strong>#$method#</strong> method by default?
+                    &#160;Cache method <strong>#$method#</strong> by default?
                 </label>
             </div>
             </xar:foreach>
+            <xar:set name="checkconfig">xarModVars::get('dynamicdata','objectcache_settings')</xar:set>
+            <xar:if condition="$objectCachingEnabled eq 1 and empty($checkconfig)">
+            <div class="xar-form-input-wrapper">
+                <p>
+                    <strong>Please configure the specific <a href="#xarModURL('xarcachemanager','admin','objects')#">object caching options</a> now.</strong>
+                </p>
+            </div>
+            </xar:if>
 <!--
             <div class="xar-form-input-wrapper-after">
                 <xar:if condition="xarModVars::get('xarcachemanager','FlushOnNewObject')">

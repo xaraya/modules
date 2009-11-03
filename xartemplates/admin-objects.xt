@@ -37,7 +37,7 @@
               </xar:if>
             </td>
             <td>
-              <a href="&xar-modurl-dynamicdata-admin-modifyprop;&amp;itemid=#$object['objectid']#" title="Name: #$object['name']# Module: #xarMod::getName($object['moduleid'])# Itemtype: #$object['itemtype']#">#$object['label']#</a>
+              <a href="&xar-modurl-dynamicdata-admin-modifyprop;&amp;itemid=#$object['objectid']#" title="#$object['name']# object (#xarMod::getName($object['moduleid'])#.#$object['itemtype']#)">#$object['label']#</a>
             </td>
             <td>
               #$method#

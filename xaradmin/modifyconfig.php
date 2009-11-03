@@ -135,11 +135,6 @@ function xarcachemanager_admin_modifyconfig()
         $data['settings']['ModuleCacheFunctions'] = array('main' => 1, 'view' => 1, 'display' => 0);
     }
     xarModVars::set('xarcachemanager','DefaultModuleCacheFunctions', serialize($data['settings']['ModuleCacheFunctions']));
-    // set new cache defaults for function params
-    if(empty($data['settings']['ModuleFunctionParams'])) {
-        $data['settings']['ModuleFunctionParams'] = array('main' => 'page','view' => 'sort,where,startnum,tab,name,itemtype,catid','display' => 'itemid,name,itemtype');
-    }
-    xarModVars::set('xarcachemanager','DefaultModuleFunctionParams', serialize($data['settings']['ModuleFunctionParams']));
 
     if(!isset($data['settings']['ObjectTimeExpiration'])) {
         $data['settings']['ObjectTimeExpiration'] = 7200;

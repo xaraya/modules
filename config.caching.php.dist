@@ -73,8 +73,6 @@ $cachingConfiguration['Module.LogFile'] = '';
 $cachingConfiguration['Module.SizeLimit'] = 2097152;
 // Default cache settings for module functions
 $cachingConfiguration['Module.CacheFunctions'] = array('main' => 1, 'view' => 1, 'display' => 0);
-// Default parameters to check for module functions
-$cachingConfiguration['Module.FunctionParams'] = array('main' => 'page','view' => 'sort,where,startnum,tab,name,itemtype,catid','display' => 'itemid,name,itemtype');
 
 // Maximum life time of object cache in seconds
 $cachingConfiguration['Object.TimeExpiration'] = 7200;
