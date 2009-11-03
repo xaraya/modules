@@ -27,7 +27,7 @@
             <xar:set name="tabclass">$activetab=='pages'?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-xarcachemanager-admin-pages;" >
-                    <xar:mlstring>Page Caching</xar:mlstring>
+                    <xar:mlstring>Pages</xar:mlstring>
                 </a>
             </dd>
         </xar:if>
@@ -35,25 +35,23 @@
             <xar:set name="tabclass">$activetab=='blocks'?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-xarcachemanager-admin-blocks;" >
-                    <xar:mlstring>Block Caching</xar:mlstring>
+                    <xar:mlstring>Blocks</xar:mlstring>
                 </a>
             </dd>
         </xar:if>
-<!-- TODO
         <xar:if condition="$modulevarCacheDir">
             <xar:set name="tabclass">$activetab=='modules'?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-xarcachemanager-admin-modules;" >
-                    <xar:mlstring>Module Caching</xar:mlstring>
+                    <xar:mlstring>Modules</xar:mlstring>
                 </a>
             </dd>
         </xar:if>
--->
         <xar:if condition="$objectvarCacheDir">
             <xar:set name="tabclass">$activetab=='objects'?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-xarcachemanager-admin-objects;" >
-                    <xar:mlstring>Object Caching</xar:mlstring>
+                    <xar:mlstring>Objects</xar:mlstring>
                 </a>
             </dd>
         </xar:if>
@@ -61,7 +59,7 @@
        <xar:set name="tabclass">$activetab=='queries'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-xarcachemanager-admin-queries;">
-            <xar:mlstring>Query Caching</xar:mlstring>
+            <xar:mlstring>Queries</xar:mlstring>
           </a>
         </dd>
 -->

@@ -114,6 +114,15 @@ function xarcachemanager_admin_stats($args)
                 }
                 // get a list of items in cache
                 $data['items'] = $cachestorage->getCachedList();
+                // get a list of keys in cache
+                $cachekeys = array();
+                foreach ($data['items'] as $item) {
+                    $cachekeys[$item['key']] = 1;
+                }
+                $data['cachekeys'] = array_keys($cachekeys);
+                unset($cachekeys);
+                // Generate a one-time authorisation code for this operation
+                $data['authid'] = xarSecGenAuthKey();
                 // analyze logfile
                 if (!empty($withlog) && !empty($data['settings'][$logfile]) && file_exists($data['settings'][$logfile]) && filesize($data['settings'][$logfile]) > 0) {
                     $data['withlog'] = 1;

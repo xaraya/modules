@@ -86,8 +86,6 @@ function xarcachemanager_admin_view($args)
         if (!empty($code)) {
             $cachestorage->setCode($code);
         }
-        // remove prefix if necessary
-        $key = str_replace($tab.'/','',$key);
         if ($cachestorage->isCached($key, 0, 0)) {
             $value = $cachestorage->getCached($key);
             $data['lines'] = explode("\n", $value);

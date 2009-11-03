@@ -105,6 +105,35 @@
                 <input type="text" name="pageexpiretime" id="pageexpiretime" value="#$settings.PageTimeExpiration#" size="9" maxlength="9" />
                     <xar:mlstring>(in hh:mm:ss)</xar:mlstring>
             </div>
+            <div class="xar-form-input-wrapper">
+                <label for="pagecachestorage" class="xar-form-label" title="#xarML('Specify where the cached data should be stored.')#">
+                    <xar:mlstring>Page Cache Storage:</xar:mlstring>
+                </label>
+                <select name="pagecachestorage" id="pagecachestorage">
+                    <xar:foreach in="$storagetypes" key="$storagetype" value="$storageinfo">
+                        <xar:if condition="empty($storageinfo['enabled'])">
+                            <option value="#$storagetype#" disabled="disabled">#$storageinfo.label#</option>
+                        <xar:elseif condition="$settings['PageCacheStorage'] eq $storagetype"/>
+                            <option value="#$storagetype#" selected="selected">#$storageinfo.label#</option>
+                        <xar:else/>
+                            <option value="#$storagetype#">#$storageinfo.label#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="pagesizelimit" class="xar-form-label" title="#xarML('Limits the disk usage of the page cache to the specified number of megabytes.')#">
+                    <xar:mlstring>Page Cache Size Limit:</xar:mlstring>
+                </label>
+                <input type="text" name="pagesizelimit" id="pagesizelimit" value="#$settings.PageSizeLimit#" size="4" maxlength="4" />
+                <xar:mlstring>(in MB)</xar:mlstring>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="pagelogfile" class="xar-form-label" title="#xarML('Specify if cache hits and misses should be logged, e.g. in var/logs/page.log')#">
+                    <xar:mlstring>Page Cache Logfile:</xar:mlstring>
+                </label>
+                <input type="text" name="pagelogfile" id="pagelogfile" value="#$settings.PageLogFile#" size="20" />
+            </div>
             <div class="xar-form-input-wrapper-after">
                 <xar:if condition="$settings.PageDisplayView eq 1 ">
                     <input type="checkbox" name="pagedisplayview" id="pagedisplayview" value="1" checked="checked" />
@@ -188,35 +217,6 @@
                     &#160;<xar:mlstring>Only cache pages of modules hooked to xarCacheManager:</xar:mlstring>
                 </label>
             </div>
-            <div class="xar-form-input-wrapper">
-                <label for="pagecachestorage" class="xar-form-label" title="#xarML('Specify where the cached data should be stored.')#">
-                    <xar:mlstring>Page Cache Storage:</xar:mlstring>
-                </label>
-                <select name="pagecachestorage" id="pagecachestorage">
-                    <xar:foreach in="$storagetypes" key="$storagetype" value="$storageinfo">
-                        <xar:if condition="empty($storageinfo['enabled'])">
-                            <option value="#$storagetype#" disabled="disabled">#$storageinfo.label#</option>
-                        <xar:elseif condition="$settings['PageCacheStorage'] eq $storagetype"/>
-                            <option value="#$storagetype#" selected="selected">#$storageinfo.label#</option>
-                        <xar:else/>
-                            <option value="#$storagetype#">#$storageinfo.label#</option>
-                        </xar:if>
-                    </xar:foreach>
-                </select>
-            </div>
-            <div class="xar-form-input-wrapper">
-                <label for="pagesizelimit" class="xar-form-label" title="#xarML('Limits the disk usage of the page cache to the specified number of megabytes.')#">
-                    <xar:mlstring>Page Cache Size Limit:</xar:mlstring>
-                </label>
-                <input type="text" name="pagesizelimit" id="pagesizelimit" value="#$settings.PageSizeLimit#" size="4" maxlength="4" />
-                <xar:mlstring>(in MB)</xar:mlstring>
-            </div>
-            <div class="xar-form-input-wrapper">
-                <label for="pagelogfile" class="xar-form-label" title="#xarML('Specify if cache hits and misses should be logged, e.g. in var/logs/page.log')#">
-                    <xar:mlstring>Page Cache Logfile:</xar:mlstring>
-                </label>
-                <input type="text" name="pagelogfile" id="pagelogfile" value="#$settings.PageLogFile#" size="20" />
-            </div>
         </fieldset>
         <fieldset>
             <legend><xar:mlstring>Block Output Cache Settings</xar:mlstring></legend>
@@ -267,7 +267,6 @@
                 <input type="text" name="blocklogfile" id="blocklogfile" value="#$settings.BlockLogFile#" size="20" />
             </div>
         </fieldset>
-<!--
         <fieldset>
             <legend><xar:mlstring>Module Output Cache Settings</xar:mlstring></legend>
             <div class="xar-form-input-wrapper-after">
@@ -287,32 +286,6 @@
                 <input type="text" name="moduleexpiretime" id="moduleexpiretime" value="#$settings.ModuleTimeExpiration#" size="9" maxlength="9" />
                 <xar:mlstring>(in hh:mm:ss)</xar:mlstring>
             </div>
-            <xar:foreach in="$settings.ModuleCacheFunctions" key="$func" value="$docache">
-            <div class="xar-form-input-wrapper-after">
-                <xar:if condition="!empty($docache)">
-                    <input type="checkbox" name="modulefunctions[#$func#]" id="modulefunctions_#$func#" value="1" checked="checked" />
-                <xar:else />
-                    <input type="checkbox" name="modulefunctions[#$func#]" id="modulefunctions_#$func#" value="1" />
-                </xar:if>
-                <label for="modulefunctions_#$func#" title="#xarML('If selected, the output of this module function will be cached by default. This is overridden by the specific module caching configuration.')#">
-                    &#160;Cache <strong>#$func#</strong> function by default?
-                </label>
-            </div>
-            </xar:foreach>
--->
-<!--
-            <div class="xar-form-input-wrapper-after">
-                <xar:if condition="xarModVars::get('xarcachemanager','FlushOnNewModule')">
-                    <input type="checkbox" name="moduleflushview" id="moduleflushview" value="1" checked="checked" />
-                <xar:else />
-                    <input type="checkbox" name="moduleflushview" id="moduleflushview" value="1" />
-                </xar:if>
-                <label for="moduleflushview" title="#xarML('If selected, the view cache will be invalidated when items are created, updated or deleted.')#">
-                    &#160;<xar:mlstring>Flush Cached Views on Item Updates?</xar:mlstring>
-                </label>
-            </div>
--->
-<!--
             <div class="xar-form-input-wrapper">
                 <label for="modulecachestorage" class="xar-form-label" title="#xarML('Specify where the cached data should be stored.')#">
                     <xar:mlstring>Module Cache Storage:</xar:mlstring>
@@ -342,8 +315,39 @@
                 </label>
                 <input type="text" name="modulelogfile" id="modulelogfile" value="#$settings.ModuleLogFile#" size="20" />
             </div>
-        </fieldset>
+            <xar:foreach in="$settings.ModuleCacheFunctions" key="$func" value="$docache">
+            <div class="xar-form-input-wrapper-after">
+                <xar:if condition="!empty($docache)">
+                    <input type="checkbox" name="modulefunctions[#$func#]" id="modulefunctions_#$func#" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="modulefunctions[#$func#]" id="modulefunctions_#$func#" value="1" />
+                </xar:if>
+                <label for="modulefunctions_#$func#" title="#xarML('If selected, the output of this module function will be cached by default. This is overridden by the specific module caching configuration.')#">
+                    &#160;Cache <strong>#$func#</strong> function by default?
+                </label>
+            </div>
+            <xar:if condition="!empty($docache)">
+            <div class="xar-form-input-wrapper">
+                <label for="moduleparams_#$func#" class="xar-form-label" title="#xarML('Specify the default parameters that will affect the output of this module function.')#">
+                    Parameters for <strong>#$func#</strong> function:
+                </label>
+                <input type="text" name="moduleparams[#$func#]" id="moduleparams_#$func#" value="#$settings['ModuleFunctionParams'][$func]#" size="50" />
+            </div>
+            </xar:if>
+            </xar:foreach>
+<!--
+            <div class="xar-form-input-wrapper-after">
+                <xar:if condition="xarModVars::get('xarcachemanager','FlushOnNewModule')">
+                    <input type="checkbox" name="moduleflushview" id="moduleflushview" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="moduleflushview" id="moduleflushview" value="1" />
+                </xar:if>
+                <label for="moduleflushview" title="#xarML('If selected, the view cache will be invalidated when items are created, updated or deleted.')#">
+                    &#160;<xar:mlstring>Flush Cached Views on Item Updates?</xar:mlstring>
+                </label>
+            </div>
 -->
+        </fieldset>
         <fieldset>
             <legend><xar:mlstring>Object Output Cache Settings</xar:mlstring></legend>
             <div class="xar-form-input-wrapper-after">
@@ -363,30 +367,6 @@
                 <input type="text" name="objectexpiretime" id="objectexpiretime" value="#$settings.ObjectTimeExpiration#" size="9" maxlength="9" />
                 <xar:mlstring>(in hh:mm:ss)</xar:mlstring>
             </div>
-            <xar:foreach in="$settings.ObjectCacheMethods" key="$method" value="$docache">
-            <div class="xar-form-input-wrapper-after">
-                <xar:if condition="!empty($docache)">
-                    <input type="checkbox" name="objectmethods[#$method#]" id="objectmethods_#$method#" value="1" checked="checked" />
-                <xar:else />
-                    <input type="checkbox" name="objectmethods[#$method#]" id="objectmethods_#$method#" value="1" />
-                </xar:if>
-                <label for="objectmethods_#$method#" title="#xarML('If selected, the output of this object method will be cached by default. This is overridden by the specific object caching configuration.')#">
-                    &#160;Cache <strong>#$method#</strong> method by default?
-                </label>
-            </div>
-            </xar:foreach>
-<!--
-            <div class="xar-form-input-wrapper-after">
-                <xar:if condition="xarModVars::get('xarcachemanager','FlushOnNewObject')">
-                    <input type="checkbox" name="objectflushview" id="objectflushview" value="1" checked="checked" />
-                <xar:else />
-                    <input type="checkbox" name="objectflushview" id="objectflushview" value="1" />
-                </xar:if>
-                <label for="objectflushview" title="#xarML('If selected, the view cache will be invalidated when items are created, updated or deleted.')#">
-                    &#160;<xar:mlstring>Flush Cached Views on Item Updates?</xar:mlstring>
-                </label>
-            </div>
--->
             <div class="xar-form-input-wrapper">
                 <label for="objectcachestorage" class="xar-form-label" title="#xarML('Specify where the cached data should be stored.')#">
                     <xar:mlstring>Object Cache Storage:</xar:mlstring>
@@ -416,6 +396,30 @@
                 </label>
                 <input type="text" name="objectlogfile" id="objectlogfile" value="#$settings.ObjectLogFile#" size="20" />
             </div>
+            <xar:foreach in="$settings.ObjectCacheMethods" key="$method" value="$docache">
+            <div class="xar-form-input-wrapper-after">
+                <xar:if condition="!empty($docache)">
+                    <input type="checkbox" name="objectmethods[#$method#]" id="objectmethods_#$method#" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="objectmethods[#$method#]" id="objectmethods_#$method#" value="1" />
+                </xar:if>
+                <label for="objectmethods_#$method#" title="#xarML('If selected, the output of this object method will be cached by default. This is overridden by the specific object caching configuration.')#">
+                    &#160;Cache <strong>#$method#</strong> method by default?
+                </label>
+            </div>
+            </xar:foreach>
+<!--
+            <div class="xar-form-input-wrapper-after">
+                <xar:if condition="xarModVars::get('xarcachemanager','FlushOnNewObject')">
+                    <input type="checkbox" name="objectflushview" id="objectflushview" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="objectflushview" id="objectflushview" value="1" />
+                </xar:if>
+                <label for="objectflushview" title="#xarML('If selected, the view cache will be invalidated when items are created, updated or deleted.')#">
+                    &#160;<xar:mlstring>Flush Cached Views on Item Updates?</xar:mlstring>
+                </label>
+            </div>
+-->
         </fieldset>
         <div class="xar-form-input-wrapper-after">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />

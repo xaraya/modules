@@ -45,6 +45,7 @@ function xarcachemanager_admin_updateconfig()
     if (!xarVarFetch('modulelogfile',     'str',        $modulelogfile,     '',   XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('modulesizelimit',   'float:0.25:',$modulesizelimit,   2,    XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('modulefunctions',   'isset',      $modulefunctions,   array(), XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('moduleparams',      'isset',      $moduleparams,      array(), XARVAR_NOT_REQUIRED)) { return; }
 
     if (!xarVarFetch('cacheobjects',      'isset',      $cacheobjects,      0,    XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('objectexpiretime',  'str:1:9',    $objectexpiretime,  '02:00:00', XARVAR_NOT_REQUIRED)) { return; }
@@ -195,10 +196,17 @@ function xarcachemanager_admin_updateconfig()
     // update cache defaults for module functions
     $defaultmodulefunctions = unserialize(xarModVars::get('xarcachemanager','DefaultModuleCacheFunctions'));
     foreach ($defaultmodulefunctions as $func => $docache) {
-       if (!isset($modulefunctions[$func])) $modulefunctions[$func] = 0;
+        if (!isset($modulefunctions[$func])) $modulefunctions[$func] = 0;
     }
     $configSettings['Module.CacheFunctions'] = $modulefunctions;
     xarModVars::set('xarcachemanager','DefaultModuleCacheFunctions', serialize($modulefunctions));
+    // update cache defaults for function params
+    $defaultmoduleparams = unserialize(xarModVars::get('xarcachemanager','DefaultModuleFunctionParams'));
+    foreach ($defaultmoduleparams as $func => $params) {
+        if (!isset($moduleparams[$func])) $moduleparams[$func] = $params;
+    }
+    $configSettings['Module.FunctionParams'] = $moduleparams;
+    xarModVars::set('xarcachemanager','DefaultModuleFunctionParams', serialize($moduleparams));
 
     $configSettings['Object.TimeExpiration'] = $objectexpiretime;
     $configSettings['Object.CacheStorage'] = $objectcachestorage;
@@ -207,7 +215,7 @@ function xarcachemanager_admin_updateconfig()
     // update cache defaults for object methods
     $defaultobjectmethods = unserialize(xarModVars::get('xarcachemanager','DefaultObjectCacheMethods'));
     foreach ($defaultobjectmethods as $method => $docache) {
-       if (!isset($objectmethods[$method])) $objectmethods[$method] = 0;
+        if (!isset($objectmethods[$method])) $objectmethods[$method] = 0;
     }
     $configSettings['Object.CacheMethods'] = $objectmethods;
     xarModVars::set('xarcachemanager','DefaultObjectCacheMethods', serialize($objectmethods));

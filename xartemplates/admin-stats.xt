@@ -6,110 +6,7 @@
 <div class="xar-mod-body">
   <xar:template type="module" file="admin-menu" module="xarcachemanager" />
   <h2><xar:mlstring>Cache Statistics</xar:mlstring></h2>
-    <div>
-        <dl class="xar-tabs">
-            <dt class="help">
-                <xar:mlstring>
-                    Select
-                </xar:mlstring>
-                : 
-            </dt>
-            <xar:if condition="empty($tab) or $tab eq 'overview'">
-                <dd class="active">
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'overview'))#">
-                        <xar:mlstring>Overview</xar:mlstring>
-                    </a>
-                </dd>    
-            <xar:else />
-                <dd>
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'overview'))#">    
-                        <xar:mlstring>Overview</xar:mlstring>
-                    </a>
-                </dd>    
-            </xar:if>
-            <xar:if condition="$tab eq 'page'">
-                <dd class="active">
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'page'))#">
-                        <xar:mlstring>Page</xar:mlstring>
-                    </a>
-                </dd>    
-            <xar:else />
-                <dd>
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'page'))#">    
-                        <xar:mlstring>Page</xar:mlstring>
-                    </a>
-                </dd>    
-            </xar:if>
-            <xar:if condition="$tab eq 'block'">
-                <dd class="active">
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'block'))#">
-                        <xar:mlstring>Block</xar:mlstring>
-                    </a>
-                </dd>    
-            <xar:else />
-                <dd>
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'block'))#">    
-                        <xar:mlstring>Block</xar:mlstring>
-                    </a>
-                </dd>    
-            </xar:if>
-            <xar:if condition="$tab eq 'module'">
-                <dd class="active">
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'module'))#">
-                        <xar:mlstring>Module</xar:mlstring>
-                    </a>
-                </dd>    
-            <xar:else />
-                <dd>
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'module'))#">    
-                        <xar:mlstring>Module</xar:mlstring>
-                    </a>
-                </dd>    
-            </xar:if>
-            <xar:if condition="$tab eq 'object'">
-                <dd class="active">
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'object'))#">
-                        <xar:mlstring>Object</xar:mlstring>
-                    </a>
-                </dd>    
-            <xar:else />
-                <dd>
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'object'))#">    
-                        <xar:mlstring>Object</xar:mlstring>
-                    </a>
-                </dd>    
-            </xar:if>
-<!-- Not supported with Creole
-            <xar:if condition="$tab eq 'query'">
-                <dd class="active">
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'query'))#">
-                        <xar:mlstring>Query</xar:mlstring>
-                    </a>
-                </dd>    
-            <xar:else />
-                <dd>
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'query'))#">    
-                        <xar:mlstring>Query</xar:mlstring>
-                    </a>
-                </dd>    
-            </xar:if>
--->
-            <xar:if condition="$tab eq 'autocache'">
-                <dd class="active">
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'autocache'))#">
-                        <xar:mlstring>Auto-Cache</xar:mlstring>
-                    </a>
-                </dd>    
-            <xar:else />
-                <dd>
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'autocache'))#">    
-                        <xar:mlstring>Auto-Cache</xar:mlstring>
-                    </a>
-                </dd>    
-            </xar:if>
-        </dl>
-    </div>
-    
+    <xar:template type="module" file="stats-menu" module="xarcachemanager" />
     
     <div style="border: 1px solid #ccc; text-align: left; width: 100%; border-top: none; padding-left: 5px;">
     <!-- Begin Overview Statistics -->
@@ -639,7 +536,13 @@
         </tr>
         </xar:if>
         <tr>
-          <td><a href="#xarModURL('xarcachemanager','admin','view',array('tab' => $tab, 'key' => $item['key'], 'code' => $item['code']))#">#$item['size']#</a></td>
+          <td>
+            <xar:if condition="$item.size gt 0">
+              <a href="#xarModURL('xarcachemanager','admin','view',array('tab' => $tab, 'key' => $item['key'], 'code' => $item['code']))#">#$item['size']#</a>
+            <xar:else/>
+              #$item['size']#
+            </xar:if>
+          </td>
           <td colspan="4">#$item['key']#</td>
           <td>#$item['code']#</td>
           <td><xar:if condition="!empty($item['time'])">#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$item['time'])#</xar:if></td>

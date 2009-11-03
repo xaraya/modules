@@ -86,7 +86,7 @@ function xarcachemanager_admin_objects($args)
             sys::import('xaraya.caching.output.object');
             xarObjectCache::init($config);
         }
-        xarobjectCache::flushCached($key);
+        xarObjectCache::flushCached($key);
         if (xarModVars::get('xarcachemanager','AutoRegenSessionless')) {
             xarMod::apiFunc( 'xarcachemanager', 'admin', 'regenstatic');
         }

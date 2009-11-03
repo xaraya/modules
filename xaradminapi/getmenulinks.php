@@ -41,7 +41,6 @@ function xarcachemanager_adminapi_getmenulinks()
                                  'title' => xarML('Configure the caching options for each block'),
                                  'label' => xarML('Block Caching'));
         }
-/*
         if (file_exists($varCacheDir . '/output/cache.modulelevel')) {
             $menulinks[] = Array('url'   => xarModURL('xarcachemanager',
                                                       'admin',
@@ -49,7 +48,6 @@ function xarcachemanager_adminapi_getmenulinks()
                                  'title' => xarML('Configure the caching options for modules'),
                                  'label' => xarML('Module Caching'));
         }
-*/
         if (file_exists($varCacheDir . '/output/cache.objectlevel')) {
             $menulinks[] = Array('url'   => xarModURL('xarcachemanager',
                                                       'admin',
