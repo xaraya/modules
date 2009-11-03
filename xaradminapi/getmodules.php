@@ -21,7 +21,7 @@ function xarcachemanager_adminapi_getmodules($args)
 
     // Get all module cache settings
     $modulesettings = array();
-//    $serialsettings = xarModVars::get('modules','modulecache_settings');
+    $serialsettings = xarModVars::get('modules','modulecache_settings');
     if (!empty($serialsettings)) {
         $modulesettings = unserialize($serialsettings);
     }
