@@ -29,67 +29,49 @@ function xarcachemanager_adminapi_getobjects($args)
     // Get all objects
     $objects = xarMod::apiFunc('dynamicdata', 'user', 'getobjects');
 
-    foreach ($objects as $key => $object) {
-// TODO: filter on visibility, dummy datastores etc.
-        if ($object['objectid'] < 4) {
-            $object['nocache'] = 1;
-            $objects[$key]['nocache'] = 1;
+    // Get default object methods
+    $defaultobjectmethods = unserialize(xarModVars::get('xarcachemanager','DefaultObjectCacheMethods'));
+
+// CHECKME: do we want to support settings for non-objects (like tables) ?
+
+    $objectconfig = array();
+    foreach (array_keys($objects) as $id) {
+// TODO: filter on visibility, dummy datastores etc. ?
+        if ($objects[$id]['objectid'] < 4 ||
+            $objects[$id]['moduleid'] == xarMod::getRegId('roles') ||
+            $objects[$id]['moduleid'] == xarMod::getRegId('privileges')) {
+            continue;
         }
-        if (isset($objectsettings[$key])) {
-            $object = $objectsettings[$key];
-            $objects[$key]['nocache'] = $objectsettings[$key]['nocache'];
-            $objects[$key]['displaycache'] = $objectsettings[$key]['displaycache'];
-            $objects[$key]['usershared'] = $objectsettings[$key]['usershared'];
-            if ($objectsettings[$key]['cacheexpire'] > 0) {
-                $objects[$key]['cacheexpire'] = xarMod::apiFunc('xarcachemanager', 'admin', 'convertseconds',
-                                                                array('starttime' => $objectsettings[$key]['cacheexpire'],
-                                                                      'direction' => 'from'));
-            } else {
-                $objects[$key]['cacheexpire'] = $objectsettings[$key]['cacheexpire'];
-            }
-        } else {
-/*
-            // Try loading some defaults from the object init array (cfr. articles/random)
-            if (!empty($object['module']) && !empty($object['type'])) {
-                $initresult = xarModAPIfunc('objects', 'user', 'read_type_init',
-                                            array('module' => $object['module'],
-                                                  'type' => $object['type']));
-                if (!empty($initresult) && is_array($initresult)) {
-                    if (isset($initresult['nocache'])) {
-                        $object['nocache'] = $initresult['nocache'];
-                        $objects[$key]['nocache'] = $initresult['nocache'];
-                    }
-                    if (isset($initresult['displaycache'])) {
-                        $object['displaycache'] = $initresult['displaycache'];
-                        $objects[$key]['displaycache'] = $initresult['displaycache'];
-                    }
-                    if (isset($initresult['usershared'])) {
-                        $object['usershared'] = $initresult['usershared'];
-                        $objects[$key]['usershared'] = $initresult['usershared'];
-                    }
-                    if (isset($initresult['cacheexpire'])) {
-                        $object['cacheexpire'] = $initresult['cacheexpire'];
-                        $objects[$key]['cacheexpire'] = $initresult['cacheexpire'];
-                    }
+        // use the object name as key for easy lookup in xarObjectCache
+        $name = $objects[$id]['name'];
+        $objectconfig[$name] = $objects[$id];
+        $objectconfig[$name]['cachesettings'] = array();
+        if (isset($objectsettings[$name])) {
+            foreach ($objectsettings[$name] as $method => $settings) {
+                if ($settings['cacheexpire'] > 0) {
+                    $settings['cacheexpire'] = xarMod::apiFunc('xarcachemanager', 'admin', 'convertseconds',
+                                                               array('starttime' => $settings['cacheexpire'],
+                                                                     'direction' => 'from'));
                 }
+                $objectconfig[$name]['cachesettings'][$method] = $settings;
             }
-*/
         }
-        if (!isset($object['nocache'])) {
-            $objects[$key]['nocache'] = 0;
-        }
-// TODO: specify supported methods ?
-        if (!isset($object['displaycache'])) {
-            $objects[$key]['displaycache'] = 1;
-        }
-        if (!isset($object['usershared'])) {
-            $objects[$key]['usershared'] = 1;
-        }
-        if (!isset($object['cacheexpire'])) {
-            $objects[$key]['cacheexpire'] = '';
+        // TODO: Try loading some defaults from the object config ?
+        foreach ($defaultobjectmethods as $method => $docache) {
+            if (isset($objectconfig[$name]['cachesettings'][$method])) continue;
+            $settings = array();
+            // flip from docache in config to nocache in settings
+            if (!empty($docache)) {
+                $settings['nocache'] = 0;
+            } else {
+                $settings['nocache'] = 1;
+            }
+            $settings['usershared'] = 1;
+            $settings['cacheexpire'] = '';
+            $objectconfig[$name]['cachesettings'][$method] = $settings;
         }
     }
-    return $objects;
+    return $objectconfig;
 }
 
 ?>

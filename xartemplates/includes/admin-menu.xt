@@ -49,7 +49,6 @@
             </dd>
         </xar:if>
 -->
-<!-- TODO
         <xar:if condition="$objectvarCacheDir">
             <xar:set name="tabclass">$activetab=='objects'?'active':''</xar:set>
             <dd class="#$tabclass#">
@@ -58,7 +57,6 @@
                 </a>
             </dd>
         </xar:if>
--->
 <!-- Not supported with Creole
        <xar:set name="tabclass">$activetab=='queries'?'active':''</xar:set>
         <dd class="#$tabclass#">

@@ -32,7 +32,7 @@ function xarcachemanager_admin_blocks($args)
         // Confirm authorisation code
         if (!xarSecConfirmAuthKey()) return;
 
-        xarVarFetch('nocache','isset',$nocache,array());
+        xarVarFetch('docache','isset',$docache,array());
         xarVarFetch('pageshared','isset',$pageshared,array());
         xarVarFetch('usershared','isset',$usershared,array());
         xarVarFetch('cacheexpire','isset',$cacheexpire,array());
@@ -42,10 +42,11 @@ function xarcachemanager_admin_blocks($args)
         foreach ($cacheexpire as $bid => $expire) {
             $newblocks[$bid] = array();
             $newblocks[$bid]['bid'] = $bid;
-            if (!empty($nocache[$bid])) {
-                $newblocks[$bid]['nocache'] = 1;
-            } else {
+            // flip from docache in template to nocache in settings
+            if (!empty($docache[$bid])) {
                 $newblocks[$bid]['nocache'] = 0;
+            } else {
+                $newblocks[$bid]['nocache'] = 1;
             }
             if (!empty($pageshared[$bid])) {
                 $newblocks[$bid]['pageshared'] = 1;

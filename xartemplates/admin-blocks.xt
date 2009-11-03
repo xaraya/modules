@@ -18,26 +18,27 @@
         </legend>
         <table border="1" cellpadding="4" cellspacing="0">
         <tr>
+          <th class="xar-align-center"><label title="Do you want to enable caching for this block ?">Enable<br/>Caching</label></th>
           <th class="xar-align-center"><xar:mlstring>Name</xar:mlstring></th>
           <th class="xar-align-center"><xar:mlstring>Module</xar:mlstring></th>
           <th class="xar-align-center"><xar:mlstring>Type</xar:mlstring></th>
-          <th class="xar-align-center"><label title="Do you want to disable caching for this block ?">Disable Caching</label></th>
           <th class="xar-align-center"><label title="Is the output of this block identical for all pages ?">Page Sharing</label></th>
           <th class="xar-align-center"><label title="Is the output of this block identical for all users, or for all members of the same group ?">User Sharing</label></th>
           <th class="xar-align-center"><label title="Do you want to override the default expiration time ?">Expiration Time<br />(hh:mm:ss)</label></th>
         </tr>
         <xar:foreach in="$blocks" value="$block">
         <tr>
+          <!-- flip from nocache in settings to docache in template -->
+          <td  class="xar-align-center"><xar:if condition="empty($block['nocache'])">
+                <input type="checkbox" name="docache[#$block['bid']#]" id="docache_#$block['bid']#" value="1" checked="checked"/>
+             <xar:else/>
+                <input type="checkbox" name="docache[#$block['bid']#]" id="docache_#$block['bid']#" value="1"/>
+              </xar:if></td>
           <td>
               <a href="&xar-modurl-blocks-admin-modify_instance;&amp;bid=#$block['bid']#">#$block['name']#</a>
           </td>
           <td>#$block['module']#</td>
           <td>#$block['type']#</td>
-          <td  class="xar-align-center"><xar:if condition="!empty($block['nocache'])">
-                <input type="checkbox" name="nocache[#$block['bid']#]" id="nocache_#$block['bid']#" value="1" checked="checked"/>
-             <xar:else/>
-                <input type="checkbox" name="nocache[#$block['bid']#]" id="nocache_#$block['bid']#" value="1"/>
-              </xar:if></td>
           <td  class="xar-align-center"><xar:if condition="!empty($block['pageshared'])">
                 <input type="checkbox" name="pageshared[#$block['bid']#]" id="pageshared_#$block['bid']#" value="1" checked="checked"/>
               <xar:else/>
@@ -63,12 +64,26 @@
           <td  class="xar-align-center"><input type="text" name="cacheexpire[#$block['bid']#]" id="cacheexpire_#$block['bid']#" value="#$block['cacheexpire']#" size="9" maxlength="9" /></td>
         </tr>
         </xar:foreach>
+        <tr>
+          <td>
+          </td>
+          <td>
+            <input type="hidden" name="authid" value="#$authid#" />
+            <input type="submit" name="submit" value="#xarML('Submit')#" />
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+        </tr>
         </table>
         </fieldset>
-        <div class="xar-form-input-wrapper-after">
-          <input type="hidden" name="authid" value="#$authid#" />
-          <input type="submit" name="submit" value="#xarML('Submit')#" />
-        </div>
         </form>
     </xar:if>
 

@@ -49,7 +49,21 @@ function xarcachemanager_adminapi_save_cachingconfig($args)
         } elseif (is_array($configValue)) {
             xarModVars::set('xarcachemanager', $configKey, 'array-' . serialize($configValue));
             $configValue = str_replace("'","\\'",$configValue);
-            $configValue = "'" . join("','",$configValue) . "'";
+            if (!empty($configValue)) {
+                $keyslist = array_keys($configValue);
+                // support basic associative array too
+                if (!is_numeric($keyslist[0])) {
+                    $keyValue = array();
+                    foreach ($keyslist as $key) {
+                        $keyValue[] = $key . "' => '" . $configValue[$key];
+                    }
+                    $configValue = "'" . implode("','",$keyValue) . "'";
+                } else {
+                    $configValue = "'" . implode("','",$configValue) . "'";
+                }
+            } else {
+                $configValue = "'" . implode("','",$configValue) . "'";
+            }
             $cachingConfig = preg_replace('/\[\'' . $configKey . '\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['$configKey'] = array($configValue);", $cachingConfig);
         } else {
             xarModVars::set('xarcachemanager', $configKey, $configValue);

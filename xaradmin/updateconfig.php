@@ -20,24 +20,38 @@ function xarcachemanager_admin_updateconfig()
     // Get parameters
     if (!xarVarFetch('cacheenabled',     'isset',       $cacheenabled,      0,    XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('cachetheme',       'str::24',     $cachetheme,        '',   XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('cachesizelimit',   'float:0.25:', $cachesizelimit,    0.25, XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cachesizelimit',   'float:0.25:', $cachesizelimit,    2,    XARVAR_NOT_REQUIRED)) { return; }
 
     if (!xarVarFetch('cachepages',       'isset',       $cachepages,        0,    XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('pageexpiretime',   'str:1:9',     $pageexpiretime,    '0',  XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('cachedisplayview', 'int:0:1',     $cachedisplayview,  0,    XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('cachetimestamp',   'int:0:1',     $cachetimestamp,    0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('pageexpiretime',   'str:1:9',     $pageexpiretime,    '00:30:00', XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('pagedisplayview',  'int:0:1',     $pagedisplayview,   0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('pagetimestamp',    'int:0:1',     $pagetimestamp,     0,    XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('expireheader',     'int:0:1',     $expireheader,      0,    XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('pagehookedonly',   'int:0:1',     $pagehookedonly,    0,    XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('autoregenerate',   'isset',       $autoregenerate,    0,    XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('pagecachestorage', 'str:1',       $pagecachestorage,  'filesystem', XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('pagelogfile',      'str',         $pagelogfile,       '',   XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('pagesizelimit',    'float:0.25:', $pagesizelimit,     0.25, XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('pagesizelimit',    'float:0.25:', $pagesizelimit,     2,    XARVAR_NOT_REQUIRED)) { return; }
 
     if (!xarVarFetch('cacheblocks',      'isset',       $cacheblocks,       0,    XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('blockexpiretime',  'str:1:9',     $blockexpiretime,   '0',  XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('blockcachestorage','str:1',       $blockcachestorage, 'filesystem', XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('blocklogfile',     'str',         $blocklogfile,      '',   XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('blocksizelimit',   'float:0.25:', $blocksizelimit,    0.25, XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('blocksizelimit',   'float:0.25:', $blocksizelimit,    2,    XARVAR_NOT_REQUIRED)) { return; }
+
+    if (!xarVarFetch('cachemodules',      'isset',      $cachemodules,      0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('moduleexpiretime',  'str:1:9',    $moduleexpiretime,  '02:00:00', XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('modulecachestorage','str:1',      $modulecachestorage,'filesystem', XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('modulelogfile',     'str',        $modulelogfile,     '',   XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('modulesizelimit',   'float:0.25:',$modulesizelimit,   2,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('modulefunctions',   'isset',      $modulefunctions,   array(), XARVAR_NOT_REQUIRED)) { return; }
+
+    if (!xarVarFetch('cacheobjects',      'isset',      $cacheobjects,      0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('objectexpiretime',  'str:1:9',    $objectexpiretime,  '02:00:00', XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('objectcachestorage','str:1',      $objectcachestorage,'filesystem', XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('objectlogfile',     'str',        $objectlogfile,     '',   XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('objectsizelimit',   'float:0.25:',$objectsizelimit,   2,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('objectmethods',     'isset',      $objectmethods,     array(), XARVAR_NOT_REQUIRED)) { return; }
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
@@ -104,10 +118,36 @@ function xarcachemanager_admin_updateconfig()
         }
     }
 
+    // turn module level output caching on or off
+    if ($cachemodules) {
+        if(!file_exists($outputCacheDir . '/cache.modulelevel')) {
+            touch($outputCacheDir . '/cache.modulelevel');
+        }
+        // CHECKME: flush something here too ?
+    } else {
+        if(file_exists($outputCacheDir . '/cache.modulelevel')) {
+            unlink($outputCacheDir . '/cache.modulelevel');
+        }
+    }
+
+    // turn object level output caching on or off
+    if ($cacheobjects) {
+        if(!file_exists($outputCacheDir . '/cache.objectlevel')) {
+            touch($outputCacheDir . '/cache.objectlevel');
+        }
+        // CHECKME: flush something here too ?
+    } else {
+        if(file_exists($outputCacheDir . '/cache.objectlevel')) {
+            unlink($outputCacheDir . '/cache.objectlevel');
+        }
+    }
+
     // convert size limit from MB to bytes
     $cachesizelimit = (intval($cachesizelimit * 1048576));
     $pagesizelimit = (intval($pagesizelimit * 1048576));
     $blocksizelimit = (intval($blocksizelimit * 1048576));
+    $modulesizelimit = (intval($modulesizelimit * 1048576));
+    $objectsizelimit = (intval($objectsizelimit * 1048576));
 
     //turn hh:mm:ss back into seconds
     $pageexpiretime = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
@@ -115,6 +155,12 @@ function xarcachemanager_admin_updateconfig()
                                         'direction' => 'to'));
     $blockexpiretime = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                  array('starttime' => $blockexpiretime,
+                                       'direction' => 'to'));
+    $moduleexpiretime = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
+                                 array('starttime' => $moduleexpiretime,
+                                       'direction' => 'to'));
+    $objectexpiretime = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
+                                 array('starttime' => $objectexpiretime,
                                        'direction' => 'to'));
 
     // updated the config.caching settings
@@ -129,8 +175,8 @@ function xarcachemanager_admin_updateconfig()
     }
     $configSettings['Output.DefaultLocale'] = xarMLSGetSiteLocale();  
     $configSettings['Page.TimeExpiration'] = $pageexpiretime;
-    $configSettings['Page.DisplayView'] = $cachedisplayview;
-    $configSettings['Page.ShowTime'] = $cachetimestamp;
+    $configSettings['Page.DisplayView'] = $pagedisplayview;
+    $configSettings['Page.ShowTime'] = $pagetimestamp;
     $configSettings['Page.ExpireHeader'] = $expireheader;
     $configSettings['Page.HookedOnly'] = $pagehookedonly;
     $configSettings['Page.CacheStorage'] = $pagecachestorage;
@@ -142,29 +188,53 @@ function xarcachemanager_admin_updateconfig()
     $configSettings['Block.LogFile'] = $blocklogfile;
     $configSettings['Block.SizeLimit'] = $blocksizelimit;
 
+    $configSettings['Module.TimeExpiration'] = $moduleexpiretime;
+    $configSettings['Module.CacheStorage'] = $modulecachestorage;
+    $configSettings['Module.LogFile'] = $modulelogfile;
+    $configSettings['Module.SizeLimit'] = $modulesizelimit;
+    // update cache defaults for module functions
+    $defaultmodulefunctions = unserialize(xarModVars::get('xarcachemanager','DefaultModuleCacheFunctions'));
+    foreach ($defaultmodulefunctions as $func => $docache) {
+       if (!isset($modulefunctions[$func])) $modulefunctions[$func] = 0;
+    }
+    $configSettings['Module.CacheFunctions'] = $modulefunctions;
+    xarModVars::set('xarcachemanager','DefaultModuleCacheFunctions', serialize($modulefunctions));
+
+    $configSettings['Object.TimeExpiration'] = $objectexpiretime;
+    $configSettings['Object.CacheStorage'] = $objectcachestorage;
+    $configSettings['Object.LogFile'] = $objectlogfile;
+    $configSettings['Object.SizeLimit'] = $objectsizelimit;
+    // update cache defaults for object methods
+    $defaultobjectmethods = unserialize(xarModVars::get('xarcachemanager','DefaultObjectCacheMethods'));
+    foreach ($defaultobjectmethods as $method => $docache) {
+       if (!isset($objectmethods[$method])) $objectmethods[$method] = 0;
+    }
+    $configSettings['Object.CacheMethods'] = $objectmethods;
+    xarModVars::set('xarcachemanager','DefaultObjectCacheMethods', serialize($objectmethods));
+
     xarMod::apiFunc('xarcachemanager', 'admin', 'save_cachingconfig',
                   array('configSettings' => $configSettings,
                         'cachingConfigFile' => $cachingConfigFile));
 
     // see if we need to flush the cache when a new comment is added for some item
-    xarVarFetch('cacheflushcomment','isset',$cacheflushcomment,0,XARVAR_NOT_REQUIRED);
-    if ($cacheflushcomment && $cachedisplayview) {
+    xarVarFetch('pageflushcomment','isset',$pageflushcomment,0,XARVAR_NOT_REQUIRED);
+    if ($pageflushcomment && $pagedisplayview) {
         xarModVars::set('xarcachemanager','FlushOnNewComment', 1);
     } else {
         xarModVars::set('xarcachemanager','FlushOnNewComment', 0);
     }
 
     // see if we need to flush the cache when a new rating is added for some item
-    xarVarFetch('cacheflushrating','isset',$cacheflushrating,0,XARVAR_NOT_REQUIRED);
-    if ($cacheflushrating  && $cachedisplayview) {
+    xarVarFetch('pageflushrating','isset',$pageflushrating,0,XARVAR_NOT_REQUIRED);
+    if ($pageflushrating  && $pagedisplayview) {
         xarModVars::set('xarcachemanager','FlushOnNewRating', 1);
     } else {
         xarModVars::set('xarcachemanager','FlushOnNewRating', 0);
     }
 
     // see if we need to flush the cache when a new vote is cast on a poll hooked to some item
-    xarVarFetch('cacheflushpollvote','isset',$cacheflushpollvote,0,XARVAR_NOT_REQUIRED);
-    if ($cacheflushpollvote && $cachedisplayview) {
+    xarVarFetch('pageflushpollvote','isset',$pageflushpollvote,0,XARVAR_NOT_REQUIRED);
+    if ($pageflushpollvote && $pagedisplayview) {
         xarModVars::set('xarcachemanager','FlushOnNewPollvote', 1);
     } else {
         xarModVars::set('xarcachemanager','FlushOnNewPollvote', 0);

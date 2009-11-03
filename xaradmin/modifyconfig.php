@@ -50,6 +50,20 @@ function xarcachemanager_admin_modifyconfig()
         $data['blockCachingEnabled'] = 0;
     }
     
+    // is module level output caching enabled?
+    if (file_exists($varCacheDir . '/output/cache.modulelevel')) {
+        $data['moduleCachingEnabled'] = 1;
+    } else {
+        $data['moduleCachingEnabled'] = 0;
+    }
+    
+    // is object level output caching enabled?
+    if (file_exists($varCacheDir . '/output/cache.objectlevel')) {
+        $data['objectCachingEnabled'] = 1;
+    } else {
+        $data['objectCachingEnabled'] = 0;
+    }
+    
     $data['CookieName'] =  (xarConfigVars::get(null, 'Site.Session.CookieName') != '')? xarConfigVars::get(null, 'Site.Session.CookieName'): 'XARAYASID';
     $data['cookieupdatelink'] = xarModURL('base','admin','modifyconfig',array('tab'=>'security'));
     $data['defaultlocale'] = xarMLSGetSiteLocale();
@@ -61,7 +75,7 @@ function xarcachemanager_admin_modifyconfig()
 
     // set some default values
     if(!isset($data['settings']['OutputSizeLimit'])) {
-        $data['settings']['OutputSizeLimit'] = 262144;
+        $data['settings']['OutputSizeLimit'] = 2097152;
     }
     if(!isset($data['settings']['OutputCookieName'])) {
         $data['settings']['OutputCookieName'] = $data['CookieName'];
@@ -90,6 +104,7 @@ function xarcachemanager_admin_modifyconfig()
     if(!isset($data['settings']['PageSizeLimit'])) {
         $data['settings']['PageSizeLimit'] = $data['settings']['OutputSizeLimit'];
     }
+
     if(!isset($data['settings']['BlockTimeExpiration'])) {
         $data['settings']['BlockTimeExpiration'] = 7200;
     }
@@ -103,10 +118,48 @@ function xarcachemanager_admin_modifyconfig()
         $data['settings']['BlockSizeLimit'] = $data['settings']['OutputSizeLimit'];
     }
 
+    if(!isset($data['settings']['ModuleTimeExpiration'])) {
+        $data['settings']['ModuleTimeExpiration'] = 7200;
+    }
+    if(!isset($data['settings']['ModuleCacheStorage'])) {
+        $data['settings']['ModuleCacheStorage'] = 'filesystem';
+    }
+    if(!isset($data['settings']['ModuleLogFile'])) {
+        $data['settings']['ModuleLogFile'] = '';
+    }
+    if(!isset($data['settings']['ModuleSizeLimit'])) {
+        $data['settings']['ModuleSizeLimit'] = $data['settings']['OutputSizeLimit'];
+    }
+    // set new cache defaults for module functions
+    if(empty($data['settings']['ModuleCacheFunctions'])) {
+        $data['settings']['ModuleCacheFunctions'] = array('main' => 1, 'view' => 1, 'display' => 0);
+    }
+    xarModVars::set('xarcachemanager','DefaultModuleCacheFunctions', serialize($data['settings']['ModuleCacheFunctions']));
+
+    if(!isset($data['settings']['ObjectTimeExpiration'])) {
+        $data['settings']['ObjectTimeExpiration'] = 7200;
+    }
+    if(!isset($data['settings']['ObjectCacheStorage'])) {
+        $data['settings']['ObjectCacheStorage'] = 'filesystem';
+    }
+    if(!isset($data['settings']['ObjectLogFile'])) {
+        $data['settings']['ObjectLogFile'] = '';
+    }
+    if(!isset($data['settings']['ObjectSizeLimit'])) {
+        $data['settings']['ObjectSizeLimit'] = $data['settings']['OutputSizeLimit'];
+    }
+    // set new cache defaults for object methods
+    if(empty($data['settings']['ObjectCacheMethods'])) {
+        $data['settings']['ObjectCacheMethods'] = array('view' => 1, 'display' => 1);
+    }
+    xarModVars::set('xarcachemanager','DefaultObjectCacheMethods', serialize($data['settings']['ObjectCacheMethods']));
+
     // convert the size limit from bytes to megabytes
     $data['settings']['OutputSizeLimit'] /= 1048576;
     $data['settings']['PageSizeLimit'] /= 1048576;
     $data['settings']['BlockSizeLimit'] /= 1048576;
+    $data['settings']['ModuleSizeLimit'] /= 1048576;
+    $data['settings']['ObjectSizeLimit'] /= 1048576;
 
     // reformat seconds as hh:mm:ss
     $data['settings']['PageTimeExpiration'] = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
@@ -114,6 +167,12 @@ function xarcachemanager_admin_modifyconfig()
                                                                    'direction' => 'from'));
     $data['settings']['BlockTimeExpiration'] = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                                              array('starttime' => $data['settings']['BlockTimeExpiration'],
+                                                                   'direction' => 'from'));
+    $data['settings']['ModuleTimeExpiration'] = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
+                                                             array('starttime' => $data['settings']['ModuleTimeExpiration'],
+                                                                   'direction' => 'from'));
+    $data['settings']['ObjectTimeExpiration'] = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
+                                                             array('starttime' => $data['settings']['ObjectTimeExpiration'],
                                                                    'direction' => 'from'));
 
     // get the themes list

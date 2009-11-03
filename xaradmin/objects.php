@@ -24,7 +24,7 @@ function xarcachemanager_admin_objects($args)
     $data = array();
     if (!file_exists($cacheOutputDir . '/cache.objectlevel')) {
         $data['objects'] = array();
-//        return $data;
+        return $data;
     }
 
     xarVarFetch('submit','str',$submit,'');
@@ -32,43 +32,40 @@ function xarcachemanager_admin_objects($args)
         // Confirm authorisation code
         if (!xarSecConfirmAuthKey()) return;
 
-        xarVarFetch('nocache','isset',$nocache,array());
-// TODO: specify supported methods ?
-        xarVarFetch('displaycache','isset',$displaycache,array());
+        xarVarFetch('docache','isset',$docache,array());
         xarVarFetch('usershared','isset',$usershared,array());
         xarVarFetch('cacheexpire','isset',$cacheexpire,array());
 
         $newobjects = array();
         // loop over something that should return values for every object
-        foreach ($cacheexpire as $id => $expire) {
-            $newobjects[$id] = array();
-            $newobjects[$id]['objectid'] = $id;
-            if (!empty($nocache[$id])) {
-                $newobjects[$id]['nocache'] = 1;
-            } else {
-                $newobjects[$id]['nocache'] = 0;
+        foreach ($cacheexpire as $name => $expirelist) {
+            $newobjects[$name] = array();
+            foreach ($expirelist as $method => $expire) {
+                $newobjects[$name][$method] = array();
+                // flip from docache in template to nocache in settings
+                if (!empty($docache[$name]) && !empty($docache[$name][$method])) {
+                    $newobjects[$name][$method]['nocache'] = 0;
+                } else {
+                    $newobjects[$name][$method]['nocache'] = 1;
+                }
+                if (!empty($usershared[$name]) && !empty($usershared[$name][$method])) {
+                    $newobjects[$name][$method]['usershared'] = intval($usershared[$name][$method]);
+                } else {
+                    $newobjects[$name][$method]['usershared'] = 0;
+                }
+                if (!empty($expire)) {
+                    $expire = xarMod::apiFunc('xarcachemanager', 'admin', 'convertseconds',
+                                              array('starttime' => $expire,
+                                                    'direction' => 'to'));
+                } elseif ($expire === '0') {
+                    $expire = 0;
+                } else {
+                    $expire = NULL;
+                }
+                $newobjects[$name][$method]['cacheexpire'] = $expire;
             }
-            if (!empty($displaycache[$id])) {
-                $newobjects[$id]['displaycache'] = 1;
-            } else {
-                $newobjects[$id]['displaycache'] = 0;
-            }
-            if (!empty($usershared[$id])) {
-                $newobjects[$id]['usershared'] = intval($usershared[$id]);
-            } else {
-                $newobjects[$id]['usershared'] = 0;
-            }
-            if (!empty($expire)) {
-                $expire = xarMod::apiFunc( 'xarcachemanager', 'admin', 'convertseconds',
-                                          array('starttime' => $expire,
-                                                'direction' => 'to'));
-            } elseif ($expire === '0') {
-                $expire = 0;
-            } else {
-                $expire = NULL;
-            }
-            $newobjects[$id]['cacheexpire'] = $expire;
         }
+        // save settings to dynamicdata in case xarcachemanager is removed later
         xarModVars::set('dynamicdata','objectcache_settings', serialize($newobjects));
 
         // make sure we can flush objects, even if caching is currently disabled

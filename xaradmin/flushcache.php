@@ -88,8 +88,18 @@ function xarcachemanager_admin_flushcache($args)
                         xarBlockCache::flushCached($key);
                         break;
                     case 'module':
+                        if (!xarOutputCache::$moduleCacheIsEnabled) {
+                            sys::import('xaraya.caching.output.module');
+                            xarModuleCache::init($config);
+                        }
+                        xarModuleCache::flushCached($key);
                         break;
                     case 'object':
+                        if (!xarOutputCache::$objectCacheIsEnabled) {
+                            sys::import('xaraya.caching.output.object');
+                            xarObjectCache::init($config);
+                        }
+                        xarObjectCache::flushCached($key);
                         break;
                 }
             }
