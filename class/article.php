@@ -35,8 +35,16 @@ class ArticleObject extends DataObject
     // FIXME: this actually only supports an itemid in DD, not any other combination of fields
         if (!empty($args['aid'])) {
             $args['itemid'] = $args['aid'];
+        }
+        if (!empty($args['itemid'])) {
+            $this->itemid = $args['itemid'];
+        }
+        if (!empty($this->itemid)) {
             $itemid = parent::getItem($args);
-//echo var_dump($this);
+
+// FIXME: force calling hooks here, because they're skipped for articles in DD master->callHooks() for now
+xarObjectHooks::callHooks($this, 'transform');
+
             if (!empty($args['withcids'])) {
                 // TODO
 /*
@@ -267,14 +275,18 @@ class ArticleObjectList extends DataObjectList
         return $this->itemcount;
     }
 
-    function archive()
+/**
+ * CHECKME: where's the best place to declare specific methods per object ? In sub-classed userinterface, or in sub-classed dataobject, or in object config, or ... ?
+ */
+
+    function archive($args = array())
     {
-        echo "hello archive";
+        return xarMod::guiFunc('articles','user','archive',$args);
     }
 
-    function viewmap()
+    function viewmap($args = array())
     {
-        echo "hello viewmap";
+        return xarMod::guiFunc('articles','user','viewmap',$args);
     }
 }
 

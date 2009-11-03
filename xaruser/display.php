@@ -48,11 +48,11 @@ function articles_user_display($args)
 
     if ($preview) {
         if (!isset($article)) {
-            return xarML('Invalid article');
+            return xarML('Invalid Article');
         }
         $aid = $article['aid'];
     } elseif (!isset($aid) || !is_numeric($aid) || $aid < 1) {
-        return xarML('Invalid article ID');
+        return xarResponse::NotFound(xarML('Invalid Article ID'));
     }
 
     // Load API
@@ -65,6 +65,8 @@ function articles_user_display($args)
                                 'get',
                                 array('aid' => $aid,
                                       'withcids' => true));
+       if (empty($article))
+           return xarResponse::NotFound(xarML('Invalid Article ID'));
     }
 
     if (!is_array($article)) {

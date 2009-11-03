@@ -5,7 +5,7 @@
   <itemtype>0</itemtype>
   <class>ArticleObject</class>
   <filepath>modules/articles/class/article.php</filepath>
-  <urlparam>aid</urlparam>
+  <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config>a:21:{s:17:"number_of_columns";i:0;s:12:"itemsperpage";i:20;s:11:"defaultview";i:1;s:14:"showcategories";i:1;s:12:"showcatcount";i:0;s:12:"showprevnext";i:0;s:12:"showcomments";i:1;s:13:"showhitcounts";i:1;s:11:"showratings";i:0;s:12:"showarchives";i:1;s:7:"showmap";i:1;s:12:"showpublinks";i:0;s:12:"showpubcount";i:0;s:11:"dotransform";i:0;s:14:"titletransform";i:0;s:11:"prevnextart";i:0;s:8:"usealias";i:0;s:13:"page_template";s:0:"";s:14:"usetitleforurl";i:0;s:13:"defaultstatus";i:0;s:11:"defaultsort";s:4:"date";}</config>
   <isalias>false</isalias>

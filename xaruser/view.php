@@ -72,7 +72,9 @@ function articles_user_view($args)
     $pubtypes = xarMod::apiFunc('articles', 'user', 'getpubtypes');
 
     // Check that the publication type is valid
-    if (!empty($ptid) && !isset($pubtypes[$ptid])) $ptid = null;
+    //if (!empty($ptid) && !isset($pubtypes[$ptid])) $ptid = null;
+    if (!empty($ptid) && !isset($pubtypes[$ptid]))
+        return xarResponse::NotFound(xarML('Invalid Publication Type #(1)', $ptid));
 
     // Check if we want the default 'front page'
     if (!isset($catid) && !isset($cids) && empty($ptid) && !isset($authorid)) {
