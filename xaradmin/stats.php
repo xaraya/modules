@@ -85,7 +85,7 @@ function xarcachemanager_admin_stats($args)
             $upper = ucfirst($tab);
             $enabled = $upper . 'CachingEnabled'; // e.g. PageCachingEnabled
             $storage = $upper . 'CacheStorage'; // e.g. BlockCacheStorage
-            $logfile = $upper . 'LogFile'; // e.g. ModLogFile
+            $logfile = $upper . 'LogFile'; // e.g. ModuleLogFile
 
             if (!empty($reset)) {
                 // Confirm authorisation code

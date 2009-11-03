@@ -17,7 +17,7 @@
             <xar:if condition="empty($tab) or $tab eq 'overview'">
                 <dd class="active">
                     <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'overview'))#">
-                        <xar:mlstring>Stats Summary</xar:mlstring>
+                        <xar:mlstring>Overview</xar:mlstring>
                     </a>
                 </dd>    
             <xar:else />
@@ -53,7 +53,6 @@
                     </a>
                 </dd>    
             </xar:if>
-<!-- TODO
             <xar:if condition="$tab eq 'module'">
                 <dd class="active">
                     <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'module'))#">
@@ -67,7 +66,6 @@
                     </a>
                 </dd>    
             </xar:if>
--->
             <xar:if condition="$tab eq 'object'">
                 <dd class="active">
                     <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'object'))#">
@@ -189,18 +187,10 @@
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>Log Lines</xar:mlstring>
-                    </th>
-                    <td>
-                        #$pagelog['lines']#
-                    </td>
-                </tr>
-                <tr>
-                    <th>
                         <xar:mlstring>Log Ratio</xar:mlstring>
                     </th>
                     <td>
-                        <strong>#$pagelog['ratio']#%</strong>
+                        <strong>#$pagelog['ratio']#%</strong>&#160;of&#160;#$pagelog['lines']#
                     </td>
                 </tr>
             </xar:if>
@@ -279,18 +269,10 @@
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>Log Lines</xar:mlstring>
-                    </th>
-                    <td>
-                        #$blocklog['lines']#
-                    </td>
-                </tr>
-                <tr>
-                    <th>
                         <xar:mlstring>Log Ratio</xar:mlstring>
                     </th>
                     <td>
-                        <strong>#$blocklog['ratio']#%</strong>
+                        <strong>#$blocklog['ratio']#%</strong>&#160;of&#160;#$blocklog['lines']#
                     </td>
                 </tr>
             </xar:if>
@@ -302,7 +284,6 @@
       </td>
     </tr>
     <tr>
-<!-- TODO
       <td valign="top">
 
         <h3><a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'module'))#">Module Cache</a></h3>
@@ -372,18 +353,10 @@
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>Log Lines</xar:mlstring>
-                    </th>
-                    <td>
-                        #$modulelog['lines']#
-                    </td>
-                </tr>
-                <tr>
-                    <th>
                         <xar:mlstring>Log Ratio</xar:mlstring>
                     </th>
                     <td>
-                        <strong>#$modulelog['ratio']#%</strong>
+                        <strong>#$modulelog['ratio']#%</strong>&#160;of&#160;#$modulelog['lines']#
                     </td>
                 </tr>
             </xar:if>
@@ -393,7 +366,6 @@
         </xar:if>
 
       </td>
--->
       <td valign="top">
 
         <h3><a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'object'))#">Object Cache</a></h3>
@@ -463,18 +435,10 @@
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>Log Lines</xar:mlstring>
-                    </th>
-                    <td>
-                        #$objectlog['lines']#
-                    </td>
-                </tr>
-                <tr>
-                    <th>
                         <xar:mlstring>Log Ratio</xar:mlstring>
                     </th>
                     <td>
-                        <strong>#$objectlog['ratio']#%</strong>
+                        <strong>#$objectlog['ratio']#%</strong>&#160;of&#160;#$objectlog['lines']#
                     </td>
                 </tr>
             </xar:if>
@@ -513,18 +477,10 @@
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>Log Lines</xar:mlstring>
-                    </th>
-                    <td>
-                        #$autocachelog['lines']#
-                    </td>
-                </tr>
-                <tr>
-                    <th>
                         <xar:mlstring>Log Ratio</xar:mlstring>
                     </th>
                     <td>
-                        <strong>#$autocachelog['ratio']#%</strong>
+                        <strong>#$autocachelog['ratio']#%</strong>&#160;of&#160;#$autocachelog['lines']#
                     </td>
                 </tr>
             </xar:if>
@@ -549,18 +505,10 @@
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>Stats Lines</xar:mlstring>
-                    </th>
-                    <td>
-                        #$autocachestat['lines']#
-                    </td>
-                </tr>
-                <tr>
-                    <th>
                         <xar:mlstring>Stats Ratio</xar:mlstring>
                     </th>
                     <td>
-                        <strong>#$autocachestat['ratio']#%</strong>
+                        <strong>#$autocachestat['ratio']#%</strong>&#160;of&#160;#$autocachestat['lines']#
                     </td>
                 </tr>
             </xar:if>
@@ -691,7 +639,7 @@
         </tr>
         </xar:if>
         <tr>
-          <td>#$item['size']#</td>
+          <td><a href="#xarModURL('xarcachemanager','admin','view',array('tab' => $tab, 'key' => $item['key'], 'code' => $item['code']))#">#$item['size']#</a></td>
           <td colspan="4">#$item['key']#</td>
           <td>#$item['code']#</td>
           <td><xar:if condition="!empty($item['time'])">#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$item['time'])#</xar:if></td>

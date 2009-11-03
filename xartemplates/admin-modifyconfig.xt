@@ -419,7 +419,7 @@
         </fieldset>
         <div class="xar-form-input-wrapper-after">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="submit" value="#xarML('Update xarCacheManager Configuration')#" />
+            <input type="submit" value="#xarML('Update Configuration')#" />
         </div>
     </form>
 </div>
