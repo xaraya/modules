@@ -404,7 +404,7 @@ class ForumsList extends DataObjectList
       *
       * @todo make this smarter
       */
-    public function getViewOptions(Array $args = array())
+    public function getViewOptions($data = null)
     {
         // import our own class to handle link cache (less code required)
         sys::import('modules.crispbb.class.cache.links');
