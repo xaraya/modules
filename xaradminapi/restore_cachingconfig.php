@@ -21,7 +21,7 @@
 function xarcachemanager_adminapi_restore_cachingconfig()
 {
     $varCacheDir = sys::varpath() . '/cache';
-    $defaultConfigFile = 'modules/xarcachemanager/config.caching.php.dist';
+    $defaultConfigFile = sys::code() . 'modules/xarcachemanager/config.caching.php.dist';
     $cachingConfigFile = $varCacheDir . '/config.caching.php';
 
     $configSettings = xarMod::apiFunc('xarcachemanager',

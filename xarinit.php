@@ -112,7 +112,7 @@ function xarcachemanager_init()
 function xarcachemanager_upgrade($oldversion)
 {
     $varCacheDir = sys::varpath() . '/cache';
-    $defaultConfigFile = 'modules/xarcachemanager/config.caching.php.dist';
+    $defaultConfigFile = sys::code() . 'modules/xarcachemanager/config.caching.php.dist';
     $cachingConfigFile = $varCacheDir . '/config.caching.php';
     
     // check to see if we've got the necessary permissions to upgrade
@@ -366,7 +366,7 @@ function xarcachemanager_fs_setup($args)
     $cacheOutputDir = $varCacheDir . '/output';
     
     // caching config files
-    $defaultConfigFile = 'modules/xarcachemanager/config.caching.php.dist';
+    $defaultConfigFile = sys::code() . 'modules/xarcachemanager/config.caching.php.dist';
     $cachingConfigFile = $varCacheDir .'/config.caching.php';
     
     // confirm that the things are ready to be set up
