@@ -77,6 +77,9 @@ function xarcachemanager_admin_view($args)
     $data['key'] = $key;
     $data['code'] = $code;
     $data['lines'] = array();
+    $data['title']  = '';
+    $data['styles'] = array();
+    $data['script'] = array();
     if (!empty($data[$enabled]) && !empty($data['settings'][$storage])) {
         // get cache storage
         $cachestorage = xarCache_getStorage(array('storage'  => $data['settings'][$storage],
@@ -88,7 +91,15 @@ function xarcachemanager_admin_view($args)
         }
         if ($cachestorage->isCached($key, 0, 0)) {
             $value = $cachestorage->getCached($key);
-            $data['lines'] = explode("\n", $value);
+            if ($tab == 'module') {
+                $content = unserialize($value);
+                $data['lines']  = explode("\n", $content['output']);
+                $data['title']  = $content['title'];
+                $data['styles'] = $content['styles'];
+                $data['script'] = $content['script'];
+            } else {
+                $data['lines'] = explode("\n", $value);
+            }
         }
     }
     return $data;

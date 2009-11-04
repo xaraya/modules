@@ -20,6 +20,27 @@
                 <xar:mlstring>Cache item:&#160;</xar:mlstring>#$key# #$code#
             </td>
         </tr>
+        <xar:if condition="!empty($title)">
+            <tr>
+                <td colspan="2">
+                    <strong>Title:</strong>&#160;<xar:set name="dummy">var_export($title,true)</xar:set>#$dummy#
+                </td>
+            </tr>
+        </xar:if>
+        <xar:foreach in="$styles" value="$style">
+            <tr>
+                <td colspan="2">
+                    <strong>Style:</strong>&#160;<xar:set name="dummy">var_export($style,true)</xar:set>#$dummy#
+                </td>
+            </tr>
+        </xar:foreach>
+        <xar:foreach in="$script" value="$info">
+            <tr>
+                <td colspan="2">
+                    <strong>Script:</strong>&#160;<xar:set name="dummy">var_export($info,true)</xar:set>#$dummy#
+                </td>
+            </tr>
+        </xar:foreach>
         <xar:foreach in="$lines" key="$key" value="$line">
         <tr>
             <td class="xar-align-left" valign="top" style="font-size:small; color:red">
