@@ -28,9 +28,9 @@
                 <xar:if condition="empty($moditems) or count($moditems) eq '0'">
                     <tr>
                         <td colspan="4">
-                            
+
                                 There are currently no hit counts in the database...
-                            
+
                         </td>
                     </tr>
                 <xar:else />
@@ -72,12 +72,12 @@
                 <tr>
                     <td colspan="4">
                         <div class="xar-accent xar-norm-outline xar-padding-thick">
-                            
+
                                 By clicking on <b>Delete</b> you can delete all hit counts associated with a particular
                                 module. Clicking on a module will take you to that module's statistics page containing
                                 the figures for each of that module's items that have hit counts associated with them.
                                 From there you can delete all hit counts associated with a particular item.
-                            
+
                         </div>
                     </td>
                 </tr>
@@ -101,9 +101,9 @@
                 <xar:if condition="empty($moditems) or count($moditems) eq '0'">
                     <tr>
                         <td colspan="3" align="center">
-                            
+
                                 There are currently no hit counts attached to this module...
-                            
+
                         </td>
                     </tr>
                 <xar:else />
@@ -126,10 +126,10 @@
                             </td>
                         </tr>
                     </xar:foreach>
-                <xar:if condition="!empty($pager)">
+               <xar:if condition="$total gt $itemsperpage">
                     <tr>
                         <td colspan="3" align="center">
-                            #$pager#
+                            <xar:pager startnum="$startnum" itemsperpage="$itemsperpage" total="$total" urltemplate="$urltemplate"/>
                         </td>
                     </tr>
                 </xar:if>
@@ -148,10 +148,10 @@
                 <tr>
                     <td colspan="3">
                             <div class="xar-accent xar-norm-outline xar-padding-thick">
-                            
+
                                 By clicking on <b>Delete</b> you can delete all hit counts associated with a particular
                                 module's item.
-                            
+
                         </div>
                     </td>
                 </tr>

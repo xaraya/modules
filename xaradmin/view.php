@@ -104,20 +104,17 @@ function hitcount_admin_view()
         if (empty($numstats)) {
             $numstats = 100;
         }
-        if ($numstats < $data['numitems']) {
-            sys::import('xaraya.pager');
-            $data['pager'] = xarTplGetPager($startnum,
-                                            $data['numitems'],
-                                            xarModURL('hitcount','admin','view',
+        // pager
+        $data['startnum'] = $startnum;
+        $data['total'] = $data['numitems'];
+        $data['urltemplate'] = xarModURL('hitcount','admin','view',
                                                       array('modid' => $modid,
                                                             'itemtype' => $itemtype,
                                                             'sort' => $sort,
                                                             'sortorder' => $sortorder,
-                                                            'startnum' => '%%')),
-                                            $numstats);
-        } else {
-            $data['pager'] = '';
-        }
+                                                            'startnum' => '%%'));
+        $data['itemsperpage'] = $numstats;
+
         $data['modid'] = $modid;
         $getitems = xarMod::apiFunc('hitcount','user','getitems',
                                   array('modid' => $modid,
