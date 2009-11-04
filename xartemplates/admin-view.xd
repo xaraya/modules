@@ -52,7 +52,7 @@
                 </thead>
                 <tfoot>
                     <tr>
-                        <td colspan="2" class="xar-align-center">
+                        <td>
                             <span class="xar-sub">
                                 <xar:set name="grammar">$catinfo['numforums'] == 1 ? 'forum' : 'forums'</xar:set>
                                 <xar:ml>
@@ -62,6 +62,15 @@
                                     <xar:mlvar>#$catinfo['name']#</xar:mlvar>
                                 </xar:ml>
                             </span>
+                        </td>
+                        <td class="xar-align-right">
+                            <xar:sec mask="AddCrispBB" catch="false">
+                                <a href="#xarModURL('crispbb', 'admin', 'new', array('catid' => $cid))#" title="#xarML('Add a new forum to this category')#">
+                                    <xar:mlstring>Add Forum</xar:mlstring>
+                                </a>
+                            <xar:else />
+                                &#160;
+                            </xar:sec>
                         </td>
                     </tr>
                 </tfoot>
@@ -144,11 +153,6 @@
                 <xar:else />
                     <tr><td colspan="2">
                         <xar:mlstring>No Forums found in this category</xar:mlstring>
-                        <xar:sec mask="AddCrispBB" catch="false">
-                        <a href="#xarModURL('crispbb', 'admin', 'new', array('catid' => $cid))#">
-                            <xar:mlstring>Create Forum Now</xar:mlstring>
-                        </a>
-                        </xar:sec>
                     </td></tr>
                 </xar:if>
                 </tbody>
