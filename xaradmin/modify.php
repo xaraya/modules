@@ -149,7 +149,7 @@ function crispbb_admin_modify($args)
                         }
                         if (empty($invalid)) {
                             if (strstr($redirecturl,'://')) {
-                                if (!ereg("^http://|https://|ftp://", $redirecturl)) {
+                                if (!preg_match("!^http://|https://|ftp://!", $redirecturl)) {
                                     $invalid['redirecturl'] = 'URLs of this type are not allowed';
                                 }
                             } elseif (substr($redirecturl,0,1) == '/') {
