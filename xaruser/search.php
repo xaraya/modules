@@ -20,7 +20,7 @@
  * @return array
  * @throws none
  */
-sys::import('xaraya.pager');
+sys::import('modules.base.class.pager');
 function crispbb_user_search()
 {
     // search args from search hook

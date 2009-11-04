@@ -19,7 +19,7 @@
  * @return array
  * @throws none
  */
-sys::import('xaraya.pager');
+sys::import('modules.base.class.pager');
 function crispbb_admin_posters($args)
 {
     extract($args);

@@ -16,7 +16,7 @@
  * @author crisp <crisp@crispcreations.co.uk>
  * @return array
  */
- sys::import('xaraya.pager');
+ sys::import('modules.base.class.pager');
 function crispbb_user_view($args)
 {
 
