@@ -184,7 +184,7 @@ function articles_admin_view($args)
             if ($showstatus) {
                 $item['status'] = $data['states'][$article['status']];
                 $item['statusnumeric'] = $article['status'];
-                
+
                 // pre-select all submitted items
                 if ($article['status'] == 0) {
                     $item['selected'] = 'checked';
@@ -251,26 +251,24 @@ function articles_admin_view($args)
     $data['items'] = $items;
 
     // Add pager
-    sys::import('xaraya.pager');
-    $data['pager'] = xarTplGetPager($startnum,
-                            xarMod::apiFunc('articles', 'user', 'countitems',
+    $data['startnum'] = $startnum;
+    $data['itemsperpage'] = $numitems;
+    $data['totalitems'] = xarMod::apiFunc('articles', 'user', 'countitems',
                                           array('ptid' => $ptid,
                                                 'authorid' => $authorid,
                                                 'language' => $lang,
                                                 'pubdate' => $pubdate,
                                                 'cids' => $cids,
                                                 'andcids' => $andcids,
-                                                'status' => $status)),
-                            xarModURL('articles', 'admin', 'view',
+                                                'status' => $status));
+    $data['urltemplate'] = xarModURL('articles', 'admin', 'view',
                                       array('startnum' => '%%',
                                             'ptid' => $ptid,
                                             'authorid' => $authorid,
                                             'language' => $lang,
                                             'pubdate' => $pubdate,
                                             'catid' => $catid,
-                                            'status' => $status)),
-                            $numitems);
-
+                                            'status' => $status));
     // Create filters based on publication type
     $pubfilters = array();
     foreach ($pubtypes as $id => $pubtype) {

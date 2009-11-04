@@ -267,7 +267,10 @@
       </li>
     </xar:foreach>
   </ul>
-  #$result['pager']#
+  <xar:pager startnum="$result['startnum']" itemsperpage="$result['itemsperpage']" total="$result['total']" urltemplate="$result['urltemplate']"/>
+  <xar:if condition="!empty($result['sortlink']) and !empty($result['othersort']) and !empty($result['items'])">
+  &#160;&#160;&#160;<a href="#$result['sortlink']#">sort by #$result['othersort']#</a>
+  </xar:if>
 </xar:foreach>
 
 <xar:if condition="!empty($status)">

@@ -185,55 +185,22 @@ function articles_user_display($args)
                 $data['next'] = '';
             } else {
                 $pages = explode('<!--pagebreak-->',$article['body']);
-
-                // For documents with many pages, the pages can be
-                // arranged in blocks.
-                $pageBlockSize = 10;
-
-                // Get pager information: one item per page.
-                sys::import('xaraya.pager');
-                $pagerinfo = xarTplPagerInfo((empty($page) ? 1 : $page), count($pages), 1, $pageBlockSize);
-
-                // Retrieve current page and total pages from the pager info.
-                // These will have been normalised to ensure they are in range.
-                $page = $pagerinfo['currentpage'];
-                $numpages = $pagerinfo['totalpages'];
-
+                $page = empty($page) ? 1 : $page;
                 // Discard everything but the current page.
                 $article['body'] = $pages[$page - 1];
+                $data['startnum'] = $page;
+                $data['totalpages'] = count($pages);
+                $data['itemsperpage'] = 1;
+                $data['blocksize'] = 10;
+                $data['urltemplate'] = xarModURL(
+                    'articles','user','display',
+                    array('ptid' => $ptid, 'aid' => $aid, 'page' => '%%')
+                );
                 unset($pages);
-
                 if ($page > 1) {
                     // Don't count page hits after the first page.
                     xarVarSetCached('Hooks.hitcount','nocount',1);
                 }
-
-                // Pass in the pager info so a complete custom pager
-                // can be created in the template if required.
-                $data['pagerinfo'] = $pagerinfo;
-
-                // Get the rendered pager.
-                // The pager template (last parameter) could be an
-                // option for the publication type.
-                $urlmask = xarModURL(
-                    'articles','user','display',
-                    array('ptid' => $ptid, 'aid' => $aid, 'page' => '%%')
-                );
-                $data['pager'] = xarTplGetPager(
-                    $page, $numpages, $urlmask,
-                    1, $pageBlockSize, 'multipage'
-                );
-
-                // Next two assignments for legacy templates.
-                // TODO: deprecate them?
-                $data['next'] = xarTplGetPager(
-                    $page, $numpages, $urlmask,
-                    1, $pageBlockSize, 'multipagenext'
-                );
-                $data['previous'] = xarTplGetPager(
-                    $page, $numpages, $urlmask,
-                    1, $pageBlockSize, 'multipageprev'
-                );
             }
         } else {
             $data['previous'] = '';

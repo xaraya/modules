@@ -42,8 +42,14 @@
     <xar:if condition="isset($notes)">
     <p><strong><xar:mlstring>Notes</xar:mlstring>:</strong>&#160;#$notes#</p>
     </xar:if>
-    <xar:if condition="!empty($previous) and !empty($next)">
-    <p>#$pager#</p>
+    <xar:if condition="isset($totalpages) and $totalpages gt 1">
+        <!-- Legacy $prev equivalent
+            <xar:pager startnum="$startnum" itemsperpage="$itemsperpage" urltemplate="$urltemplate" total="$totalpages" blocksize="$blocksize" template="multipageprev"/>
+        -->
+        <p><xar:pager startnum="$startnum" itemsperpage="$itemsperpage" urltemplate="$urltemplate" total="$totalpages" blocksize="$blocksize" template="multipage"/></p>
+        <!-- Legacy $next equivalent
+            <xar:pager startnum="$startnum" itemsperpage="$itemsperpage" urltemplate="$urltemplate" total="$totalpages" blocksize="$blocksize" template="multipagenext"/>
+        -->
     </xar:if>
     <p><em><xar:mlstring>More fields may be available via dynamicdata ..</xar:mlstring></em></p>
     <xar:if condition="!empty($hooks)">

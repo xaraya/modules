@@ -768,9 +768,8 @@ function articles_user_view($args)
     $data['output'] = '';
 
     // Pager
-    sys::import('xaraya.pager');
-    $data['pager'] = xarTplGetPager($startnum,
-        xarMod::apiFunc('articles', 'user', 'countitems',
+    $data['startnum'] = $startnum;
+    $data['total'] = xarMod::apiFunc('articles', 'user', 'countitems',
             array(
                 'cids' => $cids,
                 'andcids' => $andcids,
@@ -783,8 +782,8 @@ function articles_user_view($args)
                 'startdate' => $startdate,
                 'enddate' => $enddate
             )
-        ),
-        xarModURL('articles', 'user', 'view',
+        );
+    $data['urltemplate'] = xarModURL('articles', 'user', 'view',
             array(
                 'ptid' => ($ishome ? null : $ptid),
                 'catid' => $catid,
@@ -793,15 +792,11 @@ function articles_user_view($args)
                 'letter' => $letter,
                 'startnum' => '%%'
             )
-        ),
-    $numitems);
+        );
+    $data['itemsperpage'] = $numitems;
 
-    $data['viewpager'] = $data['pager'];
     $data['sortlinks'] = array();
-
-    // TODO: sorting on other fields ?
-    if (strlen($data['pager']) > 5) {
-        $data['pager'] .= '<br /><br />' . xarML('Sort by');
+    if ($data['total'] > 1) {
         $sortlist = array();
         $sortlist['date'] = xarML('Date');
         $sortlist['title'] = xarML('Title');
@@ -813,11 +808,9 @@ function articles_user_view($args)
         }
         foreach ($sortlist as $sname => $stitle) {
             if (empty($sort) && $sname == $defaultsort) {
-                $data['pager'] .= '&#160;' . $stitle . '&#160;';
                 $data['sortlinks'][] = array('stitle' => $stitle, 'slink'  => '');
                 continue;
             } elseif ($sname == $sort) {
-                $data['pager'] .= '&#160;' . $stitle . '&#160;';
                 $data['sortlinks'][] = array('stitle' => $stitle, 'slink'  => '');
                 continue;
             }
@@ -834,12 +827,9 @@ function articles_user_view($args)
                                            'authorid' => $authorid,
                                            'sort' => $sname));
             }
-            $data['pager'] .= '&#160;<a href="' . $sortlink . '">' .
-                              $stitle . '</a>&#160;';
             $data['sortlinks'][] = array('stitle' => $stitle, 'slink'  => $sortlink);
         }
     }
-
     // Specific layout within a template (optional)
     if (isset($layout)) $data['layout'] = $layout;
 

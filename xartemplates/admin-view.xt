@@ -204,7 +204,11 @@
                 </xar:if>
             </div>
         </form>
-        #$pager#
+        <xar:if condition="$totalitems gt $itemsperpage">
+            <div>
+                <xar:pager startnum="$startnum" itemsperpage="$itemsperpage" total="$totalitems" urltemplate="$urltemplate"/>
+            </div>
+        </xar:if>
     </div>
 </div>
 <xar:if condition="xarSession::setVar('statusmsg', '')"></xar:if>

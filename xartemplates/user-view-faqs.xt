@@ -59,15 +59,17 @@
     </xar:if>
 </xar:if>
 <div class="xar-align-center">
-<xar:comment>$pager (combining the pager and the sort links) will be removed in later versions</xar:comment>
-    <div>#$viewpager#</div>
+    <xar:comment>pager combining the pager and the sort links removed</xar:comment>
+    <xar:if condition="!empty($total)">
+    <div><xar:pager startnum="$startnum" itemsperpage="$itemsperpage" total="$total" urltemplate="$urltemplate"/></div>
+    </xar:if>
     <xar:if condition="isset($sortlinks) and count($sortlinks) gt 0">
         <xar:mlstring>Sort by </xar:mlstring>
         <xar:foreach in="$sortlinks" value="$sortitem">
-            <xar:if condition="!empty($sortitem['slink'])">
-                <a href="#$sortitem['slink']#">#$sortitem['stitle']#</a>
+            <xar:if condition="!empty($sortitem.slink)">
+                <a href="#$sortitem.slink#">#$sortitem.stitle#</a>
             <xar:else/>
-                #$sortitem['stitle']#
+                #$sortitem.stitle#
             </xar:if>
         </xar:foreach>
     </xar:if>

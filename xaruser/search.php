@@ -480,11 +480,14 @@ function articles_user_search($args)
                 }
                 unset($articles);
 
+                $result = array();
+                $result['description'] = xarVarPrepForDisplay($pubtypes[$curptid]['descr']);
+                $result['items'] = $items;
                 // Pager
+                $result['startnum'] = $startnum;
+                $result['itemsperpage'] = $numitems;
 // TODO: make count depend on language in the future
-                sys::import('xaraya.pager');
-                $pager = xarTplGetPager($startnum,
-                                        xarMod::apiFunc('articles', 'user', 'countitems',
+                $result['total'] = xarMod::apiFunc('articles', 'user', 'countitems',
                                                       array('cids' => $cids,
                                                             'andcids' => $andcids,
                                                             'ptid' => $curptid,
@@ -494,12 +497,11 @@ function articles_user_search($args)
                                                             'enddate' => $enddate,
                                                             'searchfields' => $fieldlist,
                                                             'searchtype' => $searchtype,
-                                                            'search' => $q)),
-
+                                                            'search' => $q));
 /* trick : use *this* articles search instead of global search for pager :-)
                                         xarModURL('search', 'user', 'main',
 */
-                                        xarModURL('articles', 'user', 'search',
+                $result['urltemplate'] = xarModURL('articles', 'user', 'search',
                                                   array('ptid' => $curptid,
                                                         'catid' => $catid,
                                                         'q' => isset($q) ? $q : null,
@@ -510,16 +512,14 @@ function articles_user_search($args)
                                                         'sort' => $sort,
                                                         'fields' => $fields,
                                                         'searchtype' => !empty($searchtype) ? $searchtype : null,
-                                                        'startnum' => '%%')),
-                                        $numitems);
+                                                        'startnum' => '%%'));
 
-                if (strlen($pager) > 5) {
-                    if (!isset($sort) || $sort == 'date') {
-                        $othersort = 'title';
-                    } else {
-                        $othersort = null;
-                    }
-                    $sortlink = xarModURL('articles',
+                if (!isset($sort) || $sort == 'date') {
+                    $othersort = 'title';
+                } else {
+                    $othersort = null;
+                }
+                $result['sortlink'] = xarModURL('articles',
                                          'user',
                                          'search',
                                          array('ptid' => $curptid,
@@ -532,16 +532,13 @@ function articles_user_search($args)
                                                'fields' => $fields,
                                                'searchtype' => !empty($searchtype) ? $searchtype : null,
                                                'sort' => $othersort));
-                    if (!isset($othersort)) {
-                        $othersort = 'date';
-                    }
-                    $pager .= '&#160;&#160;<a href="' . $sortlink . '">' .
-                              xarML('sort by') . ' ' . xarML($othersort) . '</a>';
+                if (!isset($othersort)) {
+                    $othersort = 'date';
                 }
+                $result['othersort'] = xarML($othersort);
 
-                $data['results'][] = array('description' => xarVarPrepForDisplay($pubtypes[$curptid]['descr']),
-                                           'items' => $items,
-                                           'pager' => $pager);
+                $data['results'][] = $result;
+                unset($result);
             }
         }
         unset($catinfo);
