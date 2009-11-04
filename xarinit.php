@@ -604,6 +604,7 @@ function crispbb_upgrade($oldversion)
             xarModSetVar('crispbb', 'showsortbox', true);
         case '0.8.0':
         /* current version */
+        /* create aruba 1.2.0 branch */
         break;
     }
     /* Update successful */
