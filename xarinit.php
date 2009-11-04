@@ -148,7 +148,7 @@ function crispbb_init()
                xar_phostname    C(255)      NotNull   DEFAULT '',
                xar_pdesc        C(255)      NotNull   DEFAULT '',
                xar_psettings    X          NotNull   DEFAULT '',
-               xar_ptext        X2          NotNull   DEFAULT ''
+               xar_ptext        X2
                ";
     $result = $datadict->changeTable($poststable, $fields);
     if (!$result) {return;}
