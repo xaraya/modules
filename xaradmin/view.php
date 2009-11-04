@@ -112,20 +112,17 @@ function changelog_admin_view()
         if (empty($numstats)) {
             $numstats = 100;
         }
-        if ($numstats < $data['numitems']) {
-//    sys::import('xaraya.pager');
-            $data['pager'] = xarTplGetPager($startnum,
-                                            $data['numitems'],
-                                            xarModURL('changelog','admin','view',
+        // pager
+        $data['startnum'] = $startnum;
+        $data['total'] = $data['numitems'];
+        $data['urltemplate'] = xarModURL('changelog','admin','view',
                                                       array('modid' => $modid,
                                                             'itemtype' => $itemtype,
                                                             'editor' => $editor,
                                                             'sort' => $sort,
-                                                            'startnum' => '%%')),
-                                            $numstats);
-        } else {
-            $data['pager'] = '';
-        }
+                                                            'startnum' => '%%'));
+        $data['itemsperpage'] = $numstats;
+
         $data['modid'] = $modid;
         $getitems = xarMod::apiFunc('changelog','user','getitems',
                                   array('modid' => $modid,

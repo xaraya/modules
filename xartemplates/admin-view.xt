@@ -144,13 +144,13 @@
                     </tr>
 
                 </xar:foreach>
-            <xar:if condition="!empty($pager)">
-                <tr>
-                    <td colspan="3" align="center">
-                        #$pager#
-                    </td>
-                </tr>
-            </xar:if>
+               <xar:if condition="$total gt $itemsperpage">
+                    <tr>
+                        <td colspan="3" align="center">
+                            <xar:pager startnum="$startnum" itemsperpage="$itemsperpage" total="$total" urltemplate="$urltemplate"/>
+                        </td>
+                    </tr>
+                </xar:if>
                 <tr>
                     <td align="right" valign="center" width="50%">
                         <strong><xar:mlstring>Grand Total</xar:mlstring></strong>:
