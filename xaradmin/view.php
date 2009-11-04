@@ -102,6 +102,9 @@ function xarcachemanager_admin_view($args)
             }
         }
     }
+    // Generate a one-time authorisation code for this operation
+    $data['authid'] = xarSecGenAuthKey();
+    $data['return_url'] = xarModURL('xarcachemanager','admin','stats', array('tab' => $tab));
     return $data;
 }
 

@@ -112,6 +112,10 @@ function xarcachemanager_admin_stats($args)
                 } else {
                     $data['cacheinfo']['ratio'] = 0.0;
                 }
+                if (!empty($data['cacheinfo']['size'])) {
+                    $data['cacheinfo']['size'] = round($data['cacheinfo']['size'] / 1048576, 2);
+                }
+                $data['cacheinfo']['storage'] = $data['settings'][$storage];
                 // get a list of items in cache
                 $data['items'] = $cachestorage->getCachedList();
                 // get a list of keys in cache
@@ -128,11 +132,19 @@ function xarcachemanager_admin_stats($args)
                     $data['withlog'] = 1;
                     $data['totals'] = array();
                     xarcachemanager_stats_logfile($data['items'], $data['totals'], $data['settings'][$logfile], $tab);
+                    if (!empty($data['totals']['size'])) {
+                        $data['totals']['size'] = round($data['totals']['size'] / 1048576, 2);
+                    }
+                    $data['totals']['file'] = $data['settings'][$logfile];
                 } else {
                     $data['withlog'] = null;
                     $data['loginfo'] = array();
                     // status field = 1
                     xarcachemanager_stats_filestats($data['loginfo'], $data['settings'][$logfile], 1, 1);
+                    if (!empty($data['loginfo']['size'])) {
+                        $data['loginfo']['size'] = round($data['loginfo']['size'] / 1048576, 2);
+                    }
+                    $data['loginfo']['file'] = $data['settings'][$logfile];
                 }
                 // sort items
                 if (empty($sort) || $sort == 'id') {
@@ -272,6 +284,9 @@ function xarcachemanager_admin_stats($args)
                                                               'type'     => $type,
                                                               'cachedir' => $outputCacheDir));
                     $data[$cachevar] = $cachestorage->getCacheInfo();
+                    if (!empty($data[$cachevar]['size'])) {
+                        $data[$cachevar]['size'] = round($data[$cachevar]['size'] / 1048576, 2);
+                    }
                 }
                 $data[$cachevar]['total'] = $data[$cachevar]['hits'] + $data[$cachevar]['misses'];
                 if (!empty($data[$cachevar]['total'])) {
@@ -284,6 +299,9 @@ function xarcachemanager_admin_stats($args)
                     $data[$logvar] = array();
                     // status field = 1
                     xarcachemanager_stats_filestats($data[$logvar], $data['settings'][$logfile], 1, 1);
+                    if (!empty($data[$logvar]['size'])) {
+                        $data[$logvar]['size'] = round($data[$logvar]['size'] / 1048576, 2);
+                    }
                 }
             }
 
@@ -306,6 +324,9 @@ function xarcachemanager_admin_stats($args)
                 $data['autocachelog'] = array();
                 // status field = 1
                 xarcachemanager_stats_filestats($data['autocachelog'], $data['settings']['AutoCacheLogFile'], 1, 1);
+                if (!empty($data['autocachelog']['size'])) {
+                    $data['autocachelog']['size'] = round($data['autocachelog']['size'] / 1048576, 2);
+                }
             }
             if ($data['AutoCachingEnabled'] && file_exists($outputCacheDir . '/autocache.stats')) {
                 $data['settings']['AutoCacheStatFile'] = $outputCacheDir . '/autocache.stats';
@@ -316,6 +337,9 @@ function xarcachemanager_admin_stats($args)
                 $data['autocachestat'] = array();
                 // hit field = 1, miss field = 2
                 xarcachemanager_stats_filestats($data['autocachestat'], $data['settings']['AutoCacheStatFile'], 1, 2);
+                if (!empty($data['autocachestat']['size'])) {
+                    $data['autocachestat']['size'] = round($data['autocachestat']['size'] / 1048576, 2);
+                }
             }
             break;
     }
@@ -419,6 +443,7 @@ function xarcachemanager_stats_logfile(&$items, &$totals, $logfile, $checktype)
                     'ratio' => 0,
                     'first' => 0,
                     'last'  => 0,
+                    'size'  => filesize($logfile),
                     'pages' => count($pages));
     unset($pages);
 

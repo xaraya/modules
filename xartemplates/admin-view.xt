@@ -17,7 +17,11 @@
         </tr>
         <tr>
             <td colspan="2" style="font-weight:bold;">
-                <xar:mlstring>Cache item:&#160;</xar:mlstring>#$key# #$code#
+                Cache item:&#160;
+                #$key#
+                [ <a href="#xarModURL('xarcachemanager','admin','flushcache',array('flushkey['.$tab.']' => $key, 'authid' => $authid, 'confirm' => 1, 'return_url' => $return_url))#">flush key</a> ]
+                #$code#
+                [ <a href="#xarModURL('xarcachemanager','admin','flushcache',array('flushkey['.$tab.']' => $key, 'cachecode['.$tab.']' => $code, 'authid' => $authid, 'confirm' => 1, 'return_url' => $return_url))#">delete item</a> ]
             </td>
         </tr>
         <xar:if condition="!empty($title)">

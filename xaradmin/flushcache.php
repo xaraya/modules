@@ -60,12 +60,17 @@ function xarcachemanager_admin_flushcache($args)
         //Make sure their is an authkey selected
         if (empty($flushkey) || !is_array($flushkey)) {
             $data['notice'] = xarML("You must select a cache key to flush.  If there is no cache key to select the output cache is empty.");
+
         } else {
 
             // get the caching config settings from the config file
             $config = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
                                       array('from' => 'file'));
 
+            // see if we need to delete an individual item instead of flushing the key
+            if (!xarVarFetch('cachecode', 'isset', $cachecode, '', XARVAR_NOT_REQUIRED)) return;
+
+            $found = 0;
             foreach ($flushkey as $type => $key) {
                 if (empty($key) || $key == '-') continue;
                 if ($key == '*') {
@@ -78,37 +83,70 @@ function xarcachemanager_admin_flushcache($args)
                             sys::import('xaraya.caching.output.page');
                             xarPacheCache::init($config);
                         }
-                        xarPageCache::flushCached($key);
+                        if (!empty($key) && !empty($cachecode) && !empty($cachecode[$type]) && !empty(xarPageCache::$cacheStorage)) {
+                            xarPageCache::$cacheStorage->setCode($cachecode[$type]);
+                            xarPageCache::$cacheStorage->delCached($key);
+                        } else {
+                            xarPageCache::flushCached($key);
+                        }
+                        $found++;
                         break;
                     case 'block':
                         if (!xarOutputCache::$blockCacheIsEnabled) {
                             sys::import('xaraya.caching.output.block');
                             xarBlockCache::init($config);
                         }
-                        xarBlockCache::flushCached($key);
+                        if (!empty($key) && !empty($cachecode) && !empty($cachecode[$type]) && !empty(xarBlockCache::$cacheStorage)) {
+                            xarBlockCache::$cacheStorage->setCode($cachecode[$type]);
+                            xarBlockCache::$cacheStorage->delCached($key);
+                        } else {
+                           xarBlockCache::flushCached($key);
+                        }
+                        $found++;
                         break;
                     case 'module':
                         if (!xarOutputCache::$moduleCacheIsEnabled) {
                             sys::import('xaraya.caching.output.module');
                             xarModuleCache::init($config);
                         }
-                        xarModuleCache::flushCached($key);
+                        if (!empty($key) && !empty($cachecode) && !empty($cachecode[$type]) && !empty(xarModuleCache::$cacheStorage)) {
+                            xarModuleCache::$cacheStorage->setCode($cachecode[$type]);
+                            xarModuleCache::$cacheStorage->delCached($key);
+                        } else {
+                            xarModuleCache::flushCached($key);
+                        }
+                        $found++;
                         break;
                     case 'object':
                         if (!xarOutputCache::$objectCacheIsEnabled) {
                             sys::import('xaraya.caching.output.object');
                             xarObjectCache::init($config);
                         }
-                        xarObjectCache::flushCached($key);
+                        if (!empty($key) && !empty($cachecode) && !empty($cachecode[$type]) && !empty(xarObjectCache::$cacheStorage)) {
+                            xarObjectCache::$cacheStorage->setCode($cachecode[$type]);
+                            xarObjectCache::$cacheStorage->delCached($key);
+                        } else {
+                            xarObjectCache::flushCached($key);
+                        }
+                        $found++;
                         break;
                 }
             }
-            $data['notice'] = xarML("Cached files have been successfully flushed.");
+            if (empty($found)) {
+                $data['notice'] = xarML("You must select a cache key to flush.  If there is no cache key to select the output cache is empty.");
+            } else {
+                $data['notice'] = xarML("The cached output for this key has been flushed.");
+            }
         }
 
-        $data['returnlink'] = Array('url'   => xarModURL('xarcachemanager',
-                                                         'admin',
-                                                         'flushcache'),
+        if (!xarVarFetch('return_url', 'isset', $return_url, NULL, XARVAR_NOT_REQUIRED)) return;
+        if (!empty($return_url)) {
+            xarResponse::Redirect($return_url);
+            return;
+        }
+
+        $return_url = xarModURL('xarcachemanager', 'admin', 'flushcache');
+        $data['returnlink'] = Array('url'   => $return_url,
                                     'title' => xarML('Return to the cache key selector'),
                                     'label' => xarML('Back'));
 

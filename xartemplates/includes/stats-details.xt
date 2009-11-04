@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Cache Statistics Details</xar:comment>
+
+        <xar:if condition="empty($withlog)">
+          <xar:if condition="!empty($cacheinfo['ratio'])">
+            Cache Hit Ratio:&#160;<strong>#$cacheinfo['ratio']#%</strong>&#160;of&#160;#$cacheinfo['total']#
+          <xar:else/>
+            Cache Hit Ratio:&#160;N/A
+          </xar:if>
+          <xar:if condition="!empty($loginfo['file'])">
+            &#160;Log Hit Ratio:&#160;<strong>#$loginfo['ratio']#%</strong>&#160;of&#160;#$loginfo['total']#
+            &#160;<a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab, 'withlog' => 1))#"><xar:mlstring>Analyze Logfile</xar:mlstring></a>
+          <xar:else/>
+            &#160;Log Hit Ratio:&#160;N/A
+          </xar:if>
+        <xar:else/>
+            <form method="post" action="#xarModURL('xarcachemanager', 'admin', 'stats')#">
+              <xar:if condition="!empty($cacheinfo['ratio'])">
+                Cache Hit Ratio:&#160;<strong>#$cacheinfo['ratio']#%</strong>&#160;of&#160;#$cacheinfo['total']#
+              <xar:else/>
+                Cache Hit Ratio:&#160;N/A
+              </xar:if>
+              &#160;Log Hit Ratio:&#160;<strong>#$totals['ratio']#%</strong>&#160;of&#160;#$totals['total']#
+              <input type="hidden" name="tab" id="tab" value="#$tab#" />
+              <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+              &#160;<input type="submit" name="reset" value="#xarML('Reset Logfile')#" />
+            </form>
+        </xar:if>
+
+        <table class="xar-norm">
+        <xar:if condition="!empty($withlog)">
+        <tr>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'ratio'))#"><xar:mlstring>Ratio</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'hit'))#"><xar:mlstring>Hit</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'miss'))#"><xar:mlstring>Miss</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'total'))#"><xar:mlstring>Total</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'pages'))#"><xar:mlstring>Pages</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'first'))#"><xar:mlstring>First Seen</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'last'))#"><xar:mlstring>Last Seen</xar:mlstring></a></th>
+        </tr>
+        </xar:if>
+        <tr>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'size'))#"><xar:mlstring>Size</xar:mlstring></a></th>
+          <th colspan="4"><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'key'))#"><xar:mlstring>Key</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'code'))#"><xar:mlstring>Code</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => $tab,'withlog' => $withlog,'sort' => 'time'))#"><xar:mlstring>Last Modified</xar:mlstring></a></th>
+        </tr>
+        <xar:foreach in="$items" key="$id" value="$item">
+        <xar:if condition="!empty($withlog)">
+        <tr class="xar-alt">
+          <td>#$item['ratio']#%</td>
+          <td>#$item['hit']#</td>
+          <td>#$item['miss']#</td>
+          <td>#$item['total']#</td>
+          <td>#$item['pages']#</td>
+          <td><xar:if condition="!empty($item['first'])">#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$item['first'])#</xar:if></td>
+          <td><xar:if condition="!empty($item['last'])">#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$item['last'])#</xar:if></td>
+        </tr>
+        </xar:if>
+        <tr>
+          <td>
+            <xar:if condition="$item.size gt 0">
+              <a href="#xarModURL('xarcachemanager','admin','view',array('tab' => $tab, 'key' => $item['key'], 'code' => $item['code']))#">#$item['size']#</a>
+            <xar:else/>
+              #$item['size']#
+            </xar:if>
+          </td>
+          <td colspan="4">#$item['key']#</td>
+          <td>#$item['code']#</td>
+          <td><xar:if condition="!empty($item['time'])">#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$item['time'])#</xar:if></td>
+        </tr>
+        </xar:foreach>
+        <xar:if condition="!empty($withlog) and !empty($totals)">
+        <tr>
+          <th>#$totals['ratio']#%</th>
+          <th>#$totals['hit']#</th>
+          <th>#$totals['miss']#</th>
+          <th>#$totals['total']#</th>
+          <th>#$totals['pages']#</th>
+          <th>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$totals['first'])#</th>
+          <th>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$totals['last'])#</th>
+        </tr>
+        </xar:if>
+        <xar:if condition="!empty($pager)">
+        <tr>
+            <td colspan="7" align="center">#$pager#</td>
+        </tr>
+        </xar:if>
+        </table>
+
+</xar:template>
