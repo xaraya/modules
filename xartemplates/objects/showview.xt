@@ -7,10 +7,10 @@
     display: inline;
     }
     </style>
-    
+
     <p><strong>Template invoked by the tag:</strong></p>
 
-        <blockquote>               
+        <blockquote>
         <strong>
         <a href="javascript:void(window.open('#sys::code()#modules/dyn_example/xartemplates/objects/showview.xt', 'Template', 'width=700,height=580,toolbar=0,status=0,location=0,scrollbars=1, left=200,top=200')) ">modules/dyn_example/xartemplates/objects/showview.xt</a></strong>
         </blockquote>
@@ -167,23 +167,9 @@
         You can also specify a separate template, e.g. if you want to handle individual fields differently for a particular module / itemtype
     </xar:if>
 
-    <xar:if condition="!empty($pager)">
+    <xar:if condition="$object:itemcount gt $object:numitems">
         <div class="xar-align-center">
-            #$pager#
-        </div>
-    <xar:elseif condition="!empty($prevurl) or !empty($nexturl)"/>
-        <div class="xar-align-center">
-            <xar:if condition="!empty($prevurl)">
-                <a href="#$prevurl#">&lt;&lt;</a>
-            <xar:else />
-                &lt;&lt;
-            </xar:if>
-            &#160;&#160;&#160;
-            <xar:if condition="!empty($nexturl)">
-                <a href="#$nexturl#">&gt;&gt;</a>
-            <xar:else />
-                &gt;&gt;
-            </xar:if>
+            <xar:pager startnum="$object->startnum" itemsperpage="$object->numitems" total="$object->itemcount" urltemplate="$object->pagerurl"/>
         </div>
     </xar:if>
 

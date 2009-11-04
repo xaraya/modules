@@ -13,7 +13,7 @@
     <div class="xar-mod-head">
       <span class="xar-mod-title">Dynamic Data Example Administration</span>
     </div>
-   
+
     <div class="xar-mod-body">
         <xar:template type="module" file="admintabs"/>
 
@@ -25,11 +25,11 @@
 
     <p><strong>Important tag in admin-view.xt:</strong></p>
 
-    <blockquote><pre>&lt;xar:data-view objectname="dyn_example" numitems="$items_per_page" 
-startnum="$startnum" tplmodule="dyn_example" 
+    <blockquote><pre>&lt;xar:data-view objectname="dyn_example" numitems="$items_per_page"
+startnum="$startnum" tplmodule="dyn_example"
 template="admin_list" sort="$sort" /&gt;</pre></blockquote>
 
-       <xar:data-view objectname="dyn_example" numitems="$items_per_page" startnum="$startnum" tplmodule="dyn_example" template="admin_list" sort="$sort"/>
+       <xar:data-view objectname="dyn_example" numitems="$items_per_page" startnum="$startnum" tplmodule="dyn_example" template="admin_list" sort="$sort" count="1" />
 
     </div>
 </xar:template>

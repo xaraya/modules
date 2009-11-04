@@ -30,7 +30,7 @@ See dyn_example/xartemplates/includes/userviewtabs.xt.  Note how we pass $tab to
 
 <xar:comment>  ~~~~~~~~~   Approach 1   ~~~~~~~~~ </xar:comment>
 
-<xar:if condition="$tab eq 1"> 
+<xar:if condition="$tab eq 1">
 
 	<div id="page-1">
 
@@ -68,14 +68,20 @@ See dyn_example/xartemplates/includes/userviewtabs.xt.  Note how we pass $tab to
 
 <pre>&lt;xar:data-view objectname="dyn_example" sort="$sort"
  startnum="$startnum" numitems="$items_per_page"
- tplmodule="dyn_example" layout="list" /&gt;</pre>
+ tplmodule="dyn_example" layout="list" count="1"/&gt;</pre>
 
-<xar:data-view objectname="dyn_example" numitems="$items_per_page" startnum="$startnum" tplmodule="dyn_example" layout="list"/>
+<p><strong>If you don't want the pager use:</strong></p>
+
+<pre>&lt;xar:data-view objectname="dyn_example" sort="$sort"
+ startnum="$startnum" numitems="$items_per_page"
+ tplmodule="dyn_example" layout="list"/&gt;</pre>
+
+<xar:data-view objectname="dyn_example" numitems="$items_per_page" startnum="$startnum" tplmodule="dyn_example" layout="list" count="1"/>
 
         </div>
 
- </xar:if>    
- 
+ </xar:if>
+
 <xar:comment>  ~~~~~~~~~  Approach 3   ~~~~~~~~~ </xar:comment>
 
 <xar:if condition="$tab eq 3">
@@ -91,7 +97,7 @@ As in Approach ##2, we have set some variables in view.php for use in #$userview
 <p>In #$userviewlink#, we retrieve items with... </p>
 
 <blockquote><pre>&lt;xar:data-getitems objectname="dyn_example" values="$values"
-    properties="$properties" numitems="$items_per_page" 
+    properties="$properties" numitems="$items_per_page"
     startnum="$startnum" /&gt;
 </pre></blockquote>
 
@@ -132,7 +138,11 @@ As in Approach ##2, we have set some variables in view.php for use in #$userview
                     <td class="xar-align-center"><a href="#xarModURL('dyn_example','admin','new')#">New</a></td>
                 </tr>
             </table>
-            <p>Here you'll need to provide your own pager...</p>
+            <xar:if condition="$total gt $items_per_page">
+                <div class="xar-align-center">
+                    <xar:pager startnum="$startnum" itemsperpage="$items_per_page" total="$total" urltemplate="$urltemplate"/>
+                </div>
+            </xar:if>
         </div>
 
 </xar:if>
@@ -142,7 +152,7 @@ As in Approach ##2, we have set some variables in view.php for use in #$userview
 <xar:if condition="$tab eq 4">
 
         <div id="page-4">
-            
+
 <h3>Iterate over arrays in the template</h3>
 
 Our module function passes a labels array and an items array to #$userviewlink#, and we iterate through the arrays with <pre>&lt;xar:foreach /&gt;</pre>
@@ -177,7 +187,11 @@ Our module function passes a labels array and an items array to #$userviewlink#,
                 <a href="#xarModURL('dyn_example','admin','new')#">New</a>
             </xar:if>
         </div>
-
+        <xar:if condition="$total gt $items_per_page">
+            <div class="xar-align-center">
+                <xar:pager startnum="$startnum" itemsperpage="$items_per_page" total="$total" urltemplate="$urltemplate"/>
+            </div>
+        </xar:if>
 </xar:if>
 
     </div>
