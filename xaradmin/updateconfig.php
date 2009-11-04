@@ -78,6 +78,9 @@ function xarcachemanager_admin_updateconfig()
         if(!file_exists($outputCacheDir . '/cache.pagelevel')) {
             touch($outputCacheDir . '/cache.pagelevel');
         }
+        if (!empty($pagelogfile) && !file_exists($pagelogfile)) {
+            touch($pagelogfile);
+        }
     } else {
         if(file_exists($outputCacheDir . '/cache.pagelevel')) {
             unlink($outputCacheDir . '/cache.pagelevel');
@@ -94,6 +97,9 @@ function xarcachemanager_admin_updateconfig()
     if ($cacheblocks) {
         if(!file_exists($outputCacheDir . '/cache.blocklevel')) {
             touch($outputCacheDir . '/cache.blocklevel');
+        }
+        if (!empty($blocklogfile) && !file_exists($blocklogfile)) {
+            touch($blocklogfile);
         }
         //Make sure xarOutputCache is included so you delete cacheKeys even if caching is disabled
         if (!xarCache::$outputCacheIsEnabled) {
@@ -123,6 +129,9 @@ function xarcachemanager_admin_updateconfig()
         if(!file_exists($outputCacheDir . '/cache.modulelevel')) {
             touch($outputCacheDir . '/cache.modulelevel');
         }
+        if (!empty($modulelogfile) && !file_exists($modulelogfile)) {
+            touch($modulelogfile);
+        }
         // CHECKME: flush something here too ?
     } else {
         if(file_exists($outputCacheDir . '/cache.modulelevel')) {
@@ -134,6 +143,9 @@ function xarcachemanager_admin_updateconfig()
     if ($cacheobjects) {
         if(!file_exists($outputCacheDir . '/cache.objectlevel')) {
             touch($outputCacheDir . '/cache.objectlevel');
+        }
+        if (!empty($objectlogfile) && !file_exists($objectlogfile)) {
+            touch($objectlogfile);
         }
         // CHECKME: flush something here too ?
     } else {
