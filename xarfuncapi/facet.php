@@ -2,7 +2,7 @@
 
 /**
  * Function to provide faceted navigation on items in a page.
- * 
+ *
  * This requires a small mod to the core categories module (see readme for details).
  *
  * Templates for the summary and detail of the articles are facet-summary[-pubtypename].xt
@@ -16,7 +16,7 @@
  * of 456, then category 123 can no longer be used as a filter category. Since some of the
  * articles selected my have category 123 set for them, we should not display that category
  * as a link. In other words, it would reside entirely outside of the tree of categories
- * that can form our filters. I suspect the 'cids_to_facets' array may be useful here as 
+ * that can form our filters. I suspect the 'cids_to_facets' array may be useful here as
  * a lookup.
  *
  */
@@ -48,7 +48,7 @@ function xarpages_funcapi_facet($args)
     // is the cids_to_factes list).
     // We already have the 'filter_cids' with all the current filter values.
     //
-    
+
     if (!empty($args['add']) || !empty($args['remove']) || !empty($args['show'])) {
         $filter = $filter_cids;
 
@@ -115,7 +115,7 @@ function xarpages_funcapi_facet($args)
     // These will be the facets.
     // For now assume there is no overlap.
     // TODO: deal with overlaps by removing those bases that are descendants of other bases. This will not
-    // normally happen within a single publication type, but may happen with multiple publication types 
+    // normally happen within a single publication type, but may happen with multiple publication types
     // when one type has a base category that happens to be lower in the tree of a base category in one
     // of the other publication types. Careful selection of hhoked categories can avoid this.
     //
@@ -218,7 +218,7 @@ function xarpages_funcapi_facet($args)
     // Fetch the article ID.
     xarVarFetch('aid', 'id', $aid, 0, XARVAR_NOT_REQUIRED);
 
-    // Pager 
+    // Pager
     $default_numitems = 20;
     xarVarFetch('startnum', 'id', $startnum, 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('numitems', 'enum:10:20:50:100', $numitems, $default_numitems, XARVAR_NOT_REQUIRED);
@@ -227,7 +227,7 @@ function xarpages_funcapi_facet($args)
     // Place the filter categories into their relevant factets.
     // This includes validation of the filters and fetching their ancestor paths.
     //
-    
+
     // Get the crumbtrail lists for each selected category, i.e. filters already in place.
     //$cids_crumbs = array();
     if (!empty($filter)) {
@@ -241,7 +241,7 @@ function xarpages_funcapi_facet($args)
             );
 
             if (!empty($ancestors)) {
-                // Just for efficiency in the queries, if any of these ancesters is one of 
+                // Just for efficiency in the queries, if any of these ancesters is one of
                 // the 'forced' cids, then remove that forced cid as it is redundant.
                 foreach($ancestors as $ancestor) {
                     if (in_array($ancestor['cid'], $forced_cids)) {
@@ -396,7 +396,7 @@ function xarpages_funcapi_facet($args)
             // With 5000 articles, I was getting query times of 30+ seconds with the above query, and tens of mS
             // with this work-around.
             // What a FAF!
-            $filter_sql = 'SELECT filtersub.article_id FROM (' 
+            $filter_sql = 'SELECT filtersub.article_id FROM ('
                 . 'SELECT ' . 'COUNT('.$catfilterdef['iid'].') AS cnt, ' . $catfilterdef['iid'] . ' AS article_id'
                 . ' FROM ' . $catfilterdef['table']
                 . ' INNER JOIN ' . $artfilterdef['table'] . ' ON ' . $artfilterdef['field'] . ' = ' . $catfilterdef['iid']
@@ -566,18 +566,18 @@ function xarpages_funcapi_facet($args)
     //
     // Create the pager.
     //
-
+    sys::import('modules.base.class.pager');
     $pager = '';
     if (!empty($articles)) {
         // Include the pager.
         if ($numitems != $default_numitems) {
-            $pager = xarTplGetPager($startnum, $article_count,
-               xarServerGetCurrentURL(array('startnum' => '%%', 'numitems' => $numitems)),
+            $pager = xarTplPager::getPager($startnum, $article_count,
+               xarServer::getCurrentURL(array('startnum' => '%%', 'numitems' => $numitems)),
                $numitems
             );
         } else {
-            $pager = xarTplGetPager($startnum, $article_count,
-               xarServerGetCurrentURL(array('startnum' => '%%')),
+            $pager = xarTplPager::getPager($startnum, $article_count,
+               xarServer::getCurrentURL(array('startnum' => '%%')),
                $numitems
             );
         }

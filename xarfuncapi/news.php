@@ -97,7 +97,7 @@ function xarpages_funcapi_news($args)
 
     // Transform hook fields on details.
     $transform_fields_detail = array('summary', 'body', 'notes');
-    
+
     // General sort methods will be what articles supports (practically just date and title)
     xarVarFetch('sort', 'str', $sort, '', XARVAR_NOT_REQUIRED);
     if (empty($sort)) $sort = (isset($settings['defaultsort']) ? $settings['defaultsort'] : '');
@@ -215,8 +215,8 @@ function xarpages_funcapi_news($args)
     $search_count = xarMod::apiFunc('articles', 'user', 'countitems', $article_select);
     $pager_url_params = array_merge($url_params, array('pid' => $args['current_page']['pid'], 'startnum' => '%%'));
     $pager_base_url = xarModURL('xarpages', 'user', 'display', $pager_url_params);
-    sys::import('xaraya.pager');
-    $pager = xarTplGetPager($startnum, $search_count, $pager_base_url, $numitems);
+    sys::import('modules.base.class.pager');
+    $pager = xarTplPager::getPager($startnum, $search_count, $pager_base_url, $numitems);
 
     // If an individual article has been selected, then get that separately.
     $article = array();
