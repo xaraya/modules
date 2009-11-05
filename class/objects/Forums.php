@@ -406,22 +406,23 @@ class ForumsList extends DataObjectList
       */
     public function getViewOptions($data = null)
     {
+        if (empty($data['itemid'])) return array();
         // import our own class to handle link cache (less code required)
         sys::import('modules.crispbb.class.cache.links');
         // insist on using fid in urlargs (for now)
-        $args['param'] = 'fid';
+        $data['param'] = 'fid';
         $urlargs = array();
-        $urlargs[$args['param']] = $args['itemid'];
-        $check = $this->items[$args['itemid']];
-        $check['fid'] = $args['itemid'];
-        $check['fprivileges'] = unserialize($this->items[$args['itemid']]['fprivileges']);
+        $urlargs[$data['param']] = $data['itemid'];
+        $check = $this->items[$data['itemid']];
+        $check['fid'] = $data['itemid'];
+        $check['fprivileges'] = unserialize($this->items[$data['itemid']]['fprivileges']);
         $userLevel = xarMod::apiFunc('crispbb', 'user', 'checkseclevel',
             array('check' => $check, 'priv' => 'viewforum'));
         $numforums = count($this->items);
         $fids = !empty($numforums) ? array_keys($this->items) : array();
         $currentindex = 0;
         foreach ($fids as $i => $fid) {
-            if ($fid == $args['itemid']) {
+            if ($fid == $data['itemid']) {
                 $currentindex = $i;
                 break;
             }
@@ -433,7 +434,7 @@ class ForumsList extends DataObjectList
         if (!empty($privs['deleteforum'])) {
                  // if $linktype == 'object' use getObjectURL()
                 if ($this->linktype == 'object') {
-                    $link = xarServer::getObjectURL($args['objectname'], 'delete', $urlargs);
+                    $link = xarServer::getObjectURL($data['objectname'], 'delete', $urlargs);
                 } else {
                     $link = LinkCache::getCachedURL('crispbb','admin','delete',$urlargs);
                 }
@@ -449,7 +450,7 @@ class ForumsList extends DataObjectList
             static $authid;
                 // if $linktype == 'object' use getObjectURL()
                 if ($this->linktype == 'object') {
-                    $link = xarServer::getObjectURL($args['objectname'], 'modify', $itemargs);
+                    $link = xarServer::getObjectURL($data['objectname'], 'modify', $itemargs);
                 } else {
                     $link = LinkCache::getCachedURL('crispbb','admin','modify',$itemargs);
                 }
@@ -463,7 +464,7 @@ class ForumsList extends DataObjectList
             $itemargs['sublink'] = 'edit';
                 // if $linktype == 'object' use getObjectURL()
                 if ($this->linktype == 'object') {
-                    $link = xarServer::getObjectURL($args['objectname'], 'modify', $itemargs);
+                    $link = xarServer::getObjectURL($data['objectname'], 'modify', $itemargs);
                 } else {
                     $link = LinkCache::getCachedURL('crispbb','admin','modify',$itemargs);
                 }
@@ -475,13 +476,13 @@ class ForumsList extends DataObjectList
             );
             if (empty($authid)) $authid = xarSecGenAuthKey();
             $itemargs = $urlargs;
-            $itemargs['catid'] = isset($args['catid']) ? $args['catid'] : null;
+            $itemargs['catid'] = isset($data['catid']) ? $data['catid'] : null;
             $itemargs['direction'] = 'up';
             $itemargs['authid'] = $authid;
             if ($currentindex > 0) {
                     // if $linktype == 'object' use getObjectURL()
                     if ($this->linktype == 'object') {
-                        $link = xarServer::getObjectURL($args['objectname'], 'order', $itemargs);
+                        $link = xarServer::getObjectURL($data['objectname'], 'order', $itemargs);
                     } else {
                         $link = LinkCache::getCachedURL('crispbb','admin','order',$itemargs);
                     }
@@ -493,13 +494,13 @@ class ForumsList extends DataObjectList
                 );
             }
             $itemargs = $urlargs;
-            $itemargs['catid'] = isset($args['catid']) ? $args['catid'] : null;
+            $itemargs['catid'] = isset($data['catid']) ? $data['catid'] : null;
             $itemargs['direction'] = 'down';
             $itemargs['authid'] = $authid;
             if ($currentindex < $numforums-1) {
                     // if $linktype == 'object' use getObjectURL()
                     if ($this->linktype == 'object') {
-                        $link = xarServer::getObjectURL($args['objectname'], 'order', $itemargs);
+                        $link = xarServer::getObjectURL($data['objectname'], 'order', $itemargs);
                     } else {
                         $link = LinkCache::getCachedURL('crispbb','admin','order',$itemargs);
                     }
@@ -515,7 +516,7 @@ class ForumsList extends DataObjectList
         if ($check['ftype'] != 1) {
                 // if $linktype == 'object' use getObjectURL()
                 if ($this->linktype == 'object') {
-                    $link = xarServer::getObjectURL($args['objectname'], 'view', $urlargs);
+                    $link = xarServer::getObjectURL($data['objectname'], 'view', $urlargs);
                 } else {
                     $link = LinkCache::getCachedURL('crispbb','user','view',$urlargs);
                 }
@@ -536,7 +537,7 @@ class ForumsList extends DataObjectList
                     $itemargs['action'] = 'read';
                         // if $linktype == 'object' use getObjectURL()
                         if ($this->linktype == 'object') {
-                            $link = xarServer::getObjectURL($args['objectname'], 'view', $itemargs);
+                            $link = xarServer::getObjectURL($data['objectname'], 'view', $itemargs);
                         } else {
                             $link = LinkCache::getCachedURL('crispbb','user','view',$itemargs);
                         }
@@ -551,7 +552,7 @@ class ForumsList extends DataObjectList
                         array('check' => $check, 'priv' => 'newtopic'))) {
                             // if $linktype == 'object' use getObjectURL()
                             if ($this->linktype == 'object') {
-                                $link = xarServer::getObjectURL($args['objectname'], 'newtopic', $urlargs);
+                                $link = xarServer::getObjectURL($data['objectname'], 'newtopic', $urlargs);
                             } else {
                                 $link = LinkCache::getCachedURL('crispbb','user','newtopic',$urlargs);
                             }
@@ -569,7 +570,7 @@ class ForumsList extends DataObjectList
                         $itemargs['component'] = 'topics';
                             // if $linktype == 'object' use getObjectURL()
                             if ($this->linktype == 'object') {
-                                $link = xarServer::getObjectURL($args['objectname'], 'moderate', $itemargs);
+                                $link = xarServer::getObjectURL($data['objectname'], 'moderate', $itemargs);
                             } else {
                                 $link = LinkCache::getCachedURL('crispbb','user','moderate',$itemargs);
                             }
@@ -586,7 +587,7 @@ class ForumsList extends DataObjectList
                                 $itemargs['tstatus'] = 2;
                                     // if $linktype == 'object' use getObjectURL()
                                     if ($this->linktype == 'object') {
-                                        $link = xarServer::getObjectURL($args['objectname'], 'moderate', $urlargs);
+                                        $link = xarServer::getObjectURL($data['objectname'], 'moderate', $urlargs);
                                     } else {
                                         $link = LinkCache::getCachedURL('crispbb','user','moderate',$urlargs);
                                     }
@@ -605,7 +606,7 @@ class ForumsList extends DataObjectList
                                 $itemargs['tstatus'] = 5;
                                     // if $linktype == 'object' use getObjectURL()
                                     if ($this->linktype == 'object') {
-                                        $link = xarServer::getObjectURL($args['objectname'], 'moderate', $itemargs);
+                                        $link = xarServer::getObjectURL($data['objectname'], 'moderate', $itemargs);
                                     } else {
                                         $link = LinkCache::getCachedURL('crispbb','user','moderate',$itemargs);
                                     }
@@ -624,7 +625,7 @@ class ForumsList extends DataObjectList
                         $itemargs['sublink'] = 'forumhooks';
                             // if $linktype == 'object' use getObjectURL()
                             if ($this->linktype == 'object') {
-                                $link = xarServer::getObjectURL($args['objectname'], 'modify', $itemargs);
+                                $link = xarServer::getObjectURL($data['objectname'], 'modify', $itemargs);
                             } else {
                                 $link = LinkCache::getCachedURL('crispbb','admin','modify',$itemargs);
                             }
@@ -638,7 +639,7 @@ class ForumsList extends DataObjectList
                         $itemargs['sublink'] = 'topichooks';
                             // if $linktype == 'object' use getObjectURL()
                             if ($this->linktype == 'object') {
-                                $link = xarServer::getObjectURL($args['objectname'], 'modify', $itemargs);
+                                $link = xarServer::getObjectURL($data['objectname'], 'modify', $itemargs);
                             } else {
                                 $link = LinkCache::getCachedURL('crispbb','admin','modify',$itemargs);
                             }
@@ -652,7 +653,7 @@ class ForumsList extends DataObjectList
                         $itemargs['sublink'] = 'posthooks';
                             // if $linktype == 'object' use getObjectURL()
                             if ($this->linktype == 'object') {
-                                $link = xarServer::getObjectURL($args['objectname'], 'modify', $itemargs);
+                                $link = xarServer::getObjectURL($data['objectname'], 'modify', $itemargs);
                             } else {
                                 $link = LinkCache::getCachedURL('crispbb','admin','modify',$itemargs);
                             }
@@ -666,7 +667,7 @@ class ForumsList extends DataObjectList
                         $itemargs['sublink'] = 'privileges';
                             // if $linktype == 'object' use getObjectURL()
                             if ($this->linktype == 'object') {
-                                $link = xarServer::getObjectURL($args['objectname'], 'modify', $itemargs);
+                                $link = xarServer::getObjectURL($data['objectname'], 'modify', $itemargs);
                             } else {
                                 $link = LinkCache::getCachedURL('crispbb','admin','modify',$itemargs);
                             }
@@ -680,7 +681,7 @@ class ForumsList extends DataObjectList
                 }
             }
         } else {
-            $check['fsettings'] = unserialize($this->items[$args['itemid']]['fsettings']);
+            $check['fsettings'] = unserialize($this->items[$data['itemid']]['fsettings']);
             $redirecturl = $check['fsettings']['redirected'];
             if (!empty($redirecturl)) {
                 $itemlinks['view'] = array(
