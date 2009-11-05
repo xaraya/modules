@@ -23,7 +23,9 @@ function changelog_init()
 
     $changelogtable = $xartable['changelog'];
 
-    xarDBLoadTableMaintenanceAPI();
+    //Load Table Maintenance API
+    sys::import('xaraya.tableddl');
+    //xarDBLoadTableMaintenanceAPI();
     $query = xarDBCreateTable($xartable['changelog'],
                              array('xar_logid'      => array('type'        => 'integer',
                                                            'null'        => false,
