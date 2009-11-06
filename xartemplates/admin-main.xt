@@ -5,7 +5,7 @@
     <div class="xar-mod-body">
         <h2>Overview</h2>
             <div style="float:right;padding:10px;">
-                <xar:if condition="file_exists(sys::code(), 'modules/chat/xarimages/pjirclogo.gif')" >
+                <xar:if condition="file_exists(sys::code() . 'modules/chat/xarimages/pjirclogo.gif')" >
                     <img src="#xarTplGetImage('pjirclogo.gif')#" alt="official icon" width="131" height="102" />
                 <xar:else />
                     <img src="#xarTplGetImage('modules/modules/xarimages/admin_generic.gif')" alt="official icon" width="131" height="102" />
