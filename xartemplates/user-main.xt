@@ -13,7 +13,7 @@
                     <xar:set name="nick">str_shuffle('xar_'.$nick)</xar:set>
                 </xar:if>
                 -->
-                <xar:set name="nick">xarModVars::get('chat','nick')</xar:set>
+                <xar:set name="nick">xarModItemVars::get('chat','nick', xarSession::getVar('role_id'))</xar:set>
                 <xar:var name="nick" scope="module" module="chat"/>
                 <param name="nick" value="#$nick#" />
                 <param name="name" value="#xarUserGetVar('name')#" />
