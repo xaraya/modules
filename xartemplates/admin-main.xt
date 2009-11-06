@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <div class="xar-mod-head"><span class="xar-mod-title">Administration - Chat Module</span></div>
+    <div class="xar-mod-body">
+        <h2>Overview</h2>
+            <div style="float:right;padding:10px;">
+                <xar:if condition="file_exists(sys::code(), 'modules/chat/xarimages/pjirclogo.gif')" >
+                    <img src="#xarTplGetImage('pjirclogo.gif')#" alt="official icon" width="131" height="102" />
+                <xar:else />
+                    <img src="#xarTplGetImage('modules/modules/xarimages/admin_generic.gif')" alt="official icon" width="131" height="102" />
+                </xar:if></div>
+            <h3>
+                What is it?
+            </h3>
+            <p>
+                <em>The Chat Module is a content module</em>
+                It is currently responsible for accomplishing these tasks:
+                <ul>
+                    <li>Allowing a user to attach to an IRC server via their browser.</li>
+                    <li>Chat module is based on PJIRC, an opensource chat client.  All source and credits are included in this distribution under the xarjava directory.</li>
+                </ul>
+            </p>
+            <h3>
+                How to use it?
+            </h3>
+            <p>
+                Configure the server, port (6667 is standard) and channel that you want to open when the chat is launched.
+
+            </p>
+            <h3>
+                Included Blocks
+            </h3>
+            <p>
+                There are no included blocks.
+            </p>
+            <h3>
+                Included Hooks
+            </h3>
+            <p>
+                There are no included hooks.
+            </p>
+          <h3>
+            Further Information
+          </h3>
+          <p>
+            Further information on the Chat module can be found at
+          </p>
+          <ul>
+            <li>Chat Extension page at <a title="#xarML('Chat Module - Xaraya Extension 158')#" href="http://www.xaraya.com/index.php/release/158.html">Xaraya Extension and Releases</a>.
+               Click on Version History tab at the bottom to get the latest release information.
+            </li>
+            <li>Related tutorials and documentation on Chat found at <a href="http://www.xaraya.com/index.php/keywords/chat/" title="#xarML('Related documentation on Chat')#">Xaraya Documentation.</a>
+            </li>
+          </ul>
+          <p class="xar-sub">
+            <strong>&#160;Chat Module - Overview</strong><br />&#160;Version 2.0.0&#160; 2009-11-06
+          </p>
+    </div>
+</xar:template>

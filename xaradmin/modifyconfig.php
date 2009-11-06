@@ -40,18 +40,18 @@ function chat_admin_modifyconfig()
 
             // Update module variables
 
-            xarModSetVar('chat', 'server', $server);
-            xarModSetVar('chat', 'port', $port);
-            xarModSetVar('chat', 'channel', $channel);
+            xarModVars::set('chat', 'server', $server);
+            xarModVars::set('chat', 'port', $port);
+            xarModVars::set('chat', 'channel', $channel);
             if (empty($isalias)) {
-                xarModSetVar('newsgroups','SupportShortURLs',0);
+                xarModVars::set('newsgroups','SupportShortURLs',0);
             } else {
-                xarModSetVar('newsgroups','SupportShortURLs',1);
+                xarModVars::set('newsgroups','SupportShortURLs',1);
             }
 
             xarModCallHooks('module','updateconfig','chat',
                            array('module' => 'chat')); // forum
-            xarResponseRedirect(xarModURL('chat', 'admin', 'modifyconfig'));
+            xarResponse::redirect(xarModURL('chat', 'admin', 'modifyconfig'));
             // Return
             return true;
             break;

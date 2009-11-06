@@ -25,9 +25,9 @@ function chat_user_main($args)
     extract($args);
 
     $data = array();
-    $data['server'] = xarModGetVar('chat', 'server');
-    $data['port']   = xarModGetVar('chat', 'port');
-    $data['channel']= xarModGetVar('chat', 'channel');
+    $data['server'] = xarModVars::get('chat', 'server');
+    $data['port']   = xarModVars::get('chat', 'port');
+    $data['channel']= xarModVars::get('chat', 'channel');
 
     xarTplSetPageTitle($data['channel']);
     return $data;

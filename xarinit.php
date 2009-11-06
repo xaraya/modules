@@ -18,9 +18,9 @@
 function chat_init()
 {
     // Set up module variables
-    xarModSetVar('chat', 'server', 'irc.xaraya.com');
-    xarModSetVar('chat', 'port', 6667);
-    xarModSetVar('chat', 'channel', '#support');
+    xarModVars::set('chat', 'server', 'irc.xaraya.com');
+    xarModVars::set('chat', 'port', 6667);
+    xarModVars::set('chat', 'channel', '#support');
 
     xarRegisterMask('ReadChat', 'All', 'chat', 'All', 'All', 'ACCESS_READ');
     xarRegisterMask('AdminChat', 'All', 'chat', 'All', 'All', 'ACCESS_ADMIN');

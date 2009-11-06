@@ -13,15 +13,15 @@
  */
 $modversion['name']           = 'Chat';
 $modversion['id']             = '158';
-$modversion['version']        = '1.0.0';
+$modversion['version']        = '2.0.0';
 $modversion['displayname']    = xarML('Chat');
 $modversion['description']    = 'Port of PJIRC for Xaraya';
 $modversion['credits']        = 'xardocs/credits.txt';
-$modversion['official']       = 1;
+$modversion['official']       = true;
 $modversion['author']         = 'John Cox';
 $modversion['contact']        = 'admin@dinerminor.com';
-$modversion['admin']          = 1;
-$modversion['user']           = 1;
+$modversion['admin']          = true;
+$modversion['user']           = true;
 $modversion['class']          = 'General';
 $modversion['category']       = 'Content';
 ?>
