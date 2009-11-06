@@ -404,9 +404,10 @@ class ForumsList extends DataObjectList
       *
       * @todo make this smarter
       */
-    public function getViewOptions($data = null)
+    public function getViewOptions($itemid = null)
     {
-        if (empty($data['itemid'])) return array();
+        if (empty($itemid)) return array();
+        $data['itemid'] = $itemid;
         // import our own class to handle link cache (less code required)
         sys::import('modules.crispbb.class.cache.links');
         // insist on using fid in urlargs (for now)
