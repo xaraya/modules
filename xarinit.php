@@ -21,6 +21,7 @@ function chat_init()
     xarModVars::set('chat', 'server', 'irc.xaraya.com');
     xarModVars::set('chat', 'port', 6667);
     xarModVars::set('chat', 'channel', '#support');
+    xarModVars::set('chat', 'nick', 'niceguyeddie??');
 
     xarRegisterMask('ReadChat', 'All', 'chat', 'All', 'All', 'ACCESS_READ');
     xarRegisterMask('AdminChat', 'All', 'chat', 'All', 'All', 'ACCESS_ADMIN');
@@ -35,7 +36,7 @@ function chat_init()
 function chat_delete()
 {
     // Delete any module variables
-    xarModDelAllVars('chat');
+    xarModVars::delete_all('chat');
     xarRemoveMasks('chat');
     xarRemoveInstances('chat');
     // Deletion successful

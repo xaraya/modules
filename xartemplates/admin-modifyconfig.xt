@@ -46,16 +46,21 @@
             <input type="text" name="channel" id="channel" value="#xarModVars::get('chat', 'channel', 1)#" size="25" maxlength="255" />
           </div>
           <div class="xar-form-input-wrapper">
+            <label for="channel" class="xar-form-label required">
+              <span class="help" title="#xarML('Enter a nickname to use on the channel')#">                
+                  Nickname                
+              </span>
+            </label>
+            <input type="text" name="nick" id="nick" value="#xarModVars::get('chat', 'nick')#" size="25" maxlength="255" />
+          </div>
+          <div class="xar-form-input-wrapper">
             <label for="isalias" class="xar-form-label">
               <span class="help" title="#xarML('Use short URLs')#">                
                   Enable Short URLs                
               </span>
             </label>
-            <xar:if condition="xarModVars::get('newsgroups','SupportShortURLs')">
-              <input type="checkbox" name="isalias" id="isalias" value="1" checked="checked" />
-              <xar:else/>
-              <input type="checkbox" name="isalias" id="isalias" value="1" />
-            </xar:if>
+            <xar:set name="checked">xarModVars::get('newsgroups','SupportShortURLs')</xar:set>
+            <xar:data-input type="checkbox" name="isalias" checked="$checked"/>
           </div>
           #$hooks#
         </fieldset>

@@ -8,10 +8,13 @@
             <applet code="IRCApplet.class" archive="irc.jar,pixx.jar" codebase="#sys::code()#modules/chat/xarjava" width="100%" height="400">
             <param name="CABINETS" value="irc.cab,securedirc.cab,pixx.cab" />
             <xar:if condition="xarUserIsLoggedIn()">
-                <xar:set name="nick">xarUserGetVar('uname')</xar:set>
+                <!--
                 <xar:if condition="strtolower($nick) == 'admin'">
                     <xar:set name="nick">str_shuffle('xar_'.$nick)</xar:set>
                 </xar:if>
+                -->
+                <xar:set name="nick">xarModVars::get('chat','nick')</xar:set>
+                <xar:var name="nick" scope="module" module="chat"/>
                 <param name="nick" value="#$nick#" />
                 <param name="name" value="#xarUserGetVar('name')#" />
             <xar:else />

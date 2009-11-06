@@ -30,10 +30,11 @@ function chat_admin_modifyconfig()
 
         case 'update':
 
-            if (!xarVarFetch('server','str:1:',$server,'irc.xaraya.com',XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-            if (!xarVarFetch('port','int:1:',$port,6667,XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('channel','str:1:',$channel,'#support',XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-            if (!xarVarFetch('isalias','int:1:',$isalias,0, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('server', 'str:1:',$server,  'irc.xaraya.com',XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+            if (!xarVarFetch('port',   'int:1:',$port,     6667,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('channel','str:1:',$channel, '#support',XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+            if (!xarVarFetch('isalias','int:1:',$isalias, 0, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('nick',   'str:1:',$nick,    xarModVars::get('chat','nick'), XARVAR_NOT_REQUIRED)) return;
 
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
@@ -43,6 +44,7 @@ function chat_admin_modifyconfig()
             xarModVars::set('chat', 'server', $server);
             xarModVars::set('chat', 'port', $port);
             xarModVars::set('chat', 'channel', $channel);
+            xarModVars::set('chat', 'nick', $nick);
             if (empty($isalias)) {
                 xarModVars::set('newsgroups','SupportShortURLs',0);
             } else {
