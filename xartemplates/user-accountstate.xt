@@ -11,12 +11,12 @@
             <p>
                 Thank you for registering. You can now use the login block to log in.
             </p>
-        <xar:elseif condition="$state eq Roles_Master::ROLES_RSTATE_PENDING" />
+        <xar:elseif condition="$state eq xarRoles::ROLES_STATE_PENDING"/>
             <h3>Your account is pending activation</h3>
             <p>
                 Thank you for registering. The site administrator needs to activate your account. You will be notified when this is done.
             </p>
-        <xar:elseif condition="$state eq Roles_Master::ROLES_RSTATE_NOTVALIDATED" />
+        <xar:elseif condition="$state eq xarRoles::ROLES_STATE_NOTVALIDATED"/>
             <h3>Your account needs to be validated</h3>
             <p>
                 Thank you for registering. Please follow the validation instructions you should have received via email upon registering..

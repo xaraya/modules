@@ -11,7 +11,7 @@
                 <xar:if condition="!$result">
                     <xar:if condition="$for eq 'admin'">
                         A message was successfully sent to the administrator
-                    <xar:elseif condition="$for eq 'user'" />
+                    <xar:elseif condition="$for eq 'user'"/>
                         A message was successfully sent your email address
                     </xar:if>
                 <xar:else />
@@ -31,7 +31,7 @@
         </fieldset>
         <fieldset>
             <div class="xar-form-input-wrapper-after">
-                <xar:button type="cancel" value="Return" />
+                <xar:button type="cancel" value="Return"/>
             </div>
         </fieldset>
     </div>

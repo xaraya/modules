@@ -20,7 +20,7 @@ class RegisteredUser extends DataObject
     {
         //TODO: move this into the user property?
         // Confirm that this group or user does not already exist
-        $q = new xarQuery('SELECT',$this->rolestable);
+        $q = new Query('SELECT',$this->rolestable);
         if (empty($data['uname'])) $data['uname'] = $this->properties['user_name']->value;
         $q->eq('uname',$data['uname']);
         if (!$q->run()) return;

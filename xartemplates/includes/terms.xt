@@ -78,7 +78,7 @@
                     </xar:mlstring>
                     <xar:mlvar>#$reglink#</xar:mlvar>
                     </xar:ml>
-                <xar:if condition="xarModVars::get('registration', 'minage') gt '0'" >
+                <xar:if condition="xarModVars::get('registration', 'minage') gt '0'">
                 <xar:ml>
                     <xar:mlstring>You must also be at least the age of #(1) (#(2)) or older.</xar:mlstring>
                     <xar:mlvar>#$minagewords[$mina]#</xar:mlvar>
