@@ -487,7 +487,7 @@ function xarcachemanager_create_cache_data()
     $xartables = $dbconn->MetaTables();
     if (!in_array($cachedatatable, $xartables)) {
         // Load Table Maintenance API (still some issues with xarDataDict)
-        xarDBLoadTableMaintenanceAPI();
+        sys::import('xaraya.tableddl');
 
         $query = xarDBCreateTable($cachedatatable,
                                   array('xar_id'   => array('type'        => 'integer',
