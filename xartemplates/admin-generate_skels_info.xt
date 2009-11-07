@@ -5,12 +5,12 @@
       <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
     </div>
     <div class="xar-mod-body">
-       <xar:template type="module" module="translations" file="admin-nav" />
+       <xar:template type="module" module="translations" file="admin-nav"/>
         <h2><xar:mlstring>Generate Skels</xar:mlstring></h2>
        <xar:template type="module" file="admin-menu"/>
 
     <!-- Show progress -->
-    <xar:template type="module" file="druidbar" />
+    <xar:template type="module" file="druidbar"/>
     <h4>
       <xar:ml>
         <xar:mlstring>Generating a skeleton for #(1) #(2)</xar:mlstring>
@@ -29,6 +29,6 @@
     <input type="submit" value="#xarML('GO')#"/>
     </form>
     <br />
-    <xar:template type="module" file="opbar" />
+    <xar:template type="module" file="opbar"/>
     </div>
 </xar:template>

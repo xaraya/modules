@@ -211,7 +211,7 @@ class XMLTranslationsSkelsGenerator
         if (xarModVars::get('translations', 'maxreferences')) {
             fwrite($this->fp, "\t\t<references>\n");
             foreach($references as $reference) {
-                fwrite($this->fp, "\t\t\t<reference file=\"$reference[file]\" line=\"$reference[line]\" />\n");
+                fwrite($this->fp, "\t\t\t<reference file=\"$reference[file]\" line=\"$reference[line]\"/>\n");
             }
             fwrite($this->fp, "\t\t</references>\n");
         }
@@ -229,7 +229,7 @@ class XMLTranslationsSkelsGenerator
         if (xarModVars::get('translations', 'maxreferences')) {
             fwrite($this->fp, "\t\t<references>\n");
             foreach($references as $reference) {
-                fwrite($this->fp, "\t\t\t<reference file=\"$reference[file]\" line=\"$reference[line]\" />\n");
+                fwrite($this->fp, "\t\t\t<reference file=\"$reference[file]\" line=\"$reference[line]\"/>\n");
             }
             fwrite($this->fp, "\t\t</references>\n");
         }

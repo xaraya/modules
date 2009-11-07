@@ -5,7 +5,7 @@
       <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
     </div>
     <div class="xar-mod-body">
-       <xar:template type="module" module="translations" file="admin-nav" />
+       <xar:template type="module" module="translations" file="admin-nav"/>
        <h2><xar:mlstring>Start Translate</xar:mlstring></h2>
        <xar:template file="admin-menu" type="module"/>
 

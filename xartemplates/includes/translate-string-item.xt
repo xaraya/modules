@@ -15,7 +15,7 @@
         <xar:if condition="strlen($string) gt 80">
         <textarea name="tid#$tid#" id="tid#$tid#" rows="4" cols="60" onchange="tidchange(this);">#$translation#</textarea>
         <xar:else />
-        <input type="text" name="tid#$tid#" id="tid#$tid#" value="#$translation#" onchange="tidchange(this);" size="80" />
+        <input type="text" name="tid#$tid#" id="tid#$tid#" value="#$translation#" onchange="tidchange(this);" size="80"/>
         </xar:if>
        </td>
      </tr>

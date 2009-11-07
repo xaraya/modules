@@ -10,7 +10,7 @@ $modversion['changelog'] = 'docs/changelog.txt';
 $modversion['license'] = 'docs/license.txt';
 $modversion['official'] = true;
 $modversion['author'] = 'Marco Canini';
-$modversion['contact'] = 'marco@xaraya.com';
+$modversion['contact'] = '';
 $modversion['admin'] = true;
 $modversion['user'] = true;
 $modversion['securityschema'] = array('translations::' => 'Locale string:Backend name:Module name');

@@ -49,14 +49,14 @@
                 <xar:mlstring>Translation Backend</xar:mlstring>:
                 <span class="xar-title">
                     <a href="#xarModURL('translations','admin','modifyconfig')#">
-                        <xar:var scope="config" name="Site.MLS.TranslationsBackend" />
+                        <xar:var scope="config" name="Site.MLS.TranslationsBackend"/>
                     </a>
                 </span>
                 <br/>
                 <xar:mlstring>Release Backend</xar:mlstring>:
                 <span class="xar-title">
                     <a href="#xarModURL('translations','admin','modifyconfig')#">
-                    <xar:var scope="module" module="translations" name="release_backend_type" />
+                    <xar:var scope="module" module="translations" name="release_backend_type"/>
                     </a>
                 </span>
     -->
@@ -66,7 +66,7 @@
                 <xar:mlstring>Site Display Locale</xar:mlstring>:
                 <span class="xar-title">&#160;
                     <a href="#xarModURL('base','admin','modifyconfig', array('tab' => 'locales'))#">
-                        <xar:var scope="config" name="Site.MLS.DefaultLocale" />
+                        <xar:var scope="config" name="Site.MLS.DefaultLocale"/>
                     </a>
                 </span>&#160;
                 <xar:mlstring>(recommended: utf)</xar:mlstring>
@@ -74,7 +74,7 @@
                 <xar:mlstring>MLS Mode</xar:mlstring>:
                 <span class="xar-title">&#160;
                     <a href="#xarModURL('base','admin','modifyconfig', array('tab' => 'locales'))#">
-                        <xar:var scope="config" name="Site.MLS.MLSMode" />
+                        <xar:var scope="config" name="Site.MLS.MLSMode"/>
                     </a>
                 </span>
                 <br/>

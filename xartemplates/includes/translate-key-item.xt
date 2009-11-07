@@ -18,7 +18,7 @@
             <xar:if condition="strlen($en_translation) gt 80">
             <textarea name="key#$key#" id="key#$key#" rows="4" cols="80">#$translation#</textarea>
             <xar:else />
-            <input type="text" name="key#$key#" id="key#$key#" value="#$translation#" size="80" />
+            <input type="text" name="key#$key#" id="key#$key#" value="#$translation#" size="80"/>
             </xar:if>
           </td>
         </tr>

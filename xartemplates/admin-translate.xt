@@ -5,7 +5,7 @@
       <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
     </div>
     <div class="xar-mod-body">
-       <xar:template type="module" module="translations" file="admin-nav" />
+       <xar:template type="module" module="translations" file="admin-nav"/>
        <h2><xar:mlstring>Translate</xar:mlstring></h2>
        <xar:template type="module" file="admin-menu"/>
 
@@ -17,9 +17,9 @@
     </p -->
 
     <!-- Generated list of things for which there are skeletons -->
-    <xar:template type="module" file="trabar" />
+    <xar:template type="module" file="trabar"/>
 
     <!-- Operations overview -->
-    <xar:template type="module" file="opbar" />
+    <xar:template type="module" file="opbar"/>
     </div>
 </xar:template>

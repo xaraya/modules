@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:base-include-javascript module="base" filename="formcheck.js" />
-    <xar:style file="navtabs" module="base" scope="module" />
+    <xar:base-include-javascript module="base" filename="formcheck.js"/>
+    <xar:style file="navtabs" module="base" scope="module"/>
     <div class="xar-mod-head">
       <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
     </div>
     <div class="xar-mod-body">
-       <xar:template type="module" module="translations" file="admin-nav" />
+       <xar:template type="module" module="translations" file="admin-nav"/>
        <h2><xar:mlstring>Modify Translations Configuration</xar:mlstring></h2>
        <xar:template file="admin-menu" type="module"/>
 
@@ -47,7 +47,7 @@
 
         <xar:comment> Begin Display Options </xar:comment>
         <xar:if condition="$tab eq 'display'">
-            <form action="&xar-modurl-translations-admin-updateconfig;" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
+            <form action="&xar-modurl-translations-admin-updateconfig;" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded">
                 <fieldset>
                     <legend><xar:mlstring>Display during translation</xar:mlstring></legend>
 
@@ -59,7 +59,7 @@
                         <xar:if condition="$showcontext">
                             <input id="showcontext" type="checkbox" name="showcontext" checked="checked"/>
                         <xar:else/>
-                            <input id="showcontext" type="checkbox" name="showcontext" />
+                            <input id="showcontext" type="checkbox" name="showcontext"/>
                         </xar:if>
                         <label for="showcontext" title="#xarML('Show a bit of context for the translation. This could be helpfull for determining the exact translation')#">
                             <xar:mlstring>Show a context</xar:mlstring>
@@ -69,7 +69,7 @@
                     <label for="maxreferences" class="xar-form-label" title="#xarML('References per translation string')#">
                         <xar:mlstring>References per translation string</xar:mlstring>
                     </label>:
-                    <input type="text" name="maxreferences" value="#$maxreferences#" size="3" maxlength="3" />
+                    <input type="text" name="maxreferences" value="#$maxreferences#" size="3" maxlength="3"/>
                     <xar:mlstring><small> (0 generates no references.)</small></xar:mlstring>
                 </div>
 
@@ -77,19 +77,19 @@
                     <label for="maxcodelines" class="xar-form-label" title="#xarML('Number of lines to display as context')#">
                         <xar:mlstring>Number of lines around each </xar:mlstring>
                     </label>:
-                    <input type="text" name="maxcodelines" value="#$maxcodelines#" size="3" maxlength="3" />
+                    <input type="text" name="maxcodelines" value="#$maxcodelines#" size="3" maxlength="3"/>
                 </div>
                 </fieldset>
                 <div class="xar-form-input-wrapper-after">
-                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                    <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                    <input type="submit" value="#$updatelabel#" />
+                    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                    <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+                    <input type="submit" value="#$updatelabel#"/>
                 </div>
             </form>
 
         <xar:comment> Begin Release Options </xar:comment>
-        <xar:elseif condition="$tab eq 'release'" />
-            <form action="&xar-modurl-translations-admin-updateconfig;" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
+        <xar:elseif condition="$tab eq 'release'"/>
+            <form action="&xar-modurl-translations-admin-updateconfig;" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded">
                 <fieldset>
                     <legend><xar:mlstring>Translations storage</xar:mlstring></legend>
                     <p class="xar-form-input-wrapper-before">
@@ -103,7 +103,7 @@
                         <xar:if condition="xarModVars::get('translations', 'release_backend_type') eq 'xml'">
                             <option value="xml" selected="selected"><xar:mlstring>XML (good for interoperability)</xar:mlstring></option>
                             <option value="php"><xar:mlstring>PHP (good for programmed access)</xar:mlstring></option>
-                        <xar:elseif condition="xarModVars::get('translations', 'release_backend_type') eq 'php'" />
+                        <xar:elseif condition="xarModVars::get('translations', 'release_backend_type') eq 'php'"/>
                             <option value="xml"><xar:mlstring>XML (good for interoperability)</xar:mlstring></option>
                             <option value="php" selected="selected"><xar:mlstring>PHP (good for programmed access)</xar:mlstring></option>
                         </xar:if>
@@ -112,9 +112,9 @@
                 </div>
                 </fieldset>
                 <div class="xar-form-input-wrapper">
-                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                    <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                    <input type="submit" value="#$updatelabel#" />
+                    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                    <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+                    <input type="submit" value="#$updatelabel#"/>
                 </div>
             </form>
         </xar:if>

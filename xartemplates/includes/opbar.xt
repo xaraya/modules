@@ -7,7 +7,7 @@
       </xar:if>
       <xar:if condition="$enabledOps[$i] and $i ne $currentOp">
         <a href="#$opURLs[$i]#">#$opLabels[$i]#</a>
-      <xar:elseif condition="$i eq $currentOp" />
+      <xar:elseif condition="$i eq $currentOp"/>
         <b>#$opLabels[$i]#</b>
       <xar:else />
         #$opLabels[$i]#

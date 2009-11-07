@@ -5,7 +5,7 @@
       <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
     </div>
     <div class="xar-mod-body">
-       <xar:template type="module" module="translations" file="admin-nav" />
+       <xar:template type="module" module="translations" file="admin-nav"/>
        <h2>    <xar:mlstring>Translation progress report for locale </xar:mlstring>
         #xarSessionGetVar('translations_working_locale')#
       </h2>

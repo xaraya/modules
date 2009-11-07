@@ -8,7 +8,7 @@
         When you are finished with translating all the relevant parts of xaraya (core, modules etc.)
         you can package the translation.
       </xar:mlstring>
-      <xar:template type="module" file="druidbar" />
+      <xar:template type="module" file="druidbar"/>
     </p>
     <p>
     <form name="releaseLocaleForm" id="releaseLocaleForm" action="#xarModURL('translations', 'admin', 'update_release_locale')#" method="post">
@@ -42,5 +42,5 @@
         <input type="submit" value="#xarML('GO')#"/>
     </form>
     <br />
-    <xar:template type="module" file="opbar" />
+    <xar:template type="module" file="opbar"/>
 </xar:template>

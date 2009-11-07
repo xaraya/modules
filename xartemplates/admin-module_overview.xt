@@ -4,17 +4,17 @@
       <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
     </div>
     <div class="xar-mod-body">
-       <xar:template type="module" module="translations" file="admin-nav" />
+       <xar:template type="module" module="translations" file="admin-nav"/>
        <h2><xar:mlstring>Translate Modules</xar:mlstring></h2>
        <xar:template file="admin-menu" type="module"/>
 
-    <xar:template type="module" file="druidbar" />
+    <xar:template type="module" file="druidbar"/>
     <xar:mlstring>Module name</xar:mlstring>: #$displayname#<br />
     <xar:mlstring>Module original name</xar:mlstring>: #$name#<br />
     <xar:mlstring>Module version</xar:mlstring>: #$version#<br />
     <br />
     <xar:mlstring>Make a choice</xar:mlstring>:<br />
     <br />
-    <xar:template type="module" file="opbar" />
+    <xar:template type="module" file="opbar"/>
     </div>
 </xar:template>
