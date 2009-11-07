@@ -82,6 +82,11 @@ function xarcachemanager_init()
         xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'privileges', 'hookModName' => 'xarcachemanager'));
     }
+    // Enable xarcachemanager hooks for dynamicdata
+    if (xarModIsAvailable('dynamicdata')) {
+        xarMod::apiFunc('modules','admin','enablehooks',
+                      array('callerModName' => 'dynamicdata', 'hookModName' => 'xarcachemanager'));
+    }
 
     // set up permissions masks.
     xarRegisterMask('ReadXarCache', 'All', 'xarcachemanager', 'Item', 'All:All:All', 'ACCESS_READ');

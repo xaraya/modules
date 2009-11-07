@@ -111,6 +111,31 @@ function xarcachemanager_adminapi_deletehook($args)
                 xarBlockCache::flushCached('');
             }
             break;
+        case 'dynamicdata':
+            // get the objectname
+            sys::import('modules.dynamicdata.class.objects.master');
+            $objectinfo = DataObjectMaster::getObjectInfo(array('moduleid' => $modid,
+                                                                'itemtype' => $itemtype));
+        // CHECKME: how do we know if we need to e.g. flush dyn_example pages here ?
+            // flush dynamicdata and objecturl pages
+            if (xarCache::$outputCacheIsEnabled && xarOutputCache::$pageCacheIsEnabled) {
+                xarPageCache::flushCached('dynamicdata-');
+                if (!empty($objectinfo) && !empty($objectinfo['name'])) {
+                    xarPageCache::flushCached('objecturl-' . $objectinfo['name'] . '-');
+                }
+            }
+        // CHECKME: how do we know if we need to e.g. flush dyn_example module here ?
+            // flush dynamicdata module
+            if (xarCache::$outputCacheIsEnabled && xarOutputCache::$moduleCacheIsEnabled) {
+                xarModuleCache::flushCached('dynamicdata-');
+            }
+            // flush objects by name, e.g. dyn_example
+            if (xarCache::$outputCacheIsEnabled && xarOutputCache::$objectCacheIsEnabled) {
+                if (!empty($objectinfo) && !empty($objectinfo['name'])) {
+                    xarObjectCache::flushCached($objectinfo['name'] . '-');
+                }
+            }
+            break;
         case 'autolinks': // fall-through all hooked utility modules that are admin modified
         case 'categories': // keep falling through
         case 'keywords': // keep falling through

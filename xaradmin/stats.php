@@ -78,9 +78,11 @@ function xarcachemanager_admin_stats($args)
         case 'module':
         case 'object':
             $upper = ucfirst($tab);
-            $enabled = $upper . 'CachingEnabled'; // e.g. PageCachingEnabled
-            $storage = $upper . 'CacheStorage'; // e.g. BlockCacheStorage
-            $logfile = $upper . 'LogFile'; // e.g. ModuleLogFile
+            $enabled   = $upper . 'CachingEnabled'; // e.g. PageCachingEnabled
+            $storage   = $upper . 'CacheStorage'; // e.g. BlockCacheStorage
+            $logfile   = $upper . 'LogFile'; // e.g. ModuleLogFile
+            $cachetime = $upper . 'TimeExpiration'; // e.g. ObjectTimeExpiration
+            $sizelimit = $upper . 'SizeLimit'; // e.g. VariableSizeLimit
 
             if (!empty($reset)) {
                 // Confirm authorisation code
@@ -97,9 +99,15 @@ function xarcachemanager_admin_stats($args)
             }
             if (!empty($data[$enabled]) && !empty($data['settings'][$storage])) {
                 // get cache storage
-                $cachestorage = xarCache::getStorage(array('storage'  => $data['settings'][$storage],
-                                                           'type'     => $tab,
-                                                           'cachedir' => $outputCacheDir));
+                $cachestorage = xarCache::getStorage(array('storage'   => $data['settings'][$storage],
+                                                           'type'      => $tab,
+                                                           'cachedir'  => $outputCacheDir,
+                                                           'expire'    => $data['settings'][$cachetime],
+                                                           'sizelimit' => $data['settings'][$sizelimit]));
+                // clean the cache first
+                if (!empty($data['settings'][$cachetime])) {
+                    $cachestorage->cleanCached();
+                }
                 $data['cacheinfo'] = $cachestorage->getCacheInfo();
                 $data['cacheinfo']['total'] = $data['cacheinfo']['hits'] + $data['cacheinfo']['misses'];
                 if (!empty($data['cacheinfo']['total'])) {
@@ -262,11 +270,13 @@ function xarcachemanager_admin_stats($args)
             $typelist = array('page', 'block', 'module', 'object');
             foreach ($typelist as $type) {
                 $upper = ucfirst($type);
-                $enabled = $upper . 'CachingEnabled'; // e.g. PageCachingEnabled
-                $storage = $upper . 'CacheStorage'; // e.g. BlockCacheStorage
-                $logfile = $upper . 'LogFile'; // e.g. ModLogFile
-                $cachevar = $type . 'cache'; // e.g. pagecache
-                $logvar = $type . 'log'; // e.g. blocklog
+                $enabled   = $upper . 'CachingEnabled'; // e.g. PageCachingEnabled
+                $storage   = $upper . 'CacheStorage'; // e.g. BlockCacheStorage
+                $logfile   = $upper . 'LogFile'; // e.g. ModLogFile
+                $cachetime = $upper . 'TimeExpiration'; // e.g. ObjectTimeExpiration
+                $sizelimit = $upper . 'SizeLimit'; // e.g. VariableSizeLimit
+                $cachevar  = $type . 'cache'; // e.g. pagecache
+                $logvar    = $type . 'log'; // e.g. blocklog
 
                 // get cache stats
                 $data[$cachevar] = array('size'    => 0,
@@ -275,9 +285,15 @@ function xarcachemanager_admin_stats($args)
                                          'misses'  => 0,
                                          'modtime' => 0);
                 if ($data[$enabled] && !empty($data['settings'][$storage])) {
-                    $cachestorage = xarCache::getStorage(array('storage'  => $data['settings'][$storage],
-                                                               'type'     => $type,
-                                                               'cachedir' => $outputCacheDir));
+                    $cachestorage = xarCache::getStorage(array('storage'   => $data['settings'][$storage],
+                                                               'type'      => $type,
+                                                               'cachedir'  => $outputCacheDir,
+                                                               'expire'    => $data['settings'][$cachetime],
+                                                               'sizelimit' => $data['settings'][$sizelimit]));
+                    // clean the cache first
+                    if (!empty($data['settings'][$cachetime])) {
+                        $cachestorage->cleanCached();
+                    }
                     $data[$cachevar] = $cachestorage->getCacheInfo();
                     if (!empty($data[$cachevar]['size'])) {
                         $data[$cachevar]['size'] = round($data[$cachevar]['size'] / 1048576, 2);
