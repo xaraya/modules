@@ -143,10 +143,10 @@
                     <xar:set name="value">xarModVars::get('registration', 'defaultuserstate')</xar:set>
                     <xar:set name="options">
                         array(
-                            array('id' => xarRoles::ROLES_STATE_INACTIVE, 'name' => xarML('Inactive')),
-                            array('id' => xarRoles::ROLES_STATE_NOTVALIDATED, 'name' => xarML('Not Validated')),
-                            array('id' => xarRoles::ROLES_STATE_ACTIVE, 'name' => xarML('Active')),
-                            array('id' => xarRoles::ROLES_STATE_PENDING, 'name' => xarML('Pending Activation')),
+                            array('id' => Roles_Master::ROLES_RSTATE_INACTIVE, 'name' => xarML('Inactive')),
+                            array('id' => Roles_Master::ROLES_RSTATE_NOTVALIDATED, 'name' => xarML('Not Validated')),
+                            array('id' => Roles_Master::ROLES_RSTATE_ACTIVE, 'name' => xarML('Active')),
+                            array('id' => Roles_Master::ROLES_RSTATE_PENDING, 'name' => xarML('Pending Activation')),
                         )
                     </xar:set>
                     <xar:data-input type="dropdown" name="defaultuserstate" id="defaultuserstate" options="$options" value="$value"/>

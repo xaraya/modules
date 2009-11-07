@@ -85,7 +85,7 @@
 
                 $values = $object->getFieldValues();
                 if (xarModVars::get('roles','uniqueemail')) {
-                    $user = xarModAPIFunc('roles','user', 'get', array('email' => $email));
+                    $user = xarMod::apiFunc('roles','user', 'get', array('email' => $email));
                     if ($user) throw new DuplicateException(array('email',$email));
                 }
 
@@ -93,9 +93,9 @@
                 // @todo find a better way to turn choose own password on and off that works nicely with dd objects
                 //$pass = '';
                 if (xarModVars::get('registration', 'chooseownpassword')) {
-                    /*$invalid['pass1'] = xarModApiFunc('registration','user','checkvar', array('type'=>'pass1', 'var'=>$pass1 ));
+                    /*$invalid['pass1'] = xarMod::apiFunc('registration','user','checkvar', array('type'=>'pass1', 'var'=>$pass1 ));
                     if (empty($invalid['pass1'])) {
-                        $invalid['pass2'] = xarModApiFunc('registration','user','checkvar', array('type'=>'pass2', 'var'=>array($pass1,$pass2) ));
+                        $invalid['pass2'] = xarMod::apiFunc('registration','user','checkvar', array('type'=>'pass2', 'var'=>array($pass1,$pass2) ));
                     }
                     if (empty($invalid['pass1']) && empty($invalid['pass2']))   {
                         $pass = $pass1;
@@ -135,13 +135,13 @@
 
                 // Do we need admin activation of the account?
                 if (xarModVars::get('registration', 'explicitapproval')) {
-                    $fieldvalues['state'] = xarRoles::ROLES_STATE_PENDING;
+                    $fieldvalues['state'] = Roles_Master::ROLES_RSTATE_PENDING;
                 }
 
                 //Get the default auth module data
                 //this 'authmodule' was introduced previously (1.1 merge ?)
                 // - the column in roles re default auth module that this apparently used to refer to is redundant
-                $defaultauthdata     = xarModAPIFunc('roles', 'user', 'getdefaultauthdata');
+                $defaultauthdata     = xarMod::apiFunc('roles', 'user', 'getdefaultauthdata');
                 $defaultloginmodname = $defaultauthdata['defaultloginmodname'];
                 $authmodule          = $defaultauthdata['defaultauthmodname'];
 
@@ -154,10 +154,10 @@
 
                 // Do we require user validation of account by email?
                 if (xarModVars::get('registration', 'requirevalidation')) {
-                    $fieldvalues['state'] = xarRoles::ROLES_STATE_NOTVALIDATED;
+                    $fieldvalues['state'] = Roles_Master::ROLES_RSTATE_NOTVALIDATED;
 
                     // Create confirmation code
-                    $confcode = xarModAPIFunc('roles', 'user', 'makepass');
+                    $confcode = xarMod::apiFunc('roles', 'user', 'makepass');
                 } else {
                     $confcode = '';
                 }
@@ -167,7 +167,7 @@
 
                 // Create a password and add it if the user can't create one himself
                 if (!xarModVars::get('registration', 'chooseownpassword')){
-                    $pass = xarModAPIFunc('roles', 'user', 'makepass');
+                    $pass = xarMod::apiFunc('roles', 'user', 'makepass');
                     $fieldvalues['password'] = $pass;
                     $object->setFieldValues($fieldvalues);
                 }
@@ -183,13 +183,13 @@
                     throw new Exception(xarML('The object #(1) has no name property',$object->name));
                     
                 // Send a welcome email
-                if (xarModVars::get('registration','sendnotice')) xarModAPIFunc('registration','user','notifyuser',$object->getFieldValues());
+                if (xarModVars::get('registration','sendnotice')) xarMod::apiFunc('registration','user','notifyuser',$object->getFieldValues());
 
                 //Make sure the user email setting is off unless the user sets it
                 xarModUserVars::set('roles','allowemail', false, $id);
 
                 $hookdata = $fieldvalues;
-                $hookdata['itemtype'] = xarRoles::ROLES_USERTYPE;
+                $hookdata['itemtype'] = Roles_Master::ROLES_RUSERTYPE;
                 $hookdata['module'] = 'registration';
                 $hookdata['itemid'] = $id;
                 xarModCallHooks('item', 'create', $id, $hookdata);

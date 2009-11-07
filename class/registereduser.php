@@ -37,8 +37,8 @@ class RegisteredUser extends DataObject
         // Add the user to a group
         $parentid = xarModVars::get('registration', 'defaultgroup');
         if (!empty($parentid)) {
-            $parent = xarRoles::get($parentid);
-            $child = xarRoles::get($id);
+            $parent = Roles_Master::get($parentid);
+            $child = Roles_Master::get($id);
             if (!$parent->addMember($child))
                 throw new Exception('Unable to create a roles relation');
         }
@@ -57,7 +57,7 @@ class RegisteredUser extends DataObject
         $emailargs['password'] = xarModVars::get('registration', 'chooseownpassword') ? '' : $this->properties['password']->value;
         $emailvalues = $emailargs; 
         $emailargs['emailvalues'] = $emailvalues;
-        $ret = xarModAPIFunc('registration','user','createnotify',$emailargs);
+        $ret = xarMod::apiFunc('registration','user','createnotify',$emailargs);
         if (!$ret) return;
 
         // Let any hooks know that we have created a new user.

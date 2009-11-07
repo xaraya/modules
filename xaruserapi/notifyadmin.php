@@ -82,7 +82,7 @@ function registration_userapi_notifyadmin ($args)
     $htmlmessage= xarTplModule('registration', 'user', 'newusernotification', $emailvars,'html');
 
     //send the email now
-    if (!xarModAPIFunc('mail', 'admin', 'sendmail',
+    if (!xarMod::apiFunc('mail', 'admin', 'sendmail',
                            array('info'         => $adminemail,
                                  'name'         => $adminname,
                                  'subject'      => $messagetitle,
