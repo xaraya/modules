@@ -46,10 +46,7 @@ function xarpages_funcapi_multiform($args)
     }
 
     // Tell xarCache not to cache this page.
-    // TODO: this should be a core function or method, that can be
-    // called up without having to know how it is implemented.
-    // A simple xarCacheThisPage(false) or something like that is all that should be needed here.
-    xarCore_SetCached('Page.Caching', 'nocache', true);
+    xarCache::noCache();
 
     // Get some global settings.
 
