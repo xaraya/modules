@@ -3,7 +3,7 @@
  * Update entry for an item
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,16 +14,15 @@
  * update entry for a module item - hook for ('item','updateconfig','API')
  * Optional $extrainfo['xarcachemanager_remark'] from arguments, or 'xarcachemanager_remark' from input
  *
- * @param $args['extrainfo'] extra information
- * @return bool true on success, false on failure
+ * @param array $args with mandatory arguments:
+ * - array $args['extrainfo'] extra information
+ * @return array updated extrainfo array
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  * @todo - actually raise errors, get intelligent and specific about cache files to remove
  */
 function xarcachemanager_adminapi_updateconfighook($args)
 {
     extract($args);
-
-    $outputCacheDir = sys::varpath() . '/cache/output/';
 
     if (!isset($extrainfo) || !is_array($extrainfo)) {
         $extrainfo = array();

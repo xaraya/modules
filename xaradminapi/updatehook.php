@@ -3,7 +3,7 @@
  * Update hooks
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,17 +14,16 @@
  * update entry for a module item - hook for ('item','update','API')
  * Optional $extrainfo['xarcachemanager_remark'] from arguments, or 'xarcachemanager_remark' from input
  *
- * @param $args['objectid'] ID of the object
- * @param $args['extrainfo'] extra information
- * @return bool true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
- * todo - actually raise errors, get intelligent and specific about cache files to remove
+ * @param array $args with mandatory arguments:
+ * - int   $args['objectid'] ID of the object
+ * - array $args['extrainfo'] extra information
+ * @return array updated extrainfo array
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @todo - actually raise errors, get intelligent and specific about cache files to remove
  */
 function xarcachemanager_adminapi_updatehook($args)
 {
     extract($args);
-
-    $outputCacheDir = sys::varpath() . '/cache/output/';
 
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -67,8 +66,13 @@ function xarcachemanager_adminapi_updatehook($args)
 
     switch($modname) {
         case 'blocks':
+            // Get the output cache directory so you can access it even if output caching is disabled
+            $outputCacheDir = xarCache::getOutputCacheDir();
+
             // first, if authorized, save the new settings
-            if (file_exists($outputCacheDir . 'cache.blocklevel') &&
+            // (don't check if output caching is enabled here so config options can be tweaked
+            //  even when output caching has been temporarily disabled)
+            if (xarOutputCache::$blockCacheIsEnabled &&
                 xarSecurityCheck('AdminXarCache', 0)) {
                 xarVarFetch('nocache', 'isset', $nocache, 0, XARVAR_NOT_REQUIRED);
                 xarVarFetch('pageshared', 'isset', $pageshared, 0, XARVAR_NOT_REQUIRED);

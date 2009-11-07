@@ -3,7 +3,7 @@
  * Flush output cache
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,9 +12,12 @@
  */
 /**
  * Flush cache files for a given cacheKey
- * @param flushkey
- * @param string confirm
  * @author jsb
+ * @param array $args with optional arguments:
+ * - string $args['flushkey']
+ * - string $args['cachecode']
+ * - string $args['confirm']
+ * @return array
  */
 function xarcachemanager_admin_flushcache($args)
 {
@@ -27,13 +30,6 @@ function xarcachemanager_admin_flushcache($args)
     if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     $cachetypes = xarMod::apiFunc('xarcachemanager','admin','getcachetypes');
-
-    //Make sure xarOutputCache is included so you delete cacheKeys even if caching is disabled
-    if (!xarCache::$outputCacheIsEnabled) {
-        sys::import('xaraya.caching.output');
-        //xarCache::$outputCacheIsEnabled = xarOutputCache::init();
-        xarOutputCache::init();
-    }
 
     if (empty($confirm)) {
 
@@ -63,9 +59,12 @@ function xarcachemanager_admin_flushcache($args)
 
         } else {
 
+            // Get the output cache directory so you can flush items even if output caching is disabled
+            $outputCacheDir = xarCache::getOutputCacheDir();
+
             // get the caching config settings from the config file
-            $config = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
-                                      array('from' => 'file'));
+            $data['settings'] = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
+                                                array('from' => 'file', 'tpl_prep' => TRUE));
 
             // see if we need to delete an individual item instead of flushing the key
             if (!xarVarFetch('cachecode', 'isset', $cachecode, '', XARVAR_NOT_REQUIRED)) return;
@@ -76,61 +75,23 @@ function xarcachemanager_admin_flushcache($args)
                 if ($key == '*') {
                     $key = '';
                 }
-                switch($type)
-                {
-                    case 'page':
-                        if (!xarOutputCache::$pageCacheIsEnabled) {
-                            sys::import('xaraya.caching.output.page');
-                            xarPacheCache::init($config);
-                        }
-                        if (!empty($key) && !empty($cachecode) && !empty($cachecode[$type]) && !empty(xarPageCache::$cacheStorage)) {
-                            xarPageCache::$cacheStorage->setCode($cachecode[$type]);
-                            xarPageCache::$cacheStorage->delCached($key);
-                        } else {
-                            xarPageCache::flushCached($key);
-                        }
-                        $found++;
-                        break;
-                    case 'block':
-                        if (!xarOutputCache::$blockCacheIsEnabled) {
-                            sys::import('xaraya.caching.output.block');
-                            xarBlockCache::init($config);
-                        }
-                        if (!empty($key) && !empty($cachecode) && !empty($cachecode[$type]) && !empty(xarBlockCache::$cacheStorage)) {
-                            xarBlockCache::$cacheStorage->setCode($cachecode[$type]);
-                            xarBlockCache::$cacheStorage->delCached($key);
-                        } else {
-                           xarBlockCache::flushCached($key);
-                        }
-                        $found++;
-                        break;
-                    case 'module':
-                        if (!xarOutputCache::$moduleCacheIsEnabled) {
-                            sys::import('xaraya.caching.output.module');
-                            xarModuleCache::init($config);
-                        }
-                        if (!empty($key) && !empty($cachecode) && !empty($cachecode[$type]) && !empty(xarModuleCache::$cacheStorage)) {
-                            xarModuleCache::$cacheStorage->setCode($cachecode[$type]);
-                            xarModuleCache::$cacheStorage->delCached($key);
-                        } else {
-                            xarModuleCache::flushCached($key);
-                        }
-                        $found++;
-                        break;
-                    case 'object':
-                        if (!xarOutputCache::$objectCacheIsEnabled) {
-                            sys::import('xaraya.caching.output.object');
-                            xarObjectCache::init($config);
-                        }
-                        if (!empty($key) && !empty($cachecode) && !empty($cachecode[$type]) && !empty(xarObjectCache::$cacheStorage)) {
-                            xarObjectCache::$cacheStorage->setCode($cachecode[$type]);
-                            xarObjectCache::$cacheStorage->delCached($key);
-                        } else {
-                            xarObjectCache::flushCached($key);
-                        }
-                        $found++;
-                        break;
+                $upper = ucfirst($type);
+                $storage = $upper . 'CacheStorage'; // e.g. BlockCacheStorage
+                if (empty($data['settings'][$storage])) continue;
+
+                // get cache storage
+                $cachestorage = xarCache::getStorage(array('storage'  => $data['settings'][$storage],
+                                                           'type'     => $type,
+                                                           'cachedir' => $outputCacheDir));
+                if (empty($cachestorage)) continue;
+
+                if (!empty($key) && !empty($cachecode) && !empty($cachecode[$type])) {
+                    $cachestorage->setCode($cachecode[$type]);
+                    $cachestorage->delCached($key);
+                } else {
+                    $cachestorage->flushCached($key);
                 }
+                $found++;
             }
             if (empty($found)) {
                 $data['notice'] = xarML("You must select a cache key to flush.  If there is no cache key to select the output cache is empty.");

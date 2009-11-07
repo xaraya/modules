@@ -3,7 +3,7 @@
  * Flush the appropriate cache
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,17 +13,16 @@
 /**
  * flush the appropriate cache when a module item is created- hook for ('item','create','API')
  *
- * @param $args['objectid'] ID of the object
- * @param $args['extrainfo'] extra information
- * @return array extrainfo array
+ * @param array $args with mandatory arguments:
+ * - int   $args['objectid'] ID of the object
+ * - array $args['extrainfo'] extra information
+ * @return array updated extrainfo array
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  * @todo - actually raise errors, get intelligent and specific about cache files to remove
  */
 function xarcachemanager_adminapi_createhook($args)
 {
     extract($args);
-
-    $outputCacheDir = sys::varpath() . '/cache/output/';
 
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -126,7 +125,7 @@ function xarcachemanager_adminapi_createhook($args)
             }
             // a new item might mean a new menulink
             if (xarOutputCache::$blockCacheIsEnabled) {
-                xarBlockCache::flushCached('base-block');
+                xarBlockCache::flushCached('base-');
             }
             break;
     }

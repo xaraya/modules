@@ -3,7 +3,7 @@
  * Construct an array of current cache keys
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -31,13 +31,8 @@ function xarcachemanager_adminapi_getcachekeys($type = '')
         return $cachekeys;
     }
 
-    // get default cache directory
-    global $xarOutput_cacheCollection;
-    if (!empty($xarOutput_cacheCollection)) {
-        $cachedir = $xarOutput_cacheCollection;
-    } else {
-        $cachedir = sys::varpath() . '/cache/output';
-    }
+    // Get the output cache directory so you can get cache keys even if output caching is disabled
+    $outputCacheDir = xarCache::getOutputCacheDir();
 
     // default cache storage is 'filesystem' if necessary
     if (!empty($cachetypes[$type]['CacheStorage'])) {
@@ -47,9 +42,9 @@ function xarcachemanager_adminapi_getcachekeys($type = '')
     }
 
     // get cache storage
-    $cachestorage = xarCache_getStorage(array('storage'  => $storage,
-                                              'type'     => $type,
-                                              'cachedir' => $cachedir));
+    $cachestorage = xarCache::getStorage(array('storage'  => $storage,
+                                               'type'     => $type,
+                                               'cachedir' => $outputCacheDir));
     if (empty($cachestorage)) {
         return $cachekeys;
     }

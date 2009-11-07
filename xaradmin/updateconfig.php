@@ -101,23 +101,6 @@ function xarcachemanager_admin_updateconfig()
         if (!empty($blocklogfile) && !file_exists($blocklogfile)) {
             touch($blocklogfile);
         }
-        //Make sure xarOutputCache is included so you delete cacheKeys even if caching is disabled
-        if (!xarCache::$outputCacheIsEnabled) {
-            sys::import('xaraya.caching.output');
-            //xarCache::$outputCacheIsEnabled = xarOutputCache::init();
-            xarOutputCache::init();
-        }
-        if (!xarOutputCache::$blockCacheIsEnabled) {
-            sys::import('xaraya.caching.output.block');
-            // get the caching config settings from the config file
-            $config = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
-                                      array('from' => 'file'));
-            xarBlockCache::init($config);
-        }
-        // flush adminpanels and base blocks to show new menu options if necessary
-        xarBlockCache::flushCached('base-block');
-        // CHECKME: no longer used ?
-        xarBlockCache::flushCached('adminpanels-block');
     } else {
         if(file_exists($outputCacheDir . '/cache.blocklevel')) {
             unlink($outputCacheDir . '/cache.blocklevel');
@@ -132,7 +115,6 @@ function xarcachemanager_admin_updateconfig()
         if (!empty($modulelogfile) && !file_exists($modulelogfile)) {
             touch($modulelogfile);
         }
-        // CHECKME: flush something here too ?
     } else {
         if(file_exists($outputCacheDir . '/cache.modulelevel')) {
             unlink($outputCacheDir . '/cache.modulelevel');
@@ -147,7 +129,6 @@ function xarcachemanager_admin_updateconfig()
         if (!empty($objectlogfile) && !file_exists($objectlogfile)) {
             touch($objectlogfile);
         }
-        // CHECKME: flush something here too ?
     } else {
         if(file_exists($outputCacheDir . '/cache.objectlevel')) {
             unlink($outputCacheDir . '/cache.objectlevel');
@@ -257,6 +238,22 @@ function xarcachemanager_admin_updateconfig()
         xarModVars::set('xarcachemanager','AutoRegenSessionless', 1);
     } else {
         xarModVars::set('xarcachemanager','AutoRegenSessionless', 0);
+    }
+
+    // flush adminpanels and base blocks to show new menu options if necessary
+    if ($cacheblocks) {
+        // get the output cache directory so you can flush items even if output caching is disabled
+        $outputCacheDir = xarCache::getOutputCacheDir();
+
+        // get the cache storage for block caching
+        $cachestorage = xarCache::getStorage(array('storage'  => $blockcachestorage,
+                                                   'type'     => 'block',
+                                                   'cachedir' => $outputCacheDir));
+        if (!empty($cachestorage)) {
+            $cachestorage->flushCached('base-');
+        // CHECKME: no longer used ?
+            $cachestorage->flushCached('adminpanels-');
+        }
     }
 
     xarResponse::Redirect(xarModURL('xarcachemanager', 'admin', 'modifyconfig'));

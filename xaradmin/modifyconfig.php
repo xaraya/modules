@@ -3,7 +3,7 @@
  * Modify config
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,10 +15,8 @@
  *
  * @author jsb | mikespub
  * @access public
- * @param no $ parameters
- * @return $data (array of values for admin modify template) on success or false on failure
+ * @return array $data (array of values for admin modify template) on success or false on failure
  * @throws MODULE_FILE_NOT_EXIST
- * @todo nothing
  */
 function xarcachemanager_admin_modifyconfig()
 {

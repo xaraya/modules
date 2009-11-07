@@ -3,7 +3,7 @@
  * Statistics
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,11 +12,13 @@
  */
 /**
  * Show cache statistics
- * @param tab
- * @param sort
- * @param reset
- * @param int startnum
- * @param int withlog
+ * @param array $args with optional arguments:
+ * - string $args['tab']
+ * - int    $args['withlog']
+ * - string $args['reset']
+ * - string $args['sort']
+ * - int    $args['startnum']
+ * - int    $args['itemsperpage']
  * @return array
  */
 function xarcachemanager_admin_stats($args)
@@ -30,15 +32,8 @@ function xarcachemanager_admin_stats($args)
     if (!xarVarFetch('startnum', 'int', $startnum,          1, XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('withlog',  'int',  $withlog,          0, XARVAR_NOT_REQUIRED)) { return; }
 
-    $varCacheDir = sys::varpath() . '/cache';
-    $outputCacheDir = $varCacheDir . '/output';
-
-    //Make sure xarOutputCache is included so you can view stats even if caching is disabled
-    if (!xarCache::$outputCacheIsEnabled) {
-        sys::import('xaraya.caching.output');
-        //xarCache::$outputCacheIsEnabled = xarOutputCache::init();
-        xarOutputCache::init();
-    }
+    // Get the output cache directory so you can view stats even if output caching is disabled
+    $outputCacheDir = xarCache::getOutputCacheDir();
 
     $numitems = xarModVars::get('xarcachemanager','itemsperpage');
     if (empty($numitems)) {
@@ -102,9 +97,9 @@ function xarcachemanager_admin_stats($args)
             }
             if (!empty($data[$enabled]) && !empty($data['settings'][$storage])) {
                 // get cache storage
-                $cachestorage = xarCache_getStorage(array('storage'  => $data['settings'][$storage],
-                                                          'type'     => $tab,
-                                                          'cachedir' => $outputCacheDir));
+                $cachestorage = xarCache::getStorage(array('storage'  => $data['settings'][$storage],
+                                                           'type'     => $tab,
+                                                           'cachedir' => $outputCacheDir));
                 $data['cacheinfo'] = $cachestorage->getCacheInfo();
                 $data['cacheinfo']['total'] = $data['cacheinfo']['hits'] + $data['cacheinfo']['misses'];
                 if (!empty($data['cacheinfo']['total'])) {
@@ -280,9 +275,9 @@ function xarcachemanager_admin_stats($args)
                                          'misses'  => 0,
                                          'modtime' => 0);
                 if ($data[$enabled] && !empty($data['settings'][$storage])) {
-                    $cachestorage = xarCache_getStorage(array('storage'  => $data['settings'][$storage],
-                                                              'type'     => $type,
-                                                              'cachedir' => $outputCacheDir));
+                    $cachestorage = xarCache::getStorage(array('storage'  => $data['settings'][$storage],
+                                                               'type'     => $type,
+                                                               'cachedir' => $outputCacheDir));
                     $data[$cachevar] = $cachestorage->getCacheInfo();
                     if (!empty($data[$cachevar]['size'])) {
                         $data[$cachevar]['size'] = round($data[$cachevar]['size'] / 1048576, 2);
@@ -311,9 +306,9 @@ function xarcachemanager_admin_stats($args)
             $data['querycache'] = array('size'  => 0,
                                         'items' => 0);
             if ($data['QueryCachingEnabled'] && !empty($data['settings']['QueryCacheStorage'])) {
-                $querystorage = xarCache_getStorage(array('storage'  => $data['settings']['QueryCacheStorage'],
-                                                          'type'     => 'adodb',
-                                                          'cachedir' => 'var/cache'));
+                $querystorage = xarCache::getStorage(array('storage'  => $data['settings']['QueryCacheStorage'],
+                                                           'type'     => 'database',
+                                                           'cachedir' => sys::varpath() . '/cache'));
                 $data['querycache']['size'] = $querystorage->getCacheSize(true);
                 $data['querycache']['items'] = $querystorage->getCacheItems() - 1; // index.html
             }

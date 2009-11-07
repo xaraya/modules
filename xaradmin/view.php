@@ -3,7 +3,7 @@
  * View cache items
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,6 +12,11 @@
  */
 /**
  * show the content of cache items
+ * @param array $args with optional arguments:
+ * - string $args['tab']
+ * - string $args['key']
+ * - string $args['code']
+ * @return array
  */
 function xarcachemanager_admin_view($args)
 {
@@ -31,15 +36,8 @@ function xarcachemanager_admin_view($args)
 
     if (!xarSecurityCheck('AdminXarCache')) return;
 
-    $varCacheDir = sys::varpath() . '/cache';
-    $outputCacheDir = $varCacheDir . '/output';
-
-    //Make sure xarOutputCache is included so you can view items even if caching is disabled
-    if (!xarCache::$outputCacheIsEnabled) {
-        sys::import('xaraya.caching.output');
-        //xarCache::$outputCacheIsEnabled = xarOutputCache::init();
-        xarOutputCache::init();
-    }
+    // Get the output cache directory so you can view items even if output caching is disabled
+    $outputCacheDir = xarCache::getOutputCacheDir();
 
     $data = array();
 
@@ -78,23 +76,25 @@ function xarcachemanager_admin_view($args)
     $data['code'] = $code;
     $data['lines'] = array();
     $data['title']  = '';
+    $data['link']  = '';
     $data['styles'] = array();
     $data['script'] = array();
     if (!empty($data[$enabled]) && !empty($data['settings'][$storage])) {
         // get cache storage
-        $cachestorage = xarCache_getStorage(array('storage'  => $data['settings'][$storage],
-                                                  'type'     => $tab,
-                                                  'cachedir' => $outputCacheDir));
+        $cachestorage = xarCache::getStorage(array('storage'  => $data['settings'][$storage],
+                                                   'type'     => $tab,
+                                                   'cachedir' => $outputCacheDir));
         // specify suffix if necessary
         if (!empty($code)) {
             $cachestorage->setCode($code);
         }
         if ($cachestorage->isCached($key, 0, 0)) {
             $value = $cachestorage->getCached($key);
-            if ($tab == 'module') {
+            if ($tab == 'module' || $tab == 'object') {
                 $content = unserialize($value);
                 $data['lines']  = explode("\n", $content['output']);
                 $data['title']  = $content['title'];
+                $data['link']   = $content['link'];
                 $data['styles'] = $content['styles'];
                 $data['script'] = $content['script'];
             } else {

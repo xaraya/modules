@@ -3,7 +3,7 @@
  * Modify hook
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,8 +13,9 @@
 /**
  * modify an entry for a module item - hook for ('item','modify','GUI')
  *
- * @param $args['objectid'] ID of the object
- * @param $args['extrainfo'] extra information
+ * @param array $args with mandatory arguments:
+ * - int   $args['objectid'] ID of the object
+ * - array $args['extrainfo'] extra information
  * @return string hook output in HTML
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
@@ -24,11 +25,15 @@ function xarcachemanager_admin_modifyhook($args)
 
     if (!xarSecurityCheck('AdminXarCache', 0)) { return ''; }
 
-    // If we are disabled, nothing to do here
-    $varCacheDir = sys::varpath() . '/cache';
-    $outputCacheDir = $varCacheDir . '/output';
-    if (!file_exists($outputCacheDir.'/cache.touch')) {return '';}
+    // Get the output cache directory so you can access it even if output caching is disabled
+    $outputCacheDir = xarCache::getOutputCacheDir();
 
+    // only display modify hooks if block level output caching has been enabled
+    // (don't check if output caching is enabled here so config options can be tweaked
+    //  even when output caching has been temporarily disabled)
+    if (!xarOutputCache::$blockCacheIsEnabled) {
+        return '';
+    }
 
     if (!isset($extrainfo)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -56,12 +61,6 @@ function xarcachemanager_admin_modifyhook($args)
 
     // we are only interested in the config of block output caching for now
     if ($modname !== 'blocks') {
-        return '';
-    }
-    // only display config hooks if block level output caching has been enabled
-    // (check for the file rather than the constant so config options can be tweaked
-    //  even when output caching has been temporarily disabled)
-    if (!file_exists(sys::varpath() . '/cache/output/cache.blocklevel')) {
         return '';
     }
 

@@ -1,9 +1,9 @@
 <?php
-/*
+/**
  * Main
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,16 +15,14 @@
  * 
  * @author jsb | mikespub
  * @access public 
- * @param no $ parameters
  * @return true on success or void on falure
- * @throws XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION'
  */
 function xarcachemanager_admin_main()
 { 
     // Security Check
     if (!xarSecurityCheck('AdminXarCache')) return;
 
-        xarResponse::Redirect(xarModURL('xarcachemanager', 'admin', 'modifyconfig'));
+    xarResponse::Redirect(xarModURL('xarcachemanager', 'admin', 'modifyconfig'));
     // success
     return true;
 } 

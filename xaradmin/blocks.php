@@ -3,7 +3,7 @@
  * Config block caching
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,6 +12,7 @@
  */
 /**
  * configure block caching
+ * @return array
  */
 function xarcachemanager_admin_blocks($args)
 {
@@ -19,10 +20,8 @@ function xarcachemanager_admin_blocks($args)
 
     if (!xarSecurityCheck('AdminXarCache')) { return; }
 
-    $cacheOutputDir = sys::varpath() . '/cache/output';
-
     $data = array();
-    if (!file_exists($cacheOutputDir . '/cache.blocklevel')) {
+    if (!xarCache::$outputCacheIsEnabled || !xarOutputCache::$blockCacheIsEnabled) {
         $data['blocks'] = array();
         return $data;
     }
@@ -90,30 +89,13 @@ function xarcachemanager_admin_blocks($args)
             if (!$result) return;
         }
 
-        // make sure we can flush blocks, even if caching is currently disabled
-        if (!xarCache::$outputCacheIsEnabled) {
-            sys::import('xaraya.caching.output');
-            //xarCache::$outputCacheIsEnabled = xarOutputCache::init();
-            xarOutputCache::init();
-        }
-
-        // get the caching config settings from the config file
-        $config = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
-                                  array('from' => 'file'));
-
         // blocks could be anywhere, we're not smart enough not know exactly where yet
         $key = '';
         // so just flush all pages
-        if (!xarOutputCache::$pageCacheIsEnabled) {
-            sys::import('xaraya.caching.output.page');
-            xarPacheCache::init($config);
+        if (xarOutputCache::$pageCacheIsEnabled) {
+            xarPageCache::flushCached($key);
         }
-        xarPageCache::flushCached($key);
         // and flush the blocks
-        if (!xarOutputCache::$blockCacheIsEnabled) {
-            sys::import('xaraya.caching.output.block');
-            xarBlockCache::init($config);
-        }
         xarBlockCache::flushCached($key);
         if (xarModVars::get('xarcachemanager','AutoRegenSessionless')) {
             xarMod::apiFunc( 'xarcachemanager', 'admin', 'regenstatic');

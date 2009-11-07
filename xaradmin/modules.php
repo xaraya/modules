@@ -3,7 +3,7 @@
  * Config module caching
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,6 +12,7 @@
  */
 /**
  * configure module caching
+ * @return array
  */
 function xarcachemanager_admin_modules($args)
 {
@@ -19,10 +20,8 @@ function xarcachemanager_admin_modules($args)
 
     if (!xarSecurityCheck('AdminXarCache')) { return; }
 
-    $cacheOutputDir = sys::varpath() . '/cache/output';
-
     $data = array();
-    if (!file_exists($cacheOutputDir . '/cache.modulelevel')) {
+    if (!xarCache::$outputCacheIsEnabled || !xarOutputCache::$moduleCacheIsEnabled) {
         $data['modules'] = array();
         return $data;
     }
@@ -74,24 +73,13 @@ function xarcachemanager_admin_modules($args)
         // save settings to modules in case xarcachemanager is removed later
         xarModVars::set('modules','modulecache_settings', serialize($newmodules));
 
-        // make sure we can flush modules, even if caching is currently disabled
-        if (!xarCache::$outputCacheIsEnabled) {
-            sys::import('xaraya.caching.output');
-            //xarCache::$outputCacheIsEnabled = xarOutputCache::init();
-            xarOutputCache::init();
-        }
-
-        // get the caching config settings from the config file
-        $config = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
-                                  array('from' => 'file'));
-
         // modules could be anywhere, we're not smart enough not know exactly where yet
         $key = '';
-        // just flush the modules
-        if (!xarOutputCache::$moduleCacheIsEnabled) {
-            sys::import('xaraya.caching.output.module');
-            xarModuleCache::init($config);
+        // so just flush all pages
+        if (xarOutputCache::$pageCacheIsEnabled) {
+            xarPageCache::flushCached($key);
         }
+        // and flush the modules
         xarModuleCache::flushCached($key);
         if (xarModVars::get('xarcachemanager','AutoRegenSessionless')) {
             xarMod::apiFunc( 'xarcachemanager', 'admin', 'regenstatic');

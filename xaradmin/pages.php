@@ -3,7 +3,7 @@
  * Configure page caching
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,6 +12,7 @@
  */
 /**
  * configure page caching (TODO)
+ * @return array
  */
 function xarcachemanager_admin_pages($args)
 {
@@ -20,18 +21,13 @@ function xarcachemanager_admin_pages($args)
     if (!xarSecurityCheck('AdminXarCache')) return;
 
     $data = array();
-
-    $varCacheDir = sys::varpath() . '/cache';
-    if (file_exists($varCacheDir . '/output/cache.pagelevel')) {
-        $iscached = 1;
-    } else {
-        $iscached = 0;
-    }
-
-    if (empty($iscached)) {
+    if (!xarCache::$outputCacheIsEnabled || !xarOutputCache::$pageCacheIsEnabled) {
         $data['pages'] = array();
         return $data;
     }
+
+    // Get the output cache directory
+    $outputCacheDir = xarCache::getOutputCacheDir();
 
     $cachingConfiguration = xarMod::apiFunc('xarcachemanager', 'admin', 'get_cachingconfig',
                                           array('from' => 'file'));
@@ -136,9 +132,6 @@ function xarcachemanager_admin_pages($args)
         xarMod::apiFunc('xarcachemanager', 'admin', 'save_cachingconfig',
                       array('configSettings' => $configSettings));
 
-        // set the cache dir
-        $outputCacheDir = sys::varpath() . '/cache/output';
-
         if (empty($autocache['period'])) {
             // remove autocache.start and autocache.log files
             if (file_exists($outputCacheDir . '/autocache.start')) {
@@ -217,7 +210,6 @@ function xarcachemanager_admin_pages($args)
 
     // Get some current information from the auto-cache log
     $data['autocachepages'] = array();
-    $outputCacheDir = sys::varpath() . '/cache/output';
     if (file_exists($outputCacheDir . '/autocache.log') &&
         filesize($outputCacheDir . '/autocache.log') > 0) {
         $logs = file($outputCacheDir . '/autocache.log');

@@ -24,6 +24,13 @@
                 [ <a href="#xarModURL('xarcachemanager','admin','flushcache',array('flushkey['.$tab.']' => $key, 'cachecode['.$tab.']' => $code, 'authid' => $authid, 'confirm' => 1, 'return_url' => $return_url))#">delete item</a> ]
             </td>
         </tr>
+        <xar:if condition="!empty($link)">
+            <tr>
+                <td colspan="2">
+                    <strong>Link:</strong>&#160;<a href="#xarVarPrepHTMLDisplay($link)#">#xarVarPrepHTMLDisplay($link)#</a>
+                </td>
+            </tr>
+        </xar:if>
         <xar:if condition="!empty($title)">
             <tr>
                 <td colspan="2">

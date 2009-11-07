@@ -3,7 +3,7 @@
  * Delete entry for a module item
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,17 +13,16 @@
 /**
  * delete entry for a module item - hook for ('item','delete','API')
  *
- * @param $args['objectid'] ID of the object
- * @param $args['extrainfo'] extra information
- * @return bool true on success, false on failure
+ * @param array $args with mandatory arguments:
+ * - int   $args['objectid'] ID of the object
+ * - array $args['extrainfo'] extra information
+ * @return array updated extrainfo array
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  * @todo - actually raise errors, get intelligent and specific about cache files to remove
  */
 function xarcachemanager_adminapi_deletehook($args)
 {
     extract($args);
-
-    $outputCacheDir = sys::varpath() . '/cache/output/';
 
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -138,7 +137,7 @@ function xarcachemanager_adminapi_deletehook($args)
             }
             // a deleted item might mean a menulink goes away
             if (xarCache::$outputCacheIsEnabled && xarOutputCache::$blockCacheIsEnabled) {
-                xarBlockCache::flushCached('base-block');
+                xarBlockCache::flushCached('base-');
             }
             break;
     }
