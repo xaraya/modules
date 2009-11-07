@@ -1,10 +1,10 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<xar:base-include-javascript position="head" module="registration" filename="registration.js" />
+<xar:javascript position="head" module="registration" filename="registration.js"/>
 <div class="xar-mod-head"><span class="xar-mod-title">Create User Account</span></div>
 <div class="xar-mod-body">
     <form action="&xar-modurl-registration-user-newmember;" method="post" enctype="application/x-www-form-urlencoded">
-        <xar:data-display object="$object" />
+        <xar:data-display object="$object"/>
 
         <!-- all the hooks here, loop over each one of them -->
         <xar:if condition="!empty($hookoutput)">
@@ -30,10 +30,10 @@
                 Please review the above information and check it for correctness. Click Create Account to continue.
             </p>
             <div class="xar-form-input-wrapper-after xar-padding-thick">
-                <input type="submit" id="1" value="#xarML('Edit Data')#" onclick="javascript:setPhase('registerformcycle')" />
-                <input type="submit" id="2" value="#xarML('Create Account')#" />
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="hidden" name="phase" id="phase" value="createuser" />
+                <input type="submit" id="1" value="#xarML('Edit Data')#" onclick="javascript:setPhase('registerformcycle')"/>
+                <input type="submit" id="2" value="#xarML('Create Account')#"/>
+                <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                <input type="hidden" name="phase" id="phase" value="createuser"/>
             </div>
 
         </fieldset>
