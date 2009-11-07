@@ -39,7 +39,7 @@ function crispbb_user_main()
             'privcheck' => true
             ));
     // if the error was no privs, we should have an error message
-    if (!empty($forums['error'])) {
+    if (!empty($forums['error']) && $forums['error'] != 'BAD_DATA') {
             $msg = xarML('You do not have the privileges required for this action');
             $errorMsg['message'] = $msg;
             $errorMsg['return_url'] = xarServerGetBaseURL();
@@ -76,6 +76,7 @@ function crispbb_user_main()
     $seenLevels = array();
     $totaltopics = 0;
     $totalreplies = 0;
+    $minLevel = xarModAPIFunc('crispbb', 'user', 'getseclevel');
     if (!empty($categories)) {
         foreach ($categories as $cid => $category) {
             $catLevel = xarModAPIFunc('crispbb', 'user', 'getseclevel',
