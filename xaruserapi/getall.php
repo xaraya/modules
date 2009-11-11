@@ -541,7 +541,7 @@ function articles_userapi_getall($args)
                     if (isset($items[$article['aid']]) && isset($items[$article['aid']][$name])) {
                         $value = $items[$article['aid']][$name];
                     } else {
-                        $value = $properties[$name]->default;
+                        $value = $properties[$name]->defaultvalue;
                     }
 
                     $articles[$key][$name] = $value;
