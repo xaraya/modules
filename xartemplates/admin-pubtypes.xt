@@ -121,7 +121,7 @@
                 </table>
                 <p>
                     <xar:mlstring>
-                        <strong>Note:</strong> articles of this publication type will use the templates <em>user-display-[publicationtype].xd</em> and <em>user-summary-[publicationtype].xd</em> by default.
+                        <strong>Note:</strong> articles of this publication type will use the templates <em>user-display-[publicationtype].xt</em> and <em>user-summary-[publicationtype].xt</em> by default.
                         <br />
                         Don't forget to provide those templates before trying to add new articles...
                     </xar:mlstring>
@@ -353,11 +353,19 @@
         </form>
     </xar:if>
     <xar:if condition="$action eq 'view'">
-        <h3 class="xar-align-left"><a href="#$newurl#">
+        <h3 class="xar-align-left">
+            <a href="#$newurl#">
                 <xar:mlstring>
                     Create New Publication Type
                 </xar:mlstring>
-            </a></h3>
+            </a>
+            &#160;
+            <a href="#xarModURL('articles','admin','importpubtype')#">
+                <xar:mlstring>
+                    Import Definition from XML
+                </xar:mlstring>
+            </a>
+        </h3>
         <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
             <tr>
                 <th>
@@ -448,11 +456,6 @@
                 </tr>
             </xar:foreach>
         </table>
-        <h3 class="xar-align-left"><a href="#xarModURL('articles','admin','importpubtype')#">
-                <xar:mlstring>
-                    Import Definition from XML
-                </xar:mlstring>
-            </a></h3>
     </xar:if>
     <xar:set name="dummy">xarSession::setVar('statusmsg','')</xar:set>
 </div>

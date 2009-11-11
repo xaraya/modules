@@ -685,7 +685,7 @@
                     <xar:mlstring>
                         Show links to publication types
                     </xar:mlstring>
-                    <em>($showpublinks + includes/publinks.xd)</em> </label>
+                    <em>($showpublinks + includes/publinks.xt)</em> </label>
             </div>
             <div class="xar-form-input-wrapper-after">
                 <xar:if condition="$showpubcount">

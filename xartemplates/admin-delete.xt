@@ -12,7 +12,7 @@
         <xar:mlstring>Delete Article</xar:mlstring>
     </h2>
     <div class="xar-align-center">
-        <xar:comment>You can use different admin-delete-[pubtype].xd templates for different pubtypes</xar:comment>
+        <xar:comment>You can use different admin-delete-[pubtype].xt templates for different pubtypes</xar:comment>
         <h3>
             <xar:mlstring>Delete this article?</xar:mlstring>
         </h3>

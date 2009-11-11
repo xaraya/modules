@@ -20,10 +20,12 @@ function articles_userapi_getitemtypes($args)
 {
     $itemtypes = array();
 
+/* CHECKME: where did this come from ?
     $itemtypes[300] = array('label' => xarML('Bare Article'),
                           'title' => xarML('View Bare Article'),
                           'url'   => xarModURL('articles','user','view')
                          );
+*/
     // Get publication types
     $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
 

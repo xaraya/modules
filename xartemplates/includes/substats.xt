@@ -11,6 +11,12 @@
 </xar:if>
 <ul>
     <xar:foreach in="$curvalue" key="$subkey" value="$subvalue">
+        <!-- some sanity check on values -->
+        <xar:if condition="$curfield eq 'pubtypeid' and empty($pubtypes[$subkey])">
+            <xar:continue/>
+        <xar:elseif condition="$curfield eq 'status' and empty($statuslist[$subkey])"/>
+            <xar:continue/>
+        </xar:if>
         <li>
             <xar:if condition="$curfield eq 'pubtypeid'">
                 <xar:set name="curlabel">
@@ -49,9 +55,9 @@
                 </xar:set>
             </xar:if>
             <a href="#xarModURL('articles','admin','view',array('ptid' => $pubtypeid, 'authorid' => $authorid, 'lang' => $language, 'status[]' => $status, 'pubdate' => $pubdate))#">#$curlabel# </a> 
-<xar:comment>
+<!--
     Include template recursively here
-</xar:comment>
+-->
             <xar:if condition="!empty($group[$curlevel]) and is_array($subvalue)">
                 <xar:set name="nextfield">$group[$curlevel]</xar:set>
                 <xar:set name="nextlevel">$curlevel + 1</xar:set>

@@ -45,7 +45,7 @@ function articles_admin_exportpubtype($args)
   <itemtype>' . $ptid . '</itemtype>
   <class>ArticleObject</class>
   <filepath>modules/articles/class/article.php</filepath>
-  <urlparam>aid</urlparam>
+  <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config>
 ';
@@ -56,7 +56,40 @@ function articles_admin_exportpubtype($args)
 
     foreach ($unsettings as $key => $val) {
         if (!isset($val)) continue;
+        // check default view
+        if ($key == 'defaultview' && !empty($val) && !is_numeric($val)) {
+            $val = intval(substr($val,1));
+            $info = xarMod::apiFunc('categories','user','getcatinfo',
+                                    array('cid' => $val));
+            if (!empty($info) && !empty($info['name'])) {
+                // set default view to browse in this category
+                $val = $info['name'];
+            } else {
+                // set default view to latest items
+                $val = 1;
+            }
+        }
         $data['xml'] .= "    <$key>$val</$key>\n";
+    }
+
+    // add root categories by category name
+    $catroots = xarMod::apiFunc('articles', 'user', 'getrootcats',
+                                array('ptid' => $ptid));
+    if (!empty($catroots)) {
+        $cidlist = array();
+        foreach ($catroots as $root) {
+            $cidlist[] = $root['catid'];
+        }
+        // get the actual category info
+        $catinfo = xarMod::apiFunc('categories','user','getcatinfo',
+                                   array('cids' => $cidlist));
+        if (!empty($catinfo)) {
+            $catnames = array();
+            foreach ($catinfo as $cat) {
+                $catnames[] = $cat['name'];
+            }
+            $data['xml'] .= "    <categories>" . implode(';',$catnames) . "</categories>\n";
+        }
     }
 
     // Check if we're using this as an alias for short URLs

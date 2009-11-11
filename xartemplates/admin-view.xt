@@ -20,7 +20,7 @@
           <p>#xarSession::getVar('statusmsg')#</p>
       </xar:if>
     <xar:comment>
-        You can use different admin-view-[pubtype].xd templates for different pubtypes
+        You can use different admin-view-[pubtype].xt templates for different pubtypes
     </xar:comment>
 
     <div>

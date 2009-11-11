@@ -8,8 +8,8 @@
 </xar:if>
 
     <xar:comment>
-        You can use different user-view-[pubtype].xd templates for different pubtypes,
-        and also a separate user-view-frontpage.xd template for the articles frontpage
+        You can use different user-view-[pubtype].xt templates for different pubtypes,
+        and also a separate user-view-frontpage.xt template for the articles frontpage
     </xar:comment>
 
 <xar:template file="navtabs-user" type="module" />

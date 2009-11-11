@@ -27,7 +27,7 @@
         </div>
     </xar:if>
     <xar:comment>
-        You can use different admin-modify-[pubtype].xd templates for different pubtypes
+        You can use different admin-modify-[pubtype].xt templates for different pubtypes
     </xar:comment>
     <xar:comment>
         retrieve the previous article in publication type ptid (with any status here)
@@ -83,7 +83,7 @@
             Instead of looping over all fields, you can also access individual field definitions via $fields['title'], $fields['summary'] etc.
         </xar:comment>
         <xar:comment>
-            Contrary to admin-new.xd, it is not recommended to use $field['definition']['preset'] here
+            Contrary to admin-new.xt, it is not recommended to use $field['definition']['preset'] here
         </xar:comment>
         <xar:foreach in="$fields" value="$field">
             <div class="xar-form-input-wrapper">

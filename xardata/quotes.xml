@@ -1,0 +1,130 @@
+<object name="quotes">
+  <label>Random Quotes</label>
+  <module_id>151</module_id>
+  <itemtype>7</itemtype>
+  <class>ArticleObject</class>
+  <filepath>modules/articles/class/article.php</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>
+    <number_of_columns>0</number_of_columns>
+    <itemsperpage>20</itemsperpage>
+    <defaultview>1</defaultview>
+    <showcategories>1</showcategories>
+    <showcatcount>0</showcatcount>
+    <showprevnext>0</showprevnext>
+    <showcomments>0</showcomments>
+    <showhitcounts>1</showhitcounts>
+    <showratings>1</showratings>
+    <showarchives>0</showarchives>
+    <showmap>1</showmap>
+    <showpublinks>0</showpublinks>
+    <showpubcount>1</showpubcount>
+    <dotransform>0</dotransform>
+    <titletransform>0</titletransform>
+    <prevnextart>0</prevnextart>
+    <usealias>0</usealias>
+    <page_template></page_template>
+    <defaultstatus>0</defaultstatus>
+    <defaultsort>date ASC</defaultsort>
+    <categories>Generic Category 1</categories>
+  </config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="aid">
+      <id>1</id>
+      <label>Article ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_articles.xar_aid</source>
+      <status>65</status>
+      <seq>1</seq>
+    </property>
+    <property name="pubtypeid">
+      <id>2</id>
+      <label>Publication Type</label>
+      <type>itemtype</type>
+      <defaultvalue>7</defaultvalue>
+      <source>xar_articles.xar_pubtypeid</source>
+      <status>67</status>
+      <seq>2</seq>
+    </property>
+    <property name="title">
+      <id>3</id>
+      <label>Author</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_articles.xar_title</source>
+      <input>1</input>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration></configuration>
+    </property>
+    <property name="summary">
+      <id>4</id>
+      <label>Quotes</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_articles.xar_summary</source>
+      <input>1</input>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration></configuration>
+    </property>
+    <property name="body">
+      <id>5</id>
+      <label>Body</label>
+      <type>static</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_articles.xar_body</source>
+      <input>0</input>
+      <status>64</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
+    <property name="notes">
+      <id>6</id>
+      <label>Notes</label>
+      <type>static</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_articles.xar_notes</source>
+      <input>0</input>
+      <status>64</status>
+      <seq>6</seq>
+      <configuration></configuration>
+    </property>
+    <property name="authorid">
+      <id>7</id>
+      <label>Submitted By</label>
+      <type>username</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_articles.xar_authorid</source>
+      <input>0</input>
+      <status>65</status>
+      <seq>7</seq>
+      <configuration></configuration>
+    </property>
+    <property name="pubdate">
+      <id>8</id>
+      <label>Submitted On</label>
+      <type>calendar</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_articles.xar_pubdate</source>
+      <input>0</input>
+      <status>65</status>
+      <seq>8</seq>
+      <configuration></configuration>
+    </property>
+    <property name="status">
+      <id>9</id>
+      <label>Status</label>
+      <type>status</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_articles.xar_status</source>
+      <input>0</input>
+      <status>65</status>
+      <seq>9</seq>
+      <configuration></configuration>
+    </property>
+  </properties>
+</object>

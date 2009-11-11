@@ -24,7 +24,7 @@
         </div>
     </xar:if>
     <xar:comment>
-        You can use different admin-new-[pubtype].xd templates for different pubtypes
+        You can use different admin-new-[pubtype].xt templates for different pubtypes
     </xar:comment>
     <xar:comment>
         If you want to let users pre-select a category first, before selecting a publication type, you can use the following tag. Note that this only makes sense if you have a single base category for your articles

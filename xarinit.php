@@ -28,31 +28,12 @@ function articles_init()
 
     // Create tables
     $articlestable = $xartable['articles'];
-/*
-    $query = "CREATE TABLE $articlestable (
-            xar_aid INT(10) NOT NULL AUTO_INCREMENT,
-            xar_title VARCHAR(255) NOT NULL DEFAULT '',
-            xar_summary TEXT,
-            xar_body TEXT,
-            xar_notes TEXT,
-            xar_status TINYINT(2) NOT NULL DEFAULT '0',
-            xar_authorid INT(11) NOT NULL,
-            xar_pubdate INT UNSIGNED NOT NULL,
-            xar_pubtypeid INT(4) NOT NULL DEFAULT '1',
-            xar_pages INT UNSIGNED NOT NULL,
-            xar_language VARCHAR(30) NOT NULL DEFAULT '',
-            PRIMARY KEY(xar_aid),
-            KEY xar_authorid (xar_authorid),
-            KEY xar_pubtypeid (xar_pubtypeid),
-            KEY xar_pubdate (xar_pubdate),
-            KEY xar_status (xar_status)
-            )";
-*/
+
     $fields = array(
         'xar_aid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_title'=>array('type'=>'varchar','size'=>254,'null'=>FALSE,'default'=>''),
         'xar_summary'=>array('type'=>'text'),
-        'xar_body'=>array('type'=>'text'),
+        'xar_body'=>array('type'=>'text','size'=>'medium'),
         'xar_notes'=>array('type'=>'text'),
         'xar_status'=>array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0'),
         'xar_authorid'=>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
@@ -118,14 +99,7 @@ function articles_init()
 
     // Create tables
     $pubtypestable = $xartable['publication_types'];
-/*
-    $query = "CREATE TABLE $pubtypestable (
-            xar_pubtypeid INT(4) NOT NULL AUTO_INCREMENT,
-            xar_pubtypename VARCHAR(30) NOT NULL,
-            xar_pubtypedescr VARCHAR(255) NOT NULL DEFAULT '',
-            xar_pubtypeconfig TEXT,
-            PRIMARY KEY(xar_pubtypeid))";
-*/
+
     $fields = array(
         'xar_pubtypeid'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_pubtypename'=>array('type'=>'varchar','size'=>30,'null'=>FALSE,'default'=>''),
@@ -141,115 +115,6 @@ function articles_init()
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-
-// TODO: load configuration from file(s) ?
-
-    // Load the initial setup of the publication types
-    if (file_exists(sys::code() . 'modules/articles/xarsetup.php')) {
-        include sys::code() . 'modules/articles/xarsetup.php';
-    } else {
-        // TODO: add some defaults here
-        $pubtypes = array();
-        $categories = array();
-        $settings = array();
-        $defaultpubtype = 0;
-    }
-
-    // Save publication types
-    $pubid = array();
-    foreach ($pubtypes as $pubtype) {
-        list($id,$name,$descr,$config) = $pubtype;
-        $nextId = $dbconn->GenId($pubtypestable);
-        $query = "INSERT INTO $pubtypestable
-                (xar_pubtypeid, xar_pubtypename, xar_pubtypedescr,
-                 xar_pubtypeconfig)
-                VALUES (?,?,?,?)";
-        $bindvars = array($nextId, $name, $descr, $config);
-        $result =& $dbconn->Execute($query,$bindvars);
-        if (!$result) return;
-        $ptid = $dbconn->PO_Insert_ID($pubtypestable, 'xar_pubtypeid');
-        $pubid[$id] = $ptid;
-    }
-
-    // Create articles categories
-    $cids = array();
-    foreach ($categories as $category) {
-        $cid[$category['name']] = xarMod::apiFunc('categories',
-                                               'admin',
-                                               'create',
-                        Array('name' => $category['name'],
-                              'description' => $category['description'],
-                              'parent_id' => 0));
-        foreach ($category['children'] as $child) {
-            $cid[$child] = xarMod::apiFunc('categories',
-                                        'admin',
-                                        'create',
-                        Array('name' => $child,
-                              'description' => $child,
-                              'parent_id' => $cid[$category['name']]));
-        }
-    }
-
-    // Set up module variables
-    xarModVars::set('articles', 'SupportShortURLs', 1);
-
-    // Save articles settings for each publication type
-    foreach ($settings as $id => $values) {
-        if (isset($pubid[$id])) {
-            $id = $pubid[$id];
-        }
-        // replace category names with cids
-        if (isset($values['categories'])) {
-            $cidlist = array();
-            foreach ($values['categories'] as $catname) {
-                if (isset($cid[$catname])) {
-                    $cidlist[] = $cid[$catname];
-                }
-            }
-            unset($values['categories']);
-            if (!empty($id)) {
-                xarMod::apiFunc('articles','admin','setrootcats',
-                              array('ptid' => $id,
-                                    'cids' => $cidlist));
-            } else {
-                xarMod::apiFunc('articles','admin','setrootcats',
-                              array('ptid' => null,
-                                    'cids' => $cidlist));
-            }
-        } elseif (!empty($id)) {
-            xarMod::apiFunc('articles','admin','setrootcats',
-                          array('ptid' => $id,
-                                'cids' => null));
-        } else {
-            xarMod::apiFunc('articles','admin','setrootcats',
-                          array('ptid' => null,
-                                'cids' => null));
-        }
-        if (isset($values['defaultview']) && !is_numeric($values['defaultview'])) {
-            if (isset($cid[$values['defaultview']])) {
-                $values['defaultview'] = 'c' . $cid[$values['defaultview']];
-            } else {
-                $values['defaultview'] = 1;
-            }
-        }
-        if (!empty($id)) {
-            xarModVars::set('articles', 'settings.'.$id,serialize($values));
-        } else {
-            xarModVars::set('articles', 'settings',serialize($values));
-        }
-    }
-
-    // Set default publication type
-    xarModVars::set('articles', 'defaultpubtype', $defaultpubtype);
-
-    // Enable/disable full-text search with MySQL (for all pubtypes and all text fields)
-    xarModVars::set('articles', 'fulltextsearch', '');
-
-    // Allow changing the pubtype names, not recommended
-    xarModVars::set('articles', 'ptypenamechange', '');
-
-    // Keep track of checkout editor and time when modifying articles
-    xarModVars::set('articles', 'checkout_info', '');
 
     // Register blocks
     if (!xarMod::apiFunc('blocks',
@@ -300,32 +165,6 @@ function articles_init()
                       array(),
                       'articles_userapi_handleFieldTag');
 */
-
-    // Enable articles hooks for search
-    if (xarModIsAvailable('search')) {
-        xarMod::apiFunc('modules','admin','enablehooks',
-                      array('callerModName' => 'search', 'hookModName' => 'articles'));
-    }
-
-    // Enable categories hooks for articles
-    xarMod::apiFunc('modules','admin','enablehooks',
-                  array('callerModName' => 'articles', 'hookModName' => 'categories'));
-
-    // Enable comments hooks for articles
-    if (xarModIsAvailable('comments')) {
-        xarMod::apiFunc('modules','admin','enablehooks',
-                      array('callerModName' => 'articles', 'hookModName' => 'comments'));
-    }
-    // Enable hitcount hooks for articles
-    if (xarModIsAvailable('hitcount')) {
-        xarMod::apiFunc('modules','admin','enablehooks',
-                      array('callerModName' => 'articles', 'hookModName' => 'hitcount'));
-    }
-    // Enable ratings hooks for articles
-    if (xarModIsAvailable('ratings')) {
-        xarMod::apiFunc('modules','admin','enablehooks',
-                      array('callerModName' => 'articles', 'hookModName' => 'ratings'));
-    }
 
     /*********************************************************************
     * Define instances for the core modules
@@ -382,6 +221,87 @@ function articles_init()
     xarRegisterPrivilege('Delete Articles in Category 1','All','articles','Article','All:1:All:All','ACCESS_DELETE', 'Allow people to delete articles in a particular category');
     xarRegisterPrivilege('Manage Articles Content','All','articles','Article','All:All:All:All','ACCESS_DELETE', 'Allow people to manage the articles content');
     xarRegisterPrivilege('Manage Articles Configuration','All','articles','Article','All:All:All:All','ACCESS_ADMIN', 'Allow people to manage the articles configuration');
+
+    // Set default settings for publication types
+    $settings = array('number_of_columns'    => 0,
+                      'itemsperpage'         => 20,
+                      'defaultview'          => 1,
+                      'showcategories'       => 1,
+                      'showcatcount'         => 0,
+                      'showprevnext'         => 0,
+                      'showcomments'         => 1,
+                      'showhitcounts'        => 1,
+                      'showratings'          => 0,
+                      'showarchives'         => 1,
+                      'showmap'              => 1,
+                      'showpublinks'         => 0,
+                      'showpubcount'         => 1,
+                      'dotransform'          => 0,
+                      'titletransform'       => 0,
+                      'prevnextart'          => 0,
+                      'usealias'             => 0,
+                      'page_template'        => '',
+                      'defaultstatus'        => 0,
+                      'defaultsort'          => 'date',
+                      'categories'           => array());
+
+    xarModVars::set('articles', 'settings', serialize($settings));
+    xarMod::apiFunc('articles','admin','setrootcats',
+                    array('ptid' => null,
+                          'cids' => null));
+
+    // Load the initial setup of the publication types
+    $file = sys::code() . 'modules/articles/xardata/news.xml';
+    if (file_exists($file)) {
+        $ptid = xarMod::apiFunc('articles','admin','importpubtype',
+                                array('file' => $file));
+        // default publication type is News Articles
+        $defaultpubtype = $ptid;
+    } else {
+        // TODO: add some defaults here
+        $defaultpubtype = 0;
+    }
+
+    // Set up module variables
+    xarModVars::set('articles', 'SupportShortURLs', 1);
+
+    // Set default publication type
+    xarModVars::set('articles', 'defaultpubtype', $defaultpubtype);
+
+    // Enable/disable full-text search with MySQL (for all pubtypes and all text fields)
+    xarModVars::set('articles', 'fulltextsearch', '');
+
+    // Allow changing the pubtype names, not recommended
+    xarModVars::set('articles', 'ptypenamechange', '');
+
+    // Keep track of checkout editor and time when modifying articles
+    xarModVars::set('articles', 'checkout_info', '');
+
+    // Enable articles hooks for search
+    if (xarModIsAvailable('search')) {
+        xarMod::apiFunc('modules','admin','enablehooks',
+                      array('callerModName' => 'search', 'hookModName' => 'articles'));
+    }
+
+    // Enable categories hooks for articles
+    xarMod::apiFunc('modules','admin','enablehooks',
+                  array('callerModName' => 'articles', 'hookModName' => 'categories'));
+
+    // Enable comments hooks for articles
+    if (xarModIsAvailable('comments')) {
+        xarMod::apiFunc('modules','admin','enablehooks',
+                      array('callerModName' => 'articles', 'hookModName' => 'comments'));
+    }
+    // Enable hitcount hooks for articles
+    if (xarModIsAvailable('hitcount')) {
+        xarMod::apiFunc('modules','admin','enablehooks',
+                      array('callerModName' => 'articles', 'hookModName' => 'hitcount'));
+    }
+    // Enable ratings hooks for articles
+    if (xarModIsAvailable('ratings')) {
+        xarMod::apiFunc('modules','admin','enablehooks',
+                      array('callerModName' => 'articles', 'hookModName' => 'ratings'));
+    }
 
     // Initialisation successful
     return true;
@@ -551,6 +471,16 @@ function articles_delete()
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
     if (!$result) return;
+
+    // Delete dd objects that belong to the articles module
+    sys::import('modules.dynamicdata.class.objects.master');
+    $objects = DataObjectMaster::getObjects(array('moduleid' => 151));
+    foreach ($objects as $objectinfo) {
+        // double-check to make sure ;-)
+        if ($objectinfo['moduleid'] == 151) {
+            DataObjectMaster::deleteObject(array('objectid' => $objectinfo['objectid']));
+        }
+    }
 
     // Get current publication types if necessary
     //$pubtypes = xarMod::apiFunc('articles','user','getpubtypes');

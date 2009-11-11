@@ -31,6 +31,7 @@ function articles_adminapi_importpubtype($args)
 
     $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
 
+    sys::import('modules.dynamicdata.class.properties.master');
     $proptypes = DataPropertyMaster::getPropertyTypes();
     $name2id = array();
     foreach ($proptypes as $propid => $proptype) {
@@ -124,10 +125,10 @@ function articles_adminapi_importpubtype($args)
                 }
                 $config[$key] = $value;
             } elseif (preg_match('#</config>#',$line)) {
-                // override default view if necessary
-                $config['defaultview'] = 1;
+                // don't override default view anymore
+                //$config['defaultview'] = 1;
 
-                $object['config'] = serialize($config);
+                $object['config'] = $config;
                 $config = array();
                 $what = 'object';
             } else {
@@ -203,13 +204,16 @@ function articles_adminapi_importpubtype($args)
                             // skip these
                             break;
 
+                        case 'authorid':
+                        case 'status':
+                            // FIXME: map status & input fields to DD state someday
+                            // preset these to no input
+                            $property['input'] = 0;
                         case 'title':
                         case 'summary':
                         case 'body':
                         case 'notes':
-                        case 'authorid':
                         case 'pubdate':
-                        case 'status':
                             // convert property type to string if necessary
                             if (is_numeric($property['type'])) {
                                 if (isset($proptypes[$property['type']])) {
@@ -218,9 +222,15 @@ function articles_adminapi_importpubtype($args)
                                     $property['type'] = 'static';
                                 }
                             }
+                            // FIXME: map status & input fields to DD state someday
                             // reset disabled field labels to empty
                             if (empty($property['status'])) {
                                 $property['label'] = '';
+                            }
+                            if (empty($property['label'])) {
+                                $property['input'] = 0;
+                            } elseif (!isset($property['input'])) {
+                                $property['input'] = 1;
                             }
                             $fields[$field] = array('label' => $property['label'],
                                                     'format' => $property['type'],
@@ -247,29 +257,25 @@ function articles_adminapi_importpubtype($args)
                 $ptid = xarMod::apiFunc('articles','admin','createpubtype',
                                       array('name' => $object['name'],
                                             'descr' => $object['label'],
-                                            'config' => $fields));
+                                            'config' => $fields,
+                                            'settings' => $object['config']));
                 if (empty($ptid)) return;
 
-                // 4. set the module variables
-                xarModVars::set('articles', 'settings.'.$ptid, $object['config']);
-
-                // 5. create a dynamic object if necessary
+                // 4. create the dynamic properties if necessary
                 if (count($extra) > 0) {
-                    $object['itemtype'] = $ptid;
-                    $object['config'] = '';
-                    $object['isalias'] = 0;
-                    $objectid = xarMod::apiFunc('dynamicdata','admin','createobject',
-                                              $object);
-                    if (!isset($objectid)) {
+                    sys::import('modules.dynamicdata.class.objects.master');
+                    $objectinfo = DataObjectMaster::getObjectInfo(array('moduleid' => 151,
+                                                                        'itemtype' => $ptid));
+                    if (empty($objectinfo) || $objectinfo['objectid'] < 3) {
                         if (!empty($file)) fclose($fp);
                         return;
                     }
 
-                    // 6. create the dynamic properties
+                    // 5. add the dynamic properties
                     foreach ($extra as $property) {
-                        $property['objectid'] = $objectid;
-                        $property['moduleid'] = $object['moduleid'];
-                        $property['itemtype'] = $object['itemtype'];
+                        $property['objectid'] = $objectinfo['objectid'];
+                        $property['moduleid'] = $objectinfo['moduleid'];
+                        $property['itemtype'] = $objectinfo['itemtype'];
 
                         $prop_id = xarMod::apiFunc('dynamicdata','admin','createproperty',
                                                  $property);
@@ -279,7 +285,7 @@ function articles_adminapi_importpubtype($args)
                         }
                     }
 
-                    // 7. check if we need to enable DD hooks for this pubtype
+                    // 6. check if we need to enable DD hooks for this pubtype
                     if (!xarModIsHooked('dynamicdata','articles')) {
                         xarMod::apiFunc('modules','admin','enablehooks',
                                       array('callerModName' => 'articles',

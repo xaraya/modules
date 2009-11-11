@@ -34,7 +34,7 @@ function articles_admin_importpubtype($args)
     $data['warning'] = '';
     $data['options'] = array();
 
-    $basedir = sys::code() . 'modules/articles';
+    $basedir = sys::code() . 'modules/articles/xardata';
     $filetype = 'xml';
     $files = xarMod::apiFunc('dynamicdata','admin','browse',
                            array('basedir' => $basedir,

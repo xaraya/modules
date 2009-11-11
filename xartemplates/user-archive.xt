@@ -4,7 +4,7 @@
 <div class="xar-mod-body">
     <xar:template file="publinks" type="module" />
     <xar:comment>
-        You can use different user-archive-[pubtype].xd templates for different pubtypes
+        You can use different user-archive-[pubtype].xt templates for different pubtypes
     </xar:comment>
     <h3>
         <xar:mlstring>

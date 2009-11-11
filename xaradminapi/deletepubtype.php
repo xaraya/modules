@@ -71,10 +71,33 @@ function articles_adminapi_deletepubtype($args)
     $result =& $dbconn->Execute($query,array($ptid));
     if (!$result) return;
 
-// TODO: call some kind of itemtype delete hooks here, once we have those
-    //xarModCallHooks('itemtype', 'delete', $ptid,
+// TODO: call some kind of itemtype remove hooks here, once we have those
+    //xarModCallHooks('module', 'remove', 'articles',
     //                array('module' => 'articles',
-    //                      'itemtype' =>'ptid'));
+    //                      'itemtype' => $ptid));
+
+
+    // Delete settings for this publication type
+    xarModVars::delete('articles', 'settings.'.$ptid);
+
+    // Delete this publication type as module alias for articles
+    xarModDelAlias($pubtypes[$ptid]['name'],'articles');
+
+    // Remove this publication type as default if necessary
+    $default = xarModVars::get('articles','defaultpubtype');
+    if ($ptid == $default) {
+        xarModVars::set('articles','defaultpubtype','');
+    }
+
+    // Delete corresponding dd object if any
+    sys::import('modules.dynamicdata.class.objects.master');
+    $objects = DataObjectMaster::getObjects(array('moduleid' => 151));
+    foreach ($objects as $objectinfo) {
+        // find dd object with corresponding itemtype
+        if ($objectinfo['moduleid'] == 151 && $objectinfo['itemtype'] == $ptid) {
+            DataObjectMaster::deleteObject(array('objectid' => $objectinfo['objectid']));
+        }
+    }
 
     return true;
 }

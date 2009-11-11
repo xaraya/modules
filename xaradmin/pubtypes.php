@@ -80,34 +80,6 @@ function articles_admin_pubtypes()
             if (empty($ptid)) {
                 return; // Creation of new pubtype was not successful
             } else {
-                if (empty($config['status']['label'])) {
-                    $status = 2;
-                } else {
-                    $status = 0;
-                }
-                $settings = array('number_of_columns'    => 0,
-                                  'itemsperpage'         => 20,
-                                  'defaultview'          => 1,
-                                  'showcategories'       => 1,
-                                  'showcatcount'         => 0,
-                                  'showprevnext'         => 0,
-                                  'showcomments'         => 1,
-                                  'showhitcounts'        => 1,
-                                  'showratings'          => 0,
-                                  'showarchives'         => 1,
-                                  'showmap'              => 1,
-                                  'showpublinks'         => 0,
-                                  'showpubcount'         => 0,
-                                  'dotransform'          => 0,
-                                  'titletransform'       => 0,
-                                  'prevnextart'          => 0,
-                                  'usealias'             => 0,
-                                  'page_template'        => '',
-                                  'usetitleforurl'       => 0,
-                                  'defaultstatus'        => $status,
-                                  'defaultsort'          => 'date');
-                xarModVars::set('articles', 'settings.'.$ptid,serialize($settings));
-
                 // Redirect to the admin view page
                 xarSession::setVar('statusmsg', xarML('Publication type created'));
                 xarResponse::Redirect(xarModURL('articles', 'admin', 'pubtypes',
@@ -152,12 +124,6 @@ function articles_admin_pubtypes()
                               array('ptid' => $ptid))) {
                 return;
             } else {
-                xarModVars::delete('articles', 'settings.'.$ptid);
-                xarModDelAlias($pubtypes[$ptid]['name'],'articles');
-                $default = xarModVars::get('articles','defaultpubtype');
-                if ($ptid == $default) {
-                    xarModVars::set('articles','defaultpubtype','');
-                }
                 // Redirect to the admin view page
                 xarSession::setVar('statusmsg', xarML('Publication type deleted'));
                 xarResponse::Redirect(xarModURL('articles', 'admin', 'pubtypes',

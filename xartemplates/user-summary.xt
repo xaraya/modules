@@ -6,14 +6,13 @@
         <xar:mlstring>
             <strong>Note:</strong> when you create a new publication type,
             the articles module will automatically use the templates
-            <em>user-display-[publicationtype].xd</em>
-            and <em>user-summary-[publicationtype].xd</em>.
+            <em>user-display-[publicationtype].xt</em>
+            and <em>user-summary-[publicationtype].xt</em>.
             If those templates do not exist when you try to preview or display a new article,
             you'll get this warning :-)
         </xar:mlstring>
         <xar:mlstring>
-            Please place your own templates in themes/<em>yourtheme</em>/modules/articles . The templates
-            will get the extension .xt there.
+            Please place your own templates in themes/<em>yourtheme</em>/modules/articles.
         </xar:mlstring>
     </p>
 </div>
