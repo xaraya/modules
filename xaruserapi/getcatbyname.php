@@ -61,6 +61,7 @@ function categories_userapi_getcatbyname($args)
         $result->Close();
         //$msg = xarML('This category does not exist');
         //throw new BadParameterException(null, $msg);
+        return false;
     }
 
     // Obtain the owner information from the result set
