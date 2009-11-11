@@ -6,7 +6,7 @@
 
 <div class="article-view">
     <h3><span>#$title#</span>
-      <xar:if condition="!empty($editurl)"> [<a href="#$editurl#">#$edittitle#</a>]</xar:if>
+      <xar:if condition="!empty($editurl)"> <a href="#$editurl#"><img src="#xarTplGetImage('icons/modify.png','base')#"/></a></xar:if>
     </h3>
         <xar:if condition="!empty($categories) and count($categories) gt 0">
             [ <xar:foreach in="$categories" value="$cat">

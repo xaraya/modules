@@ -5,7 +5,7 @@
 <xar:template file="catlinks" type="module" />
 <div class="xar-norm-outline xar-standard-box-padding xar-overflow-auto">
     <h1>#$title#
-    <xar:if condition="!empty($editurl)"> [<a href="#$editurl#">#$edittitle#</a>]</xar:if>
+    <xar:if condition="!empty($editurl)"> <a href="#$editurl#"><img src="#xarTplGetImage('icons/modify.png','base')#"/></a></xar:if>
     </h1>
     <div class="xar-floatright">#$topic_icons#</div>
     <div class="xar-sub">

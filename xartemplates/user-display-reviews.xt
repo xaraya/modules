@@ -11,7 +11,7 @@
   </td>
   <td align="left">
     #$title#
-    <xar:if condition="!empty($editurl)"> [<a href="#$editurl#">#$edittitle#</a>]
+    <xar:if condition="!empty($editurl)"> <a href="#$editurl#"><img src="#xarTplGetImage('icons/modify.png','base')#"/></a>
     </xar:if>
     <br />
   </td>

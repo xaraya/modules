@@ -19,11 +19,9 @@
                 </xar:mlstring>)
             </xar:if>
             <xar:if condition="!empty($editurl)">
-                [
                 <a href="#$editurl#">
-                    #$edittitle#
+                    <img src="#xarTplGetImage('icons/modify.png','base')#"/>
                 </a>
-                ]
             </xar:if>
         </p>
     </div>
