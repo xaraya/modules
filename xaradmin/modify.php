@@ -152,6 +152,31 @@ function articles_admin_modify($args)
     $data['authid'] = xarSecGenAuthKey('articles');
     $data['return_url'] = $return_url;
 
+    if (!empty($aid)) {
+        // FIXME: remove after next upgrade
+        xarModVars::set('articles','checkout_info','');
+
+        $serialcheckout = xarModItemVars::get('articles','checkout_info', $aid);
+        if (!empty($serialcheckout)) {
+            $checkout = unserialize($serialcheckout);
+        } else {
+            $checkout = array();
+        }
+        if (!empty($checkout) && !empty($checkout['editor']) &&
+            // if someone else has already checked out this article
+            $checkout['editor'] != xarUserGetVar('id') &&
+            // CHECKME: ignore checkout time after 2 hours here !?
+            $checkout['time'] > time() - 2*60*60) {
+            $checkout['elapsed'] = intval((time() - $checkout['time']) / 60);
+            $data['checkout'] = $checkout;
+
+        } else {
+            $checkout = array('editor' => xarUserGetVar('id'),
+                              'time'   => time());
+            xarModItemVars::set('articles','checkout_info', serialize($checkout), $aid);
+        }
+    }
+
     if (!empty($ptid)) {
         $template = $pubtypes[$ptid]['name'];
     } else {

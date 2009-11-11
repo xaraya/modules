@@ -174,6 +174,9 @@ function articles_admin_update()
     // Success
     xarSession::setVar('statusmsg', xarML('Article Updated'));
 
+    // Remove checkout info (even if it was from someone else)
+    xarModItemVars::delete('articles','checkout_info', $aid);
+
     // Save and continue editing via feature request.
     if (isset($save) && xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')) {
         xarResponse::Redirect(xarModURL('articles', 'admin', 'modify',

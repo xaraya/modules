@@ -248,6 +248,9 @@ function articles_init()
     // Allow changing the pubtype names, not recommended
     xarModVars::set('articles', 'ptypenamechange', '');
 
+    // Keep track of checkout editor and time when modifying articles
+    xarModVars::set('articles', 'checkout_info', '');
+
     // Register blocks
     if (!xarMod::apiFunc('blocks',
                        'admin',
@@ -517,6 +520,10 @@ function articles_upgrade($oldversion)
 
         case '2.0.2':
             // Code to upgrade from version 2.0.2 goes here
+            xarModVars::set('articles', 'checkout_info', '');
+
+        case '2.0.3':
+            // Code to upgrade from version 2.0.3 goes here
 
         case '2.5.0':
             // Code to upgrade from version 2.5 goes here
