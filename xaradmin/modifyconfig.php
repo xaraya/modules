@@ -33,12 +33,12 @@
                 if (!xarSecConfirmAuthKey()) return;
                 switch ($data['tab']) {
                     case 'general':
-                        if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('foo', 'itemsperpage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                        if (!xarVarFetch('items_per_page', 'int', $items_per_page, xarModVars::get('foo', 'items_per_page'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                         if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
                         if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('foo', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
                         if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('foo', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
 
-                        xarModVars::set('foo', 'itemsperpage', $itemsperpage);
+                        xarModVars::set('foo', 'items_per_page', $items_per_page);
                         xarModVars::set('foo', 'SupportShortURLs', $shorturls);
                         xarModVars::set('foo', 'useModuleAlias', $useModuleAlias);
                         xarModVars::set('foo', 'aliasname', $aliasname);

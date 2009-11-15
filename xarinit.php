@@ -5,7 +5,7 @@
  *
  */
 
-    sys::import('modules.query.class.query');
+    sys::import('xaraya.structures.query');
 
     function foo_init()
     {
@@ -65,20 +65,6 @@
 
     # --------------------------------------------------------
     #
-    # Set up modvars
-    #
-        xarModVars::set('foo', 'itemsperpage', 20);
-        xarModVars::set('foo', 'useModuleAlias',0);
-        xarModVars::set('foo', 'aliasname','Foo');
-        xarModVars::set('foo', 'defaultmastertable','foo_foo');
-
-        // Add variables like this next one when creating utility modules
-        // This variable is referenced in the xaradmin/modifyconfig-utility.php file
-        // This variable is referenced in the xartemplates/includes/defaults.xd file
-    //    xarModVars::set('foo', 'bar', 'Bar');
-
-    # --------------------------------------------------------
-    #
     # Create DD objects
     #
         $module = 'foo';
@@ -86,6 +72,18 @@
                          );
 
         if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+
+    # --------------------------------------------------------
+    #
+    # Set up modvars
+    #
+        $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'dyn_example'));
+        $module_settings->initialize();
+
+        // Add variables like this next one when creating utility modules
+        // This variable is referenced in the xaradmin/modifyconfig-utility.php file
+        // This variable is referenced in the xartemplates/includes/defaults.xd file
+        xarModVars::set('foo', 'defaultmastertable','foo_foo');
 
     # --------------------------------------------------------
     #

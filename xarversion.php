@@ -13,11 +13,11 @@
     $modversion['help']           = 'help.txt';
     $modversion['changelog']      = 'changelog.txt';
     $modversion['license']        = 'license.txt';
-    $modversion['official']       = 0;
+    $modversion['official']       = false;
     $modversion['author']         = 'Marc Lutolf';
     $modversion['contact']        = 'http://www.netspan.ch/';
-    $modversion['admin']          = 1;
-    $modversion['user']           = 1;
+    $modversion['admin']          = true;
+    $modversion['user']           = true;
     $modversion['class']          = 'Complete';
     $modversion['category']       = 'Content';
     $modversion['securityschema'] = array();

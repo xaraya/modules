@@ -1,60 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:template file="admin-mod-head"/>
-    <div class="xar-mod-body">
-        <h2>
-            Manage Publications            
-        </h2>
-
-        <div>
-            <div>
-                <label title="#xarML('Select a type of publication to add')#" class="xar-form-label">
-                    Publication Type:
-                </label>
-                <form method="post" action="#xarModURL('publications','admin','view')#">
-                    <xar:set name="onchange">"javascript:this.form.submit();"</xar:set>
-                    <xar:data-input name="ptid" type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$onchange" />
-                </form>
-            </div>
-            <xar:template file="navtabs-status" type="module" />
-            <xar:if condition="!empty($owner) or !empty($locale) or !empty($pubdate)">
-                <h3>
-                <xar:if condition="!empty($pubdate)">
-                    <xar:ml>
-                        <xar:mlstring>
-                            Publication Date : #(1)
-                        </xar:mlstring>
-                        <xar:mlvar>
-                            #$pubdate#
-                        </xar:mlvar>
-                    </xar:ml>
-                </xar:if>
-                <xar:if condition="!empty($owner)">
-                    <xar:ml>
-                        <xar:mlstring>
-                            By Author : #(1)
-                        </xar:mlstring>
-                        <xar:mlvar>
-                            #xarUserGetVar('name',$owner)#
-                        </xar:mlvar>
-                    </xar:ml>
-                </xar:if>
-                <xar:if condition="!empty($locale)">
-                    <xar:ml>
-                        <xar:mlstring>
-                            Language : #(1)
-                        </xar:mlstring>
-                        <xar:mlvar>
-                            #$locale#
-                        </xar:mlvar>
-                    </xar:ml>
-                </xar:if>
-                </h3>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:if condition="xarModVars::get('foo','useModuleAlias')">
+                <xar:var scope="module" module="foo" name="aliasname"/>
+            <xar:else />
+                View Items
             </xar:if>
-            <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" urltype="admin" itemtype="$ptid" catid="$catid" />
-            <div style="width: 100%">
-               <xar:data-input type="listing" object="$object" conditions="$conditions" fieldlist="name,title,author,pages,version,redirect_flag,start_date,end_date,state,itemtype" tplmodule="publications" layout="publications-admin"/>
-            </div>
-        </div>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+        <form method="post" action="#xarServer::getCurrentURL()#" style="margin-top: 10px; margin-bottom: 10px;">
+            Choose an object:&#160;<xar:data-input type="dropdown" name="objectname" value="$objectname" options="$options" onchange="javascript:submit()"/>
+        </form>
+        <xar:data-input type="listingslist" object="$objectname" tplmodule="foo"/>
     </div>
 </xar:template>
