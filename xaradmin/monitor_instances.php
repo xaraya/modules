@@ -245,11 +245,12 @@ $tplData['filter_act_status'] = isset($_REQUEST['filter_act_status']) ? $_REQUES
 $tplData['filter_user'] = isset($_REQUEST['filter_user']) ? $_REQUEST['filter_user'] : '';
 $tplData['filter_owner'] = isset($_REQUEST['filter_owner']) ? $_REQUEST['filter_owner'] : '';
 
-    $url = xarServer::getCurrentURL(array('offset' => '%%'));
-    $tplData['pager'] = xarTplGetPager($tplData['offset'],
+    /*$tplData['pager'] = xarTplGetPager($tplData['offset'],
                                        $items['cant'],
                                        $url,
-                                       $maxRecords);
+                                       $maxRecords);*/
+    $tplData['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+    $tplData['maxRecords'] = $maxRecords;
     return $tplData;
 }
 

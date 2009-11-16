@@ -163,10 +163,12 @@ $data['mid'] =  'tiki-g-monitor_workitems.tpl';
 
 
     $url = xarServer::getCurrentURL(array('offset' => '%%'));
-    $data['pager'] = xarTplGetPager($data['offset'],
+/*    $data['pager'] = xarTplGetPager($data['offset'],
                                        $items['cant'],
                                        $url,
-                                       $maxRecords);
+                                       $maxRecords);*/
+    $data['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+    $data['maxRecords'] = $maxRecords;
     return $data;
 }
 

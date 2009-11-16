@@ -180,8 +180,10 @@ function workflow_admin_roles()
 
     $data['errors'] =  $errors;
     $data['proc_info'] =  $proc_info;
-    $url = xarModURL('workflow','admin','roles',array('pid' => $data['pid'],'offset' => '%%'));
-    $data['pager'] = xarTplGetPager($data['offset'],$mapitems['cant'],$url,$maxRecords);
+
+    // $data['pager'] = xarTplGetPager($data['offset'],$mapitems['cant'],$url,$maxRecords);
+    $data['url'] = xarModURL('workflow','admin','roles',array('pid' => $data['pid'],'offset' => '%%'));
+    $data['maxRecords'] = $maxRecords;
     return $data;
 }
 

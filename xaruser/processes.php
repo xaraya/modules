@@ -108,11 +108,12 @@ function workflow_user_processes()
     $tplData['mid'] =  'tiki-g-user_processes.tpl';
 
 
-        $url = xarServer::getCurrentURL(array('offset' => '%%'));
-        $tplData['pager'] = xarTplGetPager($tplData['offset'],
+/*        $tplData['pager'] = xarTplGetPager($tplData['offset'],
                                            $items['cant'],
                                            $url,
-                                           $maxRecords);
+                                           $maxRecords);*/
+        $data['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+        $data['maxRecords'] = $maxRecords;
         return $tplData;
 }
 

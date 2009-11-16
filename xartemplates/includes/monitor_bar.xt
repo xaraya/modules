@@ -1,6 +1,6 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="base" file="navtabs"/>
-<xar:set name="func">xarRequestGetVar('func')</xar:set>
+<xar:set name="func">xarRequest::getVar('func')</xar:set>
 
 <dl class="xar-tabs">
   <dt class="help"><xar:mlstring>Monitoring:</xar:mlstring></dt>

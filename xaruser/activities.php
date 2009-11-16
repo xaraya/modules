@@ -163,11 +163,12 @@ function workflow_user_activities()
     // Missing variable
     $tplData['filter_process'] = isset($_REQUEST['filter_process']) ? $_REQUEST['filter_process'] : '';
 
-        $url = xarServer::getCurrentURL(array('offset' => '%%'));
-        $tplData['pager'] = xarTplGetPager($tplData['offset'],
+/*        $tplData['pager'] = xarTplGetPager($tplData['offset'],
                                            $items['cant'],
                                            $url,
-                                           $maxRecords);
+                                           $maxRecords);*/
+        $tplData['maxRecords'] = $maxRecords;
+        $tplData['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
         return $tplData;
 }
 

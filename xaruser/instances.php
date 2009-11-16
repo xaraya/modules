@@ -225,11 +225,12 @@ $tplData['filter_user'] = isset($_REQUEST['filter_user']) ? $_REQUEST['filter_us
 $tplData['userId'] = $user;
 $tplData['user'] = xarUserGetVar('name', $user);
 
-    $url = xarServer::getCurrentURL(array('offset' => '%%'));
-    $tplData['pager'] = xarTplGetPager($tplData['offset'],
+/*    $tplData['pager'] = xarTplGetPager($tplData['offset'],
                                        $items['cant'],
                                        $url,
-                                       $maxRecords);
+                                       $maxRecords);*/
+    $data['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+    $data['maxRecords'] = $maxRecords;
     return $tplData;
 }
 
