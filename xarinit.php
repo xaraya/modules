@@ -39,7 +39,6 @@ function workflow_init()
             break;
     }
 
-    // From file db/tiki.sql of TikiWiki 1.8 in CVS :
     /*
     $queries[] =
     "CREATE TABLE $xartable[workflow_activities] (
