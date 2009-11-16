@@ -4,21 +4,21 @@
     <legend><xar:mlstring>List of mappings</xar:mlstring></legend>
     <form action="&xar-modurl-workflow-admin-roles;" method="post">
       <div>
-        <input type="hidden" name="pid" value="#$pid#" />
-        <input type="hidden" name="offset" value="#$offset#" />
-        <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
-        <input type="hidden" name="sort_mode" value="#$sort_mode#" />
-        <xar:mlstring>Find</xar:mlstring>:<input size="8" type="text" name="find" value="#$find#" />
-        <input type="submit" name="filter" value="#xarML('find')#" />
+        <input type="hidden" name="pid" value="#$pid#"/>
+        <input type="hidden" name="offset" value="#$offset#"/>
+        <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
+        <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
+        <xar:mlstring>Find</xar:mlstring>:<input size="8" type="text" name="find" value="#$find#"/>
+        <input type="submit" name="filter" value="#xarML('find')#"/>
       </div>
     </form>
     <form action="&xar-modurl-workflow-admin-roles;" method="post">
       <div>
-        <input type="hidden" name="pid" value="#$pid#" />
-        <input type="hidden" name="offset" value="#$offset#" />
-        <input type="hidden" name="find" value="#$find#" />
-        <input type="hidden" name="sort_mode" value="#$sort_mode#" />
-        <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
+        <input type="hidden" name="pid" value="#$pid#"/>
+        <input type="hidden" name="offset" value="#$offset#"/>
+        <input type="hidden" name="find" value="#$find#"/>
+        <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
+        <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
       </div>
       <table class="xar-halfwidth" style="border-collapse: separate;">
         <tr>
@@ -58,7 +58,7 @@
             <tr class="#$rowclass#">
               <td>
                   <xar:if condition="isset($mapitems[$ix]['roleId'])">
-                      <input type="checkbox" name="map[#$mapitems[$ix]['userId']#:::#$mapitems[$ix]['roleId']#]" />
+                      <input type="checkbox" name="map[#$mapitems[$ix]['userId']#:::#$mapitems[$ix]['roleId']#]"/>
                   </xar:if>&#160;
                 #$mapitems[$ix]['name']#
               </td>
@@ -73,7 +73,7 @@
               </td>
             </tr>
           </xar:foreach>
-          <tr><td colspan="2"><input type="submit" name="delete_map" value="#xarML('Delete selected')# " /></td></tr>
+          <tr><td colspan="2"><input type="submit" name="delete_map" value="#xarML('Delete selected')# "/></td></tr>
         <xar:else/>
           <tr><td colspan="3"><xar:mlstring>No mappings defined yet</xar:mlstring></td>
           </tr>

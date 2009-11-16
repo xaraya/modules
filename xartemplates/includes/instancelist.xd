@@ -1,13 +1,13 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <form action="&xar-modurl-workflow-user-instances;" method="post">
     <xar:if condition="!isset($offset)"><xar:set name="offset">0</xar:set></xar:if>
-    <input type="hidden" name="offset" value="#$offset#" />
+    <input type="hidden" name="offset" value="#$offset#"/>
     <xar:if condition="!isset($find)"><xar:set name="find">''</xar:set></xar:if>
-    <input type="hidden" name="find" value="#$find#" />
+    <input type="hidden" name="find" value="#$find#"/>
     <xar:if condition="!isset($where)"><xar:set name="where">''</xar:set></xar:if>
-    <input type="hidden" name="where" value="#$where#" />
+    <input type="hidden" name="where" value="#$where#"/>
     <xar:if condition="!isset($sort_mode)"><xar:set name="sort_mode">'procname_asc'</xar:set></xar:if>
-    <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+    <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
 
     <table style="border-collapse: separate; width: 99%">
       <xar:if condition="!empty($items) and count($items) gt 0">

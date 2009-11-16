@@ -9,12 +9,12 @@
   <fieldset>
     <legend><xar:var name="formtitle"/></legend>
 
-    <input type="hidden" name="version" value="#$proc_info['version']#" />
-    <input type="hidden" name="pid" value="#$proc_info['pId']#" />
-    <input type="hidden" name="offset" value="#$offset#" />
-    <input type="hidden" name="where" value="#$where#" />
-    <input type="hidden" name="find" value="#$find#" />
-    <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+    <input type="hidden" name="version" value="#$proc_info['version']#"/>
+    <input type="hidden" name="pid" value="#$proc_info['pId']#"/>
+    <input type="hidden" name="offset" value="#$offset#"/>
+    <input type="hidden" name="where" value="#$where#"/>
+    <input type="hidden" name="find" value="#$find#"/>
+    <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
 
     <!-- Show an edit form for the process -->
     <div class="xar-form-input-wrapper">
@@ -23,7 +23,7 @@
     </div>
     <div class="xar-form-input-wrapper">
       <label for="processname" class="xar-form-label"><xar:mlstring>Process Name</xar:mlstring></label>
-      <input id="processname" type="text" maxlength="80" name="name" value="#$proc_info['name']#" size="55" />
+      <input id="processname" type="text" maxlength="80" name="name" value="#$proc_info['name']#" size="55"/>
     </div>
     <div class="xar-form-input-wrapper">
       <label for="processdescription" class="xar-form-label"><xar:mlstring>Description</xar:mlstring></label>
@@ -31,9 +31,9 @@
     </div>
     <div class="xar-form-input-wrapper-after">
       <xar:if condition="$proc_info['isActive'] eq 'y'">
-        <input type="checkbox" name="isActive" checked="checked" />
+        <input type="checkbox" name="isActive" checked="checked"/>
       <xar:else/>
-        <input type="checkbox" name="isActive" />
+        <input type="checkbox" name="isActive"/>
       </xar:if>
       <label><xar:mlstring>Active</xar:mlstring></label>
     </div>
@@ -43,7 +43,7 @@
         <xar:else/>
         <xar:set name="save"><xar:mlstring>Create</xar:mlstring></xar:set>
       </xar:if>
-      <input type="submit" name="save" value="#$save#" />
+      <input type="submit" name="save" value="#$save#"/>
     </div>
   </fieldset>
 </form>
@@ -56,13 +56,13 @@
       <xar:mlstring>Or upload a process using this form</xar:mlstring>
     </legend>
     <form enctype="multipart/form-data" action="&xar-modurl-workflow-admin-processes;" method="post">
-      <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" />
+      <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"/>
       <div class="xar-form-input-wrapper">
         <label for="processfile" class="xar-form-label"><xar:mlstring>Upload file:</xar:mlstring></label>
-        <input  id="processfile" size="40" name="userfile1" type="file" />
+        <input  id="processfile" size="40" name="userfile1" type="file"/>
       </div>
       <div class="xar-form-input-wrapper-after">
-        <input type="submit" name="upload" value="#xarML('Upload')#" />
+        <input type="submit" name="upload" value="#xarML('Upload')#"/>
       </div>
     </form>
   </fieldset>

@@ -176,8 +176,9 @@ function workflow_admin_processes()
 
     $data['all_procs'] =  $items['data'];
 
-    $url = xarServer::getCurrentURL(array('offset' => '%%'));
-    $data['pager'] = xarTplGetPager($data['offset'], $items['cant'], $url, $maxRecords);
+    $data['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+    $data['maxRecords'] = $maxRecords;
+    
     return $data;
 }
 

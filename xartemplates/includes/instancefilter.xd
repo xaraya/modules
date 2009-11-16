@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <form action="&xar-modurl-workflow-user-instances;" method="post">
-  <input type="hidden" name="offset" value="#$offset#" />
-  <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+  <input type="hidden" name="offset" value="#$offset#"/>
+  <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
   <table>
     <tr>
       <td><small><xar:mlstring>process</xar:mlstring></small></td>
@@ -63,8 +63,8 @@
           </xar:if>
         </select>
       </td>
-      <td><input size="8" type="text" name="find" value="#$find#" /></td>
-      <td><input type="submit" name="filter" value="#xarML('filter')#" /></td>
+      <td><input size="8" type="text" name="find" value="#$find#"/></td>
+      <td><input type="submit" name="filter" value="#xarML('filter')#"/></td>
     </tr>
   </table>
 </form>

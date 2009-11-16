@@ -175,7 +175,7 @@ CD to request:
 </xar:if>
 </xar:foreach>
 </select>
-<input type="submit" name="request" value="request" />
+<input type="submit" name="request" value="request"/>
 <xar:else/>
 There are no CDs available at the moment...
 </xar:if>
@@ -242,8 +242,8 @@ Status: #$info['status']# <br/>
 <input type="hidden" name="return_url" value="#$return_url#"/>
 <textarea name="reason" cols="40" rows="4">&#160;</textarea>
 <br/><br/>
-<input type="submit" name="rejected" value="rejected" />
-<input type="submit" name="approved" value="approved" />
+<input type="submit" name="rejected" value="rejected"/>
+<input type="submit" name="approved" value="approved"/>
 </form>
 </xar:template>      ]]></template>   
     </activity>
@@ -349,7 +349,7 @@ Your request for #$title# was #$status#
 <input type="hidden" name="activityId" value="#$activityId#"/>
 <input type="hidden" name="iid" value="#$iid#"/>
 <input type="hidden" name="return_url" value="#$return_url#"/>
-<input type="submit" name="ack" value="OK" />
+<input type="submit" name="ack" value="OK"/>
 </form>
 </xar:template>      ]]></template>    
     </activity>
@@ -421,8 +421,8 @@ Escalated: #xarLocaleFormatDate('%x %X %z', $escalated)# <br/>
 <input type="hidden" name="return_url" value="#$return_url#"/>
 <textarea name="reason" cols="40" rows="4">&#160;</textarea>
 <br/><br/>
-<input type="submit" name="rejected" value="rejected" />
-<input type="submit" name="approved" value="approved" />
+<input type="submit" name="rejected" value="rejected"/>
+<input type="submit" name="approved" value="approved"/>
 </form>
 </xar:template>      ]]></template>    
     </activity>

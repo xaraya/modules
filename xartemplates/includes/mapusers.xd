@@ -3,15 +3,15 @@
   <fieldset>
     <legend><xar:mlstring>Map users to roles</xar:mlstring></legend>
     <form method="post" action="&xar-modurl-workflow-admin-roles;">
-      <input type="hidden" name="pid" value="#$pid#" />
-      <input type="hidden" name="offset" value="#$offset#" />
-      <input type="hidden" name="sort_mode" value="#$sort_mode#" />
-      <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
-      <input type="hidden" name="find" value="#$find#" />
+      <input type="hidden" name="pid" value="#$pid#"/>
+      <input type="hidden" name="offset" value="#$offset#"/>
+      <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
+      <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
+      <input type="hidden" name="find" value="#$find#"/>
       <div class="xar-form-input-wrapper">
         <label class="xar-form-label"><xar:mlstring>Filter users</xar:mlstring></label>
-        <input type="text" size="10" name="find_users" value="#$find_users#" />
-        <input type="submit" name="findusers" value="#xarML('filter')#" />
+        <input type="text" size="10" name="find_users" value="#$find_users#"/>
+        <input type="submit" name="findusers" value="#xarML('filter')#"/>
       </div>
       <div class="xar-form-input-wrapper">
         <label class="xar-form-label"><xar:mlstring>Map users</xar:mlstring></label>
@@ -44,7 +44,7 @@
         </table>
       </div>
       <div class="xar-form-input-wrapper-after">
-        <input type="submit" name="save_map" value="#xarML('Map')#" />
+        <input type="submit" name="save_map" value="#xarML('Map')#"/>
       </div>
     </form>
   </fieldset>

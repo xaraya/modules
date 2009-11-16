@@ -137,10 +137,10 @@ if (!empty($edit)) {
 <input type="hidden" name="iid" value="#$iid#"/>
 <input type="hidden" name="return_url" value="#$return_url#"/>
 <br/><br/><textarea name="reason" rows="4" cols="40"></textarea><br/><br/>
-<input type="submit" name="approve" value="#xarML('Approve')#" />
-<input type="submit" name="frontpage" value="#xarML('Frontpage')#" />
-<input type="submit" name="edit" value="#xarML('Edit')#" />
-<input type="submit" name="reject" value="#xarML('Reject')#" />
+<input type="submit" name="approve" value="#xarML('Approve')#"/>
+<input type="submit" name="frontpage" value="#xarML('Frontpage')#"/>
+<input type="submit" name="edit" value="#xarML('Edit')#"/>
+<input type="submit" name="reject" value="#xarML('Reject')#"/>
 </div>
 </form>
 

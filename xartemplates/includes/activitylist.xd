@@ -3,11 +3,11 @@
     <form action="&xar-modurl-workflow-admin-activities;" method="post">
       <fieldset>
         <legend><xar:mlstring>Process activities</xar:mlstring></legend>
-        <input type="hidden" name="sort_mode" value="#$sort_mode#" />
-        <input type="hidden" name="pid" value="#$pid#" />
-        <input type="hidden" name="activityId" value="#$info['activityId']#" />
-        <input type="hidden" name="where2" value="#$where2#" />
-        <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
+        <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
+        <input type="hidden" name="pid" value="#$pid#"/>
+        <input type="hidden" name="activityId" value="#$info['activityId']#"/>
+        <input type="hidden" name="where2" value="#$where2#"/>
+        <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
         <table>
           <tr>
             <td><xar:mlstring>Find</xar:mlstring></td>
@@ -18,18 +18,18 @@
           </tr>
           <tr>
             <td>
-              <input size="8" type="text" name="find" value="#$find#" />
+              <input size="8" type="text" name="find" value="#$find#"/>
             </td>
             <td>
               <select name="filter_type">
                 <option value=""><xar:mlstring>all</xar:mlstring></option>
                 <option value="start"><xar:mlstring>start</xar:mlstring></option>
-                <option value="end" ><xar:mlstring>end</xar:mlstring></option>
-                <option value="activity" ><xar:mlstring>activity</xar:mlstring></option>
-                <option value="switch" ><xar:mlstring>switch</xar:mlstring></option>
-                <option value="split" ><xar:mlstring>split</xar:mlstring></option>
-                <option value="join" ><xar:mlstring>join</xar:mlstring></option>
-                <option value="standalone" ><xar:mlstring>standalone</xar:mlstring></option>
+                <option value="end"><xar:mlstring>end</xar:mlstring></option>
+                <option value="activity"><xar:mlstring>activity</xar:mlstring></option>
+                <option value="switch"><xar:mlstring>switch</xar:mlstring></option>
+                <option value="split"><xar:mlstring>split</xar:mlstring></option>
+                <option value="join"><xar:mlstring>join</xar:mlstring></option>
+                <option value="standalone"><xar:mlstring>standalone</xar:mlstring></option>
               </select>
             </td>
             <td>
@@ -47,7 +47,7 @@
               </select>
             </td>
             <td>
-              <input type="submit" name="filter" value="#xarML('Filter')#" />
+              <input type="submit" name="filter" value="#xarML('Filter')#"/>
             </td>
           </tr>
         </table>
@@ -55,13 +55,13 @@
     </form>
 
     <form action="&xar-modurl-workflow-admin-activities;" method="post">
-        <input type="hidden" name="find" value="#$find#" />
-        <input type="hidden" name="where" value="#$where#" />
-        <input type="hidden" name="sort_mode" value="#$sort_mode#" />
-        <input type="hidden" name="where2" value="#$where2#" />
-        <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
-        <input type="hidden" name="pid" value="#$pid#" />
-        <input type="hidden" name="activityId" value="#$info['activityId']#" />
+        <input type="hidden" name="find" value="#$find#"/>
+        <input type="hidden" name="where" value="#$where#"/>
+        <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
+        <input type="hidden" name="where2" value="#$where2#"/>
+        <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
+        <input type="hidden" name="pid" value="#$pid#"/>
+        <input type="hidden" name="activityId" value="#$info['activityId']#"/>
 
         <!--
             Yeah, this could be done smarter, but we consider BL1 and BL2 here.
@@ -112,7 +112,7 @@
                   #$items[$ix]['flowNum']#
                 </td>
                 <td style="text-align:left;">
-                  <input type="checkbox" name="activity[#$items[$ix]['activityId']#]" />&#160;
+                  <input type="checkbox" name="activity[#$items[$ix]['activityId']#]"/>&#160;
                   <a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=#$sort_mode#&amp;activityId=#$items[$ix]['activityId']#">#$items[$ix]['name']#</a>
                   <xar:if condition="$items[$ix]['roles'] lt 1">
                     <small><xar:mlstring>(no roles)</xar:mlstring></small>
@@ -124,28 +124,28 @@
                 </td>
                 <td style="text-align:center;">
                   <xar:if condition="$items[$ix]['isInteractive'] eq 'y'">
-                    <input type="checkbox" name="activity_inter[#$items[$ix]['activityId']#]" checked="checked" />
+                    <input type="checkbox" name="activity_inter[#$items[$ix]['activityId']#]" checked="checked"/>
                     <xar:else/>
-                    <input type="checkbox" name="activity_inter[#$items[$ix]['activityId']#]" />
+                    <input type="checkbox" name="activity_inter[#$items[$ix]['activityId']#]"/>
                   </xar:if>
                 </td>
                 <td style="text-align:center;">
                   <xar:if condition="$items[$ix]['isAutoRouted'] eq 'y'">
-                    <input type="checkbox" name="activity_route[#$items[$ix]['activityId']#]" checked="checked" />
+                    <input type="checkbox" name="activity_route[#$items[$ix]['activityId']#]" checked="checked"/>
                     <xar:else/>
-                    <input type="checkbox" name="activity_route[#$items[$ix]['activityId']#]" />
+                    <input type="checkbox" name="activity_route[#$items[$ix]['activityId']#]"/>
                   </xar:if>
                 </td>
 
                 <td style="text-align: center;">
                   <a href="#xarModURL('workflow','admin','shared_source',array('pid' => $pid, 'activityId' => $items[$ix]['activityId']))#">
-                    <img src="modules/workflow/lib/galaxia/img/icons/book.gif" alt="#xarML('code')#" title="#xarML('Code to execute when running this activity')#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/book.gif" alt="#xarML('code')#" title="#xarML('Code to execute when running this activity')#"/>
                   </a>
                 </td>
                 <td style="text-align: center;">
                   <xar:if condition="$items[$ix]['isInteractive'] eq 'y'">
                     <a class="link" href="#xarModURL('workflow','admin','shared_source',array('pid' => $pid, 'activityId' => $items[$ix]['activityId'], 'template' => 1))#">
-                      <img src="modules/workflow/lib/galaxia/img/icons/theme.gif" alt="#xarML('template')#" title="#xarML('Interface template for interactive activity')#" />
+                      <img src="modules/workflow/lib/galaxia/img/icons/theme.gif" alt="#xarML('template')#" title="#xarML('Interface template for interactive activity')#"/>
                     </a>
                   <xar:else/>
                     &#160;
@@ -162,9 +162,9 @@
           </xar:if>
           <tr>
             <td>
-              <input type="submit" name="update_act" value="#xarML('Update')#" />
+              <input type="submit" name="update_act" value="#xarML('Update')#"/>
             </td>
-            <td colspan="6"><input type="submit" name="delete_act" value="#xarML('Delete selected')#" /></td>
+            <td colspan="6"><input type="submit" name="delete_act" value="#xarML('Delete selected')#"/></td>
           </tr>
         </table>
       </form>

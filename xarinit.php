@@ -412,7 +412,7 @@ function workflow_init()
     }
 */
 
-    // Register BL tags
+/*    // Register BL tags
     // show the output of a workflow activity in a template (e.g. shopping cart or whatever)
     xarTplRegisterTag('workflow', 'workflow-activity',
                       array(),
@@ -427,7 +427,7 @@ function workflow_init()
     xarTplRegisterTag('workflow', 'workflow-instances',
                       array(),
                       'workflow_userapi_handleinstancestag');
-
+*/
     // define privilege instances and masks
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"

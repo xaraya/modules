@@ -5,11 +5,11 @@
 
       <!-- Filter form -->
       <form action="&xar-modurl-workflow-admin-activities;" method="post" id='filtran'>
-        <input type="hidden" name="pid" value="#$pid#" />
-        <input type="hidden" name="activityId" value="#$info['activityId']#" />
-        <input type="hidden" name="find" value="#$find2#" />
-        <input type="hidden" name="where" value="#$where2#" />
-        <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
+        <input type="hidden" name="pid" value="#$pid#"/>
+        <input type="hidden" name="activityId" value="#$info['activityId']#"/>
+        <input type="hidden" name="find" value="#$find2#"/>
+        <input type="hidden" name="where" value="#$where2#"/>
+        <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
         <div class="xar-form-input-wrapper">
           <label class="xar-form-label"><xar:mlstring>From:</xar:mlstring></label>
           <select name="filter_tran_name" onchange="javascript:document.getElementById('filtran').submit();">
@@ -26,17 +26,17 @@
               </xar:if>
             </xar:foreach>
           </select>
-          <input type="submit" name="filter_tran" value="#xarML('Filter')#" />
+          <input type="submit" name="filter_tran" value="#xarML('Filter')#"/>
         </div>
       </form>
       <!-- End filter form -->
 
       <form action="&xar-modurl-workflow-admin-activities;" method="post">
-        <input type="hidden" name="pid" value="#$pid#" />
-        <input type="hidden" name="activityId" value="#$info['activityId']#" />
-        <input type="hidden" name="find" value="#$find#" />
-        <input type="hidden" name="where" value="#$where#" />
-        <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+        <input type="hidden" name="pid" value="#$pid#"/>
+        <input type="hidden" name="activityId" value="#$info['activityId']#"/>
+        <input type="hidden" name="find" value="#$find#"/>
+        <input type="hidden" name="where" value="#$where#"/>
+        <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
 
         <!-- Little trick to get the base link into a variable, save some typing ahead -->
         <xar:set name="urlbase">&xar-modurl-workflow-admin-activities;</xar:set>
@@ -70,7 +70,7 @@
 
               <tr class="#$rowclass#">
                 <td>
-                  <input type="checkbox" name="transition[#$transitions[$ix]['actFromId']#_#$transitions[$ix]['actToId']#]" />&#160;
+                  <input type="checkbox" name="transition[#$transitions[$ix]['actFromId']#_#$transitions[$ix]['actToId']#]"/>&#160;
                   <a href="#$baselink#&amp;sort_mode=#$sort_mode#&amp;activityId=#$transitions[$ix]['actFromId']#">#$transitions[$ix]['actFromName']#</a>
                 </td>
                 <td>
@@ -98,11 +98,11 @@
                     <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
                   </xar:foreach>
                 </select>
-                <input type="submit" name="add_trans" value="#xarML('Add transition')#" />
+                <input type="submit" name="add_trans" value="#xarML('Add transition')#"/>
               </td>
             </tr>
             <tr>
-              <td colspan="3"><input type="submit" name="delete_tran" value="#xarML('Delete selected')# " /></td>
+              <td colspan="3"><input type="submit" name="delete_tran" value="#xarML('Delete selected')# "/></td>
             </tr>
           <xar:else/>
             <tr><td colspan="3"><xar:mlstring>No transitions defined yet</xar:mlstring></td></tr>

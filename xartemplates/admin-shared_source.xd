@@ -28,7 +28,7 @@ function keypresshandler(elemID,event)
 ]]>
 </script>
 <div class="xar-mod-body">
-    <xar:template module="workflow" type="module" file="admin-menu" />
+    <xar:template module="workflow" type="module" file="admin-menu"/>
     <!-- Process navigation bar -->
     <xar:template file="proc_bar"/>
 
@@ -58,10 +58,10 @@ function keypresshandler(elemID,event)
         </div>
        <div class="xar-form-input-wrapper-before">
           <xar:if condition="$activityId gt 0 and $act_info['isInteractive'] eq 'y' and $template eq 'n'">
-            <input type="submit" name='template' value="#xarML('Switch to template')#" />
+            <input type="submit" name='template' value="#xarML('Switch to template')#"/>
           </xar:if>
           <xar:if condition="$activityId gt 0 and $act_info['isInteractive'] eq 'y' and $template eq 'y'">
-            <input type="submit" name='save' value="#xarML('Switch to code')#" />
+            <input type="submit" name='save' value="#xarML('Switch to code')#"/>
           </xar:if>
           &#160;
         </div>
@@ -95,10 +95,10 @@ function keypresshandler(elemID,event)
             </div>
         </fieldset>
          <div class="xar-form-input-wrapper-after">
-            <input type="hidden" name="pid" value="#$pid#" />
-            <input type="hidden" name="source_name" value="#$source_name#" />
-            <input type="submit" name='save' value="#xarML('Save')#" />
-            <input type="submit" name='cancel' value="#xarML('Cancel')#" />
+            <input type="hidden" name="pid" value="#$pid#"/>
+            <input type="hidden" name="source_name" value="#$source_name#"/>
+            <input type="submit" name='save' value="#xarML('Save')#"/>
+            <input type="submit" name='cancel' value="#xarML('Cancel')#"/>
         </div>
   </form>
   <!-- Show a courtesy footer -->

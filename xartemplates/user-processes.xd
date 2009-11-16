@@ -14,25 +14,25 @@
       <xar:mlstring>List of processes</xar:mlstring> (#$cant#)
     </legend>
     <form action="&xar-modurl-workflow-user-processes;" method="post">
-      <input type="hidden" name="offset" value="#$offset#" />
-      <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+      <input type="hidden" name="offset" value="#$offset#"/>
+      <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
       <table>
         <tr>
           <td><small><xar:mlstring>description</xar:mlstring></small></td>
           <td>&#160;</td>
         </tr>
         <tr>
-          <td><input size="8" type="text" name="find" value="#$find#" /></td>
-          <td><input type="submit" name="filter" value="#xarML('filter')#" /></td>
+          <td><input size="8" type="text" name="find" value="#$find#"/></td>
+          <td><input type="submit" name="filter" value="#xarML('filter')#"/></td>
         </tr>
       </table>
     </form>
 
     <form action="&xar-modurl-workflow-user-processes;" method="post">
-      <input type="hidden" name="offset" value="#$offset#" />
-      <input type="hidden" name="find" value="#$find#" />
-      <input type="hidden" name="where" value="#$where#" />
-      <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+      <input type="hidden" name="offset" value="#$offset#"/>
+      <input type="hidden" name="find" value="#$find#"/>
+      <input type="hidden" name="where" value="#$where#"/>
+      <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
       <table style="border-collapse: separate;">
         <xar:if condition="!empty($items) and count($items) gt 0">
           <tr>

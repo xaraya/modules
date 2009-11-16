@@ -10,15 +10,15 @@
     </legend>
 
     <form action="&xar-modurl-workflow-admin-roles;" method="post">
-      <input type="hidden" name="pid" value="#$pid#" />
-      <input type="hidden" name="roleId" value="#$info['roleId']#" />
-      <input type="hidden" name="sort_mode" value="#$sort_mode#" />
-      <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
-      <input type="hidden" name="find" value="#$find#" />
-      <input type="hidden" name="offset" value="#$offset#" />
+      <input type="hidden" name="pid" value="#$pid#"/>
+      <input type="hidden" name="roleId" value="#$info['roleId']#"/>
+      <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
+      <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
+      <input type="hidden" name="find" value="#$find#"/>
+      <input type="hidden" name="offset" value="#$offset#"/>
       <div class="xar-form-input-wrapper">
         <label class="xar-form-label"><xar:mlstring>Name</xar:mlstring></label>
-        <input type="text" name="name" value="#$info['name']#" />
+        <input type="text" name="name" value="#$info['name']#"/>
       </div>
       <div class ="xar-form-input-wrapper">
         <label class="xar-form-label"><xar:mlstring>Description</xar:mlstring></label>
@@ -26,9 +26,9 @@
       </div>
       <div class="xar-form-input-wrapper-after">
         <xar:if condition="$roleId gt 0">
-          <input type="submit" name="save" value="#xarML('Update')#" />
+          <input type="submit" name="save" value="#xarML('Update')#"/>
           <xar:else/>
-          <input type="submit" name="save" value="#xarML('Save')#" />
+          <input type="submit" name="save" value="#xarML('Save')#"/>
         </xar:if>
       </div>
     </form>

@@ -35,13 +35,13 @@
           </select>
         </td>
         <td>
-          <input type="hidden" name="jobs[#$id#][lastrun]" value="#$job['lastrun']#" />
+          <input type="hidden" name="jobs[#$id#][lastrun]" value="#$job['lastrun']#"/>
           <xar:if condition="!empty($job['lastrun'])">
             #xarLocaleFormatDate('%x %X %z',$job['lastrun'])#
           </xar:if>
         </td>
         <td>
-          <input type="hidden" name="jobs[#$id#][result]" value="#$job['result']#" />
+          <input type="hidden" name="jobs[#$id#][result]" value="#$job['result']#"/>
           #$job['result']#
         </td>
       </tr>

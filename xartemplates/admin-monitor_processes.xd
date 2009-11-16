@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
-  <xar:template module="workflow" type="module" file="admin-menu" />
+  <xar:template module="workflow" type="module" file="admin-menu"/>
 
   <!-- Include the monitoring navigation -->
   <xar:template file="monitor_bar" type="module"/>
@@ -9,8 +9,8 @@
   <form style="margin-left: 1em;" action="#xarModURL('workflow','admin','monitor_processes')#" method="post">
       <fieldset>
         <legend><xar:mlstring>List of processes</xar:mlstring> (#$cant#)</legend>
-          <input type="hidden" name="offset" value="#$offset#" />
-          <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+          <input type="hidden" name="offset" value="#$offset#"/>
+          <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
           <table>
             <tr>
               <td><small><xar:mlstring>process</xar:mlstring></small></td>
@@ -75,8 +75,8 @@
                   </xar:if>
                 </select>
               </td>
-              <td><input size="8" type="text" name="find" value="#$find#" /></td>
-              <td><input type="submit" name="filter" value="#xarML('filter')#" /></td>
+              <td><input size="8" type="text" name="find" value="#$find#"/></td>
+              <td><input type="submit" name="filter" value="#xarML('filter')#"/></td>
             </tr>
           </table>
 
@@ -100,16 +100,16 @@
                   </td>
                   <td style="text-align:center;">
                     <xar:if condition="$items[$ix]['isActive'] eq 'y'">
-                      <img src="modules/workflow/lib/galaxia/img/icons/refresh2.gif" alt=" (#xarML('active')#) " title="#xarML('active process')#" />
+                      <img src="modules/workflow/lib/galaxia/img/icons/refresh2.gif" alt=" (#xarML('active')#) " title="#xarML('active process')#"/>
                       <xar:else/>
                       &#160;
                     </xar:if>
                   </td>
                   <td style="text-align:center;">
                     <xar:if condition="$items[$ix]['isValid'] eq 'n'">
-                      <img src="modules/workflow/lib/galaxia/img/icons/red_dot.gif" alt="(#xarML('invalid')#)" title="#xarML('invalid process')#" />
+                      <img src="modules/workflow/lib/galaxia/img/icons/red_dot.gif" alt="(#xarML('invalid')#)" title="#xarML('invalid process')#"/>
                       <xar:else/>
-                      <img src="modules/workflow/lib/galaxia/img/icons/green_dot.gif" alt="(#xarML('valid')#)" title="#xarML('valid process')#" />
+                      <img src="modules/workflow/lib/galaxia/img/icons/green_dot.gif" alt="(#xarML('valid')#)" title="#xarML('valid process')#"/>
                     </xar:if>
 
                   </td>
@@ -127,9 +127,9 @@
 
                   <td style="text-align:left;">
                     <xar:if condition="!empty($items[$ix]['duration'])">
-                      <xar:if condition="!empty($items[$ix]['timescale']['min'])"><img src="modules/workflow/xarimages/bluepixel.gif" class="xar-noborder" width="#$items[$ix]['timescale']['min']#" height="10" alt="minimum" title="minimum = #$items[$ix]['duration']['min']#" /></xar:if>
-                      <xar:if condition="!empty($items[$ix]['timescale']['avg'])"><img src="modules/workflow/xarimages/greenpixel.gif" class="xar-noborder" width="#$items[$ix]['timescale']['avg']#" height="10" alt="average" title="average = #$items[$ix]['duration']['avg']#" /></xar:if>
-                      <xar:if condition="!empty($items[$ix]['timescale']['max'])"><img src="modules/workflow/xarimages/redpixel.gif" class="xar-noborder" width="#$items[$ix]['timescale']['max']#" height="10" alt="maximum" title="maximum = #$items[$ix]['duration']['max']#" /></xar:if>
+                      <xar:if condition="!empty($items[$ix]['timescale']['min'])"><img src="modules/workflow/xarimages/bluepixel.gif" class="xar-noborder" width="#$items[$ix]['timescale']['min']#" height="10" alt="minimum" title="minimum = #$items[$ix]['duration']['min']#"/></xar:if>
+                      <xar:if condition="!empty($items[$ix]['timescale']['avg'])"><img src="modules/workflow/xarimages/greenpixel.gif" class="xar-noborder" width="#$items[$ix]['timescale']['avg']#" height="10" alt="average" title="average = #$items[$ix]['duration']['avg']#"/></xar:if>
+                      <xar:if condition="!empty($items[$ix]['timescale']['max'])"><img src="modules/workflow/xarimages/redpixel.gif" class="xar-noborder" width="#$items[$ix]['timescale']['max']#" height="10" alt="maximum" title="maximum = #$items[$ix]['duration']['max']#"/></xar:if>
                       #$items[$ix]['duration']['avg']#
                     </xar:if>
                   </td>

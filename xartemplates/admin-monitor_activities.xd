@@ -5,15 +5,15 @@
   </span>
 </div>
 <div class="xar-mod-body">
-    <xar:template module="workflow" type="module" file="admin-menu" />
+    <xar:template module="workflow" type="module" file="admin-menu"/>
     <xar:template file="monitor_bar" type="module"/>
 
     <div style="margin: auto;">
       <fieldset>
         <legend><xar:mlstring>List of activities</xar:mlstring> (#$cant#)</legend>
           <form style="margin-left: 1em;" id="filterf" action="#xarModURL('workflow','admin','monitor_activities')#" method="post">
-            <input type="hidden" name="offset" value="#$offset#" />
-            <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+            <input type="hidden" name="offset" value="#$offset#"/>
+            <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
             <table>
               <tr>
                 <td><small><xar:mlstring>process</xar:mlstring></small></td>
@@ -26,7 +26,7 @@
               </tr>
               <tr>
                 <td>
-                    <xar:data-input type="dropdown" name="filter_process" value="$filter_process" options="$all_procs" firstline="All" />
+                    <xar:data-input type="dropdown" name="filter_process" value="$filter_process" options="$all_procs" firstline="All"/>
                 </td>
                 <td>
                   <select name="filter_activity">
@@ -99,21 +99,21 @@
                 </select>
               </td>
               <td>
-                <input size="8" type="text" name="find" value="#$find#" />
+                <input size="8" type="text" name="find" value="#$find#"/>
               </td>
 
               <td>
-                <input type="submit" name="filter" value="#xarML('filter')#" />
+                <input type="submit" name="filter" value="#xarML('filter')#"/>
               </td>
             </tr>
           </table>
         </form>
 
         <form style="margin-left: 1em;" action="#xarModURL('workflow','admin','monitor_activities')#" method="post">
-          <input type="hidden" name="offset" value="#$offset#" />
-          <input type="hidden" name="find" value="#$find#" />
-          <input type="hidden" name="where" value="#$where#" />
-          <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+          <input type="hidden" name="offset" value="#$offset#"/>
+          <input type="hidden" name="find" value="#$find#"/>
+          <input type="hidden" name="where" value="#$where#"/>
+          <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
           <table style="border-collapse: separate; width: 99%">
             <xar:if condition="!empty($items) and count($items) gt 0">
               <tr>
@@ -133,15 +133,15 @@
 
                   <td style="text-align:left;">
                     <xar:if condition="$items[$ix]['type'] eq 'start'">
-                      <img src="modules/workflow/lib/galaxia/img/icons/mini_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                      <img src="modules/workflow/lib/galaxia/img/icons/mini_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
                     <xar:elseif condition="$items[$ix]['type'] eq 'end'"/>
-                      <img src="modules/workflow/lib/galaxia/img/icons/mini_dbl_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                      <img src="modules/workflow/lib/galaxia/img/icons/mini_dbl_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
                     <xar:elseif condition="$items[$ix]['type'] eq 'activity'"/>
-                      <img src="modules/workflow/lib/galaxia/img/icons/mini_rectangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                      <img src="modules/workflow/lib/galaxia/img/icons/mini_rectangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
                     <xar:elseif condition="$items[$ix]['type'] eq 'switch'"/>
-                      <img src="modules/workflow/lib/galaxia/img/icons/mini_diamond.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                      <img src="modules/workflow/lib/galaxia/img/icons/mini_diamond.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
                     <xar:elseif condition="$items[$ix]['type'] eq 'standalone'"/>
-                      <img src="modules/workflow/lib/galaxia/img/icons/mini_hexagon.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                      <img src="modules/workflow/lib/galaxia/img/icons/mini_hexagon.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
                     <xar:elseif condition="$items[$ix]['type'] eq 'split'"/>
                       <img src="modules/workflow/lib/galaxia/img/icons/mini_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"  />
                     <xar:elseif condition="$items[$ix]['type'] eq 'join'"/>
@@ -184,13 +184,13 @@
                   <td style="text-align:left;">
                     <xar:if condition="!empty($items[$ix]['duration'])">
                       <xar:if condition="!empty($items[$ix]['timescale']['min'])">
-                        <img src="#xarTplGetImage('bluepixel.gif')#" width="#$items[$ix]['timescale']['min']#" height="10" alt="minimum" title="minimum = #$items[$ix]['duration']['min']#" />
+                        <img src="#xarTplGetImage('bluepixel.gif')#" width="#$items[$ix]['timescale']['min']#" height="10" alt="minimum" title="minimum = #$items[$ix]['duration']['min']#"/>
                       </xar:if>
                       <xar:if condition="!empty($items[$ix]['timescale']['avg'])">
-                        <img src="#xarTplGetImage('greenpixel.gif')#" width="#$items[$ix]['timescale']['avg']#" height="10" alt="average" title="average = #$items[$ix]['duration']['avg']#" />
+                        <img src="#xarTplGetImage('greenpixel.gif')#" width="#$items[$ix]['timescale']['avg']#" height="10" alt="average" title="average = #$items[$ix]['duration']['avg']#"/>
                       </xar:if>
                       <xar:if condition="!empty($items[$ix]['timescale']['max'])">
-                        <img src="#xarTplGetImage('redpixel.gif')#" width="#$items[$ix]['timescale']['max']#" height="10" alt="maximum" title="maximum = #$items[$ix]['duration']['max']#" />
+                        <img src="#xarTplGetImage('redpixel.gif')#" width="#$items[$ix]['timescale']['max']#" height="10" alt="maximum" title="maximum = #$items[$ix]['duration']['max']#"/>
                       </xar:if>
                       #$items[$ix]['duration']['avg']#
                     </xar:if>

@@ -13,8 +13,8 @@
       <legend><xar:mlstring>List of activities</xar:mlstring> (#$cant#)</legend>
 
       <form action="#xarModURL('workflow','user','activities')#" method="post" id='fform'>
-        <input type="hidden" name="offset" value="#$offset#" />
-        <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+        <input type="hidden" name="offset" value="#$offset#"/>
+        <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
         <table>
           <tr>
             <td><small><xar:mlstring>process</xar:mlstring></small></td>
@@ -39,17 +39,17 @@
                 </xar:foreach>
               </select>
             </td>
-            <td ><input size="8" type="text" name="find" value="#$find#" /></td>
-            <td ><input type="submit" name="filter" value="#xarML('filter')#" /></td>
+            <td ><input size="8" type="text" name="find" value="#$find#"/></td>
+            <td ><input type="submit" name="filter" value="#xarML('filter')#"/></td>
           </tr>
         </table>
       </form>
 
       <form action="#xarModURL('workflow','user','activities')#" method="post">
-        <input type="hidden" name="offset" value="#$offset#" />
-        <input type="hidden" name="find" value="#$find#" />
-        <input type="hidden" name="where" value="#$where#" />
-        <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+        <input type="hidden" name="offset" value="#$offset#"/>
+        <input type="hidden" name="find" value="#$find#"/>
+        <input type="hidden" name="where" value="#$where#"/>
+        <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
         <table style="border-collapse:separate;">
           <xar:if condition="!empty($items) and count($items) gt 0">
             <tr>
@@ -80,19 +80,19 @@
                 <td style="text-align: right;">#$items[$ix]['version']#</td>
                 <td style="text-align:left;">
                   <xar:if condition="$items[$ix]['type'] eq 'start'">
-                    <img src="modules/workflow/lib/galaxia/img/icons/mini_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
                     <xar:elseif condition="$items[$ix]['type'] eq 'end'"/>
-                    <img src="modules/workflow/lib/galaxia/img/icons/mini_dbl_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_dbl_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
                     <xar:elseif condition="$items[$ix]['type'] eq 'activity'"/>
-                    <img src="modules/workflow/lib/galaxia/img/icons/mini_rectangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_rectangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
                     <xar:elseif condition="$items[$ix]['type'] eq 'switch'"/>
-                    <img src="modules/workflow/lib/galaxia/img/icons/mini_diamond.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_diamond.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
                     <xar:elseif condition="$items[$ix]['type'] eq 'standalone'"/>
-                    <img src="modules/workflow/lib/galaxia/img/icons/mini_hexagon.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_hexagon.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
                     <xar:elseif condition="$items[$ix]['type'] eq 'split'"/>
-                    <img src="modules/workflow/lib/galaxia/img/icons/mini_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
                     <xar:elseif condition="$items[$ix]['type'] eq 'join'"/>
-                    <img src="modules/workflow/lib/galaxia/img/icons/mini_inv_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_inv_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
                     <xar:else/>
                     #$items[$ix]['type']#
                   </xar:if>
@@ -103,7 +103,7 @@
                   </xar:if>
                   <xar:if condition="$items[$ix]['isInteractive'] eq 'y' and ($items[$ix]['type'] eq 'start' or $items[$ix]['type'] eq 'standalone')">
                     <a href="#xarModURL('workflow','user','run_activity',array('activityId' => $items[$ix]['activityId']))#">
-                      <img src="modules/workflow/lib/galaxia/img/icons/next.gif" alt="#xarML('run')#" title="#xarML('run activity')#" />
+                      <img src="modules/workflow/lib/galaxia/img/icons/next.gif" alt="#xarML('run')#" title="#xarML('run activity')#"/>
                     </a>
                   </xar:if>
                 </td>
@@ -128,10 +128,10 @@
   <xar:if condition="!empty($graph)">
     <div style="text-align: center">
       <xar:if condition="!empty($map)">
-        <img src="#$graph#" alt="#$procname#" usemap="#procmap" />
+        <img src="#$graph#" alt="#$procname#" usemap="#procmap"/>
         <map name="procmap">#$map#</map>
         <xar:else/>
-        <img src="#$graph#" alt="#$procname#" />
+        <img src="#$graph#" alt="#$procname#"/>
       </xar:if>
     </div>
   </xar:if>

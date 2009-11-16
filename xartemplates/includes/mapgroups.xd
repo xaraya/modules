@@ -4,11 +4,11 @@
     <legend><xar:mlstring>Map groups to roles</xar:mlstring></legend>
 
     <form method="post" action="&xar-modurl-workflow-admin-roles;">
-      <input type="hidden" name="pid" value="#$pid#" />
-      <input type="hidden" name="offset" value="#$offset#" />
-      <input type="hidden" name="sort_mode" value="#$sort_mode#" />
-      <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
-      <input type="hidden" name="find" value="#$find#" />
+      <input type="hidden" name="pid" value="#$pid#"/>
+      <input type="hidden" name="offset" value="#$offset#"/>
+      <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
+      <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
+      <input type="hidden" name="find" value="#$find#"/>
       <table class="xar-halfwidth">
         <tr>
           <th><xar:mlstring>Operation</xar:mlstring></th>
@@ -39,7 +39,7 @@
         </tr>
         <tr>
           <td colspan="3">
-            <input type="submit" name="mapg" value="#xarML('Map')#" />
+            <input type="submit" name="mapg" value="#xarML('Map')#"/>
           </td>
         </tr>
       </table>
