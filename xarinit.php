@@ -412,22 +412,6 @@ function workflow_init()
     }
 */
 
-/*    // Register BL tags
-    // show the output of a workflow activity in a template (e.g. shopping cart or whatever)
-    xarTplRegisterTag('workflow', 'workflow-activity',
-                      array(),
-                      'workflow_userapi_handleactivitytag');
-
-    // show the status (current activity/exception/aborted/completed) for "your" instances
-    xarTplRegisterTag('workflow', 'workflow-status',
-                      array(),
-                      'workflow_userapi_handlestatustag');
-
-    // show the instances that are assigned/accessible to you (i.e. your task list)
-    xarTplRegisterTag('workflow', 'workflow-instances',
-                      array(),
-                      'workflow_userapi_handleinstancestag');
-*/
     // define privilege instances and masks
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
@@ -524,11 +508,6 @@ function workflow_delete()
         return false;
     }
 */
-
-    // Unregister BL tags
-    xarTplUnregisterTag('workflow-activity');
-    xarTplUnregisterTag('workflow-status');
-    xarTplUnregisterTag('workflow-instances');
 
     // Remove all process files
     workflow_remove_processes();
