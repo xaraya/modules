@@ -112,8 +112,8 @@ function workflow_user_processes()
                                            $items['cant'],
                                            $url,
                                            $maxRecords);*/
-        $data['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
-        $data['maxRecords'] = $maxRecords;
+        $tplData['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+        $tplData['maxRecords'] = $maxRecords;
         return $tplData;
 }
 
