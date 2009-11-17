@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <div class="xar-mod-head">
     <span class="xar-mod-title">
-      <xar:mlstring>Workflow Module</xar:mlstring>
+      Workflow Module
     </span>
   </div>
   <div class="xar-mod-body">

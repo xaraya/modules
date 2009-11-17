@@ -6,15 +6,15 @@
   <xar:if condition="empty($layout) or $layout eq 'default'">
     <fieldset>
       <legend>
-        <xar:mlstring>My Current Task List</xar:mlstring>
+        My Current Task List
       </legend>
       <!-- Produce the list of instances -->
       <xar:template file="instancelist"/>
     </fieldset>
   <xar:else/>
     <!-- Layout apparently had a value -->
-    <xar:mlstring>Trying to use layout : </xar:mlstring>#$layout#
-    <xar:mlstring>Not implemented yet</xar:mlstring>
-    <xar:mlstring>This layout is undefined - please specify it in modules/workflow/xartemplates/user-showinstances.xd</xar:mlstring>
+    Trying to use layout : #$layout#
+    Not implemented yet
+    This layout is undefined - please specify it in modules/workflow/xartemplates/user-showinstances.xd
   </xar:if>
 </xar:template>

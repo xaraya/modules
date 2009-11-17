@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <div class="xar-mod-head">
     <span class="xar-mod-title">
-      <xar:mlstring>Workflow Administration</xar:mlstring>
+      Workflow Administration
     </span>
   </div>
   <div class="xar-mod-body">
@@ -21,12 +21,12 @@
       <xar:else/>
       <p>
         <xar:set name="graphvizlink">'<a href="http://www.research.att.com/sw/tools/graphviz/">GraphViz</a>'</xar:set>
-        <xar:mlstring>No process graph is available.</xar:mlstring>
+        No process graph is available.
         <xar:ml>
-          <xar:mlstring>
+          
             Either the process still contains errors, or #(1) is not properly installed.
             Or if it is installed, you may need to adapt GRAPHVIZ_DIR in the modules/workflow/lib/Galaxia/config.php file...
-          </xar:mlstring>
+          
           <xar:mlvar>#$graphvizlink#</xar:mlvar>
         </xar:ml>
       </p>

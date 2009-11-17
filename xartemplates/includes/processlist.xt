@@ -2,26 +2,26 @@
 <div class="xar-form-input-wrapper">
   <fieldset>
     <legend>
-      <xar:mlstring>List of processes</xar:mlstring> (#$cant#)
+      List of processes (#$cant#)
     </legend>
 
       <!-- Proces filtering -->
       <div class="xar-form-input-container">
       <form action="#xarModURL('workflow','admin','monitor_processes')#" method="post">
-        <xar:mlstring>Find</xar:mlstring>:<input size="8" type="text" name="find" value="#$find#"/>
-        <xar:mlstring>Process</xar:mlstring>:
+        Find:<input size="8" type="text" name="find" value="#$find#"/>
+        Process:
         <select name="filter_name">
-          <option value=""><xar:mlstring>All</xar:mlstring></option>
+          <option value="">All</option>
           <xar:foreach in="$all_procs" key="$ix">
             <option  value="#$all_procs[$ix]['name']#">#$all_procs[$ix]['name']#</option>
           </xar:foreach>
         </select>
 
-        <xar:mlstring>Status</xar:mlstring>:
+        Status:
         <select name="filter_active">
-          <option value=""><xar:mlstring>All</xar:mlstring></option>
-          <option value="y"><xar:mlstring>Active</xar:mlstring></option>
-          <option value="n"><xar:mlstring>Inactive</xar:mlstring></option>
+          <option value="">All</option>
+          <option value="y">Active</option>
+          <option value="n">Inactive</option>
         </select>
 
         <input type="hidden" name="offset" value="#$offset#"/>
@@ -47,38 +47,38 @@
           <tr>
             <th>
               <xar:if condition="$sort_mode eq 'name_desc'">
-                <a href="#$baselink#&amp;sort_mode=name_asc"><xar:mlstring>Name</xar:mlstring></a>
+                <a href="#$baselink#&amp;sort_mode=name_asc">Name</a>
                 <xar:else/>
-                <a href="#$baselink#&amp;sort_mode=name_desc"><xar:mlstring>Name</xar:mlstring></a>
+                <a href="#$baselink#&amp;sort_mode=name_desc">Name</a>
               </xar:if>
             </th>
             <th>
               <xar:if condition="$sort_mode eq 'version_desc'">
-                <a href="#$baselink#&amp;sort_mode=version_asc"><xar:mlstring>Version</xar:mlstring></a>
+                <a href="#$baselink#&amp;sort_mode=version_asc">Version</a>
                 <xar:else/>
-                <a href="#$baselink#&amp;sort_mode=version_desc"><xar:mlstring>Version</xar:mlstring></a>
+                <a href="#$baselink#&amp;sort_mode=version_desc">Version</a>
               </xar:if>
             </th>
             <th>
               <xar:if condition="$sort_mode eq 'isActive_desc'">
-                <a href="#$baselink#&amp;sort_mode=isActive_asc"><xar:mlstring>Active</xar:mlstring></a>
+                <a href="#$baselink#&amp;sort_mode=isActive_asc">Active</a>
                 <xar:else/>
-                <a href="#$baselink#&amp;sort_mode=isActive_desc"><xar:mlstring>Active</xar:mlstring></a>
+                <a href="#$baselink#&amp;sort_mode=isActive_desc">Active</a>
               </xar:if>
             </th>
             <th>
               <xar:if condition="$sort_mode eq 'isValid_desc'">
-                <a href="#$baselink#&amp;sort_mode=isValid_asc"><xar:mlstring>Valid</xar:mlstring></a>
+                <a href="#$baselink#&amp;sort_mode=isValid_asc">Valid</a>
                 <xar:else/>
-                <a href="#$baselink#&amp;sort_mode=isValid_desc"><xar:mlstring>Valid</xar:mlstring></a>
+                <a href="#$baselink#&amp;sort_mode=isValid_desc">Valid</a>
               </xar:if>
             </th>
-            <th colspan="2"><xar:mlstring>New version</xar:mlstring></th>
-            <th><xar:mlstring>Activities</xar:mlstring></th>
-            <th><xar:mlstring>Code</xar:mlstring></th>
-            <th><xar:mlstring>Roles</xar:mlstring></th>
-            <th><xar:mlstring>Graph</xar:mlstring></th>
-            <th><xar:mlstring>Export</xar:mlstring></th>
+            <th colspan="2">New version</th>
+            <th>Activities</th>
+            <th>Code</th>
+            <th>Roles</th>
+            <th>Graph</th>
+            <th>Export</th>
           </tr>
 
           <xar:if condition="!empty($items) and count($items) gt 0">
@@ -140,7 +140,7 @@
             </tr>
             <xar:else/>
             <tr>
-              <td colspan="15"><xar:mlstring>No processes defined yet</xar:mlstring></td>
+              <td colspan="15">No processes defined yet</td>
             </tr>
           </xar:if>
         </table>
@@ -148,6 +148,5 @@
       </div>
   </fieldset>
 </div>
-
 
 </xar:template>

@@ -1,26 +1,24 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div>
-  <fieldset>
-    <legend>
-      <xar:mlstring>Statistics:</xar:mlstring>
-    </legend>
-    <div  style="margin-bottom: 0.5em;">
-      <small>#$stats['processes']#&#160;#xarML('processes')#&#160;(#$stats['active_processes']#&#160;#xarML('active')#)&#160;(#$stats['running_processes']#&#160;#xarML('being run')#)</small>
+    <div>
+      <fieldset>
+        <legend>
+          Statistics:
+        </legend>
+        <div  style="margin-bottom: 0.5em;">
+          <small>#$stats['processes']#&#160;#xarML('processes')#&#160;(#$stats['active_processes']#&#160;#xarML('active')#)&#160;(#$stats['running_processes']#&#160;#xarML('being run')#)</small>
+        </div>
+        <small>#xarML('Instances')#: [
+          <a style="color:green;" href="#xarModURL('workflow','admin','monitor_instances')#&amp;filter_status=active">#$stats['active_instances']#&#160;#xarML('active')#</a> ]
+        </small>
+        <small>[
+          <a style="color:black;" href="#xarModURL('workflow','admin','monitor_instances')#&amp;filter_status=completed">#$stats['completed_instances']#&#160;#xarML('completed')#</a> ]
+        </small>
+        <small>[
+          <a style="color:grey;" href="#xarModURL('workflow','admin','monitor_instances')#&amp;filter_status=aborted">#$stats['aborted_instances']#&#160;#xarML('aborted')#</a> ]
+        </small>
+        <small>[
+          <a style="color:red;" href="#xarModURL('workflow','admin','monitor_instances')#&amp;filter_status=exception">#$stats['exception_instances']#&#160;#xarML('exceptions')#</a> ]
+        </small>
+      </fieldset>
     </div>
-    <small>#xarML('Instances')#: [
-      <a style="color:green;" href="#xarModURL('workflow','admin','monitor_instances')#&amp;filter_status=active">#$stats['active_instances']#&#160;#xarML('active')#</a> ]
-    </small>
-    <small>[
-      <a style="color:black;" href="#xarModURL('workflow','admin','monitor_instances')#&amp;filter_status=completed">#$stats['completed_instances']#&#160;#xarML('completed')#</a> ]
-    </small>
-    <small>[
-      <a style="color:grey;" href="#xarModURL('workflow','admin','monitor_instances')#&amp;filter_status=aborted">#$stats['aborted_instances']#&#160;#xarML('aborted')#</a> ]
-    </small>
-    <small>[
-      <a style="color:red;" href="#xarModURL('workflow','admin','monitor_instances')#&amp;filter_status=exception">#$stats['exception_instances']#&#160;#xarML('exceptions')#</a> ]
-    </small>
-  </fieldset>
-</div>
-
-
 </xar:template>

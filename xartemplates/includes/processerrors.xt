@@ -5,16 +5,16 @@
       <legend>
         <xar:if condition="$proc_info['isValid'] eq 'y'">
           <xar:set name="validtext">
-            <xar:mlstring>valid</xar:mlstring>
+            valid
           </xar:set>
           <img src="modules/workflow/lib/galaxia/img/icons/green_dot.gif" alt="#xarML('valid')#" title="#xarML('valid')#"/>
           <xar:else/>
           <xar:set name="validtext">
-            <xar:mlstring>invalid</xar:mlstring>
+            invalid
           </xar:set>
           <img src="modules/workflow/lib/galaxia/img/icons/red_dot.gif" alt="#xarML('invalid')#" title="#xarML('invalid')#"/>
         </xar:if>
-        <xar:mlstring>This process is: </xar:mlstring>
+        This process is: 
         <xar:var name="validtext"/>
       </legend>
       <xar:if condition="count($errors) gt 0">
@@ -28,7 +28,7 @@
         </xar:loop>
         <xar:else/>
         <small class="xar-norm">
-          <xar:mlstring>No process errors detected</xar:mlstring>
+          No process errors detected
         </small>
       </xar:if>
     </fieldset>

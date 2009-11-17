@@ -14,53 +14,53 @@
         <tr>
           <th>
             <xar:if condition="$sort_mode eq 'procname_desc'">
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_asc'))#"><xar:mlstring>Process</xar:mlstring></a>
+              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_asc'))#">Process</a>
               <xar:else/>
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_desc'))#"><xar:mlstring>Process</xar:mlstring></a>
+              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_desc'))#">Process</a>
             </xar:if>
           </th>
-          <th><xar:mlstring>Version</xar:mlstring></th>
+          <th>Version</th>
           <th>
             <xar:if condition="$sort_mode eq 'instanceId_desc'">
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'instanceId_asc'))#"><xar:mlstring>Ins</xar:mlstring></a>
+              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'instanceId_asc'))#">Ins</a>
               <xar:else/>
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'instanceId_desc'))#"><xar:mlstring>Ins</xar:mlstring></a>
+              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'instanceId_desc'))#">Ins</a>
             </xar:if>
           </th>
           <th>
             <xar:if condition="$sort_mode eq 'owner_desc'">
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'owner_asc'))#"><xar:mlstring>Owner</xar:mlstring></a>
+              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'owner_asc'))#">Owner</a>
               <xar:else/>
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'owner_desc'))#"><xar:mlstring>Owner</xar:mlstring></a>
+              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'owner_desc'))#">Owner</a>
             </xar:if>
           </th>
           <th>
             <xar:if condition="$sort_mode eq 'name_desc'">
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'name_asc'))#"><xar:mlstring>Activity</xar:mlstring></a>
+              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'name_asc'))#">Activity</a>
               <xar:else/>
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'name_desc'))#"><xar:mlstring>Activity</xar:mlstring></a>
+              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'name_desc'))#">Activity</a>
             </xar:if>
           </th>
           <th>
             <xar:if condition="$sort_mode eq 'user_desc'">
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'user_asc'))#"><xar:mlstring>User</xar:mlstring></a>
+              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'user_asc'))#">User</a>
               <xar:else/>
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'user_desc'))#"><xar:mlstring>User</xar:mlstring></a>
+              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'user_desc'))#">User</a>
             </xar:if>
           </th>
           <th>
             <xar:if condition="$sort_mode eq 'started_desc'">
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'started_asc'))#"><xar:mlstring>Start</xar:mlstring></a>
+              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'started_asc'))#">Start</a>
               <xar:else/>
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'started_desc'))#"><xar:mlstring>Start</xar:mlstring></a>
+              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'started_desc'))#">Start</a>
             </xar:if>
           </th>
-          <th><xar:mlstring>Run</xar:mlstring></th>
-          <th><xar:mlstring>Send</xar:mlstring></th>
-          <th><xar:mlstring>Except</xar:mlstring></th>
-          <th><xar:mlstring>Resume</xar:mlstring></th>
-          <th><xar:mlstring>Abort</xar:mlstring></th>
-          <th><xar:mlstring>Release</xar:mlstring></th>
+          <th>Run</th>
+          <th>Send</th>
+          <th>Except</th>
+          <th>Resume</th>
+          <th>Abort</th>
+          <th>Release</th>
         </tr>
         <xar:foreach in="$items" value="$item">
           <tr>
@@ -118,11 +118,10 @@
         <xar:else/>
         <tr>
           <td colspan="7">
-            <xar:mlstring>No instances found</xar:mlstring>
+            No instances found
           </td>
         </tr>
       </xar:if>
     </table>
   </form>
-
 </xar:template>

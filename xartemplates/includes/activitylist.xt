@@ -2,7 +2,7 @@
   <div>
     <form action="&xar-modurl-workflow-admin-activities;" method="post">
       <fieldset>
-        <legend><xar:mlstring>Process activities</xar:mlstring></legend>
+        <legend>Process activities</legend>
         <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
         <input type="hidden" name="pid" value="#$pid#"/>
         <input type="hidden" name="activityId" value="#$info['activityId']#"/>
@@ -10,10 +10,10 @@
         <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
         <table>
           <tr>
-            <td><xar:mlstring>Find</xar:mlstring></td>
-            <td><xar:mlstring>Type</xar:mlstring></td>
-            <td><xar:mlstring>Int</xar:mlstring></td>
-            <td><xar:mlstring>Routing</xar:mlstring></td>
+            <td>Find</td>
+            <td>Type</td>
+            <td>Int</td>
+            <td>Routing</td>
             <td>&#160;</td>
           </tr>
           <tr>
@@ -22,28 +22,28 @@
             </td>
             <td>
               <select name="filter_type">
-                <option value=""><xar:mlstring>all</xar:mlstring></option>
-                <option value="start"><xar:mlstring>start</xar:mlstring></option>
-                <option value="end"><xar:mlstring>end</xar:mlstring></option>
-                <option value="activity"><xar:mlstring>activity</xar:mlstring></option>
-                <option value="switch"><xar:mlstring>switch</xar:mlstring></option>
-                <option value="split"><xar:mlstring>split</xar:mlstring></option>
-                <option value="join"><xar:mlstring>join</xar:mlstring></option>
-                <option value="standalone"><xar:mlstring>standalone</xar:mlstring></option>
+                <option value="">all</option>
+                <option value="start">start</option>
+                <option value="end">end</option>
+                <option value="activity">activity</option>
+                <option value="switch">switch</option>
+                <option value="split">split</option>
+                <option value="join">join</option>
+                <option value="standalone">standalone</option>
               </select>
             </td>
             <td>
               <select name="filter_interactive">
-                <option value=""><xar:mlstring>all</xar:mlstring></option>
-                <option value="y"><xar:mlstring>Interactive</xar:mlstring></option>
-                <option value="n"><xar:mlstring>Automatic</xar:mlstring></option>
+                <option value="">all</option>
+                <option value="y">Interactive</option>
+                <option value="n">Automatic</option>
               </select>
             </td>
             <td>
               <select name="filter_autoroute">
-                <option value=""><xar:mlstring>all</xar:mlstring></option>
-                <option value="y"><xar:mlstring>Auto routed</xar:mlstring></option>
-                <option value="n"><xar:mlstring>Manual</xar:mlstring></option>
+                <option value="">all</option>
+                <option value="y">Auto routed</option>
+                <option value="n">Manual</option>
               </select>
             </td>
             <td>
@@ -74,32 +74,32 @@
         <table style="border-collapse: separate; width: 99%">
           <tr>
             <xar:if condition="$sort_mode eq 'flowNum_desc'">
-              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=flowNum_asc"><xar:mlstring>Nr.</xar:mlstring></a></th>
+              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=flowNum_asc">Nr.</a></th>
             <xar:else/>
-               <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=flowNum_desc"><xar:mlstring>Nr.</xar:mlstring></a></th>
+               <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=flowNum_desc">Nr.</a></th>
             </xar:if>
             <xar:if condition="$sort_mode eq 'name_desc'">
-              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=name_asc"><xar:mlstring>Name</xar:mlstring></a></th>
+              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=name_asc">Name</a></th>
               <xar:else/>
-              <th ><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=name_desc"><xar:mlstring>Name</xar:mlstring></a></th>
+              <th ><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=name_desc">Name</a></th>
             </xar:if>
             <xar:if condition="$sort_mode eq 'type_desc'">
-              <th ><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=type_asc"><xar:mlstring>Type</xar:mlstring></a></th>
+              <th ><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=type_asc">Type</a></th>
               <xar:else/>
-              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=type_desc"><xar:mlstring>Type</xar:mlstring></a></th>
+              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=type_desc">Type</a></th>
             </xar:if>
             <xar:if condition="$sort_mode eq 'isInteractive_desc'">
-              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isInteractive_asc"><xar:mlstring>Interactive</xar:mlstring></a></th>
+              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isInteractive_asc">Interactive</a></th>
               <xar:else/>
-              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isInteractive_desc"><xar:mlstring>Interactive</xar:mlstring></a></th>
+              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isInteractive_desc">Interactive</a></th>
             </xar:if>
             <xar:if condition="$sort_mode eq 'isInteractive_desc'">
-              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isAutoRouted_asc"><xar:mlstring>Autoroute</xar:mlstring></a></th>
+              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isAutoRouted_asc">Autoroute</a></th>
               <xar:else/>
-              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isAutoRouted_desc"><xar:mlstring>Autoroute</xar:mlstring></a></th>
+              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isAutoRouted_desc">Autoroute</a></th>
             </xar:if>
-            <th><xar:mlstring>Code</xar:mlstring></th>
-            <th><xar:mlstring>Template</xar:mlstring></th>
+            <th>Code</th>
+            <th>Template</th>
           </tr>
           <xar:if condition="!empty($items) and count($items) gt 0">
             <xar:foreach in="$items" key="$ix">
@@ -115,7 +115,7 @@
                   <input type="checkbox" name="activity[#$items[$ix]['activityId']#]"/>&#160;
                   <a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=#$sort_mode#&amp;activityId=#$items[$ix]['activityId']#">#$items[$ix]['name']#</a>
                   <xar:if condition="$items[$ix]['roles'] lt 1">
-                    <small><xar:mlstring>(no roles)</xar:mlstring></small>
+                    <small>(no roles)</small>
                   </xar:if>
                 </td>
                 <td style="text-align:center;">
@@ -156,7 +156,7 @@
           <xar:else/>
             <tr>
               <td colspan="6">
-                <xar:mlstring>No activities defined yet</xar:mlstring>
+                No activities defined yet
               </td>
             </tr>
           </xar:if>
@@ -169,6 +169,4 @@
         </table>
       </form>
   </div>
-
-
 </xar:template>

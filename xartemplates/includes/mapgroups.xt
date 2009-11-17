@@ -1,51 +1,49 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div>
-  <fieldset>
-    <legend><xar:mlstring>Map groups to roles</xar:mlstring></legend>
+    <div>
+      <fieldset>
+        <legend>Map groups to roles</legend>
 
-    <form method="post" action="&xar-modurl-workflow-admin-roles;">
-      <input type="hidden" name="pid" value="#$pid#"/>
-      <input type="hidden" name="offset" value="#$offset#"/>
-      <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
-      <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
-      <input type="hidden" name="find" value="#$find#"/>
-      <table class="xar-halfwidth">
-        <tr>
-          <th><xar:mlstring>Operation</xar:mlstring></th>
-          <th><xar:mlstring>Group</xar:mlstring></th>
-          <th><xar:mlstring>Role</xar:mlstring></th>
-        </tr>
-        <tr>
-          <td>
-            <select name="op">
-              <option value="add"><xar:mlstring>Add</xar:mlstring></option>
-              <option value="remove"><xar:mlstring>Remove</xar:mlstring></option>
-            </select>
-          </td>
-          <td>
-            <select name="group">
-              <xar:foreach in="$groups" key="$ix">
-                <option value="#$groups[$ix]['id']#">#$groups[$ix]['name']#</option>
-              </xar:foreach>
-            </select>
-          </td>
-          <td>
-            <select name="role">
-              <xar:foreach in="$roles" key="$ix">
-                <option value="#$roles[$ix]['roleId']#">#$roles[$ix]['name']#</option>
-              </xar:foreach>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            <input type="submit" name="mapg" value="#xarML('Map')#"/>
-          </td>
-        </tr>
-      </table>
-    </form>
-  </fieldset>
-</div>
-
-
+        <form method="post" action="&xar-modurl-workflow-admin-roles;">
+          <input type="hidden" name="pid" value="#$pid#"/>
+          <input type="hidden" name="offset" value="#$offset#"/>
+          <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
+          <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
+          <input type="hidden" name="find" value="#$find#"/>
+          <table class="xar-halfwidth">
+            <tr>
+              <th>Operation</th>
+              <th>Group</th>
+              <th>Role</th>
+            </tr>
+            <tr>
+              <td>
+                <select name="op">
+                  <option value="add">Add</option>
+                  <option value="remove">Remove</option>
+                </select>
+              </td>
+              <td>
+                <select name="group">
+                  <xar:foreach in="$groups" key="$ix">
+                    <option value="#$groups[$ix]['id']#">#$groups[$ix]['name']#</option>
+                  </xar:foreach>
+                </select>
+              </td>
+              <td>
+                <select name="role">
+                  <xar:foreach in="$roles" key="$ix">
+                    <option value="#$roles[$ix]['roleId']#">#$roles[$ix]['name']#</option>
+                  </xar:foreach>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <input type="submit" name="mapg" value="#xarML('Map')#"/>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </fieldset>
+    </div>
 </xar:template>

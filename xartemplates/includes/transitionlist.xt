@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div>
     <fieldset>
-      <legend><xar:mlstring>Process Transitions</xar:mlstring></legend>
+      <legend>Process Transitions</legend>
 
       <!-- Filter form -->
       <form action="&xar-modurl-workflow-admin-activities;" method="post" id='filtran'>
@@ -11,12 +11,12 @@
         <input type="hidden" name="where" value="#$where2#"/>
         <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
         <div class="xar-form-input-wrapper">
-          <label class="xar-form-label"><xar:mlstring>From:</xar:mlstring></label>
+          <label class="xar-form-label">From:</label>
           <select name="filter_tran_name" onchange="javascript:document.getElementById('filtran').submit();">
             <xar:if condition="$filter_tran_name eq ''">
-              <option value="" selected="selected"><xar:mlstring>All</xar:mlstring></option>
+              <option value="" selected="selected">All</option>
               <xar:else/>
-              <option value=""><xar:mlstring>All</xar:mlstring></option>
+              <option value="">All</option>
             </xar:if>
             <xar:foreach in="$items" key="$ix">
               <xar:if condition="$filter_tran_name eq $items[$ix]['activityId']">
@@ -47,17 +47,17 @@
           <tr>
             <th>
               <xar:if condition="$sort_mode eq 'actFromName_desc'">
-                <a href="#$baselink#&amp;sort_mode=actFromName_asc"><xar:mlstring>Origin</xar:mlstring></a>
+                <a href="#$baselink#&amp;sort_mode=actFromName_asc">Origin</a>
               <xar:else/>
-                <a href="#$baselink#&amp;sort_mode=actFromName_desc"><xar:mlstring>Origin</xar:mlstring></a>
+                <a href="#$baselink#&amp;sort_mode=actFromName_desc">Origin</a>
               </xar:if>
             </th>
             <th>&#160;</th>
             <th>
               <xar:if condition="$sort_mode eq 'actToName_desc'">
-                <a href="#$baselink#&amp;sort_mode=actToName_asc"><xar:mlstring>To</xar:mlstring></a>
+                <a href="#$baselink#&amp;sort_mode=actToName_asc">To</a>
               <xar:else/>
-                <a href="#$baselink#&amp;sort_mode=actToName_desc"><xar:mlstring>To</xar:mlstring></a>
+                <a href="#$baselink#&amp;sort_mode=actToName_desc">To</a>
               </xar:if>
             </th>
           </tr>
@@ -105,7 +105,7 @@
               <td colspan="3"><input type="submit" name="delete_tran" value="#xarML('Delete selected')# "/></td>
             </tr>
           <xar:else/>
-            <tr><td colspan="3"><xar:mlstring>No transitions defined yet</xar:mlstring></td></tr>
+            <tr><td colspan="3">No transitions defined yet</td></tr>
           </xar:if>
         </table>
       </form>

@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
   <span class="xar-mod-title">
-    <xar:mlstring>Workflow Administration</xar:mlstring>
+    Workflow Administration
   </span>
 </div>
 <div class="xar-mod-body">
@@ -10,18 +10,18 @@
 
     <div style="margin: auto;">
       <fieldset>
-        <legend><xar:mlstring>List of activities</xar:mlstring> (#$cant#)</legend>
+        <legend>List of activities (#$cant#)</legend>
           <form style="margin-left: 1em;" id="filterf" action="#xarModURL('workflow','admin','monitor_activities')#" method="post">
             <input type="hidden" name="offset" value="#$offset#"/>
             <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
             <table>
               <tr>
-                <td><small><xar:mlstring>process</xar:mlstring></small></td>
-                <td><small><xar:mlstring>activity</xar:mlstring></small></td>
-                <td><small><xar:mlstring>type</xar:mlstring></small></td>
-                <td><small><xar:mlstring>interact</xar:mlstring></small></td>
-                <td><small><xar:mlstring>route</xar:mlstring></small></td>
-                <td><small><xar:mlstring>description</xar:mlstring></small></td>
+                <td><small>process</small></td>
+                <td><small>activity</small></td>
+                <td><small>type</small></td>
+                <td><small>interact</small></td>
+                <td><small>route</small></td>
+                <td><small>description</small></td>
                 <td>&#160;</td>
               </tr>
               <tr>
@@ -31,9 +31,9 @@
                 <td>
                   <select name="filter_activity">
                     <xar:if condition="'' eq $filter_activity">
-                      <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
+                      <option selected="selected" value="">All</option>
                       <xar:else/>
-                      <option value=""><xar:mlstring>All</xar:mlstring></option>
+                      <option value="">All</option>
                     </xar:if>
                     <xar:foreach in="$all_acts" key="$ix">
                       <xar:if condition="$all_acts[$ix]['activityId'] eq $filter_activity">
@@ -47,9 +47,9 @@
                 <td>
                   <select name="filter_type">
                     <xar:if condition="'' eq $filter_type">
-                      <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
+                      <option selected="selected" value="">All</option>
                       <xar:else/>
-                      <option value=""><xar:mlstring>All</xar:mlstring></option>
+                      <option value="">All</option>
                     </xar:if>
                     <xar:foreach in="$types" key="$ix">
                       <xar:if condition="$types[$ix] eq $filter_type">
@@ -63,38 +63,38 @@
                 <td>
                   <select name="filter_isInteractive">
                     <xar:if condition="'' eq $filter_isInteractive">
-                      <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
+                      <option selected="selected" value="">All</option>
                       <xar:else/>
-                      <option value=""><xar:mlstring>All</xar:mlstring></option>
+                      <option value="">All</option>
                     </xar:if>
                     <xar:if condition="'y' eq $filter_isInteractive">
-                      <option value="y" selected="selected"><xar:mlstring>Interactive</xar:mlstring></option>
+                      <option value="y" selected="selected">Interactive</option>
                       <xar:else/>
-                      <option value="y"><xar:mlstring>Interactive</xar:mlstring></option>
+                      <option value="y">Interactive</option>
                   </xar:if>
                   <xar:if condition="'n' eq $filter_isInteractive">
-                    <option value="n" selected="selected"><xar:mlstring>Automatic</xar:mlstring></option>
+                    <option value="n" selected="selected">Automatic</option>
                     <xar:else/>
-                    <option value="n"><xar:mlstring>Automatic</xar:mlstring></option>
+                    <option value="n">Automatic</option>
                   </xar:if>
                 </select>
               </td>
               <td>
                 <select name="filter_isAutoRouted">
                   <xar:if condition="'' eq $filter_isAutoRouted">
-                    <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
+                    <option selected="selected" value="">All</option>
                     <xar:else/>
-                    <option value=""><xar:mlstring>All</xar:mlstring></option>
+                    <option value="">All</option>
                   </xar:if>
                   <xar:if condition="'n' eq $filter_isAutoRouted">
-                    <option value="n" selected="selected"><xar:mlstring>Manual</xar:mlstring></option>
+                    <option value="n" selected="selected">Manual</option>
                     <xar:else/>
-                    <option value="n"><xar:mlstring>Manual</xar:mlstring></option>
+                    <option value="n">Manual</option>
                   </xar:if>
                   <xar:if condition="'y' eq $filter_isAutoRouted">
-                    <option value="y" selected="selected"><xar:mlstring>Automatic</xar:mlstring></option>
+                    <option value="y" selected="selected">Automatic</option>
                     <xar:else/>
-                    <option value="y"><xar:mlstring>Automatic</xar:mlstring></option>
+                    <option value="y">Automatic</option>
                   </xar:if>
                 </select>
               </td>
@@ -117,13 +117,13 @@
           <table style="border-collapse: separate; width: 99%">
             <xar:if condition="!empty($items) and count($items) gt 0">
               <tr>
-                <th><xar:mlstring>Process</xar:mlstring></th>
-                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'name_asc'))#"><xar:mlstring>Activity</xar:mlstring></a></th>
-                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'type_asc'))#"><xar:mlstring>Type</xar:mlstring></a></th>
-                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'isInteractive_asc'))#"><xar:mlstring>Interact</xar:mlstring></a></th>
-                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'isAutoRouted_asc'))#"><xar:mlstring>Route</xar:mlstring></a></th>
-                <th><xar:mlstring>Status</xar:mlstring></th>
-                <th><xar:mlstring>Duration of completed activities - min/avg/max</xar:mlstring></th>
+                <th>Process</th>
+                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'name_asc'))#">Activity</a></th>
+                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'type_asc'))#">Type</a></th>
+                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'isInteractive_asc'))#">Interact</a></th>
+                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'isAutoRouted_asc'))#">Route</a></th>
+                <th>Status</th>
+                <th>Duration of completed activities - min/avg/max</th>
               </tr>
               <xar:foreach in="$items" key="$ix">
                 <tr>
@@ -198,7 +198,7 @@
                 </tr>
               </xar:foreach>
             <xar:else/>
-              <tr><td colspan="7"><xar:mlstring>No activities found</xar:mlstring></td></tr>
+              <tr><td colspan="7">No activities found</td></tr>
             </xar:if>
           </table>
         </form>
@@ -208,6 +208,4 @@
       <xar:template file="galaxfooter"/>
     </div>
   </div>
-
-
 </xar:template>

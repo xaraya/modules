@@ -1,75 +1,73 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div class="xar-mod-head">
-  <span class="xar-mod-title">
-    <xar:mlstring>Workflow Module</xar:mlstring>
-  </span>
-</div>
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">
+        Workflow Module
+      </span>
+    </div>
 
-<div class="xar-mod-body">
-<xar:template file="user_bar" type="module"/>
+    <div class="xar-mod-body">
+    <xar:template file="user_bar" type="module"/>
 
-<div style="margin: auto;">
-  <fieldset>
-    <legend>
-      <xar:mlstring>List of processes</xar:mlstring> (#$cant#)
-    </legend>
-    <form action="&xar-modurl-workflow-user-processes;" method="post">
-      <input type="hidden" name="offset" value="#$offset#"/>
-      <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
-      <table>
-        <tr>
-          <td><small><xar:mlstring>description</xar:mlstring></small></td>
-          <td>&#160;</td>
-        </tr>
-        <tr>
-          <td><input size="8" type="text" name="find" value="#$find#"/></td>
-          <td><input type="submit" name="filter" value="#xarML('filter')#"/></td>
-        </tr>
-      </table>
-    </form>
-
-    <form action="&xar-modurl-workflow-user-processes;" method="post">
-      <input type="hidden" name="offset" value="#$offset#"/>
-      <input type="hidden" name="find" value="#$find#"/>
-      <input type="hidden" name="where" value="#$where#"/>
-      <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
-      <table style="border-collapse: separate;">
-        <xar:if condition="!empty($items) and count($items) gt 0">
-          <tr>
-            <th>
-              <xar:if condition="$sort_mode eq 'procname_desc'">
-                <a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_asc'))#"><xar:mlstring>Process</xar:mlstring></a>
-                <xar:else/>
-                <a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_desc'))#"><xar:mlstring>Process</xar:mlstring></a>
-              </xar:if>
-            </th>
-            <th><xar:mlstring>Version</xar:mlstring></th>
-            <th><xar:mlstring>Activities</xar:mlstring></th>
-            <th><xar:mlstring>Instances</xar:mlstring></th>
-          </tr>
-          <xar:foreach in="$items" key="$ix">
-            <xar:set name="rowclass">'xar-norm'</xar:set>
-            <xar:if condition="$ix % 2">
-              <xar:set name="rowclass">'xar-alt'</xar:set>
-            </xar:if>
-            <tr class="#$rowclass#">
-              <td><a href="&xar-modurl-workflow-user-activities;&amp;filter_process=#$items[$ix]['pId']#">#$items[$ix]['procname']#</a></td>
-              <td style="text-align: right;">#$items[$ix]['version']#</td>
-              <td style="text-align:right;"><a href="&xar-modurl-workflow-user-activities;&amp;filter_process=#$items[$ix]['pId']#">#$items[$ix]['activities']#</a></td>
-              <td style="text-align:right;"><a href="&xar-modurl-workflow-user-instances;&amp;filter_process=#$items[$ix]['pId']#">#$items[$ix]['instances']#</a></td>
+    <div style="margin: auto;">
+      <fieldset>
+        <legend>
+          List of processes (#$cant#)
+        </legend>
+        <form action="&xar-modurl-workflow-user-processes;" method="post">
+          <input type="hidden" name="offset" value="#$offset#"/>
+          <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
+          <table>
+            <tr>
+              <td><small>description</small></td>
+              <td>&#160;</td>
             </tr>
-          </xar:foreach>
-          <xar:else/>
-          <tr><td colspan="3"><xar:mlstring>No processes found</xar:mlstring></td>
-          </tr>
-        </xar:if>
-      </table>
-    </form>
-  </fieldset>
-  <xar:template file="pager"/>
-  <xar:template file="galaxfooter"/>
-</div>
-</div>
+            <tr>
+              <td><input size="8" type="text" name="find" value="#$find#"/></td>
+              <td><input type="submit" name="filter" value="#xarML('filter')#"/></td>
+            </tr>
+          </table>
+        </form>
 
-
+        <form action="&xar-modurl-workflow-user-processes;" method="post">
+          <input type="hidden" name="offset" value="#$offset#"/>
+          <input type="hidden" name="find" value="#$find#"/>
+          <input type="hidden" name="where" value="#$where#"/>
+          <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
+          <table style="border-collapse: separate;">
+            <xar:if condition="!empty($items) and count($items) gt 0">
+              <tr>
+                <th>
+                  <xar:if condition="$sort_mode eq 'procname_desc'">
+                    <a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_asc'))#">Process</a>
+                    <xar:else/>
+                    <a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_desc'))#">Process</a>
+                  </xar:if>
+                </th>
+                <th>Version</th>
+                <th>Activities</th>
+                <th>Instances</th>
+              </tr>
+              <xar:foreach in="$items" key="$ix">
+                <xar:set name="rowclass">'xar-norm'</xar:set>
+                <xar:if condition="$ix % 2">
+                  <xar:set name="rowclass">'xar-alt'</xar:set>
+                </xar:if>
+                <tr class="#$rowclass#">
+                  <td><a href="&xar-modurl-workflow-user-activities;&amp;filter_process=#$items[$ix]['pId']#">#$items[$ix]['procname']#</a></td>
+                  <td style="text-align: right;">#$items[$ix]['version']#</td>
+                  <td style="text-align:right;"><a href="&xar-modurl-workflow-user-activities;&amp;filter_process=#$items[$ix]['pId']#">#$items[$ix]['activities']#</a></td>
+                  <td style="text-align:right;"><a href="&xar-modurl-workflow-user-instances;&amp;filter_process=#$items[$ix]['pId']#">#$items[$ix]['instances']#</a></td>
+                </tr>
+              </xar:foreach>
+              <xar:else/>
+              <tr><td colspan="3">No processes found</td>
+              </tr>
+            </xar:if>
+          </table>
+        </form>
+      </fieldset>
+      <xar:template file="pager"/>
+      <xar:template file="galaxfooter"/>
+    </div>
+    </div>
 </xar:template>

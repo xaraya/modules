@@ -127,9 +127,9 @@ if (!empty($edit)) {
 }
 ?>      ]]></code>      <template><![CDATA[
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <div class="xar-mod-body"><h2><xar:mlstring>Review Article</xar:mlstring></h2>
+  <div class="xar-mod-body"><h2>Review Article</h2>
 <div style="margin: auto;">
-<xar:ml><xar:mlstring>Article submitted by #(1) on #(2)</xar:mlstring><xar:mlvar>#$user#</xar:mlvar><xar:mlvar>#$date#</xar:mlvar></xar:ml>
+<xar:ml>Article submitted by #(1) on #(2)<xar:mlvar>#$user#</xar:mlvar><xar:mlvar>#$date#</xar:mlvar></xar:ml>
 
 <form method="post" action="&xar-modurl-workflow-user-run_activity;">
 <div>
@@ -146,11 +146,11 @@ if (!empty($edit)) {
 
 <xar:if condition="!empty($preview)">
 <div style="width: 100%;padding: 3px;">
-<h2><xar:mlstring>Preview</xar:mlstring></h2>
+<h2>Preview</h2>
     #$preview#
 </div>
 <xar:else/>
-    <xar:mlstring>No preview available...</xar:mlstring>
+    No preview available...
 </xar:if>
 </div>
 </div>

@@ -1,171 +1,169 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div class="xar-mod-head">
-  <span class="xar-mod-title">
-    <xar:mlstring>Workflow Administration</xar:mlstring>
-  </span>
-</div>
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">
+        Workflow Administration
+      </span>
+    </div>
 
-<div class="xar-mod-body">
-  <xar:template module="workflow" type="module" file="admin-menu"/>
-  <xar:template file="monitor_bar" type="module"/>
+    <div class="xar-mod-body">
+      <xar:template module="workflow" type="module" file="admin-menu"/>
+      <xar:template file="monitor_bar" type="module"/>
 
-  <div style="margin: auto;">
-    <fieldset>
-      <legend>
-        <xar:mlstring>List of workitems</xar:mlstring> (#$cant#)
-      </legend>
+      <div style="margin: auto;">
+        <fieldset>
+          <legend>
+            List of workitems (#$cant#)
+          </legend>
 
-      <form style="margin-left: 1em;" action="#xarModURL('workflow','admin','monitor_workitems')#" method="post">
-        <input type="hidden" name="offset" value="#$offset#"/>
-        <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
-        <input type="hidden" name="filter_instance" value="#$filter_instance#"/>
-        <table>
-          <tr>
-            <td><small><xar:mlstring>process</xar:mlstring></small></td>
-            <td><small><xar:mlstring>instance</xar:mlstring></small></td>
-            <td><small><xar:mlstring>activity</xar:mlstring></small></td>
-            <td><small><xar:mlstring>user</xar:mlstring></small></td>
-            <td><small><xar:mlstring>properties</xar:mlstring></small></td>
-            <td>&#160;</td>
-          </tr>
-
-          <tr>
-            <td>
-              <select name="filter_process">
-                <xar:if condition="'' eq $filter_process">
-                  <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
-                  <xar:else/>
-                  <option value=""><xar:mlstring>All</xar:mlstring></option>
-                </xar:if>
-                <xar:foreach in="$all_procs" key="$ix">
-                  <xar:if condition="$all_procs[$ix]['pId'] eq $filter_process">
-                    <option selected="selected" value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
-                    <xar:else/>
-                    <option value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
-                  </xar:if>
-                </xar:foreach>
-              </select>
-            </td>
-            <td>
-              <input type="text" name="filter_instance" value="#$filter_instance#" size="4"/>
-            </td>
-            <td>
-              <select name="filter_activity">
-                <xar:if condition="'' eq $filter_activity">
-                  <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
-                  <xar:else/>
-                  <option value=""><xar:mlstring>All</xar:mlstring></option>
-                </xar:if>
-                <xar:foreach in="$all_acts" key="$ix">
-                  <xar:if condition="$all_acts[$ix]['activityId'] eq $filter_activity">
-                    <option selected="selected" value="#$all_acts[$ix]['activityId']#">#$all_acts[$ix]['name']#</option>
-                    <xar:else/>
-                    <option value="#$all_acts[$ix]['activityId']#">#$all_acts[$ix]['name']#</option>
-                  </xar:if>
-                </xar:foreach>
-              </select>
-            </td>
-            <td>
-              <select name="filter_user">
-                <xar:if condition="'' eq $filter_user">
-                  <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
-                  <xar:else/>
-                  <option value=""><xar:mlstring>All</xar:mlstring></option>
-                </xar:if>
-                <xar:foreach in="$users" key="$ix">
-                  <xar:if condition="$users[$ix]['userId'] eq $filter_user">
-                    <option selected="selected" value="#$users[$ix]['userId']#">#$users[$ix]['user']#</option>
-                    <xar:else/>
-                    <option value="#$users[$ix]['userId']#">#$users[$ix]['user']#</option>
-                  </xar:if>
-                </xar:foreach>
-              </select>
-            </td>
-            <td>
-              <input size="8" type="text" name="find" value="#$find#"/>
-            </td>
-            <td>
-              <input type="submit" name="filter" value="#xarML('filter')#"/>
-            </td>
-          </tr>
-        </table>
-      </form>
-
-      <form style="margin-left: 1em;" action="#xarModURL('workflow','admin','monitor_workitems')#" method="post">
-        <input type="hidden" name="offset" value="#$offset#"/>
-        <input type="hidden" name="find" value="#$find#"/>
-        <input type="hidden" name="where" value="#$where#"/>
-        <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
-        <table style="border-collapse: separate; width: 99%">
-          <xar:if condition="!empty($items) and count($items) gt 0">
-            <tr>
-              <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'itemId_asc'))#"><xar:mlstring>Id</xar:mlstring></a></th>
-              <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_asc'))#"><xar:mlstring>Process</xar:mlstring></a></th>
-              <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'instanceId_asc'))#"><xar:mlstring>Ins</xar:mlstring></a></th>
-              <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'orderId_asc'))#">#</a></th>
-              <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'actname_asc'))#"><xar:mlstring>Activity</xar:mlstring></a></th>
-              <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'user_asc'))#"><xar:mlstring>User</xar:mlstring></a></th>
-              <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'started_asc'))#"><xar:mlstring>Start</xar:mlstring></a></th>
-              <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'duration_asc'))#"><xar:mlstring>Duration of this workitem</xar:mlstring></a></th>
-            </tr>
-            <xar:foreach in="$items" key="$ix">
+          <form style="margin-left: 1em;" action="#xarModURL('workflow','admin','monitor_workitems')#" method="post">
+            <input type="hidden" name="offset" value="#$offset#"/>
+            <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
+            <input type="hidden" name="filter_instance" value="#$filter_instance#"/>
+            <table>
               <tr>
-                <td style="text-align:left;">
-                  <a href="&xar-modurl-workflow-admin-workitem;&amp;itemId=#$items[$ix]['itemId']#" class="link">#$items[$ix]['itemId']#</a>
-                </td>
+                <td><small>process</small></td>
+                <td><small>instance</small></td>
+                <td><small>activity</small></td>
+                <td><small>user</small></td>
+                <td><small>properties</small></td>
+                <td>&#160;</td>
+              </tr>
 
-                <td style="text-align:left;">#$items[$ix]['procname']# #$items[$ix]['version']#</td>
-
+              <tr>
                 <td>
-                  <a class="link" href="&xar-modurl-workflow-admin-instance;&amp;iid=#$items[$ix]['instanceId']#">#$items[$ix]['instanceId']#</a>
+                  <select name="filter_process">
+                    <xar:if condition="'' eq $filter_process">
+                      <option selected="selected" value="">All</option>
+                      <xar:else/>
+                      <option value="">All</option>
+                    </xar:if>
+                    <xar:foreach in="$all_procs" key="$ix">
+                      <xar:if condition="$all_procs[$ix]['pId'] eq $filter_process">
+                        <option selected="selected" value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
+                        <xar:else/>
+                        <option value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
+                      </xar:if>
+                    </xar:foreach>
+                  </select>
                 </td>
-
-                <td>#$items[$ix]['orderId']#</td>
-
-                <td style="text-align:left;">
-                  <xar:if condition="$items[$ix]['type'] eq 'start'">
-                    <img src="modules/workflow/lib/galaxia/img/icons/mini_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
-                    <xar:elseif condition="$items[$ix]['type'] eq 'end'"/>
-                    <img src="modules/workflow/lib/galaxia/img/icons/mini_dbl_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
-                    <xar:elseif condition="$items[$ix]['type'] eq 'activity'"/>
-                    <img src="modules/workflow/lib/galaxia/img/icons/mini_rectangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
-                    <xar:elseif condition="$items[$ix]['type'] eq 'switch'"/>
-                    <img src="modules/workflow/lib/galaxia/img/icons/mini_diamond.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
-                    <xar:elseif condition="$items[$ix]['type'] eq 'standalone'"/>
-                    <img src="modules/workflow/lib/galaxia/img/icons/mini_hexagon.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
-                    <xar:elseif condition="$items[$ix]['type'] eq 'split'"/>
-                    <img src="modules/workflow/lib/galaxia/img/icons/mini_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
-                    <xar:elseif condition="$items[$ix]['type'] eq 'join'"/>
-                    <img src="modules/workflow/lib/galaxia/img/icons/mini_inv_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
-                    <xar:else/>
-                    #$items[$ix]['type']#
-                  </xar:if>
-                  #$items[$ix]['actname']#
+                <td>
+                  <input type="text" name="filter_instance" value="#$filter_instance#" size="4"/>
                 </td>
-
-                <td>#$items[$ix]['user']#</td>
-
-                <td>#$items[$ix]['started']#</td>
-
-                <td style="text-align:left;">
-                  <xar:if condition="!empty($items[$ix]['duration'])">
-                    <xar:if condition="!empty($items[$ix]['timescale'])"><img src="modules/workflow/xarimages/bluepixel.gif" width="#$items[$ix]['timescale']#" height="10" border="0" alt="duration" title="duration = #$items[$ix]['duration']#"/></xar:if>
-                    #$items[$ix]['duration']#
-                  </xar:if>
+                <td>
+                  <select name="filter_activity">
+                    <xar:if condition="'' eq $filter_activity">
+                      <option selected="selected" value="">All</option>
+                      <xar:else/>
+                      <option value="">All</option>
+                    </xar:if>
+                    <xar:foreach in="$all_acts" key="$ix">
+                      <xar:if condition="$all_acts[$ix]['activityId'] eq $filter_activity">
+                        <option selected="selected" value="#$all_acts[$ix]['activityId']#">#$all_acts[$ix]['name']#</option>
+                        <xar:else/>
+                        <option value="#$all_acts[$ix]['activityId']#">#$all_acts[$ix]['name']#</option>
+                      </xar:if>
+                    </xar:foreach>
+                  </select>
+                </td>
+                <td>
+                  <select name="filter_user">
+                    <xar:if condition="'' eq $filter_user">
+                      <option selected="selected" value="">All</option>
+                      <xar:else/>
+                      <option value="">All</option>
+                    </xar:if>
+                    <xar:foreach in="$users" key="$ix">
+                      <xar:if condition="$users[$ix]['userId'] eq $filter_user">
+                        <option selected="selected" value="#$users[$ix]['userId']#">#$users[$ix]['user']#</option>
+                        <xar:else/>
+                        <option value="#$users[$ix]['userId']#">#$users[$ix]['user']#</option>
+                      </xar:if>
+                    </xar:foreach>
+                  </select>
+                </td>
+                <td>
+                  <input size="8" type="text" name="find" value="#$find#"/>
+                </td>
+                <td>
+                  <input type="submit" name="filter" value="#xarML('filter')#"/>
                 </td>
               </tr>
-            </xar:foreach>
-            <xar:else/>
-            <tr><td colspan="9"><xar:mlstring>No workitems found</xar:mlstring></td></tr>
-          </xar:if>
-        </table>
-      </form>
-    </fieldset>
-    <xar:template file="pager"/>
-    <xar:template file="monitor_stats" type="module"/>
-    <xar:template file="galaxfooter"/>
-  </div>
-</div>
+            </table>
+          </form>
 
+          <form style="margin-left: 1em;" action="#xarModURL('workflow','admin','monitor_workitems')#" method="post">
+            <input type="hidden" name="offset" value="#$offset#"/>
+            <input type="hidden" name="find" value="#$find#"/>
+            <input type="hidden" name="where" value="#$where#"/>
+            <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
+            <table style="border-collapse: separate; width: 99%">
+              <xar:if condition="!empty($items) and count($items) gt 0">
+                <tr>
+                  <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'itemId_asc'))#">Id</a></th>
+                  <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_asc'))#">Process</a></th>
+                  <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'instanceId_asc'))#">Ins</a></th>
+                  <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'orderId_asc'))#">#</a></th>
+                  <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'actname_asc'))#">Activity</a></th>
+                  <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'user_asc'))#">User</a></th>
+                  <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'started_asc'))#">Start</a></th>
+                  <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'duration_asc'))#">Duration of this workitem</a></th>
+                </tr>
+                <xar:foreach in="$items" key="$ix">
+                  <tr>
+                    <td style="text-align:left;">
+                      <a href="&xar-modurl-workflow-admin-workitem;&amp;itemId=#$items[$ix]['itemId']#" class="link">#$items[$ix]['itemId']#</a>
+                    </td>
 
+                    <td style="text-align:left;">#$items[$ix]['procname']# #$items[$ix]['version']#</td>
+
+                    <td>
+                      <a class="link" href="&xar-modurl-workflow-admin-instance;&amp;iid=#$items[$ix]['instanceId']#">#$items[$ix]['instanceId']#</a>
+                    </td>
+
+                    <td>#$items[$ix]['orderId']#</td>
+
+                    <td style="text-align:left;">
+                      <xar:if condition="$items[$ix]['type'] eq 'start'">
+                        <img src="modules/workflow/lib/galaxia/img/icons/mini_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
+                        <xar:elseif condition="$items[$ix]['type'] eq 'end'"/>
+                        <img src="modules/workflow/lib/galaxia/img/icons/mini_dbl_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
+                        <xar:elseif condition="$items[$ix]['type'] eq 'activity'"/>
+                        <img src="modules/workflow/lib/galaxia/img/icons/mini_rectangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
+                        <xar:elseif condition="$items[$ix]['type'] eq 'switch'"/>
+                        <img src="modules/workflow/lib/galaxia/img/icons/mini_diamond.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
+                        <xar:elseif condition="$items[$ix]['type'] eq 'standalone'"/>
+                        <img src="modules/workflow/lib/galaxia/img/icons/mini_hexagon.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
+                        <xar:elseif condition="$items[$ix]['type'] eq 'split'"/>
+                        <img src="modules/workflow/lib/galaxia/img/icons/mini_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
+                        <xar:elseif condition="$items[$ix]['type'] eq 'join'"/>
+                        <img src="modules/workflow/lib/galaxia/img/icons/mini_inv_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
+                        <xar:else/>
+                        #$items[$ix]['type']#
+                      </xar:if>
+                      #$items[$ix]['actname']#
+                    </td>
+
+                    <td>#$items[$ix]['user']#</td>
+
+                    <td>#$items[$ix]['started']#</td>
+
+                    <td style="text-align:left;">
+                      <xar:if condition="!empty($items[$ix]['duration'])">
+                        <xar:if condition="!empty($items[$ix]['timescale'])"><img src="modules/workflow/xarimages/bluepixel.gif" width="#$items[$ix]['timescale']#" height="10" border="0" alt="duration" title="duration = #$items[$ix]['duration']#"/></xar:if>
+                        #$items[$ix]['duration']#
+                      </xar:if>
+                    </td>
+                  </tr>
+                </xar:foreach>
+                <xar:else/>
+                <tr><td colspan="9">No workitems found</td></tr>
+              </xar:if>
+            </table>
+          </form>
+        </fieldset>
+        <xar:template file="pager"/>
+        <xar:template file="monitor_stats" type="module"/>
+        <xar:template file="galaxfooter"/>
+      </div>
+    </div>
 </xar:template>

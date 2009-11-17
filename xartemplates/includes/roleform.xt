@@ -3,9 +3,9 @@
   <fieldset>
     <legend>
       <xar:if condition="$roleId gt 0">
-        <xar:mlstring>Role details</xar:mlstring> 
+        Role details 
       <xar:else/>
-        <xar:mlstring>Add new role</xar:mlstring>
+        Add new role
       </xar:if>
     </legend>
 
@@ -17,11 +17,11 @@
       <input type="hidden" name="find" value="#$find#"/>
       <input type="hidden" name="offset" value="#$offset#"/>
       <div class="xar-form-input-wrapper">
-        <label class="xar-form-label"><xar:mlstring>Name</xar:mlstring></label>
+        <label class="xar-form-label">Name</label>
         <input type="text" name="name" value="#$info['name']#"/>
       </div>
       <div class ="xar-form-input-wrapper">
-        <label class="xar-form-label"><xar:mlstring>Description</xar:mlstring></label>
+        <label class="xar-form-label">Description</label>
         <textarea name="description" rows="4" cols="60">#$info['description']#</textarea>
       </div>
       <div class="xar-form-input-wrapper-after">
@@ -34,6 +34,5 @@
     </form>
   </fieldset>
 </div>
-
 
 </xar:template>

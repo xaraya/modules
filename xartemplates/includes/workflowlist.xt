@@ -2,18 +2,18 @@
   <xar:if condition="!empty($items) and count($items) gt 0">
     <table style="border-collapse: separate; width: 99%">
       <tr>
-        <th><xar:mlstring>Process</xar:mlstring></th>
-        <th><xar:mlstring>Version</xar:mlstring></th>
-        <th><xar:mlstring>Start</xar:mlstring></th>
-        <th><xar:mlstring>Status</xar:mlstring></th>
-        <th><xar:mlstring>Current Activity</xar:mlstring></th>
-        <th><xar:mlstring>Assigned To</xar:mlstring></th>
-        <th><xar:mlstring>Run</xar:mlstring></th>
-        <th><xar:mlstring>Except</xar:mlstring></th>
-        <th><xar:mlstring>Resume</xar:mlstring></th>
-        <th><xar:mlstring>Abort</xar:mlstring></th>
-        <th><xar:mlstring>Release</xar:mlstring></th>
-        <th><xar:mlstring>Seen</xar:mlstring></th>
+        <th>Process</th>
+        <th>Version</th>
+        <th>Start</th>
+        <th>Status</th>
+        <th>Current Activity</th>
+        <th>Assigned To</th>
+        <th>Run</th>
+        <th>Except</th>
+        <th>Resume</th>
+        <th>Abort</th>
+        <th>Release</th>
+        <th>Seen</th>
       </tr>
       <xar:foreach in="$items" value="$item">
         <tr>
@@ -81,7 +81,7 @@
       </xar:foreach>
     </table>
     <xar:else/>
-    <xar:mlstring>No workflows found</xar:mlstring>
+    No workflows found
   </xar:if>
 
 

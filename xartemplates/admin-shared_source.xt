@@ -1,5 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title">Workflow Administration</span></div>
 <script type="text/javascript">
 <![CDATA[
 function setSomeElement(elemID, toInsert) {
@@ -35,16 +35,16 @@ function keypresshandler(elemID,event)
   <form id='editsource' action="#xarModURL('workflow','admin','shared_source')#" method="post">
 
     <fieldset>
-     <legend><xar:mlstring>Admin process sources</xar:mlstring></legend>
+     <legend>Admin process sources</legend>
           <div class="xar-form-input-wrapper-before">
               <label class="xar-form-label">
-                  <xar:mlstring>Activity: </xar:mlstring>
+                  Activity: 
               </label>
               <select name="activityId" onchange="document.getElementById('editsource').submit();">
               <xar:if condition="$activityId eq 0">
-                  <option value="" selected="selected"><xar:mlstring>Shared code</xar:mlstring></option>
+                  <option value="" selected="selected">Shared code</option>
               <xar:else/>
-                  <option value=""><xar:mlstring>Shared code</xar:mlstring></option>
+                  <option value="">Shared code</option>
               </xar:if>
 
               <xar:foreach in="$items" key="$ix">
@@ -76,19 +76,19 @@ function keypresshandler(elemID,event)
          </div>
          <div class="xar-form-input-wrapper-before">
                <p>
-                <strong><xar:mlstring>Function wizard: </xar:mlstring></strong>
+                <strong>Function wizard: </strong>
                 <xar:if condition="$template != 'y'">
-                  <a href="javascript:setSomeElement('src','$instance->setNextUser(&#39;&#39;);');"><xar:mlstring>Set next user</xar:mlstring></a> &#160;
-                  <a href="javascript:setSomeElement('src','$instance->get(&#39;&#39;);');"><xar:mlstring>Get property</xar:mlstring></a>&#160;
-                  <a href="javascript:setSomeElement('src','$instance->set(&#39;&#39;,&#39;&#39;);');"><xar:mlstring>Set property</xar:mlstring></a>&#160;
+                  <a href="javascript:setSomeElement('src','$instance->setNextUser(&#39;&#39;);');">Set next user</a> &#160;
+                  <a href="javascript:setSomeElement('src','$instance->get(&#39;&#39;);');">Get property</a>&#160;
+                  <a href="javascript:setSomeElement('src','$instance->set(&#39;&#39;,&#39;&#39;);');">Set property</a>&#160;
                   <xar:if condition="$act_info['isInteractive'] eq 'y'">
-                    <a href="javascript:setSomeElement('src','$instance->complete();');"><xar:mlstring>Complete</xar:mlstring></a>&#160;
-                    <a href="javascript:setSomeElement('src','if(isset($_REQUEST[&#39;save&#39;]){\n  $instance->complete();\n}');"><xar:mlstring>Process form</xar:mlstring></a>&#160;
+                    <a href="javascript:setSomeElement('src','$instance->complete();');">Complete</a>&#160;
+                    <a href="javascript:setSomeElement('src','if(isset($_REQUEST[&#39;save&#39;]){\n  $instance->complete();\n}');">Process form</a>&#160;
                   </xar:if>
                   <xar:if condition="$act_info['type'] eq 'switch'">
-                    <a href="javascript:setSomeElement('src','$instance->setNextActivity(&#39;&#39;);');"><xar:mlstring>Set Next act</xar:mlstring></a>&#160;
-                    <a href="javascript:setSomeElement('src','if(true) {\n    $instance->setNextActivity(&#39;&#39;);\n}');"><xar:mlstring>If:SetNextact</xar:mlstring></a>&#160;
-                    <a href="javascript:setSomeElement('src','switch($instance->get(&#39;&#39;)){\n  case:&#39;&#39;:\n  $instance->setNextActivity(&#39;&#39;);\n  break;\n}');"><xar:mlstring>Switch construct</xar:mlstring></a>&#160;
+                    <a href="javascript:setSomeElement('src','$instance->setNextActivity(&#39;&#39;);');">Set Next act</a>&#160;
+                    <a href="javascript:setSomeElement('src','if(true) {\n    $instance->setNextActivity(&#39;&#39;);\n}');">If:SetNextact</a>&#160;
+                    <a href="javascript:setSomeElement('src','switch($instance->get(&#39;&#39;)){\n  case:&#39;&#39;:\n  $instance->setNextActivity(&#39;&#39;);\n  break;\n}');">Switch construct</a>&#160;
                   </xar:if>
                 </xar:if>
                 </p>
@@ -104,6 +104,4 @@ function keypresshandler(elemID,event)
   <!-- Show a courtesy footer -->
   <xar:template file="galaxfooter"/>
 </div>
-
-
 </xar:template>

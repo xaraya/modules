@@ -5,7 +5,7 @@
 
     <fieldset>
       <legend>
-        <xar:mlstring>Workitem information</xar:mlstring>
+        Workitem information
       </legend>
       <table style="border-collapse:separate; width: 99%">
         <tr>
@@ -30,15 +30,15 @@
     </fieldset>
     <fieldset>
       <legend>
-        <xar:mlstring>Properties</xar:mlstring>
+        Properties
       </legend>
       <table style="border-collapse: separate;">
         <tr>
           <th>
-            <xar:mlstring>Property</xar:mlstring>
+            Property
           </th>
           <th>
-            <xar:mlstring>Value</xar:mlstring>
+            Value
           </th>
         </tr>
         <xar:loop name="$wi['properties']">

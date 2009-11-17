@@ -1,54 +1,52 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div>
-  <fieldset>
-    <legend><xar:mlstring>Map users to roles</xar:mlstring></legend>
-    <form method="post" action="&xar-modurl-workflow-admin-roles;">
-      <input type="hidden" name="pid" value="#$pid#"/>
-      <input type="hidden" name="offset" value="#$offset#"/>
-      <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
-      <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
-      <input type="hidden" name="find" value="#$find#"/>
-      <div class="xar-form-input-wrapper">
-        <label class="xar-form-label"><xar:mlstring>Filter users</xar:mlstring></label>
-        <input type="text" size="10" name="find_users" value="#$find_users#"/>
-        <input type="submit" name="findusers" value="#xarML('filter')#"/>
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label class="xar-form-label"><xar:mlstring>Map users</xar:mlstring></label>
-        <table>
-          <tr>
-            <th><xar:mlstring>Users</xar:mlstring></th>
-            <th><xar:mlstring>Process roles</xar:mlstring></th>
-          </tr>
-          <tr>
-            <td>
-              <select name="user[]" multiple="multiple" size="10">
-                <option value="">"<xar:mlstring>Anonymous</xar:mlstring>"</option>
-                <xar:foreach in="$users" key="$ix">
-                  <xar:if condition="$users[$ix]['uname'] eq $users[$ix]['name']">
-                    <option value="#$users[$ix]['id']#">#$users[$ix]['name']#</option>
-                    <xar:else/>
-                    <option value="#$users[$ix]['id']#">[#$users[$ix]['uname']#] #$users[$ix]['name']#</option>
-                  </xar:if>
-                </xar:foreach>
-              </select>
-            </td>
-            <td>
-              <select name="role[]" multiple="multiple" size="10">
-                <xar:foreach in="$roles" key="$ix">
-                  <option value="#$roles[$ix]['roleId']#">#$roles[$ix]['name']#</option>
-                </xar:foreach>
-              </select>
-            </td>
-          </tr>
-        </table>
-      </div>
-      <div class="xar-form-input-wrapper-after">
-        <input type="submit" name="save_map" value="#xarML('Map')#"/>
-      </div>
-    </form>
-  </fieldset>
-</div>
-
-
+    <div>
+      <fieldset>
+        <legend>Map users to roles</legend>
+        <form method="post" action="&xar-modurl-workflow-admin-roles;">
+          <input type="hidden" name="pid" value="#$pid#"/>
+          <input type="hidden" name="offset" value="#$offset#"/>
+          <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
+          <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
+          <input type="hidden" name="find" value="#$find#"/>
+          <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">Filter users</label>
+            <input type="text" size="10" name="find_users" value="#$find_users#"/>
+            <input type="submit" name="findusers" value="#xarML('filter')#"/>
+          </div>
+          <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">Map users</label>
+            <table>
+              <tr>
+                <th>Users</th>
+                <th>Process roles</th>
+              </tr>
+              <tr>
+                <td>
+                  <select name="user[]" multiple="multiple" size="10">
+                    <option value="">"Anonymous"</option>
+                    <xar:foreach in="$users" key="$ix">
+                      <xar:if condition="$users[$ix]['uname'] eq $users[$ix]['name']">
+                        <option value="#$users[$ix]['id']#">#$users[$ix]['name']#</option>
+                        <xar:else/>
+                        <option value="#$users[$ix]['id']#">[#$users[$ix]['uname']#] #$users[$ix]['name']#</option>
+                      </xar:if>
+                    </xar:foreach>
+                  </select>
+                </td>
+                <td>
+                  <select name="role[]" multiple="multiple" size="10">
+                    <xar:foreach in="$roles" key="$ix">
+                      <option value="#$roles[$ix]['roleId']#">#$roles[$ix]['name']#</option>
+                    </xar:foreach>
+                  </select>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="xar-form-input-wrapper-after">
+            <input type="submit" name="save_map" value="#xarML('Map')#"/>
+          </div>
+        </form>
+      </fieldset>
+    </div>
 </xar:template>

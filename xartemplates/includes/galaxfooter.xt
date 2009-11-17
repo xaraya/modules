@@ -1,9 +1,9 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <div>
     <i>
-      <xar:mlstring>Based on the </xar:mlstring>
+      Based on the 
       <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">
-        <xar:mlstring>Galaxia Workflow Engine</xar:mlstring>
+        Galaxia Workflow Engine
       </a>
     </i>
   </div>

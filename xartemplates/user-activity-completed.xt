@@ -2,19 +2,19 @@
   <xar:template file="user_bar" type="module"/>
   <div class="xar-mod-body">
     <h3>
-      <xar:mlstring>Activity Completed</xar:mlstring>
+      Activity Completed
     </h3>
     <div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em; margin: auto;">
       <table style="border-collapse: separate;">
         <tr>
           <th>
-            <xar:mlstring>Process</xar:mlstring>
+            Process
           </th>
           <th>
-            <xar:mlstring>Version</xar:mlstring>
+            Version
           </th>
           <th>
-            <xar:mlstring>Activity</xar:mlstring>
+            Activity
           </th>
         </tr>
         <tr>

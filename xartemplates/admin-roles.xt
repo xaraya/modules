@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <div class="xar-mod-head">
     <span class="xar-mod-title">
-      <xar:mlstring>Workflow Administration</xar:mlstring>
+      Workflow Administration
     </span>
   </div>
   <div class="xar-mod-body">
@@ -21,9 +21,9 @@
       <xar:template file="mapgroups"/>
       <xar:else/>
       <h4>
-        <xar:mlstring>Warning</xar:mlstring>
+        Warning
       </h4>
-      <xar:mlstring>No roles are defined yet so no roles can be mapped</xar:mlstring>
+      No roles are defined yet so no roles can be mapped
       <br/>
     </xar:if>
 <!-- Show a list of mappings -->

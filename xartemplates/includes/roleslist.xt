@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div>
   <fieldset>
-    <legend><xar:mlstring>Process roles</xar:mlstring></legend>
+    <legend>Process roles</legend>
     <form action="&xar-modurl-workflow-admin-roles;" method="post">
       <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
       <input type="hidden" name="pid" value="#$pid#"/>
@@ -15,26 +15,26 @@
           <xar:if condition="$sort_mode2 eq 'name_desc'">
             <th>
               <a href="&xar-modurl-workflow-admin-roles;&amp;sort_mode=#$sort_mode#&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode2=name_asc">
-                <xar:mlstring>Name</xar:mlstring>
+                Name
               </a>
             </th>
             <xar:else/>
             <th>
               <a href="&xar-modurl-workflow-admin-roles;&amp;sort_mode=#$sort_mode#&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode2=name_desc">
-                <xar:mlstring>Name</xar:mlstring>
+                Name
               </a>
             </th>
           </xar:if>
           <xar:if condition="$sort_mode2 eq 'description_desc'">
             <th>
               <a href="&xar-modurl-workflow-admin-roles;&amp;sort_mode=#$sort_mode#&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode2=description_asc">
-                <xar:mlstring>Description</xar:mlstring>
+                Description
               </a>
             </th>
             <xar:else/>
             <th>
               <a href="&xar-modurl-workflow-admin-roles;&amp;sort_mode=#$sort_mode#&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode2=description_desc">
-                <xar:mlstring>Description</xar:mlstring>
+                Description
               </a>
             </th>
           </xar:if>
@@ -58,7 +58,7 @@
           </xar:foreach>
           <tr><td colspan="2"><input type="submit" name="delete" value="#xarML('Delete selected')# "/></td></tr>
           <xar:else/>
-          <tr><td colspan="3"><xar:mlstring>No roles defined yet</xar:mlstring></td>
+          <tr><td colspan="3">No roles defined yet</td>
           </tr>
         </xar:if>
       </table>

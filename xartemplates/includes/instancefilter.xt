@@ -1,73 +1,71 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<form action="&xar-modurl-workflow-user-instances;" method="post">
-  <input type="hidden" name="offset" value="#$offset#"/>
-  <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
-  <table>
-    <tr>
-      <td><small><xar:mlstring>process</xar:mlstring></small></td>
-      <td><small><xar:mlstring>status</xar:mlstring></small></td>
-      <td><small><xar:mlstring>user</xar:mlstring></small></td>
-      <td><small><xar:mlstring>description</xar:mlstring></small></td>
-      <td >&#160;</td>
-    </tr>
+    <form action="&xar-modurl-workflow-user-instances;" method="post">
+      <input type="hidden" name="offset" value="#$offset#"/>
+      <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
+      <table>
+        <tr>
+          <td><small>process</small></td>
+          <td><small>status</small></td>
+          <td><small>user</small></td>
+          <td><small>description</small></td>
+          <td >&#160;</td>
+        </tr>
 
-    <tr>
-      <td>
-        <select name="filter_process">
-          <xar:if condition="'' eq $filter_process">
-            <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
-            <xar:else/>
-            <option value=""><xar:mlstring>All</xar:mlstring></option>
-          </xar:if>
-          <xar:foreach in="$all_procs" key="$ix">
-            <xar:if condition="$all_procs[$ix]['pId'] eq $filter_process">
-              <option selected="selected" value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['procname']#&#160;#$all_procs[$ix]['version']#</option>
-              <xar:else/>
-              <option value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['procname']#&#160;#$all_procs[$ix]['version']#</option>
-            </xar:if>
-          </xar:foreach>
-        </select>
-      </td>
-      <td >
-        <select name="filter_status">
-          <xar:if condition="'' eq $filter_status">
-            <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
-            <xar:else/>
-            <option value=""><xar:mlstring>All</xar:mlstring></option>
-          </xar:if>
-          <xar:foreach in="$statuses" key="$ix">
-            <xar:if condition="$statuses[$ix] eq $filter_status">
-              <option selected="selected" value="#$statuses[$ix]#">#xarML($statuses[$ix])#</option>
-              <xar:else/>
-              <option value="#$statuses[$ix]#">#xarML($statuses[$ix])#</option>
-            </xar:if>
-          </xar:foreach>
-        </select>
-      </td>
-      <td >
-        <select name="filter_user">
-          <xar:if condition="'' eq $filter_user">
-            <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
-            <xar:else/>
-            <option value=""><xar:mlstring>All</xar:mlstring></option>
-          </xar:if>
-          <xar:if condition="'*' eq $filter_user">
-            <option selected="selected" value="*">*</option>
-            <xar:else/>
-            <option value="*">*</option>
-          </xar:if>
-          <xar:if condition="$userId eq $filter_user">
-            <option selected="selected" value="#$userId#">#$user#</option>
-            <xar:else/>
-            <option value="#$userId#">#$user#</option>
-          </xar:if>
-        </select>
-      </td>
-      <td><input size="8" type="text" name="find" value="#$find#"/></td>
-      <td><input type="submit" name="filter" value="#xarML('filter')#"/></td>
-    </tr>
-  </table>
-</form>
-
-
+        <tr>
+          <td>
+            <select name="filter_process">
+              <xar:if condition="'' eq $filter_process">
+                <option selected="selected" value="">All</option>
+                <xar:else/>
+                <option value="">All</option>
+              </xar:if>
+              <xar:foreach in="$all_procs" key="$ix">
+                <xar:if condition="$all_procs[$ix]['pId'] eq $filter_process">
+                  <option selected="selected" value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['procname']#&#160;#$all_procs[$ix]['version']#</option>
+                  <xar:else/>
+                  <option value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['procname']#&#160;#$all_procs[$ix]['version']#</option>
+                </xar:if>
+              </xar:foreach>
+            </select>
+          </td>
+          <td >
+            <select name="filter_status">
+              <xar:if condition="'' eq $filter_status">
+                <option selected="selected" value="">All</option>
+                <xar:else/>
+                <option value="">All</option>
+              </xar:if>
+              <xar:foreach in="$statuses" key="$ix">
+                <xar:if condition="$statuses[$ix] eq $filter_status">
+                  <option selected="selected" value="#$statuses[$ix]#">#xarML($statuses[$ix])#</option>
+                  <xar:else/>
+                  <option value="#$statuses[$ix]#">#xarML($statuses[$ix])#</option>
+                </xar:if>
+              </xar:foreach>
+            </select>
+          </td>
+          <td >
+            <select name="filter_user">
+              <xar:if condition="'' eq $filter_user">
+                <option selected="selected" value="">All</option>
+                <xar:else/>
+                <option value="">All</option>
+              </xar:if>
+              <xar:if condition="'*' eq $filter_user">
+                <option selected="selected" value="*">*</option>
+                <xar:else/>
+                <option value="*">*</option>
+              </xar:if>
+              <xar:if condition="$userId eq $filter_user">
+                <option selected="selected" value="#$userId#">#$user#</option>
+                <xar:else/>
+                <option value="#$userId#">#$user#</option>
+              </xar:if>
+            </select>
+          </td>
+          <td><input size="8" type="text" name="find" value="#$find#"/></td>
+          <td><input type="submit" name="filter" value="#xarML('filter')#"/></td>
+        </tr>
+      </table>
+    </form>
 </xar:template>

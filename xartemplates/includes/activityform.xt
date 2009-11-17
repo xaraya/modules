@@ -1,169 +1,169 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div class="xar-form-input-container">
-  <form action="&xar-modurl-workflow-admin-activities;" method="post">
-    <fieldset>
-      <legend>
-        <xar:if condition="$activityId gt 0">
-          <xar:mlstring>Activity details</xar:mlstring>
-          <xar:else/>
-        <xar:mlstring>Add new activity</xar:mlstring>
-        </xar:if>
-      </legend>
-      <input type="hidden" name="pid" value="#$pid#"/>
-      <input type="hidden" name="activityId" value="#$info['activityId']#"/>
-      <input type="hidden" name="where2" value="#$where2#"/>
-      <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
-      <input type="hidden" name="find" value="#$find#"/>
-      <input type="hidden" name="where" value="#$where#"/>
-      <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
-      <div class="xar-form-input-wrapper">
-        <label for="activityname" class="xar-form-label"><xar:mlstring>Name</xar:mlstring></label>
-        <input  id="activityname" type="text" name="name" value="#$info['name']#" size="60"/>
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label class="xar-form-label"><xar:mlstring>Description</xar:mlstring></label>
-        <textarea name="description" rows="4" cols="55">#$info['description']#</textarea>
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label class="xar-form-label"><xar:mlstring>Type</xar:mlstring></label>
-        <select name="act_type">
-          <xar:if condition="$info['type'] eq 'start'">
-            <option value="start" selected="selected"><xar:mlstring>start</xar:mlstring></option>
-            <xar:else/>
-            <option value="start"><xar:mlstring>start</xar:mlstring></option>
-          </xar:if>
-          <xar:if condition="$info['type'] eq 'end'">
-            <option value="end" selected="selected"><xar:mlstring>end</xar:mlstring></option>
-            <xar:else/>
-            <option value="end"><xar:mlstring>end</xar:mlstring></option>
-          </xar:if>
-          <xar:if condition="$info['type'] eq 'activity'">
-            <option value="activity" selected="selected"><xar:mlstring>activity</xar:mlstring></option>
-            <xar:else/>
-            <option value="activity"><xar:mlstring>activity</xar:mlstring></option>
-          </xar:if>
-          <xar:if condition="$info['type'] eq 'switch'">
-            <option value="switch" selected="selected"><xar:mlstring>switch</xar:mlstring></option>
-            <xar:else/>
-            <option value="switch"><xar:mlstring>switch</xar:mlstring></option>
-          </xar:if>
-          <xar:if condition="$info['type'] eq 'split'">
-            <option value="split" selected="selected"><xar:mlstring>split</xar:mlstring></option>
-            <xar:else/>
-            <option value="split"><xar:mlstring>split</xar:mlstring></option>
-          </xar:if>
-          <xar:if condition="$info['type'] eq 'join'">
-            <option value="join" selected="selected"><xar:mlstring>join</xar:mlstring></option>
-            <xar:else/>
-            <option value="join"><xar:mlstring>join</xar:mlstring></option>
-          </xar:if>
-          <xar:if condition="$info['type'] eq 'standalone'">
-            <option value="standalone" selected="selected"><xar:mlstring>standalone</xar:mlstring></option>
-            <xar:else/>
-            <option value="standalone"><xar:mlstring>standalone</xar:mlstring></option>
-          </xar:if>
-        </select>
-      </div>
-      <div class="xar-form-input-wrapper-after">
-        <xar:if condition="$info['isInteractive'] eq 'y'">
-          <input id="activity_interactive" type="checkbox" name="isInteractive" checked="checked"/>
-          <xar:else/>
-          <input id="activity_interactive" type="checkbox" name="isInteractive"/>
-        </xar:if>
-        <label for="activity_interactive">
-          <xar:mlstring>Interactive</xar:mlstring>
-        </label>
-      </div>
-      <div class="xar-form-input-wrapper-after">
-        <xar:if condition="$info['isAutoRouted'] eq 'y'">
-          <input id="activity_routed" type="checkbox" name="isAutoRouted" checked="checked"/>
-          <xar:else/>
-          <input id="activity_routed" type="checkbox" name="isAutoRouted"/>
-        </xar:if>
-        <label for="activity_routed">
-          <xar:mlstring>Automatically routed</xar:mlstring>
-        </label>
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label class="xar-form-label">
-          <xar:mlstring>Add transitions</xar:mlstring>
-        </label>
+    <div class="xar-form-input-container">
+      <form action="&xar-modurl-workflow-admin-activities;" method="post">
+        <fieldset>
+          <legend>
+            <xar:if condition="$activityId gt 0">
+              Activity details
+              <xar:else/>
+            Add new activity
+            </xar:if>
+          </legend>
+          <input type="hidden" name="pid" value="#$pid#"/>
+          <input type="hidden" name="activityId" value="#$info['activityId']#"/>
+          <input type="hidden" name="where2" value="#$where2#"/>
+          <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
+          <input type="hidden" name="find" value="#$find#"/>
+          <input type="hidden" name="where" value="#$where#"/>
+          <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
+          <div class="xar-form-input-wrapper">
+            <label for="activityname" class="xar-form-label">Name</label>
+            <input  id="activityname" type="text" name="name" value="#$info['name']#" size="60"/>
+          </div>
+          <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">Description</label>
+            <textarea name="description" rows="4" cols="55">#$info['description']#</textarea>
+          </div>
+          <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">Type</label>
+            <select name="act_type">
+              <xar:if condition="$info['type'] eq 'start'">
+                <option value="start" selected="selected">start</option>
+                <xar:else/>
+                <option value="start">start</option>
+              </xar:if>
+              <xar:if condition="$info['type'] eq 'end'">
+                <option value="end" selected="selected">end</option>
+                <xar:else/>
+                <option value="end">end</option>
+              </xar:if>
+              <xar:if condition="$info['type'] eq 'activity'">
+                <option value="activity" selected="selected">activity</option>
+                <xar:else/>
+                <option value="activity">activity</option>
+              </xar:if>
+              <xar:if condition="$info['type'] eq 'switch'">
+                <option value="switch" selected="selected">switch</option>
+                <xar:else/>
+                <option value="switch">switch</option>
+              </xar:if>
+              <xar:if condition="$info['type'] eq 'split'">
+                <option value="split" selected="selected">split</option>
+                <xar:else/>
+                <option value="split">split</option>
+              </xar:if>
+              <xar:if condition="$info['type'] eq 'join'">
+                <option value="join" selected="selected">join</option>
+                <xar:else/>
+                <option value="join">join</option>
+              </xar:if>
+              <xar:if condition="$info['type'] eq 'standalone'">
+                <option value="standalone" selected="selected">standalone</option>
+                <xar:else/>
+                <option value="standalone">standalone</option>
+              </xar:if>
+            </select>
+          </div>
+          <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$info['isInteractive'] eq 'y'">
+              <input id="activity_interactive" type="checkbox" name="isInteractive" checked="checked"/>
+              <xar:else/>
+              <input id="activity_interactive" type="checkbox" name="isInteractive"/>
+            </xar:if>
+            <label for="activity_interactive">
+              Interactive
+            </label>
+          </div>
+          <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$info['isAutoRouted'] eq 'y'">
+              <input id="activity_routed" type="checkbox" name="isAutoRouted" checked="checked"/>
+              <xar:else/>
+              <input id="activity_routed" type="checkbox" name="isAutoRouted"/>
+            </xar:if>
+            <label for="activity_routed">
+              Automatically routed
+            </label>
+          </div>
+          <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">
+              Add transitions
+            </label>
 
-        <table>
-          <tr>
-            <th><xar:mlstring>From:</xar:mlstring></th>
-            <th><xar:mlstring>To:</xar:mlstring></th>
-          </tr>
-          <tr>
-            <td>
-              <select name="add_tran_from[]" multiple="multiple" size="5">
-                <xar:foreach in="$items" key="$ix">
-                  <xar:if condition="$items[$ix]['from'] eq 'y'">
-                    <option value="#$items[$ix]['activityId']#" selected="selected">#$items[$ix]['name']#</option>
-                    <xar:else/>
-                    <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
-                  </xar:if>
-                </xar:foreach>
-              </select>
-            </td>
-            <td>
-              <select name="add_tran_to[]" multiple="multiple" size="5">
-                <xar:foreach in="$items" key="$ix">
-                  <xar:if condition="$items[$ix]['to'] eq 'y'">
-                    <option value="#$items[$ix]['activityId']#" selected="selected">#$items[$ix]['name']#</option>
-                    <xar:else/>
-                    <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
-                  </xar:if>
-                </xar:foreach>
-              </select>
-            </td>
-          </tr>
-        </table>
-      </div>
-
-      <div class="xar-form-input-wrapper">
-        <label class="xar-form-label"><xar:mlstring>Roles</xar:mlstring></label>
-        <xar:if condition="!empty($roles) and count($roles) gt 0">
-          <table style="border-collapse: separate;">
-            <tr>
-              <th><xar:mlstring>Delete</xar:mlstring></th>
-              <th><xar:mlstring>Role</xar:mlstring></th>
-            </tr>
-            <xar:foreach in="$roles" key="$ix">
+            <table>
+              <tr>
+                <th>From:</th>
+                <th>To:</th>
+              </tr>
               <tr>
                 <td>
-                  <a class="link" href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;sort_mode=#$sort_mode#&amp;find=#$find#&amp;where=#$where#&amp;activityId=#$info['activityId']#&amp;pid=#$pid#&amp;remove_role=#$roles[$ix]['roleId']#">
-                    <img src="modules/workflow/lib/galaxia/img/icons/trash.gif" alt="#xarML('del')#" title="#xarML('Delete role')#"/>
-                  </a>
+                  <select name="add_tran_from[]" multiple="multiple" size="5">
+                    <xar:foreach in="$items" key="$ix">
+                      <xar:if condition="$items[$ix]['from'] eq 'y'">
+                        <option value="#$items[$ix]['activityId']#" selected="selected">#$items[$ix]['name']#</option>
+                        <xar:else/>
+                        <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
+                      </xar:if>
+                    </xar:foreach>
+                  </select>
                 </td>
-                <td>#$roles[$ix]['name']#</td>
+                <td>
+                  <select name="add_tran_to[]" multiple="multiple" size="5">
+                    <xar:foreach in="$items" key="$ix">
+                      <xar:if condition="$items[$ix]['to'] eq 'y'">
+                        <option value="#$items[$ix]['activityId']#" selected="selected">#$items[$ix]['name']#</option>
+                        <xar:else/>
+                        <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
+                      </xar:if>
+                    </xar:foreach>
+                  </select>
+                </td>
               </tr>
-            </xar:foreach>
-          </table>
-          <xar:else/>
-          <xar:mlstring>No roles associated to this activity</xar:mlstring>
-        </xar:if>
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label class="xar-form-label"><xar:mlstring>Add role</xar:mlstring></label>
-        <xar:if condition="count($all_roles)">
-          <select name="userole">
-            <option value=""><xar:mlstring>Add new</xar:mlstring></option>
-            <xar:foreach in="$all_roles" key="$ix">
-              <option value="#$all_roles[$ix]['roleId']#">#$all_roles[$ix]['name']#</option>
-            </xar:foreach>
-          </select>
-        </xar:if>
-        <input type="text" name="rolename"/><input type="submit" name="addrole" value="#xarML('Add')#"/>
-      </div>
-      <div class="xar-form-input-wrapper-after">
-        <xar:if condition="$activityId gt 0">
-          <input type="submit" name="save_act" value="#xarML('Save')#"/>
-          <xar:else/>
-          <input type="submit" name="save_act" value="#xarML('Update')#"/>
-        </xar:if>
-      </div>
-    </fieldset>
-  </form>
-</div>
+            </table>
+          </div>
+
+          <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">Roles</label>
+            <xar:if condition="!empty($roles) and count($roles) gt 0">
+              <table style="border-collapse: separate;">
+                <tr>
+                  <th>Delete</th>
+                  <th>Role</th>
+                </tr>
+                <xar:foreach in="$roles" key="$ix">
+                  <tr>
+                    <td>
+                      <a class="link" href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;sort_mode=#$sort_mode#&amp;find=#$find#&amp;where=#$where#&amp;activityId=#$info['activityId']#&amp;pid=#$pid#&amp;remove_role=#$roles[$ix]['roleId']#">
+                        <img src="modules/workflow/lib/galaxia/img/icons/trash.gif" alt="#xarML('del')#" title="#xarML('Delete role')#"/>
+                      </a>
+                    </td>
+                    <td>#$roles[$ix]['name']#</td>
+                  </tr>
+                </xar:foreach>
+              </table>
+              <xar:else/>
+              No roles associated to this activity
+            </xar:if>
+          </div>
+          <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">Add role</label>
+            <xar:if condition="count($all_roles)">
+              <select name="userole">
+                <option value="">Add new</option>
+                <xar:foreach in="$all_roles" key="$ix">
+                  <option value="#$all_roles[$ix]['roleId']#">#$all_roles[$ix]['name']#</option>
+                </xar:foreach>
+              </select>
+            </xar:if>
+            <input type="text" name="rolename"/><input type="submit" name="addrole" value="#xarML('Add')#"/>
+          </div>
+          <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$activityId gt 0">
+              <input type="submit" name="save_act" value="#xarML('Save')#"/>
+              <xar:else/>
+              <input type="submit" name="save_act" value="#xarML('Update')#"/>
+            </xar:if>
+          </div>
+        </fieldset>
+      </form>
+    </div>
 </xar:template>
