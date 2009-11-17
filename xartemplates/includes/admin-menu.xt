@@ -1,57 +1,70 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License:GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:comment>Common Administration menu</xar:comment>
-<xar:style scope="module" module="base" file="navtabs"/>
+<xar:style scope="module" module="base" file="tabs"/>
 
 <xar:set name="request">xarRequest::getInfo()</xar:set>
 <xar:set name="activetab">#$request.2#</xar:set>
 <div>
-  <dl class="xar-tabs">
-    <dt class="help" title="Choose an action to perform">
-      <xar:mlstring>Actions:</xar:mlstring>
-    </dt>
+  <ul class="xar-tabs">
     <xar:sec mask="AdminWorkflow" catch="false">
       <xar:if condition="$activetab eq 'monitor_processes' or $activetab eq 'monitor_activities'
         or $activetab eq 'monitor_instances' or $activetab eq 'monitor_workitems'">
-            <xar:set name="tabclass">'active'</xar:set>
-        <xar:else />
-            <xar:set name="tabclass">''</xar:set>
-        </xar:if>
-        <dd class="#$tabclass#">
-          <a href="#xarModURL('workflow','admin','monitor_processes')#">
+            <xar:set name="tabclass">'xar-tab-active'</xar:set>
+            <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+      <xar:else />
+          <xar:set name="tabclass">'xar-tab'</xar:set>
+          <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+      </xar:if>
+
+        <li class="#$tabclass#">
+          <a href="#xarModURL('workflow','admin','monitor_processes')#" class="#$linkclass#">
             <xar:mlstring>Workflow Monitoring</xar:mlstring>
           </a>
-        </dd>
+        </li>
 
-      <xar:if condition="$activetab eq 'processes' or $activetab eq 'activities'  or $activetab eq 'save_process'
+        <xar:if condition="$activetab eq 'processes' or $activetab eq 'activities'  or $activetab eq 'save_process'
         or $activetab eq 'shared_source' or $activetab eq 'roles' or $activetab eq 'graph'">
-            <xar:set name="tabclass">'active'</xar:set>
+          <xar:set name="tabclass">'xar-tab-active'</xar:set>
+          <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
         <xar:else />
-            <xar:set name="tabclass">''</xar:set>
+          <xar:set name="tabclass">'xar-tab'</xar:set>
+          <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
         </xar:if>
 
-        <dd class="#$tabclass#">
-            <a href="#xarModURL('workflow','admin','processes')#">
+        <li class="#$tabclass#">
+            <a href="#xarModURL('workflow','admin','processes')#" class="#$linkclass#">
                 <xar:mlstring>Manage Processes</xar:mlstring>
             </a>
-        </dd>
+        </li>
 
-        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-          <a href="#xarModURL('workflow','admin','modifyconfig')#">
+        <xar:if condition="$activetab eq 'modifyconfig'">
+          <xar:set name="tabclass">'xar-tab-active'</xar:set>
+          <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+          <xar:set name="tabclass">'xar-tab'</xar:set>
+          <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+          <a href="#xarModURL('workflow','admin','modifyconfig')#" class="#$linkclass#">
             <xar:mlstring>Modify Config</xar:mlstring>
           </a>
-        </dd>
+        </li>
 
-        <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-          <a href="#xarModURL('workflow','admin','overview')#">
+        <xar:if condition="$activetab eq 'overview'">
+          <xar:set name="tabclass">'xar-tab-active'</xar:set>
+          <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+          <xar:set name="tabclass">'xar-tab'</xar:set>
+          <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+          <a href="#xarModURL('workflow','admin','overview')#" class="#$linkclass#">
             <xar:mlstring>Overview</xar:mlstring>
           </a>
-        </dd>
+        </li>
     </xar:sec>
-  </dl>
+  </ul>
 </div>
-
 
 </xar:template>
