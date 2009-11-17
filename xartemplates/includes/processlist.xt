@@ -9,6 +9,7 @@
           <div class="xar-form-input-container">
           <form action="#xarModURL('workflow','admin','monitor_processes')#" method="post">
             Find:<input size="8" type="text" name="find" value="#$find#"/>
+            &#160;
             Process:
             <select name="filter_name">
               <option value="">All</option>
@@ -16,13 +17,14 @@
                 <option  value="#$all_procs[$ix]['name']#">#$all_procs[$ix]['name']#</option>
               </xar:foreach>
             </select>
-
+            &#160;
             Status:
             <select name="filter_active">
               <option value="">All</option>
               <option value="y">Active</option>
               <option value="n">Inactive</option>
             </select>
+            &#160;
 
             <input type="hidden" name="offset" value="#$offset#"/>
             <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
