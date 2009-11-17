@@ -18,16 +18,11 @@ function workflow_admin_updateconfig()
 {
     // Get parameters
     xarVarFetch('settings', 'isset',    $settings, '', XARVAR_DONT_SET);
-    xarVarFetch('shorturls',  'checkbox', $shorturls,  xarModVars::get('workflow','SupportShortURLs'), XARVAR_NOT_REQUIRED);
-    xarVarFetch('numitems', 'int:1',    $numitems, xarModVars::get('workflow','itemsperpage'), XARVAR_NOT_REQUIRED);
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
     // Security Check
     if (!xarSecurityCheck('AdminWorkflow')) return;
-
-    xarModVars::set('workflow','SupportShortURLs',$shorturls);
-    xarModVars::set('workflow','itemsperpage',$numitems);
 
     if (!xarVarFetch('jobs','isset',$jobs,array(),XARVAR_NOT_REQUIRED)) return;
     if (empty($jobs)) {
@@ -74,7 +69,16 @@ function workflow_admin_updateconfig()
         }
     }
 
-    xarResponse::Redirect(xarModURL('workflow', 'admin', 'modifyconfig'));
+    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'blocks'));
+    $data['module_settings']->getItem();
+    $isvalid = $data['module_settings']->checkInput();
+    if (!$isvalid) {
+        return xarTplModule('workflow','admin','modifyconfig', $data);        
+    } else {
+        $itemid = $data['module_settings']->updateItem();
+    }
+    
+    xarResponse::redirect(xarModURL('workflow', 'admin', 'modifyconfig'));
 
     return true;
 }

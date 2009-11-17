@@ -5,20 +5,7 @@
     <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
 
 <form method="post" action="&xar-modurl-workflow-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
-    <fieldset>
-      <legend><xar:mlstring>Global Configuration</xar:mlstring></legend>
-      <div class="xar-form-input-wrapper-after">
-        <xar:set name="checked"><xar:var scope="module" module="workflow" name="SupportShortURLs"/></xar:set>
-        <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$checked"/>
-        <label for="isalias"><xar:mlstring>Enable Short URLs</xar:mlstring></label>
-        [<xar:mlstring>Not currently implemented</xar:mlstring>]
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label class="xar-form-label" for="numitems"><xar:mlstring>Items per Page :</xar:mlstring></label>
-        <xar:set name="value"><xar:var scope="module" module="workflow" name="itemsperpage"/></xar:set>
-        <input type="text" name="numitems" id="numitems" value="#$value#" size="4"/>
-      </div>
-    </fieldset>
+    <xar:data-form object="$module_settings"/>
 
     <fieldset>
       <legend><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></legend>
@@ -40,7 +27,7 @@
                 <xar:foreach in="$activities" key="$id" value="$name">
                   <xar:if condition="$config['create'] eq $id">
                     <option value="#$id#" selected="selected">#$name#</option>
-                    <xar:else/>
+                  <xar:else/>
                     <option value="#$id#">#$name#</option>
                   </xar:if>
                 </xar:foreach>
@@ -54,7 +41,7 @@
                 <xar:foreach in="$activities" key="$id" value="$name">
                   <xar:if condition="$config['update'] eq $id">
                     <option value="#$id#" selected="selected">#$name#</option>
-                    <xar:else/>
+                  <xar:else/>
                     <option value="#$id#">#$name#</option>
                   </xar:if>
                 </xar:foreach>
@@ -68,7 +55,7 @@
                 <xar:foreach in="$activities" key="$id" value="$name">
                   <xar:if condition="$config['delete'] eq $id">
                     <option value="#$id#" selected="selected">#$name#</option>
-                    <xar:else/>
+                  <xar:else/>
                     <option value="#$id#">#$name#</option>
                   </xar:if>
                 </xar:foreach>
