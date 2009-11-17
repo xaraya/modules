@@ -7,12 +7,12 @@
           <xar:var name="validtext">
             valid
           </xar:var>
-          <img src="modules/workflow/lib/galaxia/img/icons/green_dot.gif" alt="#xarML('valid')#" title="#xarML('valid')#"/>
+          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/green_dot.gif" alt="#xarML('valid')#" title="#xarML('valid')#"/>
           <xar:else/>
           <xar:var name="validtext">
             invalid
           </xar:var>
-          <img src="modules/workflow/lib/galaxia/img/icons/red_dot.gif" alt="#xarML('invalid')#" title="#xarML('invalid')#"/>
+          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/red_dot.gif" alt="#xarML('invalid')#" title="#xarML('invalid')#"/>
         </xar:if>
         This process is: 
         <xar:var name="validtext"/>

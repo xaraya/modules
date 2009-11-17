@@ -57,12 +57,12 @@
       <li>
         go to the Dynamic Data <a href="index.php?module=dynamicdata&amp;type=util&amp;func=import">Import
         Object Definition</a> page and paste the content of the file
-        <a  href="modules/workflow/xardata/cdcollection3_dd.xml">cdcollection3_dd.xml</a>
+        <a  href="#sys::code()#modules/workflow/xardata/cdcollection3_dd.xml">cdcollection3_dd.xml</a>
         in the text area to create the sample database table;
       </li>
       <li>
         go to <a href="index.php?module=workflow&amp;type=admin&amp;func=processes">Admin Processes</a>
-        and upload the file <a href="modules/workflow/xardata/cdcollection3.xml">cdcollection3.xml</a> to
+        and upload the file <a href="#sys::code()#modules/workflow/xardata/cdcollection3.xml">cdcollection3.xml</a> to
         create a sample process;
       </li>
       <li>
@@ -93,7 +93,7 @@
 
     <p>With version 1.1, you can also automatically start a workflow process after some module item is created, updated or deleted. To try this out, you should :
     <ol>
-    <li>upload the <a href="modules/workflow/xardata/review_articles.xml">review_articles.xml</a> file to create the Review Articles process</li>
+    <li>upload the <a href="#sys::code()#modules/workflow/xardata/review_articles.xml">review_articles.xml</a> file to create the Review Articles process</li>
     <li>assign some users to the 'editors' workflow role and mark the process as active</li>
     <li>enable the workflow hooks for articles</li>
     <li>configure the workflow module so that the Review Articles - start activity is started when Create hooks are called from articles</li>
@@ -120,7 +120,7 @@
     <pre>
     // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
     // All Rights Reserved. See <a href="modules/workflow/lib/copyright.txt">copyright.txt</a> for details and a complete list of authors.
-    // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See <a href="modules/workflow/lib/license.txt">license.txt</a> for details.
+    // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See <a href="#sys::code()#modules/workflow/lib/license.txt">license.txt</a> for details.
     </pre>
       <h3>
         Further Information

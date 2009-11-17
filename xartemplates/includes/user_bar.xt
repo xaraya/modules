@@ -1,53 +1,53 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:style scope="module" module="base" file="navtabs"/>
-<xar:set name="func">xarRequest::getVar('func')</xar:set>
+    <xar:style scope="module" module="base" file="navtabs"/>
+    <xar:set name="func">xarRequest::getVar('func')</xar:set>
 
-<dl class="xar-tabs">
-  <dt class="help">Manage</dt>
+    <dl class="xar-tabs">
+      <dt class="help">Manage</dt>
 
-  <xar:set name="classstring">''</xar:set>
-  <xar:if condition="$func eq 'main' or !isset($func) or $func eq ''">
-    <xar:set name="classstring">'active'</xar:set>
-  </xar:if>
+      <xar:set name="classstring">''</xar:set>
+      <xar:if condition="$func eq 'main' or !isset($func) or $func eq ''">
+        <xar:set name="classstring">'active'</xar:set>
+      </xar:if>
 
-  <dd class="#$classstring#">
-    <a href="&xar-modurl-workflow-user-main;">
-      <img src="modules/workflow/lib/galaxia/img/icons/home.gif" alt="#xarML('workflows')#" title="#xarML('my workflows')#"/>
-        My Workflow
-    </a>
-  </dd>
+      <dd class="#$classstring#">
+        <a href="&xar-modurl-workflow-user-main;">
+          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/home.gif" alt="#xarML('workflows')#" title="#xarML('my workflows')#"/>
+            My Workflow
+        </a>
+      </dd>
 
-  <xar:set name="classstring">''</xar:set>
-  <xar:if condition="$func eq 'processes'">
-    <xar:set name="classstring">'active'</xar:set>
-  </xar:if>
-  <dd class="#$classstring#">
-    <a href="&xar-modurl-workflow-user-processes;">
-      <img src="modules/workflow/lib/galaxia/img/icons/process.gif" alt="#xarML('processes')#" title="#xarML('user processes')#"/>
-        Processes
-    </a>
-  </dd>
+      <xar:set name="classstring">''</xar:set>
+      <xar:if condition="$func eq 'processes'">
+        <xar:set name="classstring">'active'</xar:set>
+      </xar:if>
+      <dd class="#$classstring#">
+        <a href="&xar-modurl-workflow-user-processes;">
+          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/process.gif" alt="#xarML('processes')#" title="#xarML('user processes')#"/>
+            Processes
+        </a>
+      </dd>
 
-  <xar:set name="classstring">''</xar:set>
-  <xar:if condition="$func eq 'activities'">
-    <xar:set name="classstring">'active'</xar:set>
-  </xar:if>
-  <dd class="#$classstring#">
-    <a href="&xar-modurl-workflow-user-activities;">
-      <img src="modules/workflow/lib/galaxia/img/icons/activity.gif" alt="#xarML('activities')#" title="#xarML('user activities')#"/>
-        Activities
-    </a>
-  </dd>
+      <xar:set name="classstring">''</xar:set>
+      <xar:if condition="$func eq 'activities'">
+        <xar:set name="classstring">'active'</xar:set>
+      </xar:if>
+      <dd class="#$classstring#">
+        <a href="&xar-modurl-workflow-user-activities;">
+          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/activity.gif" alt="#xarML('activities')#" title="#xarML('user activities')#"/>
+            Activities
+        </a>
+      </dd>
 
-  <xar:set name="classstring">''</xar:set>
-  <xar:if condition="$func eq 'instances'">
-    <xar:set name="classstring">'active'</xar:set>
-  </xar:if>
-  <dd class="#$classstring#">
-    <a href="&xar-modurl-workflow-user-instances;">
-      <img src="modules/workflow/lib/galaxia/img/icons/instance.gif" alt="#xarML('instances')#" title="#xarML('user instances')#"/>
-        Instances
-    </a>
-  </dd>
-</dl>
+      <xar:set name="classstring">''</xar:set>
+      <xar:if condition="$func eq 'instances'">
+        <xar:set name="classstring">'active'</xar:set>
+      </xar:if>
+      <dd class="#$classstring#">
+        <a href="&xar-modurl-workflow-user-instances;">
+          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/instance.gif" alt="#xarML('instances')#" title="#xarML('user instances')#"/>
+            Instances
+        </a>
+      </dd>
+    </dl>
 </xar:template>
