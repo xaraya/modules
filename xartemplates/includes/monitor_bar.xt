@@ -1,64 +1,63 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:style scope="module" module="base" file="tabs"/>
-<xar:set name="func">xarRequest::getVar('func')</xar:set>
+    <xar:style scope="module" module="base" file="tabs"/>
+    <xar:set name="func">xarRequest::getVar('func')</xar:set>
 
-<ul class="xar-tabs">
-  <xar:if condition="$func eq 'monitor_processes'">
-    <xar:set name="tabclass">'xar-tab-active'</xar:set>
-    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
-  <xar:else />
-    <xar:set name="tabclass">'xar-tab'</xar:set>
-    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
-  </xar:if>
+    <ul class="xar-tabs">
+      <xar:if condition="$func eq 'monitor_processes'">
+        <xar:set name="tabclass">'xar-tab-active'</xar:set>
+        <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+      <xar:else />
+        <xar:set name="tabclass">'xar-tab'</xar:set>
+        <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+      </xar:if>
 
-  <li class="#$tabclass#">
-    <a href="#xarModURL('workflow','admin','monitor_processes')#" class="#$linkclass#">
-      <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/process.gif" alt="#xarML('monitor')#" title="#xarML('monitor processes')#"/>
-      Monitor processes
-    </a>
-  </li>
+      <li class="#$tabclass#">
+        <a href="#xarModURL('workflow','admin','monitor_processes')#" class="#$linkclass#">
+          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/process.gif" alt="#xarML('monitor')#" title="#xarML('monitor processes')#"/>
+          Monitor processes
+        </a>
+      </li>
 
-  <xar:if condition="$func eq 'monitor_activities'">
-    <xar:set name="tabclass">'xar-tab-active'</xar:set>
-    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
-  <xar:else />
-    <xar:set name="tabclass">'xar-tab'</xar:set>
-    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
-  </xar:if>
-  <li class="#$tabclass#">
-    <a href="#xarModURL('workflow','admin','monitor_activities')#" class="#$linkclass#">
-      <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/activity.gif" alt="#xarML('monitor')#" title="#xarML('monitor activities')#"/>
-      Monitor activities
-    </a>
-  </li>
+      <xar:if condition="$func eq 'monitor_activities'">
+        <xar:set name="tabclass">'xar-tab-active'</xar:set>
+        <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+      <xar:else />
+        <xar:set name="tabclass">'xar-tab'</xar:set>
+        <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+      </xar:if>
+      <li class="#$tabclass#">
+        <a href="#xarModURL('workflow','admin','monitor_activities')#" class="#$linkclass#">
+          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/activity.gif" alt="#xarML('monitor')#" title="#xarML('monitor activities')#"/>
+          Monitor activities
+        </a>
+      </li>
 
-  <xar:if condition="$func eq 'monitor_instances' or $func eq 'instance'">
-    <xar:set name="tabclass">'xar-tab-active'</xar:set>
-    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
-  <xar:else />
-    <xar:set name="tabclass">'xar-tab'</xar:set>
-    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
-  </xar:if>
-  <li class="#$tabclass#">
-    <a  href="#xarModURL('workflow','admin','monitor_instances')#" class="#$linkclass#">
-      <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/instance.gif" alt="#xarML('monitor')#" title="#xarML('monitor instances')#"/>
-      Monitor instances
-    </a>
-  </li>
+      <xar:if condition="$func eq 'monitor_instances' or $func eq 'instance'">
+        <xar:set name="tabclass">'xar-tab-active'</xar:set>
+        <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+      <xar:else />
+        <xar:set name="tabclass">'xar-tab'</xar:set>
+        <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+      </xar:if>
+      <li class="#$tabclass#">
+        <a  href="#xarModURL('workflow','admin','monitor_instances')#" class="#$linkclass#">
+          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/instance.gif" alt="#xarML('monitor')#" title="#xarML('monitor instances')#"/>
+          Monitor instances
+        </a>
+      </li>
 
-  <xar:if condition="$func eq 'monitor_workitems'or $func eq 'workitem'">
-    <xar:set name="tabclass">'xar-tab-active'</xar:set>
-    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
-  <xar:else />
-    <xar:set name="tabclass">'xar-tab'</xar:set>
-    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
-  </xar:if>
-  <li class="#$tabclass#">
-    <a  href="#xarModURL('workflow','admin','monitor_workitems')#" class="#$linkclass#">
-      <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/memo.gif" alt="#xarML('monitor')#" title="#xarML('monitor workitems')#"/>
-      Monitor workitems
-    </a>
-  </li>
-</ul>
-
+      <xar:if condition="$func eq 'monitor_workitems'or $func eq 'workitem'">
+        <xar:set name="tabclass">'xar-tab-active'</xar:set>
+        <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+      <xar:else />
+        <xar:set name="tabclass">'xar-tab'</xar:set>
+        <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+      </xar:if>
+      <li class="#$tabclass#">
+        <a  href="#xarModURL('workflow','admin','monitor_workitems')#" class="#$linkclass#">
+          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/memo.gif" alt="#xarML('monitor')#" title="#xarML('monitor workitems')#"/>
+          Monitor workitems
+        </a>
+      </li>
+    </ul>
 </xar:template>

@@ -1,71 +1,70 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- Determine whether we are adding a new process -->
-<xar:if condition="$pid gt 0">
-  <xar:set name="formtitle">Process details</xar:set>
-<xar:else/>
-  <xar:set name="formtitle">Add process</xar:set>
-</xar:if>
-<form action="&xar-modurl-workflow-admin-processes;" method="post">
-  <fieldset>
-    <legend><xar:var name="formtitle"/></legend>
+    <!-- Determine whether we are adding a new process -->
+    <xar:if condition="$pid gt 0">
+      <xar:var name="formtitle">Process details</xar:var>
+    <xar:else/>
+      <xar:var name="formtitle">Add process</xar:var>
+    </xar:if>
+    <form action="&xar-modurl-workflow-admin-processes;" method="post">
+      <fieldset>
+        <legend><xar:var name="formtitle"/></legend>
 
-    <input type="hidden" name="version" value="#$proc_info['version']#"/>
-    <input type="hidden" name="pid" value="#$proc_info['pId']#"/>
-    <input type="hidden" name="offset" value="#$offset#"/>
-    <input type="hidden" name="where" value="#$where#"/>
-    <input type="hidden" name="find" value="#$find#"/>
-    <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
+        <input type="hidden" name="version" value="#$proc_info['version']#"/>
+        <input type="hidden" name="pid" value="#$proc_info['pId']#"/>
+        <input type="hidden" name="offset" value="#$offset#"/>
+        <input type="hidden" name="where" value="#$where#"/>
+        <input type="hidden" name="find" value="#$find#"/>
+        <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
 
-    <!-- Show an edit form for the process -->
-    <div class="xar-form-input-wrapper">
-      <label class="xar-form-label">Version:</label>
-      #$proc_info.version#
-    </div>
-    <div class="xar-form-input-wrapper">
-      <label for="processname" class="xar-form-label">Process Name</label>
-      <input id="processname" type="text" maxlength="80" name="name" value="#$proc_info['name']#" size="55"/>
-    </div>
-    <div class="xar-form-input-wrapper">
-      <label for="processdescription" class="xar-form-label">Description</label>
-      <textarea id="processdescription" rows="5" cols="55" name="description">#$proc_info['description']#</textarea>
-    </div>
-    <div class="xar-form-input-wrapper-after">
-      <xar:if condition="$proc_info['isActive'] eq 'y'">
-        <input type="checkbox" name="isActive" checked="checked"/>
-      <xar:else/>
-        <input type="checkbox" name="isActive"/>
-      </xar:if>
-      <label>Active</label>
-    </div>
-    <div class="xar-form-input-wrapper-after">
-      <xar:if condition="$pid gt 0">
-        <xar:set name="save">Update</xar:set>
-        <xar:else/>
-        <xar:set name="save">Create</xar:set>
-      </xar:if>
-      <input type="submit" name="save" value="#$save#"/>
-    </div>
-  </fieldset>
-</form>
-
-
-<!-- Or an upload form -->
-<xar:if condition="$pid eq 0">
-  <fieldset>
-    <legend>
-      Or upload a process using this form
-    </legend>
-    <form enctype="multipart/form-data" action="&xar-modurl-workflow-admin-processes;" method="post">
-      <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"/>
-      <div class="xar-form-input-wrapper">
-        <label for="processfile" class="xar-form-label">Upload file:</label>
-        <input  id="processfile" size="40" name="userfile1" type="file"/>
-      </div>
-      <div class="xar-form-input-wrapper-after">
-        <input type="submit" name="upload" value="#xarML('Upload')#"/>
-      </div>
+        <!-- Show an edit form for the process -->
+        <div class="xar-form-input-wrapper">
+          <label class="xar-form-label">Version:</label>
+          #$proc_info.version#
+        </div>
+        <div class="xar-form-input-wrapper">
+          <label for="processname" class="xar-form-label">Process Name</label>
+          <input id="processname" type="text" maxlength="80" name="name" value="#$proc_info['name']#" size="55"/>
+        </div>
+        <div class="xar-form-input-wrapper">
+          <label for="processdescription" class="xar-form-label">Description</label>
+          <textarea id="processdescription" rows="5" cols="55" name="description">#$proc_info['description']#</textarea>
+        </div>
+        <div class="xar-form-input-wrapper-after">
+          <xar:if condition="$proc_info['isActive'] eq 'y'">
+            <input type="checkbox" name="isActive" checked="checked"/>
+          <xar:else/>
+            <input type="checkbox" name="isActive"/>
+          </xar:if>
+          <label>Active</label>
+        </div>
+        <div class="xar-form-input-wrapper-after">
+          <xar:if condition="$pid gt 0">
+            <xar:var name="save">Update</xar:var>
+          <xar:else/>
+            <xar:var name="save">Create</xar:var>
+          </xar:if>
+          <input type="submit" name="save" value="#$save#"/>
+        </div>
+      </fieldset>
     </form>
-  </fieldset>
-</xar:if>
 
+
+    <!-- Or an upload form -->
+    <xar:if condition="$pid eq 0">
+      <fieldset>
+        <legend>
+          Or upload a process using this form
+        </legend>
+        <form enctype="multipart/form-data" action="&xar-modurl-workflow-admin-processes;" method="post">
+          <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"/>
+          <div class="xar-form-input-wrapper">
+            <label for="processfile" class="xar-form-label">Upload file:</label>
+            <input  id="processfile" size="40" name="userfile1" type="file"/>
+          </div>
+          <div class="xar-form-input-wrapper-after">
+            <input type="submit" name="upload" value="#xarML('Upload')#"/>
+          </div>
+        </form>
+      </fieldset>
+    </xar:if>
 </xar:template>

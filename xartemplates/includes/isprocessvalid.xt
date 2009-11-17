@@ -2,14 +2,14 @@
   <xar:if condition="$pid gt 0">
     <h4>
       <xar:if condition="$proc_info['isValid'] eq 'y'">
-        <xar:set name="validtext">
+        <xar:var name="validtext">
           valid
-        </xar:set>
+        </xar:var>
         <img src="modules/workflow/lib/galaxia/img/icons/green_dot.gif" alt="#xarML('valid')#" title="#xarML('valid')#"/>
         <xar:else/>
-        <xar:set name="validtext">
+        <xar:var name="validtext">
           invalid
-        </xar:set>
+        </xar:var>
         <img src="modules/workflow/lib/galaxia/img/icons/red_dot.gif" alt="#xarML('invalid')#" title="#xarML('invalid')#"/>
       </xar:if>
       This process is: 
