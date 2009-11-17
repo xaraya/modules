@@ -13,8 +13,8 @@
 
   <li class="#$tabclass#">
     <a href="#xarModURL('workflow','admin','monitor_processes')#" class="#$linkclass#">
-      <img src="modules/workflow/lib/galaxia/img/icons/process.gif" alt="#xarML('monitor')#" title="#xarML('monitor processes')#"/>
-      <xar:mlstring>Monitor</xar:mlstring>&#160;<xar:mlstring>processes</xar:mlstring>
+      <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/process.gif" alt="#xarML('monitor')#" title="#xarML('monitor processes')#"/>
+      Monitor processes
     </a>
   </li>
 
@@ -27,8 +27,8 @@
   </xar:if>
   <li class="#$tabclass#">
     <a href="#xarModURL('workflow','admin','monitor_activities')#" class="#$linkclass#">
-      <img src="modules/workflow/lib/galaxia/img/icons/activity.gif" alt="#xarML('monitor')#" title="#xarML('monitor activities')#"/>
-      <xar:mlstring>Monitor</xar:mlstring>&#160;<xar:mlstring>activities</xar:mlstring>&#160;
+      <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/activity.gif" alt="#xarML('monitor')#" title="#xarML('monitor activities')#"/>
+      Monitor activities
     </a>
   </li>
 
@@ -41,8 +41,8 @@
   </xar:if>
   <li class="#$tabclass#">
     <a  href="#xarModURL('workflow','admin','monitor_instances')#" class="#$linkclass#">
-      <img src="modules/workflow/lib/galaxia/img/icons/instance.gif" alt="#xarML('monitor')#" title="#xarML('monitor instances')#"/>
-      <xar:mlstring>Monitor</xar:mlstring>&#160;<xar:mlstring>instances</xar:mlstring>&#160;
+      <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/instance.gif" alt="#xarML('monitor')#" title="#xarML('monitor instances')#"/>
+      Monitor instances
     </a>
   </li>
 
@@ -55,8 +55,8 @@
   </xar:if>
   <li class="#$tabclass#">
     <a  href="#xarModURL('workflow','admin','monitor_workitems')#" class="#$linkclass#">
-      <img src="modules/workflow/lib/galaxia/img/icons/memo.gif" alt="#xarML('monitor')#" title="#xarML('monitor workitems')#"/>
-      <xar:mlstring>Monitor</xar:mlstring>&#160;<xar:mlstring>workitems</xar:mlstring>&#160;
+      <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/memo.gif" alt="#xarML('monitor')#" title="#xarML('monitor workitems')#"/>
+      Monitor workitems
     </a>
   </li>
 </ul>
