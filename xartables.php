@@ -11,6 +11,7 @@
         $xartable = array();
 
         $xartable['mailer_mails']          = xarDB::getPrefix() . '_mailer_mails';
+        $xartable['mailer_headers']        = xarDB::getPrefix() . '_mailer_headers';
         $xartable['mailer_footers']        = xarDB::getPrefix() . '_mailer_footers';
         $xartable['mailer_history']        = xarDB::getPrefix() . '_mailer_history';
 

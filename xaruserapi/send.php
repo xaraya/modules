@@ -90,6 +90,14 @@
         // Grab the first one that fits
             $mailitem = current($mailitems);
             
+        // Get the header if this message has one
+            $header = "";
+            if (isset($mailitem['header']) && !empty($mailitem['header'])) {
+                $object = DataObjectMaster::getObject(array('name' => 'mailer_headers'));
+                $headeritemid = $object->getItem(array('itemid' => $mailitem['header']));
+                $header = $object->properties['body']->getValue();
+            }
+            
         // Get the footer if this message has one
             $footer = "";
             if (!empty($mailitem['footer'])) {
@@ -118,7 +126,7 @@
             if (empty($senderaddress)) $senderaddress = xarModItemVars::get('mailer','defaultsenderaddress', xarMod::getID($module));
         
             $subject = $mailitem['subject'];
-            $message = $mailitem['body'] . $footer;
+            $message = $header . $mailitem['body'] . $footer;
             if (($mailitem['mail_type'] == 3) || ($mailitem['mail_type'] == 4)) {
                 sys::import('blocklayout.compiler');
                 $blCompiler = xarBLCompiler::instance();
@@ -174,7 +182,7 @@
                             'sender_address' => $senderaddress,
                             'recipient_name' => $recipientname,
                             'recipient_address' => $recipientaddress,
-                            'body' => $mailitem['body'] . $footer,
+                            'body' => $header . $mailitem['body'] . $footer,
                             'subject' => $mailitem['subject'],
                             );
                 $item = $object->createItem($args);

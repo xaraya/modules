@@ -25,6 +25,7 @@
             sendername        varchar(254) default '' NOT NULL,
             senderaddress     varchar(254) default '' NOT NULL,
             subject           text,
+            header_id         integer unsigned NOT NULL,
             body              text,
             footer_id         integer unsigned NOT NULL,
             locale            varchar(64) default '' NOT NULL,
@@ -36,6 +37,17 @@
             alias             tinyint NOT NULL default '1', 
             type              tinyint NOT NULL default '3', 
             state             tinyint NOT NULL default '3', 
+            PRIMARY KEY  (id) 
+        ) TYPE=MyISAM";
+        if (!$q->run($query)) return;
+
+        $query = "DROP TABLE IF EXISTS " . $prefix . "_mailer_headers";
+        if (!$q->run($query)) return;
+        $query = "CREATE TABLE " . $prefix . "_mailer_headers (
+            id                integer unsigned NOT NULL auto_increment,
+            name              varchar(64) default '' NOT NULL,
+            body              text,
+            timecreated       int(11) unsigned NOT NULL default '0', 
             PRIMARY KEY  (id) 
         ) TYPE=MyISAM";
         if (!$q->run($query)) return;
@@ -118,6 +130,7 @@
         $module = 'mailer';
         $objects = array(
                          'mailer_mails',
+                         'mailer_headers',
                          'mailer_footers',
                          'mailer_history',
                          );

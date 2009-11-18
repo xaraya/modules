@@ -5,6 +5,7 @@
     <sender_name></sender_name>
     <sender_address></sender_address>
     <subject>Mailer Module Test Email</subject>
+    <header>1</header>
     <body>This the the default message body for a text email sent by the Mailer module.</body>
     <footer>1</footer>
     <locale>en_US.utf-8</locale>
@@ -23,6 +24,7 @@
     <sender_name></sender_name>
     <sender_address></sender_address>
     <subject>Mailer Module Test Email</subject>
+    <header>2</header>
     <body>This email uses Blocklayout tags for layout&lt;xar:br /&gt;
 &lt;xar:br /&gt;
 It also has access to the full range of Xaraya functions: &lt;xar:br /&gt;
