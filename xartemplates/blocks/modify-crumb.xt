@@ -3,9 +3,9 @@
     <div>
         <div>
             <xar:if condition="!empty($include_root)">
-                <input name="include_root" type="checkbox" value="true" id="include_root_#$bid#" checked="checked" />
+                <input name="include_root" type="checkbox" value="true" id="include_root_#$bid#" checked="checked"/>
             <xar:else />
-                <input name="include_root" type="checkbox" value="true" id="include_root_#$bid#" />
+                <input name="include_root" type="checkbox" value="true" id="include_root_#$bid#"/>
             </xar:if>
             <label for="include_root_#$bid#">Show the root page in the trails</label>
         </div>
@@ -29,7 +29,7 @@
             <!-- Existing root pids to removed -->
             <xar:loop name="$root_pids">
                 <div>
-                    <input name="remove_root_pid[]" type="checkbox" value="#$loop:key#" id="remove_root_pid_#$bid#_#$loop:key#" />
+                    <input name="remove_root_pid[]" type="checkbox" value="#$loop:key#" id="remove_root_pid_#$bid#_#$loop:key#"/>
                     <label for="remove_root_pid_#$bid#_#$loop:key#">
                         <xar:ml>
                             <xar:mlstring>Remove #(1)</xar:mlstring>

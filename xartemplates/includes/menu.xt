@@ -108,7 +108,7 @@
 
                                 <xar:if condition="!empty($page.has_children)">
                                     <xar:set name="parent">$page</xar:set>
-                                    <xar:template file="menu" />
+                                    <xar:template file="menu"/>
                                 </xar:if>
                             </xar:if>
                         </li>

@@ -53,7 +53,7 @@
     </xar:if>
 
     <xar:comment>Display the download block</xar:comment>
-    <xar:comment><xar:template module="sections" file="download-block" subdata="array('ptids'=&gt;'13','title'=&gt;$filegroup)" /></xar:comment>
+    <xar:comment><xar:template module="sections" file="download-block" subdata="array('ptids'=&gt;'13','title'=&gt;$filegroup)"/></xar:comment>
 
     <xar:if condition="!empty($hooks)">
         <div>

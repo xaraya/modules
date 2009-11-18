@@ -10,11 +10,11 @@
     </xar:if>
 
     <xar:if condition="count($pages) eq 0">
-        <input type="hidden" name="moving" id="moving" value="false" />
-        <input type="hidden" name="refpid" id="refpid" value="#$refpid#" />
-        <input type="hidden" name="position" id="position" value="#$position#" />
+        <input type="hidden" name="moving" id="moving" value="false"/>
+        <input type="hidden" name="refpid" id="refpid" value="#$refpid#"/>
+        <input type="hidden" name="position" id="position" value="#$position#"/>
     <xar:else />
-        <input type="hidden" name="moving" id="moving" value="true" />
+        <input type="hidden" name="moving" id="moving" value="true"/>
         <p class="param">
             <label for="refpid">In relation to this page</label>
             <select name="refpid" id="refpid">
@@ -22,10 +22,10 @@
                     <xar:if condition="$loop:item.pid eq $refpid">
                         <option value="#$loop:item.pid#"
                         selected="selected">#$loop:item.slash_separated#</option>
-                    <xar:elseif condition="$loop:item.left eq $page.left-1" />
+                    <xar:elseif condition="$loop:item.left eq $page.left-1"/>
                         <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
                         <xar:set name="position">'firstchild'</xar:set>
-                    <xar:elseif condition="$loop:item.right eq $page.left-1" />
+                    <xar:elseif condition="$loop:item.right eq $page.left-1"/>
                         <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
                         <xar:set name="position">'after'</xar:set>
                     <xar:else />

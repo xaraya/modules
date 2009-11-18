@@ -5,7 +5,7 @@
      -->
 
     <xar:if condition="!empty($extra.archive)">
-        <xar:style module="xarpages" file="news-archive" scope="module" />
+        <xar:style module="xarpages" file="news-archive" scope="module"/>
         <h2>
             Monthly Archive 
             <xar:if condition="!empty($extra.archive.year)and empty($extra.archive.month)">

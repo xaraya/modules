@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:style scope="module" module="xarpages" file="xarpages" />
+    <xar:style scope="module" module="xarpages" file="xarpages"/>
 
     <div class="xar-mod-head"><span class="xar-mod-title">Page Administration</span></div>
 
     <div class="xar-mod-body">
-        <xar:template type="module" file="admin-menu" />
+        <xar:template type="module" file="admin-menu"/>
         <h2>View Page Types</h2>
         <xar:if condition="empty($types)">
              No page types defined
@@ -33,13 +33,33 @@
                             </td>
                             <td class="#$row_class#">#xarVarPrepForDisplay($loop:item['description'])#</td>
                             <td class="#$row_class#" style="text-align: center;">
-                                <a href="#xarModURL('xarpages', 'admin', 'modifytype', array('id' => $loop:item['id']))#">
-                                    Modify
-                                </a>
+                                <xar:set name="link">
+                                    xarModURL('xarpages', 'admin', 'modifytype', array('id' => $loop->item['id']))
+                                </xar:set>
+                                <xar:if condition="xarModVars::get('xarpages','use_module_icons')">
+                                    <xar:set name="icon">
+                                        xarTplGetImage('icons/modify.png', 'base')
+                                    </xar:set>
+                                    <xar:data-output type="urlicon" link="$link" icon="$icon"/>
+                                <xar:else />
+                                    <a href="#$link#">
+                                        Modify
+                                    </a>
+                                </xar:if>
                                 &#160;|&#160;
-                                <a href="#xarModURL('xarpages', 'admin', 'deletetype', array('id' => $loop:item['id']))#">
-                                    Delete
-                                </a>
+                                <xar:set name="link">
+                                    xarModURL('xarpages', 'admin', 'deletetype', array('id' => $loop->item['id']))
+                                </xar:set>
+                                <xar:if condition="xarModVars::get('xarpages','use_module_icons')">
+                                    <xar:set name="icon">
+                                        xarTplGetImage('icons/delete.png', 'base')
+                                    </xar:set>
+                                    <xar:data-output type="urlicon" link="$link" icon="$icon"/>
+                                <xar:else />
+                                    <a href="#$link#">
+                                        Delete
+                                    </a>
+                                </xar:if>
                             </td>
                         </tr>
                     </xar:if>

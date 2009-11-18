@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
     <!-- Common navbar stuff -->
-    <xar:template file="user-navbar" module="xarpages" />
+    <xar:template file="user-navbar" module="xarpages"/>
 
     <!-- Change this from 'article' to some other prefix to use a different set of template prefixes -->
     <xar:set name="template_prefix">'article'</xar:set>
@@ -18,13 +18,13 @@
     </xar:if>
 
     <!-- Include a simple search box -->
-    <xar:template file="news-searchbox" type="module" module="xarpages" />
+    <xar:template file="news-searchbox" type="module" module="xarpages"/>
 
     <!-- List of items -->
     <xar:if condition="empty($extra.aid)">
         <!-- Archive table - the user has elected to view an archive (only show on the overview) -->
         <xar:if condition="!empty($extra.archive)">
-            <div class="xarpages-archive-list"><xar:template file="news-archive-list" /></div>
+            <div class="xarpages-archive-list"><xar:template file="news-archive-list"/></div>
         </xar:if>
 
         <!-- Different text for the summary as for an individual item? -->

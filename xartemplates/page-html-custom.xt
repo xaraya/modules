@@ -8,7 +8,7 @@
      -->
 
     <!-- Common navbar stuff -->
-    <xar:template file="user-navbar" module="xarpages" />
+    <xar:template file="user-navbar" module="xarpages"/>
 
     <xar:if condition="isset($current_page.dd.body)">
         <div style="margin: 1em; padding: 1em; border: 5px solid #FFCC00;">#$current_page.dd.body#</div>

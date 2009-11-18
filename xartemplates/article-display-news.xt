@@ -8,7 +8,7 @@
      -->
 
     <div class="news-item-news">
-        <xar:template file="news-nextprev" />
+        <xar:template file="news-nextprev"/>
         <div class="news-header">
             <h1>
                 <xar:ml>
@@ -33,7 +33,7 @@
          -->
         <xar:if condition="!empty($body)">
             <div class="news-body">#$body#</div>
-        <xar:elseif condition="!empty($summary)" />
+        <xar:elseif condition="!empty($summary)"/>
             <div class="news-body">#$summary#</div>
         </xar:if>
     </div>

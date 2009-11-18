@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:style scope="module" module="base" file="navtabs" />
-    <xar:style scope="module" module="xarpages" file="xarpages" />
+    <xar:style scope="module" module="base" file="navtabs"/>
+    <xar:style scope="module" module="xarpages" file="xarpages"/>
     <xar:comment>
       We are using multipart/form-data to cater for uploads which should not be a problem for use in all cases. 
       Alternatively you can test for the presence or not of upload properties and base enctype on that.
@@ -35,7 +35,7 @@
     <div class="xar-mod-head"><span class="xar-mod-title">Page Administration</span></div>
 
     <div class="xar-mod-body">
-        <xar:template type="module" file="admin-menu" />
+        <xar:template type="module" file="admin-menu"/>
         <h2>
             <xar:if condition="$func eq 'modify'">
                 Modify Page
@@ -55,8 +55,8 @@
                             </legend>
 
                             <div>
-                                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                                <input type="hidden" name="return_url" id="return_url" value="#xarVarPrepForDisplay($return_url)#" />
+                                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                                <input type="hidden" name="return_url" id="return_url" value="#xarVarPrepForDisplay($return_url)#"/>
                                 <label for="type_id">Page type</label>
                                 <select name="type_id" id="type_id">
                                     <xar:loop name="$pagetypes">
@@ -64,7 +64,7 @@
                                     </xar:loop>
                                 </select>
                             </div>
-                            <input type="submit" value="#xarML('Next')#" />
+                            <input type="submit" value="#xarML('Next')#"/>
                         <xar:else />
                             No page types defined. Please define a page type first.
                         </xar:if>
@@ -102,22 +102,22 @@
                             </legend>
 
                             <p class="param">
-                                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                                <input type="hidden" name="pid" id="pid" value="#$pid#" />
-                                <input type="hidden" name="type_id" id="type_id" value="#$type_id#" />
-                                <input type="hidden" name="return_url" id="return_url" value="#xarVarPrepForDisplay($return_url)#" />
+                                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                                <input type="hidden" name="pid" id="pid" value="#$pid#"/>
+                                <input type="hidden" name="type_id" id="type_id" value="#$type_id#"/>
+                                <input type="hidden" name="return_url" id="return_url" value="#xarVarPrepForDisplay($return_url)#"/>
                                 <label for="pagetype_name" title="#xarVarPrepForDisplay($page.pagetype.description)#">Page Type</label>
-                                <input type="text" name="pagetype_name" id="pagetype_name" value="#xarVarPrepForDisplay($page.pagetype.name)#" size="32" maxlength="64" disabled="disabled" />
+                                <input type="text" name="pagetype_name" id="pagetype_name" value="#xarVarPrepForDisplay($page.pagetype.name)#" size="32" maxlength="64" disabled="disabled"/>
                             </p>
 
                             <p class="param">
                                 <label for="name">Name</label>
                                 <!-- Disable this item if we do not have delete priv. -->
                                 <xar:if condition="$func eq 'modify' and empty($delete_allowed)">
-                                    <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($page.name)#" size="32" maxlength="64" disabled="disabled" />
+                                    <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($page.name)#" size="32" maxlength="64" disabled="disabled"/>
                                     (name locked)
                                 <xar:else />
-                                    <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($page.name)#" size="32" maxlength="64" />
+                                    <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($page.name)#" size="32" maxlength="64"/>
                                 </xar:if>
                             </p>
 
@@ -143,12 +143,12 @@
                                 <label for="status_recurse" title="#xarML('Apply status to descendants')#">
                                     Recursive status
                                 </label>
-                                <input type="checkbox" name="status_recurse" id="status_recurse" value="true" />
+                                <input type="checkbox" name="status_recurse" id="status_recurse" value="true"/>
                             </p>
 
                             <p class="param">
                                 <label for="template">Item Template</label>
-                                <input type="text" name="template" id="template" maxlength="100" value="#xarVarPrepForDisplay($page.template)#" />
+                                <input type="text" name="template" id="template" maxlength="100" value="#xarVarPrepForDisplay($page.template)#"/>
 
                                 <xar:if condition="!empty($templates)">
                                     or
@@ -168,14 +168,14 @@
 
                             <p class="param">
                                 <label for="page_template">Page Template</label>
-                                <input type="text" name="page_template" id="page_template" maxlength="100" value="#xarVarPrepForDisplay($page.page_template)#" />
+                                <input type="text" name="page_template" id="page_template" maxlength="100" value="#xarVarPrepForDisplay($page.page_template)#"/>
                                 &#160; (inherits if left empty)
                             </p>
 
                             <p class="param">
                                 <label for="theme">Theme</label>
                                 <!--
-                                <input type="text" name="theme" id="theme" maxlength="100" value="#xarVarPrepForDisplay($page.theme)#" />
+                                <input type="text" name="theme" id="theme" maxlength="100" value="#xarVarPrepForDisplay($page.theme)#"/>
                                 -->
                                 <select name="theme">
                                     <xar:if condition="$page.theme eq ''">
@@ -200,9 +200,9 @@
 
                             <p class="param">
                                 <label for="function">Custom Page Function</label>
-                                <input type="text" name="function" id="function" maxlength="100" value="#xarVarPrepForDisplay($page.function)#" />
+                                <input type="text" name="function" id="function" maxlength="100" value="#xarVarPrepForDisplay($page.function)#"/>
                                 <!--
-                                <xar:data-input name="thisname" type="filelist" value="23" validation="modules/xarpages/xarimages" />
+                                <xar:data-input name="thisname" type="filelist" value="23" validation="modules/xarpages/xarimages"/>
                                 -->
 
                                 <xar:if condition="!empty($custom_apis.func)">
@@ -222,7 +222,7 @@
 
                             <p class="param">
                                 <label for="encode_url">Custom URL Encode</label>
-                                <input type="text" name="encode_url" id="encode_url" maxlength="100" value="#xarVarPrepForDisplay($page.encode_url)#" />
+                                <input type="text" name="encode_url" id="encode_url" maxlength="100" value="#xarVarPrepForDisplay($page.encode_url)#"/>
 
                                 <xar:if condition="!empty($custom_apis.encode)">
                                     or
@@ -241,7 +241,7 @@
 
                             <p class="param">
                                 <label for="decode_url">Custom URL Decode</label>
-                                <input type="text" name="decode_url" id="decode_url" maxlength="100" value="#xarVarPrepForDisplay($page.decode_url)#" />
+                                <input type="text" name="decode_url" id="decode_url" maxlength="100" value="#xarVarPrepForDisplay($page.decode_url)#"/>
 
                                 <xar:if condition="!empty($custom_apis.decode)">
                                     or
@@ -262,11 +262,11 @@
                                 <label for="alias">Use page as module alias</label>
                                 <xar:set name="modalias">xarModGetAlias($page['name'])</xar:set>
                                 <xar:if condition="empty($modalias) or $modalias eq $page.name">
-                                    <input type="checkbox" name="alias" id="alias" value="1" />
+                                    <input type="checkbox" name="alias" id="alias" value="1"/>
                                 <xar:elseif condition="$modalias eq 'xarpages'"/>
-                                    <input type="checkbox" name="alias" id="alias" value="1" checked="checked" />
+                                    <input type="checkbox" name="alias" id="alias" value="1" checked="checked"/>
                                 <xar:else />
-                                    <input type="hidden" name="alias" value="0" />
+                                    <input type="hidden" name="alias" value="0"/>
                                 </xar:if>
                             </p>
                         </fieldset>
@@ -283,11 +283,11 @@
                                         <label for="movepage" title="#xarML('Check this box to change the position of this page')#">
                                             Move page
                                         </label>
-                                        <input type="checkbox" name="movepage" id="movepage" value="true" />
+                                        <input type="checkbox" name="movepage" id="movepage" value="true"/>
                                     </p>
                                 </xar:if>
 
-                                <xar:template file="localization" type="module" />
+                                <xar:template file="localization" type="module"/>
                             </fieldset>
                         </xar:if>
 
@@ -313,21 +313,21 @@
                                         Page Display Access
                                     </legend>
                                     <xar:set name="propname">$page['name'] . '_display'</xar:set>
-                                    <xar:data-input type="access" name="$propname" value="$page['info']['display_access']" />
+                                    <xar:data-input type="access" name="$propname" value="$page['info']['display_access']"/>
                                 </fieldset>
                                 <fieldset class="formelements xar-norm">
                                     <legend>
                                         Page Modify Access
                                     </legend>
                                     <xar:set name="propname">$page['name'] . '_modify'</xar:set>
-                                    <xar:data-input type="access" name="$propname" value="$page['info']['modify_access']" />
+                                    <xar:data-input type="access" name="$propname" value="$page['info']['modify_access']"/>
                                 </fieldset>
                                 <fieldset class="formelements xar-norm">
                                     <legend>
                                         Page Delete Access
                                     </legend>
                                     <xar:set name="propname">$page['name'] . '_delete'</xar:set>
-                                    <xar:data-input type="access" name="$propname" value="$page['info']['delete_access']" />
+                                    <xar:data-input type="access" name="$propname" value="$page['info']['delete_access']"/>
                                 </fieldset>
                             </xar:if>
                         </xar:if>
@@ -337,10 +337,10 @@
                         <fieldset class="formelements xar-norm">
                             <div>
                                 <xar:if condition="$func eq 'modify'">
-                                    <input type="submit" value="#xarML('Save')#" />
+                                    <input type="submit" value="#xarML('Save')#"/>
                                     <input type="hidden" name="creating" id="creating" value="false"/>
                                 <xar:else />
-                                    <input type="submit" value="#xarML('Create')#" />
+                                    <input type="submit" value="#xarML('Create')#"/>
                                     <input type="hidden" name="creating" id="creating" value="true"/>
                                 </xar:if>
                                 <xar:if condition="!empty($return_url)">
@@ -350,7 +350,7 @@
 
                             <xar:if condition="$func eq 'create'">
                                 <div>
-                                    <input type="checkbox" name="batch" id="batch" value="#$batch#" />
+                                    <input type="checkbox" name="batch" id="batch" value="#$batch#"/>
                                     <label for="batch">Create in a batch</label>
                                 </div>
                             </xar:if>

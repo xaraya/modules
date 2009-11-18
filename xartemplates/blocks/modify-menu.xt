@@ -3,7 +3,7 @@
     <div>
         <div>
             <xar:set name="id">'multi_homed_' . $bid</xar:set>
-            <xar:data-input type="checkbox" name="multi_homed" id="$id" checked="$multi_homed" />
+            <xar:data-input type="checkbox" name="multi_homed" id="$id" checked="$multi_homed"/>
             <label for="multi_homed_#$bid#">Hide the root page</label>
         </div>
 
@@ -57,7 +57,7 @@
             <!-- Existing root pids to removed -->
             <xar:loop name="$root_pids">
                 <div>
-                    <input name="remove_root_pid[]" type="checkbox" value="#$loop:key#" id="remove_root_pid_#$bid#_#$loop:key#" />
+                    <input name="remove_root_pid[]" type="checkbox" value="#$loop:key#" id="remove_root_pid_#$bid#_#$loop:key#"/>
                     <label for="remove_root_pid_#$bid#_#$loop:key#">
                         <xar:ml>
                             <xar:mlstring>Remove #(1)</xar:mlstring>
@@ -71,18 +71,18 @@
         <div>
             <label for="max_level_#$bid#">Maximum levels displayed</label>
             <xar:if condition="empty($max_level)">
-                <input type="text" name="max_level" id="max_level_#$bid#" size="10" maxlength="3" value="" />
+                <input type="text" name="max_level" id="max_level_#$bid#" size="10" maxlength="3" value=""/>
             <xar:else />
-                <input type="text" name="max_level" id="max_level_#$bid#" size="10" maxlength="3" value="#$max_level#" />
+                <input type="text" name="max_level" id="max_level_#$bid#" size="10" maxlength="3" value="#$max_level#"/>
             </xar:if>
         </div>
 
         <div>
             <label for="start_level_#$bid#">Hide menu below this level</label>
             <xar:if condition="empty($start_level)">
-                <input type="text" name="start_level" id="start_level_#$bid#" size="10" maxlength="3" value="" />
+                <input type="text" name="start_level" id="start_level_#$bid#" size="10" maxlength="3" value=""/>
             <xar:else />
-                <input type="text" name="start_level" id="start_level_#$bid#" size="10" maxlength="3" value="#$start_level#" />
+                <input type="text" name="start_level" id="start_level_#$bid#" size="10" maxlength="3" value="#$start_level#"/>
             </xar:if>
         </div>
 
@@ -105,7 +105,7 @@
             <!-- Existing pruning pids to removed -->
             <xar:loop name="$prune_pids">
                 <div>
-                    <input name="remove_prune_pid[]" type="checkbox" value="#$loop:key#" id="remove_prune_pid_#$bid#_#$loop:key#" />
+                    <input name="remove_prune_pid[]" type="checkbox" value="#$loop:key#" id="remove_prune_pid_#$bid#_#$loop:key#"/>
                     <label for="remove_prunt_pid_#$bid#_#$loop:key#">
                         <xar:ml>
                             <xar:mlstring>Remove #(1)</xar:mlstring>

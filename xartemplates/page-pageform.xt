@@ -41,18 +41,18 @@
         <!--  could use enctype='application/x-www-form-urlencoded' if we know there's no uploads. See other templates for examples, might need to call xarVarGetCached('Hooks.dynamicdata','withupload')   -->
         <form method="post" name="post" id="post" action="#$pageform['action_url']#" enctype='multipart/form-data'>
             <xar:if condition="!empty($current_page.dd.formlayout)">
-                <xar:data-form object="$pageform['object']" layout="$current_page['dd']['formlayout']" />
+                <xar:data-form object="$pageform['object']" layout="$current_page['dd']['formlayout']"/>
             <xar:else />
-                <xar:data-form object="$pageform['object']" />
+                <xar:data-form object="$pageform['object']"/>
             </xar:if>
             <xar:if condition="!empty($pageform['pf'])">
-                <input type="hidden" name="pf" value="#$pageform['pf']#" />
+                <input type="hidden" name="pf" value="#$pageform['pf']#"/>
             </xar:if>
             <xar:set name="submitlabel">"Submit"</xar:set>
             <xar:if condition="!empty($current_page.dd.submit_label)">
                 <xar:set name="submitlabel">$current_page['dd']['submit_label']</xar:set>
             </xar:if>
-            <div style="text-align:center; padding:1em"><input type="submit" value="#$submitlabel#" /></div>
+            <div style="text-align:center; padding:1em"><input type="submit" value="#$submitlabel#"/></div>
         </form>
 
         <div style="text-align:center">
