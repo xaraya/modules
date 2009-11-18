@@ -24,7 +24,7 @@ function categories_userapi_getlinkages($args)
     $xartable = xarDB::getTables();
     sys::import('xaraya.structures.query');
     $q = new Query('SELECT', $xartable['categories_linkage']);
-    if (!empty($module)) $q->eq('module_id',xarMod::getRegId($module));
+    if (!empty($module)) $q->eq('module_id',xarMod::getID($module));
     if (!empty($itemtype)) $q->eq('itemtype',$itemtype);
 
     if (!empty($items)) {

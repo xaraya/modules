@@ -7,8 +7,8 @@
         <xar:if condition="!is_array($categories)">
             <xar:set name="categories">array($categories)</xar:set>
         </xar:if>
-        <xar:data-input type="categories" name="hookedcategories" module="$module" itemtype="$itemtype" itemid="$itemid" firstline="$firstline" categories="$categories" />
+        <xar:data-input type="categories" name="hookedcategories" module="$module" itemtype="$itemtype" itemid="$itemid" firstline="$firstline" categories="$categories"/>
     <xar:else/>
-        <xar:data-input type="categories" name="hookedcategories" module="$module" itemtype="$itemtype" itemid="$itemid" firstline="$firstline" />
+        <xar:data-input type="categories" name="hookedcategories" module="$module" itemtype="$itemtype" itemid="$itemid" firstline="$firstline"/>
     </xar:if>
 </xar:template>

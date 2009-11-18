@@ -14,10 +14,10 @@
                 Number of possible categories
             </xar:mlstring>
         </label>
-        <input type="text" name="#$name#_categories_numberofbasecats" id="#$name#_categories_numberofbasecats" size="3" maxlength="2" value="#$categories_numberofbasecats#" />
+        <input type="text" name="#$name#_categories_numberofbasecats" id="#$name#_categories_numberofbasecats" size="3" maxlength="2" value="#$categories_numberofbasecats#"/>
     </div>
-    <input type="hidden" name="#$name#_categorypicker_localmodule" value="#$categories_localmodule#" />
-    <input type="hidden" name="#$name#_categorypicker_localitemtype" value="#$categories_localitemtype#" />
+    <input type="hidden" name="#$name#_categorypicker_localmodule" value="#$categories_localmodule#"/>
+    <input type="hidden" name="#$name#_categorypicker_localitemtype" value="#$categories_localitemtype#"/>
     <xar:foreach in="$items" value="$item">
         <div class="xar-form-input-wrapper">
             <xar:set name="cidname">$name . "_categories_basecatcid[" . $item['num'] ."]"</xar:set>
@@ -34,11 +34,11 @@
              </label>
             <xar:set name="categories">array($item['category_id'])</xar:set>
 <!-- FIXME: this generates a bunch of hidden fields too -->
-            <xar:data-input type="categories" name="$cidname" module="$categories_localmodule" itemtype="$item['itemtype']" categories="$categories" bases="single" onchange="$evt_change" style="$style" />
+            <xar:data-input type="categories" name="$cidname" module="$categories_localmodule" itemtype="$item['itemtype']" categories="$categories" bases="single" onchange="$evt_change" style="$style"/>
             &#160;Itemtype:
-            <input type="text" name="#$name#_categories_basecatitemtype[#$item['num']#]" value="#$item['itemtype']#" style="width: 50px" />
+            <input type="text" name="#$name#_categories_basecatitemtype[#$item['num']#]" value="#$item['itemtype']#" style="width: 50px"/>
             &#160;Name:
-            <input type="text" name="#$name#_categories_basecatname[#$item['num']#]" value="#$item['name']#" />
+            <input type="text" name="#$name#_categories_basecatname[#$item['num']#]" value="#$item['name']#"/>
         </div>
     </xar:foreach>
 </xar:template>

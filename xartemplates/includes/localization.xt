@@ -9,14 +9,14 @@
         </xar:if>
     </xar:if>
     <xar:if condition="count($categories) eq 0">
-        <input type="hidden" name="moving[#$cid#]" id="moving_#$cid#" value="false" />
-        <input type="hidden" name="refcid[#$cid#]" id="refcid_#$cid#" value="#$refcid#" />
-        <input type="hidden" name="position[#$cid#]" id="position_#$cid#" value="#$position#" />
-        <input type="hidden" name="catexists[#$cid#]" id="catexists_#$cid#" value="false" />
+        <input type="hidden" name="moving[#$cid#]" id="moving_#$cid#" value="false"/>
+        <input type="hidden" name="refcid[#$cid#]" id="refcid_#$cid#" value="#$refcid#"/>
+        <input type="hidden" name="position[#$cid#]" id="position_#$cid#" value="#$position#"/>
+        <input type="hidden" name="catexists[#$cid#]" id="catexists_#$cid#" value="false"/>
         <xar:else />
         <div class="xar-form-input-wrapper">
-            <input type="hidden" name="moving[#$cid#]" id="moving_#$cid#" value="true" />
-            <input type="hidden" name="catexists[#$cid#]" id="catexists_#$cid#" value="true" />
+            <input type="hidden" name="moving[#$cid#]" id="moving_#$cid#" value="true"/>
+            <input type="hidden" name="catexists[#$cid#]" id="catexists_#$cid#" value="true"/>
             <label for="refcid[#$cid#]" class="xar-form-label help" title="#xarML('Category relationship hiearchy.')#">
                 <xar:mlstring>In relation to this category</xar:mlstring>
             </label>
@@ -25,7 +25,7 @@
                     <xar:if condition="$categories[$i]['left'] eq $category['left']-1">
                         <xar:set name="position">4</xar:set>
                         <option value="#$categories[$i]['cid']#" selected="selected">#$categories[$i]['slash_separated']#</option>
-                        <xar:elseif condition="$categories[$i]['right'] eq $category['left']-1" />
+                        <xar:elseif condition="$categories[$i]['right'] eq $category['left']-1"/>
                         <xar:set name="position">2</xar:set>
                         <option value="#$categories[$i]['cid']#" selected="selected">#$categories[$i]['slash_separated']#</option>
                         <xar:else />
@@ -49,7 +49,7 @@
             </xar:set>
             <xar:set name="ddname">'position[' . $cid . ']'</xar:set>
             <xar:set name="ddid">'position_' . $cid</xar:set>
-            <xar:data-input type="dropdown" name="$ddname" id="$ddid" value="$position" options="$options" />
+            <xar:data-input type="dropdown" name="$ddname" id="$ddid" value="$position" options="$options"/>
             <div style="clear: both;">&#160;</div>
         </div>
     </xar:if>

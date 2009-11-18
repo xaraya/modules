@@ -11,12 +11,12 @@
     <xar:if condition="!empty($firstline)">
         <xar:foreach in="$items" value="$item">
             <xar:set name="cidname">$name."[" . $item['num'] . "]"</xar:set>
-            <xar:data-input type="categories" name="$cidname" basecid="$item['category_id']" value="$item['value']" firstline="$firstline" onchange="$evt_change" style="$style" />
+            <xar:data-input type="categories" name="$cidname" basecid="$item['category_id']" value="$item['value']" firstline="$firstline" onchange="$evt_change" style="$style"/>
         </xar:foreach>
     <xar:else/>
         <xar:foreach in="$items" value="$item">
             <xar:set name="cidname">$name."[" . $item['num'] . "]"</xar:set>
-            <xar:data-input type="categories" name="$cidname" basecid="$item['category_id']" value="$item['value']" onchange="$evt_change" style="$style" />
+            <xar:data-input type="categories" name="$cidname" basecid="$item['category_id']" value="$item['value']" onchange="$evt_change" style="$style"/>
         </xar:foreach>
     </xar:if>
 </xar:template>

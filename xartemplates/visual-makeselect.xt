@@ -16,7 +16,7 @@
         <xar:set name="javascript">''</xar:set>
     </xar:if>
 
-    <select size="#$sizestring#" name="#$name_prefix#cids[]" multiple="#$multiplestring#" onchange="#$javascript#" >
+    <select size="#$sizestring#" name="#$name_prefix#cids[]" multiple="#$multiplestring#" onchange="#$javascript#">
     <xar:if condition="!empty($select_itself)">
         <option value=""><xar:mlstring>Select :</xar:mlstring></option>
     </xar:if>
@@ -39,7 +39,7 @@
         <xar:set name="lastindent">$category['indentation']</xar:set>
         <xar:if condition="(isset($cid)) and ($id eq $cid)">
             <xar:if condition="!empty($select_itself)">
-                <xar:if condition="!empty($values[$id])" >
+                <xar:if condition="!empty($values[$id])">
                     <option value="#$id#" selected="selected">#$indent##$name#</option>
                 <xar:else />
                     <option value="#$id#">#$indent##$name#</option>
@@ -50,7 +50,7 @@
                 </xar:if>
                 <option value="">#$name#</option>
             </xar:if>
-        <xar:elseif condition="(isset($values)) and (isset($values[$id]))and (($multiple eq true) or (!$already_passed)) and ($values[$id] gt 0)" />
+        <xar:elseif condition="(isset($values)) and (isset($values[$id]))and (($multiple eq true) or (!$already_passed)) and ($values[$id] gt 0)"/>
             <option value="#$id#" selected="selected">#$indent##$name#</option>
             <xar:set name="already_passed">true</xar:set>
     <!-- this is used to inform the calling function that we saw this category, when several select boxes are used -->

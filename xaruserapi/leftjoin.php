@@ -21,11 +21,11 @@
  * @param $args['cidtree'] get items in cid or anywhere below it (= slower than cids, usually)
  *
  * @returns array
- * @return array('table' => 'nuke_categories_linkage',
- *               'field' => 'nuke_categories_linkage.item_id',
- *               'where' => 'nuke_categories_linkage.module_id = ...
- *                           AND nuke_categories_linkage.id IN (...)',
- *               'category_id'   => 'nuke_categories_linkage.category_id',
+ * @return array('table' => 'xar_categories_linkage',
+ *               'field' => 'xar_categories_linkage.item_id',
+ *               'where' => 'xar_categories_linkage.module_id = ...
+ *                           AND xar_categories_linkage.id IN (...)',
+ *               'category_id'   => 'xar_categories_linkage.category_id',
  *               ...
  *               'moduleid' => 'nuke_categories_linkage.module_id')
  * @todo think about qstr() and bindvars here, this function return a string, so it's a bit harder
@@ -165,7 +165,8 @@ function categories_userapi_leftjoin($args)
     // Specify the WHERE part
     $where = array();
     if (!empty($modid) && is_numeric($modid)) {
-        $where[] = $leftjoin['module_id'] . ' = ' . $modid;
+        // FIXME: needs a better soluton
+        $where[] = $leftjoin['module_id'] . ' = ' . xarMod::getID(xarMod::getName($modid));
     }
     // Note : do not default to 0 here, because we want to be able to do things across item types
     if (isset($itemtype)) {

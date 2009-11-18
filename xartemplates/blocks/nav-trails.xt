@@ -40,7 +40,7 @@
     <table border="0" cellpadding="2" cellspacing="0" width="100%">
     <tr>
         <td align="center" valign="top">
-            <img src="#$catimage#" border="0" alt="#$catname#" />
+            <img src="#$catimage#" border="0" alt="#$catname#"/>
         </td>
     </tr>
     </table>
@@ -54,7 +54,7 @@
                 <xar:while condition="1">
                     <tr>
                         <td align="center" valign="middle">
-                            <a href="#$caticons[$i]['catlink']#"><img src="#$caticons[$i]['catimage']#" border="0" alt="#$caticons[$i]['catlabel']#" /><br />#$caticons[$i]['catlabel']#</a>
+                            <a href="#$caticons[$i]['catlink']#"><img src="#$caticons[$i]['catimage']#" border="0" alt="#$caticons[$i]['catlabel']#"/><br />#$caticons[$i]['catlabel']#</a>
                             <xar:if condition="!empty($caticons[$i]['catcount'])">
                                 (#$caticons[$i]['catcount']#)
                             </xar:if>

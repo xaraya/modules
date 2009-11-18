@@ -3,16 +3,16 @@
     <xar:set name="filename">
         'navigation-' . $propertytemplate;
     </xar:set>
-    <xar:template file="$filename" />
+    <xar:template file="$filename"/>
 <!--
     <xar:if condition="$layout eq 'prevnext'">
-      <xar:template file="navigation-prevnext" />
-    <xar:elseif condition="$layout eq 'trails'" />
-      <xar:template file="navigation-trails" />
-    <xar:elseif condition="$layout eq 'tree'" />
-      <xar:template file="navigation-tree" />
+      <xar:template file="navigation-prevnext"/>
+    <xar:elseif condition="$layout eq 'trails'"/>
+      <xar:template file="navigation-trails"/>
+    <xar:elseif condition="$layout eq 'tree'"/>
+      <xar:template file="navigation-tree"/>
     <xar:else />
-      <xar:template file="navigation-tree" />
+      <xar:template file="navigation-tree"/>
     </xar:if>
 -->
 </xar:template>

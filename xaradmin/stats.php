@@ -104,20 +104,14 @@ function categories_admin_stats()
                                                     'itemtype' => $itemtype,
                                                     'catid' => $catid));
         }
-        if ($numstats < $data['numlinks']) {
-            sys::import('xaraya.pager');
-            $data['pager'] = xarTplGetPager($startnum,
-                                            $data['numlinks'],
-                                            xarModURL('categories','admin','stats',
-                                                      array('modid' => $modid,
-                                                            'itemtype' => $itemtype,
-                                                            'catid' => $catid,
-                                                            'sort' => $sort,
-                                                            'startnum' => '%%')),
-                                            $numstats);
-        } else {
-            $data['pager'] = '';
-        }
+        $data['url'] = xarModURL('categories','admin','stats',
+                                              array('modid' => $modid,
+                                                    'itemtype' => $itemtype,
+                                                    'catid' => $catid,
+                                                    'sort' => $sort,
+                                                    'startnum' => '%%'));
+        $data['url'] = $numstats;
+
         $data['modid'] = $modid;
         $getitems = xarMod::apiFunc('categories','user','getlinks',
                                   array('modid' => $modid,

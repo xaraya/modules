@@ -15,7 +15,7 @@
             <xar:set name="id">
                 "layout" . $blockid
             </xar:set>
-            <xar:data-input type="dropdown" name="layout" id="$id" options="$options" value="$layout" />
+            <xar:data-input type="dropdown" name="layout" id="$id" options="$options" value="$layout"/>
          </span>
     </div>
 
@@ -52,9 +52,9 @@
         </span>
         <span style="float: right; width: 78%; text-align: left;">
         <xar:if condition="!empty($showempty)">
-            <input type="checkbox" name="showempty" id="showempty#$blockid#" value="1" checked="checked" />
+            <input type="checkbox" name="showempty" id="showempty#$blockid#" value="1" checked="checked"/>
         <xar:else />
-            <input type="checkbox" name="showempty" id="showempty#$blockid#" value="1" />
+            <input type="checkbox" name="showempty" id="showempty#$blockid#" value="1"/>
         </xar:if>
         </span>
     </div>
@@ -65,9 +65,9 @@
         </span>
         <span style="float: right; width: 78%; text-align: left;">
         <xar:if condition="!empty($dynamictitle)">
-            <input type="checkbox" name="dynamictitle" id="dynamictitle#$blockid#" value="1" checked="checked" />
+            <input type="checkbox" name="dynamictitle" id="dynamictitle#$blockid#" value="1" checked="checked"/>
         <xar:else />
-            <input type="checkbox" name="dynamictitle" id="dynamictitle#$blockid#" value="1" />
+            <input type="checkbox" name="dynamictitle" id="dynamictitle#$blockid#" value="1"/>
         </xar:if>
         </span>
     </div>
@@ -87,7 +87,7 @@
             <xar:set name="id1">
                 "showcatcount" . $blockid
             </xar:set>
-            <xar:data-input type="dropdown" name="showcatcount" id="$id1" options="$options" value="$showcatcount" />
+            <xar:data-input type="dropdown" name="showcatcount" id="$id1" options="$options" value="$showcatcount"/>
         </span>
     </div>
 
@@ -106,7 +106,7 @@
             <xar:set name="id2">
                 "showchildren" . $blockid
             </xar:set>
-            <xar:data-input type="dropdown" name="showchildren" id="$id2" options="$options" value="$showchildren" />
+            <xar:data-input type="dropdown" name="showchildren" id="$id2" options="$options" value="$showchildren"/>
         </span>
     </div>
 </xar:template>

@@ -11,8 +11,8 @@
     <fieldset style="border: none">
     <xar:if condition="count($categories) eq 0">
         No categories defined yet
-        <input type="hidden" name="#$name#_refcid" id="#$name#_refcid" value="#$refcid#" />
-        <input type="hidden" name="#$name#_position" id="#$name#_position" value="#$position#" />
+        <input type="hidden" name="#$name#_refcid" id="#$name#_refcid" value="#$refcid#"/>
+        <input type="hidden" name="#$name#_position" id="#$name#_position" value="#$position#"/>
     <xar:else />
         <div class="xar-form-input-wrapper">
             <label for="refcid" class="xar-form-label help" title="#xarML('Category relationship hiearchy.')#">
@@ -23,7 +23,7 @@
                     <xar:if condition="$categories[$i]['left'] eq $category['left_id']-1">
                         <xar:set name="position">4</xar:set>
                         <option value="#$categories[$i]['cid']#" selected="selected">#$categories[$i]['slash_separated']#</option>
-                        <xar:elseif condition="$categories[$i]['right'] eq $category['left_id']-1" />
+                        <xar:elseif condition="$categories[$i]['right'] eq $category['left_id']-1"/>
                         <xar:set name="position">2</xar:set>
                         <option value="#$categories[$i]['cid']#" selected="selected">#$categories[$i]['slash_separated']#</option>
                         <xar:else />
@@ -47,7 +47,7 @@
             </xar:set>
             <xar:set name="ddname">$name . '_position'</xar:set>
             <xar:set name="ddid">$name . '_position'</xar:set>
-            <xar:data-input type="dropdown" name="$ddname" id="$ddid" value="$position" options="$options" />
+            <xar:data-input type="dropdown" name="$ddname" id="$ddid" value="$position" options="$options"/>
             <div style="clear: both;">&#160;</div>
         </div>
     </xar:if>

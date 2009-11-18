@@ -44,7 +44,7 @@
         <table border="0" width="95%">
             <tr>
                 <td align="center" valign="top">
-                    <img src="#$catimage#" border="0" alt="#$catname#" />
+                    <img src="#$catimage#" border="0" alt="#$catname#"/>
                 </td>
             </tr>
         </table>
@@ -66,7 +66,7 @@
                 <xar:loop id="icons" name="$caticons">
             <tr>
                     <td align="center" valign="middle">
-                        <a href="#$loop:icons:item['catlink']#"><img src="#$loop:icons:item['catimage']#" border="0" alt="#$loop:icons:item['catlabel']#" /><br />#$loop:icons:item['catlabel']#</a>
+                        <a href="#$loop:icons:item['catlink']#"><img src="#$loop:icons:item['catimage']#" border="0" alt="#$loop:icons:item['catlabel']#"/><br />#$loop:icons:item['catlabel']#</a>
                         <xar:if condition="!empty($loop:icons:item['catcount'])">
                             (#$loop:icons:item['catcount']#)
                         </xar:if>

@@ -10,11 +10,11 @@
     <div style="margin: auto;">
 
     <form method="post" action="&xar-modurl-categories-admin-privileges;">
-        <input type="hidden" name="extpid" id="extpid" value="#$extpid#" />
-        <input type="hidden" name="extname" id="extname" value="#$extname#" />
-        <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#" />
-        <input type="hidden" name="extmodule" id="extmodule" value="#$extmodule#" />
-        <input type="hidden" name="extcomponent" id="extcomponent" value="#$extcomponent#" />
+        <input type="hidden" name="extpid" id="extpid" value="#$extpid#"/>
+        <input type="hidden" name="extname" id="extname" value="#$extname#"/>
+        <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#"/>
+        <input type="hidden" name="extmodule" id="extmodule" value="#$extmodule#"/>
+        <input type="hidden" name="extcomponent" id="extcomponent" value="#$extcomponent#"/>
 
     <table border="1" cellpadding="8" cellspacing="0">
 
@@ -53,7 +53,7 @@
     <tr><th valign="top" align="right">
     <xar:mlstring>Item ID</xar:mlstring>
     </th><td>
-        <input type="text" name="itemid" id="itemid" value="#$itemid#" size="10" onchange="submit()" />
+        <input type="text" name="itemid" id="itemid" value="#$itemid#" size="10" onchange="submit()"/>
         <!-- TODO: show dropdown box for all relevant item ids (if not too many) -->
     </td></tr>
 
@@ -65,9 +65,9 @@
         </th>
         <td>
             <xar:if condition="isset($modulename)">
-                <xar:data-input type="categories" name="privcategories" value="$cids" module="$modulename" layout="vertical" returnitself="true" />
+                <xar:data-input type="categories" name="privcategories" value="$cids" module="$modulename" layout="vertical" returnitself="true"/>
             <xar:else />
-                <xar:data-input type="categories" name="privcategories" value="$cids" bases="All" layout="vertical" returnitself="true" />
+                <xar:data-input type="categories" name="privcategories" value="$cids" bases="All" layout="vertical" returnitself="true"/>
            </xar:if>
         </td>
     </tr>
@@ -110,7 +110,7 @@
     </td></tr>
 
     <tr><td colspan="2" align="center">
-        <input type="submit" value="#$refreshlabel#" />
+        <input type="submit" value="#$refreshlabel#"/>
     </td></tr>
     </table>
 
@@ -122,7 +122,7 @@
     <br /><hr /><br />
     (Instance Definition #$extinstance#)
     <br /><br />
-    <input type="submit" name="apply" value="#$applylabel#" />
+    <input type="submit" name="apply" value="#$applylabel#"/>
     </form>
     <br />
 

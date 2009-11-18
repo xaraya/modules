@@ -4,14 +4,14 @@
     <div class="xar-mod-head">
         <span class="xar-mod-title">
             <xar:if condition="xarModVars::get('categories','use_module_alias')">
-                <xar:var scope="module" module="categories" name="module_alias_name" />
+                <xar:var scope="module" module="categories" name="module_alias_name"/>
             <xar:else />
                 <xar:mlstring>Categories Administration</xar:mlstring>
             </xar:if>
         </span>
     </div>
     <div class="xar-mod-body">
-       <xar:template type="module" file="admin-menu" />
+       <xar:template type="module" file="admin-menu"/>
         <h2>
             <xar:mlstring>
                 Modify Categories Configuration
@@ -43,12 +43,12 @@
                                 List items per page:
                             </xar:mlstring>
                         </label>
-                        <xar:set name="value"><xar:var scope="module" module="categories" name="items_per_page" /></xar:set>
-                        <input type="text" name="items_per_page" id="items_per_page" value="#$value#" maxlength="3" class="xar-form-textshort" />
+                        <xar:set name="value"><xar:var scope="module" module="categories" name="items_per_page"/></xar:set>
+                        <input type="text" name="items_per_page" id="items_per_page" value="#$value#" maxlength="3" class="xar-form-textshort"/>
                     </div>
                     <div class="xar-form-input-wrapper-after">
                         <xar:set name="checked">xarModVars::get('categories','enable_short_urls')</xar:set>
-                        <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$checked" />
+                        <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$checked"/>
                         <label for="shorturls" title="#xarML('Enable short URLs for Categories module')#">
                             <xar:mlstring>
                                 Enable Short URLs
@@ -62,7 +62,7 @@
                             </xar:mlstring>
                         </label>
                         <xar:set name="checked">xarModVars::get('categories','use_module_alias')</xar:set>
-                        <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked" />
+                        <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked"/>
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="module_alias_name" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
@@ -70,8 +70,8 @@
                                     Module Alias Name
                                 </xar:mlstring>
                         </label>
-                        <xar:set name="value"><xar:var scope="module" module="categories" name="module_alias_name" /></xar:set>
-                        <input type="text" name="module_alias_name" id="module_alias_name" value="#$value#" size="32" maxlength="100" />
+                        <xar:set name="value"><xar:var scope="module" module="categories" name="module_alias_name"/></xar:set>
+                        <input type="text" name="module_alias_name" id="module_alias_name" value="#$value#" size="32" maxlength="100"/>
                     </div>
                 </fieldset>
             <xar:else />
@@ -91,16 +91,16 @@
                         Defaults
                     </xar:mlstring>
                 </legend>
-                <xar:template file="defaults" />
+                <xar:template file="defaults"/>
             </fieldset>
             <fieldset>
                 <div class="xar-form-input-wrapper-after">
-                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                    <input type="hidden" name="phase" id="phase" value="update" />
-                    <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                    <input type="hidden" name="tabmodule" id="tabmodule" value="#$tabmodule#" />
+                    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                    <input type="hidden" name="phase" id="phase" value="update"/>
+                    <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+                    <input type="hidden" name="tabmodule" id="tabmodule" value="#$tabmodule#"/>
                     <xar:var name="label">Update</xar:var>
-                    <xar:button type="submit" label="$label" />
+                    <xar:button type="submit" label="$label"/>
                 </div>
             </fieldset>
         </form>
