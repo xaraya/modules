@@ -147,8 +147,8 @@
             return false;
         }
 
-        xarModAPIFunc('modules', 'admin', 'enablehooks',
-            array('callerModName' => 'mailer', 'hookModName' => 'mailer'));
+   /*     xarModAPIFunc('modules', 'admin', 'enablehooks',
+            array('callerModName' => 'mailer', 'hookModName' => 'mailer'));*/
 
         return true;
     }
