@@ -17,6 +17,6 @@ no tabs
 // For Sandbox bug see http://bugs.xaraya.com/show_bug.cgi?id=6201
 
 // still even more sandbox testing... continuing... more and more
-// are we done yet? nope
+// are we done yet? nope. still no
 
 ?>
