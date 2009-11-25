@@ -1,5 +1,8 @@
 <?PHP
 /*
+
+ * @copyright (C) 2002-2009 The Digital Development Foundation
+
 added change
 debuggin
 dangerous
@@ -9,8 +12,10 @@ test 1
 no tabs
 */
 
-test test
+//test test
 
 // For Sandbox bug see http://bugs.xaraya.com/show_bug.cgi?id=6201
+
+// sandbox testing
 
 ?>
