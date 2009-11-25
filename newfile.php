@@ -16,6 +16,6 @@ no tabs
 
 // For Sandbox bug see http://bugs.xaraya.com/show_bug.cgi?id=6201
 
-// sandbox testing
+// more sandbox testing
 
 ?>
