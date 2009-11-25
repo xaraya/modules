@@ -183,4 +183,11 @@ Add missing topic sort options to admin forum options
 Add topic sort options to user forum views
 Add admin config option to disable sort options in forum views
 0.8.0
+Add support for crispSubs subscription module
+remove incorrect default value declaration from posts table creation
+Make sure create topic hook works when shorturls are off
+admin view: Add links to create a forum in a specific category in listings
+ereg -> preg_match for php530
+Fix no privileges error being shown in user main when no forums have yet been created
+0.8.5
 **** Current Version ****
