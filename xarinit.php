@@ -603,6 +603,13 @@ function crispbb_upgrade($oldversion)
             // Add admin config option to disable sort options in forum views
             xarModSetVar('crispbb', 'showsortbox', true);
         case '0.8.0':
+            // Add support for crispSubs subscription module
+            // remove incorrect default value declaration from posts table creation
+            // Make sure create topic hook works when shorturls are off
+            // admin view: Add links to create a forum in a specific category in listings
+            // ereg -> preg_match for php530
+            // Fix no privileges error being shown in user main when no forums have yet been created
+        case '0.8.5':
         /* current version */
         /* create aruba 1.2.0 branch */
         break;

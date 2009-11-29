@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'crispbb';
 $modversion['id']             = '970';
-$modversion['version']        = '0.8.0';
+$modversion['version']        = '0.8.5';
 $modversion['displayname']    = 'crispBB';
 $modversion['description']    = 'crispBB Forum Module';
 $modversion['credits']        = 'xardocs/credits.txt';
