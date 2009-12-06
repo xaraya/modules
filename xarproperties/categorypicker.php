@@ -50,7 +50,7 @@ class CategoryPickerProperty extends DataProperty
         // Remove all the entries for this module and itemtype
         sys::import('xaraya.structures.query');
         $q = new Query('DELETE', $xartable['categories_basecategories']);
-        $q->eq('module_id',xarMod::getRegId($localmodule));
+        $q->eq('module_id',xarMod::getID($localmodule));
     // CHECKME: if we have settings for several itemtypes, don't delete/save them all at once (0 != 1 ... N)
         if (isset($localitemtype)) {
             $q->eq('itemtype',$localitemtype);
@@ -65,7 +65,7 @@ class CategoryPickerProperty extends DataProperty
             $thisitemtype = isset($baseitemtype[$i]) ? $baseitemtype[$i] : $localitemtype;
             $thisbasecat = xarMod::apiFunc('categories','user','getcatbase',array('name' => $thisname, 'module' => $localmodule, 'itemtype' => $thisitemtype));
             $q = new Query('INSERT', $xartable['categories_basecategories']);
-            $q->addfield('module_id',xarMod::getRegId($localmodule));
+            $q->addfield('module_id',xarMod::getID($localmodule));
             $q->addfield('itemtype',$thisitemtype);
             $q->addfield('name',$thisname);
             $q->addfield('category_id',$thiscid);

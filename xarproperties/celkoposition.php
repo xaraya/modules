@@ -252,12 +252,12 @@ class CelkoPositionProperty extends DataProperty
         /* Opening space for the new node */
         $SQLquery[1] = "UPDATE " . $this->initialization_itemstable .
                         " SET " . $this->initialization_celkoright_id . " = " . $this->initialization_celkoright_id . " + 2
-                        WHERE " . $this->initialization_celkoright_id . " >= ?";
+                        WHERE " . $this->initialization_celkoright_id . ">= ?";
         $bindvars[1][] = $point_of_insertion;
 
         $SQLquery[2] = "UPDATE " . $this->initialization_itemstable .
                         " SET " . $this->initialization_celkoleft_id . " = " . $this->initialization_celkoleft_id . " + 2
-                        WHERE " . $this->initialization_celkoleft_id . " >= ?";
+                        WHERE " . $this->initialization_celkoleft_id . ">= ?";
         $bindvars[2][] = $point_of_insertion;
         // Both can be transformed into just one SQL-statement, but i dont know if every database is SQL-92 compliant(?)
 
@@ -377,7 +377,7 @@ class CelkoPositionProperty extends DataProperty
            }
            //$SQLquery .= " AND P1.left_id
            //               NOT BETWEEN ? AND ? ";
-           $SQLquery .= " AND (P1." . $this->initialization_celkoleft_id . " < ? OR P1." . $this->initialization_celkoleft_id . " > ?)";
+           $SQLquery .= " AND (P1." . $this->initialization_celkoleft_id . " < ? OR P1." . $this->initialization_celkoleft_id . "> ?)";
            $bindvars[] = $ecat['left_id']; $bindvars[] = $ecat['right_id'];
         }
 

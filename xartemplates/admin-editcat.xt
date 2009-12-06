@@ -7,7 +7,7 @@
         </span>
     </div>
     <div class="xar-mod-body">
-        <xar:template type="module" file="admin-menu" />
+        <xar:template type="module" file="admin-menu"/>
        <h2>
             <xar:if condition="$func eq 'modify'">
                 <xar:mlstring>Modify Category</xar:mlstring>
@@ -16,7 +16,7 @@
             </xar:if>
         </h2>
         <form action="#xarModURL('categories','admin','updatecat',array())#" method="post" enctype="application/x-www-form-urlencoded">
-            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
             <xar:for iter="$i++" start="$i=0" test="$i lt $repeat">
                 <fieldset class="xar-norm">
                     <legend>
@@ -24,11 +24,11 @@
                         <xar:mlstring>Category</xar:mlstring>#$i+1#</strong>
                     </legend>
                     <div class="xar-form-input-wrapper">
-                        <input type="hidden" name="cids[]" id="cids[]" value="#$cid#" />
+                        <input type="hidden" name="cids[]" id="cids[]" value="#$cid#"/>
                         <label for="name[#$cid#]" class="xar-form-label help" title="#xarML('The name of the category.')#">
                             <xar:mlstring>Name</xar:mlstring>
                         </label>
-                        <input class="xar-form-textlong" type="text" name="name[#$cid#]" id="name[#$cid#]" value="#$category['name']#" size="32" maxlength="64" />
+                        <input class="xar-form-textlong" type="text" name="name[#$cid#]" id="name[#$cid#]" value="#$category['name']#" size="32" maxlength="64"/>
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="description[#$cid#]" class="xar-form-label help" title="#xarML('The description of the category.')#">
@@ -38,13 +38,13 @@
                             <textarea class="xar-form-textareasmall" name="description[#$cid#]" id="description[#$cid#]" cols="40" rows="3" maxlength="255">#$category['description']#</textarea>
                         </div>
                     </div>
-                    <xar:template file="localization" type="module" />
+                    <xar:template file="localization" type="module"/>
                     <div class="xar-form-input-wrapper">
                         <label for="image[#$cid#]" class="xar-form-label help" title="#xarML('In modules/categories/xarimages. Theme-dependent versions can then be placed in themes/[theme name]/modules/categories/images')#">
                             <xar:mlstring>Optional Image</xar:mlstring>
                         </label>
                         <xar:set name="imagename">'image[' . $cid . ']'</xar:set>
-                        <xar:data-input type="dropdown" name="$imagename" value="$category['image']" options="$imageoptions" />
+                        <xar:data-input type="dropdown" name="$imagename" value="$category['image']" options="$imageoptions"/>
                     </div>
                         <xar:if condition="!empty($hooks)">
                             <xar:foreach in="$hooks" key="$module" value="$output">#$output#</xar:foreach>
@@ -54,17 +54,17 @@
             <fieldset class="xar-norm">
                 <div class="xar-form-input-wrapper">
                     <div class="xar-form-container-after">
-                        <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
-                        <input type="hidden" name="itemtype" value="#$itemtype#" />
+                        <input type="hidden" name="return_url" id="return_url" value="#$return_url#"/>
+                        <input type="hidden" name="itemtype" value="#$itemtype#"/>
                         <xar:if condition="$func eq 'modify'">
-                            <input type="submit" value="#xarML('Update')#" />
-                            <input type="hidden" name="creating" id="creating" value="false" />
+                            <input type="submit" value="#xarML('Update')#"/>
+                            <input type="hidden" name="creating" id="creating" value="false"/>
                             <xar:else />
-                            <input type="submit" value="#xarML('Add')#" />
-                            <input type="hidden" name="creating" id="creating" value="true" />
+                            <input type="submit" value="#xarML('Add')#"/>
+                            <input type="hidden" name="creating" id="creating" value="true"/>
                         </xar:if>
                         <!--
-                            <input type="reset" value="#xarML('Reset')#" />
+                            <input type="reset" value="#xarML('Reset')#"/>
                         -->
                     </div>
                 </div>
@@ -80,15 +80,15 @@
                         <label for="repeat" class="xar-form-label help" title="#xarML('Create Categories in a Batch.')#">
                             <xar:mlstring>Create in a batch</xar:mlstring>
                         </label>
-                        <input class="xar-form-textlong" type="text" name="repeat" id="repeat" value="#$repeat#" />
+                        <input class="xar-form-textlong" type="text" name="repeat" id="repeat" value="#$repeat#"/>
                     </div>
                 </fieldset>
                 <fieldset class="xar-norm">
                     <div class="xar-form-input-wrapper">
                         <div class="xar-form-container-after">
-                            <input type="submit" name="reassign" id="reassign" size="3" value="#xarML('Reassign')#" />
+                            <input type="submit" name="reassign" id="reassign" size="3" value="#xarML('Reassign')#"/>
                             <!--
-                                <input type="reset" value="#xarML('Reset')#" />
+                                <input type="reset" value="#xarML('Reset')#"/>
                             -->
                         </div>
                     </div>

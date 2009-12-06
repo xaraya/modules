@@ -14,6 +14,7 @@
 
 //Load Table Maintainance API
 sys::import('xaraya.tableddl');
+sys::import('xaraya.structures.query');
 
 /**
  * Initialise the categories module
@@ -128,7 +129,6 @@ function categories_init()
 
     # --------------------------------------------------
 
-    sys::import('xaraya.structures.query');
     /* Don't implement for now
     $q = new Query();
     $query = "DROP TABLE IF EXISTS " . $prefix . "_categories_linkage_summary";

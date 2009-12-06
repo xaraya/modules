@@ -104,16 +104,13 @@ function categories_admin_stats()
                                                     'itemtype' => $itemtype,
                                                     'catid' => $catid));
         }
-        // pager
-        $data['startnum'] = $startnum;
-        $data['total'] = $data['numlinks'];
-        $data['urltemplate'] = xarModURL('categories','admin','stats',
-                                                      array('modid' => $modid,
-                                                            'itemtype' => $itemtype,
-                                                            'catid' => $catid,
-                                                            'sort' => $sort,
-                                                            'startnum' => '%%'));
-        $data['itemsperpage'] = $numstats;
+        $data['url'] = xarModURL('categories','admin','stats',
+                                              array('modid' => $modid,
+                                                    'itemtype' => $itemtype,
+                                                    'catid' => $catid,
+                                                    'sort' => $sort,
+                                                    'startnum' => '%%'));
+        $data['url'] = $numstats;
 
         $data['modid'] = $modid;
         $getitems = xarMod::apiFunc('categories','user','getlinks',

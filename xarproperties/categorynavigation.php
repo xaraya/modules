@@ -826,7 +826,7 @@ class CategoryNavigationProperty extends SelectProperty
                     // Possible solution : extend xarVarIsCached('Hooks.hitcount','nocount') mechanism to take
                     // into account the module ???
                         $data['cathooks'] = xarModCallHooks('item','display',$cids[0],$curcat,'categories');
-                        // saving the current cat id for use e.g. with DD tags (<xar:data-display module="categories" itemid="$catid" />)
+                        // saving the current cat id for use e.g. with DD tags (<xar:data-display module="categories" itemid="$catid"/>)
                         $data['catid'] = $curcat['cid'];
                     }
 

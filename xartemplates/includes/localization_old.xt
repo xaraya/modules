@@ -6,12 +6,12 @@
     </xar:if>
 
     <xar:if condition="count($categories) eq 0">
-        <input type="hidden" name="moving[#$cid#]" id="moving[#$cid#]" value="0" />
-        <input type="hidden" name="refcid[#$cid#]" id="refcid[#$cid#]" value="#$refcid#" />
-        <input type="hidden" name="position[#$cid#]" id="position[#$cid#]" value="#$position#" />
-        <input type="hidden" name="catexists[#$cid#]" id="catexists[#$cid#]" value="0" />
+        <input type="hidden" name="moving[#$cid#]" id="moving[#$cid#]" value="0"/>
+        <input type="hidden" name="refcid[#$cid#]" id="refcid[#$cid#]" value="#$refcid#"/>
+        <input type="hidden" name="position[#$cid#]" id="position[#$cid#]" value="#$position#"/>
+        <input type="hidden" name="catexists[#$cid#]" id="catexists[#$cid#]" value="0"/>
     <xar:else />
-        <input type="hidden" name="moving[#$cid#]" id="moving[#$cid#]" value="1" />
+        <input type="hidden" name="moving[#$cid#]" id="moving[#$cid#]" value="1"/>
         <tr align="left" valign="middle">
             <td><xar:mlstring>In relation to this category:</xar:mlstring></td>
             <td><select name="refcid[#$cid#]" id="refcid[#$cid#]">
@@ -19,7 +19,7 @@
                     <xar:if condition="$categories[$i]['left'] eq $category['left']-1">
                         <option value="#$categories[$i]['cid']#" selected="selected"/>
                         <xar:set name="position">4</xar:set>
-                    <xar:elseif condition="$categories[$i]['right'] eq $category['left']-1" />
+                    <xar:elseif condition="$categories[$i]['right'] eq $category['left']-1"/>
                         <option value="#$categories[$i]['cid']#" selected="selected"/>
                         <xar:set name="position">2</xar:set>
                     <xar:else />

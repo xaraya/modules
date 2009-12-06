@@ -8,7 +8,7 @@
                 </xar:mlstring>
             </strong>
         </legend>
-        <xar:data-input type="categorypicker" name="basecid"  module="$modname" itemtype="$itemtype" />
+        <xar:data-input type="categorypicker" name="basecid"  module="$modname" itemtype="$itemtype"/>
     </fieldset>
     <!--  TODO: Remove
     <fieldset class="formelements xar-norm">
@@ -31,7 +31,7 @@
                 <xar:mlstring>
                     Number of possible categories
                 </xar:mlstring>
-            </label> <input type="text" name="number_of_categories" id="number_of_categories" size="3" maxlength="2" value="#$numcats#" />
+            </label> <input type="text" name="number_of_categories" id="number_of_categories" size="3" maxlength="2" value="#$numcats#"/>
         </div>
         <xar:set name="cidlist">explode(',',xarModVars::get($modname,'mastercids'.$itemtype))</xar:set>
         <xar:if condition="isset($cidlist) AND !empty($cidlist)">
@@ -42,7 +42,7 @@
                             Base category for
                         </xar:mlstring>
                     </label>
-                    <xar:data-input type="categories" cid="1" name_prefix="config_" maximum_depth="4" show_edit="true" />
+                    <xar:data-input type="categories" cid="1" name_prefix="config_" maximum_depth="4" show_edit="true"/>
                 </div>
             </xar:foreach>
         </xar:if>

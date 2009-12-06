@@ -7,13 +7,13 @@
         </span>
     </div>
     <div class="xar-mod-body">
-       <xar:template type="module" file="admin-menu" />
+       <xar:template type="module" file="admin-menu"/>
         <fieldset>
             <legend>
                 Configure Categories Hooks
             </legend>
             <xar:set name="url">#xarModURL('categories','admin','hooks')#</xar:set>
-            <xar:module main="false" module="modules" type="admin" func="hooks" curhook="categories" return_url="$url" />
+            <xar:module main="false" module="modules" type="admin" func="hooks" curhook="categories" return_url="$url"/>
         </fieldset>
         <p>
             Note: this will allow you to define base categories in your module configuration, and to assign your module items to categories when you create or update them.
