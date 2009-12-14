@@ -105,10 +105,12 @@
                 $footeritemid = $object->getItem(array('itemid' => $mailitem['footer']));
                 $footer = $object->properties['body']->getValue();
             }
+        // Set redirect information. 
+            $redirectsending = xarModItemVars::get('mailer','defaultredirect', xarMod::getID($module));
+            $redirectaddress = xarModItemVars::get('mailer','defaultredirectaddress', xarMod::getID($module));
             
         // Check if there is a default redirect
-            if (xarModItemVars::get('mailer','defaultredirect', xarMod::getID($module))) {
-                $redirectaddress = xarModItemVars::get('mailer','defaultredirectaddress', xarMod::getID($module));
+            if ($redirectsending) {
                 if (empty($redirectaddress)) return 3;
                 $recipientaddress = $redirectaddress;
             }
@@ -117,6 +119,8 @@
             if ($mailitem['redirect']) {
                 if (empty($mailitem['redirect_address'])) return 4;
                 $recipientaddress = $mailitem['redirect_address'];
+                $redirectsending = $mailitem['redirect'];
+                $redirectaddress = $mailitem['redirect_address'];
             }
             
         // Get the sender's data
@@ -153,18 +157,20 @@
             $bccaddresses = isset($args['bccaddresses']) ? $args['bccaddresses'] : '';
             
         // Bundle the data into a nice array
-            $args = array('info'          => $recipientaddress,
-                          'name'          => $recipientname,
-                          'ccrecipients'  => $ccaddresses,
-                          'bccrecipients' => $bccaddresses,
-                          'subject'       => $subject,
-                          'message'       => $message,
-                          'htmlmessage'   => $message,
-                          'from'          => $senderaddress,
-                          'fromname'      => $sendername,
-                          'attachName'    => '',
-                          'attachPath'   => '',
-                          'usetemplates' => false);
+            $args = array('info'            => $recipientaddress,
+                          'name'            => $recipientname,
+                          'ccrecipients'    => $ccaddresses,
+                          'bccrecipients'   => $bccaddresses,
+                          'subject'         => $subject,
+                          'message'         => $message,
+                          'htmlmessage'     => $message,
+                          'from'            => $senderaddress,
+                          'fromname'        => $sendername,
+                          'attachName'      => '',
+                          'attachPath'      => '',
+                          'redirectsending' => $redirectsending,
+                          'redirectaddress' => $redirectaddress,
+                          'usetemplates'    => false);
 
         // Pass it to the mail module for processing
         if (($mailitem['mail_type'] == 2) || ($mailitem['mail_type'] == 4)) {
