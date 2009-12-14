@@ -3,7 +3,7 @@
  * Xaraya BBCode
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,28 +14,28 @@
 
 xarDBLoadTableMaintenanceAPI();
 
-function bbcode_init() 
+function bbcode_init()
 {
     // Set up database tables
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    
+
     // Set up module variables
     xarModSetVar('bbcode', 'dolinebreak', 0);
     xarModSetVar('bbcode', 'transformtype', 1);
 
     $table = $xartable['bbcode'];
-    $fields = array('xar_id'            => array('type' => 'integer', 
-                                                 'null' => false, 
-                                                 'increment' => true, 
+    $fields = array('xar_id'            => array('type' => 'integer',
+                                                 'null' => false,
+                                                 'increment' => true,
                                                  'primary_key' => true),
-                    'xar_tag'           => array('type' => 'varchar', 
-                                                 'size' => 100, 
-                                                 'null' => false, 
+                    'xar_tag'           => array('type' => 'varchar',
+                                                 'size' => 100,
+                                                 'null' => false,
                                                  'default' => ''),
-                    'xar_name'          => array('type' => 'varchar', 
-                                                 'size' => 200, 
-                                                 'null' => false, 
+                    'xar_name'          => array('type' => 'varchar',
+                                                 'size' => 200,
+                                                 'null' => false,
                                                  'default' => ''),
                     'xar_description'   => array('type' => 'text'),
                     'xar_transformed'   => array('type' => 'text'));
@@ -96,7 +96,7 @@ function bbcode_init()
         $msg = xarML('Could not register hook');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
-        
+
     }
     if (!xarModRegisterHook('item',
                            'formheader',
@@ -107,7 +107,7 @@ function bbcode_init()
         $msg = xarML('Could not register hook');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
-        
+
     }
     if (!xarModRegisterHook('item',
                            'formaction',
@@ -143,7 +143,7 @@ function bbcode_init()
     return true;
 }
 
-function bbcode_upgrade($oldversion) 
+function bbcode_upgrade($oldversion)
 {
     switch ($oldversion) {
         case '1.0':
@@ -177,17 +177,17 @@ function bbcode_upgrade($oldversion)
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
             $table = $xartable['bbcode'];
-            $fields = array('xar_id'            => array('type' => 'integer', 
-                                                         'null' => false, 
-                                                         'increment' => true, 
+            $fields = array('xar_id'            => array('type' => 'integer',
+                                                         'null' => false,
+                                                         'increment' => true,
                                                          'primary_key' => true),
-                            'xar_tag'           => array('type' => 'varchar', 
-                                                         'size' => 100, 
-                                                         'null' => false, 
+                            'xar_tag'           => array('type' => 'varchar',
+                                                         'size' => 100,
+                                                         'null' => false,
                                                          'default' => ''),
-                            'xar_name'          => array('type' => 'varchar', 
-                                                         'size' => 200, 
-                                                         'null' => false, 
+                            'xar_name'          => array('type' => 'varchar',
+                                                         'size' => 200,
+                                                         'null' => false,
                                                          'default' => ''),
                             'xar_description'   => array('type' => 'text'),
                             'xar_transformed'   => array('type' => 'text'));
@@ -245,12 +245,12 @@ function bbcode_upgrade($oldversion)
             //Update covers various bugfixes/FRs.
 
         case '2.0.2': //current version
-        
+
     }
     return true;
 }
 
-function bbcode_delete() 
+function bbcode_delete()
 {
     // Drop all ModVars
     xarModDelAllVars('bbcode');
