@@ -166,7 +166,7 @@ function mime_upgrade($oldversion)
             // fall through to the next upgrade
         case '0.1.0':
             mime_init();
-            include_once "modules/mime/xarincludes/mime.magic.php";
+            include_once "code/modules/mime/xarincludes/mime.magic.php";
             xarModAPIFunc('mime','user','import_mimelist', array('mimeList' => $mime_list));
             // fall through to the next upgrade
         case '0.1.1':
