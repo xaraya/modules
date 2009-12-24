@@ -370,7 +370,10 @@ function example_upgrade($oldversion)
         );
         xarDefineInstance('example', 'Block', $instances);
 
-        case '1.5.1': /* current version */
+        case '1.5.1':
+            break;
+
+        case '1.6.0': /* current version */
             /* Code to upgrade from version 1.5.0 goes here */
             /* We break out now, being at the end of the upgrade process */
             break;
