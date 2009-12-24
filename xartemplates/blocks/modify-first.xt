@@ -5,7 +5,6 @@
         <xar:mlstring>Number of Items:</xar:mlstring>
     </label>
     <input type="text" name="numitems" id="numitems#$blockid#" value="#$numitems#" maxlength="5" class="xar-form-textshort" />
-    <br style="clear:both;" />
 </div>
 <!-- No further action is required for this block. The blocks admin will display this form element in a consistant manner throughout Xaraya -->
 

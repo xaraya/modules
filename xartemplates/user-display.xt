@@ -5,10 +5,12 @@
 </div>
 <div class="xar-mod-body">
 
-    <!-- the variables used in this menu templte  come from example_user_menu() -->
+    <!-- the variables used in this menu template  come from example_user_menu() -->
     <xar:template type="module" file="user-menu" />
 
-    <h2><xar:mlstring>Example Item</xar:mlstring></h2>
+    <h2>
+        <xar:mlstring>Example Item</xar:mlstring>
+    </h2>
 
     <!-- the specific template for the current function comes here -->
 
@@ -18,13 +20,17 @@
          to show the details of a particular item -->
     
     <xar:if condition="!empty($status)">
-        <strong>#$status#</strong>
+        <p>
+            <strong>#$status#</strong>
+        </p>
     <xar:else />
 
         <!-- some item variables given by the function using this template -->
 
-        <p>
-            <xar:mlstring>Example item name:</xar:mlstring> 
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">
+                <xar:mlstring>Example item name:</xar:mlstring>
+            </label>
 
             <!-- display depends on another variable specified by the function -->
 
@@ -33,11 +39,14 @@
             <xar:else />
                     #$name_value# <xar:mlstring>(not in bold now)</xar:mlstring>
             </xar:if>
-        </p>
-        <p>
-              <xar:mlstring>Example item number:</xar:mlstring> 
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">
+                <xar:mlstring>Example item number:</xar:mlstring>
+            </label>
             #$number_value#
-        </p>
+        </div>
 
         <!-- if you want to extend this module with dynamic data, you can retrieve
         //   that data in the code via APIs, or use e.g. the following BL tags here.
@@ -49,18 +58,17 @@
             <!-- 2. for each property, display its label and value in output format -->
             <xar:if condition="isset($properties) and count($properties) gt 0">
                 <xar:foreach in="$properties" key="$name">
-                          <xar:data-label property="$properties[$name]" />:
-                        <xar:data-output property="$properties[$name]" />
+                    <xar:data-label property="$properties[$name]" />:
+                    <xar:data-output property="$properties[$name]" />
                 </xar:foreach>
             </xar:if>
         </xar:if>
 
-    <!-- add the output from the different display hooks here -->
-    <xar:if condition="!empty($hooks)">
-        <xar:foreach in="$hooks" key="$hookmodule">
-            #$hooks[$hookmodule]#
-        </xar:foreach>
+        <!-- add the output from the different display hooks here -->
+        <xar:if condition="!empty($hooks)">
+            <xar:foreach in="$hooks" key="$hookmodule">
+                #$hooks[$hookmodule]#
+            </xar:foreach>
+        </xar:if>
     </xar:if>
-
-</xar:if>
 </div>

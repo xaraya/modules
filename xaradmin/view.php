@@ -3,7 +3,7 @@
  * Standard function to view items
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -73,6 +73,10 @@ function example_admin_view()
      * shown in xaruser.php, but as an example, we'll adapt the $items array
      * 'in place', and *then* pass the complete items array to $data
      */
+
+    /* Create an authid for use in delete links */
+    $authid = xarSecGenAuthKey();
+
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
         if (xarSecurityCheck('EditExample', 0, 'Item', "$item[name]:All:$item[exid]")) {
@@ -87,7 +91,7 @@ function example_admin_view()
             $items[$i]['deleteurl'] = xarModURL('example',
                 'admin',
                 'delete',
-                array('exid' => $item['exid']));
+                array('exid' => $item['exid'], 'authid' => $authid));
         } else {
             $items[$i]['deleteurl'] = '';
         }

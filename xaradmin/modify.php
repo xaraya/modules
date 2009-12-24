@@ -105,7 +105,7 @@ function example_admin_modify($args)
                  'name'         => $name,
                  'number'       => $number,
                  'invalid'      => $invalid,
-                 'menuitems'    => $menu['menuitems'],
+//                 'menuitems'    => $menu['menuitems'],
                  'hooks'        => $hooks,
                  'item'         => $item);
 }

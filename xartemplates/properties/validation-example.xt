@@ -1,0 +1,27 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-form-input-wrapper">
+    <label for="#$id#_min" class="xar-form-label">
+        <xar:mlstring>Minimum length:</xar:mlstring>
+    </label>
+    <input type="text" name="#$name#[min]" id="#$id#_min" value="#$min#" class="xar-form-textshort" tabindex="#$tabindex#" />
+</div>
+
+<div class="xar-form-input-wrapper">
+    <label for="#$id#_max" class="xar-form-label">
+        <xar:mlstring>Maximum length:</xar:mlstring>
+    </label>
+    <input type="text" name="#$name#[max]" id="#$id#_max" value="#$max#" class="xar-form-textshort" tabindex="#$tabindex#" />
+</div>
+
+<div class="xar-form-input-wrapper">
+    <label for="#$id#_other" class="xar-form-label">
+        <xar:mlstring>Other rule:</xar:mlstring>
+    </label>
+    <input type="text" name="#$name#[other]" id="#$id#_other" value="#$other#" class="xar-form-textxlong" tabindex="#$tabindex#" />
+</div>
+
+<xar:if condition="!empty($invalid)">
+    <div>
+        <span class="xar-error">#$invalid#</span>
+    </div>
+</xar:if>

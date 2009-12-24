@@ -1,0 +1,195 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!--
+    // Load icons early, so we don't fetch in each loop interation
+    // Icons come from the base module, unless the current module provides more
+-->
+<xar:set name="icon_modify">xarTplGetImage('icons/modify.png', 'base')</xar:set>
+<xar:set name="icon_delete">xarTplGetImage('icons/delete.png', 'base')</xar:set>
+
+<xar:comment>
+    We will use the jQuery UI plugin to confirm item deletion.  This requires us to
+    do several things:
+    * Explicitly load jQuery (it may not be loaded by default)
+    * Load the UI plugin, and its CSS
+    * Create a JS string to hold prompt code
+    * Load the string into the JS queue for the ready event
+</xar:comment>
+<xar:base-js-framework name="jquery" />
+<xar:base-js-plugin name="ui" framework="jquery" file="jquery-ui-1.7.2.custom.min.js" style="jquery-ui-1.7.2.custom.css" />
+<xar:base-js-plugin name="validate" framework="jquery"  />
+<xar:set name="examplecode">"
+// dimensions of the delete prompt dialog
+var delete_dialog_width = 300;
+var delete_dialog_height = 200;
+
+// size of the modify dialog is based on the window
+var dialog_width = Math.floor(jQuery(window).width() * .85);
+var dialog_height = Math.floor(jQuery(window).height() * .85);
+
+
+// Create an onclick handler for the delete links
+jQuery('table.xar-items a[id^=delete]').click(function() {
+    var a = this;
+    // remove and recreate the dialog container
+    jQuery('#"."xardialogtarget').remove();
+    jQuery('body').append('".chr(60)."div id=\'xardialogtarget\' style=\'display: none;\'".chr(62).chr(60)."/div".chr(62)."');
+    // populate the dialog... we get the content of the first TD in the row
+    jQuery('#" . "xardialogtarget').html('".chr(60)."h3" . chr(62) . xarML('Delete this example item?') . chr(60) ."/h3" . chr(62) . chr(60) . "p style=\'text-align: center;\'" . chr(62) . "' + jQuery.trim(jQuery(this).parent().parent().children(':first').text()) + '" . chr(60) . "/p" . chr(62) ."');
+
+    jQuery('#" . "xardialogtarget').dialog({
+        // dialog options
+        title: '" . xarML('Delete example item') . "',
+        width: delete_dialog_width,
+        height: delete_dialog_height,
+        buttons: {
+            // Cancel button
+            '". xarML('Cancel') . "': function() { jQuery(this).dialog('close'); },
+            // Delete button: we add confirm param to the delete URL, and set window.location to it
+            '". xarML('Delete') . "': function() { a.setAttribute('href', a.getAttribute('href') + '".chr(38)."confirm=1');jQuery(this).dialog('close');window.location = a.getAttribute('href'); }
+        },
+        bgiframe: true,
+        modal: true,
+        draggable: false,
+        resizable: false
+    });
+    return false;
+});
+
+// validation rules for the modify foarm
+var modify_validate = {
+    rules: {
+        name: {
+            required: true
+        },
+        number: {
+            required: true,
+            number: true
+        }
+    },
+    messages: {
+        name: {
+            required: '" . xarML('* Required') . "'
+        },
+        number: {
+            required: '" . xarML('* Required') . "',
+            number: '" . xarML('* Must be a number') . "'
+        }
+    },
+    errorClass: 'xar-error',
+    errorElement: 'div'
+};
+
+// Create an onclick handler for the modify links
+// We will load the form into a dialog via ajax, but submit the form normally
+var modify_dialog = function() {
+    // remove and recreate the dialog container
+    jQuery('#"."xardialogtarget').remove();
+    // we use PHP's chr() here to pass QA checks
+    jQuery('body').append('".chr(60)."div id=\'xardialogtarget\' style=\'display: none;\'".chr(62).chr(60)."/div".chr(62)."');
+    // we append pageName=module to the modify URL so only the module space is returned
+    // also, we only put the contents of xar-mod-body into the dialog
+    // we need to pass a callback to load() for the validation to work
+    jQuery('#" . "xardialogtarget').load(this.getAttribute('href') + '".chr(38)."pageName=module .xar-mod-body ".chr(62)." *', {}, function (){
+            jQuery('#example_modify').validate(modify_validate);
+    }).dialog(
+        {
+            title: jQuery(this).text(),
+            width: dialog_width,
+            height: dialog_height,
+            bgiframe: true,
+            modal: true,
+            draggable: false,
+            resizable: false,
+            buttons: {
+                '" . xarML('Close') . "': function() { jQuery(this).dialog('close');}
+            }
+        }
+    );
+    return false;
+}
+
+jQuery('table.xar-items a[id^=modify]').click(modify_dialog);
+
+
+"</xar:set>
+<xar:base-js-event name="ready" code="$examplecode" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <!-- common admin menu for this module -->
+    <xar:template type="module" file="admin-menu" />
+
+    <!--
+        // display a status message to the user if an action has been
+        // taken on an item
+    -->
+    <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+        <p>#xarSessionGetVar('statusmsg')#</p>
+    </xar:if>
+
+    <!-- the specific template for the current admin function comes here -->
+    <h2>
+        <xar:mlstring>View Example Items</xar:mlstring>
+    </h2>
+
+    <table class="xar-items">
+        <thead>
+            <tr>
+                <th>
+                    <xar:mlstring>Example Name</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Example Number</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Actions</xar:mlstring>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <xar:comment>
+                Set up a variable to hold the CSS class for alternating table row colors
+            </xar:comment>
+            <xar:set name="rowclass">'xar-norm'</xar:set>
+            <xar:foreach in="$items" value="$item">
+                <tr class="#$rowclass#">
+                    <td>
+                        #$item.name#
+                    </td>
+                    <td>
+                        #$item.number#
+                    </td>
+                    <td class="xar-item-actions">
+                       <xar:if condition="empty($item['editurl'])">
+                           <img src="#$icon_modify#" alt="#xarML('Edit Item')#" class="xar-icon-disabled" />
+                       <xar:else />
+                           <a href="#$item.editurl#" title="#xarML('Edit Item')#" id="modify_#$item.exid#" class="xar-icon"><img src="#$icon_modify#" alt="#xarML('Edit Item')#" /></a>
+                       </xar:if>
+
+                       <xar:if condition="empty($item['deleteurl'])">
+                           <img src="#$icon_delete#" alt="#xarML('Delete Item')#" class="xar-icon-disabled" />
+                       <xar:else />
+                           <a href="#$item.deleteurl#"  title="#xarML('Delete Item')#" id="delete_#$item.exid#" class="xar-icon"><img src="#$icon_delete#" alt="#xarML('Delete Item')#" /></a>
+                       </xar:if>
+                    </td>
+                </tr>
+                <xar:comment>
+                    Change the table row class after each iteration
+                </xar:comment>
+                <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+            </xar:foreach>
+        </tbody>
+    </table>
+
+    <div class="xar-align-center xar-padding-thick">
+        <!-- add the pager here -->
+        #$pager#
+    </div>
+</div>
+<!--
+    // clear the status message
+    // we put this in an if tag to prevent the function from
+    // showing '1' in the page
+-->
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

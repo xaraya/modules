@@ -3,16 +3,11 @@
 </xar:comment>
 
 <h2>
-    <xar:mlstring>
-        Search for Example Items
-    </xar:mlstring>
+    <xar:mlstring>Search for Example Items</xar:mlstring>
 </h2>
 <xar:if condition="!empty($example) and count($example) gt 0">
     <h4>
-        <xar:mlstring>
-            Example Items Found
-        </xar:mlstring>
-        :
+        <xar:mlstring>Example Items Found:</xar:mlstring>
     </h4>
     <ul>
         <xar:foreach in="$example" key="$key" value="$exitem">
@@ -31,29 +26,22 @@
     </xar:if>
 </xar:if>
 <p>
-    <xar:mlstring>
-        Search in
-    </xar:mlstring>
-    :
+    <xar:mlstring>Search in:</xar:mlstring>
 </p>
 
 <p>
     <xar:if condition="isset($name) and $name eq '1'">
-    <input type="checkbox" name="name" id="name" value="1" checked="checked" />
+        <input type="checkbox" name="name" id="name" value="1" checked="checked" />
     <xar:else />
-    <input type="checkbox" name="name" id="name" value="1" />
+        <input type="checkbox" name="name" id="name" value="1" />
     </xar:if>
-    <xar:mlstring>
-        Example Name
-    </xar:mlstring>
+    <xar:mlstring>Example Name</xar:mlstring>
 </p>
 <p>
     <xar:if condition="isset($number) and $number eq '1'">
-    <input type="checkbox" name="number" id="number" value="1" checked="checked" />
+        <input type="checkbox" name="number" id="number" value="1" checked="checked" />
     <xar:else />
-    <input type="checkbox" name="number" id="number" value="1" />
+        <input type="checkbox" name="number" id="number" value="1" />
     </xar:if>
-    <xar:mlstring>
-        Example Number
-    </xar:mlstring>
+    <xar:mlstring>Example Number</xar:mlstring>
 </p>

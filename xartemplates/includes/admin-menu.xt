@@ -1,0 +1,85 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>In-Page Administration menu</xar:comment>
+
+<xar:if condition="xarModGetVar('themes','adminpagemenu')">
+    <xar:style scope="module" module="base" file="navtabs" />
+
+    <xar:comment>
+        Set a variable that matches the template name. It does not consider template type.
+        If you wanted to look at type of template you would need to check #$request.1#
+        (eg to see if it's admin or user)
+        xarRequestInfo() returns the modulename, type and function in an array for
+        the function we want the third element (i.e. at index 2)
+    </xar:comment>
+    <xar:set name="request">xarRequestGetInfo()</xar:set>
+    <xar:set name="activetab">#$request.2#</xar:set>
+
+    <div>
+        <dl class="xar-tabs">
+            <dt class="help" title="#xarML('Choose an action to perform')#">
+                <xar:mlstring>Actions:</xar:mlstring>
+            </dt>
+
+        <xar:comment>
+            The following loop dynamically constructs the in-page menu. Changes to
+            example/xaradminapi/getmenulinks.php have the same effect on main admin
+            menu block and in-page admin menus.
+            The 'active' array is optional and may contain more than one item.
+        </xar:comment>
+        <xar:loop name="xarModAPIFunc($request.0, 'admin', 'getmenulinks')">
+            <xar:if condition="isset($loop:item['active'])">
+                <xar:set name="tabclass">in_array($activetab, $loop->item['active'])?'active':''</xar:set>
+            </xar:if>
+            <dd class="#$tabclass#">
+                <a href="#$loop:item.url#" title="#$loop:item.title#">
+                    #$loop:item.label#
+                </a>
+            </dd>
+        </xar:loop>
+
+        <xar:comment>
+            The following constructs a static menu completely in this template.
+            This allows the site admin to override the coded structure.
+        </xar:comment>
+        <xar:comment>
+            <!-- The minimal privilege needed for the manage items screen is viewing items -->
+            <xar:sec mask="ViewExample" catch="false">
+                <!-- Short form for checking the active tab in only one line -->
+                <xar:set name="tabclass">($activetab=='view' or $activetab=='new')?'active':''</xar:set>
+                <dd class="#$tabclass#">
+                    <a href="#xarModURL('example','admin','view')#">
+                        <xar:mlstring>Manage Items</xar:mlstring>
+                    </a>
+                </dd>
+            </xar:sec>
+            <xar:sec mask="AdminExample" catch="false">
+                <!-- Long form for checking the active tab without PHP in <xar:set> -->
+                <xar:if condition="$activetab=='modifyconfig'">
+                    <xar:set name="tabclass">'active'</xar:set>
+                <xar:else />
+                    <xar:set name="tabclass">''</xar:set>
+                </xar:if>
+                <dd class="#$tabclass#">
+                    <a href="#xarModURL('example','admin','modifyconfig')#">
+                        <xar:mlstring>Modify Config</xar:mlstring>
+                    </a>
+                </dd>
+            </xar:sec>
+
+            <!--
+                The overview function may use the admin-main template so we test
+                to see if $activetab is equal to 'main' too and set the tab active if it matches.
+            -->
+            <xar:sec mask="EditExample" catch="false">
+                <xar:set name="tabclass">($activetab=='main' or $activetab=='overview')?'active':''</xar:set>
+                <dd class="#$tabclass#">
+                    <a href="#xarModURL('example','admin','overview')#">
+                        <xar:mlstring>Overview</xar:mlstring>
+                    </a>
+                </dd>
+            </xar:sec>
+            <!-- End of static menu example -->
+        </xar:comment>
+    </dl>
+</div>
+</xar:if>

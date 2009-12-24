@@ -8,7 +8,9 @@
     <!-- the variables used in this menu templte  come from example_user_menu() -->
     <xar:template type="module" file="user-menu" />
 
-    <h2><xar:mlstring>Example Items</xar:mlstring></h2>
+    <h2>
+        <xar:mlstring>Example Items</xar:mlstring>
+    </h2>
 
     <!-- the specific template for the current function comes here -->
 
@@ -23,12 +25,18 @@
             <xar:categories-navigation layout="trails" showchildren="1" module="example" catid="$catid" />
         </xar:if>
     </xar:comment>
-    <table>
+    <table class="xar-items">
         <thead>
             <tr>
-                <th><xar:mlstring>Unique ID</xar:mlstring></th>
-                <th><xar:mlstring>Example number</xar:mlstring></th>
-                <th><xar:mlstring>Example item name</xar:mlstring></th>
+                <th>
+                    <xar:mlstring>Unique ID</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Example number</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Example item name</xar:mlstring>
+                </th>
             </tr>
         </thead>
         <!--
@@ -37,19 +45,23 @@
           // structure like we do in user-display.xd
           -->
         <tbody>
+            <xar:comment>
+                Set up a variable to hold the CSS class for alternating table row colors
+            </xar:comment>
+            <xar:set name="rowclass">'xar-norm'</xar:set>
             <xar:foreach in="$items" value="$item">
-            <tr>
-                <td>
+                <tr class="#$rowclass#">
+                    <td>
                         #$item.exid#
-                </td>
-                <td>
-                    <xar:if condition="empty($item.link)">
-                        #$item.number#
-                    <xar:else />
-                        <a href="#$item.link#">#$item.number#</a>
-                    </xar:if>
-                </td>
-                <td>
+                    </td>
+                    <td>
+                        <xar:if condition="empty($item.link)">
+                            #$item.number#
+                        <xar:else />
+                            <a href="#$item.link#">#$item.number#</a>
+                        </xar:if>
+                    </td>
+                    <td>
 
                     <!-- we only show a link if the item link variable is not empty -->
 
@@ -59,8 +71,12 @@
                         <a href="#$item.link#">#$item.name#</a>
                     </xar:if>
 
-                </td>
-            </tr>
+                    </td>
+                </tr>
+                <xar:comment>
+                    Change the table row class after each iteration
+                </xar:comment>
+                <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
             </xar:foreach>
         </tbody>
     </table>

@@ -22,7 +22,7 @@
                 <!-- more menu items come here... -->
         
                 <!-- Note : you can also specify simple links directly with blocklayout
-                     template tags : e.g. &xar-modurl-example-user-view; -->
+                     calls to the Xaraya API, e.g. #xarModURL('example','user','view')# -->
             </tr>
             </table> 
         </td>

@@ -1,0 +1,68 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>
+    See example/xartemplates/admin-modify.xd for full comments on forms in templates
+</xar:comment>
+<xar:comment>
+    We will use the jQuery Validate plugin to check input values.  This requires us to
+    do several things:
+    * Explicitly load jQuery (it may not be loaded by default)
+    * Load the Validate plugin
+    * Create a JS string to hold the validation rules
+    * Load the string into the JS queue for the ready event
+</xar:comment>
+<xar:base-js-framework name="jquery" />
+<xar:base-js-plugin name="validate" framework="jquery"  />
+<xar:set name="examplecode">"
+var usermenu_validate = {
+    rules: {
+        itemsperpage: {
+            required: true,
+            number: true
+        }
+    },
+    messages: {
+        itemsperpage: {
+            required: '" . xarML('* Required') . "',
+            number: '" . xarML('* Must be a number') . "'
+        }
+    },
+    errorClass: 'xar-error',
+    errorElement: 'div'
+};
+jQuery('#example_usermenu').validate(usermenu_validate);
+"</xar:set>
+<xar:base-js-event name="ready" code="$examplecode" />
+
+<h2>
+    <xar:ml>
+        <xar:mlstring>Example Personal Settings for #(1)</xar:mlstring>
+        <xar:mlvar>#$name#</xar:mlvar>
+    </xar:ml>
+</h2>
+
+<form action="#xarModURL('example','user','usermenu')#" method="post" id="example_usermenu" enctype="application/x-www-form-urlencoded">
+    <div class="xar-form-section">
+        <h3>
+            <xar:mlstring>Display Options</xar:mlstring>
+        </h3>
+        <div class="xar-form-input-wrapper">
+            <label for="itemsperpage" class="xar-form-label" title="#xarML('Your customized number of items per page')#">
+                <xar:mlstring>Items Per Page</xar:mlstring>
+            </label>
+            <div class="xar-form-container-after">
+                <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$value#" />
+            </div>
+        </div>
+
+        <div class="xar-form-input-wrapper-after">
+            <xar:mlstring>This is only an example of hooking the user menu. You may or may not need this functionality for your module, or wish to add more.</xar:mlstring>
+        </div>
+    </div>
+
+    <div class="xar-form-footer">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="uid" id="uid" value="#$uid#" />
+        <input type="hidden" name="phase" id="phase" value="update" />
+        <input type="submit" value="#xarML('Modify Example Settings')#" tabindex="2" />
+    </div>
+</form>
