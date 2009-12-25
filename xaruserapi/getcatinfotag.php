@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -17,7 +17,7 @@
  * Default module is the module in which the template tag is called.
  *
  * Example:
- * The following tag, used in the user-display[-pubtype].xd template of articles, will display the name of the
+ * The following tag, used in the user-display[-pubtype].xt template of articles, will display the name of the
  * category for the current item that has category 59 as an ancestor:
  *
  * <xar:categories-catinfo module="articles" itemtype="$itemtype" itemid="$aid" base="59" ifempty="not known"/>

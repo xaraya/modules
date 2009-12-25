@@ -1,7 +1,0 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-form-input-wrapper">
-    <label class="help xar-form-label" title="#xarML('Select the categories for this item.')#">
-        <xar:var name="$labels['categories']" />
-    </label>
-    <xar:loop name="$items">#$loop:item['select']#</xar:loop>
-</div>

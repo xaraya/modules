@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -57,6 +57,10 @@ function categories_admin_modifyconfig()
             if (!empty($data['showtitle'])) {
                 $data['showtitle'] = 1;
             }
+            $data['inputsize'] = xarModGetVar('categories','inputsize');
+            if (!is_numeric($data['inputsize'])) {
+                $data['inputsize'] = 5;
+            }
             $data['usenameinstead'] = xarModGetVar('categories','usename')== true ? 1 : 0;
 
             return xarTplModule('categories','admin','config',$data);
@@ -72,8 +76,10 @@ function categories_admin_modifyconfig()
             xarModSetVar('categories','usename', $usenameinstead);
             if (!xarVarFetch('numstats', 'int', $numstats, 100, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('showtitle', 'checkbox', $showtitle, false, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('inputsize', 'int:2:', $inputsize, 5, XARVAR_NOT_REQUIRED)) return;
             xarModSetVar('categories', 'numstats', $numstats);
             xarModSetVar('categories', 'showtitle', $showtitle);
+            xarModSetVar('categories', 'inputsize', $inputsize);
 
             // Call update config hooks
             xarModCallHooks('module','updateconfig','categories', array('module' => 'categories'));

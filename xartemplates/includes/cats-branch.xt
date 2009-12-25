@@ -1,0 +1,31 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="!isset($level)">
+    <xar:set name="level">1</xar:set>
+<xar:else />
+    <xar:set name="level">$level + 1</xar:set>
+</xar:if>
+<xar:if condition="!isset($authid)">
+    <xar:set name="authid">xarSecGenAuthKey()</xar:set>
+</xar:if>
+<ul>
+    <xar:foreach in="$cats" key="$k" value="$cat">
+        <li>
+            <span class="xar-cattree-icons">
+                <xar:if condition="xarSecurityCheck('DeleteCategories',0,'Category','All:' . $cat['cid'])">
+                    <a href="#xarModURL('categories','admin','deletecat', array('cid' => $cat['cid'], 'authid' => $authid))#" class="xar-icon" id="delete_#$cat.cid#">
+                        <img src="#xarTplGetImage('icons/delete.png', 'base')#" alt="#xarML('Delete')#" class="xar-icon" />
+                    </a>
+                <xar:else />
+                    <img src="#xarTplGetImage('icons/delete.png', 'base')#" alt="#xarML('Delete')#" class="xar-icon" />
+                </xar:if>
+            </span>
+            <a href="#xarModURL('categories','admin','modifycat', array('cid' => $cat['cid']))#">
+                #$cat.name#: #$cat.description#
+            </a>
+            <xar:if condition="isset($cat['children']) and count($cat['children']) gt 0">
+                <xar:set name="subdata">array('cats' => $cat['children'], 'level' => $level, 'authid' => $authid)</xar:set>
+                <xar:template type="module" file="cats-branch" subdata="$subdata" />
+            </xar:if>
+        </li>
+    </xar:foreach>
+</ul>

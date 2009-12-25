@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -140,9 +140,12 @@ function categories_admin_modifyhook($args)
                                        array('cid' => $mastercids[$n],
                                              'multiple' => 1,
                                              'name_prefix' => 'modify_',
+                                             'num' => $n + 1,
+                                             'modid' => $modid,
                                              'return_itself' => true,
                                              'select_itself' => true,
                                              'values' => &$seencid));
+        $item['modid'] = $modid;
         $items[] = $item;
     }
 
@@ -156,6 +159,8 @@ function categories_admin_modifyhook($args)
     return xarTplModule('categories','admin','modifyhook',
                          array('labels' => $labels,
                                'numcats' => $numcats,
+                               'name_prefix' => 'modify_',
+                               'modid' => $modid,
                                'items' => $items));
 }
 

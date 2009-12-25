@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -28,6 +28,7 @@ function categories_admin_stats()
 
     $data = array();
 
+    $authid = xarSecGenAuthKey();
     $modlist = xarModAPIFunc('categories','user','getmodules');
 
     if (empty($modid)) {
@@ -62,13 +63,14 @@ function categories_admin_stats()
                                                    'itemtype' => empty($itemtype) ? null : $itemtype));
                 $moditem['delete'] = xarModURL('categories','admin','unlink',
                                                array('modid' => $modid,
-                                                     'itemtype' => empty($itemtype) ? null : $itemtype));
+                                                     'itemtype' => empty($itemtype) ? null : $itemtype,
+                                                     'authid' => $authid));
                 $data['moditems'][] = $moditem;
                 $data['numitems'] += $moditem['numitems'];
                 $data['numlinks'] += $moditem['numlinks'];
             }
         }
-        $data['delete'] = xarModURL('categories','admin','unlink');
+        $data['delete'] = xarModURL('categories','admin','unlink', array('authid' => $authid));
     } else {
         $modinfo = xarModGetInfo($modid);
         $data['module'] = $modinfo['name'];
@@ -157,7 +159,8 @@ function categories_admin_stats()
             $data['moditems'][$itemid]['delete'] = xarModURL('categories','admin','unlink',
                                                              array('modid' => $modid,
                                                                    'itemtype' => $itemtype,
-                                                                   'itemid' => $itemid));
+                                                                   'itemid' => $itemid,
+                                                                   'authid' => $authid));
             if (isset($itemlinks[$itemid])) {
                 $data['moditems'][$itemid]['link'] = $itemlinks[$itemid]['url'];
                 $data['moditems'][$itemid]['title'] = $itemlinks[$itemid]['label'];
@@ -173,7 +176,8 @@ function categories_admin_stats()
         }
         $data['delete'] = xarModURL('categories','admin','unlink',
                                     array('modid' => $modid,
-                                          'itemtype' => $itemtype));
+                                          'itemtype' => $itemtype,
+                                          'authid' => $authid));
         $data['sortlink'] = array();
         if (empty($sort) || $sort == 'itemid') {
              $data['sortlink']['itemid'] = '';

@@ -1,0 +1,74 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-include-javascript module="base" filename="orderitem.js" position="head" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:if condition="$func eq 'modify'">
+            <xar:mlstring>Modify Category Base</xar:mlstring>
+        <xar:else />
+            <xar:mlstring>Create New Category Base</xar:mlstring>
+        </xar:if>
+    </h2>
+    <form action="#xarModURL('categories','admin','updatecatbase')#" method="post">
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">
+                <xar:mlstring>Module:</xar:mlstring>
+            </label>
+            #$module#
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">
+                <xar:mlstring>Item type:</xar:mlstring>
+            </label>
+            #$itemtype#
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="name" class="xar-form-label">
+                <xar:mlstring>Name:</xar:mlstring>
+            </label>
+            <input type="text" name="name" id="name" value="#$catbase['name']#" size="32" maxlength="100" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">
+                <xar:mlstring>Base category:</xar:mlstring>
+            </label>
+            #$cidselect#
+        </div>
+        <div class="xar-form-input-wrapper-after">
+            <xar:if condition="!empty($catbase['multiple'])">
+                <input type="checkbox" name="multiple" id="multiple" value="1" selected="selected" />
+            <xar:else/>
+                <input type="checkbox" name="multiple" id="multiple" value="1" />
+            </xar:if>
+            <label for="multiple">
+                <xar:mlstring>Multiple select</xar:mlstring>
+            </label>
+        </div>
+        <div class="xar-form-input-wrapper-after">
+            <xar:if condition="!empty($catbase['display'])">
+                <input type="checkbox" name="display" id="display" value="1" selected="selected" />
+            <xar:else/>
+                <input type="checkbox" name="display" id="display" value="1" />
+            </xar:if>
+            <label for="display">
+                <xar:mlstring>Display</xar:mlstring>
+            </label>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="order" class="xar-form-label">
+                <xar:mlstring>Order:</xar:mlstring>
+            </label>
+            <xar:comment> Display the ordering select list if modifying, and there are two or more category bases to order </xar:comment>
+            <xar:data-input type="orderselect" options="$catbases" name="order" />
+        </div>
+        <div class="xar-form-footer">
+            <input type="submit" name="submit" id="submit" value="#xarML('Submit')#" />
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+            <input type="hidden" name="bid" id="bid" value="#$bid#" />
+            <input type="hidden" name="modid" id="modid" value="#$modid#" />
+            <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
+        </div>
+    </form>
+</div>

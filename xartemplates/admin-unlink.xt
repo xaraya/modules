@@ -1,0 +1,41 @@
+<xar:if condition="!xarRequestIsAJAX()">
+    <div class="xar-mod-head">
+        <span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span>
+    </div>
+</xar:if>
+<div class="xar-mod-body">
+    <xar:if condition="!xarRequestIsAJAX()">
+        <xar:template type="module" file="admin-menu" />
+    </xar:if>
+    <h2>
+        <xar:mlstring>Delete Category Links</xar:mlstring>
+    </h2>
+    <form method="post" action="#xarModURL('categories','admin','unlink')#">
+        <h3>
+            <xar:mlstring>Confirm deletion</xar:mlstring>
+         </h3>
+        <div class="xar-form-input-wrapper-before">
+            <xar:if condition="empty($modname)">
+                <xar:mlstring>Are you sure you want to delete all category links?</xar:mlstring>
+            <xar:elseif condition="empty($itemid)"/>
+                <xar:ml>
+                    <xar:mlstring>Are you sure you want to delete all category links for module <strong>#(1)</strong>?</xar:mlstring>
+                    <xar:mlvar>#$modname#</xar:mlvar>
+                </xar:ml>
+            <xar:else/>
+                <xar:ml>
+                    <xar:mlstring>Are you sure you want to delete all category links for module <strong>#(1)</strong> item <strong>#(2)</strong>?</xar:mlstring>
+                    <xar:mlvar>#$modname#</xar:mlvar>
+                    <xar:mlvar>#$itemid#</xar:mlvar>
+                </xar:ml>
+            </xar:if>
+        </div>
+        <div class="xar-form-footer">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="modid" id="modid" value="#$modid#" />
+            <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
+            <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+            <input type="submit" name="confirm" id="confirm" value="#$confirmbutton#"  />
+        </div>
+    </form>
+</div>

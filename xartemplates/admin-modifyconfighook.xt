@@ -1,0 +1,32 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-form-section">
+    <h4>
+        <xar:mlstring>Categories</xar:mlstring>
+    </h4>
+
+    <xar:if condition="!empty($newcat)">
+        <p>
+            [ <a href="#xarModURL('categories','admin','modifycat')#">
+                <xar:mlstring>Add</xar:mlstring>
+            </a> ]
+        </p>
+    </xar:if>
+
+    <div class="xar-form-input-wrapper">
+        <label for="number_of_categories" class="xar-form-label" title="#xarML('Enter the number of possible categories that this itemtype will use')#">
+            <xar:mlstring>Number of possible categories</xar:mlstring>
+        </label>
+        <input type="text" name="number_of_categories" id="number_of_categories" size="3" maxlength="2" value="#$numcats#" />
+    </div>
+    <xar:loop name="$items">
+        <div class="xar-form-input-wrapper">
+            <label for="#$name_prefix#_#$loop:item['modid']#_#$loop:item['num']#" class="xar-form-label" title="#xarML('Base category')#">
+                <xar:mlstring>Base category for</xar:mlstring>
+                #$modname# # #$loop:item['num']#
+            </label>
+            <div class="xar-form-container-after">
+                #$loop:item['select']#
+            </div>
+        </div>
+    </xar:loop>
+</div>

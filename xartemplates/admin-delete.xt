@@ -1,0 +1,48 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" module="categories" file="forms" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Categories Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <xar:if condition="!xarRequestIsAJAX()">
+        <h2>
+            <xar:mlstring>Delete Category</xar:mlstring>
+        </h2>
+    </xar:if>
+    <form action="#xarModURL('categories','admin','deletecat')#" method="post" enctype="application/x-www-form-urlencoded" id="deletecatform">
+        <h3>
+            <xar:ml>
+                <xar:mlstring>Delete category '#(1)'?</xar:mlstring>
+                <xar:mlvar>#$name#</xar:mlvar>
+            </xar:ml>
+        </h3>
+        <p>
+            <xar:ml>
+                <xar:mlstring>This category has #(1) sub-categories and #(2) module items assigned to it.</xar:mlstring>
+                <xar:mlvar>#$numcats#</xar:mlvar>
+                <xar:mlvar>#$numitems#</xar:mlvar>
+            </xar:ml>
+        </p>
+
+        <xar:if condition="!xarRequestIsAJAX()">
+            <div class="xar-form-footer">
+                <input type="hidden" name="ok" id="ok" value="1" />
+                <input type="hidden" name="cid" id="cid" value="#$cid#" />
+                <input type="hidden" name="authid" id="authid" value="#$authkey#" />
+                <input type="submit" name="confirm" id="confirmyes" value="#xarML('Submit')#" />
+                <p>
+                    <a href="#xarModURL('categories','admin','viewcats')#"><xar:mlstring>Cancel</xar:mlstring></a>
+                </p>
+            </div>
+        <xar:else />
+            <span>
+                <input type="hidden" name="ok" id="ok" value="1" />
+                <input type="hidden" name="cid" id="cid" value="#$cid#" />
+                <input type="hidden" name="authid" id="authid" value="#$authkey#" />
+                <input type="hidden" name="confirm" id="confirmyes" value="#xarML('Submit')#" />
+            </span>
+        </xar:if>
+    </form>
+</div>

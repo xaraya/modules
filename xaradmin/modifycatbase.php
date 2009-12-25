@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -80,11 +80,14 @@ function categories_admin_modifycatbase()
         );
 
         // Get the list of cat bases for the order list.
-        $data['catbases'] = xarModAPIfunc(
+        $data['catbases'] = array();
+        $catbases = xarModAPIfunc(
             'categories', 'user', 'getallcatbases',
             array('modid' => $modid, 'itemtype' => $itemtype, 'order' => 'order')
         );
-
+        foreach ($catbases as $catbase) {
+            $data['catbases'][] = array('id' => $catbase['bid'], 'name' => $catbase['name'] . ' (' . $catbase['order'] . ')');
+        }
         // TODO: config hooks for the category base and modify hooks for the category base item
 
     } else {

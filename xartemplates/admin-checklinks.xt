@@ -1,0 +1,157 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+     <xar:template type="module" file="admin-menu" />
+    <h2>
+        <xar:mlstring>Check Orphan Links</xar:mlstring>
+    </h2>
+
+    <xar:if condition="empty($modid)">
+        <table class="xar-items">
+        <thead>
+            <tr>
+                <th>
+                    <xar:mlstring>Module Name</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Module Items</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Distinct Categories</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Total Links</xar:mlstring>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <xar:set name="rowclass">'xar-norm'</xar:set>
+            <xar:if condition="empty($moditems) or count($moditems) eq '0'">
+                <tr class="#$rowclass#">
+                    <td colspan="4" class="xar-align-center">
+                        <xar:mlstring>There are currently no category links in the database.</xar:mlstring>
+                    </td>
+                </tr>
+            <xar:else />
+                <xar:foreach in="$moditems" value="$moditem">
+                    <tr class="#$rowclass#">
+                        <td>
+                            <a href="#$moditem['link']#">#$moditem['name']#</a>
+                        </td>
+                        <td class="xar-align-right">
+                            #$moditem['numitems']#
+                        </td>
+                        <td class="xar-align-right">
+                            #$moditem['numcats']#
+                        </td>
+                        <td class="xar-align-right">
+                            #$moditem['numlinks']#
+                        </td>
+                    </tr>
+                    <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+                </xar:foreach>
+                <tr class="xar-accent">
+                    <td>
+                        <strong><xar:mlstring>Grand Total</xar:mlstring></strong>
+                    </td>
+                    <td class="xar-align-right">
+                        <strong>#$numitems#</strong>
+                    </td>
+                    <td class="xar-align-right">
+                        <strong>-</strong>
+                    </td>
+                    <td class="xar-align-right">
+                        <strong>#$numlinks#</strong>
+                    </td>
+                </tr>
+            </xar:if>
+        </tbody>
+        </table>
+    <xar:else/>
+        <h3>    
+            <xar:ml>
+                <xar:mlstring>Module #(1)</xar:mlstring>
+                <xar:mlvar>#$modname#</xar:mlvar>
+            </xar:ml>
+        </h3>
+
+        <xar:if condition="!empty($moditems)">
+            <form method="post" action="#xarModURL('categories','admin','checklinks')#">
+                <div class="xar-form-footer">
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <input type="hidden" name="modid" id="modid" value="#$modid#" />
+                    <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
+                    <input type="submit" name="confirm" id="confirm" value="#xarML('Delete Links')#" />
+                </div>
+            </form>
+        </xar:if>
+
+        <table class="xar-items">
+        <thead>
+            <tr>
+                <th>
+                    <xar:if condition="empty($sortlink['itemid'])">
+                        <strong><xar:mlstring>Item Id</xar:mlstring></strong>
+                    <xar:else/>
+                        <a href="#$sortlink['itemid']#"><strong><xar:mlstring>Item Id</xar:mlstring></strong></a>
+                    </xar:if>
+                </th>
+                <th>
+                    <strong><xar:mlstring>Category Links</xar:mlstring></strong>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <xar:set name="rowclass">'xar-norm'</xar:set>
+            <xar:if condition="empty($moditems) or count($moditems) eq '0'">
+                <tr class="#$rowclass#">
+                    <td colspan="2" class="xar-align-center">
+                        <xar:mlstring>There are currently no orphaned category links for this module.</xar:mlstring>
+                    </td>
+                </tr>
+            <xar:else />
+                <xar:foreach in="$moditems" key="$itemid" value="$moditem">
+                    <tr class="#$rowclass#">
+                        <xar:if condition="!empty($moditem['title']) and !empty($moditem['link'])">
+                            <td>
+                                #$itemid# - <a href="#$moditem['link']#">#$moditem['title']# </a>
+                            </td>
+                        <xar:else/>
+                            <td class="xar-align-right">
+                                #$itemid#
+                            </td>
+                        </xar:if>
+                        <td class="xar-align-center">
+                            <xar:foreach in="$moditem['cids']" value="$cid">
+                                <div>
+                                    <xar:if condition="!empty($catinfo[$cid])">
+                                        #$catinfo[$cid]['name']#
+                                    <xar:else/>
+                                        #$cid#
+                                    </xar:if>
+                                </div>
+                            </xar:foreach>
+                        </td>
+                    </tr>
+                    <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+                </xar:foreach>
+                <tr class="xar-accent">
+                    <td>
+                        <strong><xar:mlstring>Grand Total</xar:mlstring></strong>:
+                    </td>
+                    <td class="xar-align-right">
+                        <strong>#$numorphans#</strong>
+                    </td>
+                </tr>
+            </xar:if>
+        </tbody>
+        </table>
+        <xar:if condition="!empty($pager)">
+            <div>
+                #$pager#
+            </div>
+        </xar:if>
+    </xar:if>
+</div>

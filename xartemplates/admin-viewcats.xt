@@ -1,0 +1,103 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2>
+        <xar:mlstring>View Categories</xar:mlstring>
+    </h2>
+
+    <table class="xar-items">
+    <thead>
+        <tr>
+            <th><xar:mlstring>Name</xar:mlstring></th>
+            <th><xar:mlstring>Description</xar:mlstring></th>
+            <th><xar:mlstring>Image And Hooks</xar:mlstring></th>
+            <th><xar:mlstring>Options</xar:mlstring></th>
+        </tr>
+    </thead>
+    <tbody>
+        <xar:set name="rowclass">'xar-norm'</xar:set>
+        <xar:loop name="$categories">
+            <tr class="#$rowclass#">
+                <td>
+                    #$loop:item['xar_map']#
+                    #$loop:item['name']#
+                </td>
+                <td>
+                    #$loop:item['description']#
+                </td>
+                <td>
+                    <xar:if condition="empty($loop:item['image'])">
+                        &nbsp;
+                    <xar:else />
+                        #$loop:item['image']#
+                    </xar:if>
+                </td>
+                <td class="xar-item-actions">
+                    <a href="#xarModURL('categories', 'admin', 'modifycat', array('cid' => $loop:item['cid']))#">
+                        <xar:mlstring>Modify</xar:mlstring>
+                    </a>
+                    &nbsp;|&nbsp;
+                    <a href="#xarModURL('categories', 'admin', 'deletecat', array('cid' => $loop:item['cid']))#">
+                        <xar:mlstring>Delete</xar:mlstring>
+                    </a>
+                </td>
+            </tr>
+            <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+        </xar:loop>
+    </tbody>
+    </table>
+
+    <table border="0" cellspacing="0" cellpadding="2" style="text-align: center;margin: auto;">
+    <tbody>
+        <tr>
+            <td>
+                <xar:for start="$i = 1" test="$i le ($pagertotal - $catsperpage)" iter="$i += $catsperpage">
+                    <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
+                        #$i#-#$i+$catsperpage#
+                    <xar:else />
+                        <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i))#">
+                            #$i#-#$i+$catsperpage#
+                        </a>
+                    </xar:if>
+                    <xar:if condition="(($i%100) eq 1) and ($i ne 1)">
+                        <br />
+                    <xar:else />
+                        &nbsp;|&nbsp;
+                    </xar:if>
+                </xar:for>
+                <xar:if condition="$i eq $pagertotal">
+                    <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
+                        #$i#
+                    <xar:else />
+                        <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i))#">
+                            #$i#
+                        </a>
+                    </xar:if>
+                </xar:if>
+                <xar:if condition="$i lt $pagertotal">
+                    <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
+                        #$i#-#$pagertotal#
+                    <xar:else />
+                        <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i))#">
+                            #$i#-#$pagertotal#
+                        </a>
+                    </xar:if>
+                </xar:if>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <xar:mlstring>Categories Total:</xar:mlstring>&nbsp;&nbsp;#$pagertotal#
+            </td>
+        </tr>
+    </tbody>
+    </table>
+    <form action="#xarModURL('categories','admin','viewcats',array())#" method="post">
+        <div class="xar-form-footer">
+            <xar:mlstring>Categories per page:</xar:mlstring>&nbsp;&nbsp;
+            <input type="text" name="catsperpage" id="catsperpage" value="#$catsperpage#" size="5" />
+            <input type="submit" value="#$reloadlabel#" />
+        </div>
+    </form>
+</div>

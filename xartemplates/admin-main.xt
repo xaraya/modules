@@ -1,0 +1,67 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <img src="#xarTplGetImage('categories.png', 'categories')#" alt="xarML('Categories icon')#" class="xar-module-icon" />
+    <h2>
+        <xar:mlstring>Overview</xar:mlstring>
+    </h2>
+
+    <h3>
+        <xar:mlstring>What is it?</xar:mlstring>
+    </h3>
+    <p><em><xar:mlstring>Categories is a Xaraya Utility Module.</xar:mlstring></em>
+        <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
+        <ul>
+            <li><xar:mlstring>Allows the use of site wide categories for content modules to use as needed.</xar:mlstring></li>
+        </ul>
+    </p>
+
+    <h3>
+        <xar:mlstring>How to use it?</xar:mlstring>
+    </h3>
+    <p><xar:mlstring>From the menu, you have two choices.  'Add a New Category', and 'View Categories'.</xar:mlstring>
+        <ul>
+            <li><xar:mlstring>Add a new category -- Allows you to add a new category to your site categories tree.</xar:mlstring></li>
+            <li><xar:mlstring>View Categories -- This area allows you to view the entire categorization tree, allowing a easy way to modify it.</xar:mlstring></li>
+        </ul>
+    </p>
+
+    <h3>
+        <xar:mlstring>Included Blocks</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>The Navigation block allows navigation of any module using the category hooks.</xar:mlstring>
+    </p>
+
+    <h3>
+        <xar:mlstring>Included Hooks</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>Categories provides all the hooks necessary to allow categories to be available within other modules.</xar:mlstring>
+    </p>
+
+    <h3>
+        <xar:mlstring>Further Information</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>Extended information about this module can be found at </xar:mlstring><a title="#xarML('Categories Module - Xaraya Extension 147')#" href="http://www.xaraya.com/index.php/release/147.html">Xaraya Extension and Releases</a>.
+    </p>
+    <ul>
+        <li>
+            <xar:mlstring>Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+        </li>
+        <li>
+            <xar:mlstring>Related tutorials and documentation on Categories found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/categories/" title="#xarML('Related documentation on Categories')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+        </li>
+    </ul>
+</div>
+<div class="xar-mod-foot">
+    <p>
+        <strong><xar:mlstring>Categories module - Overview</xar:mlstring></strong>
+        <xar:set name="modinfo">xarModGetInfo('147')</xar:set>
+        <xar:mlstring>Version</xar:mlstring> #$modinfo.version# #xarLocaleGetFormattedDate('short','1130972400')#
+    </p>
+</div>
