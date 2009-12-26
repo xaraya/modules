@@ -1,0 +1,69 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-body">
+    <xar:template file="publinks" type="module" />
+    <xar:comment>
+        You can use different user-archive-[pubtype].xt templates for different pubtypes
+    </xar:comment>
+    <h3>
+        <xar:mlstring>Monthly Archives</xar:mlstring>
+    </h3>
+    <ul>
+        <xar:foreach in="$months" value="$month">
+            <li>
+                <xar:if condition="empty($month['mlink'])">
+                    #$month['month']# (#$month['mcount']#)
+                <xar:else />
+                    <a href="#$month['mlink']#">#$month['month']#</a>(#$month['mcount']#)
+                </xar:if>
+            </li>
+        </xar:foreach>
+    </ul>
+    <form method="post" action="#$curlink#">
+        <table>
+            <tr>
+                <xar:foreach in="$catsel" value="$sel">
+                    <td>
+                        #$sel#
+                    </td>
+                </xar:foreach>
+            </tr>
+        </table>
+    </form>
+    <table class="xar-items">
+    <thead>
+        <tr>
+            <xar:foreach in="$catlist" value="$cat">
+                <th class="xar-align-center">
+                    <xar:if condition="empty($cat['link'])">
+                        #$cat['name']#
+                    <xar:else />
+                        <a href="#$cat['link']#"> #$cat['name']# </a>
+                    </xar:if>
+                </th>
+            </xar:foreach>
+        </tr>
+    </thead>
+    <tbody>
+        <xar:set name="rowclass">'xar-norm'</xar:set>
+        <xar:foreach in="$articles" value="$article">
+            <tr class="#$rowclass#">
+                <xar:foreach in="$article['cats']" value="$cat">
+                    <td>
+                        #$cat['list']#
+                    </td>
+                </xar:foreach>
+                <td>
+                    <a href="#$article['link']#"> #$article['title']# </a>
+                </td>
+                <xar:if condition="!empty($showdate)">
+                    <td>
+                        #xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",$article['pubdate'])#
+                    </td>
+                </xar:if>
+            </tr>
+            <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+        </xar:foreach>
+    </tbody>
+    </table>
+    <xar:template file="navtabs-user" type="module" />
+</div>

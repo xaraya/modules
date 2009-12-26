@@ -1,0 +1,52 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Articles Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2>
+        <xar:mlstring>Import Definition of Publication Type</xar:mlstring>
+    </h2>
+    <xar:if condition="!empty($warning)">
+        <p class="xar-error">
+            #$warning#
+        </p>
+    </xar:if>
+    <form method="post" action="#xarModURL('articles','admin','importpubtype')#">
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">
+                <xar:mlstring>Filter:</xar:mlstring>
+            </label>
+            modules/articles/*.xml
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="import" class="xar-form-label">
+                <xar:mlstring>File:</xar:mlstring>
+            </label>
+            <xar:if condition="count($options) gt 0">
+                <select name="import" id="import">
+                    <xar:foreach in="$options" value="$option">
+                        <option value="#$option['id']#">#$option['name']#</option>
+                    </xar:foreach>
+                </select>
+            <xar:else />
+                <xar:mlstring>No files found.</xar:mlstring>
+            </xar:if>
+        </div>
+        <p>
+            <xar:mlstring>Select a file in the list above, or paste the definition below.</xar:mlstring>
+        </p>
+        <div class="xar-form-input-wrapper">
+            <label for="FOR" title="#xarML('TITLE')#" class="xar-form-label">
+                <xar:mlstring>Definition:</xar:mlstring>
+            </label>
+            <textarea name="xml" id="xml" rows="" cols="" class="xar-form-textareaxlarge"></textarea>
+        </div>
+        <div class="xar-form-footer">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="submit" value="#xarML('Import Definition')#" />
+        </div>
+    </form>
+</div>

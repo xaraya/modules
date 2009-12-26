@@ -1,0 +1,65 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Articles Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2>
+        <xar:mlstring>Utilities</xar:mlstring>
+    </h2>
+    <xar:template type="module" file="util-menu" />
+    <h3><xar:mlstring>Statistics</xar:mlstring></h3>
+    <form method="post" action="#xarModURL('articles','admin','stats')#">
+        <p>
+            <xar:mlstring>Group by</xar:mlstring>
+        </p>
+        <table class="xar-item-controls">
+        <thead>
+            <xar:for start="$i = 0" test="$i lt 4" iter="$i++">
+                <th>
+                    <label for="group_#$i#">
+                        <xar:set name="f">$i + 1</xar:set>
+                        <xar:ml>
+                            <xar:mlstring>Filter #(1)</xar:mlstring>
+                            <xar:mlvar>#$f#</xar:mlvar>
+                        </xar:ml>
+                    </label>
+                </th>
+            </xar:for>
+            <th></th>
+        </thead>
+        <tbody>
+        <xar:for start="$i = 0" test="$i lt 4" iter="$i++">
+            <td>
+                <select name="group[#$i#]" id="group_#$i#">
+                    <option value=""></option>
+                    <xar:foreach in="$fields" key="$name" value="$label">
+                        <xar:if condition="!empty($group[$i]) and $group[$i] eq $name">
+                            <option value="#$name#" selected="selected">#$label#</option>
+                        <xar:else />
+                            <option value="#$name#">#$label#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </td>
+        </xar:for>
+        <td>
+            <input type="submit" value="#xarML('Select')#" />
+        </td>
+        </tbody>
+        </table>
+    </form>
+    <xar:set name="pubtypeid">null</xar:set>
+    <xar:set name="authorid">null</xar:set>
+    <xar:set name="status">null</xar:set>
+    <xar:set name="pubdate">null</xar:set>
+    <xar:set name="language">null</xar:set>
+    <xar:if condition="!empty($group[0])">
+        <xar:set name="nextfield">$group[0]</xar:set>
+        <xar:set name="nextlevel">1</xar:set>
+        <xar:set name="nextvalue">$stats</xar:set>
+        <xar:template file="substats" type="module" />
+    </xar:if>
+</div>

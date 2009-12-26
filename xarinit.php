@@ -456,6 +456,9 @@ function articles_upgrade($oldversion)
             // Code to upgrade from version 1.5.2 goes here
             xarModSetVar('articles', 'ptypenamechange', '0');
 
+        case '1.6.0':
+            // Code to upgrade from version 1.5.2 goes here
+
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here
 

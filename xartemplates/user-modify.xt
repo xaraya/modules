@@ -1,0 +1,142 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            Articles Management
+        </xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="user-menu" />
+    <h2>
+        <xar:mlstring>
+            Modify Article
+        </xar:mlstring>
+    </h2>
+    <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+        <p>#xarSessionGetVar('statusmsg')#</p>
+    </xar:if>
+    <xar:if condition="!empty($preview)">
+        <div>
+            #$preview#
+        </div>
+    </xar:if>
+    <xar:comment>
+        You can use different user-modify-[pubtype].xt templates for different pubtypes
+    </xar:comment>
+    <xar:comment>
+        retrieve the previous article in publication type ptid (with any status here)
+    </xar:comment>
+    <xar:comment>
+        <xar:set name="prevartinfo">
+            #xarModAPIFunc('articles','user','getprevious',array('ptid' => $ptid, 'aid' => $aid, 'status' => array(0,1,2,3)))#
+        </xar:set>
+    </xar:comment>
+    <xar:comment>
+        retrieve the next article in publication type ptid (with any status here)
+    </xar:comment>
+    <xar:comment>
+        <xar:set name="nextartinfo">
+            #xarModAPIFunc('articles','user','getnext',array('ptid' => $ptid, 'aid' => $aid, 'status' => array(0,1,2,3)))#
+        </xar:set>
+    </xar:comment>
+    <xar:comment>
+        show a link to modify the previous article with title
+    </xar:comment>
+    <xar:comment>
+        <xar:if condition="!empty($prevartinfo['aid'])">
+            <a href="#xarModURL('articles','user','modify',array('aid' => $prevartinfo['aid']))#">&lt;&lt; #xarVarPrepHTMLDisplay($prevartinfo['title'])#</a>
+        </xar:if>
+    </xar:comment>
+    <xar:comment>
+        show a link to modify the next article with title
+    </xar:comment>
+    <xar:comment>
+        <xar:if condition="!empty($nextartinfo['aid'])">
+            <a href="#xarModURL('articles','user','modify',array('aid' => $nextartinfo['aid']))#">#xarVarPrepHTMLDisplay($nextartinfo['title'])# &gt;&gt;</a>
+        </xar:if>
+    </xar:comment>
+    <xar:if condition="!empty($withupload)">
+        <xar:set name="enctype">
+            'multipart/form-data'
+        </xar:set>
+        <xar:else />
+        <xar:set name="enctype">
+            'application/x-www-form-urlencoded'
+        </xar:set>
+    </xar:if>
+    <form method="post" name="post" id="post" action="#xarModURL('articles','user','update')#" enctype="#$enctype#" #$formhooks['formaction']# >
+        <div class="xar-form-input-wrapper">
+            <label class="help xar-form-label" title="#xarML('This is the publication type that this article will appear in.')#">
+                <xar:mlstring>
+                    Publication Type
+                </xar:mlstring>
+            </label> #$values['pubtype']#
+        </div>
+        <xar:comment>
+            Instead of looping over all fields, you can also access individual field definitions via $fields['title'], $fields['summary'] etc.
+        </xar:comment>
+        <xar:comment>
+            Contrary to user-new.xt, it is not recommended to use $field['definition']['preset'] here
+        </xar:comment>
+        <xar:foreach in="$fields" value="$field">
+            <div class="xar-form-input-wrapper">
+                <label class="help xar-form-label" title="#$field['label']#" for="#$field['id']#">#$field['label']#</label>
+                <xar:articles-field definition="$field['definition']" />
+            </div>
+        </xar:foreach>
+        <xar:if condition="!empty($formhooks['formdisplay'])">
+            <div class="xar-form-input-wrapper">
+                <label class="help xar-form-label" title="#xarML('Form Controls as determined by hook selection.')#">
+                    <xar:mlstring>
+                        Form Controls
+                    </xar:mlstring>
+                </label> #$formhooks['formdisplay']#
+            </div>
+        </xar:if>
+        <xar:if condition="!empty($hooks)">
+            <xar:foreach in="$hooks" key="$hookmodule">
+                #$hooks[$hookmodule]#
+            </xar:foreach>
+        </xar:if>
+        <div class="xar-form-input-wrapper">
+            <label class="help xar-form-label" title="#xarML('This is the allowed HTML that this website has configured.')#">
+                <xar:mlstring>
+                    Allowed HTML tags
+                </xar:mlstring>
+            </label>
+            <div class="xar-form-container-after">
+                #$allowedhtml#
+            </div>
+        </div>
+        <div class="xar-form-footer">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="aid" id="aid" value="#$aid#" />
+            <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+            <input type="hidden" name="return_url" value="#$return_url#" />
+            <input type="submit" name="preview" id="preview" value="#$previewlabel#" class="xar-margin-thickright" />
+            <xar:if condition="xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')">
+                <input type="submit" name="save" id="save" value="#xarML('Save and Edit')#" class="xar-margin-thicksides" />
+            </xar:if>
+            <input type="submit" value="#$updatelabel#" class="xar-margin-thickleft" />
+            <xar:comment>
+                show a link to delete the article
+            </xar:comment>
+            <xar:comment>
+                <xar:sec mask="DeleteArticles" catch="false">
+                    <a href="#xarModURL('articles','user','delete',array('aid' => $aid))#">
+                        <xar:mlstring>
+                            Delete Article
+                        </xar:mlstring>
+                    </a>
+                </xar:sec>
+            </xar:comment>
+        </div>
+    </form>
+    <!--
+    // clear the status message
+    // we put this in an if tag to prevent the function from
+    // showing '1' in the page
+    -->
+    <xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
+</div>

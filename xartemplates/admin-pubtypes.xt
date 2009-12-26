@@ -1,0 +1,411 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Articles Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <xar:set name="icon_modify">xarTplGetImage('icons/modify.png','base')</xar:set>
+    <xar:set name="icon_delete">xarTplGetImage('icons/delete.png','base')</xar:set>
+    <xar:set name="icon_new">xarTplGetImage('icons/document-new.png','base')</xar:set>
+    <xar:set name="icon_items">xarTplGetImage('icons/item-list.png','base')</xar:set>
+    <xar:set name="icon_config">xarTplGetImage('icons/modify-config.png','base')</xar:set>
+
+    <xar:template type="module" file="admin-menu" />
+    <xar:set name="statusmsg">xarSessionGetVar('statusmsg')</xar:set>
+    <xar:if condition="isset($action) and $action eq 'new'">
+        <h2>
+            <xar:mlstring>New Publication Type</xar:mlstring>
+        </h2>
+        <xar:if condition="isset($statusmsg) and $statusmsg ne ''">
+            <p class="xar-error">#$statusmsg#</p>
+        </xar:if>
+        <form method="post" action="#$link#">
+            <div class="xar-form-input-wrapper">
+                <label for="name" title="#xarML('Publication Type name')#" class="xar-form-label">
+                    <xar:mlstring>Type:</xar:mlstring>
+                </label>
+                <input type="text" name="name" id="name" value="" maxlength="30" class="xar-form-textmedium" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="descr" title="#xarML('Publication Type description')#" class="xar-form-label">
+                    <xar:mlstring>Description:</xar:mlstring>
+                </label>
+                <input type="text" name="descr" id="descr" value="" maxlength="250" class="xar-form-textxlong" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label">
+                    <xar:mlstring>Configuration:</xar:mlstring>
+                </label>
+                <div class="xar-form-container-after">
+                    <xar:mlstring>Leave Label empty to disable a field.</xar:mlstring>
+                </div>
+            </div>
+
+            <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-fullwidth xar-items">
+            <thead>
+                <tr>
+                    <th>
+                        <xar:mlstring>Field</xar:mlstring>
+                    </th>
+                    <th>
+                        <xar:mlstring>Label</xar:mlstring>
+                    </th>
+                    <th>
+                        <xar:mlstring>Format</xar:mlstring>
+                    </th>
+                    <th>
+                        <xar:mlstring>Input</xar:mlstring>
+                    </th>
+                    <th>
+                        <xar:mlstring>Type</xar:mlstring>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <xar:set name="rowclass">'xar-norm'</xar:set>
+                <xar:foreach in="$fields" value="$field">
+                    <tr class="#$rowclass#">
+                        <td>
+                            <label for="label_#$field['name']#">#$field['name']#</label>
+                        </td>
+                        <td>
+                            <input type="text" name="label[#$field['name']#]" id="label_#$field['name']#" value="#$field['label']#" class="xar-form-textmedium" />
+                        </td>
+                        <td>
+                            <xar:articles-field type="fieldtype" name="format['.$field['name'].']" value="$field['format']" />
+                        </td>
+                        <td>
+                            <xar:if condition="!empty($field['input'])">
+                                <input type="checkbox" name="input[#$field['name']#]" id="input_#$field['name']#" checked="checked" />
+                            <xar:else />
+                                <input type="checkbox" name="input[#$field['name']#]" id="input_#$field['name']#" />
+                            </xar:if>
+                        </td>
+                        <td>
+                            #$field['type']#
+                        </td>
+                    </tr>
+                    <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+                </xar:foreach>
+            </tbody>
+            </table>
+            <p>
+                <xar:mlstring><strong>Note:</strong> articles of this publication type will use the templates <em>user-display-[publicationtype].xt</em> and <em>user-summary-[publicationtype].xt</em> by default.  These templates must be in place before new articles of this Publication Type can be added.</xar:mlstring>
+            </p>
+            <div class="xar-form-footer">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" value="#$buttonlabel#" />
+            </div>
+        </form>
+    </xar:if>
+    <xar:if condition="isset($action) and $action eq 'modify'">
+        <xar:base-js-framework module="base" name="jquery" file="jquery-1.3.2.min.js" />
+        <xar:base-js-plugin name="ui" framework="jquery" file="jquery-ui-1.7.2.custom.min.js" style="jquery-ui-1.7.2.custom.css" />
+        <xar:base-js-plugin name="bgiframe" framework="jquery" file="jquery.bgiframe.min.js"  />
+        <xar:set name="ptcode">"
+    var dialog_width = Math.floor(jQuery(window).width() * .85);
+    var dialog_height = Math.floor(jQuery(window).height() * .85);
+
+    var propval_trigger = function() {
+        jQuery('#"."xardialogtarget').remove();
+        jQuery('body').append('".chr(60)."div id=\'xardialogtarget\' style=\'display: none;\'".chr(62).chr(60)."/div".chr(62)."');
+        jQuery('#" . "xardialogtarget').load(this.getAttribute('href') + '".chr(38)."pageName=module .xar-mod-body ".chr(62)." *').dialog(
+            {
+                title: jQuery(this).attr('title'),
+                width: dialog_width,
+                height: dialog_height,
+                bgiframe: true,
+                modal: true,
+                draggable: false,
+                resizable: false,
+                buttons: {
+                    '" . xarML('Close') . "': function() { jQuery(this).dialog('close');},
+                }
+            }
+        );
+        return false;
+    }
+
+    jQuery('table#"."proplist a, a#"."xmlexport').click(propval_trigger);
+"</xar:set>
+        <xar:base-js-event name="ready" code="$ptcode" />
+
+        <h2>
+            <xar:mlstring>Edit Publication Type</xar:mlstring>
+        </h2>
+        <xar:if condition="isset($statusmsg) and $statusmsg ne ''">
+            <p class="xar-error">#$statusmsg#</p>
+        </xar:if>
+        <form method="post" action="#$link#">
+            <div class="xar-form-input-wrapper">
+                <label for="name" title="#xarML('Publication Type name')#" class="xar-form-label">
+                    <xar:mlstring>Type:</xar:mlstring>
+                </label>
+                <xar:if condition="xarModGetVar('articles', 'ptypenamechange')">
+                    <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($item['name'])#" maxlength="30" class="xar-form-textmedium" />
+                <xar:else />
+                    <input type="hidden" name="name" id="name" value="#xarVarPrepForDisplay($item['name'])#" />
+                    #xarVarPrepForDisplay($item['name'])#
+                </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="descr" title="#xarML('Publication Type type description')#" class="xar-form-label">
+                    <xar:mlstring>Description:</xar:mlstring>
+                </label>
+                <input type="text" name="descr" id="descr" value="#xarVarPrepForDisplay($item['descr'])#" maxlength="250" class="xar-form-textxlong" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label">
+                    <xar:mlstring>Configuration:</xar:mlstring>
+                </label>
+                <div class="xar-form-container-after">
+                    <p>
+                        <xar:mlstring>Leave Label empty if you don't want to use a field and uncheck Input.</xar:mlstring>
+                    </p>
+                    <p>
+                        <xar:mlstring>Edit Validation for default fields via the clickable field name (some field formats only).</xar:mlstring>
+                    </p>
+                </div>
+            </div>
+
+            <table class="xar-items xar-fullwidth" id="proplist">
+                <thead>
+                <tr>
+                    <th>
+                        <xar:mlstring>Field</xar:mlstring>
+                    </th>
+                    <th>
+                        <xar:mlstring>Label</xar:mlstring>
+                    </th>
+                    <th>
+                        <xar:mlstring>Format</xar:mlstring>
+                    </th>
+                    <th>
+                        <xar:mlstring>Input</xar:mlstring>
+                    </th>
+                    <th>
+                        <xar:mlstring>Type</xar:mlstring>
+                    </th>
+                </tr>
+                </thead>
+                <xar:set name="rowclass">'xar-norm'</xar:set>
+                <tbody>
+                <xar:foreach in="$fields" value="$field">
+                    <tr class="#$rowclass#">
+                        <td>
+                            <label for="label_#$field['name']#">
+                                #$field['name']#
+                            </label>
+                            <xar:comment>Add validation link here - for those fields that already have it plus allowable textarea fields</xar:comment>
+                            <xar:if condition="$field['format'] eq 'textarea_large' or $field['format'] eq 'textarea_medium' or $field['format'] eq 'textarea_small' or $field['format'] eq 'dropdown' or $field['format'] eq 'imagelist' or $field['format'] eq 'webpage' or $field['format'] eq 'fileupload' or $field['format'] eq 'textupload' or $field['format'] eq 'userlist' or $field['format'] eq 'xartinymce'">
+                                <xar:set name="editvalidation">xarML('Edit validation for property #(1)',$field['name'])</xar:set>
+                                <a href="#xarModURL('articles','admin','showpropval',array('ptid' => $ptid, 'field' => $field['name']))#" title="#$editvalidation#" class="xar-icon">
+                                    <img src="#$icon_modify#" alt="#$editvalidation#" title="#$editvalidation#" />
+                                </a>
+                            </xar:if>
+                        </td>
+                        <td>
+                            <input type="text" name="label[#$field['name']#]" id="label_#$field['name']#" value="#$field['label']#" />
+                        </td>
+                        <td>
+                            <xar:articles-field type="fieldtype" name="format['.$field['name'].']" value="$field['format']" />
+                        </td>
+                        <td class="xar-align-center">
+                            <xar:if condition="!empty($field['input'])">
+                                <input type="checkbox" name="input[#$field['name']#]" id="input_#$field['name']#" checked="checked" />
+                            <xar:else />
+                                <input type="checkbox" name="input[#$field['name']#]" id="input_#$field['name']#" />
+                            </xar:if>
+                        </td>
+                        <td>
+                            #$field['type']#
+                        </td>
+                    </tr>
+                    <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+                </xar:foreach>
+                </tbody>
+            </table>
+            <div class="xar-form-footer">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+                <input type="submit" value="#$buttonlabel#" />
+            </div>
+        </form>
+        <xar:if condition="xarModIsHooked('dynamicdata','articles',$ptid)">
+            #xarModFunc('dynamicdata','admin','modifyconfighook',array('extrainfo' => array('module' => 'articles','itemtype' => $ptid)))#
+        </xar:if>
+        <p>
+            <a href="#xarModURL('articles','admin','exportpubtype',array('ptid' => $ptid))#" id="xmlexport" title="#xarML('Export Definition to XML')#">
+                <xar:mlstring>Export Definition to XML</xar:mlstring>
+            </a>
+        </p>
+    </xar:if>
+    <xar:if condition="isset($action) and $action eq 'delete'">
+        <h2>
+            <xar:mlstring>Delete this Publication Type?</xar:mlstring>
+        </h2>
+        <xar:if condition="isset($statusmsg) and $statusmsg ne ''">
+            <p class="xar-error">#$statusmsg#</p>
+        </xar:if>
+        <form method="post" action="#$link#">
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label">
+                    <xar:mlstring>Type:</xar:mlstring>
+                </label>
+                #$item['name']#
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label">
+                    <xar:mlstring>Description:</xar:mlstring>
+                </label>
+                #xarVarPrepForDisplay($item['descr'])#
+            </div>
+
+            <p>
+                <xar:ml>
+                    <xar:mlstring>The #(1) articles of this publication type will also be deleted.</xar:mlstring>
+                    <xar:mlvar>#$numitems#</xar:mlvar>
+                </xar:ml>
+            </p>
+            <xar:if condition="$ptid eq xarModGetVar('articles','defaultpubtype')">
+                <p class="xar-error">
+                    <xar:mlstring>Warning: this is the current default publication type.  Make sure you modify the configuration after deleting this.</xar:mlstring>
+                </p>
+            </xar:if>
+            <div class="xar-form-footer">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+                <input type="submit" value="#$buttonlabel#" />
+                <p>
+                    <a href="#xarModURL('articles','admin','pubtypes')#">
+                        <xar:mlstring>Cancel</xar:mlstring>
+                    </a>
+                </p>
+            </div>
+        </form>
+    </xar:if>
+    <xar:if condition="$action eq 'view'">
+<xar:base-js-framework module="base" name="jquery" file="jquery-1.3.2.min.js" />
+<xar:base-js-plugin name="ui" framework="jquery" file="jquery-ui-1.7.2.custom.min.js" style="jquery-ui-1.7.2.custom.css" />
+<xar:base-js-plugin name="bgiframe" framework="jquery" file="jquery.bgiframe.min.js"  />
+<xar:set name="ptcode">"
+var dialog_width = 300;
+var dialog_height = 200;
+
+jQuery('a#" . "articles_checkall').click(function() { jQuery('form#" . "viewarticles table.xar-items input[type=checkbox]').attr('checked',true);return false; });
+jQuery('a#" . "articles_checknone').click(function() { jQuery('form#" . "viewarticles table.xar-items input[type=checkbox]').attr('checked',false);return false; });
+jQuery('a#" . "articles_checktoggle').click(function() { jQuery('form#" . "viewarticles table.xar-items input[type=checkbox]').each(function() { jQuery(this).attr('checked', !jQuery(this).attr('checked')); });return false; });
+jQuery('a" . "[id^=articles_checkstatus]').click(function() { jQuery('form#" . "viewarticles table.xar-items input[type=checkbox].status-' + jQuery(this).attr('id').replace('articles_checkstatus_','')).attr('checked',true);return false; });
+jQuery('table.xar-items a[id^=delete]').click(function() {
+    var a = this;
+    jQuery('#"."xardialogtarget').remove();
+    jQuery('body').append('" . chr(60) . "div id=\'xardialogtarget\' style=\'display: none;\'" . chr(62) . chr(60) . "/div" . chr(62) . "');
+    jQuery('#" . "xardialogtarget').html('" . chr(60) . "p" . chr(62) . "" . xarML('Delete this publication type?') . "" . chr(60) . "/p" . chr(62) . chr(60) . "p style=\'text-align: center;\'" . chr(62) . "' + jQuery.trim(jQuery(this).parent().parent().children(':first').text()) + '" . chr(60) . "/p" . chr(62) . "');
+    jQuery('#" . "xardialogtarget').dialog({
+        title: '" . xarML('Delete Publication Type') . "',
+        width: dialog_width,
+        height: dialog_height,
+        buttons: {
+            '". xarML('Cancel') . "': function() { jQuery(this).dialog('close'); },
+            '". xarML('Delete') . "': function() { a.setAttribute('href', a.getAttribute('href').replace('action=delete', 'action=confirm'));jQuery(this).dialog('close');window.location = a.getAttribute('href'); }
+        },
+        bgiframe: true,
+        modal: true,
+        draggable: false,
+        resizable: false
+    });
+    return false;
+});
+"</xar:set>
+<xar:base-js-event name="ready" code="$ptcode" />
+        <h2>
+            <xar:mlstring>Publication Types</xar:mlstring>
+        </h2>
+        <p><a href="#$newurl#">
+            <xar:mlstring>Create New Publication Type</xar:mlstring>
+            </a>
+        </p>
+        <table class="xar-fullwidth xar-items">
+            <thead>
+            <tr>
+                <th>
+                    <xar:mlstring>Name</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Description</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Actions</xar:mlstring>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <xar:set name="rowclass">'xar-norm'</xar:set>
+            <xar:foreach in="$pubtypes" value="$pubtype">
+                <tr class="#$rowclass#">
+                    <td>
+                        #$pubtype['name']#
+                    </td>
+                    <td>
+                        #xarVarPrepForDisplay($pubtype['descr'])#
+                    </td>
+                    <td class="xar-item-actions">
+                        <xar:if condition="!empty($pubtype['editurl'])">
+                            <a href="#$pubtype['editurl']#" class="xar-icon" title="#xarML('Edit')#">
+                                <img src="#$icon_modify#" alt="#xarML('Edit')#" />
+                            </a>
+                        <xar:else />
+                            <img src="#$icon_modify#" alt="#xarML('Edit')#" title="#xarML('Edit')#" class="xar-icon-disabled" />
+                        </xar:if>
+
+                        <xar:if condition="!empty($pubtype['deleteurl'])">
+                            <a href="#$pubtype['deleteurl']#" id="delete_#$pubtype.ptid#" class="xar-icon" title="#xarML('Delete')#">
+                                <img src="#$icon_delete#" alt="#xarML('Delete')#" />
+                            </a>
+                        <xar:else />
+                            <img src="#$icon_delete#" alt="#xarML('Delete')#" title="#xarML('Delete')#" class="xar-icon-disabled" />
+                        </xar:if>
+
+                        <xar:if condition="!empty($pubtype['configurl'])">
+                            <a href="#$pubtype['configurl']#" class="xar-icon" title="#xarML('Article Config')#">
+                                <img src="#$icon_config#" alt="#xarML('Article Config')#" />
+                            </a>
+                        <xar:else />
+                            <img src="#$icon_config#" alt="#xarML('Article Config')#" title="#xarML('Article Config')#" class="xar-icon-disabled" />
+                        </xar:if>
+
+                        <xar:if condition="!empty($pubtype['viewurl'])">
+                            <a href="#$pubtype['viewurl']#" class="xar-icon" title="#xarML('View Articles')#">
+                                <img src="#$icon_items#" alt="#xarML('View Articles')#" />
+                            </a>
+                        <xar:else />
+                            <img src="#$icon_items#" alt="#xarML('View Articles')#" title="#xarML('View Articles')#" class="xar-icon-disabled" />
+                        </xar:if>
+
+                        <xar:if condition="!empty($pubtype['addurl'])">
+                            <a href="#$pubtype['addurl']#" class="xar-icon" title="#xarML('Add Article')#">
+                                <img src="#$icon_new#" alt="#xarML('Add Article')#" />
+                            </a>
+                        <xar:else />
+                            <img src="#$icon_new#" alt="#xarML('Add Article')#" title="#xarML('Add Article')#" class="xar-icon-disabled" />
+                        </xar:if>
+                    </td>
+                </tr>
+                <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+            </xar:foreach>
+            </tbody>
+        </table>
+        <p>
+            <a href="#xarModURL('articles','admin','importpubtype')#">
+                <xar:mlstring>Import Definition from XML</xar:mlstring>
+            </a>
+        </p>
+    </xar:if>
+    <xar:set name="dummy">xarSessionSetVar('statusmsg','')</xar:set>
+</div>

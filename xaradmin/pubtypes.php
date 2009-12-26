@@ -171,6 +171,8 @@ function articles_admin_pubtypes()
 
     // Create Edit/Delete/Modify Config links for each pubtype and
     // View/New links for articles of these pubtypes
+    $authid = xarSecGenAuthKey();
+
     foreach ($pubtypes as $id => $pubtype) {
         if (!xarSecurityCheck('AdminArticles',0,'Article',"$id:All:All:All")) {
             $pubtypes[$id]['editurl'] = '';
@@ -185,7 +187,8 @@ function articles_admin_pubtypes()
                                                    'action' => 'modify'));
         $pubtypes[$id]['deleteurl'] = xarModURL('articles', 'admin', 'pubtypes',
                                                array('ptid' => $id,
-                                                     'action' => 'delete'));
+                                                     'action' => 'delete',
+                                                     'authid' => $authid));
         $pubtypes[$id]['configurl'] = xarModURL('articles', 'admin', 'modifyconfig',
                                                array('ptid' => $id));
         $pubtypes[$id]['viewurl']   = xarModURL('articles', 'admin', 'view',
@@ -222,7 +225,7 @@ function articles_admin_pubtypes()
                                       'format' => $value['format'],
                                       'validation' => !empty($value['validation']) ? $value['validation'] : '',
                                       'type'   => $pubfieldtypes[$field],
-                                      'input'  => !empty($value['input']) ? 'checked="checked" ' : '');
+                                      'input'  => !empty($value['input']) ? 1 : '');
         }
     } elseif ($action == 'modify') {
         $data['item'] = $pubtypes[$ptid];

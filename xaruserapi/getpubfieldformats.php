@@ -52,6 +52,7 @@ function articles_userapi_getpubfieldformats($args)
         $extrafields=array('xartinymce'=> xarML('xarTinyMCE GUI'));
         $fieldlist=array_merge($fieldlist,$extrafields);
     }
+    asort($fieldlist);
 
     return $fieldlist;
 }

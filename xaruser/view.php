@@ -362,7 +362,7 @@ function articles_user_view($args)
     if ($ishome) {
         $data['ptid'] = null;
         if (xarSecurityCheck('SubmitArticles',0)) {
-            $data['submitlink'] = xarModURL('articles', 'admin', 'new');
+            $data['submitlink'] = xarModURL('articles', 'user', 'new');
         }
     } else {
         $data['ptid'] = $ptid;
@@ -374,12 +374,12 @@ function articles_user_view($args)
         if (count($cids) > 0) {
             foreach ($cids as $cid) {
                 if (xarSecurityCheck('SubmitArticles', 0, 'Article', "$curptid:$cid:All:All")) {
-                    $data['submitlink'] = xarModURL('articles', 'admin', 'new', array('ptid' => $ptid, 'catid' => $catid));
+                    $data['submitlink'] = xarModURL('articles', 'user', 'new', array('ptid' => $ptid, 'catid' => $catid));
                     break;
                 }
             }
         } elseif (xarSecurityCheck('SubmitArticles', 0, 'Article', "$curptid:All:All:All")) {
-            $data['submitlink'] = xarModURL('articles', 'admin', 'new', array('ptid' => $ptid));
+            $data['submitlink'] = xarModURL('articles', 'user', 'new', array('ptid' => $ptid));
         }
     }
     $data['cids'] = $cids;

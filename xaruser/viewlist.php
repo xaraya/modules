@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin view of articles
+ * User management view of articles
  *
  * @package modules
  * @copyright (C) 2002-2009 The Digital Development Foundation
@@ -12,7 +12,7 @@
  * @author mikespub
  */
 /**
- * View articles for an administrator. This function shows a page from which articles can be managed
+ * View articles for an user/moderator. This function shows a page from which articles can be managed
  *
  * @param int startnum Defaults to 1
  * @param int ptid OPTIONAL
@@ -24,7 +24,7 @@
  * @param pubdate OPTIONAL
  * @return mixed. Calls the template function to show the article listing.
  */
-function articles_admin_view($args)
+function articles_user_viewlist($args)
 {
     // Get parameters
     if(!xarVarFetch('startnum', 'isset', $startnum, 1,    XARVAR_NOT_REQUIRED)) {return;}
@@ -138,7 +138,7 @@ function articles_admin_view($args)
                                    'andcids'  => $andcids,
                                    'status'   => $status));
 
-    // Save the current admin view, so that we can return to it after update
+    // Save the current user view, so that we can return to it after update
     $lastview = array('ptid' => $ptid,
                       'authorid' => $authorid,
                       'language' => $lang,
@@ -204,11 +204,11 @@ function articles_admin_view($args)
             $input['mask'] = 'DeleteArticles';
             if (xarModAPIFunc('articles','user','checksecurity',$input)) {
                 $item['deleteurl'] = xarModURL('articles',
-                                              'admin',
+                                              'user',
                                               'delete',
                                               array('aid' => $article['aid'], 'authid' => $authid));
                 $item['editurl'] = xarModURL('articles',
-                                            'admin',
+                                            'user',
                                             'modify',
                                             array('aid' => $article['aid']));
                 $item['viewurl'] = xarModURL('articles',
@@ -222,7 +222,7 @@ function articles_admin_view($args)
                 $input['mask'] = 'EditArticles';
                 if (xarModAPIFunc('articles','user','checksecurity',$input)) {
                     $item['editurl'] = xarModURL('articles',
-                                                'admin',
+                                                'user',
                                                 'modify',
                                                 array('aid' => $article['aid']));
                     $item['viewurl'] = xarModURL('articles',
@@ -265,7 +265,7 @@ function articles_admin_view($args)
                                                 'cids' => $cids,
                                                 'andcids' => $andcids,
                                                 'status' => $status)),
-                            xarModURL('articles', 'admin', 'view',
+                            xarModURL('articles', 'user', 'viewlist',
                                       array('startnum' => '%%',
                                             'ptid' => $ptid,
                                             'authorid' => $authorid,
@@ -285,7 +285,7 @@ function articles_admin_view($args)
         if ($id == $ptid) {
             $pubitem['plink'] = '';
         } else {
-            $pubitem['plink'] = xarModURL('articles','admin','view',
+            $pubitem['plink'] = xarModURL('articles','user','viewlist',
                                          array('ptid' => $id));
         }
         $pubitem['ptitle'] = $pubtype['descr'];
@@ -297,13 +297,13 @@ function articles_admin_view($args)
     if (!empty($labels['status'])) {
         $statusfilters[] = array('stitle' => xarML('All'),
                                  'slink' => !is_array($status) ? '' :
-                                                xarModURL('articles','admin','view',
+                                                xarModURL('articles','user','viewlist',
                                                           array('ptid' => $ptid,
                                                                 'catid' => $catid)));
         foreach ($data['states'] as $id => $name) {
             $statusfilters[] = array('stitle' => $name,
                                      'slink' => (is_array($status) && $status[0] == $id) ? '' :
-                                                    xarModURL('articles','admin','view',
+                                                    xarModURL('articles','user','viewlist',
                                                               array('ptid' => $ptid,
                                                                     'catid' => $catid,
                                                                     'status' => array($id))));
@@ -314,7 +314,7 @@ function articles_admin_view($args)
     // Add link to create new article
     if (xarSecurityCheck('SubmitArticles',0,'Article',"$ptid:All:All:All")) {
         $newurl = xarModURL('articles',
-                           'admin',
+                           'user',
                            'new',
                            array('ptid' => $ptid));
         $data['shownewlink'] = true;
@@ -342,7 +342,7 @@ function articles_admin_view($args)
        xarTplSetPageTitle(xarML('View'));
     }
 
-    return xarTplModule('articles', 'admin', 'view', $data, $template);
+    return xarTplModule('articles', 'user', 'viewlist', $data, $template);
 }
 
 ?>

@@ -68,7 +68,6 @@ function articles_admin_importpubtype($args)
     }
 
     natsort($files);
-    array_unshift($files,'');
     foreach ($files as $file) {
          $data['options'][] = array('id' => $file,
                                     'name' => $file);

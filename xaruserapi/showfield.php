@@ -75,12 +75,12 @@ function articles_userapi_showfield($args)
                     $numid = $fieldformatnums[$fid];
                     $output .= '<option value="'.$numid.'"';
                     if ($numid == $value) {
-                        $output .= ' selected';
+                        $output .= ' selected="selected"';
                     }
                 } else {
                     $output .= '<option value="'.$fid.'"';
                     if ($fid == $value) {
-                        $output .= ' selected';
+                        $output .= ' selected="selected"';
                     }
                 }
                 $output .= '>'.$fname.'</option>';

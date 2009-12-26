@@ -17,7 +17,7 @@
  * @param string return_url
  * @param int preview
  */
-function articles_admin_modify($args)
+function articles_user_modify($args)
 {
     extract($args);
 
@@ -163,7 +163,7 @@ function articles_admin_modify($args)
        $template = null;
     }
 
-    return xarTplModule('articles', 'admin', 'modify', $data, $template);
+    return xarTplModule('articles', 'user', 'modify', $data, $template);
 }
 
 ?>

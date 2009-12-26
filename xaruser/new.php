@@ -12,16 +12,16 @@
  * @author mikespub
  */
 /**
- * Prepare form for new article
+ * add new article
  *
  * This function presents the template from which the article is created
  * @param int    ptid       The publication type id, overrides an itemtype value
- * @param string catid      The category id this article will belong to
+ * @param string catid The category id this article will belong to
  * @param int    itemtype   The itemtype (optional)
  * @param string return_url The url to return to
  * @return mixed call to template with data array and name of template to use
  */
-function articles_admin_new($args)
+function articles_user_new($args)
 {
     extract($args);
 
@@ -41,7 +41,6 @@ function articles_admin_new($args)
         // Use defaultpubtype now. This var may even be NULL
         $ptid = xarModGetVar('articles', 'defaultpubtype');
     }
-
     $data = array();
     $data['ptid'] = $ptid;
     $data['catid'] = $catid;
@@ -111,6 +110,7 @@ function articles_admin_new($args)
         $article['module'] = 'articles';
         $article['itemid'] = 0;
         $article['itemtype'] = $ptid;
+
         $hooks = xarModCallHooks('item','new','',$article);
     }
     $data['hooks'] = $hooks;
@@ -128,7 +128,7 @@ function articles_admin_new($args)
             if (!xarSecurityCheck('SubmitArticles',0,'Article',$id.':All:All:All')) {
                 continue;
             }
-            $pubitem['plink'] = xarModURL('articles','admin','new',
+            $pubitem['plink'] = xarModURL('articles','user','new',
                                           array('ptid' => $id,
                                                 'catid' => $catid));
         }
@@ -222,7 +222,7 @@ function articles_admin_new($args)
        xarTplSetPageTitle(xarML('New'));
     }
 
-    return xarTplModule('articles', 'admin', 'new', $data, $template);
+    return xarTplModule('articles', 'user', 'new', $data, $template);
 }
 
 ?>

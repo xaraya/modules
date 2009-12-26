@@ -19,7 +19,7 @@
  */
 $modversion['name']         = 'articles';
 $modversion['id']           = '151';
-$modversion['version']      = '1.5.2';
+$modversion['version']      = '1.6.0';
 $modversion['displayname']  = 'Articles';
 $modversion['description']  = 'Display articles';
 $modversion['credits']      = '';
@@ -33,8 +33,16 @@ $modversion['admin']        = 1;
 $modversion['user']         = 1;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
-// this module depends on the categories module
-$modversion['dependency']   = array(147);
+$modversion['dependency']   = array(
+                                    0 => array(
+                                            'name' => 'core',
+                                            'version_ge' => '1.2.0-b1'
+                                         ),
+                                    147 => array(
+                                            'name' => 'categories',
+                                            'version_ge' => '2.4.0'
+                                        )
+                                );
 
 // Placeholder for translation skeleton, bug 6033
 if (false) { 

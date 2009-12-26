@@ -54,11 +54,11 @@ function articles_userapi_getmenulinks()
         if (isset($ptid) && $pubitem['pubid'] == $ptid) {
             if (xarSecurityCheck('SubmitArticles',0,'Article',$ptid.':All:All:All')) {
                 $menulinks[] = Array('url'   => xarModURL('articles',
-                                                          'admin',
+                                                          'user',
                                                           'new',
                                                           array('ptid' => $ptid)),
                                      'title' => xarML('Submit #(1)',$pubitem['pubtitle']),
-                                     'label' => '&nbsp;' . xarML('Submit Now'));
+                                     'label' => '&nbsp;' . xarML('Submit Article'));
             }
 
             $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
