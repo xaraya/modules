@@ -16,7 +16,7 @@
  * Note : the following parameters are all optional
  *
  * @param int    $args['numitems'] number of articles to get
- * @param string $args['sort'] sort order ('pubdate','title','hits','rating','author','aid','summary','notes',...)
+ * @param string $args['sort'] sort order ('pubdate','title','hits','rating','author','aid','summary','notes','status',...)
  * @param int    $args['startnum'] starting article number
  * @param array  $args['aids'] array of article ids to get
  * @param int    $args['authorid'] the ID of the author
@@ -374,6 +374,8 @@ function articles_userapi_getall($args)
                 $sortparts[] = $articlesdef['aid'] . ' ' . (!empty($sortorder) ? $sortorder : 'ASC');
                 $seenaid = 1;
                 // other articles fields, e.g. summary, notes, ...
+            } elseif ($criteria == 'status') {
+                $sortparts[] = $articlesdef['status'] . ' ' . (!empty($sortorder) ? $sortorder : 'ASC');
             } elseif (!empty($articlesdef[$criteria])) {
                 $sortparts[] = $articlesdef[$criteria] . ' ' . (!empty($sortorder) ? $sortorder : 'ASC');
             } else {

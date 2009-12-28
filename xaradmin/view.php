@@ -35,6 +35,15 @@ function articles_admin_view($args)
     if(!xarVarFetch('authorid', 'isset', $authorid, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('lang',     'isset', $lang,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('pubdate',  'str:1', $pubdate,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('sort',     'enum:title:pubdate:status',  $sort,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('order',    'str:1', $order,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!empty($order)) {
+        if(!empty($sort) && $sort == 'pubdate') {
+            $order = " ASC";
+        } else {
+            $order = " DESC";
+        }
+    }
 
     extract($args);
 
@@ -71,6 +80,13 @@ function articles_admin_view($args)
     $data['pubdate'] = $pubdate;
 
     $authid = xarSecGenAuthKey();
+
+    $data['order'] = $order;
+    if(!empty($sort)) {
+        $data['sort'] = $sort;
+    } else {
+        $data['sort'] = "pubdate";
+    }
 
     if (!empty($catid)) {
         if (strpos($catid,' ')) {
@@ -136,6 +152,7 @@ function articles_admin_view($args)
                                    'pubdate'  => $pubdate,
                                    'cids'     => $cids,
                                    'andcids'  => $andcids,
+                                   'sort'     => $sort.$order,
                                    'status'   => $status));
 
     // Save the current admin view, so that we can return to it after update

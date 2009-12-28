@@ -32,6 +32,21 @@ jQuery('table.xar-items a[id^=delete]').click(function() {
 });
 "</xar:set>
 <xar:base-js-event name="ready" code="$articlescode" />
+<xar:set name="arrow_asc">xarTplGetImage('asc.png', 'articles')</xar:set>
+<xar:set name="arrow_desc">xarTplGetImage('desc.png', 'articles')</xar:set>
+<xar:set name="array_order">array('order' => 1)</xar:set>
+<xar:set name="asc_str">xarML('ascending')</xar:set>
+<xar:set name="desc_str">xarML('descending')</xar:set>
+<xar:if condition="($sort ne 'pubdate' and !empty($order)) or ($sort eq 'pubdate' and empty($order))">
+    <xar:set name="arrow_mouseover">$arrow_asc</xar:set>
+    <xar:set name="arrow_mouseout">$arrow_desc</xar:set>
+<xar:else />
+    <xar:set name="arrow_mouseover">$arrow_desc</xar:set>
+    <xar:set name="arrow_mouseout">$arrow_asc</xar:set>
+</xar:if>
+<xar:set name="arrow_js">"onmouseover=\"if(document.getElementById('sort_arrow')){ document.getElementById('sort_arrow').src='" .$arrow_mouseover. "'; }\" onmouseout=\"if(document.getElementById('sort_arrow')){ document.getElementById('sort_arrow').src='" .$arrow_mouseout. "'; }\""</xar:set>
+<xar:set name="arrow_img_begin">" src=\"" .$arrow_mouseout. "\" alt=\""</xar:set>
+<xar:set name="arrow_img_end">"\" width=\"11\" height=\"9\" id=\"sort_arrow\""</xar:set>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Articles Administration</xar:mlstring>
@@ -95,16 +110,50 @@ jQuery('table.xar-items a[id^=delete]').click(function() {
             <thead>
             <tr>
                 <th>
-                    #$labels['title']#
+                    <xar:set name="subarray">array('sort' => 'title')</xar:set>
+                    <xar:set name="sort_str">xarML('Sort by title')</xar:set>
+                    <xar:if condition="$sort == 'title'">
+                        <xar:set name="js">" ".$arrow_js</xar:set>
+                        <xar:if condition="empty($order)"><xar:set name="subarray">array_merge($subarray, $array_order)</xar:set><xar:set name="sort_str">$sort_str . ' ' . $desc_str</xar:set></xar:if>
+                        <xar:set name="img">" <img". $arrow_img_begin . $sort_str . $arrow_img_end . "/>"</xar:set>
+                    <xar:else />
+                        <xar:set name="js">""</xar:set>
+                        <xar:set name="img">""</xar:set>
+                    </xar:if>
+                    <xar:set name="title">' title="' . $sort_str . '"'</xar:set>
+                    <a href="#xarModURL('articles', 'admin', 'view', $subarray)#"#$js##$title#>#$labels['title']##$img#</a>
                 </th>
                 <xar:if condition="$showdate">
                     <th>
-                        #$labels['pubdate']#
+                        <xar:set name="subarray">array('sort' => 'pubdate')</xar:set>
+                        <xar:set name="sort_str">xarML('Sort by pubdate')</xar:set>
+                        <xar:if condition="$sort ne 'pubdate' or !empty($order)"><xar:set name="sort_str">$sort_str . ' ' . $desc_str</xar:set></xar:if>
+                        <xar:if condition="$sort == 'pubdate'">
+                            <xar:set name="js">" ".$arrow_js</xar:set>
+                            <xar:if condition="empty($order)"><xar:set name="subarray">array_merge($subarray, $array_order)</xar:set></xar:if>
+                            <xar:set name="img">" <img". $arrow_img_begin . $sort_str . $arrow_img_end . "/>"</xar:set>
+                        <xar:else />
+                            <xar:set name="js">""</xar:set>
+                            <xar:set name="img">""</xar:set>
+                        </xar:if>
+                        <xar:set name="title">' title="' . $sort_str . '"'</xar:set>
+                        <a href="#xarModURL('articles', 'admin', 'view', $subarray)#"#$js##$title#>#$labels['pubdate']##$img#</a>
                     </th>
                 </xar:if>
                 <xar:if condition="$showstatus">
                     <th>
-                        #$labels['status']#
+                        <xar:set name="subarray">array('sort' => 'status')</xar:set>
+                        <xar:set name="sort_str">xarML('Sort by status')</xar:set>
+                        <xar:if condition="$sort == 'status'">
+                            <xar:set name="js">" ".$arrow_js</xar:set>
+                            <xar:if condition="empty($order)"><xar:set name="subarray">array_merge($subarray, $array_order)</xar:set><xar:set name="sort_str">$sort_str . ' ' . $desc_str</xar:set></xar:if>
+                            <xar:set name="img">" <img". $arrow_img_begin . $sort_str . $arrow_img_end . "/>"</xar:set>
+                        <xar:else />
+                            <xar:set name="js">""</xar:set>
+                            <xar:set name="img">""</xar:set>
+                        </xar:if>
+                        <xar:set name="title">' title="' . $sort_str . '"'</xar:set>
+                        <a href="#xarModURL('articles', 'admin', 'view', $subarray)#"#$js##$title#>#$labels['status']##$img#</a>
                     </th>
                 </xar:if>
                 <th>
