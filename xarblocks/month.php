@@ -178,6 +178,11 @@ function ievents_monthblock_display($blockinfo)
             'cid' => $vars['cid'],
         );
     
+        // Display only ACTIVE events on the main view. Include DRAFT and INACTIVE only when the user has permissions to change events in that calendar.
+        if (!xarSecurityCheck('CommentIEvent', 0, 'IEvent')) {
+            $event_params['status'] = 'ACTIVE';
+        }
+
         // Get the events.
         $events = xarModAPIfunc('ievents', 'user', 'getevents', $event_params);
     //if (xarUserGetVar('uname') == 'judgej') var_dump($events);
