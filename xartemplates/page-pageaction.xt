@@ -1,0 +1,106 @@
+<xar:comment>
+</xar:comment>
+<h1>
+    <xar:mlstring>Pageaction Debugging</xar:mlstring>
+</h1>
+<p>
+    page name: #$current_page['name']#
+</p>
+<xar:if condition="!empty($pageaction['pf'])">
+    <p>pf: #$pageaction['pf']#</p>
+</xar:if>
+
+<xar:if condition="isset($current_page.dd.body)">
+    #$current_page.dd.body#
+</xar:if>
+
+<xar:if condition="!empty($message)">
+    <div style="margin:1em; font-weight:bold">
+        #$message#
+    </div>
+</xar:if>
+<xar:if condition="$pageaction['isvalid'] ne 1">
+    <h2>
+        <xar:mlstring>Validation fails on input object</xar:mlstring>
+    </h2>
+    <xar:set name="properties">$pageaction['in']->properties</xar:set>
+    <xar:foreach in="$properties" key="$name" value="$prop">
+        <xar:set name="invalid">$prop->invalid</xar:set>
+        <xar:if condition="!empty($invalid)">
+            <p>#$name# => #$invalid#</p>
+        </xar:if>
+    </xar:foreach>
+<xar:else />
+    <h2>
+        <xar:mlstring>Validation passed</xar:mlstring>
+    </h2> 
+</xar:if>
+<h2>
+    <xar:mlstring>pageaction.xt Input object:</xar:mlstring>
+</h2>
+<p>
+    name: #$pageaction['in']->name#
+</p>
+<p>
+    itemtype: #$pageaction['in']->itemtype#
+</p>
+<p style="font-weight:bold">Fields:</p>
+<pre><xar:set name="asdf">print_r($pageaction['in']->getfieldvalues())</xar:set></pre>
+
+<h2>pageaction.xt Output object: </h2>
+<xar:if condition="isset($pageaction['out'])">
+    <p>
+        name: #$pageaction['out']->name#
+    </p>
+    <p>
+        itemtype: #$pageaction['out']->itemtype#
+    </p>
+    <p style="font-weight:bold">
+        Fields:
+    </p>
+    <pre><xar:set name="asdf">print_r($pageaction['out']->getfieldvalues())</xar:set></pre>
+</xar:if>
+
+<h2>
+    <xar:mlstring>pageaction.xt Validation function:</xar:mlstring>
+</h2>
+<xar:if condition="!empty($pageaction['validation_func'])">
+    <pre>#$pageaction['validation_func']#</pre>
+</xar:if>
+
+<h2>
+    <xar:mlstring>pageaction.xt Validation snippet:</xar:mlstring>
+</h2>
+<xar:if condition="!empty($current_page.dd.validation_php)">
+    <pre>#$current_page.dd.validation_php#</pre>
+</xar:if>
+
+<h2>
+    <xar:mlstring>pageaction.xt Processing function:</xar:mlstring>
+</h2>
+<xar:if condition="!empty($pageaction['processing_func'])">
+    <pre>#$pageaction['processing_func']#</pre>
+</xar:if>
+
+<h2>
+    <xar:mlstring>pageaction.xt Processing snippet:</xar:mlstring>
+</h2>
+<xar:if condition="!empty($current_page.dd.processing_php)">
+    <pre>#$current_page.dd.processing_php#</pre>
+</xar:if>
+  
+<h2>
+    <xar:mlstring>Redirect url</xar:mlstring>
+</h2>
+<xar:if condition="!empty($current_page.dd.redirect_nav)">
+    <pre><a href="#$pageaction['nav'][$current_page.dd.redirect_nav]#">#$pageaction['nav'][$current_page.dd.redirect_nav]#</a></pre>
+<xar:else />
+    <pre><a href="#$pageaction['nav']['nextform_url']#">#$pageaction['nav']['nextform_url']#</a></pre>
+</xar:if>
+
+<h2>
+    <xar:mlstring>PhP Global $_SESSION</xar:mlstring>
+</h2>
+<pre>
+    <xar:set name="asdf">print_r($_SESSION)</xar:set>
+</pre>

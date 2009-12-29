@@ -1,0 +1,155 @@
+<div>
+    <div class="xar-form-input-wrapper">
+        <label for="current_source_#$bid#" class="xar-form-label">
+            <xar:mlstring>Source of the current page</xar:mlstring>
+        </label>
+        <select name="current_source" id="current_source_#$bid#">
+            <xar:if condition="$current_source eq 'AUTO'">
+                <option value="AUTO" selected="selected"><xar:mlstring>Automatic - set by the current module</xar:mlstring></option>
+            <xar:else />
+                <option value="AUTO"><xar:mlstring>Automatic - set by the current module</xar:mlstring></option>
+            </xar:if>
+            <xar:if condition="$current_source eq 'AUTODEFAULT'">
+                    <option value="AUTODEFAULT" selected="selected"><xar:mlstring>Automatic - use default outside roots</xar:mlstring></option>
+                <xar:else />
+                    <option value="AUTODEFAULT"><xar:mlstring>Automatic - use default outside roots</xar:mlstring></option>
+                </xar:if>
+            <xar:if condition="$current_source eq 'DEFAULT'">
+                <option value="DEFAULT" selected="selected"><xar:mlstring>Default - force use of the default page</xar:mlstring></option>
+            <xar:else />
+                <option value="DEFAULT"><xar:mlstring>Default - force use of the default page</xar:mlstring></option>
+            </xar:if>
+        </select>
+    </div>
+
+    <div class="xar-form-input-wrapper">
+        <label for="default_pid_#$bid#" class="xar-form-label">
+            <xar:mlstring>Default page</xar:mlstring>
+        </label>
+        <select name="default_pid" id="default_pid_#$bid#">
+            <xar:if condition="$default_pid eq 0">
+                <option value="-1" selected="selected">[ <xar:mlstring>None</xar:mlstring> ]</option>
+            <xar:else />
+                <option value="-1">[ <xar:mlstring>None</xar:mlstring> ]</option>
+            </xar:if>
+            <xar:loop name="$all_pages.pages">
+                <xar:if condition="$loop:item.pid eq $default_pid">
+                    <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
+                <xar:else />
+                    <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
+                </xar:if>
+            </xar:loop>
+        </select>
+    </div>
+
+    <div class="xar-form-input-wrapper">
+        <label for="max_level_#$bid#" class="xar-form-label">
+            <xar:mlstring>Maximum levels displayed</xar:mlstring>
+        </label>
+        <xar:if condition="empty($max_level)">
+            <input type="text" name="max_level" id="max_level_#$bid#" size="10" maxlength="3" value="" />
+        <xar:else />
+            <input type="text" name="max_level" id="max_level_#$bid#" size="10" maxlength="3" value="#$max_level#" />
+        </xar:if>
+    </div>
+
+    <div class="xar-form-input-wrapper">
+        <label for="start_level_#$bid#" class="xar-form-label">
+            <xar:mlstring>Hide menu below this level</xar:mlstring>
+        </label>
+        <xar:if condition="empty($start_level)">
+            <input type="text" name="start_level" id="start_level_#$bid#" size="10" maxlength="3" value="" />
+        <xar:else />
+            <input type="text" name="start_level" id="start_level_#$bid#" size="10" maxlength="3" value="#$start_level#" />
+        </xar:if>
+    </div>
+    <div class="xar-form-section">
+        <h4>
+            <xar:mlstring>Root Pages</xar:mlstring>
+        </h4>
+        <p>
+            <xar:mlstring>If root pages are set, then the menus will be limited to those trees alone.  If the current page is not under one of these roots, the block will be hidden.</xar:mlstring>
+        </p>
+
+        <div class="xar-form-input-wrapper">
+            <label for="new_root_pid_#$bid#" class="xar-form-label">
+                <xar:mlstring>Add Root Page</xar:mlstring>
+            </label>
+            <select name="new_root_pid" id="new_root_pid_#$bid#">
+                <option value="0" selected="selected">[ <xar:mlstring>None</xar:mlstring> ]</option>
+                <xar:loop name="$all_pages.pages">
+                    <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
+                </xar:loop>
+            </select>
+        </div>
+
+        <div class="xar-form-input-wrapper-after">
+            <xar:if condition="!empty($multi_homed)">
+                <input name="multi_homed" type="checkbox" value="true" id="multi_homed_#$bid#" checked="checked" />
+            <xar:else />
+                <input name="multi_homed" type="checkbox" value="true" id="multi_homed_#$bid#" />
+            </xar:if>
+            <label for="multi_homed_#$bid#">
+                <xar:mlstring>Hide the root page</xar:mlstring>
+            </label>
+        </div>
+
+        <xar:if condition="count($root_pids) gt 0">
+            <fieldset>
+                <legend>
+                    <xar:mlstring>Existing root pages</xar:mlstring>
+                </legend>
+                <xar:loop name="$root_pids">
+                    <div class="xar-form-input-wrapper-after">
+                        <input name="remove_root_pid[]" type="checkbox" value="#$loop:key#" id="remove_root_pid_#$bid#_#$loop:key#" />
+                        <label for="remove_root_pid_#$bid#_#$loop:key#">
+                            <xar:ml>
+                                <xar:mlstring>Remove #(1)</xar:mlstring>
+                                <xar:mlvar>#xarVarPrepForDisplay($loop:item)#</xar:mlvar>
+                            </xar:ml>
+                        </label>
+                    </div>
+                </xar:loop>
+            </fieldset>
+        </xar:if>
+    </div>
+
+    <div class="xar-form-section">
+        <h4>
+            <xar:mlstring>Pruning Pages</xar:mlstring>
+        </h4>
+        <p>
+            <xar:mlstring>If pruning pages are set, then the menus will be pruned at those pages.  Any [child] pages above the pruning points will be chopped off the menu.</xar:mlstring>
+        </p>
+        <div class="xar-form-input-wrapper">
+            <label for="new_prune_pid_#$bid#" class="xar-form-label">
+                <xar:mlstring>Add Pruning Page</xar:mlstring>
+            </label>
+            <select name="new_prune_pid" id="new_prune_pid_#$bid#">
+                <option value="0" selected="selected">[ <xar:mlstring>None</xar:mlstring> ]</option>
+                <xar:loop name="$all_pages.pages">
+                    <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
+                </xar:loop>
+            </select>
+        </div>
+
+        <xar:if condition="count($prune_pids) gt 0">
+            <fieldset>
+                <legend>
+                    <xar:mlstring>Existing pruning pages</xar:mlstring>
+                </legend>
+                <xar:loop name="$prune_pids">
+                    <div class="xar-form-input-wrapper-after">
+                        <input name="remove_prune_pid[]" type="checkbox" value="#$loop:key#" id="remove_prune_pid_#$bid#_#$loop:key#" />
+                        <label for="remove_prunt_pid_#$bid#_#$loop:key#">
+                            <xar:ml>
+                                <xar:mlstring>Remove #(1)</xar:mlstring>
+                                <xar:mlvar>#xarVarPrepForDisplay($loop:item)#</xar:mlvar>
+                            </xar:ml>
+                        </label>
+                    </div>
+                </xar:loop>
+            </fieldset>
+        </xar:if>
+    </div>
+</div>

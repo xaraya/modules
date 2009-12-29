@@ -6,7 +6,7 @@
  * Admin view of all pages, in hierarchical format.
  *
  * @package Xaraya
- * @copyright (C) 2004 by Jason Judge
+ * @copyright (C) 2004-2009 by Jason Judge
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.academe.co.uk/
  * @author Jason Judge
@@ -59,6 +59,35 @@ function xarpages_admin_viewpages($args)
             }
         }
     }
+
+    $pages = array_reverse($data['pages'], true);
+
+    $pagestree = array();
+
+    $parentid = 'x';
+    $siblings = array();
+
+    // convert the flat tree structure into a nested one for display
+    foreach ($pages as $tmppage) {
+        if ($tmppage['parent_pid'] !== $parentid) {
+            if (count($siblings) > 0) {
+                krsort($siblings);
+                $tmppage['children'] = array_reverse($siblings);
+            }
+            $siblings = array();
+            $parentid = $tmppage['parent_pid'];
+            $siblings[$tmppage['left']] = $tmppage;
+        } else {
+            $siblings[$tmppage['left']] = $tmppage;
+        }
+        if ($tmppage['parent_pid'] == 0) {
+            $pagestree[$tmppage['left']] = $tmppage;
+            $siblings = array();
+        }
+    }
+    ksort($pagestree);
+
+    $data['pages'] = $pagestree;
 
     // Check if the user is allowed to add pages.
     if (xarSecurityCheck('AddXarpagesPage', 0, 'Page', 'All')) {

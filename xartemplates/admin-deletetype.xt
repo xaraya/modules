@@ -1,0 +1,41 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Page Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <xar:if condition="!xarRequestIsAJAX()">
+        <xar:template type="module" file="admin-menu" />
+        <h2>
+            <xar:mlstring>Delete Page Type</xar:mlstring>
+        </h2>
+    </xar:if>
+
+    <h3>
+        <xar:ml>
+            <xar:mlstring>Do you want to delete page type '#(1)'?</xar:mlstring>
+            <xar:mlvar>#xarVarPrepForDisplay($type.name)#</xar:mlvar>
+        </xar:ml>
+    </h3>
+
+    <xar:if condition="$count gt 0">
+        <p>
+            <xar:ml>
+                <xar:mlstring>There are #(1) page(s) and their descendants that will also be deleted.</xar:mlstring>
+                <xar:mlvar>#$count#</xar:mlvar>
+            </xar:ml>
+        </p>
+    </xar:if>
+
+
+    <xar:if condition="!xarRequestIsAJAX()">
+        <form action="#xarModURL('xarpages','admin','deletetype')#" method="post">
+            <div class="xar-form-footer">
+                <input type="hidden" name="ptid" id="ptid" value="#$type.ptid#" />
+                <input type="hidden" name="authid" id="authid" value="#$authkey#" />
+                <input type="submit" name="confirm" id="confirmyes" value="#xarML('Delete')#" />
+                <p class="xar-align-center">
+                    <a href="#xarModURL('xarpages','admin','viewtypes')#">
+                        <xar:mlstring>Cancel</xar:mlstring>
+                    </a>
+                </p>
+            </div>
+        </form>
+    </xar:if>
+</div>

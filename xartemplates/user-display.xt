@@ -1,0 +1,9 @@
+<xar:style scope="module" module="xarpages" file="xarpages" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>XarPages</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>No default page to load.</xar:mlstring>
+    </h2>
+</div>

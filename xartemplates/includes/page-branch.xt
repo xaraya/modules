@@ -1,0 +1,35 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="icon_display">xarTplGetImage('icons/display.png','base')</xar:set>
+<xar:set name="icon_delete">xarTplGetImage('icons/delete.png', 'base')</xar:set>
+<xar:if condition="!isset($level)">
+    <xar:set name="level">1</xar:set>
+<xar:else />
+    <xar:set name="level">$level + 1</xar:set>
+</xar:if>
+<xar:if condition="!isset($authid)">
+    <xar:set name="authid">xarSecGenAuthKey()</xar:set>
+</xar:if>
+<ul>
+    <xar:foreach in="$pages" key="$p" value="$page">
+        <li>
+            <span class="xar-pagetree-icons">
+                <xar:if condition="!empty($page.delete_allowed)">
+                    <a href="#xarModURL('xarpages','admin','deletepage', array('pid' => $page['pid'], 'authid' => $authid))#" title="#xarML('Delete')#" id="delete_#$page.pid#" class="xar-icon">
+                        <img src="#$icon_delete#" alt="#xarML('Delete')#" />
+                    </a>
+                <xar:else />
+                    <img src="#$icon_delete#" alt="#xarML('Delete')#" class="xar-icon-disabled" />
+                </xar:if>
+                <a href="#xarModURL('xarpages','user','display', array('pid' => $page['pid']))#" title="#xarML('Display')#" class="xar-icon">
+                    <img src="#$icon_display#" alt="#xarML('Display')#" />
+                </a>
+            </span>
+            <a href="#xarModURL('xarpages','admin','modifypage', array('pid' => $page['pid']))#" title="#$page.desc#">#$page.name#</a>
+            : #$page.pagetype.name#
+            <xar:if condition="isset($page['children']) and count($page['children']) gt 0">
+                <xar:set name="subdata">array('pages' => $page['children'], 'level' => $level, 'authid' => $authid)</xar:set>
+                <xar:template type="module" file="page-branch" subdata="$subdata" />
+            </xar:if>
+        </li>
+    </xar:foreach>
+</ul>

@@ -27,8 +27,17 @@ $modversion['user']           = 1;
 $modversion['securityschema'] = array();
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
-// 147 = 'categories'; 182 = 'Dynamic Data';
-$modversion['dependency']     = array(147, 182);
+$modversion['dependency']   = array(
+                                    0 => array(
+                                            'name' => 'core',
+                                            'version_ge' => '1.2.0-b1'
+                                         ),
+                                    147 => array(
+                                            'name' => 'categories',
+                                            'version_ge' => '2.4.0'
+                                        )
+                                );
+
 if (false) {
     xarML('Xarpages');
     xarML('Static pages administration');

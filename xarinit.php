@@ -410,6 +410,8 @@ function xarpages_upgrade($oldversion)
                 'ViewXarpagesPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_OVERVIEW',
                 xarML('See that a page exists')
             );
+        case '0.2.8':
+            // Upgrade to 0.3.0 - no database changes
 
         break;
     }

@@ -6,7 +6,7 @@
  * Render functions for hierarchies.
  *
  * @package modules
- * @copyright (C) 2002-2004 by the Xaraya Development Team.
+ * @copyright (C) 2002-2009 by the Xaraya Development Team.
  * @link http://www.xaraya.com
  *
  * @subpackage xarpages

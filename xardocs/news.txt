@@ -23,7 +23,7 @@ DD items serve the following purposes:
 How the templates work
 ======================
 
-* The default wrapper page is page-news.xd
+* The default wrapper page is page-news.xt
 
 This controls the whole page, dealing with the loop over the items.
 In the theme, this can be overridden as page-news[-name].xt , with a name being used if
@@ -31,7 +31,7 @@ a more specific template is required (i.e. different wrapper templates for diffe
 pages). For example, alternative wrapper templates may display the summary as a list or
 as a table, rathern than as a series of divs.
 
-* The default summary template for an item is article-summary.xd
+* The default summary template for an item is article-summary.xt
 
 This displays a summary of a single item, and assumes there will be fields for 'title',
 'summary' and 'body'. If the body field is not empty, then a 'read me' link will be
@@ -40,13 +40,13 @@ provided to the item display.
 For a specific publication type, the template article-summary-{pubtypename}.xt can be used
 in the theme. 
 
-* The default display template for an item is article-display.xd
+* The default display template for an item is article-display.xt
 
 For a specific publication type, the template article-display-{pubtypename}.xt can be used
 in the theme. 
 
 For both the summary and display templates, the prefix 'article' is hard-coded in the wrapper
-template (page-news.xd). Alternative templates to page-news.xd may use a different prefix,
+template (page-news.xt). Alternative templates to page-news.xt may use a different prefix,
 and so offer a completely different set of summary and display templates.
 
 Settings

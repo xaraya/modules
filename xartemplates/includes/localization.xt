@@ -1,0 +1,70 @@
+<xar:if condition="empty($refpid)">
+    <xar:set name="$refpid">0</xar:set>
+    <xar:if condition="!empty($func) and $func eq 'modify'">
+        <xar:set name="$position">'before'</xar:set>
+    <xar:else/>
+        <xar:set name="$position">'after'</xar:set>
+    </xar:if>
+</xar:if>
+
+<xar:if condition="count($pages) eq 0">
+    <input type="hidden" name="moving" id="moving" value="false" />
+    <input type="hidden" name="refpid" id="refpid" value="#$refpid#" />
+    <input type="hidden" name="position" id="position" value="#$position#" />
+<xar:else />
+    <div class="xar-form-input-wrapper">
+        <label for="refpid" class="xar-form-label">
+            <xar:mlstring>In relation to this page</xar:mlstring>
+        </label>
+        <input type="hidden" name="moving" id="moving" value="true" />
+        <select name="refpid" id="refpid">
+            <xar:loop name="$pages">
+                <xar:if condition="$loop:item.pid eq $refpid">
+                    <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
+                <xar:elseif condition="$loop:item.left eq $page.left-1" />
+                    <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
+                    <xar:set name="$position">'firstchild'</xar:set>
+                <xar:elseif condition="$loop:item.right eq $page.left-1" />
+                    <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
+                    <xar:set name="$position">'after'</xar:set>
+                <xar:else />
+                    <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
+                </xar:if>
+            </xar:loop>
+        </select>
+    </div>
+
+    <xar:comment>
+        The position needs to be set after pages select because there is
+        no position which we can have a selected page that will work in
+        all cases.
+    </xar:comment>
+    <div class="xar-form-input-wrapper">
+        <label for="position" class="xar-form-label">
+            <xar:mlstring>Position</xar:mlstring>
+        </label>
+        <select name="position" id="position">
+            <xar:if condition="$position eq 'before'">
+                <option value="before" selected="selected"><xar:mlstring>Right before, in the same level</xar:mlstring></option>
+            <xar:else />
+                <option value="before"><xar:mlstring>Right before, in the same level</xar:mlstring></option>
+            </xar:if>
+            <xar:if condition="$position eq 'after'">
+                <option value="after" selected="selected"><xar:mlstring>Right after, in the same level</xar:mlstring></option>
+            <xar:else />
+                <option value="after"><xar:mlstring>Right after, in the same level</xar:mlstring></option>
+            </xar:if>
+            <xar:if condition="$position eq 'firstchild'">
+                <option value="firstchild" selected="selected"><xar:mlstring>The first child page</xar:mlstring></option>
+            <xar:else />
+                <option value="firstchild"><xar:mlstring>The first child page</xar:mlstring></option>
+            </xar:if>
+            <xar:if condition="$position eq 'lastchild'">
+                <option value="lastchild" selected="selected"><xar:mlstring>The last child page</xar:mlstring></option>
+            <xar:else />
+                <option value="lastchild"><xar:mlstring>The last child page</xar:mlstring></option>
+            </xar:if>
+        </select>
+    </div>
+</xar:if>
+

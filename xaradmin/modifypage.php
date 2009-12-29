@@ -6,7 +6,7 @@
  * Modify or create a page
  *
  * @package Xaraya
- * @copyright (C) 2004 by Jason Judge
+ * @copyright (C) 2004-2009 by Jason Judge
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.academe.co.uk/
  * @author Jason Judge
@@ -219,8 +219,8 @@ function xarpages_admin_modifypage($args)
             'module'=>'xarpages',
             'basedir'=>'xartemplates',
             'levels' => 1,
-            'match_glob' => $template_prefix . '*.xd',
-            'strip_re'=>'/^'.$template_prefix.'|.xd$/'
+            'match_glob' => $template_prefix . '*.x[td]',
+            'strip_re'=>'/^'.$template_prefix.'|.x[td]$/'
         )
     );
     if (!empty($templates)) {

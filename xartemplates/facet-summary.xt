@@ -1,0 +1,70 @@
+<xar:comment>
+    Fallback facet article summary.
+    Use template "facet-summary-{pubtypename}.xt" to customise different pubtypes.
+</xar:comment>
+<xar:if condition="xarTplGetThemeName() ne 'rss'">
+    <div class="xar-normal">
+        <h3>
+            <a href="#xarServerGetCurrentURL(array('aid'=&gt;$aid))#">#xarVarPrepForDisplay($title)#</a>
+        </h3>
+        <xar:if condition="!empty($editurl)">
+            <p>[ <a href="#$editurl#"><xar:mlstring>Edit</xar:mlstring></a> ]</p>
+        </xar:if>
+
+        <div class="summary-block">
+            <xar:if condition="!empty($title)">
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label">
+                        <xar:mlstring>Title:</xar:mlstring>
+                    </label>
+                    #$title#
+                </div>
+            </xar:if>
+
+            <xar:if condition="!empty($cats)">
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label">
+                        <xar:mlstring>Categories:</xar:mlstring>
+                    </label>
+                    <xar:loop name="$cats">
+                        <xar:if condition="$loop:index gt 0"> | </xar:if>
+                        <a href="#xarServerGetCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarModAPIfunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">
+                            #xarVarPrepForDisplay($loop:item.name)#
+                        </a>
+                    </xar:loop>
+                </div>
+            </xar:if>
+
+            <xar:if condition="!empty($pubdate)">
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label">
+                        <xar:mlstring>Issued:</xar:mlstring>
+                    </label>
+                    #xarLocaleGetFormattedDate('long',$pubdate)#
+                </div>
+            </xar:if>
+
+            <xar:if condition="!empty($summary)">
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label">
+                        <xar:mlstring>Summary:</xar:mlstring>
+                    </label>
+                    #xarModAPIfunc('xarpages','user','transform_text',array('text'=>$summary,'maxwords'=>50))#
+                </div>
+            </xar:if>
+        </div>
+    </div>
+<xar:else />
+    <xar:comment>RSS Feed - this avoids having to put templates into another theme</xar:comment>
+    <item>
+        <title>#xarVarPrepForDisplay($title)#</title>
+        <link>#xarServerGetCurrentURL(array('aid'=&gt;$aid,'theme'=&gt;NULL))#</link>
+        <xar:if condition="!empty($pubdate)"><pubDate>#xarLocaleFormatUTCDate('%a, %d %b %Y %H:%M:%S %z',$pubdate)#</pubDate></xar:if>
+        <description>#xarVarPrepForDisplay($summary)#</description>
+        <xar:if condition="!empty($cats)">
+            <xar:loop name="$cats">
+                <category domain="#xarServerGetCurrentURL(array('startnum'=&gt;NULL,'theme'=&gt;NULL,'filter'=&gt;xarModAPIfunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">#xarVarPrepForDisplay($loop:item.name)#</category>
+            </xar:loop>
+        </xar:if>
+    </item>
+</xar:if>
