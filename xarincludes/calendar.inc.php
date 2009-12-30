@@ -253,6 +253,16 @@ class ieventsCalendar {
     // boolean whether show month name as link 
     var $linkMonth;
 
+    // whether to show links to previous and next month defined in cal-pager template
+    var $nextPrevMonth;
+
+    // whether to show links to previous and next day defined in cal-pager template
+    var $nextPrevDay;
+
+    // day which is selected (shown) - determine from url. At the moment add special class for day in one day even view or in day view
+    // TODO: do it for week also?
+    var $selectedDay;
+
     //********************** End of variable declarations **********************
 
     /*
@@ -560,7 +570,7 @@ class ieventsCalendar {
 
     */
 
-    function showSmallMonth($m, $y, $np = false, $showyear = true, $linkMonth = false) {
+    function showSmallMonth($d, $m, $y, $np = false, $showyear = true, $linkMonth = false) {
         // Calculate the number of days in the month
         $days = date('t',mktime(0,0,0,$m, 1, $y));
         // Calculate the day of the week that the month starts on
@@ -601,6 +611,8 @@ class ieventsCalendar {
         }
 
         //Get the current date to display if the month showing is the current month.
+        //TODO: pev: if this is the same as selected_date, then remove selected_date in xarblocks/month.php
+        //TODO: judgej: where do you use variable $day ?
         if (mktime(0, 0, 0, date("m"), 1, date("Y")) == mktime(0, 0, 0, $m, 1, $y)) {
             $day = date("j");
         } else {
@@ -621,6 +633,7 @@ class ieventsCalendar {
         	'cid' => $this->cid,
         	'showyear' => $showyear,
             'showtitle' => $this->showTitle,
+            'selected_day' => $this->selectedDay,
         	'linkmonth' => $linkMonth,
         	'month' => $month,
         	'year' => $year,
@@ -635,8 +648,46 @@ class ieventsCalendar {
         	'today' => $today,
         	'startingdow' => $this->startingDOW,
         	'offset' => $offset,
+            'nextprevmonth' => $this->nextPrevMonth,
+            'nextprevday' => $this->nextPrevDay,
         	'cal' => $this
         	);
+
+        if($this->nextPrevDay or $this->nextPrevMonth) {
+            $ustartdate = strtotime($y.$m.'01');
+            $uenddate = strtotime('+1 month -1 day', $ustartdate);
+
+            $url_params = array(
+                'startdate' => $ustartdate,
+                'enddate' => $uenddate,
+            );
+
+            if($this->nextPrevDay) {
+                $cal_links['next_day'] = date('Ymd', strtotime('+1 day', $d));
+                $cal_links['prev_day'] = date('Ymd', strtotime('-1 day', $d));
+                $cal_links['today'] = date('Ymd');
+                $cal_links_labels['next_day'] =  xarML(xarLocaleGetFormattedDate('short', strtotime('+1 day', $d)));
+                $cal_links_labels['prev_day'] =  xarML(xarLocaleGetFormattedDate('short', strtotime('-1 day', $d)));
+                $cal_links_labels['today'] = xarML('Today');
+            }
+
+            if($this->nextPrevMonth) {
+                if($this->monthFormat == 'short') {
+                    $month_type = "monthNamesShort";
+                } else {
+                    $month_type = "monthNames";
+                }
+                $cal_links['next_month'] = date('Ym', strtotime('+1 month', $ustartdate));
+                $cal_links['prev_month'] = date('Ym', strtotime('-1 month', $ustartdate));
+                $cal_links_labels['next_month'] = $this->{$month_type}[(date('m', strtotime('+1 month', $ustartdate)) + 11) % 12 + 1];
+                $cal_links_labels['prev_month'] = $this->{$month_type}[(date('m', strtotime('-1 month', $ustartdate)) + 11) % 12 + 1];
+            }
+
+            $data['group'] = 'month'; # not smallmonth due to cal-pager.xd TODO: change to smallmonth?
+            $data['url_params'] = $url_params;
+            $data['cal_links_labels'] = $cal_links_labels;
+            $data['cal_links'] = $cal_links;
+        }
 
 		$daysofweek = array();
         for ($i = 1; $i <= 7; $i++) {
@@ -710,7 +761,8 @@ class ieventsCalendar {
 
 		$months_output = array();
         for ($i = $startmonth; $i <= $endmonth; $i++) {
-			$months_output[$i] = $this->showSmallMonth($i, $y, false, false, true);
+			//$months_output[$i] = $this->showSmallMonth($i, $y, false, false, true);
+			$months_output[$i] = $this->showSmallMonth(NULL, $i, $y, false, false, true);
 		}
 
 		$data['months_output'] = $months_output;
@@ -727,7 +779,8 @@ class ieventsCalendar {
 
 		$months_output = array();
         for ($i = 1; $i <= 12; $i++) {
-			$months_output[$i] = $this->showSmallMonth($i, $y, false, false, true);
+			//$months_output[$i] = $this->showSmallMonth($i, $y, false, false, true);
+			$months_output[$i] = $this->showSmallMonth(NULL, $i, $y, false, false, true);
 		}
 
 		$data['months_output'] = $months_output;
@@ -829,7 +882,8 @@ class ieventsCalendar {
         //Check which format to display
         switch ($this->calFormat) {
             case 'smallMonth':
-                $displayCal = $this->showSmallMonth($this->calMonth, $this->calYear, $this->displayPrevNextLinks, true, $this->linkMonth);
+                //$displayCal = $this->showSmallMonth($this->calMonth, $this->calYear, $this->displayPrevNextLinks, true, $this->linkMonth);
+                $displayCal = $this->showSmallMonth($this->calDay, $this->calMonth, $this->calYear, $this->displayPrevNextLinks, true, $this->linkMonth);
                 break;
             case 'largeMonth':
                 $displayCal = $this->showLargeMonth($this->calMonth, $this->calYear);

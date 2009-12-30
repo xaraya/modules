@@ -79,7 +79,13 @@ function ievents_monthblock_display($blockinfo)
     }
     if (!isset($vars['numberofmonths']) || empty($vars['numberofmonths'])) {
         $vars['numberofmonths'] = 1;
-    }    
+    }
+    if (!isset($vars['nextprevday'])) {
+        $vars['nextprevday'] = false;
+    }
+    if (!isset($vars['nextprevmonth'])) {
+        $vars['nextprevmonth'] = false;
+    }
     extract(xarModAPIfunc('ievents', 'user', 'params',
         array('knames' => 'html_fields,q_fields,display_formats,locale')
     ));
@@ -96,33 +102,90 @@ function ievents_monthblock_display($blockinfo)
 
     $months = $vars['numberofmonths'];
     $prior = array();
+
+    if (!defined('YYYYMM_OR_YYYYMMDD_REGEXP')) define('YYYYMM_OR_YYYYMMDD_REGEXP', 'regexp:/^(19|20)[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])?$/');
+    if (!defined('YYYYMMDD_REGEXP')) define('YYYYMMDD_REGEXP', 'regexp:/^(19|20)[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$/');
+
+    xarVarFetch('eid', 'id', $eid, 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('startdate', YYYYMM_OR_YYYYMMDD_REGEXP, $startdate, NULL, XARVAR_NOT_REQUIRED);
+    xarVarFetch('enddate', YYYYMM_OR_YYYYMMDD_REGEXP, $enddate, NULL, XARVAR_NOT_REQUIRED);
+
+    if(!empty($eid)) {
+        $event = xarModAPIfunc('ievents', 'user', 'getevent', array('eid' => $eid)); // TODO: pev: allow in api only get startdate
+        if(!empty($event['startdate']) && $event['startdate'] > 0) {
+            $eid_startdate = date('Ymd', $event['startdate']);
+            // startdate is !(yyyymmdd or yyyymm)
+            if (!xarVarValidate(YYYYMMDD_REGEXP, $eid_startdate, true)) $eid_startdate = NULL;
+        }
+    }
+
+    if ($vars['nextprevday'] or $vars['nextprevmonth']) {
+        if(!empty($eid_startdate)) {
+            $yyyymm01 = substr($eid_startdate, 0, 6) . '01';
+        } elseif(!empty($startdate)) {
+            $yyyymm01 = substr($startdate, 0, 6) . '01';
+        } else {
+            // startdate is not defined (or bad) - other sites without startdate (non ievens sites)
+            $yyyymm01 = date('Ym') . '01';
+        }
+    } else {
+        $yyyymm01 = date('Ym') . '01';
+    }
+
     if ($vars['showprevious'] == 1) {
-        $callist[]= strtotime("-1 month ".date('Ym') . '01');
+        $callist[]= strtotime("-1 month ".$yyyymm01);
         $months = $months -1;
     }
 
     if ($months > 0) {
         for ($i = 0; $i<= $months-1; $i++) { 
            if ($i ==0) {
-                $callist[] = strtotime(date('Ym') . '01');
+                $callist[] = strtotime($yyyymm01);
             } else {
-                $callist[] = strtotime("+".$i." month ".date('Ym') . '01');
+                $callist[] = strtotime("+".$i." month ".$yyyymm01);
             }
         }
     }
 
     $calarray = array();
-    foreach ($callist as $k=>$calitem) {
-
-    //$ustartdate = strtotime("+1 month ".date('Ym') . '01');
-        $ustartdate = $calitem;
-        $uenddate = strtotime('+1 month -1 day', $ustartdate);
-    
+    foreach ($callist as $k=>$ustartdate) {
         include_once(dirname(__FILE__) . '/../xarincludes/calendar.inc.php');
         $cal = new ieventsCalendar;
     
         $cal->cid = $vars['cid'];
         $cal->calFormat = 'smallMonth';
+
+        $uenddate = strtotime('+1 month -1 day', $ustartdate);
+
+        // day which is shown on calendar (in day view or in one day event), default no selected day
+        $selected_day = "";
+        // $selected_date shows date in format yyyymmdd, where dd is important
+        $selected_date = "";
+
+        $ustartdate_yyyymm = date("Ym", $ustartdate);
+        if (!empty($eid_startdate)) {
+            if (substr($eid_startdate,0, 6) == $ustartdate_yyyymm) {
+                $selected_date = $eid_startdate;
+                $selected_day = substr($eid_startdate, 6, 2);
+            }
+        } elseif(strlen($startdate) == 8 && $startdate == $enddate && substr($startdate, 0, 6) == $ustartdate_yyyymm) {
+            // startdate is yyyymmdd
+            $selected_date = $startdate;
+            $selected_day = substr($startdate, 6, 2);
+        } elseif(strlen($startdate) == 6 || strlen($startdate) == 8) {
+            // startdate is yyyymmdd or yyyymm
+
+            if ($ustartdate_yyyymm == date("Ym")) {
+                $selected_date = $ustartdate_yyyymm . date('d'); // today
+            } else {
+                $selected_date = $ustartdate_yyyymm . '01'; // not current month in this year => first day
+            }
+
+            // TODO: pev: is it used?
+            if(strlen($startdate) == 8 && substr($startdate, 0, 6) == $ustartdate_yyyymm) {
+                $selected_day = substr($startdate, 6, 2);
+            }
+        }
     
         if (xarVarValidate('enum:long:short', $vars['monthformat'], true)) {
             $cal->monthFormat = $vars['monthformat'];
@@ -144,12 +207,14 @@ function ievents_monthblock_display($blockinfo)
         }
     
         if (xarVarValidate('bool', $vars['linkmonth'])) $cal->linkMonth = $vars['linkmonth'];
+        if (xarVarValidate('bool', $vars['nextprevday'])) $cal->nextPrevDay = $vars['nextprevday'];
+        if (xarVarValidate('bool', $vars['nextprevmonth'])) $cal->nextPrevMonth = $vars['nextprevmonth'];
     
         $cal->displayPrevNext = true;
         $cal->displayEvents = true;
         $cal->startingDOW = $startdayofweek;
         $cal->showWeek = false;
-        $cal->calDay = strtotime(date('Ymd', $ustartdate));
+        $cal->calDay = strtotime(date('Ymd', strtotime($selected_date)));
         $cal->calWeek = $ustartdate;
         $cal->calMonth = date('m', $ustartdate);
         $cal->calQuarter = floor(((date('m', $ustartdate) - 1) / 3) + 1);
@@ -164,12 +229,14 @@ function ievents_monthblock_display($blockinfo)
     
         $cal->monthNames = $locale['months']['long'];
         $cal->monthNamesShort = $locale['months']['short'];
+
+        $cal->selectedDay = $selected_day;
     
         $url_params = array(
             'startdate' => $ustartdate,
             'enddate' => $uenddate,
         );
-    
+
         $event_params = array(
             'startnum' => 1,
             'numitems' => $numitems,
@@ -215,7 +282,6 @@ function ievents_monthblock_display($blockinfo)
             );
         }
 
-    
         if ($vars['usecalname'] && !empty($vars['cid'])) {
             $calendars = xarModAPIFunc('ievents','user','getcalendars',array('cid' => $vars['cid']));
             $blockinfo['title'] = $calendars[$vars['cid']]['short_name'];
@@ -250,6 +316,7 @@ function ievents_monthblock_display($blockinfo)
         $data['cid']=isset($temp['cid']) ?$temp['cid']:'';
     }
     $data['numberofmonths'] = $vars['numberofmonths'] ;
+    $data['selected_month'] = $cal->monthNames[(int)substr($ustartdate_yyyymm, 4, 2)];
     $blockinfo['content'] = $data;
     return $blockinfo;
 }

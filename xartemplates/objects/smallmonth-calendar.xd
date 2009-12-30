@@ -1,4 +1,7 @@
 <div class="ievents-calendar-smallmonth">
+    <xar:if condition="$nextprevmonth">
+      <xar:template file="cal-pager" subdata="array('group'=&gt;$group,'cal_links'=&gt;$cal_links,'cal_links_labels'=&gt;$cal_links_labels,'url_params'=&gt;$url_params)" />
+    </xar:if>
     <xar:if condition="$showtitle">
     	<h4>
 	    	#$prevlink# 
@@ -28,21 +31,25 @@
 				<xar:set name="classes">''</xar:set>
 
 			    <xar:if condition="(date('w', $date) eq 0) or (date('w', $date) eq 6)">
-			    	<xar:set name="classes">$classes . ' ievents-weekend'</xar:set>
+			    	<xar:set name="classes">$classes . (!empty($classes) ? ' ' : '') . 'ievents-weekend'</xar:set>
+			    </xar:if>
+
+			    <xar:if condition="$i eq $selected_day">
+			    	<xar:set name="classes">$classes . (!empty($classes) ? ' ' : ''). 'ievents-selected-day'</xar:set>
 			    </xar:if>
 
 			    <xar:if condition="$i eq $today">
-			    	<xar:set name="classes">$classes . ' ievents-today'</xar:set>
+			    	<xar:set name="classes">$classes . (!empty($classes) ? ' ' : '') . 'ievents-today'</xar:set>
 			    </xar:if>
 
 			    <xar:if condition="$i eq 1 and $startday gt 0">
-			        <td colspan="#$startday#" class="ievents-spacer">&nbsp;</td>
+			    	<td colspan="#$startday#" class="ievents-spacer">&nbsp;</td>
 			    </xar:if>
 
 			    <xar:if condition="!empty($classes)">
-			        <td class="#$classes#">#$cal:getEvents(mktime(0, 0, 0, $m, $i, $y), "smallMonth")#</td>
+			    	<td class="#$classes#"><span>#$cal:getEvents(mktime(0, 0, 0, $m, $i, $y), "smallMonth")#</span></td>
 			    <xar:else />
-			        <td>#$cal:getEvents(mktime(0, 0, 0, $m, $i, $y), "smallMonth")#</td>
+			    	<td><span>#$cal:getEvents(mktime(0, 0, 0, $m, $i, $y), "smallMonth")#</span></td>
 			    </xar:if>
 
 			    <xar:set name="startday">$startday + 1</xar:set>
@@ -59,4 +66,7 @@
 		</xar:if>
 
 	</table>
+    <xar:if condition="$nextprevday">
+        <xar:template file="cal-pager" subdata="array('group'=&gt;'day','cal_links'=&gt;$cal_links,'cal_links_labels'=&gt;$cal_links_labels,'url_params'=&gt;$url_params)" />
+    </xar:if>
 </div>

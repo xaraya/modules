@@ -114,17 +114,38 @@ div.ievents-nextprev li {
 	padding: 0;
 	background-image: none; /* For Xaraya_Classic */
 }
-div.ievents-nextprev li a {
+
+.ievents-calendar-smallmonth .ievents-nextprev-prev {
+    width: 48%;
+    white-space: nowrap;
+  	text-align: left;
+    padding-right: 0.2em;
 }
+.ievents-calendar-smallmonth .ievents-nextprev-next {
+    width: 48%;
+    white-space: nowrap;
+ 	text-align: right;
+    padding-left: 0.2em;
+}
+
 div.ievents-nextprev li span {
 	color: #dddddd;
 	font-weight: bold;
 }
 div.ievents-nextprev div.ievents-nextprev-prev {
     float: left;
-    width: 25%;
 	text-align: left;
 }
+div.ievents-nextprev div.ievents-nextprev-next {
+    float: right;
+	text-align: right;
+}
+div.ievents-nextprev div.ievents-nextprev-prev,
+div.ievents-nextprev div.ievents-nextprev-next {
+    width: 25%;
+    font-size: 0.8em;
+}
+
 div.ievents-nextprev div.ievents-nextprev-list {
     width: 45%;
     margin: auto;
@@ -132,11 +153,6 @@ div.ievents-nextprev div.ievents-nextprev-list {
 }
 div.ievents-nextprev div.ievents-nextprev-list h1 {
     margin-bottom: 0;
-}
-div.ievents-nextprev div.ievents-nextprev-next {
-    float: right;
-    width: 25%;
-	text-align: right;
 }
 
 /* Jump menu formatting */
@@ -375,15 +391,18 @@ td.ievents-weekend {
 	filter: alpha(opacity=70);
 	-moz-opacity: 70%;
 }
-td.ievents-today {
-	background-color: #ffdddd;
+table.ievents-calendar-smallmonth td.ievents-weekend,
+table.ievents-calendar-smallmonth td.ievents-weekend span
+{
+    background: #d8d8d8 none repeat scroll 0 0;
 }
 table.ievents-calendar-year {
 }
 td.ievents-calendar-yearmonth {
 	text-align: center; 
 	vertical-align: top;
-	width: 33%;padding: 4px;
+	width: 33%;
+    padding: 4px;
 }
 td.ievents-calendar-yearmonth h4 {
 	text-align: center;
@@ -435,7 +454,36 @@ table.ievents-calendar-smallmonth td {
 	height: auto;
 	text-align: center;
 	border: 1px solid;
-	padding: .2em .1em;
+    padding: 1px;
+}
+
+table.ievents-calendar-smallmonth td a:hover {
+	background-color: #ffdddd;
+    color: #ec008c;
+}
+
+table.ievents-calendar-smallmonth td span {
+    color: gray;
+}
+table.ievents-calendar-smallmonth td a {
+    display: block;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* selected day, this must be behind definition of table.ievents-calendar-smallmonth td.ievents-today */
+table.ievents-calendar-smallmonth td.ievents-selected-day,
+table.ievents-calendar-smallmonth td.ievents-selected-day a,
+table.ievents-calendar-smallmonth td.ievents-selected-day span {
+	background-color: #ffdddd;
+}
+
+table.ievents-calendar-smallmonth td span {
+    display: block;
+    background: white none repeat scroll 0 0;
+}
+table.ievents-calendar-smallmonth td.ievents-today {
+    background-color: #ec008c;
 }
 table.ievents-calendar-week {
 	margin: .5em .25em;
