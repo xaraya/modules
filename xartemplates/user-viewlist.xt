@@ -195,7 +195,11 @@ jQuery('table.xar-items th a').hover(
         <xar:foreach in="$items" value="$item">
             <tr class="#$rowclass#">
                 <td>
-                    #$item['title']#
+                    <xar:if condition="empty($item['editurl'])">
+                        #$item['title']#
+                    <xar:else />
+                        <a href="#$item['editurl']#" title="#xarML('Edit Article')#">#$item['title']#</a>
+                    </xar:if>
                 </td>
                 <xar:if condition="$showdate">
                     <td>
