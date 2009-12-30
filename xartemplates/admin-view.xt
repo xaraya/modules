@@ -177,7 +177,7 @@ jQuery('table.xar-items th a').hover(
                 </xar:if>
                 <xar:if condition="$showstatus">
                     <th>
-                        <a href="#xarModURL('articles', 'admin', 'view', array_merge($sortinfo), array('sort' => 'pubdate', 'sortdir' => ($sort == 'status' ? $othersortdir : 'asc')))#" id="sort_status" title="#xarML('Sort by status')#">
+                        <a href="#xarModURL('articles', 'admin', 'view', array_merge($sortinfo, array('sort' => 'status', 'sortdir' => ($sort == 'status' ? $othersortdir : 'asc'))))#" id="sort_status" title="#xarML('Sort by status')#">
                             #$labels['status']#
                             <xar:if condition="$sort eq 'status'">
                                 <img src="#$arrow_mouseout#" alt="#xarML('Sort by status')#" />
