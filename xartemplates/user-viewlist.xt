@@ -2,6 +2,17 @@
 <xar:base-js-framework module="base" name="jquery" file="jquery-1.3.2.min.js" />
 <xar:base-js-plugin name="ui" framework="jquery" file="jquery-ui-1.7.2.custom.min.js" style="jquery-ui-1.7.2.custom.css" />
 <xar:base-js-plugin name="bgiframe" framework="jquery" file="jquery.bgiframe.min.js"  />
+<xar:comment>
+    Set the sort arrow icons here so we can use them in the JS
+</xar:comment>
+<xar:if condition="$sortdir eq 'asc'">
+    <xar:set name="arrow_mouseover">xarTplGetImage('icons/sort-asc.png', 'base')</xar:set>
+    <xar:set name="arrow_mouseout">xarTplGetImage('icons/sorted-desc.png', 'base')</xar:set>
+<xar:else />
+    <xar:set name="arrow_mouseover">xarTplGetImage('icons/sort-desc.png', 'base')</xar:set>
+    <xar:set name="arrow_mouseout">xarTplGetImage('icons/sorted-asc.png', 'base')</xar:set>
+</xar:if>
+
 <xar:set name="articlescode">"
 var dialog_width = 300;
 var dialog_height = 200;
@@ -14,7 +25,7 @@ jQuery('table.xar-items a[id^=delete]').click(function() {
     var a = this;
     jQuery('#"."xardialogtarget').remove();
     jQuery('body').append('" . chr(60) . "div id=\'xardialogtarget\' style=\'display: none;\'" . chr(62) . chr(60) . "/div" . chr(62) . "');
-    jQuery('#" . "xardialogtarget').html('" . chr(60) . "p" . chr(62) . "" . xarML('Delete this article?') . "" . chr(60) . "/p" . chr(62) . chr(60) . "p style=\'text-align: center;\'" . chr(62) . "' + jQuery.trim(jQuery(this).parent().parent().children(':first').text()) + '" . chr(60) . "/p" . chr(62) . "');
+    jQuery('#" . "xardialogtarget').html('" . chr(60) . "p" . chr(62) . xarML('Delete this article?') .  chr(60) . "/p" . chr(62) . chr(60) . "p style=\'text-align: center;\'" . chr(62) . "' + jQuery.trim(jQuery(this).parent().parent().children(':first').text()) + '" . chr(60) . "/p" . chr(62) . "');
     jQuery('#" . "xardialogtarget').dialog({
         title: '" . xarML('Delete article') . "',
         width: dialog_width,
@@ -30,8 +41,56 @@ jQuery('table.xar-items a[id^=delete]').click(function() {
     });
     return false;
 });
+// delete all form submit handler
+jQuery('form#" . "viewarticles').submit( function() {
+    var f = this;
+    var numchecked = jQuery(this).find('input[type=checkbox]:checked').length;
+    if (jQuery('#status').val() == '-1' " . chr(38) . chr(38) . " numchecked " . chr(62) . " 0) {
+        jQuery('#"."xardialogtarget').remove();
+        jQuery('body').append('" . chr(60) . "div id=\'xardialogtarget\' style=\'display: none;\'" . chr(62) . chr(60) . "/div" . chr(62) . "');
+        jQuery('#" . "xardialogtarget').html('" . chr(60) . "p" . chr(62) . xarML('Delete selected articles?') .  chr(60) . "/p" . chr(62) . chr(60) . "p style=\'text-align: center;\'" . chr(62) . "' + numchecked + ' " . xarML("Selected") . chr(60) . "/p" . chr(62) . "');
+        jQuery('#" . "xardialogtarget').dialog({
+            title: '" . xarML('Delete articles') . "',
+            width: dialog_width,
+            height: dialog_height,
+            buttons: {
+                '". xarML('Cancel') . "': function() { jQuery(this).dialog('close');return false; },
+                '". xarML('Delete') . "': function() { jQuery('form#" . "viewarticles').get(0).submit();return true; }
+            },
+            bgiframe: true,
+            modal: true,
+            draggable: false,
+            resizable: false
+        });
+        return false;
+    }
+    else {
+        return true;
+    }
+});
+jQuery('table.xar-items th a img').css('verticalAlign','middle');
+var arrow_mouseover = new Image();
+arrow_mouseover.src = '" . $arrow_mouseover . "';
+var arrow_mouseout = new Image();
+arrow_mouseout.src = '" . $arrow_mouseout . "';
+
+jQuery('table.xar-items th a').hover(
+    function() {
+        jQuery(this).find('img')[0].src = arrow_mouseover.src;
+    },
+    function() {
+        jQuery(this).find('img')[0].src = arrow_mouseout.src;
+    }
+);
 "</xar:set>
 <xar:base-js-event name="ready" code="$articlescode" />
+<xar:set name="array_order">array('sortdir' => 1)</xar:set>
+<xar:set name="asc_str">xarML('ascending')</xar:set>
+<xar:set name="desc_str">xarML('descending')</xar:set>
+
+<xar:set name="arrow_js">""</xar:set>
+<xar:set name="arrow_img_begin">" src=\"" .$arrow_mouseout. "\" alt=\""</xar:set>
+<xar:set name="arrow_img_end">""</xar:set>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Articles Management</xar:mlstring>
@@ -83,7 +142,7 @@ jQuery('table.xar-items a[id^=delete]').click(function() {
             </xar:if>
         </h3>
     </xar:if>
-    <xar:categories-navigation layout="trails" showchildren="1" module="articles" type="user" itemtype="$ptid" catid="$catid" />
+    <xar:categories-navigation layout="trails" showchildren="1" module="articles" type="user" func="viewlist" itemtype="$ptid" catid="$catid" />
 
     <xar:if condition="$shownewlink">
         <p>
@@ -94,20 +153,36 @@ jQuery('table.xar-items a[id^=delete]').click(function() {
     </xar:if>
 
     <form method="post" name="viewarticles" id="viewarticles" action="#xarModURL('articles','user','updatestatus')#">
+
         <table class="xar-items">
         <thead>
             <tr>
                 <th>
+                    <a href="#xarModURL('articles', 'user', 'viewlist', array_merge($sortinfo, array('sort' => 'title', 'sortdir' => ($sort == 'title' ? $othersortdir : 'asc'))))#" id="sort_title" title="#xarML('Sort by title')#">
                     #$labels['title']#
+                        <xar:if condition="$sort eq 'title'">
+                            <img src="#$arrow_mouseout#" alt="#xarML('Sort by title')#" />
+                        </xar:if>
+                    </a>
                 </th>
                 <xar:if condition="$showdate">
                     <th>
+                        <a href="#xarModURL('articles', 'user', 'viewlist', array_merge($sortinfo, array('sort' => 'pubdate', 'sortdir' => ($sort == 'pubdate' ? $othersortdir : 'asc'))))#" id="sort_pubdate" title="#xarML('Sort by pubdate')#">
                         #$labels['pubdate']#
+                            <xar:if condition="$sort eq 'pubdate'">
+                                <img src="#$arrow_mouseout#" alt="#xarML('Sort by pubdate')#" />
+                            </xar:if>
+                        </a>
                     </th>
                 </xar:if>
                 <xar:if condition="$showstatus">
                     <th>
+                        <a href="#xarModURL('articles', 'user', 'viewlist', array_merge($sortinfo), array('sort' => 'pubdate', 'sortdir' => ($sort == 'status' ? $othersortdir : 'asc')))#" id="sort_status" title="#xarML('Sort by status')#">
                         #$labels['status']#
+                            <xar:if condition="$sort eq 'status'">
+                                <img src="#$arrow_mouseout#" alt="#xarML('Sort by status')#" />
+                            </xar:if>
+                        </a>
                     </th>
                 </xar:if>
                 <th>

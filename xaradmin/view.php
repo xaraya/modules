@@ -35,15 +35,8 @@ function articles_admin_view($args)
     if(!xarVarFetch('authorid', 'isset', $authorid, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('lang',     'isset', $lang,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('pubdate',  'str:1', $pubdate,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('sort',     'enum:title:pubdate:status',  $sort,     NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('order',    'str:1', $order,    NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!empty($order)) {
-        if(!empty($sort) && $sort == 'pubdate') {
-            $order = " ASC";
-        } else {
-            $order = " DESC";
-        }
-    }
+    if(!xarVarFetch('sort',     'enum:title:pubdate:status',  $sort,     'pubdate', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('sortdir',  'isset', $sortdir,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     extract($args);
 
@@ -80,13 +73,6 @@ function articles_admin_view($args)
     $data['pubdate'] = $pubdate;
 
     $authid = xarSecGenAuthKey();
-
-    $data['order'] = $order;
-    if(!empty($sort)) {
-        $data['sort'] = $sort;
-    } else {
-        $data['sort'] = "pubdate";
-    }
 
     if (!empty($catid)) {
         if (strpos($catid,' ')) {
@@ -140,31 +126,6 @@ function articles_admin_view($args)
         $numitems = 30;
     }
 
-    // Get item information
-    $articles = xarModAPIFunc('articles',
-                             'user',
-                             'getall',
-                             array('startnum' => $startnum,
-                                   'numitems' => $numitems,
-                                   'ptid'     => $ptid,
-                                   'authorid' => $authorid,
-                                   'language' => $lang,
-                                   'pubdate'  => $pubdate,
-                                   'cids'     => $cids,
-                                   'andcids'  => $andcids,
-                                   'sort'     => $sort.$order,
-                                   'status'   => $status));
-
-    // Save the current admin view, so that we can return to it after update
-    $lastview = array('ptid' => $ptid,
-                      'authorid' => $authorid,
-                      'language' => $lang,
-                      'catid' => $catid,
-                      'status' => $status,
-                      'pubdate' => $pubdate,
-                      'startnum' => $startnum > 1 ? $startnum : null);
-    xarSessionSetVar('Articles.LastView',serialize($lastview));
-
     $labels = array();
     if (!empty($ptid)) {
         foreach ($pubtypes[$ptid]['config'] as $field => $value) {
@@ -186,8 +147,53 @@ function articles_admin_view($args)
     // and if we're not selecting on it already
     //&& (!is_array($status) || !isset($status[0]));
     $data['showstatus'] = $showstatus;
+    
+    // fall back sort field accordingly
+    if (!$showdate && $sort == 'pubdate') {
+        $sort = 'title';
+    }
+    if (!$showstatus && $sort == 'status') {
+        $sort = 'title';
+    }
+
+    if($sortdir == NULL || trim(strtolower($sortdir)) == 'asc') {
+        $sortdir = " ASC";
+    } else {
+        $sortdir = " DESC";
+    }
+
+    $data['sortdir'] = trim(strtolower($sortdir));
+    $data['othersortdir'] = $data['sortdir'] == 'asc' ? 'desc' : 'asc';
+    $data['sort'] = $sort;
 
     $data['states'] = xarModAPIFunc('articles','user','getstates');
+
+    // Get item information
+    $articles = xarModAPIFunc('articles',
+                             'user',
+                             'getall',
+                             array('startnum' => $startnum,
+                                   'numitems' => $numitems,
+                                   'ptid'     => $ptid,
+                                   'authorid' => $authorid,
+                                   'language' => $lang,
+                                   'pubdate'  => $pubdate,
+                                   'cids'     => $cids,
+                                   'andcids'  => $andcids,
+                                   'sort'     => $sort.$sortdir,
+                                   'status'   => $status));
+
+    // Save the current admin view, so that we can return to it after update
+    $lastview = array('ptid' => $ptid,
+                      'authorid' => $authorid,
+                      'language' => $lang,
+                      'catid' => $catid,
+                      'status' => $status,
+                      'pubdate' => $pubdate,
+                      'startnum' => $startnum > 1 ? $startnum : null,
+                      'sort' => $sort,
+                      'sortdir' => $sortdir);
+    xarSessionSetVar('Articles.LastView',serialize($lastview));
 
     $items = array();
     if ($articles != false) {
@@ -271,6 +277,14 @@ function articles_admin_view($args)
         }
     }
     $data['items'] = $items;
+    $data['sortinfo'] = array(
+        'ptid' => $ptid,
+        'authorid' => $authorid,
+        'language' => $lang,
+        'catid' => $catid,
+        'cids'     => $cids,
+        'andcids'  => $andcids,
+        'status'   => $status);
 
     // Add pager
     $data['pager'] = xarTplGetPager($startnum,
