@@ -167,7 +167,7 @@ jQuery('table.xar-items th a').hover(
                 </th>
                 <xar:if condition="$showdate">
                     <th>
-                        <a href="#xarModURL('articles', 'user', 'viewlist', array_merge($sortinfo, array('sort' => 'pubdate', 'sortdir' => ($sort == 'pubdate' ? $othersortdir : 'asc'))))#" id="sort_pubdate" title="#xarML('Sort by pubdate')#">
+                        <a href="#xarModURL('articles', 'user', 'viewlist', array_merge($sortinfo, array('sort' => 'pubdate', 'sortdir' => ($sort == 'pubdate' ? $othersortdir : 'desc'))))#" id="sort_pubdate" title="#xarML('Sort by pubdate')#">
                         #$labels['pubdate']#
                             <xar:if condition="$sort eq 'pubdate'">
                                 <img src="#$arrow_mouseout#" alt="#xarML('Sort by pubdate')#" />

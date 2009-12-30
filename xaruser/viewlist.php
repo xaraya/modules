@@ -155,11 +155,18 @@ function articles_user_viewlist($args)
     if (!$showstatus && $sort == 'status') {
         $sort = 'title';
     }
-
-    if($sortdir == NULL || trim(strtolower($sortdir)) == 'asc') {
-        $sortdir = " ASC";
+    if($sort == 'pubdate') {
+        if($sortdir == NULL || trim(strtolower($sortdir)) == 'desc') {
+            $sortdir = " DESC";
+        } else {
+            $sortdir = " ASC";
+        }
     } else {
-        $sortdir = " DESC";
+        if($sortdir == NULL || trim(strtolower($sortdir)) == 'asc') {
+            $sortdir = " ASC";
+        } else {
+            $sortdir = " DESC";
+        }
     }
 
     $data['sortdir'] = trim(strtolower($sortdir));
