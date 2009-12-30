@@ -33,7 +33,7 @@ $modversion['admin']        = 1;
 $modversion['user']         = 1;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
-$modversion['dependency']   = array(
+$modversion['dependencyinfo']   = array(
                                     0 => array(
                                             'name' => 'core',
                                             'version_ge' => '1.2.0-b1'
@@ -45,7 +45,7 @@ $modversion['dependency']   = array(
                                 );
 
 // Placeholder for translation skeleton, bug 6033
-if (false) { 
+if (false) {
   return xarML('Articles');
   return xarML('Display articles');
 }
