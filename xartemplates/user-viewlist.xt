@@ -5,7 +5,7 @@
 <xar:comment>
     Set the sort arrow icons here so we can use them in the JS
 </xar:comment>
-<xar:if condition="$sortdir eq 'asc'">
+<xar:if condition="($sortdir eq 'asc' and $sort eq 'pubdate') or ($sortdir eq 'desc' and $sort ne 'pubdate')">
     <xar:set name="arrow_mouseover">xarTplGetImage('icons/sort-asc.png', 'base')</xar:set>
     <xar:set name="arrow_mouseout">xarTplGetImage('icons/sorted-desc.png', 'base')</xar:set>
 <xar:else />
