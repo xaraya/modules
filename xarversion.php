@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'example'; /* lowercase, no spaces or special chars */
 $modversion['id']             = '36';      /* register an id on xaraya.com */
-$modversion['version']        = '1.6.0'; /* three point version number */
+$modversion['version']        = '1.5.1'; /* three point version number */
 $modversion['displayname']    = 'Example';
 $modversion['description']    = 'Documented example and template for new modules';
 $modversion['credits']        = 'xardocs/credits.txt';
@@ -35,7 +35,7 @@ $modversion['category']       = 'Content';  /* Global|Content|User & Group|Misce
  *   version_le: dependency version must lesser or equal to the given value
  *
  */
-$modversion['dependency']   = array(
+$modversion['dependencyinfo']   = array(
                                     // This module requires Xaraya 1.2.0-b1 or newer, keyed by 0
                                     0 => array(
                                             'name' => 'core',
