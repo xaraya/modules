@@ -653,6 +653,10 @@ class ieventsCalendar {
         	'cal' => $this
         	);
 
+        # TODO: use xml parameter today?
+        $cal_links['today'] = date('Ymd');
+        $cal_links_labels['today'] = xarML('Today');
+
         if($this->nextPrevDay or $this->nextPrevMonth) {
             $ustartdate = strtotime($y.$m.'01');
             $uenddate = strtotime('+1 month -1 day', $ustartdate);
@@ -665,10 +669,8 @@ class ieventsCalendar {
             if($this->nextPrevDay) {
                 $cal_links['next_day'] = date('Ymd', strtotime('+1 day', $d));
                 $cal_links['prev_day'] = date('Ymd', strtotime('-1 day', $d));
-                $cal_links['today'] = date('Ymd');
                 $cal_links_labels['next_day'] =  xarML(xarLocaleGetFormattedDate('short', strtotime('+1 day', $d)));
                 $cal_links_labels['prev_day'] =  xarML(xarLocaleGetFormattedDate('short', strtotime('-1 day', $d)));
-                $cal_links_labels['today'] = xarML('Today');
             }
 
             if($this->nextPrevMonth) {

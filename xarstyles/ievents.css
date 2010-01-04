@@ -392,11 +392,8 @@ td.ievents-weekend {
 	-moz-opacity: 70%;
 }
 table.ievents-calendar-smallmonth td.ievents-weekend,
-table.ievents-calendar-smallmonth td.ievents-weekend span
-{
+table.ievents-calendar-smallmonth td.ievents-weekend span {
     background: #d8d8d8 none repeat scroll 0 0;
-}
-table.ievents-calendar-year {
 }
 td.ievents-calendar-yearmonth {
 	text-align: center; 
@@ -483,7 +480,7 @@ table.ievents-calendar-smallmonth td span {
     background: white none repeat scroll 0 0;
 }
 table.ievents-calendar-smallmonth td.ievents-today {
-    background-color: #ec008c;
+    background-color: #ec008c; /* create border */
 }
 table.ievents-calendar-week {
 	margin: .5em .25em;
