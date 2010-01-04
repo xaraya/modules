@@ -3,7 +3,7 @@
  * Initialise the registration module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -135,11 +135,13 @@ function registration_upgrade($oldVersion)
             xarModSetVar('roles','defaultregmodule', xarModGetIDFromName('registration'));
         }
         case '1.0.2':
-		    xarModSetVar('registration', 'enteremailtwice', false);
+            xarModSetVar('registration', 'enteremailtwice', false);
 
             break;
-        case '1.0.3': //current version
+        case '1.0.3':
+            // nothing to do here
 
+        case '1.1.0': //current version
             break;
     }
     // Update successful

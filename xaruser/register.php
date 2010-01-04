@@ -3,7 +3,7 @@
  * Register a new user
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -135,13 +135,18 @@ function registration_user_register()
             }
 
             $data = xarTplModule('registration','user', 'registerform',
-                           array('authid'     => $authid,
-                                 'values'     => $values,
-                                 'invalid'    => $invalid,
-                                 'properties' => $properties,
-                                 'hookoutput' => $hookoutput,
-                                 'withupload' => isset($withupload) ? $withupload : (int) FALSE,
-                                 'userlabel'  => xarML('New User')));
+                           array('authid'            => $authid,
+                                 'values'            => $values,
+                                 'enteremailtwice'   => xarModGetVar('registration', 'enteremailtwice'),
+                                 'chooseownpassword' => xarModGetVar('registration', 'chooseownpassword'),
+                                 'minpasslength'     => xarModGetVar('registration','minpasslength'),
+                                 'showterms'         => xarModGetVar('registration','showterms'),
+                                 'showprivacy'       => xarModGetVar('registration','showprivacy'),
+                                 'invalid'           => $invalid,
+                                 'properties'        => $properties,
+                                 'hookoutput'        => $hookoutput,
+                                 'withupload'        => isset($withupload) ? $withupload : (int) FALSE,
+                                 'userlabel'         => xarML('New User')));
             break;
 
         case 'checkregistration':
@@ -261,26 +266,36 @@ function registration_user_register()
             if ($countInvalid > 0 || !$isvalid) {
                 // if so, return to the previous template
                 return xarTplModule('registration','user', 'registerform',
-                                 array('authid'      => $authid,
-                                       'values'      => $values,
-                                       'invalid'     => $invalid,
-                                       'properties'  => $properties,
-                                       'hookoutput'  => $hookoutput,
-                                       'createlabel' => xarML('Create Account'),
-                                       'userlabel'   => xarML('New User')));
+                                 array('authid'            => $authid,
+                                       'values'            => $values,
+                                       'enteremailtwice'   => xarModGetVar('registration', 'enteremailtwice'),
+                                       'chooseownpassword' => xarModGetVar('registration', 'chooseownpassword'),
+                                       'minpasslength'     => xarModGetVar('registration','minpasslength'),
+                                       'showterms'         => xarModGetVar('registration','showterms'),
+                                       'showprivacy'       => xarModGetVar('registration','showprivacy'),
+                                       'invalid'           => $invalid,
+                                       'properties'        => $properties,
+                                       'hookoutput'        => $hookoutput,
+                                       'createlabel'       => xarML('Create Account'),
+                                       'userlabel'         => xarML('New User')));
             }
 
             // everything seems OK -> go on to the next step
             $data = xarTplModule('registration','user', 'confirmregistration',
-                                 array('username'    => $username,
-                                       'email'       => $email,
-                                       'realname'    => $realname,
-                                       'pass'        => $pass,
-                                       'ip'          => $ip,
-                                       'authid'      => $authid,
-                                       'properties'  => $properties,
-                                       'hookoutput'  => $hookoutput,
-                                       'createlabel' => xarML('Create Account')));
+                                 array('username'          => $username,
+                                       'email'             => $email,
+                                       'realname'          => $realname,
+                                       'pass'              => $pass,
+                                       'ip'                => $ip,
+                                       'enteremailtwice'   => xarModGetVar('registration', 'enteremailtwice'),
+                                       'chooseownpassword' => xarModGetVar('registration', 'chooseownpassword'),
+                                       'minpasslength'     => xarModGetVar('registration','minpasslength'),
+                                       'showterms'         => xarModGetVar('registration','showterms'),
+                                       'showprivacy'       => xarModGetVar('registration','showprivacy'),
+                                       'authid'            => $authid,
+                                       'properties'        => $properties,
+                                       'hookoutput'        => $hookoutput,
+                                       'createlabel'       => xarML('Create Account')));
 
             break;
 

@@ -3,7 +3,7 @@
  * Registration module initialization
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -20,7 +20,7 @@
  */
 $modversion['name']           = 'registration';
 $modversion['id']             = '30205';
-$modversion['version']        = '1.0.3';
+$modversion['version']        = '1.1.0';
 $modversion['displayname']    = xarML('User Registration');
 $modversion['description']    = 'Standard User Registration';
 $modversion['displaydescription'] = xarML('Standard User Registration');
@@ -35,6 +35,11 @@ $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Registration';
 $modversion['category']       = 'Users & Groups';
-$modversion['dependency']     = array(27,42);
-$modversion['dependencyinfo'] = array(27 => 'roles',42=>'authsystem');
+$modversion['dependency']     = array();
+$modversion['dependencyinfo']   = array(
+                                    0 => array(
+                                            'name' => 'core',
+                                            'version_ge' => '1.2.0-b1'
+                                         )
+                                );
 ?>
