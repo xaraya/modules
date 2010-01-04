@@ -457,6 +457,8 @@ table.ievents-calendar-smallmonth td {
 table.ievents-calendar-smallmonth td a:hover {
 	background-color: #ffdddd;
     color: #ec008c;
+    border: 1px solid #ffdddd;
+    margin: -1px;
 }
 
 table.ievents-calendar-smallmonth td span {
@@ -474,6 +476,10 @@ table.ievents-calendar-smallmonth td.ievents-selected-day a,
 table.ievents-calendar-smallmonth td.ievents-selected-day span {
 	background-color: #ffdddd;
 }
+table.ievents-calendar-smallmonth td.ievents-selected-day a:hover {
+    border: 1px solid #ffdddd;
+    margin: -1px;
+}
 
 table.ievents-calendar-smallmonth td span {
     display: block;
@@ -481,6 +487,10 @@ table.ievents-calendar-smallmonth td span {
 }
 table.ievents-calendar-smallmonth td.ievents-today {
     background-color: #ec008c; /* create border */
+}
+table.ievents-calendar-smallmonth td.ievents-today a:hover {
+    border: 1px solid #ec008c;
+    margin: -1px;
 }
 table.ievents-calendar-week {
 	margin: .5em .25em;
