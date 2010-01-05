@@ -110,7 +110,7 @@
                                 <xar:if condition="!empty($page.dd.menu_title)">
                                     #xarVarPrepForDisplay($page.dd.menu_title)#
                                 <xar:else />
-                                    #$page.name# #$this_menu_level#
+                                    #$page.name#
                                 </xar:if>
                             </a>
 
