@@ -3,7 +3,7 @@
  * Xaraya HTML Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,7 +13,7 @@
  */
 $modversion['name']         = 'HTML';
 $modversion['id']           = '779';
-$modversion['version']      = '1.4.1';
+$modversion['version']      = '1.5.0';
 $modversion['displayname']  = xarML('HTML');
 $modversion['description']  = 'Configure the allowed HTML or your site';
 $modversion['credits']      = 'xardocs/credits.txt';
@@ -29,4 +29,17 @@ $modversion['user']         = 0;
 $modversion['class']        = 'Admin';
 $modversion['category']     = 'Global';
 //$modversion['dependency']  = array(778); BBCode Dependency in transformoutput removed
+$modversion['dependencyinfo']   = array(
+                                    0 => array(
+                                            'name' => 'core',
+                                            'version_ge' => '1.2.0-b1'
+                                         ),
+                                  );
+
+if (false) {
+    xarML('HTML');
+    xarML('Configure the allowed HTML or your site');
+}
+
+
 ?>

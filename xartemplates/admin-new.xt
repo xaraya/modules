@@ -1,0 +1,83 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-js-framework name="jquery" />
+<xar:base-js-plugin name="ui" framework="jquery" file="jquery-ui-1.7.2.custom.min.js" style="jquery-ui-1.7.2.custom.css" />
+<xar:base-js-plugin name="validate" framework="jquery"  />
+<xar:set name="htmlcode">"
+jQuery('#"."newtag').validate({
+    rules: {
+        tag: {
+            required: true
+        }
+    },
+    messages: {
+        tag: {
+            required: '" . xarML('* Required field') . "'
+        }
+    },
+    errorClass: 'xar-error',
+    errorElement: 'div'
+});
+"</xar:set>
+<xar:base-js-event name="ready" code="$htmlcode" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2>
+        <xar:mlstring>Add Tag</xar:mlstring>
+    </h2>
+
+    <form method="post" id="newtag" action="#xarModURL('html','admin','create')#" enctype="application/x-www-form-urlencoded">
+        <div class="xar-form-input-wrapper">
+            <label for="tag" class="xar-form-label" title="#xarML('Tag')#">
+                <xar:mlstring>Tag:</xar:mlstring>
+            </label>
+            <div class="xar-form-input-container-after">
+                <input type="text" name="tag" id="tag" value="" size="32" maxlength="100" tabindex="1" />
+            </div>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="tagtype" class="xar-form-label" title="#xarML('Tag type')#">
+                <xar:mlstring>Type:</xar:mlstring>
+            </label>
+            <div class="xar-form-input-container-after">
+                <select name="tagtype" id="tagtype" tabindex="2">
+                    <xar:loop name="$types">
+                        <option name="#$loop:item['type']#" value="#$loop:item['type']#">#$loop:item['type']#</option>
+                    </xar:loop>
+                </select>
+            </div>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label" title="#xarML('Tag state')#">
+                <xar:mlstring>State:</xar:mlstring>
+            </label>
+            <div class="xar-form-container-after">
+                <div>
+                    <input type="radio" value="0" name="allowed" id="tagstate_0" tabindex="3" />
+                    <label for="tagstate_0">
+                        <xar:mlstring>Not Allowed</xar:mlstring>
+                    </label>
+                </div>
+                <div>
+                    <input type="radio" value="1" name="allowed" id="tagstate_1" tabindex="4" />
+                    <label for="tagstate_1">
+                        <xar:mlstring>Allowed</xar:mlstring>
+                    </label>
+                </div>
+                <div>
+                    <input type="radio" value="2" name="allowed" id="tagstate_2" tabindex="5" checked="checked" />
+                    <label for="tagstate_2">
+                        <xar:mlstring>Allowed with Attributes</xar:mlstring>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="xar-form-footer">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="submit" value="#$createbutton#" />
+        </div>
+    </form>
+
+</div>

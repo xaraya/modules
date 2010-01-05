@@ -1,0 +1,45 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-js-framework name="jquery" />
+<xar:base-js-plugin name="ui" framework="jquery" file="jquery-ui-1.7.2.custom.min.js" style="jquery-ui-1.7.2.custom.css" />
+<xar:base-js-plugin name="validate" framework="jquery"  />
+<xar:set name="htmlcode">"
+jQuery('#"."newtype').validate({
+    rules: {
+        tagtype: {
+            required: true
+        }
+    },
+    messages: {
+        tagtype: {
+            required: '" . xarML('* Required field') . "'
+        }
+    },
+    errorClass: 'xar-error',
+    errorElement: 'div'
+});
+"</xar:set>
+<xar:base-js-event name="ready" code="$htmlcode" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2>
+        <xar:mlstring>Add Tag Type</xar:mlstring>
+    </h2>
+
+    <form method="post" id="newtype" action="#xarModURL('html','admin','createtype')#" enctype="application/x-www-form-urlencoded">
+        <div class="xar-form-input-wrapper">
+            <label for="tagtype" class="xar-form-label" title="#xarML('Tag Type')#">
+                <xar:mlstring>Tag Type:</xar:mlstring>
+            </label>
+            <div class="xar-form-input-container-after">
+                <input type="text" name="tagtype" id="tagtype" value="" class="xar-form-text-long" maxlength="20" tabindex="1" />
+            </div>
+        </div>
+        <div class="xar-form-footer">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="submit" value="#$createbutton#" />
+        </div>
+    </form>
+</div>

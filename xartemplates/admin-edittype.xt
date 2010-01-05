@@ -1,0 +1,29 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2>
+        <xar:mlstring>Edit Tag Type</xar:mlstring>
+    </h2>
+
+    <form method="post" action="#xarModURL('html','admin','edittype')#" enctype="application/x-www-form-urlencoded">
+        <div class="xar-form-input-wrapper">
+            <label for="tagtype" class="xar-form-label" title="#xarML('Tag Type Name')#">
+                <xar:mlstring>Tag Type:</xar:mlstring>
+            </label>
+            <input type="text" name="tagtype" id="tagtype" value="#$type#" class="xar-form-textlong" maxlength="100" tabindex="1" />
+        </div>
+
+        <div class="xar-form-footer">
+            <input type="hidden" name="authid" value="#$authid#" />
+            <input type="hidden" name="id" id="id" value="#$id#" />
+            <input type="hidden" name="confirm" id="confirm" value="1"/>
+            <input type="submit" value="#$editbutton#"  tabindex="2" />
+            <p class="xar-align-center">
+                <a href="#xarModURL('html','admin','viewtypes')#"><xar:mlstring>Cancel</xar:mlstring></a>
+            </p>
+        </div>
+    </form>
+</div>

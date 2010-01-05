@@ -3,7 +3,7 @@
  * Xaraya HTML Module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -54,7 +54,8 @@ function html_admin_set()
             $allowed[$idx]['deleteurl'] = xarModURL('html',
                                                     'admin',
                                                     'delete',
-                                                    array('cid' => $allowed[$idx]['cid']));
+                                                    array('cid' => $allowed[$idx]['cid'],
+                                                          'authid' => $data['authid']));
         } else {
             $allowed[$idx]['deleteurl'] = '';
         }

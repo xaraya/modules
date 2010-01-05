@@ -3,7 +3,7 @@
  * Xaraya html
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -416,6 +416,8 @@ function html_upgrade($oldversion)
             // BBCode linebreak handling
         case '1.4.1':
             // Code to upgrade from version 1.4.1 goes here
+        case '1.5.0':
+            // Code to upgrade from version 1.5.0 goes here
             break;
         default:
             // Couldn't find a previous version to upgrade
