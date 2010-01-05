@@ -28,7 +28,7 @@ $modversion['contact'] = 'ajeitler@edu.uni-klu.ac.at | miko@xaraya.com | rcave@x
 $modversion['admin'] = 1;
 $modversion['user'] = 0;
 $modversion['class'] = 'Authentication';
-$modversion['category'] = 'Global';
+$modversion['category'] = 'System';
 // this module depends on the xarldap module
 $modversion['dependency'] = array(25);
 $modversion['dependencyinfo']   = array(
