@@ -3,7 +3,7 @@
  * AuthLDAP Initialisation
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -74,6 +74,9 @@ function authldap_upgrade($oldVersion)
   case '1.0':
     authldap_createdb();
     authldap_initgroupsvars();
+    break;
+  case '1.1.0':
+  case '1.1.1':
     break;
   }
   return true;

@@ -1,0 +1,38 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:set name="request">xarRequestGetInfo()</xar:set>
+<xar:set name="activetab">#$request.2#</xar:set>
+
+<xar:style scope="module" module="base" file="navtabs" />
+
+<div>
+    <dl class="xar-tabs">
+        <dt class="help" title="#xarML('Choose an action to perform')#">
+            <xar:mlstring>Actions:</xar:mlstring>
+        </dt>
+        <xar:sec mask="AdminAuthLDAP" catch="false">
+            <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+            <dd class="#$tabclass#">
+              <a href="#xarModURL('authldap','admin','modifyconfig')#">
+                <xar:mlstring>Modify Configuration</xar:mlstring>
+              </a>
+            </dd>
+        </xar:sec>
+        <xar:sec mask="AdminAuthLDAP" catch="false">
+            <xar:set name="tabclass">$activetab=='manuallysyncgroups'?'active':''</xar:set>
+            <dd class="#$tabclass#">
+              <a href="#xarModURL('authldap','admin','manuallysyncgroups')#">
+                <xar:mlstring>Manually Sync Groups</xar:mlstring>
+              </a>
+            </dd>
+        </xar:sec>
+        <xar:sec mask="AdminAuthLDAP" catch="false">
+            <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+            <dd class="#$tabclass#">
+                <a href="#xarModURL('authldap','admin','overview')#" >
+                    <xar:mlstring>Overview</xar:mlstring>
+                </a>
+            </dd>
+        </xar:sec>
+    </dl>
+</div>

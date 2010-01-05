@@ -1,0 +1,72 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>AuthLDAP Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <xar:template file="admin-menu" type="module" />
+    <img src="#xarTplGetImage('admin_generic.png', 'base')#" alt="official icon" class="xar-module-icon" />
+    <h2>
+        <xar:mlstring>Overview</xar:mlstring>
+    </h2>
+
+    <h3>
+        <xar:mlstring>What is it?</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>The AuthLDAP module allows you to authenticate a user with an LDAP server.  The AuthLDAP module forwards the username and password from the login screen to the LDAP server for authentication.</xar:mlstring>
+    </p>
+
+    <h3>
+        <xar:mlstring>How to use it?</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>From the menu, you have one choice.  "Modify Config".</xar:mlstring>
+    </p>
+    <ul>
+        <li>
+            <xar:mlstring>Modify Config -- From here, you can allow a user that has account information in LDAP to be automatically added to the Xaraya database and allowed to login. You can also setup the synchronization settings for LDAP groups.</xar:mlstring>
+        </li>
+        <li>
+            <xar:mlstring>Manually Sync Groups -- This will resynchronize the imported LDAP groups. It may be long the first time if you have lots of Xaraya users imported from LDAP, or lots of (sub)groups to import.</xar:mlstring>
+        </li>
+    </ul>
+    <p>
+        <xar:mlstring>To synchronize the groups, we recommand to setup a job entry in the scheduler module. You need to call the function in (module:authldap, type:admin, function:syncgroups). The module has some caching mecanism for LDAP user profiles, so you can run this job frequently, for example every 30 minutes, without fearing about resource usage.</xar:mlstring>
+    </p>
+
+    <h3>
+        <xar:mlstring>Included Blocks</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>There are no included blocks with the AuthLDAP Module</xar:mlstring>
+    </p>
+
+    <h3>
+        <xar:mlstring>Included Hooks</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>There are no included Hooks with the AuthLDAP Module</xar:mlstring>
+    </p>
+
+    <h3>
+        <xar:mlstring>Further Information</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>Further information on the AuthLDAP module can be found at</xar:mlstring>
+    </p>
+    <ul>
+        <li>
+            <xar:mlstring>AuthLDAP Extension page at</xar:mlstring> <a title="#xarML('AuthLDAP Module - Xaraya Extension 50')#" href="http://www.xaraya.com/index.php/release/50.html">Xaraya Extension and Releases</a>.
+            <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+        </li>
+        <li>
+            <xar:mlstring>Related tutorials and documentation on AuthLDAP found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/authldap/" title="#xarML('Related documentation on AuthLDAP')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+        </li>
+    </ul>
+</div>
+<div class="xar-mod-foot">
+    <strong>&nbsp;<xar:mlstring>AuthLDAP Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-03-08
+</div>
+
