@@ -32,10 +32,10 @@
                 <p style="clear: both;">
                     <label style="display: block;"><xar:data-label property="$this_property" /></label>
                     <xar:if condition="!empty($properties_extra[$this_property-&gt;name]['displayonly'])">
-                        <xar:comment>Changeable property</xar:comment>
+                        <xar:comment>Read-only property</xar:comment>
                         <xar:data-output property="$this_property" />
                     <xar:else />
-                        <xar:comment>Read-only property</xar:comment>
+                        <xar:comment>Changeable property</xar:comment>
                         <xar:data-input property="$this_property" />
                     </xar:if>
                 </p>
