@@ -1,0 +1,9 @@
+<xar:comment> 
+Variables available in this template:
+    match - the complete matched text
+    template_base - the template base name
+    template_name - the template main name
+    error_text - the full error text
+</xar:comment>
+<xar:set name="$error_desc">xarML('Dynamic Autolink Error in template #(1)-#(2):', $template_base, $template_name)</xar:set>
+<span class="xar-error" title="#$error_desc# #xarVarPrepForDisplay($error_text)#">#$match#</span>

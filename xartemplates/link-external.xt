@@ -12,10 +12,10 @@
 </xar:if>
 <xar:comment> Default icon, if not over-ridden. </xar:comment>
 <xar:if condition="!isset($icon)">
-    <xar:set name="$icon">'icon_www.gif'</xar:set>
+    <xar:set name="$icon">'www-url.png'</xar:set>
 </xar:if>
 <xar:comment> Get the image URL </xar:comment>
-<xar:set name="$imgurl">#xarTplGetImage($icon, 'autolinks')#</xar:set>
+<xar:set name="$imgurl">#xarTplGetImage("icons/$icon", 'base')#</xar:set>
 <xar:comment> First set used if a target is specified (either the global default, or over-ridden with DD). </xar:comment>
 <xar:if condition="!empty($target)">
     <xar:if condition="empty($imgurl)">

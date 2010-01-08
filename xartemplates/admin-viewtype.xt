@@ -1,0 +1,116 @@
+<xar:comment> $Id </xar:comment>
+<xar:set name="icon_modify">xarTplGetImage('icons/modify.png', 'base')</xar:set>
+<xar:set name="icon_delete">xarTplGetImage('icons/delete.png', 'base')</xar:set>
+<xar:set name="icon_itemlist">xarTplGetImage('icons/item-list.png', 'base')</xar:set>
+<xar:base-js-framework name="jquery" />
+<xar:base-js-plugin name="ui" framework="jquery" file="jquery-ui-1.7.2.custom.min.js" style="jquery-ui-1.7.2.custom.css" />
+<xar:set name="autolinkscode">"
+// dimensions of the delete prompt dialog
+var delete_dialog_width = Math.floor(jQuery(window).width() * .85);
+var delete_dialog_height = Math.floor(jQuery(window).height() * .85);
+
+// Create an onclick handler for the delete links
+jQuery('table.xar-items a[id^=delete]').click(function() {
+    var a = this;
+    // remove and recreate the dialog container
+    jQuery('#"."xardialogtarget').remove();
+    jQuery('body').append('".chr(60)."div id=\'xardialogtarget\' style=\'display: none;\'".chr(62).chr(60)."/div".chr(62)."');
+    // populate the dialog... we get the content from the first TD in the row
+    jQuery('#" . "xardialogtarget').load(this.getAttribute('href') + '".chr(38)."pageName=module .xar-mod-body ".chr(62)." *').dialog({
+        // dialog options
+        title: '" . xarML('Delete Autolink Type') . "',
+        width: delete_dialog_width,
+        height: delete_dialog_height,
+        buttons: {
+            // Cancel button
+            '". xarML('Cancel') . "': function() { jQuery(this).dialog('close'); }
+        },
+        bgiframe: true,
+        modal: true,
+        draggable: false,
+        resizable: false
+    });
+    return false;
+});
+"</xar:set>
+<xar:base-js-event name="ready" code="$autolinkscode" />
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2>
+        <xar:mlstring>View Autolink Types</xar:mlstring>
+    </h2>
+
+    <xar:if condition="!empty($items)">
+        <table class="xar-items">
+        <thead>
+            <tr>
+                <th><xar:mlstring>Name</xar:mlstring></th>
+                <th><xar:mlstring>Template</xar:mlstring></th>
+                <th><xar:mlstring>Method</xar:mlstring></th>
+                <th><xar:mlstring>Description</xar:mlstring></th>
+                <th><xar:mlstring>Options</xar:mlstring></th>
+            </tr>
+        </thead>
+        <tbody>
+            <xar:set name="rowclass">'xar-norm'</xar:set>
+            <xar:foreach in="$items" value="$item">
+                <tr>
+                    <td>
+                        <xar:if condition="empty($item['editurl'])">
+                            #xarVarPrepForDisplay($item['type_name'])#
+                        <xar:else />
+                            <a href="#$item['editurl']#">#xarVarPrepForDisplay($item['type_name'])#</a>
+                        </xar:if>
+                    </td>
+                    <td>
+                        #xarModGetVar('autolinks','templatebase', 1)#-#xarVarPrepForDisplay($item['template_name'])#.xt
+                    </td>
+                    <td>
+                        <xar:if condition="!empty($item['dynamic_replace'])">
+                            <xar:mlstring>Dynamic</xar:mlstring>
+                        <xar:else />
+                            <xar:mlstring>Static</xar:mlstring>
+                        </xar:if>
+                    </td>
+                    <td>
+                        #xarVarPrepForDisplay($item['type_desc'])#
+                    </td>
+                    <td class="xar-item-actions">
+                        <xar:if condition="empty($item['linksurl'])">
+                            <img src="#$icon_itemlist#" alt="#xarML('View Autolinks')#" title="#xarML('View Autolinks')#" class="xar-icon-disabled" />
+                        <xar:else />
+                            <a href="#$item['linksurl']#" title="#xarML('View Autolinks')#" class="xar-icon"><img src="#$icon_itemlist#" alt="#xarML('View Autolinks')#" /></a>
+                        </xar:if>
+
+                        <xar:if condition="empty($item['editurl'])">
+                            <img src="#$icon_modify#" alt="#xarML('Modify')#" title="#xarML('Modify')#" class="xar-icon-disabled" />
+                        <xar:else />
+                            <a href="#$item['editurl']#" title="#xarML('Modify')#" class="xar-icon"><img src="#$icon_modify#" alt="#xarML('Modify')#" /></a>
+                        </xar:if>
+
+                        <xar:if condition="empty($item['deleteurl'])">
+                            <img src="#$icon_delete#" alt="#xarML('Delete')#" title="#xarML('Delete')#" class="xar-icon-disabled" />
+                        <xar:else />
+                            <a href="#$item['deleteurl']#" id="delete_#$item['tid']#" title="#xarML('Delete')#" class="xar-icon"><img src="#$icon_delete#" alt="#xarML('Delete')#" /></a>
+                        </xar:if>
+                    </td>
+                </tr>
+                <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+            </xar:foreach>
+        </tbody>
+        </table>
+
+        <!-- add the pager here -->
+        #$pager#
+
+    <xar:else/>
+        <p class="xar-align-center">
+            <xar:mlstring>No Autolink types defined</xar:mlstring>
+        </p>
+    </xar:if>
+</div>
+

@@ -14,12 +14,11 @@
       set up to supply different parts of the matched string, using a RE match.
 </xar:comment>
 
-<xar:comment>TODO: provide alternative to deprecated 'target' attribute.</xar:comment>
 <xar:if condition="!empty($target)">
     <xar:if condition="!empty($style)">
-        <a href="#$url#" title="#$title#" target="#$target#">#$match#</a>
+        <a href="#$url#" title="#$title#" onclick="window.open(this.getAttribute('href'), '#$target#');return false;">#$match#</a>
     <xar:else />
-        <a href="#$url#" title="#$title#" target="#$target#" style="#$style#">#$match#</a>
+        <a href="#$url#" title="#$title#"  onclick="window.open(this.getAttribute('href'), '#$target#');return false;" style="#$style#">#$match#</a>
     </xar:if>
 <xar:else />
     <xar:if condition="!empty($style)">

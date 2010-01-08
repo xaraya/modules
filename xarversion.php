@@ -3,7 +3,7 @@
  * Xaraya Autolinks
  *
  * @package modules
- * @copyright (C) 2002-2008 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,7 +14,7 @@
 
 $modversion['name']         = 'Autolinks';
 $modversion['id']           = '11';
-$modversion['version']      = '1.6.0';
+$modversion['version']      = '1.7.0';
 $modversion['displayname']  = xarML('Autolinks');
 $modversion['description']  = 'Automatically link key words';
 $modversion['credits']      = 'xardocs/credits.txt';
@@ -28,5 +28,12 @@ $modversion['contact']      = 'jason.xaraya@acadweb.co.uk,Jim@mcdee.net';
 $modversion['admin']        = 1;
 $modversion['user']         = 0;
 $modversion['class']        = 'Utility';
-$modversion['category']     = 'Global';
+$modversion['category']     = 'System';
+$modversion['dependencyinfo']   = array(
+                                    0 => array(
+                                            'name' => 'core',
+                                            'version_ge' => '1.2.0-b1'
+                                         )
+                                  );
+
 ?>

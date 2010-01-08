@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Xaraya Autolinks create sample links
+ *
+ * @package modules
+ * @copyright (C) 2002-2010 by the Xaraya Development Team.
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.org
+ *
+ * @subpackage Autolinks Module
+ * @link http://xaraya.com/index.php/release/11.html
+ * @author Jason Judge/Jim McDonald
+*/
 /**
  * Create sample data (autolink types, links, DD objects, properties, etc.)
  * @param action - 'create' or 'get': create samples or return the samples array.
@@ -77,7 +88,7 @@ function autolinks_adminapi_samples($args)
                         'enabled' => '0',
                         'dd_properties' => array (
                             'imgalt' => '',
-                            'icon' => 'icon_www.gif',
+                            'icon' => 'www-url.png',
                             'target' => 'external'
                         )
                     )

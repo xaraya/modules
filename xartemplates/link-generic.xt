@@ -77,4 +77,12 @@
 </xar:if>
 
 <xar:comment> Now create the actual link, based on the attributes we have defined above. </xar:comment>
-<a href="#$href#" title="#$title#" class="#$class#" style="#$style#" target="#$target#">#xarML($text)#</a>
+<xar:if condition="$target eq ''">
+    <a href="#$href#" title="#$title#" class="#$class#" style="#$style#" target="#$target#">
+        #xarML($text)#
+    </a>
+<xar:else />
+    <a href="#$href#" title="#$title#" class="#$class#" style="#$style#" onclick="window.open(this.getAttribute('href'), '#$target#');return false;">
+        #xarML($text)#
+    </a>
+</xar:if>

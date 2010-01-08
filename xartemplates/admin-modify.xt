@@ -1,0 +1,142 @@
+<xar:comment> $Id </xar:comment>
+<xar:set name="$modifybuttonlabel"><xar:mlstring>Modify</xar:mlstring></xar:set>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2>
+        <xar:mlstring>Modify Autolink</xar:mlstring>
+    </h2>
+
+    <form method="post" action="#$updateurl#" enctype="application/x-www-form-urlencoded">
+        <div class="xar-form-input-wrapper">
+            <label for="name" title="#xarML('A unique name for the Autolink')#" class="xar-form-label">
+                <xar:mlstring>Name:</xar:mlstring>
+            </label>
+            <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($name)#" class="xar-form-textlong" maxlength="30"/>
+        </div>
+        <xar:comment>
+            <a href="#$edittypeurl#" title="#xarML('Edit autolink type')#"><xar:mlstring>Type</xar:mlstring></a>
+        </xar:comment>
+
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">
+                <xar:mlstring>Type:</xar:mlstring>
+            </label>
+            <div class="xar-form-container-after">
+                #xarVarPrepForDisplay($type_name)#
+                <xar:if condition="!empty($moveurl)">
+                    [ <a href="#$moveurl#" title="#xarML('Move autolink type to a new type')#"><xar:mlstring>Move</xar:mlstring></a> ]
+                </xar:if>
+                <xar:if condition="!empty($type_desc)">
+                    <div>
+                        #xarVarPrepForDisplay($type_desc)#
+                    </div>
+                </xar:if>
+            </div>
+        </div>
+
+        <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$enabled">
+                <input type="checkbox" name="enabled" id="enabled" value="1" checked="checked"/>
+            <xar:else />
+                <input type="checkbox" name="enabled" id="enabled" value="1"/>
+            </xar:if>
+            <label for="enabled" class="help" title="#xarML('Flag determines whether the Autolink is active')#">
+                <xar:mlstring>Enabled</xar:mlstring>
+            </label>
+        </div>
+
+        <div class="xar-form-section">
+            <h3>
+                <xar:mlstring>Matching</xar:mlstring>
+            </h3>
+
+
+            <div class="xar-form-input-wrapper">
+                <label for="keyword" title="#xarML('The word or regular expression that is replaced for this Autolink')#" class="xar-form-label">
+                    <xar:mlstring>Matching Key</xar:mlstring>
+                </label>
+                <input type="text" name="keyword" id="keyword" value="#xarVarPrepForDisplay($keyword)#" class="xar-form-textxxlong" maxlength="100" />
+            </div>
+
+            <div class="xar-form-input-wrapper-after">
+                <xar:if condition="$match_re">
+                    <input type="checkbox" name="match_re" id="match_re" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="match_re" id="match_re" value="1" />
+                </xar:if>
+                <label for="match_re" title="#xarML('Flag indicates whether the Matching Key should be processed as a regular expression')#">
+                    <xar:mlstring>Match As Regular Expression</xar:mlstring>
+                </label>
+            </div>
+        </div>
+
+
+        <div class="xar-form-section">
+            <h3>
+                <xar:mlstring>Replacing</xar:mlstring>
+            </h3>
+
+            <div class="xar-form-input-wrapper">
+                <label for="title" title="#xarML('The title (usually a tooltip) for the resulting Autolink transformation')#" class="xar-form-label">
+                    <xar:mlstring>Title</xar:mlstring>
+                </label>
+                <input type="text" name="title" id="title" value="#xarVarPrepForDisplay($title)#" class="xar-form-text-long" maxlength="100" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="url" title="#xarML('The URL for the Autolink')#" class="xar-form-label">
+                    <xar:mlstring>URL</xar:mlstring>
+                </label>
+                <input type="text" name="url" id="url" value="#xarVarPrepForDisplay($url)#" class="xar-form-textxlong" maxlength="200" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="comment" title="#xarML('A comment or description to help you manage the Autolinks generally not used in the Autolink transform')#" class="xar-form-label">
+                    <xar:mlstring>Comment</xar:mlstring>
+                </label>
+                <div class="xar-form-container-after">
+                    <textarea name="comment" id="comment" cols="" rows="" class="xar-form-textareamedium">#xarVarPrepForDisplay($comment)#</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="xar-form-section">
+            <h3>
+                <xar:mlstring>Other</xar:mlstring>
+            </h3>
+
+            <div class="xar-form-input-wrapper">
+                <label for="sample" title="#xarML('Some sample text that can be used to test the Autolink - the examples are displayed in the main Autolink list')#" class="xar-form-label">
+                    <xar:mlstring>Sample text to test link</xar:mlstring>
+                </label>
+                <input type="text" name="sample" id="sample" value="#xarVarPrepForDisplay($sample)#" class="xar-form-textxlong" maxlength="200"/>
+            </div>
+
+            <xar:comment>
+                Display the hooks
+            </xar:comment>
+            <xar:if condition="!empty($hooks)">
+                <div class="xar-form-section">
+                    <h3>
+                        <xar:mlstring>Configuration of Hooked Modules</xar:mlstring>
+                    </h3>
+                    <xar:foreach in="$hooks" key="$hookmodule">
+                        <div class="xar-clearboth">#$hookmodule#
+                            #$hooks[$hookmodule]#
+                        </div>
+                    </xar:foreach>
+                </div>
+            </xar:if>
+        </div>
+
+        <div class="xar-form-footer">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="lid" id="lid" value="#$lid#" />
+            <input type="submit" value="#$modifybuttonlabel#" tabindex="5" />
+        </div>
+    </form>
+</div>
+

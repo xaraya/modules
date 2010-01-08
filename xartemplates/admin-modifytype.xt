@@ -1,0 +1,98 @@
+<xar:set name="$moduleinfo">#xarModGetInfo(xarModGetIDFromName('autolinks'))#</xar:set>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h3>
+        <xar:mlstring>Modify Autolink Type</xar:mlstring>
+    </h3>
+
+    <xar:if condition="isset($global_error)">
+       <div class="xar-error">#xarVarPrepForDisplay($global_error)#</div>
+    </xar:if>
+
+    <form method="post" action="#xarModURL('autolinks', 'admin', 'modifytype')#" enctype="application/x-www-form-urlencoded">
+
+        <div class="xar-form-input-wrapper">
+            <label for="type_name" title="#xarML('Unique name for the Autolink Type')#" class="xar-form-label">
+                <xar:mlstring>Name</xar:mlstring>
+            </label>
+            <div class="xar-form-container-after">
+                <input type="text" name="type_name" id="type_name" value="#xarVarPrepForDisplay($type_name)#" class="xar-form-textlong" maxlength="60" />
+                <xar:if condition="!empty($type_name_error)">
+                    <div class="xar-error">
+                        #xarVarPrepForDisplay($type_name_error)#
+                    </div>
+                </xar:if>
+            </div>
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="template_name" title="#xarML('Name of the template, without the template base part')#" class="xar-form-label">
+                <xar:mlstring>Template Name</xar:mlstring>
+            </label>
+            <div class="xar-form-container-after">
+                <input type="text" name="template_name" id="template_name" value="#xarVarPrepForDisplay($template_name)#" class="xar-form-textlong" maxlength="60" />
+                <div>
+                    #$moduleinfo['directory']#/#xarModGetVar('autolinks','templatebase', 1)#-{<em><xar:mlstring>name</xar:mlstring></em>}.xt
+                </div>
+                <xar:if condition="!empty($template_name_error)">
+                    <div class="xar-error">
+                        #xarVarPrepForDisplay($template_name_error)#
+                    </div>
+                </xar:if>
+            </div>
+        </div>
+
+        <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$dynamic_replace">
+                <input type="checkbox" name="dynamic_replace" id="dynamic_replace" value="1" checked="checked"/>
+            <xar:else/>
+                <input type="checkbox" name="dynamic_replace" id="dynamic_replace" value="1"/>
+            </xar:if>
+            <label for="dynamic_replace" title="#xarML('Flag to indicate whether the transform template should be executed dynamically')#">
+                <xar:mlstring>Execute Template Dynamically</xar:mlstring>
+            </label>
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="type_desc" title="#xarML('A description to help in using the Autolink Type')#" class="xar-form-label">
+                <xar:mlstring>Description</xar:mlstring>
+            </label>
+            <div class="xar-form-container-after">
+                <textarea name="type_desc" id="type_desc" cols="" rows="" class="xar-form-textareamedium">#xarVarPrepForDisplay($type_desc)#</textarea>
+                <xar:if condition="isset($type_desc_error)">
+                    <div class="xar-error">
+                        #xarVarPrepForDisplay($type_desc_error)#
+                    </div>
+                </xar:if>
+            </div>
+        </div>
+
+        <xar:if condition="!empty($typehooks)">
+            <xar:foreach in="$typehooks" key="$typehookmodule">
+                #$typehooks[$typehookmodule]#
+            </xar:foreach>
+        </xar:if>
+
+        <xar:if condition="!empty($itemhooks)">
+            <div class="xar-form-section">
+                <h3>
+                    <xar:mlstring>Configuration of Hooked Modules</xar:mlstring>
+                </h3>
+                <xar:foreach in="$itemhooks" key="$itemhookmodule">
+                    <div>
+                        #$itemhooks[$itemhookmodule]#
+                    </div>
+                </xar:foreach>
+            </div>
+        </xar:if>
+
+        <div class="xar-form-footer">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="tid" id="tid" value="#$tid#" />
+            <input type="submit" name="submit" id="submit" value="#xarML('Update')#" />
+        </div>
+    </form>
+</div>

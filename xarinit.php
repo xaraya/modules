@@ -3,7 +3,7 @@
  * Xaraya Autolinks
  *
  * @package modules
- * @copyright (C) 2002-2008 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -19,8 +19,8 @@ define ('AUTOLINKS_PUNCTUATION', '.!?"\';:');
  */
 function autolinks_init()
 {
-    // Need Xaraya version 0.9.1.3 or above for correct exceptions core functions.
-    if (!xarModAPIfunc('base', 'versions', 'assert_application', array('0.9.1.3'))) {
+    // Need Xaraya version 1.0.0 or above for correct exceptions core functions.
+    if (!xarModAPIfunc('base', 'versions', 'assert_application', array('1.0.0'))) {
         return;
     }
 
@@ -240,8 +240,8 @@ function autolinks_upgrade($oldversion)
             // - drop and alter some autolink table columns
             // - set up some sample data
 
-            // Need Xaraya version 0.9.1.3 or above for correct exceptions core functions.
-            if (!xarModAPIfunc('base', 'versions', 'assert_application', array('0.9.1.3'))) {
+            // Need Xaraya version 1.0.0 or above for correct exceptions core functions.
+            if (!xarModAPIfunc('base', 'versions', 'assert_application', array('1.0.0'))) {
                 return;
             }
 
@@ -335,8 +335,6 @@ function autolinks_upgrade($oldversion)
        case '1.6':
             // compatability upgrade
        case '1.6.0':
-            // The current version.
-
             // Create or update sample data.
             //$result = xarModAPIfunc(
             //    'autolinks', 'admin', 'samples',
@@ -344,6 +342,9 @@ function autolinks_upgrade($oldversion)
             //);
 
             xarModSetVar('autolinks', 'excludeelements', 'a code pre');
+
+       case '1.7.0':
+            // The current version.
 
             return true;
     }

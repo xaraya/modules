@@ -1,0 +1,155 @@
+<xar:comment> Dropdown for link style </xar:comment>
+<xar:set name="$decorationsel">xarModGetVar('autolinks', 'decoration')</xar:set>
+
+<xar:comment> Dropdown for samples display </xar:comment>
+<xar:set name="$samplessel">xarModGetVar('autolinks', 'showsamples')</xar:set>
+
+<xar:comment> Button labels </xar:comment>
+<xar:set name="$submit"><xar:mlstring>Submit</xar:mlstring></xar:set>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2>
+        <xar:mlstring>Modify Config</xar:mlstring>
+    </h2>
+    <form method="post" action="#xarModURL('autolinks', 'admin', 'updateconfig')#" enctype="application/x-www-form-urlencoded">
+        <div class="xar-form-section">
+            <h3>
+                <xar:mlstring>Matching Rule Options</xar:mlstring>
+            </h3>
+
+            <div class="xar-form-input-wrapper">
+                <label for="punctuation" title="#xarML('Characters that are permitted to terminate matching words, in addition to white space')#" class="xar-form-label">
+                    <xar:mlstring>Punctuation characters</xar:mlstring>
+                </label>
+                <input type="text" name="punctuation" id="punctuation" class="xar-form-textmedium" maxlength="30" value="#xarModGetVar('autolinks', 'punctuation', 1)#" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="excludeelements" title="#xarML('A list of XML elements within which no Autolinks are to be transformed')#" class="xar-form-label">
+                    <xar:mlstring>Do not match in elements</xar:mlstring>
+                </label>
+                <input type="text" name="excludeelements" id="excludeelements" class="xar-form-textlong" maxlength="200" value="#xarModGetVar('autolinks', 'excludeelements', 1)#" />
+            </div>
+
+            <div class="xar-form-input-wrapper-after">
+                <xar:if condition="xarModGetVar('autolinks', 'nbspiswhite')">
+                    <input type="checkbox" name="nbspiswhite" id="nbspiswhite" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="nbspiswhite" id="nbspiswhite" value="1" />
+                </xar:if>
+                <label for="nbspiswhite" title="#xarML('Treat the non-breaking space entity as a white-space character for demarcating the boundaries of key words')#">
+                    <xar:mlstring>Non-breaking space entity (&amp;nbsp;) as white space</xar:mlstring>
+                </label>
+            </div>
+        </div>
+        <div class="xar-form-section">
+            <h3>
+                <xar:mlstring>Action Options</xar:mlstring>
+            </h3>
+
+            <div class="xar-form-input-wrapper">
+                <label for="maxlinkcount" title="#xarML('The maximum number of times each Autolink is permitted to match a keyword in any single block of text')#" class="xar-form-label">
+                    <xar:mlstring>Link count limit</xar:mlstring>
+                </label>
+                <input type="text" name="maxlinkcount" id="maxlinkcount" class="xar-form-textshort" maxlength="3" value="#xarModGetVar('autolinks', 'maxlinkcount', 1)#"/>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="decoration" title="#xarML('Legacy setting - default decoration style applied to Autolinks - individual links may over-ride this setting or ignore it completely')#" class="xar-form-label">
+                    <xar:mlstring>Autolink decoration style</xar:mlstring>
+                </label>
+                <select name="decoration" id="decoration" size="1">
+                    <xar:foreach in="$decoration" value="$v" key="$k">
+                        <xar:if condition="$k eq $decorationsel">
+                            <option value="#$k#" selected="selected">#$v#</option>
+                        <xar:else />
+                            <option value="#$k#">#$v#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </div>
+
+            <div class="xar-form-input-wrapper-after">
+                <xar:if condition="xarModGetVar('autolinks', 'newwindow')">
+                    <input type="checkbox" name="newwindow" id="newwindow" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="newwindow" id="newwindow" value="1" />
+                </xar:if>
+                <label for="newwindow" title="#xarML('Legacy setting - default new window setting for Autolinks - individual links may over-ride this setting with named windows or ignore it completely')#">
+                    <xar:mlstring>Open links in new window</xar:mlstring>
+                </label>
+            </div>
+
+            <div class="xar-form-input-wrapper-after">
+                <xar:if condition="xarModGetVar('autolinks', 'showerrors')">
+                    <input type="checkbox" name="showerrors" id="showerrors" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="showerrors" id="showerrors" value="1" />
+                </xar:if>
+                <label for="showerrors" title="#xarML('Flag to indicate whether errors in the execution of Autolink templates are to be shown inline with the linked keyword attempt, or hidden completely, leaving matched keywords intact - generally use this only for debugging')#">
+                    <xar:mlstring>Show template errors inline (errors shown in content)</xar:mlstring>
+                </label>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="templatebase" title="#xarML('The base name for Autolink templates - this setting will form the first part of the template names')#" class="xar-form-label">
+                    <xar:mlstring>Template base name</xar:mlstring>
+                </label>
+                <div class="xar-form-container-after">
+                    <input type="text" name="templatebase" id="templatebase" class="xar-form-textmedium" maxlength="30" value="#xarModGetVar('autolinks', 'templatebase', 1)#"/>
+                    <div>
+                        <xar:mlstring>(affects all templates used)</xar:mlstring>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="xar-form-section">
+            <h3>
+                <xar:mlstring>Admin Options</xar:mlstring>
+            </h3>
+
+            <div class="xar-form-input-wrapper">
+                <label for="itemsperpage" title="#xarML('The maximum number of Autolinks that will be displayed at any time in the Autolink view list admin page')#" class="xar-form-label">
+                    <xar:mlstring>Items Per Page</xar:mlstring>
+                </label>
+                <input type="text" name="itemsperpage" id="itemsperpage" class="xar-form-text-short" maxlength="3" value="#xarModGetVar('autolinks', 'itemsperpage', 1)#" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="showsamples" title="#xarML('Indicates whether the sample links will be displayed in the Autolink view list admin page')#" class="xar-form-label">
+                    <xar:mlstring>Show sample links in list</xar:mlstring>
+                </label>
+                    <select name="showsamples" id="showsamples" size="1">
+                    <xar:foreach in="$samples" value="$v" key="$k">
+                        <xar:if condition="$k eq $samplessel">
+                            <option value="#$k#" selected="selected">#$v#</option>
+                        <xar:else />
+                            <option value="#$k#">#$v#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </div>
+        </div>
+        <xar:if condition="!empty($hooks)">
+            <div class="xar-form-section">
+                <h3>
+                    <xar:mlstring>Configuration of Hooked Modules</xar:mlstring>
+                </h3>
+                <xar:foreach in="$hooks" key="$hookmodule">
+                    <div class="xar-clearboth">
+                        #$hooks[$hookmodule]#
+                    </div>
+                </xar:foreach>
+            </div>
+        </xar:if>
+
+        <div class="xar-form-footer">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="submit" name="submit" id="submit" value="#$submit#" />
+        </div>
+    </form>
+</div>

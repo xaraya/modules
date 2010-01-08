@@ -8,14 +8,14 @@
 </xar:if>
 <xar:comment> Default icon, if not over-ridden. </xar:comment>
 <xar:if condition="!isset($icon)">
-    <xar:set name="$icon">'icon_mail.gif'</xar:set>
+    <xar:set name="$icon">'icons/mail.png'</xar:set>
 </xar:if>
 <xar:comment> Get the image URL </xar:comment>
-<xar:set name="$imgurl">#xarTplGetImage($icon, 'autolinks')#</xar:set>
+<xar:set name="$imgurl">#xarTplGetImage($icon, 'base')#</xar:set>
 <xar:comment> First set used if a target is specified (either the global default, or over-ridden with DD). </xar:comment>
 
 <xar:if condition="empty($imgurl)">
     <a href="mailto:#$url#" title="#xarVarPrepForDisplay(xarML($title))#">#$url#</a>
 <xar:else/>
-    <a href="mailto:#$url#" title="#xarVarPrepForDisplay(xarML($title))#"><img src="#$imgurl#" alt="#xarVarPrepForDisplay(xarML($imgalt))#" hspace="4"/>#$url#</a>
+    <a href="mailto:#$url#" title="#xarVarPrepForDisplay(xarML($title))#">#$url#<img src="#$imgurl#" alt="#xarVarPrepForDisplay(xarML($imgalt))#" class="xar-icon" /></a>
 </xar:if>

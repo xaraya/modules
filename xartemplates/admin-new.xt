@@ -1,0 +1,105 @@
+<xar:set name="$addbuttonlabel"><xar:mlstring>Create</xar:mlstring></xar:set>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span>
+</div>
+
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2>
+        <xar:mlstring>Add Autolink</xar:mlstring>
+    </h2>
+
+    <xar:if condition="isset($global_error)">
+       <p class="xar-error">#$global_error#</p>
+    </xar:if>
+
+    <form method="post" action="#xarModURL('autolinks', 'admin', 'create')#" enctype="application/x-www-form-urlencoded">
+        <xar:if condition="isset($types)">
+            <div class="xar-form-input-wrapper">
+                <label for="tid" class="xar-form-label">
+                    <xar:mlstring>Autolink Type:</xar:mlstring>
+                </label>
+                <div class="xar-form-container-after">
+                    <select name="tid" id="tid">
+                        <xar:foreach in="$types" value="$v" key="$k">
+                            <xar:if condition="$v['tid'] eq $tid or $v['itemtype'] eq $itemtype">
+                                <option value="#$k#" selected="selected">#$v['type_name']#</option>
+                            <xar:else/>
+                                <option value="#$k#">#$v['type_name']#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                    <xar:if condition="!empty($tid_error)">
+                        <div class="xar-error">#$tid_error#</div>
+                    </xar:if>
+                </div>
+            </div>
+        </xar:if>
+
+        <div class="xar-form-input-wrapper">
+            <label for="name" class="xar-form-label">
+                <xar:mlstring>Name:</xar:mlstring>
+            </label>
+            <div class="xar-form-container-after">
+                <input type="text" name="name" id="name" value="#$name#" class="xar-form-textlong" maxlength="100" />
+                <xar:if condition="!empty($name_error)">
+                    <div class="xar-error">#$name_error#</div>
+                </xar:if>
+            </div>
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="keyword" class="xar-form-label">
+                <xar:mlstring>Matching Key</xar:mlstring>
+            </label>
+            <div class="xar-form-container-after">
+                <input type="text" name="keyword" id="keyword" value="#$keyword#" class="xar-form-textlong" maxlength="100" />
+                <xar:if condition="!empty($keyword_error)">
+                    <div class="xar-error">#$keyword_error#</div>
+                </xar:if>
+            </div>
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="title" class="xar-form-label">
+                <xar:mlstring>Title</xar:mlstring>
+            </label>
+            <div class="xar-form-container-after">
+                <input type="text" name="title" id="title" value="#$title#" class="xar-form-textlong" maxlength="100" />
+                <xar:if condition="!empty($title_error)">
+                    <div class="xar-error">#$title_error#</div>
+                </xar:if>
+            </div>
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="url" class="xar-form-label">
+                <xar:mlstring>URL</xar:mlstring>
+            </label>
+            <div class="xar-form-container-after">
+                <input type="text" name="url" id="url" value="#$url#" class="xar-form-textxlong" maxlength="200" />
+                <xar:if condition="!empty($url_error)">
+                    <div class="xar-error">#$url_error#</div>
+                </xar:if>
+            </div>
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="comment" class="xar-form-label">
+                <xar:mlstring>Comment</xar:mlstring>
+            </label>
+            <div class="xar-form-container-after">
+                <input type="text" name="comment" id="comment" value="#$comment#" class="xar-form-textxlong" maxlength="200" />
+                <xar:if condition="!empty($comment_error)">
+                    <div class="xar-error">#$comment_error#</div>
+                </xar:if>
+            </div>
+        </div>
+
+        <div class="xar-form-footer">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="submit" value="#$addbuttonlabel#"  />
+        </div>
+</form>
+
+</div>

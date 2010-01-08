@@ -1,0 +1,230 @@
+<xar:comment>$Id$</xar:comment>
+<xar:set name="icon_modify">xarTplGetImage('icons/modify.png', 'base')</xar:set>
+<xar:set name="icon_delete">xarTplGetImage('icons/delete.png', 'base')</xar:set>
+<xar:set name="icon_move">xarTplGetImage('icons/move.png', 'base')</xar:set>
+<xar:set name="icon_activate">xarTplGetImage('icons/activate.png', 'base')</xar:set>
+<xar:set name="icon_deactivate">xarTplGetImage('icons/deactivate.png', 'base')</xar:set>
+<xar:set name="icon_info">xarTplGetImage('icons/info.png', 'base')</xar:set>
+<xar:base-js-framework name="jquery" />
+<xar:base-js-plugin name="ui" framework="jquery" file="jquery-ui-1.7.2.custom.min.js" style="jquery-ui-1.7.2.custom.css" />
+<xar:set name="autolinkscode">"
+// dimensions of the delete prompt dialog
+var delete_dialog_width = 300;
+var delete_dialog_height = 200;
+
+// Create an onclick handler for the delete links
+jQuery('table.xar-items a[id^=delete]').click(function() {
+    var a = this;
+    // remove and recreate the dialog container
+    jQuery('#"."xardialogtarget').remove();
+    jQuery('body').append('".chr(60)."div id=\'xardialogtarget\' style=\'display: none;\'".chr(62).chr(60)."/div".chr(62)."');
+    // populate the dialog... we get the content from the first TD in the row
+    jQuery('#" . "xardialogtarget').html('".chr(60)."h3" . chr(62) . xarML('Delete this autolink?') . chr(60) ."/h3" . chr(62) . chr(60) . "p style=\'text-align: center;\'" . chr(62) . "' + jQuery.trim(jQuery(this).parent().parent().children(':first').children().filter('a').text()) + '" . chr(60) . "/p" . chr(62) ."');
+
+    jQuery('#" . "xardialogtarget').dialog({
+        // dialog options
+        title: '" . xarML('Delete Autolink') . "',
+        width: delete_dialog_width,
+        height: delete_dialog_height,
+        buttons: {
+            // Cancel button
+            '". xarML('Cancel') . "': function() { jQuery(this).dialog('close'); },
+            // Delete button: we add confirm param to the delete URL, and set window.location to it
+            '". xarML('Delete') . "': function() { a.setAttribute('href', a.getAttribute('href') + '".chr(38)."confirm=1');jQuery(this).dialog('close');window.location = a.getAttribute('href'); }
+        },
+        bgiframe: true,
+        modal: true,
+        draggable: false,
+        resizable: false
+    });
+    return false;
+});
+jQuery('table.xar-items tr.autolinks-info').hide();
+jQuery('table.xar-items img.autolinks-infoicon').show()
+jQuery('table.xar-items img.autolinks-infoicon.xar-icon').click(function() {
+    jQuery(this).parent().parent().next().toggle();
+    return false;
+});
+"</xar:set>
+<xar:base-js-event name="ready" code="$autolinkscode" />
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2>
+        <xar:mlstring>View Autolinks</xar:mlstring>
+    </h2>
+
+    <form method="post" action="#xarModURL('autolinks', 'admin', 'view')#" enctype="application/x-www-form-urlencoded">
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">
+                <xar:mlstring>Autolink Type:</xar:mlstring>
+            </label>
+            <select name="tid" id="tid">
+                <option value="0"><xar:mlstring>All Autolink Types</xar:mlstring></option>
+                <xar:if condition="isset($types)">
+                    <xar:foreach in="$types" key="$tidkey" value="$type">
+                        <xar:if condition="$tidkey eq $tid">
+                            <option value="#$tidkey#" selected="selected">#$type['type_name']#</option>
+                        <xar:else />
+                            <option value="#$tidkey#">#$type['type_name']#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </xar:if>
+            </select>
+            <input type="submit" name="update" id="update" value="#xarML('Reload')#" />
+        </div>
+    </form>
+
+    <xar:if condition="!empty($items)">
+        <table class="xar-items">
+        <thead>
+            <tr>
+                <th>
+                    <xar:mlstring>Name</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Type</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Matching Key</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>URL</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Options</xar:mlstring>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <xar:set name="rowclass">'xar-norm'</xar:set>
+            <xar:set name="$showsamples">#xarModGetVar('autolinks', 'showsamples')#</xar:set>
+            <xar:foreach in="$items" value="$item">
+                <xar:comment>
+                    TODO: set classes rather than style colours; do we have standard classes for enabled/disabled items?
+                </xar:comment>
+                <tr class="#$rowclass#">
+                    <td>
+                        <xar:if condition="empty($item['editurl'])">
+                            <xar:if condition="!empty($item['comment'])">
+                                <span title="#xarVarPrepForDisplay($item['comment'])#">#xarVarPrepForDisplay($item['name'])#</span>
+                            <xar:else/>
+                                #xarVarPrepForDisplay($item['name'])#
+                            </xar:if>
+                        <xar:else />
+                            <xar:if condition="!empty($item['comment'])">
+                                <a href="#$item['editurl']#" title="#xarML('Edit autolink')# | #xarVarPrepForDisplay($item['comment'])#">#xarVarPrepForDisplay($item['name'])#</a>
+                            <xar:else/>
+                                <a href="#$item['editurl']#" title="#xarML('Edit autolink')#">#xarVarPrepForDisplay($item['name'])#</a>
+                            </xar:if>
+                        </xar:if>
+                    </td>
+                    <td>
+                        <xar:if condition="empty($item['edittypeurl'])">
+                            #xarVarPrepForDisplay($item['type_name'])#
+                        <xar:else/>
+                            <a href="#$item['edittypeurl']#" title="#xarML('Edit autolink type')#">#xarVarPrepForDisplay($item['type_name'])#</a>
+                        </xar:if>
+                    </td>
+                    <td>
+                        <xar:if condition="!empty($item['match_re'])">
+                            <em>#xarVarPrepForDisplay($item['keyword'])#</em>
+                        <xar:else/>
+                            #xarVarPrepForDisplay($item['keyword'])#
+                        </xar:if>
+                    </td>
+                    <td>
+                        <xar:if condition="!empty($item['title'])">
+                            <span title="#xarVarPrepForDisplay($item['title'])#">#xarVarPrepForDisplay($item['url'])#</span>
+                        <xar:else/>
+                            #xarVarPrepForDisplay($item['url'])#
+                        </xar:if>
+                    </td>
+                    <td class="xar-item-actions">
+                        <xar:if condition="$showsamples gt 0 and !empty($item['sample'])">
+                            <img src="#$icon_info#" alt="#xarML('Info')#" class="xar-icon autolinks-infoicon" style="display: none;" />
+                        <xar:else />
+                            <img src="#$icon_info#" alt="#xarML('Info')#" title="#xarML('Info')#" class="xar-icon-disabled autolinks-infoicon" style="display: none;" />
+                        </xar:if>
+                        <xar:if condition="!empty($item['enabled'])">
+                            <xar:if condition="empty($item['enableurl'])">
+                                <img src="#$icon_deactivate#" alt="#xarML('Disable')#" title="#xarML('Disable')#" class="xar-icon-disabled" />
+                            <xar:else />
+                                <a href="#$item['enableurl']#" title="#xarML('Disable')#" class="xar-icon"><img src="#$icon_deactivate#" alt="#xarML('Disable')#" /></a>
+                            </xar:if>
+                        <xar:else/>
+                            <xar:if condition="empty($item['enableurl'])">
+                                <img src="#$icon_activate#" alt="#xarML('Enable')#" title="#xarML('Enable')#" class="xar-icon-disabled" />
+                            <xar:else />
+                                <a href="#$item['enableurl']#" title="#xarML('Enable')#" class="xar-icon"><img src="#$icon_activate#" alt="#xarML('Enable')#" /></a>
+                            </xar:if>
+                        </xar:if>
+
+                        <xar:if condition="empty($item['editurl'])">
+                            <img src="#$icon_modify#" alt="#xarML('Modify')#" title="#xarML('Modify')#" class="xar-icon-disabled" />
+                        <xar:else />
+                            <a href="#$item['editurl']#" title="#xarML('Modify')#" class="xar-icon"><img src="#$icon_modify#" alt="#xarML('Modify')#" /></a>
+                        </xar:if>
+
+                        <xar:if condition="empty($item['moveurl'])">
+                            <img src="#$icon_modify#" alt="#xarML('Move')#" title="#xarML('Move')#" class="xar-icon-disabled" />
+                        <xar:else />
+                            <a href="#$item['moveurl']#" title="#xarML('Move')#" class="xar-icon"><img src="#$icon_move#" alt="#xarML('Move')#" /></a>
+                        </xar:if>
+
+                        <xar:if condition="empty($item['deleteurl'])">
+                            <img src="#$icon_delete#" alt="#xarML('Delete')#" title="#xarML('Delete')#" class="xar-icon-disabled" />
+                        <xar:else />
+                            <a href="#$item['deleteurl']#" id="delete_#$item['lid']#" title="#xarML('Delete')#" class="xar-icon"><img src="#$icon_delete#" alt="#xarML('Delete')#" /></a>
+                        </xar:if>
+                    </td>
+                </tr>
+                <xar:if condition="$showsamples gt 0 and !empty($item['sample'])">
+                    <tr class="#$rowclass# autolinks-info">
+                        <td colspan="5">
+                            <xar:if condition="$showsamples eq 2 or $showsamples eq 3">
+                                <div class="xar-form-input-wrapper">
+                                    <span class="xar-form-label">
+                                        <xar:mlstring>Test:</xar:mlstring> #$showsamples#
+                                    </span>
+                                    <div class="xar-form-container-after">
+                                        #xarVarPrepForDisplay($item['sample'])#
+                                    </div>
+                                </div>
+                            </xar:if>
+                            <xar:if condition="$showsamples eq 1 or $showsamples eq 3">
+                                <div class="xar-form-input-wrapper">
+                                    <span class="xar-form-label">
+                                        <xar:mlstring>Example:</xar:mlstring> #$showsamples#
+                                    </span>
+                                    <div class="xar-form-container-after">
+                                        #$item['sampleresult']#
+                                    </div>
+                                </div>
+                            </xar:if>
+                        </td>
+                    </tr>
+                </xar:if>
+
+                <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+            </xar:foreach>
+        </tbody>
+        </table>
+
+        <!-- pager -->
+        #$pager#
+
+    <xar:else />
+        <p class="xar-align-center">
+            <xar:mlstring>No Autolinks defined</xar:mlstring>
+        </p>
+        <p>
+            <xar:mlstring>Click here to create sample Autolinks: </xar:mlstring>
+            <a href="#xarModURL('autolinks','util','main')#"><xar:mlstring>Autolinks Utilities</xar:mlstring></a>
+        </p>
+    </xar:if>
+</div>
+

@@ -13,7 +13,7 @@
     'text'   - alternative text for link when displaying types
                'readfirst'/'readnext'/'readlast'
 </xar:comment>
-<xar:if condition="empty($aid) and 2 &gt; 1">
+<xar:if condition="empty($aid) and 2 gt 1">
     #$match#
 <xar:else/>
     <xar:comment> The trigger - the URL - can be used to select different portions of this template. </xar:comment>
@@ -29,7 +29,9 @@
             <cite><a href="#xarModURL('articles','user','display',array('aid' =&gt; $aid))#" title="#xarVarPrepForDisplay(xarML($title))#">#xarVarPrepHTMLDisplay($article['title'])#</a></cite>
         <xar:else/>
             <xar:comment> Display error if the article could not be fetched (invalid number or no permission. </xar:comment>
-            <span class="xar-error">[<xar:mlstring>Article not available:</xar:mlstring> ID #$aid#]</span>
+            <span class="xar-error">
+                <xar:mlstring>Article not available:</xar:mlstring> ID #$aid#
+            </span>
         </xar:if>
     <xar:elseif condition="$url eq 'readfirst' or $url eq 'readnext' or $url eq 'readlast'"/>
         <xar:comment> If the ptid is passed in, then use that. </xar:comment>

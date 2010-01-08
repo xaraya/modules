@@ -1,0 +1,99 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2>
+        <xar:mlstring>Move Autolink</xar:mlstring>
+    </h2>
+
+    <form method="post" action="#xarModURL('autolinks', 'admin', 'move')#" enctype="application/x-www-form-urlencoded">
+
+        <xar:comment> Details of existing link. </xar:comment>
+        <xar:if condition="isset($link)">
+            <h3>
+                <xar:mlstring>Current details</xar:mlstring>
+            </h3>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label">
+                    <xar:mlstring>Name:</xar:mlstring>
+                </label>
+                #xarVarPrepForDisplay($link['name'])#
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label">
+                    <xar:mlstring>Matching Key:</xar:mlstring>
+                </label>
+                #xarVarPrepForDisplay($link['keyword'])#
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label">
+                    <xar:mlstring>Type Name:</xar:mlstring>
+                </label>
+                #xarVarPrepForDisplay($link['type_name'])#
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label">
+                    <xar:mlstring>Type Description:</xar:mlstring>
+                </label>
+                #xarVarPrepForDisplay($link['type_desc'])#
+            </div>
+        </xar:if>
+
+        <xar:comment> Choice of types to move link to. </xar:comment>
+        <xar:if condition="isset($types)">
+            <h3>
+                <xar:mlstring>Move</xar:mlstring>
+            </h3>
+            <div class="xar-form-input-wrapper">
+                <label for="tid" class="xar-form-label">
+                    <xar:mlstring>Move To Autolink Type</xar:mlstring>
+                </label>
+                <select name="tid" id="tid" size="1">
+                    <xar:foreach in="$types" value="$v" key="$k">
+                        <xar:if condition="$v['tid'] eq (isset($tid) ? $tid : 0)">
+                            <option value="#$k#" selected="selected">#$v['type_name']#</option>
+                        <xar:else/>
+                            <option value="#$k#">#$v['type_name']#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </div>
+        </xar:if>
+
+        <xar:comment> Details of selected type to move link to. </xar:comment>
+        <xar:if condition="isset($type)">
+            <h3>
+                <xar:mlstring>Move to</xar:mlstring>
+            </h3>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label">
+                    <xar:mlstring>Type Name:</xar:mlstring>
+                </label>
+                #xarVarPrepForDisplay($type['type_name'])#
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label">
+                    <xar:mlstring>Type Desc:</xar:mlstring>
+                </label>
+                #xarVarPrepForDisplay($type['type_desc'])#
+            </div>
+        </xar:if>
+
+        <xar:comment> A type has been selected; show confirm/back buttons. </xar:comment>
+        <div class="xar-form-footer">
+            <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+            <xar:if condition="isset($link)">
+                <input type="hidden" name="lid" id="lid" value="#$link['lid']#" />
+            </xar:if>
+            <xar:if condition="!empty($type)">
+                <input type="hidden" name="tid" id="tid" value="#$tid#"/>
+                <input type="submit" name="confirm" value="#xarML('Move')#" class="xar-margin-thickright" />
+                <input type="submit" name="cancel" value="#xarML('Cancel')#" class="xar-margin-thickleft" />
+            <xar:else/>
+                <input type="submit" name="submit" value="#xarML('Move')#" />
+            </xar:if>
+        </div>
+    </form>
+</div>
+
