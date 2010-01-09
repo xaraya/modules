@@ -71,7 +71,7 @@ opt.saveNewRightOptions('keywords');"
         <input type="hidden" size="70" name="keywords" id="keywords"/>
     </div>
     <xar:base-include-javascript type="code" position="body" code="// Init for Keywords selectbox.js
-opt.init(document.forms['post']);"
+opt.init(document.forms[0]);"
     />
 </xar:if>
 
