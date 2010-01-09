@@ -1,5 +1,13 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:style scope="module" module="crispbb" />
+<xar:base-js-framework name="jquery" />
+<xar:base-js-plugin name="ui" framework="jquery" />
+<xar:base-js-plugin name="tablednd" framework="jquery" />
+<xar:base-include-javascript module="crispbb" filename="jquery/crispbb.common.js" />
+<xar:set name="cbcode">"
+crispbb.init( { type: 'admin', func: 'view' } );
+"</xar:set>
+<xar:base-js-event name="ready" code="$cbcode" />
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>crispBB Administration</xar:mlstring></span>
 </div>
@@ -11,8 +19,8 @@
     </xar:if>
     <xar:if condition="!empty($categories)">
         <xar:foreach in="$categories" key="$cid" value="$catinfo">
-            <table class="xar-fullwidth xar-alt-outline xar-margin-nonetop">
-                <caption class="xar-padding-thick xar-alt-outline xar-align-left">
+            <table class="xar-fullwidth xar-alt-outline xar-margin-nonetop crispbb-category" id="category_#$cid#">
+                <caption class="xar-padding-thick xar-alt-outline xar-align-left crispbb-category-handle">
                     <span class="xar-floatleft">
                     <a href="#xarModURL('crispbb', 'admin', 'view', array('catid' => $cid))#" title="#$catinfo['description']#">
                         <xar:mlstring>All forums in</xar:mlstring> #$catinfo['name']#
@@ -78,7 +86,7 @@
                 <xar:if condition="isset($forums[$cid]) && !empty($forums[$cid])">
                     <xar:set name="rowclass">'xar-norm'</xar:set>
                     <xar:foreach in="$forums[$cid]" key="$fid" value="$forum">
-                        <tr class="#$rowclass#">
+                        <tr class="#$rowclass# crispbb-forum" id="forum_#$fid#">
                             <td>
                                 <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#">#$forum['fname']#</a>
                             </td>

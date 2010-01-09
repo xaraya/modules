@@ -236,12 +236,15 @@ function crispbb_admin_modify($args)
                 $item = array();
                 $item['num'] = 1;
                 $item['select'] = xarModAPIFunc('categories', 'visual', 'makeselect',
-                                             array('cid' => $parentcat,
-                                                   'multiple' => 0,
-                                                   'name_prefix' => 'modify_',
-                                                   'return_itself' => false,
-                                                   'select_itself' => false,
-                                                   'values' => &$seencid));
+                    array(
+                        'cid' => $parentcat,
+                        'multiple' => 0,
+                        'name_prefix' => 'modify_',
+                        'return_itself' => false,
+                        'select_itself' => false,
+                        'values' => &$seencid,
+                        'size' => 1,
+                    ));
 
                 $items[] = $item;
                 unset($item);
@@ -249,9 +252,13 @@ function crispbb_admin_modify($args)
                 $labels['categories'] = xarML('Category');
                 // replace hook output
                 $hooks['categories'] = xarTplModule('categories','admin','modifyhook',
-                                   array('labels' => $labels,
-                                         'numcats' => 1,
-                                         'items' => $items));
+                    array(
+                        'labels' => $labels,
+                        'numcats' => 1,
+                        'items' => $items,
+                        'name_prefix' => 'modify_',
+                        'modid' => xarModGetIDFromName('crispbb'),
+                ));
             }
 
             switch ($data['ftype']) {

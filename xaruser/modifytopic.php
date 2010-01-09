@@ -127,8 +127,18 @@ function crispbb_user_modifytopic($args)
         }
 
         // transforms
-        $hasbbcode = xarModIsHooked('bbcode', 'crispbb', $data['topicstype']);
-        $hassmilies = xarModIsHooked('smilies', 'crispbb', $data['topicstype']);
+        if (xarModIsHooked('nbbc', 'crispbb', $data['topicstype'])) {
+            // support for newbbcode module (added in v0.9.0)
+            $hasbbcode = xarModGetVar('nbbc', 'bbcode.active');
+            $hassmilies = xarModGetVar('nbbc', 'smileys.active');
+            $bbcodemod = 'nbbc';
+            $smileymod = 'nbbc';
+        } else {
+            $hasbbcode = xarModIsHooked('bbcode', 'crispbb', $data['topicstype']);
+            $hassmilies = xarModIsHooked('smilies', 'crispbb', $data['topicstype']);
+            $bbcodemod = 'bbcode';
+            $smileymod = 'smilies';
+        }
 
         // always $hashtml
         if (!empty($privs['html'])) { // user has privs to use html
@@ -162,7 +172,9 @@ function crispbb_user_modifytopic($args)
                 $hasbbcode = false;
             }
             if ($hasbbcode) { // check if we're transforming any fields
-                if (empty($data['ttransforms']['ttitle']['bbcode']) && empty($data['ttransforms']['tdesc']['bbcode']) && empty($data['ttransforms']['ttext']['bbcode'])) { // no fields, no bbcode
+                if (empty($data['ttransforms']['ttitle'][$bbcodemod]) &&
+                    empty($data['ttransforms']['tdesc'][$bbcodemod]) &&
+                    empty($data['ttransforms']['ttext'][$bbcodemod])) { // no fields, no bbcode
                     $hasbbcode = false;
                 }
             }
@@ -182,7 +194,9 @@ function crispbb_user_modifytopic($args)
                 $hassmilies = false;
             }
             if ($hassmilies) { // check if we're transforming any fields
-                if (empty($data['ttransforms']['ttitle']['smilies']) && empty($data['ttransforms']['tdesc']['smilies']) && empty($data['ttransforms']['ttext']['smilies'])) { // no fields, no smilies
+                if (empty($data['ttransforms']['ttitle'][$smileymod]) &&
+                    empty($data['ttransforms']['tdesc'][$smileymod]) &&
+                    empty($data['ttransforms']['ttext'][$smileymod])) { // no fields, no smilies
                     $hassmilies = false;
                 }
             }

@@ -83,10 +83,20 @@ function crispbb_user_modifyreply($args)
     $presets = xarModAPIFunc('crispbb', 'user', 'getpresets',
         array('preset' => 'privactionlabels,privleveloptions,tstatusoptions,ttypeoptions'));
     $poststype = $data['poststype'];
-    // transforms
 
-    $hasbbcode = xarModIsHooked('bbcode', 'crispbb', $poststype);
-    $hassmilies = xarModIsHooked('smilies', 'crispbb', $poststype);
+    // transforms
+    if (xarModIsHooked('nbbc', 'crispbb', $poststype)) {
+        // support for newbbcode module (added in v0.9.0)
+        $hasbbcode = xarModGetVar('nbbc', 'bbcode.active');
+        $hassmilies = xarModGetVar('nbbc', 'smileys.active');
+        $bbcodemod = 'nbbc';
+        $smileymod = 'nbbc';
+    } else {
+        $hasbbcode = xarModIsHooked('bbcode', 'crispbb', $poststype);
+        $hassmilies = xarModIsHooked('smilies', 'crispbb', $poststype);
+        $bbcodemod = 'bbcode';
+        $smileymod = 'smilies';
+    }
     if (!$hasbbcode) $privs['bbcode'] = 0;
     if (!$hassmilies) $privs['smilies'] = 0;
 
@@ -107,8 +117,18 @@ function crispbb_user_modifyreply($args)
         if (!xarVarFetch('smiliesdeny', 'checkbox', $smiliesdeny, false, XARVAR_NOT_REQUIRED)) return;
         if (empty($iconlist[$topicicon])) $topicicon = 'none';
         // transforms
-        $hasbbcode = xarModIsHooked('bbcode', 'crispbb', $poststype);
-        $hassmilies = xarModIsHooked('smilies', 'crispbb', $poststype);
+        if (xarModIsHooked('nbbc', 'crispbb', $poststype)) {
+            // support for newbbcode module (added in v0.9.0)
+            $hasbbcode = xarModGetVar('nbbc', 'bbcode.active');
+            $hassmilies = xarModGetVar('nbbc', 'smileys.active');
+            $bbcodemod = 'nbbc';
+            $smileymod = 'nbbc';
+        } else {
+            $hasbbcode = xarModIsHooked('bbcode', 'crispbb', $poststype);
+            $hassmilies = xarModIsHooked('smilies', 'crispbb', $poststype);
+            $bbcodemod = 'bbcode';
+            $smileymod = 'smilies';
+        }
 
         // always $hashtml
         if (!empty($privs['html'])) { // user has privs to use html
@@ -142,7 +162,8 @@ function crispbb_user_modifyreply($args)
                 $hasbbcode = false;
             }
             if ($hasbbcode) { // check if we're transforming any fields
-                if (empty($data['ptransforms']['pdesc']['bbcode']) && empty($data['ptransforms']['ptext']['bbcode'])) { // no fields, no bbcode
+                if (empty($data['ptransforms']['pdesc'][$bbcodemod]) &&
+                    empty($data['ptransforms']['ptext'][$bbcodemod])) { // no fields, no bbcode
                     $hasbbcode = false;
                 }
             }
@@ -162,7 +183,8 @@ function crispbb_user_modifyreply($args)
                 $hassmilies = false;
             }
             if ($hassmilies) { // check if we're transforming any fields
-                if ( empty($data['ptransforms']['pdesc']['smilies']) && empty($data['ptransforms']['ptext']['smilies'])) { // no fields, no smilies
+                if ( empty($data['ptransforms']['pdesc'][$smileymod]) &&
+                    empty($data['ptransforms']['ptext'][$smileymod])) { // no fields, no smilies
                     $hassmilies = false;
                 }
             }

@@ -39,7 +39,6 @@ function crispbb_userapi_dotransforms($args)
     foreach ($transforms as $field => $hooks) {
         if (isset($args[$field])) {
             $text = $args[$field];
-            $text = empty($ignore['html']) ? xarVarPrepHTMLDisplay($text) : xarVarPrepForDisplay($text);
             if (!empty($transhooks)) {
                 foreach ($transhooks as $transform) {
                     // skip ignored hook module
@@ -55,6 +54,18 @@ function crispbb_userapi_dotransforms($args)
                         'transform' => array($field),
                         $field => $text
                     );
+                    // support for newbbcode module (added in v0.9.0)
+                    if ($transform['module'] == 'nbbc') {
+                        if (!empty($ignore['bbcode']) && !empty($ignore['smilies'])) continue;
+                        if (!empty($ignore['bbcode'])) {
+                            $what = 'smileys';
+                        } elseif (!empty($ignore['smilies'])) {
+                            $what = 'bbcode';
+                        } else {
+                            $what = 'all';
+                        }
+                        $extrainfo['transform_what'] = $what;
+                    }
                     $res = xarModAPIFunc($transform['module'],
                                          $transform['type'],
                                          $transform['func'],
@@ -64,6 +75,7 @@ function crispbb_userapi_dotransforms($args)
                     $text = $res[$field];
                 }
             }
+            $text = empty($ignore['html']) ? xarVarPrepHTMLDisplay($text) : xarVarPrepForDisplay($text);
             $transformed[$field] = $text;
         }
     }

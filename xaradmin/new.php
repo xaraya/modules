@@ -255,12 +255,15 @@ function crispbb_admin_new($args)
         $item = array();
         $item['num'] = 1;
         $item['select'] = xarModAPIFunc('categories', 'visual', 'makeselect',
-                                     array('cid' => $parentcat,
-                                           'multiple' => 0,
-                                           'name_prefix' => 'new_',
-                                           'return_itself' => false,
-                                           'select_itself' => false,
-                                           'values' => &$seencid));
+            array(
+                'cid' => $parentcat,
+                'multiple' => 0,
+                'name_prefix' => 'new_',
+                'return_itself' => false,
+                'select_itself' => false,
+                'values' => &$seencid,
+                'size' => 1,
+        ));
 
         $items[] = $item;
         unset($item);

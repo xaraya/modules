@@ -123,10 +123,20 @@ function crispbb_user_newreply($args)
     if ($data['approvereplies'] && empty($privs['approvereplies'])) {
         $pstatus = 2;
     }
-    // transforms
-    $hasbbcode = xarModIsHooked('bbcode', 'crispbb', $poststype);
-    $hassmilies = xarModIsHooked('smilies', 'crispbb', $poststype);
 
+    // transforms
+    if (xarModIsHooked('nbbc', 'crispbb', $poststype)) {
+        // support for newbbcode module (added in v0.9.0)
+        $hasbbcode = xarModGetVar('nbbc', 'bbcode.active');
+        $hassmilies = xarModGetVar('nbbc', 'smileys.active');
+        $bbcodemod = 'nbbc';
+        $smileymod = 'nbbc';
+    } else {
+        $hasbbcode = xarModIsHooked('bbcode', 'crispbb', $poststype);
+        $hassmilies = xarModIsHooked('smilies', 'crispbb', $poststype);
+        $bbcodemod = 'bbcode';
+        $smileymod = 'smilies';
+    }
     // always $hashtml
     if (!empty($privs['html'])) { // user has privs to use html
         // user can disable html?
@@ -179,7 +189,8 @@ function crispbb_user_newreply($args)
             $hasbbcode = false;
         }
         if ($hasbbcode) { // check if we're transforming any fields
-            if (empty($data['ptransforms']['pdesc']['bbcode']) && empty($data['ptransforms']['ptext']['bbcode'])) { // no fields, no bbcode
+            if (empty($data['ptransforms']['pdesc'][$bbcodemod]) &&
+                empty($data['ptransforms']['ptext'][$bbcodemod])) { // no fields, no bbcode
                 $hasbbcode = false;
             }
         }
@@ -199,7 +210,8 @@ function crispbb_user_newreply($args)
             $hassmilies = false;
         }
         if ($hassmilies) { // check if we're transforming any fields
-            if ( empty($data['ptransforms']['pdesc']['smilies']) && empty($data['ptransforms']['ptext']['smilies'])) { // no fields, no smilies
+            if ( empty($data['ptransforms']['pdesc'][$smileymod]) &&
+                empty($data['ptransforms']['ptext'][$smileymod])) { // no fields, no smilies
                 $hassmilies = false;
             }
         }

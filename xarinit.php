@@ -24,6 +24,19 @@
  */
 function crispbb_init()
 {
+    // prevent install on Xaraya versions pre 1.2.0
+    $cur_core = xarConfigGetVar('System.Core.VersionNum');
+    $req_core = '1.2.0';
+    $modId = xarModGetIDFromName('crispbb');
+    $modInfo = xarModGetInfo($modId);
+    $vercompare = xarModAPIFunc('base', 'versions', 'compare',
+        array('ver1' => $req_core, 'ver2' => $cur_core));
+    if ($vercompare > 0) {
+        $msg = xarML('This version of #(1) (v#(4)) requires Xaraya Aruba core version #(2) or greater. You are currently using Xaraya core version #(3)', 'crispBB', $req_core, $cur_core, $modInfo['version']);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return false;
+    }
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $forumstable = $xartable['crispbb_forums'];
@@ -612,6 +625,8 @@ function crispbb_upgrade($oldversion)
         case '0.8.5':
         /* current version */
         /* create aruba 1.2.0 branch */
+            // Add support for NewBBCode (nbbc) module
+            // Adjust layout of new and modify templates
         break;
     }
     /* Update successful */

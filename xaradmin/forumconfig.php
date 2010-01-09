@@ -350,12 +350,15 @@ function crispbb_admin_forumconfig($args)
                 $item = array();
                 $item['num'] = 1;
                 $item['select'] = xarModAPIFunc('categories', 'visual', 'makeselect',
-                                               array('cid' => 0,
-                                                     'multiple' => 0,
-                                                     'name_prefix' => 'config_',
-                                                     'return_itself' => false,
-                                                     'select_itself' => false,
-                                                     'values' => &$seencid));
+                    array(
+                        'cid' => 0,
+                        'multiple' => 0,
+                        'name_prefix' => 'config_',
+                        'return_itself' => false,
+                        'select_itself' => false,
+                        'values' => &$seencid,
+                        'size' => 1,
+                ));
 
                 $items[] = $item;
                 unset($item);

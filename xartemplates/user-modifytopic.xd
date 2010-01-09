@@ -88,45 +88,45 @@
             </xar:if>
             <div class="xar-form-input-wrapper">
                 <label for="ptext" class="xar-form-label help" title="#xarML('Enter your post here')#"><xar:mlstring>Post</xar:mlstring></label>
-                <ul class="xar-floatleft xar-clearleft xar-margin-none" style="width:15em;">
-                <xar:if condition="$privs['html']">
-                    <li><xar:mlstring>HTML is </xar:mlstring><span style="color:green;"><xar:mlstring>On</xar:mlstring></span></li>
-                    <xar:if condition="$privs['htmldeny']">
-                        <li>
-                        <label for="htmldeny" class="help" title="#xarML('Disable HTML in this topic and all replies')#"><xar:mlstring>Disable HTML</xar:mlstring></label>
-                        <xar:data-input type="checkbox" name="htmldeny" id="htmldeny" value="$htmldeny" tabindex="7" />
-                        </li>
-                    </xar:if>
-                <xar:else />
-                    <li><xar:mlstring>HTML is </xar:mlstring><span style="color:red;"><xar:mlstring>Off</xar:mlstring></span></li>
-                </xar:if>
-                <xar:if condition="$privs['bbcode']">
-                    <li><xar:mlstring>BBCode is </xar:mlstring><span style="color:green;"><xar:mlstring>On</xar:mlstring></span></li>
-                    <xar:if condition="$privs['bbcodedeny']">
-                        <li>
-                        <label for="bbcodedeny" class="help" title="#xarML('Disable BBCode in this topic and all replies')#"><xar:mlstring>Disable BBCode</xar:mlstring></label>
-                        <xar:data-input type="checkbox" name="bbcodedeny" id="bbcodedeny" value="$bbcodedeny" tabindex="8" />
-                        </li>
-                    </xar:if>
-                <xar:else />
-                    <li><xar:mlstring>BBCode is </xar:mlstring><span style="color:red;"><xar:mlstring>Off</xar:mlstring></span></li>
-                </xar:if>
-                <xar:if condition="$privs['smilies']">
-                    <li><xar:mlstring>Smilies are </xar:mlstring><span style="color:green;"><xar:mlstring>On</xar:mlstring></span></li>
-                    <xar:if condition="$privs['smiliesdeny']">
-                        <li>
-                        <label for="smiliesdeny" class="help" title="#xarML('Disable Smilies in this topic and all replies')#"><xar:mlstring>Disable Smilies</xar:mlstring></label>
-                        <xar:data-input type="checkbox" name="smiliesdeny" id="smiliesdeny" value="$smiliesdeny" tabindex="9" />
-                        </li>
-                    </xar:if>
-                <xar:else />
-                    <li><xar:mlstring>Smilies are </xar:mlstring><span style="color:red;"><xar:mlstring>Off</xar:mlstring></span></li>
-                </xar:if>
-                </ul>
                 <div class="xar-form-container-after">
                     #$formdisplay#
+                    <textarea name="ptext" id="ptext" class="xar-form-textareaxlarge" tabindex="3">#$ptext#</textarea>
                 </div>
-                <textarea name="ptext" id="ptext" cols="60" rows="15" tabindex="3">#$ptext#</textarea>
+                <div class="xar-form-container-after">
+                <span class="xar-nowrap"><xar:mlstring>HTML</xar:mlstring>:
+                    <xar:if condition="$privs['html']">
+                        <span style="color:green;"><xar:mlstring>On</xar:mlstring></span>
+                        <xar:if condition="$privs['htmldeny']">
+                            <label for="htmldeny" class="help" title="#xarML('Disable HTML in this topic and all replies')#"><xar:mlstring>Disable</xar:mlstring>?</label>
+                            <xar:data-input type="checkbox" name="htmldeny" id="htmldeny" value="$htmldeny" tabindex="7" />
+                        </xar:if>
+                    <xar:else />
+                        <span style="color:red;"><xar:mlstring>Off</xar:mlstring></span>
+                    </xar:if>
+                </span>
+                <span class="xar-nowrap"><xar:mlstring>BBCode</xar:mlstring>:
+                    <xar:if condition="$privs['bbcode']">
+                        <span style="color:green;"><xar:mlstring>On</xar:mlstring></span>
+                        <xar:if condition="$privs['bbcodedeny']">
+                            <label for="bbcodedeny" class="help" title="#xarML('Disable BBCode in this topic and all replies')#"><xar:mlstring>Disable</xar:mlstring>?</label>
+                            <xar:data-input type="checkbox" name="bbcodedeny" id="bbcodedeny" value="$bbcodedeny" tabindex="8" />
+                        </xar:if>
+                    <xar:else />
+                        <span style="color:red;"><xar:mlstring>Off</xar:mlstring></span>
+                    </xar:if>
+                </span>
+                <span class="xar-nowrap"><xar:mlstring>Smileys</xar:mlstring>:
+                    <xar:if condition="$privs['smilies']">
+                        <span style="color:green;"><xar:mlstring>On</xar:mlstring></span>
+                        <xar:if condition="$privs['smiliesdeny']">
+                            <label for="bbcodedeny" class="help" title="#xarML('Disable Smileys in this topic and all replies')#"><xar:mlstring>Disable</xar:mlstring>?</label>
+                            <xar:data-input type="checkbox" name="smiliesdeny" id="smiliesdeny" value="$smiliesdeny" tabindex="9" />
+                        </xar:if>
+                    <xar:else />
+                        <span style="color:red;"><xar:mlstring>Off</xar:mlstring></span>
+                    </xar:if>
+                </span>
+                </div>
             </div>
             <xar:if condition="!empty($invalid['ptext'])">
             <div class="xar-form-input-wrapper-after">
