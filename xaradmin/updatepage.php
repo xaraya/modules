@@ -6,7 +6,7 @@
  * Update or create a page - form handler.
  *
  * @package Xaraya
- * @copyright (C) 2004-2009 by Jason Judge
+ * @copyright (C) 2004-2010 by Jason Judge
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.academe.co.uk/
  * @author Jason Judge
@@ -64,7 +64,7 @@ function xarpages_admin_updatepage($args)
     // Bug 4495: ensure sensible defaults here, since these items may be suppressed in
     // the update form for some users.
     if (!xarVarFetch('moving', 'bool', $moving, false, XARVAR_NOT_REQUIRED)) return;
-//    if (!xarVarFetch('movepage', 'bool', $movepage, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('movepage', 'bool', $movepage, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('refpid', 'pre:field:refpid:int:0', $refpid, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('position', 'enum:before:after:firstchild:lastchild', $position, 'before', XARVAR_NOT_REQUIRED)) return;
 
@@ -85,7 +85,7 @@ function xarpages_admin_updatepage($args)
                 'function'      => $function,
                 'encode_url'    => $encode_url,
                 'decode_url'    => $decode_url,
-//                'moving'        => ($movepage && $moving),
+                'moving'        => ($movepage && $moving),
                 'insertpoint'   => $refpid,
                 'offset'        => $position,
                 'alias'         => $alias,

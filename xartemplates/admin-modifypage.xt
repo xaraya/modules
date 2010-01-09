@@ -11,9 +11,6 @@ jQuery('select#ptid').change(function(event) {
 jQuery('select#refpid').add('select#position').change(function(event) {
     jQuery('input#movepage').attr('checked', true);
 });
-jQuery('select#ptid').change(function(event) {
-    this.form.submit();
-});
 "</xar:set>
 <xar:base-js-event name="ready" code="$pagecode" />
 <xar:set name="enctype">'multipart/form-data'</xar:set>
