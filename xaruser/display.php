@@ -217,16 +217,28 @@ function crispbb_user_display($args)
         if (!empty($post['towner'])) $seenposters[$post['towner']] = 1;
         if (!empty($post['powner'])) $seenposters[$post['powner']] = 1;
         if ($post['firstpid'] == $pid) {
+            if (xarModIsHooked('nbbc', 'crispbb', $item['topicstype'])) {
+                // support for newbbcode module (added in v0.9.0)
+                $hasbbcode = xarModGetVar('nbbc', 'bbcode.active');
+            } else {
+                $hasbbcode = xarModIsHooked('bbcode', 'crispbb', $item['topicstype']);
+            }
             if (!empty($data['topicicon'])) {
                 $item['topicicon'] = $data['topicicon'];
             } else {
                 $item['topicicon'] = '';
             }
             $item['hookoutput'] = $data['hookoutput'];
-            if (xarModIsHooked('bbcode', 'crispbb', $item['topicstype']) && !empty($data['newreplyurl'])) {
+            if ($hasbbcode && !empty($data['newreplyurl'])) {
                 $item['quotereplyurl'] = xarModURL('crispbb', 'user', 'newreply', array('tid' => $tid, 'pids' => array($pid => 1)));
             }
         }   else {
+            if (xarModIsHooked('nbbc', 'crispbb', $item['poststype'])) {
+                // support for newbbcode module (added in v0.9.0)
+                $hasbbcode = xarModGetVar('nbbc', 'bbcode.active');
+            } else {
+                $hasbbcode = xarModIsHooked('bbcode', 'crispbb', $item['poststype']);
+            }
             if (!empty($post['topicicon']) && isset($iconlist[$post['topicicon']])) {
                 $item['topicicon'] = $iconlist[$post['topicicon']]['imagepath'];
             } else {
@@ -241,7 +253,7 @@ function crispbb_user_display($args)
             $posthooks = xarModCallHooks('item', 'display', $post['pid'], $hookitem);
             $item['hookoutput'] = !empty($posthooks) && is_array($posthooks) ? $posthooks : array();
             unset($posthooks);
-             if (xarModIsHooked('bbcode', 'crispbb', $item['poststype']) && !empty($data['newreplyurl'])) {
+             if ($hasbbcode && !empty($data['newreplyurl'])) {
                 $item['quotereplyurl'] = xarModURL('crispbb', 'user', 'newreply', array('tid' => $tid, 'pids' => array($pid => 1)));
             }
         }
