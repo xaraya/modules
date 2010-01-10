@@ -15,12 +15,12 @@ jQuery('#"."registrationoptions').validate({
     },
     messages: {
         minage: {
-            required: '" . xarML('* Must be a number') . "',
-            required: '" . xarML('* Must be a number') . "'
+            required: '" . str_replace("'", "\'", xarML('* Must be a number')) . "',
+            required: '" . str_replace("'", "\'", xarML('* Must be a number')) . "'
         },
         notifyemail: {
-            required: '" . xarML('* Valid email required') . "',
-            email: '" . xarML('* Valid email required') . "'
+            required: '" . str_replace("'", "\'", xarML('* Valid email required')) . "',
+            email: '" . str_replace("'", "\'", xarML('* Valid email required')) . "'
         }
     },
     errorClass: 'xar-error',

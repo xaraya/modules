@@ -40,33 +40,33 @@ jQuery('#"."registerform').validate({
     },
     messages: {
         username: {
-            required: '" . xarML('* Required field') . "',
-            maxlength: '" . xarML('* Must be less than 255 characters') . "',
-            nowhitespace: '" . xarML('* Cannot contain spaces') . "'
+            required: '" . str_replace("'", "\'", xarML('* Required')) . "',
+            maxlength: '" . str_replace("'", "\'", xarML('* Must be less than 255 characters')) . "',
+            nowhitespace: '" . str_replace("'", "\'", xarML('* Cannot contain spaces')) . "'
         },
         realname: {
-            required: '" . xarML('* Required field') . "'
+            required: '" . str_replace("'", "\'", xarML('* Required')) . "'
         },
         email: {
-            required: '" . xarML('* Required field') . "',
-            email: '" . xarML('* Must be a valid email address') . "'
+            required: '" . str_replace("'", "\'", xarML('* Required field')) . "',
+            email: '" . str_replace("'", "\'", xarML('* Must be a valid email address')) . "'
         }" . ($enteremailtwice ? ",
         email2: {
-            required: '" . xarML('* Required field') . "',
-            email: '" . xarML('* Must be a valid email address') . "',
-            equalTo: '" . xarML('* Email values must be identical') . "'
+            required: '" . str_replace("'", "\'", xarML('* Required')) . "',
+            email: '" . str_replace("'", "\'", xarML('* Must be a valid email address')) . "',
+            equalTo: '" . str_replace("'", "\'", xarML('* Email values must be identical')) . "'
         }" : "") . ($chooseownpassword ? ",
         pass1: {
-            required: '" . xarML('* Required field') . "',
-            minlength: '" . xarML('* Must be at least #(1) characters long', $minpasslength) . "',
+            required: '" . str_replace("'", "\'", xarML('* Required')) . "',
+            minlength: '" . str_replace("'", "\'", xarML('* Must be at least #(1) characters long', $minpasslength)) . "',
         },
         pass2: {
-            required: '" . xarML('* Required field') . "',
-            minlength: '" . xarML('* Must be at least #(1) characters long', $minpasslength) . "',
-            equalTo: '" . xarML('* Password values must be identical') . "'
+            required: '" . str_replace("'", "\'", xarML('* Required')) . "',
+            minlength: '" . str_replace("'", "\'", xarML('* Must be at least #(1) characters long', $minpasslength)) . "',
+            equalTo: '" . str_replace("'", "\'", xarML('* Password values must be identical')) . "'
         }" : "") . (($showterms || $showprivacy) ? ",
         agreetoterms: {
-            required: '" . xarML('* You must consent by checking this box') . "'
+            required: '" . str_replace("'", "\'", xarML('* You must consent by checking this box')) . "'
         }" : "") . "
     },
     errorPlacement: function(error, element) { 
@@ -91,7 +91,7 @@ var preview_trigger = function() {
             draggable: false,
             resizable: false,
             buttons: {
-                '" . xarML('Close') . "': function() { jQuery(this).dialog('close');}
+                '" . str_replace("'", "\'", xarML('Close')) . "': function() { jQuery(this).dialog('close');}
             }
         }
     );
