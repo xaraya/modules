@@ -19,16 +19,16 @@ jQuery('#"."categoriesconfigform').validate({
     },
     messages: {
         catsperpage: {
-            required: '" . xarML('* Required') . "',
-            number: '" . xarML('* Must be a number') . "'
+            required: '" . str_replace("'", "\'", xarML('* Required')) . "',
+            number: '" . str_replace("'", "\'", xarML('* Must be a number')) . "'
         },
         numstats: {
             required: '" . xarML('* Required') . "',
-            number: '" . xarML('* Must be a number') . "'
+            number: '" . str_replace("'", "\'", xarML('* Must be a number')) . "'
         },
         inputsize: {
-            required: '" . xarML('* Required') . "',
-            number: '" . xarML('* Must be a number') . "'
+            required: '" . str_replace("'", "\'", xarML('* Required')) . "',
+            number: '" . str_replace("'", "\'", xarML('* Must be a number')) . "'
         }
     },
     errorClass: 'xar-error',

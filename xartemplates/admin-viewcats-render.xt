@@ -7,7 +7,7 @@
 var dialog_width = 300;
 var dialog_height = 200;
 
-jQuery('div#"."cattreewrapper > ul').treeview();
+jQuery('div#"."cattreewrapper ".chr(62)." ul').treeview();
 jQuery('div#"."cattreewrapper span.xar-cattree-icons').css({'float': 'left', 'margin': '0 .5em'});
 jQuery('#"."cattreewrapper a').click(function(event) {
     event.stopPropagation();
@@ -18,12 +18,12 @@ jQuery('div#"."cattreewrapper a[id^=delete]').click(function() {
     jQuery('#"."xardialogtarget').remove();
     jQuery('body').append('" . chr(60) . "div id=\'xardialogtarget\' style=\'display: none;\'" . chr(62) . chr(60) . "/div" . chr(62) . "');
     jQuery('#" . "xardialogtarget').load(this.getAttribute('href') + '".chr(38)."pageName=module .xar-mod-body ".chr(62)." *').dialog({
-        title: '" . xarML('Delete Category') . "',
+        title: '" . str_replace("'", "\'", xarML('Delete Category')) . "',
         width: dialog_width,
         height: dialog_height,
         buttons: {
-            '". xarML('Cancel') . "': function() { jQuery(this).dialog('close'); },
-            '". xarML('Delete') . "': function() { jQuery('#"."xardialogtarget form#deletecatform').submit(); }
+            '". str_replace("'", "\'", xarML('Cancel')) . "': function() { jQuery(this).dialog('close'); },
+            '". str_replace("'", "\'", xarML('Delete')) . "': function() { jQuery('#"."xardialogtarget form#deletecatform').submit(); }
         },
         bgiframe: true,
         modal: true,
