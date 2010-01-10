@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2009 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -26,9 +26,9 @@ function articles_userapi_getpubfieldformats($args)
     $fieldlist=array(
         'static'          => xarML('Static Text'),
         'textbox'         => xarML('Text Box'),
-        'textarea_small'  => xarML('Small Text Area'),
-        'textarea_medium' => xarML('Medium Text Area'),
-        'textarea_large'  => xarML('Large Text Area'),
+        'textarea_small'  => xarML('Text Area (small)'),
+        'textarea_medium' => xarML('Text Area (medium)'),
+        'textarea_large'  => xarML('Text Area (large)'),
         'dropdown'        => xarML('Dropdown List'),
         'textupload'      => xarML('Text Upload'),
         'fileupload'      => xarML('File Upload'),

@@ -25,14 +25,14 @@ jQuery('table.xar-items a[id^=delete]').click(function() {
     var a = this;
     jQuery('#"."xardialogtarget').remove();
     jQuery('body').append('" . chr(60) . "div id=\'xardialogtarget\' style=\'display: none;\'" . chr(62) . chr(60) . "/div" . chr(62) . "');
-    jQuery('#" . "xardialogtarget').html('" . chr(60) . "p" . chr(62) . xarML('Delete this article?') .  chr(60) . "/p" . chr(62) . chr(60) . "p style=\'text-align: center;\'" . chr(62) . "' + jQuery.trim(jQuery(this).parent().parent().children(':first').text()) + '" . chr(60) . "/p" . chr(62) . "');
+    jQuery('#" . "xardialogtarget').html('" . chr(60) . "p" . chr(62) . str_replace("'", "\'", xarML('Delete this article?')) .  chr(60) . "/p" . chr(62) . chr(60) . "p style=\'text-align: center;\'" . chr(62) . "' + jQuery.trim(jQuery(this).parent().parent().children(':first').text()) + '" . chr(60) . "/p" . chr(62) . "');
     jQuery('#" . "xardialogtarget').dialog({
-        title: '" . xarML('Delete article') . "',
+        title: '" . str_replace("'", "\'", xarML('Delete article')) . "',
         width: dialog_width,
         height: dialog_height,
         buttons: {
-            '". xarML('Cancel') . "': function() { jQuery(this).dialog('close'); },
-            '". xarML('Delete') . "': function() { a.setAttribute('href', a.getAttribute('href') + '" . chr(38) . "confirm=1');jQuery(this).dialog('close');window.location = a.getAttribute('href'); }
+            '". str_replace("'", "\'", xarML('Cancel')) . "': function() { jQuery(this).dialog('close'); },
+            '". str_replace("'", "\'", xarML('Delete')) . "': function() { a.setAttribute('href', a.getAttribute('href') + '" . chr(38) . "confirm=1');jQuery(this).dialog('close');window.location = a.getAttribute('href'); }
         },
         bgiframe: true,
         modal: true,
@@ -48,14 +48,14 @@ jQuery('form#" . "viewarticles').submit( function() {
     if (jQuery('#status').val() == '-1' " . chr(38) . chr(38) . " numchecked " . chr(62) . " 0) {
         jQuery('#"."xardialogtarget').remove();
         jQuery('body').append('" . chr(60) . "div id=\'xardialogtarget\' style=\'display: none;\'" . chr(62) . chr(60) . "/div" . chr(62) . "');
-        jQuery('#" . "xardialogtarget').html('" . chr(60) . "p" . chr(62) . xarML('Delete selected articles?') .  chr(60) . "/p" . chr(62) . chr(60) . "p style=\'text-align: center;\'" . chr(62) . "' + numchecked + ' " . xarML("Selected") . chr(60) . "/p" . chr(62) . "');
+        jQuery('#" . "xardialogtarget').html('" . chr(60) . "p" . chr(62) . str_replace("'", "\'", xarML('Delete selected articles?')) .  chr(60) . "/p" . chr(62) . chr(60) . "p style=\'text-align: center;\'" . chr(62) . "' + numchecked + ' " . str_replace("'", "\'", xarML("Selected")) . chr(60) . "/p" . chr(62) . "');
         jQuery('#" . "xardialogtarget').dialog({
-            title: '" . xarML('Delete articles') . "',
+            title: '" . str_replace("'", "\'", xarML('Delete articles')) . "',
             width: dialog_width,
             height: dialog_height,
             buttons: {
-                '". xarML('Cancel') . "': function() { jQuery(this).dialog('close');return false; },
-                '". xarML('Delete') . "': function() { jQuery('form#" . "viewarticles').get(0).submit();return true; }
+                '". str_replace("'", "\'", xarML('Cancel')) . "': function() { jQuery(this).dialog('close');return false; },
+                '". str_replace("'", "\'", xarML('Delete')) . "': function() { jQuery('form#" . "viewarticles').get(0).submit();return true; }
             },
             bgiframe: true,
             modal: true,
