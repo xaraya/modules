@@ -18,12 +18,12 @@ jQuery('table.xar-items a[id^=delete]').click(function() {
     // populate the dialog... we get the content from the first TD in the row
     jQuery('#" . "xardialogtarget').load(this.getAttribute('href') + '".chr(38)."pageName=module .xar-mod-body ".chr(62)." *').dialog({
         // dialog options
-        title: '" . xarML('Delete Autolink Type') . "',
+        title: '" . str_replace("'", "\'", xarML('Delete Autolink Type')) . "',
         width: delete_dialog_width,
         height: delete_dialog_height,
         buttons: {
             // Cancel button
-            '". xarML('Cancel') . "': function() { jQuery(this).dialog('close'); }
+            '". str_replace("'", "\'", xarML('Cancel')) . "': function() { jQuery(this).dialog('close'); }
         },
         bgiframe: true,
         modal: true,
