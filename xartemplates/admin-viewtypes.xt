@@ -9,14 +9,14 @@ jQuery('table.xar-items a[id^=delete]').click(function() {
     var a = this;
     jQuery('#"."xardialogtarget').remove();
     jQuery('body').append('" . chr(60) . "div id=\'xardialogtarget\' style=\'display: none;\'" . chr(62) . chr(60) . "/div" . chr(62) . "');
-    jQuery('#" . "xardialogtarget').html('" . chr(60) . "h3" . chr(62) . xarML('Delete this tag type?') . chr(60) . "/h3" . chr(62) . "" . chr(60) . "p style=\'text-align: center;\'" . chr(62) . "' + jQuery.trim(jQuery(this).parent().parent().children(':first').text()) + '" . chr(60) . "/p" . chr(62) . "');
+    jQuery('#" . "xardialogtarget').html('" . chr(60) . "h3" . chr(62) . str_replace("'", "\'", xarML('Delete this tag type?')) . chr(60) . "/h3" . chr(62) . "" . chr(60) . "p style=\'text-align: center;\'" . chr(62) . "' + jQuery.trim(jQuery(this).parent().parent().children(':first').text()) + '" . chr(60) . "/p" . chr(62) . "');
     jQuery('#" . "xardialogtarget').dialog({
-        title: '" . xarML('Delete tag type') . "',
+        title: '" . str_replace("'", "\'", xarML('Delete tag type')) . "',
         width: dialog_width,
         height: dialog_height,
         buttons: {
-            '". xarML('Cancel') . "': function() { jQuery(this).dialog('close'); },
-            '". xarML('Delete') . "': function() { a.setAttribute('href', a.getAttribute('href') + '" . chr(38) . "confirm=1');jQuery(this).dialog('close');window.location = a.getAttribute('href'); }
+            '". str_replace("'", "\'", xarML('Cancel')) . "': function() { jQuery(this).dialog('close'); },
+            '". str_replace("'", "\'", xarML('Delete')) . "': function() { a.setAttribute('href', a.getAttribute('href') + '" . chr(38) . "confirm=1');jQuery(this).dialog('close');window.location = a.getAttribute('href'); }
         },
         bgiframe: true,
         modal: true,

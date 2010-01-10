@@ -11,7 +11,7 @@ jQuery('#"."newtype').validate({
     },
     messages: {
         tagtype: {
-            required: '" . xarML('* Required field') . "'
+            required: '" . str_replace("'", "\'", xarML('* Required')) . "'
         }
     },
     errorClass: 'xar-error',
