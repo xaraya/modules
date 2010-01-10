@@ -10,12 +10,12 @@ jQuery('table.xar-items a[id^=delete]').click(function() {
     jQuery('#"."xardialogtarget').remove();
     jQuery('body').append('".chr(60)."div id=\'xardialogtarget\' style=\'display: none;\'".chr(62).chr(60)."/div".chr(62)."');
     jQuery('#" . "xardialogtarget').load(this.getAttribute('href') + '".chr(38)."pageName=module .xar-mod-body ".chr(62)." *').dialog({
-        title: '" . xarML('Delete xarpage type') . "',
+        title: '" . str_replace("'", "\'", xarML('Delete xarpage type')) . "',
         width: dialog_width,
         height: dialog_height,
         buttons: {
-            '". xarML('Cancel') . "': function() { jQuery(this).dialog('close'); },
-            '". xarML('Delete') . "': function() { a.setAttribute('href', a.getAttribute('href') + '" . chr(38) . "confirm=1');jQuery(this).dialog('close');window.location = a.getAttribute('href'); }
+            '". str_replace("'", "\'", xarML('Cancel')) . "': function() { jQuery(this).dialog('close'); },
+            '". str_replace("'", "\'", xarML('Delete')) . "': function() { a.setAttribute('href', a.getAttribute('href') + '" . chr(38) . "confirm=1');jQuery(this).dialog('close');window.location = a.getAttribute('href'); }
         },
         bgiframe: true,
         modal: true,
