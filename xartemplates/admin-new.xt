@@ -28,11 +28,11 @@ jQuery('#"."example_add').validate({
     },
     messages: {
         name: {
-            required: '" . xarML('* Required') . "'
+            required: '" . str_replace("'", "\'", xarML('* Required')) . "'
         },
         number: {
-            required: '" . xarML('* Required') . "',
-            number: '" . xarML('* Must be a number') . "'
+            required: '" . str_replace("'", "\'", xarML('* Required')) . "',
+            number: '" . str_replace("'", "\'", xarML('* Must be a number')) . "'
         }
     },
     errorClass: 'xar-error',

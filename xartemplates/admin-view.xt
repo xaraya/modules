@@ -34,18 +34,18 @@ jQuery('table.xar-items a[id^=delete]').click(function() {
     jQuery('#"."xardialogtarget').remove();
     jQuery('body').append('".chr(60)."div id=\'xardialogtarget\' style=\'display: none;\'".chr(62).chr(60)."/div".chr(62)."');
     // populate the dialog... we get the content of the first TD in the row
-    jQuery('#" . "xardialogtarget').html('".chr(60)."h3" . chr(62) . xarML('Delete this example item?') . chr(60) ."/h3" . chr(62) . chr(60) . "p style=\'text-align: center;\'" . chr(62) . "' + jQuery.trim(jQuery(this).parent().parent().children(':first').text()) + '" . chr(60) . "/p" . chr(62) ."');
+    jQuery('#" . "xardialogtarget').html('".chr(60)."h3" . chr(62) . str_replace("'", "\'", xarML('Delete this example item?')) . chr(60) ."/h3" . chr(62) . chr(60) . "p style=\'text-align: center;\'" . chr(62) . "' + jQuery.trim(jQuery(this).parent().parent().children(':first').text()) + '" . chr(60) . "/p" . chr(62) ."');
 
     jQuery('#" . "xardialogtarget').dialog({
         // dialog options
-        title: '" . xarML('Delete example item') . "',
+        title: '" . str_replace("'", "\'", xarML('Delete example item')) . "',
         width: delete_dialog_width,
         height: delete_dialog_height,
         buttons: {
             // Cancel button
-            '". xarML('Cancel') . "': function() { jQuery(this).dialog('close'); },
+            '". str_replace("'", "\'", xarML('Cancel')) . "': function() { jQuery(this).dialog('close'); },
             // Delete button: we add confirm param to the delete URL, and set window.location to it
-            '". xarML('Delete') . "': function() { a.setAttribute('href', a.getAttribute('href') + '".chr(38)."confirm=1');jQuery(this).dialog('close');window.location = a.getAttribute('href'); }
+            '". str_replace("'", "\'", xarML('Delete')) . "': function() { a.setAttribute('href', a.getAttribute('href') + '".chr(38)."confirm=1');jQuery(this).dialog('close');window.location = a.getAttribute('href'); }
         },
         bgiframe: true,
         modal: true,
@@ -68,11 +68,11 @@ var modify_validate = {
     },
     messages: {
         name: {
-            required: '" . xarML('* Required') . "'
+            required: '" . str_replace("'", "\'", xarML('* Required')) . "'
         },
         number: {
-            required: '" . xarML('* Required') . "',
-            number: '" . xarML('* Must be a number') . "'
+            required: '" . str_replace("'", "\'", xarML('* Required')) . "',
+            number: '" . str_replace("'", "\'", xarML('* Must be a number')) . "'
         }
     },
     errorClass: 'xar-error',
@@ -90,7 +90,7 @@ var modify_dialog = function() {
     // also, we only put the contents of xar-mod-body into the dialog
     // we need to pass a callback to load() for the validation to work
     jQuery('#" . "xardialogtarget').load(this.getAttribute('href') + '".chr(38)."pageName=module .xar-mod-body ".chr(62)." *', {}, function (){
-            jQuery('#example_modify').validate(modify_validate);
+        jQuery('#example_modify').validate(modify_validate);
     }).dialog(
         {
             title: jQuery(this).text(),
@@ -101,7 +101,7 @@ var modify_dialog = function() {
             draggable: false,
             resizable: false,
             buttons: {
-                '" . xarML('Close') . "': function() { jQuery(this).dialog('close');}
+                '" . str_replace("'", "\'", xarML('Close')) . "': function() { jQuery(this).dialog('close');}
             }
         }
     );
