@@ -228,6 +228,12 @@ function xarbb_init()
         return false;
     }
 
+    // In this version (1.3.2) we intoduced eventapi handling to track last visit more accurately
+    // this includes two user variables to store current (thisvisit) and last visit times
+    // access a users last visit using xarModGetUserVar('xarbb', 'lastvisit', $uid);
+    xarModSetVar('xarbb', 'lastvisit', time());
+    xarModSetVar('xarbb', 'thisvisit', time());
+
     return true;
 }
 
