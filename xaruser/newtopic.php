@@ -458,7 +458,9 @@ function crispbb_user_newtopic($args)
     $data['forumLevel'] = $forumLevel;
     $data['htmldeny'] = $htmldeny;
     $data['bbcodedeny'] = $bbcodedeny;
+    $data['bbcodemod'] = $bbcodemod == 'nbbc' ? $bbcodemod : '';
     $data['smiliesdeny'] = $smiliesdeny;
+    $data['smileymod'] = $smileymod == 'nbbc' ? $smileymod : '';
     $data['topicicon'] = $topicicon;
     $data['towner'] = $uid;
 

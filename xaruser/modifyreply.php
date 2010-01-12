@@ -106,6 +106,19 @@ function crispbb_user_modifyreply($args)
         $data['iconlist'] = $iconlist;
     }
 
+    // transforms
+    if (xarModIsHooked('nbbc', 'crispbb', $poststype)) {
+        // support for newbbcode module (added in v0.9.0)
+        $hasbbcode = xarModGetVar('nbbc', 'bbcode.active');
+        $hassmilies = xarModGetVar('nbbc', 'smileys.active');
+        $bbcodemod = 'nbbc';
+        $smileymod = 'nbbc';
+    } else {
+        $hasbbcode = xarModIsHooked('bbcode', 'crispbb', $poststype);
+        $hassmilies = xarModIsHooked('smilies', 'crispbb', $poststype);
+        $bbcodemod = 'bbcode';
+        $smileymod = 'smilies';
+    }
 
     if ($phase == 'update' || $preview) {
         if (!xarVarFetch('pdesc', 'str', $pdesc, '', XARVAR_NOT_REQUIRED)) return;
@@ -116,19 +129,6 @@ function crispbb_user_modifyreply($args)
         if (!xarVarFetch('bbcodedeny', 'checkbox', $bbcodedeny, false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('smiliesdeny', 'checkbox', $smiliesdeny, false, XARVAR_NOT_REQUIRED)) return;
         if (empty($iconlist[$topicicon])) $topicicon = 'none';
-        // transforms
-        if (xarModIsHooked('nbbc', 'crispbb', $poststype)) {
-            // support for newbbcode module (added in v0.9.0)
-            $hasbbcode = xarModGetVar('nbbc', 'bbcode.active');
-            $hassmilies = xarModGetVar('nbbc', 'smileys.active');
-            $bbcodemod = 'nbbc';
-            $smileymod = 'nbbc';
-        } else {
-            $hasbbcode = xarModIsHooked('bbcode', 'crispbb', $poststype);
-            $hassmilies = xarModIsHooked('smilies', 'crispbb', $poststype);
-            $bbcodemod = 'bbcode';
-            $smileymod = 'smilies';
-        }
 
         // always $hashtml
         if (!empty($privs['html'])) { // user has privs to use html
@@ -276,6 +276,8 @@ function crispbb_user_modifyreply($args)
     $data['actions'] = $presets['privactionlabels'];
     $data['levels'] = $presets['privleveloptions'];
     $data['invalid'] = $invalid;
+    $data['bbcodemod'] = $bbcodemod == 'nbbc' ? $bbcodemod : '';
+    $data['smileymod'] = $smileymod == 'nbbc' ? $smileymod : '';
     $data['powner'] = $uid;
     xarTplSetPageTitle(xarVarPrepForDisplay($pageTitle));
     // call hooks

@@ -104,7 +104,12 @@
                         <span style="color:red;"><xar:mlstring>Off</xar:mlstring></span>
                     </xar:if>
                 </span>
-                <span class="xar-nowrap"><xar:mlstring>BBCode</xar:mlstring>:
+                <span class="xar-nowrap">
+                    <xar:if condition="!empty($bbcodemod) and $privs['bbcode']">
+                        <a href="#xarModURL('nbbc', 'user', 'bbcode')#"><xar:mlstring>BBCode</xar:mlstring></a>:
+                    <xar:else />
+                        <xar:mlstring>BBCode</xar:mlstring>:
+                    </xar:if>
                     <xar:if condition="$privs['bbcode']">
                         <span style="color:green;"><xar:mlstring>On</xar:mlstring></span>
                         <xar:if condition="$privs['bbcodedeny']">
@@ -115,7 +120,12 @@
                         <span style="color:red;"><xar:mlstring>Off</xar:mlstring></span>
                     </xar:if>
                 </span>
-                <span class="xar-nowrap"><xar:mlstring>Smileys</xar:mlstring>:
+                <span class="xar-nowrap">
+                    <xar:if condition="!empty($smileymod) and $privs['smilies']">
+                        <a href="#xarModURL('nbbc', 'user', 'smileys')#"><xar:mlstring>Smileys</xar:mlstring></a>:
+                    <xar:else />
+                        <xar:mlstring>Smileys</xar:mlstring>:
+                    </xar:if>
                     <xar:if condition="$privs['smilies']">
                         <span style="color:green;"><xar:mlstring>On</xar:mlstring></span>
                         <xar:if condition="$privs['smiliesdeny']">

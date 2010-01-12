@@ -97,6 +97,20 @@ function crispbb_user_modifytopic($args)
     $data['ptext'] = $data['ttext'];
     $data['pdesc'] = $data['tdesc'];
 
+    // transforms
+    if (xarModIsHooked('nbbc', 'crispbb', $data['topicstype'])) {
+        // support for newbbcode module (added in v0.9.0)
+        $hasbbcode = xarModGetVar('nbbc', 'bbcode.active');
+        $hassmilies = xarModGetVar('nbbc', 'smileys.active');
+        $bbcodemod = 'nbbc';
+        $smileymod = 'nbbc';
+    } else {
+        $hasbbcode = xarModIsHooked('bbcode', 'crispbb', $data['topicstype']);
+        $hassmilies = xarModIsHooked('smilies', 'crispbb', $data['topicstype']);
+        $bbcodemod = 'bbcode';
+        $smileymod = 'smilies';
+    }
+
     if ($phase == 'update' || $preview) {
         if (!xarVarFetch('ttitle', 'str:1:100', $ttitle, '', XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('pdesc', 'str', $pdesc, '', XARVAR_NOT_REQUIRED)) return;
@@ -124,20 +138,6 @@ function crispbb_user_modifytopic($args)
         }
         if (empty($privs['locktopics']) && $tstatus == 4) {
             $invalid['tstatus'] = xarML('You can not post locked topics');
-        }
-
-        // transforms
-        if (xarModIsHooked('nbbc', 'crispbb', $data['topicstype'])) {
-            // support for newbbcode module (added in v0.9.0)
-            $hasbbcode = xarModGetVar('nbbc', 'bbcode.active');
-            $hassmilies = xarModGetVar('nbbc', 'smileys.active');
-            $bbcodemod = 'nbbc';
-            $smileymod = 'nbbc';
-        } else {
-            $hasbbcode = xarModIsHooked('bbcode', 'crispbb', $data['topicstype']);
-            $hassmilies = xarModIsHooked('smilies', 'crispbb', $data['topicstype']);
-            $bbcodemod = 'bbcode';
-            $smileymod = 'smilies';
         }
 
         // always $hashtml
@@ -324,6 +324,8 @@ function crispbb_user_modifytopic($args)
     $data['levels'] = $presets['privleveloptions'];
     $data['privs'] = $privs;
     $data['invalid'] = $invalid;
+    $data['bbcodemod'] = $bbcodemod == 'nbbc' ? $bbcodemod : '';
+    $data['smileymod'] = $smileymod == 'nbbc' ? $smileymod : '';
 
     // call hooks
     $item = array();

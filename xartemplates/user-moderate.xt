@@ -69,6 +69,7 @@
                     <xar:set name="onupicon">#xarTPLGetImage('tango/sorted-asc.png', 'crispbb')#</xar:set>
                     <xar:set name="ondownicon">#xarTPLGetImage('tango/sorted-desc.png', 'crispbb')#</xar:set>
                     <thead>
+                        <tr>
                         <th>
                             <xar:mlstring>Topic</xar:mlstring>
                             <xar:if condition="$sort == 'ttitle' && $order == 'ASC'">
@@ -109,6 +110,7 @@
                             </xar:if>
                         </th>
                         <th class="xar-align-right"><xar:mlstring>Actions</xar:mlstring></th>
+                        </tr>
                     </thead>
                     <tfoot><tr><td colspan="4"></td></tr></tfoot>
                     <tbody>

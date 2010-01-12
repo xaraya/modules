@@ -404,6 +404,8 @@ function crispbb_user_newreply($args)
     $hooks = xarModCallHooks('item', 'new', '', $item);
     $data['hookoutput'] = !empty($hooks) ? $hooks : array();
     $data['return_url'] = $return_url;
+    $data['bbcodemod'] = $bbcodemod == 'nbbc' ? $bbcodemod : '';
+    $data['smileymod'] = $smileymod == 'nbbc' ? $smileymod : '';
 
     $formaction =  xarModCallHooks('item', 'formaction', '', array(), 'crispbb', $poststype);
     $formdisplay = xarModCallHooks('item', 'formdisplay','', array(), 'crispbb', $poststype);
