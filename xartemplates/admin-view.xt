@@ -20,14 +20,14 @@
                     </span>
                     <span class="xar-floatright">
                     <xar:if condition="!empty($catinfo['upurl'])">
-                        <a href="#$catinfo['upurl']#"><img src="#xarTPLGetImage('tango/go-up.png', 'crispbb')#" alt="#xarML('up')#" title="#xarML('Move this category up')#" /></a>
+                        <a href="#$catinfo['upurl']#"><img src="#xarTPLGetImage('icons/go-up.png', 'base')#" alt="#xarML('up')#" title="#xarML('Move this category up')#" /></a>
                     <xar:else />
-                        <img class="xar-icon-disabled" src="#xarTPLGetImage('tango/go-up.png', 'crispbb')#" alt="#xarML('up')#" title="#xarML('Move this category up')#" />
+                        <img class="xar-icon-disabled" src="#xarTPLGetImage('icons/go-up.png', 'base')#" alt="#xarML('up')#" title="#xarML('Move this category up')#" />
                     </xar:if>
                     <xar:if condition="!empty($catinfo['downurl'])">
-                        <a href="#$catinfo['downurl']#"><img src="#xarTPLGetImage('tango/go-down.png', 'crispbb')#" alt="#xarML('down')#" title="#xarML('Move this category down')#" /></a>
+                        <a href="#$catinfo['downurl']#"><img src="#xarTPLGetImage('icons/go-down.png', 'base')#" alt="#xarML('down')#" title="#xarML('Move this category down')#" /></a>
                     <xar:else />
-                        <img class="xar-icon-disabled" src="#xarTPLGetImage('tango/go-down.png', 'crispbb')#" alt="#xarML('down')#" title="#xarML('Move this category down')#" />
+                        <img class="xar-icon-disabled" src="#xarTPLGetImage('icons/go-down.png', 'base')#" alt="#xarML('down')#" title="#xarML('Move this category down')#" />
                     </xar:if>
                     </span>
                     <br class="xar-clearboth" />
@@ -105,9 +105,9 @@
                                     <img class="xar-icon-disabled" src="#xarTPLGetImage('icons/bin_closed.png', 'crispbb')#" alt="Deleted" title="#xarML('Deleted Topics')#" />
                                 </xar:if>
                                 <xar:if condition="!empty($forum['addforumurl'])">
-                                    <a href="#$forum['addforumurl']#" title="#xarML('View information about this forum')#"><img src="#xarTPLGetImage('tango/info.png', 'crispbb')#" alt="#xarML('Information')#" title="#xarML('View information about this forum')#" /></a>
+                                    <a href="#$forum['addforumurl']#" title="#xarML('View information about this forum')#"><img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('Information')#" title="#xarML('View information about this forum')#" /></a>
                                 <xar:else />
-                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('tango/info.png', 'crispbb')#" alt="#xarML('Information')#" title="#xarML('View information about this forum')#" />
+                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('Information')#" title="#xarML('View information about this forum')#" />
                                 </xar:if>
                                 <xar:if condition="!empty($forum['modforumurl'])">
                                     <a href="#$forum['modforumurl']#">
@@ -117,34 +117,34 @@
                                     <img class="xar-icon-disabled" src="#xarTPLGetImage('icons/comments_wrench_orange.png', 'crispbb')#" alt="Moderate" title="#xarML('Moderate forum topics')#" />
                                 </xar:if>
                                 <xar:if condition="!empty($forum['editforumurl'])">
-                                    <a href="#$forum['editforumurl']#"><img src="#xarTPLGetImage('tango/modify.png', 'crispbb')#" alt="#xarML('Modify')#" title="#xarML('Modify this forum')#" /></a>
+                                    <a href="#$forum['editforumurl']#"><img src="#xarTPLGetImage('icons/modify.png', 'base')#" alt="#xarML('Modify')#" title="#xarML('Modify this forum')#" /></a>
                                 <xar:else />
-                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('tango/modify.png', 'crispbb')#" alt="#xarML('Modify')#" title="#xarML('Modify this forum')#" />
+                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('icons/modify.png', 'base')#" alt="#xarML('Modify')#" title="#xarML('Modify this forum')#" />
                                 </xar:if>
                                 <xar:if condition="!empty($forum['hooksforumurl'])">
-                                    <a href="#$forum['hooksforumurl']#"><img src="#xarTPLGetImage('tango/hooks.png', 'crispbb')#" alt="#xarML('Hooks')#" title="#xarML('Modify forum hooks configuration')#" /></a>
+                                    <a href="#$forum['hooksforumurl']#"><img src="#xarTPLGetImage('icons/hooks.png', 'base')#" alt="#xarML('Hooks')#" title="#xarML('Modify forum hooks configuration')#" /></a>
                                 <xar:else />
-                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('tango/hooks.png', 'crispbb')#" alt="#xarML('Hooks')#" title="#xarML('Modify forum hooks configuration')#" />
+                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('icons/hooks.png', 'base')#" alt="#xarML('Hooks')#" title="#xarML('Modify forum hooks configuration')#" />
                                 </xar:if>
                                 <xar:if condition="!empty($forum['privsforumurl'])">
-                                    <a href="#$forum['privsforumurl']#"><img src="#xarTPLGetImage('tango/privileges.png', 'crispbb')#" alt="#xarML('Privileges')#" title="#xarML('Modify privileges for this forum')#" /></a>
+                                    <a href="#$forum['privsforumurl']#"><img src="#xarTPLGetImage('icons/privileges.png', 'base')#" alt="#xarML('Privileges')#" title="#xarML('Modify privileges for this forum')#" /></a>
                                 <xar:else />
-                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('tango/privileges.png', 'crispbb')#" alt="#xarML('Privileges')#" title="#xarML('Modify privileges for this forum')#" />
+                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('icons/privileges.png', 'base')#" alt="#xarML('Privileges')#" title="#xarML('Modify privileges for this forum')#" />
                                 </xar:if>
                                 <xar:if condition="!empty($forum['deleteforumurl'])">
-                                    <a href="#$forum['deleteforumurl']#"><img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="#xarML('Delete')#" title="#xarML('Delete this forum')#" /></a>
+                                    <a href="#$forum['deleteforumurl']#"><img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="#xarML('Delete')#" title="#xarML('Delete this forum')#" /></a>
                                 <xar:else />
-                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="#xarML('Delete')#" title="#xarML('Delete this forum')#" />
+                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="#xarML('Delete')#" title="#xarML('Delete this forum')#" />
                                 </xar:if>
                                 <xar:if condition="!empty($forum['upurl'])">
-                                    <a href="#$forum['upurl']#"><img src="#xarTPLGetImage('tango/go-up.png', 'crispbb')#" alt="#xarML('Up')#" title="#xarML('Move this forum up')#" /></a>
+                                    <a href="#$forum['upurl']#"><img src="#xarTPLGetImage('icons/go-up.png', 'base')#" alt="#xarML('Up')#" title="#xarML('Move this forum up')#" /></a>
                                 <xar:else />
-                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('tango/go-up.png', 'crispbb')#" alt="#xarML('Up')#" title="#xarML('Move this forum up')#" />
+                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('icons/go-up.png', 'base')#" alt="#xarML('Up')#" title="#xarML('Move this forum up')#" />
                                 </xar:if>
                                 <xar:if condition="!empty($forum['downurl'])">
-                                    <a href="#$forum['downurl']#"><img src="#xarTPLGetImage('tango/go-down.png', 'crispbb')#" alt="#xarML('Down')#" title="#xarML('Move this forum down')#" /></a>
+                                    <a href="#$forum['downurl']#"><img src="#xarTPLGetImage('icons/go-down.png', 'base')#" alt="#xarML('Down')#" title="#xarML('Move this forum down')#" /></a>
                                 <xar:else />
-                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('tango/go-down.png', 'crispbb')#" alt="#xarML('Down')#" title="#xarML('Move this forum down')#" />
+                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('icons/go-down.png', 'base')#" alt="#xarML('Down')#" title="#xarML('Move this forum down')#" />
                                 </xar:if>
                             </td>
                         </tr>
@@ -173,7 +173,7 @@
             <xar:mlstring>Deleted</xar:mlstring>
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('tango/info.png', 'crispbb')#" alt="#xarML('Info')#" title="#xarML('View information about this forum')#" />
+            <img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('Info')#" title="#xarML('View information about this forum')#" />
             Information
         </span>
         <span class="xar-nowrap">
@@ -181,19 +181,19 @@
              Moderate
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('tango/modify.png', 'crispbb')#" alt="#xarML('Modify')#" title="#xarML('Modify this forum')#" />
+            <img src="#xarTPLGetImage('icons/modify.png', 'base')#" alt="#xarML('Modify')#" title="#xarML('Modify this forum')#" />
             Modify
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('tango/hooks.png', 'crispbb')#" alt="#xarML('Hooks')#" title="#xarML('Modify forum hooks configuration')#" />
+            <img src="#xarTPLGetImage('icons/hooks.png', 'base')#" alt="#xarML('Hooks')#" title="#xarML('Modify forum hooks configuration')#" />
             Hooks
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('tango/privileges.png', 'crispbb')#" alt="#xarML('Privileges')#" title="#xarML('Modify privileges for this forum')#" />
+            <img src="#xarTPLGetImage('icons/privileges.png', 'base')#" alt="#xarML('Privileges')#" title="#xarML('Modify privileges for this forum')#" />
             Privileges
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="#xarML('Delete')#" title="#xarML('Delete this forum')#" />
+            <img src="#xarTPLGetImage('icons/delete.png', 'base')#" alt="#xarML('Delete')#" title="#xarML('Delete this forum')#" />
             Delete
         </span>
     </div>
