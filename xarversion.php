@@ -27,7 +27,11 @@ $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
-$modversion['dependency']     = array(147,177);
+$modversion['dependencyinfo'] = array(
+    0   => array('name' => 'core', 'version_ge' => '1.2.0', 'version_le' => '1.9.9'),
+    147 => array('name' => 'categories', 'version_ge' => '2.4.0'),
+    177 => array('name' => 'hitcount'),
+);
 if (false) { //bug 6033
 xarML('crispBB');
 xarML('crispBB Forum Module');
