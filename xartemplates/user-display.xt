@@ -97,12 +97,12 @@
         </xar:if>
         <xar:if condition="!empty($locktopicurl)">
             <a href="#$locktopicurl#">
-            <img src="#xarTPLGetImage('icons/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock this topic')#" />
+            <img src="#xarTPLGetImage('tango/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock this topic')#" />
             </a>
         </xar:if>
         <xar:if condition="!empty($unlocktopicurl)">
             <a href="#$unlocktopicurl#">
-            <img src="#xarTPLGetImage('icons/lock_open.png', 'crispbb')#" alt="Unlock" title="#xarML('Unlock this topic')#" />
+            <img src="#xarTPLGetImage('tango/lock-open.png', 'crispbb')#" alt="Unlock" title="#xarML('Unlock this topic')#" />
             </a>
         </xar:if>
         <xar:if condition="!empty($movetopicurl)">

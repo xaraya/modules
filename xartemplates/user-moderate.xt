@@ -168,14 +168,14 @@
                                 </xar:if>
                                 <xar:if condition="!empty($topic['locktopicurl'])">
                                     <a href="#$topic['locktopicurl']#">
-                                    <img src="#xarTPLGetImage('icons/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock this topic')#" />
+                                    <img src="#xarTPLGetImage('tango/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock this topic')#" />
                                     </a>
                                 <xar:elseif condition="!empty($topic['unlocktopicurl'])" />
                                     <a href="#$topic['unlocktopicurl']#">
-                                    <img src="#xarTPLGetImage('icons/lock_open.png', 'crispbb')#" alt="Unlock" title="#xarML('Unlock this topic')#" />
+                                    <img src="#xarTPLGetImage('tango/lock-open.png', 'crispbb')#" alt="Unlock" title="#xarML('Unlock this topic')#" />
                                     </a>
                                 <xar:else />
-                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('icons/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock this topic')#" />
+                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('tango/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock this topic')#" />
                                </xar:if>
                                 <xar:if condition="!empty($topic['movetopicurl'])">
                                     <a href="#$topic['movetopicurl']#">
@@ -526,12 +526,12 @@
         </xar:if>
         <xar:if condition="!empty($post['locktopicurl'])">
             <a href="#$post['locktopicurl']#">
-            <img src="#xarTPLGetImage('icons/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock this topic')#" />
+            <img src="#xarTPLGetImage('tango/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock this topic')#" />
             </a>
         </xar:if>
         <xar:if condition="!empty($post['unlocktopicurl'])">
             <a href="#$post['unlocktopicurl']#">
-            <img src="#xarTPLGetImage('icons/lock_open.png', 'crispbb')#" alt="Unlock" title="#xarML('Unlock this topic')#" />
+            <img src="#xarTPLGetImage('tango/lock-open.png', 'crispbb')#" alt="Unlock" title="#xarML('Unlock this topic')#" />
             </a>
         </xar:if>
         <xar:if condition="!empty($post['movetopicurl'])">
@@ -841,11 +841,11 @@
                 <xar:mlstring>Open</xar:mlstring>
             </span>
             <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('icons/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock')#" />
+                <img src="#xarTPLGetImage('tango/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock')#" />
                 <xar:mlstring>Lock</xar:mlstring>
             </span>
             <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('icons/lock_open.png', 'crispbb')#" alt="Unlock" title="#xarML('Unlock')#" />
+                <img src="#xarTPLGetImage('tango/lock-open.png', 'crispbb')#" alt="Unlock" title="#xarML('Unlock')#" />
                 <xar:mlstring>Unlock</xar:mlstring>
             </span>
             <span class="xar-nowrap">
