@@ -190,4 +190,10 @@ admin view: Add links to create a forum in a specific category in listings
 ereg -> preg_match for php530
 Fix no privileges error being shown in user main when no forums have yet been created
 0.8.5
+Update xarversion, this release is for Xaraya Aruba 1.2.0 or greater
+Rename templates from *.xd to *.xt
+Update for latest changes to categories module (version 2.4.0 or greater required)
+Add support for nbbc module
+Layout changes to new/modify topic/reply templates
+Fix a layout bug in user-moderate template
 **** Current Version ****
