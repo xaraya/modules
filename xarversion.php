@@ -3,7 +3,7 @@
  * Example Module - documented module template
  *
  * @package modules
- * @copyright (C) 2002-2009 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'example'; /* lowercase, no spaces or special chars */
 $modversion['id']             = '36';      /* register an id on xaraya.com */
-$modversion['version']        = '1.5.1'; /* three point version number */
+$modversion['version']        = '1.6.0'; /* three point version number */
 $modversion['displayname']    = 'Example';
 $modversion['description']    = 'Documented example and template for new modules';
 $modversion['credits']        = 'xardocs/credits.txt';
