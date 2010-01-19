@@ -9,7 +9,7 @@
         // Security Check
         if (!xarSecurityCheck('ReadMailer')) return;
 
-//        xarResponse::Redirect(xarModURL('mailer', 'user', 'view'));
+//        xarResponse::redirect(xarModURL('mailer', 'user', 'view'));
         // success
         return array(); //true;
     }

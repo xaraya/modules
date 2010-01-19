@@ -1,10 +1,10 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<xar:style scope="module" module="base" file="navtabs" />
+<xar:style scope="module" module="base" file="navtabs"/>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:if condition="xarModVars::get('mailer','useModuleAlias')">
-            <xar:var scope="module" module="mailer" name="aliasname" />
+            <xar:var scope="module" module="mailer" name="aliasname"/>
         <xar:else />
             <xar:mlstring>Mailer Administration</xar:mlstring>
         </xar:if>
@@ -98,12 +98,12 @@
                             Items Per Page:
                         </xar:mlstring>
                     </label>
-                    <xar:set name="value"><xar:var scope="module" module="mailer" name="itemsperpage" /></xar:set>
-                    <xar:data-input type="textbox" name="itemsperpage" value="$value" class="xar-form-textshort" />
+                    <xar:set name="value"><xar:var scope="module" module="mailer" name="itemsperpage"/></xar:set>
+                    <xar:data-input type="textbox" name="itemsperpage" value="$value" class="xar-form-textshort"/>
                 </div>
                 <div class="xar-form-input-wrapper-after">
                     <xar:set name="checked">xarModVars::get('mailer','SupportShortURLs')</xar:set>
-                    <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$checked" />
+                    <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$checked"/>
                     <label for="shorturls" title="#xarML('Enable short URLs for Mailer module')#">
                         <xar:mlstring>
                             Enable Short URLs
@@ -116,7 +116,7 @@
                             Use a module alias
                         </xar:mlstring>
                     </label>
-                    <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked" />
+                    <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked"/>
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
@@ -124,27 +124,27 @@
                                 Module Alias Name
                             </xar:mlstring>
                     </label>
-                    <xar:set name="value"><xar:var scope="module" module="mailer" name="aliasname" /></xar:set>
-                    <xar:data-input type="textbox" name="aliasname" value="$value" size="32" maxlength="100" />
+                    <xar:set name="value"><xar:var scope="module" module="mailer" name="aliasname"/></xar:set>
+                    <xar:data-input type="textbox" name="aliasname" value="$value" size="32" maxlength="100"/>
                 </div>
             </fieldset>
             <fieldset>
                 <div class="xar-form-input-wrapper-after">
-                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                    <input type="hidden" name="phase" id="phase" value="update" />
-                    <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                    <input type="submit" value="#xarML('Update Mailer Configuration')#" />
+                    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                    <input type="hidden" name="phase" id="phase" value="update"/>
+                    <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+                    <input type="submit" value="#xarML('Update Mailer Configuration')#"/>
                 </div>
             </fieldset>
         </form>
         <xar:comment>
              - - - - - - - - - - - - - - - - - - - Begin Tab2 Options  - - - - - - - - - - - - - - - - - - -
         </xar:comment>
-        <xar:elseif condition="$tab eq 'tab2'" />
+        <xar:elseif condition="$tab eq 'tab2'"/>
         <xar:comment>
              - - - - - - - - - - - - - - - - - - - Begin Tab3 Options  - - - - - - - - - - - - - - - - - - -
         </xar:comment>
-        <xar:elseif condition="$tab eq 'tab3'" />
+        <xar:elseif condition="$tab eq 'tab3'"/>
     </xar:if>
 </div>
 </xar:template>

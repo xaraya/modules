@@ -3,13 +3,15 @@
     <div class="xar-mod-head">
         <span class="xar-mod-title">
             <xar:if condition="xarModVars::get('mailer','useModuleAlias')">
-                <xar:var scope="module" module="mailer" name="aliasname" />
+                <xar:var scope="module" module="mailer" name="aliasname"/>
             <xar:else />
-                <xar:mlstring>Mailer</xar:mlstring>
+                <xar:mlstring>Mailer Administration</xar:mlstring>
             </xar:if>
         </span>
     </div>
     <div class="xar-mod-body">
+        <img src="#xarTplGetImage('admin.gif', 'mailer')#" alt="official icon" width="96" height="96" class="xar-module-icon"/>
+
         <h2>
             <xar:mlstring>Overview</xar:mlstring>
         </h2>
