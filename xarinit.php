@@ -5,7 +5,7 @@
  *
  */
 
-    sys::import('modules.query.class.query');
+    sys::import('xaraya.structures.query');
 
     function mailer_init()
     {

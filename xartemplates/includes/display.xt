@@ -11,7 +11,7 @@
             </xar:mlstring>
         </label>
         <xar:set name="value">xarModItemVars::get('mailer', 'defaultmastertable', $regid)</xar:set>
-        <xar:data-input type="object" name="defaultmastertable" value="$value" store_prop="name" firstline="Choose a master table object" />
+        <xar:data-input type="object" name="defaultmastertable" value="$value" store_prop="name" firstline="Choose a master table object"/>
     </div>
     <div class="xar-form-input-wrapper">
         <label for="defaultuserobject" title="#xarML('The object this module uses as default to represent users/recipients')#" class="xar-form-label">
@@ -20,7 +20,7 @@
             </xar:mlstring>
         </label>
         <xar:set name="value">xarModItemVars::get('mailer', 'defaultuserobject', $regid)</xar:set>
-        <xar:data-input type="objectref" name="defaultuserobject" value="$value" firstline="Choose a user object" />
+        <xar:data-input type="objectref" name="defaultuserobject" value="$value" firstline="Choose a user object"/>
     </div>
     <!--
     <div class="xar-form-input-wrapper">
@@ -30,7 +30,7 @@
             </xar:mlstring>
         </label>
         <xar:set name="value">xarModItemVars::get('mailer', 'defaultmailobject', $regid)</xar:set>
-        <xar:data-input type="object" name="defaultmailobject" value="$value" firstline="Choose a mail object" />
+        <xar:data-input type="object" name="defaultmailobject" value="$value" firstline="Choose a mail object"/>
     </div>
     -->
 </xar:template>

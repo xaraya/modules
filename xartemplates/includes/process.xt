@@ -11,7 +11,7 @@
             </xar:mlstring>
         </label>
         <xar:set name="value">xarModItemVars::get('mailer', 'savetodb', $regid)</xar:set>
-        <xar:data-input type="checkbox" name="savetodb" value="$value" />
+        <xar:data-input type="checkbox" name="savetodb" value="$value"/>
     </div>
     <div class="xar-form-input-wrapper">
         <label for="defaultredirect" title="#xarML('Whether all mails of this module should be redirected')#" class="xar-form-label">
@@ -20,7 +20,7 @@
             </xar:mlstring>
         </label>
         <xar:set name="value">xarModItemVars::get('mailer', 'defaultredirect', $regid)</xar:set>
-        <xar:data-input type="checkbox" name="defaultredirect" value="$value" />
+        <xar:data-input type="checkbox" name="defaultredirect" value="$value"/>
     </div>
     <div class="xar-form-input-wrapper">
         <label for="defaultredirectaddress" title="#xarML('The address to where all mails of this module will be redirected')#" class="xar-form-label">
@@ -29,6 +29,6 @@
             </xar:mlstring>
         </label>
         <xar:set name="value">xarModItemVars::get('mailer', 'defaultredirectaddress', $regid)</xar:set>
-        <xar:data-input type="textbox" name="defaultredirectaddress" value="$value" />
+        <xar:data-input type="textbox" name="defaultredirectaddress" value="$value"/>
     </div>
 </xar:template>

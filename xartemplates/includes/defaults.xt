@@ -11,7 +11,7 @@
             </xar:mlstring>
         </label>
         <xar:set name="value">xarModItemVars::get('mailer', 'defaultrecipientname', $regid)</xar:set>
-        <xar:data-input type="textbox" name="defaultrecipientname" value="$value" />
+        <xar:data-input type="textbox" name="defaultrecipientname" value="$value"/>
     </div>
     <div class="xar-form-input-wrapper">
         <label for="defaultsendername" title="#xarML('The name assigned to the sender if none is specified')#" class="xar-form-label">
@@ -20,7 +20,7 @@
             </xar:mlstring>
         </label>
         <xar:set name="value">xarModItemVars::get('mailer', 'defaultsendername', $regid)</xar:set>
-        <xar:data-input type="textbox" name="defaultsendername" value="$value" />
+        <xar:data-input type="textbox" name="defaultsendername" value="$value"/>
     </div>
     <div class="xar-form-input-wrapper">
         <label for="defaultsenderaddress" title="#xarML('The email address assigned to the sender if none is specified')#" class="xar-form-label">
@@ -29,7 +29,7 @@
             </xar:mlstring>
         </label>
         <xar:set name="value">xarModItemVars::get('mailer', 'defaultsenderaddress', $regid)</xar:set>
-        <xar:data-input type="textbox" name="defaultsenderaddress" value="$value" />
+        <xar:data-input type="textbox" name="defaultsenderaddress" value="$value"/>
     </div>
     <div class="xar-form-input-wrapper">
         <label for="defaultlocale" title="#xarML('The locale assigned to the message if none is specified')#" class="xar-form-label">
@@ -38,6 +38,6 @@
             </xar:mlstring>
         </label>
         <xar:set name="value">xarModItemVars::get('mailer', 'defaultlocale', $regid)</xar:set>
-        <xar:data-input type="language" name="defaultlocale" value="$value" />
+        <xar:data-input type="language" name="defaultlocale" value="$value"/>
     </div>
 </xar:template>
