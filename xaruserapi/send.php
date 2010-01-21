@@ -128,6 +128,18 @@
             if (empty($sendername)) $sendername = xarModItemVars::get('mailer','defaultsendername', xarMod::getID($module));
             $senderaddress = isset($args['senderaddress']) ? $args['senderaddress'] : $mailitem['sender_address'];
             if (empty($senderaddress)) $senderaddress = xarModItemVars::get('mailer','defaultsenderaddress', xarMod::getID($module));
+            
+            if (($mailitem['mail_type'] == 1) || ($mailitem['mail_type'] == 2)) {
+                
+                $data = isset($args['data']) ? $args['data'] : array();
+
+                foreach ($data as $key => $value) {
+                    $placeholder = '/%%' . $key . '%%/';
+                    $mailitem['body'] = preg_replace($placeholder,
+                                                     $value,
+                                                     $mailitem['body']);
+                }
+            }
         
             $subject = $mailitem['subject'];
             $message = $header . $mailitem['body'] . $footer;
