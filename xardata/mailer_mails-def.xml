@@ -74,7 +74,7 @@
     <property name="body">
       <id>339</id>
       <label>Body</label>
-      <type>textarea_medium</type>
+      <type>editor</type>
       <defaultvalue></defaultvalue>
       <source>xar_mailer_mails.body</source>
       <status>34</status>
@@ -141,44 +141,54 @@
       <seq>13</seq>
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:74:"1,text to text;2,text to html;3,blocklayout to text;4,blocklayout to html;";}</configuration>
     </property>
-    <property name="alias">
+    <property name="module_id">
       <id>348</id>
+      <label>Module</label>
+      <type>objectref</type>
+      <defaultvalue>xarMod::getID('mailer')</defaultvalue>
+      <source>xar_mailer_mails.module_id</source>
+      <status>34</status>
+      <seq>14</seq>
+      <configuration>a:5:{s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:7:"modules";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";s:22:"initialization_options";s:15:"0,Choose Module";}</configuration>
+    </property>
+    <property name="alias">
+      <id>349</id>
       <label>Alias</label>
       <type>objectref</type>
       <defaultvalue>0</defaultvalue>
       <source>xar_mailer_mails.alias</source>
       <status>34</status>
-      <seq>14</seq>
+      <seq>15</seq>
       <configuration>a:6:{s:14:"display_layout";s:7:"default";s:19:"validation_override";s:1:"1";s:24:"initialization_refobject";s:12:"mailer_mails";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";s:24:"initialization_firstline";s:34:"0,Choose the alias of this message";}</configuration>
     </property>
     <property name="created">
-      <id>342</id>
+      <id>350</id>
       <label>Created</label>
       <type>formatteddatetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>xar_mailer_mails.timecreated</source>
       <status>66</status>
-      <seq>15</seq>
+      <seq>16</seq>
       <configuration></configuration>
     </property>
     <property name="modified">
-      <id>343</id>
+      <id>351</id>
       <label>Modified</label>
       <type>formatteddatetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>xar_mailer_mails.timemodified</source>
       <status>65</status>
-      <seq>16</seq>
+      <seq>17</seq>
       <configuration></configuration>
     </property>
     <property name="state">
-      <id>349</id>
+      <id>351</id>
       <label>State</label>
       <type>dropdown</type>
       <defaultvalue>3</defaultvalue>
       <source>xar_mailer_mails.state</source>
       <status>33</status>
-      <seq>17</seq>
+      <seq>18</seq>
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:30:"0,Deleted,1,Inactive;3,Active;";}</configuration>
     </property>
   </properties>
