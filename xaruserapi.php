@@ -35,7 +35,7 @@ if (!defined('CALENDAR_ROOT')) {
 //======================================================================
 $modinfo = xarModGetInfo(xarModGetIdFromName('calendar'));
 if (!defined('CALENDAR_MODULE_ROOT')) {
-    define('CALENDAR_MODULE_ROOT',"modules/{$modinfo['directory']}/");
+    define('CALENDAR_MODULE_ROOT',"code/modules/{$modinfo['directory']}/");
 }
 if (!defined('CALENDAR_MODULE_INCLUDES')) {
     define('CALENDAR_MODULE_INCLUDES',CALENDAR_MODULE_ROOT.'xarincludes/');

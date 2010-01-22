@@ -58,8 +58,8 @@ function calendar_user_delete($args)
         $data['authid'] = xarSecGenAuthKey();
         $data['object'] = $myobject;
 
-        if (file_exists('modules/' . $data['tplmodule'] . '/xartemplates/user-delete.xd') ||
-            file_exists('modules/' . $data['tplmodule'] . '/xartemplates/admin-delete-' . $data['template'] . '.xd')) {
+        if (file_exists('code/modules/' . $data['tplmodule'] . '/xartemplates/user-delete.xd') ||
+            file_exists('code/modules/' . $data['tplmodule'] . '/xartemplates/admin-delete-' . $data['template'] . '.xd')) {
             return xarTplModule($data['tplmodule'],'user','delete',$data,$data['template']);
         } else {
             return xarTplModule('dynamicdata','admin','delete',$data,$data['template']);

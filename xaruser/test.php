@@ -10,7 +10,7 @@ $t->start();
 $t->setMarker('Class Instantiated');
     xarVarFetch('file','str::',$file);
 $t->setMarker('File Var Fetched');
-    //$ical->setFile('modules/timezone/zoneinfo/America/Phoenix.ics');
+    //$ical->setFile('code/modules/timezone/zoneinfo/America/Phoenix.ics');
     $ical->setFile($file);
 $t->setMarker('File Set');
     $ical->parse();
