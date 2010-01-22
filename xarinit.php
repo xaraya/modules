@@ -91,15 +91,15 @@ function mime_init()
         return FALSE;
     }
 
-    if (!file_exists('modules/mime/xarincludes/mime.magic.php')) {
+    if (!file_exists('code/modules/mime/xarincludes/mime.magic.php')) {
 
-        $msg = xarML('Could not open #(1) for inclusion', 'modules/mime/xarincludes/mime.magic.php');
+        $msg = xarML('Could not open #(1) for inclusion', 'code/modules/mime/xarincludes/mime.magic.php');
         throw new Exception($msg);
 
         mime_delete();
         return FALSE;
     } else {
-        include('modules/mime/xarincludes/mime.magic.php');
+        include('code/modules/mime/xarincludes/mime.magic.php');
 
         if (!isset($mime_list) || empty($mime_list)) {
             $msg = xarML('Missing mime magic list! Please report this as a bug.');
