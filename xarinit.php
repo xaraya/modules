@@ -29,13 +29,14 @@
             body              text,
             footer_id         integer unsigned NOT NULL,
             locale            varchar(64) default '' NOT NULL,
-            timecreated       int(11) unsigned NOT NULL default '0', 
-            timemodified      int(11) unsigned NOT NULL default '0', 
-            role_id           int(11) unsigned NOT NULL default '0', 
+            timecreated       integer unsigned NOT NULL default '0', 
+            timemodified      integer unsigned NOT NULL default '0', 
+            role_id           integer unsigned NOT NULL default '0', 
             redirect          tinyint NOT NULL default '0', 
             redirectaddress   varchar(254) default '' NOT NULL,
             alias             tinyint NOT NULL default '1', 
             type              tinyint NOT NULL default '3', 
+            module_id         integer unsigned NOT NULL default '0', 
             state             tinyint NOT NULL default '3', 
             PRIMARY KEY  (id) 
         ) TYPE=MyISAM";
@@ -47,7 +48,7 @@
             id                integer unsigned NOT NULL auto_increment,
             name              varchar(64) default '' NOT NULL,
             body              text,
-            timecreated       int(11) unsigned NOT NULL default '0', 
+            timecreated       integer unsigned NOT NULL default '0', 
             PRIMARY KEY  (id) 
         ) TYPE=MyISAM";
         if (!$q->run($query)) return;
@@ -58,7 +59,7 @@
             id                integer unsigned NOT NULL auto_increment,
             name              varchar(64) default '' NOT NULL,
             body              text,
-            timecreated       int(11) unsigned NOT NULL default '0', 
+            timecreated       integer unsigned NOT NULL default '0', 
             PRIMARY KEY  (id) 
         ) TYPE=MyISAM";
         if (!$q->run($query)) return;
@@ -74,7 +75,7 @@
             recipientaddress  varchar(254) default '' NOT NULL,
             subject           text,
             body              text,
-            timecreated       int(11) unsigned NOT NULL default '0', 
+            timecreated       integer unsigned NOT NULL default '0', 
             PRIMARY KEY  (id) 
         ) TYPE=MyISAM";
         if (!$q->run($query)) return;

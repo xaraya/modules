@@ -1,69 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:if condition="xarModVars::get('mailer','useModuleAlias')">
-            <xar:var scope="module" module="mailer" name="aliasname"/>
-        <xar:else />
-            <xar:mlstring>Mailer Module</xar:mlstring>
-        </xar:if>
-    </span>
-</div>
-<div class="xar-mod-body">
-    <form method="post" action="#xarServer::getCurrentURL()#">
-        <fieldset>
-            <legend>
-                Sending a test email
-            </legend>
-            <div  style="margin-top: 20px; margin-bottom: 20px">
-                To test the module click on the button below. A default email will be sent to the site administrator.
-            </div>
-            <div class="xar-form-input-wrapper">
-                <label for="message" title="#xarML('The test message to send')#" class="xar-form-label">
-                    Message to send
-                </label>
-                <xar:data-input type="objectref" name="message_id" value="$message_id" refobject="mailer_mails" store_prop="id" firstline="0,Choose a message"/>
-            </div>
-            <div class="xar-form-input-wrapper">
-                <label for="message" title="#xarML('The locale the message should be in')#" class="xar-form-label">
-                    Locale
-                </label>
-                <xar:data-input type="language" name="locale" value="$locale"/>
-            </div>
-            <div class="xar-form-input-wrapper">
-                <label for="message" title="#xarML('The address the message is sent to')#" class="xar-form-label">
-                    Recipient Address
-                </label>
-                <xar:data-input type="textbox" name="recipientaddress" value="$recipientaddress"/>
-                &#160;(uses defaults if empty)
-            </div>
-            <xar:if condition="isset($result)">
-                <div class="xar-form-input-wrapper-after" style="color: red; margin-top: 20px; margin-bottom: 20px">
-                    <xar:if condition="$result == 0">
-                        Message sent
-                    <xar:elseif condition="$result == 1"/>
-                        Message not sent: No recipient address available
-                    <xar:elseif condition="$result == 2"/>
-                        Message not sent: No message available
-                    <xar:elseif condition="$result == 3"/>
-                        Message not sent: Default redirect checked, but no redirect address available
-                    <xar:elseif condition="$result == 4"/>
-                        Message not sent: Message redirect checked, but no redirect address available
-                    <xar:elseif condition="$result == 5"/>
-                        Message not sent: Sending message failed
-                    <xar:elseif condition="$result == 6"/>
-                        Message not sent: Blocklayout compilation failed
-                    </xar:if>
-                </div>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:if condition="xarModVars::get('mailer','useModuleAlias')">
+                <xar:var scope="module" module="mailer" name="aliasname"/>
+            <xar:else />
+                <xar:mlstring>Mailer Module</xar:mlstring>
             </xar:if>
-        </fieldset>
-        <fieldset>
-            <div class="xar-form-input-wrapper-after">
-                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
-                <input type="hidden" name="phase" id="phase" value="submit"/>
-                <input type="submit" value="#xarML('Send a test email')#"/>
-            </div>
-        </fieldset>
-    </form>
-</div>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+        <form method="post" action="#xarServer::getCurrentURL()#">
+            <fieldset>
+                <legend>
+                    Sending a test email
+                </legend>
+                <div  style="margin-top: 20px; margin-bottom: 20px">
+                    To test the module click on the button below. A default email will be sent to the site administrator.
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="message" title="#xarML('The test message to send')#" class="xar-form-label">
+                        Message to send
+                    </label>
+                    <xar:data-input type="objectref" name="message_id" value="$message_id" refobject="mailer_mails" store_prop="id" firstline="0,Choose a message"/>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="message" title="#xarML('The locale the message should be in')#" class="xar-form-label">
+                        Locale
+                    </label>
+                    <xar:data-input type="language" name="locale" value="$locale"/>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="message" title="#xarML('The address the message is sent to')#" class="xar-form-label">
+                        Recipient Address
+                    </label>
+                    <xar:data-input type="textbox" name="recipientaddress" value="$recipientaddress"/>
+                    &#160;(uses defaults if empty)
+                </div>
+                <xar:if condition="isset($result)">
+                    <div class="xar-form-input-wrapper-after" style="color: red; margin-top: 20px; margin-bottom: 20px">
+                        <xar:if condition="$result == 0">
+                            Message sent
+                        <xar:elseif condition="$result == 1"/>
+                            Message not sent: No recipient address available
+                        <xar:elseif condition="$result == 2"/>
+                            Message not sent: No message available
+                        <xar:elseif condition="$result == 3"/>
+                            Message not sent: Default redirect checked, but no redirect address available
+                        <xar:elseif condition="$result == 4"/>
+                            Message not sent: Message redirect checked, but no redirect address available
+                        <xar:elseif condition="$result == 5"/>
+                            Message not sent: Sending message failed
+                        <xar:elseif condition="$result == 6"/>
+                            Message not sent: Blocklayout compilation failed
+                        </xar:if>
+                    </div>
+                </xar:if>
+            </fieldset>
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                    <input type="hidden" name="phase" id="phase" value="submit"/>
+                    <input type="submit" value="#xarML('Send a test email')#"/>
+                </div>
+            </fieldset>
+        </form>
+    </div>
 </xar:template>
