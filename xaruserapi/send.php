@@ -128,7 +128,7 @@
             if (empty($sendername)) $sendername = xarModItemVars::get('mailer','defaultsendername', xarMod::getID($module));
             $senderaddress = isset($args['senderaddress']) ? $args['senderaddress'] : $mailitem['sender_address'];
             if (empty($senderaddress)) $senderaddress = xarModItemVars::get('mailer','defaultsenderaddress', xarMod::getID($module));
-            
+        
             if (($mailitem['mail_type'] == 1) || ($mailitem['mail_type'] == 2)) {
                 
                 $data = isset($args['data']) ? $args['data'] : array();
@@ -139,8 +139,8 @@
                                                      $value,
                                                      $mailitem['body']);
                 }
-            }
-        
+            } 
+
             $subject = $mailitem['subject'];
             $message = $header . $mailitem['body'] . $footer;
             if (($mailitem['mail_type'] == 3) || ($mailitem['mail_type'] == 4)) {
@@ -167,6 +167,7 @@
         // Take care of other data passed through directly
             $ccaddresses = isset($args['ccaddresses']) ? $args['ccaddresses'] : '';
             $bccaddresses = isset($args['bccaddresses']) ? $args['bccaddresses'] : '';
+            $custom_header = isset($args['custom_header']) ? $args['custom_header'] : array();
             
         // Bundle the data into a nice array
             $args = array('info'            => $recipientaddress,
@@ -182,7 +183,8 @@
                           'attachPath'      => '',
                           'redirectsending' => $redirectsending,
                           'redirectaddress' => $redirectaddress,
-                          'usetemplates'    => false);
+                          'usetemplates'    => false,
+                          'custom_header'   => $custom_header);
 
         // Pass it to the mail module for processing
         if (($mailitem['mail_type'] == 2) || ($mailitem['mail_type'] == 4)) {
