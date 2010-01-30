@@ -89,7 +89,7 @@ function registration_init()
         xarModVars::set('roles','defaultregmodule','registration');
     }
 
-    xarModVars::set('registration','defaultuserstate',Roles_Master::ROLES_RSTATE_ACTIVE);
+    xarModVars::set('registration','defaultuserstate',xarRoles::ROLES_STATE_ACTIVE);
 
     $regobject = DataObjectMaster::getObjectInfo(array('name' => 'registration_users'));
     xarModVars::set('registration', 'registrationobject', $regobject['name']);
