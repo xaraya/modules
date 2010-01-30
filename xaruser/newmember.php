@@ -15,7 +15,7 @@
 
             case 'registerformcycle':
                 $fieldvalues = xarSessionGetVar('Registration.UserInfo');
-            case 'registerform': 
+            case 'registerform':
             default:
 
 
@@ -71,7 +71,7 @@
                                   'hookoutput' => $hookoutput);
                     return xarTplModule('registration','user', 'newmemberform',$data);
                 }
-                
+
                 // if a password exists, save it in a sessionvar for later retrieval
                 foreach ($object->properties as $property) {
                     if (isset($property->password)) {
@@ -135,7 +135,7 @@
 
                 // Do we need admin activation of the account?
                 if (xarModVars::get('registration', 'explicitapproval')) {
-                    $fieldvalues['state'] = Roles_Master::ROLES_RSTATE_PENDING;
+                    $fieldvalues['state'] = xarRoles::ROLES_STATE_PENDING;
                 }
 
                 //Get the default auth module data
@@ -154,7 +154,7 @@
 
                 // Do we require user validation of account by email?
                 if (xarModVars::get('registration', 'requirevalidation')) {
-                    $fieldvalues['state'] = Roles_Master::ROLES_RSTATE_NOTVALIDATED;
+                    $fieldvalues['state'] = xarRoles::ROLES_STATE_NOTVALIDATED;
 
                     // Create confirmation code
                     $confcode = xarMod::apiFunc('roles', 'user', 'makepass');
@@ -177,11 +177,11 @@
 
                 if (empty($id)) return;
                 xarModVars::set('roles', 'lastuser', $id);
-                
+
                 // Make sure we have a name property for the next step(s)
                 if (!isset($object->properties['name']))
                     throw new Exception(xarML('The object #(1) has no name property',$object->name));
-                    
+
                 // Send a welcome email
                 if (xarModVars::get('registration','sendnotice')) xarMod::apiFunc('registration','user','notifyuser',$object->getFieldValues());
 
@@ -189,7 +189,7 @@
                 xarModUserVars::set('roles','allowemail', false, $id);
 
                 $hookdata = $fieldvalues;
-                $hookdata['itemtype'] = Roles_Master::ROLES_RUSERTYPE;
+                $hookdata['itemtype'] = xarRoles::ROLES_USERTYPE;
                 $hookdata['module'] = 'registration';
                 $hookdata['itemid'] = $id;
                 xarModCallHooks('item', 'create', $id, $hookdata);
@@ -201,12 +201,12 @@
                     } else {
                         throw new Exception("Missing a 'state' property for the registration data");
                     }
-                } 
+                }
 
-                // Retrieve the password and 
+                // Retrieve the password and
                 $data['password'] = xarSession:: getVar('registration.password');
 //                if (!empty($data['password'])) xarSession::setVars('registration.password','');
-                
+
                 $data['object'] = $object;
                 $data['properties'] = $object->getProperties();
                 $data = xarTplModule('registration','user', 'newmembersignoff',$data);

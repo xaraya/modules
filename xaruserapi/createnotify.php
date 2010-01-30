@@ -24,14 +24,14 @@
  * @param 'pass'  password
  * @param 'id'  user id
  * @param 'ip'  user ip (optional)
- * @param 'state'  one of Roles_Master::ROLES_RSTATE_NOTVALIDATED, Roles_Master::ROLES_RSTATE_PENDING, Roles_Master::ROLES_RSTATE_ACTIVE
+ * @param 'state'  one of xarRoles::ROLES_STATE_NOTVALIDATED, xarRoles::ROLES_STATE_PENDING, xarRoles::ROLES_STATE_ACTIVE
  * @return true if ok
  */
 function registration_userapi_createnotify($args)
 {
     extract($args);
 
-    if ($state == Roles_Master::ROLES_RSTATE_NOTVALIDATED) {
+    if ($state == xarRoles::ROLES_STATE_NOTVALIDATED) {
 
         // TODO: make sending mail configurable too, depending on the other options ?
         $emailargs = array( 'id'           => array($id => '1'),
@@ -45,7 +45,7 @@ function registration_userapi_createnotify($args)
         }
     }
 
-    if ($state == Roles_Master::ROLES_RSTATE_PENDING || $state == Roles_Master::ROLES_RSTATE_ACTIVE) {
+    if ($state == xarRoles::ROLES_STATE_PENDING || $state == xarRoles::ROLES_STATE_ACTIVE) {
         // Send an e-mail to the admin if notification of new user registration is required,
         // Same  email is added to the 'getvalidation' new users in Roles module
 
@@ -78,7 +78,7 @@ function registration_userapi_createnotify($args)
         }
     }
 
-    if ($state == Roles_Master::ROLES_RSTATE_ACTIVE) {
+    if ($state == xarRoles::ROLES_STATE_ACTIVE) {
          // send welcome email to user(option)
          // This template is used in options for user validation, user validation and user pending, and user pending alone
         if (xarModVars::get('registration', 'sendwelcomeemail')) {

@@ -6,7 +6,7 @@
     </div>
 
     <div class="xar-mod-body">
-        <xar:if condition="$state eq Roles_Master::ROLES_RSTATE_ACTIVE">
+        <xar:if condition="$state eq xarRoles::ROLES_STATE_ACTIVE">
             <h3>Your account is active</h3>
             <p>
                 Thank you for registering. You can now use the login block to log in.

@@ -241,7 +241,7 @@ function registration_user_register()
 
             // Do we need admin activation of the account?
             if (xarModVars::get('registration', 'explicitapproval')) {
-                $fieldvalues['state'] = Roles_Master::ROLES_RSTATE_PENDING;
+                $fieldvalues['state'] = xarRoles::ROLES_STATE_PENDING;
             }
 
             //Get the default auth module data
@@ -260,7 +260,7 @@ function registration_user_register()
 
             // Do we require user validation of account by email?
             if (xarModVars::get('registration', 'requirevalidation')) {
-                $fieldvalues['state'] = Roles_Master::ROLES_RSTATE_NOTVALIDATED;
+                $fieldvalues['state'] = xarRoles::ROLES_STATE_NOTVALIDATED;
 
                 // Create confirmation code
                 $confcode = xarMod::apiFunc('roles', 'user', 'makepass');
@@ -288,7 +288,7 @@ function registration_user_register()
             xarModUserVars::set('roles','allowemail', false, $id);
 
             $hookdata = $fieldvalues;
-            $hookdata['itemtype'] = Roles_Master::ROLES_RUSERTYPE;
+            $hookdata['itemtype'] = xarRoles::ROLES_USERTYPE;
             $hookdata['module'] = 'registration';
             $hookdata['itemid'] = $id;
             xarModCallHooks('item', 'create', $id, $hookdata);
@@ -303,7 +303,7 @@ function registration_user_register()
             }
 
             // go to appropriate page, based on state
-            if ($fieldvalues['state'] == Roles_Master::ROLES_RSTATE_ACTIVE) {
+            if ($fieldvalues['state'] == xarRoles::ROLES_STATE_ACTIVE) {
                 // log in and redirect
 
                 /* Need a more general definition of what it means to "log in"
@@ -314,12 +314,12 @@ function registration_user_register()
                 */
                 $data = xarTplModule('registration','user', 'accountstate', array('state' => $fieldvalues['state']));
 
-            } else if ($fieldvalues['state'] == Roles_Master::ROLES_RSTATE_PENDING) {
+            } else if ($fieldvalues['state'] == xarRoles::ROLES_STATE_PENDING) {
                 // If we are still waiting on admin to review pending accounts send the user to a page to notify them
                 // This page is for options of validation alone, validation and pending, and pending alone
                 $data = xarTplModule('roles','user', 'getvalidation', $data);
 
-            } else { // $state == Roles_Master::ROLES_RSTATE_NOTVALIDATED
+            } else { // $state == xarRoles::ROLES_STATE_NOTVALIDATED
                 $data = xarTplModule('registration','user', 'waitingconfirm');
             }
 
