@@ -50,12 +50,9 @@
     </xar:comment>
     <xar:if condition="$tab eq 'general'">
         <form method="post" action="&xar-modurl-registration-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
-        <fieldset>
-            <legend>
-                General Options
-            </legend>
-            <xar:data-form object="$module_settings" />
-        </fieldset>
+
+        <xar:data-form object="$module_settings" />
+
         <fieldset>
                 <legend>
                     Service/Privacy
@@ -143,10 +140,10 @@
                     <xar:set name="value">xarModVars::get('registration', 'defaultuserstate')</xar:set>
                     <xar:set name="options">
                         array(
-                            array('id' => Roles_Master::ROLES_RSTATE_INACTIVE, 'name' => xarML('Inactive')),
-                            array('id' => Roles_Master::ROLES_RSTATE_NOTVALIDATED, 'name' => xarML('Not Validated')),
-                            array('id' => Roles_Master::ROLES_RSTATE_ACTIVE, 'name' => xarML('Active')),
-                            array('id' => Roles_Master::ROLES_RSTATE_PENDING, 'name' => xarML('Pending Activation')),
+                            array('id' => xarRoles::ROLES_STATE_INACTIVE, 'name' => xarML('Inactive')),
+                            array('id' => xarRoles::ROLES_STATE_NOTVALIDATED, 'name' => xarML('Not Validated')),
+                            array('id' => xarRoles::ROLES_STATE_ACTIVE, 'name' => xarML('Active')),
+                            array('id' => xarRoles::ROLES_STATE_PENDING, 'name' => xarML('Pending Activation')),
                         )
                     </xar:set>
                     <xar:data-input type="dropdown" name="defaultuserstate" id="defaultuserstate" options="$options" value="$value"/>
