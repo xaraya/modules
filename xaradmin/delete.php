@@ -28,7 +28,7 @@
             $item = $data['object']->deleteItem();
                 
             // Jump to the next page
-            xarResponse::Redirect(xarModURL('foo','admin','view'));
+            xarResponse::redirect(xarModURL('foo','admin','view'));
             return true;
         }
         return $data;

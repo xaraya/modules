@@ -11,7 +11,7 @@
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return array();
         } else {
-            xarResponse::Redirect(xarModURL('foo', 'admin', 'modifyconfig'));
+            xarResponse::redirect(xarModURL('foo', 'admin', 'modifyconfig'));
         }
         // success
         return true;

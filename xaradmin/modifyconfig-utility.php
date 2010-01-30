@@ -66,7 +66,7 @@
                 }
                 foreach ($modvars as $var) if (isset($$var)) xarModItemVars::set('foo', $var, $$var, $regid);
 
-                xarResponse::Redirect(xarModURL('foo', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+                xarResponse::redirect(xarModURL('foo', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
                 // Return
                 return true;
                 break;

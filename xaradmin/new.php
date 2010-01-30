@@ -29,13 +29,13 @@
             
             if (!$isvalid) {
                 // Bad data: redisplay the form with error messages
-                return xarTplModule('foo','user','new', $data);        
+                return xarTplModule('foo','admin','new', $data);        
             } else {
                 // Good data: create the item
                 $item = $data['object']->createItem();
                 
                 // Jump to the next page
-                xarResponse::Redirect(xarModURL('foo','admin','view'));
+                xarResponse::redirect(xarModURL('foo','admin','view'));
                 return true;
             }
         }

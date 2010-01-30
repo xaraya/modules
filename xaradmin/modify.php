@@ -14,6 +14,7 @@
         if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
 
         $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+        $data['object']->getItem(array('itemid' => $data['itemid']));
 
         $data['tplmodule'] = 'foo';
         $data['authid'] = xarSecGenAuthKey('foo');
@@ -28,17 +29,15 @@
             
             if (!$isvalid) {
                 // Bad data: redisplay the form with error messages
-                return xarTplModule('foo','user','modify', $data);        
+                return xarTplModule('foo','admin','modify', $data);        
             } else {
                 // Good data: create the item
-                $item = $data['object']->updateItem();
+                $item = $data['object']->updateItem(array('itemid' => $data['itemid']));
                 
                 // Jump to the next page
-                xarResponse::Redirect(xarModURL('foo','admin','view'));
+                xarResponse::redirect(xarModURL('foo','admin','view'));
                 return true;
             }
-        } else {
-            $data['object']->getItem(array('itemid' => $data['itemid']));
         }
         return $data;
     }

@@ -51,7 +51,7 @@
                         break;
                 }
 
-                xarResponse::Redirect(xarModURL('foo', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+                xarResponse::redirect(xarModURL('foo', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
                 // Return
                 return true;
                 break;
