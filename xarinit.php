@@ -110,7 +110,7 @@
     #
     # Set up modvars
     #
-        xarModVars::set('mailer', 'itemsperpage', 20);
+        xarModVars::set('mailer', 'items_per_page', 20);
         xarModVars::set('mailer', 'useModuleAlias',0);
         xarModVars::set('mailer', 'aliasname','Mailer');
         xarModVars::set('mailer', 'defaultmastertable','mailer_mails');
