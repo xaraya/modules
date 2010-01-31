@@ -30,6 +30,11 @@
                 </td>
             </xar:if>
         </xar:foreach>
+        <xar:if condition="$objectname eq 'mailer_mails'">
+            <td class="xar-align-center">
+                <a href="#xarModURL('mailer','admin','view_mailer',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $localmodule))#">View</a>
+            </td>
+        </xar:if>
         <xar:template file="listingslist_rowsuffix" module="$localmodule,listings"/>
     </tr>
 </xar:template>
