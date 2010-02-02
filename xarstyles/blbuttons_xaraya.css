@@ -95,7 +95,7 @@ form.nquser legend, form.nqadmin legend
 }
 * html form.nquser legend, html form.nqadmin legend
 {
-  top: -12px;
+  top: -24px;
   margin-top: -1px;
   position: absolute;
 }
