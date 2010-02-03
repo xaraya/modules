@@ -2,12 +2,12 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
      <xar:if condition="$objectname eq 'mailer_mails'">
         <th width="5%" style="text-align: center;">
-            <xar:mlstring>Action</xar:mlstring>
+            Action
         </th>
      </xar:if>
      <xar:if condition="xarUserIsLoggedIn() AND xarSecurityCheck('DeleteListings',0)">
          <th width="5%" style="text-align: center;">
-            <xar:mlstring>Option</xar:mlstring>
+            Option
          </th>
      </xar:if>
 </xar:template>
