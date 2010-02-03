@@ -73,31 +73,31 @@ jQuery('table.xar-items a[id^=delete]').click(function() {
                         #$loop:item['type']#
                     </td>
                     <td class="xar-align-center">
-                        <xar:if condition="$loop:item['allowed'] eq 0">
-                            <span class="help" title="#xarML('This Tag will not be allowed at all with this setting.')#"></span>
-                            <input type="radio" value="0" name="tags[#$loop:item['cid']#]" id="#$loop:item['cid']#" checked="checked" />
-                        <xar:else />
-                            <span class="help" title="#xarML('This Tag will not be allowed at all with this setting.')#"></span>
-                            <input type="radio" value="0" name="tags[#$loop:item['cid']#]" id="#$loop:item['cid']#" />
-                        </xar:if>
+                        <span title="#xarML('This Tag will not be allowed at all with this setting.')#">
+                            <xar:if condition="$loop:item['allowed'] eq 0">
+                                <input type="radio" value="0" name="tags[#$loop:item['cid']#]" id="tag_not_allowed_#$loop:item['cid']#" checked="checked" />
+                            <xar:else />
+                                <input type="radio" value="0" name="tags[#$loop:item['cid']#]" id="tag_not_allowed_#$loop:item['cid']#" />
+                            </xar:if>
+                        </span>
                     </td>
                     <td class="xar-align-center">
-                        <xar:if condition="$loop:item['allowed'] eq 1">
-                            <span class="help" title="#xarML('This Tag will be allowed, but without added attributes.  IE li is allowed, but li style=something will not be allowed.')#"></span>
-                            <input type="radio" value="1" name="tags[#$loop:item['cid']#]" id="#$loop:item['cid']#" checked="checked" />
-                        <xar:else />
-                            <span class="help" title="#xarML('This Tag will be allowed, but without added attributes.  IE li is allowed, but li style=something will not be allowed.')#"></span>
-                            <input type="radio" value="1" name="tags[#$loop:item['cid']#]" id="#$loop:item['cid']#" />
-                        </xar:if>
+                        <span title="#xarML('This Tag will be allowed, but without added attributes.  IE li is allowed, but li style=something will not be allowed.')#">
+                            <xar:if condition="$loop:item['allowed'] eq 1">
+                                <input type="radio" value="1" name="tags[#$loop:item['cid']#]" id="tag_allowed_#$loop:item['cid']#" checked="checked" />
+                            <xar:else />
+                                <input type="radio" value="1" name="tags[#$loop:item['cid']#]" id="tag_allowed_#$loop:item['cid']#" />
+                            </xar:if>
+                        </span>
                     </td>
                     <td class="xar-align-center">
-                        <xar:if condition="$loop:item['allowed'] eq 2">
-                            <span class="help" title="#xarML('This Tag will be allowed with any parameter.')#"></span>
-                            <input type="radio" value="2" name="tags[#$loop:item['cid']#]" id="#$loop:item['cid']#" checked="checked" />
-                        <xar:else />
-                            <span class="help" title="#xarML('This Tag will be allowed with any parameter.')#"></span>
-                            <input type="radio" value="2" name="tags[#$loop:item['cid']#]" id="#$loop:item['cid']#" />
-                        </xar:if>
+                        <span title="#xarML('This Tag will be allowed with any parameter.')#">
+                            <xar:if condition="$loop:item['allowed'] eq 2">
+                                <input type="radio" value="2" name="tags[#$loop:item['cid']#]" id="tag_allowed_attr_#$loop:item['cid']#" checked="checked" />
+                            <xar:else />
+                                <input type="radio" value="2" name="tags[#$loop:item['cid']#]" id="tag_allowed_attr_#$loop:item['cid']#" />
+                            </xar:if>
+                        </span>
                     </td>
                     <td class="xar-item-actions">
                         <xar:if condition="empty($loop:item['editurl'])">
