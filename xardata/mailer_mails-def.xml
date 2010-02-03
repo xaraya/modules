@@ -4,8 +4,8 @@
   <parent>objects</parent>
   <module_id>182</module_id>
   <itemtype>15</itemtype>
-  <class>MailMessage</class>
-  <filepath>modules/mailer/class/mailmessage.php</filepath>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config>a:0:{}</config>

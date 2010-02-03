@@ -11,9 +11,7 @@
     </xar:if>
     <dd class="#$displayclass#">
         <a href="#$current#/tab1">
-            <xar:mlstring>
-                Tab 1
-            </xar:mlstring>
+            Tab 1
         </a>
     </dd>
     <xar:if condition="$stub eq 'tab2'">
@@ -23,9 +21,7 @@
     </xar:if>
     <dd class="#$displayclass#">
         <a href="#$current#/tab2">
-            <xar:mlstring>
-                Tab 2
-            </xar:mlstring>
+            Tab 2
         </a>
     </dd>
 </xar:template>
