@@ -22,6 +22,7 @@
         $query = "CREATE TABLE " . $prefix . "_mailer_mails (
             id                integer unsigned NOT NULL auto_increment,
             name              varchar(64) default '' NOT NULL,
+            description       text,
             sendername        varchar(254) default '' NOT NULL,
             senderaddress     varchar(254) default '' NOT NULL,
             subject           text,
