@@ -13,7 +13,7 @@
 */
 function sharecontent_admin_modifyconfig()
 {
-    xarResponseRedirect(xarModURL('sharecontent', 'admin', 'webconfig'));
+    xarResponse::redirect(xarModURL('sharecontent', 'admin', 'webconfig'));
 }
 
 ?>

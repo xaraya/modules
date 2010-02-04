@@ -1,2 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:mlstring>A recommendation from</xar:mlstring> #$fromname# <xar:if condition="isset($extrainfo['title'])"> #$extrainfo['title']# </xar:if>
-
+</xar:template>

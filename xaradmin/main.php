@@ -3,7 +3,7 @@
  * Sharecontent Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -25,10 +25,15 @@ function sharecontent_admin_main()
     // Security Check
     if (!xarSecurityCheck('AdminSharecontent')) return;
 
-        xarResponseRedirect(xarModURL('sharecontent', 'admin', 'modifyconfig'));
+    $refererinfo = xarRequest::getInfo(xarServer::getVar('HTTP_REFERER'));
+    $info = xarRequest::getInfo();
+    $samemodule = $info[0] == $refererinfo[0];
 
-    // success
-    return true;
+    if (((bool)xarModVars::get('modules', 'disableoverview') == false) || $samemodule){
+        return xarTplModule('sharecontent','admin','main');
+    } else {
+        xarResponse::redirect(xarModURL('sharecontent', 'admin', 'modifyconfig'));
+        return true;
+    }
 }
-
 ?>

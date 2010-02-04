@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:set name="sitename"><xar:var scope="module" module="themes" name="SiteName" /></xar:set>
 #$fromname# <xar:mlstring>has visited the web site</xar:mlstring> #$sitename#
  <xar:mlstring>and recommends you visit the following page:</xar:mlstring>
@@ -6,9 +8,9 @@
 <xar:mlstring>Here are the aricles details:</xar:mlstring>
 
 
-<xar:set name="articleinfo">xarModAPiFunc('articles','user','get',array('aid'=>$objectid))</xar:set>
+<xar:set name="articleinfo">xarMod::apiFunc('articles','user','get',array('aid'=>$objectid))</xar:set>
 #$articleinfo['title']#
 
 
 #$articleinfo['summary']#
-
+</xar:template>

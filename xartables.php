@@ -3,7 +3,7 @@
  * Sharecontent Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -25,8 +25,8 @@ function sharecontent_xartables()
 {
     // Initialise table array
     $xartable = array();
-    // Name for sharecontent database entities
-    $sharecontent = xarDBGetSiteTablePrefix() . '_sharecontent';
+    // Name for hitcount database entities
+    $sharecontent = xarDB::getPrefix() . '_sharecontent';
     // Table name
     $xartable['sharecontent'] = $sharecontent;
     // Return table information

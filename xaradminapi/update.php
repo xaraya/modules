@@ -27,15 +27,16 @@ function sharecontent_adminapi_update($args)
 	extract($args);
 	if (isset($active)) {
 	    $activate = array();
+        $deactivate = array();
         $bindvars = array();
-        $dbconn =& xarDBGetConn();
- 	    $xartable =& xarDBGetTables();
+        $dbconn =& xarDB::getConn();
+        $xartable =& xarDB::getTables();
  	    $table = $xartable['sharecontent'];
         $bindvars = array();
  	    foreach ($active as $key=>$value) {
- 	        if ($value) {$activate[]="xar_id=$key"; 
+ 	        if ($value) {$activate[]="id=$key";
  		    } else {
- 		        $deactivate[]="xar_id=$key";
+ 		        $deactivate[]="id=$key";
             }
  	    }
  	    if ($activate) {
@@ -51,13 +52,13 @@ function sharecontent_adminapi_update($args)
 
 	    // Update the item
 	    $query = "UPDATE $table
-	              SET xar_active = TRUE
+	              SET active = TRUE
                   WHERE $whereactivate ";
         $result =& $dbconn->Execute($query);
         if (!$result) return false;
-		
+
 	    $query = "UPDATE $table
-	              SET xar_active = FALSE 
+	              SET active = FALSE
                   WHERE $wheredeactivate ";
         $result =& $dbconn->Execute($query);
         if (!$result) return false;

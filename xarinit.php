@@ -16,66 +16,97 @@
  */
 function sharecontent_init()
 {
-    // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    // Load Table Maintainance API
-    xarDBLoadTableMaintenanceAPI();
-    // Create table
-    $fields = array('xar_id' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
-        'xar_title' => array('type' => 'varchar', 'size'=>64, 'null' => false),
-        'xar_homeurl' => array('type' => 'varchar', 'size'=>128),
-        'xar_submiturl' => array('type' => 'varchar', 'size'=>128,'null' => false),
-        'xar_image' => array('type' => 'varchar', 'size' => 128),
-        'xar_active' => array('type' => 'boolean', 'null'=>false, 'default' => '1')
+    $module = 'sharecontent';
+# --------------------------------------------------------
+#
+# Create tables
+#
+    $dbconn =& xarDB::getConn();
+    $tables =& xarDB::getTables();
+    $prefix = xarDB::getPrefix();
+    //Load Table Maintenance API
+    sys::import('xaraya.tableddl');
+
+    $sctable = $tables['sharecontent'];
+
+    // Create tables inside a transaction
+    try {
+        $charset = xarSystemVars::get(sys::CONFIG, 'DB.Charset');
+        $dbconn->begin();
+        sys::import('xaraya.structures.query');
+        $q = new Query();
+        // sharecontent table
+        $query = "DROP TABLE IF EXISTS " . $sctable;
+        if (!$q->run($query)) return;
+        $fields = array(
+            'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+            'title' => array('type' => 'varchar','size' => 64,'null' => false, 'charset' => $charset),
+            'homeurl' => array('type' => 'varchar','size' => 128,'null' => false, 'charset' => $charset),
+            'submiturl' => array('type' => 'varchar','size' => 128,'null' => false, 'charset' => $charset),
+            'image' => array('type' => 'varchar','size' => 128,'null' => false, 'charset' => $charset),
+            'active' => array('type' => 'boolean','null' => false, 'default' => 1)
         );
+        $query = xarDBCreateTable($sctable,$fields);
+        $dbconn->Execute($query);
+        // We're done, commit
+        $dbconn->commit();
+    } catch (Exception $e) {
+        $dbconn->rollback();
+        throw $e;
+    }
 
-    // Create the Table - the function will return the SQL is successful or
-    // raise an exception if it fails, in this case $query is empty
-    $query = xarDBCreateTable($xartable['sharecontent'], $fields);
-    if (empty($query)) return; // throw back
-
-    // Pass the Table Create DDL to adodb to create the table and 
-	// send exception if unsuccessful
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-
-    // Load the initial setup of the publication types
-    if (file_exists('modules/sharecontent/xarsetup.php')) {
-        include 'modules/sharecontent/xarsetup.php';
+# --------------------------------------------------------
+#
+# Set up websites
+#
+    // Load the initial setup of the websites
+    $file = sys::code() . 'modules/sharecontent/xarsetup.php';
+    if (file_exists($file)) {
+        include $file;
     } else {
-        // TODO: add some defaults here
-        $websites= array();
+        $websites = array();
     }
 
     // Save  websites
     foreach ($websites as $website) {
         list($title,$homeurl,$submiturl,$image,$active) = $website;
-        $nextId = $dbconn->GenId($xartable['sharecontent']);
-        $query = "INSERT INTO $xartable[sharecontent] (xar_id,xar_title, xar_homeurl, xar_submiturl, xar_image,xar_active) VALUES (?,?,?,?,?,?)";
+        $nextId = $dbconn->GenId($sctable);
+        $query = "INSERT INTO $sctable (id, title, homeurl, submiturl, image, active) VALUES (?,?,?,?,?,?)";
         $bindvars = array($nextId,$title,$homeurl,$submiturl,$image,$active);
         $result =& $dbconn->Execute($query,$bindvars);
         if (!$result)  sharecontent_delete();
     }
 
-    // Set up module variables
-    xarModSetVar('sharecontent', 'enablemail', '0');
-    xarModSetVar('sharecontent', 'maxemails', '1');
-    xarModSetVar('sharecontent', 'htmlmail', '0');
-    xarModSetVar('sharecontent', 'bcc', '');
+# --------------------------------------------------------
+#
+# Set up configuration modvars (module specific)
+#
+    xarModVars::set('sharecontent', 'enablemail', '0');
+    xarModVars::set('sharecontent', 'maxemails', '1');
+    xarModVars::set('sharecontent', 'htmlmail', '0');
+    xarModVars::set('sharecontent', 'bcc', '');
 
-    // Set up module hooks
-    if (!xarModRegisterHook('item',
-            'display',
-            'GUI',
-            'sharecontent',
-            'user',
-            'display')) {
+# --------------------------------------------------------
+#
+# Set up configuration modvars (common)
+#
+    $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => $module));
+    $module_settings->initialize();
+
+# --------------------------------------------------------
+#
+# Register module hooks
+#
+    // Display item
+    if (!xarModRegisterHook('item', 'display', 'GUI', $module, 'user', 'display'))
         return false;
-    }
 
-	// define instances
-	$query = "SELECT DISTINCT xar_smodule FROM $xartable[hooks] WHERE xar_tmodule='sharecontent'  ";
+# --------------------------------------------------------
+#
+# Create privilege instances
+#
+
+	$query = "SELECT DISTINCT xar_smodule FROM $tables[hooks] WHERE xar_tmodule='sharecontent'  ";
 	$instances = array( array('header'=>'Hooked module','query'=>$query,'limit'=>20));
     xarDefineInstance('sharecontent', 'Web', $instances);
     xarDefineInstance('sharecontent', 'Mail', $instances);
@@ -87,13 +118,6 @@ function sharecontent_init()
     xarRegisterMask('AdminSharecontent', 'All', 'sharecontent', 'All', 'All', 'ACCESS_ADMIN');
 
     // Initialisation successful
-	// run upgrades
-	if (!sharecontent_upgrade('0.9.3')) {;
-	   return false;
-    }
-	if (!sharecontent_upgrade('0.9.4')) {;
-	   return false;
-    }
 	return true;
 }
 
@@ -104,55 +128,19 @@ function sharecontent_init()
  */
 function sharecontent_upgrade($oldversion)
 {
+    $dbconn =& xarDB::getConn();
+    $tables =& xarDB::getTables();
+    $prefix = xarDB::getPrefix();
+    //Load Table Maintenance API
+    sys::import('xaraya.tableddl');
+
+    $sctable = $tables['sharecontent'];
+
     // Upgrade dependent on old version number
     switch ($oldversion) {
-	    case '0.9.2':
-            xarModSetVar('sharecontent', 'bcc', '');
-		case '0.9.3':
-            // Pass the Table Create DDL to adodb to create the table and 
-        	// send exception if unsuccessful
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
-        
-            // Load the initial setup of the publication types
-            if (file_exists('modules/sharecontent/xarsetup.php')) {
-                include 'modules/sharecontent/xarsetup.php';
-            } else {
-                // TODO: add some defaults here
-                $websites= array();
-            }
-        
-            // Save  websites
-            foreach ($websites2 as $website) {
-                list($title,$homeurl,$submiturl,$image,$active) = $website;
-                $nextId = $dbconn->GenId($xartable['sharecontent']);
-                $query = "INSERT INTO $xartable[sharecontent] (xar_id,xar_title, xar_homeurl, xar_submiturl, xar_image,xar_active) VALUES (?,?,?,?,?,?)";
-                $bindvars = array($nextId,$title,$homeurl,$submiturl,$image,$active);
-                $result =& $dbconn->Execute($query,$bindvars);
-                if (!$result)  sharecontent_delete();
-            }
+        case '2.0.0':
 
-        case '0.9.4':
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
-        
-            // Load the initial setup of the publication types
-            if (file_exists('modules/sharecontent/xarsetup.php')) {
-                include 'modules/sharecontent/xarsetup.php';
-            } else {
-                // TODO: add some defaults here
-                $websites= array();
-            }
-        
-            // Save  websites
-            foreach ($websites3 as $website) {
-                list($title,$homeurl,$submiturl,$image,$active) = $website;
-                $nextId = $dbconn->GenId($xartable['sharecontent']);
-                $query = "INSERT INTO $xartable[sharecontent] (xar_id,xar_title, xar_homeurl, xar_submiturl, xar_image,xar_active) VALUES (?,?,?,?,?,?)";
-                $bindvars = array($nextId,$title,$homeurl,$submiturl,$image,$active);
-                $result =& $dbconn->Execute($query,$bindvars);
-                if (!$result)  sharecontent_delete();
-            }
+        break;
     }
 
     return true;
@@ -160,45 +148,40 @@ function sharecontent_upgrade($oldversion)
 
 /**
  * delete the sharecontent module
- * @return bool true on successfull deletion
+ * @return bool true on successful deletion
  */
 function sharecontent_delete()
 {
-    // Remove module hooks
-    if (!xarModUnregisterHook('item',
-            'display',
-            'GUI',
-            'sharecontent',
-            'user',
-            'display')) return;
+    $module = 'sharecontent';
 
+    $dbconn =& xarDB::getConn();
+    $tables =& xarDB::getTables();
+    $prefix = xarDB::getPrefix();
+    //Load Table Maintenance API
+    sys::import('xaraya.tableddl');
+
+    $sctable = $tables['sharecontent'];
+
+    if (!xarModUnregisterHook('item', 'display', 'GUI',
+                              $module, 'user', 'display')) {
+        return false;
+    }
+    /* @FIXME: this hook doesn't exist. Undocumented todo?
     if (!xarModUnregisterHook('module', 'remove', 'API',
                              'sharecontent', 'admin', 'deleteall')) {
         return;
     }
+    */
 
-    // Delete module variables
-    xarModDelVar('sharecontent', 'enablemail');
-    xarModDelVar('sharecontent', 'maxemails');
-    xarModDelVar('sharecontent', 'htmlmail');
-    xarModDelVar('sharecontent', 'bcc');
+# --------------------------------------------------------
+#
+# Uninstall the module
+#
+# The function below pretty much takes care of everything else that needs to be removed
+#
+    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
 
-    // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-
-    xarDBLoadTableMaintenanceAPI();
-    // Delete tables
-    // Generate the SQL to drop the table using the API
-    $query = xarDBDropTable($xartable['sharecontent']);
-    if (empty($query)) return; // throw back
-    // Drop the table and send exception if returns false.
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-    // Remove Masks and Instances
-    xarRemoveMasks('sharecontent');
-    xarRemoveInstances('sharecontent');
-    // Deletion successful
+    /* Deletion successful*/
     return true;
 }
 

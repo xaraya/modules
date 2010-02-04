@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:base-include-javascript module="base" filename="checkall.js" />
+<xar:javascript module="base" filename="checkall.js" />
 <div class="xar-mod-head">
   <span class="xar-mod-title">
     <xar:mlstring>
@@ -15,33 +17,25 @@
         <xar:mlstring>Mail Configuration</xar:mlstring>
       </legend>
       <div class="xar-form-input-wrapper">
-	    <xar:if condition="$enablemail">
-	      <xar:set name="checked">'checked = "checked" '</xar:set>
-		<xar:else />
-		  <xar:set name="checked">' '</xar:set>
-		</xar:if>
         <label for="enablemail" class="xar-form-label">
             <xar:mlstring>Enable mail share</xar:mlstring>
         </label>
-        <input type="checkbox" #$checked# value="1"  id="enablemail" name="enablemail" />
+        <xar:data-input type="checkbox" value="1" id="enablemail" name="enablemail" checked="$enablemail"/>
       </div>
       <div class="xar-form-input-wrapper">
         <label for="maxemails" class="xar-form-label">
-            <xar:mlstring>Max number of recipients (comma-separated)</xar:mlstring>
+            <xar:mlstring>Max number of recipients </xar:mlstring>
         </label>
-        <input type="text" size="3" id="maxemails" value="#$maxemails#" name="maxemails" />
+        <input type="text" size="3" id="maxemails" value="#$maxemails#" name="maxemails" /> (comma-separated)
       </div>
+      <!--
       <div class="xar-form-input-wrapper">
-	    <xar:if condition="$htmlmail">
-	      <xar:set name="checked">'checked = "checked" '</xar:set>
-		<xar:else />
-		  <xar:set name="checked">' '</xar:set>
-		</xar:if>
         <label for="htmlmail" class="xar-form-label">
             <xar:mlstring>Html mail</xar:mlstring>
         </label>
-        <input type="checkbox" disabled #$checked# value="1" id="htmlmail" name="htmlmail" />
+        <xar:data-input type="checkbox" value="1" id="htmlmail" name="htmlmail" checked="$htmlmail" />
       </div>
+      -->
       <div class="xar-form-input-wrapper">
 	    <label for="bcc" class="xar-form-label">
 		  <xar:mlstring>Bcc emails to:</xar:mlstring>
@@ -55,5 +49,5 @@
     </div>
   </form>
 </div>
-
+</xar:template>
 

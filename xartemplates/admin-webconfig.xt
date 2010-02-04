@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:base-include-javascript module="base" filename="checkall.js" />
+<xar:javascript module="base" filename="checkall.js" />
 <div class="xar-mod-head">
   <span class="xar-mod-title">
     <xar:mlstring>
@@ -20,10 +22,12 @@
       </div>
       <xar:if condition="sizeof($websites) ge 1">
         <xar:mlstring>Check the websites you want to activate</xar:mlstring>
+    <![CDATA[
           <script language="JavaScript" type="text/javascript">
             document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['updatewebsites'],true)\"> <xar:mlstring>Check All</xar:mlstring></a> | ");
           document.write("<a href=\"javascript:xar_base_checkall(document.forms['updatewebsites'],false)\"> <xar:mlstring>Uncheck All</xar:mlstring></a> ]");
     </script>
+    ]]>
         <ul>
         <xar:foreach in="$websites" key="$key" value="$website">
           <li>
@@ -33,11 +37,11 @@
             <xar:else />
                <input type="checkbox" value="1" name="active[#$key#]" />
             </xar:if>
-            <a href="#$website['homeurl']#" 
+            <a href="#$website['homeurl']#"
                title="xarML('submit to') #$website['title']#"
-              ><img src="#$website['image']#" 
-                  title="#$website['title']#" 
-              alt="#$website['title']#" 
+              ><img src="#$website['image']#"
+                  title="#$website['title']#"
+              alt="#$website['title']#"
             /> #$website['title']#</a>
           </li>
         </xar:foreach>
@@ -49,5 +53,4 @@
     </fieldset>
   </form>
 </div>
-
-
+</xar:template>

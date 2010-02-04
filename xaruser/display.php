@@ -41,19 +41,19 @@ function sharecontent_user_display($args)
         $modname = xarModGetName();
     }
 
-    $extrainfo['modid'] = xarModGetIDFromName($modname);
+    $extrainfo['modid'] = xarMod::getRegID($modname);
     // get only enabled sites
     $args['active']=1;
 
     // Run API function
-    if ($websites = xarModAPIFunc('sharecontent', 'user', 'get',$args)) {
+    if ($websites = xarMod::apiFunc('sharecontent', 'user', 'get',$args)) {
         if (isset($websites)) {
             // Set the cached variable if requested
             if (xarVarIsCached('Hooks.sharecontent','save') &&
                 xarVarGetCached('Hooks.sharecontent','save') == true) {
             	xarVarSetCached('Hooks.sharecontent','value',$websites);
-            } 
-            
+            }
+
             foreach($websites as $key=>$website) {
                 $submiturl = $website['submiturl'];
                 //$dataurl = preg_replace('/&amp;/','%2526',$data['returnurl']);
@@ -66,10 +66,10 @@ function sharecontent_user_display($args)
 				}
                 $websites[$key]['submiturl']=$submiturl;
             }
-        }    
-    }    
- 
-    if (xarModGetVar('sharecontent','enablemail') and 
+        }
+    }
+
+    if (xarModVars::get('sharecontent','enablemail') and
         xarSecurityCheck('SendSharecontentMail', 0, 'Mail', $modname))
 	{
         $data['authid'] = xarSecGenAuthKey('sharecontent');
@@ -84,7 +84,7 @@ function sharecontent_user_display($args)
     }  else {
         $data['websites'] = array();
     }
-	
+
     return $data;
 }
 

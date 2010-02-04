@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Sharecontent Administration</xar:mlstring></span>
@@ -17,7 +19,7 @@
             <ul>
                 <li><xar:mlstring>Simplifying the task of bookmarking articles (or other hooked items) to the social bookmarking sites you have enabled in Sharecontent's module configuration.  The widget is inspired by Pascal Belloncle's Bookmarkit plugin for Typo, and Kaf Oseo's excellent example for WordPress. The first release includes 71 web2.0 sites; future releases will allow administrators to include custom sites</xar:mlstring></li>
 				<li><xar:mlstring>Providing a user interface to send the hooked item's basic information by email</xar:mlstring></li>
-				
+
             </ul>
         </p>
          <h3>
@@ -25,8 +27,8 @@
        </h3>
         <p>
             <xar:mlstring>
-            From the Modules Administration hook the Sharecontent module to any module or itemtype 
-			you need this functionality to be used. The module has been tested with the articles 
+            From the Modules Administration hook the Sharecontent module to any module or itemtype
+			you need this functionality to be used. The module has been tested with the articles
 			module but should work with other modules that have display hook functionality.
             </xar:mlstring>
 	    </p>
@@ -52,25 +54,25 @@
 		  <xar:mlstring>
 		    The <b>mailshare section</b> lets you enable the "recommend by email" form. It is disabled
 			by default. <b>For extra security, the user needs to have comment privileges to the mail
-			component of Sharecontent's module in order to be able to see the form</b>. 
-		    To enable such privilege, go to the privileges module, create a privilege for the 
-			mail component of Sharecontent's module with comment level. 
+			component of Sharecontent's module in order to be able to see the form</b>.
+		    To enable such privilege, go to the privileges module, create a privilege for the
+			mail component of Sharecontent's module with comment level.
 	      </xar:mlstring>
 	    </p>
 	    <p>
 		  <xar:mlstring>
 		    Depending on what information the hooked module sends to Sharecontent, your email may
-			include or not meaningful information. You can however set up module specific email 
+			include or not meaningful information. You can however set up module specific email
 			templates that call the hooked modules' API to get specific information. For reference,
 			you can consult the two articles' templates:
 			user-sendbymail-articles.xd, which contains the body's message for articles
-		    and user-sendbymail-subject-articles.xd, containing the messages' subject. You will	 
+		    and user-sendbymail-subject-articles.xd, containing the messages' subject. You will
             see there how the article's api is called to retreive missing article's information
-			such as the article summary. 
+			such as the article summary.
 	      </xar:mlstring>
 	    </p>
 	      <xar:mlstring>
-		    This functionality somewhat duplicates functionality of the recommend module. One advantage of using sharecontent is that sharecontent works as a hook, whereas recommend needs adding an extra tag in the content module. With sharecontent you won't have to modify your templates, and the user will never have to leave the content modules' display even after sending the email. The recommend module instead displays a link that forwards you to a mail form. One advantage of recommend  module is that it includes a dynamicdata property which wil let site administrators you can pick which items should include the sendtofriend link. 
+		    This functionality somewhat duplicates functionality of the recommend module. One advantage of using sharecontent is that sharecontent works as a hook, whereas recommend needs adding an extra tag in the content module. With sharecontent you won't have to modify your templates, and the user will never have to leave the content modules' display even after sending the email. The recommend module instead displays a link that forwards you to a mail form. One advantage of recommend  module is that it includes a dynamicdata property which wil let site administrators you can pick which items should include the sendtofriend link.
 	      </xar:mlstring>
         <h3>
             <xar:mlstring>Included Blocks</xar:mlstring>
@@ -102,6 +104,7 @@
     </li>
   </ul>
   <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>Sharecontent Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 0.9.4 2007-04-21
+    <strong>&#160;<xar:mlstring>Sharecontent Module Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 2.0.0 2007-04-21
   </p>
 </div>
+</xar:template>

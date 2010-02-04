@@ -26,7 +26,7 @@ function sharecontent_user_sendbymail($args)
     if(!xarVarFetch('objectid', 'int', $objectid, NULL,XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('extrainfo', 'str', $extrainfo, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
-    // Confirm authorisation code; need to add modname to match 
+    // Confirm authorisation code; need to add modname to match
     if (!xarSecConfirmAuthKey('sharecontent')) return;
 
     // Security Check
@@ -48,9 +48,9 @@ function sharecontent_user_sendbymail($args)
         $mailmodule = array();
         $mailmodule['message'] = xarTplModule('sharecontent','user','sendbymail',$tpldata,$template);
         $mailmodule['htmlmessage'] = xarTplModule('sharecontent','user','sendbymail',$tpldata,$template.'-html');
-		$maxemails=xarModGetVar('sharecontent','maxemails');
+		$maxemails=xarModVars::get('sharecontent','maxemails');
         $emailsarray = explode(',',$emails);
-		
+
 		// get recepients and check check for valid email address
 		$chunkemails = array_chunk($emailsarray,$maxemails);
 		foreach ($chunkemails[0] as $key=>$email) {
@@ -60,25 +60,25 @@ function sharecontent_user_sendbymail($args)
         $mailmodule['subject'] = xarTplModule('sharecontent','user','sendbymail-subject',$tpldata,$template);
         $mailmodule['fromname'] = $author;
         $mailmodule['from'] = $senderemail;
-		if ($bccinfo = xarModGetVar('sharecontent','bcc')) {
+		if ($bccinfo = xarModVars::get('sharecontent','bcc')) {
 		    $mailmodule['bccinfo'] = $bccinfo;
 	    }
 
-        if (xarConfigGetVar('sharecontent','htmlmail')) {
-            if (!xarModAPIFunc('mail','admin','sendhtmlmail',$mailmodule)) {
+        if (xarConfigVars::get('sharecontent','htmlmail')) {
+            if (!xarMod::apiFunc('mail','admin','sendhtmlmail',$mailmodule)) {
                return;
             }
         } else {
-            if (!xarModAPIFunc('mail','admin','sendmail',$mailmodule)) {
+            if (!xarMod::apiFunc('mail','admin','sendmail',$mailmodule)) {
                return;
             }
         }
     }
 
-    return xarResponseRedirect(xarModURL('sharecontent','user','mailsentmsg',
+    return xarResponse::redirect(xarModURL('sharecontent','user','mailsentmsg',
 	                      array('returnurl'=>rawurldecode($returnurl),
 						        'sentto'=>$mailmodule['recipients'])));
-    //xarResponseRedirect($returnurl);
+    //xarResponse::redirect($returnurl);
 
 }
 

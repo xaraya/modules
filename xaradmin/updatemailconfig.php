@@ -3,7 +3,7 @@
  * Sharecontent Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -26,12 +26,12 @@ function sharecontent_admin_updatemailconfig()
     // Security Check
     if (!xarSecurityCheck('AdminSharecontent')) return;
 
-	if (isset($enablemail)) xarModSetVar('sharecontent','enablemail',$enablemail);
-	if (isset($maxemails)) xarModSetVar('sharecontent','maxemails',$maxemails);
-	if (isset($htmlmail)) xarModSetVar('sharecontent','htmlmail',$htmlmail);
-	if (isset($bcc)) xarModSetVar('sharecontent','bcc',$bcc);
+	if (isset($enablemail)) xarModVars::set('sharecontent','enablemail',$enablemail);
+	if (isset($maxemails)) xarModVars::set('sharecontent','maxemails',$maxemails);
+	if (isset($htmlmail)) xarModVars::set('sharecontent','htmlmail',$htmlmail);
+	if (isset($bcc)) xarModVars::set('sharecontent','bcc',$bcc);
 
-    xarResponseRedirect(xarModURL('sharecontent', 'admin', 'mailconfig'));
+    xarResponse::redirect(xarModURL('sharecontent', 'admin', 'mailconfig'));
 
     return true;
 }

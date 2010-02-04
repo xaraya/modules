@@ -3,7 +3,7 @@
  * Displays standard Overview page
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -18,7 +18,7 @@
 function sharecontent_admin_overview()
 {
    /* Security Check */
-    if (!xarSecurityCheck('AdminSharecontent',0)) return;
+    if (!xarSecurityCheck('AdminSharecontent')) return;
 
     $data=array();
 
@@ -26,7 +26,7 @@ function sharecontent_admin_overview()
      * else just call the main function that displays the overview
      */
 
-    return xarTplModule('sharecontent', 'admin', 'main', $data,'main');
+    return xarTplModule('sharecontent', 'admin', 'main');
 }
 
 ?>

@@ -24,11 +24,11 @@ function sharecontent_admin_updatewebconfig()
     // Security Check
     if (!xarSecurityCheck('AdminSharecontent')) return;
 
-    if (!xarModAPIFunc('sharecontent','admin','update',array('active'=>$active))) {
+    if (!xarMod::apiFunc('sharecontent','admin','update',array('active'=>$active))) {
 	   return;
 	}
 
-    xarResponseRedirect(xarModURL('sharecontent', 'admin', 'webconfig'));
+    xarResponse::redirect(xarModURL('sharecontent', 'admin', 'webconfig'));
 
     return true;
 }

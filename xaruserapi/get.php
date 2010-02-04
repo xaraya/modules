@@ -23,24 +23,24 @@ function sharecontent_userapi_get($args)
     if(!xarSecurityCheck('ReadSharecontentWeb',0)) {
 	    return;
 	}
-	
+
 	extract($args);
 	if (!isset($active)) $active = 0;
 	if ($active) {
-	    $where='WHERE xar_active= TRUE ';
+	    $where='WHERE active= TRUE ';
     } else {
 	    $where='';
     }
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $sharecontenttable = $xartable['sharecontent'];
     // Get items
-    $query = "SELECT xar_id,xar_title,xar_homeurl,xar_submiturl,xar_image,xar_active
+    $query = "SELECT id,title,homeurl,submiturl,image,active
               FROM $sharecontenttable
 			  $where
-			  ORDER BY xar_title 
+			  ORDER BY title
 	          ";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
