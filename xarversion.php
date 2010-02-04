@@ -3,7 +3,7 @@
  * Sharecontent Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'Sharecontent';
 $modversion['id']             = '894';
-$modversion['version']        = '0.9.5';
+$modversion['version']        = '2.0.0';
 $modversion['displayname']    = xarML('Sharecontent');
 $modversion['description']    = 'Share items in web 2.0 sites and by email';
 $modversion['changelog']      = 'xardocs/changelog.txt';
