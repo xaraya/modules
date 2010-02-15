@@ -34,13 +34,20 @@ function images_init()
     xarModVars::set('images', 'file.cache-expire', 60);
     xarModVars::set('images', 'file.imagemagick', '');
 
-/*
-    xarRegisterMask('ViewUploads',  'All','images','Image','All','ACCESS_READ');
-    xarRegisterMask('AddUploads',   'All','images','Image','All','ACCESS_ADD');
-    xarRegisterMask('EditUploads',  'All','images','Image','All','ACCESS_EDIT');
-    xarRegisterMask('DeleteUploads','All','images','Image','All','ACCESS_DELETE');
-*/
     xarRegisterMask('AdminImages', 'All','images','Image','All','ACCESS_ADMIN');
+
+    # --------------------------------------------------------
+    #
+    # Set up privileges
+    #
+        xarRegisterPrivilege('ViewImages','All','images','All','All','ACCESS_OVERVIEW');
+        xarRegisterPrivilege('ReadImages','All','images','All','All','ACCESS_READ');
+        xarRegisterPrivilege('CommentImages','All','images','All','All','ACCESS_COMMENT');
+        xarRegisterPrivilege('ModerateImages','All','images','All','All','ACCESS_MODERATE');
+        xarRegisterPrivilege('EditImages','All','images','All','All','ACCESS_EDIT');
+        xarRegisterPrivilege('AddImages','All','images','All','All','ACCESS_ADD');
+        xarRegisterPrivilege('ManageImages','All','images','All','All','ACCESS_DELETE');
+        xarRegisterPrivilege('AdminImages','All','images','All','All','ACCESS_ADMIN');
 
     if (!xarModRegisterHook('item', 'transform', 'API', 'images', 'user', 'transformhook')) {
         $msg = xarML('Could not register hook.');
