@@ -1,9 +1,9 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:comment>Common Administration menu</xar:comment>
-    <xar:style scope="module" module="base" file="navtabs" />
+    <xar:style scope="module" module="base" file="navtabs"/>
 
-    <xar:set name="request">xarRequestGetInfo()</xar:set>
+    <xar:set name="request">xarRequest::getInfo()</xar:set>
     <xar:set name="activetab">#$request.2#</xar:set>
     <div>
       <dl class="xar-tabs">
@@ -29,13 +29,13 @@
 
             <xar:set name="tabclass">$activetab=='browse'?'active':''</xar:set>
             <dd class="#$tabclass#">
-                <a href="&xar-modurl-images-admin-browse;" >
+                <a href="&xar-modurl-images-admin-browse;">
                     <xar:mlstring>Server Images</xar:mlstring>
                 </a>
             </dd>
             <xar:set name="tabclass">$activetab=='phpthumb'?'active':''</xar:set>
             <dd class="#$tabclass#">
-                <a href="&xar-modurl-images-admin-phpthumb;" >
+                <a href="&xar-modurl-images-admin-phpthumb;">
                     <xar:mlstring>Image Processing</xar:mlstring>
                 </a>
             </dd>

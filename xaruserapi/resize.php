@@ -82,7 +82,7 @@ function images_userapi_resize($args)
     }
     if ($notSupported) {
         $errorMsg = xarML('Image type for file: #(1) is not supported for resizing', $src);
-        return '<img src="" alt="' . $errorMsg . '" />';
+        return '<img src="" alt="' . $errorMsg . '"/>';
     }
 
     $attribs = '';

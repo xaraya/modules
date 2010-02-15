@@ -62,7 +62,7 @@ function & images_userapi_transform ( $body )
                 $parts = explode(':', $parts);
                 // with image-resize, all we want to pass back to the content is the url
                 // location of the resized image so it can be dropped in a <img> tag
-                // like so: <img src="#image-resize:23:200::true#" alt="some alt text" />
+                // like so: <img src="#image-resize:23:200::true#" alt="some alt text"/>
                 list($width, $height, $constrain) = $parts;
                 if (!empty($width)) {
                     $args['width'] = $width;

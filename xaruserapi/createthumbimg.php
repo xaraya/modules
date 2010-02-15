@@ -283,7 +283,7 @@ function createthumbnetpbm( $file, $thumbwidth, $thumbheight, $newfile )
     {
         $cmd .= $bin_path . $quant . " | ";
     }
-    $cmd .= $bin_path . $tothumb . " > \"" . $thumbname . "\"";
+    $cmd .= $bin_path . $tothumb . "> \"" . $thumbname . "\"";
     // create the path to the thumbnail, if necessary, and execute the shell command
     // to create the thumbnail file
 /*

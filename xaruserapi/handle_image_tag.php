@@ -13,12 +13,12 @@
  */
 /**
  * Handle <xar:image-resize ... /> tags
- * Format : <xar:image-resize src="fileId | URL" width="[0-9]+(px|%)" [height="[0-9]+(px|%)" constrain="(yes|true|1|no|false|0)"] label="text" />
+ * Format : <xar:image-resize src="fileId | URL" width="[0-9]+(px|%)" [height="[0-9]+(px|%)" constrain="(yes|true|1|no|false|0)"] label="text"/>
  * examples:
- *  <xar:image-resize src="32" width="50px" height="50px" label="resize an image using pixels" />
- *  <xar:image-resize src="somedir/some_image.jpg" width="25%" constrain="yes" label="resize an image using percentages" />
- *  <xar:image-resize src="32" setting="JPEG 800 x 600" label="process an image with predefined setting" />
- *  <xar:image-resize src="32" params="$params" label="process an image with phpThumb parameters" />
+ *  <xar:image-resize src="32" width="50px" height="50px" label="resize an image using pixels"/>
+ *  <xar:image-resize src="somedir/some_image.jpg" width="25%" constrain="yes" label="resize an image using percentages"/>
+ *  <xar:image-resize src="32" setting="JPEG 800 x 600" label="process an image with predefined setting"/>
+ *  <xar:image-resize src="32" params="$params" label="process an image with phpThumb parameters"/>
  *
  * @param $args array containing the image that you want to resize and display
  * @return string the PHP code needed to invoke resize() in the BL template

@@ -6,7 +6,7 @@
     </div>
 
     <div class="xar-mod-body">
-      <xar:template type="module" file="admin-menu" module="images" />
+      <xar:template type="module" file="admin-menu" module="images"/>
         <h2>
             <xar:mlstring>View Uploaded Images</xar:mlstring>
         </h2>
@@ -16,19 +16,19 @@
             <xar:if condition="!empty($action) and $action eq 'delete'">
             <form method="post" action="&xar-modurl-images-admin-uploads;">
                 <p><strong><xar:mlstring>Are you sure you want to delete this image ?</xar:mlstring></strong></p>
-                <input type="hidden" name="authid" value="#$authid#" />
-                <input type="hidden" name="action" value="delete" />
-                <input type="hidden" name="fileId" value="#$selimage['fileId']#" />
-                <input type="submit" name="confirm" value="#xarML('Confirm')#" />
-                <input type="submit" name="action" value="#xarML('Cancel')#" />
+                <input type="hidden" name="authid" value="#$authid#"/>
+                <input type="hidden" name="action" value="delete"/>
+                <input type="hidden" name="fileId" value="#$selimage['fileId']#"/>
+                <input type="submit" name="confirm" value="#xarML('Confirm')#"/>
+                <input type="submit" name="action" value="#xarML('Cancel')#"/>
             </form>
             <xar:elseif condition="!empty($action) and $action eq 'resize'"/>
             <form method="post" action="&xar-modurl-images-admin-uploads;">
                 <p><strong><xar:mlstring>Specify the width and/or height you want :</xar:mlstring></strong></p>
                 <label for="width"><xar:mlstring>Width</xar:mlstring></label> 
-                    <input type="text" name="width" id="width" size="5" value="#$width#" />
+                    <input type="text" name="width" id="width" size="5" value="#$width#"/>
                 <label for="height"><xar:mlstring>Height</xar:mlstring></label> 
-                    <input type="text" name="height" id="height" size="5" value="#$height#" />
+                    <input type="text" name="height" id="height" size="5" value="#$height#"/>
                 <label for="replace"><xar:mlstring>Replace</xar:mlstring></label>
                 <select name="replace" id="replace">
                     <xar:if condition="empty($replace)">
@@ -39,12 +39,12 @@
                         <option value="1" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
                     </xar:if>
                 </select>
-                <input type="hidden" name="authid" value="#$authid#" />
-                <input type="hidden" name="action" value="resize" />
-                <input type="hidden" name="fileId" value="#$selimage['fileId']#" />
-                <input type="submit" name="preview" value="#xarML('Preview')#" />
-                <input type="submit" name="confirm" value="#xarML('Confirm')#" />
-                <input type="submit" name="action" value="#xarML('Cancel')#" />
+                <input type="hidden" name="authid" value="#$authid#"/>
+                <input type="hidden" name="action" value="resize"/>
+                <input type="hidden" name="fileId" value="#$selimage['fileId']#"/>
+                <input type="submit" name="preview" value="#xarML('Preview')#"/>
+                <input type="submit" name="confirm" value="#xarML('Confirm')#"/>
+                <input type="submit" name="action" value="#xarML('Cancel')#"/>
             </form>
             </xar:if>
 
@@ -59,7 +59,7 @@
                 <p class="xar-align-center">
                 <a href="#xarModURL('images','admin','uploads',array('action' => $action,'getprev' => $selimage['fileName']))#">&lt;&lt;</a>&#160;&#160;&#160;
                 <xar:if condition="!empty($width) or !empty($height)">
-                    <img src="#$selimage['fileDownload']#" width="#$width#" height="#$height#" class="xar-noborder xar-valign-top" />
+                    <img src="#$selimage['fileDownload']#" width="#$width#" height="#$height#" class="xar-noborder xar-valign-top"/>
                 <xar:else/>
                     <img src="#$selimage['fileDownload']#" class="xar-noborder xar-valign-top" alt=""/>
                 </xar:if>
@@ -143,7 +143,7 @@
 
             <p><a href="#xarModURL('uploads','admin','get_files')#"><xar:mlstring>Add Image</xar:mlstring></a></p>
 
-            <xar:base-include-javascript module="base" filename="checkall.js" />
+            <xar:javascript module="base" filename="checkall.js"/>
 
             <form id="viewuploads" method="post" action="#xarModURL('images','admin','uploads')#">
             <table class="xar-accent">
@@ -186,9 +186,9 @@
                 <tr>
                     <td>
                         <xar:if condition="!empty($selected) and in_array($image['fileId'],$selected)">
-                            <input type="checkbox" name="fileId[#$image['fileId']#]" id="fileId_#$image['fileId']#" value="1" checked="checked" />
+                            <input type="checkbox" name="fileId[#$image['fileId']#]" id="fileId_#$image['fileId']#" value="1" checked="checked"/>
                         <xar:else/>
-                            <input type="checkbox" name="fileId[#$image['fileId']#]" id="fileId_#$image['fileId']#" value="1" />
+                            <input type="checkbox" name="fileId[#$image['fileId']#]" id="fileId_#$image['fileId']#" value="1"/>
                         </xar:if>
                         <label for="fileId_#$image['fileId']#">
                             #$image['fileName']#
@@ -257,19 +257,19 @@
                             <option value="1"><xar:mlstring>[image]_new.[ext]</xar:mlstring></option>
                             <option value="2"><xar:mlstring>replace</xar:mlstring></option>
                         </select>
-                        <input type="submit" name="processlist" value="#xarML('Process')#" />
+                        <input type="submit" name="processlist" value="#xarML('Process')#"/>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="7" align="center">
-                        <label for="width"><xar:mlstring>Width</xar:mlstring></label> <input type="text" name="width" id="width" size="5" value="" />
-                        <label for="height"><xar:mlstring>Height</xar:mlstring></label> <input type="text" name="height" id="height" size="5" value="" />
+                        <label for="width"><xar:mlstring>Width</xar:mlstring></label> <input type="text" name="width" id="width" size="5" value=""/>
+                        <label for="height"><xar:mlstring>Height</xar:mlstring></label> <input type="text" name="height" id="height" size="5" value=""/>
                         <label for="replace"><xar:mlstring>Replace</xar:mlstring></label>
                         <select name="replace" id="replace">
                             <option value="0"><xar:mlstring>No</xar:mlstring></option>
                             <option value="1"><xar:mlstring>Yes</xar:mlstring></option>
                         </select>
-                        <input type="submit" name="resizelist" value="#xarML('Resize')#" />
+                        <input type="submit" name="resizelist" value="#xarML('Resize')#"/>
                     </td>
                 </tr>
                 <xar:elseif condition="$action eq 'resizelist'"/>
@@ -280,17 +280,17 @@
                         <xar:else/>
                             <xar:ml><xar:mlstring>Are you sure you want to resize the selected images to [#(1) x #(2)] ?</xar:mlstring><xar:mlvar>#$width#</xar:mlvar><xar:mlvar>#$height#</xar:mlvar></xar:ml>
                         </xar:if>
-                        <input type="hidden" name="authid" value="#$authid#" />
-                        <input type="hidden" name="width" value="#$width#" />
-                        <input type="hidden" name="height" value="#$height#" />
-                        <input type="hidden" name="replace" value="#$replace#" />
-                        <input type="hidden" name="action" value="resize" />
+                        <input type="hidden" name="authid" value="#$authid#"/>
+                        <input type="hidden" name="width" value="#$width#"/>
+                        <input type="hidden" name="height" value="#$height#"/>
+                        <input type="hidden" name="replace" value="#$replace#"/>
+                        <input type="hidden" name="action" value="resize"/>
                         <xar:if condition="!empty($replace)">
-                            <input type="submit" name="confirm" value="#xarML('Replace')#" />
+                            <input type="submit" name="confirm" value="#xarML('Replace')#"/>
                         <xar:else/>
-                            <input type="submit" name="confirm" value="#xarML('Resize')#" />
+                            <input type="submit" name="confirm" value="#xarML('Resize')#"/>
                         </xar:if>
-                        <input type="submit" name="action" value="#xarML('Cancel')#" />
+                        <input type="submit" name="action" value="#xarML('Cancel')#"/>
                     </td>
                 </tr>
                 <xar:elseif condition="$action eq 'processlist'"/>
@@ -301,16 +301,16 @@
                         <xar:else/>
                             <xar:ml><xar:mlstring>Are you sure you want to replace the selected images using '#(1)' ?</xar:mlstring><xar:mlvar>#$setting#</xar:mlvar></xar:ml>
                         </xar:if>
-                        <input type="hidden" name="authid" value="#$authid#" />
-                        <input type="hidden" name="setting" value="#xarVarPrepForDisplay($setting)#" />
-                        <input type="hidden" name="saveas" value="#$saveas#" />
-                        <input type="hidden" name="action" value="processlist" />
+                        <input type="hidden" name="authid" value="#$authid#"/>
+                        <input type="hidden" name="setting" value="#xarVarPrepForDisplay($setting)#"/>
+                        <input type="hidden" name="saveas" value="#$saveas#"/>
+                        <input type="hidden" name="action" value="processlist"/>
                         <xar:if condition="empty($saveas) or $saveas lt 2">
-                            <input type="submit" name="confirm" value="#xarML('Process')#" />
+                            <input type="submit" name="confirm" value="#xarML('Process')#"/>
                         <xar:else/>
-                            <input type="submit" name="confirm" value="#xarML('Replace')#" />
+                            <input type="submit" name="confirm" value="#xarML('Replace')#"/>
                         </xar:if>
-                        <input type="submit" name="action" value="#xarML('Cancel')#" />
+                        <input type="submit" name="action" value="#xarML('Cancel')#"/>
                     </td>
                 </tr>
                 </xar:if>

@@ -6,7 +6,7 @@
     </div>
 
     <div class="xar-mod-body">
-      <xar:template type="module" file="admin-menu" module="images" />
+      <xar:template type="module" file="admin-menu" module="images"/>
         <h2>
             <xar:mlstring>View Derivative Images</xar:mlstring>
         </h2>
@@ -16,11 +16,11 @@
             <xar:if condition="!empty($action) and $action eq 'delete'">
             <form method="post" action="&xar-modurl-images-admin-derivatives;">
                 <p><strong><xar:mlstring>Are you sure you want to delete this image ?</xar:mlstring></strong></p>
-                <input type="hidden" name="authid" value="#$authid#" />
-                <input type="hidden" name="action" value="delete" />
-                <input type="hidden" name="fileId" value="#$selimage['fileId']#" />
-                <input type="submit" name="confirm" value="#xarML('Confirm')#" />
-                <input type="submit" name="action" value="#xarML('Cancel')#" />
+                <input type="hidden" name="authid" value="#$authid#"/>
+                <input type="hidden" name="action" value="delete"/>
+                <input type="hidden" name="fileId" value="#$selimage['fileId']#"/>
+                <input type="submit" name="confirm" value="#xarML('Confirm')#"/>
+                <input type="submit" name="action" value="#xarML('Cancel')#"/>
             </form>
             </xar:if>
             <fieldset>

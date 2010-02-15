@@ -6,7 +6,7 @@
     </div>
 
     <div class="xar-mod-body">
-      <xar:template type="module" file="admin-menu" module="images" />
+      <xar:template type="module" file="admin-menu" module="images"/>
         <h2>
             <xar:mlstring>Modify Images Configuration</xar:mlstring>
         </h2>
@@ -39,24 +39,24 @@
                         <xar:if condition="$gdextension">
 
                             <xar:if condition="$libtype['graphics-library'] eq $library['GD']">
-                                <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" checked="checked" /> GD
-                                <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" disabled="true" /> Image Magick
-                                <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" disabled="true" /> NetPBM
+                                <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" checked="checked"/> GD
+                                <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" disabled="true"/> Image Magick
+                                <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" disabled="true"/> NetPBM
             <!--
-                            <xar:elseif condition="$libtype['graphics-library'] eq $library['ImageMagick']" />
-                                <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" /> GD
-                                <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" checked="checked" /> Image Magick
-                                <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" /> NetPBM
+                            <xar:elseif condition="$libtype['graphics-library'] eq $library['ImageMagick']"/>
+                                <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#"/> GD
+                                <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" checked="checked"/> Image Magick
+                                <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#"/> NetPBM
                             <xar:else />
-                                <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" /> GD
-                                <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" /> Image Magick
-                                <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" checked="checked" /> NetPBM
+                                <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#"/> GD
+                                <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#"/> Image Magick
+                                <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" checked="checked"/> NetPBM
             -->
                             </xar:if>
                         <xar:else />
-                            <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" disabled="true" /> GD
-                            <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" disabled="true" /> Image Magick
-                            <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" disabled="true" /> NetPBM
+                            <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" disabled="true"/> GD
+                            <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" disabled="true"/> Image Magick
+                            <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" disabled="true"/> NetPBM
                         </xar:if>
                         <p class="xar-form-input-wrapper-after">
                         <xar:if condition="$gdextension">
@@ -76,8 +76,8 @@
                                 ImageMagick 'convert' program:
                             </xar:mlstring>
                         </label>
-                        <xar:set name="value"><xar:var scope="module" module="images" name="file.imagemagick" /></xar:set>
-                        <input type="text" name="file[imagemagick]" id="file_imagemagick" size="60" value="#$value#" />
+                        <xar:set name="value"><xar:var scope="module" module="images" name="file.imagemagick"/></xar:set>
+                        <input type="text" name="file[imagemagick]" id="file_imagemagick" size="60" value="#$value#"/>
                         <p class="xar-form-input-wrapper-after">
                             <xar:mlstring>
                             <em>
@@ -111,8 +111,8 @@
                                 Cache server file information:
                             </xar:mlstring>
                         </label>
-                        <xar:set name="value"><xar:var scope="module" module="images" name="file.cache-expire" /></xar:set>
-                        <input type="text" name="file[cache-expire]" id="file_cache_expire" size="3" maxlength="3" value="#$value#" />
+                        <xar:set name="value"><xar:var scope="module" module="images" name="file.cache-expire"/></xar:set>
+                        <input type="text" name="file[cache-expire]" id="file_cache_expire" size="3" maxlength="3" value="#$value#"/>
                         <xar:mlstring>seconds</xar:mlstring>
                     </div>
                     <div class="xar-form-input-wrapper">
@@ -121,8 +121,8 @@
                                 Items per page in admin view:
                             </xar:mlstring>
                         </label>
-                        <xar:set name="value"><xar:var scope="module" module="images" name="itemsperpage" /></xar:set>
-                        <input type="text" name="view[itemsperpage]" id="view_itemsperpage" size="3" maxlength="3" value="#$value#" />
+                        <xar:set name="value"><xar:var scope="module" module="images" name="itemsperpage"/></xar:set>
+                        <input type="text" name="view[itemsperpage]" id="view_itemsperpage" size="3" maxlength="3" value="#$value#"/>
                     </div>
                 </fieldset>
                 <fieldset>
@@ -150,20 +150,20 @@
                          <xar:foreach in="$basedirs" key="$id" value="$info">
                          <tr>
                             <td>
-                                <input type="text" name="basedirs[#$id#][basedir]" id="basedirs_#$id#_basedir" value="#$info['basedir']#" size="30" />
+                                <input type="text" name="basedirs[#$id#][basedir]" id="basedirs_#$id#_basedir" value="#$info['basedir']#" size="30"/>
                             </td>
                             <td>
-                                <input type="text" name="basedirs[#$id#][baseurl]" id="basedirs_#$id#_baseurl" value="#$info['baseurl']#" size="30" />
+                                <input type="text" name="basedirs[#$id#][baseurl]" id="basedirs_#$id#_baseurl" value="#$info['baseurl']#" size="30"/>
                             </td>
                             <td>
                             <xar:if condition="!empty($info['recursive'])">
-                                <input type="checkbox" name="basedirs[#$id#][recursive]" id="basedirs_#$id#_recursive" value="1" checked="checked" />
+                                <input type="checkbox" name="basedirs[#$id#][recursive]" id="basedirs_#$id#_recursive" value="1" checked="checked"/>
                             <xar:else/>
-                                <input type="checkbox" name="basedirs[#$id#][recursive]" id="basedirs_#$id#_recursive" value="1" />
+                                <input type="checkbox" name="basedirs[#$id#][recursive]" id="basedirs_#$id#_recursive" value="1"/>
                             </xar:if>
                             </td>
                             <td>
-                                <input type="text" name="basedirs[#$id#][filetypes]" id="basedirs_#$id#_filetypes" value="#$info['filetypes']#" size="10" />
+                                <input type="text" name="basedirs[#$id#][filetypes]" id="basedirs_#$id#_filetypes" value="#$info['filetypes']#" size="10"/>
                             </td>
                         </tr>
                         </xar:foreach>

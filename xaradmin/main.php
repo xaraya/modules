@@ -19,7 +19,7 @@ function images_admin_main()
 {
     // Security Check
     if (!xarSecurityCheck('AdminImages')) return;
-    xarResponse::Redirect(xarModURL('images', 'admin', 'modifyconfig'));
+    xarResponse::redirect(xarModURL('images', 'admin', 'modifyconfig'));
     // success
     return true;
 }
