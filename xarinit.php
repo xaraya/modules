@@ -17,23 +17,16 @@
         $q = new Query();
         $prefix = xarDB::getPrefix();
         
-        $query = "DROP TABLE IF EXISTS " . $prefix . "_foo_tags";
+        $query = "DROP TABLE IF EXISTS " . $prefix . "_foo_entries";
         if (!$q->run($query)) return;
-        $query = "CREATE TABLE " . $prefix . "_foo_tags (
+        $query = "CREATE TABLE " . $prefix . "_foo_entries (
             id                integer unsigned NOT NULL auto_increment,
-            name              varchar(255) NOT NULL default '', 
-            timecreated       int(11) unsigned NOT NULL default '0', 
-            timelasthit       int(11) unsigned NOT NULL default '0', 
-            state             tinyint(4) NOT NULL default '1', 
-            role_id           int(11) unsigned NOT NULL default '0', 
-            count             int(11) unsigned NOT NULL default '0', 
+            name              varchar(254) NOT NULL default '', 
+            timecreated       integer unsigned NOT NULL default 0, 
+            role_id           integer unsigned NOT NULL default 0, 
+            state             tinyint(3) NOT NULL default 3, 
             PRIMARY KEY  (id), 
-            KEY i_tag_name (name), 
-            KEY i_tag_timecreated (timecreated), 
-            KEY i_tag_ltimelasthit (timelasthit), 
-            KEY i_tag_state (state), 
-            KEY i_tag_role_id (role_id), 
-            KEY i_tag_count (count) 
+            KEY i_tag_name (name)
         ) TYPE=MyISAM";
         if (!$q->run($query)) return;
   
@@ -77,7 +70,7 @@
     #
     # Set up modvars
     #
-        $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'dyn_example'));
+        $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'foo'));
         $module_settings->initialize();
 
         // Add variables like this next one when creating utility modules
@@ -89,14 +82,6 @@
     #
     # Set up hooks
     #
-        // This is a GUI hook for the roles module that enhances the roles profile page
-        if (!xarModRegisterHook('item', 'usermenu', 'GUI',
-                'foo', 'user', 'usermenu')) {
-            return false;
-        }
-
-        xarModAPIFunc('modules', 'admin', 'enablehooks',
-            array('callerModName' => 'foo', 'hookModName' => 'foo'));
 
         return true;
     }
