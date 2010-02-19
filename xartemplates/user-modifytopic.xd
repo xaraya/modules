@@ -123,10 +123,10 @@
                     <li><xar:mlstring>Smilies are </xar:mlstring><span style="color:red;"><xar:mlstring>Off</xar:mlstring></span></li>
                 </xar:if>
                 </ul>
-                <div class="xar-form-container-after">
+                <div class="xar-form-container-after xar-clearright">
                     #$formdisplay#
+                    <textarea name="ptext" id="ptext" cols="60" rows="15" tabindex="3" class="xar-form-textareaxlarge xar-clearright">#$ptext#</textarea>
                 </div>
-                <textarea name="ptext" id="ptext" cols="60" rows="15" tabindex="3">#$ptext#</textarea>
             </div>
             <xar:if condition="!empty($invalid['ptext'])">
             <div class="xar-form-input-wrapper-after">

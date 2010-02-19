@@ -35,7 +35,9 @@
                 <label for="fdesc" class="xar-form-label" title="#xarML('Description for this forum')#">
                     <xar:mlstring>Description:</xar:mlstring>
                 </label>
-                <textarea name="fdesc" id="fdesc" rows="3" cols="40">#$fdesc#</textarea>
+                <div class="xar-form-container-after">
+                <textarea name="fdesc" id="fdesc" rows="3" cols="40" class="xar-form-textareasmall xar-clearright">#$fdesc#</textarea>
+                </div>
             </div>
             <xar:if condition="!empty($invalid['fdesc'])">
                 <div class="xar-form-input-wrapper-after xar-error">
