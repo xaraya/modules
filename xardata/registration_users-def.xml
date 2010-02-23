@@ -104,7 +104,7 @@
     <property name="auth_module">
       <id>116</id>
       <label>Auth Module</label>
-      <type>module</type>
+      <type>integerbox</type>
       <defaultvalue>xarMod::getID('registration')</defaultvalue>
       <source>xar_roles.auth_module_id</source>
       <status>67</status>

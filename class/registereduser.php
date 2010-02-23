@@ -20,6 +20,7 @@ class RegisteredUser extends DataObject
     {
         //TODO: move this into the user property?
         // Confirm that this group or user does not already exist
+        sys::import('xaraya.structures.query');
         $q = new Query('SELECT',$this->rolestable);
         if (empty($data['uname'])) $data['uname'] = $this->properties['user_name']->value;
         $q->eq('uname',$data['uname']);
