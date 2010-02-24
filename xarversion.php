@@ -4,7 +4,7 @@
  * Xarpages version information.
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003-2009 by the Xaraya Development Team.
+ * @copyright (C) 2003-2010 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,7 +14,7 @@
 
 $modversion['name']           = 'xarpages';
 $modversion['id']             = '160';
-$modversion['version']        = '0.2.8';
+$modversion['version']        = '0.3.0';
 $modversion['displayname']    = 'Xarpages';
 $modversion['description']    = 'Static pages administration';
 $modversion['help']           = 'xardocs/privileges.txt';

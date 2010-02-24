@@ -6,7 +6,7 @@
  * Admin view of all pages, in hierarchical format.
  *
  * @package Xaraya
- * @copyright (C) 2004-2009 by Jason Judge
+ * @copyright (C) 2004-2010 by Jason Judge
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.academe.co.uk/
  * @author Jason Judge
@@ -65,27 +65,36 @@ function xarpages_admin_viewpages($args)
     $pagestree = array();
 
     $parentid = 'x';
-    $siblings = array();
+    $children = array(0 => array());
 
     // convert the flat tree structure into a nested one for display
     foreach ($pages as $tmppage) {
-        if ($tmppage['parent_pid'] !== $parentid) {
-            if (count($siblings) > 0) {
-                krsort($siblings);
-                $tmppage['children'] = array_reverse($siblings);
+        $pid = $tmppage['pid'];
+        $parent = $tmppage['parent_pid'];
+        $left = $tmppage['left'];
+        if ($parent !== $parentid) {
+            if (isset($children[$parent]) && count($children[$parent]) > 0) {
+                ksort($children[$parent], SORT_NUMERIC);
+                $tmppage['children'] = $children[$pid];
+            } else {
+                $children[$parent] = array();
             }
-            $siblings = array();
-            $parentid = $tmppage['parent_pid'];
-            $siblings[$tmppage['left']] = $tmppage;
+            $parentid = $parent;
+            $children[$parent][$left] = $tmppage;
+            ksort($children[$parent], SORT_NUMERIC);
         } else {
-            $siblings[$tmppage['left']] = $tmppage;
+            $children[$parent][$left] = $tmppage;
+            ksort($children[$parent], SORT_NUMERIC);
         }
-        if ($tmppage['parent_pid'] == 0) {
-            $pagestree[$tmppage['left']] = $tmppage;
-            $siblings = array();
+        if ($parent == 0) {
+            if(isset($children[$pid]) && count($children[$pid]) > 0) {
+                ksort($children[$pid], SORT_NUMERIC);
+                $tmppage['children'] = $children[$pid];
+            }
+            $pagestree[$left] = $tmppage;
         }
     }
-    ksort($pagestree);
+    ksort($pagestree, SORT_NUMERIC);
 
     $data['pages'] = $pagestree;
 
