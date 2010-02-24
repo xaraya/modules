@@ -55,6 +55,10 @@ function categories_admin_viewcats()
                 $tmpcat['children'] = $children[$cid];
             } else {
                 $children[$parent] = array();
+                if (isset($children[$cid])) {
+                    ksort($children[$cid], SORT_NUMERIC);
+                    $tmpcat['children'] = $children[$cid];
+                }
             }
             $parentid = $parent;
             $children[$parent][$left] = $tmpcat;
