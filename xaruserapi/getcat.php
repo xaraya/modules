@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -23,6 +23,7 @@
  *    @param $args['getchildren'] =Boolean= get children of category (default false)
  *    @param $args['getparents'] =Boolean= get parents of category (default false)
  *    @param $args['return_itself'] =Boolean= return the cid itself (default false)
+ * @param bool $args['usecache'] get results from SQL cache (default true)
  * @return array Array of categories, or =Boolean= false on failure
 
  * Examples:
@@ -45,6 +46,7 @@ function categories_userapi_getcat($args)
     if (empty($indexby)) $indexby = 'default';
     if (!isset($getchildren)) $getchildren = false;
     if (!isset($getparents)) $getparents = false;
+    if (!isset($usecache) || $usecache != false) $usecache = true;
 
     if (!isset($start)) {
         $start = 0;
@@ -149,13 +151,13 @@ function categories_userapi_getcat($args)
     // cfr. xarcachemanager - this approach might change later
     $expire = xarModGetVar('categories', 'cache.userapi.getcat');
     if (is_numeric($count) && $count > 0 && is_numeric($start) && $start > -1) {
-        if (!empty($expire)){
+        if (!empty($expire) && $usecache){
             $result = $dbconn->CacheSelectLimit($expire, $SQLquery, $count, $start, $bindvars);
         } else {
             $result = $dbconn->SelectLimit($SQLquery, $count, $start, $bindvars);
         }
     } else {
-        if (!empty($expire)){
+        if (!empty($expire) && $usecache){
             $result = $dbconn->CacheExecute($expire, $SQLquery, $bindvars);
         } else {
             $result = $dbconn->Execute($SQLquery, $bindvars);

@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2009 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -30,7 +30,8 @@ function categories_admin_viewcats()
                                 'user',
                                 'getcat',
                                 array('cid' => false,
-                                      'getchildren' => true));
+                                      'getchildren' => true,
+                                      'usecache' => false));
 
     if (empty($categories)) {
         return xarTplModule('categories','admin','viewcats-nocats',$data);
@@ -41,27 +42,36 @@ function categories_admin_viewcats()
     $categories = array_reverse($categories, true);
 
     $parentid = null;
-    $siblings = array();
+    $children = array(0 => array());
 
     // convert the flat cats structure into a nested one for display
     foreach ($categories as $tmpcat) {
-        if ($tmpcat['parent'] !== $parentid) {
-            if (count($siblings) > 0) {
-                krsort($siblings);
-                $tmpcat['children'] = array_reverse($siblings);
+        $cid = $tmpcat['cid'];
+        $parent = $tmpcat['parent'];
+        $left = $tmpcat['left'];
+        if ($parent !== $parentid) {
+            if (isset($children[$parent]) && count($children[$parent]) > 0) {
+                ksort($children[$parent], SORT_NUMERIC);
+                $tmpcat['children'] = $children[$cid];
+            } else {
+                $children[$parent] = array();
             }
-            $siblings = array();
-            $parentid = $tmpcat['parent'];
-            $siblings[$tmpcat['left']] = $tmpcat;
+            $parentid = $parent;
+            $children[$parent][$left] = $tmpcat;
+            ksort($children[$parent], SORT_NUMERIC);
         } else {
-            $siblings[$tmpcat['left']] = $tmpcat;
+            $children[$parent][$left] = $tmpcat;
+            ksort($children[$parent], SORT_NUMERIC);
         }
-        if ($tmpcat['parent'] == 0) {
-            $catstree[$tmpcat['left']] = $tmpcat;
-            $siblings = array();
+        if ($parent == 0) {
+            if(isset($children[$cid]) && count($children[$cid]) > 0) {
+                ksort($children[$cid], SORT_NUMERIC);
+                $tmpcat['children'] = $children[$cid];
+            }
+            $catstree[$left] = $tmpcat;
         }
     }
-    ksort($catstree);
+    ksort($catstree, SORT_NUMERIC);
 
     $data['cats'] = $catstree;
 

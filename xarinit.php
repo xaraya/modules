@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2009 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -458,9 +458,10 @@ function categories_upgrade($oldversion)
             xarModSetVar('categories', 'inputsize', 5);
         case '2.4.0':
             // Code to upgrade from version 2.4 goes here
-            break;
+        case '2.4.1':
+            // Code to upgrade from version 2.5.1 goes here
         case '2.5.0':
-            // Code to upgrade from version 2.5 goes here
+            // Code to upgrade from version 2.5.0 goes here
             break;
     }
 

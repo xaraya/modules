@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2009 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,7 +14,7 @@
  */
 $modversion['name']         = 'categories';
 $modversion['id']           = '147';
-$modversion['version']      = '2.4.0';
+$modversion['version']      = '2.4.1';
 $modversion['displayname']  = 'Categories';
 $modversion['description']  = 'Categorised data utility';
 $modversion['credits']      = 'xardocs/credits.txt';
