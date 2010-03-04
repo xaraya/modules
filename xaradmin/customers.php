@@ -63,6 +63,11 @@ function shop_admin_customers()
     // Get the items 
     $items = $mylist->getItems($filters);
 
+	$data['none'] = false;
+	if (count($items) == 0) {
+		$data['none'] = true;
+	}
+
 	$data['mylist'] = $mylist;
 
     // Return the template variables defined in this function

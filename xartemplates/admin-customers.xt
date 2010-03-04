@@ -13,8 +13,10 @@
 
         <h2>View Customers</h2>
 
-
        <xar:data-view object="$mylist" tplmodule="shop" template="customers_adminlist" sort="$sort" fieldlist="$adminfields" />  
 
+<xar:if condition="$none">
+	<p>Looks like you're just getting started and there are no customers yet.  For testing purposes, you could log out and then buy something in the <a href="#xarmodurl('shop')#">storefront</a>. Then you'll see a customer listed here.</p>
+</xar:if>
     </div>
 </xar:template>

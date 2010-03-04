@@ -68,6 +68,10 @@ function shop_admin_transactions()
     // Get the items 
     $items = $mylist->getItems($filters);
 
+	$data['none'] = false;
+	if (count($items) == 0) {
+		$data['none'] = true;
+	}
 
 	$data['mylist'] = $mylist;
 

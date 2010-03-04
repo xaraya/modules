@@ -28,7 +28,7 @@
 <h3>Getting started with payment processing</h3>
 
 <p>In the <a href="#xarModURL('shop','admin','modifyconfig')#">Modify Config tab</a>, you can set the payment gateway to Demo Mode, Authorize.net, PayPal or some other payment gateway.  In Demo Mode, no transaction is submitted to a payment processor.</p>
-<p>As of this writing, two payment gateways are integrated: Authorize.net and PayPal (Web Payments Pro).  Set up test accounts with those companies if you want to test those integrations.  Or, integrate a different payment gateway. <a href="code/modules/shop/xardocs/payment_gateways.html" target="new">Notes on integrating payment gateways</a>.</p>
+<p>As of this writing, two payment gateways are integrated: Authorize.net and PayPal (Web Payments Pro).  Set up test accounts with those companies if you would like to test those integrations.  Or, integrate a different payment gateway. <a href="#xarModURL('shop','admin','docs')#">Notes on integrating payment gateways</a>.</p>
 
 <a name="chart"></a>
  <h3>Customer experience</h3>

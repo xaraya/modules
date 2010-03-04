@@ -93,7 +93,7 @@
         </li>
     </xar:sec>
     <xar:sec mask="Editshop" catch="false">
-        <xar:if condition="$activetab eq 'main' or $activetab eq 'overview'">
+        <xar:if condition="$activetab eq 'main' or $activetab eq 'overview' or $activetab eq 'docs'">
             <xar:set name="tabclass">'xar-tab-active'</xar:set>
             <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
         <xar:else />
