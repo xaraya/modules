@@ -1,6 +1,10 @@
 <?php 
 function shop_adminapi_handlepgresponse($args) {
 
+		// Config for paypal
+		$countrycode = 'US';
+		$currency = 'USD';
+
 		extract($args);
 
 		$pg = xarModVars::get('shop','payment_gateway');
@@ -26,7 +30,7 @@ function shop_adminapi_handlepgresponse($args) {
 				}
 				break;
 
-			case 3:   // paypal
+			case 3:   // paypal web payments pro
 
 				$paymentType = urlencode('Sale');
 				$firstName = urlencode($transfields['first_name']);
@@ -45,9 +49,9 @@ function shop_adminapi_handlepgresponse($args) {
 				$city = urlencode($transfields['city_addr']);
 				$state = urlencode($transfields['state_addr']);
 				$zip = urlencode($transfields['postal_code']);
-				$country = urlencode('US');
+				$country = urlencode($countrycode);
 				$amount = urlencode($transfields['total']);
-				$currencyID = urlencode('USD');						
+				$currencyID = urlencode($currency);						
 
 				// Add request-specific fields to the request string.
 				$str =	"&PAYMENTACTION=$paymentType&AMT=$amount&CREDITCARDTYPE=$creditCardType&ACCT=$creditCardNumber";
