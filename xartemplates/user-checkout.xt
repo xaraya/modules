@@ -112,7 +112,7 @@
 		<xar:data-input property="$properties['password']" value="" class="new_cust" />
 	</div>
 	<div>
-		  <input type="submit" value="#xarML('Create')#" class="button" />
+		  <input type="submit" value="#xarML('Create Account')#" class="button" />
 	</div>
 	    
 		</form>
@@ -127,11 +127,11 @@
 	<input type="hidden" name="redirecturl" id="returnurl3" value="#xarModURL('shop','user','checkout')#"/>
 	<label for="uname3" title="Enter your user name">
 	Email:</label>
-	<input type="text" name="uname" id="uname3" maxlength="64"/>
+	<input type="text" name="uname" id="uname3" maxlength="64" size="25" />
 	<div class="password">
 		<label for="pass3" title="Enter your password">
 		Password:</label>
-		<input type="password" name="pass" id="pass3" maxlength="64"/>
+		<input type="password" name="pass" id="pass3" maxlength="64" size="25" />
 		<div id="dont_req_pw">
 			<input type="checkbox" name="rememberme" id="rememberme3" value="1"/> <span>Remember my password</span> 
 		</div>

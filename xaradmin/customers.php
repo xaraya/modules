@@ -49,7 +49,7 @@ function shop_admin_customers()
 
 	$data['sort'] = xarMod::ApiFunc('shop','admin','sort', array(
 		//how to sort if the URL doesn't say otherwise...
-		'sortfield_fallback' => 'ID', 
+		'sortfield_fallback' => 'id', 
 		'ascdesc_fallback' => 'ASC'
 	));
 

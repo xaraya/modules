@@ -59,6 +59,10 @@
 
 	table#cust_route {
 	border: none;
+	margin-left: 10px;
+	}
+	#cust_route tr {
+	background-color: transparent;
 	}
 	#cust_route h3 {
 	font-size: 14px;
@@ -88,6 +92,9 @@
 	}
 	#dont_req_pw  {
 	margin: 7px 0 7px 0;
+	}
+	#dont_req_pw input {
+	margin-right: 7px;
 	}
 	#req_new_pw  {
 	margin: 9px 0 9px 0;
