@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <xar:style scope="module" module="base" file="tabs" />
+
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">shop Administration</span>
+    </div>
+   
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admintabs" />
+
+<xar:set name="cust">$customer</xar:set>
+<xar:set name="cust">xarMod::APIFunc('shop','user','customerinfo',array('id' => $cust))</xar:set>
+
+<h2>Transaction #$id#</h2>
+
+<table style="width: 85%">
+<tr>
+<td>
+	<strong><xar:data-label property="$properties['date']" />:</strong>  
+	<xar:set name="date">date('F j, Y g:i a', $date)</xar:set>
+	 #$date#
+</td>   	
+<td>
+	<strong><xar:data-label property="$properties['customer']" />:</strong>&#160;  
+	 <a href="#xarModURL('shop','admin','modifycustomer',array(
+	'itemid'=> $cust['id']
+	))#">#$cust['first_name']# #$cust['last_name']#</a>  
+</td>
+<td> 
+	<strong><xar:data-label property="$properties['total']" />:</strong>  #$total#
+</td>
+<td>
+	<strong><xar:data-label property="$properties['pg_transaction_id']" />:</strong>  #$pg_transaction_id#
+</td>
+</tr>
+</table>
+	 
+<div>	 
+	<strong><xar:data-label property="$properties['products']" />:</strong>
+ 
+	<table style="width:74%; margin-top: 6px;">
+	<tr><th>title</th><th>qty</th><th>price each</th><th>subtotal</th></tr>
+	 <xar:foreach in="$products" key="$key" value="$val">
+		<tr>
+		<td>#$val['title']#</td><td>#$val['qty']#</td> <td>#$val['price']#</td>
+		<td>#$val['subtotal']#</td> 
+		</tr> 
+	 </xar:foreach>
+	 </table>
+</div>
+
+
+<table style="width:36%; margin-top: 6px; float:left; margin-right: 20px;"> 
+<tr><td><strong><xar:data-label property="$properties['street_addr']" />:</strong></td><td> #$street_addr#</td></tr>
+<tr><td><strong><xar:data-label property="$properties['city_addr']" />:</strong></td><td>#$city_addr#</td></tr>
+<tr><td><strong><xar:data-label property="$properties['state_addr']" />:</strong></td><td>#$state_addr#</td></tr>
+<tr><td><strong><xar:data-label property="$properties['postal_code']" />:</strong></td><td>#$postal_code# </td></tr>
+ </table>
+ <table style="width:36%; margin-top: 6px; float:left;">
+<tr><td><strong><xar:data-label property="$properties['card_type']" />:</strong></td><td>#$card_type#</td></tr>
+<tr><td><strong><xar:data-label property="$properties['card_num']" />:</strong></td><td>#$card_num#</td></tr>
+<tr><td><strong><xar:data-label property="$properties['exp_date']" />:</strong></td><td>#$exp_date#</td></tr>
+<tr><td>&#160;</td><td></td></tr>
+ </table>
+
+	 
+ </div>
+
+</xar:template>

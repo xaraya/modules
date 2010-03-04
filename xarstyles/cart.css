@@ -1,0 +1,94 @@
+    table#paymentinfo {
+	margin: 0;
+	}
+	.button { 
+	} 
+	#total td {
+    font-weight: bold;
+    padding: 5px;
+    }
+    #total tr {
+    border-top: none;
+    }
+    #total {
+    margin-top: 0;
+    text-transform: uppercase;
+    }
+    #total .price {
+    width: 70px;
+    }
+    td, th {
+    text-align: right;
+    }
+    td{
+    font-size: 12px;
+    }
+    input.qty {
+    text-align: right;
+    padding-right: 2px;
+    }
+    .last_col {
+    width: 150px;
+    }
+    div.button_container {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 9px;
+	margin-bottom: 4px;
+    font-size: 15px;
+    }
+    input#complete, input#update_shop {
+    text-align: center;
+    font-size: 12px;
+    }
+    td.right {
+    text-align: left;
+    }
+    td.right input, td.right select {
+    margin-left: 4px; 
+    }
+	#pg_response {
+	padding: 4px 4px 5px 6px;
+	margin: 4px;
+	font-weight: bold;
+	color: red;
+	border: 2px dotted #ddd;
+	}
+
+/* Customer router forms in user-checkout.xt */
+
+	table#cust_route {
+	border: none;
+	}
+	#cust_route h3 {
+	font-size: 14px;
+	}
+	#cust_route td {
+	text-align: left;
+	vertical-align: top;
+	}
+	#cust_route td.left {
+	width: 45%;
+	}
+	#cust_route input {
+	margin: 3px 0 3px 0;
+	}
+	.password {
+	margin: 9px 0 9px 0;
+	}
+	#cust_route label {
+	display: block;
+	padding: 0;
+	margin: 0;
+	font-style: normal;
+	}
+	#returning {
+	padding-left: 30px;
+	border-left: 2px dotted #ddd;
+	}
+	#dont_req_pw  {
+	margin: 7px 0 7px 0;
+	}
+	#req_new_pw  {
+	margin: 9px 0 9px 0;
+	}

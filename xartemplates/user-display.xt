@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+<xar:comment>Depending on the $shop_type we can use different showdisplay templates in the theme or module...</xar:comment>
+
+<xar:data-display object="$object" itemid="$itemid" tplmodule="shop" template="$template" data="$data" />
+
+</xar:template>

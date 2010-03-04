@@ -1,0 +1,63 @@
+<object name="shop_module_settings">
+  <objectid>307</objectid>
+  <label>Module Settings for shop</label>
+  <module_id>1031</module_id>
+  <itemtype>6</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:0:{}</config>
+  <isalias>false</isalias>
+  <properties>
+    <property name="payment_gateway">
+      <id>1995</id>
+      <label>Payment Gateway</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: shop</source>
+      <status>33</status>
+      <seq>1</seq>
+      <configuration>a:3:{s:14:"display_layout";s:7:"default";s:24:"initialization_firstline";s:8:"-Select-";s:23:"initialization_function";s:42:"xarMod::APIFunc('shop','admin','gateways')";}</configuration>
+    </property>
+    <property name="pg_id">
+      <id>1996</id>
+      <label>Payment Gateway ID</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: shop</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="pg_key">
+      <id>1997</id>
+      <label>Payment Gateway Key</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: shop</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration></configuration>
+    </property>
+    <property name="pg_api_signature">
+      <id>1998</id>
+      <label>Payment Gateway API Signature</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: shop</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration></configuration>
+    </property>
+    <property name="pg_notes">
+      <id>1999</id>
+      <label>Notes</label>
+      <type>textarea_large</type>
+      <source>module variable: shop</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
+  </properties>
+</object>

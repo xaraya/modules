@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:style scope="module" module="shop" file="cart" />
+    <div class="xar-mod-head">
+    <span class="xar-mod-title">shop</span>
+    </div>
+    <div class="xar-mod-body">
+ 
+	<h2>Thanks for your order!</h2>
+ 
+<h3>
+Transaction ID: #$tid#<br />
+Order date: #$date#
+</h3>
+
+
+<xar:if condition="$products">
+ 
+	<table>
+
+	<tr><th>Product</th><th>Item Price</th><th>Qty</th><th>Subtotal</th><th class="last_col"></th></tr>
+
+
+	 <xar:foreach in="$products" key="$key" value="$val">
+
+	<tr>
+
+	 <td>#$val['title']#
+	 
+	 </td>
+
+	 <td>#$val['price']#</td>
+	 
+	 <td> 
+		  #$val['qty']# 
+		
+	 </td>
+
+	 <td class="price">#$val['subtotal']#</td>
+	 
+	 <td> </td>
+	 </tr>
+
+	 </xar:foreach>
+
+	</table>
+
+<table id="total">
+<tr><td>Total:</td><td class="price">#$total#</td><td class="last_col"></td></tr>
+</table>
+
+</xar:if>
+
+
+<div id="continue">
+<a href="#xarmodurl('shop')#">Continue Shopping</a>
+</div>
+
+
+    </div>
+</xar:template>

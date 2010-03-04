@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+   <xar:style scope="module" module="shop" file="storefront" />
+   <div class="xar-mod-head">
+    <span class="xar-mod-title">shop</span>
+    </div>
+    <div class="xar-mod-body">
+
+    <h2>Storefront</h2> 
+    
+<xar:comment>One way to get products for display</xar:comment>
+<xar:set name="productinfo">xarMod::APIFunc('shop','user','getproducts')</xar:set>
+<xar:set name="products">$productinfo['products']</xar:set>
+
+<div id="storefront">
+  <table>
+	<tr>
+	<td>
+		<xar:foreach in="$products" key="$key" value="$val">
+			<div class="product">
+				<div class="ptitle">#$val['title']#</div>
+				<div>#$val['description']#</div>
+				<div>#$val['price']#</div>
+				<div><a href="#xarModURL('shop','user','add',array('id' => $key, 'returnurl' => xarServer::GetCurrentURL()
+				))#">Add to cart</a></div>
+			</div>
+		</xar:foreach>
+	</td>
+	<td id="rightcol">
+		<xar:if condition="!empty($_SESSION['shop'])">
+			<xar:template type="module" file="cartsummary" />
+		</xar:if>
+	</td>
+	</tr>
+  </table>
+</div>
+
+
+    </div>
+</xar:template>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <xar:style scope="module" module="base" file="tabs" />
+
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">shop Administration</span>
+    </div>
+   
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admintabs" />
+
+        <h2>View Customers</h2>
+
+
+       <xar:data-view object="$mylist" tplmodule="shop" template="customers_adminlist" sort="$sort" fieldlist="$adminfields" />  
+
+    </div>
+</xar:template>

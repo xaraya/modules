@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <xar:style scope="module" module="base" file="tabs" />
+
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">shop Administration</span>
+    </div>
+   
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admintabs" />
+
+        <h2>View Payment Options</h2>
+TODO: Let customers save payment options (credit card numbers, etc) to their account  
+<div style="margin: 25px 0 0 1px;">
+ <a href="#xarModURL('shop','admin','newpaymentoption')#"><img src="#sys::code()#modules/base/xarimages/icons/document-new.png" width="16" height="16" alt="New Item" /></a>
+ </div>
+
+       <xar:data-view object="$mylist" tplmodule="shop" template="paymentoptions_adminlist" sort="$sort" fieldlist="$adminfields" />  
+
+    </div>
+</xar:template>

@@ -1,0 +1,47 @@
+    #total td {
+    font-weight: bold;
+    padding: 5px;
+    }
+    #total tr {
+    border-top: none;
+    }
+    #total {
+    margin-top: 0;
+    text-transform: uppercase;
+    }
+    #total .price {
+    width: 70px;
+    }
+    td, th {
+    text-align: right;
+    }
+    td{
+    font-size: 12px;
+    }
+    input.qty {
+    text-align: right;
+    padding-right: 2px;
+    }
+    .last_col {
+    width: 150px;
+    }
+    #update_shop, #editcart, #complete, #continue {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 11px;
+    font-size: 16px;
+    }
+    input#complete {
+    text-align: center;
+    font-size: 12px;
+    }
+    td.right {
+    text-align: left;
+    }
+    td.right input, td.right select {
+    margin-left: 4px; 
+    }
+
+
+
+

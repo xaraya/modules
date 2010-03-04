@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:style scope="module" module="shop" file="cart" />
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title">shop</span>
+    </div>
+    <div class="xar-mod-body">
+
+<xar:if condition="xarUserIsLoggedIn()">
+
+	<xar:if condition="isset($products)">
+
+		<h2>Checkout</h2>
+	 
+		<table>
+
+		<tr><th>Product</th><th>Item Price</th><th>Qty</th><th>Subtotal</th><th class="last_col"></th></tr>
+
+
+		 <xar:foreach in="$products" key="$key" value="$val">
+
+			<tr>
+			 <td>#$val['title']#</td>
+			 <td>#$val['price']#</td>
+			 <td>#$val['qty']#</td>
+			 <td class="price">#$val['subtotal']#</td>			 
+			 <td></td>
+			 </tr>
+
+		 </xar:foreach>
+
+		</table>
+
+		<table id="total">
+		<tr><td>Total:</td><td class="price">#$total#</td><td class="last_col"></td></tr>
+		</table>
+
+		<xar:set name="cust">xarMod::APIFunc('shop','user','customerinfo')</xar:set>
+		
+		<xar:comment>Not sure we'll need this check, but for now...</xar:comment>
+		<xar:if condition="!empty($cust)">
+
+			<xar:comment>If there was a bad response from the payment gateway, display that response...</xar:comment>
+			<xar:if condition="isset($_SESSION['pg_response'])">
+				<div id="pg_response">
+					<xar:if condition="isset($_SESSION['pg_response']['msg'])">
+						#$_SESSION['pg_response']['msg']#
+					</xar:if>
+				</div>
+			</xar:if>
+
+			<fieldset>
+			<legend>Please enter your credit card info:</legend>
+				<form method="post" id="complete" action="#xarmodurl('shop','user','complete')#">
+				<table id="paymentinfo"> 
+				<xar:foreach in="$myfields" value="$name">
+					
+					<xar:comment>Priority: populate fields with session data if we have it... if not, populate with customer account data... otherwise, leave fields empty</xar:comment>
+					<xar:if condition="isset($_SESSION['checkout'][$name])">
+						<xar:set name="val">$_SESSION['checkout'][$name]</xar:set>
+					<xar:elseif condition="isset($cust[$name])" />
+						<xar:set name="val">$cust[$name]</xar:set>
+					<xar:else />
+						<xar:set name="val">''</xar:set>
+					</xar:if>
+
+					<tr>
+					<td><xar:data-label property="$transproperties[$name]" /></td>
+					<td class="right"><xar:data-input property="$transproperties[$name]" value="$val" /></td>
+					</tr>
+
+				</xar:foreach>
+				</table>	
+					<div class="button_container">
+					<input type="submit" class="button" name="complete" value="Complete order" />
+					</div>
+				</form>
+			</fieldset>
+			<div id="editcart" class="button_container">
+			<a href="#xarmodurl('shop','user','viewcart')#">Edit Cart</a>
+			</div>
+		</xar:if>
+
+		
+	<xar:else />
+
+		<div>
+		You have no items to checkout.
+		</div>
+
+	</xar:if>
+
+<xar:else /><xar:comment>Not logged in... route the customer</xar:comment>
+
+	<table id="cust_route">
+	<tr>
+	<td class="left">
+	<div class="new_customer">
+		<h3>New customer? </h3>
+
+	    <form method="post" action="#xarServer::getCurrentURL()#">
+		  <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+		  <input type="hidden" name="confirm" id="confirm" value="true" />
+	<div>
+		  <xar:data-label property="$properties['email']" value="" class="new_cust" />
+		 <xar:data-input property="$properties['email']" size="25" value="" class="new_cust" />
+	 </div>
+	<div class="password">
+		<xar:data-label property="$properties['password']" value="" class="new_cust" /> 
+		<xar:data-input property="$properties['password']" value="" class="new_cust" />
+	</div>
+	<div>
+		  <input type="submit" value="#xarML('Create')#" class="button" />
+	</div>
+	    
+		</form>
+	</div>
+	</td>
+
+	<td>
+	<div id="returning">
+	<h3>Returning customer?</h3> 
+ 
+	<form action="#xarModURL('authsystem','user','login')#" method="post">
+	<input type="hidden" name="redirecturl" id="returnurl3" value="#xarModURL('shop','user','checkout')#"/>
+	<label for="uname3" title="Enter your user name">
+	Email:</label>
+	<input type="text" name="uname" id="uname3" maxlength="64"/>
+	<div class="password">
+		<label for="pass3" title="Enter your password">
+		Password:</label>
+		<input type="password" name="pass" id="pass3" maxlength="64"/>
+		<div id="dont_req_pw">
+			<input type="checkbox" name="rememberme" id="rememberme3" value="1"/> <span>Remember my password</span> 
+		</div>
+	</div>
+	<input type="submit" value="Log In" class="button" />
+	<div id="req_new_pw">
+		<a href="#xarModURL('roles','user','lostpassword')#">Lost your  password?</a>
+	</div>
+	</form>
+ 
+
+	</div>
+	</td>
+	</tr>
+	</table>
+	
+</xar:if>
+ 
+
+
+ 
+
+
+    </div>
+</xar:template>

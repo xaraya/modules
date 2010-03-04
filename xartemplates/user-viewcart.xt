@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+ <xar:style scope="module" module="shop" file="cart" />
+ 
+ <div class="xar-mod-head">
+    <span class="xar-mod-title">shop</span>
+    </div>
+    <div class="xar-mod-body">
+<img src="code/modules/shop/xarimages/Shoppingcart_48x48.png" width="48" height="48" alt="shopping cart" align="right" style="margin: -6px 11px 4px -11px" />
+	<h2>Shopping Cart</h2>  
+
+<xar:if condition="!empty($products)">
+
+	<form name="qty" id="qty" method="post" action="#xarModURL('shop','user','viewcart')#">
+	
+	<table>
+
+	<tr><th>Product</th><th>Item Price</th><th>Qty</th><th>Subtotal</th><th class="last_col"></th></tr>
+
+
+	 <xar:foreach in="$products" key="$key" value="$val">
+
+	<tr>
+
+	 <td>#$val['title']#
+	 
+	 </td>
+
+	 <td>#$val['price']#</td>
+	 
+	 <td> 
+		 <input type="text" class="qty" value="#$val['qty']#" size="4" name="qty#$key#" />
+		
+	 </td>
+
+	 <td class="price">#$val['subtotal']#</td>
+	 
+	 <td><a href="#xarmodurl('shop','user','remove',array(
+		 'id' => $key, 
+		 'returnurl' => xarServer::GetCurrentURL()
+	 ))#">Remove from cart</a></td>
+	 </tr>
+
+	 </xar:foreach>
+
+	</table>
+
+<table id="total">
+<tr><td>Total:</td><td class="price">#$total#</td><td class="last_col"></td></tr>
+</table>
+	
+
+
+	<div class="button_container">
+	<input type="submit" class="button" id="update_shop" name="update_shop" value="Update Totals" />
+	</div>
+
+	</form>
+
+<xar:else />
+
+	<div>
+	The cart is empty.
+	</div>
+
+</xar:if>
+
+<div id="continue" class="button_container">
+<a href="#xarmodurl('shop')#">Continue Shopping</a>
+</div>
+
+<xar:if condition="!empty($products)">
+	<div id="checkout" class="button_container">
+	<a href="#xarmodurl('shop','user','checkout')#">Checkout</a>
+	</div>
+</xar:if>
+
+
+    </div>
+</xar:template>
