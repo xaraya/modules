@@ -13,7 +13,7 @@
  **/
 $modversion['name']         = 'shop';
 $modversion['id']           = '1031';
-$modversion['version']      = '0.5.0';
+$modversion['version']      = '0.5.1';
 $modversion['displayname']  = xarML('shop');
 $modversion['description']  = 'E-commerce for Xaraya 2x';
 $modversion['credits']      = 'xardocs/credits.txt';
