@@ -4,7 +4,7 @@ include "usaepaylib.php";
  
 $tran=new umTransaction;
  
-$tran->key="iJb8zXQ9eJdxY1y8wk7CsNqab64hN6Al";
+$tran->key=xarModVars::get('shop','pg_key');
 $tran->ip=$_SERVER['REMOTE_ADDR'];   // This allows fraud blocking on the customers ip address
 
 $tran->usesandbox = true;

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">shop Administration</span>
+    </div>
+
+    <div class="xar-mod-body">
+
+        <xar:template type="module" file="admintabs" />
+
+        <h2>Shop Docs</h2>
+
+<img src="code/modules/shop/xarimages/Shoppingcart_128x128.png" width="128" height="128" alt="shopping cart" align="right" />
+ 
+
+ <h3>To set up a new payment gateway, you need to do three things:</h3>
+
+<ol>
+<li>Write an API function similar to <strong>xaradminapi/authorizenet.php</strong> to connect to your payment gateway.  You should be able to find sample code in your payment gateway's developer documentation.</li>
+<li>Add your payment gateway to the array in <strong>xaradminapi/gateways.php</strong>.</li>
+<li>Add some code in <strong>xaradminapi/handlepgresponse.php</strong> to handle the response from your payment gateway.</li>
+</ol>
+
+<h3>Notes on payment gateways:</h3>
+
+<p>You don't need an SSL cert for testing.</p>
+
+<p>Request a free <strong>Authorize.net</strong> test account: <a href="http://developer.authorize.net/testaccount/">http://developer.authorize.net/testaccount/</a></p>
+
+<p><strong>PayPal</strong>... go here:  <a href="https://developer.paypal.com/">https://developer.paypal.com/</a>.
+Click the US or UK link next to Create a Website Payments Pro account.  The integration was tested with US.</p>
+
+<p><strong>PaySimple</strong> is almost integrated but there is a little more work to do on that.  They are a reseller of <strong>USA ePay</strong> so that integration should work for all other <strong>USA ePay</strong> resellers.</p>
+
+<p>Of the three, <strong>Authorize.net</strong> was the easiest to get started with.</p>
+  
+</div>
+
+</xar:template>
