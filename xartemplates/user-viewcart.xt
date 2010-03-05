@@ -14,18 +14,18 @@
 
 	<form name="qty" id="qty" method="post" action="#xarModURL('shop','user','viewcart')#">
 	
-	<table>
+	<table id="maincart">
 
-	<tr><th>Product</th><th>Item Price</th><th>Qty</th><th>Subtotal</th><th class="last_col"></th></tr>
+	<tr>
+	<th>Product</th><th>Item Price</th><th>Qty</th><th>Subtotal</th><th class="last_col"></th>
+	</tr>
 
 
 	 <xar:foreach in="$products" key="$key" value="$val">
 
 	<tr>
 
-	 <td>#$val['title']#
-	 
-	 </td>
+	 <td>#$val['title']#</td>
 
 	 <td>#$val['price']#</td>
 	 
@@ -36,45 +36,57 @@
 
 	 <td class="price">#$val['subtotal']#</td>
 	 
-	 <td><a href="#xarmodurl('shop','user','remove',array(
-		 'id' => $key, 
-		 'returnurl' => xarServer::GetCurrentURL()
-	 ))#">Remove from cart</a></td>
+	 <td class="last_col">
+		<a href="#xarmodurl('shop','user','remove',array(
+			 'id' => $key, 
+			 'returnurl' => xarServer::GetCurrentURL()
+		 ))#">Remove from cart</a>
+	 </td>
 	 </tr>
 
 	 </xar:foreach>
 
 	</table>
 
+	<div class="button_container" id="update_cart">
+	<input type="submit" class="button" name="update_cart" value="Update Total" />
+	</div>
+
 <table id="total">
-<tr><td>Total:</td><td class="price">#$total#</td><td class="last_col"></td></tr>
+<tr>
+<td style="width: 35%">
+	<div id="continue" class="button_container">
+	<a href="#xarmodurl('shop')#">&#171; Continue Shopping</a>
+	</div>
+</td>
+<td style="width: 38%"><label>Total: &#160;</label> #$total#</td> 
+<td>
+	<div id="checkout" class="button_container">
+	<a href="#xarmodurl('shop','user','checkout')#">Checkout &#187;</a>
+	</div>
+</td>
+</tr>
 </table>
 	
-
-
-	<div class="button_container">
-	<input type="submit" class="button" id="update_shop" name="update_shop" value="Update Totals" />
-	</div>
 
 	</form>
 
 <xar:else />
 
-	<div>
-	The cart is empty.
+	<div id="emptycart">
+		<p>
+		The cart is empty.
+		</p>
+
+		<div id="continue" class="button_container">
+		<a href="#xarmodurl('shop')#">&#171; Continue Shopping</a>
+		</div>
 	</div>
 
 </xar:if>
 
-<div id="continue" class="button_container">
-<a href="#xarmodurl('shop')#">Continue Shopping</a>
-</div>
 
-<xar:if condition="!empty($products)">
-	<div id="checkout" class="button_container">
-	<a href="#xarmodurl('shop','user','checkout')#">Checkout</a>
-	</div>
-</xar:if>
+
 
 
     </div>

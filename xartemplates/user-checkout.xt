@@ -14,9 +14,14 @@
 
 		<h2>Checkout</h2>
 	 
-		<table>
+		<table id="maincart">
 
-		<tr><th>Product</th><th>Item Price</th><th>Qty</th><th>Subtotal</th><th class="last_col"></th></tr>
+		<tr>
+		<th>Product</th>
+		<th>Item Price</th>
+		<th>Qty</th>
+		<th class="last_col">Subtotal</th> 
+		</tr>
 
 
 		 <xar:foreach in="$products" key="$key" value="$val">
@@ -25,8 +30,7 @@
 			 <td>#$val['title']#</td>
 			 <td>#$val['price']#</td>
 			 <td>#$val['qty']#</td>
-			 <td class="price">#$val['subtotal']#</td>			 
-			 <td></td>
+			 <td class="last_col">#$val['subtotal']#</td>			 
 			 </tr>
 
 		 </xar:foreach>
@@ -34,8 +38,18 @@
 		</table>
 
 		<table id="total">
-		<tr><td>Total:</td><td class="price">#$total#</td><td class="last_col"></td></tr>
+		<tr>
+		<td>
+		<div id="editcart" class="button_container">
+			<a href="#xarmodurl('shop','user','viewcart')#">&#171; Edit Cart</a>
+		</div>
+		</td>
+		<td class="last_col"><label>Total: &#160;</label>
+		 #$total#</td> 
+		</tr>
 		</table>
+
+	
 
 		<xar:set name="cust">xarMod::APIFunc('shop','user','customerinfo')</xar:set>
 		
@@ -53,7 +67,7 @@
 
 			<fieldset>
 			<legend>Please enter your credit card info:</legend>
-				<form method="post" id="complete" action="#xarmodurl('shop','user','complete')#">
+				<form method="post" id="payment" action="#xarmodurl('shop','user','complete')#">
 				<table id="paymentinfo"> 
 				<xar:foreach in="$myfields" value="$name">
 					
@@ -73,14 +87,12 @@
 
 				</xar:foreach>
 				</table>	
-					<div class="button_container">
+					<div class="button_container" id="complete">
 					<input type="submit" class="button" name="complete" value="Complete order" />
 					</div>
 				</form>
 			</fieldset>
-			<div id="editcart" class="button_container">
-			<a href="#xarmodurl('shop','user','viewcart')#">Edit Cart</a>
-			</div>
+		
 		</xar:if>
 
 		

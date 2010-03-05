@@ -1,59 +1,117 @@
-    table#paymentinfo {
-	margin: 0;
-	}
-	.button { 
-	} 
-	#total td {
-    font-weight: bold;
-    padding: 5px;
-    }
-    #total tr {
-    border-top: none;
-    }
-    #total {
-    margin-top: 0;
-    text-transform: uppercase;
-    }
-    #total .price {
-    width: 70px;
-    }
-    td, th {
-    text-align: right;
-    }
-    td{
-    font-size: 12px;
-    }
-    input.qty {
-    text-align: right;
-    padding-right: 2px;
-    }
-    .last_col {
-    width: 150px;
-    }
-    div.button_container {
-    text-align: center;
-    font-weight: bold;
-    margin-top: 9px;
-	margin-bottom: 4px;
-    font-size: 15px;
-    }
-    input#complete, input#update_shop {
-    text-align: center;
-    font-size: 12px;
-    }
-    td.right {
-    text-align: left;
-    }
-    td.right input, td.right select {
-    margin-left: 4px; 
-    }
-	#pg_response {
-	padding: 4px 4px 5px 6px;
-	margin: 4px;
-	font-weight: bold;
-	color: red;
-	border: 2px dotted #ddd;
-	}
+td, th {
+text-align: right;
+}
+td{
+font-size: 12px;
+}
+td.right {
+text-align: left;
+}
+td.right input, td.right select {
+margin-left: 4px; 
+}
+
+#total td {
+font-weight: bold;
+padding: 7px 0 8px 0;
+}
+#total tr {
+border-top: none;
+}
+#total {
+margin-top: 0;
+text-transform: uppercase;
+}
+td.price {
+width: 70px;
+}
+
+input.qty {
+text-align: right;
+padding-right: 2px;
+}
+
+form#qty {
+display: inline;
+}
+table#maincart {
+margin: 6px 0 10px 0;
+}
+#maincart td {
+padding: 3px 0 3px 0;
+}
+#total td.last_col, #maincart td.last_col {  
+padding-right: 10px;
+}
+
+.last_col {
+width: 150px;
+}
+.button_container {
+font-weight: bold;
+font-size: 14px;
+text-transform: none;
+}
+#update_cart {
+text-align: center;
+margin: 0 0 14px 0;
+}
+#checkout {
+margin-right: 7px;
+}
+
+#complete {
+text-align: center;
+}
+#complete input {
+margin: 12px 0 8px 0;
+font-size: 14px;
+} 
+#editcart {
+text-align: left;
+margin-left: 20px;
+}
+
+table#paymentinfo {
+margin: 0;
+}
+table#paymentinfo td {
+padding: 4px 0 4px 7px;
+}
+input.button { 
+font-size: 12px;
+padding-bottom: 2px;
+} 
+#total {
+margin-top: 0;
+text-transform: uppercase;
+}
+input.qty {
+text-align: right;
+padding-right: 2px;
+}
+ 
+ 
+td.right {
+text-align: left;
+}
+td.right input, td.right select {
+margin-left: 4px; 
+}
+#pg_response {
+padding: 4px 4px 5px 6px;
+margin: 4px;
+font-weight: bold;
+color: red;
+border: 2px dotted #ddd;
+}
+#viewcart_buttons {
+margin-top: 0; 
+border: none;
+}
+#viewcart_buttons tr {
+background-color: transparent;
+}
 
 /* Customer router forms in user-checkout.xt */
 

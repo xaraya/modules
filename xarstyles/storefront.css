@@ -11,11 +11,15 @@ padding: 8px;
 #storefront table {
 margin-top: 7px;
 }
-#cart_summary td {
-padding: 3px;
-}
 td#rightcol {
 width: 31%;
+}
+
+
+/*cart summary*/
+
+#cart_summary td {
+padding: 3px;
 }
 table#cart_summary  {
 margin-top: 9px; 
@@ -25,7 +29,6 @@ text-align: right;
 }
 #cart_items {
 margin-top: 5px;
-
 }
 .cart_item {
 background-color: #f6f6f6;

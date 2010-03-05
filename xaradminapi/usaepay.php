@@ -4,13 +4,11 @@ include "usaepaylib.php";
  
 $tran=new umTransaction;
  
-$tran->key="WNkue4k63w1h49q9dVNJq09T78xbZg4r";
+$tran->key="iJb8zXQ9eJdxY1y8wk7CsNqab64hN6Al";
 $tran->ip=$_SERVER['REMOTE_ADDR'];   // This allows fraud blocking on the customers ip address
 
 $tran->usesandbox = true;
 $tran->ignoresslcerterrors = true;
- 
-$tran->testmode=1;    // Change this to 0 for the transaction to process
  
 $tran->card="4000200011112222";		// card number, no dashes, no spaces
 $tran->exp="1212";			// expiration date 4 digits no /
