@@ -100,7 +100,7 @@
 	<div class="new_customer">
 		<h3>New customer? </h3>
 
-	    <form method="post" action="#xarServer::getCurrentURL()#">
+	    <form method="post" action="#xarServer::getCurrentURL()#" enctype="application/x-www-form-urlencoded">
 		  <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
 		  <input type="hidden" name="confirm" id="confirm" value="true" />
 	<div>
@@ -123,7 +123,7 @@
 	<div id="returning">
 	<h3>Returning customer?</h3> 
  
-	<form action="#xarModURL('authsystem','user','login')#" method="post">
+	<form action="#xarModURL('authsystem','user','login')#" method="post" enctype="application/x-www-form-urlencoded">
 	<input type="hidden" name="redirecturl" id="returnurl3" value="#xarModURL('shop','user','checkout')#"/>
 	<label for="uname3" title="Enter your user name">
 	Email:</label>

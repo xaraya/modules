@@ -43,6 +43,10 @@ function shop_user_checkout() {
 		return xarTplModule('shop','user','checkout', $data);               
 	} else {
 
+		if (!xarSecConfirmAuthKey()) {
+            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+        }     
+
 		// Create the role and the customer object and then log in
 		$email = $rolesobject->properties['email']->getValue();
 		$password = $rolesobject->properties['password']->getValue();
@@ -52,8 +56,8 @@ function shop_user_checkout() {
 		$rolesobject->properties['uname']->setValue($email);
 		$rolesobject->properties['password']->setValue($password);
 		$rolesobject->properties['state']->setValue(3);
-		$authmodule = (int)xarMod::getID('shop');
-		$rolesobject->properties['authmodule']->setValue($authmodule);
+		//$authmodule = (int)xarMod::getID('shop');
+		//$rolesobject->properties['authmodule']->setValue($authmodule);
 		$uid = $rolesobject->createItem();
 
 		$custobject = DataObjectMaster::getObject(array('name' => 'shop_customers'));
