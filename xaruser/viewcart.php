@@ -14,6 +14,9 @@
  */
 function shop_user_viewcart() {
 
+	// If the user views cart after moving on to checkout, unset any errors from earlier in the session.
+	unset($_SESSION['errors']);
+
     sys::import('modules.dynamicdata.class.objects.master');
 
 	$products = array();
@@ -44,6 +47,7 @@ function shop_user_viewcart() {
 
 			if (isset($_SESSION['shop'][$pid])) { // If the quantity hasn't been set to zero...
 
+				//commas in the quantity seem to mess up our math
 				$products[$pid]['qty'] = str_replace(',','',$_SESSION['shop'][$pid]['qty']); 
 
 				// Get the product info
@@ -66,12 +70,12 @@ function shop_user_viewcart() {
 
 	$total = array_sum($subtotals);
 			if (substr($total, 0, 1) == '.') {
-				$total = '0' . $total;
+				$total = '0' . $total; // add a zero to the front of the number if it starts with a decimal
 			}
-	$total = number_format($total, 2);
+	$total = number_format($total, 2);  
 
-	$_SESSION['products'] = $products;
-	$data['products'] = $products;
+	$_SESSION['products'] = $products; // update the session variables
+	$data['products'] = $products; // don't want too much session stuff in the templates
 	$_SESSION['total'] = $total;
 	$data['total'] = $total;
 

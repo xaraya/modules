@@ -18,7 +18,39 @@ $environment = 'sandbox';
 function shop_adminapi_paypal($args) {
 	global $environment;
 
+	// defaults
+	$paymentType = urlencode('Sale');
+	$countrycode = 'US';
+	$currency = 'USD';
+
 	extract($args);
+	
+	$firstName = urlencode($transfields['first_name']);
+	$lastName = urlencode($transfields['last_name']);
+	$creditCardType = urlencode($transfields['card_type']);
+	$creditCardNumber = urlencode($transfields['card_num']);
+	
+	$exp = $transfields['exp_date'];
+	$exp_month = substr($exp,0,2);
+	$exp_year = '20' . substr($exp,2,4); // will work until later this century
+
+	$expDateMonth = urlencode($exp_month);
+	$expDateYear = urlencode($exp_year);
+	$cvv2Number = urlencode($transfields['cvv2']);
+	$address1 = urlencode($transfields['street_addr']); 
+	$city = urlencode($transfields['city_addr']);
+	$state = urlencode($transfields['state_addr']);
+	$zip = urlencode($transfields['postal_code']);
+	$country = urlencode($countrycode);
+	$amount = urlencode($transfields['total']);
+	$currencyID = urlencode($currency);		
+
+	// Add request-specific fields to the request string.
+	$str =	"&PAYMENTACTION=$paymentType&AMT=$amount&CREDITCARDTYPE=$creditCardType&ACCT=$creditCardNumber";
+	$str .= "&EXPDATE=$expDateMonth$expDateYear&CVV2=$cvv2Number&FIRSTNAME=$firstName&LASTNAME=$lastName";
+	$str .= "&STREET=$address1&CITY=$city&STATE=$state&ZIP=$zip&COUNTRYCODE=$country&CURRENCYCODE=$currencyID";
+
+	$nvpStr_ = $str;
 
 	// Set up your API credentials, PayPal end point, and API version.
 	$API_UserName = urlencode(trim(xarModVars::get('shop','pg_id')));

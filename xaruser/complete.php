@@ -14,12 +14,18 @@
  */
 function shop_user_complete() {
 
-	if (!isset($_SESSION['did_checkout'])) return;
+	if (!isset($_SESSION['did_checkout'])) { 
+		// the user probably tried to back arrow after completing a purchase
+		return xarResponse::Redirect(xarModURL('shop')); 
+	}
 
-	$cust = xarMod::APIFunc('shop','user','customerinfo');
-	$data['cust'] = $cust;
+	$tid = 0;
+	$products = array();
 
-	if (isset($_SESSION['products']) && $_SESSION['total'] > 0) {  //not sure we need these checks at this point
+	$cust = xarMod::APIFunc('shop','user','customerinfo'); 
+	$data['cust'] = $cust; 
+
+	if (isset($_SESSION['products']) && $_SESSION['total'] > 0) {  
 
 		$data['products'] = $_SESSION['products'];
 
@@ -38,15 +44,28 @@ function shop_user_complete() {
 			} else {
 				unset($_SESSION['errors'][$field]); // in case we previously submitted invalid input in this field
 			}
+
 			${$field} = $transobject->properties[$field]->getValue();
-			 if ($field != 'card_num') {
-				//Save values to $_SESSION['checkout'] in case we need to re-display the form in user-checkout.xt 
+
+			if (isset($exp_date)) {
+				$exp_month = substr($exp_date,0,2);
+				$exp_year = substr($exp_date,2,4);
+				$reverse_date = $exp_year . $exp_month;
+				$minimum_date = date('ym',time());
+				if ($minimum_date > $reverse_date) {
+					$_SESSION['errors']['exp_date'] = true;
+				}
+			}
+			
+			if ($field != 'card_num') {
+				/*Save values to $_SESSION['checkout'] in case we need to re-display the form in user-checkout.xt, but don't re-display the card number*/ 
 				$_SESSION['checkout'][$field] = ${$field};
-			 }
+			}
 		}
-		//If fields don't validate, re-display the checkout page
+		// If fields don't validate, re-display the checkout page.
+		// If were not in Demo Mode, the payment gateway will do its own validation, but we might as well try to catch things here before submitting the transaction.
 		if (!empty($_SESSION['errors'])) {
-			xarResponse::Redirect(xarModURL('shop','user','checkout'));
+			xarResponse::Redirect(xarModURL('shop','user','checkout').'#errors');
 			return;
 		}
 
@@ -90,7 +109,7 @@ function shop_user_complete() {
 
 		$response = xarMod::APIFunc('shop','admin','handlepgresponse', array('transfields' => $transfields));
 		
-		if (is_numeric($response['trans_id'])) {
+		if (isset($response['trans_id']) && !empty($response['trans_id'])) { 
 			$data['response'] = $response;
 			$transfields['pg_transaction_id'] = $response['trans_id'];
 			$tid = $transobject->createItem($transfields);
@@ -100,10 +119,10 @@ function shop_user_complete() {
 			// There must be a problem...
 			$pg_id = xarModVars::get('shop','pg_id');
 			$pg_key = xarModVars::get('shop','pg_key');
-			if (empty($pg_key) || empty($pg_id)) {
-				$_SESSION['pg_response']['msg'] .= "<p style='color:red'><strong>Looks like you haven't set up a payment gateway yet.  <a href='".xarModURL('shop','admin','overview')."'>Please read this</a>.</strong></p>";
+			if (empty($pg_key)) {
+				$_SESSION['pg_response']['msg'] .= "<p style='color:red'><strong>Looks like you haven't entered a payment gateway key.  <a href='".xarModURL('shop','admin','overview')."'>Read me</a>.</strong></p>";
 			}
-
+ 
 			xarResponse::Redirect(xarModURL('shop','user','checkout'));
 			return;
 		}
@@ -114,7 +133,8 @@ function shop_user_complete() {
 	$data['tid'] = $tid;
 	$data['date'] = date('F j, Y g:i a',$_SESSION['time']);
 	
-	//Might as well unset these now to make sure we can't re-submit the purchase
+	//Need to clear all this now that the purchase went through
+	unset($_SESSION['errors']);
 	unset($_SESSION['shop']);
 	unset($_SESSION['products']);
 	unset($_SESSION['did_checkout']);

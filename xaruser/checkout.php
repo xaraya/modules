@@ -30,7 +30,7 @@ function shop_user_checkout() {
 	$myfields = array('first_name', 'last_name', 'street_addr', 'city_addr', 'state_addr', 'postal_code', 'card_type','card_num', 'cvv2', 'exp_date');
 	$data['myfields'] = $myfields; 
 
-	$_SESSION['did_checkout'] = true; //to make sure we don't skip the checkout phase
+	$_SESSION['did_checkout'] = true; //to make sure we don't skip the checkout step
 
 	$rolesobject = DataObjectMaster::getObject(array('name' => 'roles_users'));
 	$data['properties'] = $rolesobject->properties;
@@ -39,7 +39,7 @@ function shop_user_checkout() {
 	$isvalid2 = $rolesobject->properties['password']->checkInput();
 
 	if (!$isvalid || !$isvalid2 || xarUserIsLoggedIn()) {
-		// Bad data: redisplay the form with the data we picked up and with error messages
+		//Bad data from a previous submission or the user is logged in. Either way, display the checkout form.
 		return xarTplModule('shop','user','checkout', $data);               
 	} else {
 

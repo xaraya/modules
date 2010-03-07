@@ -9,6 +9,8 @@
         <xar:template type="module" file="admintabs" />
         <h2>Modify Default Configuration</h2>
 
+	<p align="right"><a href="http://localhost/keys.txt" style="color: #999">test keys and acct numbers</a></p>
+
         <form method="post" action="#xarServer::getCurrentURL()#">
             <fieldset>
                 <legend>Modify shop Configuration</legend>
@@ -27,5 +29,7 @@
             </div>
         </form>
  
+ 
+
     </div>
 </xar:template>

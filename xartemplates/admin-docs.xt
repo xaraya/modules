@@ -15,12 +15,13 @@
 <img src="code/modules/shop/xarimages/Shoppingcart_128x128.png" width="128" height="128" alt="shopping cart" align="right" />
  
 
- <h3>To set up a new payment gateway, you need to do three things:</h3>
+ <h3>To set up a new payment gateway, you need to do four things:</h3>
 
 <ol>
 <li>Write an API function similar to <strong>xaradminapi/authorizenet.php</strong> to connect to your payment gateway.  You should be able to find sample code in your payment gateway's developer documentation.</li>
 <li>Add your payment gateway to the array in <strong>xaradminapi/gateways.php</strong>.</li>
-<li>Add some code in <strong>xaradminapi/handlepgresponse.php</strong> to handle the response from your payment gateway.</li>
+<li>Add some code in <strong>xaradminapi/handlepgresponse.php</strong> to handle the response from your payment gateway.  The payment gateway will respond with a transaction ID that is presented to the customer and also saved in your transaction records.  They all respond a little differently but it's mainly a matter of grabbing the transaction ID from whatever array they return.</li>
+<li>Visit the Modify Config page.  You'll see your payment gateway is now in the dropdown.  Select it and click Update.
 </ol>
 
 <h3>Notes on payment gateways:</h3>

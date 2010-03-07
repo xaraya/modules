@@ -7,15 +7,14 @@
     </div>
     <div class="xar-mod-body">
  
+<xar:if condition="isset($products) and is_array($products) and !empty($products)">
+
 	<h2>Thanks for your order!</h2>
  
-<h3>
-Transaction ID: #$tid#<br />
-Order date: #$date#
-</h3>
-
-
-<xar:if condition="$products">
+	<h3>
+	Transaction ID: #$tid#<br />
+	Order date: #$date#
+	</h3>
  
 	<table>
 
@@ -46,15 +45,18 @@ Order date: #$date#
 
 	</table>
 
-<table id="total">
-<tr><td>Total:</td><td class="price">#$total#</td><td class="last_col"></td></tr>
-</table>
+	<table id="total">
+	<tr><td>Total:</td><td class="price">#$total#</td><td class="last_col"></td></tr>
+	</table>
+
+<xar:else />
+
+	#xarResponse::Redirect(xarModURL('shop'))#
 
 </xar:if>
 
-
-<div id="continue">
-<a href="#xarmodurl('shop')#">Continue Shopping</a>
+<div id="continue" class="button_container">
+	<a href="#xarmodurl('shop')#">&#171; Continue Shopping</a>
 </div>
 
 

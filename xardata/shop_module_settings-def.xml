@@ -1,5 +1,5 @@
 <object name="shop_module_settings">
-  <objectid>307</objectid>
+  <objectid>342</objectid>
   <label>Module Settings for shop</label>
   <module_id>1031</module_id>
   <itemtype>6</itemtype>
@@ -11,7 +11,7 @@
   <isalias>false</isalias>
   <properties>
     <property name="payment_gateway">
-      <id>1995</id>
+      <id>2225</id>
       <label>Payment Gateway</label>
       <type>dropdown</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration>a:3:{s:14:"display_layout";s:7:"default";s:24:"initialization_firstline";s:8:"-Select-";s:23:"initialization_function";s:42:"xarMod::APIFunc('shop','admin','gateways')";}</configuration>
     </property>
     <property name="pg_id">
-      <id>1996</id>
+      <id>2226</id>
       <label>Payment Gateway ID</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -31,7 +31,7 @@
       <configuration></configuration>
     </property>
     <property name="pg_key">
-      <id>1997</id>
+      <id>2227</id>
       <label>Payment Gateway Key</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -41,7 +41,7 @@
       <configuration></configuration>
     </property>
     <property name="pg_api_signature">
-      <id>1998</id>
+      <id>2228</id>
       <label>Payment Gateway API Signature</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -51,9 +51,10 @@
       <configuration></configuration>
     </property>
     <property name="pg_notes">
-      <id>1999</id>
+      <id>2229</id>
       <label>Notes</label>
-      <type>textarea_large</type>
+      <type>textarea_medium</type>
+      <defaultvalue></defaultvalue>
       <source>module variable: shop</source>
       <status>33</status>
       <seq>5</seq>

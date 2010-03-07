@@ -98,7 +98,7 @@ text-align: left;
 td.right input, td.right select {
 margin-left: 4px; 
 }
-#pg_response {
+.error {
 padding: 4px 4px 5px 6px;
 margin: 4px;
 font-weight: bold;
