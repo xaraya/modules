@@ -11,64 +11,83 @@
  * @link http://xaraya.com/index.php/release/66.html
  * @author mikespub <mikespub@xaraya.com>
  */
-
-/**
- * initialise block
- * @return array
- */
-function dyn_example_firstblock_init()
+// All block classes extend the BasicBlock class and implement the iBlock inteface
+sys::import('xaraya.structures.containers.blocks.basicblock');
+Class FirstBlock extends BasicBlock implements iBlock
 {
-    return array(
-        'numitems' => 5
-    );
-}
+    // declare the name of your block, the module it belongs to and an
+    // optional description, these are required
+    public $module          = 'dyn_example';  // Module your block belongs to
+    public $text_type       = 'First Block';  // Block name
+    public $text_type_long  = 'Show first dyn_example items (alphabetical)'; // Block description
 
-/**
- * get information on block
- * @return array
- */
-function dyn_example_firstblock_info()
-{
-    // Values
-    return array('text_type' => 'First',
-        'module' => 'dyn_example',
-        'text_type_long' => 'Show first dyn_example items (alphabetical)',
-        'allow_multiple' => true,
-        'form_content' => false,
-        'form_refresh' => false,
-        'show_preview' => true);
-}
+    // the basicblock class declares properties required for the blocks module
+    // to function properly, you should avoid using those in your block, but you
+    // must declare any additional properties which are used by your block,
+    // these are used as the defaults when a user creates a new block instance.
 
-/**
- * display block
- * @return array blockinfo
- */
-function dyn_example_firstblock_display($blockinfo)
-{
-// TODO: Security check
-//    if (!xarSecurityCheck('ReadExampleBlock', 1, 'Block', $blockinfo['title'])) {return;}
+    // The first block only has one property, numitems
+    public $numitems = 5;
 
-    // Get variables from content block.
-    // Content is a serialized array for legacy support, but will be
-    // an array (not serialized) once all blocks have been converted.
-    if (!is_array($blockinfo['content'])) {
-        $data = @unserialize($blockinfo['content']);
-    } else {
-        $data = $blockinfo['content'];
+    // declare the methods your block will use
+
+    // display method, this is called whenever the block is displayed,
+    // either as a standalone block, or when rendered as part of a block group
+    // data here is passed to you blocks {blocktype}.xt template
+    function display(Array $args=array())
+    {
+        // the parent class supplies blockinfo for the current block instance
+        // so we call the parent method here to obtain the data
+        $data = parent::display($args);
+
+        // the data passed to the block template for your block is stored as
+        // an array in $data['content'], if you need to pass additional variables,
+        // or act on the ones stored, you should use that array.
+
+        // here we're just going to check that numitems is set, and if not,
+        // set the default
+        if (!isset($data['content']['numitems'])) {
+            $data['content']['numitems'] = $this->numitems;
+        }
+
+        // and now we return the $data to the calling function
+        return $data;
     }
 
-    // Defaults
-    if (empty($data['numitems'])) {
-        $data['numitems'] = 5;
+    // modify method, this is called whenever the block is modified in blocks admin,
+    // the data here is passed to your blocks modify-{blocktype}.xt template
+    function modify(Array $args=array())
+    {
+        // the parent class supplies content for the current block instance
+        // so we call the parent method here to obtain the data
+        $data = parent::modify($args);
+
+        // here we're just going to check that numitems is set, and if not,
+        // set a default
+        if (!isset($data['content']['numitems'])) {
+            $data['content']['numitems'] = $this->numitems;
+        }
+
+        // and now we return the content to the calling function
+        return $data['content'];
     }
-    $data['blockid'] = $blockinfo['bid'];
 
-    // we'll retrieve the items directly in the template here
+    // update method, this is called whenever the block is update from blocks admin modify,
+    function update(Array $args=array())
+    {
+        // the parent class supplies blockinfo for the current block instance
+        // so we call the parent method here to obtain the data
+        $data = parent::update($args);
 
-    // Just return the template data.
-    $blockinfo['content'] = $data;
+        // fetch any parameters to update from input
+        if (!xarVarFetch('numitems', 'int:0:', $numitems, 5, XARVAR_NOT_REQUIRED)) {return;}
 
-    return $blockinfo;
+        // update the var in the content array
+        $data['content']['numitems'] = $numitems;
+
+        // and pass the data back to the calling function
+        return $data;
+    }
+
 }
-
 ?>
