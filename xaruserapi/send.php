@@ -144,8 +144,8 @@
             $subject = $mailitem['subject'];
             $message = $header . $mailitem['body'] . $footer;
             if (($mailitem['mail_type'] == 3) || ($mailitem['mail_type'] == 4)) {
-                sys::import('blocklayout.compiler');
-                $blCompiler = xarBLCompiler::instance();
+                sys::import('xaraya.templating.compiler');
+                $blCompiler = XarayaCompiler::instance();
                 $data = isset($args['data']) ? $args['data'] : array();
 
                 try {
