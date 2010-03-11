@@ -1,10 +1,10 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:style scope="module" module="xarpages" file="xarpages" />
+    <xar:style scope="module" module="xarpages" file="xarpages"/>
 
     <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Page Administration</xar:mlstring></span></div>
 
     <div class="xar-mod-body">
-        <xar:template type="module" file="admin-menu" />
+        <xar:template type="module" file="admin-menu"/>
         <h2>
             <xar:if condition="$func eq 'modify'">
                 <xar:mlstring>Modify Page Type</xar:mlstring>
@@ -21,15 +21,15 @@
                         <strong><xar:mlstring>Page Type Attributes</xar:mlstring></strong>
                     </legend>
 
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                    <input type="hidden" name="id" id="id" value="#$id#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                    <input type="hidden" name="id" id="id" value="#$id#"/>
 
                     <p class="param">
                         <label for="name"><xar:mlstring>Name</xar:mlstring></label>
-                        <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($type['name'])#" size="32" maxlength="64" />
+                        <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($type['name'])#" size="32" maxlength="64"/>
 
                         <xar:if condition="empty($id) and !empty($files)">
-                            <xar:data-input name="name_list" id="name_list" type="6" options="$files" firstline="-- Predefined --" value="" />
+                            <xar:data-input name="name_list" id="name_list" type="6" options="$files" firstline="-- Predefined --" value=""/>
                         </xar:if>
                     </p>
 
@@ -65,14 +65,14 @@
                     <legend>
                         Page Add Access
                     </legend>
-                    <xar:data-input type="access" name="type_add_access" value="$type['info']['add_access']" />
+                    <xar:data-input type="access" name="type_add_access" value="$type['info']['add_access']"/>
                 </fieldset>
                 <div>
                     <xar:if condition="$func eq 'modify'">
-                        <input type="submit" value="#xarML('Modify')#" />
+                        <input type="submit" value="#xarML('Modify')#"/>
                         <input type="hidden" name="creating" id="creating" value="false"/>
                     <xar:else />
-                        <input type="submit" value="#xarML('Add')#" />
+                        <input type="submit" value="#xarML('Add')#"/>
                         <input type="hidden" name="creating" id="creating" value="true"/>
                     </xar:if>
                 </div>

@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<xar:style scope="module" module="xarpages" file="xarpages" />
-<xar:base-include-javascript module="base" filename="formcheck.js" />
+<xar:style scope="module" module="xarpages" file="xarpages"/>
+<xar:javascript module="base" filename="formcheck.js"/>
 
 <script type="text/javascript">
 <!--
@@ -15,51 +15,51 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Xarpages Administration</xar:mlstring></span></div>
 
 <div class="xar-mod-body">
-    <xar:template type="module" file="admin-menu" />
+    <xar:template type="module" file="admin-menu"/>
     <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
 
     <div style="margin: auto;">
-        <form class="xar-xarpages-admin" action="#xarModUrl('xarpages', 'admin', 'modifyconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" >
+        <form class="xar-xarpages-admin" action="#xarModUrl('xarpages', 'admin', 'modifyconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);">
             <xar:set name="subdata">array('modulename' => 'xarpages')</xar:set>
-            <xar:template file="display" module="base" subdata="$subdata" />
+            <xar:template file="display" module="base" subdata="$subdata"/>
             <fieldset class="formelements xar-norm">
                 <legend>
                     <strong><xar:mlstring>Properties</xar:mlstring></strong>
                 </legend>
 
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="hidden" name="form" id="form" value="form" />
+                <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                <input type="hidden" name="form" id="form" value="form"/>
 
                 <p class="param">
                     <label for="shorturl"><xar:mlstring>Enable short URLs</xar:mlstring></label>
                     <xar:if condition="$shorturl eq 1">
-                        <input type="checkbox" name="shorturl" id="shorturl" value="1" checked="checked" />
+                        <input type="checkbox" name="shorturl" id="shorturl" value="1" checked="checked"/>
                     <xar:else />
-                        <input type="checkbox" name="shorturl" id="shorturl" value="1" />
+                        <input type="checkbox" name="shorturl" id="shorturl" value="1"/>
                     </xar:if>
                 </p>
 
                 <p class="param">
                     <label for="shorturl" title="#xarML('Always use module aliases in paths where possible')#"><xar:mlstring>Use shortest paths</xar:mlstring></label>
                     <xar:if condition="$shortestpath eq 1">
-                        <input type="checkbox" name="shortestpath" id="shortestpath" value="1" checked="checked" />
+                        <input type="checkbox" name="shortestpath" id="shortestpath" value="1" checked="checked"/>
                     <xar:else />
-                        <input type="checkbox" name="shortestpath" id="shortestpath" value="1" />
+                        <input type="checkbox" name="shortestpath" id="shortestpath" value="1"/>
                     </xar:if>
                 </p>
 
                 <p class="param">
                     <label for="transformref" title="#xarML('Enable transform hook for all page internal references')#"><xar:mlstring>Internal references hook</xar:mlstring></label>
                     <xar:if condition="$transformref eq 1">
-                        <input type="checkbox" name="transformref" id="transformref" value="1" checked="checked" />
+                        <input type="checkbox" name="transformref" id="transformref" value="1" checked="checked"/>
                     <xar:else />
-                        <input type="checkbox" name="transformref" id="transformref" value="1" />
+                        <input type="checkbox" name="transformref" id="transformref" value="1"/>
                     </xar:if>
                 </p>
 
                 <p class="param">
                     <label for="transformfields" title="#xarML('Limit dynamic data fields presented for transform hooks to a list of names')#"><xar:mlstring>Transform hook fields</xar:mlstring></label>
-                    <input type="text" name="transformfields" id="transformfields" value="#xarVarPrepForDisplay($transformfields)#" maxlength="100" />
+                    <input type="text" name="transformfields" id="transformfields" value="#xarVarPrepForDisplay($transformfields)#" maxlength="100"/>
                 </p>
             </fieldset>
 
@@ -68,8 +68,8 @@
                     <strong><xar:mlstring>Special Pages</xar:mlstring></strong>
                 </legend>
 
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="hidden" name="form" id="form" value="form" />
+                <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                <input type="hidden" name="form" id="form" value="form"/>
 
                 <p class="param">
                     <label for="defaultpage"><xar:mlstring>Default page</xar:mlstring></label>

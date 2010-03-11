@@ -110,7 +110,7 @@
                             <xar:if condition="!empty($page.has_children) and !empty($page.is_ancestor)"></xar:if>
 
                             <xar:if condition="!empty($page.has_children)">
-                                <xar:template file="menu-level1" subdata="array('parent'=&gt;$page,'pages'=&gt;$pages,'max_level'=&gt;$max_level,'menu_level'=&gt;$menu_level+1)" />
+                                <xar:template file="menu-level1" subdata="array('parent'=&gt;$page,'pages'=&gt;$pages,'max_level'=&gt;$max_level,'menu_level'=&gt;$menu_level+1)"/>
                             </xar:if>
                         </xar:if>
                     </li>

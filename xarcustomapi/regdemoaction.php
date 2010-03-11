@@ -54,7 +54,7 @@ function pageform_regdemoaction_process( &$inobj, &$outobj )
         // log in and redirect
         xarModAPIFunc('authsystem', 'user', 'login', array( 'uname' => $email, 'pass' => $pass, 'rememberme' => 0));
         $redirect=xarServer::getBaseURL();
-        xarResponse::Redirect($redirect);
+        xarResponse::redirect($redirect);
     }
 */
     // ok, then pass state to next form

@@ -1,13 +1,13 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:style scope="module" module="xarpages" file="func_page_tabs" />
+<xar:style scope="module" module="xarpages" file="func_page_tabs"/>
 
 <div class="xar-xarpages-tabs">
   <ul>
     <xar:loop name="$section_titles">
       <xar:if condition="$tab eq $loop:index+1">
-        <li class="xar-xarpages-tabs-current"><a href="#xarServergetCurrentURL(array('tab'=&gt;$loop:index+1))#"><span>#$loop:item#</span></a></li>
+        <li class="xar-xarpages-tabs-current"><a href="#xarServer::getCurrentURL(array('tab'=&gt;$loop:index+1))#"><span>#$loop:item#</span></a></li>
       <xar:else />
-        <li><a href="#xarServergetCurrentURL(array('tab'=&gt;$loop:index+1))#"><span>#$loop:item#</span></a></li>
+        <li><a href="#xarServer::getCurrentURL(array('tab'=&gt;$loop:index+1))#"><span>#$loop:item#</span></a></li>
       </xar:if>
     </xar:loop>
   </ul>

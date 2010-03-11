@@ -1,5 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:style file="multiform" scope="module" />
+    <xar:style file="multiform" scope="module"/>
 
     <xar:if condition="!empty($multiform.debug)">
         <hr />

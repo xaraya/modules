@@ -7,7 +7,7 @@
  -->
 
 <!-- Common navbar stuff -->
-<xar:template file="user-navbar" module="xarpages" />
+<xar:template file="user-navbar" module="xarpages"/>
 
 <xar:if condition="empty($multiform)">
     <p class="xar-error"><xar:mlstring>Configuration error: This page is missing the 'multiform' custom page function.
@@ -16,14 +16,14 @@
     <xar:if condition="$multiform.reason eq 'cancel'">
         <h1><xar:mlstring>Cancelled</xar:mlstring></h1>
         <p><xar:mlstring>You have chosen to cancel the process.</xar:mlstring></p>
-    <xar:elseif condition="$multiform.reason eq 'error'" />
+    <xar:elseif condition="$multiform.reason eq 'error'"/>
         <h1><xar:mlstring>Error</xar:mlstring></h1>
         <p><xar:mlstring>An unexpected error occured.</xar:mlstring></p>
         <xar:if condition="!empty($multiform.passdata.reason_detail)">
             <h2><xar:mlstring>Reason</xar:mlstring></h2>
             <p>#xarVarPrepForDisplay($multiform.passdata.reason_detail)#</p>
         </xar:if>
-    <xar:elseif condition="$multiform.reason eq 'timeout'" />
+    <xar:elseif condition="$multiform.reason eq 'timeout'"/>
         <h1><xar:mlstring>Timeout</xar:mlstring></h1>
         <p><xar:mlstring>Due to a period of inactivity, the form entry has been cancelled.</xar:mlstring></p>
     <xar:else />

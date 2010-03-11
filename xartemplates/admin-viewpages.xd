@@ -1,10 +1,10 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:style scope="module" module="xarpages" file="xarpages" />
+<xar:style scope="module" module="xarpages" file="xarpages"/>
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Page Administration</xar:mlstring></span></div>
 
 <div class="xar-mod-body">
-    <xar:template type="module" file="admin-menu" />
+    <xar:template type="module" file="admin-menu"/>
     <h2><xar:mlstring>View Pages</xar:mlstring></h2>
 
     <xar:set name="root_pages">#xarModAPIfunc('xarpages', 'user', 'getpages', array('parent'=&gt;0))#</xar:set>
@@ -13,9 +13,9 @@
         <form method="#$method#" action="#xarModURL('xarpages','admin','viewpages')#">
             <div>
                 <xar:if condition="$method eq 'get'">
-                    <input name="module" type="hidden" value="xarpages" />
-                    <input name="type" type="hidden" value="admin" />
-                    <input name="func" type="hidden" value="viewpages" />
+                    <input name="module" type="hidden" value="xarpages"/>
+                    <input name="type" type="hidden" value="admin"/>
+                    <input name="func" type="hidden" value="viewpages"/>
                 </xar:if>
 
                 <label for="contains"><xar:mlstring>Select tree:</xar:mlstring></label>
@@ -30,7 +30,7 @@
                         </xar:if>
                     </xar:loop>
                 </select>
-                <input type="submit" value="#xarML('Refresh')#" />
+                <input type="submit" value="#xarML('Refresh')#"/>
             </div>
         </form>
     </xar:if>
@@ -71,7 +71,7 @@
                                     <xar:set name="icon">
                                         xarTplGetImage('icons/modify.png', 'base')
                                     </xar:set>
-                                    <xar:data-output type="urlicon" link="$link" icon="$icon" />
+                                    <xar:data-output type="urlicon" link="$link" icon="$icon"/>
                                 <xar:else />
                                     <a href="#$link#">
                                         <xar:mlstring>Modify</xar:mlstring>
@@ -88,7 +88,7 @@
                                     <xar:set name="icon">
                                         xarTplGetImage('icons/delete.png', 'base')
                                     </xar:set>
-                                    <xar:data-output type="urlicon" link="$link" icon="$icon" />
+                                    <xar:data-output type="urlicon" link="$link" icon="$icon"/>
                                 <xar:else />
                                     <a href="#$link#">
                                         <xar:mlstring>Delete</xar:mlstring>
@@ -104,7 +104,7 @@
                                 <xar:set name="icon">
                                     xarTplGetImage('icons/display.png', 'base')
                                 </xar:set>
-                                <xar:data-output type="urlicon" link="$link" icon="$icon" />
+                                <xar:data-output type="urlicon" link="$link" icon="$icon"/>
                             <xar:else />
                                 <a href="#$link#">
                                     <xar:mlstring>Display</xar:mlstring>

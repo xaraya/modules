@@ -7,12 +7,12 @@
 
 <div class="news-item">
     <div class="news-header">
-        <xar:template file="news-nextprev" />
+        <xar:template file="news-nextprev"/>
 
         <h3>
             <!-- Add an edit link if we have the privileges -->
             <xar:if condition="xarSecurityCheck('EditArticles',0,'Article',$pubtypeid.'::' . $authorid . ':' . $aid)">
-                [<a href="#xarModURL('articles','admin','modify',array('aid'=&gt;$aid,'return_url'=&gt;xarServergetCurrentURL(array(),false)))#">edit</a>]
+                [<a href="#xarModURL('articles','admin','modify',array('aid'=&gt;$aid,'return_url'=&gt;xarServer::getCurrentURL(array(),false)))#">edit</a>]
             </xar:if>
             <a href="#xarServer::getCurrentURL(array('aid'=&gt;$aid))#">#xarvarPrepForDisplay($title)#</a>
         </h3>
@@ -25,11 +25,11 @@
      -->
     <xar:if condition="!empty($body)">
         <div class="news-body">#$body#</div>
-    <xar:elseif condition="!empty($summary)" />
+    <xar:elseif condition="!empty($summary)"/>
         <div class="news-body">#$summary#</div>
     </xar:if>
 
-    <xar:template file="news-nextprev" />
+    <xar:template file="news-nextprev"/>
 </div>
 
 <xar:set name="dummy">#xarTplSetPageTitle($title)#</xar:set>

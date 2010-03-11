@@ -478,7 +478,7 @@ function xarpages_funcapi_facet($args)
                 // Also add edit URLs if we have privileges.
                 if (!empty($edit_privs[$ptid])) {
                     $articles[$article_key]['editurl'] = xarModURL('articles','admin','modify',
-                        array('aid' => $article_value['aid'], 'return_url' => xarServergetCurrentURL(array(), false))
+                        array('aid' => $article_value['aid'], 'return_url' => xarServer::getCurrentURL(array(), false))
                     );
                 }
             }
@@ -516,12 +516,12 @@ function xarpages_funcapi_facet($args)
         // Include the pager.
         if ($numitems != $default_numitems) {
             $pager = xarTplGetPager($startnum, $article_count,
-               xarServerGetCurrentURL(array('startnum' => '%%', 'numitems' => $numitems)),
+               xarServer::getCurrentURL(array('startnum' => '%%', 'numitems' => $numitems)),
                $numitems
             );
         } else {
             $pager = xarTplGetPager($startnum, $article_count,
-               xarServerGetCurrentURL(array('startnum' => '%%')),
+               xarServer::getCurrentURL(array('startnum' => '%%')),
                $numitems
             );
         }
