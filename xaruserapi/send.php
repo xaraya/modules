@@ -210,6 +210,7 @@
         // Check we want to save this message and if so do it
             if (xarModItemVars::get('mailer','savetodb', xarMod::getID($module))) {
                 $object = DataObjectMaster::getObject(array('name' => 'mailer_history'));
+                if (!isset($mailitem['id'])) $mailitem['id'] = 0;
                 $args = array(
                             'mail_id' => $mailitem['id'],
                             'sender_name' => $sendername,
