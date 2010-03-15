@@ -3,8 +3,9 @@
  * Send an email
  *
  * @param  $module
- * @param  $id
- * @param  $name
+ * @param  $id      OR
+ * @param  $name    OR
+ * @param  $message
  * @param  $role_id
  * @param  $sendername
  * @param  $senderaddress
@@ -15,6 +16,11 @@
  * @param  $module
  * @param  $data
  *
+ * We can define a message by:
+ * - its raw content
+ * - its name
+ * - its ID
+ * 
  * The sequence of overrides is
  *  1. params passed to this function
  *  2. settings specific to the message to be sent
@@ -59,24 +65,29 @@
             if (empty($recipientlocale) && isset($object) && ($object->name == 'roles_users')) $recipientlocale = $recipient->properties['locale']->getValue();
             if (empty($recipientlocale)) $recipientlocale = xarModItemVars::get('mailer','defaultlocale', xarMod::getID($module));
             
-        // Get the list of message aliases (translations of the same message)
-            if (isset($args['name'])) {
-                $object = DataObjectMaster::getObjectList(array('name' => xarModItemVars::get('mailer','defaultmailobject', xarMod::getID($module))));
-                $where = "name = '" . $args['name'] . "'";
-                $mailitems = $object->getItems(array('where' => $where));
-                if (empty($mailitems)) return 2;
-        // Grab the first one that fits
-                $mailitem = current($mailitems);
-                $args['id'] = $mailitem['id'];
+            if (isset($args['message'])) {
+        // We'll send the message passed directly
+                $mailitems = array(array('body' => $args['message']));                
             } else {
-        // If no name available, need an id
-                if (!isset($args['id'])) return 2;
+                if (isset($args['name'])) {
+            // Get the list of message aliases (translations of the same message)
+                    $object = DataObjectMaster::getObjectList(array('name' => xarModItemVars::get('mailer','defaultmailobject', xarMod::getID($module))));
+                    $where = "name = '" . $args['name'] . "'";
+                    $mailitems = $object->getItems(array('where' => $where));
+                    if (empty($mailitems)) return 2;
+            // Grab the first one that fits
+                    $mailitem = current($mailitems);
+                    $args['id'] = $mailitem['id'];
+                } else {
+            // If no message or message name available, need an id
+                    if (!isset($args['id'])) return 2;
+                }
+                // FIXME: sholdn't need to instantiate the object again
+                $object = DataObjectMaster::getObjectList(array('name' => xarModItemVars::get('mailer','defaultmailobject', xarMod::getID($module))));
+                $where = "locale = '" . $recipientlocale . "' AND alias = " . $args['id'];
+                $mailitems = $object->getItems(array('where' => $where));
             }
             
-            // FIXME: sholdn't need to instantiate the object again
-            $object = DataObjectMaster::getObjectList(array('name' => xarModItemVars::get('mailer','defaultmailobject', xarMod::getID($module))));
-            $where = "locale = '" . $recipientlocale . "' AND alias = " . $args['id'];
-            $mailitems = $object->getItems(array('where' => $where));
             
             if (empty($mailitems)) {
         // If no message based on the alias use the ID
@@ -116,7 +127,7 @@
             }
 
         // Check if there is a redirect in the message
-            if ($mailitem['redirect']) {
+            if (!empty($mailitem['redirect'])) {
                 if (empty($mailitem['redirect_address'])) return 4;
                 $recipientaddress = $mailitem['redirect_address'];
                 $redirectsending = $mailitem['redirect'];
@@ -124,12 +135,14 @@
             }
             
         // Get the sender's data
-            $sendername = isset($args['sendername']) ? $args['sendername'] : $mailitem['sender_name'];
+            $sendername = isset($mailitem['sender_name']) ? $mailitem['sender_name'] : '';
+            $sendername = isset($args['sendername']) ? $args['sendername'] : $sendername;
             if (empty($sendername)) $sendername = xarModItemVars::get('mailer','defaultsendername', xarMod::getID($module));
-            $senderaddress = isset($args['senderaddress']) ? $args['senderaddress'] : $mailitem['sender_address'];
+            $senderaddress = isset($mailitem['sender_address']) ? $mailitem['sender_address'] : '';
+            $senderaddress = isset($args['senderaddress']) ? $args['senderaddress'] : $senderaddress;
             if (empty($senderaddress)) $senderaddress = xarModItemVars::get('mailer','defaultsenderaddress', xarMod::getID($module));
         
-            if (($mailitem['mail_type'] == 1) || ($mailitem['mail_type'] == 2)) {
+            if (!empty($mailitem['mail_type']) && (($mailitem['mail_type'] == 1) || ($mailitem['mail_type'] == 2))) {
                 
                 $data = isset($args['data']) ? $args['data'] : array();
 
@@ -141,9 +154,10 @@
                 }
             } 
 
-            $subject = $mailitem['subject'];
+            $subject = !empty($mailitem['subject']) ? $mailitem['subject'] : '';
             $message = $header . $mailitem['body'] . $footer;
-            if (($mailitem['mail_type'] == 3) || ($mailitem['mail_type'] == 4)) {
+
+            if (!empty($mailitem['mail_type']) && (($mailitem['mail_type'] == 3) || ($mailitem['mail_type'] == 4))) {
                 sys::import('xaraya.templating.compiler');
                 $blCompiler = XarayaCompiler::instance();
                 $data = isset($args['data']) ? $args['data'] : array();
@@ -187,7 +201,7 @@
                           'custom_header'   => $custom_header);
 
         // Pass it to the mail module for processing
-        if (($mailitem['mail_type'] == 2) || ($mailitem['mail_type'] == 4)) {
+        if (!empty($mailitem['mail_type']) && (($mailitem['mail_type'] == 2) || ($mailitem['mail_type'] == 4))) {
             if (!xarModAPIFunc('mail','admin','sendhtmlmail', $args)) return 5;
         } else {
             if (!xarModAPIFunc('mail','admin','sendmail', $args)) return 5;
