@@ -217,8 +217,8 @@
                             'sender_address' => $senderaddress,
                             'recipient_name' => $recipientname,
                             'recipient_address' => $recipientaddress,
-                            'body' => $header . $mailitem['body'] . $footer,
-                            'subject' => $mailitem['subject'],
+                            'body' => $message,
+                            'subject' => $subject,
                             );
                 $item = $object->createItem($args);
             }
