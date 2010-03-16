@@ -5,7 +5,8 @@
  * @param  $id      OR          the ID of the message to be sent
  * @param  $name    OR          the name/designation of the messageto be sent
  * @param  $message             the message body
- * @param  $mail_type           the type of mail to be sent (text, html)
+ * @param  $mail_id             the id of the mail to be sent (from another module)
+ * @param  $mail_type           the type of the mail to be sent (text, html)
  * @param  $role_id             the ID of the recipient
  * @param  $sendername
  * @param  $senderaddress
@@ -104,12 +105,17 @@
 
         // Grab the first one that fits
             $mailitem = current($mailitems);
+
+        // Adjust the mail id if such a param was passed
+            $mailid = !empty($args['mail_id']) ? $args['mail_id'] : 0;
+            if (!empty($mailid)) $mailitem['id'] = $mailid;
+            if (empty($mailitem['id'])) $mailitem['id'] = 0;            
             
         // Adjust the mail type if such a param was passed
         // Ensure we always have a value for this
             $mailtype = !empty($args['mail_type']) ? $args['mail_type'] : 0;
             if (!empty($mailtype)) $mailitem['mail_type'] = $mailtype;
-            if (!empty($mailitem['mail_type'])) $mailitem['mail_type'] = 1;            
+            if (empty($mailitem['mail_type'])) $mailitem['mail_type'] = 1;            
             
         // Get the header if this message has one
             $header = "";
@@ -220,7 +226,6 @@
         // Check we want to save this message and if so do it
             if (xarModItemVars::get('mailer','savetodb', xarMod::getID($module))) {
                 $object = DataObjectMaster::getObject(array('name' => 'mailer_history'));
-                if (!isset($mailitem['id'])) $mailitem['id'] = 0;
                 $args = array(
                             'mail_id' => $mailitem['id'],
                             'module' => $messagemodule,
