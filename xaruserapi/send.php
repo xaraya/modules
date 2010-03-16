@@ -177,7 +177,6 @@
                 sys::import('xaraya.templating.compiler');
                 $blCompiler = XarayaCompiler::instance();
                 $data = isset($args['data']) ? $args['data'] : array();
-
                 try {
                     $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
                     $tplString .= $subject;
