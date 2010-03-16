@@ -70,6 +70,7 @@
         $query = "CREATE TABLE " . $prefix . "_mailer_history (
             id                integer unsigned NOT NULL auto_increment,
             mail_id           integer unsigned NOT NULL,
+            module_id         integer unsigned NOT NULL,
             sendername        varchar(254) default '' NOT NULL,
             senderaddress     varchar(254) default '' NOT NULL,
             recipientname     varchar(254) default '' NOT NULL,

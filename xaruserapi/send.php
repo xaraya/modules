@@ -2,7 +2,6 @@
 /**
  * Send an email
  *
- * @param  $module
  * @param  $id      OR
  * @param  $name    OR
  * @param  $message
@@ -14,7 +13,8 @@
  * @param  $recipientaddress
  * @param  $ccaddresses         format is an array with elements emailaddr => name
  * @param  $bccaddresses        format is an array with elements emailaddr => name
- * @param  $module
+ * @param  $module              the module where the user object is defined
+ * @param  $messagemodule       the module where the message to be sent is defined (for the history only)
  * @param  $data
  *
  * We can define a message by:
@@ -42,7 +42,10 @@
     
     function mailer_userapi_send($args)
     {
+        // The module(s) where our information iscoming from
         $module = isset($args['module']) ? $args['module'] : 'mailer';
+        $messagemodule = isset($args['messagemodule']) ? $args['messagemodule'] : xarMod::getRegID('mailer');
+        ;
         if (!isset($args['role_id']) && !isset($args['recipientaddress'])) 
             throw new Exception(xarML('No recipient user id or email address'));
 
@@ -220,6 +223,7 @@
                 if (!isset($mailitem['id'])) $mailitem['id'] = 0;
                 $args = array(
                             'mail_id' => $mailitem['id'],
+                            'module_id' => $messagemodule,
                             'sender_name' => $sendername,
                             'sender_address' => $senderaddress,
                             'recipient_name' => $recipientname,
