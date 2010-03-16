@@ -6,6 +6,7 @@
  * @param  $id      OR
  * @param  $name    OR
  * @param  $message
+ * @param  $mail_type
  * @param  $role_id
  * @param  $sendername
  * @param  $senderaddress
@@ -101,6 +102,12 @@
         // Grab the first one that fits
             $mailitem = current($mailitems);
             
+        // Adjust the mail type if such a param was passed
+        // Ensure we always have a value for this
+            $mailtype = !empty($args['mail_type']) ? $args['mail_type'] : 0;
+            if (!empty($mailtype)) $mailitem['mail_type'] = $mailtype;
+            if (!empty($mailitem['mail_type'])) $mailitem['mail_type'] = 1;            
+            
         // Get the header if this message has one
             $header = "";
             if (isset($mailitem['header']) && !empty($mailitem['header'])) {
@@ -142,7 +149,7 @@
             $senderaddress = isset($args['senderaddress']) ? $args['senderaddress'] : $senderaddress;
             if (empty($senderaddress)) $senderaddress = xarModItemVars::get('mailer','defaultsenderaddress', xarMod::getID($module));
         
-            if (!empty($mailitem['mail_type']) && (($mailitem['mail_type'] == 1) || ($mailitem['mail_type'] == 2))) {
+            if (($mailitem['mail_type'] == 1) || ($mailitem['mail_type'] == 2)) {
                 
                 $data = isset($args['data']) ? $args['data'] : array();
 
@@ -157,7 +164,7 @@
             $subject = !empty($mailitem['subject']) ? $mailitem['subject'] : '';
             $message = $header . $mailitem['body'] . $footer;
 
-            if (!empty($mailitem['mail_type']) && (($mailitem['mail_type'] == 3) || ($mailitem['mail_type'] == 4))) {
+            if (($mailitem['mail_type'] == 3) || ($mailitem['mail_type'] == 4)) {
                 sys::import('xaraya.templating.compiler');
                 $blCompiler = XarayaCompiler::instance();
                 $data = isset($args['data']) ? $args['data'] : array();
