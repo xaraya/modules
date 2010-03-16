@@ -223,7 +223,7 @@
                 if (!isset($mailitem['id'])) $mailitem['id'] = 0;
                 $args = array(
                             'mail_id' => $mailitem['id'],
-                            'module_id' => $messagemodule,
+                            'module' => $messagemodule,
                             'sender_name' => $sendername,
                             'sender_address' => $senderaddress,
                             'recipient_name' => $recipientname,
