@@ -2,11 +2,11 @@
 /**
  * Send an email
  *
- * @param  $id      OR
- * @param  $name    OR
- * @param  $message
- * @param  $mail_type
- * @param  $role_id
+ * @param  $id      OR          the ID of the message to be sent
+ * @param  $name    OR          the name/designation of the messageto be sent
+ * @param  $message             the message body
+ * @param  $mail_type           the type of mail to be sent (text, html)
+ * @param  $role_id             the ID of the recipient
  * @param  $sendername
  * @param  $senderaddress
  * @param  $recipientname
