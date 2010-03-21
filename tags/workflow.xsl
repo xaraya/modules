@@ -10,7 +10,7 @@
 
   <xsl:template match="xar:workflow-activity">
     <xsl:processing-instruction name="php">
-      <xsl:text>echo xarMod::apiFunc('workflow','user','handleactivitytag',</xsl:text>
+      <xsl:text>echo xarMod::apiFunc('workflow','user','showactivity',</xsl:text>
         <xsl:call-template name="atts2args">
           <xsl:with-param name="nodeset" select="@*"/>
         </xsl:call-template>
@@ -20,7 +20,7 @@
 
   <xsl:template match="xar:workflow-status">
     <xsl:processing-instruction name="php">
-      <xsl:text>echo xarMod::apiFunc('workflow','user','handlestatustag',</xsl:text>
+      <xsl:text>echo xarMod::apiFunc('workflow','user','showstatus',</xsl:text>
         <xsl:call-template name="atts2args">
           <xsl:with-param name="nodeset" select="@*"/>
         </xsl:call-template>
@@ -30,7 +30,7 @@
 
   <xsl:template match="xar:workflow-instances">
     <xsl:processing-instruction name="php">
-      <xsl:text>echo xarMod::apiFunc('workflow','user','handleinstancestag',</xsl:text>
+      <xsl:text>echo xarMod::apiFunc('workflow','user','showinstances',</xsl:text>
         <xsl:call-template name="atts2args">
           <xsl:with-param name="nodeset" select="@*"/>
         </xsl:call-template>
