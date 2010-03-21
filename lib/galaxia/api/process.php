@@ -165,7 +165,7 @@ class Process extends Base
         return $ret;
     }
 
-    static function normalize($name, $version)
+    static function normalize($name, $version = null)
     {
          $name = $name.'_'.$version;
          return parent::normalize($name);

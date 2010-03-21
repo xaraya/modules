@@ -57,7 +57,13 @@ if (!defined('GRAPHVIZ_BIN_DIR')) {
 // Database handler
 if (!isset($GLOBALS['dbGalaxia'])) {
     if(defined('xarCore::GENERATION') && xarCore::GENERATION == 2) {
-        $GLOBALS['dbGalaxia'] = xarDB::getConn();
+
+    // CHECKME: we need a connection *without* COMPAT_ASSOC_LOWER flags here, but xaraya sets this
+    //          by default now. So we get another connection with the same DSN and without the flags
+        $conn = xarDB::getConn();
+        $dsn = $conn->getDSN();
+        $flags = 0;
+        $GLOBALS['dbGalaxia'] = xarDB::getConnection($dsn, $flags);
 
         // This means we're in the 2 series of Xaraya
         define('GALAXIA_FETCHMODE',ResultSet::FETCHMODE_ASSOC);

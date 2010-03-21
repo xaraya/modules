@@ -143,7 +143,7 @@ class Base extends Observable
         return ' `'.GALAXIA_TABLE_PREFIX.$tbl.'` ';
     }
 
-    static function normalize($text)
+    static function normalize($text, $extra = null)
     {
         $text = str_replace(" ","_",$text);
         $text = preg_replace("/[^0-9A-Za-z\_]/",'',$text);
