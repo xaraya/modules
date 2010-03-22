@@ -41,7 +41,7 @@ $where = '';
 $wheres = array();
 
 if (!empty($data['filter_instance'])) $wheres[] = "instanceId='" . $data['filter_instance'] . "'";
-if (!empty($data['filter_process'])) $wheres[] = "gp.id='" . $data['filter_process'] . "'";
+if (!empty($data['filter_process'])) $wheres[] = "gp.pId='" . $data['filter_process'] . "'";
 if (!empty($data['filter_activity'])) $wheres[] = "ga.activityId='" . $data['filter_activity'] . "'";
 if (!empty($data['filter_user'])) $wheres[] = "user='" . $data['filter_user'] . "'";
 

@@ -65,7 +65,7 @@ class ProcessManager extends BaseManager
                 $out.=$line;
             }
             fclose($fp);
-            $out.='      ]]></code>';
+            $out.='      ]]></code>'."\n";
             if($res['isInteractive']=='y') {
                 $out.='      <template><![CDATA[';
                 $fp=fopen(GALAXIA_PROCESSES."/$procname/code/templates/$name.tpl","r");
@@ -74,7 +74,7 @@ class ProcessManager extends BaseManager
                     $out.=$line;
                 }
                 fclose($fp);
-                $out.='      ]]></template>';
+                $out.='      ]]></template>'."\n";
             }
             $out.='    </activity>'."\n";
         }

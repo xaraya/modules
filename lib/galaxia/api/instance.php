@@ -566,6 +566,15 @@ class Instance extends Base
       }
     }
 
+// We need to delete the old instance activity, contrary to revision com.xaraya.modules.workflow/dbab1fe35fd2ada554c5763e4e549bb66bc99faa
+// and http://tikiwiki.svn.sourceforge.net/viewvc/tikiwiki/branches/1.10/lib/Galaxia/src/API/Instance.php?r1=2464&r2=5629
+    //update the instance_activities table
+    //if not splitting delete first
+    if (!$split && $from != $activityId) {
+      $query = "delete from ".self::tbl('instance_activities')." where `instanceId`=? and `activityId`=?";
+      $this->query($query,array((int)$this->instanceId,$from));
+    }
+
     $now = date("U");
     $iid = $this->instanceId;
     $query="delete from ".self::tbl('instance_activities')." where `instanceId`=? and `activityId`=?";

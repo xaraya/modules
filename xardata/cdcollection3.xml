@@ -4,7 +4,7 @@
   <version>1.0</version>
   <isActive>y</isActive>
    <description>Borrow CD's, browse CDs, etc...</description>
-  <lastModif>01/10/2003 [09:55:32]</lastModif>
+  <lastModif>21/03/2010 [04:04:52]</lastModif>
   <sharedCode><![CDATA[<?php
 
 ?>  ]]></sharedCode>
@@ -13,20 +13,20 @@
       <name>end</name>
       <type>end</type>
       <description>default end activity</description>
-      <lastModif>01/10/2003 [09:55:32]</lastModif>
+      <lastModif>21/03/2010 [04:04:52]</lastModif>
       <isInteractive>n</isInteractive>
       <isAutoRouted>y</isAutoRouted>
       <roles>
       </roles>
       <code><![CDATA[<?php
 // Nothing to do here...
-?>      ]]></code>    
+?>      ]]></code>
     </activity>
     <activity>
       <name>Browse CDs</name>
       <type>standalone</type>
       <description>The user can browse CDs. The title and status is displayed for each CD. A button to request a CD is displayed.</description>
-      <lastModif>02/10/2003 [02:31:23]</lastModif>
+      <lastModif>21/03/2010 [04:04:52]</lastModif>
       <isInteractive>y</isInteractive>
       <isAutoRouted>n</isAutoRouted>
       <roles>
@@ -35,10 +35,6 @@
       </roles>
       <code><![CDATA[<?php
 
-// Retrieve the object information for the CD collection
-$object = DataObjectMaster::getObjectInfo(
-                                      array('name' => 'cdcollection'));
-
 // Check if the current user has the 'admin' role
 $isadmin = $activity->checkUserRole($user,'admin');
 $tplData['isadmin'] = $isadmin;
@@ -46,9 +42,8 @@ $tplData['isadmin'] = $isadmin;
 // Change the status of CDs if allowed
 if ($isadmin && isset($_REQUEST['status'])) {
     // get the CD item
-    $object['itemid'] = $_REQUEST['cdId'];
-    $object['getobject'] = 1;
-    $cd = xarModAPIFunc('dynamicdata','user','getitem', $object);
+    $cd = DataObjectMaster::getObject(array('name' => 'cdcollection'));
+    $itemid = $cd->getItem(array('itemid' => $_REQUEST['cdId']));
     // update the CD status and user
     if ($_REQUEST['status']=='available') {
         $cd->updateItem(array('status' => 'not available',
@@ -57,17 +52,16 @@ if ($isadmin && isset($_REQUEST['status'])) {
         $cd->updateItem(array('status' => 'available',
                                            'user' => 0));
     }
-    unset($object['itemid']);
-    unset($object['getobject']);
 }
 
 // Get the CD list
-$items = xarModAPIFunc('dynamicdata','user','getitems', $object);
+$cdlist = DataObjectMaster::getObjectList(array('name' => 'cdcollection'));
+$items = $cdlist->getItems();
 foreach (array_keys($items) as $index) {
     // show the user name instead of the user id
     if (empty($items[$index]['user'])) {
         $items[$index]['user'] = '-';
-    } else {
+    } elseif (is_numeric($items[$index]['user'])) {
         $items[$index]['user'] = xarUserGetVar('name', $items[$index]['user']);
     }
 }
@@ -85,8 +79,8 @@ if ($actinfo) {
 
 // Note: current activityId, iid and return_url are automatically available in the template
 
-?>      ]]></code>      <template><![CDATA[
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+?>      ]]></code>
+      <template><![CDATA[<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <h3>Listing CDs</h3>
 <table class="normal">
   <tr>
@@ -109,7 +103,8 @@ if ($actinfo) {
 <input type="hidden" name="cdId" value="#$cd['cdid']#"/>
 <input type="hidden" name="status" value="#$cd['status']#"/>
 <input type="image" name="whatever" src="#sys::code()#modules/workflow/lib/galaxia/img/icons/refresh2.gif" title="Change Status"/>
-<xar:elseif condition="$cd['status'] eq 'available'"/>
+</xar:if>
+<xar:if condition="$cd['status'] eq 'available'">
 <input type="hidden" name="activityId" value="#$requestId#"/>
 <input type="hidden" name="cd" value="#$cd['cdid']#"/>
 <input type="hidden" name="request" value="1"/>
@@ -121,13 +116,13 @@ if ($actinfo) {
 </xar:foreach>
 </xar:if>
 </table>
-</xar:template>      ]]></template>    
+</xar:template>      ]]></template>
     </activity>
     <activity>
       <name>Request CD</name>
       <type>start</type>
       <description>The user requests a CD</description>
-      <lastModif>02/10/2003 [02:31:54]</lastModif>
+      <lastModif>21/03/2010 [04:04:52]</lastModif>
       <isInteractive>y</isInteractive>
       <isAutoRouted>y</isAutoRouted>
       <roles>
@@ -136,13 +131,9 @@ if ($actinfo) {
       </roles>
       <code><![CDATA[<?php
 
-// Retrieve the object information for the CD collection
-$object = xarModAPIFunc('dynamicdata','user','getobjectinfo',
-                                      array('name' => 'cdcollection'));
-
 // Get the CDs with status 'available'
-$object['where'] = "status eq 'available'";
-$items = xarModAPIFunc('dynamicdata','user','getitems', $object);
+$cdlist = DataObjectMaster::getObjectList(array('name' => 'cdcollection'));
+$items = $cdlist->getItems(array('where' => "status eq 'available'"));
 
 // Put the CD list in a template variable
 $tplData['cds'] = $items;
@@ -159,8 +150,8 @@ $tplData['cdId'] = isset($_REQUEST['cdId']) ? $_REQUEST['cdId'] : '';
 
 // Note: current activityId, iid and return_url are automatically available in the template
 
-?>      ]]></code>      <template><![CDATA[
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"><h3>Request a CD</h3>
+?>      ]]></code>
+      <template><![CDATA[<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"><h3>Request a CD</h3>
 <form method="post" action="&xar-modurl-workflow-user-run_activity;">
 <input type="hidden" name="activityId" value="#$activityId#"/>
 <input type="hidden" name="return_url" value="#$return_url#"/>
@@ -186,7 +177,7 @@ There are no CDs available at the moment...
       <name>Approve CD Request</name>
       <type>switch</type>
       <description>Approve or reject the CD request</description>
-      <lastModif>10/10/2003 [10:40:13]</lastModif>
+      <lastModif>21/03/2010 [04:04:52]</lastModif>
       <isInteractive>y</isInteractive>
       <isAutoRouted>y</isAutoRouted>
       <roles>
@@ -194,19 +185,16 @@ There are no CDs available at the moment...
       </roles>
       <code><![CDATA[<?php
 
-// Retrieve the object information for the CD collection
-$object = xarModAPIFunc('dynamicdata','user','getobjectinfo',
-                                      array('name' => 'cdcollection'));
-
 // Get the CD that was requested
-$object['itemid'] = $instance->get('cdId');
-$cd = xarModAPIFunc('dynamicdata','user','getitem', $object);
+$cd = DataObjectMaster::getObject(array('name' => 'cdcollection'));
+$cd->getItem(array('itemid' => $instance->get('cdId')));
+$cdinfo = $cd->getFieldValues();
 
 // Save the CD title in the instance for later in the process
-$instance->set('title',$cd['title']);
+$instance->set('title',$cdinfo['title']);
 
 // Put the CD information in a template variable
-$tplData['info'] = $cd;
+$tplData['info'] = $cdinfo;
 $tplData['requestedby'] = xarUserGetVar('name',$instance->get('user'));
 
 // Approve the CD request
@@ -231,8 +219,8 @@ if(isset($_REQUEST['rejected'])) {
 
 // Note: current activityId, iid and return_url are automatically available in the template
 
-?>      ]]></code>      <template><![CDATA[
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"><h3>Approve or reject CD loan</h3>
+?>      ]]></code>
+      <template><![CDATA[<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"><h3>Approve or reject CD loan</h3>
 CD: #$info['title']# <br/>
 Requested by: #$requestedby# <br/>
 Status: #$info['status']# <br/>
@@ -245,13 +233,13 @@ Status: #$info['status']# <br/>
 <input type="submit" name="rejected" value="rejected"/>
 <input type="submit" name="approved" value="approved"/>
 </form>
-</xar:template>      ]]></template>   
+</xar:template>      ]]></template>
     </activity>
     <activity>
       <name>Approve CD</name>
       <type>activity</type>
       <description>Approve the request</description>
-      <lastModif>01/10/2003 [09:55:32]</lastModif>
+      <lastModif>21/03/2010 [04:04:52]</lastModif>
       <isInteractive>n</isInteractive>
       <isAutoRouted>y</isAutoRouted>
       <roles>
@@ -269,25 +257,20 @@ if (!empty($sendto)) {
     $sendto = 0;
 }
 
-// Retrieve the object information for the CD collection
-$object = xarModAPIFunc('dynamicdata','user','getobjectinfo',
-                                      array('name' => 'cdcollection'));
-
-// Get the CD item
-$object['itemid'] = $instance->get('cdId');
-$object['getobject'] = 1;
-$cd = xarModAPIFunc('dynamicdata','user','getitem', $object);
+// Get the CD that was requested
+$cd = DataObjectMaster::getObject(array('name' => 'cdcollection'));
+$cd->getItem(array('itemid' => $instance->get('cdId')));
 
 // Update the CD status and user
 $cd->updateItem(array('status' => 'not available',
                       'user' => $sendto));
-?>      ]]></code>    
+?>      ]]></code>
     </activity>
     <activity>
       <name>Reject CD</name>
       <type>activity</type>
       <description>Reject the loan request</description>
-      <lastModif>01/10/2003 [09:55:32]</lastModif>
+      <lastModif>21/03/2010 [04:04:52]</lastModif>
       <isInteractive>n</isInteractive>
       <isAutoRouted>y</isAutoRouted>
       <roles>
@@ -305,13 +288,13 @@ if (!empty($sendto)) {
 
 // No need to update the CD information here
 
-?>      ]]></code>    
+?>      ]]></code>
     </activity>
     <activity>
       <name>Ack result</name>
       <type>activity</type>
       <description>The user gets the response</description>
-      <lastModif>02/10/2003 [02:32:16]</lastModif>
+      <lastModif>21/03/2010 [04:04:52]</lastModif>
       <isInteractive>y</isInteractive>
       <isAutoRouted>y</isAutoRouted>
       <roles>
@@ -336,8 +319,8 @@ $tplData['escalated'] = $instance->get('escalated');
 
 // Note: current activityId, iid and return_url are automatically available in the template
 
-?>      ]]></code>      <template><![CDATA[
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"><h3>Loan result</h3>
+?>      ]]></code>
+      <template><![CDATA[<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"><h3>Loan result</h3>
 Your request for #$title# was #$status#
 <xar:if condition="!empty($reason)">
 <p>Reason: #$reason#</p>
@@ -351,16 +334,15 @@ Your request for #$title# was #$status#
 <input type="hidden" name="return_url" value="#$return_url#"/>
 <input type="submit" name="ack" value="OK"/>
 </form>
-</xar:template>      ]]></template>    
+</xar:template>      ]]></template>
     </activity>
     <activity>
       <name>Handle Escalated Request</name>
       <type>switch</type>
       <description>When the normal delay for approval has expired, and the scheduler is executing scheduled workflow activities, we end up here. You could for instance assign another role (e.g. manager) to this activity, and let other people handle escalated requests in different ways.
 
-Note that we need to specify a transition from Approve CD Request here, even though that transition will never be followed by regular users, because the scheduled Escalate activity needs to be able to move the instance from there to here.
-</description>
-      <lastModif>11/10/2003 [12:28:48]</lastModif>
+Note that we need to specify a transition from Approve CD Request here, even though that transition will never be followed by regular users, because the scheduled Escalate activity needs to be able to move the instance from there to here.</description>
+      <lastModif>21/03/2010 [04:04:52]</lastModif>
       <isInteractive>y</isInteractive>
       <isAutoRouted>y</isAutoRouted>
       <roles>
@@ -371,19 +353,16 @@ Note that we need to specify a transition from Approve CD Request here, even tho
 // See when we escalated this instance
 $tplData['escalated'] = $instance->get('escalated');
 
-// Retrieve the object information for the CD collection
-$object = xarModAPIFunc('dynamicdata','user','getobjectinfo',
-                                      array('name' => 'cdcollection'));
-
 // Get the CD that was requested
-$object['itemid'] = $instance->get('cdId');
-$cd = xarModAPIFunc('dynamicdata','user','getitem', $object);
+$cd = DataObjectMaster::getObject(array('name' => 'cdcollection'));
+$cd->getItem(array('itemid' => $instance->get('cdId')));
+$cdinfo = $cd->getFieldValues();
 
 // Save the CD title in the instance for later in the process
-$instance->set('title',$cd['title']);
+$instance->set('title',$cdinfo['title']);
 
 // Put the CD information in a template variable
-$tplData['info'] = $cd;
+$tplData['info'] = $cdinfo;
 $tplData['requestedby'] = xarUserGetVar('name',$instance->get('user'));
 
 // Approve the CD request
@@ -408,8 +387,8 @@ if(isset($_REQUEST['rejected'])) {
 
 // Note: current activityId, iid and return_url are automatically available in the template
 
-?>      ]]></code>      <template><![CDATA[
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"><h3>Approve or reject CD loan</h3>
+?>      ]]></code>
+      <template><![CDATA[<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"><h3>Approve or reject CD loan</h3>
 <p><span class="xar-error">It's about time you got here :-)</span></p>
 CD: #$info['title']# <br/>
 Requested by: #$requestedby# <br/>
@@ -424,7 +403,7 @@ Escalated: #xarLocaleFormatDate('%x %X %z', $escalated)# <br/>
 <input type="submit" name="rejected" value="rejected"/>
 <input type="submit" name="approved" value="approved"/>
 </form>
-</xar:template>      ]]></template>    
+</xar:template>      ]]></template>
     </activity>
     <activity>
       <name>Escalate</name>
@@ -432,7 +411,7 @@ Escalated: #xarLocaleFormatDate('%x %X %z', $escalated)# <br/>
       <description>Escalate a CD request when a certain time has elapsed before the request was approved or rejected. This activity will be called by the scheduler module, so we associate a specific scheduler role to it - you can e.g. map the anonymous user to that role.
 
 If you want to test this activity manually -without the scheduler- you can make it interactive and then run it like other stand-alone activities.</description>
-      <lastModif>11/10/2003 [12:18:38]</lastModif>
+      <lastModif>21/03/2010 [04:04:52]</lastModif>
       <isInteractive>n</isInteractive>
       <isAutoRouted>n</isAutoRouted>
       <roles>
@@ -498,8 +477,8 @@ foreach ($findinstances as $info) {
     // or ...
 }
 
-?>      ]]></code>    
-  </activity>
+?>      ]]></code>
+    </activity>
   </activities>
   <transitions>
      <transition>

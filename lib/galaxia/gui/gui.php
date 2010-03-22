@@ -130,6 +130,7 @@ class GUI extends Base
     $result = $this->query($query,$bindvars,$maxRecords,$offset);
     $cant = $this->getOne($query_cant,$bindvars);
     $ret = Array();
+// TODO: check http://tikiwiki.svn.sourceforge.net/viewvc/tikiwiki/branches/1.10/lib/Galaxia/src/GUI/GUI.php?annotate=5629
     while($res = $result->fetchRow()) {
       // Get instances per activity
       $res['instances']=$this->getOne("select count(distinct(gi.instanceId))
