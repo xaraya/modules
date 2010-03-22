@@ -12,6 +12,11 @@
         if (!xarSecurityCheck('AdminFoo')) return;
         if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
         if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+
+        $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'foo'));
+        $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls');
+        $data['module_settings']->getItem();
+
         switch (strtolower($phase)) {
             case 'modify':
             default:
@@ -33,15 +38,12 @@
                 if (!xarSecConfirmAuthKey()) return;
                 switch ($data['tab']) {
                     case 'general':
-                        if (!xarVarFetch('items_per_page', 'int', $items_per_page, xarModVars::get('foo', 'items_per_page'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-                        if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-                        if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('foo', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
-                        if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('foo', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
-
-                        xarModVars::set('foo', 'items_per_page', $items_per_page);
-                        xarModVars::set('foo', 'SupportShortURLs', $shorturls);
-                        xarModVars::set('foo', 'useModuleAlias', $useModuleAlias);
-                        xarModVars::set('foo', 'aliasname', $aliasname);
+                        $isvalid = $data['module_settings']->checkInput();
+                        if (!$isvalid) {
+                            return xarTplModule('foo','admin','modifyconfig', $data);        
+                        } else {
+                            $itemid = $data['module_settings']->updateItem();
+                        }
                         break;
                     case 'tab2':
                         break;

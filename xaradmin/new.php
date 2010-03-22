@@ -32,7 +32,7 @@
                 return xarTplModule('foo','admin','new', $data);        
             } else {
                 // Good data: create the item
-                $item = $data['object']->createItem();
+                $itemid = $data['object']->createItem();
                 
                 // Jump to the next page
                 xarResponse::redirect(xarModURL('foo','admin','view'));

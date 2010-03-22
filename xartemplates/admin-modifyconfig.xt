@@ -70,36 +70,7 @@
                     General Options
                 </h3>
                 <fieldset>
-                    <legend>
-                        Page Layout
-                    </legend>
-                    <div class="xar-form-input-wrapper">
-                        <label for="items_per_page" title="#xarML('Number of items to show on each page.')#" class="xar-form-label">
-                            Items Per Page:
-                        </label>
-                        <xar:set name="value"><xar:var scope="module" module="foo" name="items_per_page"/></xar:set>
-                        <xar:data-input type="textbox" name="items_per_page" value="$value" class="xar-form-textshort"/>
-                    </div>
-                    <div class="xar-form-input-wrapper-after">
-                        <xar:set name="checked">xarModVars::get('foo','SupportShortURLs')</xar:set>
-                        <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$checked"/>
-                        <label for="shorturls" title="#xarML('Enable short URLs for Foo module')#">
-                            Enable Short URLs
-                        </label>
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
-                            Use a module alias
-                        </label>
-                        <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked"/>
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
-                            Module Alias Name
-                        </label>
-                        <xar:set name="value"><xar:var scope="module" module="foo" name="aliasname"/></xar:set>
-                        <xar:data-input type="textbox" name="aliasname" value="$value" size="32" maxlength="100"/>
-                    </div>
+                    <xar:data-form object="$module_settings"/>
                 </fieldset>
                 <fieldset>
                     <div class="xar-form-input-wrapper-after">
