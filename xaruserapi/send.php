@@ -3,7 +3,8 @@
  * Send an email
  *
  * @param  $id      OR          the ID of the message to be sent
- * @param  $name    OR          the name/designation of the messageto be sent
+ * @param  $name    OR          the name/designation of the message to be sent
+ * @param  $subject             the message subject
  * @param  $message             the message body
  * @param  $mail_id             the id of the mail to be sent (from another module)
  * @param  $mail_type           the type of the mail to be sent (text, html)
@@ -171,6 +172,7 @@
             } 
 
             $subject = !empty($mailitem['subject']) ? $mailitem['subject'] : '';
+            $subject = isset($args['subject']) ? $args['subject'] : $subject;
             $message = $header . $mailitem['body'] . $footer;
 
             if (($mailitem['mail_type'] == 3) || ($mailitem['mail_type'] == 4)) {
