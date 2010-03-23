@@ -9,7 +9,7 @@
         &#xA0;[<a class="prevnext" href="#xarServer::getCurrentURL(array('offset' =&gt; $next_offset))#">#xarML('next')#</a>]
       </xar:if>
       <br/>
-      <xar:pager startnum="$offset" itemsperpage="$cant_pages" total="$maxRecords" urltemplate="$url"/>
+      <xar:pager startnum="$offset" itemsperpage="$maxRecords" total="$cant" urltemplate="$url"/>
     </div>
   </div>
 </xar:template>
