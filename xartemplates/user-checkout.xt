@@ -10,7 +10,7 @@
     <div class="xar-mod-body">
 
 <xar:if condition="xarUserIsLoggedIn()">
-
+ 
 	<xar:if condition="isset($products)">
 
 		<h2>Checkout</h2>

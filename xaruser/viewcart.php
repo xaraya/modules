@@ -43,9 +43,10 @@ function shop_user_viewcart() {
 					$_SESSION['shop'][$pid]['qty'] = $qty_new;
 				}
 
-			} 
+			}  
 
-			if (isset($_SESSION['shop'][$pid])) { // If the quantity hasn't been set to zero...
+			// If the quantity hasn't been set to zero, add it to the $products array...
+			if (isset($_SESSION['shop'][$pid])) { 
 
 				//commas in the quantity seem to mess up our math
 				$products[$pid]['qty'] = str_replace(',','',$_SESSION['shop'][$pid]['qty']); 
@@ -58,7 +59,7 @@ function shop_user_viewcart() {
 				$products[$pid]['title'] = xarVarPrepForDisplay($values['title']);
 				$products[$pid]['price'] = $values['price'];
 				$subtotal = $values['price'] * $products[$pid]['qty'];
-				$subtotals[] = $subtotal;
+				$subtotals[] = $subtotal; // so we can use array_sum() to add it all up
 				if (substr($subtotal, 0, 1) == '.') {
 					$subtotal = '0' . $subtotal;
 				}
@@ -69,12 +70,15 @@ function shop_user_viewcart() {
 		}
 
 	$total = array_sum($subtotals);
-			if (substr($total, 0, 1) == '.') {
-				$total = '0' . $total; // add a zero to the front of the number if it starts with a decimal
-			}
+	
+	// Add a zero to the front of the number if it starts with a decimal...
+	if (substr($total, 0, 1) == '.') {
+		$total = '0' . $total; 
+	}
+
 	$total = number_format($total, 2);  
 
-	$_SESSION['products'] = $products; // update the session variables
+	$_SESSION['products'] = $products; // update the session variable
 	$data['products'] = $products; // don't want too much session stuff in the templates
 	$_SESSION['total'] = $total;
 	$data['total'] = $total;

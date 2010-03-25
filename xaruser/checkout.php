@@ -24,51 +24,61 @@ function shop_user_checkout() {
 		$data['total'] =	$_SESSION['total'];
 	}
 
-	$transobject = DataObjectMaster::getObject(array('name' => 'shop_transactions'));
-	$data['transproperties'] = $transobject->getProperties();
+	if (xarUserIsLoggedIn()) {
+		// User is logged in.  Display the payment form...
 
-	$myfields = array('first_name', 'last_name', 'street_addr', 'city_addr', 'state_addr', 'postal_code', 'card_type','card_num', 'cvv2', 'exp_date');
-	$data['myfields'] = $myfields; 
+		$transobject = DataObjectMaster::getObject(array('name' => 'shop_transactions'));
+		$data['transproperties'] = $transobject->getProperties();
 
-	$_SESSION['did_checkout'] = true; //to make sure we don't skip the checkout step
+		$myfields = array('first_name', 'last_name', 'street_addr', 'city_addr', 'state_addr', 'postal_code', 'card_type','card_num', 'cvv2', 'exp_date');
+		$data['myfields'] = $myfields; 
 
-	$rolesobject = DataObjectMaster::getObject(array('name' => 'roles_users'));
-	$data['properties'] = $rolesobject->properties;
+		$_SESSION['did_checkout'] = true; // to make sure we don't skip the checkout step
 
-	$isvalid = $rolesobject->properties['email']->checkInput();
-	$isvalid2 = $rolesobject->properties['password']->checkInput();
-
-	if (!$isvalid || !$isvalid2 || xarUserIsLoggedIn()) {
-		//Bad data from a previous submission or the user is logged in. Either way, display the checkout form.
-		return xarTplModule('shop','user','checkout', $data);               
+		return xarTplModule('shop','user','checkout', $data);   
+		
 	} else {
+		// Not logged in... display the registration and login forms...
 
-		if (!xarSecConfirmAuthKey()) {
-            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
-        }     
+		$rolesobject = DataObjectMaster::getObject(array('name' => 'roles_users'));
+		$data['properties'] = $rolesobject->properties;
 
-		// Create the role and the customer object and then log in
-		$email = $rolesobject->properties['email']->getValue();
-		$password = $rolesobject->properties['password']->getValue();
+		$isvalid = $rolesobject->properties['email']->checkInput();
+		$isvalid2 = $rolesobject->properties['password']->checkInput();
 
-		$rolesobject->properties['name']->setValue($email);
-		$rolesobject->properties['email']->setValue($email);
-		$rolesobject->properties['uname']->setValue($email);
-		$rolesobject->properties['password']->setValue($password);
-		$rolesobject->properties['state']->setValue(3);
-		//$authmodule = (int)xarMod::getID('shop');
-		//$rolesobject->properties['authmodule']->setValue($authmodule);
-		$uid = $rolesobject->createItem();
+		if ($isvalid && $isvalid2) {
 
-		$custobject = DataObjectMaster::getObject(array('name' => 'shop_customers'));
-		$custobject->createItem(array('id' => $uid));
+			if (!xarSecConfirmAuthKey()) {  // right time to do this??
+				return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+			}     
 
-	   xarMod::APIFunc('authsystem','user','login',array('uname' => $email, 'pass' => $password));
+			// Create the role and the customer object and then log in
+			$email = $rolesobject->properties['email']->getValue();
+			$password = $rolesobject->properties['password']->getValue();
+
+			$rolesobject->properties['name']->setValue($email);
+			$rolesobject->properties['email']->setValue($email);
+			$rolesobject->properties['uname']->setValue($email);
+			$rolesobject->properties['password']->setValue($password);
+			$rolesobject->properties['state']->setValue(3);
+			//$authmodule = (int)xarMod::getID('shop');
+			//$rolesobject->properties['authmodule']->setValue($authmodule);
+			$uid = $rolesobject->createItem();
+
+			$custobject = DataObjectMaster::getObject(array('name' => 'shop_customers'));
+			$custobject->createItem(array('id' => $uid));
+
+			xarMod::APIFunc('authsystem','user','login',array('uname' => $email, 'pass' => $password));
+
+			xarResponse::Redirect(xarModURL('shop','user','checkout'));
+
+		} else {
+			// We don't yet have a valid email or password for registration...
+			return xarTplModule('shop','user','checkout', $data); 
+		}
 		
 	}
 
-
-	return $data;
 
 }
 
