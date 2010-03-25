@@ -1,0 +1,429 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Galaxia Concepts</title>
+</head>
+
+<body class="tiki_wiki">
+
+
+<a name="Introduction_and_concepts"></a>
+<h1>Introduction and concepts</h1>
+
+Galaxia is an "activity based" workflow. Workflow processes are 
+implemented as a set of activities that must be completed to achieve 
+some result. In Galaxia, the logic of activities lies in PHP scripts. 
+The presentation consists of a Blocklayout template. Galaxia provides three 
+main modules: Process Manager, User Interface and Process Monitor.<br />
+
+
+<a name="Definitions"></a>
+<h2>1. Definitions</h2>
+
+<a name="Process"></a>
+<h3>Process</h3>
+
+A process is defined as a set of activities that must be done to achieve
+ some goal. Business interactions are mapped to Galaxia processes to 
+automate them. Process activities are connected using transitions 
+defining what has to be done after each activity is completed.<br />
+
+<a name="Activity"></a>
+<h3>Activity</h3>
+
+An activity is a task that must be completed as a part of a process. In 
+Galaxia activities are mapped to PHP scripts. This way an activity can 
+do anything that can be done from a PHP script.<br />
+
+<a name="Transition"></a>
+<h3>Transition</h3>
+
+Transitions defines which activity or activities come before an activity
+ is executed and after it is completed.<br />
+
+<a name="Role"></a>
+<h3>Role</h3>
+
+Roles define who can perform an associated activity. Roles are defined 
+at a per-process level.<br />
+
+<a name="Instance"></a>
+<h3>Instance</h3>
+
+An instance is an occurrence of a process being executed. An instance is
+ created when a process is started. The instance passes through the 
+process activities until the process is terminated.<br />
+
+<a name="Workitem"></a>
+<h3>Workitem</h3>
+
+A workitem is added to the instance when an activity is completed. 
+Workitems thus represent completed activities.<br />
+
+
+<a name="Activity_types"></a>
+<h2>2. Activity types</h2>
+
+Galaxia defines seven basic activity types that can be used to design a 
+process. They are:<br />
+
+<ul>
+  <li>Start
+  </li>
+  <li>End
+  </li>
+  <li>Activity
+  </li>
+  <li>Switch
+  </li>
+  <li>Split
+  </li>
+  <li>Join
+  </li>
+  <li>Standalone
+  </li>
+</ul>
+
+<a name="Start_activities"></a>
+<h3>Start activities</h3>
+
+<table class="wikitable">
+  <tbody>
+    <tr>
+      <td class="wikicell"><span class="img"><img alt="" src="concepts_files/start.png" border="0" /></span></td>
+      <td class="wikicell">Start activities are represented using a circle. Every
+ process must have at least one start activity. Start is the only 
+activity type that can be executed without the presence of an instance 
+in the activity because instances are created when a start activity is 
+executed. Processes with many start activities are awkward but possible 
+in Galaxia. No transitions can lead to a start activity and only one 
+outgoing transition is allowed per start activity.</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+<a name="End_activities"></a>
+<h3>End activities</h3>
+
+<table class="wikitable">
+  <tbody>
+    <tr>
+      <td class="wikicell"><span class="img"><img alt="" src="concepts_files/end.png" border="0" /></span></td>
+      <td class="wikicell">The end activity represents the end of a process. When
+ an instance reaches the end activity the process is considered 
+completed. Process must have exactly one end activity. This doesn't 
+mean that processes can't end in different ways, since the end 
+activity represents only that the process ends. How the process ends 
+depends on the activities visited before the end activity. The end 
+activity is represented in Galaxia using a double circle. The end 
+activity can have many inbound transitions. Outbound transitions are not
+ allowed.</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+<br />
+
+<div class="simplebox">Rules: Valid processes must have at least one 
+begin activity and exactly one end activity. There must be at least one 
+path leading from a start activity to the end activity.</div>
+<br />
+
+<a name="Normal_activities"></a>
+<h3>Normal activities</h3>
+
+<table class="wikitable">
+  <tbody>
+    <tr>
+      <td class="wikicell"><span class="img"><img alt="" src="concepts_files/normal.png" border="0" /></span></td>
+      <td class="wikicell">Normal activities don't 
+have a special meaning so they are used to represent tasks that should 
+be done as a part of a process. A rectangle is used to represent these 
+activities. Normal activities can receive many inbound transitions but 
+can only have one outbound transition.</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+<a name="Switch_activities"></a>
+<h3>Switch activities</h3>
+
+<table class="wikitable">
+  <tbody>
+    <tr>
+      <td class="wikicell"><span class="img"><img alt="" src="concepts_files/switch.png" border="0" /></span></td>
+      <td class="wikicell">A switch activity represents
+ a point of decision in a process. Instances reaching a switch activity 
+are evaluated and depending on some conditions the instance can be 
+routed to different activities. Switch activities can have many inbound 
+transitions and many outbound transitions. Switch activities are 
+represented using a diamond.</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+<a name="Split_activities"></a>
+<h3>Split activities</h3>
+
+<table class="wikitable">
+  <tbody>
+    <tr>
+      <td class="wikicell"><span class="img"><img alt="" src="concepts_files/split.png" border="0" /></span></td>
+      <td class="wikicell">Sometimes two or more activities in a process can be 
+done independently in parallel. A split activity is used to split an 
+instance and route it to many activities. This way an instance can be in
+ many activities at the same time. Split activities represent subflows 
+in a workflow. A split activity can receive many inbound transitions and
+ can have many outbound transitions. Split activities are represented by
+ a triangle.</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+<a name="Join_activities"></a>
+<h3>Join activities</h3>
+
+<table class="wikitable">
+  <tbody>
+    <tr>
+      <td class="wikicell"><span class="img"><img alt="" src="concepts_files/join.png" border="0" /></span></td>
+      <td class="wikicell">A join activity is used to regroup instances splitted 
+from a split activity. When an instance reaches a join activity the 
+engine verifies that the instance is present also in some other 
+activity. If so, the instance must wait in the join activity until all 
+activities leading to the join activity are completed. Once all 
+activities reach the join activity the instance can be directed to the 
+next activity. Join activities can have many inbound transitions (more 
+than one is expected) and can only have one outbound activity. Join 
+activities are represented using an inverted triangle.</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+<a name="Standalone_activities"></a>
+<h3>Standalone activities</h3>
+
+<table class="wikitable">
+  <tbody>
+    <tr>
+      <td class="wikicell"><span class="img"><img alt="" src="concepts_files/standalone.png" border="0" /></span></td>
+      <td class="wikicell">Standalone activities are 
+represented by hexagons. A standalone activity is not part of the normal
+ flow of the process so they are not related to instances. A standalone 
+activity can be executed any time by an user with the required 
+permissions. These activities are ideal for data management related to 
+the process, listings, adding items, removing items, etc. Many processes
+ can be designed as a set of standalone activities if there's no order
+ relationship between the different activities in the process. Other 
+processes consist of a main process flow and a set of auxiliary 
+standalone activities. Standalone activities can't have inbound nor 
+outbound transitions.</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+
+<a name="AutoRouting_and_Interactiveness"></a>
+<h2>3. AutoRouting and 
+Interactiveness</h2>
+
+<a name="Autorouting"></a>
+<h3>Autorouting</h3>
+
+When an activitiy is completed the engine may or may not automatically 
+route the instance to the next activity in the process. Activities with 
+the "AutoRouting" setting activated automatically route the instance to 
+the next process activity when the activity is completed. If the 
+activity is not "AutoRouting" the user must "send" the activity after 
+completion to let the instance continue. This can be used in activities 
+where the user can edit information and review it many times before 
+deciding that the activity is completed.<br />
+
+<a name="Interactiveness"></a>
+<h3>Interactiveness</h3>
+
+In Galaxia activities can be automatic or interactive. Interactive 
+activities are activities that require some kind of interaction from the
+ user. These activities usually present a form asking the user to fill 
+some data. After the information is submitted the activity is completed.
+ Automatic activities in contrast are executed automatically by the 
+Galaxia engine without any user interaction. Frequently automatic 
+activities are hidden from the user view of a process.<br />
+<br />
+
+<table style="text-align: left; width: 100%;">
+  <tbody>
+    <tr>
+      <td><span class="img"><img alt="" src="concepts_files/routeinter.png" border="0" /></span></td>
+      <td><br />
+
+      <ul>
+        <li>Auto-routed activities have <span style="color: rgb(255, 0, 0);">red</span>
+ arrows going out of them.
+        </li>
+        <li>Non-auto-routed activities have black arrows going out of them.
+        </li>
+        <li>Interactive activities have <span style="color: rgb(0, 0, 255);">blue</span> borders.
+        </li>
+        <li>Automatic activities have black borders.
+        </li>
+      </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<span class="img"></span><br />
+
+
+<a name="Sample_process"></a>
+<h2>4. Sample process</h2>
+
+<table class="wikitable">
+  <tbody>
+    <tr>
+      <td class="wikicell"><span class="img"><img alt="" src="concepts_files/cd_loans.png" border="0" /></span></td>
+      <td class="wikicell">The picture on the left 
+shows the graph of a process. This process defines requests to a shared 
+CD collection. The start activity (interactive) is where the user picks a
+ CD. Then the manager must verify that the CD is available in the 
+"Approve loan" activity. If the CD is available, the manager sends the 
+CD to the user, and the request is accepted. If not, the request is 
+rejected. The standalone activity "Browse CDs" can be used by the user 
+or the manager to browse the CD collection.</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+
+<a name="Modules"></a>
+<h2>5. Modules</h2>
+
+Galaxia defines three modules:<br />
+
+<ul>
+  <li>The Process Manager
+  </li>
+  <li>The User Interafce
+  </li>
+  <li>The Process Monitor
+  </li>
+</ul>
+
+<a name="The_Process_Manager"></a>
+<h3>The Process Manager</h3>
+
+The process manager is the module used to create and modify processes. 
+This module is normally used by an administrator and process designers 
+to create processes. The process manager covers the following 
+functionality:<br />
+
+<ul>
+  <li>Create process and process versions
+  </li>
+  <li>Create, rename, edit and delete activities
+  </li>
+  <li>View a graph of the process activities
+  </li>
+  <li>Check if a process is valid
+  </li>
+  <li>Activate/de-activate a process
+  </li>
+  <li>Edit the source code of activities (PHP scripts) and templates 
+(Blocklayout templates)
+  </li>
+  <li>Define roles and define what roles are allowed to execute what 
+activities
+  </li>
+  <li>Map users to roles
+  </li>
+  <li>Export processes to XML files (backup)
+  </li>
+  <li>Load processes from XML files (restore)
+  </li>
+</ul>
+
+<a name="The_User_Interface"></a>
+<h3>The User Interface</h3>
+
+The user interface is used by the users to browse processes where they 
+can start new instances, or run activities to which their role has 
+permissions and belong to a particular instance. Users can execute 
+activities, and see the results and some statistics about work asssigned
+ to them.<br />
+
+<a name="The_Process_Monitor"></a>
+<h3>The Process Monitor</h3>
+
+The process monitor is used to monitor and control the execution of 
+processes. The following list shows some features of the process monitor
+ API.<br />
+
+<ul>
+  <li>List processes, process activities and number of instances per 
+activity
+  </li>
+  <li>List active instances and exceptions
+  </li>
+  <li>Browse instances and modify instance properties
+  </li>
+  <li>Send instances to some activity
+  </li>
+  <li>Assign or reassign an instance to some user
+  </li>
+  <li>Abort instances
+  </li>
+  <li>View statistics about completed processes, execution time, and 
+time spent per activity
+  </li>
+</ul>
+
+
+<a name="Summary"></a>
+<h2>6. Summary</h2>
+
+This document presented an introduction to "Galaxia", a PHP-based 
+workflow engine that can be used in any PHP project and will be 
+initially released with modules created for Tiki. Galaxia can be used to
+ create new "features" in any PHP application defining processes, where 
+all the activities related to the feature are grouped. If necesary, 
+Galaxia can define the flow of activities for some process allowing the 
+definition of "Workflows". The flexibility and extensibility of the 
+engine open a lot of interesting new areas to any PHP project using this
+ product.<br />
+
+
+<a name="Acknowledgements"></a>
+<h2>7. Acknowledgements</h2>
+
+<ul>
+  <li>Galaxia is based on <a class="wiki" target="_blank" href="http://www.openflow.it/">OpenFlow</a>
+  </li>
+  <li><a class="wiki" target="_blank" href="http://tikiwiki.org/UserPagemarclaporte">Marc Laporte</a> was the 
+first member of the Tiki team to suggest adding a Workflow engine to 
+Tiki.
+  </li>
+  <li>This wikified version was originally a copy/paste from the <a class="wiki" target="_blank" href="http://prdownloads.sourceforge.net/tikiwiki/Galaxia_introduction.pdf?download">PDF
+
+ Galaxia introduction on SourceForge</a>. This document was originally 
+produced by Garland Foster, Richard Moore and Eduardo Polidor, and 
+edited by Georger Araujo to be included in workflow.tw.o.
+  </li>
+</ul>
+
+ 
+
+  
+</body>
+</html>

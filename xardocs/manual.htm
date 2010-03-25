@@ -1,0 +1,1619 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+
+
+  
+  <style type="text/css">
+
+.img {
+    margin-left: 100px;
+}
+  </style>
+
+
+
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Galaxia Manual</title>
+</head>
+
+
+<body class="tiki_wiki">
+
+
+
+
+<div class="wikitext">
+
+<a name="Modules"></a>
+<h1>Modules</h1>
+
+
+The workflow engine contains 3 modules: The User Interface, The Process Monitor and the Process Manager.<br />
+
+
+<ul>
+
+  <li> User interface
+  </li>
+
+  <li> Process Monitor
+  </li>
+
+  <li> Process Manager
+  </li>
+
+</ul>
+
+
+Behind these modules is the "engine", a set of PHP classes and scripts 
+that execute the workflow processes.<br />
+
+
+The User Interface presents a set of screens and interfaces to let users
+ start a new instance of a process, execute process activities, see what
+ activities they have pending and manage their workload.<br />
+
+
+The Process Monitor is used to track what the users are doing, what 
+instances of what processes are being executed and the status of each 
+process in execution. It is used to "track" processes.<br />
+
+
+The Process Manager is used to map a business process to a workflow 
+process. It is used to "design" processes.<br />
+
+
+
+<a name="The_User_Interface"></a>
+<h2>1. The User Interface</h2>
+
+
+The User Interface (UI) is used by the users to launch new instances of 
+processes and execute process activities of existing instances.<br />
+
+<br />
+
+
+Enter the UI by clicking the "User processes" link from the Workflow 
+section of the application menu:<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/userprocesses.png" border="0" /></span><br />
+
+
+<br />
+
+
+In this screen you will see process that he user can start or where the 
+user has pending activities to execute. In this example the "CD loans" 
+process that will be created in one of the tutorials is used as an 
+example. Clicking the process name will take you to the "User activities" view.<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/listofactivities.png" border="0" /></span><br />
+
+
+<br />
+
+
+In this screen you can see activities of the "CD loans" process and the
+ instances present in each activity. The activities with an arrow can be
+ executed without an instance present (the start activity and a 
+standalone activity). The "approve loan" activity can be clicked to 
+display instances in this activity. The "User instances" screen is as 
+follows:<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/userinstances.png" border="0" /></span><br />
+
+
+<br />
+
+
+The buttons are explained as follows:<br />
+
+
+<br />
+
+
+<table class="wikitable">
+
+  <tbody>
+
+    <tr>
+
+      <td class="wikicell"><b>Icon</b></td>
+
+      <td class="wikicell" colspan="4"><b>Meaning</b>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/stop.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Declare the instance in "Exception status"
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/next.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Execute activity. When the user executes a 
+start activity, she will be prompted to supply an alphanumeric name, 
+like "Request CD 1", for the instance.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/trash.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Abort the instance.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/fix.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">"Grab" the instance. Assigns the execution
+ of the instance in this activity to the user.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/float.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">"Release" the instance. Lets other users 
+execute this activity for the instance.</td>
+
+    </tr>
+
+  
+  </tbody>
+</table>
+
+<br />
+
+
+
+<a name="The_Process_Monitor"></a>
+<h2>2. The Process Monitor</h2>
+
+
+The Process Monitor is used to track what the users are doing, what 
+instances of what processes are being executed and the status of each 
+process in execution. It is used to "track" processes.<br />
+
+<br />
+
+
+To get a general view of how each process is doing, click the "Monitor 
+processes" link in the Workflow section of the application menu. You 
+will see how many activities a process contains, whether the process is 
+activated and valid, and the most important: how many instances of the 
+process are running and in what state they are.<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/monitorprocesses.png" border="0" /></span><br />
+
+
+<br />
+
+
+Click the number of activities on the "Activities" column to see the 
+data about activities that belong to a particular process:<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/monitoractivities.png" border="0" /></span><br />
+
+
+<br />
+
+
+When you want to see the details about a particular instance, click the 
+"Monitor instances" link. You will be presented with a list of all 
+instances and the relevant data about them.<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/monitorinstances.png" border="0" /></span><br />
+
+
+<br />
+
+
+Click the Id or Name of an instance to see its details.<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/admininstanceI.png" border="0" /></span><br />
+
+
+<span class="img"><img alt="" src="manual_files/admininstanceII.png" border="0" /></span><br />
+
+
+<br />
+
+
+The buttons are explained as follows:<br />
+
+
+<br />
+
+
+<table class="wikitable">
+
+  <tbody>
+
+    <tr>
+
+      <td class="wikicell"><b>Icon</b></td>
+
+      <td class="wikicell" colspan="4"><b>Meaning</b>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/Process.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Takes you to the Monitor Processes screen.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/Activity.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Takes you to the Monitor Activities screen.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/Instance.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Takes you to the Monitor Instances screen.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/memo.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Takes you to the Monitor Workitems screen.</td>
+
+    </tr>
+
+  
+  </tbody>
+</table>
+
+<br />
+
+
+<br />
+
+
+In this screen you can rename the instance, change its status, owner, 
+and send it to an arbitrary activity. You can also edit the value of 
+existing instance properties, and add new properties.<br />
+
+
+<br />
+
+
+<div class="simplebox">When you manually send the process to an 
+activity, the history is lost. Do this only when absolutely necessary.</div>
+
+<br />
+
+
+<br />
+
+
+Click a particular activity in the history to see its details.<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/workitemdetail.png" border="0" /></span><br />
+
+
+<br />
+
+
+To see details about all workitems from all instances, click the Monitor
+ Workitems icon (<img alt="" src="manual_files/memo.gif" border="0" />):<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/monitorworkitems.png" border="0" /></span><br />
+
+
+
+<a name="The_Process_Manager"></a>
+<h2>3. The Process Manager</h2>
+
+
+The Process Manager (PM from now on) is used to design processes and 
+make them available to your users. A process can be very simple or very 
+complex depending on the business process being modeled. Galaxia 
+processes can be used to map internal process in your company so they 
+are automated. They can also be used to extend TikiWiki adding features 
+particular to your implementation.<br />
+
+
+The creation of a process can be divided in the following tasks:<br />
+
+
+<ul>
+
+  <li> Creating a new process
+  </li>
+
+  <li> Editing process activities
+  </li>
+
+</ul>
+
+
+<ul>
+
+  <li> Editing and mapping process roles
+  </li>
+
+  <li> Editing process activity source code and templates
+  </li>
+
+</ul>
+
+
+
+<a name="Creating_a_new_process"></a>
+<h3>3.1. Creating a new process</h3>
+
+
+Enter the Process Manager clicking on the "Admin processes" link from 
+the Workflow section of the application menu. You should have the 
+tiki_p_admin_workflow permission to use this feature.<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/adminprocesses.png" border="0" /></span><br />
+
+
+<br />
+
+
+You can create a new process in 3 different ways:<br />
+
+
+<ul>
+
+  <li> Creating a new process from scratch
+  </li>
+
+  <li> Importing a process
+  </li>
+
+  <li> Branching an existing process
+  </li>
+
+</ul>
+
+
+
+<br />
+
+<h3>Creating a new 
+process from scratch</h3>
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/addprocess.png" border="0" /></span><br />
+
+
+<br />
+
+
+You can create a new process from scratch clicking the "new" link next 
+to the form to edit a process name and description. Enter a name for the
+ process and a description, a new process will be created with version 
+1.0.<br />
+
+
+Once the process is created you can edit its activities, roles and so. 
+Note that upon creation the process cannot be set to "active" because 
+only valid processes can be "active" and a recently created process is 
+invalid.<br />
+
+
+
+<br />
+
+<h3>Importing a process</h3>
+
+
+The Workflow engine can be used to "export" a process to an XML file. 
+This file will contain all the process activities, transitions, roles 
+and source code. You can then distribute the process in its XML format 
+so other applications can use it. You can upload a process using the 
+import feature in the process manager:<br />
+
+
+<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/uploadprocess.png" border="0" /></span><br />
+
+
+<br />
+
+
+When a process is imported you will have to map the process roles to 
+your site users/groups depending on what users/groups will be able to 
+execute the process activities on your site. Once roles are mapped the 
+process will be ready to use as it was in the installation where it was 
+created.<br />
+
+
+
+<br />
+
+<h3>Branching an existing 
+process</h3>
+
+
+Once you have a process created you can define new "versions" of the 
+process. This can be useful in many situations. If you want to change a 
+process that is active you may need to create a new version so you 
+don't make unexpected changes to process instances already in 
+execution. You can also "version" a process if you want to create a new
+ process that will be very similar to an existing process.<br />
+
+
+You can create a new version defining a new "major" version or "minor"
+ version being the difference how the new process version number is 
+created.<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/processactionmenu.png" border="0" /></span><br />
+
+
+<br />
+
+
+<div class="simplebox">To change an active process:<br />
+
+
+1. Create a new version of the process.<br />
+
+
+2. Edit the new version<br />
+
+
+3. Make the old process "inactive"</div>
+
+<br />
+
+
+
+<a name="Editing_process_activities"></a>
+<h3>3.2. Editing process activities</h3>
+
+
+Once a process is created click on the "activities" link in the action 
+menu to edit or create process activities.<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/processactionmenu.png" border="0" /></span><br />
+
+
+<br />
+
+
+The activities manager is a module of the process manager used to edit 
+or create activities. This is the most important and crucial part of the
+ process creation. You may want to design your process using a tool like
+ <a class="wiki" target="_blank" href="http://www.openoffice.org/product/draw.html">OpenOffice.org Draw</a>
+ before using this tool to define your process.<br />
+
+
+The activity editor screen should be similar to the following one:<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/adminactivities.png" border="0" /></span><br />
+
+
+<span class="img"><img alt="" src="manual_files/activitylistingandtransitions.png" border="0" /></span><br />
+
+
+<br />
+
+
+The screen is divided in different sections that will be explained in 
+detail:<br />
+
+
+<ul>
+
+  <li> The process toolbar
+  </li>
+
+  <li> The add/edit activity form
+  </li>
+
+  <li> The activity listing
+  </li>
+
+  <li> The transition listing and form
+  </li>
+
+</ul>
+
+
+
+<br />
+
+<h3>The process toolbar</h3>
+
+
+<img alt="" src="manual_files/processtoolbar.png" border="0" /><br />
+
+
+<br />
+
+
+The process toolbar can be used to quickly jump to different modules of 
+the Process Manager. The icons are explained below:<br />
+
+
+<br />
+
+
+<table class="wikitable">
+
+  <tbody>
+
+    <tr>
+
+      <td class="wikicell"><b>Icon</b></td>
+
+      <td class="wikicell" colspan="4"><b>Meaning</b>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/red_dot.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Invalid process. This icon indicates that 
+the process is invalid. A list of errors will be displayed at the top of
+ the screen.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/Activity.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Configure activities. The activity manager 
+for the process.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/book.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Process code. Used to edit the source code 
+and display template of the activities.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/mode_tree.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Process graph. Used to display the current 
+graph of the process. Whenever you add, edit or remove activities and/or
+ transitions, the graph is updated accordingly.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/myinfo.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Process roles. Used to define roles and map
+ users to roles for this process.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/change.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Admin processes. Goes to the admin 
+processes screen where you can edit the process name and description.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/export.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Save process. Exports the whole process as 
+an XML file.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/Process.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Monitor processes.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/Activity.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Monitor activities.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/Instance.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Monitor instances.</td>
+
+    </tr>
+
+  
+  </tbody>
+</table>
+
+<br />
+
+
+<br />
+
+
+When the process is valid (i.e. contains no errors), the following icons
+ are also available:<br />
+
+
+<br />
+
+
+<table class="wikitable">
+
+  <tbody>
+
+    <tr>
+
+      <td class="wikicell"><b>Icon</b></td>
+
+      <td class="wikicell" colspan="4"><b>Meaning</b>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/green_dot.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Valid process. This icon indicates that the
+ process is valid.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/stop.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Stop process. If the process is active you 
+can use this icon to "stop" the process. Once stopped no new instances 
+of the process can be created. Already created instances will remain in 
+execution.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/refresh2.gif" border="0" /></td>
+
+      <td class="wikicell" colspan="4">Activate process. If the process is valid 
+but the process is not active, this icon will be displayed. Click it to 
+activate the process.</td>
+
+    </tr>
+
+  
+  </tbody>
+</table>
+
+<br />
+
+<h3>The add/edit activity form</h3>
+
+
+This form is where you can edit process activities or add new activities
+ to the process. You have to select the activity name and a description 
+for the activity. Then select the activity type, select if the activity 
+is interactive and select if the activity is auto-routed.<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/addeditactivityform.png" border="0" /></span><br />
+
+
+<br />
+
+
+<div class="simplebox">Tip: Use the link to the process graph (<img alt="" src="manual_files/mode_tree.gif" border="0" />)
+ frequently to display the graph of your process and 
+check if the activites are correctly linked.</div>
+
+<br />
+
+
+<br />
+
+
+The next boxes can be used to add transitions from existing activities 
+to the activity being edited/created and to create transitions from the 
+activity being edited/created to existint activities.<br />
+
+
+Then you can define roles for the activity adding already existing roles
+ or create a new role. Later roles will have to be mapped using the 
+admin roles module.<br />
+
+
+
+<br />
+
+<h3>The activity listing</h3>
+
+
+This section lists your process activities. You can use the filter bar 
+at the top to select the activities that you want to see.<br />
+
+
+Activities are displayed in "flow" order from the start activity to the
+ end activity. You can re-sort by other fields clicking on the column 
+titles.<br />
+
+
+This listing can be used to set if activities are interactive or 
+automatic and if activities are auto-routed or manually routed, just set
+ the checkboxes accordingly and press the update button at the bottom of
+ the listing. Activities can be removed marking the activities with the 
+checkboxes on the left and the pressing the "x" button.<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/activitylisting.png" border="0" /></span><br />
+
+
+
+<br />
+
+<h3>The transition listing
+ and form</h3>
+
+
+The last section of the activity manager shows the list of transitions 
+for the process. You can remove transitions using the checkboxes and the
+ "x" button.<br />
+
+
+You can also add transitions selecting the From and To activities and 
+clicking the "add" button. As you can see there is more than one way to
+ add transitions or remove transitions from/to activites.<br />
+
+
+<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/transitionlisting.png" border="0" /></span><br />
+
+
+
+<br />
+
+<h3>Understanding activities</h3>
+
+
+The table below describes the several activity types available in 
+Galaxia.<br />
+
+
+<br />
+
+
+<table class="wikitable">
+
+  <tbody>
+
+    <tr>
+
+      <td class="wikicell"><b>Icon</b></td>
+
+      <td class="wikicell"><b>Type</b></td>
+
+      <td class="wikicell"><b>Description</b></td>
+
+      <td class="wikicell"><b>Inbound Transitions</b></td>
+
+      <td class="wikicell"><b>Outbound
+
+ Transitions</b>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/mini_blue_circle.gif" border="0" /></td>
+
+      <td class="wikicell">Start</td>
+
+      <td class="wikicell">The start activity. A 
+process must have at least one start activity, and can have two or more.
+ Start activities can be executed without the presence of an instance of
+ the process because start activities create a new process instance. 
+Start activities are usually interactive and require some kind of user 
+input to start a new process.</td>
+
+      <td class="wikicell">
+      
+      <div align="center">0</div>
+
+      </td>
+
+      <td class="wikicell">
+      
+      <div align="center">1</div>
+
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/mini_dbl_circle.gif" border="0" /></td>
+
+      <td class="wikicell">End</td>
+
+      <td class="wikicell">The end activity 
+terminates a process instance. All the processes must have one and only 
+one end activity. The end eactivity should be reachable from the start 
+activity. Make sure all your process "paths" of execution lead to the 
+end activity or you will have "dangling" instances of your processes.</td>
+
+      <td class="wikicell">
+      
+      <div align="center">N</div>
+
+      </td>
+
+      <td class="wikicell">
+      
+      <div align="center">0</div>
+
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/mini_blue_rectangle.gif" border="0" /></td>
+
+      <td class="wikicell">Activity</td>
+
+      <td class="wikicell">A normal activity. 
+Used to perform a tasks. It can be interactive or automatic.</td>
+
+      <td class="wikicell">
+      
+      <div align="center">N</div>
+
+      </td>
+
+      <td class="wikicell">
+      
+      <div align="center">1</div>
+
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/mini_blue_diamond.gif" border="0" /></td>
+
+      <td class="wikicell">Switch</td>
+
+      <td class="wikicell">A switch activity is 
+like a normal activity, but can be used to send the process instance to 
+different activities depending on some condition. This type of activity 
+is used to choose alternate paths of execution in a given instance (i.e.
+ If condition "a" is true then go to activity "x", else go to activity
+ "y").</td>
+
+      <td class="wikicell">
+      
+      <div align="center">N</div>
+
+      </td>
+
+      <td class="wikicell">
+      
+      <div align="center">N</div>
+
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/mini_blue_hexagon.gif" border="0" /></td>
+
+      <td class="wikicell">Standalone</td>
+
+      <td class="wikicell">A standalone 
+activity can be executed without the presence of a process instance. 
+Standalone activites are used to model activities independant of the 
+process flow (e.g. queries and tracking). You can even create a process 
+featuring only standalone activities.</td>
+
+      <td class="wikicell">
+      
+      <div align="center">0</div>
+
+      </td>
+
+      <td class="wikicell">
+      
+      <div align="center">0</div>
+
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/mini_blue_diamond.gif" border="0" /></td>
+
+      <td class="wikicell">Split</td>
+
+      <td class="wikicell">A split activity is 
+used to send an instance to two or more different activities in 
+paralell. If your process features activities that can be executed in 
+paralell then you can use a split activity.</td>
+
+      <td class="wikicell">
+      
+      <div align="center">N</div>
+
+      </td>
+
+      <td class="wikicell">
+      
+      <div align="center">N</div>
+
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell"><img alt="" src="manual_files/mini_blue_inv_triangle.gif" border="0" /></td>
+
+      <td class="wikicell">Join</td>
+
+      <td class="wikicell">A join activity is used 
+to re-group an instances that has been split by a split activity. When 
+an instance reaches a join activity, the engine checks if the instance 
+is still running other preceding activites. If this is the case, the 
+instance will wait for the other activities to be completed and only 
+then make the join activity available.</td>
+
+      <td class="wikicell">
+      
+      <div align="center">N</div>
+
+      </td>
+
+      <td class="wikicell">
+      
+      <div align="center">1</div>
+
+      </td>
+
+    </tr>
+
+  
+  </tbody>
+</table>
+
+<br />
+
+
+<br />
+
+
+<div class="simplebox">Note: When an activity is interactive the icon is
+ displayed in a blue-grey background. Automatic activities have a 
+light-grey background. In the process graph interactive activities are 
+displayed using a blue border. Automatic activities have a black border.</div>
+
+<br />
+
+<h3>Interactiveness</h3>
+
+
+Activities can be either interactive or automatic. Interactive actvities
+ require some kind of user interaction, normally a form is presented to 
+the user and the user can fill/change values submitting the form as many
+ times as needed until the activity decides that the activity is 
+completed. Automatic activites don't require user interaction and are 
+executed by the workflow engine.<br />
+
+
+<br />
+
+
+<div class="simplebox">Note: In order for Galaxia to run automatic 
+activities, PHP needs to have the <b>allow_url_fopen</b> directive in 
+PHP.INI set to <b>On</b>.</div>
+
+<br />
+
+<h3>AutoRouting</h3>
+
+
+An activity can be routed automatically (auto-routed) or manually. When 
+an activity is auto-routed instances are automatically sent to the next 
+activity in the process once the activity is completed. If the actvity 
+is not auto-routed a user will have to manually "send" the instance to 
+make the instance flow to the next activity.<br />
+
+
+
+<a name="Editing_and_mapping_process_roles"></a>
+<h3>3.3. Editing and mapping 
+process roles</h3>
+
+
+The Role Manager is the module of the process manager used to admin 
+process roles and map roles to tiki users or groups. The role manager 
+screen is similar to the following one:<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/adminprocessroles.png" border="0" /></span><br />
+
+
+<br />
+
+
+The screen can be divided in sections that will be explained next:<br />
+
+
+<ul>
+
+  <li> Role editing and listing
+  </li>
+
+  <li> Role mapping and listing
+  </li>
+
+</ul>
+
+
+<br />
+
+<h3>Role editing and listing</h3>
+
+
+The first section of the Role Manager module can be used to add new 
+roles to the process, edit existing roles names and descriptions and 
+remove roles as needed. Please note that roles are defined per-process. 
+The "user" role can be absolutely different in Process A and Process B.<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/addeditrole.png" border="0" /></span><br />
+
+
+
+<br />
+
+<h3>Role mapping and listing</h3>
+
+
+In the first section you can map user to roles you can select many users
+ and many roles and all the mappings will be executed. So you can use it
+ to map a user to many roles, a role to many users or many roles to many
+ users at the same time. Next you can add or remove all the users in any
+ tiki group to some role, this can be used to "batch" map users in a 
+group to some role. Note that roles are mapped to individual users not 
+groups, this is different to tiki permissions that are handled at group 
+levels.<br />
+
+
+The last section of the secreen lists all the mappings defined, you can 
+filter the list and remove mappings if you want.<br />
+
+
+<br />
+
+
+<div class="simplebox">Note: in this example, we added the role "user".</div>
+
+<br />
+
+
+<br />
+
+
+<span class="img"><img alt="" src="manual_files/mapuserstoroles.png" border="0" /></span><br />
+
+
+
+<br />
+
+<h3>Understanding roles</h3>
+
+
+Roles are used in processes to control who can do what. Roles provide an
+ abstract representation of what users will be able to execute process 
+activities. Since user names and even group names can be very different 
+in different Tiki installations, roles are used to abstract permission 
+to execute process activities so processes can be shared in different 
+Tiki installations just by remapping the process roles.<br />
+
+
+Roles can also be used to control what each activity can do, since 
+special variables will be created to indicate if the user executing some
+ activity is mapped or not to some role. You can for example let roles 
+"a" and "b" execute some activity but only users with role "b" can 
+see some information.<br />
+
+
+
+<a name="Editing_process_activity_source_code_and_templates"></a>
+<h3>3.4. Editing
+
+ process activity source code and templates</h3>
+
+
+IntroductionThe workflow engine maps activities to PHP scripts. This is where the 
+power of the engine resides. An activity can do anything that a PHP 
+script can do. Usually you can design processes without a deep knowledge
+ of PHP, creating forms to interact with the user and setting 
+"instance" properties depending on those values.<br />
+
+
+
+<br />
+
+<h3>Interactive
+
+ activities and automatic activities</h3>
+
+
+When editing activities code there is a very important distinction 
+between automatic activities and interactive activities. Automatic 
+activities are represented by a PHP script only, whereas interactive 
+activities are represented by a PHP script and a Blocklayout template. The 
+PHP script provides the logic, and the Blocklayout template provides the 
+presentation.<br />
+
+
+When coding interactive activities you should not output anything from 
+the PHP script. Instead, assign whatever you want to display to Blocklayout 
+template variables and then display the variables in the template. The 
+template will also contain all the forms, tables and other HTML elements
+ that you want to use. We'll see examples in a few paragraphs.<br />
+
+
+<br />
+
+
+Example: A simple interactive activity and its template<br />
+
+
+<br />
+
+
+<div dir="ltr">
+<div class="codelisting"><code><span style="color: rgb(0, 0, 0);">
+<span style="color: rgb(0, 0, 187);">&lt;?php<br />
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 119, 0);">if&nbsp;(isset(</span><span style="color: rgb(0, 0, 187);">$_REQUEST</span><span style="color: rgb(0, 119, 0);">[</span><span style="color: rgb(221, 0, 0);">'save'</span><span style="color: rgb(0, 119, 0);">]))&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</span><span style="color: rgb(0, 0, 187);">$instance</span><span style="color: rgb(0, 119, 0);">-&gt;</span><span style="color: rgb(0, 0, 187);">set</span><span style="color: rgb(0, 119, 0);">(</span><span style="color: rgb(221, 0, 0);">'name'</span><span style="color: rgb(0, 119, 0);">,&nbsp;</span><span style="color: rgb(0, 0, 187);">$_REQUEST</span><span style="color: rgb(0, 119, 0);">[</span><span style="color: rgb(221, 0, 0);">'name'</span><span style="color: rgb(0, 119, 0);">];<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 187);">$instance</span><span style="color: rgb(0, 119, 0);">-&gt;</span><span style="color: rgb(0, 0, 187);">complete</span><span style="color: rgb(0, 119, 0);">();<br />
+
+&nbsp;&nbsp; &nbsp;}</span><span style="color: rgb(0, 0, 187);"><br />
+?&gt;</span>
+</span>
+</code></div>
+
+</div>
+
+<br />
+
+
+<i>PHP code</i><br />
+
+
+<br />
+
+
+<div dir="ltr">
+<div class="codelisting"><code><span style="color: rgb(0, 0, 0);">
+&lt;form&nbsp;method="post"&gt;
+<br />
+
+&nbsp;&nbsp;&nbsp;Name:&nbsp;&lt;input&nbsp;type="text"&nbsp;name="name"&nbsp;/&gt;
+<br />
+
+&nbsp;&nbsp;&nbsp;&lt;input&nbsp;type="submit"&nbsp;name="save"&nbsp;value="save"&nbsp;/&gt;
+<br />
+
+&lt;/form&gt;</span>
+</code></div>
+
+</div>
+
+<br />
+
+
+<i>Blocklayout template</i><br />
+
+
+
+<br />
+
+<h3>The Instance object</h3>
+
+
+When coding the PHP code for any activity you can use the <b>$instance</b>
+ object to get/set instance properties and other important actvities 
+related to the instance. The most relevant method of the $instance 
+object are listed next. If you want to get a deeper understanding of a 
+methods, please read the PHP source for the class for a complete 
+description of its usage.<br />
+
+
+<br />
+
+
+<table class="wikitable">
+
+  <tbody>
+
+    <tr>
+
+      <td class="wikicell"><b>Method</b></td>
+
+      <td class="wikicell" colspan="4"><b>Description</b>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell">get($property)</td>
+
+      <td class="wikicell" colspan="4">Gets the value of an instance property.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell">set($property, $value)</td>
+
+      <td class="wikicell" colspan="4">Sets the value for an instance property.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell">complete()</td>
+
+      <td class="wikicell" colspan="4">For interactive activities only. Declares the activity as 
+completed. If the activity is autorouted the engine will route the 
+instance to the next activity automatically.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell">setStatus($status)</td>
+
+      <td class="wikicell" colspan="4">Sets the status of the instance. Possible 
+values are 'active', 'aborted' and 'exception'.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell" colspan="5">
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell">setNextActivity($activity_name)</td>
+
+      <td class="wikicell" colspan="4">Indicates the name of the next activity to
+ be executed. This is needed in switch activities.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td class="wikicell">setNextUser($user)</td>
+
+      <td class="wikicell" colspan="4">Indicates the name of a user to assign the 
+instance to. The next activity must be performed by the indicated user.</td>
+
+    </tr>
+
+  
+  </tbody>
+</table>
+
+<br />
+
+<h3>Instance properties</h3>
+
+
+Instances are processes in execution. They have "properties" that you 
+can "get" and "set" in process activities. This is how you can pass 
+information from one activity to another one. A typical way to code 
+activities is to present a form and then set instance properties based 
+on the form values. The following activities can "display" or "get" 
+properties to perform some action.<br />
+
+
+
+<br />
+
+<h3>Switch actvities</h3>
+
+
+In a switch activity, the activity must decide the next activity for the
+ instance because there is more than one possible path of execution. 
+This is generally decided examining the instance properties and/or user 
+input if the switch activity is interactive. In order to set the next 
+activity the method <b>setNextActivity($actName)</b> must be used 
+indicating the name of the next activity.<br />
+
+
+<br />
+
+
+<i>Example</i><br />
+
+
+<div dir="ltr">
+<div class="codelisting"><code><span style="color: rgb(0, 0, 0);">
+<span style="color: rgb(0, 0, 187);">&lt;?php<br />
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 119, 0);">if&nbsp;(</span><span style="color: rgb(0, 0, 187);">$_REQUEST</span><span style="color: rgb(0, 119, 0);">[</span><span style="color: rgb(221, 0, 0);">'amount'</span><span style="color: rgb(0, 119, 0);">]&nbsp;&gt;&nbsp;</span><span style="color: rgb(0, 0, 187);">1000</span><span style="color: rgb(0, 119, 0);">)&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: rgb(0, 0, 187);">&nbsp;$instance</span><span style="color: rgb(0, 119, 0);">-&gt;</span><span style="color: rgb(0, 0, 187);">setNextActivity</span><span style="color: rgb(0, 119, 0);">(</span><span style="color: rgb(221, 0, 0);">'approve&nbsp;loan'</span><span style="color: rgb(0, 119, 0);">);
+<br />
+
+&nbsp;&nbsp; &nbsp;}&nbsp;else&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</span><span style="color: rgb(0, 0, 187);">$instance</span><span style="color: rgb(0, 119, 0);">-&gt;</span><span style="color: rgb(0, 0, 187);">setNextActivity</span><span style="color: rgb(0, 119, 0);">(</span><span style="color: rgb(221, 0, 0);">'process&nbsp;loan'</span><span style="color: rgb(0, 119, 0);">);
+<br />
+
+&nbsp;&nbsp; &nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(255, 128, 0);">//&nbsp;We&nbsp;use&nbsp;complete()&nbsp;because&nbsp;this&nbsp;was&nbsp;interactive<br />
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 187);">$instance</span><span style="color: rgb(0, 119, 0);">-&gt;</span><span style="color: rgb(0, 0, 187);">complete</span><span style="color: rgb(0, 119, 0);">();</span><span style="color: rgb(0, 0, 187);"><br />
+?&gt;</span>
+</span>
+</code></div>
+
+</div>
+
+<br />
+
+<h3>Roles</h3>
+
+
+Roles are used to determine who can execute an activity. When the 
+process is defined one or more roles must be asociated with interactive 
+activities. To make the process valid, an administrator has to map 
+process roles to Tiki users using the role manager tool. When an 
+instance enters an activity, the engine checks the roles that are 
+associated to the activity. If there is only one user that can execute 
+the activity the engine assigns that user as the "activity user" and 
+only he will see the instance in his User Interface. If there's more 
+than one user allowed to execute the activity the engine will show the 
+instance to all the users that can execute the activity, a user can then
+ "grab" an instance so only he can execute the activity, if the user 
+can't complete the activity he can "release" the instance so other 
+user with the proper role can execute the activity. Note that executing 
+the activity automatically "grabs" the instance but the instance can 
+also be grabbed first and the activity executed later.<br />
+
+
+
+<br />
+
+<h3>Setting
+
+ the instance user for the next activity</h3>
+
+
+The instance object has a method to let an activity determine who will 
+be assigned to execute the next activity.<br />
+
+
+<br />
+
+
+<div dir="ltr">
+<div class="codelisting"><code><span style="color: rgb(0, 0, 0);">
+<span style="color: rgb(0, 0, 187);">&lt;?php
+<br />
+
+&nbsp;&nbsp; &nbsp;$instance</span><span style="color: rgb(0, 119, 0);">-&gt;</span><span style="color: rgb(0, 0, 187);">setNextUser</span><span style="color: rgb(0, 119, 0);">(</span><span style="color: rgb(221, 0, 0);">'john'</span><span style="color: rgb(0, 119, 0);">);</span><span style="color: rgb(0, 0, 187);"><br />
+?&gt;</span>
+</span>
+</code></div>
+
+</div>
+
+<br />
+
+
+In the example we are indicating that the next activity can only be 
+executed by the user 'john'.<br />
+
+
+
+<a name="Summary"></a>
+<h2>4. Summary</h2>
+
+
+This document is the official manual to Galaxia, a PHP-based workflow 
+engine that can be used in any PHP project and will be initially 
+released with modules created for Tiki. Galaxia can be used to create 
+new "features" in any PHP application defining processes, where all the 
+activities related to the feature are grouped. If necesary, Galaxia can 
+define the flow of activities for some process allowing the definition 
+of "Workflows". The flexibility and extensibility of the engine open a 
+lot of interesting new areas to any PHP project using this product.<br />
+
+
+
+<a name="Acknowledgements"></a>
+<h2>5. Acknowledgements</h2>
+
+
+<ul>
+
+  <li>Galaxia is based on <a class="wiki" target="_blank" href="http://www.openflow.it/">OpenFlow</a>
+  </li>
+
+  <li>Marc Laporte<a href="http://workflow.tikiwiki.org/tiki-editpage.php?page=UserPagemarclaporte" title="Create page: UserPagemarclaporte" class="wiki wikinew">?</a> was
+ the first member of the Tiki team to suggest adding a Workflow engine 
+to Tiki.
+  </li>
+
+  <li>This wikified version was originally a copy/paste from the <a class="wiki" target="_blank" href="http://prdownloads.sourceforge.net/tikiwiki/Galaxia_introduction.pdf?download">PDF
+
+ Galaxia introduction on SourceForge</a>. This document was originally 
+produced by Garland Foster, Richard Moore and Eduardo Polidor, and 
+edited by Georger Araujo to be included in workflow.tw.o.
+  </li>
+
+</ul>
+
+
+
+</div>
+
+ 
+  
+</body>
+</html>
