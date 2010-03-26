@@ -41,7 +41,8 @@ function shop_user_checkout() {
 		// Not logged in... display the registration and login forms...
 
 		$rolesobject = DataObjectMaster::getObject(array('name' => 'roles_users'));
-		$data['properties'] = $rolesobject->properties;
+		$properties = $rolesobject->properties;
+		$data['properties'] = $properties;
 
 		$isvalid = $rolesobject->properties['email']->checkInput();
 		$isvalid2 = $rolesobject->properties['password']->checkInput();
@@ -55,20 +56,23 @@ function shop_user_checkout() {
 			// Create the role and the customer object and then log in
 			$email = $rolesobject->properties['email']->getValue();
 			$password = $rolesobject->properties['password']->getValue();
-
-			$rolesobject->properties['name']->setValue($email);
-			$rolesobject->properties['email']->setValue($email);
-			$rolesobject->properties['uname']->setValue($email);
-			$rolesobject->properties['password']->setValue($password);
-			$rolesobject->properties['state']->setValue(3);
-			//$authmodule = (int)xarMod::getID('shop');
-			//$rolesobject->properties['authmodule']->setValue($authmodule);
+			
+			$values['name'] = $email;
+			$values['email'] = $email;
+			$values['uname'] = $email;
+			$values['password'] = $password;
+			$values['state'] = 3;
+			$rolesobject->setFieldValues($values,1);
 			$uid = $rolesobject->createItem();
 
 			$custobject = DataObjectMaster::getObject(array('name' => 'shop_customers'));
 			$custobject->createItem(array('id' => $uid));
 
-			xarMod::APIFunc('authsystem','user','login',array('uname' => $email, 'pass' => $password));
+			$name = 'dd_' . $properties['password']->id;
+			$vals = $properties['password']->fetchValue($name);
+			$pass = $vals[1][0]; 
+
+			$res = xarMod::APIFunc('authsystem','user','login',array('uname' => $email, 'pass' => $pass));
 
 			xarResponse::Redirect(xarModURL('shop','user','checkout'));
 
