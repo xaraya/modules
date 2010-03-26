@@ -108,7 +108,7 @@ function scheduler_admin_modify()
 
         xarModAPIFunc('scheduler','admin','update', $job);
 
-        xarResponse::Redirect(xarModURL('scheduler', 'admin', 'modify',
+        xarResponse::redirect(xarModURL('scheduler', 'admin', 'modify',
                                       array('itemid' => $itemid)));
         return true;
     }

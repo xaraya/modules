@@ -6,7 +6,7 @@
     </span>
 </div>
 <div class="xar-mod-body">
-    <xar:template type="module" module="scheduler" file="admin-menu" />
+    <xar:template type="module" module="scheduler" file="admin-menu"/>
     <h2>
         <xar:mlstring>Create Scheduler Job</xar:mlstring>
     </h2>
@@ -36,13 +36,13 @@
                 <label for="job_func" class="xar-form-label">
                     <xar:mlstring>API Function</xar:mlstring>
                 </label>
-                <input type="text" name="job_func" id="job_func" value="" size="10" />
+                <input type="text" name="job_func" id="job_func" value="" size="10"/>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="config_params" class="xar-form-label">
                     <xar:mlstring>Parameters</xar:mlstring>
                 </label>
-                <input type="text" name="config[params]" id="config_params" value="" />
+                <input type="text" name="config[params]" id="config_params" value=""/>
                 <xar:mlstring>example: array('ptid' => 1)</xar:mlstring>
             </div>
             <div class="xar-form-input-wrapper">
@@ -60,13 +60,13 @@
                 <label for="config_startdate" class="xar-form-label">
                     <xar:mlstring>Start Date</xar:mlstring>
                 </label>
-                <xar:data-input type="calendar" name="config[startdate]" id="config_startdate" value="" />
+                <xar:data-input type="calendar" name="config[startdate]" id="config_startdate" value=""/>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="config_enddate" class="xar-form-label">
                     <xar:mlstring>End Date</xar:mlstring>
                 </label>
-                <xar:data-input type="calendar" name="config[enddate]" id="config_enddate" value="" />
+                <xar:data-input type="calendar" name="config[enddate]" id="config_enddate" value=""/>
             </div>
 
         <fieldset>
@@ -103,7 +103,7 @@
                 <label for="checkvalue" class="xar-form-label">
                     <xar:mlstring>Source</xar:mlstring>
                 </label>
-                <input type="text" name="checkvalue" id="checkvalue" value="" />
+                <input type="text" name="checkvalue" id="checkvalue" value=""/>
             </div>
 
 
@@ -118,39 +118,39 @@
                 <label for="config_crontab_minute" class="xar-form-label">
                     <xar:mlstring>Minutes (0-59)</xar:mlstring>
                 </label>
-                <input type="text" name="config[crontab][minute]" id="config_crontab_minute" value="" />
+                <input type="text" name="config[crontab][minute]" id="config_crontab_minute" value=""/>
                 <xar:mlstring>example: 0,15,30,45 = every 15 minutes</xar:mlstring>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="config_crontab_hour" class="xar-form-label">
                     <xar:mlstring>Hours (0-23)</xar:mlstring>
                 </label>
-                <input type="text" name="config[crontab][hour]" id="config_crontab_hour" value="" />
+                <input type="text" name="config[crontab][hour]" id="config_crontab_hour" value=""/>
                 <xar:mlstring>example: 8-18 = during business hours</xar:mlstring>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="config_crontab_day" class="xar-form-label">
                     <xar:mlstring>Days (1-31)</xar:mlstring>
                 </label>
-                <input type="text" name="config[crontab][day]" id="config_crontab_day" value="" />
+                <input type="text" name="config[crontab][day]" id="config_crontab_day" value=""/>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="config_crontab_month" class="xar-form-label">
                     <xar:mlstring>Months (1-12)</xar:mlstring>
                 </label>
-                <input type="text" name="config[crontab][month]" id="config_crontab_month" value="" />
+                <input type="text" name="config[crontab][month]" id="config_crontab_month" value=""/>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="config_crontab_weekday" class="xar-form-label">
                     <xar:mlstring>Week Days (0-6)</xar:mlstring>
                 </label>
-                <input type="text" name="config[crontab][weekday]" id="config_crontab_weekday" value="" />
+                <input type="text" name="config[crontab][weekday]" id="config_crontab_weekday" value=""/>
                 <xar:mlstring>example: 1-5 = from Monday to Friday</xar:mlstring>
             </div>
         </fieldset>
         <div class="xar-form-input-wrapper-after">
-            <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="submit" name="confirm" value="#xarML('Create Scheduler Job')#" />
+            <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+            <input type="submit" name="confirm" value="#xarML('Create Scheduler Job')#"/>
         </div>
     </form>
     <p>

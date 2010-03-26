@@ -27,7 +27,7 @@ function scheduler_admin_updateconfig()
     xarModCallHooks('module','updateconfig','scheduler',
                     array('module' => 'scheduler'));
 
-    xarResponse::Redirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
+    xarResponse::redirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
 
     return true;
 }

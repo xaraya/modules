@@ -5,9 +5,9 @@
 </span>
 <span style="float: right; width: 78%; text-align: left;">
     <xar:if condition="empty($showstatus)">
-        <input type="checkbox" name="showstatus" id="showstatus#$blockid#" value="1" />
+        <input type="checkbox" name="showstatus" id="showstatus#$blockid#" value="1"/>
     <xar:else />
-        <input type="checkbox" name="showstatus" id="showstatus#$blockid#" value="1" checked="checked" />
+        <input type="checkbox" name="showstatus" id="showstatus#$blockid#" value="1" checked="checked"/>
     </xar:if>
 </span>
 </div>

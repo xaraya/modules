@@ -6,7 +6,7 @@
     </span>
 </div>
 <div class="xar-mod-body">
-    <xar:template type="module" module="scheduler" file="admin-menu" />
+    <xar:template type="module" module="scheduler" file="admin-menu"/>
     <h2>
         <xar:mlstring>Modify Configuration</xar:mlstring>
     </h2>
@@ -62,13 +62,13 @@
 
                 </td>
                 <td>
-                    <input type="hidden" name="jobs[#$id#][lastrun]" value="#$job['lastrun']#" />
+                    <input type="hidden" name="jobs[#$id#][lastrun]" value="#$job['lastrun']#"/>
                     <xar:if condition="!empty($job['lastrun'])">
                         #xarLocaleGetFormattedDate('short',$job['lastrun'])# - #xarLocaleGetFormattedTime('short',$job['lastrun'])#
                     </xar:if>
                 </td>
                 <td>
-                    <input type="hidden" name="jobs[#$id#][result]" value="#$job['result']#" />
+                    <input type="hidden" name="jobs[#$id#][result]" value="#$job['result']#"/>
                     #$job['result']#
                 </td>
                 <td class="xar-align-center">
