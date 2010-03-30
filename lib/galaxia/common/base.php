@@ -145,8 +145,8 @@ class Base extends Observable
 
     static function normalize($name, $version = null)
     {
-        $text = str_replace(" ","_",$name);
-        $text = preg_replace("/[^0-9A-Za-z\_]/",'',$name);
+        $name = str_replace(" ","_",$name);
+        $name = preg_replace("/[^0-9A-Za-z\_]/",'',$name);
         return $name;
     }
 } //end of class
