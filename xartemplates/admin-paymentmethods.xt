@@ -11,13 +11,21 @@
     <div class="xar-mod-body">
         <xar:template type="module" file="admintabs" />
 
-        <h2>View Payment Options</h2>
-TODO: Let customers save payment options (credit card numbers, etc) to their account  
+<xar:if condition="isset($cust) and !empty($cust['first_name'])">
+	<xar:set name="for">' for ' . $cust['first_name'] . ' ' . $cust['last_name']</xar:set>
+<xar:elseif condition="isset($cust)" />
+	<xar:set name="for">' for Customer ' . $cust['id']</xar:set>
+<xar:else />
+	<xar:set name="for">''</xar:set>
+</xar:if>
+
+        <h2>View Payment Methods#$for#</h2>
+
 <div style="margin: 25px 0 0 1px;">
  <a href="#xarModURL('shop','admin','newpaymentoption')#"><img src="#sys::code()#modules/base/xarimages/icons/document-new.png" width="16" height="16" alt="New Item" /></a>
  </div>
 
-       <xar:data-view object="$mylist" tplmodule="shop" template="paymentoptions_adminlist" sort="$sort" fieldlist="$adminfields" />  
+       <xar:data-view object="$mylist" tplmodule="shop" template="paymentmethods_adminlist" sort="$sort" fieldlist="$adminfields" />  
 
     </div>
 </xar:template>

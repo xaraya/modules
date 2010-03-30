@@ -10,14 +10,14 @@
  * @author potion <ryan@webcommunicate.net>
  */
 /**
- *  List the product option sets
+ *  List payment methods
  */
-function shop_admin_optionsets()
+function shop_admin_paymentmethods()
 {
     if(!xarVarFetch('startnum', 'isset', $data['startnum'], NULL, XARVAR_DONT_SET)) {return;}
-	if(!xarVarFetch('user_id', 'isset', $user_id, NULL, XARVAR_DONT_SET)) {return;}
+	if(!xarVarFetch('uid', 'isset', $uid, NULL, XARVAR_DONT_SET)) {return;}
 
-	$objectname = 'shop_optionsets';
+	$objectname = 'shop_paymentmethods';
 	$data['objectname'] = $objectname;
 
     // Security check - important to do this as early as possible to avoid
@@ -60,30 +60,13 @@ function shop_admin_optionsets()
 					'sort' => $data['sort']
                     );
 
-	if (isset($user_id)) {
-		$filters['where'] = 'user_id eq '.$user_id;
+	if (isset($uid)) {
+		$filters['where'] = 'customer eq '.$uid;
+		$data['cust'] = xarMod::APIFunc('shop','user','customerinfo',array('id'=>$uid));
 	}
     
     // Get the items 
     $items = $mylist->getItems($filters);
-
-	if (isset($user_id)) {
-
-		// Get the object we'll be working with. Note this is a so called object list
-		$mylist2 = DataObjectMaster::getObjectList(array('name' =>  'shop_customers'));
-		
-		$filters = array();
-
-		if (isset($user_id)) {
-			$filters['where'] = 'ID eq '.$user_id;
-		}
-
-		$items2 = $mylist2->getItems($filters);
-
-		$data['fname'] = $items2[$user_id]['FirstName'];
-		$data['lname'] = $items2[$user_id]['LastName'];
-
-	}
 
 	$data['mylist'] = $mylist;
 

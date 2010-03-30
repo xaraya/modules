@@ -8,7 +8,7 @@
     <div class="xar-mod-body">
       <xar:template type="module" file="admintabs" />
 
-        <h2>Create an Option Set</h2> 
+        <h2>Create Product Attributes</h2> 
         <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
         <xar:if condition="!empty($withupload)">
             <xar:set name="enctype">'multipart/form-data'</xar:set>

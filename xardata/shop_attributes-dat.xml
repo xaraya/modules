@@ -1,12 +1,12 @@
 <items>
-  <shop_optionsets itemid="1">
+  <shop_attributes itemid="1">
     <id>1</id>
     <name>Apple options</name>
     <options>a:2:{s:5:&quot;green&quot;;s:3:&quot;.60&quot;;s:3:&quot;red&quot;;s:3:&quot;.50&quot;;}</options>
-  </shop_optionsets>
-  <shop_optionsets itemid="2">
+  </shop_attributes>
+  <shop_attributes itemid="2">
     <id>2</id>
     <name>Shirt sizes</name>
     <options>a:3:{s:6:&quot;Medium&quot;;s:3:&quot;$10&quot;;s:5:&quot;Large&quot;;s:3:&quot;$12&quot;;s:2:&quot;XL&quot;;s:3:&quot;$14&quot;;}</options>
-  </shop_optionsets>
+  </shop_attributes>
 </items>

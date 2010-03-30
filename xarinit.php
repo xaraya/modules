@@ -46,9 +46,9 @@ function shop_init()
     $objects = array(
                 'shop_products',
 				'shop_transactions',
-				'shop_optionsets',
+				'shop_attributes',
 				'shop_customers',
-				'shop_paymentoptions',
+				'shop_paymentmethods',
 				'shop_module_settings',
 				'shop_user_settings'
                 );

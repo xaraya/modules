@@ -75,7 +75,64 @@
 			</div>
 		 </xar:if>
 
-		<form method="post" id="payment" action="#xarmodurl('shop','user','complete')#">
+		 <xar:set name="formstyle">'display:block'</xar:set>
+ 
+		 <xar:if condition="isset($paymentmethods)">
+
+			<form method="post" id="paybysavedmethod" name="paybysavedmethod" action="#xarmodurl('shop','user','complete')#">
+
+			<xar:set name="formstyle">'display:none'</xar:set>
+
+			<table id="paymentmethod">
+			<tr><td>
+			<div id="selectpayment">
+			Select a payment method:
+			</div>
+
+			 <xar:foreach in="$paymentmethods" key="$key" value="$val">
+
+			 <xar:set name="card_last4">substr($val['card_num'], -4)</xar:set>
+			 <xar:set name="month">substr($val['exp_date'], 0, 2)</xar:set>
+			 <xar:set name="year">substr($val['exp_date'], -2)</xar:set>
+
+			<xar:comment>
+
+			TODO: grey out the radio buttons for expired cards and give customers a way to update their cards
+
+			<xar:set name="exp">$year.$month</xar:set>
+			 <xar:set name="now">date('ym',time())</xar:set>
+
+			 <xar:if condition="$exp lt $now">
+				<xar:set name="dis">' disabled="disabled"'</xar:set>
+			 <xar:else />
+				<xar:set name="dis">""</xar:set>
+			 </xar:if>
+
+			 </xar:comment>
+	 
+			<div class="paymentmethod">
+				<input type="radio" name="paymentmethod"  value="#$key#" onClick="javascript:document.payment.style.display='none';document.getElementById('complete1').style.display='block'" />
+				<strong>#$val['card_type']#</strong>  ending: #$card_last4# &#160; <strong>#$val['first_name']#</strong>&#160;<strong>#$val['last_name']#</strong> &#160; Exp date: #$month#/#$year#
+			</div> 
+
+			</xar:foreach>
+
+			<div class="paymentmethod">
+				<input type="radio" name="paymentmethod" value="0" onClick="javascript:document.getElementById('complete1').style.display='none'; document.payment.style.display='block'" /> Enter different payment information
+			</div> 
+
+			</td><td>
+			<div class="button_container" id="complete1" style="display:block">
+			<input type="submit" class="button" name="savedmethodsubmit" value="Complete Order" />
+			</div>
+			</td></tr>
+			</table>
+
+			</form>
+
+		 </xar:if>
+
+		<form method="post" id="payment" name="payment" style="#$formstyle#" action="#xarmodurl('shop','user','complete')#">
 		<fieldset>
 		<legend>Please enter your credit card info:</legend>
 			<table id="paymentinfo"> 

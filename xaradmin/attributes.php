@@ -10,14 +10,14 @@
  * @author potion <ryan@webcommunicate.net>
  */
 /**
- *  List payment options
+ *  List the product attributes 
  */
-function shop_admin_paymentoptions()
+function shop_admin_attributes()
 {
     if(!xarVarFetch('startnum', 'isset', $data['startnum'], NULL, XARVAR_DONT_SET)) {return;}
 	if(!xarVarFetch('user_id', 'isset', $user_id, NULL, XARVAR_DONT_SET)) {return;}
 
-	$objectname = 'shop_paymentoptions';
+	$objectname = 'shop_attributes';
 	$data['objectname'] = $objectname;
 
     // Security check - important to do this as early as possible to avoid
@@ -75,7 +75,7 @@ function shop_admin_paymentoptions()
 		$filters = array();
 
 		if (isset($user_id)) {
-			$filters['where'] = 'id eq '.$user_id;
+			$filters['where'] = 'ID eq '.$user_id;
 		}
 
 		$items2 = $mylist2->getItems($filters);

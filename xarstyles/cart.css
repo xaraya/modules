@@ -113,3 +113,6 @@ border: none;
 background-color: transparent;
 }
 
+#paymentmethod td {
+text-align: left;
+}

@@ -1,17 +1,17 @@
-<object name="shop_optionsets">
-  <objectid>36</objectid>
-  <label>Option Sets</label>
+<object name="shop_attributes">
+  <objectid>459</objectid>
+  <label>Product Attributes</label>
   <module_id>1031</module_id>
-  <itemtype>17</itemtype>
+  <itemtype>3</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
-  <maxid>0</maxid>
+  <maxid>2</maxid>
   <config>a:0:{}</config>
   <isalias>true</isalias>
   <properties>
     <property name="id">
-      <id>484</id>
+      <id>2774</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration></configuration>
     </property>
     <property name="name">
-      <id>485</id>
+      <id>2775</id>
       <label>Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -31,7 +31,7 @@
       <configuration></configuration>
     </property>
     <property name="options">
-      <id>486</id>
+      <id>2776</id>
       <label>Options</label>
       <type>array</type>
       <defaultvalue></defaultvalue>

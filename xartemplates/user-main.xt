@@ -22,9 +22,20 @@
 				<div class="ptitle">#$val['title']#</div>
 				<div>#$val['description']#</div>
 				<div>#$val['price']#</div>
+
+				<xar:comment>
+				 probably going to eliminate the product attributes feature
+				<xar:set name="attributes">$val['attributes']</xar:set>
+				<xar:if condition="is_numeric($attributes)">
+					 <xar:set name="options">xarMod::APIFunc('shop','admin','getattributeoptions',array('id' => $attributes, 'separator' => ' ', 'firstline' => 'Select'))</xar:set>
+					 <xar:set name="attr">'attr-' . $key</xar:set>
+					 <xar:data-input type="dropdown" value="1" options="$options" name="$attr" />
+				</xar:if></xar:comment>
+
 				<div><a href="#xarModURL('shop','user','add',array('id' => $key, 'returnurl' => xarServer::GetCurrentURL()
 				))#">Add to cart</a></div>
 			</div>
+			<xar:set name="attributes">''</xar:set>
 		</xar:foreach>
 	</td>
 	<td id="rightcol">

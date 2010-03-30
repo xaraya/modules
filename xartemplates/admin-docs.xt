@@ -21,7 +21,8 @@
 <li>Write an API function similar to <strong>xaradminapi/authorizenet.php</strong> to connect to your payment gateway.  You should be able to find sample code in your payment gateway's developer documentation.</li>
 <li>Add your payment gateway to the array in <strong>xaradminapi/gateways.php</strong>.</li>
 <li>Add some code in <strong>xaradminapi/handlepgresponse.php</strong> to handle the response from your payment gateway.  The payment gateway will respond with a transaction ID that is presented to the customer and also saved in your transaction records.  They all respond a little differently but it's mainly a matter of grabbing the transaction ID from whatever array they return.</li>
-<li>Visit the Modify Config page.  You'll see your payment gateway is now in the dropdown.  Select it and click Update.
+<li>Visit the Modify Config page.  Make sure you've entered the appropriate credentials for your payment gateway.</li>
+<li>Still in the Modify Config page, you'll see your payment gateway in the dropdown.  Select it and click Update.</li>
 </ol>
 
 <h3>Notes on payment gateways:</h3>

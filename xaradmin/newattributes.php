@@ -10,16 +10,16 @@
  * @author potion <ryan@webcommunicate.net>
  */
 /**
- *  Add a payment option to a customer's account
+ *  Add new product attributes
  */
-function shop_admin_newpaymentoption()
+function shop_admin_newattributes()
 {
     // See if the current user has the privilege to add an item. We cannot pass any extra arguments here
-    if (!xarSecurityCheck('AddShop')) return;
+    if (!xarSecurityCheck('Addshop')) return;
 
 	if(!xarVarFetch('objectid',       'id',    $data['objectid'],   NULL, XARVAR_DONT_SET)) {return;}
 	
-	$objectname = 'shop_paymentoptions';
+	$objectname = 'shop_attributes';
 	$data['objectname'] = $objectname;
 
 	// Load the DD master object class. This line will likely disappear in future versions
@@ -50,16 +50,16 @@ function shop_admin_newpaymentoption()
 
         if (!$isvalid) {
             // Bad data: redisplay the form with the data we picked up and with error messages
-            return xarTplModule('shop','admin','newpaymentoption', $data);        
+            return xarTplModule('shop','admin','newattributes', $data);        
         } elseif (isset($data['preview'])) {
             // Show a preview, same thing as the above essentially
-            return xarTplModule('shop','admin','newpaymentoption', $data);        
+            return xarTplModule('shop','admin','newattributes', $data);        
         } else {
 
 			$itemid = $data['object']->createItem();
  
             // Jump to the next page
-            xarResponse::Redirect(xarModURL('shop','admin','paymentoptions'));
+            xarResponse::Redirect(xarModURL('shop','admin','attributes'));
             // Always add the next line even if processing never reaches it
             return true;
         }

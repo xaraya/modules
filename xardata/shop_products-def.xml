@@ -1,17 +1,17 @@
 <object name="shop_products">
-  <objectid>35</objectid>
+  <objectid>457</objectid>
   <label>Products</label>
   <module_id>1031</module_id>
-  <itemtype>16</itemtype>
+  <itemtype>1</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
-  <maxid>0</maxid>
+  <maxid>3</maxid>
   <config>a:0:{}</config>
   <isalias>true</isalias>
   <properties>
     <property name="id">
-      <id>480</id>
+      <id>2754</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -20,9 +20,9 @@
       <seq>1</seq>
       <configuration></configuration>
     </property>
-    <property name="title">
-      <id>481</id>
-      <label>Title</label>
+    <property name="sku">
+      <id>2801</id>
+      <label>SKU</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
@@ -30,25 +30,45 @@
       <seq>2</seq>
       <configuration></configuration>
     </property>
-    <property name="description">
-      <id>482</id>
-      <label>Description</label>
-      <type>textarea_large</type>
+    <property name="title">
+      <id>2755</id>
+      <label>Title</label>
+      <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
       <status>33</status>
       <seq>3</seq>
       <configuration></configuration>
     </property>
-    <property name="price">
-      <id>483</id>
-      <label>Price</label>
-      <type>textbox</type>
+    <property name="description">
+      <id>2756</id>
+      <label>Description</label>
+      <type>textarea_large</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
       <status>33</status>
       <seq>4</seq>
       <configuration></configuration>
+    </property>
+    <property name="price">
+      <id>2757</id>
+      <label>Price</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
+    <property name="attributes">
+      <id>2800</id>
+      <label>Attributes</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration>a:3:{s:14:"display_layout";s:7:"default";s:24:"initialization_firstline";s:15:"-Please Select-";s:23:"initialization_function";s:47:"xarMod::APIFunc('shop','admin','getattributes')";}</configuration>
     </property>
   </properties>
 </object>

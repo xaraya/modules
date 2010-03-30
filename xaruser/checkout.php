@@ -27,6 +27,18 @@ function shop_user_checkout() {
 	if (xarUserIsLoggedIn()) {
 		// User is logged in.  Display the payment form...
 
+		// See if there are already some payment methods saved in the user's account
+		$mylist = DataObjectMaster::getObjectList(array('name' => 'shop_paymentmethods'));
+		// We have some filters for the items
+		$filters = array(
+						 'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
+						'where' => 'customer eq ' . xarUserGetVar('id'),
+						);
+		$paymentmethods = $mylist->getItems($filters);
+		if (count($paymentmethods) > 0) {
+			$data['paymentmethods'] = $paymentmethods;
+		}
+
 		$transobject = DataObjectMaster::getObject(array('name' => 'shop_transactions'));
 		$data['transproperties'] = $transobject->getProperties();
 

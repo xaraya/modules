@@ -10,16 +10,16 @@
  * @author potion <ryan@webcommunicate.net>
  */
 /**
- *  Add a new optionset 
+ *  Add a payment option to a customer's account
  */
-function shop_admin_newoptionset()
+function shop_admin_newpaymentoption()
 {
     // See if the current user has the privilege to add an item. We cannot pass any extra arguments here
-    if (!xarSecurityCheck('Addshop')) return;
+    if (!xarSecurityCheck('AddShop')) return;
 
 	if(!xarVarFetch('objectid',       'id',    $data['objectid'],   NULL, XARVAR_DONT_SET)) {return;}
 	
-	$objectname = 'shop_optionsets';
+	$objectname = 'shop_paymentmethods';
 	$data['objectname'] = $objectname;
 
 	// Load the DD master object class. This line will likely disappear in future versions
@@ -59,7 +59,7 @@ function shop_admin_newoptionset()
 			$itemid = $data['object']->createItem();
  
             // Jump to the next page
-            xarResponse::Redirect(xarModURL('shop','admin','optionsets'));
+            xarResponse::Redirect(xarModURL('shop','admin','paymentmethods'));
             // Always add the next line even if processing never reaches it
             return true;
         }
