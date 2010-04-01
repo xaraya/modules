@@ -57,6 +57,7 @@ function ratings_init()
     // Set up module variables
     xarModSetVar('ratings', 'defaultstyle', 'outoffivestars');
     xarModSetVar('ratings', 'seclevel', 'medium');
+    xarModSetVar('ratings', 'shownum', 1);
     // Set up module hooks
     if (!xarModRegisterHook('item',
             'display',
