@@ -61,8 +61,6 @@ function ratings_user_display($args)
     if (empty($modname)) {
         $modname = xarModGetName();
     }
-    $args['modname'] = $modname;
-    $args['itemtype'] = $itemtype;
 
     if (!isset($style)) {
         if (!empty($itemtype)) {
@@ -110,6 +108,11 @@ function ratings_user_display($args)
     $data['showdisplay'] = $showdisplay;
     $data['showinput'] = $showinput;
 
+    // Select the right rating
+    $args['modname'] = $modname;
+    $args['itemtype'] = $itemtype;
+    $args['itemids'] = array($objectid);
+
     // Run API function
     // Bug 6160 Use getitems at first, then get if we get weird results
     $rating = xarModAPIFunc('ratings',
@@ -118,9 +121,8 @@ function ratings_user_display($args)
                            $args);
     // Select the way to get the rating
     if (!empty($rating[$objectid])) {
-        $key_id = array_keys($rating);
-        $data['rawrating'] = $rating[$key_id[0]]['rating'];
-        $data['numratings'] = $rating[$key_id[0]]['numratings'];
+        $data['rawrating'] = $rating[$objectid]['rating'];
+        $data['numratings'] = $rating[$objectid]['numratings'];
     } else {
         // Use old fashioned way
         $data['rawrating'] = xarModAPIFunc('ratings',
