@@ -3,7 +3,7 @@
     <div class="xar-mod-head">
         <span class="xar-mod-title">
             <xar:if condition="xarModVars::get('xarayatesting','use_module_alias')">
-                <xar:var scope="module" module="xarayatesting" name="module_alias_name" />
+                <xar:var scope="module" module="xarayatesting" name="module_alias_name"/>
             <xar:else />
                 <xar:mlstring>Manage XarayaTesting Master Tables</xar:mlstring>
             </xar:if>
@@ -11,7 +11,7 @@
     </div>
     <div class="xar-mod-body">
         <form method="post" action="#xarServer::getCurrentURL()#" style="margin-top: 10px; margin-bottom: 10px;">
-            Choose an object:&#160;<xar:data-input type="dropdown" name="objectname" value="$objectname" options="$options" onchange="javascript:submit()" />
+            Choose an object:&#160;<xar:data-input type="dropdown" name="objectname" value="$objectname" options="$options" onchange="javascript:submit()"/>
         </form>
 <!--        <xar:data-input type="listingslist" object="$objectname"/> -->
     </div>

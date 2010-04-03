@@ -4,7 +4,7 @@
     <div class="xar-mod-head">
         <span class="xar-mod-title">
             <xar:if condition="xarModVars::get('xarayatesting','use_module_alias')">
-                <xar:var scope="module" module="xarayatesting" name="module_alias_name" />
+                <xar:var scope="module" module="xarayatesting" name="module_alias_name"/>
             <xar:else />
                 <xar:mlstring>Xarayatesting Module</xar:mlstring>
             </xar:if>
@@ -15,10 +15,10 @@
             <form action="#xarServer::getCurrentURL()#" method="post">
                 <fieldset>
                     Choose a module to check:&#160;
-                    <xar:data-input type="dropdown" name="item" options="$items" firstline="0,All" />
+                    <xar:data-input type="dropdown" name="item" options="$items" firstline="0,All"/>
                 </fieldset>
                 <fieldset>
-                    <input type="hidden" name="confirm" value="1" />
+                    <input type="hidden" name="confirm" value="1"/>
                     <xar:button type="submit" label="Go"/>
                 </fieldset>
             </form>
@@ -27,7 +27,7 @@
                 <xar:if condition="!empty($items)">
                     The following modules were checked for PHP validity:
                     <ul>
-                        <xar:foreach in="$items" value="$item" >
+                        <xar:foreach in="$items" value="$item">
                             <li>
                                 #$item['name']#
                             </li>
@@ -38,7 +38,7 @@
                 </xar:if>
             </fieldset>
             <fieldset>
-                <a href="#xarModURL('xarayatesting','admin','othertests')#" >Back to Scans</a>
+                <a href="#xarModURL('xarayatesting','admin','othertests')#">Back to Scans</a>
             </fieldset>
         </xar:if>
     </div>

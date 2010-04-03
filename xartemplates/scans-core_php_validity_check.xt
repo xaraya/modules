@@ -14,8 +14,7 @@
         <xar:if condition="empty($confirm)">   
             <form action="#xarServer::getCurrentURL()#" method="post">
                 <fieldset>
-                    Choose a module to check:&#160;
-                    <xar:data-input type="dropdown" name="item" options="$items" firstline="0,All"/>
+                    This test scans all the files in the core
                 </fieldset>
                 <fieldset>
                     <input type="hidden" name="confirm" value="1"/>
@@ -25,7 +24,7 @@
         <xar:else />
             <fieldset>
                 <xar:if condition="!empty($items)">
-                    Checked templates of the following modules:
+                    The following files were checked for PHP validity:
                     <ul>
                         <xar:foreach in="$items" value="$item">
                             <li>
@@ -34,7 +33,7 @@
                         </xar:foreach>
                     </ul>
                 <xar:else />
-                    No module templates were checked
+                    No modules were checked
                 </xar:if>
             </fieldset>
             <fieldset>
