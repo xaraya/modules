@@ -12,9 +12,10 @@
       <h3>What is it?</h3>
 
       <p>
-        See the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">introduction
-        and user manual of Galaxia</a> for more details on what this
-        module is all about, and how to use it.
+        <xar:set name="concepts">sys::code() . 'modules/workflow/xardocs/concepts.htm'</xar:set>
+        <xar:set name="manual">sys::code() . 'modules/workflow/xardocs/manual.htm'</xar:set>
+        See the <a href="#$concepts#">introduction</a> and <a href="#$manual#">user manual</a> of
+        Galaxia for more details on what this module is all about, and how to use it.
       </p>
       <p>
         However, we clarify their definitions here a bit. In the workflow
