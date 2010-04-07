@@ -58,7 +58,7 @@
         </xar:if>
       </td>
       <td #$width2# align="left">&nbsp;
-        <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18">&nbsp;
+        <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18" />&nbsp;
           <xar:mlstring><strong>Current Folder</strong></xar:mlstring>
       </td>
 
@@ -86,7 +86,7 @@
               <a href="#$local_import_post_url#&amp;inode=#$loop:item['fileName']#&amp;action=#$getAction['REFRESH']#"
                  alt="#xarML('Open Folder')#"
                  title="#xarML('Open Folder')#">
-                <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18">
+                <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18" />
                   <strong>#$loop:item['fileName']#</strong>
               </a>
               <xar:else />
@@ -123,5 +123,7 @@
     </xar:if>
   </table>
   <br />                    
-  </form>
+  <xar:if condition="isset($fileList) AND count($fileList)">
+    </form>
+  </xar:if>
 </div>

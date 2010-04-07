@@ -114,8 +114,8 @@
                             <td>
                             <xar:base-include-javascript module="base" filename="checkall.js" />
                             <script language="JavaScript" type="text/javascript">
-                                document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],true)\" class=\"xar-nowrap\"><xar:mlstring>Check All</xar:mlstring></a> | ");
-                                document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],false)\" class=\"xar-nowrap\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
+                                document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],true)\" class=\"xar-nowrap\"><xar:mlstring>Check All</xar:mlstring><\/a> | ");
+                                document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],false)\" class=\"xar-nowrap\"><xar:mlstring>Uncheck All</xar:mlstring><\/a> ]");
                             </script>
                             </td>
                         </tr>

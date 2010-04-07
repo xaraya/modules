@@ -33,7 +33,6 @@ function uploads_admin_get_files()
     $storeTypes = _UPLOADS_STORE_FSDB . ':' . _UPLOADS_STORE_DB_FULL;
     if (!xarVarFetch('storeType',     "enum:$storeTypes", $storeType, '', XARVAR_NOT_REQUIRED)) return;
 
-    #if (!xarVarFetch('description', 'str', $description, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('description', 'array:1', $description, '', XARVAR_NOT_REQUIRED)) return;
 
     // now make sure someone hasn't tried to change our maxsize on us ;-)
