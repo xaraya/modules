@@ -44,6 +44,11 @@ function dyn_example_user_view()
     // Get the object we'll be working with
     $mylist = DataObjectMaster::getObjectList(array('name' => 'dyn_example'));
 
+    // Alternative security check e.g. if your module doesn't have its own security masks for items
+    // Check if the current user has 'view' access to this object
+    //if (!$mylist->checkAccess('view'))
+    //    return xarResponse::Forbidden(xarML('View #(1) is forbidden', $mylist->label));
+
     // We have some filters for the items
     $filters = array('numitems'  => $data['items_per_page'],
                      'startnum'  => $data['startnum'],

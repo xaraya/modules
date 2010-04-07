@@ -24,6 +24,11 @@ function dyn_example_admin_new()
     // Get the object we'll be working with
     $data['object'] = DataObjectMaster::getObject(array('name' => 'dyn_example'));
 
+    // Alternative security check e.g. if your module doesn't have its own security masks for items
+    // Check if the current user has 'create' access to this object
+    //if (!$data['object']->checkAccess('create'))
+    //    return xarResponse::Forbidden(xarML('Create #(1) is forbidden', $data['object']->label));
+
     // Check if we are in 'preview' mode from the input here - the rest is handled by checkInput()
     // Here we are testing for a button clicked, so we test for a string
     if(!xarVarFetch('preview', 'str', $data['preview'],  NULL, XARVAR_DONT_SET)) {return;}

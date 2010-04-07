@@ -39,6 +39,11 @@ function dyn_example_admin_modify()
     sys::import('modules.dynamicdata.class.objects.master');
     // Get the object we'll be working with
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+
+    // Alternative security check e.g. if your module doesn't have its own security masks for items
+    // Check if the current user has 'update' access to this object
+    //if (!$data['object']->checkAccess('update', $data['itemid']))
+    //    return xarResponse::Forbidden(xarML('Update #(1) is forbidden', $data['object']->label));
     
     // Check if we are in 'preview' mode from the input here - the rest is handled by checkInput()
     // Here we are testing for a button clicked, so we test for a string

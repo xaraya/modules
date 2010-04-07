@@ -31,6 +31,11 @@ function dyn_example_admin_view()
 
     // Get the object we'll be working with. Note this is a so called object list
     $mylist = DataObjectMaster::getObjectList(array('name' => 'dyn_example'));
+
+    // Alternative security check e.g. if your module doesn't have its own security masks for items
+    // Check if the current user has 'update' access to this object ('update' instead of 'view' to require higher access)
+    //if (!$mylist->checkAccess('update'))
+    //    return xarResponse::Forbidden(xarML('Update #(1) is forbidden', $mylist->label));
     
     // Load the DD master property class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.properties.master');

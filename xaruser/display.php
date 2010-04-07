@@ -40,6 +40,11 @@ function dyn_example_user_display()
     // Get the object definition we'll be working with
     $object = DataObjectMaster::getObject(array('name' => 'dyn_example'));
 
+    // Alternative security check e.g. if your module doesn't have its own security masks for items
+    // Check if the current user has 'display' access to this object
+    //if (!$object->checkAccess('display',$itemid))
+    //    return xarResponse::Forbidden(xarML('Display #(1) is forbidden', $object->label));
+
     //We'll need $object in the template for both Approach #1 and #3, so let's go ahead and add it to the $data array.  At the end of this function, we'll return $data to the template.
     $data['object'] = $object;
 

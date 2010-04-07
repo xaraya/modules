@@ -44,6 +44,12 @@ function dyn_example_admin_delete()
     sys::import('modules.dynamicdata.class.objects.master');
     // Get the object we'll be working with
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+
+    // Alternative security check e.g. if your module doesn't have its own security masks for items
+    // Check if the current user has 'delete' access to this object
+    //if (!$data['object']->checkAccess('delete', $data['itemid']))
+    //    return xarResponse::Forbidden(xarML('Delete #(1) is forbidden', $data['object']->label));
+
     $data['object']->getItem(array('itemid' => $data['itemid']));
     
     if ($data['confirm']) {

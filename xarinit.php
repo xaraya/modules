@@ -83,20 +83,22 @@ function dyn_example_init()
                              'blockType' => 'first'))) return;
 # --------------------------------------------------------
 #
-# Create privilege instances
+# Create privilege instances if you don't use $ddobject->checkAccess() for security checks
 #
     sys::import('modules.dynamicdata.class.objects.master');
     $object = DataObjectMaster::getObject(array('name' => 'dyn_example'));
     $objectid = $object->objectid;
 
+    // Note: this query will retrieve a list of item ids for this object directly from the database
+    // You could retrieve some more meaningful instances for security checks in your own module
     $xartable =& xarDB::getTables();
     $dynproptable = $xartable['dynamic_properties'];
     $dyndatatable = $xartable['dynamic_data'];
-    $query = "SELECT DISTINCT $dynproptable.id
+    $query = "SELECT DISTINCT $dyndatatable.item_id
 	FROM $dynproptable
 	LEFT JOIN $dyndatatable
-                  ON $dyndatatable.id=property_id
-               WHERE object_id= $objectid";
+                  ON $dyndatatable.property_id=$dynproptable.id
+               WHERE $dynproptable.object_id=$objectid";
 
     // Note : we could add some other fields in here too, based on the properties we imported above
     $instances = array(
@@ -108,14 +110,19 @@ function dyn_example_init()
     xarDefineInstance('dyn_example', 'Item', $instances);
 # --------------------------------------------------------
 #
-# Register masks
+# Register security masks
 #
-    xarRegisterMask('ViewDynExample','All','dyn_example','Item','All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadDynExample','All','dyn_example','Item','All','ACCESS_READ');
-    xarRegisterMask('EditDynExample','All','dyn_example','Item','All','ACCESS_EDIT');
-    xarRegisterMask('AddDynExample','All','dyn_example','Item','All','ACCESS_ADD');
+    // Check access to module items if you don't use $ddobject->checkAccess() for security checks
+    xarRegisterMask('ViewDynExample',  'All','dyn_example','Item','All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadDynExample',  'All','dyn_example','Item','All','ACCESS_READ');
+    xarRegisterMask('EditDynExample',  'All','dyn_example','Item','All','ACCESS_EDIT');
+    xarRegisterMask('AddDynExample',   'All','dyn_example','Item','All','ACCESS_ADD');
     xarRegisterMask('DeleteDynExample','All','dyn_example','Item','All','ACCESS_DELETE');
-    xarRegisterMask('AdminDynExample','All','dyn_example','Item','All','ACCESS_ADMIN');
+    xarRegisterMask('ConfigDynExample','All','dyn_example','Item','All','ACCESS_ADMIN');
+
+    // Check access to the module administration if you don't use ???
+    xarRegisterMask('AdminDynExample', 'All','dyn_example', 'All','All','ACCESS_ADMIN');
+
 # --------------------------------------------------------
 #
 # Register hooks
