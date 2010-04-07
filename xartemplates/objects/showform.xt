@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+    <p><strong>Template invoked by the tag:</strong></p>
+
+        <blockquote>                  
+        <strong>
+        <a href="javascript:void(window.open('#sys::code()#modules/dyn_example/xartemplates/objects/showform.xt', 'Template', 'width=700,height=580,toolbar=0,status=0,location=0,scrollbars=1, left=200,top=200')) ">modules/dyn_example/xartemplates/objects/showform.xt</a></strong>
+        </blockquote>
+
+    <p><strong>Output:</strong></p>
+
     <xar:if condition="empty($layout) or $layout eq 'default'">
         <xar:foreach in="$properties" key="$name" value="$property">
             <div class="xar-form-input-wrapper">

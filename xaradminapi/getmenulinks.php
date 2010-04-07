@@ -58,6 +58,17 @@ function dyn_example_adminapi_getmenulinks()
                               'label' => xarML('Modify Configuration'));
     }
 
+    if (xarSecurityCheck('EditDynExample',0)) {
+
+        $menulinks[] = Array('url'   => xarModURL('dyn_example',
+                                                   'object',
+                                                   'main'),
+                              // In order to display the tool tips and label in any language,
+                              // we must encapsulate the calls in the xarML in the API.
+                              'title' => xarML('Object interface using Dynamic Data UI handlers.'),
+                              'label' => xarML('All-in-one Interface'));
+    }
+
     return $menulinks;
 }
 ?>

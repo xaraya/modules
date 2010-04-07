@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">#$tpltitle#</span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:if condition="!empty($object)">
+            <xar:set name="searchlink">xarObject::getActionURL($object, 'search')</xar:set>
+            <xar:if condition="!empty($object:primary) and $object:checkAccess('create')">
+                <xar:set name="newlink">xarObject::getActionURL($object, 'new')</xar:set>
+            </xar:if>
+            <h2>
+                View #$object:label#&#160;
+                <a href="#$searchlink#" title="Search #$object:label#">
+                    <img src="#xarTplGetImage('icons/system-search.png', 'base')#" width="16" height="16" alt="search"/>
+                </a>
+                <xar:if condition="!empty($newlink)">
+                    &#160;<a href="#$newlink#" title="Create New #$object:label#">
+                        <img src="#xarTplGetImage('icons/add.png', 'base')#" width="16" height="16" alt="new"/>
+                    </a>
+                </xar:if>
+            </h2>
+
+        This shows an all-in-one interface to your objects using the Dynamic Data UI handlers. You only need one function
+        in your module in order to use this - see modules/dyn_example/xarobject/main.php.
+
+        <p><strong>Template invoked by the object interface:</strong></p>
+
+        <blockquote>
+        <strong>
+        <a href="javascript:void(window.open('#sys::code()#modules/dyn_example/xartemplates/objects/ui_view.xt', 'Template', 'width=700,height=580,toolbar=0,status=0,location=0,scrollbars=1, left=200,top=200')) ">modules/dyn_example/xartemplates/objects/ui_view.xt</a></strong>
+        </blockquote>
+
+            <!-- don't show a newlink here -->
+            <xar:data-view object="$object" newlink=""/>
+        <xar:else />
+            <div class="xar-align-center">
+                <a href="&xar-modurl-dynamicdata-object-main;">Please select one of the available objects</a>
+            </div>
+        </xar:if>
+    </div>
+</xar:template>
