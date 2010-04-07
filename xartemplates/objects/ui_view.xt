@@ -22,10 +22,10 @@
                 </xar:if>
             </h2>
 
-        This shows an all-in-one interface to your objects using the Dynamic Data UI handlers. You only need one function
-        in your module in order to use this - see modules/dyn_example/xarobject/main.php.
+        This shows an all-in-one interface to your objects using the Dynamic Data UI handlers. You only need one
+        module function in order to use this - see <strong>dyn_example/xarobject/main.php</strong>.
 
-        <p><strong>Template invoked by the object interface:</strong></p>
+        <p><strong>Template invoked by the user interface handler:</strong></p>
 
         <blockquote>
         <strong>
