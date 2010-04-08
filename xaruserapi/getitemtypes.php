@@ -39,6 +39,7 @@ function courses_userapi_getitemtypes($args)
     $types = xarModAPIFunc('courses',
                             'user',
                             'getall_coursetypes');
+    if (empty($types)) $types = array();
 
     foreach($types as $type){
         $itemtypevalue = $type['tid'];

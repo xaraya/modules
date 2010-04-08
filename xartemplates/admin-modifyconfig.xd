@@ -42,7 +42,7 @@
                     <label for="hidecoursemsg" class="xar-form-label" title="#xarML('The message to display when a user wants to see a course that is hidden.')#">
                         <span class="required" >#xarML('Message to show when a complete course is selected for hiding')#</span>
                     </label>
-                    <span class="fullright" class="xar-form-label">
+                    <span class="fullright">
                         <textarea class="fullright" name="hidecoursemsg" id="hidecoursemsg" wrap="virtual" rows="10" cols="40">#xarModGetVar('courses', 'hidecoursemsg')#</textarea>
                     </span>
                     <xar:if condition="!empty($invalid['hidecoursemsg'])">
@@ -62,7 +62,11 @@
                     <label for="HideEmptyField" class="xar-form-label" title="#xarML('Hide fields in display templates that are empty?')#">
                         #xarML('Hide Empty Fields for User?')#
                     </label>
-                    <input type="checkbox" name="HideEmptyFields" id="HideEmptyFields" value="1" #$hideemptyfieldschecked# />
+                    <xar:if condition="$hideemptyfieldschecked">
+                      <input type="checkbox" name="HideEmptyFields" id="HideEmptyFields" value="1" checked="checked" />
+                      <xar:else/>
+                      <input type="checkbox" name="HideEmptyFields" id="HideEmptyFields" value="1" />
+                    </xar:if>
                 </div>
                   <div class="xar-form-input-wrapper">
                     <label for="SendConfirmsForExtreg" class="xar-form-label" title="#xarML('Also send confirm emails for courses that use external registration?')#">
@@ -86,7 +90,11 @@
                     <label for="ShowShortDesc" class="xar-form-label" title="#xarML('Show table column with short description for every course?')#">
                         #xarML('Show short description on user view page?')#
                     </label>
-                    <input type="checkbox" name="ShowShortDesc" id="ShowShortDesc" value="1" #$ShowShortDescchecked# />
+                    <xar:if condition="$ShowShortDescchecked">
+                      <input type="checkbox" name="ShowShortDesc" id="ShowShortDesc" value="1" checked="checked" />
+                      <xar:else/>
+                      <input type="checkbox" name="ShowShortDesc" id="ShowShortDesc" value="1" />
+                    </xar:if>
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="coord_group" class="xar-form-label">

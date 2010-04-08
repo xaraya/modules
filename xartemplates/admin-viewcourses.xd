@@ -46,17 +46,29 @@
             <td>#$item['coursetype']#</td>
             <xar:if condition="$item['hidecourse'] eq 1">
                 <td class="coursehidden">H:
+                <xar:if condition="!empty($item.next)">
+                    #xarLocaleGetFormattedDate('short', $item.next)#
+                <xar:else />
+                    &nbsp;
+                </xar:if>
+                </td>
             <xar:elseif condition="!empty($item.expected)" />
                 <td class="dateexpected">E:
+                <xar:if condition="!empty($item.next)">
+                    #xarLocaleGetFormattedDate('short', $item.next)#
+                <xar:else />
+                    &nbsp;
+                </xar:if>
+                </td>
             <xar:else />
                 <td>
+                <xar:if condition="!empty($item.next)">
+                    #xarLocaleGetFormattedDate('short', $item.next)#
+                <xar:else />
+                    &nbsp;
+                </xar:if>
+                </td>
             </xar:if>
-            <xar:if condition="!empty($item.next)">
-                #xarLocaleGetFormattedDate('short', $item.next)#
-            <xar:else />
-                &nbsp;
-            </xar:if>
-            </td>
             <td>
                <xar:if condition="empty($item['planurl'])">
                    #$item['plantitle']#

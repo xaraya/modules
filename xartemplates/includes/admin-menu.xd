@@ -33,7 +33,7 @@
 
     <xar:comment>
       Set a variable that matches the template name. It does not consider template type.
-      If you wanted to look at type of template you would need to check #$request.1#
+      If you wanted to look at type of template you would need to check $request.1
       (eg to see if it's admin or user)
       xarRequestInfo() returns the modulename, type and function in an array for
       the function we want the third element (i.e. at index 2)
