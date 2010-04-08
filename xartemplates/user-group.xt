@@ -1,15 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Newsgroups</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title">Newsgroups</span></div>
 <div class="xar-mod-body">
 
-    <h2><xar:ml><xar:mlstring>Messages in newsgroup #(1)</xar:mlstring><xar:mlvar>#$group#</xar:mlvar></xar:ml></h2>
-    <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
-        <div>#xarSessionGetVar('statusmsg')#</div>
-        <xar:set name="i">xarSessionSetVar('statusmsg', '')</xar:set>
+    <h2><xar:ml>Messages in newsgroup #(1)<xar:mlvar>#$group#</xar:mlvar></xar:ml></h2>
+    <xar:if condition="xarSession::getVar('statusmsg') ne ''">
+        <div>#xarSession::getVar('statusmsg')#</div>
+        <xar:set name="i">xarSession::setVar('statusmsg', '')</xar:set>
     </xar:if>
 
 <xar:if condition="isset($error_message)">
-    <p> <xar:mlstring>News Server Error:</xar:mlstring>
+    <p> News Server Error:
         <span class="xar-error">
             #$error_message#
         </span>
@@ -21,19 +23,19 @@
     <xar:sec mask="SendNewsGroups" catch="false">
         <div class="xar-floatright xar-align-right">
             <a href="#xarModUrl('newsgroups', 'user', 'post', array('group' => $group, 'phase' => 'new'))#" title="#xarML('Post to this newsgroup')#">
-                <xar:mlstring>Post Message</xar:mlstring>
+                Post Message
             </a>
         </div>
     </xar:sec>
     <a href="#xarModUrl('newsgroups', 'user', 'main')#" title="#xarML('Back to main list')#">
-        <xar:mlstring>Main list</xar:mlstring>
+        Main list
     </a>
     <div class="xar-norm" style="margin-bottom:0.5ex;">
 <table width="100%" cellspacing="0">
     <tr>
-        <th><xar:mlstring>Subject</xar:mlstring></th>
-        <th><xar:mlstring>From</xar:mlstring></th>
-        <th><xar:mlstring>Date</xar:mlstring></th>
+        <th>Subject</th>
+        <th>From</th>
+        <th>Date</th>
     </tr>
     <xar:loop name="$items">
     <xar:if condition="(($loop:index + 1) % 2)">
@@ -44,7 +46,7 @@
     <tr>
         <td class="#$tdclass#"><span style="margin-left: #$loop:item['depth']*2#ex;"> <a href="#xarModUrl('newsgroups', 'user', 'article', array('group' => $group, 'article' => $loop:item['number']))#">#xarVarPrepForDisplay($loop:item['Subject'])#</a></span></td>
         <td class="#$tdclass#">#xarVarPrepEmailDisplay(xarVarPrepForDisplay($loop:item['fromname']))#</td>
-        <td class="#$tdclass#">#xarLocaleGetFormattedDate('shortdate', strtotime(xarVarPrepForDisplay($loop:item['Date'])), true)#</td>
+        <td class="#$tdclass#">#xarLocaleGetFormattedDate('short', strtotime(xarVarPrepForDisplay($loop:item['Date'])), true)#</td>
     </tr>
     </xar:loop>
 </table>
@@ -53,3 +55,4 @@
 </xar:if>
 
 </div>
+</xar:template>

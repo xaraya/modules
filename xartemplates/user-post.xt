@@ -1,11 +1,13 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Newsgroups</xar:mlstring></span></div>
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<div class="xar-mod-head"><span class="xar-mod-title">Newsgroups</span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
 
-<h2><xar:mlstring>Post to</xar:mlstring> #$group#</h2>
+<h2>Post to #$group#</h2>
 
 <xar:if condition="isset($error_message)">
-    <p> <xar:mlstring>News Server Error:</xar:mlstring>
+    <p> News Server Error:
         <span style="color: red;">
             #$error_message#
         </span>
@@ -16,7 +18,7 @@
 <table>
     <tr>
         <td align="right">
-            <strong><xar:mlstring>Subject:</xar:mlstring></strong> 
+            <strong>Subject:</strong> 
         </td>
         <td>
             <input type="text" name="subject" value="#$subject#" size="40" maxlength="80" />
@@ -24,7 +26,7 @@
     </tr>
     <tr>
         <td align="right">
-            <strong><xar:mlstring>Name:</xar:mlstring></strong>
+            <strong>Name:</strong>
         </td>
         <td align="left">
             <input type="text" name="name" value="#$name#" size="40" maxlength="40" />
@@ -32,7 +34,7 @@
     </tr>
     <tr>
         <td align="right">
-            <strong><xar:mlstring>Email:</xar:mlstring></strong>
+            <strong>Email:</strong>
         </td>
         <td align="left">
             <input type="text" name="email" value="#$email#" size="40" maxlength="40" />
@@ -42,7 +44,7 @@
 <table>
     <tr>
         <td>
-            <strong><xar:mlstring>Message:</xar:mlstring></strong>
+            <strong>Message:</strong>
         <br />
             <textarea name="body" rows="20" cols="79" >#xarVarPrepEmailDisplay(xarVarPrepForDisplay($message))#</textarea>
         </td>
@@ -52,8 +54,9 @@
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="group" id="group" value="#$group#" />
     <input type="hidden" name="reference" value="#xarVarPrepForDisplay($reference)#" />
-    <input type="submit" value="#xarML('Mitteilung senden')#" />
+    <input type="submit" value="#xarML('Send Message')#" />
 </p>
 </form>
 </xar:if>
 </div>
+</xar:template>

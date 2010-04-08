@@ -1,40 +1,42 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>NewsGroups Administration</xar:mlstring></span></div>
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<div class="xar-mod-head"><span class="xar-mod-title">NewsGroups Administration</span></div>
 <div class="xar-mod-body">
   <xar:template type="module" file="admin-menu" />
-    <h2><xar:mlstring>Modify NewsGroups Configuration</xar:mlstring></h2><br />
+    <h2>Modify NewsGroups Configuration</h2><br />
 
         <form method="post" action="#xarModURL('newsgroups', 'admin', 'modifyconfig', array('phase' => 'update'))#" enctype="application/x-www-form-urlencoded" >
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <fieldset>
-            <legend><xar:mlstring>Configuration Options</xar:mlstring></legend>
+            <legend>Configuration Options</legend>
 
             <div class="xar-form-input-wrapper">
                 <label for="server" class="xar-form-label" title="#xarML('The news server.')#">
-                    <xar:mlstring>News Server</xar:mlstring>
+                    News Server
                 </label>
-                <input type="text" name="server" id="server" value="#xarModGetVar('newsgroups', 'server', 1)#" size="25" maxlength="255" />
+                <input type="text" name="server" id="server" value="#xarModVars::get('newsgroups', 'server', 1)#" size="25" maxlength="255" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="port" class="xar-form-label" title="#xarML('The port')#">
-                    <xar:mlstring>Port</xar:mlstring>
+                    Port
                 </label>
-                <input type="text" name="port" id="port" value="#xarModGetVar('newsgroups', 'port', 1)#" size="2" maxlength="4" />
+                <input type="text" name="port" id="port" value="#xarModVars::get('newsgroups', 'port', 1)#" size="2" maxlength="4" />
             </div>
             <div class="xar-form-input-wrapper">
                     <label for="user" class="xar-form-label">
-                        <xar:mlstring>Username</xar:mlstring>
+                        Username
                     </label>
-                    <input type="text" name="user" id="user" value="#xarModGetVar('newsgroups', 'user', 1)#" size="25" maxlength="255" />
+                    <input type="text" name="user" id="user" value="#xarModVars::get('newsgroups', 'user', 1)#" size="25" maxlength="255" />
             </div>
              <div class="xar-form-input-wrapper">
                     <label for="pass" class="xar-form-label">
-                        <xar:mlstring>Password</xar:mlstring>
+                        Password
                     </label>
                     <input type="password" name="pass" id="pass" value="" size="25" maxlength="255" />
             </div>
              <div class="xar-form-input-wrapper">
                     <label for="wildmat_0" class="xar-form-label">
-                        <xar:mlstring>Wildcard Match</xar:mlstring>
+                        Wildcard Match
                     </label>
                     <xar:foreach in="$wildmat" key="$idx" value="$value">
                     <div class="xar-form-input-wrapper-after">
@@ -44,66 +46,66 @@
             </div>
              <div class="xar-form-input-wrapper">
                     <label for="numitems"  class="xar-form-label">
-                        <xar:mlstring>Messages Per Page</xar:mlstring>
+                        Messages Per Page
                     </label>
-                    <input type="text" name="numitems" id="numitems" value="#xarModGetVar('newsgroups', 'numitems')#" size="2" maxlength="4" />
+                    <input type="text" name="numitems" id="numitems" value="#xarModVars::get('newsgroups', 'numitems')#" size="2" maxlength="4" />
             </div>
              <div class="xar-form-input-wrapper">
                     <label for="sortby" class="xar-form-label">
-                        <xar:mlstring>Sort Messages in Page By</xar:mlstring>
+                        Sort Messages in Page By
                     </label>
-                    <xar:set name="sortby">xarModGetVar('newsgroups','sortby')</xar:set>
+                    <xar:set name="sortby">xarModVars::get('newsgroups','sortby')</xar:set>
                     <select name="sortby" id="sortby">
                         <xar:if condition="empty($sortby) or $sortby eq 'thread'">
-                            <option value="thread" selected="selected"><xar:mlstring>Newest Thread</xar:mlstring></option>
-                            <option value="article"><xar:mlstring>Newest Article</xar:mlstring></option>
+                            <option value="thread" selected="selected">Newest Thread</option>
+                            <option value="article">Newest Article</option>
                         <xar:else/>
-                            <option value="thread"><xar:mlstring>Newest Thread</xar:mlstring></option>
-                            <option value="article" selected="selected"><xar:mlstring>Newest Article</xar:mlstring></option>
+                            <option value="thread">Newest Thread</option>
+                            <option value="article" selected="selected">Newest Article</option>
                         </xar:if>
                     </select>
             </div>
 <xar:comment> replace with xarCacheManager modifyconfig hook for mod / data caching ? </xar:comment>
              <div class="xar-form-input-wrapper">
                     <label for="listexpire"  class="xar-form-label">
-                        <xar:mlstring>Refresh List of Newsgroups</xar:mlstring>
+                        Refresh List of Newsgroups
                     </label>
-                    <input type="text" name="listexpire" id="listexpire" value="#xarModGetVar('newsgroups', 'listexpire')#" size="5" maxlength="10" />
-                    <xar:mlstring>seconds (leave empty to disable caching)</xar:mlstring>
+                    <input type="text" name="listexpire" id="listexpire" value="#xarModVars::get('newsgroups', 'listexpire')#" size="5" maxlength="10" />
+                    seconds (leave empty to disable caching)
             </div>
              <div class="xar-form-input-wrapper">
                     <label for="groupexpire"  class="xar-form-label">
-                        <xar:mlstring>Refresh Newsgroup Messages</xar:mlstring>
+                        Refresh Newsgroup Messages
                     </label>
-                    <input type="text" name="groupexpire" id="groupexpire" value="#xarModGetVar('newsgroups', 'groupexpire')#" size="5" maxlength="10" />
-                    <xar:mlstring>seconds (leave empty to disable caching)</xar:mlstring>
+                    <input type="text" name="groupexpire" id="groupexpire" value="#xarModVars::get('newsgroups', 'groupexpire')#" size="5" maxlength="10" />
+                    seconds (leave empty to disable caching)
             </div>
              <div class="xar-form-input-wrapper">
                     <label for="messageexpire" class="xar-form-label">
-                        <xar:mlstring>Cache Individual Messages</xar:mlstring>
+                        Cache Individual Messages
                     </label>
-                    <input type="text" name="messageexpire" id="messageexpire" value="#xarModGetVar('newsgroups', 'messageexpire')#" size="5" maxlength="10" />
-                    <xar:mlstring>seconds (leave empty to disable caching)</xar:mlstring>
+                    <input type="text" name="messageexpire" id="messageexpire" value="#xarModVars::get('newsgroups', 'messageexpire')#" size="5" maxlength="10" />
+                    seconds (leave empty to disable caching)
             </div>
              <div class="xar-form-input-wrapper">
                     <label for="cachesize" class="xar-form-label">
-                        <xar:mlstring>Cache Size</xar:mlstring>
+                        Cache Size
                     </label>
-                    <input type="text" name="cachesize" id="cachesize" value="#xarModGetVar('newsgroups', 'cachesize')#" size="8" maxlength="10" />
-                    <xar:mlstring>bytes (leave empty to disable caching)</xar:mlstring>
+                    <input type="text" name="cachesize" id="cachesize" value="#xarModVars::get('newsgroups', 'cachesize')#" size="8" maxlength="10" />
+                    bytes (leave empty to disable caching)
             </div>
              <div class="xar-form-input-wrapper-after">
-                    <xar:if condition="xarModGetVar('newsgroups','SupportShortURLs')">
+                    <xar:if condition="xarModVars::get('newsgroups','SupportShortURLs')">
                         <input type="checkbox" name="isalias" id="isalias" value="1" checked="checked" />
                     <xar:else/>
                         <input type="checkbox" name="isalias" id="isalias" value="1" />
                     </xar:if>
-                    <label for="isalias"><xar:mlstring>Enable Short URLs</xar:mlstring></label>
+                    <label for="isalias">Enable Short URLs</label>
             </div>
         </fieldset>
 
         <fieldset>
-        <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
+        <legend>Enabled Hooks</legend>
             #$hooks#
 
         </fieldset>
@@ -112,3 +114,4 @@
         </div>
     </form>
 </div>
+</xar:template>

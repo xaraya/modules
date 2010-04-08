@@ -545,7 +545,7 @@ class Net_NNTP_Protocol extends PEAR
 
     switch ($response) {
             case 211: // RFC977: 'n f l s group selected'
-            $response_arr = split(' ', trim($this->currentStatusResponse()));
+            $response_arr = explode(' ', trim($this->currentStatusResponse()));
             $response_arr['count'] =& $response_arr[0];
             $response_arr['first'] =& $response_arr[1];
         $response_arr['last']  =& $response_arr[2];
