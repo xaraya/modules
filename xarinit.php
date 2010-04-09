@@ -82,27 +82,17 @@ function mime_init()
         return FALSE;
     }
 
-    if (!file_exists('modules/mime/xarincludes/mime.magic.php')) {
+    @include('modules/mime/xarincludes/mime.magic.php');
 
-        $msg = xarML('Could not open #(1) for inclusion', 'modules/mime/xarincludes/mime.magic.php');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'MISSING_FILE', new SystemException($msg));
+    if (!isset($mime_list) || empty($mime_list)) {
+        $msg = xarML('Missing mime magic list! Please report this as a bug.');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'MISSING_MIME_MAGIC_LIST', new SystemException($msg));
 
         mime_delete();
         return FALSE;
-    } else {
-        include('modules/mime/xarincludes/mime.magic.php');
-
-        if (!isset($mime_list) || empty($mime_list)) {
-            $msg = xarML('Missing mime magic list! Please report this as a bug.');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'MISSING_MIME_MAGIC_LIST', new SystemException($msg));
-
-            mime_delete();
-            return FALSE;
-        }
-
-        xarModAPIFunc('mime','user','import_mimelist', array('mimeList' => $mime_list));
     }
 
+    xarModAPIFunc('mime','user','import_mimelist', array('mimeList' => $mime_list));
 
     // Initialisation successful
     return TRUE;

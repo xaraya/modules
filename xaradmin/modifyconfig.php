@@ -18,7 +18,7 @@
 function mime_admin_modifyconfig()
 { 
     // Security Check
-    if (!xarSecurityCheck('AdminAll')) return; 
+    if (!xarSecurityCheck('AdminBase')) return; 
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey(); 
     // everything else happens in Template for now

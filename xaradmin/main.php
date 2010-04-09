@@ -20,7 +20,7 @@
 function mime_admin_main()
 {
     // Security check
-    if(!xarSecurityCheck('AdminAll')) return;
+    if(!xarSecurityCheck('AdminBase')) return;
     // Redirect
     xarResponseRedirect(xarModURL('mime', 'admin', 'modifyconfig'));
     return true;

@@ -24,7 +24,7 @@ function mime_admin_updateconfig()
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return; 
     // Security Check
-    if (!xarSecurityCheck('AdminAll')) return; 
+    if (!xarSecurityCheck('AdminBase')) return; 
     xarModSetVar('mime', 'mimemethod', $mimeMethod); 
     xarModSetVar('mime', 'mimepath', $mimePath);
     // lets update status and display updated configuration

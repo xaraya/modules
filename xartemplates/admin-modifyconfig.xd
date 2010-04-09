@@ -29,7 +29,7 @@
                         </xar:mlstring>
                     </span>
                 </label>
-                <p class="xar-form-input-wrapper">
+                <div class="xar-form-input-wrapper-after">
                     <xar:set name="mimefunction">xarModGetVar('mime', 'mimemethod')</xar:set>
                     <xar:if condition="$mimefunction eq 'none'">
                         <input type="radio" name="mimemethod" id="funcnone" value="none" checked="checked" />
@@ -77,7 +77,8 @@
                                 <xar:mlstring>file_get_contents (For PHP 5)</xar:mlstring> 
                             </label>
                     </xar:if>
-                </p>
+                 </div>
+            </div>
                 <div class="xar-form-input-wrapper">
                     <label for="mimepath" title="#xarML('Path with file name without extension')#" class="xar-form-label">
                         <xar:mlstring>Path to magic.mime file:</xar:mlstring>
@@ -87,7 +88,6 @@
                 <div class="xar-form-input-wrapper-after">
                     Some PHP 5 versions need the path to the magic file (http://pecl.php.net/bugs/bug.php?id=7555).
                 </div>
-
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="submit" value="#xarML('Submit')#" />
