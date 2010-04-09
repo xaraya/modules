@@ -26,7 +26,7 @@
       <input type="hidden" name="phase" id="phase" value="update" />
       <div class="xar-form-input-wrapper">
         <label for="dolinebreak">
-          <span class="help" class="xar-form-label" title="#xarML('Check this if you would like the BBCode module to provide linebreaks on content.')#">
+          <span class="help xar-form-label" title="#xarML('Check this if you would like the BBCode module to provide linebreaks on content.')#">
             <xar:mlstring>
               Transform Linebreaks
             </xar:mlstring>

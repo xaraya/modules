@@ -2,14 +2,14 @@
 
 <xar:base-include-javascript filename="bbcode.js" module="bbcode" position="head" />
 <span>
-    <input type="button" accesskey="z" name="addbbcode18" value=" p " onclick="bbstyle(18)" onmouseover="document.post.helpbox.value='#xarML("Paragraph: [p]text[/p]  (alt+z)")#'; return true" />
-    <input type="button" accesskey="b" name="addbbcode0" value=" b " style="font-weight:bold;" onclick="bbstyle(0)" onmouseover="document.post.helpbox.value='#xarML("Bold text: [b]text[/b]  (alt+b)")#'; return true" />
-    <input type="button" accesskey="i" name="addbbcode2" value=" i " style="font-style:italic;" onclick="bbstyle(2)" onmouseover="document.post.helpbox.value='#xarML("Italic text: [i]text[/i]  (alt+i)")#'; return true" />
-    <input type="button" accesskey="u" name="addbbcode4" value=" u " style="font-style: underline;" onclick="bbstyle(4)" onmouseover="document.post.helpbox.value='#xarML("Underline text: [u]text[/u]  (alt+u)")#'; return true" />
-    <input type="button" accesskey="q" name="addbbcode6" value="Quote" onclick="bbstyle(6)" onmouseover="document.post.helpbox.value='#xarML("Quote text: [quote]text[/quote]  (alt+q)")#'; return true" />
-    <input type="button" accesskey="c" name="addbbcode8" value="Code" onclick="bbstyle(8)" onmouseover="document.post.helpbox.value='#xarML("Code display: [code=xml]code[/code] (alt+c)")#'; return true" />
-    <input type="button" accesskey="p" name="addbbcode14" value="Img" onclick="bbstyle(14)" onmouseover="document.post.helpbox.value='#xarML("Insert image: [img]http://image_url[/img]  (alt+p)")#'; return true" />
-    <input type="button" accesskey="w" name="addbbcode16" value="URL" style="text-decoration: underline;" onclick="bbstyle(16)" onmouseover="document.post.helpbox.value='#xarML("Insert URL: [url]http://url[/url] or [url=http://url]URL text[/url]  (alt+w)")#'; return true" />
+    <input type="button" accesskey="z" name="addbbcode18" value=" p " onclick="bbstyle(18)" onmouseover="document.post.helpbox.value='#xarML('Paragraph: [p]text[/p]  (alt+z)')#'; return true" />
+    <input type="button" accesskey="b" name="addbbcode0" value=" b " style="font-weight:bold;" onclick="bbstyle(0)" onmouseover="document.post.helpbox.value='#xarML('Bold text: [b]text[/b]  (alt+b)')#'; return true" />
+    <input type="button" accesskey="i" name="addbbcode2" value=" i " style="font-style:italic;" onclick="bbstyle(2)" onmouseover="document.post.helpbox.value='#xarML('Italic text: [i]text[/i]  (alt+i)')#'; return true" />
+    <input type="button" accesskey="u" name="addbbcode4" value=" u " style="font-style: underline;" onclick="bbstyle(4)" onmouseover="document.post.helpbox.value='#xarML('Underline text: [u]text[/u]  (alt+u)')#'; return true" />
+    <input type="button" accesskey="q" name="addbbcode6" value="Quote" onclick="bbstyle(6)" onmouseover="document.post.helpbox.value='#xarML('Quote text: [quote]text[/quote]  (alt+q)')#'; return true" />
+    <input type="button" accesskey="c" name="addbbcode8" value="Code" onclick="bbstyle(8)" onmouseover="document.post.helpbox.value='#xarML('Code display: [code=xml]code[/code] (alt+c)')#'; return true" />
+    <input type="button" accesskey="p" name="addbbcode14" value="Img" onclick="bbstyle(14)" onmouseover="document.post.helpbox.value='#xarML('Insert image: [img]http://image_url[/img]  (alt+p)')#'; return true" />
+    <input type="button" accesskey="w" name="addbbcode16" value="URL" style="text-decoration: underline;" onclick="bbstyle(16)" onmouseover="document.post.helpbox.value='#xarML('Insert URL: [url]http://url[/url] or [url=http://url]URL text[/url]  (alt+w)')#'; return true" />
 </span>
 <label for="addbbcode20">
     <xar:mlstring>
@@ -17,7 +17,7 @@
     </xar:mlstring>
     :
 </label>
-<select name="addbbcode20" onchange="bbfontstyle('[color=' + this.form.addbbcode20.options[this.form.addbbcode20.selectedIndex].value + ']', '[/color]');this.selectedIndex=0;" onmouseover="document.post.helpbox.value='#xarML("Font color: [color=red]text[/color]  Tip: you can also use")# color=#FF0000'; return true">
+<select name="addbbcode20" onchange="bbfontstyle('[color=' + this.form.addbbcode20.options[this.form.addbbcode20.selectedIndex].value + ']', '[/color]');this.selectedIndex=0;" onmouseover="document.post.helpbox.value='#xarML('Font color: [color=red]text[/color]  Tip: you can also use')# color=#FF0000'; return true">
     <option style="color:black; background-color: #FAFAFA" value="#444444" class="xar-bbcode-genmed">
         <xar:mlstring>
             Default
@@ -100,7 +100,7 @@
     </xar:mlstring>
     :
 </label>
-<select name="addbbcode22" onchange="bbfontstyle('[size=' + this.form.addbbcode22.options[this.form.addbbcode22.selectedIndex].value + ']', '[/size]');this.selectedIndex=2;" onmouseover="document.post.helpbox.value='#xarML("Font size: [size=x-small]small text[/size]")#'; return true">
+<select name="addbbcode22" onchange="bbfontstyle('[size=' + this.form.addbbcode22.options[this.form.addbbcode22.selectedIndex].value + ']', '[/size]');this.selectedIndex=2;" onmouseover="document.post.helpbox.value='#xarML('Font size: [size=x-small]small text[/size]')#'; return true">
     <option value="7" class="xar-bbcode-genmed">
         <xar:mlstring>
             Tiny
@@ -127,7 +127,7 @@
         </xar:mlstring>
     </option>
 </select>
-<a href="javascript:bbstyle(-1)" class="xar-bbcode-genmed" onmouseover="document.post.helpbox.value='#xarML("Close all open bbCode tags")#'; return true"><xar:mlstring>Close Tags</xar:mlstring></a>
+<a href="javascript:bbstyle(-1)" class="xar-bbcode-genmed" onmouseover="document.post.helpbox.value='#xarML('Close all open bbCode tags')#'; return true"><xar:mlstring>Close Tags</xar:mlstring></a>
 <span class="gensmall">
     <input type="text" name="helpbox" size="50" maxlength="100" class="helpline" value="#xarML('Tip: Styles can be applied quickly to selected text.')#" />
 </span>
