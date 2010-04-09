@@ -52,7 +52,7 @@
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="group" id="group" value="#$group#" />
     <input type="hidden" name="reference" value="#xarVarPrepForDisplay($reference)#" />
-    <input type="submit" value="#xarML('Mitteilung senden')#" />
+    <input type="submit" value="#xarML('Send Message')#" />
 </p>
 </form>
 </xar:if>

@@ -23,7 +23,7 @@
           </xar:comment>
         <xar:if condition="$group eq 'xaraya.test' OR false eq true">
           <div class="xar-floatright xar-align-right">
-            <a href="#$deleteurl#" title="#xarML('Deleting destroys the continuous message sequence. This may affect the navigation in this view.')#" title="#xarML('Cancel this message')#">
+            <a href="#$deleteurl#" title="#xarML('Deleting destroys the continuous message sequence. This may affect the navigation in this view.')#">
               <xar:mlstring>Delete</xar:mlstring>
             </a>
           </div>
@@ -112,7 +112,7 @@
                 </xar:if>
               </table>
             </div>
-            <pre style="color: black; font-size:116%";>
+            <pre style="color: black; font-size:116%">
 #xarVarPrepEmailDisplay(xarVarPrepForDisplay($article))#
             </pre>
         </div>
