@@ -49,14 +49,24 @@ function categories_userapi_getallcatbases($args)
     $q->addfield('category.left_id AS left_id');
     $q->addfield('category.right_id AS right_id');
     // Aliases for 1.x modules calling categories
-    $q->addfield('base.category_id AS cid');
+// FIXME: no way to have get the same field twice with different aliases ?
+    //$q->addfield('base.category_id AS cid');
     if (!empty($module))  $q->eq('module_id',xarMod::getID($module));
     if (!empty($module_id))  $q->eq('module_id',$module_id);
     if (isset($itemtype))  $q->eq('itemtype',$itemtype);
     $q->addorder('base.id');
 //    $q->qecho();
     if (!$q->run()) return;
-    return $q->output();
+
+    $output = $q->output();
+    if (!empty($output)) {
+        foreach (array_keys($output) as $idx) {
+            if (isset($output[$idx]['category_id']) && !isset($output[$idx]['cid'])) {
+                $output[$idx]['cid'] = $output[$idx]['category_id'];
+            }
+        }
+    }
+    return $output;
 }
 
 ?>
