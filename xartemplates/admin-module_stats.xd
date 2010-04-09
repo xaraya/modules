@@ -86,7 +86,6 @@
                         <a href="#$delete_all_url#"><xar:mlstring>Delete All</xar:mlstring></a>
                     </td>
                 </tr>
-            </table>
             </xar:if>
             <xar:if condition="!empty($pager)">
             <tr>
@@ -95,6 +94,7 @@
                 </td>
             </tr>
             </xar:if>
+            </table>
 
             <div class="xar-accent xar-norm-outline" style="text-align: justify;padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
                <xar:mlstring>

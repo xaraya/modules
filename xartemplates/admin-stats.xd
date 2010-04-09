@@ -19,7 +19,7 @@
                 <th class="xar-valign-middle xar-align-center" width="15%">
                     <xar:mlstring><b>Module<br />Items</b></xar:mlstring>
                 </th>
-                <th class="xar-valign-middle xar-align-center"width="15%">
+                <th class="xar-valign-middle xar-align-center" width="15%">
                     <xar:mlstring><b>Total<br />Comments</b></xar:mlstring>
                 </th>
                 <th class="xar-valign-middle xar-align-center" width="15%">

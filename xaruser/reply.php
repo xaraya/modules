@@ -89,8 +89,8 @@ function comments_user_reply()
             $comments = xarModAPIFunc('comments','user','get_one',
                                        array('cid' => $header['pid']));
 
-            if (eregi('^(re\:|re\([0-9]+\))',$comments[0]['xar_title'])) {
-                if (eregi('^re\:',$comments[0]['xar_title'])) {
+            if (preg_match('/^(re\:|re\([0-9]+\))/i',$comments[0]['xar_title'])) {
+                if (preg_match('/^re\:/i',$comments[0]['xar_title'])) {
                     $new_title = preg_replace("'re\:'i",
                                               'Re(1):',
                                               $comments[0]['xar_title'],

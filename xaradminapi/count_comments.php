@@ -36,7 +36,7 @@ function comments_adminapi_count_comments( $args )
     $where_type     = '';
     $where_status   = '';
 
-    if (empty($type) || !eregi('^(all|module|object)$',$type)) {
+    if (empty($type) || !preg_match('/^(all|module|object)$/i',$type)) {
         $msg = xarML('Invalid Parameter \'type\' to function count_comments(). \'type\' must be: all, module, or object.');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
@@ -75,7 +75,7 @@ function comments_adminapi_count_comments( $args )
                 $where_type = "1";
         }
     }
-    if (empty($status) || !eregi('^(all|inactive|active)$',$status)) {
+    if (empty($status) || !preg_match('/^(all|inactive|active)$/i',$status)) {
         $msg = xarML('Invalid Parameter \'status\' to function count_module_comments(). \'status\' must be: all, active, or inactive.');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;

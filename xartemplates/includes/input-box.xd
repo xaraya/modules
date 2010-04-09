@@ -14,7 +14,8 @@
 
 <xar:sec mask="Comments-Reply" catch="false">
   <h3>#$header['input-title']#</h3> 
-  <form action="#$receipt['post_url']#" method="post" name="post" id="post" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription, alertMsg);" #$hooks['formaction']# >
+  <xar:comment>removed unnecessary $hooks['formaction']</xar:comment>
+  <form action="#$receipt['post_url']#" method="post" name="post" id="post" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription, alertMsg);">
     <div class="xar-ib-wrapper xar-accent-outline">
       <xar:if condition="$hooks['formdisplay'] ne ''">
         <div class="xar-ib-actionpanel xar-accent">
@@ -80,13 +81,13 @@
           <xar:else />
             <textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2"></textarea>
           </xar:if>
-          <xar:comment> TODO: show item new/modify hook here somehow
+          <!-- TODO: show item new/modify hook here somehow
             <xar:if condition="!empty($hooks['iteminput'])">
               <xar:foreach in="$hooks['iteminput']" key="$hookmodule">
                 #$hooks.iteminput.$hookmodule#
               </xar:foreach>
             </xar:if>
-          </xar:comment> 
+          --> 
           #$hooks['formnew']#
           <input type="hidden" name="header[modid]" id="header-modid" value="#$header['modid']#" /> 
           <input type="hidden" name="header[objectid]" id="header-objectid" value="#$header['objectid']#" /> 
@@ -158,13 +159,13 @@
           <xar:else />
             <textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2"></textarea>
           </xar:if>
-          <xar:comment> TODO: show item new/modify hook here somehow
+          <!-- TODO: show item new/modify hook here somehow
             <xar:if condition="!empty($hooks['iteminput'])">
               <xar:foreach in="$hooks['iteminput']" key="$hookmodule">
                 #$hooks.iteminput.$hookmodule#
               </xar:foreach>
             </xar:if>
-          </xar:comment>
+          -->
            #$hooks['formnew']#
           <input type="hidden" name="header[modid]" id="header-modid" value="#$header['modid']#" /> 
           <input type="hidden" name="header[objectid]" id="header-objectid" value="#$header['objectid']#" /> 

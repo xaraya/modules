@@ -669,7 +669,7 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
         foreach ($comment_list as $node) {
             switch($sortby) {
                 case _COM_SORTBY_TOPIC:
-                    $key = eregi_replace("\:", " ", $node['xar_title']);
+                    $key = str_replace(":", " ", $node['xar_title']);
                     break;
                 case _COM_SORTBY_DATE:
                     $key = 'a' . $node['xar_datetime'];
@@ -692,7 +692,7 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
         foreach ($comment_list as $node) {
             switch($sortby) {
                 case _COM_SORTBY_TOPIC:
-                    $key = eregi_replace("\:"," ",$node['xar_title']);
+                    $key = str_replace(":"," ",$node['xar_title']);
                     break;
                 case _COM_SORTBY_DATE:
                     $key = 'a' . $node['xar_datetime'];

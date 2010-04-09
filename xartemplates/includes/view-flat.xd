@@ -73,7 +73,7 @@
             </xar:if>
 
         </div>
-<xar:comment> TODO: show item display hook here somehow
+<!-- TODO: show item display hook here somehow
         <xar:if condition="!empty($loop:item['hooks'])">
         <div class="xar-norm">
             <xar:foreach in="$loop:item['hooks']" key="$hookmodule" value="$hookoutput">
@@ -81,7 +81,7 @@
             </xar:foreach>
         </div>
         </xar:if>
-</xar:comment>
+-->
     </div>
 
 </xar:loop>

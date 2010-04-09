@@ -21,7 +21,7 @@ function comments_admin_delete( )
     if (!xarVarFetch('dtype', 'str:1:', $dtype)) return;
     $delete_args = array();
 
-    if (!isset($dtype) || !eregi('^(all|module|object)$',$dtype)) {
+    if (!isset($dtype) || !preg_match('/^(all|module|object)$/i',$dtype)) {
         $msg = xarML('Invalid or Missing Parameter \'dtype\'');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
@@ -87,7 +87,7 @@ function comments_admin_delete( )
 
         // if choice isn't set or it has an incorrect value,
         // redirect back to the choice page
-        if (!isset($choice) || !eregi('^(yes|no|true|false)$',$choice)) {
+        if (!isset($choice) || !preg_match('/^(yes|no|true|false)$/i',$choice)) {
             xarResponseRedirect(xarModURL('comments','admin','delete',$delete_args));
         }
 
