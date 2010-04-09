@@ -97,7 +97,7 @@ function images_admin_browse()
         $data['url'] = xarModURL('images', 'admin', 'browse',
                                                       array('bid'      => $baseId,
                                                             'startnum' => '%%',
-                                                            'numitems' => $data['numitems'],
+                                                            //'numitems' => $data['numitems'],
                                                             'sort'     => $data['sort']));
 
     $data['basedirs'] = $basedirs;

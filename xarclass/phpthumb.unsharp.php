@@ -37,11 +37,9 @@ Any suggenstions for improvement of the algorithm, expecially regarding the spee
 and the roundoff errors in the Gaussian blur process, are welcome.
 */
 
-class phpUnsharpMask 
-{
+class phpUnsharpMask {
 
-    function applyUnsharpMask(&$img, $amount, $radius, $threshold) 
-    {
+    function applyUnsharpMask(&$img, $amount, $radius, $threshold) {
 
         // $img is an image that is already created within php using
         // imgcreatetruecolor. No url! $img must be a truecolor image.
@@ -58,7 +56,7 @@ class phpUnsharpMask
 
         $threshold = min($threshold, 255);
 
-        $radius = abs(round($radius));     // Only integers make sense.
+        $radius = abs(round($radius));  // Only integers make sense.
         if ($radius == 0) {
             return true;
         }
@@ -87,9 +85,9 @@ class phpUnsharpMask
             ///////////////////////////
             //
             // Gaussian blur matrix:
-            //    1  2  1
-            //    2  4  2
-            //    1  2  1
+            //  1  2  1
+            //  2  4  2
+            //  1  2  1
             //
             ///////////////////////////
 
@@ -128,8 +126,8 @@ class phpUnsharpMask
 
         // Calculate the difference between the blurred pixels and the original
         // and set the pixels
-        for ($x = 0; $x < $w; $x++)    { // each row
-            for ($y = 0; $y < $h; $y++)    { // each pixel
+        for ($x = 0; $x < $w; $x++) { // each row
+            for ($y = 0; $y < $h; $y++) { // each pixel
 
                 $rgbOrig = ImageColorAt($imgCanvas2, $x, $y);
                 $rOrig = (($rgbOrig >> 16) & 0xFF);

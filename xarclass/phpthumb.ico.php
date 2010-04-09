@@ -73,7 +73,7 @@ class phpthumb_ico
             // height of the XOR and AND masks.
             $BitmapInfoHeader[$key] .= phpthumb_functions::LittleEndian2String($ImageHeights[$key] * 2, 4); // LONG   biHeight;
             $BitmapInfoHeader[$key] .= "\x01\x00";                                      // WORD   biPlanes;
-               $BitmapInfoHeader[$key] .= chr($bpp[$key])."\x00";                          // wBitCount;
+            $BitmapInfoHeader[$key] .= chr($bpp[$key])."\x00";                          // wBitCount;
             $BitmapInfoHeader[$key] .= "\x00\x00\x00\x00";                              // DWORD  biCompression;
             $BitmapInfoHeader[$key] .= phpthumb_functions::LittleEndian2String($biSizeImage, 4);            // DWORD  biSizeImage;
             $BitmapInfoHeader[$key] .= "\x00\x00\x00\x00";                              // LONG   biXPelsPerMeter;

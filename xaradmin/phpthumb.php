@@ -47,7 +47,7 @@ function images_admin_phpthumb($args)
         }
 
     // we're dealing with a derivative image here
-    } elseif (preg_match('/^[0-9a-f]{32}$/i',$fileId)) {
+    } elseif (preg_match('/^[0-9a-f]{32}$/',$fileId)) {
         $data['thumbsdir'] = xarModVars::get('images', 'path.derivative-store');
         $data['images'] = xarModAPIFunc('images','admin','getderivatives',
                                         array('thumbsdir' => $data['thumbsdir'],
@@ -170,7 +170,7 @@ function images_admin_phpthumb($args)
             }
         }
 
-        include_once('modules/images/xarclass/phpthumb.class.php');
+        include_once(sys::code() . 'modules/images/xarclass/phpthumb.class.php');
         $phpThumb = new phpThumb();
 
         $imagemagick = xarModVars::get('images', 'file.imagemagick');

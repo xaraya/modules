@@ -55,7 +55,7 @@ function images_admin_updateconfig()
              foreach ($path as $varname => $value) {
             // check to make sure that the value passed in is
             // a real images module variable
-            $value = trim(ereg_replace('\/$', '', $value));
+            $value = trim(preg_replace('/\/$/', '', $value));
             if (NULL !== xarModVars::get('images', 'path.' . $varname)) {
                 if (!file_exists($value) || !is_dir($value)) {
                     $msg = xarML('Location [#(1)] either does not exist or is not a valid directory!', $value);

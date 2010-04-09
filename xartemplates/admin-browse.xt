@@ -262,7 +262,7 @@
                 <tr>
                     <td colspan="6" align="center">
                         <div class="xar-align-center">
-                            <xar:data-input type="pager" url="$url" itemsperpage ="$numitems" startnum="$startnum" itemstotal="$countitems"/>
+                            <xar:pager urltemplate="$url" itemsperpage="$numitems" startnum="$startnum" total="$countitems"/>
                         </div>
     [ <a href="javascript:xar_base_checkall(document.forms['viewimages'],true)"><xar:mlstring>Check All</xar:mlstring></a>&#160;|&#160;
      <a href="javascript:xar_base_checkall(document.forms['viewimages'],false)"><xar:mlstring>Uncheck All</xar:mlstring></a> ]

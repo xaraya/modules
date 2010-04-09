@@ -260,7 +260,7 @@ function images_adminapi_process_image($args)
 
 function &images_get_thumb()
 {
-    include_once('modules/images/xarclass/phpthumb.class.php');
+    include_once(sys::code() . 'modules/images/xarclass/phpthumb.class.php');
     $phpThumb = new phpThumb();
 
     $imagemagick = xarModVars::get('images', 'file.imagemagick');
