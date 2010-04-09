@@ -25,12 +25,14 @@ function articles_user_formhooks($ptid = '')
     $hooks['formaction']              = xarModCallHooks('item', 'formaction', '', array(), 'articles', $ptid);
     $hooks['formdisplay']             = xarModCallHooks('item', 'formdisplay', '', array(), 'articles', $ptid);
 
+    // Note: this was used by the bbcode module to insert id="post" in the form tag - ignored
     if (empty($hooks['formaction'])){
         $hooks['formaction'] = '';
     } elseif (is_array($hooks['formaction'])) {
         $hooks['formaction'] = join('',$hooks['formaction']);
     }
 
+    // Note: this is used by the bbcode module to insert bbcode input buttons etc. in forms
     if (empty($hooks['formdisplay'])){
         $hooks['formdisplay'] = '';
     } elseif (is_array($hooks['formdisplay'])) {

@@ -70,7 +70,7 @@
             'application/x-www-form-urlencoded'
         </xar:set>
     </xar:if>
-    <!-- mrb: removed the formhooks['formaction'] thing, invalid attribute and i couldnt figure out what it was -->
+    <!-- removed the formhooks['formaction'] thing, invalid attribute and it basically sets id="post" for bbcode -->
     <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-update;" enctype="#$enctype#" >
         <div class="xar-form-input-wrapper">
             <label class="help xar-form-label" title="#xarML('This is the publication type that this article will appear in.')#">
