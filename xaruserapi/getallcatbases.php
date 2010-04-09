@@ -48,6 +48,8 @@ function categories_userapi_getallcatbases($args)
     $q->addfield('base.itemtype AS itemtype');
     $q->addfield('category.left_id AS left_id');
     $q->addfield('category.right_id AS right_id');
+    // Aliases for 1.x modules calling categories
+    $q->addfield('base.category_id AS cid');
     if (!empty($module))  $q->eq('module_id',xarMod::getID($module));
     if (!empty($module_id))  $q->eq('module_id',$module_id);
     if (isset($itemtype))  $q->eq('itemtype',$itemtype);
