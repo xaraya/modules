@@ -12,7 +12,6 @@
  * @author John Cox, Mikespub, Jo Dalle Nogare
  */
 
-include_once 'includes/xarDate.php';
 /* Load Table Maintainance API */
 xarDBLoadTableMaintenanceAPI();
 
@@ -789,6 +788,8 @@ function xarbb_convertdates()
                      FROM $xbbtopicstable";
        $result =& $dbconn->Execute($tottopics);
        if (!$result) return;
+
+       include_once 'includes/xarDate.php';
 
        for (; !$result->EOF; $result->MoveNext()) {
           list($tid,$ttime, $tftime, $nttime, $ntftime) = $result->fields;

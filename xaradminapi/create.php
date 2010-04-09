@@ -112,7 +112,6 @@ function xarbb_adminapi_create($args)
 
     $result = $dbconn->execute($query, array($forder, $fid));
     if (!$result) return;
-    $result->close();
 
     if (empty($cids)) {
         // Set them to the master categories

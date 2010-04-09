@@ -74,8 +74,6 @@ function xarbb_adminapi_moveforum($args)
     $result = $dbconn->execute($query, array($currentorderid, $swapforumid));
     if (!$result) return;
 
-    $result->close();
-
     return true;
 }
 
