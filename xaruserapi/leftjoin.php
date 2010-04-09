@@ -135,6 +135,10 @@ function categories_userapi_leftjoin($args)
     foreach ($columns as $column) {
         $leftjoin[$column] = $linktable . '.' . $column;
     }
+    // Aliases for 1.x modules calling categories
+    $leftjoin['cid'] = $leftjoin['category_id'];
+    $leftjoin['iid'] = $leftjoin['item_id'];
+    $leftjoin['modid'] = $leftjoin['module_id'];
 
     // Specify LEFT JOIN ... ON ... [WHERE ...] parts
     if (count($cids) > 0 && $andcids) {
