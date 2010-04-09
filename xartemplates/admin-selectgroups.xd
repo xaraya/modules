@@ -1,18 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div class="xar-mod-head"><span class="xar-mod-title">NewsGroups Administration</span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>NewsGroups Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
-    <h2>Select Newsgroups</h2>
+    <h2><xar:mlstring>Select Newsgroups</xar:mlstring></h2>
 
         <form method="post" action="#xarModURL('newsgroups', 'admin', 'selectgroups')#" enctype="application/x-www-form-urlencoded" >
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <fieldset>
-            <legend>Wildcard Filter</legend>
+            <legend><xar:mlstring>Wildcard Filter</xar:mlstring></legend>
 
              <div class="xar-form-input-wrapper">
                     <label for="wildmat_0" class="xar-form-label" >
-                        Wildcard Match
+                        <xar:mlstring>Wildcard Match</xar:mlstring>
                     </label>
                     <xar:foreach in="$wildmat" key="$idx" value="$value">
                     <div class="xar-form-input-wrapper-after">
@@ -30,7 +28,7 @@
         <form method="post" name="selectgroups" id="selectgroups" action="#xarModURL('newsgroups', 'admin', 'selectgroups', array('phase' => 'update'))#" enctype="application/x-www-form-urlencoded" >
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <fieldset>
-            <legend>Newsgroup Selection</legend>
+            <legend><xar:mlstring>Newsgroup Selection</xar:mlstring></legend>
 
             <xar:foreach in="$items" key="$name" value="$info">
             <div class="xar-form-input-wrapper">
@@ -56,12 +54,11 @@
                 <p>
                     <input type="submit" value="#xarML('Update Newsgroup Selection')#" />
 <script language="JavaScript" type="text/javascript"><![CDATA[
-    document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['selectgroups'],true)\">Check All</a> | ");
-    document.write("<a href=\"javascript:xar_base_checkall(document.forms['selectgroups'],false)\">Uncheck All</a> ]");
+    document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['selectgroups'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
+    document.write("<a href=\"javascript:xar_base_checkall(document.forms['selectgroups'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
 ]]>
 </script>
                 </p>
             </div>
         </form>
 </div>
-</xar:template>

@@ -1,16 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarModVars::get('themes','adminpagemenu')">
+<xar:if condition="xarModGetVar('themes','adminpagemenu')">
 <xar:style scope="module" module="base" file="navtabs" />
-<xar:set name="request">xarRequest::getInfo()</xar:set>
+<xar:set name="request">xarRequestGetInfo()</xar:set>
 <xar:set name="activetab">#$request.2#</xar:set>
 <div>
   <dl class="xar-tabs">
     <dt class="help" title="#xarML('Choose an action to perform')#">
-      Actions:
+      <xar:mlstring>Actions:</xar:mlstring>
     </dt>
-    <xar:loop name="xarMod::apiFunc('newsgroups', 'admin', 'getmenulinks')">
+    <xar:loop name="xarModAPIFunc('newsgroups', 'admin', 'getmenulinks')">
       <xar:if condition="isset($loop:item['active'])">
         <xar:set name="tabclass">
           in_array($activetab, $loop->item['active'])?'active':''
@@ -22,4 +20,4 @@
     </xar:loop>
   </dl>
 </div>
-</xar:if></xar:template>
+</xar:if>

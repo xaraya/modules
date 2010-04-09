@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        Newsgroups
+        <xar:mlstring>Newsgroups</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
     <xar:if condition="isset($error_message)">
-        <h2>Read Message</h2>
-        <p> News Server Error:
+        <h2><xar:mlstring>Read Message</xar:mlstring></h2>
+        <p> <xar:mlstring>News Server Error:</xar:mlstring>
             <span class="xar-error">
                 #$error_message#
             </span>
@@ -25,8 +23,8 @@
           </xar:comment>
         <xar:if condition="$group eq 'xaraya.test' OR false eq true">
           <div class="xar-floatright xar-align-right">
-            <a href="#$deleteurl#" title="#xarML('Deleting destroys the continuous message sequence. This may affect the navigation in this view.')#">
-              Delete
+            <a href="#$deleteurl#" title="#xarML('Deleting destroys the continuous message sequence. This may affect the navigation in this view.')#" title="#xarML('Cancel this message')#">
+              <xar:mlstring>Delete</xar:mlstring>
             </a>
           </div>
         </xar:if>
@@ -36,11 +34,11 @@
             #$group#
         </a>
         <a style="padding-right:3em; white-space:nowrap;" href="#xarModUrl('newsgroups', 'user', 'main')#" title="#xarML('Back to main list')#">
-            Main list
+            <xar:mlstring>Main list</xar:mlstring>
         </a>
         <xar:sec mask="SendNewsGroups" catch="false">
           <a href="#xarModUrl('newsgroups', 'user', 'post', array('group' => $group, 'article' => $articlenum, 'phase' => 'reply'))#" title="#xarML('Post a reply to this message')#">
-            Reply
+            <xar:mlstring>Reply</xar:mlstring>
           </a>
         </xar:sec>
           <div class="xar-norm" style="margin-top: 1ex;">
@@ -49,7 +47,7 @@
                 <xar:comment>
                 <tr>
                   <td class="xar-accent">
-                    Subject
+                    <xar:mlstring>Subject</xar:mlstring>
                   </td>
                   <td class="xar-accent">
                     <strong>#xarVarPrepForDisplay($headers['Subject'])#</strong>
@@ -58,7 +56,7 @@
                 </xar:comment>
                 <tr>
                   <td class="xar-accent">
-                    From
+                    <xar:mlstring>From</xar:mlstring>
                   </td>
                   <td class="xar-accent">
                     <xar:comment>
@@ -71,7 +69,7 @@
                 <xar:if condition="!empty($headers['Organization']) and $headers['Organization'] ne 'Xaraya'">
                 <tr>
                   <td class="xar-accent">
-                    Organization
+                    <xar:mlstring>Organization</xar:mlstring>
                   </td>
                   <td class="xar-accent">
                     <strong>#xarVarPrepForDisplay($headers['Organization'])#</strong>
@@ -80,16 +78,16 @@
                 </xar:if>
                 <tr>
                   <td class="xar-accent">
-                    Date
+                    <xar:mlstring>Date</xar:mlstring>
                   </td>
                   <td class="xar-accent">
-                    <strong>#xarLocaleGetFormattedDate('long', strtotime(xarVarPrepForDisplay($headers['Date'])), true)#</strong>
+                    <strong>#xarLocaleGetFormattedDate('longdate', strtotime(xarVarPrepForDisplay($headers['Date'])), true)#</strong>
                   </td>
                 </tr>
                 <xar:if condition="$headers['Newsgroups'] ne $group">
                 <tr>
                   <td class="xar-accent">
-                    Newsgroups
+                    <xar:mlstring>Newsgroups</xar:mlstring>
                   </td>
                   <td class="xar-accent">
                     <strong>#xarVarPrepForDisplay($headers['Newsgroups'])#</strong>
@@ -99,7 +97,7 @@
                 <xar:if condition="isset($headers['References']) and is_array($headers['References'])">
                 <tr>
                   <td class="xar-accent">
-                    References
+                    <xar:mlstring>References</xar:mlstring>
                   </td>
                   <td class="xar-accent">
                         <xar:foreach in="$headers['References']" key="$key" value="$ref">
@@ -114,11 +112,10 @@
                 </xar:if>
               </table>
             </div>
-            <pre style="color: black; font-size:116%">
+            <pre style="color: black; font-size:116%";>
 #xarVarPrepEmailDisplay(xarVarPrepForDisplay($article))#
             </pre>
         </div>
         #$pager#
     </xar:if>
 </div>
-</xar:template>

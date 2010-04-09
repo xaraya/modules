@@ -1,16 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div class="xar-mod-head"><span class="xar-mod-title">Newsgroups</span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Newsgroups</xar:mlstring></span></div>
 <div class="xar-mod-body">
 
-    <h2>Newsgroups from: <a href="#$server#">#$server#</a>
+    <h2><xar:mlstring>Newsgroups from:</xar:mlstring> <a href="#$server#">#$server#</a>
     </h2>
 
   <table width="100%" border="0" cellpadding="2" cellspacing="0">
     <tr>
       <th>
-        <span style="float: left; text-align: left;">Name and Description</span>
-        <span style="float: right; text-align: right;">Number of Posts</span>
+        <span style="float: left; text-align: left;"><xar:mlstring>Name and Description</xar:mlstring></span>
+        <span style="float: right; text-align: right;"><xar:mlstring>Number of Posts</xar:mlstring></span>
       </th>  
     </tr>
     <xar:loop name="$items">
@@ -34,8 +32,7 @@
     </xar:loop>
   </table>
 <xar:if condition="!empty($error_message)">
-    News Server Error: <strong>#$error_message#</strong>
+    <xar:mlstring>News Server Error:</xar:mlstring> <strong>#$error_message#</strong>
 </xar:if>
 
 </div>
-</xar:template>
