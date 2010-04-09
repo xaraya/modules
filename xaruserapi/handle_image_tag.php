@@ -22,6 +22,7 @@
  *
  * @param $args array containing the image that you want to resize and display
  * @return string the PHP code needed to invoke resize() in the BL template
+ * @deprecated This is now handled by the tags/image.xsl stylesheet
  */
 
 function images_userapi_handle_image_tag($args)

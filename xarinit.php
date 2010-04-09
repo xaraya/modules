@@ -98,8 +98,6 @@ function images_upgrade($oldversion)
  */
 function images_delete()
 {
-    // Unregister template tag
-    xarTplUnregisterTag('image-resize');
     // Remove mask
     xarUnregisterMask('AdminImages');
     // Unregister the hook

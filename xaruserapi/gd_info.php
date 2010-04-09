@@ -55,7 +55,7 @@ function images_userapi_gd_info()
                     continue;
                 }
 
-                eregi('\<tr\>\<td class="e"\>([^<]*)\<\/td\>\<td class="v"\>([^<]*)\<\/td\>\<\/tr\>', $line, $matches);
+                preg_match('/\<tr\>\<td class="e"\>([^<]*)\<\/td\>\<td class="v"\>([^<]*)\<\/td\>\<\/tr\>/i', $line, $matches);
 
                 $key   = trim($matches[1]);
                 $value = trim($matches[2]);

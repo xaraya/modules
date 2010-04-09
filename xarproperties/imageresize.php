@@ -48,6 +48,8 @@ class ImageResizeProperty extends ImageProperty
                 $data['height'] = $sizeinfo[1] . "px";
             } catch (Exception $e) {}
         }
+        // tell resize we want an array back
+        $data['returnarray'] = true;
         try {
             $data = array_merge($data,xarModAPIFunc('images', 'user', 'resize', $data));
         } catch(Exception $e) {

@@ -25,6 +25,7 @@
  * @param   boolean $static     Use static link instead of dynamic one where possible (default FALSE)
  * @param   string  $baseurl    (optional) Base URL for the static links
  * @param   boolean $returnpath (optional) Flag to return the image path instead of the image tag
+ * @param   boolean $returnarray (optional) Flag to return the image array instead of the image tag
  * @return  string An <img> tag for the newly resized image
  */
 function images_userapi_resize($args)
@@ -54,6 +55,7 @@ function images_userapi_resize($args)
     }
 
     if( !isset($returnpath) ){ $returnpath = false; }
+    if( !isset($returnarray) ){ $returnarray = false; }
 
     $notSupported = FALSE;
 
@@ -224,8 +226,8 @@ function images_userapi_resize($args)
     }
 
     if (isset($width)) {
-        eregi('([0-9]+)(px|%)', $width, $parts);
-        $type = ($parts[2] == '%') ? _IMAGES_UNIT_TYPE_PERCENT : _IMAGES_UNIT_TYPE_PIXELS;
+        preg_match('/([0-9]+)(px|%)?/i', $width, $parts);
+        $type = (isset($parts[2]) && $parts[2] == '%') ? _IMAGES_UNIT_TYPE_PERCENT : _IMAGES_UNIT_TYPE_PIXELS;
         switch ($type) {
             case _IMAGES_UNIT_TYPE_PERCENT:
                 $image->setPercent(array('wpercent' => $width));
@@ -242,8 +244,8 @@ function images_userapi_resize($args)
     }
 
     if (isset($height)) {
-        eregi('([0-9]+)(px|%)', $height, $parts);
-        $type = ($parts[2] == '%') ? _IMAGES_UNIT_TYPE_PERCENT : _IMAGES_UNIT_TYPE_PIXELS;
+        preg_match('/([0-9]+)(px|%)?/i', $height, $parts);
+        $type = (isset($parts[2]) && $parts[2] == '%') ? _IMAGES_UNIT_TYPE_PERCENT : _IMAGES_UNIT_TYPE_PIXELS;
         switch ($type) {
             case _IMAGES_UNIT_TYPE_PERCENT:
                 $image->setPercent(array('hpercent' => $height));
@@ -305,8 +307,8 @@ function images_userapi_resize($args)
 
     if( $returnpath == true ) return $url;
 
-    return array('url' => $url, 'label' => $label, 'attributes' => $attribs);
-    
+    if( $returnarray == true ) return array('url' => $url, 'label' => $label, 'attributes' => $attribs);
+
     $imgTag = sprintf('<img src="%s" alt="%s" %s />', $url, $label, $attribs);
 
     return $imgTag;

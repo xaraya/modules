@@ -235,7 +235,7 @@ class phpthumb
         $this->src            = $sourceFilename;
         if (is_null($this->config_output_format)) {
             $sourceFileExtension = strtolower(substr(strrchr($sourceFilename, '.'), 1));
-            if (preg_match('/^[a-z]{3,4}$', $sourceFileExtension)) {
+            if (preg_match('/^[a-z]{3,4}$/', $sourceFileExtension)) {
                 $this->config_output_format = $sourceFileExtension;
                 $this->DebugMessage('setSourceFilename('.$sourceFilename.') set $this->config_output_format to "'.$sourceFileExtension.'"', __FILE__, __LINE__);
             } else {

@@ -1,6 +1,6 @@
 <?php
 
-include_once('modules/images/xarclass/image_properties.php');
+include_once(dirname(__FILE__).'/image_properties.php');
 
 class Image_GD extends Image_Properties 
 {

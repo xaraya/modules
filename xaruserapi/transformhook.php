@@ -42,7 +42,7 @@ function & images_userapi_transformhook ( $args )
 function & images_userapi_transform ( $body )
 {
 
-    while(eregi('#(image-resize):([0-9]+):([^#]*)#', $body, $parts)) {
+    while(preg_match('/#(image-resize):([0-9]+):([^#]*)#/ig', $body, $parts)) {
         // first argument is always the complete haystack
         // get rid of it
         array_shift($parts);
@@ -96,7 +96,7 @@ function & images_userapi_transform ( $body )
                 break;
         }
         $parts = implode(':', $parts);
-        $body = ereg_replace("#$type:$id:$parts#", $replacement, $body);
+        $body = str_replace("#$type:$id:$parts#", $replacement, $body);
 
     }
 
