@@ -199,23 +199,26 @@
             $ccaddresses = isset($args['ccaddresses']) ? $args['ccaddresses'] : '';
             $bccaddresses = isset($args['bccaddresses']) ? $args['bccaddresses'] : '';
             $custom_header = isset($args['custom_header']) ? $args['custom_header'] : array();
+            $message_envelope = isset($args['message_envelope'])? $args['message_envelope'] : "";
             
         // Bundle the data into a nice array
-            $args = array('info'            => $recipientaddress,
-                          'name'            => $recipientname,
-                          'ccrecipients'    => $ccaddresses,
-                          'bccrecipients'   => $bccaddresses,
-                          'subject'         => $subject,
-                          'message'         => $message,
-                          'htmlmessage'     => $message,
-                          'from'            => $senderaddress,
-                          'fromname'        => $sendername,
-                          'attachName'      => '',
-                          'attachPath'      => '',
-                          'redirectsending' => $redirectsending,
-                          'redirectaddress' => $redirectaddress,
-                          'usetemplates'    => false,
-                          'custom_header'   => $custom_header);
+            $args = array('info'             => $recipientaddress,
+                          'name'             => $recipientname,
+                          'ccrecipients'     => $ccaddresses,
+                          'bccrecipients'    => $bccaddresses,
+                          'subject'          => $subject,
+                          'message'          => $message,
+                          'htmlmessage'      => $message,
+                          'from'             => $senderaddress,
+                          'fromname'         => $sendername,
+                          'attachName'       => '',
+                          'attachPath'       => '',
+                          'redirectsending'  => $redirectsending,
+                          'redirectaddress'  => $redirectaddress,
+                          'usetemplates'     => false,
+                          'custom_header'    => $custom_header,
+                          'message_envelope' => $message_envelope
+            );
 
         // Pass it to the mail module for processing
         if (!empty($mailitem['mail_type']) && (($mailitem['mail_type'] == 2) || ($mailitem['mail_type'] == 4))) {
