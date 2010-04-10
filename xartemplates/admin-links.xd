@@ -7,10 +7,16 @@
 
 <form action="&xar-modurl-sitetools-admin-links;" method="post">
 <table border="0" cellpadding="4" cellspacing="0">
- <tr>
+ <xar:if condition="!empty($authid)">
   <input type="hidden" name="authid" id="authid" value="#$authid#" />
+ </xar:if>
+ <xar:set name="$modnames">array_keys($modules)</xar:set>
+ <xar:while condition="count($modnames) gt 0">
+ <tr>
   <xar:set name="$i">0</xar:set>
-  <xar:foreach in="$modules" key="$name" value="$fields">
+  <xar:while condition="count($modnames) gt 0">
+   <xar:set name="$name">array_shift($modnames)</xar:set>
+   <xar:set name="$fields">$modules[$name]</xar:set>
    <td valign="top">
     <h3>
       #$name#
@@ -27,10 +33,11 @@
     </xar:foreach>
    </td>
    <xar:if condition="$i++ and $i % 4 == 0">
-    </tr><tr>
+    <xar:break/>
    </xar:if>
-  </xar:foreach>
+  </xar:while>
  </tr>
+ </xar:while>
 </table>
 <p>
   <xar:set name="$findbutton"><xar:mlstring>Find Links</xar:mlstring></xar:set>

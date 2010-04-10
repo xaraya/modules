@@ -210,6 +210,56 @@ function sitetools_adminapi_findlinks($args)
             }
         }
     }
+    // find links for dynamicdata
+    if (!empty($fields['dynamicdata'])) {
+        $modid = xarModGetIDFromName('dynamicdata');
+        foreach ($fields['dynamicdata'] as $itemtype => $fieldlist) {
+            $where = array();
+            foreach ($fieldlist as $field) {
+                $where[] = $field . " ne ''";
+            }
+            $whereclause = join(' or ',$where);
+            $object = new Dynamic_Object_List(array('moduleid' => $modid,
+                                                    'itemtype' => $itemtype,
+                                                    'fieldlist' => $fieldlist,
+                                                    'where' => $whereclause));
+            $items = $object->getItems();
+            $serialized = array();
+            foreach ($fieldlist as $field) {
+                if ($object->properties[$field]->type == 41) { // urltitle
+                    $serialized[$field] = 1;
+                }
+            }
+            $descr = $object->label;
+            $count[$descr] = 0;
+            foreach ($items as $itemid => $item) {
+                $url = xarModURL('dynamicdata','user','display',
+                                 array('modid' => $modid,
+                                       'itemtype' => $itemtype,
+                                       'itemid' => $itemid));
+                foreach ($fieldlist as $field) {
+                    if (empty($item[$field])) continue;
+                    if (!empty($serialized[$field])) {
+                        $info = unserialize($item[$field]);
+                        if (empty($info['link'])) continue;
+                        $item[$field] = $info['link'];
+                    }
+                    if ($skiplocal &&
+                        (!strstr($item[$field],'://') ||
+                          preg_match("!://($server|localhost|127\.0\.0\.1)((:\d+)?/|$)!",$item[$field])) ) {
+                        continue;
+                    }
+                    $id = $dbconn->GenId($linkstable);
+                    $query = "INSERT INTO $linkstable (xar_id, xar_link, xar_status, xar_moduleid, xar_itemtype, xar_itemid, xar_itemtitle, xar_itemlink)
+                              VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    $bindvars = array($id, $item[$field], 0, $modid, $itemtype, $itemid, $itemid, $url);
+                    $result =& $dbconn->Execute($query,$bindvars);
+                    if (!$result) return;
+                    $count[$descr]++;
+                }
+            }
+        }
+    }
     // TODO: find links for ...
     return $count;
 }

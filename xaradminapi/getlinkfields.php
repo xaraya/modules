@@ -109,6 +109,48 @@ function sitetools_adminapi_getlinkfields($args)
         }
     }
 
+    // find relevant fields for other dynamic objects
+    $objects = xarModAPIFunc('dynamicdata','user','getobjects');
+    foreach ($objects as $objectinfo) {
+        // skip internal DD objects
+        if ($objectinfo['objectid'] < 3) continue;
+        // skip internal privileges objects
+        if ($objectinfo['moduleid'] == 1098) continue;
+        // skip articles and roles DD extensions
+        if ($objectinfo['moduleid'] == 151 || $objectinfo['moduleid'] == 27) continue;
+        // skip sitetools links
+        if ($objectinfo['moduleid'] == 887) continue;
+
+    // CHECKME: skip objects that don't belong to DD for now...
+        if ($objectinfo['moduleid'] != 182) continue;
+
+        $object = xarModAPIFunc('dynamicdata','user','getobject',
+                                array('objectid' => $objectinfo['objectid']));
+        if (!empty($object) && count($object->properties) > 0) {
+            $fields = array();
+            foreach ($object->properties as $name => $property) {
+                switch ($proptypes[$property->type]['name'])
+                {
+                    case 'url':
+                    case 'image':
+                // skip imagelists here
+                    //case 'imagelist':
+                    case 'urlicon':
+                    case 'urltitle':
+                        $fields[] = array('name' => $property->label,
+                                          'field' => xarModGetNameFromID($object->moduleid) . '.' . $object->itemtype . '.' . $name,
+                                          'type' => $proptypes[$property->type]['label']);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (count($fields) > 0) {
+                $modules[$objectinfo['label']] = $fields;
+            }
+        }
+    }
+
     // TODO: find relevant fields for ...
 
     return $modules;

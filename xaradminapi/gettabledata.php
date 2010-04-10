@@ -34,7 +34,9 @@ function sitetools_adminapi_gettabledata($dbname='', $dbtype='')
             $dbtables=array();
             $dbconn =& xarDBGetConn();
             $dbname= xarDBGetName();
-            $tables = mysql_list_tables($dbname);
+            $sql = "SHOW TABLES FROM " . $dbname;
+            $tables = mysql_query($sql);
+            //$tables = mysql_list_tables($dbname);
             $i=0;
             if ($tables) {
                  while (list($tablename) = mysql_fetch_array($tables)) {

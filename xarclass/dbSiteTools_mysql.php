@@ -75,7 +75,10 @@ class dbSiteTools_mysql extends dbSiteTools
 
     function _selecttables()
     {
-        $tables = mysql_list_tables($this->dbname);
+        mysql_select_db($this->dbname);
+        $sql = "SHOW TABLES FROM " . $this->dbname;
+        $tables = mysql_query($sql);
+        //$tables = mysql_list_tables($this->dbname);
             if (is_resource($tables)) {
                 $tablecounter = 0;
                       while (list($tablename) = mysql_fetch_array($tables)) {

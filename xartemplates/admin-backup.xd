@@ -131,29 +131,22 @@
                         </label>
                     </th>
                 </tr>
-                <tr>
-                    <xar:set name="$i">
-                        1
-                    </xar:set>
-                    <xar:foreach in="$dbtables" value="$dbtable">
-                        <xar:if condition="$i++ lt $number_of_cols">
-                          <td class="xar-norm-outline" style="text-align: left;margin-left:2px; margin-top:2px; margin-bottom:2px;width:4%;border-width: 0px 0px 1px 0px;border-style: dotted;">
+                <xar:set name="$values">array_values($dbtables)</xar:set>
+                <xar:while condition="count($values) gt 0">
+                    <tr>
+                    <xar:set name="$i">1</xar:set>
+                    <xar:while condition="count($values) gt 0">
+                        <xar:set name="$dbtable">array_shift($values)</xar:set>
+                        <td class="xar-norm-outline" style="text-align: left;margin-left:2px; margin-top:2px; margin-bottom:2px;width:4%;border-width: 0px 0px 1px 0px;border-style: dotted;">
                             <input type="checkbox" name="#$checkboxname#" value="#$dbtable['tablename']#" checked="checked" />
                             #$dbtable['tablename']# (#$dbtable['tablerecs']#)
-                          </td>
-                        <xar:else />
-                          <td class="xar-norm-outline" style="text-align: left;margin-left:2px; margin-top:2px; margin-bottom:2px;width:4%;border-width: 0px 0px 1px 0px;border-style: dotted;">
-                            <input type="checkbox" name="#$checkboxname#" value="#$dbtable['tablename']#" checked="checked" />
-                            #$dbtable['tablename']# (#$dbtable['tablerecs']#)
-                            <xar:set name="$i">
-                                    1
-                            </xar:set>
-                          </td>
-                          </tr>
-                          <tr>
+                        </td>
+                        <xar:if condition="$i++ ge $number_of_cols">
+                            <xar:break/>
                         </xar:if>
-                    </xar:foreach>
-                </tr>
+                    </xar:while>
+                    </tr>
+                </xar:while>
             </table>
             <span style="float: left; padding-top: 30px; width: 98%; text-align: center;">
                 <input type="button" OnClick="CheckAll(true)" value="#$checktrue#" />

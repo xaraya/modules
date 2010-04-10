@@ -50,7 +50,7 @@ function sitetools_admin_updateconfig()
 
 
     foreach ($checkpath as $varname=>$pathname) {
-        $pathname= trim(ereg_replace('\/$', '', $pathname));
+        $pathname= trim(preg_replace('/\/$/', '', $pathname));
         if ($pathname == '') {
             $pathvar = substr($varname,0,3);
             switch ($pathvar) {
