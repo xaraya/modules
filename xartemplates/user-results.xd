@@ -38,7 +38,7 @@
                                     <img src="#xarTplGetImage('bar.png', 'polls')#" class="xar-polls-image-bar" style="width: #$loop:item['barwidth']#%" alt="vote bar" />
                                 </xar:if>
                             <xar:else/>
-                                <div class="xar-alt" class="xar-polls-css-bar" style="width: #$loop:item.barwidth#%;">&nbsp;</div>
+                                <div class="xar-alt xar-polls-css-bar" style="width: #$loop:item.barwidth#%;">&nbsp;</div>
                             </xar:if>
                         </td>
                     </tr>

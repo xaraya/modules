@@ -72,11 +72,10 @@ function polls_admin_list()
 
         $modinfo = xarModGetInfo($poll['modid']);
 
-        $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',array(), 0);
-
         if ($poll['itemtype'] == 0) {
             $moditem['modname'] = ucwords($modinfo['displayname']). ' - ' . $poll['itemid'];
         } else {
+            $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',array(), 0);
             if (isset($mytypes) && !empty($mytypes[$poll['itemtype']])) {
                 $moditem['modname'] = ucwords($modinfo['displayname']) . ' - ' . $mytypes[$poll['itemtype']]['label'] . ' - ' . $poll['itemid'];
             } else {
