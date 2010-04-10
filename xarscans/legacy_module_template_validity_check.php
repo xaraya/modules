@@ -1,6 +1,6 @@
 <?php
 
-    function xarayatesting_scans_module_template_validity_check()
+    function xarayatesting_scans_legacy_module_template_validity_check()
     {
         if (!xarVarFetch('item','str',$item,0,XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('confirm','int',$data['confirm'],0,XARVAR_NOT_REQUIRED)) return;
@@ -16,7 +16,8 @@
             $checked_modules = array();
             foreach ($items as $item) {
                 $basedir = sys::code() . 'modules/' . $item['name'] . '/xartemplates';
-                $files = get_module_files($basedir,'xt');
+                // find legacy .xd templates
+                $files = get_module_files($basedir,'xd');
                 foreach ($files as $file) {
                     parse_module_template($file,$reader);
                 }
@@ -99,6 +100,15 @@
         }
         
         $filestring = file_get_contents($filename);
+
+        // apply fixlegacy() rules like lib/blocklayout/xsltransformer.php
+        $filestring = '<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">' . $filestring . '</xar:template>';
+        $filestring = str_replace('&nbsp;','&#160;',$filestring);
+        $filestring = str_replace('<xar:set name="$','<xar:set name="',$filestring);
+        $filestring = str_replace('></textarea>','>&#160;</textarea>',$filestring);
+        $filestring = str_replace('<xar:base-include-javascript','<xar:javascript',$filestring);
+
         $filestring = preg_replace("/&xar([\-A-Za-z\d.]{2,41});/","xar-entity",$filestring);
 //        try {
             $reader->xml($filestring);
