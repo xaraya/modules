@@ -1,0 +1,497 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="isxarigami">XARCORE_VERSION_ID =='Xarigami'?true:false;</xar:set>
+<xar:style scope="module" module="base" file="tabs" />
+<xar:base-include-javascript module="base" filename="toggle.js" />
+<xar:set name="dummyimage">xarTplGetImage('blank.gif','base')</xar:set>
+<xar:set name="loadmode">'<a href="'.xarModURL('tinymce','admin','modifyconfig',array(),false,'loadmode').'">'.xarML('set load mode automatic').'</a>'</xar:set>
+<xar:set name="snippet">'<a href="'.xarModURL('tinymce','admin','modifyconfig',array(),false,'snippet').'">'.xarML('activate template snippet').'</a>'</xar:set>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>XarTinyMCE Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" module="tinymce" file="admin-menu" />
+    <h2><xar:mlstring>Manage Editor Instances</xar:mlstring></h2>
+
+<xar:comment> * * * * * * * Create a new configuration instance * * * * * * * *</xar:comment>
+<xar:if condition="isset($action) and $action eq 'new'">
+    <h3><xar:mlstring>New Editor Configuration Instance</xar:mlstring></h3>
+         <p class="xar-form-input-wrapper">
+         <xar:mlstring>Each editor configuration instance has a unique Short Name, lowercase, no spaces. For multiconfigurations, this should also be used as the value for the CSS Selector class to turn on the editor. For automatic loading of all text areas the default 'mceEditor' must be used.</xar:mlstring></p>
+          <p class="xar-form-input-wrapper"><xar:mlstring>
+            Other options may have inbuilt defaults, shown in square brackets after the option input field where practical.</xar:mlstring></p>
+         <p class="xar-form-input-wrapper">
+           <xar:mlstring>
+           Help text is available for each option by hovering your cursor over the option label.
+           </xar:mlstring>
+         </p>
+         <p class="xar-form-input-wrapper">
+           <xar:mlstring>
+           If you add plugins, remember to add the buttons for them to the button list fields in Advanced Theme Section. A few plugins have extra configuration options that can be added in the Custom section.
+           </xar:mlstring>
+         </p>
+         <div class="xar-floatleft xar-fullwidth">
+            <form id="advanced" action="#xarModURL('tinymce','admin','resetdefault')#" method="post" enctype="application/x-www-form-urlencoded" >
+                <p class="xar-form-input-wrapper">
+                    <xar:data-input type="checkbox" id="useadvanced0" name="useadvanced" checked="$useadvanced" onchange="this.form.submit();" />
+                    <label for="useadvanced" class="help" title="#xarML('Toggle advanced mode on and off')#"><xar:mlstring>Show advanced options?</xar:mlstring></label>
+                </p>
+                <input type="hidden" name="authid" id="authid0" value="#$authid#" />
+                <input type="hidden" name="resettype" id="resettype0" value="formmode" />
+                <input type="hidden" name="returnurl" id="returnurl0" value="#xarServerGetCurrentURL()#" />  
+            </form>
+        </div>
+        <p class="xar-clearleft" />
+        <form id="newinstance" action="#$link#" method="post" enctype="application/x-www-form-urlencoded" >
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <xar:foreach in="$configarray" key="$category" value="$configs">
+            <xar:if condition="$category eq 'Instance'">
+               <fieldset>
+                    <legend>
+                        <xar:mlstring>Configuration Instance Information</xar:mlstring>
+                    </legend>
+                    <xar:foreach in="$configs" key="$option" value="$param">
+                        <xar:set name="params">array('definclude'=>$param[0],'fieldtype'=>$param[1],'defvalue'=>$param[3],'deflabel'=>$param[4],'defhelp'=>$param[5])</xar:set>
+                        <xar:if condition="in_array($option,array_keys($currentoptions))">
+                            <xar:set name="updatevalue">$currentoptions[$option]</xar:set>
+                        <xar:else />
+                            <xar:set name="updatevalue">$params['defvalue']</xar:set>
+                        </xar:if>  
+                         <div class="xar-form-input-wrapper">
+                            <label for="#$option#" class="xar-form-label" title="#$params['defhelp']#">
+                                   #$params['deflabel']#
+                            </label>
+                            <xar:if condition="$params['fieldtype'] eq 'dropdown'">
+                                <xar:set name="valoptions">$option.'_options'</xar:set>
+                                <xar:data-input type="dropdown" name="$option" id="$option.'a'" value="$updatevalue" validation="$$valoptions" />
+                            <xar:elseif condition="$params['fieldtype'] eq 'checkboxlist'" />
+                                <xar:set name="valoptions">$option.'_options'</xar:set>
+                                <xar:data-input type="checkboxlist" name="$option" id="$option.'checkboxlist'" columns="3" value="$updatevalue" layout="column" validation="$$valoptions" />                                
+                            <xar:elseif condition="$params['fieldtype'] eq 'boolean'" />
+                                <xar:set name="checked">$updatevalue =='false'?false:true</xar:set>
+                                <xar:data-input type="checkbox" name="$option" id="$option.'b'" checked="$checked" />
+                            <xar:elseif condition="$params['fieldtype'] eq 'textbox'" />
+                                <xar:data-input type="textarea_medium" name="$option" id="$option.'c'" value="$updatevalue" class="xar-textmedium mceNoEditor" />
+                            <xar:else />
+                                <xar:data-input type="textbox" name="$option" id="$option.'d'" value="$updatevalue" class="xar-textmedium" />
+                            </xar:if> 
+                            <xar:set name="printabledefault">(isset($params['defvalue']) and !empty($params['defvalue'])) ?'['.$params['defvalue'].']':""</xar:set>
+                            <span style="color:#ccc">#$printabledefault#</span>
+                        </div>
+                        <xar:if condition="isset($invalid[$option]) and !empty($invalid[$option])">
+                           <div class="xar-form-input-wrapper-after"><span class="xar-error">#$invalid[$option]#</span></div>
+                        </xar:if>        
+                    </xar:foreach>
+                </fieldset> 
+                <xar:elseif condition="count($configs) gt 0" />
+                <fieldset>
+                    <legend>
+                         <a href="javascript:void(0);" title="#xarML('Click to toggle visibility for category options')#" onclick="return toggleDisplay('fieldwrapper_#$category#');">
+                            <strong>#$category#</strong>
+                            <img src="#xarTplGetImage('toggle.png','tinymce')#" alt="#xarML('(Toggle display)')#" title="#xarML('(Toggle display)')#" />
+                        </a>
+                    </legend>
+                    <div id="fieldwrapper_#$category#"  style="display:none;">
+                        <xar:foreach in="$configs" key="$option" value="$param">
+                            <xar:set name="params">array('definclude'=>$param[0],'fieldtype'=>$param[1],'defvalue'=>$param[3],'deflabel'=>$param[4],'defhelp'=>$param[5])</xar:set>
+                            <xar:if condition="in_array($option,array_keys($currentoptions))">
+                                <xar:set name="updatevalue">$currentoptions[$option]</xar:set>
+                            <xar:else />
+                                <xar:if condition="$params['fieldtype'] eq 'boolean'">
+                                    <xar:set name="updatevalue">$params['defvalue']=='false'?FALSE:TRUE</xar:set>
+                                <xar:else />
+                                    <xar:set name="updatevalue">$params['defvalue']</xar:set>
+                                </xar:if>
+                            </xar:if> 
+                                <div class="xar-form-input-wrapper">
+                                    <label for="#$option#" class="xar-form-label help" title="#$params['defhelp']#">
+                                           #$params['deflabel']#
+                                    </label>
+                                    <xar:if condition="$params['fieldtype'] eq 'dropdown'">
+                                        <xar:set name="valoptions">$option.'_options'</xar:set>
+                                        <xar:data-input type="dropdown" name="$option" id="$option.'1'" value="$updatevalue" validation="$$valoptions" />
+                                    <xar:elseif condition="$params['fieldtype'] eq 'checkboxlist'" />
+                                        <xar:set name="valoptions">$option.'_options'</xar:set>
+                                        <xar:data-input type="checkboxlist" name="$option" id="$option.'checkboxlist1'" columns="3" layout="column" value="$updatevalue" validation="$$valoptions" />    
+                                    <xar:elseif condition="$params['fieldtype'] eq 'boolean'" />
+                                        <xar:set name="checked">$params['defvalue'] =='false'?false:true</xar:set>
+                                        <xar:data-input type="checkbox" name="$option" id="$option.'2'" checked="$checked" />
+                                    <xar:elseif condition="$params['fieldtype'] eq 'textarea'" />
+                                        <xar:data-input type="textarea_medium" name="$option" id="$option.'3'" value="$updatevalue" class="xar-textmedium" />
+                                    <xar:else />
+                                      <!--  <xar:if condition="$option eq 'editor_selector'">
+                                            #$param[3]# 
+                                            <xar:data-input type="textbox" name="$option" id="$option.'4b'" value="$param[3]" class="xar-textmedium" />             
+                                        <xar:else />-->
+                                       
+                                            <xar:data-input type="textbox" name="$option" id="$option.'4'" value="$updatevalue" class="xar-textmedium mceNoEditor"/>
+                                       
+                                    </xar:if> 
+                                    <xar:set name="printabledefault">(isset($params['defvalue']) and !empty($params['defvalue'])) ?'['.$params['defvalue'].']':""</xar:set>
+                                    <span style="color:#ccc">#$printabledefault#</span>
+                            </div> 
+                            <xar:comment>add in button and plugin help - put it after the theme_advanced_path option which is also in simple form layout</xar:comment>
+                            <xar:if  condition="$option eq 'theme_advanced_path'" >
+                                <div class="xar-form-input-wrapper">
+                                       <label class="xar-form-label"><xar:mlstring>Available buttons:</xar:mlstring></label>
+                                        <xar:set name="optioncount">round(count($buttonarray['Buttons'])/4)</xar:set>
+                                         <div class="xar-form-container-after xar-form-container-after" >
+                                            <ul style="list-style-type:none;float: left; max-width: 25%; margin-right: 2px;">
+                                                <xar:set name="currentcount">0</xar:set>
+                                                <xar:foreach in="$buttonarray['Buttons']" key="$buttonname" value="$buttonvalues">
+                                                    <li>#$buttonname#</li>
+                                                    <xar:set name="currentcount">++$currentcount</xar:set> 
+                                            <xar:if condition="$currentcount eq $optioncount ">
+                                            </ul>
+                                                <ul style="list-style-type:none; float: left; max-width: 25%; margin-right: 2px;">
+                                                <xar:set name="currentcount">0</xar:set>
+                                            </xar:if>
+                                                </xar:foreach>
+                                            </ul>
+                                        </div>
+                                </div>
+                                <div class="xar-form-input-wrapper">
+                                       <label class="xar-form-label"><xar:mlstring>Available plugin <em>buttons</em></em></xar:mlstring></label>
+                                       <xar:set name="optionct">round(count($buttonarray['Plugins'])/2)</xar:set>
+                                        <div class="xar-form-container-after xar-form-container-after" >
+                                            <ul style="list-style-type:none;float: left; width: 35%; margin-right: 2px;">
+                                                <xar:set name="currentcount">0</xar:set>
+                                                <xar:foreach in="$buttonarray['Plugins']" key="$pluginname" value="$pluginvalues">
+                                                    <xar:set name="pluglist">implode(', ',$pluginvalues)</xar:set>
+                                                    <li>#$pluginname#: <em>#$pluglist#</em></li>
+                                                    <xar:set name="currentcount">++$currentcount</xar:set> 
+                                            <xar:if condition="$currentcount eq $optionct ">
+                                            </ul>
+                                                <ul style="list-style-type:none; float: left; width: 40%; margin-right: 2px;">
+                                                <xar:set name="currentcount">0</xar:set>
+                                            </xar:if>
+                                                </xar:foreach>
+                                            </ul>
+                                        </div>
+                                        <p class="xar-clearleft xar-form-container-after xar-form-container-after" >
+                                            <xar:mlstring>Some plugins have additional configurations (eg date format). Please add these in the Custom section. 
+                                            Check plugin options at </xar:mlstring>
+                                            <a href="#xarModURL('tinymce','admin','overview',array(),false,'plugins')#">xarTinyMCE Overview</a>
+                                        </p>
+                                </div>                                       
+                            </xar:if>                                   
+                        </xar:foreach>
+                    </div>
+                    </fieldset>                    
+                </xar:if>
+        </xar:foreach>
+
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                          
+                    <input type="submit" value="#$updatebutton#" />
+               </div>
+            </fieldset>
+        </form>
+    
+    <xar:comment> * * * * * * * Modify configuration instance * * * * * * * *</xar:comment>
+    <xar:elseif condition="isset($action) and $action eq 'modify'" />
+<h3><xar:mlstring>Modify Editor Configuration Instance</xar:mlstring></h3>
+
+         <p class="xar-form-input-wrapper">
+        <xar:mlstring>Each editor configuration instance has a unique Short Name, lowercase, no spaces. For multiconfigurations, this should also be used as the value for the CSS Selector class to turn on the editor. For automatic loading of all text areas the default 'mceEditor' must be used.</xar:mlstring></p>
+          <p class="xar-form-input-wrapper"><xar:mlstring>
+            Other options may have inbuilt defaults, shown in square brackets after the option input field where practical.</xar:mlstring></p>
+         <div class="xar-form-input-wrapper">
+             <p class="xar-form-input-wrapper">
+               <xar:mlstring>
+               Help text is available for each option by hovering your cursor over the option label.
+               </xar:mlstring>
+             </p>
+             <p class="xar-form-input-wrapper">
+               <xar:mlstring>
+               If you add plugins, remember to add the buttons for them to the button list fields in Advanced Theme Section. A few plugins have extra configuration options that can be added in the Custom section.
+               </xar:mlstring>
+             </p>
+            <div class="xar-align-left xar-half-width">
+                <form id="advanced" action="#xarModURL('tinymce','admin','resetdefault')#" method="post" enctype="application/x-www-form-urlencoded" >
+                <p class="xar-form-input-wrapper">
+                    <xar:data-input type="checkbox" id="useadvanced" name="useadvanced" checked="$useadvanced" onchange="this.form.submit();" />
+                    <label for="useadvanced" class="help" title="#xarML('Toggle advanced mode on and off')#"><xar:mlstring>Show advanced options?</xar:mlstring></label>
+                </p>
+                <input type="hidden" name="authid" id="authid1" value="#$authid#" />
+                <input type="hidden" name="id" id="id1" value="#$id#" />
+                <input type="hidden" name="resettype" id="resettype1" value="formmode" />
+                <input type="hidden" name="returnurl" id="returnurl1" value="#xarServerGetCurrentURL()#" />                   
+                </form>
+            </div>             
+            <xar:if condition="$currentoptions['iname'] eq 'default'">
+
+                <p class="xar-floatright">
+                    <a href="#xarModURL('tinymce','admin','resetdefault',array('resettype'=>'default'))#">
+                        <xar:mlstring>Restore default to install settings</xar:mlstring>
+                    </a>
+                </p>
+            </xar:if>
+        </div>
+        <form id="newinstance" action="#$link#" method="post" enctype="application/x-www-form-urlencoded" >
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <xar:foreach in="$configarray" key="$category" value="$configs">
+                <xar:if condition="$category eq 'Instance'">
+                <fieldset>
+                    <legend>
+                        <xar:mlstring>Configuration Instance Information</xar:mlstring>
+                    </legend>
+
+                    <xar:foreach in="$configs" key="$option" value="$param">
+                     <xar:set name="params">array('definclude'=>$param[0],'fieldtype'=>$param[1],'defvalue'=>$param[3],'deflabel'=>$param[4],'defhelp'=>$param[5])</xar:set>
+                            <xar:if condition="in_array($option,array_keys($currentoptions))">
+                                <xar:set name="updatevalue">$currentoptions[$option]</xar:set>
+                            <xar:else />
+                                 <xar:set name="updatevalue">$params['defvalue']</xar:set>
+                            </xar:if>  
+                         <div class="xar-form-input-wrapper">
+                            <label for="#$option#" class="xar-form-label help" title="#$params['defhelp']#">
+                                   #$params['deflabel']#
+                            </label>
+                            <xar:if condition="$params['fieldtype'] eq 'dropdown'">
+                                <xar:set name="valoptions">$option.'_options'</xar:set>
+                                <xar:data-input type="dropdown" name="$option" id="$option.'aa'" value="$updatevalue" validation="$$valoptions" />
+                            <xar:elseif condition="$params['fieldtype'] eq 'checkboxlist'" />
+                                <xar:set name="valoptions">$option.'_options'</xar:set>
+                                <xar:data-input type="checkboxlist" name="$option" id="$option.'checkboxlist_aa'"  columns="3" layout="column" value="$updatevalue" validation="$$valoptions" />
+                            <xar:elseif condition="$params['fieldtype'] eq 'boolean'" />
+                                <xar:if condition="$option eq 'active' and $isdefault">
+                                    <input type="checkbox" name="dummy" id="dummy" disabled="disabled" checked="#$updatevalue#" /> <xar:mlstring>Cannot deactive the current default configuration</xar:mlstring>
+                                    <xar:data-input type="hidden" name="$option" id="$option" value="1" />
+                                <xar:else />
+                                    <xar:data-input type="checkbox" name="$option" id="$option.'bb'" checked="$updatevalue" />
+                                </xar:if>
+                            <xar:elseif condition="$params['fieldtype'] eq 'textarea'" />
+                                <xar:data-input type="textarea_medium" name="$option" id="$option.'cc'" value="$updatevalue" class="xar-textmedium" />
+                            <xar:else />
+                                <xar:if condition="$option eq 'iname' AND $updatevalue eq 'default'">
+                                    #$updatevalue# <span style="color:#aaa"><xar:mlstring>[The default config name cannot be changed but you can edit it]</xar:mlstring></span>
+                                    <xar:data-input type="hidden" name="$option" value="$updatevalue" />
+                                <xar:else />
+                                    <xar:data-input type="textbox" name="$option" id="$option.'dd'" value="$updatevalue" class="xar-textmedium" />
+                                </xar:if>
+                            </xar:if> 
+                            <xar:set name="printabledefault">(isset($params['defvalue']) and !empty($params['defvalue'])) ?'['.$params['defvalue'].']':""</xar:set>
+                            <xar:if condition="$option ne 'active' and $isdefault ne 1">
+                            <span style="color:#aaa">#$printabledefault#</span>
+                            </xar:if>
+                        </div>        
+                    </xar:foreach>
+                </fieldset>
+                <xar:elseif condition="count($configs) gt 0" />
+                   <fieldset>
+                    <legend>
+                         <a href="javascript:void(0);" title="#xarML('Click to toggle visibility for category options')#" onclick="return toggleDisplay('fieldwrapper_#$category#');">
+                            <strong>#$category#</strong>
+                            <img src="#xarTplGetImage('toggle.png','tinymce')#" alt="#xarML('(Toggle display)')#" title="#xarML('(Toggle display)')#" />
+                        </a>
+                    </legend>
+                    <div id="fieldwrapper_#$category#"  style="display:none;">
+                        <xar:foreach in="$configs" key="$option" value="$param">
+                            <xar:set name="params">array('definclude'=>$param[0],'fieldtype'=>$param[1],'defvalue'=>$param[3],'deflabel'=>$param[4],'defhelp'=>$param[5])</xar:set>
+                            <xar:if condition="in_array($option,array_keys($currentoptions))">
+                                <xar:set name="updatevalue">$currentoptions[$option]</xar:set>
+                            <xar:else />
+                                <xar:if condition="$params['fieldtype'] eq 'boolean'">
+                                    <xar:set name="updatevalue">$params['defvalue']=='false'?FALSE:TRUE</xar:set>
+                                <xar:else />
+                                    <xar:set name="updatevalue">$params['defvalue']</xar:set>
+                                </xar:if>
+                            </xar:if>                          
+                             <div class="xar-form-input-wrapper"> 
+                                <label for="#$option#" class="xar-form-label help" title="#$params['defhelp']#">
+                                       #$params['deflabel']#
+                                </label>
+                                <xar:if condition="$params['fieldtype'] eq 'dropdown'">
+                                    <xar:set name="valoptions">$option.'_options'</xar:set>
+                                    <xar:data-input type="dropdown" name="$option" id="$option.'11'" value="$updatevalue" validation="$$valoptions" />
+                                <xar:elseif condition="$params['fieldtype'] eq 'checkboxlist'" />
+                                    <xar:set name="valoptions">$option.'_options'</xar:set>
+                                    <xar:data-input type="checkboxlist" name="$option" id="$option.'checkboxlist_11'"  columns="3" layout="column" value="$updatevalue" validation="$$valoptions" />
+                                <xar:elseif condition="$params['fieldtype'] eq 'boolean'" />
+                                    <xar:data-input type="checkbox" name="$option" id="$option.'22'" checked="$updatevalue" />
+                                <xar:elseif condition="$params['fieldtype'] eq 'textarea'" />
+                                    <xar:data-input type="textarea_medium" name="$option" id="$option.'33'" value="$updatevalue" class="xar-textmedium mceNoEditor" />
+                                <xar:else />
+                                <!--
+                                    <xar:if condition="$option eq 'editor_selector'">
+                                        #$updatevalue# 
+                                        <input type="hidden" name="editor_selector" id="editor_selector" value="#$updatevalue# " />      
+                                    <xar:else />-->
+                                        <xar:data-input type="textbox" name="$option" id="$option.'44'" value="$updatevalue" class="xar-textmedium" />
+
+                                </xar:if> 
+                                <xar:set name="printabledefault">(isset($params['defvalue']) and !empty($params['defvalue'])) ?'['.$params['defvalue'].']':""</xar:set>
+                                <span style="color:#aaa">#$printabledefault#</span>
+                            </div>    
+                               <xar:if  condition="$option eq 'theme_advanced_path'" >
+                                <div class="xar-form-input-wrapper">
+                                       <label class="xar-form-label"><xar:mlstring>Available buttons:</xar:mlstring></label>
+                                        <xar:set name="optioncount">round(count($buttonarray['Buttons'])/4)</xar:set>
+                                         <div class="xar-form-container-after xar-form-container-after" >
+                                            <ul style="list-style-type:none;float: left; max-width: 25%; margin-right: 2px;">
+                                                <xar:set name="currentcount">0</xar:set>
+                                                <xar:foreach in="$buttonarray['Buttons']" key="$buttonname" value="$buttonvalues">
+                                                    <li>#$buttonname#</li>
+                                                    <xar:set name="currentcount">++$currentcount</xar:set> 
+                                            <xar:if condition="$currentcount eq $optioncount ">
+                                            </ul>
+                                                <ul style="list-style-type:none; float: left; max-width: 25%; margin-right: 2px;">
+                                                <xar:set name="currentcount">0</xar:set>
+                                            </xar:if>
+                                                </xar:foreach>
+                                            </ul>
+                                        </div>
+                                </div>
+                                <div class="xar-form-input-wrapper">
+                                       <label class="xar-form-label"><xar:mlstring>Available plugin <em>buttons</em></em></xar:mlstring></label>
+                                       <xar:set name="optionct">round(count($buttonarray['Plugins'])/2)</xar:set>
+                                        <div class="xar-form-container-after xar-form-container-after" >
+                                            <ul style="list-style-type:none;float: left; width: 35%; margin-right: 2px;">
+                                                <xar:set name="currentcount">0</xar:set>
+                                                <xar:foreach in="$buttonarray['Plugins']" key="$pluginname" value="$pluginvalues">
+                                                    <xar:set name="pluglist">implode(', ',$pluginvalues)</xar:set>
+                                                    <li>#$pluginname#: <em>#$pluglist#</em></li>
+                                                    <xar:set name="currentcount">++$currentcount</xar:set> 
+                                            <xar:if condition="$currentcount eq $optionct ">
+                                            </ul>
+                                                <ul style="list-style-type:none; float: left; width: 40%; margin-right: 2px;">
+                                                <xar:set name="currentcount">0</xar:set>
+                                            </xar:if>
+                                                </xar:foreach>
+                                            </ul>
+                                        </div>
+                                        <p class="xar-clearleft xar-form-container-after xar-form-container-after" >
+                                            <xar:mlstring>Some plugins have additional configurations (eg date format). Please add these in the Custom section. 
+                                            Check plugin options at </xar:mlstring>
+                                            <a href="#xarModURL('tinymce','admin','overview',array(),false,'plugins')#">xarTinyMCE Overview</a>
+                                        </p>
+                                </div>                                       
+                            </xar:if>                                                  
+                        </xar:foreach>
+                    </div>
+                </fieldset>    
+                </xar:if>
+            
+        </xar:foreach>
+            <fieldset>
+            <legend>
+                <strong><xar:mlstring>Current active default configuration</xar:mlstring></strong>
+            </legend>
+
+            <div class="xar-form-input-wrapper-before">
+                 <pre>#$jsstrings#</pre>
+            </div>
+        </fieldset>            
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="authid" id="authid2" value="#$authid#" />
+                    <input type="hidden" name="id" id="id" value="#$id#" />      
+                    <input type="submit" value="#$updatebutton#" />
+               </div>
+            </fieldset>
+        </form>
+
+    <xar:comment> * * * * * * * Delete configuration instance * * * * * * * *</xar:comment>
+    <xar:elseif condition="isset($action) and $action eq 'delete'" />
+         <form method="post" action="#xarModURL('tinymce','admin','manageconfigs')#">
+                <fieldset>
+                    <legend>
+                        <xar:mlstring>Confirm Deletion?</xar:mlstring>
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="id" class="xar-form-label">
+                            <xar:mlstring>Item ID:</xar:mlstring>
+                        </label>
+                        #$item['id']#
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="name" class="xar-form-label">
+                            <xar:mlstring>Name:</xar:mlstring>
+                        </label>
+                        #$item['name']#
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="desc" class="xar-form-label">
+                            <xar:mlstring>Description:</xar:mlstring>
+                        </label>
+                        #$item['desc']#
+                    </div>                    
+                </fieldset>
+        
+                <fieldset>
+                    <div class="xar-form-input-wrapper-after">
+                        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                        <input type="hidden" name="action" id="action" value="confirm" />
+                        <input type="hidden" name="id" id="id" value="#$item['id']#" />
+                        <input type="submit" value="#xarML('Confirm')#" />
+                    </div>
+                    <div class="xar-form-input-wrapper-before">
+                     <a href="#xarModURL('tinymce','admin','manageconfigs')#">
+                         <xar:mlstring>Cancel</xar:mlstring>
+                     </a>
+                     </div>
+                </fieldset>
+            </form>
+
+<xar:comment> * * * * * * * List configuration instances * * * * * * * *</xar:comment>
+    
+    <xar:else />
+        <p class="xar-align-right"><img src="#xarTplGetImage('icons/add.png','base')#" alt="#xarML('Add editor configuration')#"/><a href="#$newurl#"><xar:mlstring>&#160;Add Editor Configuration</xar:mlstring></a></p>
+        <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+            <p class="xar-error">#xarSessionGetVar('statusmsg')#</p>
+        </xar:if>
+        <table class="xar-items">
+            <tr>
+                <th><xar:mlstring>Config ID</xar:mlstring></th>
+                <th><xar:mlstring>Config Name</xar:mlstring></th>
+                <th><xar:mlstring>Status</xar:mlstring></th>
+                <th><xar:mlstring>Selector</xar:mlstring></th>                
+                <th><xar:mlstring>Description</xar:mlstring></th>
+                
+                <th><xar:mlstring>Options</xar:mlstring></th>
+            </tr>
+            <xar:foreach in="$iconfigs" key="$k" value="$iconfig">
+
+                <tr>
+                    <td>#$iconfig['id']#</td>
+                    <td>#$iconfig['name']#</td>
+                    <td>
+                        <xar:if condition="$iconfig['active']">
+                            <img src="#xarTplGetImage('package-installed.png','tinymce')#" alt="#xarML('Active')#" class="xar-valign-middle" />&#160;<xar:mlstring>Active</xar:mlstring>
+                        <xar:else />
+                            <img src="#xarTplGetImage('package-inactive.png','tinymce')#" alt="#xarML('Inactive')#" class="xar-valign-middle" />&#160;<xar:mlstring>Inactive</xar:mlstring>
+                        </xar:if>
+                    </td>
+                    <td>
+                     <xar:set name="edselector">isset($iconfig['options']['editor_selector'])?$iconfig['options']['editor_selector']:'mceEditor';</xar:set>
+                            <xar:set name="ismce">$edselector == 'mceEditor'?'xar-error':'';</xar:set>
+                           <span class="#$ismce#">#$edselector#</span>
+                    </td>
+                    <td>#$iconfig['desc']#</td>
+                    <td style="text-align: center;" class="xar-norm">
+                        <xar:if condition="!empty($configurls[$iconfig['id']]['editurl'])">
+                            <a href="#$configurls[$iconfig['id']]['editurl']#"><xar:mlstring>Edit</xar:mlstring></a>
+                        <xar:else />
+                            <xar:mlstring>Edit</xar:mlstring>
+                        </xar:if>
+                        |
+                        <xar:if condition="empty($configurls[$iconfig['id']]['deleteurl']) and ($iconfig['name'] eq $defaultinstance)">
+                                <strong><xar:mlstring>DEFAULT</xar:mlstring></strong>
+                        <xar:elseif condition="!empty($configurls[$iconfig['id']]['deleteurl'])" />
+                            <a href="#$configurls[$iconfig['id']]['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
+                        <xar:else />
+                            <xar:mlstring>Delete</xar:mlstring>
+                        </xar:if>
+                    </td>
+                </tr>
+            </xar:foreach>
+        </table>
+        #$pager#
+
+    </xar:if>
+</div>

@@ -1,0 +1,379 @@
+* Version 3.0.3  23 Feb 2010
+xtm-000502 Modify config template checkbox list tag
+xtm-000513 Update code to upstream version 3.3.b
+xtm-000517 Manual additon of template snippet for specific config
+xtm-000518 Update with advlist plugin
+- Bug fixes from the upstream tinymce project esp related to IE
+- Much new functionality from the upstream tinymce project including
+Paste plugin improved functionality, new text formatting engine among others.
+
+* Version 3.0.2  09 Jan 2010
+- Fix the autoloading on all textareas (unless mceNoEditor is the class)
+- Update code to upstream version 3.2.7
+- Add server side validation on creation of new wysiwyg instance
+- Tidy up the UI and menus
+
+
+* Version 3.0.1   18 Dec 2009
+- Add autoloading option
+- Fix undeclared vars
+- Rework on organisation of property code
+- Ensure we can override selector in template
+- Rework some aspects of the UI for clearer presentation
+
+* Version 3.0.0   20 Sept 2009
+- First release in this series
+- Incorporates changes from upstream project to version 3.2.6
+- total rewrite to better support multiple configs
+- rewritten user interface
+- not backward compatible - requires an uninstall and reinistall
+
+
+* Version 1.6.0 6 Aug 2009
+- The last version for the 1x series
+- Added upstream tinymce code to release 3.2.5
+- A number of major bug fixes in the upstream project covering
+    Fixes for Webkit bugs related to tables, and DOM ranges
+    New autoresize options
+    Better support for jquery
+    Specific IE fixes for memory leaks and other issues
+    Others as per the upstream project change log.
+- Local bug fixes include:
+    xtm-000018  Bug     Popup windows are not resizeable  
+    xtm-000391  Bug     Editor UI CSS File results in load issues?  
+    xtm-000426  Bug     Deprecated vars causing problems   
+    xtm-000427  Bug     Default class overrides GUI assignable 
+    xtm-000425  Improvement Update documentation
+
+* Version 1.5.7 
+ - Added upstream tinymce code to release 3.2.4.1 and upped version to 1.5.7 to reflect
+
+* Version 1.5.6  31 May 2009
+- Applied changes from upstream 3.2.3.1 release.
+See the tinymce changelog file in the modules/tinymce/xarincludes folder for full details
+
+* Version 1.5.6  31 May 2009
+- Applied changes from upstream 3.2.4.1 release.
+See the tinymce changelog file in the modules/tinymce/xarincludes folder for full details.
+
+* Version 1.5.5  5 May 2009
+- Applies changes from upstream 3.2.3.1 release with fixes including:
+- Fixed - paragraphs containing form elements such as input or textarea would be removed.
+- Fixed - some IE versions would produce a wrapper function for events attributes.
+- Fixed - table cell contents could be removed if you pressed return/enter at the end of the cell contents.
+- Fixed - the paste plugin would remove a extra character if the selection range was collapsed.
+- Fixed - creating tables with % width wouldn't be handled correctly on WebKit browsers.
+
+
+* Version 1.5.5  30 April 2009
+- Upgrade to latest upstream Revision 1075 including 3.2.3 release code
+  Fixes a number of key bugs for IE
+  See the upstream tinymce changelog for full details.
+  
+* Version 1.5.4  4 April 2009
+- Upgrade to latest upstream Revision 1075 including 3.2.2.3 release code
+  Fixes a number of key bugs for IE8, regression bug with getPos.
+  See the upstream tinymce changelog for full details.
+  .
+
+* Version 1.5.3  9 Jan 2009
+- Upgrade to latest upstream 3.2.1.1 code to revision 984
+- Updated with latest fixes to compressor php file
+- Fixed problem with added p tags
+
+* Version 1.5.2  18 Nov 2008
+- Upgrade to latest upstream 3.2.1 code (including additional to revision 962)
+- Upstream changes include better support and fixes for webkit based browers
+- xhtmlextra plugin fixes
+- fix for problem with inlinepopup and editable input elements in Firefox2
+- legacy fonts converted to spans even without cleanup enabled
+
+* Version 1.5.1  20 Sept 2008
+- Upgrade to latest upstream 3.2.0.1 code (revision 932)
+- xtm-000199 undeclared var using simple theme
+- xtm-000222 liststyle plugin lang broken - fixed lang files for upstream TinyMCE3 changes
+- xtm-000223 Lorem Ipsum plugin lang files broken - incorrect params to method
+- New dpHighlight highlight plugin (must have dpHighlight module installed)
+
+* Version 1.5.0 July 2008
+- Integration of upstream 3.1.0 and post release fixes
+- New activation modvar  - use the tinymce one not base module 'activetinymce' modvar
+- Remove deprecated tinymce api calls, update with new.
+- Update the button on/off code
+- Reintegrate the new compressor
+- Remodel the xarTinymce DD property to inherit from xar textarea dd property
+- Adjust the tinymce Pagebreak plugin to use xaraya pagebreaks by default, 
+   and remove older xarpagebreak code
+- Updated Loremipsum plugin - removed old lorem plugin
+- Updated Liststyle plugin
+- Updated Spellchecker plugin
+- New configuration variables
+
+* Version 1.1.5 6 Oct 2007
+- Integrate 2.1.2 and post release fixes
+- Changed tinymceconfig.inc file to tinymceconfig.inc.php for better security
+- See full tinymce changelog for details
+
+* Version 1.1.4 31 Jan 2007
+- Integrate post 2.0.9 fixes to 31 Jan
+- Updated compressor and colourpicker and spellchecker
+- Fix for full screen plugin - use new window option for the plugin to return to older behaviour
+- See full tinymce changelog for details
+
+* Version 1.1.3 21 Nov 2006
+- Integrate post 2.0.8 fixes to 21 Nov
+- Updated compressor
+- Fix for full screen plugin
+- Fix for spellchecker for those without curl
+- See full tinymce changelog for details
+
+* Version 1.1.2 27 Oct 2006
+- Integrates upstream tinymce 2.0.7 plus extra fixes
+- Fixes including fore and background colour (xar bug  5837)
+- Updated spellchecker plugin (requires Curl)
+- Four new plugins called visulachars, nonbreaking, xhtmlxtras,devkit
+- Lots of bug fixes and enhancements
+
+* Version 1.1.1 June 26
+- Add on/off switch for filebrowser in the tinymceconfig.inc.php file
+- Some bug fixes related to IE, base element and relative URLs, and style plugin fix
+- Add new Media plugin for Flash, Shockwave, etc
+- Fix some bugs regarding Layer plugin
+- Make the wysiwyg toggle button independent of the wysiwyg prompt requirement
+  Toggle can be used now with DD properties when prompt is not set as default.
+
+* Version 1.1.0 7 May 06
+- Includes upstream project version 2.0.6.1
+- New plugins to manage layers, and edit css styles, fixed list style plugin
+- Better integration of filebrowser with config available in the tinymceconfig.inc.php file
+- Configuration for ibrowser, imanager and filebrowser in one configuration file for easier management
+- xartinymce IBrowser and Dictionary no longer bundled. Available separately at http://xaraya.com/~jojodee
+- Enhanced Block formatting now includes other block formats including divs, blockquote,
+- Lots of bug fixes for xhref problems and related
+
+* Version 1.0.4 29 Mar 06
+- Includes tinymce upstream project version 2.0.5.1
+- Updated and reduced number  of language files - only UTF-8 included
+- Ibrowser update for file paths, newest phpThumbs
+- New! Filebrowser functionality that works with the advimage, advlink, and flash plugins.
+- Updated IManager 
+- Many bugfixes
+
+* Version 1.0.3 26 Feb 06
+- Includes tinymce upstream project version 2.0.4
+- This included a major rewrite and cleanup of files so will break
+  some backward compatibility. Some plugins will not work until they are upgraded.
+- New and revamped xartinymce user interface in the admin
+- Total rearrangement of tinymce files - fully remove your old module!
+- Intereface additions including local and entity options
+- IBrowser plugin update
+- Faster loading, rewritten cleanup routines and new functionality from upstream project
+- General bugfixing
+- See the full tinymce code changes in the xarincludes/changelog file
+
+* Version 1.0.2 25 Jan 06
+- Added fixes release in tinymce 2.0.2
+- Set usewysiwyg var in include template fixing bug for those not using DD
+- Some minor documentation updates
+
+* Version 1.0.1 26 Dec 05
+- Fix for href to xhref conversion bug
+- updated danish language pack
+- minor fixes
+- addition of configurable js compressor for increased performance
+- Updated compressor file with security fixes
+
+* Version 1.0.0 2 Dec 05
+- Many many bug fixes and integrating tinymce 2.0
+- New ibrowser - please update your ibrowser config file
+- Updated language packs
+- Support for Opera, and improved support for Safari
+- Support for Firefox 1.5
+
+* Version 0.9.4
+- Allow a space to act to remove line totall in custom adv theme row building
+
+* Version 0.9.2b 12 Sept 05
+- Missing files in original tinymce distro
+- updated language files
+- Bug fixes
+
+* Version 0.9.2 7 Sept 05
+- updated files to include latest tinymce v2rc1 files
+- some minor enhancements to install defaults
+- extra plugins
+- revised documentation
+
+* Version 0.9.0 21 Aug 05
+- deprecate textareas_trigger! Now uses activation and deactivation classes
+  set by editor_selector and editor_deselector. Use these for custom config
+  for w3c standards. BREAKS BACKWARD COMPATIBILITY
+- clean up files
+- Better support for table css
+- Custom css now loads after the default - so it is added rather than replaces default.
+- For other changes and bug fixes see the tinymce changelog
+
+* Version 0.7.0 10 Aug 05
+- Default theme removed - not required as Advanced can be configured
+  BREAKS BACKWARD COMPATIBLITY
+- New image and link in dialogs
+- new utils directory in tiny_mce script dir
+- All theme CSS files moved to a css directory within the theme
+- auto resize window functionality removed
+- various bug fixes and file cleanups
+- simplified interface, changed default install options
+
+* Version 0.6.2 16 June 05
+- include bug fixes from tinymce 1.45rc2
+- move the xartinymce property to the module!
+- tidied up some default config vars
+
+* Version 0.6.1 8 June 05
+- Added button switch to DD property as popup alternative when 'ask' is set to on
+- Allow loading of DD propery automatically without loading tinymce js on every page
+- browser option to specify which browsers should use the WYSYWIG
+
+
+* Version 0.6.0  27 May 05
+- new full screen editing plugin
+- experimental Safari support
+- insert raw HTML
+- plain text paste plugin - paste plain text, or MS Word
+- table functionality improvment - split/merge
+- New plugin directionality for better lanugage support
+- Bug fixes - context menu, images, mouseover, links,etc
+- New documentation on writing plugins, themes
+
+* Version 0.5.5 05 April 05
+- New context menu with right click on images, tables
+- Customize the default configuration for tinymce from the GUI in the Advance Tab in config area
+- NEW! Multiple configurations on a single page. Setup your multiple configs in the new Advance Tab.
+- Many bug fixes!
+
+* Version 0.5.0 22 April 05
+- New mce_editable="false" added to textarea prevents wysiwyg
+  editor when All Text Area mode is active
+- New multiple configuration support - with manual mode can be set
+  multiple times on page with different config settings
+- Many new features including custom config settings from the GUI in xartinymce
+- Language file fixes
+- Many bug fixes including image width/height in advimg with Mozilla/FF
+- See the tinymce changelog file in /modules/tinymce/xartemplates/includes/tinymce/docs
+
+* Version 0.4.1  10 Mar 05
+- Split the activation method (auto vs manual) and the mode (All areas vs Labelled)
+- Tidy up the templates
+
+* Version 0.4.0  9 Mar 05
+- Added 1.43 code bug fix release
+- Updated language packs
+- Fix major bugs with 'ask', tables, lost instances etc
+- tidy up start to configuration area
+- Added major change to initialization with automatic event loading
+  The template snippet is no longer required for activation.
+- Added the Manual mode for those that wish to override their templates.
+- You must have the Base module updated with current version for this 0.4.0 version.
+
+* Version 0.3.2 1 Feb 05
+- New simplified Chinese language pack
+- Update of other language packs including Thai
+- Fix the Firefox double <p> bug in empty text areas
+- Move all table controls to new Table plugin
+- Change language charset - English now en rather than uk
+- Incorporating the tinymce version 1.41
+
+* Version 0.3.1 10 Jan 05
+- Incorporating tinymce version 1.40
+- New Search and Replace plugin - search, search next, replace
+- New Print plugin
+- Fix Firefox icon display problem in editor
+- Fix so there is an editor prompt to use on Tab to textarea if Ask set true
+- Many other bug fixes
+
+* Version 0.3.0 5 Jan 05
+- Incorporates tinymce version 1.391 with many bug fixes and added features.
+- New and improved language packs.
+- Style/tag path browser in Advanced theme
+- Force to p or br tags for IE and Gecko browsers
+- Fix major bug where text is lost in Firefox if the editor is activated after text entry has begun.
+- Improved auto configration settings for the Imagebrowser/uploader for sites in root doc dir and also those in subdirectories.
+- New Save plug in, enhanced image plug in with rollovers, advanced link entry with popups, new tags for fore and background colour, and much more.
+- Many bug fixes
+
+* Version 0.2.1 29 Nov 04
+- Update with TinyMCE 1.3.8 version
+- Fixes for a number of prior bugs with popups
+- New Flash plugin, advanced HR plugin, advimage and advlink plugins
+- Updated image browser integration so config file is in /var/ibrowser dir
+  and now configurable by site. Only relative paths tho still till full integration.
+- Updated symbol and character map
+- A few other things i forgot.
+- Check the original TinyMCE changelog for their changes for 1.3.8
+- No database changes or new modvars
+
+* Version 0.2.0 23 Nov 04
+- Update with a few fixes eg for width bug
+
+* Version 0.2.0 08 Oct 04
+- Added basic Image Browser integration -still some to do
+- Added height settings
+- Updated with Dynamic Data xarTinyMCE wysiwyg property
+- Bug fixes
+- Add advanced theme button setup and definition in config settings
+- Moved configuration to tabs for better organization
+
+* Version 0.1.3 21 Oct 04
+- Upgrade to TinyMCE 1.3.6
+- Added Polish, Taiwanese Updated German and French Canadian
+- Fixed a number of issues with events, inline styles, link button
+- Various bugs with absolute URLs, back button in IE
+- Shortcut keys for Firefox
+- Plus much more - see TinyMCE changelog
+
+* Version 0.1.2 5 Oct 04
+- Upgrade to TinyMCE 1.3.4
+- Add provision for plugins
+- Add provision to define buttons in the editor
+- Add configurable linefeed to <br /> option
+- Add provision to add buttons to all rows
+- Redo interface to Tabbed areas to simplify configuration and clarify use of Advanced options
+
+* Version 0.1.1 30 Sept 04
+- Upgrade to TinyMCE 1.33
+- Addition of Arabic language pack
+- Configuration for text direction
+- Image, and various bug fixes. 
+
+* Version 0.1.0
+- Upgrade to TinyMCE 1.31
+- Multiple bug fixes
+- Ability to set number of Undo levels - better for performance
+- Configuration for ensuring Inline styles using style="" rather than eg border=0
+  This makes for XHTML 1.0 Strict compliance, and useful when the Class drop down box is not available
+- Add the Special Labelled Only mode that only convert textareas of divs 
+  labelled with the attribute: mce_editable = "true" 
+- Known issue in IE on Windows when short URLS are used on a page where an editor
+  instance is created or used to modify a document
+  eg Comments creation to an article which uses short URLS.
+  Temp workaround: 
+  Either turn short URLs off for that module, Use "Ask" so the editor is not automatically 
+  used for that specific textarea, or only add the template tags to specific module templates to
+  restrict the editor instance.
+
+* Version 0.0.3
+- Upgrade to TinyMCE 1.30
+- Added additional configuration options for advanced theme including location of editor toolbar
+- Additional general options including configuration of language, removal of hardcoded themes, optional width 
+of WYSIWYG editor.
+- Moved all configuration to the Modify Config function. This passes the final javascript to the template for use
+eliminating processing of config vars in the template.
+
+* Version 0.0.2
+- Upgarde to TinyMCD 1.26
+Configuration options added in the module's Modify Config option in the Admin Panels.
+This included theme choice, and specific options for Advanced theme use such as addition or removal of buttons,
+use of a specific CSS style sheet.
+
+* Version 0.0.1
+Basic wrapper allowing installation as a module through Xaraya's module view listing (install, activate,
+deactivate)

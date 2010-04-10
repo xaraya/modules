@@ -1,0 +1,101 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:comment> ************************ Setup getall.phs************************</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>XarTinyMCE Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" module="tinymce" file="admin-menu" />
+    <h2><xar:mlstring>Modify XarTinyMCE Configuration</xar:mlstring></h2>
+
+    <form action="&xar-modurl-tinymce-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
+        <fieldset>
+            <legend>
+                <strong><xar:mlstring>General Options</xar:mlstring></strong>
+            </legend>
+            <p style="margin-left:5.5em;">
+                <xar:set name="sethtml">'<a href="'.xarModURL('html','admin','set').'">'.xarML('Allowed HTML').'</a>'</xar:set>
+                <xar:ml>
+                    <xar:mlstring>
+                        Before activating TinyMCE, ensure you have set the #(1) that determines which HTML tags will 
+                        be rendered in your site.
+                    </xar:mlstring>
+                    <xar:mlvar>#$sethtml#</xar:mlvar>
+                </xar:ml>
+                <br />
+            </p>
+            <div class="xar-form-input-wrapper">
+                <label for="activetinymce" class="xar-form-label" title="#xarML('Activate xartinymce')#">
+                    <xar:mlstring>Activate xarTinyMCE?</xar:mlstring>
+                </label>
+                <xar:data-input type="checkbox" id="activetinymce" name="activetinymce" checked="$activetinymce" />
+                
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="default" class="xar-form-label" title="#xarML('Select a default instance for user on your site')#">
+                        <xar:mlstring>Default configuration:</xar:mlstring>
+                </label>       
+                <xar:data-input type="dropdown" id="default" name="default" validation="$configlist" value="$default" />
+            </div>      
+            <a name="loadmode">&#160;</a>     
+            <div class="xar-form-input-wrapper">
+                <label for="tinyloadmode" class="xar-form-label" title="#xarML('Select automatic activation or manual')#">
+                        <xar:mlstring>Automatic activation or manual?</xar:mlstring>
+                </label>
+                <xar:data-input type="dropdown" id="tinyloadmode" name="tinyloadmode" value="$tinyloadmode" validation="$loadoptions" />
+                <p class="xar-form-input-wrapper xar-clearleft" style="margin-left:1em;">
+                    <xar:mlstring>xarTinyMCE works by loading two chunks of javascript into your page, one in the head of your page, and the other for the specific WYSIWYG instance in the body of your page.</xar:mlstring>
+                </p>
+                <ol class="xar-form-input-wrapper">
+                    <li><xar:mlstring><strong>Automatic mode:</strong> use a configuration with editor selector of 'mceEditor' to
+                     automatically load the necessary javascript into the head section on every page. The downside is the extra loading 
+                     time on pages where you may not need the wysiwyg.</xar:mlstring><br /></li>
+                    <li><xar:mlstring><strong>Manual override mode:</strong> requires you to load the head javascript manually only on pages where it is needed. You can do this by either specifying a text area as a Dynamic Data xarTinyMCE data property (from the GUI or directly in your template), or adding the following snippet to the top of your custom module template.</xar:mlstring></li>
+
+                </ol>
+            </div>
+         <div class="xar-form-input-wrapper">                
+            <p class="xar-form-input-wrapper"><xar:mlstring>Using a dynamic data property:</xar:mlstring></p>
+            <pre class="xar-form-input-wrapper">
+ &lt;xar:data-input type="xartinymce" id="someid" name="somename" value="" class="myselectorclass" /&gt;</pre>
+                 <a name="snippet">&#160;</a>
+            <p class="xar-form-input-wrapper"><xar:mlstring>A snippet in the template to activate a text area in the page (use the 'autoload' var only if you want the wysiwyg to load immediately on page load):</xar:mlstring></p>
+            <pre class="xar-form-input-wrapper">
+&lt;xar:if condition="xarModGetVar('tinymce','activetinymce') eq 1"&gt;
+     &lt;xar:template file="tinymce_insert" module="tinymce" type="module" 
+            subdata="array('configname'=&amp;gt;'configname','autoload'=>&amp;gt;1)" /&gt;
+&lt;/xar:if&gt;</pre>
+            </div><br />
+              
+            <div class="xar-form-input-wrapper">
+                <label for="default" class="xar-form-label" title="#xarML('Number of items listed in view mode per page')#">
+                        <xar:mlstring>Config items per page:</xar:mlstring>
+                </label>       
+                <xar:data-input type="textbox" id="itemsperpage" name="itemsperpage" value="$itemsperpage" class="xar-form-textshort" max="3"/>
+            </div>     
+                            
+            <div class="xar-form-input-wrapper">
+                 <label for="reset" class="xar-form-label" title="#xarML('A developer option that reloads the various configuration options used in the tinymce config creation')#">
+                        <xar:mlstring>Reload config options:</xar:mlstring>
+                </label>       
+                    <a href="#xarModURL('tinymce','admin','resetdefault', array('resettype'=>'configs', 'returnurl'=> xarServerGetCurrentURL() ))#">
+                        <xar:mlstring>Reload configuration options</xar:mlstring>
+                    </a>
+            </div>                 
+
+        </fieldset>  
+
+
+                  
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+          
+                <input type="submit" value="#$updatebutton#" />
+            </div>
+        </fieldset>
+    </form>
+</div>

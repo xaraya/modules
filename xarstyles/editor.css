@@ -1,0 +1,159 @@
+body {
+    font-family: "trebuchet ms", "luxi sans", verdana, helvetica, sans-serif;
+    font-size: 100.01%;
+    line-height: 145%;
+    margin: 15px 2%;
+    padding: 0;
+    background-color: #FFFFFF;
+    color: #333333;
+}
+
+a {
+    color: #666699;
+    font-weight: bold;
+}
+
+
+a:link { }
+a:visited { }
+a:active { }
+a:hover { }
+
+
+a:link:hover, a:visited:hover {
+    color: #CC3300;
+    text-decoration: underline;
+}
+
+table {
+    border-collapse: collapse;
+    border-style: solid;
+    border-color: #757F8B;
+    border-width: 0px;
+}
+
+
+th {
+    color: #666699;
+    background-color: #DCDCE5;
+}
+
+tfoot {
+    font-weight: bold;
+    background-color: #DCDCE1;
+}
+
+th, td { padding: .25em; }
+
+h1, h2, h3, h4 {
+    font-family: arial, helvetica, tahoma, sans-serif;
+    font-weight: bold;
+    line-height: 120%;
+    color: #CC3300;
+    padding: 0;
+    margin: .5em 0 .5em 0;
+}
+
+
+h1 { font-size: 160%; }
+h2 { font-size: 150%; }
+h3 { font-size: 130%; }
+h4 { font-size: 120%; }
+p { margin: .7em 0 0 .3em; }
+
+pre {
+    color: #990066;
+    font-size: 95%;
+    font-family: monaco, courier, monospace;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+ul li {
+    padding-left: 13px;
+    background-image: url(../images/bullet.png);
+    background-repeat: no-repeat;
+    background-position: 0 .45em;
+}
+
+
+blockquote {
+    color: #333366;
+    margin: 2em;
+}
+
+code {
+    color: #990066;
+    font-family: monaco, courier, monospace;
+}
+
+sup, sub {
+    font-size: 95%;
+    font-weight: normal;
+}
+
+
+textarea {
+    font-weight: normal;
+    text-indent: 2px;
+}
+
+img { border: 0px; }
+
+
+ul, li, ol { line-height: 140%; }
+
+h5, h6 {
+    color: #333399;
+    font-size: 95%;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: bold;
+}
+
+hr {
+    width: 100%;
+    color: #c0c0c0;
+}
+
+td.xar-norm { }
+td.xar-alt { }
+select { }
+
+
+.xar-alt { background-color: #E7E9F4; }
+.xar-accent { background-color: #E7EAF4; }
+
+.xar-alt-outline {
+    border-color: #A782BB;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.xar-accent-outline {
+    border-color: #82BBA7;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.xar-norm-outline {
+    border-color: #8296BB;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.xar-norm { background-color: #FFFFFF; }
+.xar-sub { font-size: 80%; }
+.xar-error { color: #ff0000; }
+.xar-title { font-weight: bold; }
+
+
+.txttitle {
+    font-weight: bold;
+    color: #336699;
+    text-decoration: none;
+}
+

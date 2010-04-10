@@ -1,0 +1,77 @@
+INSTALLATION AND USE - XarTinyMCE Version 3.0.3
+
+UPGRADES to 3.0.3: 
+xarTinyMCE 3 series is not backward compatible with prior tinymce versions, including the version 2 series and 3.0.0 betas. You must uninstall those prior 
+versions of xarTinyMCE and reinstall 3 series xarTinyMCE.
+
+
+****************************
+To INSTALL and get started:
+
+1. Install this module like you would any other Xaraya module. That is:
+   - Put the tinymce folder in your Xaraya modules directory
+   - Go to the Administration menu -> Modules -> View All
+   - Click on the "install" link of the tinymce module
+
+2. Make sure you have the HTML module installed, and your allowed tags 
+   set in addition to allowing with attributes if relevant.
+
+3. Go to xarTinyMCE modify config Modify Config tab: 
+   - Activate TinyMCE by checking the Activate tinymce checkbox
+   - Leave the other settings for now (Automatic loading). You can change these later.
+   
+   
+4. The editor is now activated in automatic mode. You can use it as is or go to Manage Editor Instances, click on Edit to modify the Default configuration.
+
+5. Browse down to General and check CSS selector class is 'mceEditor', 
+    and Conversion method is All Text Areas. This is the default install.
+
+6. Scroll down and click on Update Configuration to save the settings and ensure
+  the dynamic javascript is saved in your site.
+ 
+7. If you now visit any textarea, it should automatically be converted to a WYSIWYG editor.
+    You can review the Default configuration or define new configurations as you please.
+
+Please read the Overview Documentation in the TinyMCE administration area for more detail and
+examples are provided at http://xarigami.com/resources/Multiple_xarTinyMCE_Configurations
+
+
+
+MAJOR CHANGES
+*************
+See the changelog.txt in the xardocs directory or at http://xarigami.com/contrails/versions/xtm.
+
+
+IMAGE BROWSER (IBROWSER), IMAGE MANAGER (IMANAGER) and  SECURITY
+******************************
+The updated xartinymce ibrowser and image manager plugin can be downloaded at http://xarigami.com
+
+Please make sure you copy the tinymceconfig.inc.php file in
+modules/tinymce/xartemplates/includes/tinymceconfig.inc.php to your
+var/tinymce/ directory and update the configuration settings there.
+
+Most settings will work as is, but you must set the image libraries to your own.
+
+Using ibrowser, imanager means that the path to your images will be available to those
+browsing your site. If you want obfuscated paths and file names, please use the Xaraya Uploads module.
+
+For added security, turn off Upload ability in the filebrowser, or the iBrowser and iManager plugins and 
+use the Uploads and Images module. Point your Image library to the Image module's directory or 
+trusted directory of Uploads.
+
+KNOWN ISSUES
+******************************
+iBrowser and iManager for xarTinymce 1.5.7 and above is iBrowser and iManager 1.5.0 tested and working with IE 6, IE7, IE8
+This current iBrowser and iManager  will not work in Safari or Opera.
+******************************
+
+Feature requests and bug reports to:
+http://xarigami.com/contrails/displayproject/xtm
+
+Resources, downloads, news, development discussion on xartinymce:
+http://xarigami.com/project/xartinymce
+
+Thanks
+Jo :)
+
+

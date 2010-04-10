@@ -1,0 +1,51 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="tinymce" file="tabs" />
+<xar:set name="request">xarRequestGetInfo()</xar:set>
+<xar:set name="activetab">#$request.2#</xar:set>
+<xar:set name="action">isset($action)?$action:''</xar:set>
+<xar:sec mask="AdminTinyMCE" catch="false">
+    <xar:template type="module" module="tinymce" file="admin-breadcrumb" />
+    
+    <xar:if condition="xarModGetVar('themes','adminpagemenu')">
+        <xar:if condition="!empty($menulinks)">
+                <ul class="xar-tabs xar-alt xar-norm-outline">
+                    <li class="xar-tabs-label" title="#xarML('Choose an action to perform')#">
+                        <xar:mlstring>Actions:</xar:mlstring>
+                    </li>
+                    <xar:if condition="$activetab eq 'manageconfigs' AND $action ne 'new'">
+                        <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+                        <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                    <xar:else />
+                        <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+                        <xar:set name="tabclass">'xar-tab'</xar:set>
+                    </xar:if>
+                    <li class="#$tabclass#">
+                         <a href="#xarModURL('tinymce','admin','manageconfigs')#" title="#xarML('Manage configs')#" class="#$linkclass#">
+                            <xar:mlstring>Manage configs</xar:mlstring>
+                        </a>
+                    </li>
+                     <xar:if condition="$activetab eq 'manageconfigs' AND $action eq 'new'">
+                        <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+                        <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                    <xar:else />
+                        <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+                        <xar:set name="tabclass">'xar-tab'</xar:set>
+                    </xar:if>
+                     <li class="#$tabclass#">
+                        <a href="#xarModURL('tinymce','admin','manageconfigs',array('action'=>'new'))#" title="#xarML('Add config instance')#" class="#$linkclass#">
+                            <xar:mlstring>Add config instance</xar:mlstring>
+                        </a>
+                    </li>
+                                        
+                    <xar:set name="tabclass">$activetab == 'modifyconfig'?'xar-tab-active':'xar-tab'</xar:set>
+                    <xar:set name="linkclass">$activetab == 'modifyconfig'?'xar-accent xar-accent-outline':'xar-norm xar-norm-outline'</xar:set>
+                    <li class="#$tabclass#">
+                        <a href="#xarModURL('tinymce','admin','modifyconfig')#" title="#xarML('Modify configuration')#" class="#$linkclass#">
+                            <xar:mlstring>Modify configuration</xar:mlstring>
+                        </a>
+                    </li>
+                </ul>
+       </xar:if>
+    </xar:if>
+</xar:sec>

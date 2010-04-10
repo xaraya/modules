@@ -1,0 +1,208 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="modInfo">xarModGetInfo(xarModGetIDFromName('tinymce'))</xar:set>
+<xar:set name="xarigamiprojectlink">'<a href="http://xarigami.com/project/xartinymce" title="'.xarML('xarTinyMCE Project page at xarigami.com').'">'.xarML('xarTinyMCE project page').'</a>'</xar:set>
+<div class="xar-mod-head">
+   <span class="xar-mod-title"><xar:mlstring>XarTinyMCE Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" module="tinymce" file="admin-menu" />
+    <img src="#xarTplGetImage('admin.png','tinymce')#" class="xar-module-icon" alt="official icon"  />
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+     <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+        <p><em><xar:mlstring>
+            XarTinyMCE is based on TinyMCE, a platform independent, web based Javascript
+            HTML WYSIWYG editor released as Open Source under LGPL by Moxiecode Systems AB</xar:mlstring></em>
+        </p>
+        <p> 
+            <xar:mlstring>xarTinyMCE has a number of nice features such as
+                browser support for all modern browsers 
+                (currently Mozilla, MSIE, FireFox, Opera and Safari) and support for XHTML 1.0 strict 
+                markup. There are powerful features for not only specifying which 
+                xhtml tags are allowed, but also which attributes and attribute values. You can enhance
+            xarTinyMCE further with plugins and different configuration settings.</xar:mlstring>
+        </p>
+
+        <h2>
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </h2>
+            <ol>
+                <li><xar:mlstring>After installing xarTinyMCE on your site, browse to the xarTinyMCE Modify Config page.</xar:mlstring>
+                    <ul>
+                      <li><xar:mlstring>Check the 'Activate xarTinyMCE' checkbox to enable the module.</xar:mlstring>
+                       </li>
+                       <li><xar:mlstring>A system default configuration is installed which you can edit or use as is on your site. If you define other editor configuration instances you can set a default here.</xar:mlstring>
+                       </li>
+                       <li><xar:mlstring>Choose either Automatic or Manual mode as indicated in the Modify Config page</xar:mlstring></li>
+                    </ul>
+                </li>
+                <li style="margin-top:20px;"><xar:mlstring>You can edit existing and define new editor configurations on the Manage Editor Instance page. Key points to remember when defining a new instance are:</xar:mlstring>
+                     <ul>
+                         <li><xar:mlstring><strong>Name:</strong> each must have a unique short name, no spaces</xar:mlstring></li>
+                         <li><xar:mlstring><strong>CSS selector class: </strong> specifies which textareas to turn into this specific wysiwyg 
+                            editor instances. It should be the same name as the configuration short name. For automatic mode, 
+                            if you wish all text areas to be automatically converted, you should use the default 'mceEditor' as the selector. </xar:mlstring></li>
+                         <li><xar:mlstring><strong>Conversion method: </strong> determines where and how the body javascript is 
+                            loaded to activate an editor instance. For multiple configurations on the same page, 
+                            you should select specific text areas. All text areas is useful when used with automatic loading mode.</xar:mlstring></li>
+                    </ul>
+                </li>
+                <li style="margin-top:20px;"><xar:mlstring>Once you have your editor configuration defined you can start using the wysiwyg editor on your site.</xar:mlstring>
+                    <ul>
+                        <li><xar:mlstring> If you have <strong>Automatic mode</strong> set in the Modify Configuration settings, the CSS 
+                        selector class set as mceEditor (the default), and All Text Areas as the conversion method then you 
+                        should find that all text areas on site are now converted to the default wysiwyg editor that you have defined. </xar:mlstring></li>
+                        <li><xar:mlstring>Alternatively you can 'tag' the textareas you want to use as wysiwyg editor by replacing 
+                        them with a xarTinyMCE Dynamic Data or Textarea property with the appropriate CSS Selector (see below for details).</xar:mlstring></li>
+                    </ul>
+                
+                </li>
+            </ol>
+                <xar:set name="emphcode">'<strong><code>class="mceNoEditor"</code></strong>'</xar:set>
+          
+                
+
+    <h3>
+     <xar:mlstring>Using the xarTinyMCE Dynamic Data Property and Text Areas</xar:mlstring>
+    </h3>
+        <p>
+            <xar:mlstring>You can 'tag' any text area by adding the CSS Selector to the field. 
+                This can be done from the GUI by adding a Textarea or xarTinyMCE Dynamic Data property 
+                to your Article publication type, or xarPages Page Type or any other hooked or native dynamic data or object. 
+            </xar:mlstring>
+        </p>
+            <ol>
+                <li style="margin-top:20px;">
+                <xar:mlstring>Choose the xarTinyMCE DD property or Textarea property and then <strong>edit the validation and ensure you add the CSS Selector class</strong>.
+                </xar:mlstring>
+                </li>
+                <li style="margin-top:20px;">
+                    <xar:mlstring>The CSS Selector will indicate which editor configuration will be used to transform the textarea or xartinymce data property. 
+                    Both the xarTinyMCE data property or textarea property will be transformed if tagged with the CSS Selector. 
+                    </xar:mlstring>
+                </li>
+
+                <li style="margin-top:20px;">
+                <xar:mlstring>
+                The xarTinyMCE property offers greater control and ability to automatically add an on/off button for the wysiwyg as well 
+                as automatically loading the head javascript.
+                </xar:mlstring>
+                </li>
+                <li style="margin-top:20px;">
+                <xar:mlstring>
+                Using a textarea data property and CSS Selector, you will have to use the 'automatic loading' or add the template snippet to the top of your custom template.
+                </xar:mlstring>
+                </li>                
+            </ol>
+           <a name="plugins">&nbsp;</a> 
+      <h3>
+            <xar:mlstring>Plug Ins</xar:mlstring>
+      </h3>
+           <p><xar:mlstring>There are a number of plugins bundled with xarTinymce. </xar:mlstring></p>
+            <ul>
+                <li><xar:mlstring>You must add the Plugin Name to the Plugin list in the General configuration settings.</xar:mlstring></li>
+                <li><xar:mlstring>To see the plugin in the Editor Panel, you may also need to add the plugin's button(s). Some plugins have none or one, while other plugins may have a few buttons offering different functionality. You must specify which button in the Advanced Theme configuration section in one of the button row configurations.</xar:mlstring></li>
+                <li><xar:mlstring>There may be configuration options for some plugins. You will need to add these in the Custom section, one per line in the form:  <code>option : "value", </code> ensuring there is a trailing comma(,).</xar:mlstring></li>
+                <li><xar:mlstring>For some plugins, you may have to ensure that some html tags and attributes are allowed eg in 'extended_valid_elements', or in your HTML module.</xar:mlstring></li>
+            </ul>
+             <p><xar:mlstring>Bundled plugin descriptions, buttons if any to add (in round brackets),  and their configuration or requirements include:</xar:mlstring></p>
+            <ol>
+                <li><xar:mlstring><strong>autosave</strong>: (-) n gives the user a warning if they made modifications to a editor instance but didn't submit them.</xar:mlstring></li>            
+                <li><xar:mlstring><strong>advcode</strong>: (advcode) provides options for line numbers and nice formatting when viewing the HTML Souce code via the editor HTML button.</xar:mlstring></li>            
+                <li><xar:mlstring><strong>advcode</strong>: (advhr) supports advanced hr formatting. Add <code>hr[class|width|size|noshade]</code> to extended_valid_elements for best results.</xar:mlstring></li> 
+                <li><xar:mlstring><strong>advimg</strong>: (-) an advanced image plugin that supports insert of rollover images. Add <code>a[name|href|target|title|onclick] to extended_valid_elements. </code></xar:mlstring></li>               
+                <li><xar:mlstring><strong>advlink</strong>: (-) Advanced Link insertion supporting extended link tags, plus popup windows. Add <code>a[id|name|href|style|title|onclick]</code> to extended_valid_elements.</xar:mlstring></li>
+                <li><xar:mlstring><strong>advlist</strong>: (-) Advanced List insertion supporting different list type styles.</xar:mlstring></li>
+                <li><xar:mlstring><strong>autosave</strong>: (autosave) gives the user a warning if they made modifications to a editor instance but didn't submit them.</xar:mlstring></li>  
+                <li><xar:mlstring><strong>autoresize</strong>: (autoresize) automatically resizes the editor window to the content.</xar:mlstring></li>
+                <li><xar:mlstring><strong>bbcode</strong>: (bbcode) makes it possible for TinyMCE to edit BBCode in WYSIWYG way. For more information and options see</xar:mlstring> <a href="http://wiki.moxiecode.com/index.php/TinyMCE:Plugins/bbcode">bbcode plugin - TinyMCE Wiki</a></li> 
+                <li><xar:mlstring><strong>contextmenu</strong>: (contexmenu) - plug in to add context menu for tables, images and flash.</xar:mlstring></li>
+                <li><xar:mlstring><strong>directionality</strong>: (directionality) plug in for better support of right to left languages.</xar:mlstring></li>
+                <li><xar:mlstring><strong>dphighlight</strong>: (dphighlight) adds the ability to easily add code highlighting to you articles (must have xarigami dpHighlight module installed).</xar:mlstring></li>                               
+                <li><xar:mlstring><strong>emotions</strong>: (emotions)  enables addition of fancy emotions (smilies).</xar:mlstring></li>
+                <li><xar:mlstring><strong>example</strong>: (example)  does nothing useful as is, but acts as a model for creating new plugins.</xar:mlstring></li>
+                <li><xar:mlstring><strong>fullscreen</strong>: (fullscreen) - adds fullscreen editing mode that can be toggled on and off.</xar:mlstring></li>             
+                <li><xar:mlstring><strong>iespell</strong>: (iespell) adds an IE only spellchecker.</xar:mlstring></li>               
+                <li><xar:mlstring><strong>inlinepopups</strong>: (-) makes all dialogs  open as floating DIV layers instead of popup windows.</xar:mlstring></li>               
+                <li><xar:mlstring><strong>insertdatetime</strong>: (insertdate, inserttime) enables one click insert of date or time. There are configurable options that should be added to the Custom section. The options can be found at </xar:mlstring><a href="http://wiki.moxiecode.com/index.php/TinyMCE:Plugins/insertdatetime">insertdatetime plugin - TinyMCE Wiki</a></li>               
+                <li><xar:mlstring><strong>layer</strong>: (insertlayer,moveforward,movebackward,absolute) support for create/remove and z-index block elements.</xar:mlstring></li>
+                <li><xar:mlstring><strong>liststyle</strong>: (liststyle) DEPRECATED: use advlist. Add list style types to your lists.</xar:mlstring></li>
+                <li><xar:mlstring><strong>legacyoutput</strong>: (-) change the output for TinyMCE to produce legacy elements such as font, b, i, u, strike and use align attributes.t</xar:mlstring></li>
+                <li><xar:mlstring><strong>loremipsum</strong>: (loremipsum) adds text for fill in documents.</xar:mlstring></li>
+                <li><xar:mlstring><strong>media</strong>: (media) Media plugin allows addition of Flash, Shockwave, Quicktime, Windows Media and Real Media. For more information see: </xar:mlstring><a href="http://wiki.moxiecode.com/index.php/TinyMCE:Plugins/media">media plugin - TinyMCE Wiki</a></li>
+                <li><xar:mlstring><strong>nonbreaking</strong>: (nonbreaking) Enter nonbreaking spaces.</xar:mlstring></li>
+                <li><xar:mlstring><strong>pagebreak</strong>: (pagebreak) support for Xaraya articles and xarpages pagebreak insertion.</xar:mlstring></li>
+                <li><xar:mlstring><strong>paste</strong>: (pastetext,pasteword,selectall) auto detect word contents and automatically clean it up before inserting it to the editor. There are many additional options that you can find at </xar:mlstring><a href="http://wiki.moxiecode.com/index.php/TinyMCE:Plugins/paste">paste plugin - TinyMCE Wiki</a></li>
+                <li><xar:mlstring><strong>preview</strong>: (preview) text and MS Word paste plugin.</xar:mlstring></li>
+                <li><xar:mlstring><strong>print</strong>: (print) displays a Print function button.</xar:mlstring></li>
+                <li><xar:mlstring><strong>safari</strong>: (-) only loaded if you are using Safari and solves older safari issues.</xar:mlstring></li>
+                <li><xar:mlstring><strong>searchreplace</strong>: (search,replace) Search, Search Next and Replace function.</xar:mlstring></li>
+                <li><xar:mlstring><strong>spellchecker</strong>: (spellchecker) Spellchecking for all browsers using Google and ajax, or aspell if you have it installed in php. Defaults to Google and English. For more information on setting language defaults see </xar:mlstring><a href="http://wiki.moxiecode.com/index.php/TinyMCE:Plugins/spellchecker">spellchecker plugin - TinyMCE Wiki</a></li>
+                <li><xar:mlstring><strong>style</strong>: (styleprops) Adds CSS style editing support to enable you to edit almost any CSS style property in a visual way.</xar:mlstring></li>
+                <li><xar:mlstring><strong>tabfocus</strong>: (tabfocus) adds the possibility to tab in/out of TinyMCE. Configuration option <code>abfocus_elements</code> containing an element ID to focus, when the user presses the tab key inside the editor</xar:mlstring></li>
+                <li><xar:mlstring><strong>table</strong>: (tablecontrols, .....) plug in to add table controls. Add <strong>tablecontrols</strong> for all table controls, or the specific controls.</xar:mlstring></li>
+                <li><xar:mlstring><strong>template</strong>: (template) adds support for custom templates. There are two types of files this plugin supports: templates and snippets. For more information see </xar:mlstring> <a href="http://wiki.moxiecode.com/index.php/TinyMCE:Plugins/template">template plugin - TinyMCE Wiki</a></li>
+                <li><xar:mlstring><strong>visualchars</strong>: (visualchars) Toggle to show or hide special characters such as hard spaces.</xar:mlstring></li>
+                <li><xar:mlstring><strong>xhtmlextras</strong>: (xhtmlextras) Abiilty to add xml extras such as cite.</xar:mlstring></li>
+            </ol>
+            <p>
+                <xar:ml>
+                    <xar:mlstring>Further plugins that are customized and tested for xartinymce can be downloaded from the #(1).
+                    These include IBrowser (image upload and browse), IManager (full featured image upload, browse and editing with all the features of phpthumbs, and Dictionary lookup plugin.
+                    </xar:mlstring>
+                <xar:mlvar>#$xarigamiprojectlink#</xar:mlvar>
+                </xar:ml>
+            </p>
+       
+
+        <h3>
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </h3>
+            <p><xar:mlstring>There are no included blocks</xar:mlstring></p>
+        <h3>
+            <xar:mlstring>Included Hooks</xar:mlstring>
+        </h3>
+            <p><xar:mlstring>There are no included hooks</xar:mlstring></p>
+        <h3>
+            <xar:mlstring>Further Information</xar:mlstring>
+        </h3>
+            <p><xar:mlstring>Further information on xarTinyMCE can be found at</xar:mlstring></p>
+            <ul>
+                 <li>
+                    <xar:ml>
+                        <xar:mlstring>The #(1). Click on main Display tab to get the latest release information.</xar:mlstring>
+                        <xar:mlvar>#$xarigamiprojectlink#</xar:mlvar>
+                    </xar:ml>
+                 </li>
+                 <li>
+                    <xar:set name="resourcelink">'<a href="http://xarigami.com/project/xartinymce?page=resources" title="'.xarML('Related resources on XarTinyMCE').'">'.xarML('Xarigami Resources for xarTinyMCE').'</a>'</xar:set>
+                    <xar:ml>
+                        <xar:mlstring>Related tutorials and documentation on xarTinyMCE found at #(1).</xar:mlstring>
+                        <xar:mlvar>#$resourcelink#</xar:mlvar>
+                    </xar:ml>
+                 </li>
+                 <li>
+                 <xar:set name="moxielinkhelp">'<a href ="http://wiki.moxiecode.com/index.php/TinyMCE:Index">'.xarML('usage instructions').'</a>'</xar:set>
+
+                    <xar:ml>
+                        <xar:mlstring>See the TinyMCE Project #(1) for more detail on specific TinyMCE options.</xar:mlstring>
+                        <xar:mlvar>#$moxielinkhelp#</xar:mlvar>
+                    </xar:ml>
+
+                 </li>
+                 <li>
+                    <xar:set name="resourcebugs">'<a href="http://xarigami.com/contrails/displayproject/xtm" title="'.xarML('XarTinyMCE issue tracker').'">'.xarML('xarTinyMCE issue tracker').'</a>'</xar:set>
+                    <xar:ml>
+                        <xar:mlstring>Please post any bugs and feature requests at #(1).</xar:mlstring>
+                        <xar:mlvar>#$resourcebugs#</xar:mlvar>
+                    </xar:ml>
+                 </li>                 
+             </ul>
+            <p class="xar-sub">
+                <xar:ml>
+                    <xar:mlstring>
+                        xarTinyMCE Module - Overview Revision 3.2.3 2010-02-22 for xarTinyMCE V#(1)
+                    </xar:mlstring>
+                    <xar:mlvar>#$modInfo.version#</xar:mlvar>
+                </xar:ml>
+            </p>
+   </div>

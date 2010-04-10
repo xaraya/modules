@@ -1,0 +1,60 @@
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+<xar:if condition="empty($rows)">
+    <xar:set name="classtype">'xar-form-textareamedium'</xar:set>
+<xar:elseif condition="$rows gt 15"/>
+    <xar:set name="classtype">'xar-form-textarealarge'</xar:set>
+<xar:elseif condition="$rows lt 5"/>
+    <xar:set name="classtype">'xar-form-textareasmall'</xar:set>
+<xar:else/>
+    <xar:set name="classtype">'xar-form-textareamedium'</xar:set>
+</xar:if>
+
+<xar:comment>We want to be able to add to the class from validation class passed in from the property 'editor selector' </xar:comment>
+<xar:if condition="empty($editor_selector)">
+   <xar:set name="class">$classtype</xar:set>
+<xar:else />
+   <xar:set name="class">$editor_selector</xar:set>
+</xar:if>
+
+<xar:set name="textareasource">'
+<!--
+textarea#'.$id.' {
+    max-width: 99%;
+    width: '. $cols.'em;
+    height: '. ($rows * 1.6) .'em;
+}
+-->
+'</xar:set>
+<xar:set name="buttonon">
+    <xar:mlstring>Turn On</xar:mlstring>
+</xar:set>
+<xar:set name="buttonoff">
+    <xar:mlstring>Turn Off</xar:mlstring>
+</xar:set>
+
+<xar:if condition ="$usewysiwyg eq 1"> 
+    <xar:template file="tinymce_insert" module="tinymce" type="module" />
+    <div class="xar-form-container-after">
+        <textarea  class="#$class#" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
+    </div>
+    <xar:if condition="$usebutton">
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>WYSIWYG</xar:mlstring></label>
+            <xar:if condition="$autoload">
+                <input type="button" value="#$buttonoff#" onclick="mce_button_toggle('#$id#', this);" />
+            <xar:else />
+                <input type="button" value="#$buttonon#" onclick="mce_button_toggle('#$id#', this);" />
+            </xar:if>
+        </div>
+    </xar:if>
+
+<xar:else />
+    <xar:comment>NO WYSIWYG USED</xar:comment>
+    <div class="xar-form-container-after">
+    <textarea class="#$class#" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
+    </div>
+</xar:if>
+
+<xar:if condition="!empty($invalid)">
+    <span class="xar-error">#$invalid#</span>
+</xar:if>

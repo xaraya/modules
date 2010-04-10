@@ -1,0 +1,50 @@
+<xar:comment>Template for xartinymce wysiwyg editor accessed via DD property, autoloading, or manual adding of template
+             We have the following vars possibly passed in:
+                usewysiwyg, jsstring, gzstring, usebutton, configname, usegzp
+                We access this template in 3 ways so have to make sure the vars are here
+</xar:comment>
+<xar:set name="buttonjs">''</xar:set>
+
+<xar:comment>Include the dynamic JavaScript, if not already included.</xar:comment>
+
+<xar:if condition="!isset($always_load) and !isset($usingdd)">
+        <xar:set name="config">isset($configname)?$configname:''</xar:set>
+        <xar:set name="args">xarModAPIFunc('tinymce','admin','loadconfig',array('configname'=>$config))</xar:set>
+
+        <xar:foreach in="$args" key="$key" value="$value">
+            <xar:set name="dummy">$$key= $value;</xar:set>
+        </xar:foreach>
+       <xar:set name="usewysiwyg">$args['usewysiwyg']</xar:set>   
+</xar:if>
+<xar:set name="autoload">isset($autoload)?$autoload: 0;</xar:set>
+<xar:set name="configname">(isset($editor_selector) AND !empty($editor_selector))? $editor_selector: $configname;</xar:set>
+<xar:set name="tinyloaded">xarTplGetJavaScript('head', $configname)</xar:set>
+
+<xar:if condition="!$tinyloaded and $usewysiwyg">
+    <xar:if condition="$usebutton eq 1">
+        <xar:set name="buttonjs">xarModGetVar('tinymce','buttonstring')</xar:set>
+    </xar:if>
+    <xar:comment>Include the static JavaScript - we have the data passed in from the DD property or grab the default</xar:comment>
+    <xar:if condition="!$usegzp">
+        <xar:base-include-javascript position="head"  module="tinymce" filename="../../xarincludes/tiny_mce.js" />
+        <xar:if condition="$autoload">
+            <xar:set name="dynajs">xarTplAddJavaScript('body', 'code', 'tinyMCE.init({'.$jsstring.'});'.$buttonjs, $configname)</xar:set>
+         <xar:else />
+            <xar:set name="dynajs">xarTplAddJavaScript('body', 'code', 'function load_tinymce() {tinyMCE.init({'.$jsstring.'});}'.$buttonjs, $configname)</xar:set>
+        </xar:if>
+    <xar:else />
+        <xar:base-include-javascript position="head" module="tinymce" filename="../../xarincludes/tiny_mce_gzip.js" />
+        <xar:if condition="$autoload">
+            <xar:set name="dynajs">xarTplAddJavaScript('head', 'code', 'tinyMCE_GZ.init({'.$gzstring.'});', $configname,50)</xar:set>
+            <xar:set name="dynajs">xarTplAddJavaScript('body', 'code', 'tinyMCE.init({'.$jsstring.'});'.$buttonjs, $configname)</xar:set>
+        <xar:else />
+            <xar:set name="dynajs">xarTplAddJavaScript('head', 'code', 'tinyMCE_GZ.init({'.$gzstring.'});', $configname,50)</xar:set>
+            <xar:set name="dynajs">xarTplAddJavaScript('body', 'code', 'function load_tinymce() {tinyMCE.init({'.$jsstring.'});}'.$buttonjs, $configname)</xar:set>
+        </xar:if>
+    </xar:if>
+    <xar:if condition="xarModGetVar('tinymce','usefilebrowser') eq 1 and xarSecurityCheck('AdminArticles',0)">
+        <xar:base-include-javascript position="head" module="tinymce" filename="../../xarincludes/xarfilebrowsercallback.js" />
+    </xar:if>
+
+</xar:if>
+
