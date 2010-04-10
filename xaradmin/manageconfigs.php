@@ -61,7 +61,7 @@ function tinymce_admin_manageconfigs()
     foreach($lists as $list) {
         $list_var_name = $list.'list';
         $$list_var_name = array();
-        $include_path = "./modules/tinymce/xarincludes/".$list;
+        $include_path = dirname(dirname(__FILE__)) . "/xarincludes/".$list;
         $handle = opendir($include_path);
         while (false !== ($file = readdir($handle))) {
             // The skip array defines which file types not to include in the drop downs

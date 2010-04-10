@@ -1,5 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:set name="isxarigami">XARCORE_VERSION_ID =='Xarigami'?true:false;</xar:set>
+<xar:set name="isxarigami">(defined('XARCORE_VERSION_ID') and XARCORE_VERSION_ID =='Xarigami')?true:false;</xar:set>
 <xar:style scope="module" module="base" file="tabs" />
 <xar:base-include-javascript module="base" filename="toggle.js" />
 <xar:set name="dummyimage">xarTplGetImage('blank.gif','base')</xar:set>
@@ -138,37 +138,49 @@
                                        <label class="xar-form-label"><xar:mlstring>Available buttons:</xar:mlstring></label>
                                         <xar:set name="optioncount">round(count($buttonarray['Buttons'])/4)</xar:set>
                                          <div class="xar-form-container-after xar-form-container-after" >
-                                            <ul style="list-style-type:none;float: left; max-width: 25%; margin-right: 2px;">
-                                                <xar:set name="currentcount">0</xar:set>
-                                                <xar:foreach in="$buttonarray['Buttons']" key="$buttonname" value="$buttonvalues">
-                                                    <li>#$buttonname#</li>
-                                                    <xar:set name="currentcount">++$currentcount</xar:set> 
-                                            <xar:if condition="$currentcount eq $optioncount ">
-                                            </ul>
-                                                <ul style="list-style-type:none; float: left; max-width: 25%; margin-right: 2px;">
-                                                <xar:set name="currentcount">0</xar:set>
-                                            </xar:if>
-                                                </xar:foreach>
-                                            </ul>
+                                           <xar:set name="currentcount">0</xar:set>
+                                           <xar:set name="cols">array()</xar:set>
+                                           <xar:set name="num">0;$cols[$num] = array()</xar:set>
+                                           <xar:foreach in="$buttonarray['Buttons']" key="$buttonname" value="$buttonvalues">
+                                             <xar:set name="dummy">1;$cols[$num][$buttonname] = 1</xar:set>
+                                             <xar:set name="currentcount">++$currentcount</xar:set> 
+                                             <xar:if condition="$currentcount eq $optioncount ">
+                                               <xar:set name="num">++$num;$cols[$num] = array()</xar:set> 
+                                               <xar:set name="currentcount">0</xar:set>
+                                             </xar:if>
+                                           </xar:foreach>
+                                           <xar:foreach in="$cols" value="$vals">
+                                             <ul style="list-style-type:none;float: left; max-width: 25%; margin-right: 2px;">
+                                             <xar:foreach in="$vals" key="$key" value="$val">
+                                               <li>#$key#</li>
+                                             </xar:foreach>
+                                             </ul>
+                                           </xar:foreach>
                                         </div>
                                 </div>
                                 <div class="xar-form-input-wrapper">
-                                       <label class="xar-form-label"><xar:mlstring>Available plugin <em>buttons</em></em></xar:mlstring></label>
+                                       <label class="xar-form-label"><xar:mlstring>Available plugin <em>buttons</em></xar:mlstring></label>
                                        <xar:set name="optionct">round(count($buttonarray['Plugins'])/2)</xar:set>
                                         <div class="xar-form-container-after xar-form-container-after" >
-                                            <ul style="list-style-type:none;float: left; width: 35%; margin-right: 2px;">
-                                                <xar:set name="currentcount">0</xar:set>
-                                                <xar:foreach in="$buttonarray['Plugins']" key="$pluginname" value="$pluginvalues">
-                                                    <xar:set name="pluglist">implode(', ',$pluginvalues)</xar:set>
-                                                    <li>#$pluginname#: <em>#$pluglist#</em></li>
-                                                    <xar:set name="currentcount">++$currentcount</xar:set> 
-                                            <xar:if condition="$currentcount eq $optionct ">
-                                            </ul>
-                                                <ul style="list-style-type:none; float: left; width: 40%; margin-right: 2px;">
-                                                <xar:set name="currentcount">0</xar:set>
+                                          <xar:set name="currentcount">0</xar:set>
+                                          <xar:set name="cols">array()</xar:set>
+                                          <xar:set name="num">0;$cols[$num] = array()</xar:set>
+                                          <xar:foreach in="$buttonarray['Plugins']" key="$pluginname" value="$pluginvalues">
+                                            <xar:set name="pluglist">implode(', ',$pluginvalues)</xar:set>
+                                            <xar:set name="dummy">1;$cols[$num][$pluginname] = $pluglist</xar:set>
+                                            <xar:set name="currentcount">++$currentcount</xar:set> 
+                                            <xar:if condition="$currentcount eq $optioncount ">
+                                              <xar:set name="num">++$num;$cols[$num] = array()</xar:set> 
+                                              <xar:set name="currentcount">0</xar:set>
                                             </xar:if>
-                                                </xar:foreach>
+                                          </xar:foreach>
+                                          <xar:foreach in="$cols" value="$vals">
+                                            <ul style="list-style-type:none;float: left; width: 35%; margin-right: 2px;">
+                                            <xar:foreach in="$vals" key="$key" value="$val">
+                                              <li>#$key#: <em>#$val#</em></li>
+                                            </xar:foreach>
                                             </ul>
+                                          </xar:foreach>
                                         </div>
                                         <p class="xar-clearleft xar-form-container-after xar-form-container-after" >
                                             <xar:mlstring>Some plugins have additional configurations (eg date format). Please add these in the Custom section. 
@@ -333,37 +345,49 @@
                                        <label class="xar-form-label"><xar:mlstring>Available buttons:</xar:mlstring></label>
                                         <xar:set name="optioncount">round(count($buttonarray['Buttons'])/4)</xar:set>
                                          <div class="xar-form-container-after xar-form-container-after" >
-                                            <ul style="list-style-type:none;float: left; max-width: 25%; margin-right: 2px;">
-                                                <xar:set name="currentcount">0</xar:set>
-                                                <xar:foreach in="$buttonarray['Buttons']" key="$buttonname" value="$buttonvalues">
-                                                    <li>#$buttonname#</li>
-                                                    <xar:set name="currentcount">++$currentcount</xar:set> 
-                                            <xar:if condition="$currentcount eq $optioncount ">
-                                            </ul>
-                                                <ul style="list-style-type:none; float: left; max-width: 25%; margin-right: 2px;">
-                                                <xar:set name="currentcount">0</xar:set>
-                                            </xar:if>
-                                                </xar:foreach>
-                                            </ul>
+                                           <xar:set name="currentcount">0</xar:set>
+                                           <xar:set name="cols">array()</xar:set>
+                                           <xar:set name="num">0;$cols[$num] = array()</xar:set>
+                                           <xar:foreach in="$buttonarray['Buttons']" key="$buttonname" value="$buttonvalues">
+                                             <xar:set name="dummy">1;$cols[$num][$buttonname] = 1</xar:set>
+                                             <xar:set name="currentcount">++$currentcount</xar:set> 
+                                             <xar:if condition="$currentcount eq $optioncount ">
+                                               <xar:set name="num">++$num;$cols[$num] = array()</xar:set> 
+                                               <xar:set name="currentcount">0</xar:set>
+                                             </xar:if>
+                                           </xar:foreach>
+                                           <xar:foreach in="$cols" value="$vals">
+                                             <ul style="list-style-type:none;float: left; max-width: 25%; margin-right: 2px;">
+                                             <xar:foreach in="$vals" key="$key" value="$val">
+                                               <li>#$key#</li>
+                                             </xar:foreach>
+                                             </ul>
+                                           </xar:foreach>
                                         </div>
                                 </div>
                                 <div class="xar-form-input-wrapper">
-                                       <label class="xar-form-label"><xar:mlstring>Available plugin <em>buttons</em></em></xar:mlstring></label>
+                                       <label class="xar-form-label"><xar:mlstring>Available plugin <em>buttons</em></xar:mlstring></label>
                                        <xar:set name="optionct">round(count($buttonarray['Plugins'])/2)</xar:set>
                                         <div class="xar-form-container-after xar-form-container-after" >
-                                            <ul style="list-style-type:none;float: left; width: 35%; margin-right: 2px;">
-                                                <xar:set name="currentcount">0</xar:set>
-                                                <xar:foreach in="$buttonarray['Plugins']" key="$pluginname" value="$pluginvalues">
-                                                    <xar:set name="pluglist">implode(', ',$pluginvalues)</xar:set>
-                                                    <li>#$pluginname#: <em>#$pluglist#</em></li>
-                                                    <xar:set name="currentcount">++$currentcount</xar:set> 
-                                            <xar:if condition="$currentcount eq $optionct ">
-                                            </ul>
-                                                <ul style="list-style-type:none; float: left; width: 40%; margin-right: 2px;">
-                                                <xar:set name="currentcount">0</xar:set>
+                                          <xar:set name="currentcount">0</xar:set>
+                                          <xar:set name="cols">array()</xar:set>
+                                          <xar:set name="num">0;$cols[$num] = array()</xar:set>
+                                          <xar:foreach in="$buttonarray['Plugins']" key="$pluginname" value="$pluginvalues">
+                                            <xar:set name="pluglist">implode(', ',$pluginvalues)</xar:set>
+                                            <xar:set name="dummy">1;$cols[$num][$pluginname] = $pluglist</xar:set>
+                                            <xar:set name="currentcount">++$currentcount</xar:set> 
+                                            <xar:if condition="$currentcount eq $optioncount ">
+                                              <xar:set name="num">++$num;$cols[$num] = array()</xar:set> 
+                                              <xar:set name="currentcount">0</xar:set>
                                             </xar:if>
-                                                </xar:foreach>
+                                          </xar:foreach>
+                                          <xar:foreach in="$cols" value="$vals">
+                                            <ul style="list-style-type:none;float: left; width: 35%; margin-right: 2px;">
+                                            <xar:foreach in="$vals" key="$key" value="$val">
+                                              <li>#$key#: <em>#$val#</em></li>
+                                            </xar:foreach>
                                             </ul>
+                                          </xar:foreach>
                                         </div>
                                         <p class="xar-clearleft xar-form-container-after xar-form-container-after" >
                                             <xar:mlstring>Some plugins have additional configurations (eg date format). Please add these in the Custom section. 
