@@ -90,7 +90,7 @@
   </xar:if>
 
   <h2><xar:mlstring>Link Status</xar:mlstring></h2>
-  <xar:data-getitems name="$props" value="$stats" module="sitetools" itemtype="3" fieldlist="status,COUNT(id)" groupby="status" />
+  <xar:data-getitems name="$props" value="$stats" module="sitetools" itemtype="$itemtype" fieldlist="status,COUNT(id)" groupby="status" />
   <table border="1" cellpadding="4" cellspacing="0">
     <tr>
       <th><xar:mlstring>Status</xar:mlstring></th>
@@ -112,7 +112,7 @@
   </xar:if>
 
   <xar:set name="$numitems">100</xar:set>
-  <xar:data-getitems name="$properties" value="$items" module="sitetools" itemtype="3" numitems="$numitems" startnum="$startnum" sort="$sort" where="$where" />
+  <xar:data-getitems name="$properties" value="$items" module="sitetools" itemtype="$itemtype" numitems="$numitems" startnum="$startnum" sort="$sort" where="$where" />
   <table border="1" cellpadding="4" cellspacing="0">
     <tr>
       <th><a href="&xar-modurl-sitetools-admin-links;&amp;sort=link"><xar:mlstring>Link</xar:mlstring></a></th>

@@ -114,10 +114,11 @@ function sitetools_adminapi_findlinks($args)
                     $where[] = $field . " ne ''";
                 }
                 $whereclause = join(' or ',$where);
-                $object = new Dynamic_Object_List(array('moduleid' => $modid,
-                                                        'itemtype' => $ptid,
-                                                        'fieldlist' => $fieldlist,
-                                                        'where' => $whereclause));
+                $object = xarModAPIFunc('dynamicdata','user','getobjectlist',
+                                        array('moduleid' => $modid,
+                                              'itemtype' => $ptid,
+                                              'fieldlist' => $fieldlist,
+                                              'where' => $whereclause));
                 $object->joinTable(array('table' => $articlestable,
                                          'key' => 'aid',
                                          'fields' => array('aid','title')));
@@ -169,10 +170,11 @@ function sitetools_adminapi_findlinks($args)
                 $where[] = $field . " ne ''";
             }
             $whereclause = join(' or ',$where);
-            $object = new Dynamic_Object_List(array('moduleid' => $modid,
-                                                    'itemtype' => $itemtype,
-                                                    'fieldlist' => $fieldlist,
-                                                    'where' => $whereclause));
+            $object = xarModAPIFunc('dynamicdata','user','getobjectlist',
+                                    array('moduleid' => $modid,
+                                          'itemtype' => $itemtype,
+                                          'fieldlist' => $fieldlist,
+                                          'where' => $whereclause));
             $object->joinTable(array('table' => $rolestable,
                                      'key' => 'uid',
                                      'fields' => array('uid','name')));
@@ -219,10 +221,11 @@ function sitetools_adminapi_findlinks($args)
                 $where[] = $field . " ne ''";
             }
             $whereclause = join(' or ',$where);
-            $object = new Dynamic_Object_List(array('moduleid' => $modid,
-                                                    'itemtype' => $itemtype,
-                                                    'fieldlist' => $fieldlist,
-                                                    'where' => $whereclause));
+            $object = xarModAPIFunc('dynamicdata','user','getobjectlist',
+                                    array('moduleid' => $modid,
+                                          'itemtype' => $itemtype,
+                                          'fieldlist' => $fieldlist,
+                                          'where' => $whereclause));
             $items = $object->getItems();
             $serialized = array();
             foreach ($fieldlist as $field) {

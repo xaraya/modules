@@ -43,6 +43,18 @@ function sitetools_admin_links()
     $data['modules'] = xarModAPIFunc('sitetools','admin','getlinkfields');
     if (!isset($data['modules'])) return;
 
+    /* get the objectid and itemtype for the sitetools links */
+    $data['objectid'] = xarModGetVar('sitetools','objectid_links');
+    $data['itemtype'] = xarModGetVar('sitetools','itemtype_links');
+    if (empty($data['itemtype'])) {
+        $object = xarModAPIFunc('dynamicdata','user','getobject',
+                                array('objectid' => $data['objectid']));
+        if (!empty($object) && $object->objectid == $data['objectid']) {
+            xarModSetVar('sitetools','itemtype_links',$object->itemtype);
+            $data['itemtype'] = $object->itemtype;
+        }
+    }
+
     if (empty($find)) {
         $todo = xarModGetVar('sitetools','links_todo');
         if (!empty($todo)) {
