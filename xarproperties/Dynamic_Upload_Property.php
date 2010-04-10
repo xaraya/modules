@@ -52,7 +52,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
             $this->validation = '';
         }
         // this is used by DD's importpropertytypes() function
-        if (empty($args['skipInit'])) {
+        if (empty($args) || !is_array($args) || empty($args['skipInit'])) {
             // always parse validation to preset methods here
             $this->parseValidation($this->validation);
 
@@ -178,7 +178,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
      * @param array args
      * @return mixed This function will show the input form via the uploads_admin_showinput function
      */
-    function showInput($args = array())
+    function showInput(Array $args = array())
     {
         extract($args);
 
@@ -220,7 +220,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
     /**
      * Show the output: a link to the file
      */
-    function showOutput($args = array())
+    function showOutput(Array $args = array())
     {
         extract($args);
 
@@ -258,7 +258,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
             $ulid = ";$value";
         // For old values, pull the ULID from the URL that is stored
         } elseif (strstr($value, 'ulid=')) {
-            ereg('ulid=([0-9]+)',$value,$reg);
+            preg_match('/ulid=([0-9]+)/i',$value,$reg);
             $ulid = ";$reg[1]";
         // For new values when DD stores a ;-separated list
         } elseif (strstr($value, ';')) {
@@ -312,7 +312,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
      * Show the options for the validation of the property
      * This function will show all options that are possible
      */
-    function showValidation($args = array())
+    function showValidation(Array $args = array())
     {
         extract($args);
 
@@ -349,7 +349,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
      * @param array args with validation
      * @return bool true on succesful set.
      */
-    function updateValidation($args = array())
+    function updateValidation(Array $args = array())
     {
         extract($args);
 

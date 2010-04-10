@@ -111,7 +111,7 @@ function uploads_user_file_properties( $args )
 
             $fileInfo['size'] = xarModAPIFunc('uploads', 'user', 'normalize_filesize', array('fileSize' => $fileInfo['fileSize']));
 
-            if (ereg('^image', $fileInfo['fileType'])) {
+            if (preg_match('/^image/', $fileInfo['fileType'])) {
                 // let the images module handle it
                 if (xarModIsAvailable('images')) {
                     $fileInfo['image'] = TRUE;

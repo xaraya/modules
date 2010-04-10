@@ -10,10 +10,11 @@
                 <xar:mlstring>Approval</xar:mlstring>
             </legend>
                 <div class="xar-form-input-wrapper">
-                    <label for="approval" class="xar-form-label"">
+                    <label for="approval" class="xar-form-label">
                         <xar:mlstring>Are you sure?</xar:mlstring>
                     </label>
                          <xar:set name="$MLApprove"><xar:mlstring>Approve</xar:mlstring></xar:set>                    
+                </div>
         </fieldset>
         
         <div class="xar-form-input-wrapper">

@@ -26,7 +26,7 @@
     <xar:if condition="empty($missing)">
         <p><a href="#xarModURL('uploads','admin','assoc',array('action' => 'missing'))#"><xar:mlstring>Check Missing Files</xar:mlstring></a></p>
     <xar:else/>
-        <p><strong><xar:mlstring>Missing Files in Associations</xar:mlstring></strong>
+        <p><strong><xar:mlstring>Missing Files in Associations</xar:mlstring></strong></p>
         <ul>
         <xar:foreach in="$missing" key="$id" value="$num">
             <li><a href="#xarModURL('uploads','admin','assoc',array('fileId' => $id))#"><xar:ml><xar:mlstring>File #(1) - #(2) association(s)</xar:mlstring><xar:mlvar>#$id#</xar:mlvar><xar:mlvar>#$num#</xar:mlvar></xar:ml></a></li>

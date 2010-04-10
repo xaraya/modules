@@ -1,7 +1,7 @@
-<xar:set name="width1">' width="5%"'</xar:set>
-<xar:set name="width2">' width="25%"'</xar:set>
-<xar:set name="width3">' width="50%"'</xar:set>
-<xar:set name="width4">' width="20%"'</xar:set>
+<xar:set name="width1">'5%'</xar:set>
+<xar:set name="width2">'25%'</xar:set>
+<xar:set name="width3">'50%'</xar:set>
+<xar:set name="width4">'20%'</xar:set>
 <div>
   <xar:if condition="isset($curDir)">
     <div>
@@ -18,22 +18,20 @@
     
   <xar:base-include-javascript filename="checkall.js" />
   <xar:comment>TODO: split this, with an included template so this file can be valid xml</xar:comment>
-  <xar:if condition="isset($fileList) AND count($fileList)">
-    <form name="local_import_form" id="local_import_form" action="#$local_import_post_url#" method="post">
-  </xar:if>
+  <form name="local_import_form" id="local_import_form" action="#$local_import_post_url#" method="post">
   <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
     <tr>
-      <th #$width1#><xar:mlstring>Select</xar:mlstring></th>
-      <th #$width2#><xar:mlstring>File / Directory</xar:mlstring></th>
-      <th #$width3#><xar:mlstring>Description</xar:mlstring></th>
-      <th #$width4#><xar:mlstring>Size (in bytes)</xar:mlstring></th>
+      <th width="#$width1#"><xar:mlstring>Select</xar:mlstring></th>
+      <th width="#$width2#"><xar:mlstring>File / Directory</xar:mlstring></th>
+      <th width="#$width3#"><xar:mlstring>Description</xar:mlstring></th>
+      <th width="#$width4#"><xar:mlstring>Size (in bytes)</xar:mlstring></th>
     </tr>
     <xar:if condition="isset($noPrevDir) AND ($noPrevDir eq FALSE)">
       <tr>
-        <td #$width1# class="xar-norm" align="center">
+        <td width="#$width1#" class="xar-norm" align="center">
           &nbsp;
         </td>
-        <td #$width2# class="xar-norm" align="left">&nbsp;
+        <td width="#$width2#" class="xar-norm" align="left">&nbsp;
           <a href="#xarModURL('uploads', 'admin', 'get_files', array('inode' => '...', 'action' => $getAction['REFRESH']))#"
              alt="#xarML('Open Folder')#"
              title="#xarML('Open Folder')#">
@@ -43,29 +41,29 @@
             </xar:mlstring>
           </a>
         </td>
-        <td #$width3# class="xar-norm" align="center">
+        <td width="#$width3#" class="xar-norm" align="center">
           &nbsp;<xar:mlstring>N/A</xar:mlstring>
         </td>
-        <td #$width4# class="xar-norm" align="right">
+        <td width="#$width4#" class="xar-norm" align="right">
           &nbsp;<xar:mlstring>N/A</xar:mlstring>
         </td>
       </tr>
     </xar:if>
     <tr>
-      <td #$width1# align="center">
+      <td width="#$width1#" align="center">
         <xar:if condition="isset($fileList) AND count($fileList)">
           <input type="checkbox" name="file_all" id="file_all" onclick="CheckAll();" />
         </xar:if>
       </td>
-      <td #$width2# align="left">&nbsp;
-        <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18" />&nbsp;
+      <td width="#$width2#" align="left">&nbsp;
+        <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18"/>&nbsp;
           <xar:mlstring><strong>Current Folder</strong></xar:mlstring>
       </td>
 
-      <td #$width3# class="xar-norm" align="center">
+      <td width="#$width3#" class="xar-norm" align="center">
         &nbsp;<xar:mlstring>N/A</xar:mlstring>
       </td>
-      <td #$width4# class="xar-norm" align="right">
+      <td width="#$width4#" class="xar-norm" align="right">
         &nbsp;<xar:mlstring>N/A</xar:mlstring>
       </td>
     </tr>
@@ -78,15 +76,15 @@
             <xar:else/>
             <xar:set name="rowclass">'xar-accent'</xar:set>
           </xar:if>
-          <td #$width1# class="#$rowclass#" align="center">
+          <td width="#$width1#" class="#$rowclass#" align="center">
             <input type="checkbox" name="fileList[]" id="file_#$loop:index#" value="#$loop:item['fileName']#" />
           </td>
-          <td #$width2# class="#$rowclass#" align="left">&nbsp;
+          <td width="#$width2#" class="#$rowclass#" align="left">&nbsp;
             <xar:if condition="$loop:item['inodeType'] eq $inodeType['DIRECTORY']">
               <a href="#$local_import_post_url#&amp;inode=#$loop:item['fileName']#&amp;action=#$getAction['REFRESH']#"
                  alt="#xarML('Open Folder')#"
                  title="#xarML('Open Folder')#">
-                <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18" />
+                <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18"/>
                   <strong>#$loop:item['fileName']#</strong>
               </a>
               <xar:else />
@@ -96,7 +94,7 @@
             </xar:if>
           </td>
 
-          <td #$width3# class="#$rowclass# xar-align-center">
+          <td width="#$width3#" class="#$rowclass# xar-align-center">
               <input type="text" name="description[]" value="" size="55" id="description#$loop:index#" />
           </td>
 
@@ -105,7 +103,7 @@
             <xar:else />
               <xar:set name="value">$loop->item['fileSize']</xar:set>
           </xar:if>
-          <td #$width4# class="#$rowclass#" align="right">&nbsp;#$value#</td>
+          <td width="#$width4#" class="#$rowclass#" align="right">&nbsp;#$value#</td>
         </tr>
       </xar:loop>
       <tr>
@@ -123,7 +121,5 @@
     </xar:if>
   </table>
   <br />                    
-  <xar:if condition="isset($fileList) AND count($fileList)">
-    </form>
-  </xar:if>
+  </form>
 </div>

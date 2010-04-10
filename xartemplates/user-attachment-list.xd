@@ -6,7 +6,7 @@
         <xar:style module="uploads" scope="module" file="uploads" />
         <xar:loop name="$Attachments">
             <xar:if condition="!empty($loop:item['extrainfo']['description'])">
-                <xar:set name="description">" &ndash; ".$loop->item['extrainfo']['description']</xar:set>
+                <xar:set name="description">" &#8211; ".$loop->item['extrainfo']['description']</xar:set>
             <xar:else />
                 <xar:set name="description">""</xar:set>
             </xar:if>

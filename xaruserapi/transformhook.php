@@ -44,7 +44,7 @@ function & uploads_userapi_transformhook ( $args )
  */
 function & uploads_userapi_transform ( $body )
 {
-    while(eregi('#(ulid|file|ulidd|ulfn|fileURL|fileIcon|fileName|fileLinkedIcon):([^#]+)#', $body, $matches)) {
+    while(preg_match('/#(ulid|file|ulidd|ulfn|fileURL|fileIcon|fileName|fileLinkedIcon):([^#]+)#/i', $body, $matches)) {
         $replacement=NULL;
         array_shift($matches);
         list($type, $id) = $matches;
@@ -90,7 +90,7 @@ function & uploads_userapi_transform ( $body )
                 return $body;
         }
 
-        $body = ereg_replace("#$type:$id#", $replacement, $body);
+        $body = str_replace("#$type:$id#", $replacement, $body);
     }
 
     return $body;
