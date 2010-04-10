@@ -35,11 +35,11 @@
     </tr>
     <tr>
       <td><label for="start"><xar:mlstring>Start</xar:mlstring></label></td>
-      <td><input name="start" id="start" value="TODO: calendar popup"/> <input size=8 name="sttime" id="sttime"/></td>
+      <td><input name="start" id="start" value="TODO: calendar popup"/> <input size="8" name="sttime" id="sttime"/></td>
     </tr>
     <tr>
         <td><label for="end"><xar:mlstring>End</xar:mlstring></label></td>
-        <td><input name="end" id="end" value="TODO: calendar popup"/> <input size=8 name="endtime" id="endtime"/></td>
+        <td><input name="end" id="end" value="TODO: calendar popup"/> <input size="8" name="endtime" id="endtime"/></td>
     </tr>
     <tr>
       <td><label for="allDayEvent"><xar:mlstring>This event lasts all day</xar:mlstring></label></td>
@@ -51,17 +51,18 @@
     </tr>
     <tr>
       <td><label for="URL"><xar:mlstring>URL</xar:mlstring></label></td>
-      <td><input name="URL" id="URL"/><input type="submit" value="visit URL"></td>
+      <td><input name="URL" id="URL"/><input type="submit" value="visit URL"/></td>
     </tr>
     <tr>
       <td><label for="title"><xar:mlstring>Categories</xar:mlstring></label></td>
       <td>
-        <select multiple size = "3" name="categories" id="categories">
+        <select multiple="multiple" size = "3" name="categories" id="categories">
           <xar:if condition="1">
             <option value="day" selected="selected"><xar:mlstring>Need to pull categories from cat module</xar:mlstring></option>
           <xar:else />
             <option value="day"><xar:mlstring>Day</xar:mlstring></option>
           </xar:if>
+        </select>
       </td>
     </tr>    
     <tr>
@@ -81,7 +82,7 @@
         <xar:if condition="$thereAreIcs eq 0">
           <xar:mlstring>No calendars found in var/calendar</xar:mlstring>
         <xar:else />  
-          <select multiple size="3" name="default_cal[]" id="default_cal">           
+          <select multiple="multiple" size="3" name="default_cal[]" id="default_cal">           
             <xar:foreach in="$icsfiles" key="$filenumber" value="$filename">
               <xar:if condition="in_array($filename,$default_cal)">
                 <option value= "#$filename#" selected="selected">#$filename#</option>

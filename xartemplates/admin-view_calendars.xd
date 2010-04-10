@@ -8,7 +8,7 @@
   <input type="hidden" name="authid" id="authid" value="#$authid#" />  
   <table>
     <tr> 
-      <th><xar:mlstring>ID</xar:mlstring>
+      <th><xar:mlstring>ID</xar:mlstring></th>
       <th><xar:mlstring>Name</xar:mlstring></th>
       <th><xar:mlstring>Location</xar:mlstring></th>
       <th><xar:mlstring>Action</xar:mlstring></th>
@@ -35,5 +35,4 @@
     </xar:foreach>
   </table>
 </form>
-</div>
 </div>

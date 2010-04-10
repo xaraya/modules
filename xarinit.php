@@ -77,7 +77,6 @@ function calendar_init()
         'calendar_userapi_handledecoratortag'
     );
 
-
     return true;
 }
 
