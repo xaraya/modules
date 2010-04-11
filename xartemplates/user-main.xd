@@ -11,58 +11,38 @@
     <xar:if condition="xarModGetVar('keywords', 'showsort')">
       <xar:template file="navtabs" type="module" />
     </xar:if>
-    <!-- <div class="xar-form-input-wrapper"> -->
     <xar:if condition="empty($items)">
       <div class="xar-form-input-wrapper">
         <h4>
           <xar:mlstring>No keywords found !</xar:mlstring>
         </h4>
+      </div>
     <xar:else /> 
       <xar:comment>Start the list column output</xar:comment>
       <xar:set name="totitemspercol">round($totitems/$displaycolumns)</xar:set>
       <xar:set name="divwidth">round(95/$displaycolumns)</xar:set>
-      <xar:comment> Begin the column wrapping div </xar:comment>
       <div class="xar-form-input-wrapper">
-        <xar:set name="i">1</xar:set>
-        <xar:set name="j">0</xar:set>
-        <xar:comment> Begin first list column div </xar:comment>
-        <xar:comment> TODO: well, what can i say, does the author still know what happens here? </xar:comment>
-        <div class="xar-floatleft xar-align-left" style="width: #$divwidth#%;">
-          <ul>
-            <xar:foreach in="$items" value="$item">
-              <xar:set name="j">++$j</xar:set>
-              <xar:if condition="$i++ lt $totitemspercol">
-                <li class="xar-list-nostyle">
-                  <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
-                </li>
-              <xar:elseif condition="($j eq $totitems)" />
-                <li class="xar-list-nostyle">
-                  <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
-                </li>
-                <xar:set name="i">1</xar:set>
-              <xar:else />
-                <li class="xar-list-nostyle">
-                  <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
-                </li>
-          </ul>
-        </div> 
-        <xar:comment> end list column </xar:comment>
-        <xar:comment> begin list column </xar:comment>
-        <div class="xar-floatleft xar-align-left" style="width: #$divwidth#%;">
-          <ul>
-            <xar:set name="i">1</xar:set>
-        </xar:if>
-        </xar:foreach>
-        </ul>
-        </div>              
-        <!-- end last column div 
-             </div> -->
-      <xar:comment> End all column wrapping div </xar:comment>
+        <xar:while condition="count($items) gt 0">
+          <xar:set name="i">1</xar:set>
+          <xar:comment> Begin list column div </xar:comment>
+          <div class="xar-floatleft xar-align-left" style="width: #$divwidth#%;">
+            <ul>
+            <xar:while condition="count($items) gt 0">
+              <xar:set name="$item">array_shift($items)</xar:set>
+              <li class="xar-list-nostyle">
+                <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
+              </li>
+              <xar:if condition="$i++ ge $totitemspercol">
+                <xar:break/>
+              </xar:if>
+            </xar:while>
+            </ul>
+          </div> 
+          <xar:comment> End list column div </xar:comment>
+        </xar:while>
+      </div>
     </xar:if>
-    </div>    
-    <xar:comment>da qui sicuramene buono. c'e una chiusura di div direy xat body</xar:comment>    
-    <xar:comment> End div for wrapping whole if section </xar:comment>
-    <xar:elseif condition="$status eq 1 and !empty($keyword)" />
+  <xar:elseif condition="$status eq 1 and !empty($keyword)" />
     <h4>
       <xar:ml>
         <xar:mlstring>Keyword : #(1)</xar:mlstring>
@@ -124,5 +104,5 @@
             <xar:mlstring>Overview of Keyword Assignments</xar:mlstring>
         </h2>
             <xar:mlstring>Unknown status</xar:mlstring>
-    </xar:if>
+  </xar:if>
 </div>

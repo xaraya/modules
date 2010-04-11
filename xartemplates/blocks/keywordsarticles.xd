@@ -9,7 +9,7 @@ $item['title'],$item['summary'],$item['authorid'],$item['pubdate'],$item['pubtyp
 
     <div class="xar-block-title"><xar:mlstring>Keywords related articles</xar:mlstring>:</div>
     <xar:foreach in="$items" value="$item">
-        &bull;#xarVarPrepForDisplay($item['title'])#&nbsp;
+        &#149;#xarVarPrepForDisplay($item['title'])#&nbsp;
         <xar:if condition="!empty($item['pubdate'])">(#xarLocaleGetFormattedDate('medium',$item['pubdate'])#)</xar:if><br />
         <xar:if condition="!empty($item['summary'])">
             #xarVarPrepForDisplay($item['summary'])#<br />

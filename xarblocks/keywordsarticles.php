@@ -20,7 +20,13 @@
  */
 function keywords_keywordsarticlesblock_init()
 {
-    return true;
+    // Initial values when the block is created.
+    return array(
+        'ptid' => '',
+        'cid' => '',
+        'status' => '2,3',
+        'refreshtime' => 1440
+    );
 }
 
 /**
