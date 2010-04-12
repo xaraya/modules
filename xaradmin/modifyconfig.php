@@ -21,8 +21,21 @@ function dyn_example_admin_modifyconfig()
     // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('AdminDynExample')) return;
 
+    $data = array();
+
+    // Check if the user selected a particular tab
+    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+
+    // Check if we need to process this here or elsewhere
+    if (!empty($data['tab']) && $data['tab'] != 'general') {
+        // This is handled elsewhere, we'll just give it the object information
+        $info = DataObjectMaster::getObjectInfo(array('name' => 'dyn_example'));
+        $data = array_merge($data, $info);
+        return $data;
+    }
+
     // Check if this template has been submitted, or if we just got here
-    if (!xarVarFetch('phase',        'str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
@@ -42,6 +55,8 @@ function dyn_example_admin_modifyconfig()
     switch (strtolower($phase)) {
         case 'modify':
         default:
+            // Call modifyconfig GUI hooks for this module
+            $data['hooks'] = xarModCallHooks('module','modifyconfig','dyn_example');
             break;
 
         case 'update':
@@ -74,6 +89,9 @@ function dyn_example_admin_modifyconfig()
             } else {
                 $itemid = $data['module_settings']->updateItem();
             }
+
+            // Call updateconfig API hooks for this module
+            xarModCallHooks('module','updateconfig','dyn_example');
 
             # --------------------------------------------------------
             #

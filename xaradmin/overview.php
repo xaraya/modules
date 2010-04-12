@@ -26,8 +26,8 @@ function dyn_example_admin_overview()
     /* if there is a separate overview function return data to it
      * else just call the main function that usually displays the overview
      */
-
-    return xarTplModule('dyn_example', 'admin', 'main', $data,'main');
+    $data = array();
+    return xarTplModule('dyn_example', 'admin', 'overview', $data);
 }
 
 ?>

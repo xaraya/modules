@@ -42,6 +42,12 @@
         dyn_example/xartemplates/objects/showform.xt</xar:comment>
                 <xar:data-form object="$object" tplmodule="dyn_example"/>
 
+                <xar:if condition="!empty($hooks)">
+                    <xar:foreach in="$hooks" key="$module" value="$output">
+                        #$output#
+                    </xar:foreach>
+                </xar:if>
+
                 <div class="xar-form-input-wrapper-after">
                     <input type="submit" name="preview" value="#xarML('Preview')#"/>
                     &#160;&#160;&#160;

@@ -46,13 +46,13 @@ border: 1px solid #002200;
 </style>
 
 <table style="border:none; display: inline;"><tbody>
+<tr><td class="demotab"><div>Overview</div></td><td>  You're reading it.  In your own module, use this space any way you deem appropriate, whether it be to summarize the workings of your module, provide links to documentation, etc.</td></tr>
+
+<tr><td class="demotab"><div>List Items</div></td><td> Here you'll find an example of one way to list items and provide links to disply, edit or delete the items.</td></tr>
+
 <tr><td class="demotab"><div>Add Item</div></td><td>The Add Item page demonstrates how to provide a form for your users to create new items.</td></tr>
 
-<tr><td class="demotab"><div>List All</div></td><td> Here you'll find an example of one way to list items and provide links to disply, edit or delete the items.</td></tr>
-
 <tr><td class="demotab"><div>Modify Config</div></td><td> This page demonstrates one way to provide configuration settings for your module.  Note that data storage for the settings is handled by the DD module.</td></tr>
-
-<tr><td class="demotab"><div>Overview</div></td><td>  You're reading it.  In your own module, use this space any way you deem appropriate, whether it be to summarize the workings of your module, provide links to documentation, etc.</td></tr>
 </tbody></table>
 
 <h3>XML for object definitions</h3>

@@ -40,6 +40,9 @@ function dyn_example_admin_modify()
     // Get the object we'll be working with
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
 
+    // Get that specific item of the object
+    $data['object']->getItem(array('itemid' => $data['itemid']));
+
     // Alternative security check e.g. if your module doesn't have its own security masks for items
     // Check if the current user has 'update' access to this object
     //if (!$data['object']->checkAccess('update', $data['itemid']))
@@ -65,22 +68,22 @@ function dyn_example_admin_modify()
 
         if (!$isvalid) {
             // Bad data: redisplay the form with the data we picked up and with error messages
-            return xarTplModule('dyn_example','admin','modify', $data);        
         } elseif (isset($data['preview'])) {
             // Show a preview, same thing as the above essentially
-            return xarTplModule('dyn_example','admin','modify', $data);        
         } else {
-            // Good data: create the item
+            // Good data: update the item
             $item = $data['object']->updateItem();
 
             // Jump to the next page
             xarResponse::Redirect(xarModURL('dyn_example','admin','view'));
             return true;
         }
-    } else {
-        // Get that specific item of the object
-        $data['object']->getItem(array('itemid' => $data['itemid']));
     }
+
+    // Call modify GUI hooks for this object
+    $data['object']->callHooks('modify');
+    // Show the hook output in the template
+    $data['hooks'] = $data['object']->hookoutput;
 
     // Return the template variables defined in this function
     return $data;

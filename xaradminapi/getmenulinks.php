@@ -24,6 +24,17 @@ function dyn_example_adminapi_getmenulinks()
     // Add a security check, so only admins can see this link
     // Hide the possible error
 
+    if (xarSecurityCheck('EditDynExample',0)) {
+
+        $menulinks[] = Array('url'   => xarModURL('dyn_example',
+                                                   'admin',
+                                                   'view'),
+                              // In order to display the tool tips and label in any language,
+                              // we must encapsulate the calls in the xarML in the API.
+                              'title' => xarML('View all example items that have been added.'),
+                              'label' => xarML('List Items'));
+    }
+
     if (xarSecurityCheck('AddDynExample',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('dyn_example',
@@ -38,12 +49,12 @@ function dyn_example_adminapi_getmenulinks()
     if (xarSecurityCheck('EditDynExample',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('dyn_example',
-                                                   'admin',
-                                                   'view'),
+                                                   'object',
+                                                   'main'),
                               // In order to display the tool tips and label in any language,
                               // we must encapsulate the calls in the xarML in the API.
-                              'title' => xarML('View all example items that have been added.'),
-                              'label' => xarML('List Items'));
+                              'title' => xarML('Object interface using Dynamic Data UI handlers.'),
+                              'label' => xarML('All-in-one Interface'));
     }
 
     if (xarSecurityCheck('AdminDynExample',0)) {
@@ -56,17 +67,6 @@ function dyn_example_adminapi_getmenulinks()
                               // we must encapsulate the calls in the xarML in the API.
                               'title' => xarML('Modify the configuration for the module'),
                               'label' => xarML('Modify Configuration'));
-    }
-
-    if (xarSecurityCheck('EditDynExample',0)) {
-
-        $menulinks[] = Array('url'   => xarModURL('dyn_example',
-                                                   'object',
-                                                   'main'),
-                              // In order to display the tool tips and label in any language,
-                              // we must encapsulate the calls in the xarML in the API.
-                              'title' => xarML('Object interface using Dynamic Data UI handlers.'),
-                              'label' => xarML('All-in-one Interface'));
     }
 
     return $menulinks;

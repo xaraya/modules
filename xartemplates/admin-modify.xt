@@ -27,6 +27,13 @@
                 </legend>
                 <!-- this does most of the hard work :) -->
                 <xar:data-form object="$object" tplmodule="dyn_example"/>
+
+                <xar:if condition="!empty($hooks)">
+                    <xar:foreach in="$hooks" key="$module" value="$output">
+                        #$output#
+                    </xar:foreach>
+                </xar:if>
+
              </fieldset>
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>

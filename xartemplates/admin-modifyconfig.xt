@@ -7,7 +7,48 @@
     </div>
     <div class="xar-mod-body">
         <xar:template type="module" file="admintabs"/>
-        <h2>Modify Default Configuration</h2>
+        <h2>Modify Dynamic Data Example Configuration</h2>
+        <xar:if condition="empty($tab)">
+            <xar:set name="tab">'general'</xar:set>
+        </xar:if>
+<!--
+        <ul class="xar-tabs xar-alt xar-norm-outline">
+            <xar:var name="title">Choose a set of configuration options to modify</xar:var>
+            <xar:var name="label">Modify</xar:var>
+            <li class="xar-tabs-label" title="#$title#">#$label#</li>
+            <xar:if condition="$tab eq 'general'">
+                <li class="xar-tab-active">
+                    <a href="#xarServer::getCurrentURL()#" class="xar-accent xar-accent-outline">Module Settings</a>
+                </li>
+                <xar:else />
+                <li class="xar-tab">
+                    <a href="#xarModURL('dyn_example', 'admin', 'modifyconfig')#" class="xar-norm xar-norm-outline">
+                    Module Settings</a>
+                </li>
+            </xar:if>
+            <xar:if condition="$tab eq 'props'">
+                <li class="xar-tab-active">
+                    <a href="#xarServer::getCurrentURL()#" class="xar-accent xar-accent-outline">Data Properties</a>
+                </li>
+                <xar:else />
+                <li class="xar-tab">
+                    <a href="#xarModURL('dyn_example', 'admin', 'modifyconfig', array('tab' =&gt; 'props'))#" class="xar-norm xar-norm-outline">
+                    Data Properties</a>
+                </li>
+            </xar:if>
+            <xar:if condition="$tab eq 'access'">
+                <li class="xar-tab-active">
+                    <a href="#xarServer::getCurrentURL()#" class="xar-accent xar-accent-outline">Access Rules</a>
+                </li>
+                <xar:else />
+                <li class="xar-tab">
+                    <a href="#xarModURL('dyn_example', 'admin', 'modifyconfig', array('tab' =&gt; 'access'))#" class="xar-norm xar-norm-outline">
+                    Access Rules</a>
+                </li>
+            </xar:if>
+        </ul>
+-->
+        <xar:if condition="$tab eq 'general'">
         <p class="xar-form-input-before">
           This text here is TBD<br />
           This uses dynamic module settings, i.e. you can add/remove settings for
@@ -17,24 +58,59 @@
 
         <form method="post" action="#xarServer::getCurrentURL()#">
             <fieldset>
-                <legend>Modify Dyn_Example Configuration</legend>
+                <legend>Module Settings</legend>
                 <xar:data-form object="$module_settings"/>
                 <xar:data-form object="$object" itemid="0"/>
             </fieldset>
 
-            <div class="xar-form-input-after">
+            <xar:if condition="!empty($hooks)">
+                <fieldset>
+                    <legend>Configuration of Hooked Modules</legend>
+                    <xar:foreach in="$hooks" key="$module" value="$output">
+                        #$output#
+                    </xar:foreach>
+                </fieldset>
+            </xar:if>
+
+            <fieldset>
+            <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" value="#xarSecGenAuthKey('dyn_example')#"/>
                 <xar:data-input type="hidden" name="phase" value="update"/>
                 <input type="hidden" name="objectid" value="#$object->objectid#"/>
                 <input type="hidden" name="itemid" value="0"/>
                 <input type="hidden" name="return_url" value="#xarServer::getCurrentURL()#"/>
-                <xar:var name="label">Update</xar:var>
+                <xar:var name="label">Update Configuration</xar:var>
                 <xar:button type="submit" label="$label"/>
             </div>
+            </fieldset>
         </form>
 
         <p class="xar-form-input-wrapper-before">
             <em>Note : your users will only be able to override those settings that you make available as user settings</em>
         </p>
+        </xar:if>
+<!--
+        <xar:if condition="$tab eq 'props'">
+            <p class="xar-form-input-before">
+                You can modify the data properties of your data object(s) directly in the Dynamic Data module,
+                or you can show them here as well...
+            </p>
+
+            <xar:if condition="!empty($objectid)">
+                <xar:module module="dynamicdata" type="admin" func="modifyprop" itemid="$objectid" tplmodule="dyn_example"/>
+            </xar:if>
+        </xar:if>
+
+        <xar:if condition="$tab eq 'access'">
+            <p class="xar-form-input-before">
+                You can modify the access rules for your data object(s) directly in the Dynamic Data module,
+                or you can show them here as well...
+            </p>
+
+            <xar:if condition="!empty($objectid)">
+                <xar:module module="dynamicdata" type="admin" func="access" itemid="$objectid" tplmodule="dyn_example"/>
+            </xar:if>
+        </xar:if>
+-->
     </div>
 </xar:template>

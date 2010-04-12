@@ -64,6 +64,12 @@
 
 		<xar:data-display object="$object" itemid="$itemid" tplmodule="dyn_example"/>
 
+                <xar:if condition="!empty($hooks)">
+                    <xar:foreach in="$hooks" key="$module" value="$output">
+                        #$output#
+                    </xar:foreach>
+                </xar:if>
+
         </div>
 
 <xar:comment>  ~~~~~~~~~   Approach 2   ~~~~~~~~~ </xar:comment>

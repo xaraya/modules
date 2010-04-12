@@ -50,10 +50,8 @@ function dyn_example_admin_new()
 
         if (!$isvalid) {
             // Bad data: redisplay the form with the data we picked up and with error messages
-            return xarTplModule('dyn_example','admin','new', $data);        
         } elseif (isset($data['preview'])) {
             // Show a preview, same thing as the above essentially
-            return xarTplModule('dyn_example','admin','new', $data);        
         } else {
             // Good data: create the item
             $item = $data['object']->createItem();
@@ -64,6 +62,11 @@ function dyn_example_admin_new()
             return true;
         }
     }
+
+    // Call new GUI hooks for this object
+    $data['object']->callHooks('new');
+    // Show the hook output in the template
+    $data['hooks'] = $data['object']->hookoutput;
 
     // Return the template variables defined in this function
     return $data;

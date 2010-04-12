@@ -59,6 +59,11 @@ function dyn_example_user_display()
     // All we really need for this approach is an $itemid and $object 
     $data['itemid'] = $itemid;
 
+    // Call display GUI hooks for this object
+    $data['object']->callHooks('display');
+    // Show the hook output in the template
+    $data['hooks'] = $data['object']->hookoutput;
+
 /* end APPROACH #1  */
 
 /* start APPROACH #2  make the values available in template variables  */
