@@ -1,11 +1,11 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:style scope="module" module="messages" file="messages" />
+    <xar:style scope="module" module="messages" file="messages"/>
     <div class="xar-mod-head">
         <span class="xar-mod-title"><xar:mlstring>Private Messages</xar:mlstring></span>
     </div>
     <div class="xar-mod-body">
         <xar:comment>Psspl: Added the code for configuring NewMessages tab</xar:comment>
-        <xar:template type="module" file="user-menu" />
+        <xar:template type="module" file="user-menu"/>
 
         <h2><xar:mlstring>View Message</xar:mlstring></h2>
 

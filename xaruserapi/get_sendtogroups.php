@@ -8,7 +8,7 @@ sys::import('modules.messages.xarincludes.defines');
         if (!isset($currentuser)) $currentuser = xarUserGetVar('id');
     
         // First we get all the parents of the current user
-        sys::import('modules.query.class.query');
+        sys::import('xaraya.structures.query');
         $xartable = xarDB::getTables();
         $q = new Query('SELECT');
         $q->addtable($xartable['roles'], 'r');
@@ -29,4 +29,4 @@ sys::import('modules.messages.xarincludes.defines');
         }                
         return $sendtogroups;
     }
-?>    
+?>

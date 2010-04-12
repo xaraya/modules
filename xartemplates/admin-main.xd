@@ -4,7 +4,7 @@
 </div>
 <div class="xar-mod-body">
   <!-- include a standard tabbed admin menu via include file in the xartemplates/include folder -->
-  <xar:template type="module" file="admin-menu" />
+  <xar:template type="module" file="admin-menu"/>
   <img src="#xarTplGetImage('xaraya_logo.gif','messages')#" class="xar-module-icon" alt="official icon"   />
 
   <h2><xar:mlstring>Overview</xar:mlstring></h2>

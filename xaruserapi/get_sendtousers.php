@@ -12,7 +12,7 @@ sys::import('modules.messages.xarincludes.defines');
         $sendtogroups = xarModAPIFunc('messages','user','get_sendtogroups',$args);
         ;  
         // Get the uses these allowed groups contain
-        sys::import('modules.query.class.query');
+        sys::import('xaraya.structures.query');
         $xartable = xarDB::getTables();
         $q = new Query('SELECT');
         $q->addtable($xartable['roles'], 'r');
@@ -43,4 +43,4 @@ sys::import('modules.messages.xarincludes.defines');
 
         return $users;
     }
-?>    
+?>

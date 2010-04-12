@@ -1,5 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:style scope="module" module="messages" file="messages" />
+    <xar:style scope="module" module="messages" file="messages"/>
     <div class="xar-mod-head">
         <span class="xar-mod-title">
             <xar:mlstring>Away Message</xar:mlstring>
@@ -14,7 +14,7 @@
         <span class="xar-norm">
             <p>#xarVarPrepHTMLDisplay($away_message)#</p>
         </span>
-        <input type="submit" value="#xarML('Return')#" class="xar-margin-thickleft" />
+        <input type="submit" value="#xarML('Return')#" class="xar-margin-thickleft"/>
     </form>
     </div>
 </xar:template>

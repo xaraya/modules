@@ -10,8 +10,8 @@
     <fieldset style="border: none">
     <xar:if condition="count($messages) eq 0">
         No messages defined yet
-        <input type="hidden" name="#$name#_refmsgid" id="#$name#_refmsgid" value="#$refmsgid#" />
-        <input type="hidden" name="#$name#_position" id="#$name#_position" value="#$position#" />
+        <input type="hidden" name="#$name#_refmsgid" id="#$name#_refmsgid" value="#$refmsgid#"/>
+        <input type="hidden" name="#$name#_position" id="#$name#_position" value="#$position#"/>
     <xar:else />
         <div class="xar-form-input-wrapper">
             <label for="refmsgid" class="xar-form-label help" title="#xarML('Message relationship hiearchy.')#">
@@ -22,7 +22,7 @@
                     <xar:if condition="$messages[$i]['left'] eq $message['left']-1">
                         <xar:set name="position">4</xar:set>
                         <option value="#$messages[$i]['id']#" selected="selected">#$messages[$i]['slash_separated']#</option>
-                        <xar:elseif condition="$messages[$i]['right'] eq $message['left']-1" />
+                        <xar:elseif condition="$messages[$i]['right'] eq $message['left']-1"/>
                         <xar:set name="position">2</xar:set>
                         <option value="#$messages[$i]['id']#" selected="selected">#$messages[$i]['slash_separated']#</option>
                         <xar:else />
@@ -46,7 +46,7 @@
             </xar:set>
             <xar:set name="ddname">$name . '_position'</xar:set>
             <xar:set name="ddid">$name . '_position'</xar:set>
-            <xar:data-input type="dropdown" name="$ddname" id="$ddid" value="$position" options="$options" />
+            <xar:data-input type="dropdown" name="$ddname" id="$ddid" value="$position" options="$options"/>
             <div style="clear: both;">&#160;</div>
         </div>
     </xar:if>

@@ -24,7 +24,7 @@ function messages_adminapi_view( $args )
 
     // The itemtype is a must!
     if (empty( $itemtype) ) {
-        xarResponse::Redirect(
+        xarResponse::redirect(
             xarModURL('messages', 'user', 'main' ));
     }
 
@@ -75,12 +75,12 @@ function messages_adminapi_view( $args )
                    array('module' => 'messages', 'itemtype'  => $itemtype));
 
          $data['unread'] = $numitems;
-         $data['indicatorinboxyes'] = '<img src="'.xarTplGetImage('green.gif','messages').'" alt="inbox yes" />';
-         $data['indicatorinboxno'] = '<img src="'.xarTplGetImage('red.gif','messages').'" alt="inbox no" />';
-         $data['indicatorunreadyes'] = '<img src="'.xarTplGetImage('green.gif','messages').'" alt="unread yes" />';
-         $data['indicatorunreadno'] = '<img src="'.xarTplGetImage('red.gif','messages').'" alt="unread no" />';
-         $data['indicatoroutboxyes'] = '<img src="'.xarTplGetImage('green.gif','messages').'" alt="outbox yes" />';
-         $data['indicatoroutboxno'] = '<img src="'.xarTplGetImage('red.gif','messages').'" alt="outbox no" />';
+         $data['indicatorinboxyes'] = '<img src="'.xarTplGetImage('green.gif','messages').'" alt="inbox yes"/>';
+         $data['indicatorinboxno'] = '<img src="'.xarTplGetImage('red.gif','messages').'" alt="inbox no"/>';
+         $data['indicatorunreadyes'] = '<img src="'.xarTplGetImage('green.gif','messages').'" alt="unread yes"/>';
+         $data['indicatorunreadno'] = '<img src="'.xarTplGetImage('red.gif','messages').'" alt="unread no"/>';
+         $data['indicatoroutboxyes'] = '<img src="'.xarTplGetImage('green.gif','messages').'" alt="outbox yes"/>';
+         $data['indicatoroutboxno'] = '<img src="'.xarTplGetImage('red.gif','messages').'" alt="outbox no"/>';
          $data['messageslogo'] = '<img src=""'.xarTplGetImage('xaraya_logo.jpg','messages').'" width="150" alt="xaraya"/>';
          $data['limitinbox'] = '10';
          $data['outbox'] = '10';

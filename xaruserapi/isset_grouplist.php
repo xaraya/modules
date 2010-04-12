@@ -20,7 +20,7 @@ function messages_userapi_isset_grouplist( $args )
                                         'include_myself' => false));
         $userid = xarUserGetVar('id');
 
-        sys::import('modules.query.class.query');
+        sys::import('xaraya.structures.query');
 
         $xartable = xarDB::getTables();
         $q = new Query('SELECT');
@@ -52,4 +52,4 @@ function messages_userapi_isset_grouplist( $args )
             return false;
         }
 }
-?>    
+?>

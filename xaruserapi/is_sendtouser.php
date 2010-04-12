@@ -28,4 +28,4 @@ sys::import('modules.messages.xarincludes.defines');
         }        
         return $is_sendtouser;
     }
-?>    
+?>

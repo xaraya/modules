@@ -1,11 +1,11 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:style scope="module" module="messages" file="messages" />
+<xar:style scope="module" module="messages" file="messages"/>
     <div class="xar-mod-head">
         <span class="xar-mod-title"><xar:mlstring>Private Messages</xar:mlstring></span>
     </div>
     <div class="xar-mod-body">
         <xar:comment>Psspl: Added the code for configuring NewMessages tab</xar:comment>
-        <xar:template type="module" file="user-menu" />
+        <xar:template type="module" file="user-menu"/>
 
         <xar:set name="is_reply">$object->properties['pid']->value</xar:set>
         <xar:if condition="$is_reply">
@@ -32,9 +32,9 @@
                     <xar:set name="previousanon">
                         $previousobject->properties['postanon']->value
                     </xar:set>
-                    <xar:data-display object="$object" tplmodule="messages" action="$action" previousanon="$previousanon" />
+                    <xar:data-display object="$object" tplmodule="messages" action="$action" previousanon="$previousanon"/>
                 <xar:else />
-                    <xar:data-display object="$object" tplmodule="messages" action="$action" />
+                    <xar:data-display object="$object" tplmodule="messages" action="$action"/>
                 </xar:if>
             </div>
         </xar:if>
@@ -44,16 +44,16 @@
                 <xar:set name="previousanon">
                     $previousobject->properties['postanon']->value
                 </xar:set>
-                <xar:data-form object="$object" tplmodule="messages" action="$action" previousanon="$previousanon" />
+                <xar:data-form object="$object" tplmodule="messages" action="$action" previousanon="$previousanon"/>
             <xar:else />
                 <xar:data-form object="$object" tplmodule="messages" action="$action"/>
             </xar:if>
             <div class="xar-align-center xar-margin-thick">
-                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                <input type="hidden" name="id" id="id" value="#$id#" />
-                <input type="hidden" name="action" id="action" value="submit" />
-                <input type="submit" name="preview" id="preview" value="#xarML('Preview')#" class="xar-margin-thickright" />
-                <input type="submit" name="confirm" id="confirm" value="#xarML('Submit')#" class="xar-margin-thickleft" />
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                <input type="hidden" name="id" id="id" value="#$id#"/>
+                <input type="hidden" name="action" id="action" value="submit"/>
+                <input type="submit" name="preview" id="preview" value="#xarML('Preview')#" class="xar-margin-thickright"/>
+                <input type="submit" name="confirm" id="confirm" value="#xarML('Submit')#" class="xar-margin-thickleft"/>
             </div>
         </form>
     </div>
