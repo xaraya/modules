@@ -31,12 +31,9 @@ function keywords_admin_newhook($args)
         return $msg;
     }
 
+    // new item won't have an id yet
     if (!isset($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID', 'admin', 'newhook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $msg;
+        $objectid = null;
     }
 
     // When called via hooks, the module name may be empty, so we get it from
