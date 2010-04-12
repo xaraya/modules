@@ -19,13 +19,13 @@
             <xar:mlstring>Keywords</xar:mlstring>:
         </label>
 
-        <xar:base-include-javascript filename="selectbox.js"/>
+        <xar:base-include-javascript module="keywords" filename="selectbox.js"/>
 
         <script type="text/javascript">
-        var opt = new OptionTransfer("list1","list2");
-        opt.setAutoSort(true);
-        opt.setDelimiter("#$delimiter#");
-        opt.saveNewRightOptions("keywords");
+            var keywords_opt = new OptionTransfer('keywords_list1','keywords_list2');
+            keywords_opt.setAutoSort(true);
+            keywords_opt.setDelimiter('#$delimiter#');
+            keywords_opt.saveNewRightOptions('keywords');
         </script>
         <table class="xar-noborder">
                 <tr>
@@ -45,7 +45,7 @@
                 </tr>
                 <tr>
                 <td class="xar-align-center">
-                        <select ondblclick="opt.transferRight()" multiple="multiple" size="10" name="list1" id="list1">
+                        <select ondblclick="keywords_opt.transferRight()" multiple="multiple" size="10" name="keywords_list1" id="keywords_list1">
                             <xar:foreach in="$keywords" value="$item">
                                 <option value="#$item#">#$item#</option>
                             </xar:foreach>
@@ -53,20 +53,20 @@
                     </td>
                 <td class="xar-align-center">
                         <p>
-                            <input onclick="opt.transferRight()" type="button" value="&gt;" name="right" />
+                            <input onclick="keywords_opt.transferRight()" type="button" value="&gt;" name="right" />
                         </p>
                         <p>
-                            <input onclick="opt.transferAllRight()" type="button" value="&gt;&gt;" name="right" />
+                            <input onclick="keywords_opt.transferAllRight()" type="button" value="&gt;&gt;" name="right" />
                         </p>
                         <p>
-                            <input onclick="opt.transferLeft()" type="button" value="&lt;" name="left" />
+                            <input onclick="keywords_opt.transferLeft()" type="button" value="&lt;" name="left" />
                         </p>
                         <p>
-                            <input onclick="opt.transferAllLeft()" type="button" value="&lt;&lt;" name="left" />
+                            <input onclick="keywords_opt.transferAllLeft()" type="button" value="&lt;&lt;" name="left" />
                         </p>
                     </td>
                 <td class="xar-align-center">
-                        <select ondblclick="opt.transferLeft()" multiple="multiple" size="10" name="list2" id="list2">
+                        <select ondblclick="keywords_opt.transferLeft()" multiple="multiple" size="10" name="keywords_list2" id="keywords_list2">
                         </select>
                     </td>
                 </tr>
@@ -74,7 +74,7 @@
         <input type="hidden" size="70" name="keywords" id="keywords"/>
     </div>
     <script type="text/javascript">
-        opt.init(document.forms['post']);
+        keywords_opt.init(document.getElementById('keywords').form);
     </script>
     </xar:if>
 
