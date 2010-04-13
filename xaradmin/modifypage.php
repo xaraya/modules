@@ -152,7 +152,7 @@ function xarpages_admin_modifypage($args)
             // New page: create default access values
             sys::import('modules.dynamicdata.class.properties.master');
             $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
-            $defaultaccess = $accessproperty->getValue();
+            $defaultaccess = $accessproperty->value;
 
             // Default data for the page form.
             $data['page'] = array(
