@@ -162,28 +162,6 @@ if ($offset > 1) {
     $tplData['prev_offset'] =  -1;
 }
 
-foreach ($items['data'] as $index => $info) {
-    if (!empty($info['started'])) {
-        $items['data'][$index]['started'] = xarLocaleGetFormattedDate('medium',$info['started']) . ' '
-                                            . xarLocaleGetFormattedTime('short',$info['started']);
-    }
-    $items['data'][$index]['ownerId'] = $info['owner'];
-    if (!empty($info['owner']) &&
-        is_numeric($info['owner'])) {
-        $items['data'][$index]['owner'] = xarUserGetVar('name', $info['owner']);
-    }
-    if (!is_numeric($info['user'])) {
-        $items['data'][$index]['userId'] = $info['user'];
-        continue;
-    }
-    $role = xarModAPIFunc('roles','user','get',
-                          array('id' => $info['user']));
-    if (!empty($role)) {
-        $items['data'][$index]['userId'] = $role['id'];
-        $items['data'][$index]['user'] = $role['name'];
-        $items['data'][$index]['login'] = $role['uname'];
-    }
-}
 $tplData['items'] =&  $items["data"];
 
 $processes = $GUI->gui_list_user_processes($user, 0, -1, 'procname_asc', '', '');

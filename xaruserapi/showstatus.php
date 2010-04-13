@@ -40,7 +40,20 @@ function workflow_userapi_showstatus($args)
     // retrieve the instances for which you're the owner
     $where = "owner=$user";
     if (!empty($args['status'])) {
-        $where .= " and gi.status='" . $args['status'] . "'";
+        if (strpos($args['status'], ',')) {
+            $statuslist = explode(',',$args['status']);
+            $where .= " and gi.status IN ('" . implode("','", $statuslist) . "')";
+        } else {
+            $where .= " and gi.status='" . $args['status'] . "'";
+        }
+    }
+    if (!empty($args['notstatus'])) {
+        if (strpos($args['notstatus'], ',')) {
+            $statuslist = explode(',',$args['notstatus']);
+            $where .= " and gi.status NOT IN ('" . implode("','", $statuslist) . "')";
+        } else {
+            $where .= " and gi.status!='" . $args['notstatus'] . "'";
+        }
     }
     if (!empty($args['actstatus'])) {
         $where .= " and gia.status='" . $args['actstatus'] . "'";
@@ -48,8 +61,30 @@ function workflow_userapi_showstatus($args)
     if (!empty($args['pId'])) {
         $where .= " and gp.pId='" . $args['pId'] . "'";
     }
-    $items = $processMonitor->monitor_list_instances(0, -1, 'started_asc', '', $where, array());
+    if (!empty($args['owner'])) {
+        $where .= " and gi.owner='" . $args['owner'] . "'";
+    }
+    if (!empty($args['user'])) {
+        $where .= " and gia.user='" . $args['user'] . "'";
+    }
+    if (!empty($args['numitems'])) {
+        $numitems = $args['numitems'];
+    } else {
+        $numitems = -1;
+    }
+    if (!empty($args['startnum'])) {
+        $startnum = $args['startnum'];
+    } else {
+        $startnum = 1;
+    }
+    if (!empty($args['sort_mode'])) {
+        $sort_mode = $args['sort_mode'];
+    } else {
+        $sort_mode = 'started_asc';
+    }
+    $items = $processMonitor->monitor_list_instances($startnum - 1, $numitems, $sort_mode, '', $where, array());
 
+    // filter out instances the user doesn't want to see
     if (xarUserIsLoggedIn()) {
         $seenlist = xarModUserVars::get('workflow','seenlist');
     } else {
@@ -63,12 +98,6 @@ function workflow_userapi_showstatus($args)
     $tplData['items'] = array();
     foreach ($items['data'] as $index => $info) {
         if (in_array($info['instanceId'],$seen)) continue;
-        $items['data'][$index]['started'] = xarLocaleGetFormattedDate('medium',$info['started']) . ' '
-                                            . xarLocaleGetFormattedTime('short',$info['started']);
-        $items['data'][$index]['userId'] = $info['user'];
-        if (is_numeric($info['user'])) {
-            $items['data'][$index]['user'] = xarUserGetVar('name',$info['user']);
-        }
         $tplData['items'][] = $items['data'][$index];
     }
     if (count($tplData['items']) < 1) {
@@ -77,12 +106,34 @@ function workflow_userapi_showstatus($args)
 
     $tplData['userId'] = $user;
 
+    if (!empty($args['title'])) {
+        $tplData['title'] = $args['title'];
+    }
+
     if (!empty($args['layout'])) {
         $tplData['layout'] = $args['layout'];
     }
 
     // URL to return to if some action is taken
-    $tplData['return_url'] = xarServer::getCurrentURL();
+    if (!empty($args['return_url'])) {
+        $tplData['return_url'] = $args['return_url'];
+    } else {
+        $tplData['return_url'] = xarServer::getCurrentURL();
+    }
+
+    // field list to show
+    if (!empty($args['fieldlist'])) {
+        $tplData['fieldlist'] = explode(',',$args['fieldlist']);
+    }
+
+    // action list to show (could be empty here !)
+    if (isset($args['actionlist'])) {
+        if (!empty($args['actionlist'])) {
+            $tplData['actionlist'] = explode(',',$args['actionlist']);
+        } else {
+            $tplData['actionlist'] = array();
+        }
+    }
 
     if (!empty($args['template'])) {
         return xarTplModule('workflow', 'user', 'showstatus', $tplData, $args['template']);

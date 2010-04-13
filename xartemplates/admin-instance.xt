@@ -155,7 +155,8 @@
               <label for="propvalue" class="xar-form-label">
                 Value
               </label>
-              <textarea id="propvalue" name="value" rows="4" cols="80"></textarea>
+              <xar:set name="empty">''</xar:set>
+              <textarea id="propvalue" name="value" rows="4" cols="80">#$empty#</textarea>
             </div>
             <div class="xar-form-input-wrapper-after">
               <input type="submit" name="addprop" value="#xarML('add')#"/>

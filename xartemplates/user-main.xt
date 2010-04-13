@@ -13,10 +13,12 @@
       See the <a href="#$concepts#">introduction</a> and <a href="#$manual#">user manual</a> of
       Galaxia for more details on what this module is all about, and how to use it.
     </p>
-<!-- Show the status of the processes that the user started -->
-      <xar:workflow-status/>
 <!-- Show the tasklist for this user -->
       <xar:workflow-instances/>
+<!-- Show the on-going processes that the user started -->
+      <xar:workflow-status notstatus="completed,aborted" title="On-going workflow processes initiated by me" sort_mode="started_desc"/>
+<!-- Show the completed processes that the user started, with customized fieldlist and empty actionlist -->
+      <xar:workflow-status status="completed,aborted" title="Completed workflow processes initiated by me" sort_mode="started_desc" fieldlist="procname,version,instanceId,started,status,ended" actionlist=""/>
       <xar:template file="galaxfooter"/>
     </div>
   </div>

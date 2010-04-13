@@ -8,6 +8,19 @@
     <div>
       <ul class="xar-tabs">
         <xar:sec mask="AdminWorkflow" catch="false">
+            <xar:if condition="$activetab eq 'overview'">
+              <xar:set name="tabclass">'xar-tab-active'</xar:set>
+              <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+              <xar:set name="tabclass">'xar-tab'</xar:set>
+              <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+            </xar:if>
+            <li class="#$tabclass#">
+              <a href="#xarModURL('workflow','admin','overview')#" class="#$linkclass#">
+                Overview
+              </a>
+            </li>
+
           <xar:if condition="$activetab eq 'monitor_processes' or $activetab eq 'monitor_activities'
             or $activetab eq 'monitor_instances' or $activetab eq 'monitor_workitems'">
                 <xar:set name="tabclass">'xar-tab-active'</xar:set>
@@ -47,20 +60,7 @@
             </xar:if>
             <li class="#$tabclass#">
               <a href="#xarModURL('workflow','admin','modifyconfig')#" class="#$linkclass#">
-                Modify Config
-              </a>
-            </li>
-
-            <xar:if condition="$activetab eq 'overview'">
-              <xar:set name="tabclass">'xar-tab-active'</xar:set>
-              <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
-            <xar:else />
-              <xar:set name="tabclass">'xar-tab'</xar:set>
-              <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
-            </xar:if>
-            <li class="#$tabclass#">
-              <a href="#xarModURL('workflow','admin','overview')#" class="#$linkclass#">
-                Overview
+                Modify Configuration
               </a>
             </li>
         </xar:sec>

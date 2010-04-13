@@ -4,9 +4,12 @@
      The ideas is to use a layout attribute in tag tag to select the proper layout
 -->
   <xar:if condition="empty($layout) or $layout eq 'default'">
+    <xar:if condition="empty($title)">
+      <xar:set name="title">'My Current Task List'</xar:set>
+    </xar:if>
     <fieldset>
       <legend>
-        My Current Task List
+        #$title#
       </legend>
       <!-- Produce the list of instances -->
       <xar:template file="instancelist"/>

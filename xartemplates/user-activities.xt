@@ -79,23 +79,8 @@
                     <td>#$items[$ix]['procname']#</td>
                     <td style="text-align: right;">#$items[$ix]['version']#</td>
                     <td style="text-align:left;">
-                      <xar:if condition="$items[$ix]['type'] eq 'start'">
-                        <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/mini_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
-                        <xar:elseif condition="$items[$ix]['type'] eq 'end'"/>
-                        <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/mini_dbl_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
-                        <xar:elseif condition="$items[$ix]['type'] eq 'activity'"/>
-                        <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/mini_rectangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
-                        <xar:elseif condition="$items[$ix]['type'] eq 'switch'"/>
-                        <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/mini_diamond.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
-                        <xar:elseif condition="$items[$ix]['type'] eq 'standalone'"/>
-                        <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/mini_hexagon.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
-                        <xar:elseif condition="$items[$ix]['type'] eq 'split'"/>
-                        <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/mini_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
-                        <xar:elseif condition="$items[$ix]['type'] eq 'join'"/>
-                        <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/mini_inv_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"/>
-                        <xar:else/>
-                        #$items[$ix]['type']#
-                      </xar:if>
+                      <!-- Get an image for the activity -->
+                      <xar:template file="activity_image" subdata="$items[$ix]"/>
                       <xar:if condition="$items[$ix]['instances'] gt 0">
                         <a href="&xar-modurl-workflow-user-instances;&amp;filter_process=#$items[$ix]['pId']#&amp;filter_activity=#$items[$ix]['activityId']#">#$items[$ix]['name']#</a>
                         <xar:else/>

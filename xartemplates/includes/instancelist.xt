@@ -1,127 +1,156 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <form action="&xar-modurl-workflow-user-instances;" method="post">
+  <xar:if condition="!empty($items) and count($items) gt 0">
     <xar:if condition="!isset($offset)"><xar:set name="offset">0</xar:set></xar:if>
-    <input type="hidden" name="offset" value="#$offset#"/>
     <xar:if condition="!isset($find)"><xar:set name="find">''</xar:set></xar:if>
-    <input type="hidden" name="find" value="#$find#"/>
     <xar:if condition="!isset($where)"><xar:set name="where">''</xar:set></xar:if>
-    <input type="hidden" name="where" value="#$where#"/>
     <xar:if condition="!isset($sort_mode)"><xar:set name="sort_mode">'procname_asc'</xar:set></xar:if>
-    <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
+
+    <xar:set name="fieldlabel">array('procname'   => 'Process',
+                                     'version'    => 'Version',
+                                     'instanceId' => 'Inst',
+                                     'owner'      => 'Owner',
+                                     'started'    => 'Start',
+                                     'ended'      => 'End',
+                                     'status'     => 'Status',
+                                     'name'       => 'Activity',
+                                     'user'       => 'User')</xar:set>
+    <xar:if condition="!isset($fieldlist)">
+        <xar:set name="fieldlist">array('procname', 'instanceId', 'owner', 'name', 'user', 'started')</xar:set>
+    </xar:if>
+    <xar:set name="actionlabel">array('run'       => 'Run',
+                                      'send'      => 'Send',
+                                      'exception' => 'Except',
+                                      'resume'    => 'Resume',
+                                      'abort'     => 'Abort',
+                                      'release'   => 'Release',
+                                      'remove'    => 'Seen')</xar:set>
+    <xar:if condition="!isset($actionlist)">
+        <xar:set name="actionlist">array('run', 'send', 'exception', 'resume', 'abort', 'release')</xar:set>
+    </xar:if>
 
     <table style="border-collapse: separate; width: 99%">
-      <xar:if condition="!empty($items) and count($items) gt 0">
+      <tr>
+        <xar:foreach in="$fieldlist" value="$field">
+          <xar:if condition="$sort_mode eq $field . '_desc'">
+            <th><a href="#xarServer::getCurrentURL(array('sort_mode' => $field . '_asc'))#">#$fieldlabel[$field]#</a></th>
+          <xar:else/>
+            <th><a href="#xarServer::getCurrentURL(array('sort_mode' => $field . '_desc'))#">#$fieldlabel[$field]#</a></th>
+          </xar:if>
+        </xar:foreach>
+        <xar:if condition="!empty($actionlist)">
+          <th>Actions</th>
+          <!--
+          <xar:foreach in="$actionlist" value="$action">
+            <th>#$actionlabel[$action]#</th>
+          </xar:foreach>
+          -->
+        </xar:if>
+      </tr>
+      <xar:foreach in="$items" value="$item">
         <tr>
-          <th>
-            <xar:if condition="$sort_mode eq 'procname_desc'">
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_asc'))#">Process</a>
+          <form method="post" action="&xar-modurl-workflow-user-instances;">
+            <xar:foreach in="$fieldlist" value="$field">
+              <xar:if condition="$field eq 'procname'">
+                <td>#$item[$field]#</td>
+              <xar:elseif condition="$field eq 'version' or $field eq 'instanceId'"/>
+                <td style="text-align: center;">#$item[$field]#</td>
+              <xar:elseif condition="$field eq 'user' or $field eq 'owner'"/>
+                <xar:if condition="!empty($item[$field]) and is_numeric($item[$field])">
+                  <td>#xarUserGetVar('name',$item[$field])#</td>
+                <xar:else/>
+                  <td>#$item[$field]#</td>
+                </xar:if>
+              <xar:elseif condition="$field eq 'started' or $field eq 'ended'"/>
+                <xar:if condition="!empty($item[$field]) and is_numeric($item[$field])">
+                  <!-- you can choose how to display the date and time here, e.g. show
+                       the time for the last 12 hours and the date for anything older -->
+                  <xar:if condition="$item[$field] > time() - 12*60*60">
+                    <td>#xarLocaleGetFormattedTime('short',$item[$field])#</td>
+                  <xar:else/>
+                    <td>#xarLocaleGetFormattedDate('medium',$item[$field])#</td>
+                  </xar:if>
+                <xar:else/>
+                  <td>#$item[$field]#</td>
+                </xar:if>
+              <xar:elseif condition="$field eq 'status'"/>
+                <td>
+                  <xar:if condition="$item['status'] eq 'active'">
+                    <span style="color:green;">#$item['status']#</span>
+                  <xar:elseif condition="$item['status'] eq 'completed'"/>
+                    <span style="color:black;">#$item['status']#</span>
+                  <xar:elseif condition="$item['status'] eq 'aborted'"/>
+                    <span style="color:grey;">#$item['status']#</span>
+                  <xar:elseif condition="$item['status'] eq 'exception'"/>
+                    <span style="color:red;">#$item['status']#</span>
+                  <xar:else/>
+                    #$item['status']#
+                  </xar:if>
+                </td>
+              <xar:elseif condition="$field eq 'name'"/>
+                <td>
+                  <!-- Get an image for the activity -->
+                  <xar:template file="activity_image" subdata="$item"/>
+                  #$item['name']#
+                </td>
               <xar:else/>
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_desc'))#">Process</a>
-            </xar:if>
-          </th>
-          <th>Version</th>
-          <th>
-            <xar:if condition="$sort_mode eq 'instanceId_desc'">
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'instanceId_asc'))#">Ins</a>
-              <xar:else/>
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'instanceId_desc'))#">Ins</a>
-            </xar:if>
-          </th>
-          <th>
-            <xar:if condition="$sort_mode eq 'owner_desc'">
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'owner_asc'))#">Owner</a>
-              <xar:else/>
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'owner_desc'))#">Owner</a>
-            </xar:if>
-          </th>
-          <th>
-            <xar:if condition="$sort_mode eq 'name_desc'">
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'name_asc'))#">Activity</a>
-              <xar:else/>
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'name_desc'))#">Activity</a>
-            </xar:if>
-          </th>
-          <th>
-            <xar:if condition="$sort_mode eq 'user_desc'">
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'user_asc'))#">User</a>
-              <xar:else/>
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'user_desc'))#">User</a>
-            </xar:if>
-          </th>
-          <th>
-            <xar:if condition="$sort_mode eq 'started_desc'">
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'started_asc'))#">Start</a>
-              <xar:else/>
-              <a href="#xarServer::getCurrentURL(array('sort_mode' => 'started_desc'))#">Start</a>
-            </xar:if>
-          </th>
-          <th>Run</th>
-          <th>Send</th>
-          <th>Except</th>
-          <th>Resume</th>
-          <th>Abort</th>
-          <th>Release</th>
-        </tr>
-        <xar:foreach in="$items" value="$item">
-          <tr>
-            <form method="post" action="&xar-modurl-workflow-user-instances;">
-              <td>#$item['procname']#</td>
-              <td style="text-align: right;">#$item['version']#</td>
-              <td>#$item['instanceId']#</td>
-              <td>#$item['owner']#</td>
+                <td>#$field# ?</td>
+              </xar:if>
+            </xar:foreach>
+            <xar:if condition="!empty($actionlist)">
               <td>
-                <!-- Get an image for the activity -->
-                <xar:template file="activity_image" subdata="$item"/>
-                #$item['name']#
-              </td>
-              <td>#$item['user']#</td>
-              <td>#$item['started']#</td>
-              <td style="text-align: center;">
                 <input type="hidden" name="iid" value="#$item['instanceId']#"/>
                 <input type="hidden" name="aid" value="#$item['activityId']#"/>
                 <input type="hidden" name="return_url" value=""/>
-                <xar:if condition="$item['isInteractive'] eq 'y' and $item['status'] eq 'active'">
-                  <input type="hidden" name="activityId" value="#$item['activityId']#"/>
-                  <input type="image" name="run" value="1" title="#xarML('run instance')#" alt="#xarML('run instance')#" src="#sys::code()#modules/workflow/lib/galaxia/img/icons/next.gif"/>
-                </xar:if>
-              </td>
-              <td style="text-align: center;">
-                <xar:if condition="$item['isAutoRouted'] eq 'n' and $item['actstatus'] eq 'completed'">
-                  <input type="image" name="send" value="1" title="#xarML('send instance')#" alt="#xarML('send instance')#" src="#sys::code()#modules/workflow/lib/galaxia/img/icons/linkto.gif"/>
-                </xar:if>
-              </td>
-              <td style="text-align: center;">
-                <xar:if condition="$item['status'] ne 'aborted' and $item['status'] ne 'exception' and $item['userId'] eq $userId">
-                  <input type="image" name="exception" value="1" title="#xarML('exception handling')#" alt="#xarML('exception handling')#" src="#sys::code()#modules/workflow/lib/galaxia/img/icons/stop.gif"/>
-                </xar:if>
-              </td>
-              <td style="text-align: center;">
-                <xar:if condition="$item['status'] eq 'exception' and $item['userId'] eq $userId">
-                  <input type="image" name="resume" value="1" title="#xarML('resume instance')#" alt="#xarML('resume instance')#" src="#sys::code()#modules/workflow/lib/galaxia/img/icons/refresh2.gif"/>
-                </xar:if>
-              </td>
-              <td style="text-align: center;">
-                <xar:if condition="$item['status'] ne 'aborted' and $item['userId'] eq $userId">
-                  <input type="image" name="abort" value="1" title="#xarML('abort instance')#" alt="#xarML('abort instance')#" src="#sys::code()#modules/workflow/lib/galaxia/img/icons/trash.gif"/>
-                </xar:if>
-              </td>
-              <td style="text-align: center;">
-                <xar:if condition="$item['user'] eq '*' and $item['status'] eq 'active'">
-                  <input type="image" name="grab" value="1" title="#xarML('grab instance')#" alt="#xarML('grab instance')#" src="#sys::code()#modules/workflow/lib/galaxia/img/icons/fix.gif"/>
+              <!-- Caution: action checks differ between instancelist and workflowlist -->
+              <!-- We do know that the current user has the right role here -->
+                <xar:foreach in="$actionlist" value="$action">
+                  <!-- Get an input image for the action -->
+                  <xar:set name="info">array('action' => $action)</xar:set>
+                  <xar:if condition="$action eq 'run'">
+                    <xar:if condition="$item['isInteractive'] eq 'y' and $item['status'] eq 'active'">
+                      <input type="hidden" name="activityId" value="#$item['activityId']#"/>
+                      <xar:template file="action_input_image" subdata="$info"/>
+                    </xar:if>
+                  <xar:elseif condition="$action eq 'send'"/>
+                    <xar:if condition="$item['isAutoRouted'] eq 'n' and $item['actstatus'] eq 'completed'">
+                      <xar:template file="action_input_image" subdata="$info"/>
+                    </xar:if>
+                  <xar:elseif condition="$action eq 'exception'"/>
+                    <xar:if condition="$item['status'] ne 'aborted' and $item['status'] ne 'exception' and $item['user'] eq $userId">
+                      <xar:template file="action_input_image" subdata="$info"/>
+                    </xar:if>
+                  <xar:elseif condition="$action eq 'resume'"/>
+                    <xar:if condition="$item['status'] eq 'exception' and $item['user'] eq $userId">
+                      <xar:template file="action_input_image" subdata="$info"/>
+                    </xar:if>
+                  <xar:elseif condition="$action eq 'abort'"/>
+                    <xar:if condition="$item['status'] ne 'aborted' and $item['user'] eq $userId">
+                      <xar:template file="action_input_image" subdata="$info"/>
+                    </xar:if>
+                  <xar:elseif condition="$action eq 'release'"/>
+                    <xar:if condition="$item['user'] eq '*' and $item['status'] eq 'active'">
+                      <!-- reverse current action -->
+                      <xar:set name="info">array('action' => 'grab')</xar:set>
+                      <xar:template file="action_input_image" subdata="$info"/>
                     <xar:elseif condition="$item['status'] eq 'active'"/>
-                    <input type="image" name="release" value="1" title="#xarML('release instance')#" alt="#xarML('release instance')#" src="#sys::code()#modules/workflow/lib/galaxia/img/icons/float.gif"/>
-                </xar:if>
+                      <xar:template file="action_input_image" subdata="$info"/>
+                    </xar:if>
+                  <xar:elseif condition="$action eq 'remove'"/>
+                    <xar:if condition="$item['status'] eq 'completed' or $item['status'] eq 'aborted'">
+                      <xar:template file="action_input_image" subdata="$info"/>
+                    </xar:if>
+                  <xar:else/>
+                    #$action# ?
+                  </xar:if>
+                </xar:foreach>
               </td>
-            </form>
-          </tr>
-        </xar:foreach>
-        <xar:else/>
-        <tr>
-          <td colspan="7">
-            No instances found
-          </td>
+            </xar:if>
+          </form>
         </tr>
-      </xar:if>
+      </xar:foreach>
     </table>
-  </form>
+  <xar:else/>
+    No instances found
+  </xar:if>
+
 </xar:template>

@@ -4,9 +4,12 @@
          The ideas is to use a layout attribute in the tag to select the proper layout
     -->
     <xar:if condition="empty($layout) or $layout eq 'default'">
+      <xar:if condition="empty($title)">
+        <xar:set name="title">'Workflow processes initiated by me'</xar:set>
+      </xar:if>
       <fieldset>
         <legend>
-          Workflow processes initiated by me
+          #$title#
         </legend>
         <!-- Include the default layout for the xar:workflow-status tag -->
         <xar:template file="workflowlist"/>
@@ -15,6 +18,6 @@
       <!-- Layout apparently had a value -->
       Trying to use layout : #$layout#
       Not implemented yet
-      This layout is undefined - please specify it in modules/workflow/xartemplates/user-showinstances.xd
+      This layout is undefined - please specify it in modules/workflow/xartemplates/user-showstatus.xd
     </xar:if>
 </xar:template>

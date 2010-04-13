@@ -38,13 +38,32 @@ function workflow_userapi_showinstances($args)
 
     $wheres = array();
     if (!empty($args['status'])) {
-        $wheres[] = "gi.status='" . $args['status'] . "'";
+        if (strpos($args['status'], ',')) {
+            $statuslist = explode(',',$args['status']);
+            $wheres[] = "gi.status IN ('" . implode("','", $statuslist) . "')";
+        } else {
+            $wheres[] = "gi.status='" . $args['status'] . "'";
+        }
+    }
+    if (!empty($args['notstatus'])) {
+        if (strpos($args['notstatus'], ',')) {
+            $statuslist = explode(',',$args['notstatus']);
+            $wheres[] = "gi.status NOT IN ('" . implode("','", $statuslist) . "')";
+        } else {
+            $wheres[] = "gi.status!='" . $args['notstatus'] . "'";
+        }
     }
     if (!empty($args['actstatus'])) {
         $wheres[] = "gia.status='" . $args['actstatus'] . "'";
     }
     if (!empty($args['pId'])) {
         $wheres[] = "gp.pId='" . $args['pId'] . "'";
+    }
+    if (!empty($args['owner'])) {
+        $wheres[] = "gi.owner='" . $args['owner'] . "'";
+    }
+    if (!empty($args['user'])) {
+        $wheres[] = "gia.user='" . $args['user'] . "'";
     }
     $where = implode(' and ', $wheres);
 
@@ -68,38 +87,56 @@ function workflow_userapi_showinstances($args)
         return '';
     }
 
-    foreach ($items['data'] as $index => $info) {
-        if (!empty($info['started'])) {
-            $items['data'][$index]['started'] = xarLocaleGetFormattedDate('medium',$info['started']) . ' '
-                                                . xarLocaleGetFormattedTime('short',$info['started']);
-        }
-        $items['data'][$index]['ownerId'] = $info['owner'];
-        if (!empty($info['owner']) &&
-            is_numeric($info['owner'])) {
-            $items['data'][$index]['owner'] = xarUserGetVar('name', $info['owner']);
-        }
-        if (!is_numeric($info['user'])) {
-            $items['data'][$index]['userId'] = $info['user'];
-            continue;
-        }
-        $role = xarModAPIFunc('roles','user','get',
-                              array('id' => $info['user']));
-        if (!empty($role)) {
-            $items['data'][$index]['userId'] = $role['id'];
-            $items['data'][$index]['user'] = $role['name'];
-            $items['data'][$index]['login'] = $role['uname'];
-        }
+    // filter out instances the user doesn't want to see
+    if (xarUserIsLoggedIn()) {
+        $seenlist = xarModUserVars::get('workflow','seenlist');
+    } else {
+        $seenlist = xarSession::getVar('workflow.seenlist');
     }
-    $tplData['items'] = $items['data'];
+    if (!empty($seenlist)) {
+        $seen = explode(';',$seenlist);
+    } else {
+        $seen = array();
+    }
+    $tplData['items'] = array();
+    foreach ($items['data'] as $index => $info) {
+        if (in_array($info['instanceId'],$seen)) continue;
+        $tplData['items'][] = $items['data'][$index];
+    }
+    if (count($tplData['items']) < 1) {
+        return '';
+    }
 
     $tplData['userId'] = $user;
+
+    if (!empty($args['title'])) {
+        $tplData['title'] = $args['title'];
+    }
 
     if (!empty($args['layout'])) {
         $tplData['layout'] = $args['layout'];
     }
 
     // URL to return to if some action is taken
-    $tplData['return_url'] = xarServer::getCurrentURL();
+    if (!empty($args['return_url'])) {
+        $tplData['return_url'] = $args['return_url'];
+    } else {
+        $tplData['return_url'] = xarServer::getCurrentURL();
+    }
+
+    // field list to show
+    if (!empty($args['fieldlist'])) {
+        $tplData['fieldlist'] = explode(',',$args['fieldlist']);
+    }
+
+    // action list to show (could be empty here !)
+    if (isset($args['actionlist'])) {
+        if (!empty($args['actionlist'])) {
+            $tplData['actionlist'] = explode(',',$args['actionlist']);
+        } else {
+            $tplData['actionlist'] = array();
+        }
+    }
 
     if (!empty($args['template'])) {
         return xarTplModule('workflow', 'user', 'showinstances', $tplData, $args['template']);
