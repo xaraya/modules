@@ -7,7 +7,7 @@ function xarpages_userapi_getpagestree($args)
     // First get the set of pages.
     // Check out 'getpages' for the complete range of parameters that can be
     // passed in to restrict the pages retrieved.
-    $pages = xarModAPIfunc('xarpages', 'user', 'getpages', $args);
+    $pages = xarMod::apiFunc('xarpages', 'user', 'getpages', $args);
 
     // Return if no pages found.
     if (empty($pages)) {

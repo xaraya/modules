@@ -55,7 +55,7 @@ function xarpages_admin_updatepage($args)
     if (!xarVarFetch('return_url', 'str:0:200', $return_url, '', XARVAR_DONT_SET)) {return;}
 
     // Validate the status against the list available.
-    $statuses = xarModAPIfunc('xarpages', 'user', 'getstatuses');
+    $statuses = xarMod::apiFunc('xarpages', 'user', 'getstatuses');
     if (!xarVarFetch('status', 'pre:upper:enum:' . implode(':', array_keys($statuses)), $status, NULL, XARVAR_NOT_REQUIRED)) return;
 
     // Allow the admin to propagate the status to all child pages (when ACIVE or INACTIVE).
@@ -71,18 +71,20 @@ function xarpages_admin_updatepage($args)
     sys::import('modules.dynamicdata.class.properties.master');
     $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
     $isvalid = $accessproperty->checkInput($name . '_display');
-    $info['display_access'] = $accessproperty->getValue();
+    $info['display_access'] = $accessproperty->value;
     $isvalid = $accessproperty->checkInput($name . '_modify');
-    $info['modify_access'] = $accessproperty->getValue();
+    $info['modify_access'] = $accessproperty->value;
     $isvalid = $accessproperty->checkInput($name . '_delete');
-    $info['delete_access'] = $accessproperty->getValue();
+    $info['delete_access'] = $accessproperty->value;
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+    }        
 
     // Pass to API
     if (!$creating) {
-        if (!xarModAPIFunc(
+        if (!xarMod::apiFunc(
             'xarpages', 'admin', 'updatepage',
             array(
                 'pid'           => $pid,
@@ -98,7 +100,6 @@ function xarpages_admin_updatepage($args)
                 'insertpoint'   => $refpid,
                 'offset'        => $position,
                 'alias'         => $alias,
-                'alias'         => $alias,
                 'info'          => $info,
                 'status'        => $status,
                 'status_recurse' => $status_recurse
@@ -106,7 +107,7 @@ function xarpages_admin_updatepage($args)
         )) {return;}
     } else {
         // Pass to API
-        $pid = xarModAPIFunc(
+        $pid = xarMod::apiFunc(
             'xarpages', 'admin', 'createpage',
             array(
                 'name'          => $name,

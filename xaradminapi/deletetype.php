@@ -18,7 +18,7 @@ function xarpages_adminapi_deletetype($args)
     }
 
     // Get the page type.
-    $type = xarModAPIfunc('xarpages', 'user', 'get_type', $args);
+    $type = xarMod::apiFunc('xarpages', 'user', 'get_type', $args);
 
     if (empty($type)) {
         $msg = xarML('Page type does not exist.');
@@ -29,7 +29,7 @@ function xarpages_adminapi_deletetype($args)
     if (!xarSecurityCheck('AdminXarpagesPagetype', 1)) {return;}
 
     // Get the [optional] pages for deleting.
-    $pages = xarModAPIFunc(
+    $pages = xarMod::apiFunc(
         'xarpages', 'user', 'getpages',
         array('dd_flag' => false, 'itemtype' => $id)
     );
@@ -38,7 +38,7 @@ function xarpages_adminapi_deletetype($args)
         // Delete each page of this type.
         foreach($pages as $page) {
             // Delete the page.
-            if (!xarModAPIfunc(
+            if (!xarMod::apiFunc(
                 'xarpages', 'admin', 'deletepage',
                 array('pid' => $page['pid'])
             )) {return;}
@@ -54,7 +54,7 @@ function xarpages_adminapi_deletetype($args)
     $result = $dbconn->Execute($query, array((int)$id));
     if (!$result) return;
 
-    $type_itemtype = xarModAPIfunc('xarpages', 'user', 'gettypeitemtype');
+    $type_itemtype = xarMod::apiFunc('xarpages', 'user', 'gettypeitemtype');
 
     // Delete the page type as an item.
     xarModCallHooks(

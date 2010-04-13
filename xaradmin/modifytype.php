@@ -25,13 +25,13 @@ function xarpages_admin_modifytype($args)
     $data = array();
 
     // Get the itemtype of the page type.
-    $type_itemtype = xarModAPIfunc('xarpages', 'user', 'gettypeitemtype');
+    $type_itemtype = xarMod::apiFunc('xarpages', 'user', 'gettypeitemtype');
 
     if (!empty($id)) {
         // Editing an existing page type
 
         // We need all pages, but with the current page tree pruned.
-        $type = xarModAPIFunc(
+        $type = xarMod::apiFunc(
             'xarpages', 'user', 'get_type',
             array('id' => $id, 'dd_flag' => false)
         );
@@ -65,9 +65,9 @@ function xarpages_admin_modifytype($args)
 
         // Get some example page types from the xardata directory.
         $files = array();
-        $xml_files = xarModAPIFunc(
+        $xml_files = xarMod::apiFunc(
             'dynamicdata', 'admin', 'browse',
-            array('basedir' => 'modules/xarpages/xardata', 'filetype' => 'xml')
+            array('basedir' => sys::code() . 'modules/xarpages/xardata', 'filetype' => 'xml')
         );
         if (!empty($xml_files)) {
             foreach($xml_files as $xml_file) {

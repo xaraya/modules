@@ -34,7 +34,7 @@
             <xar:if condition="!empty($summary)">
                 <tr>
                     <th scope="row"><xar:mlstring>Summary:</xar:mlstring></th>
-                    <td>#xarModAPIfunc('xarpages','user','transform_text',array('html'=>$summary))#</td>
+                    <td>#xarMod::apiFunc('xarpages','user','transform_text',array('html'=>$summary))#</td>
                 </tr>
             </xar:if>
        </table>

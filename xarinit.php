@@ -98,9 +98,16 @@ function xarpages_init()
     xarModVars::set('xarpages', 'show_usernavbar', true);
     xarModVars::set('xarpages', 'useicons', false);
     
+    # --------------------------------------------------------
+    #
+    # Set up configuration modvars (general)
+    #
+            $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'xarpages'));
+            $module_settings->initialize();
+
     // Switch short URL support on by default, as that is largely
     // the purpose of this module.
-    xarModVars::set('xarpages', 'SupportShortURLs', 1);
+    xarModVars::set('xarpages', 'enable_short_urls', true);
 
     // Privileges.
 
@@ -207,7 +214,7 @@ function xarpages_init()
 
     // Switch on all hooks from DD.
     if (xarModIsAvailable('dynamicdata')) {
-        xarModAPIFunc('modules', 'admin', 'enablehooks',
+        xarMod::apiFunc('modules', 'admin', 'enablehooks',
             array('callerModName' => 'xarpages', 'hookModName' => 'dynamicdata')
         );
     }
@@ -218,7 +225,7 @@ function xarpages_init()
 
     // Register block types.
     foreach(array('menu', 'crumb') as $blocktype) {
-        if (!xarModAPIFunc(
+        if (!xarMod::apiFunc(
             'blocks', 'admin', 'register_block_type',
             array(
                 'modName' => 'xarpages',
@@ -237,7 +244,7 @@ function xarpages_init()
                     'xarpages_pagetypes',
                     );
 
-    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
     // Set up module hooks
     if (!xarModRegisterHook(
@@ -315,7 +322,7 @@ function xarpages_upgrade($oldversion)
             // Register a 'menu' block type.
 
             // Register block types.
-            if (!xarModAPIFunc(
+            if (!xarMod::apiFunc(
                 'blocks', 'admin', 'register_block_type',
                 array(
                     'modName' => 'xarpages',
@@ -365,7 +372,7 @@ function xarpages_upgrade($oldversion)
             // Upgrade to 0.2.6 - new crumbtrail block added.
 
             // Register block types.
-            if (!xarModAPIFunc(
+            if (!xarMod::apiFunc(
                 'blocks', 'admin', 'register_block_type',
                 array(
                     'modName' => 'xarpages',
@@ -420,7 +427,7 @@ function xarpages_upgrade($oldversion)
  */
 function xarpages_delete()
 {
-    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'xarpages'));
+    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => 'xarpages'));
 
     // Set up database tables
     $dbconn = xarDB::getConn();

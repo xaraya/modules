@@ -33,7 +33,7 @@ function xarpages_adminapi_updatepage($args)
     }
 
     // Get current information on the page
-    $page = xarModAPIfunc('xarpages', 'user', 'getpage', array('pid' => $pid));
+    $page = xarMod::apiFunc('xarpages', 'user', 'getpage', array('pid' => $pid));
 
     if (empty($page)) {
         $msg = xarML('The page does not exist');
@@ -81,7 +81,7 @@ function xarpages_adminapi_updatepage($args)
 
     // Move the item in the hierarchy/tree, if required.
     if (!empty($moving) && $moving == 1) {
-        if (!xarModAPIfunc(
+        if (!xarMod::apiFunc(
             'xarpages', 'tree', 'moveitem',
             array(
                 'tablename' => $tablename,

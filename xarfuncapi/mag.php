@@ -32,7 +32,7 @@ function xarpages_funcapi_mag($args)
     // Call up the main mag module function.
     // Check the module is installed first.
     if (xarModIsAvailable('mag')) {
-        $args['content'] = xarModfunc('mag', 'user', 'main', array('pid' => $args['pid'], 'mid' => $mid));
+        $args['content'] = xarMod::guiFunc('mag', 'user', 'main', array('pid' => $args['pid'], 'mid' => $mid));
     } else {
         $args['content'] = xarML('Module "mag" is not installed or available.');
     }

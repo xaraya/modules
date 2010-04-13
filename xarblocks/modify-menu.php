@@ -39,7 +39,7 @@ function xarpages_menublock_modify($blockinfo)
 
     // Get a list of all pages for the drop-downs.
     // Get the tree of all pages, without the DD for speed.
-    $vars['all_pages'] = xarModAPIfunc(
+    $vars['all_pages'] = xarMod::apiFunc(
         'xarpages', 'user', 'getpagestree',
         array('dd_flag' => false, 'key' => 'pid')
     );

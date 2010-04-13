@@ -15,7 +15,7 @@ function xarpages_funcapi_news($args)
     // Get the details of the publication type (defaults etc.)
 
     // We get the first pubtype for historical reasons (DEPRECATED).
-    $pubtype = xarModAPIFunc('articles', 'user', 'getpubtypes', array('ptid' => $ptids[0]));
+    $pubtype = xarMod::apiFunc('articles', 'user', 'getpubtypes', array('ptid' => $ptids[0]));
 
     // Get the global settings if using multiple publication types, otherwise fetch
     // settings for the single selected publication type.
@@ -48,9 +48,9 @@ function xarpages_funcapi_news($args)
     $max_numitems_floor = 100;
     $max_numitems_ceiling = 1000;
 
-    $max_numitems = ($settings['itemsperpage'] < ($max_numitems_floor/$max_numitems_factor) ? $max_numitems_floor : ($settings['itemsperpage'] > ($max_numitems_ceiling/$max_numitems_factor) ? $max_numitems_ceiling : $settings['itemsperpage'] * $max_numitems_factor));
+    $max_numitems = ($settings['items_per_page'] < ($max_numitems_floor/$max_numitems_factor) ? $max_numitems_floor : ($settings['items_per_page'] > ($max_numitems_ceiling/$max_numitems_factor) ? $max_numitems_ceiling : $settings['items_per_page'] * $max_numitems_factor));
     xarVarFetch('startnum', 'int:1', $startnum, 1, XARVAR_NOT_REQUIRED);
-    xarVarFetch('numitems', 'int:1:' . $max_numitems, $numitems, $settings['itemsperpage'], XARVAR_NOT_REQUIRED);
+    xarVarFetch('numitems', 'int:1:' . $max_numitems, $numitems, $settings['items_per_page'], XARVAR_NOT_REQUIRED);
 
     // An individual item has been selected
     // TODO: support selection by name, though this may not be unique enough.
@@ -97,7 +97,7 @@ function xarpages_funcapi_news($args)
 
     // Transform hook fields on details.
     $transform_fields_detail = array('summary', 'body', 'notes');
-    
+
     // General sort methods will be what articles supports (practically just date and title)
     xarVarFetch('sort', 'str', $sort, '', XARVAR_NOT_REQUIRED);
     if (empty($sort)) $sort = (isset($settings['defaultsort']) ? $settings['defaultsort'] : '');
@@ -110,7 +110,7 @@ function xarpages_funcapi_news($args)
 
     // Add in some (i.e. all) optional values if they are not set to their defaults.
     if ($startnum > 1) $url_params['startnum'] = $startnum;
-    if ($numitems != $settings['itemsperpage']) $url_params['numitems'] = $numitems;
+    if ($numitems != $settings['items_per_page']) $url_params['numitems'] = $numitems;
     if (!empty($q)) $url_params['q'] = $q;
     if (!empty($cids)) $url_params['cids'] = $cids;
     if (!empty($aid)) $url_params['aid'] = $aid;
@@ -160,7 +160,7 @@ function xarpages_funcapi_news($args)
     $enddate = strtotime('+1 day -1 second', time());
 
     // Get details for all pubtypes
-    $pubtypes = xarModAPIFunc('articles', 'user', 'getpubtypes');
+    $pubtypes = xarMod::apiFunc('articles', 'user', 'getpubtypes');
 
     $article_select = array(
         'startnum' => $startnum,
@@ -184,7 +184,7 @@ function xarpages_funcapi_news($args)
         ),
     );
 
-    $articles = xarModAPIFunc('articles', 'user', 'getall', $article_select);
+    $articles = xarMod::apiFunc('articles', 'user', 'getall', $article_select);
 
     // Get the details of all the categories selected in these articles.
     // Gather a list of unique category IDs.
@@ -197,7 +197,7 @@ function xarpages_funcapi_news($args)
     // Now fetch the category details.
     if (!empty($all_cat_cids)) {
         $all_cat_cids = array_unique($all_cat_cids);
-        $all_cats = xarModAPIfunc('categories', 'user', 'getcatinfo', array('cids' => $all_cat_cids));
+        $all_cats = xarMod::apiFunc('categories', 'user', 'getcatinfo', array('cids' => $all_cat_cids));
 
         // Distribute the category details back to the items.
         foreach($articles as $cid_article_key => $cid_article) {
@@ -212,10 +212,11 @@ function xarpages_funcapi_news($args)
     }
 
     // Set the Pager
-    $search_count = xarModAPIFunc('articles', 'user', 'countitems', $article_select);
+    $search_count = xarMod::apiFunc('articles', 'user', 'countitems', $article_select);
     $pager_url_params = array_merge($url_params, array('pid' => $args['current_page']['pid'], 'startnum' => '%%'));
     $pager_base_url = xarModURL('xarpages', 'user', 'display', $pager_url_params);
-    $pager = xarTplGetPager($startnum, $search_count, $pager_base_url, $numitems);
+    sys::import('modules.base.class.pager');
+    $pager = xarTplPager::getPager($startnum, $search_count, $pager_base_url, $numitems);
 
     // If an individual article has been selected, then get that separately.
     $article = array();
@@ -223,7 +224,7 @@ function xarpages_funcapi_news($args)
         $single_article_select = $article_select;
         $single_article_select['aid'] = $aid;
         unset($single_article_select['startnum']);
-        $article = xarModAPIFunc('articles', 'user', 'get', $single_article_select);
+        $article = xarMod::apiFunc('articles', 'user', 'get', $single_article_select);
 
         // Do transform hooks.
         // TODO: transform some dynamic data fields too? Make configurable.
@@ -240,7 +241,7 @@ function xarpages_funcapi_news($args)
             // Fetch keywords and articles related by keyword.
             // CHECKME: does xarModIsHooked accept an array of ptids?
             if (xarModIsHooked('keywords', 'articles', $ptids)) {
-                $keyword_words = xarModAPIfunc(
+                $keyword_words = xarMod::apiFunc(
                     'keywords', 'user', 'getwords',
                     array('itemid' => $aid, 'modid' => xarMod::getRegID('articles'), 'itemtype' => $ptids)
                 );
@@ -254,7 +255,7 @@ function xarpages_funcapi_news($args)
                     // TODO: safety check for cases where articles etc don't exist
                     foreach($keyword_words as $keyword_word) {
                         // Get the item IDs that share this module's keywords
-                        $keyword_items = xarModAPIfunc(
+                        $keyword_items = xarMod::apiFunc(
                             'keywords', 'user', 'getitems',
                             array('keyword' => $keyword_word, 'modid' => xarMod::getRegID('articles'), 'itemtype' => $ptids)
                         );
@@ -275,7 +276,7 @@ function xarpages_funcapi_news($args)
                         $word_ids = array_values($word_ids);
 
                         // If we have keywords, go grab the articles - just need titles.
-                        $keyword_articles = xarModAPIfunc(
+                        $keyword_articles = xarMod::apiFunc(
                             'articles', 'user', 'getall',
                             array('aids' => $word_ids, 'status' => $status, 'fields' => array('aid','title'), 'enddate' => time())
                         );
@@ -339,7 +340,7 @@ function xarpages_funcapi_news($args)
                         $range_article_select['numitems'] = 3;
                     }
                     // Fetch the range of articles either side of the current article.
-                    $range_articles = xarModAPIFunc('articles', 'user', 'getall', $range_article_select);
+                    $range_articles = xarMod::apiFunc('articles', 'user', 'getall', $range_article_select);
 
                     // Only one article available.
                     if (count($range_articles) <= 1) {
@@ -407,7 +408,7 @@ function xarpages_funcapi_news($args)
         $month_select = $article_select;
 
         unset($month_select['pubdate']);
-        $month_counts = xarModAPIFunc('articles', 'user', 'getmonthcount', $month_select);
+        $month_counts = xarMod::apiFunc('articles', 'user', 'getmonthcount', $month_select);
 
         // DONE: Sum up counts by year
         // DONE: split up date for display as a title

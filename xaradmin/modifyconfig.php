@@ -22,7 +22,7 @@ function xarpages_admin_modifyconfig($args)
     if (!xarSecurityCheck('AdminXarpagesPage')) return;
 
     // Get the tree of all pages.
-    $data['tree'] = xarModAPIfunc('xarpages', 'user', 'getpagestree', array('dd_flag' => false));
+    $data['tree'] = xarMod::apiFunc('xarpages', 'user', 'getpagestree', array('dd_flag' => false));
 
     // Implode the names for each page into a path for display.
     foreach ($data['tree']['pages'] as $key => $page) {
@@ -91,7 +91,7 @@ function xarpages_admin_modifyconfig($args)
     }
 
     // Check any problem aliases
-    $problem_aliases = xarModAPIfunc('xarpages', 'user', 'getaliases', array('mincount' => 2));
+    $problem_aliases = xarMod::apiFunc('xarpages', 'user', 'getaliases', array('mincount' => 2));
     $data['problem_aliases'] = $problem_aliases;
 
     $data['authid'] = xarSecGenAuthKey();
@@ -99,7 +99,7 @@ function xarpages_admin_modifyconfig($args)
     // Config hooks for all page types.
 
     // Get the itemtype of the page type.
-    $type_itemtype = xarModAPIfunc('xarpages', 'user', 'gettypeitemtype');
+    $type_itemtype = xarMod::apiFunc('xarpages', 'user', 'gettypeitemtype');
 
     $confighooks = array();
     $confighooks = xarModCallHooks(

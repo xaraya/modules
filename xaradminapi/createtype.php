@@ -27,7 +27,7 @@ function xarpages_adminapi_createtype($args)
     // the system itemtype pagetype will be created, so do it first to
     // increase the likelyhood that it will get ID number 1.
     if ($name[0] != '@') {
-        $type_itemtype = xarModAPIfunc('xarpages', 'user', 'gettypeitemtype');
+        $type_itemtype = xarMod::apiFunc('xarpages', 'user', 'gettypeitemtype');
     }
 
     // TODO: validate name (mandatory and unique)
@@ -68,8 +68,8 @@ function xarpages_adminapi_createtype($args)
     // If there is a suitable XML definition file available, then
     // use it to create the DD hook object.
     $files = array();
-    $basedir = 'modules/xarpages/xardata';
-    $xml_files = xarModAPIFunc(
+    $basedir = sys::code() . 'modules/xarpages/xardata';
+    $xml_files = xarMod::apiFunc(
         'dynamicdata', 'admin', 'browse',
         array('basedir' => $basedir, 'filetype' => 'xml')
     );
@@ -81,7 +81,7 @@ function xarpages_adminapi_createtype($args)
 
         if (isset($files[$name])) {
             // There is an XML file to import.
-            $objectid = xarModAPIFunc(
+            $objectid = xarMod::apiFunc(
                 'dynamicdata', 'util', 'import',
                 array('file' => $basedir . '/' . $files[$name], 'keepitemid' => false)
             );
@@ -98,7 +98,7 @@ function xarpages_adminapi_createtype($args)
                 // updated, or the need for keeping an itemtype on the properties should
                 // be removed.
                 /*
-                xarModAPIFunc('dynamicdata', 'admin', 'syncprops',
+                xarMod::apiFunc('dynamicdata', 'admin', 'syncprops',
                     array(
                         'objectid' => $objectid,
                         'moduleid' => xarMod::getRegID('xarpages'),

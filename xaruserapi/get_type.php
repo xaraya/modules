@@ -4,7 +4,7 @@
 
 function xarpages_userapi_get_type($args)
 {
-    $types = xarModAPIfunc('xarpages', 'user', 'get_types', $args);
+    $types = xarMod::apiFunc('xarpages', 'user', 'get_types', $args);
 
     if (empty($types) || count($types) > 1) {
         return;

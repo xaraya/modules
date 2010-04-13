@@ -30,14 +30,16 @@ function xarpages_admin_updatetype($args)
     sys::import('modules.dynamicdata.class.properties.master');
     $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
     $isvalid = $accessproperty->checkInput('type_add_access');
-    $info = array('add_access' => $accessproperty->getValue());
+    $info = array('add_access' => $accessproperty->value);
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) {return;}
+    if (!xarSecConfirmAuthKey()) {
+        return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+    }        
 
     // Pass to API
     if (!empty($id)) {
-        if (!xarModAPIFunc(
+        if (!xarMod::apiFunc(
             'xarpages', 'admin', 'updatetype',
             array(
                 'id'           => $id,
@@ -48,7 +50,7 @@ function xarpages_admin_updatetype($args)
         )) {return;}
     } else {
         // Pass to API
-        $id = xarModAPIFunc(
+        $id = xarMod::apiFunc(
             'xarpages', 'admin', 'createtype',
             array(
                 'name'         => $name,

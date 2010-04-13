@@ -99,7 +99,7 @@ function xarpages_userapi_get_types($args)
 
         // Fetch the DD fields for all page types in one go.
         if (!empty($item_ids)) {
-            $dd_data = xarModAPIfunc(
+            $dd_data = xarMod::apiFunc(
                 'dynamicdata', 'user', 'getitems',
                 array('module' => 'xarpages', 'itemtype' => $itemtype, 'itemids' => array_keys($item_ids))
             );

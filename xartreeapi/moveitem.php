@@ -18,7 +18,7 @@ function xarpages_treeapi_moveitem($args)
     $xartable = xarDB::getTables();
 
     // Obtain current information on the reference item
-    $refitem = xarModAPIFunc('xarpages', 'user', 'getpage', array('pid' => $refid));
+    $refitem = xarMod::apiFunc('xarpages', 'user', 'getpage', array('pid' => $refid));
     $query = 'SELECT xar_left, xar_right, xar_parent'
         . ' FROM ' . $tablename
         . ' WHERE ' . $idname . ' = ?';

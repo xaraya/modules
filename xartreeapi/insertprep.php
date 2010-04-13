@@ -38,7 +38,7 @@ function xarpages_treeapi_insertprep($args)
 
     $dbconn = xarDB::getConn();
 
-    $result = xarModAPIfunc(
+    $result = xarMod::apiFunc(
         'xarpages', 'tree', 'getleftright',
         array(
             'tablename' => $tablename,

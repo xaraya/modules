@@ -176,7 +176,7 @@ function xarpages_userapi_getpages($args)
         $pages = array();
 
         // Get all the page type details.
-        $pagetypes = xarModAPIfunc(
+        $pagetypes = xarMod::apiFunc(
             'xarpages', 'user', 'get_types',
             array('key' => 'id', 'dd_flag' => $dd_flag)
         );
@@ -312,7 +312,7 @@ function xarpages_userapi_getpages($args)
 
         if ($dd_flag && !empty($pages)) {
             // Get the DD properties for the page tree.
-            $dd_data = xarModAPIfunc('xarpages', 'user', 'getpagedd', array('pages' => $pages));
+            $dd_data = xarMod::apiFunc('xarpages', 'user', 'getpagedd', array('pages' => $pages));
 
             // Merge the DD data into the main page tree.
             // TODO: an easier way to merge arrays? This just seems clumsy.

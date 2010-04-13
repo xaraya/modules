@@ -70,28 +70,28 @@ function sniffer()
 {
     $http_agent = getenv('HTTP_USER_AGENT');
 
-    if (ereg('MSIE ([0-9].[0-9]{1,2})', $http_agent, $ver)) {
+    if (mb_ereg('MSIE ([0-9].[0-9]{1,2})', $http_agent, $ver)) {
         $version = $ver[1];
         $agent = 'MSIE';
-    } elseif (ereg('Opera[ /]([0-9].[0-9]{1,2})', $http_agent, $ver)) {
+    } elseif (mb_ereg('Opera[ /]([0-9].[0-9]{1,2})', $http_agent, $ver)) {
         $version = $ver[1];
         $agent = 'Opera';
-    } elseif (ereg('Konqueror/([0-9].[0-9]{1,2})', $http_agent, $ver)) {
+    } elseif (mb_ereg('Konqueror/([0-9].[0-9]{1,2})', $http_agent, $ver)) {
         $version = $ver[1];
         $agent = 'Konqueror';
-    } elseif (ereg('Netscape6/([0-9].[0-9]{1,2})', $http_agent, $ver)) {
+    } elseif (mb_ereg('Netscape6/([0-9].[0-9]{1,2})', $http_agent, $ver)) {
         $version = '6';
         $agent = 'Netscape';
-    } elseif (ereg('Netscape/([0-9].[0-9]{1,2})', $http_agent, $ver)) {
+    } elseif (mb_ereg('Netscape/([0-9].[0-9]{1,2})', $http_agent, $ver)) {
         $version = $ver[1];
         $agent = 'Netscape';
-    } elseif (ereg('Firefox/([0-9]{1,2})', $http_agent, $ver)) {
+    } elseif (mb_ereg('Firefox/([0-9]{1,2})', $http_agent, $ver)) {
         $agent = 'Mozilla Firefox';
         $version = $ver[1];
-    } elseif (ereg('Mozilla/([0-9].[0-9]{1,2})', $http_agent, $ver)) {
+    } elseif (mb_ereg('Mozilla/([0-9].[0-9]{1,2})', $http_agent, $ver)) {
         $version = $ver[1];
         $agent = 'Mozilla';
-    } elseif (ereg('Safari/([0-9]{1,2})', $http_agent, $ver)) {
+    } elseif (mb_ereg('Safari/([0-9]{1,2})', $http_agent, $ver)) {
         $agent = 'Safari';
         $version = $ver[1];
     } else {
