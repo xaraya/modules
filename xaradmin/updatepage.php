@@ -100,7 +100,6 @@ function xarpages_admin_updatepage($args)
                 'insertpoint'   => $refpid,
                 'offset'        => $position,
                 'alias'         => $alias,
-                'alias'         => $alias,
                 'info'          => $info,
                 'status'        => $status,
                 'status_recurse' => $status_recurse
@@ -133,7 +132,7 @@ function xarpages_admin_updatepage($args)
     if ($creating) {
         if ($batch) {
             // If there are more to create, then go to the create page.
-            xarResponse::Redirect(
+            xarResponse::redirect(
                 xarModUrl(
                     'xarpages', 'admin', 'modifypage',
                     array(
@@ -146,13 +145,13 @@ function xarpages_admin_updatepage($args)
                 )
             );
         } else {
-            xarResponse::Redirect(xarModURL('xarpages', 'admin', 'modifypage', array('pid' => $pid)));
+            xarResponse::redirect(xarModURL('xarpages', 'admin', 'modifypage', array('pid' => $pid)));
         }
     } else {
         if (!empty($return_url)) {
-            xarResponse::Redirect($return_url);
+            xarResponse::redirect($return_url);
         } else {
-            xarResponse::Redirect(xarModURL('xarpages', 'admin', 'viewpages'));
+            xarResponse::redirect(xarModURL('xarpages', 'admin', 'viewpages'));
         }
     }
 

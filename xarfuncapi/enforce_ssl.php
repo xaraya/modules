@@ -31,7 +31,7 @@ function xarpages_funcapi_enforce_ssl($args)
         $url = preg_replace('/^http:/i', 'https:', $url);
 
         // Set the redirect URL.
-        xarResponse::Redirect($url);
+        xarResponse::redirect($url);
 
         // Tell the caller we want to redirect.
         return false;

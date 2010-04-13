@@ -655,7 +655,7 @@ function xarpages_funcapi_multiform($args)
         }
 
         // Set the redirect URL.
-        xarResponse::Redirect($redirect_url);
+        xarResponse::redirect($redirect_url);
 
         // Returning 'false' indicates that we are doing a redirect, so no more xarpages
         // display handling is necessary.

@@ -128,7 +128,7 @@ function xarpages_funcapi_pageaction($args)
         // save and redirect back to previous page
         _pageform_setobject( $pf, $pages[$form_pid]['name'], $in_object );
         if ($dd['debug'] != 1) {
-            xarResponse::Redirect( $nav['form_url'] );
+            xarResponse::redirect( $nav['form_url'] );
         }
         // else return
     }
@@ -188,7 +188,7 @@ function xarpages_funcapi_pageaction($args)
             // save input and redirect back to previous page (current form)
             _pageform_setobject( $pf, $pages[$form_pid]['name'], $in_object );
             if ($dd['debug'] != 1) {
-                xarResponse::Redirect( $nav['form_url'] );
+                xarResponse::redirect( $nav['form_url'] );
             }
             // else return
         }
@@ -205,10 +205,10 @@ function xarpages_funcapi_pageaction($args)
         // if not debugging, redirect
         if ($dd['debug'] != 1) {
             if (!empty($dd['redirect_nav'])) {
-                xarResponse::Redirect( $nav[$dd['redirect_nav']] );
+                xarResponse::redirect( $nav[$dd['redirect_nav']] );
             }
             else {
-                xarResponse::Redirect( $nav['nextform_url'] );
+                xarResponse::redirect( $nav['nextform_url'] );
             }
         }
     }

@@ -50,11 +50,11 @@ function pageform_regdemoaction_process( &$inobj, &$outobj )
         return 1;
     }
 /*
-    if ($state==Roles_Master::ROLES_RSTATE_ACTIVE) {
+    if ($state==ROLES_STATE_ACTIVE) {
         // log in and redirect
         xarMod::apiFunc('authsystem', 'user', 'login', array( 'uname' => $email, 'pass' => $pass, 'rememberme' => 0));
         $redirect=xarServer::getBaseURL();
-        xarResponse::Redirect($redirect);
+        xarResponse::redirect($redirect);
     }
 */
     // ok, then pass state to next form
