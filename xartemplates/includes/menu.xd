@@ -43,7 +43,7 @@
 
         <xar:set name="display_children">false</xar:set>
         <xar:loop name="$parent_copy.child_keys">
-            <xar:set name="page">$pages[$loop:item]</xar:set>
+            <xar:set name="page">#$pages[$loop:item]#</xar:set>
             <xar:if condition="($max_level eq 0 or $page.depth le $max_level) and (!empty($page.is_child) or !empty($page.is_sibling) or !empty($page.is_ancestor) or $this_menu_level eq 1)">
                 <xar:set name="display_children">true</xar:set>
             </xar:if>
@@ -57,7 +57,7 @@
 
             <ul>
                 <xar:loop name="$parent_copy.child_keys">
-                    <xar:set name="page">$pages[$loop:item]</xar:set>
+                    <xar:set name="page">#$pages[$loop:item]#</xar:set>
                     <xar:if condition="($max_level eq 0 or $page.depth le $max_level) and (!empty($page.is_child) or !empty($page.is_sibling) or !empty($page.is_ancestor) or $this_menu_level eq 1)">
                         <!-- Set a class if the page has sub-pages -->
                         <xar:if condition="!empty($page.has_children)">
