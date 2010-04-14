@@ -23,7 +23,7 @@ function registration_user_main()
     $allowregistration = xarModVars::get('registration', 'allowregistration');
 
     if (xarUserIsLoggedIn()) {
-        xarResponse::Redirect(xarModURL('registration', 'user', 'terms'));
+        xarResponse::redirect(xarModURL('registration', 'user', 'terms'));
 
     } elseif ($allowregistration != true) {
 
@@ -31,14 +31,14 @@ function registration_user_main()
         $defaultauthdata     = xarModAPIFunc('roles','user','getdefaultauthdata');
         $defaultloginmodname = $defaultauthdata['defaultloginmodname'];
 
-        xarResponse::Redirect(xarModURL($defaultloginmodname, 'user', 'showloginform'));
+        xarResponse::redirect(xarModURL($defaultloginmodname, 'user', 'showloginform'));
 
     } else { //allow user to register
         $minage = xarModVars::get('registration', 'minage');
         if (($minage)>0) {
-            xarResponse::Redirect(xarModURL('registration','user','register', array('phase'=>'checkage')));
+            xarResponse::redirect(xarModURL('registration','user','register', array('phase'=>'checkage')));
         }else{
-            xarResponse::Redirect(xarModURL('registration','user','register'));
+            xarResponse::redirect(xarModURL('registration','user','register'));
         }
     }
     return true;
