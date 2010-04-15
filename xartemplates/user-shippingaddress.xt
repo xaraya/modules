@@ -2,33 +2,24 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
-<xar:style scope="module" module="shop" file="cart" />
+<xar:style scope="module" module="shop" file="checkout" />
  
 <div class="xar-mod-head">
     <span class="xar-mod-title">shop</span>
 </div>
-    <div class="xar-mod-body">
 
+<div class="xar-mod-body">
 
 <form method="post" id="newaccount" name="newaccount"  action="#xarmodurl('shop','user','shippingaddress')#">
 
-	<xar:if condition="isset($shippingaddresses)">
+<xar:set name="legend">'Enter a shipping address:'</xar:set>
 
-	<style>
-	.shippingaddress {
-	padding: 5px 6px 6px 6px;
-	float: left;
-	width: 160px;
-	border: 1px solid ##ddd;
-	margin: 0 15px 15px 0;
-	}
-	#shippingsaved {
-	clear: both;
-	display: block;
-	}
-	</style> 
+<xar:if condition="isset($shippingaddresses)">
 
-TODO: should be possible to delete addresses
+	TODO: should be possible to delete addresses
+
+	<xar:set name="legend">'Or enter a different shipping address:'</xar:set>
+	
 	<fieldset>
 
 		<legend>
@@ -37,7 +28,7 @@ TODO: should be possible to delete addresses
 
 		<xar:foreach in="$shippingaddresses" key="$key" value="$val">
 
-		<div class="shippingaddress">
+		<div class="shippingaddressbox">
 		<div>#$val['first_name']# #$val['last_name']#</div>
 		<div>#$val['street_addr']#</div>
 		<div>#$val['city_addr']# #$val['state_addr']# #$val['postal_code']#</div>
@@ -52,51 +43,47 @@ TODO: should be possible to delete addresses
 		</xar:foreach>
 		<br style="clear:both;" />
 
-	
-
 	</fieldset>
 
-	</xar:if>
+</xar:if>
 
-	 <xar:if condition="isset($_SESSION['errors'])">
-		<div class="error">
-		<div>
-		There is a problem with your address:
-		</div>
-		<xar:foreach in="$_SESSION['errors']" key="$key">
+ <xar:if condition="isset($_SESSION['errors'])">
+	<a name="errors"></a>
+	<div class="error">
+	<div>There is a problem with your address:</div>
+	<xar:foreach in="$_SESSION['errors']" key="$key">
 		<div style="margin-left: 7px;"> 
-		<xar:data-label property="$properties[$key]" /> <span style="font-weight: normal">field is empty or invalid.</span>
+		<xar:data-label property="$properties[$key]" /> 
+		<span style="font-weight: normal">field is empty or invalid.</span>
 		</div>
-		</xar:foreach>
-		</div>
-	 </xar:if>
-
-
+	</xar:foreach>
+	</div>
+ </xar:if>
 	
-	<fieldset> 
+<fieldset> 
+<legend>#$legend#</legend>
 
-	<legend>Or enter a different shipping address:</legend>
-		<table id="paymentinfo"> 
-		<xar:foreach in="$myfields" value="$name">
-			
+	<table id="paymentinfo"> 
+	<xar:foreach in="$myfields" value="$name">
+		
+		<xar:set name="val">''</xar:set>
+		<xar:comment>If there is an error, let's make sure we don't populate the field with the user's saved account data, because it will look like our validation is broken.  Instead, empty the field.</xar:comment>
+		<xar:if condition="isset($_SESSION['errors'][$name])">
 			<xar:set name="val">''</xar:set>
-			<xar:comment>If there is an error, let's make sure we don't populate the field with the user's saved account data, because it will look like our validation is broken.  Instead, empty the field.</xar:comment>
-			<xar:if condition="isset($_SESSION['errors'][$name])">
-				<xar:set name="val">''</xar:set>
-			</xar:if>
+		</xar:if>
 
-			<tr>
-			<td><xar:data-label property="$properties[$name]" /></td>
-			<td class="right"><xar:data-input property="$properties[$name]" value="$val" /></td>
-			</tr>
+		<tr>
+		<td><xar:data-label property="$properties[$name]" /></td>
+		<td class="right"><xar:data-input property="$properties[$name]" value="$val" /></td>
+		</tr>
 
-		</xar:foreach>
-		</table>	
-		<div class="button_container" id="shippingaddress">
-		<input type="submit" class="button" name="proceed" value="Continue" />
-		</div>
-	</fieldset>
-	</form>
+	</xar:foreach>
+	</table>	
+	<div class="button_container">
+	<input type="submit" class="button" name="proceed" value="Continue" />
+	</div>
+</fieldset>
+</form>
 
-    </div>
+</div>
 </xar:template>

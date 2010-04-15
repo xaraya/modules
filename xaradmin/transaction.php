@@ -37,10 +37,10 @@ function shop_admin_transaction($args)
 
     //We don't really have the item until we call getItem()
     $some_id = $object->getItem(array('itemid' => $itemid));
-
+ 
     //Make sure we got something
     if (!isset($some_id) || $some_id != $itemid) return;
-
+ 
     //Get the property names and values for the item with the getFieldValues() method
     $values = $object->getFieldValues();
 		

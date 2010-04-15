@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
-<xar:style scope="module" module="shop" file="cart" />
+<xar:style scope="module" module="shop" file="checkout" />
 
 <div class="xar-mod-head">
     <span class="xar-mod-title">shop</span>
@@ -28,7 +28,7 @@
 		   <xar:data-label property="$properties['password']" value="" class="new_cust" /> 
 		   <xar:data-input property="$properties['password']" value="" class="new_cust" />
 		</div>
-		<div>
+		<div class="button_container">
 		   <input type="submit" value="#xarML('Continue')#" class="button" />
 		</div>
 	</form>
@@ -52,7 +52,9 @@
 			<input type="checkbox" name="rememberme" id="rememberme3" value="1"/> <span>Remember my password</span> 
 		</div>
 	</div>
-	<input type="submit" value="#xarML('Continue')#" class="button" />
+	<div class="button_container">
+		<input type="submit" value="#xarML('Continue')#" class="button" />
+	</div>
 	<div id="req_new_pw">
 		<a href="#xarModURL('roles','user','lostpassword')#">Lost your  password?</a>
 	</div>

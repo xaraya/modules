@@ -32,10 +32,11 @@ function shop_admin_modify()
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
     // Get the object we'll be working with
+	
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
 
 	$data['label'] = $data['object']->label;
-    
+ 
     // Check if we are in 'preview' mode from the input here - the rest is handled by checkInput()
     // Here we are testing for a button clicked, so we test for a string
     if(!xarVarFetch('preview', 'str', $data['preview'],  NULL, XARVAR_DONT_SET)) {return;}

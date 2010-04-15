@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
- <xar:style scope="module" module="shop" file="cart" />
+ <xar:style scope="module" module="shop" file="checkout" />
  
  <div class="xar-mod-head">
     <span class="xar-mod-title">shop</span>

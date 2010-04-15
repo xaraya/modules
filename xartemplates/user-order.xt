@@ -1,38 +1,42 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
- <xar:style scope="module" module="shop" file="cart" />
+ <xar:style scope="module" module="shop" file="checkout" />
  
  <div class="xar-mod-head">
     <span class="xar-mod-title">shop</span>
     </div>
     <div class="xar-mod-body">
 <img src="code/modules/shop/xarimages/Shoppingcart_48x48.png" width="48" height="48" alt="shopping cart" align="right" style="margin: -6px 11px 4px -11px" />
-	<h2>Review Order</h2>
-	
+	<h2>Review Your Order</h2>
+	When you're ready, place your order below.
 	<xar:comment>TODO: display error response from payment gateway, if any</xar:comment>
 
+<form style="display:inline">
+<table class="order ordertop"><tr><td>
 <fieldset id="shippingaddress">
 	<legend>Shipping address</legend>
-	<div> 
+	<div class="shippingaddressbox"> 
 		<div>#$shippingvals['first_name']# #$shippingvals['last_name']#</div>
 		<div>#$shippingvals['street_addr']#</div>
 		<div>#$shippingvals['city_addr']# #$shippingvals['state_addr']# #$shippingvals['postal_code']#</div>
 		<div><a href="#xarmodurl('shop','user','shippingaddress',array('skipto'=>'order'))#">Edit</a></div>
 	</div>
 </fieldset>
-
+</td><td>
 <fieldset id="paymentmethod">
 	<legend>Payment method</legend>
-	<div> 
+	<div class="paymentmethodbox"> 
 		<div>#$payvalues['card_type']# &#160; 
 		<xar:set name="lastfour">substr($payvalues['card_num'],-4)</xar:set>
 		 ending in #$lastfour#</div>
 		 <div><a href="#xarmodurl('shop','user','paymentmethod')#">Edit</a></div>
 	</div>
 </fieldset>
+</td></tr></table>
+</form>
 
-<table>
+<table class="order">
 
 	<tr><th>Product</th><th>Item Price</th><th>Qty</th><th>Subtotal</th><th class="last_col"></th></tr>
 
@@ -66,8 +70,8 @@
 	 
 	 <form method="post" id="placeorder" name="placeorder"  action="#xarmodurl('shop','user','order')#">
 	
-	<div class="button_container" id="placeorder">
-	<input type="submit" class="button" id="placeorder" name="placeorder" value="Place Order" />
+	<div class="button_container">
+	<input type="submit" class="button" name="placeorder" value="Place Order" />
 	</div>
 
 	</form>

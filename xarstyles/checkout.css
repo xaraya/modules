@@ -1,8 +1,15 @@
+fieldset {
+border: 1px solid #e1e1e1;
+}
+legend {
+margin-bottom: 2px;
+}
 td, th {
 text-align: right;
 }
 td{
 font-size: 12px;
+vertical-align: top;
 }
 td.right {
 text-align: left;
@@ -48,8 +55,9 @@ padding-right: 10px;
 width: 150px;
 }
 .button_container {
+text-align: center;
 font-weight: bold;
-font-size: 14px;
+font-size: 13px;
 text-transform: none;
 }
 .button_container div {
@@ -64,10 +72,10 @@ margin: 0 0 14px 0;
 margin-right: 7px;
 }
 
-#complete, #placeorder {
+.placeorder {
 text-align: center;
 }
-#complete input, , #placeorder input {
+input#placeorder {
 margin: 12px 0 8px 0;
 font-size: 14px;
 } 
@@ -76,9 +84,6 @@ text-align: left;
 margin-left: 20px;
 }
 
-table#paymentinfo {
-margin: 0;
-}
 table#paymentinfo td {
 padding: 4px 0 4px 7px;
 }
@@ -126,4 +131,38 @@ color: #444;
 }
 #shippingaddress legend {
 font-weight: normal;
+}
+
+
+.shippingaddressbox, .paymentmethodbox {
+text-align: left;
+font-size: 11px;
+padding: 5px 6px 6px 6px;
+float: left;
+width: 130px;
+background-color: #f9f9f9;
+/*border: 1px dotted #dddddd;*/
+margin: 0 6px 12px 6px;
+}
+#shippingsaved {
+clear: both;
+display: block;
+}
+
+.order {
+margin: 0;
+}
+.ordertop {
+border:none;
+}
+.ordertop tr {
+background-color: transparent;
+}
+.ordertop fieldset {
+margin: 10px 20px 10px 0;
+border: none;
+}
+
+div.review {
+font-size: 11px;
 }

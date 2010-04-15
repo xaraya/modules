@@ -28,8 +28,6 @@ function shop_user_paymentmethod() {
 	if(!xarVarFetch('proceednew', 'str', $proceednew, NULL, XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('paymentmethod', 'str', $paymentmethod, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
-	unset($_SESSION['errors']);
-
 	$cust = xarMod::APIFunc('shop','user','customerinfo'); 
 	$data['cust'] = $cust; 
 
@@ -60,7 +58,8 @@ function shop_user_paymentmethod() {
 	$data['properties'] = $properties;
 
 	foreach ($myfields as $field) {
-		$propids[$field] = 'dd_' . $properties[$field]->id;  
+		$propids[$field] = 'dd_' . $properties[$field]->id; 
+		$data[$field] = ''; 
 	}
 	$data['propids'] = $propids;
 
@@ -75,20 +74,18 @@ function shop_user_paymentmethod() {
 		foreach ($myfields as $field) {
 			$isvalid = $paymentobject->properties[$field]->checkInput();
 			
-			if (!$isvalid) {
-				print $field; exit;
-				$_SESSION['errors'][$field] = true;
-			} else {
-				unset($_SESSION['errors'][$field]); // In case we previously submitted invalid input in this field
-			}
-
 			${$field} = $paymentobject->properties[$field]->getValue();
 			$values[$field] = ${$field};
 			$values['customer'] = xarUserGetVar('id');
-
-			if ($field != 'card_num') {
-				/*Save values to $_SESSION['checkout'] in case we need to re-display the form in user-paymentmethod.xt, but don't re-display the card number*/ 
-				$_SESSION['payment'][$field] = ${$field};
+			
+			if (!$isvalid) {
+				$_SESSION['errors'][$field] = true;
+			} else {	
+				if ($field != 'card_num') {
+					$_SESSION['payment'][$field] = ${$field};
+					$data[$field] = ${$field}; 
+				}
+				unset($_SESSION['errors'][$field]); // In case we previously submitted invalid input in this field
 			}
 
 		} // end foreach
@@ -103,10 +100,8 @@ function shop_user_paymentmethod() {
 			}
 		} 
 
-		if (!empty($_SESSION['errors'])) {
-			var_dump($_SESSION['errors']);
-			exit;
-			xarResponse::Redirect(xarModURL('shop','user','paymentmethod').'#errors');
+		if (!empty($_SESSION['errors'])) { 
+			return xarTplModule('shop','user','paymentmethod', $data);
 		} else {
 			$paymentobject->setFieldValues($values,1);
 			$_SESSION['paymentmethod'] = $paymentobject->createItem();
@@ -114,7 +109,6 @@ function shop_user_paymentmethod() {
 		}
 		
 	}
-
 	return $data;
 
 }

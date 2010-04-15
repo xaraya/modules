@@ -68,7 +68,7 @@
                         <td valign="top">
 
 <div>
-<a href="#xarModURL('shop','admin','transaction', array('itemid' => $itemid))#"><img src="#sys::code()#modules/base/xarimages/icons/display.png" width="16" height="16" alt="Display" /></a>
+<a href="#xarModURL('shop','admin','modify', array('itemid' => $itemid, 'name' => 'shop_shippingaddresses'))#"><img src="#sys::code()#modules/base/xarimages/icons/modify.png" width="16" height="16" alt="Modify" /></a>
 </div>
            
 <xar:comment>Probably shouldn't make it easy to delete transaction records</xar:comment>		     
