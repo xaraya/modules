@@ -52,6 +52,10 @@ font-weight: bold;
 font-size: 14px;
 text-transform: none;
 }
+.button_container div {
+font-size: 12px;
+font-weight: normal;
+}
 #update_cart {
 text-align: center;
 margin: 0 0 14px 0;
@@ -60,10 +64,10 @@ margin: 0 0 14px 0;
 margin-right: 7px;
 }
 
-#complete {
+#complete, #placeorder {
 text-align: center;
 }
-#complete input {
+#complete input, , #placeorder input {
 margin: 12px 0 8px 0;
 font-size: 14px;
 } 
@@ -115,4 +119,11 @@ background-color: transparent;
 
 #paymentmethod td {
 text-align: left;
+}
+
+#shippingaddress {
+color: #444;
+}
+#shippingaddress legend {
+font-weight: normal;
 }

@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+<xar:style scope="module" module="shop" file="cart" />
+ 
+<div class="xar-mod-head">
+    <span class="xar-mod-title">shop</span>
+</div>
+    <div class="xar-mod-body">
+
+
+<form method="post" id="newaccount" name="newaccount"  action="#xarmodurl('shop','user','shippingaddress')#">
+
+	<xar:if condition="isset($shippingaddresses)">
+
+	<style>
+	.shippingaddress {
+	padding: 5px 6px 6px 6px;
+	float: left;
+	width: 160px;
+	border: 1px solid ##ddd;
+	margin: 0 15px 15px 0;
+	}
+	#shippingsaved {
+	clear: both;
+	display: block;
+	}
+	</style> 
+
+TODO: should be possible to delete addresses
+	<fieldset>
+
+		<legend>
+		Choose a shipping address:
+		</legend>
+
+		<xar:foreach in="$shippingaddresses" key="$key" value="$val">
+
+		<div class="shippingaddress">
+		<div>#$val['first_name']# #$val['last_name']#</div>
+		<div>#$val['street_addr']#</div>
+		<div>#$val['city_addr']# #$val['state_addr']# #$val['postal_code']#</div>
+		<xar:if condition="isset($skipto)">
+		<xar:set name="skipto">'&amp;skipto=order'</xar:set>
+		<xar:else />
+		<xar:set name="skipto">''</xar:set>
+		</xar:if>
+		<div><a href="#xarmodurl('shop','user','shippingaddress',array('shipto'=>$val['id']))##$skipto#">Ship to this address</a></div>
+		</div>
+
+		</xar:foreach>
+		<br style="clear:both;" />
+
+	
+
+	</fieldset>
+
+	</xar:if>
+
+	 <xar:if condition="isset($_SESSION['errors'])">
+		<div class="error">
+		<div>
+		There is a problem with your address:
+		</div>
+		<xar:foreach in="$_SESSION['errors']" key="$key">
+		<div style="margin-left: 7px;"> 
+		<xar:data-label property="$properties[$key]" /> <span style="font-weight: normal">field is empty or invalid.</span>
+		</div>
+		</xar:foreach>
+		</div>
+	 </xar:if>
+
+
+	
+	<fieldset> 
+
+	<legend>Or enter a different shipping address:</legend>
+		<table id="paymentinfo"> 
+		<xar:foreach in="$myfields" value="$name">
+			
+			<xar:set name="val">''</xar:set>
+			<xar:comment>If there is an error, let's make sure we don't populate the field with the user's saved account data, because it will look like our validation is broken.  Instead, empty the field.</xar:comment>
+			<xar:if condition="isset($_SESSION['errors'][$name])">
+				<xar:set name="val">''</xar:set>
+			</xar:if>
+
+			<tr>
+			<td><xar:data-label property="$properties[$name]" /></td>
+			<td class="right"><xar:data-input property="$properties[$name]" value="$val" /></td>
+			</tr>
+
+		</xar:foreach>
+		</table>	
+		<div class="button_container" id="shippingaddress">
+		<input type="submit" class="button" name="proceed" value="Continue" />
+		</div>
+	</fieldset>
+	</form>
+
+    </div>
+</xar:template>

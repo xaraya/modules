@@ -7,13 +7,13 @@
     </div>
     <div class="xar-mod-body">
  
-<xar:if condition="isset($products) and is_array($products) and !empty($products)">
+<xar:if condition="isset($order)">
 
 	<h2>Thanks for your order!</h2>
  
 	<h3>
-	Transaction ID: #$tid#<br />
-	Order date: #$date#
+	Transaction ID: #$ordertid#<br />
+	Order date: #$orderdate#
 	</h3>
  
 	<table>
@@ -21,7 +21,7 @@
 	<tr><th>Product</th><th>Item Price</th><th>Qty</th><th>Subtotal</th><th class="last_col"></th></tr>
 
 
-	 <xar:foreach in="$products" key="$key" value="$val">
+	 <xar:foreach in="$order" key="$key" value="$val">
 
 	<tr>
 

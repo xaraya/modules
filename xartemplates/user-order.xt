@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+ <xar:style scope="module" module="shop" file="cart" />
+ 
+ <div class="xar-mod-head">
+    <span class="xar-mod-title">shop</span>
+    </div>
+    <div class="xar-mod-body">
+<img src="code/modules/shop/xarimages/Shoppingcart_48x48.png" width="48" height="48" alt="shopping cart" align="right" style="margin: -6px 11px 4px -11px" />
+	<h2>Review Order</h2>
+	
+	<xar:comment>TODO: display error response from payment gateway, if any</xar:comment>
+
+<fieldset id="shippingaddress">
+	<legend>Shipping address</legend>
+	<div> 
+		<div>#$shippingvals['first_name']# #$shippingvals['last_name']#</div>
+		<div>#$shippingvals['street_addr']#</div>
+		<div>#$shippingvals['city_addr']# #$shippingvals['state_addr']# #$shippingvals['postal_code']#</div>
+		<div><a href="#xarmodurl('shop','user','shippingaddress',array('skipto'=>'order'))#">Edit</a></div>
+	</div>
+</fieldset>
+
+<fieldset id="paymentmethod">
+	<legend>Payment method</legend>
+	<div> 
+		<div>#$payvalues['card_type']# &#160; 
+		<xar:set name="lastfour">substr($payvalues['card_num'],-4)</xar:set>
+		 ending in #$lastfour#</div>
+		 <div><a href="#xarmodurl('shop','user','paymentmethod')#">Edit</a></div>
+	</div>
+</fieldset>
+
+<table>
+
+	<tr><th>Product</th><th>Item Price</th><th>Qty</th><th>Subtotal</th><th class="last_col"></th></tr>
+
+	<xar:foreach in="$products" key="$key" value="$val">
+
+		<tr>
+
+		 <td>#$val['title']#
+		 
+		 </td>
+
+		 <td>#$val['price']#</td>
+		 
+		 <td> 
+			  #$val['qty']# 
+			
+		 </td>
+
+		 <td class="price">#$val['subtotal']#</td>
+		 
+		 <td> </td>
+		 </tr>
+
+	 </xar:foreach>
+
+	</table>
+
+	<table id="total">
+	<tr><td>Total:</td><td class="price">#$total#</td><td class="last_col"></td></tr>
+	</table>
+	 
+	 <form method="post" id="placeorder" name="placeorder"  action="#xarmodurl('shop','user','order')#">
+	
+	<div class="button_container" id="placeorder">
+	<input type="submit" class="button" id="placeorder" name="placeorder" value="Place Order" />
+	</div>
+
+	</form>
+
+
+    </div>
+</xar:template>

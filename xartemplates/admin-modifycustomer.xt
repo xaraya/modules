@@ -24,6 +24,8 @@
 
 	      <p> <a href="#xarmodurl('shop','admin','paymentmethods',array('uid' => $itemid))#">View this customer's payment methods</a></p>
 
+	      <p> <a href="#xarmodurl('shop','admin','shippingaddresses',array('uid' => $itemid))#">View this customer's shipping addresses</a></p>
+
 
         <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
            

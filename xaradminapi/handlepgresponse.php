@@ -39,7 +39,6 @@ function shop_adminapi_handlepgresponse($args) {
 					$msg .= '. Response: ' . urldecode($response['L_LONGMESSAGE0']);
 					$_SESSION['pg_response']['msg'] = $msg;
 				}
-			
 				break;
 
 			 case 4:   // something else

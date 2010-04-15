@@ -61,8 +61,15 @@
 </td>
 <td style="width: 38%"><label>Total: &#160;</label> #$total#</td> 
 <td>
+
+<xar:if condition="xarUserIsLoggedIn()">
+	<xar:set name="nexturl">xarmodurl('shop','user','shippingaddress')</xar:set>
+<xar:else />
+	<xar:set name="nexturl">xarmodurl('shop','user','start')</xar:set>
+</xar:if>
+
 	<div id="checkout" class="button_container">
-	<a href="#xarmodurl('shop','user','checkout')#">Checkout &#187;</a>
+	<a href="#$nexturl#">Checkout &#187;</a>
 	</div>
 </td>
 </tr>

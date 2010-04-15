@@ -48,6 +48,7 @@ function shop_init()
 				'shop_transactions',
 				'shop_attributes',
 				'shop_customers',
+				'shop_shippingaddresses',
 				'shop_paymentmethods',
 				'shop_module_settings',
 				'shop_user_settings'

@@ -14,6 +14,12 @@
  */
 function shop_user_viewcart() {
 
+	// Redirects at the start of the user functions are just a way to make sure someone isn't where they don't need to be
+	if (!isset($_SESSION['shop']) || empty($_SESSION['shop'])) {
+		xarResponse::Redirect(xarModURL('shop','user','main'));
+		return;
+	}
+
 	// If the user views cart after moving on to checkout, unset any errors from earlier in the session.
 	unset($_SESSION['errors']);
 
