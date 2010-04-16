@@ -20,11 +20,11 @@ $modversion['credits']      = 'xardocs/credits.txt';
 $modversion['help']         = 'xardocs/help.txt';
 $modversion['changelog']    = 'xardocs/changelog.txt';
 $modversion['license']      = 'xardocs/license.txt';
-$modversion['official']     = 1;
+$modversion['official']     = true;
 $modversion['author']       = 'potion';
 $modversion['contact']      = 'http://www.webcommunicate.net/';
 $modversion['admin']        = true;
 $modversion['user']         = true;
 $modversion['class']        = 'Complete';
-$modversion['category']     = 'shop';
+$modversion['category']     = 'Commerce';
 ?>
