@@ -1,33 +1,8 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head"><span class="xar-mod-title">Workflow Administration</span></div>
-<script type="text/javascript">
-<![CDATA[
-function setSomeElement(elemID, toInsert) {
-   var elem = document.getElementById(elemID);
-
-   if(typeof elem.selectionStart != 'undefined') {
-       var start = elem.selectionStart;
-       var end   = elem.selectionEnd;
-       elem.value = elem.value.substr(0, start) + toInsert + elem.value.substr(end);
-       elem.selectionStart = start + toInsert.length;
-       elem.selectionEnd = end + toInsert.length;
-   }
-   elem.focus();
-}
-
-function keypresshandler(elemID,event)
-{
-    var tabKey = 9;
-    if (event.keyCode == tabKey && elemID=="src") { // to be sure we dont disable tabs on anything but the src for now
-      setSomeElement(elemID,"    ");
-      event.returnValue = false;
-      return false;
-    }
-    return true;
-}
-]]>
-</script>
 <div class="xar-mod-body">
+    <xar:style scope="module" module="workflow" file="codemirror/docs"/>
+    <xar:javascript module="workflow" filename="codemirror/codemirror.js" position="head"/>
     <xar:template module="workflow" type="module" file="admin-menu"/>
     <!-- Process navigation bar -->
     <xar:template file="proc_bar"/>
@@ -65,35 +40,64 @@ function keypresshandler(elemID,event)
           </xar:if>
           &#160;
         </div>
-         <div class="xar-form-input-wrapper-before">
+        <div class="xar-form-input-wrapper-before">
            <!--
                This is the area where templating and code is editted
            -->
-           <textarea style="font-family: monospace; white-space: pre; width: 100%" id='src' name="source" rows="20" cols="80" onkeypress="return keypresshandler(this.id,event);">#$data#</textarea>
+           <textarea style="font-family: monospace; white-space: pre; width: 100%" id="src" name="src" rows="20" cols="80" onkeypress="return keypresshandler(this.id,event);">#$data#</textarea>
            <!--
                End of it
            -->
-         </div>
-         <div class="xar-form-input-wrapper-before">
+        </div>
+        <xar:if condition="$template != 'y'">
+            <script type="text/javascript">
+            <![CDATA[
+              var editor = CodeMirror.fromTextArea('src', {
+                height: "350px",
+                width: "600px",
+                parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js",
+                             "tokenizephp.js", "parsephp.js", "parsephphtmlmixed.js"],
+                stylesheet: ["#sys::code()#modules/workflow/xarstyles/codemirror/xmlcolors.css", "#sys::code()#modules/workflow/xarstyles/codemirror/jscolors.css", "#sys::code()#modules/workflow/xarstyles/codemirror/csscolors.css", "#sys::code()#modules/workflow/xarstyles/codemirror/phpcolors.css"],
+                path: "#sys::code()#modules/workflow/xartemplates/includes/codemirror/",
+                continuousScanning: 500
+              });
+            ]]>
+            </script>
+        <xar:else/>
+            <script type="text/javascript">
+            <![CDATA[
+              var editor = CodeMirror.fromTextArea('src', {
+                height: "350px",
+                width: "600px",
+                parserfile: ["parsexml.js"],
+                stylesheet: ["#sys::code()#modules/workflow/xarstyles/codemirror/xmlcolors.css"],
+                path: "#sys::code()#modules/workflow/xartemplates/includes/codemirror/",
+                continuousScanning: 500,
+                reindentOnLoad: true
+              });
+            ]]>
+            </script>
+        </xar:if>
+        <xar:if condition="$template != 'y'">
+            <div class="xar-form-input-wrapper-before">
                <p>
                 <strong>Function wizard: </strong>
-                <xar:if condition="$template != 'y'">
-                  <a href="javascript:setSomeElement('src','$instance->setNextUser(&#39;&#39;);');">Set next user</a> &#160;
-                  <a href="javascript:setSomeElement('src','$instance->get(&#39;&#39;);');">Get property</a>&#160;
-                  <a href="javascript:setSomeElement('src','$instance->set(&#39;&#39;,&#39;&#39;);');">Set property</a>&#160;
+                  <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'$instance->setNextUser(&quot;thisuser&quot;);');">Set next user</a> &#160;
+                  <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'$instance->get(&quot;thisprop&quot;);');">Get property</a>&#160;
+                  <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'$instance->set(&quot;thisprop&quot;,&quot;thisval&quot;);');">Set property</a>&#160;
                   <xar:if condition="$act_info['isInteractive'] eq 'y'">
-                    <a href="javascript:setSomeElement('src','$instance->complete();');">Complete</a>&#160;
-                    <a href="javascript:setSomeElement('src','if(isset($_REQUEST[&#39;save&#39;]){\n  $instance->complete();\n}');">Process form</a>&#160;
+                    <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'$instance->complete();');">Complete</a>&#160;
+                    <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'if(isset($_REQUEST[&quot;save&quot;])){\n  $instance->complete();\n}');">Process form</a>&#160;
                   </xar:if>
                   <xar:if condition="$act_info['type'] eq 'switch'">
-                    <a href="javascript:setSomeElement('src','$instance->setNextActivity(&#39;&#39;);');">Set Next act</a>&#160;
-                    <a href="javascript:setSomeElement('src','if(true) {\n    $instance->setNextActivity(&#39;&#39;);\n}');">If:SetNextact</a>&#160;
-                    <a href="javascript:setSomeElement('src','switch($instance->get(&#39;&#39;)){\n  case:&#39;&#39;:\n  $instance->setNextActivity(&#39;&#39;);\n  break;\n}');">Switch construct</a>&#160;
+                    <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'$instance->setNextActivity(&quot;thisact&quot;);');">Set Next act</a>&#160;
+                    <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'if(true) {\n    $instance->setNextActivity(&quot;thisact&quot;);\n}');">If:SetNextact</a>&#160;
+                    <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'switch($instance->get(&quot;thisprop&quot;)){\n  case &quot;thisval&quot;:\n  $instance->setNextActivity(&quot;thisact&quot;);\n  break;\n}');">Switch construct</a>&#160;
                   </xar:if>
-                </xar:if>
                 </p>
             </div>
-        </fieldset>
+        </xar:if>
+    </fieldset>
          <div class="xar-form-input-wrapper-after">
             <input type="hidden" name="pid" value="#$pid#"/>
             <input type="hidden" name="source_name" value="#$source_name#"/>

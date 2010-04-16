@@ -3,7 +3,7 @@
     <xar:set name="func">xarRequest::getVar('func')</xar:set>
 
     <dl class="xar-tabs">
-      <dt class="help">Manage</dt>
+      <dt class="help">View</dt>
 
       <xar:set name="classstring">''</xar:set>
       <xar:if condition="$func eq 'main' or !isset($func) or $func eq ''">
