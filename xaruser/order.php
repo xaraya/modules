@@ -77,8 +77,8 @@ function shop_user_order()
             $_SESSION['order']['tid'] = $tid;
             $_SESSION['order']['date'] = date('F j, Y g:i a',$_SESSION['time']);
 
-            unset($_SESSION['pg_response']); // This is set in shop_adminapi_handlepgresponse()
-            unset($_SESSION['payment']); 
+            xarSession::delVar('pg_response'); // This is set in shop_adminapi_handlepgresponse()
+            xarSession::delVar('payment');
 
             //Need to clear all this now that the purchase went through.  Doing so ensures we don't re-submit the order
             xarSession::delVar('errors');

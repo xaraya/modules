@@ -16,7 +16,7 @@ function shop_user_viewcart()
 {
 
     // If the user returns to the cart after taking other steps, unset any errors from earlier in the session.
-    unset($_SESSION['errors']);
+    xarSession::delVar('errors');
 
     sys::import('modules.dynamicdata.class.objects.master');
 

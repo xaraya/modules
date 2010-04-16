@@ -59,19 +59,20 @@ function shop_user_shippingaddress()
 
     if ($proceed) {
     
+        $errors = xarSession::getVar('errors');
         foreach ($myfields as $field) {
             $isvalid = $shippingobject->properties[$field]->checkInput();
 
             if (!$isvalid) {
-                $_SESSION['errors'][$field] = true;
+                $errors[$field] = true;
             } else {
-                unset($_SESSION['errors'][$field]); // In case we previously submitted invalid input in this field
+                unset($errors[$field]); // In case we previously submitted invalid input in this field
             }
 
             ${$field} = $shippingobject->properties[$field]->getValue();
         }
 
-        if (!empty($_SESSION['errors'])) {
+        if (!empty($errors)) {
             xarResponse::redirect(xarModURL('shop','user','shippingaddress').'#errors');
             return;
         }
@@ -91,7 +92,7 @@ function shop_user_shippingaddress()
         $shippingobject->properties['city_addr']->setValue($city_addr);
         $shippingobject->properties['postal_code']->setValue($postal_code);
         $shippingobject->properties['state_addr']->setValue($state_addr);
-        $_SESSION['shippingaddress'] = $shippingobject->createItem();
+        xarSession::setVar('shippingaddress',$shippingobject->createItem());
 
         // update the name field in roles to use first and last name instead of email
         $rolesobject = DataObjectMaster::getObject(array('name' => 'roles_users'));
@@ -102,6 +103,7 @@ function shop_user_shippingaddress()
         xarResponse::redirect(xarModURL('shop','user','paymentmethod'));
 
     }
+    xarSession::setVar('errors',$errors);
 
     return $data;
 

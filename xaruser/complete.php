@@ -29,9 +29,8 @@ function shop_user_complete()
     $data['ordertid'] = $_SESSION['order']['tid'];
     $data['orderdate'] = $_SESSION['order']['date'];
     $data['total'] = $_SESSION['total'];
-    unset($_SESSION['order']); // For privacy, order will not be redisplayed if the page is visited later
-    unset($_SESSION['total']);
-
+    xarSession::delVar('order');  // For privacy, order will not be redisplayed if the page is visited later
+    xarSession::delVar('total');
     return $data;
 
 }
