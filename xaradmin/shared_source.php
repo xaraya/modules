@@ -116,6 +116,11 @@ function workflow_admin_shared_source()
     }
     fclose ($fp);
 
+    // initialize template
+    if (empty($tplData['data']) && isset($_REQUEST['template']) && empty($tplData['data']) && !empty($act)) {
+        $tplData['data'] = htmlspecialchars('<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">' . "\n" . $act->name . "\n" . '</xar:template>');
+    }
+
     $valid = $activityManager->validate_process_activities($_REQUEST['pid']);
     $errors = array();
 
