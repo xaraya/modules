@@ -1,7 +1,5 @@
 <?php
  
-function sss() 
-{
 include "usaepaylib.php";
  
 $tran=new umTransaction;
@@ -36,5 +34,5 @@ if($tran->Process())
     echo "<b>Reason:</b> " . $tran->error . "<br>"; 
     if($tran->curlerror) echo "<b>Curl Error:</b> " . $tran->curlerror . "<br>";    
 }       
- }
+ 
 ?>
