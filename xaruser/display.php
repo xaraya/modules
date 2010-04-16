@@ -12,7 +12,7 @@
 /**
  * Display an item
  */
-function shop_user_product($args)
+function shop_user_display($args)
 {
 
     if(!xarVarFetch('itemid',   'id', $itemid,   NULL, XARVAR_DONT_SET)) {return;} 
@@ -48,8 +48,8 @@ function shop_user_product($args)
     //Get the property names and values for the item with the getFieldValues() method
     $values = $object->getFieldValues();
 
-	$data['itemid'] = $itemid;
-		
+    $data['itemid'] = $itemid;
+        
     //$values is an associative array of property names and values, so...
     foreach ($values as $name => $value) {
         $data[$name] = xarVarPrepForDisplay($value);
