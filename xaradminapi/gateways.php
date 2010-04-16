@@ -12,17 +12,18 @@
 /**
  *   
  */
-function shop_adminapi_gateways() {
+function shop_adminapi_gateways() 
+{
 
-	$array = array(
-		1 => 'Demo Mode (no payment gateway)', // don't remove this from the array
-		2 => 'Authorize.net',
-		3 => 'Paypal',
-		4 => 'Your payment gateway',
-		5 => 'Etcetera'
-	);
+    $array = array(
+        1 => 'Demo Mode (no payment gateway)', // don't remove this from the array
+        2 => 'Authorize.net',
+        3 => 'Paypal',
+        4 => 'Your payment gateway',
+        5 => 'Etcetera'
+    );
 
-	return $array;
+    return $array;
 
 }
 

@@ -17,17 +17,17 @@ function shop_admin_newproduct()
     // See if the current user has the privilege to add an item. We cannot pass any extra arguments here
     if (!xarSecurityCheck('Addshop')) return;
 
-	if(!xarVarFetch('objectid',       'id',    $data['objectid'],   NULL, XARVAR_DONT_SET)) {return;}
-	
-	$objectname = 'shop_products';
-	$data['objectname'] = $objectname;
+    if(!xarVarFetch('objectid',       'id',    $data['objectid'],   NULL, XARVAR_DONT_SET)) {return;}
+    
+    $objectname = 'shop_products';
+    $data['objectname'] = $objectname;
 
-	// Load the DD master object class. This line will likely disappear in future versions
+    // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
 
-	$object = DataObjectMaster::getObject(array('name' => $objectname));
-	$data['label'] = $object->label;
-	$data['object'] = $object;
+    $object = DataObjectMaster::getObject(array('name' => $objectname));
+    $data['label'] = $object->label;
+    $data['object'] = $object;
 
     // Check if we are in 'preview' mode from the input here - the rest is handled by checkInput()
     // Here we are testing for a button clicked, so we test for a string
@@ -56,10 +56,10 @@ function shop_admin_newproduct()
             return xarTplModule('shop','admin','newproduct', $data);        
         } else {
 
-			$itemid = $data['object']->createItem();
+            $itemid = $data['object']->createItem();
  
             // Jump to the next page
-            xarResponse::Redirect(xarModURL('shop','admin','products'));
+            xarResponse::redirect(xarModURL('shop','admin','products'));
             // Always add the next line even if processing never reaches it
             return true;
         }

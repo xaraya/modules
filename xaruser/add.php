@@ -12,25 +12,26 @@
 /**
  *  Add an item to the cart
  */
-function shop_user_add($args) {
+function shop_user_add($args) 
+{
 
     if(!xarVarFetch('id', 'isset', $pid, NULL, XARVAR_DONT_SET)) {return;}
-	if(!xarVarFetch('returnurl', 'isset', $returnurl, NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('returnurl', 'isset', $returnurl, NULL, XARVAR_DONT_SET)) {return;}
 
-	extract($args);
+    extract($args);
 
-	// if we've previously added this product, add one more
-	if (isset($_SESSION['shop'][$pid])) {
-		$qty = $_SESSION['shop'][$pid]['qty'] + 1;
-	} else {
-		$qty = 1;
-	}
+    // if we've previously added this product, add one more
+    if (isset($_SESSION['shop'][$pid])) {
+        $qty = $_SESSION['shop'][$pid]['qty'] + 1;
+    } else {
+        $qty = 1;
+    }
 
-	$_SESSION['shop'][$pid]['qty'] = $qty;
+    $_SESSION['shop'][$pid]['qty'] = $qty;
 
     // Return the template variables defined in this function
 
-	xarResponse::Redirect($returnurl);
+    xarResponse::redirect($returnurl);
 
     return true;
 

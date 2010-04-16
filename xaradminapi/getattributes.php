@@ -12,29 +12,30 @@
 /**
  *  Get all product attributes
  */
-function shop_adminapi_getattributes() {
+function shop_adminapi_getattributes() 
+{
 
-	$objectname = 'shop_attributes';
+    $objectname = 'shop_attributes';
 
     sys::import('modules.dynamicdata.class.objects.master');
 
-	// Get the object we'll be working with. Note this is a so called object list
+    // Get the object we'll be working with. Note this is a so called object list
     $mylist = DataObjectMaster::getObjectList(array('name' =>  $objectname));
 
-	// We have some filters for the items
+    // We have some filters for the items
     $filters = array(
                      'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
-				//	'sort' => 'name DESC' 
+                //  'sort' => 'name DESC' 
                     );
     
     // Get the items 
     $items = $mylist->getItems($filters);
 
-	foreach ($items as $item) { 
-		$id = $item['id'];
-		$array[$id] = $item['name'] . ' (ID: ' . $item['id'] . ')';
-	}
-		
+    foreach ($items as $item) { 
+        $id = $item['id'];
+        $array[$id] = $item['name'] . ' (ID: ' . $item['id'] . ')';
+    }
+        
     return $array;
 }
 

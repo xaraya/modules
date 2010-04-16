@@ -12,7 +12,8 @@
 /**
  *  Shop user main
  */
-function shop_user_main() {
+function shop_user_main() 
+{
 
     return xarTplModule('shop','user','main');
 

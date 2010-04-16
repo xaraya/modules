@@ -15,13 +15,13 @@
 function shop_user_newcustomer()
 {
 
-	if(!xarVarFetch('objectid',       'id',    $data['objectid'],   NULL, XARVAR_DONT_SET)) {return;}
-	if(!xarVarFetch('returnurl',       'str',    $returnurl,   NULL, XARVAR_NOT_REQUIRED)) {return;}
-	
+    if(!xarVarFetch('objectid',       'id',    $data['objectid'],   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('returnurl',       'str',    $returnurl,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    
     sys::import('modules.dynamicdata.class.objects.master');
 
-	$rolesobject = DataObjectMaster::getObject(array('name' => 'roles_users'));
-	$data['properties'] = $rolesobject->properties;
+    $rolesobject = DataObjectMaster::getObject(array('name' => 'roles_users'));
+    $data['properties'] = $rolesobject->properties;
 
     // Check if we are in 'preview' mode from the input here - the rest is handled by checkInput()
     // Here we are testing for a button clicked, so we test for a string
@@ -41,34 +41,34 @@ function shop_user_newcustomer()
         // Get the data from the form and see if it is all valid
         // Either way the values are now stored in the object
         $isvalid = $rolesobject->properties['email']->checkInput();
-		$isvalid2 = $rolesobject->properties['password']->checkInput();
+        $isvalid2 = $rolesobject->properties['password']->checkInput();
 
         if (!$isvalid || !$isvalid2) {
             // Bad data: redisplay the form with the data we picked up and with error messages
             return xarTplModule('shop','user','newcustomer', $data);               
         } else {
 
-			$email = $rolesobject->properties['email']->getValue();
-			$password = $rolesobject->properties['password']->getValue();
+            $email = $rolesobject->properties['email']->getValue();
+            $password = $rolesobject->properties['password']->getValue();
 
-			$rolesobject->properties['name']->setValue($email);
-			$rolesobject->properties['email']->setValue($email);
-			$rolesobject->properties['uname']->setValue($email);
-			$rolesobject->properties['password']->setValue($password);
-			$rolesobject->properties['state']->setValue(3);
-			$authmodule = (int)xarMod::getID('shop');
-			$rolesobject->properties['authmodule']->setValue($authmodule);
-			$uid = $rolesobject->createItem();
+            $rolesobject->properties['name']->setValue($email);
+            $rolesobject->properties['email']->setValue($email);
+            $rolesobject->properties['uname']->setValue($email);
+            $rolesobject->properties['password']->setValue($password);
+            $rolesobject->properties['state']->setValue(3);
+            $authmodule = (int)xarMod::getID('shop');
+            $rolesobject->properties['authmodule']->setValue($authmodule);
+            $uid = $rolesobject->createItem();
  
-			$custobject = DataObjectMaster::getObject(array('name' => 'shop_customers'));
-			$custobject->createItem(array('id' => $uid));
+            $custobject = DataObjectMaster::getObject(array('name' => 'shop_customers'));
+            $custobject->createItem(array('id' => $uid));
  
             if (isset($returnurl)) {
-				xarMod::APIFunc('authsystem','user','login',array('uname' => $email, 'pass' => $password));
-				xarResponse::Redirect($returnurl);
-			} else {
-				xarResponse::Redirect(xarModURL('shop'));
-			}
+                xarMod::APIFunc('authsystem','user','login',array('uname' => $email, 'pass' => $password));
+                xarResponse::redirect($returnurl);
+            } else {
+                xarResponse::redirect(xarModURL('shop'));
+            }
 
             // Always add the next line even if processing never reaches it
             return true;

@@ -17,8 +17,8 @@ function shop_admin_modifycustomer()
     if(!xarVarFetch('itemid',       'id',    $data['itemid'],   NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return; 
 
-	$objectname = 'shop_customers';
-	$data['objectname'] = $objectname;
+    $objectname = 'shop_customers';
+    $data['objectname'] = $objectname;
 
     // Check if we still have no id of the item to modify.
     if (empty($data['itemid'])) {
@@ -32,17 +32,17 @@ function shop_admin_modifycustomer()
     sys::import('modules.dynamicdata.class.objects.master');
 
     $object = DataObjectMaster::getObject(array('name' => $objectname));
-	$data['object'] = $object;
-	$data['label'] = $object->label;
-	$object->getItem(array('itemid' => $data['itemid']));	
-	
-	$values = $object->getFieldValues();
+    $data['object'] = $object;
+    $data['label'] = $object->label;
+    $object->getItem(array('itemid' => $data['itemid']));   
+    
+    $values = $object->getFieldValues();
     foreach ($values as $name => $value) {
         $data[$name] = xarVarPrepForDisplay($value);
     }
 
-	$rolesobject = DataObjectMaster::getObject(array('name' => 'roles_users'));
-	$rolesobject->getItem(array('itemid' => $data['itemid']));
+    $rolesobject = DataObjectMaster::getObject(array('name' => 'roles_users'));
+    $rolesobject->getItem(array('itemid' => $data['itemid']));
 
     if ($data['confirm']) {
 
@@ -62,16 +62,16 @@ function shop_admin_modifycustomer()
             return xarTplModule('shop','admin','modifycustomer', $data);        
         } else {
 
-			$first_name = $object->properties['first_name']->getValue();
-			$last_name = $object->properties['last_name']->getValue();
+            $first_name = $object->properties['first_name']->getValue();
+            $last_name = $object->properties['last_name']->getValue();
 
-			$rolesobject->properties['name']->setValue($first_name . ' ' . $last_name);
-			$rolesobject->updateItem();
-			
+            $rolesobject->properties['name']->setValue($first_name . ' ' . $last_name);
+            $rolesobject->updateItem();
+            
             $object->updateItem();
 
             // Jump to the next page 
-            xarResponse::Redirect(xarModURL('shop','admin','modifycustomer',array('itemid' => $data['itemid'])));
+            xarResponse::redirect(xarModURL('shop','admin','modifycustomer',array('itemid' => $data['itemid'])));
             return $data;
         }
     } else {

@@ -51,10 +51,10 @@ function shop_admin_delete()
 
         $item = $data['object']->deleteItem();
 
-		$viewfunc = str_replace('shop_','',$name);
+        $viewfunc = str_replace('shop_','',$name);
         
         // Jump to the next page
-        xarResponse::Redirect(xarModURL('shop','admin',$viewfunc));
+        xarResponse::redirect(xarModURL('shop','admin',$viewfunc));
         return true;
     }
     return $data;

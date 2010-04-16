@@ -9,54 +9,54 @@
  
 <xar:if condition="isset($order)">
 
-	<h2>Thanks for your order!</h2>
+    <h2>Thanks for your order!</h2>
  
-	<h3>
-	Transaction ID: #$ordertid#<br />
-	Order date: #$orderdate#
-	</h3>
+    <h3>
+    Transaction ID: #$ordertid#<br />
+    Order date: #$orderdate#
+    </h3>
  
-	<table>
+    <table>
 
-	<tr><th>Product</th><th>Item Price</th><th>Qty</th><th>Subtotal</th><th class="last_col"></th></tr>
+    <tr><th>Product</th><th>Item Price</th><th>Qty</th><th>Subtotal</th><th class="last_col"></th></tr>
 
 
-	 <xar:foreach in="$order" key="$key" value="$val">
+     <xar:foreach in="$order" key="$key" value="$val">
 
-	<tr>
+    <tr>
 
-	 <td>#$val['title']#
-	 
-	 </td>
+     <td>#$val['title']#
+     
+     </td>
 
-	 <td>#$val['price']#</td>
-	 
-	 <td> 
-		  #$val['qty']# 
-		
-	 </td>
+     <td>#$val['price']#</td>
+     
+     <td> 
+          #$val['qty']# 
+        
+     </td>
 
-	 <td class="price">#$val['subtotal']#</td>
-	 
-	 <td> </td>
-	 </tr>
+     <td class="price">#$val['subtotal']#</td>
+     
+     <td> </td>
+     </tr>
 
-	 </xar:foreach>
+     </xar:foreach>
 
-	</table>
+    </table>
 
-	<table id="total">
-	<tr><td>Total:</td><td class="price">#$total#</td><td class="last_col"></td></tr>
-	</table>
+    <table id="total">
+    <tr><td>Total:</td><td class="price">#$total#</td><td class="last_col"></td></tr>
+    </table>
 
 <xar:else />
 
-	#xarResponse::Redirect(xarModURL('shop'))#
+    #xarResponse::redirect(xarModURL('shop'))#
 
 </xar:if>
 
 <div class="button_container">
-	<a href="#xarmodurl('shop')#">&#171; Continue Shopping</a>
+    <a href="#xarmodurl('shop')#">&#171; Continue Shopping</a>
 </div>
 
 

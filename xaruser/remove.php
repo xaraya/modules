@@ -12,16 +12,17 @@
 /**
  *  Remove an item from the cart
  */
-function shop_user_remove($args) {
+function shop_user_remove($args) 
+{
 
     if(!xarVarFetch('id', 'isset', $pid, NULL, XARVAR_DONT_SET)) {return;}
-	if(!xarVarFetch('returnurl', 'isset', $returnurl, NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('returnurl', 'isset', $returnurl, NULL, XARVAR_DONT_SET)) {return;}
 
-	unset($_SESSION['shop'][$pid]); 
+    unset($_SESSION['shop'][$pid]); 
 
     // Return the template variables defined in this function
 
-	xarResponse::Redirect($returnurl);
+    xarResponse::redirect($returnurl);
 
     return true;
 
