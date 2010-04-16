@@ -19,9 +19,10 @@ function shop_userapi_getcartproducts($args)
 
     $total = 0;
 
-    if(!isset($_SESSION['shop'])) return;
+    $shop = xarSession::getVar('shop');
+    if(empty($shop)) return;
 
-    foreach ($_SESSION['shop'] as $pid => $val) {
+    foreach ($shop as $pid => $val) {
 
         // if this post variable is set, we must need to update the quantity
         if (isset($_POST['qty'.$pid])) {
@@ -30,11 +31,11 @@ function shop_userapi_getcartproducts($args)
 
             if(!xarVarFetch('qty'.$pid, 'isset', $qty_new, NULL, XARVAR_DONT_SET)) {return;}
 
-            $_SESSION['shop'][$pid]['qty'] = $qty_new;
+            $shop[$pid]['qty'] = $qty_new;
 
         } 
 
-        $products[$pid]['qty'] = $_SESSION['shop'][$pid]['qty'];
+        $products[$pid]['qty'] = $shop[$pid]['qty'];
 
         $object = DataObjectMaster::getObject(array('name' => 'shop_products'));
         $some_id = $object->getItem(array('itemid' => $pid));
@@ -53,6 +54,8 @@ function shop_userapi_getcartproducts($args)
         $subtotals[] = $subtotal;
         $products[$pid]['subtotal'] = number_format($subtotal, 2);
     }
+    
+    xarSession::setVar('shop',$shop);
 
     $total = array_sum($subtotals);
     $total = number_format($total, 2);

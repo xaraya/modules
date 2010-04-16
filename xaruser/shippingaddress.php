@@ -16,7 +16,8 @@ function shop_user_shippingaddress()
 {
 
     // Redirects at the start of the user functions are just a way to make sure someone isn't where they don't need to be
-    if (!xarUserIsLoggedIn() || !isset($_SESSION['shop']) || empty($_SESSION['shop'])) {
+    $shop = xarSession::getVar('shop');
+    if (!xarUserIsLoggedIn() || empty($shop)) {
         xarResponse::redirect(xarModURL('shop','user','main'));
         return;
     }

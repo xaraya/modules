@@ -18,7 +18,9 @@ function shop_user_remove($args)
     if(!xarVarFetch('id', 'isset', $pid, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('returnurl', 'isset', $returnurl, NULL, XARVAR_DONT_SET)) {return;}
 
-    unset($_SESSION['shop'][$pid]); 
+    $shop = xarSession::getVar('shop');
+    unset($shop[$pid]); 
+    xarSession::setVar('shop',$shop);
 
     // Return the template variables defined in this function
 

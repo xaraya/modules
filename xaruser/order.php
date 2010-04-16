@@ -16,7 +16,8 @@ function shop_user_order()
 {
 
     // Redirects at the start of the user functions are just a way to make sure someone isn't where they don't need to be
-    if (!xarUserIsLoggedIn() || !isset($_SESSION['shop']) || empty($_SESSION['shop'])) {
+    $shop = xarSession::getVar('shop');
+    if (!xarUserIsLoggedIn() || empty($shop)) {
         xarResponse::redirect(xarModURL('shop','user','main'));
         return;
     }
@@ -80,9 +81,9 @@ function shop_user_order()
             unset($_SESSION['payment']); 
 
             //Need to clear all this now that the purchase went through.  Doing so ensures we don't re-submit the order
-            unset($_SESSION['errors']);
-            unset($_SESSION['shop']);
-            unset($_SESSION['products']);
+            xarSession::delVar('errors');
+            xarSession::delVar('shop');
+            xarSession::delVar('products');
 
             xarResponse::redirect(xarModURL('shop','user','complete'));
 

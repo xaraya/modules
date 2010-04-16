@@ -20,7 +20,8 @@ function shop_user_start()
         xarResponse::redirect(xarModURL('shop','user','viewcart'));
         return;
     }
-    if (!isset($_SESSION['shop']) || empty($_SESSION['shop'])) {
+    $shop = xarSession::getVar('shop');
+    if (empty($shop)) {
         xarResponse::redirect(xarModURL('shop','user','main'));
         return;
     }

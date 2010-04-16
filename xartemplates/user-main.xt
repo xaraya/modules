@@ -15,35 +15,36 @@
 
 <div id="storefront">
   <table>
-	<tr>
-	<td>
-		<xar:foreach in="$products" key="$key" value="$val">
-			<div class="product">
-				<div class="ptitle">#$val['title']#</div>
-				<div>#$val['description']#</div>
-				<div>#$val['price']#</div>
+    <tr>
+    <td>
+        <xar:foreach in="$products" key="$key" value="$val">
+            <div class="product">
+                <div class="ptitle">#$val['title']#</div>
+                <div>#$val['description']#</div>
+                <div>#$val['price']#</div>
 
-				<xar:comment>
-				 probably going to eliminate the product attributes feature
-				<xar:set name="attributes">$val['attributes']</xar:set>
-				<xar:if condition="is_numeric($attributes)">
-					 <xar:set name="options">xarMod::APIFunc('shop','admin','getattributeoptions',array('id' => $attributes, 'separator' => ' ', 'firstline' => 'Select'))</xar:set>
-					 <xar:set name="attr">'attr-' . $key</xar:set>
-					 <xar:data-input type="dropdown" value="1" options="$options" name="$attr" />
-				</xar:if></xar:comment>
+                <xar:comment>
+                 probably going to eliminate the product attributes feature
+                <xar:set name="attributes">$val['attributes']</xar:set>
+                <xar:if condition="is_numeric($attributes)">
+                     <xar:set name="options">xarMod::APIFunc('shop','admin','getattributeoptions',array('id' => $attributes, 'separator' => ' ', 'firstline' => 'Select'))</xar:set>
+                     <xar:set name="attr">'attr-' . $key</xar:set>
+                     <xar:data-input type="dropdown" value="1" options="$options" name="$attr" />
+                </xar:if></xar:comment>
 
-				<div><a href="#xarModURL('shop','user','add',array('id' => $key, 'returnurl' => xarServer::GetCurrentURL()
-				))#">Add to cart</a></div>
-			</div>
-			<xar:set name="attributes">''</xar:set>
-		</xar:foreach>
-	</td>
-	<td id="rightcol">
-		<xar:if condition="!empty($_SESSION['shop'])">
-			<xar:template type="module" file="cartsummary" />
-		</xar:if>
-	</td>
-	</tr>
+                <div><a href="#xarModURL('shop','user','add',array('id' => $key, 'returnurl' => xarServer::GetCurrentURL()
+                ))#">Add to cart</a></div>
+            </div>
+            <xar:set name="attributes">''</xar:set>
+        </xar:foreach>
+    </td>
+    <td id="rightcol">
+        <xar:set name="shop">xarSession::getVar('shop')</xar:set>
+        <xar:if condition="!empty($shop)">
+            <xar:template type="module" file="cartsummary" />
+        </xar:if>
+    </td>
+    </tr>
   </table>
 </div>
 

@@ -21,13 +21,16 @@ function shop_user_add($args)
     extract($args);
 
     // if we've previously added this product, add one more
-    if (isset($_SESSION['shop'][$pid])) {
-        $qty = $_SESSION['shop'][$pid]['qty'] + 1;
+    $shop = xarSession::getVar('shop');
+
+    if (isset($shop[$pid])) {
+        $qty = $shop[$pid]['qty'] + 1;
     } else {
         $qty = 1;
     }
 
-    $_SESSION['shop'][$pid]['qty'] = $qty;
+    $shop[$pid]['qty'] = $qty;
+    xarSession::setVar('shop',$shop);
 
     // Return the template variables defined in this function
 

@@ -28,7 +28,9 @@ function shop_user_viewcart()
     $cust = xarMod::APIFunc('shop','user','customerinfo');
     $data['cust'] = $cust;  
 
-    foreach ($_SESSION['shop'] as $pid => $val) {
+    $shop = xarSession::getVar('shop');
+
+    foreach ($shop as $pid => $val) {
 
         // If this post variable is set, we must need to update the quantity
         if (isset($_POST['qty'.$pid])) {
@@ -38,18 +40,18 @@ function shop_user_viewcart()
             if(!xarVarFetch('qty'.$pid, 'isset', $qty_new, NULL, XARVAR_DONT_SET)) {return;}
 
             if ($qty_new == 0) {
-                unset($_SESSION['shop'][$pid]); 
+                unset($shop[$pid]); 
             } else {
-                $_SESSION['shop'][$pid]['qty'] = $qty_new;
+                $shop[$pid]['qty'] = $qty_new;
             }
 
         }  
 
         // If the quantity hasn't been set to zero, add it to the $products array...
-        if (isset($_SESSION['shop'][$pid])) { 
+        if (isset($shop[$pid])) { 
 
             // Commas in the quantity seem to mess up our math
-            $products[$pid]['qty'] = str_replace(',','',$_SESSION['shop'][$pid]['qty']); 
+            $products[$pid]['qty'] = str_replace(',','',$shop[$pid]['qty']); 
 
             // Get the product info
             $object = DataObjectMaster::getObject(array('name' => 'shop_products'));
@@ -67,6 +69,8 @@ function shop_user_viewcart()
             
         }
     }
+
+    xarSession::setVar('shop',$shop);
 
     $total = array_sum($subtotals);
     
