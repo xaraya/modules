@@ -14,17 +14,12 @@
  */
 function shop_user_viewcart() {
 
-	// Redirects at the start of the user functions are just a way to make sure someone isn't where they don't need to be
-	if (!isset($_SESSION['shop']) || empty($_SESSION['shop'])) {
-		xarResponse::Redirect(xarModURL('shop','user','main'));
-		return;
-	}
-
-	// If the user views cart after moving on to checkout, unset any errors from earlier in the session.
+	// If the user returns to the cart after taking other steps, unset any errors from earlier in the session.
 	unset($_SESSION['errors']);
 
     sys::import('modules.dynamicdata.class.objects.master');
 
+	$subtotals = array();
 	$products = array();
 	$total = 0;
 
@@ -32,48 +27,45 @@ function shop_user_viewcart() {
 	$cust = xarMod::APIFunc('shop','user','customerinfo');
 	$data['cust'] = $cust;  
 
-	if (!empty($_SESSION['shop'])) {
+	foreach ($_SESSION['shop'] as $pid => $val) {
 
-		foreach ($_SESSION['shop'] as $pid => $val) {
+		// If this post variable is set, we must need to update the quantity
+		if (isset($_POST['qty'.$pid])) {
 
-			// If this post variable is set, we must need to update the quantity
-			if (isset($_POST['qty'.$pid])) {
+			unset($qty_new); // Have to unset this since we're in a foreach
 
-				unset($qty_new); // Have to unset this since we're in a foreach
+			if(!xarVarFetch('qty'.$pid, 'isset', $qty_new, NULL, XARVAR_DONT_SET)) {return;}
 
-				if(!xarVarFetch('qty'.$pid, 'isset', $qty_new, NULL, XARVAR_DONT_SET)) {return;}
-
-				if ($qty_new == 0) {
-					unset($_SESSION['shop'][$pid]); 
-				} else {
-					$_SESSION['shop'][$pid]['qty'] = $qty_new;
-				}
-
-			}  
-
-			// If the quantity hasn't been set to zero, add it to the $products array...
-			if (isset($_SESSION['shop'][$pid])) { 
-
-				//commas in the quantity seem to mess up our math
-				$products[$pid]['qty'] = str_replace(',','',$_SESSION['shop'][$pid]['qty']); 
-
-				// Get the product info
-				$object = DataObjectMaster::getObject(array('name' => 'shop_products'));
-				$some_id = $object->getItem(array('itemid' => $pid));
-				$values = $object->getFieldValues();
-
-				$products[$pid]['title'] = xarVarPrepForDisplay($values['title']);
-				$products[$pid]['price'] = $values['price'];
-				$subtotal = $values['price'] * $products[$pid]['qty'];
-				$subtotals[] = $subtotal; // so we can use array_sum() to add it all up
-				if (substr($subtotal, 0, 1) == '.') {
-					$subtotal = '0' . $subtotal;
-				}
-				$products[$pid]['subtotal'] = number_format($subtotal, 2);
-				
+			if ($qty_new == 0) {
+				unset($_SESSION['shop'][$pid]); 
+			} else {
+				$_SESSION['shop'][$pid]['qty'] = $qty_new;
 			}
 
+		}  
+
+		// If the quantity hasn't been set to zero, add it to the $products array...
+		if (isset($_SESSION['shop'][$pid])) { 
+
+			// Commas in the quantity seem to mess up our math
+			$products[$pid]['qty'] = str_replace(',','',$_SESSION['shop'][$pid]['qty']); 
+
+			// Get the product info
+			$object = DataObjectMaster::getObject(array('name' => 'shop_products'));
+			$some_id = $object->getItem(array('itemid' => $pid));
+			$values = $object->getFieldValues();
+
+			$products[$pid]['title'] = xarVarPrepForDisplay($values['title']);
+			$products[$pid]['price'] = $values['price'];
+			$subtotal = $values['price'] * $products[$pid]['qty'];
+			$subtotals[] = $subtotal; // so we can use array_sum() to add it all up
+			if (substr($subtotal, 0, 1) == '.') {
+				$subtotal = '0' . $subtotal;
+			}
+			$products[$pid]['subtotal'] = number_format($subtotal, 2);
+			
 		}
+	}
 
 	$total = array_sum($subtotals);
 	
@@ -89,9 +81,7 @@ function shop_user_viewcart() {
 	$_SESSION['total'] = $total;
 	$data['total'] = $total;
 
-	}
-
-return $data;
+	return $data;
 
 }
 

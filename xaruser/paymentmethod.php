@@ -15,11 +15,7 @@
 function shop_user_paymentmethod() {
 
 	// Redirects at the start of the user functions are just a way to make sure someone isn't where they don't need to be
-	if (!xarUserIsLoggedIn()) {
-		xarResponse::Redirect(xarModURL('shop','user','viewcart'));
-		return;
-	}
-	if (!isset($_SESSION['shop']) || empty($_SESSION['shop'])) {
+	if (!xarUserIsLoggedIn() || !isset($_SESSION['shop']) || empty($_SESSION['shop'])) {
 		xarResponse::Redirect(xarModURL('shop','user','main'));
 		return;
 	}

@@ -76,7 +76,7 @@
 
 	 <xar:set name="errorstyle">'display:block'</xar:set>
 
-	 <xar:if condition="isset($_SESSION['errors'])">
+	 <xar:if condition="isset($_SESSION['errors']) and !empty($_SESSION['errors'])">
 		<div class="error" id="error" style="#$errorstyle#">
 		<div>
 		There is a problem with your order:

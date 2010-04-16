@@ -47,7 +47,7 @@
 
 </xar:if>
 
- <xar:if condition="isset($_SESSION['errors'])">
+ <xar:if condition="isset($_SESSION['errors']) and !empty($_SESSION['errors'])">
 	<a name="errors"></a>
 	<div class="error">
 	<div>There is a problem with your address:</div>
