@@ -10,7 +10,11 @@
   <form id='editsource' action="#xarModURL('workflow','admin','shared_source')#" method="post">
 
     <fieldset>
-     <legend>Admin process sources</legend>
+       <xar:if condition="$template != 'y'">
+          <legend>Edit Activity Code</legend>
+       <xar:else/>
+          <legend>Edit Activity Template</legend>
+       </xar:if>
           <div class="xar-form-input-wrapper-before">
               <label class="xar-form-label">
                   Activity: 
@@ -24,19 +28,19 @@
 
               <xar:foreach in="$items" key="$ix">
               <xar:if condition="$activityId eq $items[$ix]['activityId']">
-                <option value="#$items[$ix]['activityId']#" selected="selected">#$items[$ix]['name']#</option>
+                <option value="#$items[$ix]['activityId']#" selected="selected">#$items[$ix]['name']# [#$items[$ix]['type']#]</option>
                 <xar:else/>
-                <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
+                <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']# [#$items[$ix]['type']#]</option>
               </xar:if>
               </xar:foreach>
               </select>
         </div>
        <div class="xar-form-input-wrapper-before">
           <xar:if condition="$activityId gt 0 and $act_info['isInteractive'] eq 'y' and $template eq 'n'">
-            <input type="submit" name='template' value="#xarML('Switch to template')#"/>
+            <input type="submit" name='template' value="#xarML('Save and Switch to Template')#"/>
           </xar:if>
           <xar:if condition="$activityId gt 0 and $act_info['isInteractive'] eq 'y' and $template eq 'y'">
-            <input type="submit" name='save' value="#xarML('Switch to code')#"/>
+            <input type="submit" name='code' value="#xarML('Save and Switch to Code')#"/>
           </xar:if>
           &#160;
         </div>
@@ -44,7 +48,7 @@
            <!--
                This is the area where templating and code is editted
            -->
-           <textarea style="font-family: monospace; white-space: pre; width: 100%" id="src" name="src" rows="20" cols="80" onkeypress="return keypresshandler(this.id,event);">#$data#</textarea>
+           <textarea style="font-family: monospace; white-space: pre; width: 100%" id="src" name="source" rows="20" cols="80">#$data#</textarea>
            <!--
                End of it
            -->

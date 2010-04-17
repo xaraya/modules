@@ -41,6 +41,9 @@ function workflow_admin_shared_source()
     if (isset($_REQUEST['code'])) {
         unset ($_REQUEST['template']);
         $_REQUEST['save'] = 'y';
+    } elseif (isset($_REQUEST['template'])) {
+        unset ($_REQUEST['code']);
+        $_REQUEST['save'] = 'y';
     }
 
     $process = new Process($_REQUEST['pid']);
@@ -71,10 +74,9 @@ function workflow_admin_shared_source()
 
             $source = GALAXIA_PROCESSES."/$procname/code/activities/$actname" . '.php';
         }
-
         // Then editing an activity
         $tplData['act_info'] =  array(
-            'isInteractive' => $act->isInteractive() ? 'y' : 0,
+            'isInteractive' => $act->isInteractive(),
             'type'          => $act->getType());
     } else {
         $tplData['template'] =  'n';
@@ -84,7 +86,7 @@ function workflow_admin_shared_source()
     }
 
     //First of all save
-    if (isset($_REQUEST['source'])) {
+    if (isset($_REQUEST['source']) && isset($_REQUEST['save'])) {
         // security check on paths
         $basedir = GALAXIA_PROCESSES . "/$procname/code/";
         $basepath = realpath($basedir);
@@ -117,8 +119,12 @@ function workflow_admin_shared_source()
     fclose ($fp);
 
     // initialize template
-    if (empty($tplData['data']) && isset($_REQUEST['template']) && empty($tplData['data']) && !empty($act)) {
-        $tplData['data'] = htmlspecialchars('<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">' . "\n" . $act->name . "\n" . '</xar:template>');
+    if (empty($tplData['data']) && isset($_REQUEST['template']) && !empty($act)) {
+        // load sample template
+        $sample = file_get_contents(sys::code() . 'modules/workflow/xartemplates/includes/sample.xt');
+        // replace title with current activity name
+        $sample = str_replace('#$title#', $act->name, $sample);
+        $tplData['data'] = htmlspecialchars($sample);
     }
 
     $valid = $activityManager->validate_process_activities($_REQUEST['pid']);
