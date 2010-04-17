@@ -20,15 +20,16 @@ function shop_user_complete()
         xarResponse::redirect(xarModURL('shop','user','viewcart'));
         return;
     }
-    if (!isset($_SESSION['order'])) {  //Probably a page reload... no reason to be here anymore
+    $order = xarSession::getVar('order');
+    if (empty($order)) {  //Probably a page reload... no reason to be here anymore
         xarResponse::redirect(xarModURL('shop','user','main'));
         return;
     }
 
-    $data['order'] = $_SESSION['order']['products'];
-    $data['ordertid'] = $_SESSION['order']['tid'];
-    $data['orderdate'] = $_SESSION['order']['date'];
-    $data['total'] = $_SESSION['total'];
+    $data['order'] = $order['products'];
+    $data['ordertid'] = $order['tid'];
+    $data['orderdate'] = $order['date'];
+    $data['total'] = xarSession::getVar('total');
     xarSession::delVar('order');  // For privacy, order will not be redisplayed if the page is visited later
     xarSession::delVar('total');
     return $data;

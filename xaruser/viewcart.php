@@ -81,9 +81,9 @@ function shop_user_viewcart()
 
     $total = number_format($total, 2);  
 
-    $_SESSION['products'] = $products; // update the session variable
+    xarSession::setVar('products',$products); // update the session variable
     $data['products'] = $products; // don't want too much session stuff in the templates
-    $_SESSION['total'] = $total;
+    xarSession::setVar('total',$total);
     $data['total'] = $total;
 
     return $data;

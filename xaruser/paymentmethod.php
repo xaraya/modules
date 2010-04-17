@@ -33,7 +33,7 @@ function shop_user_paymentmethod()
     sys::import('modules.dynamicdata.class.properties.master');
 
     $shippingobject = DataObjectMaster::getObject(array('name' => 'shop_shippingaddresses'));
-    $shippingobject->getItem(array('itemid' => $_SESSION['shippingaddress']));
+    $shippingobject->getItem(array('itemid' => xarSession::getVar('shippingaddress')));
     $shippingvals = $shippingobject->getFieldValues();
     $data['shippingvals'] = $shippingvals;
 
@@ -64,11 +64,13 @@ function shop_user_paymentmethod()
     // If we're using a saved payment method...
     if ($proceedsaved) {
         
-        $_SESSION['paymentmethod'] = $paymentmethod;
+        xarSession::setVar('paymentmethod',$paymentmethod);
         xarResponse::redirect(xarModURL('shop','user','order')); 
+        return true;
 
     } elseif ($proceednew) {  // We're not using a saved payment method...
 
+        $errors = xarSession::getVar('errors');
         foreach ($myfields as $field) {
             $isvalid = $paymentobject->properties[$field]->checkInput();
             
@@ -77,13 +79,15 @@ function shop_user_paymentmethod()
             $values['customer'] = xarUserGetVar('id');
             
             if (!$isvalid) {
-                $_SESSION['errors'][$field] = true;
+                $errors[$field] = true;
             } else {    
                 if ($field != 'card_num') {
-                    $_SESSION['payment'][$field] = ${$field};
+                    $errors = xarSession::getVar('payment');
+                    $payment[$field] = ${$field};
+                    xarSession::setVar('payment',$payment);
                     $data[$field] = ${$field}; 
                 }
-                unset($_SESSION['errors'][$field]); // In case we previously submitted invalid input in this field
+                unset($errors[$field]); // In case we previously submitted invalid input in this field
             }
 
         } // end foreach
@@ -94,16 +98,19 @@ function shop_user_paymentmethod()
             $reverse_date = $exp_year . $exp_month;
             $minimum_date = date('ym',time());
             if ($minimum_date > $reverse_date) {
-                $_SESSION['errors']['exp_date'] = true;
+                $errors['exp_date'] = true;
             }
         } 
 
-        if (!empty($_SESSION['errors'])) { 
+        xarSession::setVar('errors',$errors);
+        
+        if (!empty($errors)) { 
             return xarTplModule('shop','user','paymentmethod', $data);
         } else {
             $paymentobject->setFieldValues($values,1);
-            $_SESSION['paymentmethod'] = $paymentobject->createItem();
+            xarSession::setVar('paymentmethod',$paymentobject->createItem());
             xarResponse::redirect(xarModURL('shop','user','order')); 
+            return true;
         }
         
     }

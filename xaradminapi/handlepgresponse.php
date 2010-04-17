@@ -7,6 +7,8 @@ function shop_adminapi_handlepgresponse($args)
         $pg = xarModVars::get('shop','payment_gateway');
         $trans_id = false;
 
+        $pg_response = xarSession::getVar('pg_response');
+        
         switch ($pg) {
 
             case 1:  // demo mode
@@ -23,7 +25,7 @@ function shop_adminapi_handlepgresponse($args)
                     $authorizenet_codes = array(1 => 'Approved', 2 => 'Declined', 3 => 'Error', 4 => 'Held for Review');
                     $msg = $response[4];
                     $msg .= ' Response code: ' . $authorizenet_codes[$num];
-                    $_SESSION['pg_response']['msg'] = $msg;
+                    $pg_response['msg'] = $msg;
                 }
                 break;
 
@@ -38,7 +40,7 @@ function shop_adminapi_handlepgresponse($args)
                 } else {
                     $msg = $response['ACK'];
                     $msg .= '. Response: ' . urldecode($response['L_LONGMESSAGE0']);
-                    $_SESSION['pg_response']['msg'] = $msg;
+                    $pg_response['msg'] = $msg;
                 }
                 break;
 
@@ -48,6 +50,7 @@ function shop_adminapi_handlepgresponse($args)
 
         }
         
+    xarSession::setVar('pg_response',$pg_response);
     $response['trans_id'] = $trans_id;
     return $response;
 

@@ -10,176 +10,177 @@
 </div>
     <div class="xar-mod-body">
 
-	<xar:set name="cust">xarMod::APIFunc('shop','user','customerinfo')</xar:set>
+    <xar:set name="cust">xarMod::APIFunc('shop','user','customerinfo')</xar:set>
 
-	 <xar:set name="formstyle">'display:block'</xar:set>
+     <xar:set name="formstyle">'display:block'</xar:set>
 
-	 <xar:if condition="isset($paymentmethods)">
+     <xar:if condition="isset($paymentmethods)">
 
-		<form method="post" id="paybysavedmethod" name="paybysavedmethod" action="#xarmodurl('shop','user','paymentmethod')#">
+        <form method="post" id="paybysavedmethod" name="paybysavedmethod" action="#xarmodurl('shop','user','paymentmethod')#">
 
-		<xar:set name="formstyle">'display:block'</xar:set>
-		<xar:set name="errorstyle">'display:block'</xar:set>
+        <xar:set name="formstyle">'display:block'</xar:set>
+        <xar:set name="errorstyle">'display:block'</xar:set>
 
-		<table id="paymentmethod">
-		<tr><td>
-		<div id="selectpayment">
-		Select a payment method:
-		</div>
+        <table id="paymentmethod">
+        <tr><td>
+        <div id="selectpayment">
+        Select a payment method:
+        </div>
 
-		 <xar:foreach in="$paymentmethods" key="$key" value="$val">
+         <xar:foreach in="$paymentmethods" key="$key" value="$val">
 
-			 <xar:set name="card_last4">substr($val['card_num'], -4)</xar:set>
-			 <xar:set name="month">substr($val['exp_date'], 0, 2)</xar:set>
-			 <xar:set name="year">substr($val['exp_date'], -2)</xar:set>
+             <xar:set name="card_last4">substr($val['card_num'], -4)</xar:set>
+             <xar:set name="month">substr($val['exp_date'], 0, 2)</xar:set>
+             <xar:set name="year">substr($val['exp_date'], -2)</xar:set>
 
-			<xar:set name="exp">$year.$month</xar:set>
-			 <xar:set name="now">date('ym',time())</xar:set>
+            <xar:set name="exp">$year.$month</xar:set>
+             <xar:set name="now">date('ym',time())</xar:set>
 
-			<div class="paymentmethod">
-			<xar:if condition="$exp lt $now">
-				<input type="radio" name="paymentmethod" id="pmethod" value="#$key#" onClick="javascript:document.payment.style.display='none';document.getElementById('complete1').style.display='block';document.getElementById('error').style.display='none'" disabled="disabled" />  
-			 <xar:else />
-				<input type="radio" name="paymentmethod"  value="#$key#" onClick="javascript:document.payment.style.display='none';document.getElementById('complete1').style.display='block';document.getElementById('error').style.display='none'" />
-			 </xar:if> 
-				<strong>#$val['card_type']#</strong>  ending: #$card_last4# &#160; <strong>#$val['first_name']#</strong>&#160;<strong>#$val['last_name']#</strong> &#160; 
-				<xar:if condition="$exp lt $now">
-					<span style="color:red">
-					Card has expired: #$month#/#$year#
-					</span>
-				<xar:else />
-					Exp date: #$month#/#$year#
-				</xar:if>
+            <div class="paymentmethod">
+            <xar:if condition="$exp lt $now">
+                <input type="radio" name="paymentmethod" id="pmethod" value="#$key#" onClick="javascript:document.payment.style.display='none';document.getElementById('complete1').style.display='block';document.getElementById('error').style.display='none'" disabled="disabled" />  
+             <xar:else />
+                <input type="radio" name="paymentmethod"  value="#$key#" onClick="javascript:document.payment.style.display='none';document.getElementById('complete1').style.display='block';document.getElementById('error').style.display='none'" />
+             </xar:if> 
+                <strong>#$val['card_type']#</strong>  ending: #$card_last4# &#160; <strong>#$val['first_name']#</strong>&#160;<strong>#$val['last_name']#</strong> &#160; 
+                <xar:if condition="$exp lt $now">
+                    <span style="color:red">
+                    Card has expired: #$month#/#$year#
+                    </span>
+                <xar:else />
+                    Exp date: #$month#/#$year#
+                </xar:if>
 
-			</div> 
+            </div> 
 
-		</xar:foreach>
+        </xar:foreach>
 
-		<div class="paymentmethod">
-			<input type="radio" name="paymentmethod" value="0" checked="checked" onClick="javascript:document.getElementById('complete1').style.display='none';document.payment.style.display='block';document.getElementById('error').style.display='block';" /> Enter different payment information
-		</div> 
+        <div class="paymentmethod">
+            <input type="radio" name="paymentmethod" value="0" checked="checked" onClick="javascript:document.getElementById('complete1').style.display='none';document.payment.style.display='block';document.getElementById('error').style.display='block';" /> Enter different payment information
+        </div> 
 
-		</td></tr>
-		</table>
+        </td></tr>
+        </table>
 
-		<div class="button_container" id="complete1" style="display:none">
-		<input type="submit" class="button" name="proceedsaved" value="#xarML('Continue')#" /><br />
-		<div class="review">(You Can Review This Order Before It's Final)</div>
-		</div>
+        <div class="button_container" id="complete1" style="display:none">
+        <input type="submit" class="button" name="proceedsaved" value="#xarML('Continue')#" /><br />
+        <div class="review">(You Can Review This Order Before It's Final)</div>
+        </div>
 
-		</form>
+        </form>
 
-	 </xar:if>
-
-
-	 <a name="errors"></a>
-
-	 <xar:set name="errorstyle">'display:block'</xar:set>
-
-	 <xar:if condition="isset($_SESSION['errors']) and !empty($_SESSION['errors'])">
-		<div class="error" id="error" style="#$errorstyle#">
-		<div>
-		There is a problem with your order:
-		</div>
-		<xar:foreach in="$_SESSION['errors']" key="$key">
-		<div style="margin-left: 7px;"> 
-		<xar:data-label property="$properties[$key]" /> <span style="font-weight: normal">field is empty or invalid.</span>
-		</div>
-		</xar:foreach>
-		</div>
-	 </xar:if>
+     </xar:if>
 
 
-	<form method="post" id="payment" name="payment" style="#$formstyle#" action="#xarmodurl('shop','user','paymentmethod')#">
+     <a name="errors"></a>
 
-	<fieldset id="shippingaddress">
-	<legend>Your shipping address:</legend>
-	<div class="shippingaddressbox"> 
-		<div><span id="first_name2">#$shippingvals['first_name']#</span>&#160;<span id="last_name2">#$shippingvals['last_name']#</span></div>
-		<div><span id="street_addr2">#$shippingvals['street_addr']#</span></div>
-		<div><span id="city_addr2">#$shippingvals['city_addr']#</span>&#160;<span id="state_addr2">#$shippingvals['state_addr']#</span>&#160;<span id="postal_code2">#$shippingvals['postal_code']#</span></div>
-	</div>
-	</fieldset>
+     <xar:set name="errorstyle">'display:block'</xar:set>
 
-	<fieldset>
-	<legend>Enter a billing address:</legend>
+     <xar:set name="errors">xarSession::getVar('errors')</xar:set>
+     <xar:if condition="!empty($errors)">
+        <div class="error" id="error" style="#$errorstyle#">
+        <div>
+        There is a problem with your order:
+        </div>
+        <xar:foreach in="$errors" key="$key">
+        <div style="margin-left: 7px;"> 
+        <xar:data-label property="$properties[$key]" /> <span style="font-weight: normal">field is empty or invalid.</span>
+        </div>
+        </xar:foreach>
+        </div>
+     </xar:if>
 
-	<input type="checkbox" name="popBilling" id="popBilling" onClick="popBillingAddr('popBilling');" /> Same as shipping address
 
-		<table id="billinginfo"> 
+    <form method="post" id="payment" name="payment" style="#$formstyle#" action="#xarmodurl('shop','user','paymentmethod')#">
 
-			<tr>
-			<td><xar:data-label property="$properties['first_name']" /></td>
-			<td class="right"><xar:data-input property="$properties['first_name']" id="first_name" value="$first_name" /></td>
-			</tr>
+    <fieldset id="shippingaddress">
+    <legend>Your shipping address:</legend>
+    <div class="shippingaddressbox"> 
+        <div><span id="first_name2">#$shippingvals['first_name']#</span>&#160;<span id="last_name2">#$shippingvals['last_name']#</span></div>
+        <div><span id="street_addr2">#$shippingvals['street_addr']#</span></div>
+        <div><span id="city_addr2">#$shippingvals['city_addr']#</span>&#160;<span id="state_addr2">#$shippingvals['state_addr']#</span>&#160;<span id="postal_code2">#$shippingvals['postal_code']#</span></div>
+    </div>
+    </fieldset>
 
-			<tr>
-			<td><xar:data-label property="$properties['last_name']" /></td>
-			<td class="right"><xar:data-input property="$properties['last_name']" id="last_name" value="$last_name"/></td>
-			</tr>
+    <fieldset>
+    <legend>Enter a billing address:</legend>
 
-			<tr>
-			<td><xar:data-label property="$properties['street_addr']" /></td>
-			<td class="right"><xar:data-input property="$properties['street_addr']" id="street_addr" value="$street_addr"/></td>
-			</tr>
+    <input type="checkbox" name="popBilling" id="popBilling" onClick="popBillingAddr('popBilling');" /> Same as shipping address
 
-			<tr>
-			<td><xar:data-label property="$properties['city_addr']" /></td>
-			<td class="right"><xar:data-input property="$properties['city_addr']" id="city_addr" value="$city_addr"/></td>
-			</tr>
+        <table id="billinginfo"> 
 
-			<tr>
-			<td><xar:data-label property="$properties['state_addr']" /></td>
-			<td class="right"><xar:data-input property="$properties['state_addr']" id="state_addr" value="$state_addr"/></td>
-			</tr>
+            <tr>
+            <td><xar:data-label property="$properties['first_name']" /></td>
+            <td class="right"><xar:data-input property="$properties['first_name']" id="first_name" value="$first_name" /></td>
+            </tr>
 
-			<tr>
-			<td><xar:data-label property="$properties['postal_code']" /></td>
-			<td class="right"><xar:data-input property="$properties['postal_code']" id="postal_code" value="$postal_code"/></td>
-			</tr>
+            <tr>
+            <td><xar:data-label property="$properties['last_name']" /></td>
+            <td class="right"><xar:data-input property="$properties['last_name']" id="last_name" value="$last_name"/></td>
+            </tr>
 
-		</table>	
-		
-	</fieldset>
+            <tr>
+            <td><xar:data-label property="$properties['street_addr']" /></td>
+            <td class="right"><xar:data-input property="$properties['street_addr']" id="street_addr" value="$street_addr"/></td>
+            </tr>
 
-	<fieldset>
-	<legend>Credit Card Info</legend>
+            <tr>
+            <td><xar:data-label property="$properties['city_addr']" /></td>
+            <td class="right"><xar:data-input property="$properties['city_addr']" id="city_addr" value="$city_addr"/></td>
+            </tr>
 
-		<table id="paymentinfo"> 
+            <tr>
+            <td><xar:data-label property="$properties['state_addr']" /></td>
+            <td class="right"><xar:data-input property="$properties['state_addr']" id="state_addr" value="$state_addr"/></td>
+            </tr>
 
-			<tr>
-			<td><xar:data-label property="$properties['card_type']" /></td>
-			<td class="right"><xar:data-input property="$properties['card_type']" value="$card_type"/></td>
-			</tr>
-					
-			<tr>
-			<td><xar:data-label property="$properties['card_num']" /></td>
-			<td class="right"><xar:data-input property="$properties['card_num']" /></td>
-			</tr>
+            <tr>
+            <td><xar:data-label property="$properties['postal_code']" /></td>
+            <td class="right"><xar:data-input property="$properties['postal_code']" id="postal_code" value="$postal_code"/></td>
+            </tr>
 
-			<tr>
-			<td><xar:data-label property="$properties['cvv2']" /></td>
-			<td class="right"><xar:data-input property="$properties['cvv2']" value="$cvv2" /></td>
-			</tr>
+        </table>    
+        
+    </fieldset>
 
-			<tr>
-			<td><xar:data-label property="$properties['exp_date']" /></td>
-			<td class="right"><xar:data-input property="$properties['exp_date']" value="$exp_date" /></td>
-			</tr>
-		
-		</table>
-		
-	<div class="button_container">
-		<input type="submit" class="button" name="proceednew" value="#xarML('Continue')# " />
-		<div class="review">
-		(You Can Review This Order Before It's Final)
-		</div>
-	</div>
+    <fieldset>
+    <legend>Credit Card Info</legend>
 
-	</fieldset>
+        <table id="paymentinfo"> 
 
-	
-	</form>
+            <tr>
+            <td><xar:data-label property="$properties['card_type']" /></td>
+            <td class="right"><xar:data-input property="$properties['card_type']" value="$card_type"/></td>
+            </tr>
+                    
+            <tr>
+            <td><xar:data-label property="$properties['card_num']" /></td>
+            <td class="right"><xar:data-input property="$properties['card_num']" /></td>
+            </tr>
+
+            <tr>
+            <td><xar:data-label property="$properties['cvv2']" /></td>
+            <td class="right"><xar:data-input property="$properties['cvv2']" value="$cvv2" /></td>
+            </tr>
+
+            <tr>
+            <td><xar:data-label property="$properties['exp_date']" /></td>
+            <td class="right"><xar:data-input property="$properties['exp_date']" value="$exp_date" /></td>
+            </tr>
+        
+        </table>
+        
+    <div class="button_container">
+        <input type="submit" class="button" name="proceednew" value="#xarML('Continue')# " />
+        <div class="review">
+        (You Can Review This Order Before It's Final)
+        </div>
+    </div>
+
+    </fieldset>
+
+    
+    </form>
 
     </div>
 </xar:template>

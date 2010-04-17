@@ -48,7 +48,7 @@ function shop_user_shippingaddress()
     $data['properties'] = $properties;
 
     if (isset($shipto)) {
-        $_SESSION['shippingaddress'] = $shipto;
+        xarSession::setVar('shippingaddress',$shipto);
         if(isset($data['skipto'])) {
             $func = $data['skipto'];
         } else {
@@ -102,8 +102,8 @@ function shop_user_shippingaddress()
 
         xarResponse::redirect(xarModURL('shop','user','paymentmethod'));
 
+        xarSession::setVar('errors',$errors);
     }
-    xarSession::setVar('errors',$errors);
 
     return $data;
 

@@ -16,72 +16,73 @@
 
 <xar:if condition="isset($shippingaddresses)">
 
-	TODO: should be possible to delete addresses
+    TODO: should be possible to delete addresses
 
-	<xar:set name="legend">'Or enter a different shipping address:'</xar:set>
-	
-	<fieldset>
+    <xar:set name="legend">'Or enter a different shipping address:'</xar:set>
+    
+    <fieldset>
 
-		<legend>
-		Choose a shipping address:
-		</legend>
+        <legend>
+        Choose a shipping address:
+        </legend>
 
-		<xar:foreach in="$shippingaddresses" key="$key" value="$val">
+        <xar:foreach in="$shippingaddresses" key="$key" value="$val">
 
-		<div class="shippingaddressbox">
-		<div>#$val['first_name']# #$val['last_name']#</div>
-		<div>#$val['street_addr']#</div>
-		<div>#$val['city_addr']# #$val['state_addr']# #$val['postal_code']#</div>
-		<xar:if condition="isset($skipto)">
-		<xar:set name="skipto">'&amp;skipto=order'</xar:set>
-		<xar:else />
-		<xar:set name="skipto">''</xar:set>
-		</xar:if>
-		<div><a href="#xarmodurl('shop','user','shippingaddress',array('shipto'=>$val['id']))##$skipto#">Ship to this address</a></div>
-		</div>
+        <div class="shippingaddressbox">
+        <div>#$val['first_name']# #$val['last_name']#</div>
+        <div>#$val['street_addr']#</div>
+        <div>#$val['city_addr']# #$val['state_addr']# #$val['postal_code']#</div>
+        <xar:if condition="isset($skipto)">
+        <xar:set name="skipto">'&amp;skipto=order'</xar:set>
+        <xar:else />
+        <xar:set name="skipto">''</xar:set>
+        </xar:if>
+        <div><a href="#xarmodurl('shop','user','shippingaddress',array('shipto'=>$val['id']))##$skipto#">Ship to this address</a></div>
+        </div>
 
-		</xar:foreach>
-		<br style="clear:both;" />
+        </xar:foreach>
+        <br style="clear:both;" />
 
-	</fieldset>
+    </fieldset>
 
 </xar:if>
 
- <xar:if condition="isset($_SESSION['errors']) and !empty($_SESSION['errors'])">
-	<a name="errors"></a>
-	<div class="error">
-	<div>There is a problem with your address:</div>
-	<xar:foreach in="$_SESSION['errors']" key="$key">
-		<div style="margin-left: 7px;"> 
-		<xar:data-label property="$properties[$key]" /> 
-		<span style="font-weight: normal">field is empty or invalid.</span>
-		</div>
-	</xar:foreach>
-	</div>
+ <xar:set name="errors">xarSession::getVar('errors')</xar:set>
+ <xar:if condition="!empty($errors)">
+    <a name="errors"></a>
+    <div class="error">
+    <div>There is a problem with your address:</div>
+    <xar:foreach in="$errors" key="$key">
+        <div style="margin-left: 7px;"> 
+        <xar:data-label property="$properties[$key]" /> 
+        <span style="font-weight: normal">field is empty or invalid.</span>
+        </div>
+    </xar:foreach>
+    </div>
  </xar:if>
-	
+    
 <fieldset> 
 <legend>#$legend#</legend>
 
-	<table id="paymentinfo"> 
-	<xar:foreach in="$myfields" value="$name">
-		
-		<xar:set name="val">''</xar:set>
-		<xar:comment>If there is an error, let's make sure we don't populate the field with the user's saved account data, because it will look like our validation is broken.  Instead, empty the field.</xar:comment>
-		<xar:if condition="isset($_SESSION['errors'][$name])">
-			<xar:set name="val">''</xar:set>
-		</xar:if>
+    <table id="paymentinfo"> 
+    <xar:foreach in="$myfields" value="$name">
+        
+        <xar:set name="val">''</xar:set>
+        <xar:comment>If there is an error, let's make sure we don't populate the field with the user's saved account data, because it will look like our validation is broken.  Instead, empty the field.</xar:comment>
+        <xar:if condition="isset($errors[$name])">
+            <xar:set name="val">''</xar:set>
+        </xar:if>
 
-		<tr>
-		<td><xar:data-label property="$properties[$name]" /></td>
-		<td class="right"><xar:data-input property="$properties[$name]" value="$val" /></td>
-		</tr>
+        <tr>
+        <td><xar:data-label property="$properties[$name]" /></td>
+        <td class="right"><xar:data-input property="$properties[$name]" value="$val" /></td>
+        </tr>
 
-	</xar:foreach>
-	</table>	
-	<div class="button_container">
-	<input type="submit" class="button" name="proceed" value="Continue" />
-	</div>
+    </xar:foreach>
+    </table>    
+    <div class="button_container">
+    <input type="submit" class="button" name="proceed" value="Continue" />
+    </div>
 </fieldset>
 </form>
 

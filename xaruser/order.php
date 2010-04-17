@@ -27,17 +27,17 @@ function shop_user_order()
     sys::import('modules.dynamicdata.class.objects.master');
     
     $shippingobject = DataObjectMaster::getObject(array('name' => 'shop_shippingaddresses'));
-    $shippingobject->getItem(array('itemid' => $_SESSION['shippingaddress']));
+    $shippingobject->getItem(array('itemid' => xarSession::getVar('shippingaddress')));
     $shippingvals = $shippingobject->getFieldValues();
     $data['shippingvals'] = $shippingvals;
 
-    $data['products'] = $_SESSION['products'];
-    $data['total'] = $_SESSION['total'];
+    $data['products'] = xarSession::getVar('products');
+    $data['total'] = xarSession::getVar('total');
     $time = time();
-    $_SESSION['time'] = $time;
+    xarSession::setVar('time',$time);
 
     $paymentobject = DataObjectMaster::getObject(array('name' => 'shop_paymentmethods'));
-    $paymentmethod = $_SESSION['paymentmethod'];
+    $paymentmethod = xarSession::getVar('paymentmethod');
     $paymentobject->getItem(array('itemid' => $paymentmethod));
     $values = $paymentobject->getFieldValues();
     $data['payvalues'] = $values;
@@ -50,14 +50,16 @@ function shop_user_order()
             $reverse_date = $exp_year . $exp_month;
             $minimum_date = date('ym',time());
             if ($minimum_date > $reverse_date) {
-                $_SESSION['errors']['exp_date'] = true;
+                $errors = xarSession::getVar('errors');
+                $errors['exp_date'] = true;
+                xarSession::setVar('errors',$errors);
             }
         }*/
  
         // A few more things
         $values['date'] = $time;
         $values['products'] = serialize($data['products']);
-        $values['total'] =  $_SESSION['total'];
+        $values['total'] =  xarSession::getVar('total');
 
         /*****************************/
         /***** PAYMENT PROCESSING ****/
@@ -73,9 +75,11 @@ function shop_user_order()
             $transobject = DataObjectMaster::getObject(array('name' => 'shop_transactions'));
             $tid = $transobject->createItem($values);
 
-            $_SESSION['order']['products'] = $_SESSION['products'];
-            $_SESSION['order']['tid'] = $tid;
-            $_SESSION['order']['date'] = date('F j, Y g:i a',$_SESSION['time']);
+            $order = xarSession::getVar('order');
+            $order['products'] = xarSession::getVar('products');
+            $order['tid'] = $tid;
+            $order['date'] = date('F j, Y g:i a',xarSession::getVar('time'));
+            xarSession::setVar('order',$order);
 
             xarSession::delVar('pg_response'); // This is set in shop_adminapi_handlepgresponse()
             xarSession::delVar('payment');
@@ -92,7 +96,9 @@ function shop_user_order()
             $pg_key = xarModVars::get('shop','pg_key');
             // Assuming we're using the key field for all payment gateways for keys, passwords and the like...
             if (empty($pg_key)) {
-                $_SESSION['pg_response']['msg'] .= "<p style='color:red'><strong>Looks like you haven't entered a payment gateway key.  <a href='".xarModURL('shop','admin','overview')."'>Read me</a>.</strong></p>";
+                $errors = xarSession::getVar('pg_response');
+                $pg_response['msg'] .= "<p style='color:red'><strong>Looks like you haven't entered a payment gateway key.  <a href='".xarModURL('shop','admin','overview')."'>Read me</a>.</strong></p>";
+                xarSession::setVar('pg_response',$pg_response);
             }
 
             xarResponse::redirect(xarModURL('shop','user','order'));
