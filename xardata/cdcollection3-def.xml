@@ -1,55 +1,55 @@
 <object name="cdcollection">
-  <objectid>24</objectid>
+  <objectid>16</objectid>
   <label>CD Collection 3</label>
-  <parent>objects</parent>
   <module_id>182</module_id>
-  <itemtype>14</itemtype>
+  <itemtype>10</itemtype>
   <class>DataObject</class>
   <filepath></filepath>
   <urlparam>itemid</urlparam>
-  <maxid>20</maxid>
-  <config></config>
-  <isalias>0</isalias>
+  <maxid>39</maxid>
+  <config>a:0:{}</config>
+  <isalias>false</isalias>
   <properties>
     <property name="cdid">
-      <id>186</id>
+      <id>109</id>
       <label>CD</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>33</status>
       <seq>1</seq>
       <configuration></configuration>
     </property>
     <property name="title">
-      <id>187</id>
+      <id>110</id>
       <label>Title</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>33</status>
       <seq>2</seq>
       <configuration></configuration>
     </property>
     <property name="status">
-      <id>188</id>
+      <id>111</id>
       <label>Status</label>
       <type>dropdown</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>33</status>
       <seq>3</seq>
-      <configuration>available;not available</configuration>
+      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:24:"available;not available;";}</configuration>
     </property>
     <property name="user">
-      <id>189</id>
+      <id>112</id>
       <label>User</label>
-      <type>username</type>
-      <defaultvalue></defaultvalue>
+      <type>integerbox</type>
+      <defaultvalue>0</defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>33</status>
       <seq>4</seq>
       <configuration></configuration>
     </property>
   </properties>
 </object>
+
