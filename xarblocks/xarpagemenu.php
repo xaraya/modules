@@ -258,7 +258,7 @@
         // TODO: It may be quicker to do the merge the other way around?
         $vars = array_merge($vars, $pagedata);
 
-        return $blockinfo;
+        return $vars;
     }
 }
 
