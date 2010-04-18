@@ -7,7 +7,7 @@
     <xar:if condition="xarTplGetThemeName() ne 'rss'">
     <div class="xar-normal">
         <h3>
-            <a href="#xarServerGetCurrentURL(array('aid'=&gt;$aid))#">#xarVarPrepForDisplay($title)#</a><br/>
+            <a href="#xarServer::getCurrentURL(array('aid'=&gt;$aid))#">#xarVarPrepForDisplay($title)#</a><br/>
             <xar:if condition="!empty($editurl)"> [<a href="#$editurl#">edit</a>]</xar:if>
         </h3>
 
@@ -25,7 +25,7 @@
                         <td>
                             <xar:loop name="$cats">
                                 <xar:if condition="$loop:index gt 0"> | </xar:if>
-                                <a href="#xarServerGetCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarMod::apiFunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">
+                                <a href="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarMod::apiFunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">
                                     #xarVarPrepForDisplay($loop:item.name)#
                                 </a>
                             </xar:loop>
@@ -53,12 +53,12 @@
     <xar:comment>RSS Feed - this avoids having to put templates into another theme</xar:comment>
     <item>
         <title>#xarVarPrepForDisplay($title)#</title>
-        <link>#xarServerGetCurrentURL(array('aid'=&gt;$aid,'theme'=&gt;NULL))#</link>
+        <link>#xarServer::getCurrentURL(array('aid'=&gt;$aid,'theme'=&gt;NULL))#</link>
         <xar:if condition="!empty($pubdate)"><pubDate>#xarLocaleFormatUTCDate('%a, %d %b %Y %H:%M:%S %z',$pubdate)#</pubDate></xar:if>
         <description>#xarVarPrepForDisplay($summary)#</description>
         <xar:if condition="!empty($cats)">
             <xar:loop name="$cats">
-                <category domain="#xarServerGetCurrentURL(array('startnum'=&gt;NULL,'theme'=&gt;NULL,'filter'=&gt;xarMod::apiFunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">#xarVarPrepForDisplay($loop:item.name)#</category>
+                <category domain="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'theme'=&gt;NULL,'filter'=&gt;xarMod::apiFunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">#xarVarPrepForDisplay($loop:item.name)#</category>
             </xar:loop>
         </xar:if>
     </item>
