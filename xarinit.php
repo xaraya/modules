@@ -96,6 +96,7 @@ function xarpages_init()
     xarModVars::set('xarpages', 'transformref', 1);
     xarModVars::set('xarpages', 'transformfields', 'body');
     xarModVars::set('xarpages', 'show_usernavbar', true);
+    xarModVars::set('xarpages', 'useicons', false);
     
     # --------------------------------------------------------
     #
@@ -223,7 +224,8 @@ function xarpages_init()
     // type is created.
 
     // Register block types.
-    foreach(array('menu', 'crumb') as $blocktype) {
+//    foreach(array('xarpagemenu', 'crumb') as $blocktype) {
+    foreach(array('xarpagemenu') as $blocktype) {
         if (!xarMod::apiFunc(
             'blocks', 'admin', 'register_block_type',
             array(
