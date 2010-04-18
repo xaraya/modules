@@ -25,7 +25,7 @@
                         <td>
                             <xar:loop name="$cats">
                                 <xar:if condition="$loop:index gt 0"> | </xar:if>
-                                <a href="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarMod::apiFunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">
+                                    <a href="#xarServer::getCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarMod::apiFunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">
                                     #xarVarPrepForDisplay($loop:item.name)#
                                 </a>
                             </xar:loop>

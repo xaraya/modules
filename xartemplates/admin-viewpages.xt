@@ -85,7 +85,7 @@
                                     <xar:set name="link">
                                         xarModURL('xarpages', 'admin', 'deletepage', array('pid' => $loop->item['pid']))
                                     </xar:set>
-                                    <xar:if condition="xarModVars::get('xarpages', 'use_module_icons')">
+                                    <xar:if condition="xarModVars::get('xarpages', 'useicons')">
                                         <xar:set name="icon">
                                             xarTplGetImage('icons/delete.png', 'base')
                                         </xar:set>

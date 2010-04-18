@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:style scope="module" module="xarpages" file="xarpages"/>
-    <xar:base-include-javascript module="base" filename="formcheck.js"/>
+<xar:javascript module="base" filename="formcheck.js"/>
 
     <script type="text/javascript">
     <!--
@@ -22,6 +22,7 @@
         <div style="margin: auto;">
             <form class="xar-xarpages-admin" action="#xarServer::getCurrentURL()#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);">
                 <xar:data-form object="$module_settings"/>
+            <xar:template file="display" module="base" subdata="$subdata"/>
                 <fieldset class="formelements xar-norm">
                     <legend>
                         <strong>Properties</strong>
@@ -61,6 +62,8 @@
                         <strong>Special Pages</strong>
                     </legend>
 
+                <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                <input type="hidden" name="form" id="form" value="form"/>
                     <p class="param">
                         <label for="defaultpage">Default page</label>
                         <select name="defaultpage" id="defaultpage">

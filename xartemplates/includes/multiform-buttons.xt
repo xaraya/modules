@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:base-include-javascript module="base" filename="confirmlink.js"/>
+    <xar:javascript module="base" filename="confirmlink.js"/>
 
     <!-- Display the form buttons -->
     <div class="xarpages-multiform-buttons">

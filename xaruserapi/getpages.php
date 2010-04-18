@@ -220,7 +220,16 @@ function xarpages_userapi_getpages($args)
             // then up in some way (status?). Displaying any of these pages would instead just
             // show the 'no privs' page.
 
+            // Define admin access
+            sys::import('modules.dynamicdata.class.properties.master');
+            $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
             $typename = $pagetypes[$itemtype]['name'];
+            $args = array(
+                'instance' => $name . ":" . $typename,
+                'level' => 800,
+            );
+            $adminaccess = $accessproperty->check($args);
+
             $info = unserialize($info);
             if (!empty($info['view_access'])) {
                 // Decide whether the current user can create blocks of this type
@@ -231,15 +240,14 @@ function xarpages_userapi_getpages($args)
                     'group' => $info['view_access']['group'],
                     'level' => $info['view_access']['level'],
                 );
-                sys::import('modules.dynamicdata.class.properties.master');
-                $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
                 if (!$accessproperty->check($args)) {
                     // Save the right value. We need to skip all subsequent
                     // pages until we get to a page to the right of this one.
                     // The pages will be in 'left' order, so the descendants
                     // will be contiguous and will immediately follow this page.
                     $prune_left = $right;
-                    continue;
+                    // Don't get this unless you are an admin
+                    if (!$adminaccess) continue;
                 }
             }
 
@@ -256,13 +264,12 @@ function xarpages_userapi_getpages($args)
                     'group' => $info['display_access']['group'],
                     'level' => $info['display_access']['level'],
                 );
-                sys::import('modules.dynamicdata.class.properties.master');
-                $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
                 if (!$accessproperty->check($args)) {
                     // We have reached a page that allows only overview access.
                     // Flag all pages with the restricted view until we get past this page.
                     $overview_only_left = $right;
-                    continue;
+                    // Don't get this unless you are an admin
+                    if (!$adminaccess) continue;
                 }
             }
 

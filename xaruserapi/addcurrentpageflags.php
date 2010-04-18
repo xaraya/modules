@@ -80,7 +80,11 @@ function xarpages_userapi_addcurrentpageflags($args)
         $pagedata['ancestors'][0] =& $pagedata['pages'][$this_pid];
 
         // Get the parent page.
-        $pid_ancestor = $pagedata['pages'][$this_pid]['parent_key'];
+        try {
+            $pid_ancestor = $pagedata['pages'][$this_pid]['parent_key'];
+        } catch (Exception $e) {
+            $pid_ancestor = 0;
+        }
 
         // If there is no parent, then stop.
         // Likewise if this is a page we have already seen (infinite loop protection).
@@ -122,7 +126,7 @@ function xarpages_userapi_addcurrentpageflags($args)
     // a single tree.
     // Siblings will include self - filter out in the template if necessary.
     $pagedata['siblings'] = array();
-    if (!empty($pagedata['current_page']['parent_key'])) {
+    if (!empty($pagedata['current_page']['parent_key']) && isset($pagedata['pages'][$pagedata['current_page']['parent_key']]['child_keys'])) {
         // Loop though all children of the parent.
         foreach ($pagedata['pages'][$pagedata['current_page']['parent_key']]['child_keys'] as $key => $child) {
             // Set flag for menus.
