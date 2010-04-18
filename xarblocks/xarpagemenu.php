@@ -256,9 +256,9 @@
         // Pass the page data into the block.
         // Merge it in with the existing block details.
         // TODO: It may be quicker to do the merge the other way around?
-        $vars = array_merge($vars, $pagedata);
+        $data['content'] = array_merge($vars, $pagedata);
 
-        return $vars;
+        return $data;
     }
 }
 
