@@ -155,7 +155,7 @@ function xarpages_funcapi_facet($args)
 
             if ($itemtype_base_cids_count > 0) {
                 for($i = 1; $i <= $itemtype_base_cids_count; $i++) {
-                    $itemtype_base_cat = xarMod::apiFunc(
+                    $itemtype_base_cid = xarMod::apiFunc(
                         'categories', 'user', 'getcatbase',
                         array('modid' => $modid, 'itemtype' => $ptid, 'bid' => $i)
                     );
@@ -534,7 +534,7 @@ function xarpages_funcapi_facet($args)
                 // Also add edit URLs if we have privileges.
                 if (!empty($edit_privs[$ptid])) {
                     $articles[$article_key]['editurl'] = xarModURL('articles','admin','modify',
-                        array('aid' => $article_value['aid'], 'return_url' => xarServergetCurrentURL(array(), false))
+                        array('aid' => $article_value['aid'], 'return_url' => xarServer::getCurrentURL(array(), false))
                     );
                 }
             }
