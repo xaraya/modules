@@ -16,6 +16,11 @@ function shop_user_paymentmethod()
 {
 
     // Redirects at the start of the user functions are just a way to make sure someone isn't where they don't need to be
+	$shippingaddress = xarSession::getVar('shippingaddress');
+	if (empty($shippingaddress)) {
+        xarResponse::redirect(xarModURL('shop','user','shippingaddress'));
+        return;
+    }
     $shop = xarSession::getVar('shop');
     if (!xarUserIsLoggedIn() || empty($shop)) {
         xarResponse::redirect(xarModURL('shop','user','main'));
