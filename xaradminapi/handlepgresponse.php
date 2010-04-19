@@ -50,7 +50,9 @@ function shop_adminapi_handlepgresponse($args)
 
         }
         
-    xarSession::setVar('pg_response',$pg_response);
+    if(isset($pg_response)) {
+		xarSession::setVar('pg_response',$pg_response);
+	}
     $response['trans_id'] = $trans_id;
     return $response;
 

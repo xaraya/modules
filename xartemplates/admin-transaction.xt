@@ -15,7 +15,7 @@
 <xar:set name="cust">xarMod::APIFunc('shop','user','customerinfo',array('id' => $cust))</xar:set>
 
 <h2>Transaction #$id#</h2>
-
+TODO: needs shipping address
 <table style="width: 85%">
 <tr>
 <td>

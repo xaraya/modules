@@ -69,7 +69,7 @@ function shop_user_paymentmethod()
         return true;
 
     } elseif ($proceednew) {  // We're not using a saved payment method...
-
+		
         $errors = xarSession::getVar('errors');
         foreach ($myfields as $field) {
             $isvalid = $paymentobject->properties[$field]->checkInput();
@@ -82,7 +82,6 @@ function shop_user_paymentmethod()
                 $errors[$field] = true;
             } else {    
                 if ($field != 'card_num') {
-                    $errors = xarSession::getVar('payment');
                     $payment[$field] = ${$field};
                     xarSession::setVar('payment',$payment);
                     $data[$field] = ${$field}; 
@@ -102,7 +101,9 @@ function shop_user_paymentmethod()
             }
         } 
 
-        xarSession::setVar('errors',$errors);
+		if (isset($errors)) {
+			xarSession::setVar('errors',$errors);
+		}
         
         if (!empty($errors)) { 
             return xarTplModule('shop','user','paymentmethod', $data);
