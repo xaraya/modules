@@ -57,6 +57,9 @@ function shop_user_paymentmethod()
     $data['properties'] = $properties;
 
 	if ($remove) {
+		if ($remove == xarSession::getVar('paymentmethod')) {
+			xarSession::delVar('paymentmethod');
+		}
 		$paymentobject->getItem(array('itemid' => $remove));
 		$paymentobject->deleteItem();
 		xarResponse::redirect(xarModURL('shop','user','paymentmethod'));
@@ -67,6 +70,11 @@ function shop_user_paymentmethod()
         $data[$field] = ''; 
     }
     $data['propids'] = $propids;
+
+	$selectedpaymentmethod = xarSession::getVar('paymentmethod');
+	if(!empty($selectedpaymentmethod)) {
+		$data['paymentmethod'] = $selectedpaymentmethod;
+	}
 
     // If we're using a saved payment method...
     if ($proceedsaved) {

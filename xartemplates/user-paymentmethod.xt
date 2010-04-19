@@ -37,9 +37,17 @@
             <tr class="paymentmethod">
            <td> 
 	    <xar:if condition="$exp lt $now">
+
                <input type="radio" name="paymentmethod" id="pmethod" value="#$key#" onClick="javascript:document.payment.style.display='none';document.getElementById('complete1').style.display='block';document.getElementById('error').style.display='none'" disabled="disabled" />  
+
              <xar:else />
-                <input type="radio" name="paymentmethod"  value="#$key#" onClick="javascript:document.payment.style.display='none';document.getElementById('complete1').style.display='block';document.getElementById('error').style.display='none'" />
+
+		<xar:if condition="isset($paymentmethod) and $key eq $paymentmethod">
+			<input type="radio" name="paymentmethod"  value="#$key#" onClick="javascript:document.payment.style.display='none';document.getElementById('complete1').style.display='block';document.getElementById('error').style.display='none'" checked="checked" />
+		<xar:else />
+			<input type="radio" name="paymentmethod"  value="#$key#" onClick="javascript:document.payment.style.display='none';document.getElementById('complete1').style.display='block';document.getElementById('error').style.display='none'" />
+		</xar:if>
+
              </xar:if> 
 	     </td>
                 <td><strong>#$val['card_type']#</strong></td><td>ending: #$card_last4#</td>
@@ -59,9 +67,17 @@
 		</tr>
  
         </xar:foreach>
+
+	
 	
         <tr><td colspan="6"><div class="paymentmethod">
-            <input type="radio" name="paymentmethod" value="0" checked="checked" onClick="javascript:document.getElementById('complete1').style.display='none';document.payment.style.display='block';document.getElementById('error').style.display='block';" /> Enter different payment information
+	
+	<xar:if condition="isset($paymentmethod)">
+	   <input type="radio" name="paymentmethod" value="0"  onClick="javascript:document.getElementById('complete1').style.display='none';document.payment.style.display='block';document.getElementById('error').style.display='block';" />
+	<xar:else />
+	   <input type="radio" name="paymentmethod" value="0"  onClick="javascript:document.getElementById('complete1').style.display='none';document.payment.style.display='block';document.getElementById('error').style.display='block';" checked="checked" />
+	</xar:if>
+             Enter different payment information
         </div> 
 	</td></tr>
 
@@ -69,7 +85,14 @@
  
  </fieldset>
 
-        <div class="button_container" id="complete1" style="display:none">
+	<xar:if condition="isset($paymentmethod)">
+		<xar:set name="style">'display:block'</xar:set>
+		<xar:set name="formstyle">'display:none'</xar:set>
+	<xar:else />
+		<xar:set name="style">'display:none'</xar:set>
+	</xar:if>
+
+        <div class="button_container" id="complete1" style="#$style#">
         <input type="submit" class="button" name="proceedsaved" value="#xarML('Continue')#" /><br />
         <div class="review">(You Can Review This Order Before It's Final)</div>
         </div>
