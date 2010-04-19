@@ -25,6 +25,7 @@ function shop_user_paymentmethod()
     if(!xarVarFetch('proceedsaved', 'str', $proceedsaved, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('proceednew', 'str', $proceednew, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('paymentmethod', 'str', $paymentmethod, NULL, XARVAR_NOT_REQUIRED)) {return;}
+	if(!xarVarFetch('remove', 'str', $remove, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     $cust = xarMod::APIFunc('shop','user','customerinfo'); 
     $data['cust'] = $cust; 
@@ -54,6 +55,12 @@ function shop_user_paymentmethod()
     $paymentobject = DataObjectMaster::getObject(array('name' => 'shop_paymentmethods'));
     $properties = $paymentobject->getProperties();
     $data['properties'] = $properties;
+
+	if ($remove) {
+		$paymentobject->getItem(array('itemid' => $remove));
+		$paymentobject->deleteItem();
+		xarResponse::redirect(xarModURL('shop','user','paymentmethod'));
+	}
 
     foreach ($myfields as $field) {
         $propids[$field] = 'dd_' . $properties[$field]->id; 

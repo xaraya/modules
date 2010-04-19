@@ -21,12 +21,10 @@
         <xar:set name="formstyle">'display:block'</xar:set>
         <xar:set name="errorstyle">'display:block'</xar:set>
 
-        <table id="paymentmethod">
-        <tr><td>
-        <div id="selectpayment">
-        Select a payment method:
-        </div>
+<fieldset>
+<legend>Select a payment method:</legend>
 
+<table id="paymentmethod">
          <xar:foreach in="$paymentmethods" key="$key" value="$val">
 
              <xar:set name="card_last4">substr($val['card_num'], -4)</xar:set>
@@ -36,13 +34,18 @@
             <xar:set name="exp">$year.$month</xar:set>
              <xar:set name="now">date('ym',time())</xar:set>
 
-            <div class="paymentmethod">
-            <xar:if condition="$exp lt $now">
-                <input type="radio" name="paymentmethod" id="pmethod" value="#$key#" onClick="javascript:document.payment.style.display='none';document.getElementById('complete1').style.display='block';document.getElementById('error').style.display='none'" disabled="disabled" />  
+            <tr class="paymentmethod">
+           <td> 
+	    <xar:if condition="$exp lt $now">
+               <input type="radio" name="paymentmethod" id="pmethod" value="#$key#" onClick="javascript:document.payment.style.display='none';document.getElementById('complete1').style.display='block';document.getElementById('error').style.display='none'" disabled="disabled" />  
              <xar:else />
                 <input type="radio" name="paymentmethod"  value="#$key#" onClick="javascript:document.payment.style.display='none';document.getElementById('complete1').style.display='block';document.getElementById('error').style.display='none'" />
              </xar:if> 
-                <strong>#$val['card_type']#</strong>  ending: #$card_last4# &#160; <strong>#$val['first_name']#</strong>&#160;<strong>#$val['last_name']#</strong> &#160; 
+	     </td>
+                <td><strong>#$val['card_type']#</strong></td><td>ending: #$card_last4#</td>
+		<td><strong>#$val['first_name']#</strong>&#160;<strong>#$val['last_name']#</strong></td>
+
+		<td>
                 <xar:if condition="$exp lt $now">
                     <span style="color:red">
                     Card has expired: #$month#/#$year#
@@ -50,17 +53,21 @@
                 <xar:else />
                     Exp date: #$month#/#$year#
                 </xar:if>
+		</td>
+		<td><a href="#xarmodurl('shop','user','paymentmethod',array('remove'=>$key))#">Remove</a></td>
 
-            </div> 
-
+		</tr>
+ 
         </xar:foreach>
-
-        <div class="paymentmethod">
+	
+        <tr><td colspan="6"><div class="paymentmethod">
             <input type="radio" name="paymentmethod" value="0" checked="checked" onClick="javascript:document.getElementById('complete1').style.display='none';document.payment.style.display='block';document.getElementById('error').style.display='block';" /> Enter different payment information
         </div> 
+	</td></tr>
 
-        </td></tr>
-        </table>
+	</table>
+ 
+ </fieldset>
 
         <div class="button_container" id="complete1" style="display:none">
         <input type="submit" class="button" name="proceedsaved" value="#xarML('Continue')#" /><br />
