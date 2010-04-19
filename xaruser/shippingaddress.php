@@ -59,6 +59,9 @@ function shop_user_shippingaddress()
     }
 
 	if ($remove) {
+		if ($remove == xarSession::getVar('shippingaddress')) {
+			xarSession::delVar('shippingaddress');
+		}
 		$shippingobject->getItem(array('itemid' => $remove));
 		$shippingobject->deleteItem();
 		xarResponse::redirect(xarModURL('shop','user','shippingaddress'));
