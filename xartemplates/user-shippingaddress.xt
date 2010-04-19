@@ -38,6 +38,7 @@
 		<xar:set name="next">''</xar:set>
         </xar:if>
         <div><a href="#xarmodurl('shop','user','shippingaddress',array('shipto'=>$val['id'],'next'=>$next))#">Ship to this address</a></div>
+	<div><a href="#xarmodurl('shop','user','shippingaddress',array('remove'=>$val['id']))#">Remove this address</a></div>
         </div>
 
         </xar:foreach>

@@ -24,6 +24,7 @@ function shop_user_shippingaddress()
 
     if(!xarVarFetch('proceed', 'str', $proceed, NULL, XARVAR_NOT_REQUIRED)) {return;} 
     if(!xarVarFetch('shipto', 'str', $shipto, NULL, XARVAR_NOT_REQUIRED)) {return;}
+	if(!xarVarFetch('remove', 'str', $remove, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('next', 'str', $data['next'], NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     sys::import('modules.dynamicdata.class.objects.master');
@@ -47,7 +48,7 @@ function shop_user_shippingaddress()
     $properties = $shippingobject->properties;
     $data['properties'] = $properties;
 
-    if (isset($shipto)) {
+    if ($shipto) {
         xarSession::setVar('shippingaddress',$shipto);
         if(isset($data['next']) && !empty($data['next'])) {
             $func = $data['next'];
@@ -56,6 +57,12 @@ function shop_user_shippingaddress()
         }
             xarResponse::redirect(xarModURL('shop','user',$func));
     }
+
+	if ($remove) {
+		$shippingobject->getItem(array('itemid' => $remove));
+		$shippingobject->deleteItem();
+		xarResponse::redirect(xarModURL('shop','user','shippingaddress'));
+	}
 
     if ($proceed) {
     
