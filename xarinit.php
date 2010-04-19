@@ -225,7 +225,7 @@ function xarpages_init()
 
     // Register block types.
 //    foreach(array('xarpagemenu', 'crumb') as $blocktype) {
-    foreach(array('xarpagemenu') as $blocktype) {
+    foreach(array('xarpagesmenu') as $blocktype) {
         if (!xarMod::apiFunc(
             'blocks', 'admin', 'register_block_type',
             array(

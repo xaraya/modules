@@ -19,9 +19,9 @@
  * @param $blockinfo array (serialized or unserialized)
  */
 
-    sys::import('modules.xarpages.xarblocks.xarpagemenu');
+    sys::import('modules.xarpages.xarblocks.xarpagesmenu');
 
-    class XarpageMenuBlockAdmin extends XarpageMenuBlock implements iBlock
+    class Xarpages_MenuBlockAdmin extends Xarpages_MenuBlock implements iBlock
     {
 /**
  * Modify Function to the Blocks Admin

@@ -17,9 +17,9 @@
 
     sys::import('xaraya.structures.containers.blocks.basicblock');
 
-    class XarpageMenuBlock extends BasicBlock implements iBlock
+    class Xarpages_MenuBlock extends BasicBlock implements iBlock
     {
-        public $name                = 'XarpageMenuBlock';
+        public $name                = 'MenuBlock';
         public $module              = 'xarpages';
         public $text_type           = 'Content';
         public $text_type_long      = 'Xarpages Menu Block';
@@ -37,8 +37,8 @@
         public $max_level           = 0;
         public $start_level         = 0;
 
-        public $func_update         = 'xarpages_menublock_update';
-        public $notes               = "cno notes";
+        public $func_update         = 'menublock_update';
+        public $notes               = "no notes";
 
 
 /**
