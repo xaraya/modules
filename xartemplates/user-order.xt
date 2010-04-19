@@ -20,7 +20,7 @@
 		<div>#$shippingvals['first_name']# #$shippingvals['last_name']#</div>
 		<div>#$shippingvals['street_addr']#</div>
 		<div>#$shippingvals['city_addr']# #$shippingvals['state_addr']# #$shippingvals['postal_code']#</div>
-		<div><a href="#xarmodurl('shop','user','shippingaddress',array('skipto'=>'order'))#">Edit</a></div>
+		<div><a href="#xarmodurl('shop','user','shippingaddress',array('next'=>'order'))#">Edit</a></div>
 	</div>
 </fieldset>
 </td><td>

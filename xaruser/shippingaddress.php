@@ -24,7 +24,7 @@ function shop_user_shippingaddress()
 
     if(!xarVarFetch('proceed', 'str', $proceed, NULL, XARVAR_NOT_REQUIRED)) {return;} 
     if(!xarVarFetch('shipto', 'str', $shipto, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('skipto', 'str', $data['skipto'], NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('next', 'str', $data['next'], NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     sys::import('modules.dynamicdata.class.objects.master');
     sys::import('modules.dynamicdata.class.properties.master');
@@ -49,8 +49,8 @@ function shop_user_shippingaddress()
 
     if (isset($shipto)) {
         xarSession::setVar('shippingaddress',$shipto);
-        if(isset($data['skipto'])) {
-            $func = $data['skipto'];
+        if(isset($data['next']) && !empty($data['next'])) {
+            $func = $data['next'];
         } else {
             $func = 'paymentmethod';
         }

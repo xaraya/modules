@@ -32,12 +32,12 @@
         <div>#$val['first_name']# #$val['last_name']#</div>
         <div>#$val['street_addr']#</div>
         <div>#$val['city_addr']# #$val['state_addr']# #$val['postal_code']#</div>
-        <xar:if condition="isset($skipto)">
-        <xar:set name="skipto">'&amp;skipto=order'</xar:set>
-        <xar:else />
-        <xar:set name="skipto">''</xar:set>
+        <xar:if condition="isset($next)">
+		<xar:set name="next">$next</xar:set>
+	<xar:else />
+		<xar:set name="next">''</xar:set>
         </xar:if>
-        <div><a href="#xarmodurl('shop','user','shippingaddress',array('shipto'=>$val['id']))##$skipto#">Ship to this address</a></div>
+        <div><a href="#xarmodurl('shop','user','shippingaddress',array('shipto'=>$val['id'],'next'=>$next))#">Ship to this address</a></div>
         </div>
 
         </xar:foreach>
