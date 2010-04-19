@@ -83,7 +83,6 @@ function shop_user_paymentmethod()
             } else {    
                 if ($field != 'card_num') {
                     $payment[$field] = ${$field};
-                    xarSession::setVar('payment',$payment);
                     $data[$field] = ${$field}; 
                 }
                 unset($errors[$field]); // In case we previously submitted invalid input in this field

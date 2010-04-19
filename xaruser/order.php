@@ -82,7 +82,6 @@ function shop_user_order()
             xarSession::setVar('order',$order);
 
             xarSession::delVar('pg_response'); // This is set in shop_adminapi_handlepgresponse()
-            xarSession::delVar('payment');
 
             //Need to clear all this now that the purchase went through.  Doing so ensures we don't re-submit the order
             xarSession::delVar('errors');
