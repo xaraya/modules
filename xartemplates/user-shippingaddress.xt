@@ -16,8 +16,6 @@
 
 <xar:if condition="isset($shippingaddresses)">
 
-    TODO: should be possible to delete addresses
-
     <xar:set name="legend">'Or enter a different shipping address:'</xar:set>
     
     <fieldset>
