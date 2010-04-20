@@ -36,5 +36,10 @@ $modversion['user']           = true;
 $modversion['class']          = 'Registration';
 $modversion['category']       = 'Users & Groups';
 $modversion['dependency']     = array();
-$modversion['dependencyinfo'] = array();
+$modversion['dependencyinfo'] = array(
+                                    0 => array(
+                                            'name' => 'Xaraya Core',
+                                            'version_ge' => '2.1.0'
+                                         ),
+                                      );
 ?>

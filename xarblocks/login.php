@@ -18,13 +18,12 @@
  * initialise block
  * @return array
  */
-sys::import('xaraya.structures.containers.blocks.basicblock');
 sys::import('modules.authsystem.xarblocks.login');
-class rLoginBlock extends LoginBlock implements iBlock
+class Registration_LoginBlock extends Authsystem_LoginBlock implements iBlock
 {
     public $no_cache            = 1;
 
-    public $name                = 'rLoginBlock';
+    public $name                = 'LoginBlock';
     public $module              = 'registration';
     public $text_type           = 'Login';
     public $text_type_long      = 'Registration and Login';
