@@ -20,6 +20,16 @@
                 <legend>Gateway Settings</legend>
                 <xar:data-form object="$object" itemid="0" />
             </fieldset>
+            <fieldset>
+                <legend>Object Settings</legend>
+                    <xar:var name="firstline">0,Choose an object</xar:var>
+                    <div class="xar-form-input-wrapper">
+                        <label for="module_alias_name" class="xar-form-label">
+                            Customer
+                        </label>
+                        <xar:data-input type="objectref" name="customer" refobject="objects" store_prop="objectid" firstline="$firstline" value="$customer"/>
+                    </div>
+            </fieldset>
 
             <fieldset>
                 <div class="xar-form-input-wrapper-after">

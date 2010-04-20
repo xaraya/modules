@@ -35,6 +35,9 @@ function shop_admin_modifyconfig()
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
     $data['module_settings']->getItem();
 
+    $defaultcustomer = DataObjectMaster::getObject(array('name' => 'shop_customers'));
+    if (!xarVarFetch('customer', 'int', $data['customer'], $defaultcustomer->objectid, XARVAR_NOT_REQUIRED)) return;
+
     // Run the appropriate code depending on whether the template was submitted or not
     switch (strtolower($phase)) {
         case 'modify':
