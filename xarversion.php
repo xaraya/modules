@@ -30,7 +30,7 @@ $modversion['category']     = 'Commerce';
 $modversion['dependencyinfo'] = array(
                                     0 => array(
                                             'name' => 'Xaraya Core',
-                                            'version_ge' => '2.0.0'
+                                            'version_ge' => '2.1.0'
                                          ),
                                       );
 ?>
