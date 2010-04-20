@@ -15,7 +15,7 @@
 function shop_admin_transactions()
 {
     if(!xarVarFetch('startnum', 'isset', $data['startnum'], NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('uid', 'isset', $uid, NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('uid', 'isset', $data['uid'], NULL, XARVAR_DONT_SET)) {return;}
 
     $objectname = 'shop_transactions';
     $data['objectname'] = $objectname;
@@ -60,9 +60,9 @@ function shop_admin_transactions()
                     'sort' => $data['sort']
                     );
 
-    if (isset($uid)) {
-        $filters['where'] = 'customer eq '.$uid;
-        $data['cust'] = xarMod::APIFunc('shop','user','customerinfo',array('id'=>$uid));
+    if (isset($data['uid'])) {
+        $filters['where'] = 'customer eq '.$data['uid'];
+        $data['cust'] = xarMod::APIFunc('shop','user','customerinfo',array('id'=>$data['uid']));
     }
     
     // Get the items 

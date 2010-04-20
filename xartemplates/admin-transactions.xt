@@ -23,8 +23,10 @@
 
        <xar:data-view object="$mylist" tplmodule="shop" template="transactions_adminlist" sort="$sort" fieldlist="$adminfields" />  
 
-<xar:if condition="$none">
+<xar:if condition="$none and !isset($uid)">
 	<p>Looks like you're just getting started and there are no transactions yet.  For testing purposes, you could log out and then buy something in the <a href="#xarmodurl('shop')#">storefront</a>. Then you'll see a transaction listed here.</p>
+<xar:elseif condition="$none" />
+	<p>There are no transactions for this customer.</p>
 </xar:if>
 
     </div>
