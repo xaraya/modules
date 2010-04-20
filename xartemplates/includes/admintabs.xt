@@ -78,7 +78,7 @@
           </a>
         </li>
     </xar:sec>
-    <xar:sec mask="Adminshop" catch="false">
+    <xar:sec mask="AdminShop" catch="false">
         <xar:if condition="$activetab eq 'modifyconfig'">
             <xar:set name="tabclass">'xar-tab-active'</xar:set>
             <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>

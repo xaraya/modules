@@ -35,7 +35,18 @@ function shop_adminapi_getmenulinks()
                               'label' => xarML('Products'));
     }
 
-    if (xarSecurityCheck('Adminshop',0)) {
+    if (xarSecurityCheck('ManageShop',0)) {
+        // Display the master tables.
+        // We place this link last in the list so have a similar menu for all modules
+        $menulinks[] = Array('url'   => xarModURL('shop',
+                                                   'admin',
+                                                   'view'),
+                              // In order to display the tool tips and label in any language,
+                              // we must encapsulate the calls in the xarML in the API.
+                              'title' => xarML('Manage the master tables of the module'),
+                              'label' => xarML('Master Tables'));
+    }
+    if (xarSecurityCheck('AdminShop',0)) {
         // Add a link to the module's configuration.
         // We place this link last in the list so have a similar menu for all modules
         $menulinks[] = Array('url'   => xarModURL('shop',
@@ -47,7 +58,7 @@ function shop_adminapi_getmenulinks()
                               'label' => xarML('Modify Configuration'));
     }
 
-        if (xarSecurityCheck('Adminshop',0)) {
+        if (xarSecurityCheck('AdminShop',0)) {
         // Add a link to the module's configuration.
         // We place this link last in the list so have a similar menu for all modules
         $menulinks[] = Array('url'   => xarModURL('shop',

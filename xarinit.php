@@ -45,13 +45,13 @@ function shop_init()
     $module = 'shop';
     $objects = array(
                 'shop_products',
-				'shop_transactions',
-				'shop_attributes',
-				'shop_customers',
-				'shop_shippingaddresses',
-				'shop_paymentmethods',
-				'shop_module_settings',
-				'shop_user_settings'
+                'shop_transactions',
+                'shop_attributes',
+                'shop_customers',
+                'shop_shippingaddresses',
+                'shop_paymentmethods',
+                'shop_module_settings',
+                'shop_user_settings'
                 );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;    
@@ -64,10 +64,11 @@ function shop_init()
 # we updated the modifyconfig page
 #
     xarModVars::set('shop','payment_gateway',1);
-	xarModVars::set('shop','pg_id','');
-	xarModVars::set('shop','pg_key','');
-	xarModVars::set('shop','pg_api_signature','');
-	xarModVars::set('shop','pg_notes','A place to store test credit card numbers etc');
+    xarModVars::set('shop','pg_id','');
+    xarModVars::set('shop','pg_key','');
+    xarModVars::set('shop','pg_api_signature','');
+    xarModVars::set('shop','pg_notes','A place to store test credit card numbers etc');
+    xarModVars::set('shop','defaultmastertable','shop_products');
 
 # --------------------------------------------------------
 #
@@ -101,11 +102,11 @@ function shop_init()
     $xartable =& xarDB::getTables();
     $dynproptable = $xartable['dynamic_properties'];
     $dyndatatable = $xartable['dynamic_data'];
-	$query = "SELECT DISTINCT $dynproptable.id
-	FROM $dynproptable
-	LEFT JOIN $dyndatatable
-	ON $dyndatatable.id=property_id
-	WHERE object_id= $objectid";
+    $query = "SELECT DISTINCT $dynproptable.id
+    FROM $dynproptable
+    LEFT JOIN $dyndatatable
+    ON $dyndatatable.id=property_id
+    WHERE object_id= $objectid";
 
     // Note : we could add some other fields in here too, based on the properties we imported above
     $instances = array(
@@ -116,7 +117,7 @@ function shop_init()
                     );
     xarDefineInstance('shop', 'Item', $instances);
 
-	xarRemoveMasks('shop');
+    xarRemoveMasks('shop');
 
 # --------------------------------------------------------
 #
@@ -126,7 +127,7 @@ function shop_init()
     xarRegisterMask('ReadShop','All','shop','Item','All:All:All','ACCESS_READ');
     xarRegisterMask('EditShop','All','shop','Item','All:All:All','ACCESS_EDIT');
     xarRegisterMask('AddShop','All','shop','Item','All:All:All','ACCESS_ADD');
-    xarRegisterMask('DeleteShop','All','shop','Item','All:All:All','ACCESS_DELETE');
+    xarRegisterMask('ManageShop','All','shop','Item','All:All:All','ACCESS_DELETE');
     xarRegisterMask('AdminShop','All','shop','Item','All:All:All','ACCESS_ADMIN');
 # --------------------------------------------------------
 #
