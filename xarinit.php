@@ -129,7 +129,7 @@ president@whitehouse.gov';
             'admin',
             'register_block_type',
             array('modName' => 'registration',
-                'blockType' => 'rlogin'));
+                'blockType' => 'login'));
     if (!$tid) return;
 
     /* This init function brings our module to version 1.0.0, run the upgrades for the rest of the initialisation */
@@ -172,7 +172,7 @@ function registration_delete()
    // UnRegister blocks
     if (!xarMod::apiFunc('blocks', 'admin', 'unregister_block_type',
                        array('modName'  => 'registration',
-                             'blockType'=> 'rlogin'))) return;
+                             'blockType'=> 'login'))) return;
 
     //check if the roles default registration module is set
     //If so - we have to remove the registration value if it's registration module
