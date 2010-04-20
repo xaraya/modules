@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:for start="$i=1" test="$i le $rows" iter="$i++">
+        <div class="xar-form-input-wrapper">
+            <label for="#$name#_city" class="xar-form-label">
+                Line #$i#
+            </label>
+            <xar:set name="fieldname">'line_'. $i</xar:set>
+            <input type="text" name="#$name#_line_#$i#" id="#$id#_line_#$i#" value="#$value[$fieldname]#"/>
+        </div>
+    </xar:for>
+    <div class="xar-form-input-wrapper">
+        <label for="#$name#_city" class="xar-form-label">
+            City
+        </label>
+        <input type="text" name="#$name#_city" id="#$id#_city" value="#$value['city']#"/>
+    </div>
+    <xar:if condition="empty($show_province)">
+        <div class="xar-form-input-wrapper">
+            <label for="#$name#_province" class="xar-form-label">
+                State
+            </label>
+            <input type="text" name="#$name#_province" id="#$id#_province" value="#$value['province']#"/>
+        </div>
+    </xar:if>
+    <xar:if condition="empty($show_postal_code)">
+        <div class="xar-form-input-wrapper">
+            <label for="#$name#_postal_code" class="xar-form-label">
+                Postal Code
+            </label>
+            <input type="text" name="#$name#_postal_code" id="#$id#_postal_code" value="#$value['postal_code']#"/>
+        </div>
+    </xar:if>
+    <xar:if condition="empty($show_country)">
+        <div class="xar-form-input-wrapper">
+            <label for="#$name#_country" class="xar-form-label">
+                Country
+            </label>
+            <input type="text" name="#$name#_country" id="#$id#_country" value="#$value['country']#"/>
+        </div>
+    </xar:if>
+
+    <xar:template file="dataproperty_additions" module="base"/>
+</xar:template>

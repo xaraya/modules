@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:for start="$i=1" test="$i le $rows" iter="$i++">
+        <xar:set name="fieldname">'line_'. $i</xar:set>
+        #$value[$fieldname]#
+        <xar:if condition="$i ne $rows">
+            <br/>
+        </xar:if>
+    </xar:for>
+
+    <xar:set name="newline">1</xar:set>
+
+    <xar:if condition="!empty($show_city)">
+        <xar:if condition="$newline">
+            <br/>
+            <xar:set name="newline">0</xar:set>
+        </xar:if>
+        #$value['city']#
+    </xar:if>
+
+    <xar:if condition="!empty($show_province)">
+        <xar:if condition="$newline">
+            <br/>
+            <xar:set name="newline">0</xar:set>
+        </xar:if>
+        <xar:if condition="!empty($show_city)">,&#160;</xar:if>
+        #$value['province']#&#160;
+    </xar:if>
+
+    <xar:if condition="!empty($show_postal_code)">
+        <xar:if condition="$newline">
+            <br/>
+            <xar:set name="newline">0</xar:set>
+        </xar:if>
+        #$value['postal_code']#
+    </xar:if>
+
+    <xar:if condition="!empty($show_country)">
+        <xar:if condition="!$newline">
+            <br/>
+            <xar:set name="newline">0</xar:set>
+        </xar:if>
+        #$value['country']#
+    </xar:if>
+
+    <xar:template file="dataproperty_additions" module="base"/>
+</xar:template>
