@@ -19,7 +19,7 @@ function registration_admin_main()
     // Security Check
     if (!xarSecurityCheck('EditRegistration')) return;
 
-    xarResponse::Redirect(xarModURL('registration', 'admin', 'modifyconfig'));
+    xarResponse::redirect(xarModURL('registration', 'admin', 'modifyconfig'));
     // success
     return true;
 }
