@@ -184,6 +184,19 @@ function xarpages_user_display($args)
         $data['current_page']['dd'] = xarModCallHooks(
             'item', 'transform', $pid, $data['current_page']['dd'], 'xarpages'
         );
+
+        /* FIXME: need to remove all unknown entities, like &nbsp;
+        sys::import('blocklayout.compiler');
+        $blCompiler = xarBLCompiler::instance();
+        foreach ($data['current_page']['dd'] as $key => $value)  {
+            $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
+            $tplString .= $value;
+            $tplString .= '</xar:template>';
+            $tplString = $blCompiler->compilestring($tplString);
+            $tmp = array();
+            $data['current_page']['dd'][$key] = xarTplString($tplString,$tmp);   
+        }
+        */
     }
 
     // Provide a 'rolled up' version of the current page (or page and
