@@ -23,7 +23,7 @@
         </label>
         <input type="text" name="#$name#_city" id="#$id#_city" value="#$value['city']#"/>
     </div>
-    <xar:if condition="empty($show_province)">
+    <xar:if condition="!empty($show_province)">
         <div class="xar-form-input-wrapper">
             <label for="#$name#_province" class="xar-form-label">
                 <xar:if condition="!empty($labels['state'])">
@@ -38,7 +38,7 @@
             <xar:data-input type="statelisting" name="$provincename" value="$value['province']" firstline="$firstline"/>
         </div>
     </xar:if>
-    <xar:if condition="empty($show_postal_code)">
+    <xar:if condition="!empty($show_postal_code)">
         <div class="xar-form-input-wrapper">
             <label for="#$name#_postal_code" class="xar-form-label">
                 <xar:if condition="!empty($labels['postal_code'])">
@@ -50,7 +50,7 @@
             <input type="text" name="#$name#_postal_code" id="#$id#_postal_code" value="#$value['postal_code']#"/>
         </div>
     </xar:if>
-    <xar:if condition="empty($show_country)">
+    <xar:if condition="!empty($show_country)">
         <div class="xar-form-input-wrapper">
             <label for="#$name#_country" class="xar-form-label">
                 <xar:if condition="!empty($labels['country'])">

@@ -27,6 +27,7 @@ class AddressProperty extends TextBoxProperty
     public $display_show_country      = true;
     public $display_rows              = 2;
     public $display_labels            = array();
+    public $invalids                  = array();
 
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -42,18 +43,62 @@ class AddressProperty extends TextBoxProperty
         // store the fieldname for validations who need them (e.g. file uploads)
         $this->fieldname = $name;
         if (!isset($value)) {
+            $validity = true;
             $value = array();
-            for ($i=1;$i<=$this->display_rows;$i++) {
-                list($isvalid, $value['line_' . $i]) = $this->fetchValue($name . '_line_' . $i);
-            }
-            list($isvalid, $value['city']) = $this->fetchValue($name . '_city');
-            list($isvalid, $value['province']) = $this->fetchValue($name . '_province');
-            list($isvalid, $value['postal_code']) = $this->fetchValue($name . '_postal_code');
-            list($isvalid, $value['country']) = $this->fetchValue($name . '_country');
-        }
+            $textbox = DataPropertyMaster::getProperty(array('name' => 'textbox'));
+            $textbox->validation_min_length = 3;
 
-        $value = serialize($value);
-        return $this->validateValue($value);
+            for ($i=1;$i<=$this->display_rows;$i++) {
+                $isvalid = $textbox->checkInput($name . '_line_' . $i);
+                if ($isvalid) {
+                    $value['line_' . $i] = $textbox->value;
+                } else {
+                    $this->invalids[] = 'line_' . $i;
+                }                
+                $validity = $validity && $isvalid;
+            }
+
+            if ($this->display_show_city) {
+                $isvalid = $textbox->checkInput($name . '_city');
+                if ($isvalid) {
+                    $value['city'] = $textbox->value;
+                } else {
+                    $this->invalids[] = 'city';
+                }
+                $validity = $validity && $isvalid;
+            }
+
+            if ($this->display_show_province) {
+                $province = DataPropertyMaster::getProperty(array('name' => 'statelisting'));
+                $isvalid = $province->checkInput($name . '_province');
+                if ($isvalid) {
+                    $value['province'] = $province->value;
+                } else {
+                    $this->invalids[] = 'province';
+                }
+                $validity = $validity && $isvalid;
+            }
+
+            if ($this->display_show_postal_code) {
+                list($isvalid, $value['postal_code']) = $this->fetchValue($name . '_postal_code');
+                $validity = $validity && $isvalid;
+            }
+            
+            if ($this->display_show_country) {
+                $country = DataPropertyMaster::getProperty(array('name' => 'countrylisting'));
+                $isvalid = $country->checkInput($name . '_country');
+                if ($isvalid) {
+                    $value['country'] = $country->value;
+                } else {
+                    $this->invalids[] = 'country';
+                }
+                $validity = $validity && $isvalid;
+            }
+            
+        }
+        if (!$validity)  $this->value = null;
+        else $this->value = serialize($value);
+        return $validity;
     }
 
     public function getValue()
@@ -85,12 +130,12 @@ class AddressProperty extends TextBoxProperty
 
     private function assemble_address(Array $data = array())
     {
-        if (!empty($data['rows'])) $this->display_rows = $data['rows'];
-        if (!empty($data['labels'])) $this->display_labels = $data['labels'];
-        if (!empty($data['display_show_city'])) $this->display_show_city = $data['display_show_city'];
-        if (!empty($data['display_show_province'])) $this->display_show_province = $data['display_show_province'];
-        if (!empty($data['display_show_postal_code'])) $this->display_show_postal_code = $data['display_show_postal_code'];
-        if (!empty($data['display_show_country'])) $this->display_show_country = $data['display_show_country'];
+        if (isset($data['rows'])) $this->display_rows = $data['rows'];
+        if (!isset($data['labels'])) $data['labels'] = $this->display_labels;;
+        if (!isset($data['show_city'])) $data['show_city'] = $this->display_show_city;
+        if (!isset($data['show_province'])) $data['show_province'] = $this->display_show_province;
+        if (!isset($data['show_postal_code'])) $data['show_postal_code'] = $this->display_show_postal_code;
+        if (!isset($data['show_country'])) $data['show_country'] = $this->display_show_country;
         if (empty($data['value'])) $data['value'] = $this->getValue();
         return $data;
     }
