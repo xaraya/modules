@@ -18,12 +18,12 @@ function shop_user_start()
     // Redirects at the start of the user functions are just a way to make sure someone isn't where they don't need to be
     if (xarUserIsLoggedIn()) {
         xarResponse::redirect(xarModURL('shop','user','viewcart'));
-        return;
+        return true;
     }
     $shop = xarSession::getVar('shop');
     if (empty($shop)) {
         xarResponse::redirect(xarModURL('shop','user','main'));
-        return;
+        return true;
     }
 
     sys::import('modules.dynamicdata.class.objects.master');
@@ -64,6 +64,7 @@ function shop_user_start()
         $res = xarMod::APIFunc('authsystem','user','login',array('uname' => $email, 'pass' => $pass));
 
         xarResponse::redirect(xarModURL('shop','user','shippingaddress'));
+        return true;
 
     } else {
         // We don't yet have a valid email or password for registration...

@@ -18,12 +18,12 @@ function shop_user_complete()
     // Redirects at the start of the user functions are just a way to make sure someone isn't where they don't need to be
     if (!xarUserIsLoggedIn()) {
         xarResponse::redirect(xarModURL('shop','user','viewcart'));
-        return;
+        return true;
     }
     $order = xarSession::getVar('order');
     if (empty($order)) {  //Probably a page reload... no reason to be here anymore
         xarResponse::redirect(xarModURL('shop','user','main'));
-        return;
+        return true;
     }
 
     $data['order'] = $order['products'];

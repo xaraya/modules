@@ -35,7 +35,6 @@ function shop_user_add($args)
     // Return the template variables defined in this function
 
     xarResponse::redirect($returnurl);
-
     return true;
 
 }

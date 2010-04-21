@@ -19,12 +19,12 @@ function shop_user_shippingaddress()
     $shop = xarSession::getVar('shop');
     if (!xarUserIsLoggedIn() || empty($shop)) {
         xarResponse::redirect(xarModURL('shop','user','main'));
-        return;
+        return true;
     }
 
     if(!xarVarFetch('proceed', 'str', $proceed, NULL, XARVAR_NOT_REQUIRED)) {return;} 
     if(!xarVarFetch('shipto', 'str', $shipto, NULL, XARVAR_NOT_REQUIRED)) {return;}
-	if(!xarVarFetch('remove', 'str', $remove, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('remove', 'str', $remove, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('next', 'str', $data['next'], NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     sys::import('modules.dynamicdata.class.objects.master');
@@ -56,16 +56,18 @@ function shop_user_shippingaddress()
             $func = 'paymentmethod';
         }
             xarResponse::redirect(xarModURL('shop','user',$func));
+            return true;
     }
 
-	if ($remove) {
-		if ($remove == xarSession::getVar('shippingaddress')) {
-			xarSession::delVar('shippingaddress');
-		}
-		$shippingobject->getItem(array('itemid' => $remove));
-		$shippingobject->deleteItem();
-		xarResponse::redirect(xarModURL('shop','user','shippingaddress'));
-	}
+    if ($remove) {
+        if ($remove == xarSession::getVar('shippingaddress')) {
+            xarSession::delVar('shippingaddress');
+        }
+        $shippingobject->getItem(array('itemid' => $remove));
+        $shippingobject->deleteItem();
+        xarResponse::redirect(xarModURL('shop','user','shippingaddress'));
+        return true;
+    }
 
     if ($proceed) {
     
@@ -84,7 +86,7 @@ function shop_user_shippingaddress()
 
         if (!empty($errors)) {
             xarResponse::redirect(xarModURL('shop','user','shippingaddress').'#errors');
-            return;
+            return true;
         }
 
         // Save the customer data
@@ -111,6 +113,7 @@ function shop_user_shippingaddress()
         $rolesobject->updateItem();
 
         xarResponse::redirect(xarModURL('shop','user','paymentmethod'));
+        return true;
 
         xarSession::setVar('errors',$errors);
     }

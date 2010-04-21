@@ -60,7 +60,6 @@ function shop_admin_newproduct()
  
             // Jump to the next page
             xarResponse::redirect(xarModURL('shop','admin','products'));
-            // Always add the next line even if processing never reaches it
             return true;
         }
     }

@@ -16,21 +16,21 @@ function shop_user_paymentmethod()
 {
 
     // Redirects at the start of the user functions are just a way to make sure someone isn't where they don't need to be
-	$shippingaddress = xarSession::getVar('shippingaddress');
-	if (empty($shippingaddress)) {
+    $shippingaddress = xarSession::getVar('shippingaddress');
+    if (empty($shippingaddress)) {
         xarResponse::redirect(xarModURL('shop','user','shippingaddress'));
-        return;
+        return true;
     }
     $shop = xarSession::getVar('shop');
     if (!xarUserIsLoggedIn() || empty($shop)) {
         xarResponse::redirect(xarModURL('shop','user','main'));
-        return;
+        return true;
     }
 
     if(!xarVarFetch('proceedsaved', 'str', $proceedsaved, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('proceednew', 'str', $proceednew, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('paymentmethod', 'str', $paymentmethod, NULL, XARVAR_NOT_REQUIRED)) {return;}
-	if(!xarVarFetch('remove', 'str', $remove, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('remove', 'str', $remove, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     $cust = xarMod::APIFunc('shop','user','customerinfo'); 
     $data['cust'] = $cust; 
@@ -61,14 +61,15 @@ function shop_user_paymentmethod()
     $properties = $paymentobject->getProperties();
     $data['properties'] = $properties;
 
-	if ($remove) {
-		if ($remove == xarSession::getVar('paymentmethod')) {
-			xarSession::delVar('paymentmethod');
-		}
-		$paymentobject->getItem(array('itemid' => $remove));
-		$paymentobject->deleteItem();
-		xarResponse::redirect(xarModURL('shop','user','paymentmethod'));
-	}
+    if ($remove) {
+        if ($remove == xarSession::getVar('paymentmethod')) {
+            xarSession::delVar('paymentmethod');
+        }
+        $paymentobject->getItem(array('itemid' => $remove));
+        $paymentobject->deleteItem();
+        xarResponse::redirect(xarModURL('shop','user','paymentmethod'));
+        return true;
+    }
 
     foreach ($myfields as $field) {
         $propids[$field] = 'dd_' . $properties[$field]->id; 
@@ -76,10 +77,10 @@ function shop_user_paymentmethod()
     }
     $data['propids'] = $propids;
 
-	$selectedpaymentmethod = xarSession::getVar('paymentmethod');
-	if(!empty($selectedpaymentmethod)) {
-		$data['paymentmethod'] = $selectedpaymentmethod;
-	}
+    $selectedpaymentmethod = xarSession::getVar('paymentmethod');
+    if(!empty($selectedpaymentmethod)) {
+        $data['paymentmethod'] = $selectedpaymentmethod;
+    }
 
     // If we're using a saved payment method...
     if ($proceedsaved) {
@@ -89,7 +90,7 @@ function shop_user_paymentmethod()
         return true;
 
     } elseif ($proceednew) {  // We're not using a saved payment method...
-		
+        
         $errors = xarSession::getVar('errors');
         foreach ($myfields as $field) {
             $isvalid = $paymentobject->properties[$field]->checkInput();
@@ -120,9 +121,9 @@ function shop_user_paymentmethod()
             }
         } 
 
-		if (isset($errors)) {
-			xarSession::setVar('errors',$errors);
-		}
+        if (isset($errors)) {
+            xarSession::setVar('errors',$errors);
+        }
         
         if (!empty($errors)) { 
             return xarTplModule('shop','user','paymentmethod', $data);

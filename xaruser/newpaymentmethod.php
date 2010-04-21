@@ -60,7 +60,6 @@ function shop_admin_newpaymentoption()
  
             // Jump to the next page
             xarResponse::redirect(xarModURL('shop','admin','paymentmethods'));
-            // Always add the next line even if processing never reaches it
             return true;
         }
     }
