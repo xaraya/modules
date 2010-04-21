@@ -20,7 +20,10 @@
             <label for="#$name#_province" class="xar-form-label">
                 State
             </label>
-            <input type="text" name="#$name#_province" id="#$id#_province" value="#$value['province']#"/>
+            <xar:var name="firstline">Choose a state</xar:var>
+            <xar:set name="firstline">"0,$firstline"</xar:set>
+            <xar:set name="provincename">$name . '_province'</xar:set>
+            <xar:data-input type="statelisting" name="$provincename" value="$value['province']" firstline="$firstline"/>
         </div>
     </xar:if>
     <xar:if condition="empty($show_postal_code)">
@@ -36,7 +39,10 @@
             <label for="#$name#_country" class="xar-form-label">
                 Country
             </label>
-            <input type="text" name="#$name#_country" id="#$id#_country" value="#$value['country']#"/>
+            <xar:var name="firstline">Choose a country</xar:var>
+            <xar:set name="firstline">"0,$firstline"</xar:set>
+            <xar:set name="countryname">$name . '_country'</xar:set>
+            <xar:data-input type="countrylisting" name="$countryname" value="$value['country']" firstline="$firstline"/>
         </div>
     </xar:if>
 
