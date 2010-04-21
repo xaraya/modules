@@ -14,6 +14,4 @@
     </xar:if>
     <xar:set name="filename">'address-' . $layout . '-input'</xar:set>
     <xar:template file="$filename"/>
-
-    <xar:template file="dataproperty_additions" module="base"/>
 </xar:template>

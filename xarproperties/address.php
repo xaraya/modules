@@ -27,7 +27,6 @@ class AddressProperty extends TextBoxProperty
     public $display_show_country      = true;
     public $display_rows              = 2;
     public $display_labels            = array();
-    public $invalids                  = array();
 
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -43,6 +42,7 @@ class AddressProperty extends TextBoxProperty
         // store the fieldname for validations who need them (e.g. file uploads)
         $this->fieldname = $name;
         if (!isset($value)) {
+            $invalid = array();
             $validity = true;
             $value = array();
             $textbox = DataPropertyMaster::getProperty(array('name' => 'textbox'));
@@ -53,7 +53,7 @@ class AddressProperty extends TextBoxProperty
                 if ($isvalid) {
                     $value['line_' . $i] = $textbox->value;
                 } else {
-                    $this->invalids[] = 'line_' . $i;
+                    $invalid[] = 'line_' . $i;
                 }                
                 $validity = $validity && $isvalid;
             }
@@ -63,7 +63,7 @@ class AddressProperty extends TextBoxProperty
                 if ($isvalid) {
                     $value['city'] = $textbox->value;
                 } else {
-                    $this->invalids[] = 'city';
+                    $invalid[] = 'city';
                 }
                 $validity = $validity && $isvalid;
             }
@@ -74,7 +74,7 @@ class AddressProperty extends TextBoxProperty
                 if ($isvalid) {
                     $value['province'] = $province->value;
                 } else {
-                    $this->invalids[] = 'province';
+                    $invalid[] = 'province';
                 }
                 $validity = $validity && $isvalid;
             }
@@ -90,14 +90,14 @@ class AddressProperty extends TextBoxProperty
                 if ($isvalid) {
                     $value['country'] = $country->value;
                 } else {
-                    $this->invalids[] = 'country';
+                    $invalid[] = 'country';
                 }
                 $validity = $validity && $isvalid;
             }
             
         }
-        if (!$validity)  $this->value = null;
-        else $this->value = serialize($value);
+        if (!empty($invalid)) $this->invalid = implode(',',$invalid);
+        $this->value = serialize($value);
         return $validity;
     }
 
