@@ -26,6 +26,7 @@ class AddressProperty extends TextBoxProperty
     public $display_show_postal_code  = true;
     public $display_show_country      = true;
     public $display_rows              = 2;
+    public $display_labels            = array();
 
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -85,6 +86,7 @@ class AddressProperty extends TextBoxProperty
     private function assemble_address(Array $data = array())
     {
         if (!empty($data['rows'])) $this->display_rows = $data['rows'];
+        if (!empty($data['labels'])) $this->display_labels = $data['labels'];
         if (!empty($data['display_show_city'])) $this->display_show_city = $data['display_show_city'];
         if (!empty($data['display_show_province'])) $this->display_show_province = $data['display_show_province'];
         if (!empty($data['display_show_postal_code'])) $this->display_show_postal_code = $data['display_show_postal_code'];
