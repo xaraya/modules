@@ -18,6 +18,16 @@
       <order>10</order>
       <validation></validation>
     </property>
+    <property name="body_type">
+      <id>117</id>
+      <label>Body Type</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <order>11</order>
+      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:37:"1,text to html;2,blocklayout to html;";}</configuration>
+    </property>
     <property name="menu_title">
       <id>2</id>
       <label>Menu Title</label>
