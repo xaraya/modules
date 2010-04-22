@@ -15,7 +15,7 @@
  */
 sys::import('xaraya.structures.containers.blocks.basicblock');
 
-class TopitemsBlock extends BasicBlock implements iBlock
+class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
 {
     public $no_cache            = 0;
 

@@ -14,7 +14,7 @@
  */
 sys::import('xaraya.structures.containers.blocks.basicblock');
 
-class UserPanelBlock extends BasicBlock implements iBlock
+class Crispbb_UserPanelBlock extends BasicBlock implements iBlock
 {
     public $no_cache            = 1;
 

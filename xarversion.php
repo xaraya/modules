@@ -31,6 +31,10 @@ $modversion['dependency'] = array(
                                   147,177
                                   );
 $modversion['dependencyinfo'] = array(
+                                    0 => array(
+                                            'name' => 'Xaraya Core',
+                                            'version_ge' => '2.1.0'
+                                         ),
                                       147  => 'categories',
                                       177  => 'hitcount',
                                       );
