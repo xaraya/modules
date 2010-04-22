@@ -60,7 +60,7 @@ function categories_admin_unlink()
         }
         // TODO: support deleting all links for a category too (cfr. checklinks)
     }
-    xarResponse::Redirect(xarModURL('categories', 'admin', 'stats'));
+    xarResponse::redirect(xarModURL('categories', 'admin', 'stats'));
     return true;
 }
 

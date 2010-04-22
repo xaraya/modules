@@ -57,9 +57,9 @@ function categories_admin_updatecatbase()
 
     if (empty($pbid)) {
         // TODO: direct to the currect URLs.
-        xarResponse::Redirect(xarModUrl('categories', 'admin', 'modifycatbase', array()));
+        xarResponse::redirect(xarModURL('categories', 'admin', 'modifycatbase', array()));
     } else {
-        xarResponse::Redirect(xarModUrl('categories', 'admin', 'viewcatbases', array()));
+        xarResponse::redirect(xarModURL('categories', 'admin', 'viewcatbases', array()));
     }
 
     return true;
