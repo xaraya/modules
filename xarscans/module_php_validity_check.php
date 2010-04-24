@@ -15,7 +15,7 @@
             $checked_modules = array();
             foreach ($items as $item) {
                 $basedir = sys::code() . 'modules/' . $item['name'];
-                $files = get_php_files($basedir,'php');
+                $files = get_module_php_files($basedir,'php');
                 foreach ($files as $file) {
                     include_once($file);
                 }
@@ -26,7 +26,7 @@
         return $data; 
     }
 
-    function get_php_files($directory, $filter=FALSE)
+    function get_module_php_files($directory, $filter=FALSE)
     {
         $directory_tree = array();
 
@@ -57,7 +57,7 @@
                          // if the new path is a directory
                          if(is_dir($path)) {
                              // add the directory details to the file list
-                             $dirs = get_php_files($path, $filter);
+                             $dirs = get_module_php_files($path, $filter);
                              $directory_tree = array_merge($directory_tree, $dirs);  
 
                          // if the new path is a file

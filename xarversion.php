@@ -27,6 +27,10 @@ $modversion['dependency'] = array(
 //                                  30046,
                                   );
 $modversion['dependencyinfo'] = array(
+                                    0 => array(
+                                            'name' => 'Xaraya Core',
+                                            'version_ge' => '2.1.0'
+                                         ),
 //                                      14  => 'comments',
 //                                      30046  => 'listings',
                                       );

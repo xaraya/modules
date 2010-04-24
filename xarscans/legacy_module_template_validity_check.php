@@ -17,9 +17,9 @@
             foreach ($items as $item) {
                 $basedir = sys::code() . 'modules/' . $item['name'] . '/xartemplates';
                 // find legacy .xd templates
-                $files = get_module_files($basedir,'xd');
+                $files = get_legacy_module_files($basedir,'xd');
                 foreach ($files as $file) {
-                    parse_module_template($file,$reader);
+                    parse_legacy_module_template($file,$reader);
                 }
                 $checked_modules[] = $item;
             }
@@ -29,7 +29,7 @@
         return $data; 
     }
 
-    function get_module_files($directory, $filter=FALSE)
+    function get_legacy_module_files($directory, $filter=FALSE)
     {
         $directory_tree = array();
 
@@ -60,7 +60,7 @@
                          // if the new path is a directory
                          if(is_dir($path)) {
                              // add the directory details to the file list
-                             $dirs = get_module_files($path, $filter);
+                             $dirs = get_legacy_module_files($path, $filter);
                              $directory_tree = array_merge($directory_tree, $dirs);  
 
                          // if the new path is a file
@@ -90,7 +90,7 @@
          }
     }
 
-    function parse_module_template($filename,$reader)
+    function parse_legacy_module_template($filename,$reader)
     {
         if (!file_exists($filename)) return;
         $fd = fopen($filename, 'r');
