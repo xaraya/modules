@@ -113,7 +113,7 @@ function calendar_init()
 
     // Location of the PEAR Calendar Classes
     // Use the PHP Include path for now
-    xarModVars::set('calendar','pearcalendar_root','modules/calendar/pear/Calendar/');
+    xarModVars::set('calendar','pearcalendar_root','code/modules/calendar/pear/Calendar/');
 
     // get list of calendar ics files
     $data = xarModAPIFunc('calendar', 'admin', 'get_calendars');
