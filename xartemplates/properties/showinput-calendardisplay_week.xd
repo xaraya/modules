@@ -1,13 +1,13 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:style scope="module" module="calendar" file="user-month" />
+    <xar:style scope="module" module="calendar" file="user-month"/>
     <!-- we want to add the textual decorator to the month class so we have day names and such -->
 
-    <xar:template file="navheader" />
+    <xar:template file="navheader"/>
     <!--
         Define our navigation elements.
         TODO: Make a nice API Function for creating the valid URLS
     -->
-    <xar:calendar-decorator object="$Week" decorator="Xaraya" name="WeekURI" />
+    <xar:calendar-decorator object="$Week" decorator="Xaraya" name="WeekURI"/>
 
     <xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
     <xar:set name="prevYearURL">$WeekURI->prev('year')</xar:set>
@@ -39,7 +39,7 @@
                 <xar:set name="Day">$Week->fetch()</xar:set>
                 <xar:if condition="$Day">
                     <!-- we want to create a new Day object with Xaraya specifics -->
-                    <xar:calendar-decorator object="$Day" decorator="Xaraya" name="DayURI" />
+                    <xar:calendar-decorator object="$Day" decorator="Xaraya" name="DayURI"/>
 
                     <xar:if condition="$Day:isFirst()">
                         <td>&#160;<!-- week info goes here --></td>
@@ -78,7 +78,7 @@
                                                 </a>
                                             </xar:if>
                                         </td>
-                                        <td style="line-height: 10px;text-align: right"><xar:data-output type="formattedtime" value="$entry['start_time']" /></td>
+                                        <td style="line-height: 10px;text-align: right"><xar:data-output type="formattedtime" value="$entry['start_time']"/></td>
                                     </tr>
                                 </xar:foreach>
                             </table>

@@ -10,7 +10,7 @@ function calendar_user_updateconfig()
     xarVarFetch('default_view','str::',$default_view,xarModUserVars::get('calendar','default_view'));
     xarModUserVars::set('calendar','default_view',$default_view);
 
-    xarResponse::Redirect(xarModURL('calendar', 'user', 'modifyconfig'));
+    xarResponse::redirect(xarModURL('calendar', 'user', 'modifyconfig'));
 }
 
 ?>

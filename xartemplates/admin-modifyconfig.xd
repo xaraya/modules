@@ -3,7 +3,7 @@
     <div class="xar-mod-head">
         <span class="xar-mod-title">
             <xar:if condition="xarModVars::get('calendar','useModuleAlias')">
-                <xar:var scope="module" module="calendar" name="aliasname" />
+                <xar:var scope="module" module="calendar" name="aliasname"/>
             <xar:else />
                 <xar:mlstring>Calendar Administration</xar:mlstring>
             </xar:if>
@@ -41,14 +41,14 @@
                                 Items Per Page:
                             </xar:mlstring>
                         </label>
-                        <xar:set name="value"><xar:var scope="module" module="calendar" name="itemsperpage" /></xar:set>
-                        <input type="text" name="itemsperpage" id="itemsperpage" value="#$value#" maxlength="3" class="xar-form-textshort" />
+                        <xar:set name="value"><xar:var scope="module" module="calendar" name="itemsperpage"/></xar:set>
+                        <input type="text" name="itemsperpage" id="itemsperpage" value="#$value#" maxlength="3" class="xar-form-textshort"/>
                     </div>
                     <div class="xar-form-input-wrapper-after">
                         <xar:if condition="xarModVars::get('calendar', 'supportshorturls')">
-                            <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+                            <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked"/>
                             <xar:else />
-                            <input type="checkbox" name="shorturls" id="shorturls" value="1" />
+                            <input type="checkbox" name="shorturls" id="shorturls" value="1"/>
                         </xar:if>
                         <label for="shorturls" title="#xarML('Enable short URLs for Calendar module')#">
                             <xar:mlstring>
@@ -63,7 +63,7 @@
                             </xar:mlstring>
                         </label>
                         <xar:set name="checked">xarModVars::get('calendar','useModuleAlias')</xar:set>
-                        <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked" />
+                        <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked"/>
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
@@ -71,8 +71,8 @@
                                     Module Alias Name
                                 </xar:mlstring>
                         </label>
-                        <xar:set name="value"><xar:var scope="module" module="calendar" name="aliasname" /></xar:set>
-                        <input type="text" name="aliasname" id="aliasname" value="#$value#" size="32" maxlength="100" />
+                        <xar:set name="value"><xar:var scope="module" module="calendar" name="aliasname"/></xar:set>
+                        <input type="text" name="aliasname" id="aliasname" value="#$value#" size="32" maxlength="100"/>
                     </div>
                 </fieldset>
             <xar:else />
@@ -92,15 +92,15 @@
                         Display Settings
                     </xar:mlstring>
                 </legend>
-                <xar:template file="display" />
+                <xar:template file="display"/>
             </fieldset>
             <fieldset>
                 <div class="xar-form-input-wrapper-after">
-                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                    <input type="hidden" name="phase" id="phase" value="update" />
-                    <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                    <input type="hidden" name="tabmodule" id="tabmodule" value="#$tabmodule#" />
-                    <input type="submit" value="#xarML('Update Configuration')#" />
+                    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                    <input type="hidden" name="phase" id="phase" value="update"/>
+                    <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+                    <input type="hidden" name="tabmodule" id="tabmodule" value="#$tabmodule#"/>
+                    <input type="submit" value="#xarML('Update Configuration')#"/>
                 </div>
             </fieldset>
         </form>
@@ -127,7 +127,7 @@
         // contains an authorisation ID.  The authorisation ID is very important in
         // preventing certain attacks on the website
     -->
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="authid" id="authid" value="#$authid#"/>
 
         <tr>
             <td colspan="2" style="text-align: center; font-weight: 600; font-size: 120%"> OPTIONS THAT SHOULD WORK </td>
@@ -318,33 +318,33 @@
                 </td>
         </tr>
         <tr><td><label for="display_custom_goto">In the 'Jump To' box, display the custom 'go to day' box</label></td>
-        <td><input type="checkbox" name="display_custom_goto" id="display_custom_goto" value="1" checked="#$display_custom_gotochecked#" /></td></tr>
+        <td><input type="checkbox" name="display_custom_goto" id="display_custom_goto" value="1" checked="#$display_custom_gotochecked#"/></td></tr>
         <tr><td><label for="display_ical_list">In the 'Jump To' box, display the pop-up menu with the list of all calendars in the $calendar_path directory</label></td>
-        <td><input type="checkbox" name="display_ical_list" id="display_ical_list" value="1" checked="#$display_ical_listchecked#" /></td></tr>
+        <td><input type="checkbox" name="display_ical_list" id="display_ical_list" value="1" checked="#$display_ical_listchecked#"/></td></tr>
         <tr><td><label for="allow_webcals">Allow http:// and webcal:// prefixed URLs to be used as the $cal for remote viewing of "subscribe-able" calendars. This does not have to be enabled to allow specific ones below</label></td>
-        <td><input type="checkbox" name="allow_webcals" id="allow_webcals" value="1" checked="#$allow_webcalschecked#" /></td></tr>
+        <td><input type="checkbox" name="allow_webcals" id="allow_webcals" value="1" checked="#$allow_webcalschecked#"/></td></tr>
         <tr><td><label for="this_months_events">Display "This month's events" at the bottom off the month page</label></td>
-        <td><input type="checkbox" name="this_months_events" id="this_months_events" value="1" checked="#$this_months_eventschecked#" /></td></tr>
+        <td><input type="checkbox" name="this_months_events" id="this_months_events" value="1" checked="#$this_months_eventschecked#"/></td></tr>
         <tr><td><label for="use_color_cals">Display each calendar in the pop-up as a different color</label></td>
-        <td><input type="checkbox" name="use_color_cals" id="use_color_cals" value="1" checked="#$use_color_calschecked#" /></td></tr>
+        <td><input type="checkbox" name="use_color_cals" id="use_color_cals" value="1" checked="#$use_color_calschecked#"/></td></tr>
         <tr><td><label for="daysofweek_dayview">Display the days of the week in day.php view</label></td>
-        <td><input type="checkbox" name="daysofweek_dayview" id="daysofweek_dayview" value="1" checked="#$daysofweek_dayviewchecked#" /></td></tr>
+        <td><input type="checkbox" name="daysofweek_dayview" id="daysofweek_dayview" value="1" checked="#$daysofweek_dayviewchecked#"/></td></tr>
         <tr><td><label for="enable_rss">Enable RSS access to your calendars (good thing)</label></td>
-        <td><input type="checkbox" name="enable_rss" id="enable_rss" value="1" checked="#$enable_rsschecked#" /></td></tr>
+        <td><input type="checkbox" name="enable_rss" id="enable_rss" value="1" checked="#$enable_rsschecked#"/></td></tr>
         <tr><td><label for="show_search">Show the search box in the sidebar</label></td>
-        <td><input type="checkbox" name="show_search" id="show_search" value="1" checked="#$show_searchchecked#" /></td></tr>
+        <td><input type="checkbox" name="show_search" id="show_search" value="1" checked="#$show_searchchecked#"/></td></tr>
         <tr><td><label for="allow_preferences">Allow visitors to change various preferences via cookies</label></td>
-        <td><input type="checkbox" name="allow_preferences" id="allow_preferences" value="1" checked="#$allow_preferenceschecked#" /></td></tr>
+        <td><input type="checkbox" name="allow_preferences" id="allow_preferences" value="1" checked="#$allow_preferenceschecked#"/></td></tr>
         <tr><td><label for="printview_default">Set print view as the default view. day, week, and month only supported views for $default_view (listed well above)</label></td>
-        <td><input type="checkbox" name="printview_default" id="printview_default" value="1" checked="#$printview_defaultchecked#" /></td></tr>
+        <td><input type="checkbox" name="printview_default" id="printview_default" value="1" checked="#$printview_defaultchecked#"/></td></tr>
         <tr><td><label for="show_todos">Show your todo list on the side of day and week view</label></td>
-        <td><input type="checkbox" name="show_todos" id="show_todos" value="1" checked="#$show_todoschecked#" /></td></tr>
+        <td><input type="checkbox" name="show_todos" id="show_todos" value="1" checked="#$show_todoschecked#"/></td></tr>
         <tr><td><label for="show_completed">Show completed todos on your todo list</label></td>
-        <td><input type="checkbox" name="show_completed" id="show_completed" value="1" checked="#$show_completedchecked#" /></td></tr>
+        <td><input type="checkbox" name="show_completed" id="show_completed" value="1" checked="#$show_completedchecked#"/></td></tr>
         <tr><td><label for="allow_login"> Check to prompt for login to unlock calendars.</label></td>
-        <td><input type="checkbox" name="allow_login" id="allow_login" value="1" checked="#$allow_loginchecked#" /></td></tr>
+        <td><input type="checkbox" name="allow_login" id="allow_login" value="1" checked="#$allow_loginchecked#"/></td></tr>
         <tr><td><label for="shorturls">#$shorturlslabel#</label></td>
-        <td><input type="checkbox" name="shorturls" id="shorturls" value="1" checked="#$shorturlschecked#" /></td></tr>
+        <td><input type="checkbox" name="shorturls" id="shorturls" value="1" checked="#$shorturlschecked#"/></td></tr>
 
     <!--
 
@@ -353,7 +353,7 @@
     <td><input type="checkbox" name="bold" id="bold" value="1" #$boldchecked# /></td></tr>
 
     <tr><td><label for="itemsperpage">#$itemslabel#</label></td>
-    <td><input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsvalue#" /></td></tr>
+    <td><input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsvalue#"/></td></tr>
 
 
     <tr><td colspan="2">
@@ -363,7 +363,7 @@
     -->
 
     <tr><td colspan="2" align="center">
-        <input type="submit" value="#$updatebutton#" /></td></tr>
+        <input type="submit" value="#$updatebutton#"/></td></tr>
     </form>
 
     </table>

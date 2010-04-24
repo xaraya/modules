@@ -14,7 +14,8 @@ function calendar_init()
 #
 # Set up tables
 #
-    $q = new xarQuery();
+    sys::import('xaraya.structures.query');
+    $q = new Query();
     $prefix = xarDB::getPrefix();
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_calendar_calendar";
@@ -171,8 +172,8 @@ function calendar_init()
     xarModAPIFunc('blocks', 'admin','register_block_type', array('modName' => 'calendar','blockType' => 'month'));
 
 //TODO::Register our blocklayout tags to allow using Objects in the templates
-//<xar:calendar-decorator object="$Month" decorator="Xaraya" name="$MonthURI" />
-//<xar:calendar-build object="$Month" />
+//<xar:calendar-decorator object="$Month" decorator="Xaraya" name="$MonthURI"/>
+//<xar:calendar-build object="$Month"/>
 //<xar:set name="Month">& $Year->fetch()</xar:set>
 
     xarModVars::set('calendar', 'SupportShortURLs', true);

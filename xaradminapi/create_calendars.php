@@ -25,7 +25,7 @@ function calendar_adminapi_create_calendars($args)
     // TODO: should I move these two issets to the admin function
     // admin/create_calendars.php? --amoro
     if (!isset($mod_id)) {
-        $module = xarRequestGetInfo();
+        $module = xarRequest::getInfo();
         $mod_id = xarMod::getRegID($module[0]);
     }
     if (!isset($role_id)) {

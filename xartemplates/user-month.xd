@@ -1,10 +1,10 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:template file="navheader" />
-    <xar:data-input type="calendardisplay" timeframe="month" />
+    <xar:template file="navheader"/>
+    <xar:data-input type="calendardisplay" timeframe="month"/>
 
     <xar:set name="page">'month'</xar:set>
     <xar:data-input type="listingslist" conditions="$conditions" object="calendar_event" fields="id,name,start_time,end_time,return_link" tplmodule="calendar" page="$page"/>
 
     <!-- include the calendar footer -->
-    <xar:template file="todayfooter" />
+    <xar:template file="todayfooter"/>
 </xar:template>

@@ -6,7 +6,7 @@
 
         <h2>Calendars</h2>
         <form method="post" action="#xarModURL('calendar','admin','view_calendars')#">
-          <input type="hidden" name="authid" id="authid" value="#$authid#" />
+          <input type="hidden" name="authid" id="authid" value="#$authid#"/>
           <table>
             <tr>
               <th><xar:mlstring>ID</xar:mlstring></th>

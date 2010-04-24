@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:style scope="module" module="calendar" file="user-year" />
+    <xar:style scope="module" module="calendar" file="user-year"/>
 
-    <xar:calendar-decorator object="$Year" decorator="Xaraya" name="YearURI" />
+    <xar:calendar-decorator object="$Year" decorator="Xaraya" name="YearURI"/>
     <xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
     <xar:set name="prevYearURL">#$YearURI->prev('year')#</xar:set>
 
@@ -26,8 +26,8 @@
             <xar:set name="i">0</xar:set>
             <tr>
                 <xar:while condition="1">
-                    <xar:calendar-decorator object="$Month" decorator="Xaraya" name="MonthURI" />
-                    <xar:calendar-decorator object="$Month" decorator="Textual" name="MonthText" />
+                    <xar:calendar-decorator object="$Month" decorator="Xaraya" name="MonthURI"/>
+                    <xar:calendar-decorator object="$Month" decorator="Textual" name="MonthText"/>
 
                     <td class="cal-container">
                         <table id="cal-calendar">

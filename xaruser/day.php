@@ -5,7 +5,7 @@
     sys::import("modules.calendar.class.Calendar.Decorator.Xaraya");
     sys::import("modules.calendar.class.Calendar.Decorator.event");
     sys::import("modules.calendar.class.Calendar.Decorator.dayevent");
-    sys::import('modules.query.class.query');
+    sys::import('xaraya.structures.query');
 
     function calendar_user_day()
     {

@@ -20,8 +20,8 @@
         // contains an authorisation ID.  The authorisation ID is very important in
         // preventing certain attacks on the website
     -->
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="submit" value="#$updatebutton#" />
+    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+    <input type="submit" value="#$updatebutton#"/>
 
     <fieldset>
       <legend><xar:mlstring>Event</xar:mlstring></legend>

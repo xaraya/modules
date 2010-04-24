@@ -1,7 +1,7 @@
 <?php
 
     include_once(CALENDAR_ROOT.'Month/Weekdays.php');
-    sys::import('modules.query.class.query');
+    sys::import('xaraya.structures.query');
 
     function calendar_user_month()
     {

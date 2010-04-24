@@ -1,6 +1,6 @@
 <?php
 
-    sys::import('modules.query.class.query');
+    sys::import('xaraya.structures.query');
 
     function calendar_userapi_getevents($args)
     {

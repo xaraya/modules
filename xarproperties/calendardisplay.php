@@ -12,7 +12,7 @@
 
 /* Include files needed */
 sys::import('modules.dynamicdata.class.properties');
-sys::import('modules.query.class.query');
+sys::import('xaraya.structures.query');
 xarModAPILoad('calendar','user');
 
 class CalendarDisplayProperty extends DataProperty

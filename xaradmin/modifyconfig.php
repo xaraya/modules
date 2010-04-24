@@ -74,7 +74,7 @@ function calendar_admin_modifyconfig()
             xarModItemVars::set('calendar', 'day_start', $day_start, $regid);
             xarModItemVars::set('calendar', 'day_end', $day_end, $regid);
 
-            xarResponse::Redirect(xarModURL('calendar', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+            xarResponse::redirect(xarModURL('calendar', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
             return true;
             break;
 

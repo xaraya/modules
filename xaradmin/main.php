@@ -7,7 +7,7 @@ function calendar_admin_main()
     if (xarModVars::get('modules', 'disableoverview') == 0) {
         return array();
     } else {
-       xarResponse::Redirect(xarModURL('calendar','admin', 'view'));
+       xarResponse::redirect(xarModURL('calendar','admin', 'view'));
     }
 
     return true;

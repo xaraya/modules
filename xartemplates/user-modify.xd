@@ -3,7 +3,7 @@
     <div class="xar-mod-head">
         <span class="xar-mod-title">
             <xar:if condition="xarModVars::get('calendar','useModuleAlias')">
-                <xar:var scope="module" module="calendar" name="aliasname" />
+                <xar:var scope="module" module="calendar" name="aliasname"/>
             <xar:else />
                 <xar:mlstring>Modify Event</xar:mlstring>
             </xar:if>
@@ -20,10 +20,10 @@
           </fieldset>
           <fieldset>
             <div class="xar-align-center">
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#" />
-                <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#" />
-                <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#" />
+                <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#"/>
+                <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#"/>
+                <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#"/>
                 <xar:set name="properties">$object->getProperties()</xar:set>
                 <xar:data-input property="$properties['id']" hidden="hidden"/>
                 <xar:data-input property="$properties['object_id']" hidden="hidden"/>
@@ -34,9 +34,9 @@
                 <xar:data-input property="$properties['return_link']" hidden="hidden"/>
                 <xar:data-input property="$properties['state']" hidden="hidden"/>
                 <xar:data-input property="$properties['timestamp']" hidden="hidden"/>
-                <input type="hidden" name="return_url" id="return_url_standard" value="#xarModURL('calendar','user',$page,array('page' => $page))#" />
+                <input type="hidden" name="return_url" id="return_url_standard" value="#xarModURL('calendar','user',$page,array('page' => $page))#"/>
                 <xar:var name="var">Save Changes</xar:var>
-                <input type="submit" value="#$var#" class="xar-margin-thickleft" />
+                <input type="submit" value="#$var#" class="xar-margin-thickleft"/>
             </div>
           </fieldset>
         </form>
