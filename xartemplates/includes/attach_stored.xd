@@ -31,6 +31,6 @@
             </xar:if>
     <xar:else />
         <xar:mlstring>No files to display</xar:mlstring><br />
-        <input type="hidden" name="#$id#_attach_stored[]" value="" style="display: none;" />
+        <input type="hidden" name="#$id#_attach_stored[]" value="" style="display: none;"/>
     </xar:if>
 </xar:template>

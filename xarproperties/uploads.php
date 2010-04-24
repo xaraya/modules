@@ -500,7 +500,7 @@ class UploadProperty extends FileUploadProperty
             $ulid = ";$value";
         // For old values, pull the ULID from the URL that is stored
         } elseif (strstr($value, 'ulid=')) {
-            ereg('ulid=([0-9]+)',$value,$reg);
+            mb_ereg('ulid=([0-9]+)',$value,$reg);
             $ulid = ";$reg[1]";
         // For new values when DD stores a ;-separated list
         } elseif (strstr($value, ';')) {

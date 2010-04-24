@@ -8,11 +8,11 @@
         </span>
     </div>
     <div class="xar-mod-body">
-       <xar:template type="module" file="admin-menu" />
+       <xar:template type="module" file="admin-menu"/>
         <h2><xar:mlstring>View File Associations</xar:mlstring></h2>
 
         <xar:if condition="!empty($fileId)">
-            <xar:base-include-javascript filename="openDialog.js" />
+            <xar:javascript filename="openDialog.js"/>
             <h3>
                 <xar:if condition="!empty($fileinfo[$fileId])">
                     <xar:set name="fileName">$fileinfo[$fileId]['fileName']</xar:set>
@@ -138,14 +138,14 @@
             <xar:if condition="!empty($action) and $action eq 'delete'">
                 <form method="post" action="&xar-modurl-uploads-admin-assoc;">
                     <p><strong><xar:mlstring>Are you sure you want to remove the file associations in these module items ?</xar:mlstring></strong></p>
-                    <input type="hidden" name="modid" value="#$modid#" />
-                    <input type="hidden" name="itemtype" value="#$itemtype#" />
-                    <input type="hidden" name="itemid" value="#$itemid#" />
-                    <input type="hidden" name="fileId" value="#$fileId#" />
-                    <input type="hidden" name="action" value="delete" />
-                    <input type="hidden" name="authid" value="#$authid#" />
-                    <input type="submit" name="confirm" value="#xarML('Confirm')#" />
-                    <input type="submit" value="#xarML('Cancel')#" />
+                    <input type="hidden" name="modid" value="#$modid#"/>
+                    <input type="hidden" name="itemtype" value="#$itemtype#"/>
+                    <input type="hidden" name="itemid" value="#$itemid#"/>
+                    <input type="hidden" name="fileId" value="#$fileId#"/>
+                    <input type="hidden" name="action" value="delete"/>
+                    <input type="hidden" name="authid" value="#$authid#"/>
+                    <input type="submit" name="confirm" value="#xarML('Confirm')#"/>
+                    <input type="submit" value="#xarML('Cancel')#"/>
                 </form>
             </xar:if>
 

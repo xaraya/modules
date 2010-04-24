@@ -69,7 +69,7 @@ function uploads_user_file_properties( $args )
                                   $fileInfo['fileName'], $fileInfo['fileId']);
                     throw new Exception($msg);             
                 }
-                xarResponse::Redirect(xarModURL('uploads', 'user', 'file_properties', array('fileId' => $fileId)));
+                xarResponse::redirect(xarModURL('uploads', 'user', 'file_properties', array('fileId' => $fileId)));
                 return;
             } else {
                 xarErrorHandled();
@@ -105,7 +105,7 @@ function uploads_user_file_properties( $args )
 
             $fileInfo['size'] = xarModAPIFunc('uploads', 'user', 'normalize_filesize', array('fileSize' => $fileInfo['fileSize']));
 
-            if (ereg('^image', $fileInfo['fileType'])) {
+            if (mb_ereg('^image', $fileInfo['fileType'])) {
                 // let the images module handle it
                 if (xarModIsAvailable('images')) {
                     $fileInfo['image'] = TRUE;

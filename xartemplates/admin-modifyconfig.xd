@@ -6,7 +6,7 @@
     </div>
 
     <div class="xar-mod-body">
-       <xar:template type="module" file="admin-menu" />
+       <xar:template type="module" file="admin-menu"/>
         <h2>
             <xar:mlstring>Modify Uploads Configuration</xar:mlstring>
         </h2>
@@ -73,7 +73,7 @@
                         <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#" checked="true"/> <xar:mlstring>No one</xar:mlstring>     
                         <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#"/> <xar:mlstring>Admin</xar:mlstring>      
                         <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#"/> <xar:mlstring>Everyone</xar:mlstring>   
-                    <xar:elseif condition="$file['auto-approve'] eq $approveList['admin']" />
+                    <xar:elseif condition="$file['auto-approve'] eq $approveList['admin']"/>
                         <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#"/><xar:mlstring>No one</xar:mlstring>     
                         <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#" checked="true"/> <xar:mlstring>Admin</xar:mlstring>      
                         <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#"/> <xar:mlstring>Everyone</xar:mlstring>   
@@ -204,8 +204,8 @@
                                 Cache trusted file information:
                             </xar:mlstring>
                         </label>
-                        <xar:set name="value"><xar:var scope="module" module="uploads" name="file.cache-expire" /></xar:set>
-                        <input type="text" name="file[cache-expire]" id="file_cache_expire" size="3" maxlength="3" value="#$value#" />
+                        <xar:set name="value"><xar:var scope="module" module="uploads" name="file.cache-expire"/></xar:set>
+                        <input type="text" name="file[cache-expire]" id="file_cache_expire" size="3" maxlength="3" value="#$value#"/>
                         <xar:mlstring>seconds</xar:mlstring>
                     </div>
                     <div class="xar-form-input-wrapper">
@@ -214,8 +214,8 @@
                                 Items per page in admin view:
                             </xar:mlstring>
                         </label>
-                        <xar:set name="value"><xar:var scope="module" module="uploads" name="view.itemsperpage" /></xar:set>
-                        <input type="text" name="view[itemsperpage]" id="view_itemsperpage" size="3" maxlength="3" value="#$value#" />
+                        <xar:set name="value"><xar:var scope="module" module="uploads" name="view.itemsperpage"/></xar:set>
+                        <input type="text" name="view[itemsperpage]" id="view_itemsperpage" size="3" maxlength="3" value="#$value#"/>
                     </div>
                 </fieldset>
 

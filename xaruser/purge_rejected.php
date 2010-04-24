@@ -49,7 +49,7 @@ function uploads_user_purge_rejected( $args )
                                    array('fileStatus' => _UPLOADS_STATUS_REJECTED));
 
         if (empty($fileList)) {
-            xarResponse::Redirect(xarModURL('uploads', 'admin', 'view'));
+            xarResponse::redirect(xarModURL('uploads', 'admin', 'view'));
             return;
         } else {
             $result = xarModAPIFunc('uploads', 'user', 'purge_files',
@@ -72,6 +72,6 @@ function uploads_user_purge_rejected( $args )
         return $data;
     }
 
-    xarResponse::Redirect(xarModURL('uploads', 'admin', 'view'));
+    xarResponse::redirect(xarModURL('uploads', 'admin', 'view'));
 }
 ?>

@@ -5,7 +5,7 @@
         </span>
     </div>
     <div class="xar-mod-body">
-        <xar:template type="module" file="admin-menu" />
+        <xar:template type="module" file="admin-menu"/>
         <h2><xar:mlstring>View Files</xar:mlstring></h2>
             <xar:if condition="isset($diskUsage)">
                 <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
@@ -33,10 +33,10 @@
                 </table>
                 <br />
             </xar:if>
-            <xar:template file="filter_bar" type="module" />
+            <xar:template file="filter_bar" type="module"/>
 
-            <xar:base-include-javascript filename="openDialog.js" />
-            <xar:base-include-javascript module="base" filename="checkall.js" />
+            <xar:javascript filename="openDialog.js"/>
+            <xar:javascript module="base" filename="checkall.js"/>
 
             <table summary="Files" border="0" class="xar-fullwidth xar-accent-outline">
                     <tr>
@@ -53,7 +53,7 @@
                     <xar:loop name="$items">
                     <xar:if condition="(($loop:index + 1) % 2)">
                     <tr>    
-                        <td class="xar-norm xar-align-center" >
+                        <td class="xar-norm xar-align-center">
                             <input type="checkbox" name="fileId[]" id="fileId_#$loop:item['fileId']#" value="#$loop:item['fileId']#"/>
                         </td>
                         <td class="xar-norm" align="center">&#160;
@@ -86,13 +86,13 @@
             </xar:if>
             </xar:loop>
                     <tr>
-                        <td colspan="7" class="xar-norm xar-align-center" >
+                        <td colspan="7" class="xar-norm xar-align-center">
     [&#160;<a href="javascript:xar_base_checkall(document.forms['viewfiles'],true)"><xar:mlstring>Check All</xar:mlstring></a>&#160;|&#160;<a href="javascript:xar_base_checkall(document.forms['viewfiles'],false)"><xar:mlstring>Uncheck All</xar:mlstring></a>&#160;]
                  #$pager#
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="7" >
+                        <td colspan="7">
                             <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
                             <tr>
                                 <td width="100%">
@@ -119,8 +119,8 @@
                     <td colspan="7" style="text-align:right;">
                         <xar:if condition="!xarModVars::get('uploads','file.auto-purge')">
                         <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
-                            <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
-                            <input type="submit" name="fileDo" id="fileDo_purge"  value="#xarML('Purge Rejected Files')#" />
+                            <input type="hidden" name="authid" value="#xarSecGenAuthKey()#"/>
+                            <input type="submit" name="fileDo" id="fileDo_purge"  value="#xarML('Purge Rejected Files')#"/>
                         </form>
                         <xar:else />
                             &#160;

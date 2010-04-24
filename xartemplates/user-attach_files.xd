@@ -1,6 +1,6 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:base-include-javascript filename="switchImport.js" />
-    <xar:style scope="module" module="uploads" file="uploads" />
+    <xar:javascript filename="switchImport.js"/>
+    <xar:style scope="module" module="uploads" file="uploads"/>
     <div class="xar-form-container-after">
         <xar:mlstring>Attach file(s) from source:</xar:mlstring><br />
 
@@ -28,26 +28,26 @@
            name="attach_reset_#$id#" title="#xarML('Revert to initial state')#"><xar:mlstring>Reset</xar:mlstring></a> | 
 
         <input type="checkbox" id="attach_clear_#$id#" onclick="javascript:xar_uploads_switchImport(6, -2, '#$id#');true;" 
-           name="attach_clear_#$id#" /> <label for="attach_clear_#$id#" title="#xarML('Clear stored value')#"><xar:mlstring>Clear</xar:mlstring></label>
+           name="attach_clear_#$id#"/> <label for="attach_clear_#$id#" title="#xarML('Clear stored value')#"><xar:mlstring>Clear</xar:mlstring></label>
         <br />
 
         <div id="#$id#_attach_trusted" style="display: none;">
-            <xar:template file="attach_trusted" type="module" />
+            <xar:template file="attach_trusted" type="module"/>
         </div>
 
         <div id="#$id#_attach_external" style="display: none;">
-            <xar:template file="attach_external" type="module" />
+            <xar:template file="attach_external" type="module"/>
         </div>
 
         <div id="#$id#_attach_upload" style="display: none;">
-            <xar:template file="attach_upload" type="module" />
+            <xar:template file="attach_upload" type="module"/>
         </div>
 
         <div id="#$id#_attach_stored" style="display: none;">
-            <xar:template file="attach_stored" type="module" />
+            <xar:template file="attach_stored" type="module"/>
         </div>
 
-        <input type="hidden" name="#$id#_attach_type" id="#$id#_attach_type" value="#$getAction['STORED']#" />
+        <input type="hidden" name="#$id#_attach_type" id="#$id#_attach_type" value="#$getAction['STORED']#"/>
     </div>
-    <xar:template file="dataproperty_additions" module="base" />
+    <xar:template file="dataproperty_additions" module="base"/>
 </xar:template>

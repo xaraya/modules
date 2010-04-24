@@ -5,7 +5,7 @@
         </span>
     </div>
     <div class="xar-mod-body">
-         <xar:template type="module" file="admin-menu" />
+         <xar:template type="module" file="admin-menu"/>
         <h2><xar:mlstring>Purge Rejected Files</xar:mlstring></h2>
                 <xar:if condition="!count($fileList)">
                     <p class="xar-norm xar-align-left">&#160;
@@ -26,7 +26,7 @@
                                     </xar:mlstring>&#160;
                                 </label>
 
-                                <input type="submit" name="submit" value="#xarML('Delete')#" />
+                                <input type="submit" name="submit" value="#xarML('Delete')#"/>
                             </div>
                             <div class="xar-form-input-wrapper-before">
                                 <ul>
@@ -45,10 +45,10 @@
                             </div>
                             </fieldset>
                             <div class="xar-form-input-wrapper">
-                                <input type="hidden" name="authid" value="#$authid#" />
-                                <input type="hidden" name="confirmation" value="1" />
+                                <input type="hidden" name="authid" value="#$authid#"/>
+                                <input type="hidden" name="confirmation" value="1"/>
 
-                                <input type="submit" name="submit" value="#xarML('Cancel')#" onclick="javascript:window.location='#xarModURL('uploads', 'admin', 'view')#'; return false;" />
+                                <input type="submit" name="submit" value="#xarML('Cancel')#" onclick="javascript:window.location='#xarModURL('uploads', 'admin', 'view')#'; return false;"/>
                             </div>
                             </form>
                 </xar:if>

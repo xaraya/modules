@@ -1,9 +1,9 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:comment>Common Administration menu</xar:comment>
-    <xar:style scope="module" module="base" file="navtabs" />
+    <xar:style scope="module" module="base" file="navtabs"/>
 
-    <xar:set name="request">xarRequestGetInfo()</xar:set>
+    <xar:set name="request">xarRequest::getInfo()</xar:set>
     <xar:set name="activetab">#$request.2#</xar:set>
     <div>
       <dl class="xar-tabs">
@@ -23,13 +23,13 @@
                 <xar:set name="tabclass">''</xar:set>
             </xar:if>
             <dd class="#$tabclass#">
-                <a href="#xarModURL('uploads','admin','get_files')#" >
+                <a href="#xarModURL('uploads','admin','get_files')#">
                     <xar:mlstring>Add File</xar:mlstring>
                 </a>
             </dd>
             <xar:set name="tabclass">$activetab=='assoc'?'active':''</xar:set>
             <dd class="#$tabclass#">
-                <a href="&xar-modurl-uploads-admin-assoc;" >
+                <a href="&xar-modurl-uploads-admin-assoc;">
                     <xar:mlstring>View Associations</xar:mlstring>
                 </a>
             </dd>

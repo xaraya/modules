@@ -1,6 +1,6 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:base-include-javascript module="uploads" filename="switchImport.js" />
-    <xar:style scope="module" module="uploads" file="uploads" />
+    <xar:javascript module="uploads" filename="switchImport.js"/>
+    <xar:style scope="module" module="uploads" file="uploads"/>
     <xar:if condition="count($file_input_methods) gt 1">
         <xar:mlstring>Attach file(s) from source:</xar:mlstring><br />
         <xar:if condition="in_array($getAction['LOCAL'],$file_input_methods)">
@@ -40,7 +40,7 @@
                 #$attachment.fileName#&#160;
             </xar:foreach>
             <xar:set name="name">$id . '_clear'</xar:set>
-            <xar:data-input type="checkbox" name="$name" /> 
+            <xar:data-input type="checkbox" name="$name"/> 
             <label for="#$id#_attach_clear" title="#xarML('Clear stored value')#">
                 <xar:mlstring>Remove</xar:mlstring>
             </label>
@@ -51,7 +51,7 @@
         <xar:set name="setdisplay">'block'</xar:set>
     </xar:if>
     <div id="#$id#_attach_trusted" style="display: #$setdisplay#;">
-        <xar:template file="attach_trusted" type="module" />
+        <xar:template file="attach_trusted" type="module"/>
     </div>
 
     <xar:set name="setdisplay">'none'</xar:set>
@@ -59,7 +59,7 @@
         <xar:set name="setdisplay">'block'</xar:set>
     </xar:if>
     <div id="#$id#_attach_external" style="display: #$setdisplay#;">
-        <xar:template file="attach_external" type="module" />
+        <xar:template file="attach_external" type="module"/>
     </div>
 
     <xar:set name="setdisplay">'none'</xar:set>
@@ -67,7 +67,7 @@
         <xar:set name="setdisplay">'block'</xar:set>
     </xar:if>
     <div id="#$id#_attach_upload" style="display: #$setdisplay#;">
-        <xar:template file="attach_upload" type="module" />
+        <xar:template file="attach_upload" type="module"/>
         <xar:if condition="!empty($file_extensions)">
             <br /><xar:ml><xar:mlstring>Allowed file types : #(1)</xar:mlstring><xar:mlvar>#$file_extensions#</xar:mlvar></xar:ml>
         </xar:if>
@@ -78,11 +78,11 @@
         <xar:set name="setdisplay">'block'</xar:set>
     </xar:if>
     <div id="#$id#_attach_stored" style="display: #$setdisplay#;">
-        <xar:template file="attach_stored" type="module" />
+        <xar:template file="attach_stored" type="module"/>
     </div>
 
-    <input type="hidden" name="#$name#_active_method" id="#$id#_active_method" value="#$active_method#" />
-    <input type="hidden" name="#$name#_initial_method" id="#$id#_initial_method" value="#$initial_method#" />
+    <input type="hidden" name="#$name#_active_method" id="#$id#_active_method" value="#$active_method#"/>
+    <input type="hidden" name="#$name#_initial_method" id="#$id#_initial_method" value="#$initial_method#"/>
 
-    <xar:template file="dataproperty_additions" module="base" />
+    <xar:template file="dataproperty_additions" module="base"/>
 </xar:template>

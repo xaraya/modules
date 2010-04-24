@@ -6,7 +6,7 @@
     </div>
 
     <div class="xar-mod-body">
-       <xar:template type="module" file="admin-menu" />
+       <xar:template type="module" file="admin-menu"/>
         <h2>
             <xar:mlstring>Upload/Import Status</xar:mlstring>
         </h2>
@@ -47,7 +47,7 @@
                                             Doing so will create a link to the item for downloading purposes.
                                         </xar:mlstring>
                                     </td>
-                                <xar:elseif condition="isset($loop:item['errors'])" />
+                                <xar:elseif condition="isset($loop:item['errors'])"/>
                                     <td width="75%" class="xar-norm">
                                         <strong>
                                             <xar:mlstring>
@@ -98,7 +98,7 @@
                                             Doing so will create a link to the item for downloading purposes.
                                         </xar:mlstring>
                                     </td>
-                                <xar:elseif condition="isset($loop:item['errors'])" />
+                                <xar:elseif condition="isset($loop:item['errors'])"/>
                                     <td width="75%" class="xar-accent">
                                         <strong>
                                             <xar:mlstring>

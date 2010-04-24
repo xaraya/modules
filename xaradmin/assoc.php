@@ -70,7 +70,7 @@ function uploads_admin_assoc()
                                               'itemid' => $itemid,
                                               'fileId' => $fileId));
                 if (!$result) return;
-                xarResponse::Redirect(xarModURL('uploads','admin','assoc'));
+                xarResponse::redirect(xarModURL('uploads','admin','assoc'));
                 return true;
             }
         }

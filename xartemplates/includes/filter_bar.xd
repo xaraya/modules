@@ -15,9 +15,9 @@
                 </label>
                 <br />
                 <xar:if condition="$filters['inverse'] eq TRUE">
-                    <input type="checkbox" name="inverse" id="inverse" value="invert" checked="checked" />
+                    <input type="checkbox" name="inverse" id="inverse" value="invert" checked="checked"/>
                 <xar:else />
-                    <input type="checkbox" name="inverse" id="inverse" value="invert" />
+                    <input type="checkbox" name="inverse" id="inverse" value="invert"/>
                 </xar:if>
             </td>
             <td width="10%" align="center">
@@ -107,7 +107,7 @@
             <td width="10%" align="center">
                 <br />
                 <xar:if condition="!empty($catid)">
-                    <input type="hidden" name="catid" value="#$catid#" />
+                    <input type="hidden" name="catid" value="#$catid#"/>
                 </xar:if>
                 <input type="submit" name="do_it" value="#xarML('Refresh')#"/>
             </td>
@@ -116,7 +116,7 @@
         <xar:if condition="xarModIsAvailable('categories') and xarModIsHooked('categories','uploads',1)">
         <tr>
             <td colspan="6">
-                <xar:template file="catnavigation" type="module" />
+                <xar:template file="catnavigation" type="module"/>
             </td>
         </tr>
         </xar:if>

@@ -20,7 +20,7 @@ function uploads_admin_main()
 {
     // Security Check
     if (!xarSecurityCheck('EditUploads')) return;
-      xarResponse::Redirect(xarModURL('uploads', 'admin', 'view'));
+      xarResponse::redirect(xarModURL('uploads', 'admin', 'view'));
     // success
     return true;
 }

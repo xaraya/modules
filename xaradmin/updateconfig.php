@@ -102,7 +102,7 @@ function uploads_admin_updateconfig()
                     array('module'   => 'uploads',
                           'itemtype' => 1)); // Files
 
-    xarResponse::Redirect(xarModURL('uploads', 'admin', 'modifyconfig'));
+    xarResponse::redirect(xarModURL('uploads', 'admin', 'modifyconfig'));
 
     // Return
     return TRUE;
