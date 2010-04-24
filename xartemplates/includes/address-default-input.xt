@@ -57,10 +57,11 @@
         <xar:foreach in="$keys" value="$key">
             <xar:set name="dummy">1;$badlabels[] = $labels[$key]</xar:set>
         </xar:foreach>
-        <xar:set name="invalid">implode(', ',$badlabels)</xar:set>        
-        <span class="xar-error">
-            The following fields are not filled out correctly::#$invalid#
-        </span>
+        <div>
+            <xar:set name="invalid">implode(', ',$badlabels)</xar:set>        
+            <span class="xar-error">
+                The following fields are not filled out correctly::#$invalid#
+            </span>
+        </div>
     </xar:if>
-
 </xar:template>
