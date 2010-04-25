@@ -21,7 +21,7 @@ function headlines_admin_view()
     $data['warninglabel'] = xarVarPrepForDisplay(xarML('Status'));
     $data['optionslabel'] = xarVarPrepForDisplay(xarML('Options'));
     $data['authid'] = xarSecGenAuthKey();
-    sys::import('xaraya.pager');
+    sys::import('modules.base.class.pager');
     $data['pager'] = xarTplGetPager($startnum,
                                     xarMod::apiFunc('headlines', 'user', 'countitems'),
                                     xarModURL('headlines', 'admin', 'view', array('startnum' => '%%')),

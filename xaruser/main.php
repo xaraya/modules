@@ -182,7 +182,7 @@ function headlines_user_main()
     }
 
     $data['indlinks'] = $links;
-    sys::import('xaraya.pager');
+    sys::import('modules.base.class.pager');
     $data['pager'] = xarTplGetPager($startnum,
                                     xarMod::apiFunc('headlines', 'user', 'countitems'),
                                     xarModURL('headlines', 'user', 'main', array('startnum' => '%%')),
