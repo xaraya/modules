@@ -96,5 +96,42 @@ class RssBlockAdmin extends RssBlock implements iBlock
         return $vars;
     }
 
+    public function insert(Array $data=array())
+    {
+        $vars = array();
+
+        if (!xarVarFetch('rssurl', 'str:1:', $vars['rssurl'], $this->rssurl, XARVAR_NOT_REQUIRED)) {return;}
+        // The 'otherrssurl' can override the 'rssurl'
+        if (!xarVarFetch('otherrssurl', 'str:1:', $otherrssurl, $this->rssurl, XARVAR_NOT_REQUIRED)) {return;}
+        // FR: added check for correct url format, including local urls
+        if (!empty($otherrssurl) && $otherrssurl != $this->rssurl) {
+            if (strstr($otherrssurl,'://')) {
+                if (preg_match("!^http://|https://|ftp://!", $otherrssurl)) {
+                    $vars['rssurl'] = $otherrssurl;
+                }
+            } elseif (substr($otherrssurl,0,1) == '/') {
+                $server = xarServerGetHost();
+                $protocol = xarServerGetProtocol();
+                $vars['rssurl'] = $protocol . '://' . $server . $otherrssurl;
+            } else {
+                $baseurl = xarServerGetBaseURL();
+                $vars['rssurl'] = $baseurl . $otherrssurl;
+            }
+        }
+        // bug[ 5322 ] replace url value with numeric hid
+        // allowing changes to module feeds to be reflected in blocks
+        if (is_numeric($vars['rssurl'])) {
+            $headline = xarMod::apiFunc('headlines', 'user', 'get', array('hid' => $vars['rssurl']));
+            if (empty($headline)) {
+                $vars['rssurl'] = $this->rssurl;
+            }
+        }
+        // TODO: check for duplicates
+        // TODO: check otherrssurl against stored headlines
+
+
+        $data['content'] = $vars;
+        return $data;
+    }
 }
 ?>
