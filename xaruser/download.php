@@ -20,7 +20,7 @@ function uploads_user_download()
     $fileInfo = xarModAPIFunc('uploads','user','db_get_file', array('fileId' => $fileId));
 
     if (empty($fileInfo) || !count($fileInfo)) {
-        xarResponse::redirect('modules/uploads/xarimages/notapproved.gif');
+        xarResponse::redirect(sys::code() . 'modules/uploads/xarimages/notapproved.gif');
         return TRUE;
     //    $msg = xarML('Unable to retrieve information on file [#(1)]', $fileId);
     //    xarErrorSet(XAR_USER_EXCEPTION, 'UPLOADS_ERR_NO_FILE', new SystemException($msg));
