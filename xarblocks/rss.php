@@ -106,9 +106,9 @@ class RssBlock extends BasicBlock implements iBlock
             $vars['truncate'] = 0; // no point doing extra work for nothing :)
         }
         // call api function to get the parsed feed (or warning)
-        $data = xarMod::apiFunc('headlines', 'user', 'getparsed',
+        $data = array_merge($data, xarMod::apiFunc('headlines', 'user', 'getparsed',
                     array('feedfile' => $feedfile, 'refresh' => $refresh,
-                          'numitems' => $vars['maxitems'], 'truncate' => $vars['truncate']));
+                          'numitems' => $vars['maxitems'], 'truncate' => $vars['truncate'])));
         // TODO: option to hide block here instead
         if (!empty($data['warning'])) {
             if (empty($vars['show_warning'])) return;
@@ -150,7 +150,7 @@ class RssBlock extends BasicBlock implements iBlock
 
         $data['content'] = array(
             'feedcontent'  => $data['feedcontent'],
-            'blockid'      => $blockinfo['bid'],
+            'blockid'      => $data['bid'],
             'chantitle'    => $data['chantitle'],
             'chanlink'     => $data['chanlink'],
             'chandesc'     => $data['chandesc'],
