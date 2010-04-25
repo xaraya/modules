@@ -126,6 +126,44 @@ class RssBlock extends BasicBlock implements iBlock
             }
         }
 
+        // FR: add alt channel title/desc/link
+        if (!isset($vars['alt_chantitle'])) $vars['alt_chantitle'] = $this->alt_chantitle;
+        if (!isset($vars['alt_chandesc'])) $vars['alt_chandesc'] = $this->alt_chandesc;
+        if (!isset($vars['alt_chanlink'])) $vars['alt_chanlink'] = $this->alt_chanlink;
+        if (!empty($vars['alt_chantitle'])) $data['chantitle'] = $vars['alt_chantitle'];
+        if (!empty($vars['alt_chandesc'])) $data['chandesc'] = $vars['alt_chandesc'];
+        if (!empty($vars['alt_chanlink'])) $data['chanlink'] = $vars['alt_chanlink'];
+        // optionally show images and cats if available (SimplePie required)
+        if (!isset($vars['show_chanimage'])) $vars['show_chanimage'] = $this->show_chanimage;
+        if (!isset($vars['show_itemimage'])) $vars['show_itemimage'] = $this->show_itemimage;
+        if (!isset($vars['show_itemcats'])) $vars['show_itemcats'] = $this->show_itemcats;
+        // make sure SimplePie's available
+        if (!xarMod::isAvailable('simplepie')) {
+            $vars['show_chanimage'] = $this->show_chanimage;
+            $vars['show_itemimage'] = $this->show_itemimage;
+            $vars['show_itemcats'] = $this->show_itemcats;
+        }
+        if ($vars['linkhid'] && (isset($thishid)&& !empty($thishid))) {
+            $vars['linkhid'] = $thishid;
+        }
+        if (!isset($vars['show_warning'])) $vars['show_warning'] = $this->show_warning;
+
+        $data['content'] = array(
+            'feedcontent'  => $data['feedcontent'],
+            'blockid'      => $blockinfo['bid'],
+            'chantitle'    => $data['chantitle'],
+            'chanlink'     => $data['chanlink'],
+            'chandesc'     => $data['chandesc'],
+            'chanimage'    => $data['image'],
+            'show_desc'     => $vars['showdescriptions'],
+            'show_chantitle' => $vars['show_chantitle'],
+            'show_chandesc'  => $vars['show_chandesc'],
+            'show_chanimage' => $vars['show_chanimage'],
+            'show_itemimage' => $vars['show_itemimage'],
+            'show_itemcats' => $vars['show_itemcats'],
+            'show_warning' => $vars['show_warning'],
+            'linkhid' => $vars['linkhid']
+        );
 
         return $data;
     }
