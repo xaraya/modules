@@ -129,6 +129,13 @@ class RssBlockAdmin extends RssBlock implements iBlock
         // TODO: check for duplicates
         // TODO: check otherrssurl against stored headlines
 
+        if (!xarVarFetch('maxitems', 'int:0', $vars['maxitems'], $this->maxitems, XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], $this->showdescriptions, XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVarFetch('show_chantitle', 'checkbox', $vars['show_chantitle'], $this->show_chantitle, XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVarFetch('show_chandesc', 'checkbox', $vars['show_chandesc'], $this->show_chandesc, XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVarFetch('refresh', 'int:0', $vars['refresh'], $this->refresh, XARVAR_NOT_REQUIRED)) {return;}
+        // bug [4545]
+        if (!xarVarFetch('truncate', 'int:0', $vars['truncate'], $this->truncate, XARVAR_NOT_REQUIRED)) return;
 
         $data['content'] = $vars;
         return $data;
