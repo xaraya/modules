@@ -189,7 +189,8 @@ function uploads_admin_assoc()
         }
 */
         if ($numstats < $data['numlinks']) {
-            $data['pager'] = xarTplGetPager($startnum,
+            sys::import('modules.base.class.pager');
+            $data['pager'] = xarTplPager::getPager($startnum,
                                             $data['numlinks'],
                                             xarModURL('uploads','admin','assoc',
                                                       array('modid' => $modid,

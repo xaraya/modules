@@ -198,7 +198,8 @@ function uploads_admin_view( )
 
     // Add pager
     if (!empty($numitems) && $countitems > $numitems) {
-        $data['pager'] = xarTplGetPager($startnum,
+        sys::import('modules.base.class.pager');
+        $data['pager'] = xarTplPager::getPager($startnum,
                                         $countitems,
                                         xarModURL('uploads', 'admin', 'view',
                                                   array('startnum' => '%%',
