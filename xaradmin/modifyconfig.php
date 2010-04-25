@@ -21,7 +21,7 @@ function scheduler_admin_modifyconfig()
 
     $data = array();
 
-    $forwarded = xarServerGetVar('HTTP_X_FORWARDED_FOR');
+    $forwarded = xarServer::getVar('HTTP_X_FORWARDED_FOR');
     if (!empty($forwarded)) {
         $data['proxy'] = $data['ip'];
         $data['ip'] = preg_replace('/,.*/', '', $forwarded);

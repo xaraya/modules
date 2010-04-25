@@ -161,8 +161,8 @@ function scheduler_userapi_runjobs($args)
         } else {
             // checks for jobs called by external scheduler
             // get the IP
-            $ip = xarServerGetVar('REMOTE_ADDR');
-            $forwarded = xarServerGetVar('HTTP_X_FORWARDED_FOR');
+            $ip = xarServer::getVar('REMOTE_ADDR');
+            $forwarded = xarServer::getVar('HTTP_X_FORWARDED_FOR');
             if (!empty($forwarded)) {
                 $proxy = $ip;
                 $ip = preg_replace('/,.*/', '', $forwarded);
