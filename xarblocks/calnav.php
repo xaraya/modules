@@ -50,7 +50,7 @@ function calendar_calnavblock_display($blockinfo)
     $tplData['form_action'] = xarModURL('calendar', 'user', 'changecalnav');
     $tplData['blockid'] = $blockinfo['bid'];
 
-    if (xarServerGetVar('REQUEST_METHOD') == 'GET') {
+    if (xarServer::getVar('REQUEST_METHOD') == 'GET') {
         // URL of this page
         $tplData['return_url'] = xarServer::getCurrentURL();
     } else {
