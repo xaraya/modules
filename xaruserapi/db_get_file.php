@@ -273,10 +273,10 @@ function uploads_userapi_db_get_file( $args )
     $importDir = eregi_replace('/$', '', $importDir);
     $uploadDir = eregi_replace('/$', '', $uploadDir);
 
-    if(xarServerGetVar('PATH_TRANSLATED')) {
-        $base_directory = dirname(realpath(xarServerGetVar('PATH_TRANSLATED')));
-    } elseif(xarServerGetVar('SCRIPT_FILENAME')) {
-        $base_directory = dirname(realpath(xarServerGetVar('SCRIPT_FILENAME')));
+    if(xarServer::getVar('PATH_TRANSLATED')) {
+        $base_directory = dirname(realpath(xarServer::getVar('PATH_TRANSLATED')));
+    } elseif(xarServer::getVar('SCRIPT_FILENAME')) {
+        $base_directory = dirname(realpath(xarServer::getVar('SCRIPT_FILENAME')));
     } else {
         $base_directory = './';
     }

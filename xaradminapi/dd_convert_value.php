@@ -33,8 +33,8 @@ function uploads_adminapi_dd_convert_value($args)
 
     if (!isset($basePath)) {
 
-        if(xarServerGetVar('SCRIPT_FILENAME')) {
-            $base_directory = dirname(realpath(xarServerGetVar('SCRIPT_FILENAME')));
+        if(xarServer::getVar('SCRIPT_FILENAME')) {
+            $base_directory = dirname(realpath(xarServer::getVar('SCRIPT_FILENAME')));
         } else {
             $base_directory = './';
         }

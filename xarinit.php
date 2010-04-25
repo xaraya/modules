@@ -36,8 +36,8 @@ function uploads_init()
     // load the predefined constants
     xarModAPILoad('uploads', 'user');
 
-    if(xarServerGetVar('SCRIPT_FILENAME')) {
-        $base_directory = dirname(realpath(xarServerGetVar('SCRIPT_FILENAME')));
+    if(xarServer::getVar('SCRIPT_FILENAME')) {
+        $base_directory = dirname(realpath(xarServer::getVar('SCRIPT_FILENAME')));
     } else {
         $base_directory = './';
     }
@@ -285,8 +285,8 @@ function uploads_upgrade($oldversion)
 
             xarDefineInstance('uploads', 'File', $instances);
 
-            if (xarServerGetVar('SCRIPT_FILENAME')) {
-                $base_directory = dirname(realpath(xarServerGetVar('SCRIPT_FILENAME')));
+            if (xarServer::getVar('SCRIPT_FILENAME')) {
+                $base_directory = dirname(realpath(xarServer::getVar('SCRIPT_FILENAME')));
             } else {
                 $base_directory = './';
             }
