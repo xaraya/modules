@@ -57,6 +57,37 @@ class RssBlockAdmin extends RssBlock implements iBlock
             }
         }
 
+        // Defaults
+        if (!isset($vars['show_chantitle'])) $vars['show_chantitle'] = $this->show_chantitle;
+        if (!isset($vars['show_chandesc'])) $vars['show_chandesc'] = $this->show_chandesc;
+        if (!isset($vars['showdescriptions'])) $vars['showdescriptions'] = $this->showdescriptions;
+        if (!isset($vars['maxitems'])) $vars['maxitems'] = $this->maxitems;
+        if (!isset($vars['refresh'])) $vars['refresh'] = $this->refresh;
+        // bug [4545]
+        if (!isset($vars['truncate'])) $vars['truncate'] = $this->truncate;
+        // FR: add alt title/description/link
+        if (!isset($vars['alt_chantitle'])) $vars['alt_chantitle'] = $this->alt_chantitle;
+        if (!isset($vars['alt_chandesc'])) $vars['alt_chandesc'] = $this->alt_chandesc;
+        if (!isset($vars['alt_chanlink'])) $vars['alt_chanlink'] = $this->alt_chanlink;
+        if (!isset($vars['linkhid'])) $vars['linkhid'] = $this->linkhid;
+        // get the current parser
+        $vars['parser'] = xarModVars::get('headlines', 'parser');
+        // check for legacy magpie code, checkme: is this still necessary?
+        if (xarModVars::get('headlines', 'magpie')) $vars['parser'] = 'magpie';
+        // check module available if not default parser
+        if ($vars['parser'] != 'default' && !xarMod::isAvailable($vars['parser'])) $vars['parser'] = 'default';
+        if ($vars['parser'] == 'simplepie') {
+            // optionally show images and cats if available (SimplePie only)
+            if (!isset($vars['show_chanimage'])) $vars['show_chanimage'] = $this->show_chanimage;
+            if (!isset($vars['show_itemimage'])) $vars['show_itemimage'] = $this->show_itemimage;
+            if (!isset($vars['show_itemcats'])) $vars['show_itemcats'] = $this->show_itemcats;
+        } else {
+            // otherwise set false (defaults)
+            $vars['show_chanimage'] = $this->show_chanimage;
+            $vars['show_itemimage'] = $this->show_itemimage;
+            $vars['show_itemcats'] = $this->show_itemcats;
+        }
+        if (!isset($vars['show_warning'])) $vars['show_warning'] = $this->show_warning;
 
 
         $vars['blockid'] = $data['bid'];
