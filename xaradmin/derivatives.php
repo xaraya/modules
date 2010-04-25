@@ -63,7 +63,8 @@ function images_admin_derivatives()
 
         // Add pager
         if (!empty($params['numitems']) && $countitems > $params['numitems']) {
-            $data['pager'] = xarTplGetPager($startnum,
+            sys::import('modules.base.class.pager');
+            $data['pager'] = xarTplPager::getPager($startnum,
                                             $countitems,
                                             xarModURL('images', 'admin', 'derivatives',
                                                       array('startnum' => '%%',
