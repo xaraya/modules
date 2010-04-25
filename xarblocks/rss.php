@@ -55,5 +55,43 @@ class RssBlock extends BasicBlock implements iBlock
     public $show_itemcats       = 0;  // added for SimpePie
 
 
+/**
+ * Display func.
+ * @param $data array containing title,content
+ */
+    function display(Array $data=array())
+    {
+        $data = parent::display($data);
+        if (empty($data)) return;
+
+        $vars = $data;
+
+        $data['content'] = '';
+
+        // Check and see if a feed has been supplied to us.
+        if (empty($vars['rssurl'])) {
+            $data['title'] = xarML('Headlines');
+            $data['content'] = xarML('No Feed URL Specified');
+            return $data;
+        }
+
+        // bug[ 5322 ]
+        if (is_numeric($vars['rssurl'])) {
+            $headline = xarMod::apiFunc('headlines', 'user', 'get', array('hid' => $vars['rssurl']));
+            if (!empty($headline)) {
+                $feedfile = $headline['url'];
+                $thishid = $headline['hid'];
+            } else {
+                $data['title'] = xarML('Headlines');
+                $data['content'] = xarML('No Feed URL Specified');
+                return $data;
+            }
+        } else {
+            $feedfile = $vars['rssurl'];
+        }
+
+
+        return $data;
+    }
 }
 ?>
