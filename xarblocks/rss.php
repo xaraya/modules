@@ -90,6 +90,42 @@ class RssBlock extends BasicBlock implements iBlock
             $feedfile = $vars['rssurl'];
         }
 
+        if (!isset($vars['maxitems'])) $vars['maxitems'] = $this->maxitems;
+        if (!isset($vars['show_chantitle'])) $vars['show_chantitle'] = $this->show_chantitle;
+        if (!isset($vars['show_chandesc'])) $vars['show_chandesc'] = $this->show_chandesc;
+        if (empty($vars['refresh'])) $vars['refresh'] = $this->refresh;
+        if (!isset($vars['linkhid'])) $vars['linkhid'] = $this->linkhid;
+        if (!isset($vars['show_warning'])) $vars['show_warning'] = $this->show_warning;
+
+        // CHECKME: this forces early refresh regardless of caching options, why do we do that? old code below
+        // define('MAGPIE_CACHE_AGE', round($refresh/2)); // set lower than block cache so we always get something
+        // simplepie'cache_max_minutes' => round($refresh/2*60) - bug, simplepie caching is in seconds
+        // this only happens in the rss block, need to work out if it's necessary
+        $refresh = $vars['refresh']/2;
+        if (!$vars['showdescriptions']) {
+            $vars['truncate'] = 0; // no point doing extra work for nothing :)
+        }
+        // call api function to get the parsed feed (or warning)
+        $data = xarMod::apiFunc('headlines', 'user', 'getparsed',
+                    array('feedfile' => $feedfile, 'refresh' => $refresh,
+                          'numitems' => $vars['maxitems'], 'truncate' => $vars['truncate']));
+        // TODO: option to hide block here instead
+        if (!empty($data['warning'])) {
+            if (empty($vars['show_warning'])) return;
+            $data['title'] = xarML('Headlines');
+            $data['content'] = xarVarPrepForDisplay($data['warning']);
+            return $data;
+        } else {
+            // here we see if this feed has been updated by comparing the stored hash against the
+            // hash provided by the getparsed function, if they're different, we update the feed
+            // with the new hash, and the time of the last item in the feed, or the current time
+            // this means the feeds can now be sorted reliably by date ala. the cloud block
+            if (isset($headline['string']) && ($headline['string'] != $data['compare'])) {
+                // call api function to update our feed item
+                if (!xarMod::apiFunc('headlines', 'user', 'update', array('hid' => $headline['hid'], 'date' => $data['lastitem'], 'string' => $data['compare']))) return;
+            }
+        }
+
 
         return $data;
     }
