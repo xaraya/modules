@@ -136,6 +136,16 @@ class RssBlockAdmin extends RssBlock implements iBlock
         if (!xarVarFetch('refresh', 'int:0', $vars['refresh'], $this->refresh, XARVAR_NOT_REQUIRED)) {return;}
         // bug [4545]
         if (!xarVarFetch('truncate', 'int:0', $vars['truncate'], $this->truncate, XARVAR_NOT_REQUIRED)) return;
+        // FR: add alt title/description/link
+        if (!xarVarFetch('alt_chantitle', 'str:1:', $vars['alt_chantitle'], $this->alt_chantitle, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('alt_chandesc', 'str:1:', $vars['alt_chandesc'], $this->alt_chandesc, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('alt_chanlink', 'str:1:', $vars['alt_chanlink'], $this->alt_chanlink, XARVAR_NOT_REQUIRED)) return;
+        if (!preg_match("!^http://|https://|ftp://!", $vars['alt_chanlink'])) $vars['alt_chanlink'] = $this->alt_chanlink;
+        if (!xarVarFetch('linkhid', 'checkbox', $vars['linkhid'], $this->linkhid, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('show_chanimage', 'checkbox', $vars['show_chanimage'], $this->show_chanimage, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('show_itemimage', 'checkbox', $vars['show_itemimage'], $this->show_itemimage, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('show_itemcats', 'checkbox', $vars['show_itemcats'], $this->show_itemcats, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('show_warning', 'checkbox', $vars['show_warning'], false, XARVAR_NOT_REQUIRED)) return;
 
         $data['content'] = $vars;
         return $data;
