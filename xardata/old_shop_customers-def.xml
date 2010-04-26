@@ -1,0 +1,44 @@
+<object name="shop_customers">
+  <objectid>521</objectid>
+  <label>Customers</label>
+  <module_id>1031</module_id>
+  <itemtype>4</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:0:{}</config>
+  <isalias>true</isalias>
+  <properties>
+    <property name="id">
+      <id>3228</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="first_name">
+      <id>3229</id>
+      <label>First Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="last_name">
+      <id>3230</id>
+      <label>Last Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration></configuration>
+    </property>
+  </properties>
+</object>
