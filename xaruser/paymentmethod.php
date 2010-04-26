@@ -50,32 +50,24 @@ function shop_user_paymentmethod()
                     'where' => 'customer eq ' . xarUserGetVar('id'),
                     );
     $paymentmethods = $mylist->getItems($filters);
-    if (count($paymentmethods) > 0) {
-        $data['paymentmethods'] = $paymentmethods;
-    }
+    $data['paymentmethods'] = $paymentmethods;
 
-    $myfields = array('first_name', 'last_name', 'street_addr', 'city_addr', 'state_addr', 'postal_code', 'card_type','card_num', 'cvv2', 'exp_date');
-    $data['myfields'] = $myfields;
-
-    $paymentobject = DataObjectMaster::getObject(array('name' => 'shop_paymentmethods'));
-    $properties = $paymentobject->getProperties();
-    $data['properties'] = $properties;
+    $data['paymentobject'] = DataObjectMaster::getObject(array('name' => 'shop_paymentmethods'));
+    $data['paymentobject']->properties['name']->display_show_salutation = false;
+    $data['paymentobject']->properties['name']->display_show_middlename = false;
+    $data['paymentobject']->properties['address']->display_rows = 1;
+    $data['paymentobject']->properties['address']->display_show_country = false;
+    $data['properties'] = $data['paymentobject']->getProperties();
 
     if ($remove) {
         if ($remove == xarSession::getVar('paymentmethod')) {
             xarSession::delVar('paymentmethod');
         }
-        $paymentobject->getItem(array('itemid' => $remove));
-        $paymentobject->deleteItem();
+        $data['paymentobject']->getItem(array('itemid' => $remove));
+        $data['paymentobject']->deleteItem();
         xarResponse::redirect(xarModURL('shop','user','paymentmethod'));
         return true;
     }
-
-    foreach ($myfields as $field) {
-        $propids[$field] = 'dd_' . $properties[$field]->id; 
-        $data[$field] = ''; 
-    }
-    $data['propids'] = $propids;
 
     $selectedpaymentmethod = xarSession::getVar('paymentmethod');
     if(!empty($selectedpaymentmethod)) {
@@ -91,25 +83,7 @@ function shop_user_paymentmethod()
 
     } elseif ($proceednew) {  // We're not using a saved payment method...
         
-        $errors = xarSession::getVar('errors');
-        foreach ($myfields as $field) {
-            $isvalid = $paymentobject->properties[$field]->checkInput();
-            
-            ${$field} = $paymentobject->properties[$field]->getValue();
-            $values[$field] = ${$field};
-            $values['customer'] = xarUserGetVar('id');
-            
-            if (!$isvalid) {
-                $errors[$field] = true;
-            } else {    
-                if ($field != 'card_num') {
-                    $payment[$field] = ${$field};
-                    $data[$field] = ${$field}; 
-                }
-                unset($errors[$field]); // In case we previously submitted invalid input in this field
-            }
-
-        } // end foreach
+        $isvalid = $data['paymentobject']->checkInput();
 
         if (isset($exp_date)) {
             $exp_month = substr($exp_date,0,2);
@@ -125,18 +99,16 @@ function shop_user_paymentmethod()
             xarSession::setVar('errors',$errors);
         }
         
-        if (!empty($errors)) { 
+        if (!$isvalid) { 
             return xarTplModule('shop','user','paymentmethod', $data);
         } else {
-            $paymentobject->setFieldValues($values,1);
-            xarSession::setVar('paymentmethod',$paymentobject->createItem());
+            xarSession::setVar('paymentmethod',$data['paymentobject']->createItem());
             xarResponse::redirect(xarModURL('shop','user','order')); 
             return true;
         }
         
     }
     return $data;
-
 }
 
 ?>

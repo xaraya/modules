@@ -119,7 +119,6 @@ function shop_user_order()
 
     return $data;
  
-
 }
 
 ?>

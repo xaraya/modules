@@ -28,25 +28,12 @@ function shop_user_shippingaddress()
     if(!xarVarFetch('next', 'str', $data['next'], NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     sys::import('modules.dynamicdata.class.objects.master');
-    sys::import('modules.dynamicdata.class.properties.master');
-
-    // Get the saved payment methods, if any exist
-    $mylist = DataObjectMaster::getObjectList(array('name' => 'shop_shippingaddresses'));
-    $filters = array(
-                     'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
-                    'where' => 'customer eq ' . xarUserGetVar('id'),
-                    );
-    $shippingaddresses = $mylist->getItems($filters);
-    if (count($shippingaddresses) > 0) {
-        $data['shippingaddresses'] = $shippingaddresses;
-    }
-
-    $myfields = array('first_name', 'last_name', 'street_addr', 'city_addr', 'state_addr', 'postal_code');
-    $data['myfields'] = $myfields;
-
-    $shippingobject = DataObjectMaster::getObject(array('name' => 'shop_shippingaddresses'));
-    $properties = $shippingobject->properties;
-    $data['properties'] = $properties;
+    $data['shippingobject'] = DataObjectMaster::getObject(array('name' => 'shop_shippingaddresses'));
+    $data['shippingobject']->properties['name']->display_show_salutation = false;
+    $data['shippingobject']->properties['name']->display_show_middlename = false;
+    $data['shippingobject']->properties['address']->display_rows = 1;
+    $data['shippingobject']->properties['address']->display_show_country = false;
+    $data['properties'] = $data['shippingobject']->properties;
 
     if ($shipto) {
         xarSession::setVar('shippingaddress',$shipto);
@@ -63,53 +50,32 @@ function shop_user_shippingaddress()
         if ($remove == xarSession::getVar('shippingaddress')) {
             xarSession::delVar('shippingaddress');
         }
-        $shippingobject->getItem(array('itemid' => $remove));
-        $shippingobject->deleteItem();
+        $data['shippingobject']->getItem(array('itemid' => $remove));
+        $data['shippingobject']->deleteItem();
         xarResponse::redirect(xarModURL('shop','user','shippingaddress'));
         return true;
     }
 
     if ($proceed) {
-    
-        $errors = xarSession::getVar('errors');
-        foreach ($myfields as $field) {
-            $isvalid = $shippingobject->properties[$field]->checkInput();
-
-            if (!$isvalid) {
-                $errors[$field] = true;
-            } else {
-                unset($errors[$field]); // In case we previously submitted invalid input in this field
-            }
-
-            ${$field} = $shippingobject->properties[$field]->getValue();
-        }
-
-        if (!empty($errors)) {
-            xarResponse::redirect(xarModURL('shop','user','shippingaddress').'#errors');
-            return true;
+        $isvalid = $data['shippingobject']->checkInput();
+        if (!$isvalid) {
+            return xarTplModule('shop','user','shippingaddress',$data);
         }
 
         // Save the customer data
         $custobject = DataObjectMaster::getObject(array('name' => 'shop_customers'));
         $custobject->getItem(array('itemid' => xarUserGetVar('id')));
-        $custobject->properties['first_name']->setValue($first_name);
-        $custobject->properties['last_name']->setValue($last_name);
+        $name = $data['shippingobject']->properties['name']->value;
+        $custobject->properties['name']->setValue($name);
         $custobject->updateItem();
 
         // Save the shipping address
-        $shippingobject->properties['customer']->setValue(xarUserGetVar('id'));
-        $shippingobject->properties['first_name']->setValue($first_name);
-        $shippingobject->properties['last_name']->setValue($last_name);
-        $shippingobject->properties['street_addr']->setValue($street_addr);
-        $shippingobject->properties['city_addr']->setValue($city_addr);
-        $shippingobject->properties['postal_code']->setValue($postal_code);
-        $shippingobject->properties['state_addr']->setValue($state_addr);
-        xarSession::setVar('shippingaddress',$shippingobject->createItem());
+        $itemid= $data['shippingobject']->createItem();
+        xarSession::setVar('shippingaddress',$itemid);
 
         // update the name field in roles to use first and last name instead of email
-        $rolesobject = DataObjectMaster::getObject(array('name' => 'roles_users'));
-        $rolesobject->getItem(array('itemid' => xarUserGetVar('id')));
-        $rolesobject->properties['name']->setValue($first_name . ' ' . $last_name);
+        $rolesobject = xarCurrentRole();
+        $rolesobject->properties['name']->value = $name;
         $rolesobject->updateItem();
 
         xarResponse::redirect(xarModURL('shop','user','paymentmethod'));

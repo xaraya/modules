@@ -1,17 +1,17 @@
 <object name="shop_paymentmethods">
-  <objectid>478</objectid>
+  <objectid>107</objectid>
   <label>Payment Methods</label>
   <module_id>1031</module_id>
-  <itemtype>8</itemtype>
+  <itemtype>6</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>77</maxid>
-  <config>a:1:{s:11:&quot;adminfields&quot;;s:43:&quot;id, customer, card_type, card_num, exp_date&quot;;}</config>
+  <config>a:1:{s:11:"adminfields";s:43:"id, customer, card_type, card_num, exp_date";}</config>
   <isalias>true</isalias>
   <properties>
     <property name="id">
-      <id>2900</id>
+      <id>870</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration></configuration>
     </property>
     <property name="customer">
-      <id>2902</id>
+      <id>871</id>
       <label>Customer</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -30,68 +30,28 @@
       <seq>3</seq>
       <configuration></configuration>
     </property>
-    <property name="first_name">
-      <id>2905</id>
-      <label>First Name</label>
-      <type>textbox</type>
+    <property name="name">
+      <id>872</id>
+      <label>Name</label>
+      <type>name</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
       <status>33</status>
       <seq>6</seq>
       <configuration>a:6:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"1";s:21:"validation_max_length";s:2:"70";}</configuration>
     </property>
-    <property name="last_name">
-      <id>2906</id>
-      <label>Last Name</label>
-      <type>textbox</type>
+    <property name="address">
+      <id>873</id>
+      <label>Address</label>
+      <type>address</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
       <status>33</status>
       <seq>7</seq>
       <configuration>a:6:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"1";s:21:"validation_max_length";s:3:"100";}</configuration>
     </property>
-    <property name="street_addr">
-      <id>2907</id>
-      <label>Street Address</label>
-      <type>textbox</type>
-      <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
-      <status>33</status>
-      <seq>8</seq>
-      <configuration>a:6:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"1";s:21:"validation_max_length";s:3:"200";}</configuration>
-    </property>
-    <property name="city_addr">
-      <id>2908</id>
-      <label>City</label>
-      <type>textbox</type>
-      <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
-      <status>33</status>
-      <seq>9</seq>
-      <configuration>a:5:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"1";s:21:"validation_max_length";s:3:"100";}</configuration>
-    </property>
-    <property name="state_addr">
-      <id>2909</id>
-      <label>State</label>
-      <type>dropdown</type>
-      <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
-      <status>33</status>
-      <seq>10</seq>
-      <configuration>a:4:{s:14:"display_layout";s:7:"default";s:20:"validation_notequals";s:8:"-Select-";s:24:"initialization_firstline";s:8:"-Select-";s:22:"initialization_options";s:697:"AL,Alabama; AK,Alaska; AZ,Arizona; AR,Arkansas; CA,California; CO,Colorado; CT,Connecticut; DE,Delaware; DC,District Of Columbia; FL,Florida; GA,Georgia; HI,Hawaii; ID,Idaho; IL,Illinois; IN,Indiana; IA,Iowa; KS,Kansas; KY,Kentucky; LA,Louisiana; ME,Maine; MD,Maryland; MA,Massachusetts; MI,Michigan; MN,Minnesota; MS,Mississippi; MO,Missouri; MT,Montana; NE,Nebraska; NV,Nevada; NH,New Hampshire; NJ,New Jersey; NM,New Mexico; NY,New York; NC,North Carolina; ND,North Dakota; OH,Ohio; OK,Oklahoma; OR,Oregon; PA,Pennsylvania; RI,Rhode Island; SC,South Carolina; SD,South Dakota; TN,Tennessee; TX,Texas; UT,Utah; VT,Vermont; VA,Virginia; WA,Washington; WV,West Virginia; WI,Wisconsin; WY,Wyoming; ";}</configuration>
-    </property>
-    <property name="postal_code">
-      <id>2910</id>
-      <label>Postal Code</label>
-      <type>integerbox</type>
-      <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
-      <status>33</status>
-      <seq>11</seq>
-      <configuration>a:6:{s:12:"display_size";s:1:"5";s:17:"display_maxlength";s:1:"5";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"5";s:21:"validation_max_length";s:1:"5";}</configuration>
-    </property>
     <property name="card_type">
-      <id>2911</id>
+      <id>878</id>
       <label>Card Type</label>
       <type>dropdown</type>
       <defaultvalue></defaultvalue>
@@ -101,7 +61,7 @@
       <configuration>a:4:{s:14:"display_layout";s:7:"default";s:20:"validation_notequals";s:8:"-Select-";s:24:"initialization_firstline";s:8:"-Select-";s:22:"initialization_options";s:30:"Visa;MasterCard;Discover;Amex;";}</configuration>
     </property>
     <property name="card_num">
-      <id>2912</id>
+      <id>879</id>
       <label>Card Number</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -111,7 +71,7 @@
       <configuration>a:6:{s:12:"display_size";s:2:"16";s:17:"display_maxlength";s:2:"16";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:2:"16";s:21:"validation_max_length";s:2:"16";}</configuration>
     </property>
     <property name="cvv2">
-      <id>2913</id>
+      <id>880</id>
       <label>CVV2</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -121,7 +81,7 @@
       <configuration>a:6:{s:12:"display_size";s:1:"3";s:17:"display_maxlength";s:1:"3";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"3";s:21:"validation_max_length";s:1:"3";}</configuration>
     </property>
     <property name="exp_date">
-      <id>2914</id>
+      <id>881</id>
       <label>Exp Date</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>

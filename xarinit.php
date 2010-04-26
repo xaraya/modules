@@ -42,6 +42,9 @@ function shop_init()
 # Note: the object(s) created below are automatically kept track of so that the module knows to remove them when
 # you deinstall it.
 #
+    // Load the address property because we need it in the objects
+    PropertyRegistration::importPropertyTypes(false,array('modules/shop/xarproperties'));
+
     $module = 'shop';
     $objects = array(
                 'shop_products',

@@ -1,6 +1,6 @@
 <object name="shop_shippingaddresses">
-  <objectid>522</objectid>
-  <label>Payment Methods</label>
+  <objectid>106</objectid>
+  <label>Shop Shipping Addresses</label>
   <module_id>1031</module_id>
   <itemtype>5</itemtype>
   <class>DataObject</class>
@@ -11,84 +11,44 @@
   <isalias>true</isalias>
   <properties>
     <property name="id">
-      <id>3235</id>
+      <id>866</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
-      <status>97</status>
+      <status>99</status>
       <seq>1</seq>
       <configuration></configuration>
     </property>
     <property name="customer">
-      <id>3236</id>
+      <id>867</id>
       <label>Customer</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
-      <status>97</status>
+      <status>99</status>
       <seq>3</seq>
       <configuration></configuration>
     </property>
-    <property name="first_name">
-      <id>3237</id>
-      <label>First Name</label>
-      <type>textbox</type>
+    <property name="name">
+      <id>868</id>
+      <label>Name</label>
+      <type>name</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
       <status>33</status>
       <seq>6</seq>
       <configuration>a:6:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"1";s:21:"validation_max_length";s:2:"70";}</configuration>
     </property>
-    <property name="last_name">
-      <id>3238</id>
-      <label>Last Name</label>
-      <type>textbox</type>
+    <property name="address">
+      <id>869</id>
+      <label>Address</label>
+      <type>address</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
       <status>33</status>
       <seq>7</seq>
       <configuration>a:6:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"1";s:21:"validation_max_length";s:3:"100";}</configuration>
-    </property>
-    <property name="street_addr">
-      <id>3239</id>
-      <label>Street Address</label>
-      <type>textbox</type>
-      <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
-      <status>33</status>
-      <seq>8</seq>
-      <configuration>a:6:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"1";s:21:"validation_max_length";s:3:"200";}</configuration>
-    </property>
-    <property name="city_addr">
-      <id>3240</id>
-      <label>City</label>
-      <type>textbox</type>
-      <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
-      <status>33</status>
-      <seq>9</seq>
-      <configuration>a:5:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"1";s:21:"validation_max_length";s:3:"100";}</configuration>
-    </property>
-    <property name="state_addr">
-      <id>3241</id>
-      <label>State</label>
-      <type>dropdown</type>
-      <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
-      <status>33</status>
-      <seq>10</seq>
-      <configuration>a:4:{s:14:"display_layout";s:7:"default";s:20:"validation_notequals";s:8:"-Select-";s:24:"initialization_firstline";s:8:"-Select-";s:22:"initialization_options";s:697:"AL,Alabama; AK,Alaska; AZ,Arizona; AR,Arkansas; CA,California; CO,Colorado; CT,Connecticut; DE,Delaware; DC,District Of Columbia; FL,Florida; GA,Georgia; HI,Hawaii; ID,Idaho; IL,Illinois; IN,Indiana; IA,Iowa; KS,Kansas; KY,Kentucky; LA,Louisiana; ME,Maine; MD,Maryland; MA,Massachusetts; MI,Michigan; MN,Minnesota; MS,Mississippi; MO,Missouri; MT,Montana; NE,Nebraska; NV,Nevada; NH,New Hampshire; NJ,New Jersey; NM,New Mexico; NY,New York; NC,North Carolina; ND,North Dakota; OH,Ohio; OK,Oklahoma; OR,Oregon; PA,Pennsylvania; RI,Rhode Island; SC,South Carolina; SD,South Dakota; TN,Tennessee; TX,Texas; UT,Utah; VT,Vermont; VA,Virginia; WA,Washington; WV,West Virginia; WI,Wisconsin; WY,Wyoming; ";}</configuration>
-    </property>
-    <property name="postal_code">
-      <id>3242</id>
-      <label>Postal Code</label>
-      <type>integerbox</type>
-      <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
-      <status>33</status>
-      <seq>11</seq>
-      <configuration>a:6:{s:12:"display_size";s:1:"5";s:17:"display_maxlength";s:1:"5";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"5";s:21:"validation_max_length";s:1:"5";}</configuration>
     </property>
   </properties>
 </object>

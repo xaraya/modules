@@ -50,39 +50,17 @@
 
             </xar:if>
 
-             <xar:set name="errors">xarSession::getVar('errors')</xar:set>
-             <xar:if condition="!empty($errors)">
-                <a name="errors"></a>
-                <div class="error">
-                    <div>There is a problem with your address:</div>
-                    <xar:foreach in="$errors" key="$key">
-                        <div style="margin-left: 7px;"> 
-                        <xar:data-label property="$properties[$key]" /> 
-                        <span style="font-weight: normal">field is empty or invalid.</span>
-                        </div>
-                    </xar:foreach>
-                </div>
-             </xar:if>
-
             <fieldset> 
                 <legend>#$legend#</legend>
-
-                <table id="paymentinfo"> 
-                    <xar:foreach in="$myfields" value="$name">
-
-                        <xar:set name="val">''</xar:set>
-                        <xar:comment>If there is an error, let's make sure we don't populate the field with the user's saved account data, because it will look like our validation is broken.  Instead, empty the field.</xar:comment>
-                        <xar:if condition="isset($errors[$name])">
-                            <xar:set name="val">''</xar:set>
-                        </xar:if>
-
-                        <tr>
-                            <td><xar:data-label property="$properties[$name]" /></td>
-                            <td class="right"><xar:data-input property="$properties[$name]" value="$val" /></td>
-                        </tr>
-
-                    </xar:foreach>
-                </table>    
+                <div class="xar-form-input-wrapper">
+                    <label for="customer_name" class="xar-form-label">
+                        Name
+                    </label>
+                    <xar:data-input property="$properties['name']"/>
+                </div>
+                <xar:data-input property="$properties['address']"/>
+                <xar:data-input property="$properties['id']" hidden="hidden"/>
+                <xar:data-input property="$properties['customer']" hidden="hidden"/>
                 <div class="button_container">
                     <input type="submit" class="button" name="proceed" value="Continue" />
                 </div>
