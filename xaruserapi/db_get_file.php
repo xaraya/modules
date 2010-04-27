@@ -289,7 +289,7 @@ function uploads_userapi_db_get_file( $args )
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
 
-        $fileInfo['fileId']        = $row['xar_fileEntry_id'];
+        $fileInfo['fileId']        = $row['xar_fileentry_id'];
         $fileInfo['userId']        = $row['xar_user_id'];
         if (!isset($usercache[$fileInfo['userId']])) {
             $usercache[$fileInfo['userId']] = xarUserGetVar('name',$fileInfo['userId']);
