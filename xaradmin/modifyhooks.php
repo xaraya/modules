@@ -115,7 +115,8 @@ function crispbb_admin_modifyhooks($args)
         }
 
         if ($numstats < $data['numlinks']) {
-            $data['pager'] = xarTplGetPager($startnum,
+            sys::import('modules.base.class.pager');
+            $data['pager'] = xarTplPager::getPager($startnum,
                                             $data['numlinks'],
                                             xarModURL('crispbb','admin','modifyhooks',
                                                       array('modid' => $modid,

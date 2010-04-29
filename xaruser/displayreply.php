@@ -205,7 +205,8 @@ function crispbb_user_displayreply($args)
         ));
     $data['totalunanswered'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('tstatus' => $tstatus, 'noreplies' => true));
     /*
-    $data['pager'] = xarTplGetPager($startnum,
+    sys::import('modules.base.class.pager');
+    $data['pager'] = xarTplPager::getPager($startnum,
         $data['totalposts'],
         xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => '%%')),
         $data['postsperpage']);

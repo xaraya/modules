@@ -434,7 +434,7 @@ function crispbb_user_search()
         }
         $pageargs['component'] = $component;
         $pageargs['startnum'] = '%%';
-        $data['pager'] = xarTplGetPager($startnum,
+        $data['pager'] = xarTplPager::getPager($startnum,
             $totalitems,
             xarModURL('crispbb', 'user', 'search', $pageargs),
             $search['numitems']);

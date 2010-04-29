@@ -269,7 +269,7 @@ function crispbb_user_display($args)
     $data['totalunanswered'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('tstatus' => $tstatus, 'noreplies' => true));
     $pagerTpl = ($data['totalposts'] > (10*$data['postsperpage'])) ? 'multipage' : 'default';
     sys::import('modules.base.class.pager');
-    $data['pager'] = xarTplGetPager($startnum,
+    $data['pager'] = xarTplPager::getPager($startnum,
         $data['totalposts'],
         xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => '%%')),
         $data['postsperpage'],
