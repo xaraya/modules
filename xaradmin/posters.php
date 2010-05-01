@@ -64,7 +64,8 @@ function crispbb_admin_posters($args)
     if (!empty($uid)) {
         $data['name'] = xarUserGetVar('name', $uid);
     }
-    $data['pager'] = xarTplGetPager($startnum,
+    sys::import('modules.base.class.pager');
+    $data['pager'] = xarTplPager::getPager($startnum,
         $totalposters,
         xarModURL('crispbb', 'admin', 'posters', array('ip' => $ip, 'uid' => $uid, 'startnum' => '%%')),
         $numitems);
