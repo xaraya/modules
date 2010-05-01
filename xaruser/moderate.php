@@ -342,7 +342,7 @@ function crispbb_user_moderate($args)
                         'numdels' => true,
                     ));
                 $data['totaltopics'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('tstatus' => $tstatus, 'fid' => $fid));
-                $data['pager'] = xarTplGetPager($startnum,
+                $data['pager'] = xarTplPager::getPager($startnum,
                     $data['totaltopics'],
                     xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus, 'startnum' => '%%', 'sort' => $sort, 'order' => $order)),
                     $numitems);
@@ -702,7 +702,7 @@ function crispbb_user_moderate($args)
                             'fid' => $movefid,
                             'tstatus' => array(0,1,2,4),
                         ));
-                    $data['pager'] = xarTplGetPager($startnum,
+                    $data['pager'] = xarTplPager::getPager($startnum,
                         $data['fnumtopics'],
                         xarModURL('crispbb', 'user', 'moderate', array('component' => 'topics', 'fid' => $fid, 'modaction' => 'move', 'phase' => 'update', 'movefid' => $movefid, 'tids' => $tids, 'movetid' => $movetid, 'mergetid' => $mergetid, 'sort' => $sort, 'order' => $order, 'startnum' => '%%')),
                         $numitems);
@@ -988,7 +988,7 @@ function crispbb_user_moderate($args)
                     );
                 $data['sortorders'] = $presets['sortorderoptions'];
                 $data['totalposts'] = xarMod::apiFunc('crispbb', 'user', 'countposts', array('pstatus' => $pstatus, 'tid' => $tid));
-                $data['pager'] = xarTplGetPager($startnum,
+                $data['pager'] = xarTplPager::getPager($startnum,
                     $data['totalposts'],
                     xarModURL('crispbb', 'user', 'moderate', array('component' => 'posts', 'tid' => $tid, 'pstatus' => $pstatus, 'startnum' => '%%', 'sort' => $sort, 'order' => $order)),
                     $numitems);
@@ -1295,7 +1295,7 @@ function crispbb_user_moderate($args)
                             'fid' => $movefid,
                             'tstatus' => array(0,1,2,4),
                         ));
-                    $data['pager'] = xarTplGetPager($startnum,
+                    $data['pager'] = xarTplPager::getPager($startnum,
                         $data['fnumtopics'],
                         xarModURL('crispbb', 'user', 'moderate', array('component' => 'posts', 'tid' => $tid, 'modaction' => 'split', 'phase' => 'update', 'movefid' => $movefid, 'pids' => $pids, 'movetid' => $movetid, 'mergetid' => $mergetid, 'sort' => $sort, 'order' => $order, 'startnum' => '%%')),
                         $numitems);
