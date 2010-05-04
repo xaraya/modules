@@ -29,4 +29,10 @@
     $modversion['category'] = 'Content';
     $modversion['securityschema'] = array('categories::category' => 'Category name::Category ID',
                                       'categories::item' => 'Category ID:Module ID:Item ID');
+$modversion['dependencyinfo'] = array(
+                                    0 => array(
+                                            'name' => 'Xaraya Core',
+                                            'version_ge' => '2.1.0'
+                                         ),
+                                      );
 ?>
