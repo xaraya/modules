@@ -62,7 +62,7 @@
                 </h3>
             </xar:if>
             <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" urltype="admin" itemtype="$ptid" catid="$catid" />
-            <xar:base-include-javascript module="base" filename="checkall.js" />
+            <xar:javascript module="base" filename="checkall.js" />
             <form method="post" id="viewpublications" action="#xarModURL('publications','admin','updatestate')#">
                 <div>
                     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />

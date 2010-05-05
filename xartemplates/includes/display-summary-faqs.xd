@@ -29,5 +29,5 @@
     <p>
     #$body#
     </p>
-    <p><a href="#xarServerGetCurrentURL()##titles">Back to top</a></p>
+    <p><a href="#xarServer::getCurrentURL()##titles">Back to top</a></p>
 </xar:template>

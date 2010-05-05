@@ -8,6 +8,7 @@
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
+  <datastore>relational</datastore>
   <config>a:1:{s:5:&quot;where&quot;;s:13:&quot;itemtype = 10&quot;;}</config>
   <sources>a:1:{s:11:&quot;publication&quot;;s:16:&quot;xar_publications&quot;;}</sources>
   <relations>a:0:{}</relations>

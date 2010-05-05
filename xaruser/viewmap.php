@@ -73,7 +73,7 @@ function publications_user_viewmap($args)
             $catid = NULL;
         }
         $url = xarModURL('publications','user','view',array('ptid' => $ptid, 'catid' => $catid));
-        xarResponseRedirect($url);
+        xarResponse::redirect($url);
         return;
     }
 

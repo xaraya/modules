@@ -7,6 +7,7 @@
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
+  <datastore>relational</datastore>
   <config>a:0:{}</config>
   <sources>a:1:{s:8:&quot;pubtypes&quot;;s:22:&quot;xar_publications_types&quot;;}</sources>
   <relations>a:0:{}</relations>
@@ -61,7 +62,7 @@
       <source>pubtypes.configuration</source>
       <status>34</status>
       <seq>5</seq>
-      <configuration>a:7:{s:15:"display_columns";s:2:"30";s:12:"display_rows";s:1:"1";s:17:"display_key_label";s:3:"Key";s:19:"display_value_label";s:5:"Value";s:14:"display_layout";s:7:"default";s:19:"initialization_rows";s:1:"2";s:32:"initialization_associative_array";s:1:"1";}</configuration>
+      <configuration>a:7:{s:15:"display_columns";s:2:"30";s:12:"display_rows";s:1:"1";s:17:"display_key_label";s:3:"Key";s:19:"display_value_label";s:5:"Value";s:14:"display_layout";s:7:"default";s:24:"initialization_addremove";s:1:"2";s:32:"initialization_associative_array";s:1:"1";}</configuration>
     </property>
     <property name="state">
       <id>308</id>

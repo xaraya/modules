@@ -377,7 +377,7 @@ function publications_user_view($args)
             )
         );
     }
-/* -------------------------------------------------------------------------------
+/*
     // retrieve the categories for each article
     $catinfo = array();
     if ($showcategories) {

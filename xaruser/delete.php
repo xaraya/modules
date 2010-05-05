@@ -21,7 +21,7 @@ function publications_user_delete()
     if(!xarVarFetch('idlist',     'str', $idlist,     NULL,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('returnurl',  'str', $data['returnurl'],  $return,  XARVAR_NOT_REQUIRED)) {return;}
 
-    if (empty($idlist)) xarResponseRedirect($data['returnurl']);
+    if (empty($idlist)) xarResponse::redirect($data['returnurl']);
 
     $ids = explode(',',trim($idlist,','));
     $data['idlist'] = $idlist;
@@ -52,7 +52,7 @@ function publications_user_delete()
                          array('itemid' => $ids,
                                'deletetype' => 0))) 
             return;
-        xarResponseRedirect($data['returnurl']);
+        xarResponse::redirect($data['returnurl']);
     }
 
     return true;

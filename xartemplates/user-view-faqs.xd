@@ -10,7 +10,7 @@
         <ul>
             <xar:foreach in="$titles" key="$id" value="$title">
                 <li>
-                    <a href="#xarServerGetCurrentURL()####$id#">
+                    <a href="#xarServer::getCurrentURL()####$id#">
                         #$title#
                     </a>
                 </li>

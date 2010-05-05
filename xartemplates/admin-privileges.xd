@@ -45,7 +45,7 @@
                     </th>
                     <td>
                         <xar:set name="firstline">array('id' => xarML('All'), 'name' => xarML('All'))</xar:set>
-                        <xar:set name="onchange">"this.form.action='" . xarServerGetCurrentURL() . "';this.form.submit();"</xar:set>
+                        <xar:set name="onchange">"this.form.action='" . xarServer::getCurrentURL() . "';this.form.submit();"</xar:set>
                         <xar:data-input type="categories" name="privcategories" itemtype="$ptid" value="$cids" firstline="All" layout="vertical" returnitself="true" onchange="$onchange" />
                     </td>
                 </tr>

@@ -20,15 +20,15 @@ function publications_admin_multiops()
 
     switch ($operation) {
         case 0:
-        xarResponseRedirect(xarModURL('publications','user','delete',$args));
+        xarResponse::redirect(xarModURL('publications','user','delete',$args));
         break;
 
         case 'delete_customer':
-        xarResponseRedirect(xarModURL('ledgerar','user','delete_customer',array('idlist' => $idlist)));
+        xarResponse::redirect(xarModURL('ledgerar','user','delete_customer',array('idlist' => $idlist)));
         break;
 
         case 'customerlist':
-        xarResponseRedirect(xarModURL('ledgerar','user','view_customers'));
+        xarResponse::redirect(xarModURL('ledgerar','user','view_customers'));
         break;
     }
     return true;
@@ -46,7 +46,7 @@ function publications_admin_multiops()
     }
     $ids = explode(',',$idlist);
     $totalids = count($ids);
-    if (($totalids <=0) or ($operation == 0)) xarResponseRedirect($returnurl);
+    if (($totalids <=0) or ($operation == 0)) xarResponse::redirect($returnurl);
 
 
     // doin stuff with items
@@ -79,7 +79,7 @@ function publications_admin_multiops()
         break;
     } // end switch
 
-    xarResponseRedirect($returnurl);
+    xarResponse::redirect($returnurl);
 
     return true;
 }
