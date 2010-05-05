@@ -19,7 +19,7 @@ function publications_user_main($args)
     return xarModFunc('publications','user','view',$args);
 // TODO: make this configurable someday ?
     // redirect to default view (with news publications)
-    //xarResponseRedirect(xarModURL('publications', 'user', 'view'));
+    //xarResponse::redirect(xarModURL('publications', 'user', 'view'));
     //return;
 }
 

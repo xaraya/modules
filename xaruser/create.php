@@ -65,10 +65,10 @@ function publications_user_create()
 
     // if we can edit publications, go to admin view, otherwise go to user view
     if (xarSecurityCheck('EditPublications',0,'Publication',$data['ptid'].':All:All:All')) {
-        xarResponseRedirect(xarModURL('publications', 'admin', 'view',
+        xarResponse::redirect(xarModURL('publications', 'admin', 'view',
                                       array('ptid' => $data['ptid'])));
     } else {
-        xarResponseRedirect(xarModURL('publications', 'user', 'view',
+        xarResponse::redirect(xarModURL('publications', 'user', 'view',
                                       array('ptid' => $data['ptid'])));
     }
 

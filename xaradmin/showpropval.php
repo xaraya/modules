@@ -90,7 +90,7 @@ function publications_admin_showpropval($args)
                                             array('ptid' => $ptid,
                                                   'action' => 'modify'));
                 }
-                xarResponseRedirect($return_url);
+                xarResponse::redirect($return_url);
                 return true;
             }
         } else {

@@ -13,7 +13,7 @@
     </table>
     <br />
     <div align="center">
-        <form method="post" action="#xarServerGetCurrentURL()#" enctype="application/x-www-form-urlencoded" >
+        <form method="post" action="#xarServer::getCurrentURL()#" enctype="application/x-www-form-urlencoded" >
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="idlist" id="idlist" value="#$idlist#" />
             <input type="hidden" name="returnurl" id="returnurl" value="#$returnurl#" />
