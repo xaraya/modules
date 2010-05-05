@@ -20,8 +20,6 @@ function publications_init()
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
 
-    //Load Table Maintainance API
-    sys::import('xaraya.tableddl');
     sys::import('xaraya.structures.query');
 
 # --------------------------------------------------------
@@ -119,7 +117,7 @@ function publications_init()
 #
 # Set up modvars
 #
-    xarModVars::set('publications', 'itemsperpage', 20);
+    xarModVars::set('publications', 'items_per_page', 20);
     xarModVars::set('publications', 'useModuleAlias',0);
     xarModVars::set('publications', 'aliasname','Publications');
     xarModVars::set('publications', 'defaultmastertable','publications_documents');
@@ -172,7 +170,7 @@ function publications_init()
 
 */
     // Register blocks
-    if (!xarModAPIFunc('blocks',
+/*    if (!xarModAPIFunc('blocks',
                        'admin',
                        'register_block_type',
                        array('modName'  => 'publications',
@@ -201,7 +199,7 @@ function publications_init()
                        'register_block_type',
                        array('modName'  => 'publications',
                              'blockType'=> 'glossary'))) return;
-
+*/
     if (!xarModRegisterHook('item', 'search', 'GUI',
                            'publications', 'user', 'search')) {
         return false;
@@ -361,7 +359,7 @@ function publications_delete()
     // Delete module variables
 
     //FIXME: This is breaking the removal of the module...
-    xarModVars::delete('publications', 'itemsperpage');
+    xarModVars::delete('publications', 'items_per_page');
 
     xarModVars::delete('publications', 'SupportShortURLs');
 
