@@ -77,7 +77,12 @@ class AddressProperty extends TextBoxProperty
             }
 
             if ($this->display_show_postal_code) {
-                list($isvalid, $value['postal_code']) = $this->fetchValue($name . '_postal_code');
+                $isvalid = $textbox->checkInput($name . '_postal_code');
+                if ($isvalid) {
+                    $value['postal_code'] = $textbox->value;
+                } else {
+                    $invalid[] = 'postal_code';
+                }
                 $validity = $validity && $isvalid;
             }
             
