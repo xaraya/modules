@@ -106,8 +106,8 @@ function publications_admin_view($args)
             $settings = unserialize($string);
         }
     }
-    if (isset($settings['adminitemsperpage'])) {
-        $numitems = $settings['adminitemsperpage'];
+    if (isset($settings['admin_items_per_page'])) {
+        $numitems = $settings['admin_items_per_page'];
     } else {
         $numitems = 30;
     }
@@ -352,6 +352,7 @@ function publications_admin_view($args)
     $data['objects'] = $options;
 
     // Only show top level documents, not translations
+    sys::import('xaraya.structures.query');
     $q = new Query();
     $q->eq('parent_id',0);
     $data['conditions'] = $q;
