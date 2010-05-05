@@ -1,46 +1,91 @@
-<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-
-    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:javascript module="publications" filename="tabs.js" />
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:if condition="xarModVars::get('calendar','useModuleAlias')">
-                <xar:var scope="module" module="calendar" name="aliasname"/>
-            <xar:else />
-                Create Event
-            </xar:if>
+            <xar:mlstring>
+                Publications Administration
+            </xar:mlstring>
         </span>
     </div>
     <div class="xar-mod-body">
         <h2>
-            Create New Event
+            <xar:mlstring>
+                New Publication
+            </xar:mlstring>
         </h2>
-        <form method="post" action="&xar-modurl-calendar-admin-create;">
-          <fieldset>
-            <legend>Event details</legend>
-            <xar:data-form object="$object" fieldlist="name,description,start_time,end_time,duration,recurring_code,recurring_span,start_location,end_location"/>
-          </fieldset>
-          <fieldset>
-            <div class="xar-align-center">
-                <input type="hidden" name="authid" id="authid" value="#$authid#"/>
-                <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#"/>
-                <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#"/>
-                <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#"/>
-                <xar:set name="properties">$object->getProperties()</xar:set>
-                <xar:data-input property="$properties['id']" hidden="hidden"/>
-                <xar:data-input property="$properties['object_id']" hidden="hidden"/>
-                <xar:data-input property="$properties['module_id']" hidden="hidden"/>
-                <xar:data-input property="$properties['itemtype']" hidden="hidden"/>
-                <xar:data-input property="$properties['item_id']" hidden="hidden"/>
-                <xar:data-input property="$properties['owner']" hidden="hidden"/>
-                <xar:data-input property="$properties['return_link']" hidden="hidden"/>
-                <xar:data-input property="$properties['state']" hidden="hidden"/>
-                <xar:data-input property="$properties['timestamp']" hidden="hidden"/>
-                <input type="hidden" name="return_url" id="return_url_standard" value="#xarModURL('calendar','user',$page,array('page' => $page))#"/>
-                <xar:var name="var">Create Event</xar:var>
-                <input type="submit" value="#$var#" class="xar-margin-thickleft"/>
+        <xar:comment>
+            You can use different admin-new-[pubtype].xd templates for different pubtypes
+        </xar:comment>
+        <xar:comment>
+            If you want to let users pre-select a category first, before selecting a publication type, you can use the following tag. Note that this only makes sense if you have a single base category for your publications
+    <!-- xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" urltype="admin" func="new" itemtype="$ptid" catid="$catid" /-->
+        </xar:comment>
+        <div  style="float:left">
+            <label title="#xarML('Select a type of publication to add')#" class="xar-form-label">
+                Publication Type:
+            </label>
+            <xar:set name="newurl">"document.location.href='" . xarModURL('publications','user','new') . "&amp;ptid='+this.value"</xar:set>
+            <xar:data-input type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$newurl" />
+        </div>
+        <div style="float:right">
+            <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#">
+                Publications List
+            </a>
+        </div>
+        <div style="clear:both">&#160;</div>
+        <xar:if condition="!empty($object->withupload)">
+            <xar:set name="enctype">
+                'multipart/form-data'
+            </xar:set>
+        <xar:else />
+            <xar:set name="enctype">
+                'application/x-www-form-urlencoded'
+            </xar:set>
+        </xar:if>
+        <form method="post" id="post" action="&xar-modurl-publications-user-create;" enctype="#$enctype#" >
+            <xar:if condition="isset($tab) AND $tab eq 'preview'">
+                <xar:set name="visible">array('none','none','block')</xar:set>
+            <xar:else />
+                <xar:set name="visible">array('block','none','none')</xar:set>
+            </xar:if>
+            <xar:set name="itemcount">count($items)</xar:set>
+            <xar:template file="pagetabs" type="module" />
+            <div id="page-1" style="display: #$visible[0]#">
+                <xar:set name="contentfile">'content-' . $object->name</xar:set>
+                <xar:template file="$contentfile" type="module" />
             </div>
-          </fieldset>
+            <div id="page-2" style="display: #$visible[1]#">
+                <xar:template file="publication-settings" type="module" />
+            </div>
+            <div id="page-3" style="display: #$visible[2]#">
+                <fieldset class="xar-standard-box-padding xar-overflow-auto">
+                    <xar:data-display object="$object" tplmodule="publications"/>
+                </fieldset>
+            </div>
+            <!--
+                <xar:if condition="!empty($prevart) || !empty($nextart)">
+                    <div class="xar-normal xar-overflow-auto">
+                        <xar:if condition="!empty($prevart)">
+                        <a class="xar-floatleft" href="#$prevart#">&lt;
+                        <xar:mlstring>prev</xar:mlstring></a>&#160;</xar:if>
+                        <xar:if condition="!empty($nextart)">
+                            <a class="xar-floatright" href="#$nextart#">
+                            <xar:mlstring>next</xar:mlstring>&gt;</a>
+                        </xar:if>
+                    </div>
+                </xar:if>
+                <xar:template file="navtabs-user" type="module" />
+            -->
+            <div class="xar-form-input-wrapper">
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+                    <xar:comment>The return_url can be set here to return to another page that the admin-view one</xar:comment>
+                    <input type="submit" name="preview" id="preview" value="#xarML('Create Preview')#" />
+                    <input type="submit" value="#xarML('Create Document')#" />
+                </div>
+            </div>
         </form>
     </div>
 </xar:template>

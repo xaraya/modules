@@ -1,41 +1,41 @@
-<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-
-    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:if condition="xarModVars::get('calendar','useModuleAlias')">
-                <xar:var scope="module" module="calendar" name="aliasname"/>
-            <xar:else />
-                Delete Event
-            </xar:if>
+            Publications
         </span>
     </div>
-    <div class="xar-mod-body">
-        <h2>
-            <xar:ml>
-                <xar:mlstring>Delete Event #(1)</xar:mlstring>
-                <xar:mlvar>#$object:itemid#</xar:mlvar>
-            </xar:ml>
-        </h2>
-        <h3 class="xar-align-center">
-            Confirm Deleting This Event?
-        </h3>
+    <table border="0" width="100%">
+        <tr>
+            <th colspan="4" align="center">
+                #$lang_title#
+            </th>
+        </tr>
+    </table>
+    <br />
+    <div align="center">
+        <form method="post" action="#xarServer::getCurrentURL()#" enctype="application/x-www-form-urlencoded" >
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="idlist" id="idlist" value="#$idlist#" />
+            <input type="hidden" name="returnurl" id="returnurl" value="#$returnurl#" />
+            <input type="hidden" name="confirmed" id="confirmed" value="1" />
 
-        <xar:data-display object="$object" tplmodule="$tplmodule"/>
+            <span class="xar-title">Confirm the deletion of:</span><br />
+            <xar:if condition="isset($name)">
+                <div style="align: center; width: 50%">'#$name#'</div>
+            <xar:elseif condition="isset($items)" />
+                <div style="align: center; width: 50%">
+                    <xar:foreach in="$items" value="$item">
+                        #$item['name']# (ID #$item['id']#)
+                        <br />
+                    </xar:foreach>
+                </div>
+            </xar:if>
+            <br />
 
-        <form method="post" action="&xar-modurl-calendar-user-delete;">
-            <div class="xar-align-center">
-                <input type="hidden" name="authid" id="authid" value="#$authid#"/>
-                <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#"/>
-                <input type="hidden" name="modid" id="modid" value="#$object:moduleid#"/>
-                <input type="hidden" name="itemtype" id="itemtype" value="#$object:itemtype#"/>
-                <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#"/>
-                <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#"/>
-
-                <input type="submit" name="confirm" id="confirm" value="#xarML('Delete')#" class="xar-margin-thickright"/>
-                <input type="submit" name="noconfirm" id="noconfirm" value="#xarML('Cancel')#" class="xar-margin-thickleft"/>
-            </div>
+            <input type="submit" value="Confirm" align="middle" tabindex="1" />
+            &#160;
+            <xar:var name="label">Cancel</xar:var>
+            <xar:button type="cancel" label="$label" />
         </form>
     </div>
 </xar:template>
