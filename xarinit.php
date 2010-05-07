@@ -51,6 +51,7 @@ function publications_init()
             version integer unsigned NULL,
             create_date integer unsigned NULL,
             modify_date integer unsigned NULL,
+            access varchar(255) NOT NULL DEFAULT 'a:0:{}',
             state tinyint NOT NULL DEFAULT '3',
             process_state tinyint NOT NULL DEFAULT '1',
             PRIMARY KEY(id),
@@ -68,6 +69,7 @@ function publications_init()
             description varchar(255) NOT NULL DEFAULT '',
             template varchar(255) NOT NULL DEFAULT '',
             configuration TEXT,
+            access varchar(255) NOT NULL DEFAULT 'a:0:{}',
             state tinyint unsigned NOT NULL DEFAULT '0',
             PRIMARY KEY(id))";
     if (!$q->run($query)) return;
