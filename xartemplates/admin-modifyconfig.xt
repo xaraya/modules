@@ -42,7 +42,7 @@
 
        <form class="xar-formwidget" action="&xar-modurl-publications-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
             <xar:if condition="$tab eq 'global'">
-                <xar:template file="display" module="base" subdata="array('modulename' => 'publications')" />
+                <xar:data-form object="$module_settings"/>
                 <fieldset class="xar-norm">
                     <legend>
                         Global Configuration
@@ -67,7 +67,7 @@
                         </xar:set>
                         <xar:data-input name="sortpubtypes" type="dropdown" options="$options" />&#160;
                     </div>
-                    <xar:if condition="xarDBGetType() eq 'mysql'">
+                    <xar:if condition="xarDB::getType() eq 'mysql'">
                     <div class="xar-form-input-wrapper">
                     <xar:comment>
                         You can adapt the field list here if you want e.g. to ignore the notes field for full-text search
