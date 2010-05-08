@@ -15,173 +15,136 @@
  * Original Author of file: Jim McDonald
  * Purpose of file: Articles Block
  */
+sys::import('xaraya.structures.containers.blocks.basicblock');
+
+class Articles_GlossaryBlock extends BasicBlock implements iBlock
+{
+    public $name                = 'GlossaryBlock';
+    public $module              = 'articles';
+    public $text_type           = 'Glossary';
+    public $text_type_long      = 'Show a glossary summary in a side block';
+    public $pageshared          = 0;
+    public $usershared          = 1;
+    public $nocache             = 1;
+
+    public $paramname   = 'glossaryitem';
+    public $ptid        = 0;
+    public $cid         = 0;
 
 /**
- * initialise block
+ * Display func.
+ * @param $data array containing title,content
  */
-function articles_glossaryblock_init()
-{
-    return array(
-        'paramname' => 'glossaryterm',
-        'ptid' => 0,
-        'cid' => 0,
-        'nocache' => 1, // don't cache by default
-        'pageshared' => 0, // don't share across pages
-        'usershared' => 1, // share across group members
-        'cacheexpire' => null
-    );
-}
+    function display(Array $args=array())
+    {
+        $data = parent::display($args);
+        if (empty($data)) return;
+
+        $vars = $data['content'];
+
+        // Get the glossary parameter.
+        // TODO: make parameter name configurable.
+        xarVarFetch($vars['paramname'], 'str', $glossaryterm, NULL, XARVAR_NOT_REQUIRED);
+
+        if (empty($glossaryterm)) {
+            // No glossary parameter found.
+            return;
+        }
+
+        $articlecriteria = array();
+        $articlecriteria['title'] = $glossaryterm;
+
+        if (!empty($vars['ptid'])) {
+            $articlecriteria['ptid'] = $vars['ptid'];
+        }
+
+        if (!empty($vars['cid'])) {
+            $articlecriteria['withcids'] = true;
+        }
+
+        // Attempt to find an article with this title and optional category/pubtype.
+        $article = xarMod::apiFunc('articles', 'user', 'get', $articlecriteria);
+
+        if (!empty($vars['cid']) && array_search($vars['cid'], $article['cids']) === NULL) {
+            // Category not assigned to article.
+            unset($article);
+        }
+
+        // Matching glossary item found.
+        if (!empty($article)) {
+            $vars['definition'] = $article['summary'];
+            $vars['term'] = $glossaryterm;
+            $vars['detailurl'] = xarModURL(
+                'articles', 'user', 'display',
+                array('aid' => $article['aid'], 'ptid' => $article['pubtypeid'])
+            );
+            $vars['detailavailable'] = !empty($article['body']);
+        }
+
+        // Replace the string '{term}' in the title with the term.
+        // Note: the prep display prevents injected tags being rendered.
+        // The title of a block does not go through any further tag stripping
+        // because it is normally under admin control (the admin may wish to
+        // add working tags to the title).
+        $data['title'] = str_replace('{term}', xarVarPrepForDisplay($glossaryterm), $data['title']);
+
+        $data['content'] = $vars;
+        return $data;
+    }
 
 /**
- * get information on block
+ * Modify Function to the Blocks Admin
+ * @param $data array containing title,content
+ * @TODO: Move this to block_admin after 2.1.0
  */
-function articles_glossaryblock_info()
-{
-    // Values
-    return array(
-        'text_type' => 'Glossary',
-        'module' => 'articles',
-        'text_type_long' => 'Show a glossary summary in a side block.',
-        'allow_multiple' => true,
-        'form_content' => false,
-        'form_refresh' => false,
-        'show_preview' => true
-    );
-}
+    public function modify(Array $data=array())
+    {
+        $data = parent::modify($data);
+        // Pub type drop-down list values.
+        $data['pubtypes'] = xarMod::apiFunc('articles', 'user', 'getpubtypes');
+
+        // Categories drop-down list values.
+        $data['categorylist'] = xarMod::apiFunc('categories', 'user', 'getcat');
+
+        // Defaults.
+        if (empty($data['ptid'])) {
+            $data['ptid'] = 0;
+        }
+        if (empty($data['cid'])) {
+            $data['cid'] = 0;
+        }
+        if (empty($data['paramname'])) {
+            $data['paramname'] = 'glossaryterm';
+        }
+
+        // Return output
+        return $data;
+    }
 
 /**
- * display block
+ * Updates the Block config from the Blocks Admin
+ * @param $data array containing title,content
+ * @TODO: Move this to block_admin after 2.1.0
  */
-function articles_glossaryblock_display($blockinfo)
-{
-    // Security check.
-    // TODO: this is being phased out.
-    //if(!xarSecurityCheck('ReadArticlesBlock', 1, 'Block', $blockinfo['title'])) {return;}
+    public function update(Array $data=array())
+    {
+        $data = parent::update($data);
+        $vars = array();
 
-    // Get variables from content block
-    if (!is_array($blockinfo['content'])) {
-        $vars = @unserialize($blockinfo['content']);
-    } else {
-        $vars = $blockinfo['content'];
+        xarVarFetch('paramname', 'str:1:20', $vars['paramname'], 'glossaryterm', XARVAR_NOT_REQUIRED);
+        xarVarFetch('ptid', 'int:0:', $vars['ptid'], 0, XARVAR_NOT_REQUIRED);
+        xarVarFetch('cid', 'int:0:', $vars['cid'], 0, XARVAR_NOT_REQUIRED);
+
+        $data['content'] = $vars;
+        return $data;
     }
 
-    // Get the glossary parameter.
-    // TODO: make parameter name configurable.
-    xarVarFetch($vars['paramname'], 'str', $glossaryterm, NULL, XARVAR_NOT_REQUIRED);
-
-    if (empty($glossaryterm)) {
-        // No glossary parameter found.
-        return;
+    public function help(Array $data=array())
+    {
+        $data = parent::getInfo($data);
+        return $data;
     }
 
-    $articlecriteria = array();
-    $articlecriteria['title'] = $glossaryterm;
-
-    if (!empty($vars['ptid'])) {
-        $articlecriteria['ptid'] = $vars['ptid'];
-    }
-
-    if (!empty($vars['cid'])) {
-        $articlecriteria['withcids'] = true;
-    }
-
-    // Attempt to find an article with this title and optional category/pubtype.
-    $article = xarMod::apiFunc('articles', 'user', 'get', $articlecriteria);
-
-    if (!empty($vars['cid']) && array_search($vars['cid'], $article['cids']) === NULL) {
-        // Category not assigned to article.
-        unset($article);
-    }
-
-    // Matching glossary item found.
-    if (!empty($article)) {
-        $vars['definition'] = $article['summary'];
-        $vars['term'] = $glossaryterm;
-        $vars['detailurl'] = xarModURL(
-            'articles', 'user', 'display',
-            array('aid' => $article['aid'], 'ptid' => $article['pubtypeid'])
-        );
-        $vars['detailavailable'] = !empty($article['body']);
-    }
-
-    // TODO: who uses blockid? Can this be done centrally?
-    $vars['blockid'] = $blockinfo['bid'];
-
-    // Replace the string '{term}' in the title with the term.
-    // Note: the prep display prevents injected tags being rendered.
-    // The title of a block does not go through any further tag stripping
-    // because it is normally under admin control (the admin may wish to
-    // add working tags to the title).
-    $blockinfo['title'] = str_replace('{term}', xarVarPrepForDisplay($glossaryterm), $blockinfo['title']);
-
-    $blockinfo['content'] = $vars;
-
-    return $blockinfo;
-}
-
-
-/**
- * modify block settings
- */
-function articles_glossaryblock_modify($blockinfo)
-{
-    // Get current content
-    if (!is_array($blockinfo['content'])) {
-        $vars = @unserialize($blockinfo['content']);
-    } else {
-        $vars = $blockinfo['content'];
-    }
-
-    // Pub type drop-down list values.
-    $vars['pubtypes'] = xarMod::apiFunc('articles', 'user', 'getpubtypes');
-
-    // Categories drop-down list values.
-    $vars['categorylist'] = xarMod::apiFunc('categories', 'user', 'getcat');
-
-    // Defaults.
-    if (empty($vars['ptid'])) {
-        $vars['ptid'] = 0;
-    }
-    if (empty($vars['cid'])) {
-        $vars['cid'] = 0;
-    }
-    if (empty($vars['paramname'])) {
-        $vars['paramname'] = 'glossaryterm';
-    }
-
-    $vars['bid'] = $blockinfo['bid'];
-
-    // Return output
-    return $vars;
-}
-
-/**
- * update block settings
- */
-function articles_glossaryblock_update($blockinfo)
-{
-    $vars = array();
-
-    xarVarFetch('paramname', 'str:1:20', $vars['paramname'], 'glossaryterm', XARVAR_NOT_REQUIRED);
-    xarVarFetch('ptid', 'int:0:', $vars['ptid'], 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('cid', 'int:0:', $vars['cid'], 0, XARVAR_NOT_REQUIRED);
-
-    $blockinfo['content'] = $vars;
-    return $blockinfo;
-}
-
-/**
- * built-in block help/information system.
- */
-function articles_glossaryblock_help()
-{
-    return (
-        'Use {term} in the block title as a placeholder for the glossary term.'
-        . ' Glossary terms will match an article title.'
-        . ' In the block admin, choose the optional pub type and category that will define the glossary terms.'
-        . ' The glossary term displayed will be the article summary.'
-        . ' A link to the full article will be provided if the body of the article contains text.'
-    );
 }
 
 ?>

@@ -17,164 +17,133 @@
 /**
  * initialise block
  */
-function articles_relatedblock_init()
+sys::import('xaraya.structures.containers.blocks.basicblock');
+
+class Articles_RelatedBlock extends BasicBlock implements iBlock
 {
-    return array(
-        'numitems' => 5,
-        'showvalue' => true,
-        'nocache' => 1, // don't cache by default
-        'pageshared' => 0, // don't share across pages
-        'usershared' => 1, // share across group members
-        'cacheexpire' => null
-    );
-}
+    public $name                = 'RelatedBlock';
+    public $module              = 'articles';
+    public $text_type           = 'Related';
+    public $text_type_long      = 'Show related categories and author links';
+    public $pageshared          = 0;
+    public $usershared          = 1;
+    public $nocache             = 1;
+
+    public $numitems    = 5;
+    public $showvalue   = true;
 
 /**
- * get information on block
+ * Display func.
+ * @param $data array containing title,content
  */
-function articles_relatedblock_info()
-{
-    // Values
-    return array(
-        'text_type' => 'Related',
-        'module' => 'articles',
-        'text_type_long' => 'Show related categories and author links',
-        'allow_multiple' => true,
-        'form_content' => false,
-        'form_refresh' => false,
-        'show_preview' => true
-    );
-}
+    function display(Array $args=array())
+    {
+        $data = parent::display($args);
+        if (empty($data)) return;
 
-/**
- * display block
- */
-function articles_relatedblock_display($blockinfo)
-{
-    // Security check
-    if (!xarSecurityCheck('ReadArticlesBlock', 0, 'Block', $blockinfo['title'])) {return;}
+        $vars = $data['content'];
 
-    // Get variables from content block
-    if (!is_array($blockinfo['content'])) {
-        $vars = @unserialize($blockinfo['content']);
-    } else {
-        $vars = $blockinfo['content'];
-    }
+        // Defaults
+        if (empty($vars['numitems'])) {
+            $vars['numitems'] = 5;
+        }
+        if (empty($vars['showvalue'])) {
+            $vars['showvalue'] = false;
+        }
 
-    // Defaults
-    if (empty($vars['numitems'])) {
-        $vars['numitems'] = 5;
-    }
-    if (empty($vars['showvalue'])) {
-        $vars['showvalue'] = false;
-    }
+        // Trick : work with cached variables here (set by the module function)
 
-    // Trick : work with cached variables here (set by the module function)
+        // Check if we've been through articles display
+        if (!xarVarIsCached('Blocks.articles','aid')) {
+            return;
+        }
 
-    // Check if we've been through articles display
-    if (!xarVarIsCached('Blocks.articles','aid')) {
+        $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
+
+        $links = 0;
+        // Show publication type (for now)
+        if (xarVarIsCached('Blocks.articles','ptid')) {
+            $ptid = xarVarGetCached('Blocks.articles','ptid');
+            if (!empty($ptid) && isset($pubtypes[$ptid]['descr'])) {
+                $vars['pubtypelink'] = xarModURL('articles','user','view',
+                                                 array('ptid' => $ptid));
+                $vars['pubtypename'] = $pubtypes[$ptid]['descr'];
+                $links++;
+            }
+        }
+        // Show categories (for now)
+        if (xarVarIsCached('Blocks.articles','cids')) {
+            $cids = xarVarGetCached('Blocks.articles','cids');
+            // TODO: add related links
+        }
+        // Show author (for now)
+        if (xarVarIsCached('Blocks.articles','authorid') &&
+            xarVarIsCached('Blocks.articles','author')) {
+            $authorid = xarVarGetCached('Blocks.articles','authorid');
+            $author = xarVarGetCached('Blocks.articles','author');
+            if (!empty($authorid) && !empty($author)) {
+                $vars['authorlink'] = xarModURL('articles','user','view',
+                                                array('ptid' => (!empty($ptid) ? $ptid : null),
+                                                      'authorid' => $authorid));
+                $vars['authorname'] = $author;
+                $vars['authorid'] = $authorid;
+                if (!empty($vars['showvalue'])) {
+                    $vars['authorcount'] = xarMod::apiFunc('articles','user','countitems',
+                                                         array('ptid' => (!empty($ptid) ? $ptid : null),
+                                                               'authorid' => $authorid,
+                                                               // limit to approved / frontpage articles
+                                                               'status' => array(2,3),
+                                                               'enddate' => time()));
+                }
+                $links++;
+            }
+        }
+
+        // Populate block info and pass to theme
+        if ($links > 0) {
+            $data['content'] = $vars;
+            return $data;
+        }
+
         return;
     }
 
-    $pubtypes = xarMod::apiFunc('articles','user','getpubtypes');
-
-    $links = 0;
-    // Show publication type (for now)
-    if (xarVarIsCached('Blocks.articles','ptid')) {
-        $ptid = xarVarGetCached('Blocks.articles','ptid');
-        if (!empty($ptid) && isset($pubtypes[$ptid]['descr'])) {
-            $vars['pubtypelink'] = xarModURL('articles','user','view',
-                                             array('ptid' => $ptid));
-            $vars['pubtypename'] = $pubtypes[$ptid]['descr'];
-            $links++;
+/**
+ * Modify Function to the Blocks Admin
+ * @param $data array containing title,content
+ * @TODO: Move this to block_admin after 2.1.0
+ */
+    public function modify(Array $data=array())
+    {
+        $data = parent::modify($data);
+        // Defaults
+        if (empty($data['numitems'])) {
+            $data['numitems'] = 5;
         }
-    }
-    // Show categories (for now)
-    if (xarVarIsCached('Blocks.articles','cids')) {
-        $cids = xarVarGetCached('Blocks.articles','cids');
-        // TODO: add related links
-    }
-    // Show author (for now)
-    if (xarVarIsCached('Blocks.articles','authorid') &&
-        xarVarIsCached('Blocks.articles','author')) {
-        $authorid = xarVarGetCached('Blocks.articles','authorid');
-        $author = xarVarGetCached('Blocks.articles','author');
-        if (!empty($authorid) && !empty($author)) {
-            $vars['authorlink'] = xarModURL('articles','user','view',
-                                            array('ptid' => (!empty($ptid) ? $ptid : null),
-                                                  'authorid' => $authorid));
-            $vars['authorname'] = $author;
-            $vars['authorid'] = $authorid;
-            if (!empty($vars['showvalue'])) {
-                $vars['authorcount'] = xarMod::apiFunc('articles','user','countitems',
-                                                     array('ptid' => (!empty($ptid) ? $ptid : null),
-                                                           'authorid' => $authorid,
-                                                           // limit to approved / frontpage articles
-                                                           'status' => array(2,3),
-                                                           'enddate' => time()));
-            }
-            $links++;
+        if (empty($data['showvalue'])) {
+            $data['showvalue'] = false;
         }
+
+        // Return output
+        return $data;
     }
-
-    $vars['blockid'] = $blockinfo['bid'];
-
-    // Populate block info and pass to theme
-    if ($links > 0) {
-        $blockinfo['content'] = $vars;
-        return $blockinfo;
-    }
-
-    return;
-}
-
 
 /**
- * modify block settings
+ * Updates the Block config from the Blocks Admin
+ * @param $data array containing title,content
+ * @TODO: Move this to block_admin after 2.1.0
  */
-function articles_relatedblock_modify($blockinfo)
-{
-    // Get current content
-    if (!is_array($blockinfo['content'])) {
-        $vars = @unserialize($blockinfo['content']);
-    } else {
-        $vars = $blockinfo['content'];
+    public function update(Array $data=array())
+    {
+        $data = parent::update($data);
+        $vars = array();
+
+        if (!xarVarFetch('numitems', 'int:1:100', $vars['numitems'], 5, XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVarFetch('showvalue', 'checkbox', $vars['showvalue'], false, XARVAR_NOT_REQUIRED)) {return;}
+
+        $data['content'] = $vars;
+        return $data;
     }
 
-    // Defaults
-    if (empty($vars['numitems'])) {
-        $vars['numitems'] = 5;
-    }
-    if (empty($vars['showvalue'])) {
-        $vars['showvalue'] = false;
-    }
-
-    $vars['bid'] = $blockinfo['bid'];
-
-    // Return output
-    return $vars;
 }
-
-/**
- * update block settings
- */
-function articles_relatedblock_update($blockinfo)
-{
-    $vars = array();
-    if (!xarVarFetch('numitems', 'int:1:100', $vars['numitems'], 5, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('showvalue', 'checkbox', $vars['showvalue'], false, XARVAR_NOT_REQUIRED)) {return;}
-
-    $blockinfo['content'] = $vars;
-
-    return $blockinfo;
-}
-
-/**
- * built-in block help/information system.
- */
-function articles_relatedblock_help()
-{
-    return '';
-}
-
 ?>
