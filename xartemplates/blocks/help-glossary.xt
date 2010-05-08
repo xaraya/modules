@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<div>
+    <h4>Glossary Block Help</h4>
+    <ul>
+        <li>
+            Use {term} in the block title as a placeholder for the glossary term.
+        </li>
+        <li>
+            Glossary terms will match an article title.
+        </li>
+        <li>
+            In the block admin, choose the optional pub type and category that will define the glossary terms.
+        </li>
+        <li>
+            The glossary term displayed will be the article summary.
+        </li>
+        <li>
+            A link to the full article will be provided if the body of the article contains text.
+        </li>
+    </ul>
+</div>
+</xar:template>
