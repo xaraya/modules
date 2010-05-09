@@ -156,13 +156,13 @@ function publications_userapi_get($args)
         if (!xarModAPILoad('categories', 'user')) return;
 
         $info = xarMod::getBaseInfo('publications');
-        $sysid = $info['systemid'];
+        $regid = $info['systemid'];
         $articlecids = xarModAPIFunc('categories',
                                     'user',
                                     'getlinks',
                                     array('iids' => Array($id),
                                           'itemtype' => $pubtype_id,
-                                          'modid' => $sysid,
+                                          'modid' => $regid,
                                           'reverse' => 0
                                          )
                                    );
