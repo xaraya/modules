@@ -19,121 +19,98 @@
 /**
  * Block init - holds security.
  */
-function headlines_cloudblock_init()
+sys::import('xaraya.structures.containers.blocks.basicblock');
+class Headlines_CloudBlock extends BasicBlock implements iBlock
 {
-    return array(
-        'rssurl' => '',
-        'maxitems' => 5,
-        'showdescriptions' => false
-    );
-}
-/**
- * Block info array
- */
-function headlines_cloudblock_info()
-{
-    return array(
-        'text_type' => 'RSS Cloud',
-        'text_type_long' => 'RSS Cloud',
-        'module' => 'headlines',
-        'func_update' => 'headlines_cloudblock_insert',
-        'allow_multiple' => true,
-        'form_content' => false,
-        'form_refresh' => false,
-        'show_preview' => true
-    );
-}
+
+    public $name                = 'CloudBlock';
+    public $module              = 'headlines';
+    public $text_type           = 'RSS Cloud';
+    public $text_type_long      = 'RSS Cloud';
+    public $pageshared          = 1;
+    public $usershared          = 1;
+    public $nocache             = 1;
+
+    public $rssurl              = '';
+    public $maxitems            = 5;
+    public $showdescriptions    = false;
+
 /**
  * Display func.
- * @param $blockinfo array containing title,content
+ * @param $data array containing title,content
  */
-function headlines_cloudblock_display($blockinfo)
-{
-     // Keep all the default values in one place.
-    $defaults = headlines_cloudblock_init();
-    // Break out options from our content field.
-    if (!is_array($blockinfo['content'])) {
-        $vars = unserialize($blockinfo['content']);
-    } else {
-        $vars = $blockinfo['content'];
-    }
-    $blockinfo['content'] = '';
-    // TODO: provide config options, link to last item, link to headline, show image/cats/date
-    $maxitems = isset($vars['maxitems']) ? $vars['maxitems'] : $defaults['maxitems'];
-    $showdescriptions = isset($vars['showdescriptions']) ? $vars['showdescriptions'] : $defaults['showdescriptions'];
-    $links = xarMod::apiFunc('headlines', 'user', 'getall',
-        array(
-            'numitems' => $maxitems,
-            'sort' => 'date'
-        )
-    );
-    $feedcontent = array();
-    //if (empty($links)) return
-    // Check individual permissions for Edit / Delete
-    for ($i = 0; $i < count($links); $i++) {
-        $link = $links[$i];
-        // Check and see if a feed has been supplied to us.
-        if (empty($link['url'])) {
-            continue;
-        }
-        $feedfile = $link['url'];
-        // TODO: make refresh configurable
-        $links[$i] = xarMod::apiFunc(
-            'headlines', 'user', 'getparsed',
-            array('feedfile' => $feedfile)
+    function display(Array $data=array())
+    {
+        $data = parent::display($data);
+        if (empty($data)) return;
+
+        $vars = $data['content'];
+
+        $links = xarMod::apiFunc('headlines', 'user', 'getall',
+            array(
+                'numitems' => $vars['maxitems'],
+                'sort' => 'date'
+            )
         );
-        // Check and see if a valid feed has been supplied to us.
-        if (!isset($links[$i]) || isset($links[$i]['warning'])) continue;
-        if (!empty($link['title'])){
-            $links[$i]['chantitle'] = $link['title'];
-        }
-        if (!empty($link['desc'])){
-            $links[$i]['chandesc'] = $link['desc'];
-        }
 
-        $feedcontent[] = array('title' => $links[$i]['chantitle'], 'url' => $links[$i]['chanlink'], 'channel' => $links[$i]['chandesc']);
-    }
-    $blockinfo['content'] = array(
-        'feedcontent'  => $feedcontent,
-        'showdescriptions' => $showdescriptions
-    );
-    return $blockinfo;
-}
-/**
- * Modify Function to the Blocks Admin
- * @param $blockinfo array containing title,content
- */
-function headlines_cloudblock_modify($blockinfo)
-{
-    // Keep all the default values in one place.
-    $defaults = headlines_cloudblock_init();
-    // Break out options from our content field.
-    // Prepare for when content is passed in as an array.
-    if (!is_array($blockinfo['content'])) {
-        $vars = unserialize($blockinfo['content']);
-    } else {
-        $vars = $blockinfo['content'];
-    }
-    // TODO:
-    $vars['maxitems'] = isset($vars['maxitems']) ? $vars['maxitems'] : $defaults['maxitems'];
-    $vars['showdescriptions'] = isset($vars['showdescriptions']) ? $vars['showdescriptions'] : $defaults['showdescriptions'];    
-    $vars['blockid'] = $blockinfo['bid'];
-     // Just return the template variables.
-    return $vars;
-}
-/**
- * Updates the Block config from the Blocks Admin
- * @param $blockinfo array containing title,content
- */
-function headlines_cloudblock_insert($blockinfo)
-{
-    // Keep all the default values in one place.
-    $defaults = headlines_cloudblock_init();
-    $vars = array();
-    if (!xarVarFetch('maxitems', 'int:0', $vars['maxitems'], $defaults['maxitems'], XARVAR_NOT_REQUIRED)) {return;} 
-    if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], $defaults['showdescriptions'], XARVAR_NOT_REQUIRED)) {return;}    
-    $blockinfo['content'] = $vars;
-    return $blockinfo;
-}
+        $feedcontent = array();
+    //if (empty($links)) return
+        // Check individual permissions for Edit / Delete
+        for ($i = 0; $i < count($links); $i++) {
+            $link = $links[$i];
+            // Check and see if a feed has been supplied to us.
+            if (empty($link['url'])) {
+                continue;
+            }
+            $feedfile = $link['url'];
+            // TODO: make refresh configurable
+            $links[$i] = xarMod::apiFunc(
+                'headlines', 'user', 'getparsed',
+                array('feedfile' => $feedfile)
+            );
+            // Check and see if a valid feed has been supplied to us.
+            if (!isset($links[$i]) || isset($links[$i]['warning'])) continue;
+            if (!empty($link['title'])){
+                $links[$i]['chantitle'] = $link['title'];
+            }
+            if (!empty($link['desc'])){
+                $links[$i]['chandesc'] = $link['desc'];
+            }
 
+            $feedcontent[] = array('title' => $links[$i]['chantitle'], 'url' => $links[$i]['chanlink'], 'channel' => $links[$i]['chandesc']);
+        }
+        $vars['feedcontent'] = $feedcontent;
+
+        $data['content'] = $vars;
+
+        return $data;
+    }
+
+/**
+ * Modify func.
+ * @param $data array containing title,content
+ */
+    function modify(Array $data=array())
+    {
+        return parent::modify($data);
+    }
+
+/**
+ * Update func.
+ * @param $data array containing title,content
+ */
+    function update(Array $data=array())
+    {
+        $data = parent::update($data);
+        if (empty($data)) return;
+
+        $vars = array();
+        if (!xarVarFetch('maxitems', 'int:0', $vars['maxitems'], 5, XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], XARVAR_NOT_REQUIRED)) {return;}
+        $data['content'] = $vars;
+        return $data;
+
+    }
+
+}
 ?>

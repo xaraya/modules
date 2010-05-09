@@ -9,7 +9,7 @@
 
 sys::import('modules.headlines.xarblocks.rss');
 
-class RssBlockAdmin extends RssBlock implements iBlock
+class Headlines_RssBlockAdmin extends Headlines_RssBlock implements iBlock
 {
 /**
  * Modify Function to the Blocks Admin

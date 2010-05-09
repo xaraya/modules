@@ -21,7 +21,7 @@
  */
 sys::import('xaraya.structures.containers.blocks.basicblock');
 
-class RssBlock extends BasicBlock implements iBlock
+class Headlines_RssBlock extends BasicBlock implements iBlock
 {
     public $nocache             = 1;
 
@@ -38,7 +38,7 @@ class RssBlock extends BasicBlock implements iBlock
     public $form_content        = false;
     public $form_refresh        = false;
     public $show_preview        = true;
-    
+
     public $rssurl              = '';
     public $maxitems            = 5;
     public $showdescriptions    = false;
