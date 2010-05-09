@@ -8,12 +8,12 @@
             </xar:foreach>
             ]
         </xar:if>
-        <a class="xar-title" href="#xarModURL('publications', 'user', 'redirect', array('ptid' => $properties['itemtype']->value, 'id' => $properties['id']->value))#">
+        <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
             <xar:data-output property="$properties['title']" />
         </a>
         <br />        
             Description        
-        : #$summary#
+        : <xar:data-output property="$properties['summary']" />
         <br />
         <xar:if condition="!empty($notes)">            
             Source            
