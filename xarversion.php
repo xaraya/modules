@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'Scheduler';
 $modversion['id']             = '189';
-$modversion['version']        = '1.2.0';
+$modversion['version']        = '2.0.0';
 $modversion['displayname']    = xarML('Scheduler');
 $modversion['description']    = 'Schedule Xaraya jobs at certain times of the day/week/month (cron)';
 $modversion['credits']        = '';

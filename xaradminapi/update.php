@@ -55,7 +55,7 @@ function scheduler_adminapi_update($args)
 
     if (!xarSecurityCheck('AdminScheduler')) return;
 
-    $serialjobs = xarModGetVar('scheduler','jobs');
+    $serialjobs = xarModVars::get('scheduler','jobs');
     if (empty($serialjobs)) {
         $jobs = array();
     } else {
@@ -106,7 +106,7 @@ function scheduler_adminapi_update($args)
         $jobs[$itemid]['result'] = $result;
     }
     $serialjobs = serialize($jobs);
-    xarModSetVar('scheduler','jobs',$serialjobs);
+    xarModVars::set('scheduler','jobs',$serialjobs);
 
     $item = $args;
     $item['module'] = 'scheduler';

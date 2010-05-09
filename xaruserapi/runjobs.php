@@ -20,7 +20,7 @@ function scheduler_userapi_runjobs($args = array())
 {
     // run the jobs
     $log = xarML('Starting jobs');
-    $serialjobs = xarModGetVar('scheduler','jobs');
+    $serialjobs = xarModVars::get('scheduler','jobs');
     if (!empty($serialjobs)) {
         $jobs = unserialize($serialjobs);
     } else {
@@ -115,12 +115,12 @@ function scheduler_userapi_runjobs($args = array())
                             $skip = 1; // in fact, this case is already handled above
                         } else {
                             // run it now, and calculate the next run for this job
-                            $jobs[$id]['config']['crontab']['nextrun'] = xarModAPIFunc('scheduler','user','nextrun',
+                            $jobs[$id]['config']['crontab']['nextrun'] = xarMod::apiFunc('scheduler','user','nextrun',
                                                                                        $config['crontab']);
                         }
                     } else {
                         // run it now, and calculate the next run for this job
-                        $jobs[$id]['config']['crontab']['nextrun'] = xarModAPIFunc('scheduler','user','nextrun',
+                        $jobs[$id]['config']['crontab']['nextrun'] = xarMod::apiFunc('scheduler','user','nextrun',
                                                                                    $config['crontab']);
                     }
                     break;
@@ -131,9 +131,9 @@ function scheduler_userapi_runjobs($args = array())
             }
         }
         if (!empty($config['params'])) {
-            @eval('$output = xarModAPIFunc("'.$job['module'].'", "'.$job['type'].'", "'.$job['func'].'", '.$config['params'].', 0);');
+            @eval('$output = xarMod::apiFunc("'.$job['module'].'", "'.$job['type'].'", "'.$job['func'].'", '.$config['params'].', 0);');
         } else {
-            $output = xarModAPIFunc($job['module'], $job['type'], $job['func'], array(), 0);
+            $output = xarMod::apiFunc($job['module'], $job['type'], $job['func'], array(), 0);
         }
         if (empty($output)) {
             $jobs[$id]['result'] = xarML('failed');
@@ -150,7 +150,7 @@ function scheduler_userapi_runjobs($args = array())
 
     // we didn't run anything, so return now
     if (count($hasrun) == 0) {
-        xarModDelVar('scheduler','running');
+        xarModVars::delete('scheduler','running');
         return $log;
     }
 
@@ -159,7 +159,7 @@ function scheduler_userapi_runjobs($args = array())
 //    xarVarDelCached('Mod.Variables.scheduler', 'jobs');
 
     // get the current list of jobs
-    $serialjobs = xarModGetVar('scheduler','jobs');
+    $serialjobs = xarModVars::get('scheduler','jobs');
     if (!empty($serialjobs)) {
         $newjobs = unserialize($serialjobs);
     } else {
@@ -184,8 +184,8 @@ function scheduler_userapi_runjobs($args = array())
     }
     // update the new jobs
     $serialjobs = serialize($newjobs);
-    xarModSetVar('scheduler','jobs',$serialjobs);
-    xarModDelVar('scheduler','running');
+    xarModVars::set('scheduler','jobs',$serialjobs);
+    xarModVars::delete('scheduler','running');
 
     return $log;
 }

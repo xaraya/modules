@@ -17,21 +17,21 @@
 function scheduler_user_main()
 {
     // check if we have the right trigger
-    $trigger = xarModGetVar('scheduler','trigger');
+    $trigger = xarModVars::get('scheduler','trigger');
     if (empty($trigger) || $trigger != 'external') {
         return xarML('Wrong trigger');
     }
 
     // get the IP
-    $ip = xarServerGetVar('REMOTE_ADDR');
-    $forwarded = xarServerGetVar('HTTP_X_FORWARDED_FOR');
+    $ip = xarServer::getVar('REMOTE_ADDR');
+    $forwarded = xarServer::getVar('HTTP_X_FORWARDED_FOR');
     if (!empty($forwarded)) {
         $proxy = $ip;
         $ip = preg_replace('/,.*/', '', $forwarded);
     }
 
-    $checktype = xarModGetVar('scheduler','checktype');
-    $checkvalue = xarModGetVar('scheduler','checkvalue');
+    $checktype = xarModVars::get('scheduler','checktype');
+    $checkvalue = xarModVars::get('scheduler','checkvalue');
 
 // TODO: allow IP range or domain here if that's what people want (insecure)
     $isvalid = 0;
@@ -81,7 +81,7 @@ function scheduler_user_main()
     }
 
     // check when we last ran the scheduler
-    $lastrun = xarModGetVar('scheduler', 'lastrun');
+    $lastrun = xarModVars::get('scheduler', 'lastrun');
     $now = time();
 /*
     if (!empty($lastrun) && $lastrun > $now - ((60*5)-1) )  // Make sure it's been at least five minutes
@@ -95,10 +95,10 @@ function scheduler_user_main()
     @set_time_limit(15*60);
 
     // update the last run time
-    xarModSetVar('scheduler','lastrun',$now - 60); // remove the margin here
-    xarModSetVar('scheduler','running',1);
+    xarModVars::set('scheduler','lastrun',$now - 60); // remove the margin here
+    xarModVars::set('scheduler','running',1);
 
-    $output = xarModAPIFunc('scheduler','user','runjobs');
+    $output = xarMod::apiFunc('scheduler','user','runjobs');
 
 // TODO: dump exceptions ?
     return $output;

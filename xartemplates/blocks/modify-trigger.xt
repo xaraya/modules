@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+
 <div class="xar-form-input-wrapper">
     <label for="showstatus#$blockid#" class="help xar-form-label" title="#xarML('Show the status of the trigger to administrators?')#"><xar:mlstring>Show status to admins</xar:mlstring></label>
     <xar:if condition="empty($showstatus)">
@@ -7,3 +10,6 @@
     </xar:if>
 </div>
 
+
+
+</xar:template>

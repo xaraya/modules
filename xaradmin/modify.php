@@ -21,7 +21,7 @@ function scheduler_admin_modify()
 
     if (!xarSecurityCheck('AdminScheduler')) return;
 
-    $serialjobs = xarModGetVar('scheduler', 'jobs');
+    $serialjobs = xarModVars::get('scheduler', 'jobs');
     if (empty($serialjobs)) {
         $jobs = array();
     } else {
@@ -29,7 +29,7 @@ function scheduler_admin_modify()
     }
 
     if (empty($jobs[$itemid])) {
-        xarResponseRedirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
+        xarResponse::redirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
         return true;
     }
 
@@ -51,15 +51,15 @@ function scheduler_admin_modify()
             $config['enddate'] = strtotime($config['enddate']);
         }
         if ($interval == '0c' && !empty($config['crontab'])) {
-            $config['crontab']['nextrun'] = xarModAPIFunc('scheduler','user','nextrun',
+            $config['crontab']['nextrun'] = xarMod::apiFunc('scheduler','user','nextrun',
                                                           $config['crontab']);
         }
         $jobs[$itemid]['config'] = $config;
 
         $serialjobs = serialize($jobs);
-        xarModSetVar('scheduler','jobs',$serialjobs);
+        xarModVars::set('scheduler','jobs',$serialjobs);
 
-        xarResponseRedirect(xarModURL('scheduler', 'admin', 'modify',
+        xarResponse::redirect(xarModURL('scheduler', 'admin', 'modify',
                                       array('itemid' => $itemid)));
         return true;
     }
@@ -68,7 +68,7 @@ function scheduler_admin_modify()
     $data = $jobs[$itemid];
     $data['itemid'] = $itemid;
     $data['authid'] = xarSecGenAuthKey();
-    $data['intervals'] = xarModAPIFunc('scheduler','user','intervals');
+    $data['intervals'] = xarMod::apiFunc('scheduler','user','intervals');
 
     // Prefill the configuration array
     if (empty($data['config'])) {

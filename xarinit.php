@@ -18,12 +18,12 @@
  */
 function scheduler_init()
 {
-    xarModSetVar('scheduler', 'trigger', 'disabled');
-    xarModSetVar('scheduler', 'lastrun', 0);
+    xarModVars::set('scheduler', 'trigger', 'disabled');
+    xarModVars::set('scheduler', 'lastrun', 0);
 
     xarRegisterMask('AdminScheduler', 'All', 'scheduler', 'All', 'All', 'ACCESS_ADMIN');
 
-    if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+    if (!xarMod::apiFunc('blocks', 'admin', 'register_block_type',
                        array('modName' => 'scheduler',
                              'blockType' => 'trigger'))) return;
 
@@ -41,7 +41,7 @@ function scheduler_upgrade($oldversion)
     switch ($oldversion) {
         case '1.0':
             // Code to upgrade from version 1.0 goes here
-            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+            if (!xarMod::apiFunc('blocks', 'admin', 'register_block_type',
                                array('modName' => 'scheduler',
                                      'blockType' => 'trigger'))) return;
             // fall through to the next upgrade
@@ -67,13 +67,13 @@ function scheduler_upgrade($oldversion)
  */
 function scheduler_delete()
 {
-    xarModDelVar('scheduler', 'trigger');
-    xarModDelVar('scheduler', 'lastrun');
-    xarModDelVar('scheduler', 'jobs');
+    xarModVars::delete('scheduler', 'trigger');
+    xarModVars::delete('scheduler', 'lastrun');
+    xarModVars::delete('scheduler', 'jobs');
 
     xarRemoveMasks('scheduler');
 
-    if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type',
+    if (!xarMod::apiFunc('blocks', 'admin', 'unregister_block_type',
                        array('modName' => 'scheduler',
                              'blockType' => 'trigger'))) return;
 

@@ -51,7 +51,7 @@ function scheduler_adminapi_delete($args)
 
     if (!xarSecurityCheck('AdminScheduler')) return;
 
-    $serialjobs = xarModGetVar('scheduler','jobs');
+    $serialjobs = xarModVars::get('scheduler','jobs');
     if (empty($serialjobs)) {
         $jobs = array();
     } else {
@@ -82,7 +82,7 @@ function scheduler_adminapi_delete($args)
     }
     unset($jobs[$itemid]);
     $serialjobs = serialize($jobs);
-    xarModSetVar('scheduler','jobs',$serialjobs);
+    xarModVars::set('scheduler','jobs',$serialjobs);
 
     $item = $args;
     $item['module'] = 'scheduler';
