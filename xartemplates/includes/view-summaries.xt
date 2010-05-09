@@ -1,6 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:set name="context">xarModAPIFunc('publications','user','getsettings',array('ptid' => $properties['itemtype']->value))</xar:set>
+    <xar:set name="ptid">$properties['itemtype']->value</xar:set>
+    <xar:set name="context">xarModAPIFunc('publications','user','getsettings',array('ptid' => $ptid))</xar:set>
 
     <xar:set name="colwidth">
         100
@@ -30,7 +31,7 @@
     </h2>
     <xar:set name="instance">$properties['itemtype']->value.':All:All:All'</xar:set>
     <xar:sec mask="SubmitPublications" instance="$instance" >
-        <a href="#xarModURL('publications','user','new',array('ptid' => $properties['itemtype']->value))#">
+        <a href="#xarModURL('publications','user','new',array('ptid' => $ptid))#">
             <xar:ml>
                 <xar:mlstring>Submit a #(1)</xar:mlstring>
                 <xar:mlvar><xar:data-output property="$properties['itemtype']"/></xar:mlvar>
