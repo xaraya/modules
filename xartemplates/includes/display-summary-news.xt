@@ -8,7 +8,7 @@
             </xar:foreach>
             ]
         </xar:if>
-        <h1> <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $properties['id']->getValue(),'ptid' => $properties['itemtype']->value))#">
+        <h1> <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
                 <xar:data-output property="$properties['title']" />
             </a>
         </h1>
