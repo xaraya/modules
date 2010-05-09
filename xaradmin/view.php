@@ -22,7 +22,7 @@ function headlines_admin_view()
     $data['optionslabel'] = xarVarPrepForDisplay(xarML('Options'));
     $data['authid'] = xarSecGenAuthKey();
     sys::import('modules.base.class.pager');
-    $data['pager'] = xarTplGetPager($startnum,
+    $data['pager'] = xarTplPager::getPager($startnum,
                                     xarMod::apiFunc('headlines', 'user', 'countitems'),
                                     xarModURL('headlines', 'admin', 'view', array('startnum' => '%%')),
                                     xarModVars::get('headlines', 'itemsperpage'));
