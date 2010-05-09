@@ -19,7 +19,7 @@
  * @param $blockinfo array (serialized or unserialized)
  */
 
-    sys::import('modules.xarpages.xarblocks.xarpagesmenu');
+    sys::import('modules.xarpages.xarblocks.menu');
 
     class Xarpages_MenuBlockAdmin extends Xarpages_MenuBlock implements iBlock
     {
@@ -89,7 +89,7 @@
         public function update(Array $data=array())
         {
             $data = parent::update($data);
-    
+
             if (xarVarFetch('multi_homed', 'checkbox', $multi_homed, 1, XARVAR_NOT_REQUIRED)) {
                 $data['multi_homed'] = $multi_homed;
             }

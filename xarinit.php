@@ -76,7 +76,7 @@ function xarpages_init()
         );
     $query = xarDBCreateTable($typestable, $fields);
     $result = $dbconn->Execute($query);
-    
+
 
     $index = array('name' => 'i_' . $prefix . '_xarpages_type_name',
                    'fields' => array('name'),
@@ -97,7 +97,7 @@ function xarpages_init()
     xarModVars::set('xarpages', 'transformfields', 'body');
     xarModVars::set('xarpages', 'show_usernavbar', true);
     xarModVars::set('xarpages', 'useicons', false);
-    
+
     # --------------------------------------------------------
     #
     # Set up configuration modvars (general)
@@ -225,7 +225,7 @@ function xarpages_init()
 
     // Register block types.
 //    foreach(array('xarpagemenu', 'crumb') as $blocktype) {
-    foreach(array('xarpagesmenu') as $blocktype) {
+    foreach(array('menu', 'crumb') as $blocktype) {
         if (!xarMod::apiFunc(
             'blocks', 'admin', 'register_block_type',
             array(
