@@ -95,6 +95,7 @@
             </legend>
             <div class="xar-form-input-wrapper-before">
                 <em><xar:mlstring>These settings over-ride global settings</xar:mlstring></em>
+            </div>
             <div class="xar-form-input-wrapper">
                 <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of items per page to show')#">
                     <xar:mlstring>Maximum Items Per Feed</xar:mlstring>
