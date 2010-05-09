@@ -32,10 +32,7 @@
     <xar:set name="instance">$properties['itemtype']->value.':All:All:All'</xar:set>
     <xar:sec mask="SubmitPublications" instance="$instance" >
         <a href="#xarModURL('publications','user','new',array('ptid' => $ptid))#">
-            <xar:ml>
-                <xar:mlstring>Submit a #(1)</xar:mlstring>
-                <xar:mlvar><xar:data-output property="$properties['itemtype']"/></xar:mlvar>
-            </xar:ml>
+            Submit a <xar:data-output property="$properties['itemtype']"/>
         </a>
         <div style="clear:both">&#160;</div>
     </xar:sec>
