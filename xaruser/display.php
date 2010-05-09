@@ -24,19 +24,20 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_display($args)
 {
-    extract ($args);
     // Get parameters from user
+// this is used to determine whether we come from a pubtype-based view or a
+// categories-based navigation
     if(!xarVarFetch('ptid',    'id',    $ptid,  xarModVars::get('publications', 'defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('id',      'id',    $itemid,   NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('page', 'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
     
-// this is used to determine whether we come from a pubtype-based view or a
-// categories-based navigation
+    // Override xarVarFetch
+    extract ($args);
 
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
-    $data['object']->getItem(array('itemid' => $itemid));
+    $data['object']->getItem(array('itemid' => $id));
     $publication = $data['object']->getFieldValues();
 
     return xarTplModule('publications', 'user', 'display', $data);
@@ -478,7 +479,7 @@ function publications_user_display($args)
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
-    $data['object']->getItem(array('itemid' => $itemid));
+    $data['object']->getItem(array('itemid' => $id));
 
     return xarTplModule('publications', 'user', 'display', $data, $template);
 }
