@@ -13,7 +13,7 @@
  */
 // All block classes extend the BasicBlock class and implement the iBlock inteface
 sys::import('xaraya.structures.containers.blocks.basicblock');
-Class FirstBlock extends BasicBlock implements iBlock
+Class Dyn_example_FirstBlock extends BasicBlock implements iBlock
 {
     // declare the name of your block, the module it belongs to and an
     // optional description, these are required
