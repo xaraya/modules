@@ -33,7 +33,7 @@
         <a href="#xarModURL('publications','user','new',array('ptid' => $properties['itemtype']->value))#">
             <xar:ml>
                 <xar:mlstring>Submit a #(1)</xar:mlstring>
-                <xar:mlvar>#$context['pubtypeobject']->properties['description']->value#</xar:mlvar>
+                <xar:mlvar><xar:data-output property="$properties['itemtype']"/></xar:mlvar>
             </xar:ml>
         </a>
         <div style="clear:both">&#160;</div>
