@@ -534,7 +534,7 @@ function publications_user_view($args)
     $data['conditions'] = $q;
 
     // Throw all the relevant settings we are using into the cache
-    $data['settings']['pubtypeobject'] = $data['pubtypeobject'];
+    $data['settings']['pubtypeobject'] = $data['pubtypeobject']->properties['configuration']->getValue();
     xarCore::setCached('publications', 'context' . $ptid, $data['settings']);
 
     return xarTplModule('publications', 'user', 'view', $data, $data['template']);
