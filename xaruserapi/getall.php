@@ -163,7 +163,7 @@ function publications_userapi_getall($args)
         if (empty($usersdef)) return;
     }
 
-    $sysid = xarMod::getID('publications');
+    $regid = xarMod::getRegID('publications');
 
     if (!empty($required['cids'])) {
         // Load API
@@ -174,7 +174,7 @@ function publications_userapi_getall($args)
                                       array('cids' => $cids,
                                             'andcids' => $andcids,
                                             'itemtype' => isset($ptid) ? $ptid : null,
-                                            'modid' => $sysid));
+                                            'modid' => $regid));
         if (empty($categoriesdef)) return;
     }
 
@@ -184,7 +184,7 @@ function publications_userapi_getall($args)
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from hitcount
         $hitcountdef = xarModAPIFunc('hitcount','user','leftjoin',
-                                    array('modid' => $sysid,
+                                    array('modid' => $regid,
                                           'itemtype' => isset($ptid) ? $ptid : null));
     }
 
@@ -194,7 +194,7 @@ function publications_userapi_getall($args)
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from ratings
         $ratingsdef = xarModAPIFunc('ratings','user','leftjoin',
-                                    array('modid' => $sysid,
+                                    array('modid' => $regid,
                                           'itemtype' => isset($ptid) ? $ptid : null));
     }
 
@@ -417,7 +417,7 @@ function publications_userapi_getall($args)
                              array('iids' => $ids,
                                    'reverse' => 1,
                                // Note : we don't need to specify the item type here for publications, since we use unique ids anyway
-                                   'modid' => $sysid));
+                                   'modid' => $regid));
 
         // Inserting the corresponding Category ID in the Publication Description
         $delete = array();
