@@ -8,7 +8,7 @@
             </xar:foreach>
             ]
         </xar:if>
-        <a class="xar-title" href="#$redirect#">
+        <a class="xar-title" href="#xarModURL('publications', 'user', 'redirect', array('ptid' => $properties['itemtype']->value, 'id' => $properties['id']->value))#">
             <xar:data-output property="$properties['title']" />
         </a>
         <br />        
