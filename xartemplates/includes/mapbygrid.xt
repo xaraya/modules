@@ -2,9 +2,7 @@
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:if condition="empty($descr)">
         <h2>
-            <xar:mlstring>
-                Publication Map by Grid
-            </xar:mlstring>
+            Publication Map by Grid
         </h2>
         <xar:else />
         <h2>

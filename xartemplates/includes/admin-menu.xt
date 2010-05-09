@@ -14,7 +14,7 @@
 <div>
   <dl class="xar-tabs">
     <dt class="help" title="Choose an action to perform">
-      <xar:mlstring>Actions:</xar:mlstring>
+      Actions:
     </dt>
 
         <xar:if condition="$request.2 eq 'view' or $request.2 eq 'modify' or $request.2 eq 'delete'">
@@ -24,14 +24,14 @@
         </xar:if>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-publications-admin-view;">
-            <xar:mlstring>Manage Publications</xar:mlstring>
+            Manage Publications
           </a>
         </dd>
 
         <xar:set name="tabclass">$activetab=='new'?'active':''</xar:set>
         <dd class="#$tabclass#">
             <a href="&xar-modurl-publications-admin-new;" >
-                <xar:mlstring>New Publication</xar:mlstring>
+                New Publication
             </a>
         </dd>
 
@@ -43,7 +43,7 @@
         </xar:if>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-publications-admin-viewpubtypes;">
-            <xar:mlstring>Publication Types</xar:mlstring>
+            Publication Types
           </a>
         </dd>
         <xar:if condition="$request.2 eq 'stats' or $request.2 eq 'importpages' or $request.2 eq 'importpictures'">
@@ -53,20 +53,20 @@
         </xar:if>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-publications-admin-stats;">
-            <xar:mlstring>Utilities</xar:mlstring>
+            Utilities
           </a>
         </dd>
         <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-publications-admin-modifyconfig;">
-            <xar:mlstring>Modify Config</xar:mlstring>
+            Modify Config
           </a>
         </dd>
     </xar:sec>
         <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-publications-admin-overview;">
-            <xar:mlstring>Overview</xar:mlstring>
+            Overview
           </a>
         </dd>
   </dl>

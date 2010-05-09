@@ -32,7 +32,7 @@
 
     <xar:if condition="!empty($showsubmit)">
         <div>
-            <a href="#xarModURL('publications', 'admin', 'new', array('ptid' => $pubtype_id))#"><xar:mlstring>Submit new</xar:mlstring></a>
+            <a href="#xarModURL('publications', 'admin', 'new', array('ptid' => $pubtype_id))#">Submit new</a>
         </div>
     </xar:if>
 

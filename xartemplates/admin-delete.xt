@@ -2,18 +2,18 @@
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Publications Administration</xar:mlstring>
+        Publications Administration
     </span>
 </div>
 <div class="xar-mod-body">
       <xar:template type="module" file="admin-menu" />
     <h2>
-        <xar:mlstring>Delete Publication</xar:mlstring>
+        Delete Publication
     </h2>
     <div class="xar-align-center">
         <xar:comment>You can use different admin-delete-[pubtype].xd templates for different pubtypes</xar:comment>
         <h3>
-            <xar:mlstring>Delete this article?</xar:mlstring>
+            Delete this article?
         </h3>
         <form method="post" action="&xar-modurl-publications-admin-delete;">
             <div>
@@ -26,7 +26,7 @@
         </form>
         <br />
         <a href="&xar-modurl-publications-admin-view;">
-            <xar:mlstring>Cancel Delete</xar:mlstring>
+            Cancel Delete
         </a>
         <br />
     </div>

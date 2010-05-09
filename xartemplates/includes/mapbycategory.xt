@@ -1,9 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <h2>
-        <xar:mlstring>
-            Publication Map by Category
-        </xar:mlstring>
+        Publication Map by Category
     </h2>
     <br />
     <form method="post" action="#$maplink#">

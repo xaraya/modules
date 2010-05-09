@@ -3,10 +3,7 @@
         <xar:style scope="module" module="base" file="navtabs" />
         <dl class="xar-tabs">
             <dt class="help">
-                <xar:mlstring>
-                    Options 
-                </xar:mlstring>
-                : 
+                Options                 : 
             </dt>
             <xar:if condition="!empty($settings['showmap'])">
                 <dd>
@@ -18,9 +15,7 @@
             <xar:if condition="!empty($settings['showsubmit'])">
                 <dd>
                     <a href="#xarModURL('publications', 'user', 'new', array('ptid' => !empty($ptid) ? $ptid : null))#" title="Submit Publication">
-                        <xar:mlstring>
-                            Contribute 
-                        </xar:mlstring>
+                        Contribute 
                     </a>
                 </dd>
             </xar:if>

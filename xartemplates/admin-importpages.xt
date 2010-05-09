@@ -2,18 +2,18 @@
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Publications Administration</xar:mlstring>
+        Publications Administration
     </span>
 </div>
 <div class="xar-mod-body">
       <xar:template type="module" file="admin-menu" />
     <h2>
-        <xar:mlstring>
+        
            Utilities
-        </xar:mlstring>
+        
     </h2>
       <xar:template type="module" file="util-menu" />
-    <h3><xar:mlstring>Import Web Pages</xar:mlstring></h3>
+    <h3>Import Web Pages</h3>
     <div class="xar-align-center">
         <xar:if condition="!empty($logfile)">#$logfile#
         <br />
@@ -23,7 +23,7 @@
                 <tr>
                     <td class="xar-align-left">
                         <label for="basedir">
-                            <xar:mlstring>Base Directory</xar:mlstring>
+                            Base Directory
                         </label>
                     </td>
                     <td class="xar-align-left">
@@ -35,7 +35,7 @@
                 <tr>
                     <td class="xar-align-left">
                         <label for="filelist[]">
-                            <xar:mlstring>Available HTML Pages</xar:mlstring>
+                            Available HTML Pages
                         </label>
                     </td>
                     <td class="xar-align-left">
@@ -54,7 +54,7 @@
                 <tr>
                     <td class="xar-align-left">
                         <label for="ptid">
-                            <xar:mlstring>Publication Type</xar:mlstring>
+                            Publication Type
                         </label>
                     </td>
                     <td class="xar-align-left">
@@ -74,7 +74,7 @@
                     <tr>
                         <td class="xar-align-left">
                             <label for="content">
-                                <xar:mlstring>Insert Page Title into Field</xar:mlstring>
+                                Insert Page Title into Field
                             </label>
                         </td>
                         <td class="xar-align-left">
@@ -93,7 +93,7 @@
                     <tr>
                         <td class="xar-align-left">
                             <label for="content">
-                                <xar:mlstring>Insert Content into Field</xar:mlstring>
+                                Insert Content into Field
                             </label>
                         </td>
                         <td class="xar-align-left">
@@ -114,7 +114,7 @@
                     <tr>
                         <td class="xar-align-left">
                             <label for="ptid">
-                                <xar:mlstring>Initial Categories</xar:mlstring>
+                                Initial Categories
                             </label>
                         </td>
                         <td class="xar-align-left">
@@ -128,7 +128,7 @@
                 <tr>
                     <td class="xar-align-left">
                         <label for="filterhead">
-                            <xar:mlstring>Filter Start of Page</xar:mlstring>
+                            Filter Start of Page
                         </label>
                     </td>
                     <td class="xar-align-left">
@@ -138,7 +138,7 @@
                 <tr>
                     <td class="xar-align-left">
                         <label for="filtertail">
-                            <xar:mlstring>Filter End of Page</xar:mlstring>
+                            Filter End of Page
                         </label>
                     </td>
                     <td class="xar-align-left">
@@ -148,7 +148,7 @@
                 <tr>
                     <td class="xar-align-left">
                         <label for="findtitle">
-                            <xar:mlstring>Find Page Title</xar:mlstring>
+                            Find Page Title
                         </label>
                     </td>
                     <td class="xar-align-left">
@@ -158,7 +158,7 @@
                 <tr>
                     <td class="xar-align-left">
                         <label for="filtertail">
-                            <xar:mlstring>Replacement Rules</xar:mlstring>
+                            Replacement Rules
                         </label>
                     </td>
                     <td class="xar-align-left">
@@ -167,10 +167,10 @@
                         <table border="0" cellpadding="5">
                             <tr>
                                 <td>
-                                    <xar:mlstring>Search for</xar:mlstring>
+                                    Search for
                                 </td>
                                 <td>
-                                    <xar:mlstring>Replace with</xar:mlstring>
+                                    Replace with
                                 </td>
                             </tr>
                             <xar:foreach in="$search" key="$id">
@@ -197,7 +197,7 @@
             <div class="xar-fullwidth xar-standard-box-padding">
             <hr />
             <strong>
-                <xar:mlstring>Preview of the first webpage</xar:mlstring>
+                Preview of the first webpage
             </strong>
             <hr />#$preview#</div>
         </xar:if>

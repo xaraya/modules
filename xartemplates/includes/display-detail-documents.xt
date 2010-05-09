@@ -43,11 +43,7 @@
                     <br />
                     <!--
                     <xar:if condition="!empty($counter)">
-                        (#$counter#
-                        <xar:mlstring>
-                            Reads
-                        </xar:mlstring>
-                        )
+                        (#$counter# Reads)
                     </xar:if>
                     <div align="right">
                         <span class="xar-sub"> #$topic_icons# </span>

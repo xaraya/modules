@@ -91,7 +91,7 @@
         </legend>
         <div class="xar-form-input-wrapper">
             <label class="xar-form-label help" title="#xarML('This is the allowed HTML that this website has configured.')#">
-                <xar:mlstring>Allowed HTML tags</xar:mlstring>
+                Allowed HTML tags
             </label>
             <xar:set name="tags">xarConfigVars::get(null,'Site.Core.AllowableHTML')</xar:set>
             <div class="xar-form-container-after">

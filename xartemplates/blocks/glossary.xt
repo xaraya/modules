@@ -1,12 +1,12 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div>
-    <xar:if condition="!empty($definition)">
-        #xarVarPrepForDisplay($definition)#
-        <xar:if condition="!empty($detailavailable)">
-            <br/><a href="#$detailurl#" title="#xarML('Expanded glossary definition')#"><xar:mlstring>Further details...</xar:mlstring></a>
+    <div>
+        <xar:if condition="!empty($definition)">
+            #xarVarPrepForDisplay($definition)#
+            <xar:if condition="!empty($detailavailable)">
+                <br/><a href="#$detailurl#" title="#xarML('Expanded glossary definition')#">Further details...</a>
+            </xar:if>
+        <xar:else/>
+            <span class="xar-error">No glossary entry found.</span>
         </xar:if>
-    <xar:else/>
-        <span class="xar-error"><xar:mlstring>No glossary entry found.</xar:mlstring></span>
-    </xar:if>
-</div>
+    </div>
 </xar:template>

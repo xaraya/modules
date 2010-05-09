@@ -2,23 +2,16 @@
 <xar:style scope="module" module="base" file="navtabs" />
 <dl class="xar-tabs">
     <dt class="help" title="#xarML('Click on a tab to explore further')#">
-        <xar:mlstring>
-            Options 
-        </xar:mlstring>
-        : 
+        Options 
     </dt>
     <dd>
         <a href="#xarModURL('publications','user','viewmap',array('by' => 'cat'))#">
-            <xar:mlstring>
-                Publication Map by Category 
-            </xar:mlstring>
+            Publication Map by Category 
         </a>
     </dd>
     <dd>
         <a href="#xarModURL('publications','user','viewmap',array('by' => 'pub','ptid' => $ptid))#">
-            <xar:mlstring>
-                Publication Map by Publication Type 
-            </xar:mlstring>
+            Publication Map by Publication Type 
         </a>
     </dd>
     <xar:if condition="!empty($viewlink)">

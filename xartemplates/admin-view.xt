@@ -2,16 +2,12 @@
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>
-                Publications Administration
-            </xar:mlstring>
+            Publications Administration            
         </span>
     </div>
     <div class="xar-mod-body">
         <h2>
-            <xar:mlstring>
-                Manage Publications
-            </xar:mlstring>
+            Manage Publications            
         </h2>
 
         <xar:comment>
@@ -88,9 +84,7 @@
                                 </th>
                             </xar:if>
                             <th>
-                                <xar:mlstring>
-                                    Options
-                                </xar:mlstring>
+                                Options                                
                             </th>
                         </tr>
                         <xar:foreach in="$items" value="$item">
@@ -148,16 +142,12 @@
                     <xar:if condition="!empty($showstate) and count($items) gt 0">
                         <p>
                             <label for="state">
-                                <xar:mlstring>
-                                    Change checked article state to
-                                </xar:mlstring>
-                                :</label>&#160;
+                                Change checked article state to                                
+                            :</label>&#160;
                             <select name="state" id="state">
                             <xar:if condition="xarSecurityCheck('ManagePublications',0,'Publication',$id.':All:All:All')">
                                 <option value="-1">
-                                    <xar:mlstring>
-                                        [Delete All]
-                                    </xar:mlstring>
+                                    [Delete All]                                    
                                 </option>
                             </xar:if>
                             <xar:foreach in="$states" key="$id" value="$name">
@@ -181,8 +171,8 @@
                             </xar:foreach>
                             </select>&#160;
                             <input type="submit" value="#$changestatelabel#" />&#160;
-                            <a href="javascript:xar_base_checkall(document.getElementById('viewpublications'),true)"><xar:mlstring>Check All</xar:mlstring></a>&#160;|&#160;
-                            <a href="javascript:xar_base_checkall(document.getElementById('viewpublications'),false)"><xar:mlstring>Uncheck All</xar:mlstring></a> ]
+                            <a href="javascript:xar_base_checkall(document.getElementById('viewpublications'),true)">Check All</a>&#160;|&#160;
+                            <a href="javascript:xar_base_checkall(document.getElementById('viewpublications'),false)">Uncheck All</a> ]
                         </p>
                     </xar:if>
                 </div>
