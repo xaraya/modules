@@ -26,7 +26,7 @@
 </xar:loop>
 
 <xar:if condition="!empty($items)">
-    <div class="xar-block-title"><xar:mlstring>More Featured Headlines</xar:mlstring>:</div>
+    <div class="xar-block-title">More Featured Headlines:</div>
     <ul>
     <xar:foreach in="$items" value="$item">
       <li>

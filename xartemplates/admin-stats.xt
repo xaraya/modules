@@ -1,64 +1,58 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>
-            Publications Administration
-        </xar:mlstring>
-    </span>
-</div>
-<div class="xar-mod-body">
-      <xar:template type="module" file="admin-menu" />
-    <h2>
-        <xar:mlstring>
-           Utilities
-        </xar:mlstring>
-    </h2>
-      <xar:template type="module" file="util-menu" />
-    <h3><xar:mlstring>Statistics</xar:mlstring></h3>
-    <form method="post" action="#xarModURL('publications','admin','stats')#">
-        <xar:mlstring>
-            Group by
-        </xar:mlstring>
-        <xar:for start="$i = 0" test="$i lt 4" iter="$i++">
-            <select name="group[#$i#]" id="group_#$i#">
-                <option value="">
-                </option>
-                <xar:foreach in="$fields" key="$name" value="$label">
-                    <xar:if condition="!empty($group[$i]) and $group[$i] eq $name">
-                        <option value="#$name#" selected="selected">
-                            #$label#
-                        </option>
-                        <xar:else />
-                        <option value="#$name#">
-                            #$label#
-                        </option>
-                    </xar:if>
-                </xar:foreach>
-            </select>
-        </xar:for>
-        <input type="submit" value="#xarML('Select')#" />
-    </form>
-    <xar:set name="pubtype_id">
-        null
-    </xar:set>
-    <xar:set name="owner">
-        null
-    </xar:set>
-    <xar:set name="state">
-        null
-    </xar:set>
-    <xar:set name="pubdate">
-        null
-    </xar:set>
-    <xar:set name="locale">
-        null
-    </xar:set>
-    <xar:if condition="!empty($group[0])">
-        <xar:set name="nextfield">$group[0]</xar:set>
-        <xar:set name="nextlevel">1</xar:set>
-        <xar:set name="nextvalue">$stats</xar:set>
-        <xar:template file="substats" type="module" />
-    </xar:if>
-</div>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            Publications Administration        
+        </span>
+    </div>
+    <div class="xar-mod-body">
+          <xar:template type="module" file="admin-menu" />
+        <h2>        
+           Utilities        
+        </h2>
+          <xar:template type="module" file="util-menu" />
+        <h3>Statistics</h3>
+        <form method="post" action="#xarModURL('publications','admin','stats')#">        
+            Group by        
+            <xar:for start="$i = 0" test="$i lt 4" iter="$i++">
+                <select name="group[#$i#]" id="group_#$i#">
+                    <option value="">
+                    </option>
+                    <xar:foreach in="$fields" key="$name" value="$label">
+                        <xar:if condition="!empty($group[$i]) and $group[$i] eq $name">
+                            <option value="#$name#" selected="selected">
+                                #$label#
+                            </option>
+                            <xar:else />
+                            <option value="#$name#">
+                                #$label#
+                            </option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </xar:for>
+            <input type="submit" value="#xarML('Select')#" />
+        </form>
+        <xar:set name="pubtype_id">
+            null
+        </xar:set>
+        <xar:set name="owner">
+            null
+        </xar:set>
+        <xar:set name="state">
+            null
+        </xar:set>
+        <xar:set name="pubdate">
+            null
+        </xar:set>
+        <xar:set name="locale">
+            null
+        </xar:set>
+        <xar:if condition="!empty($group[0])">
+            <xar:set name="nextfield">$group[0]</xar:set>
+            <xar:set name="nextlevel">1</xar:set>
+            <xar:set name="nextvalue">$stats</xar:set>
+            <xar:template file="substats" type="module" />
+        </xar:if>
+    </div>
 </xar:template>

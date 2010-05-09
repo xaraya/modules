@@ -16,9 +16,7 @@
         <br />
         <dl class="xar-tabs">
             <dt class="help">
-                <xar:mlstring>
-                    Applies to:
-                </xar:mlstring>
+                Applies to:                
             </dt>
             <xar:if condition="$tab eq 'global'">
                 <xar:set name="class">"active"</xar:set>
@@ -27,7 +25,7 @@
             </xar:if>
             <dd class="#$class#">
                 <a href="#xarModURL('publications', 'admin', 'modifyconfig', array('tab' => 'global'))#">
-                <xar:mlstring>Global</xar:mlstring></a>
+                Global</a>
             </dd>
             <xar:if condition="$tab eq 'pubtypes'">
                 <xar:set name="class">"active"</xar:set>
@@ -36,7 +34,7 @@
             </xar:if>
             <dd class="#$class#">
                 <a href="#xarModURL('publications', 'admin', 'modifyconfig', array('tab' => 'pubtypes'))#">
-                <xar:mlstring>Punlication Types</xar:mlstring></a>
+                Punlication Types</a>
             </dd>
         </dl>
 

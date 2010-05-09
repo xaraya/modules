@@ -2,31 +2,31 @@
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Publications Administration</xar:mlstring>
+        Publications Administration
     </span>
 </div>
 <div class="xar-mod-body">
       <xar:template type="module" file="admin-menu" />
     <h2>
-        <xar:mlstring>
+        
            Utilities
-        </xar:mlstring>
+        
     </h2>
       <xar:template type="module" file="util-menu" />
-    <h3><xar:mlstring>Import Pictures</xar:mlstring></h3>
+    <h3>Import Pictures</h3>
     <div class="xar-align-center">
         <xar:if condition="!empty($logfile)">#$logfile#
         <br />
         <br /></xar:if>
         <p>
-            <xar:mlstring>Create a simple picture gallery based on images and thumbnails located on your server.</xar:mlstring>
+            Create a simple picture gallery based on images and thumbnails located on your server.
         </p>
         <form method="post" action="&xar-modurl-publications-admin-importpictures;">
             <table width="100%" border="0" cellpadding="2" cellspacing="1">
                 <tr>
                     <td class="xar-align-left">
                         <label for="basedir">
-                            <xar:mlstring>Base Directory</xar:mlstring>
+                            Base Directory
                         </label>
                     </td>
                     <td class="xar-align-left">
@@ -38,7 +38,7 @@
                 <tr>
                     <td class="xar-align-left">
                         <label for="baseurl">
-                            <xar:mlstring>Base URL</xar:mlstring>
+                            Base URL
                         </label>
                     </td>
                     <td class="xar-align-left">
@@ -48,7 +48,7 @@
                 <tr>
                     <td class="xar-align-left">
                         <label for="thumbnail">
-                            <xar:mlstring>Thumbnail Prefix</xar:mlstring>
+                            Thumbnail Prefix
                         </label>
                     </td>
                     <td class="xar-align-left">
@@ -58,7 +58,7 @@
                 <tr>
                     <td class="xar-align-left">
                         <label for="picture_filelist">
-                            <xar:mlstring>Available Pictures</xar:mlstring>
+                            Available Pictures
                         </label>
                     </td>
                     <td class="xar-align-left">
@@ -82,7 +82,7 @@
                 <tr>
                     <td class="xar-align-left">
                         <label for="ptid">
-                            <xar:mlstring>Publication Type</xar:mlstring>
+                            Publication Type
                         </label>
                     </td>
                     <td class="xar-align-left">
@@ -102,7 +102,7 @@
                     <tr>
                         <td class="xar-align-left">
                             <label for="content">
-                                <xar:mlstring>Insert Picture Name into Field</xar:mlstring>
+                                Insert Picture Name into Field
                             </label>
                         </td>
                         <td class="xar-align-left">
@@ -121,7 +121,7 @@
                     <tr>
                         <td class="xar-align-left">
                             <label for="content">
-                                <xar:mlstring>Insert Picture URL into Field</xar:mlstring>
+                                Insert Picture URL into Field
                             </label>
                         </td>
                         <td class="xar-align-left">
@@ -140,7 +140,7 @@
                     <tr>
                         <td class="xar-align-left">
                             <label for="content">
-                                <xar:mlstring>Insert Thumbnail URL into Field</xar:mlstring>
+                                Insert Thumbnail URL into Field
                             </label>
                         </td>
                         <td class="xar-align-left">
@@ -159,7 +159,7 @@
                     <tr>
                         <td class="xar-align-left">
                             <label for="usefilemtime">
-                                <xar:mlstring>Use File Modification Time for Publication Date</xar:mlstring>
+                                Use File Modification Time for Publication Date
                             </label>
                         </td>
                         <td class="xar-align-left">
@@ -175,7 +175,7 @@
                     <tr>
                         <td class="xar-align-left">
                             <label for="ptid">
-                                <xar:mlstring>Initial Categories</xar:mlstring>
+                                Initial Categories
                             </label>
                         </td>
                         <td class="xar-align-left">
@@ -195,13 +195,13 @@
         </form>
         <br />
         <p>
-            <xar:mlstring>Note : for more advanced upload and import features, have a look at the Uploads and Images modules.</xar:mlstring>
+            Note : for more advanced upload and import features, have a look at the Uploads and Images modules.
         </p>
         <xar:if condition="!empty($preview)">
             <div class="xar-fullwidth xar-standard-box-padding">
             <hr />
             <strong>
-                <xar:mlstring>Preview of the first picture</xar:mlstring>
+                Preview of the first picture
             </strong>
             <hr />#$preview#</div>
         </xar:if>

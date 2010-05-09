@@ -3,16 +3,12 @@
     <xar:javascript module="publications" filename="tabs.js" />
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>
-                Publications Administration
-            </xar:mlstring>
+            Publications Administration
         </span>
     </div>
     <div class="xar-mod-body">
         <h2>
-            <xar:mlstring>
-                New Publication
-            </xar:mlstring>
+            New Publication
         </h2>
         <xar:comment>
             You can use different admin-new-[pubtype].xd templates for different pubtypes
@@ -68,10 +64,10 @@
                     <div class="xar-normal xar-overflow-auto">
                         <xar:if condition="!empty($prevart)">
                         <a class="xar-floatleft" href="#$prevart#">&lt;
-                        <xar:mlstring>prev</xar:mlstring></a>&#160;</xar:if>
+                        prev</a>&#160;</xar:if>
                         <xar:if condition="!empty($nextart)">
                             <a class="xar-floatright" href="#$nextart#">
-                            <xar:mlstring>next</xar:mlstring>&gt;</a>
+                            next&gt;</a>
                         </xar:if>
                     </div>
                 </xar:if>

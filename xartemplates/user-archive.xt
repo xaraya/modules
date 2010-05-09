@@ -6,9 +6,7 @@
         You can use different user-archive-[pubtype].xd templates for different pubtypes
     </xar:comment>
     <h3>
-        <xar:mlstring>
-            Monthly Archives
-        </xar:mlstring>
+        Monthly Archives
     </h3>
     <ul>
         <xar:foreach in="$months" value="$month">
