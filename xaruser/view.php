@@ -87,7 +87,7 @@ function publications_user_view($args)
     $data['pubtypeobject']->getItem(array('itemid' => $ptid));
 
     // Get the settings of this publication type
-    $data['settings'] = $data['pubtypeobject']->properties['configuration']->getValue();
+    $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $ptid));
 
     // Get the template for this publication type
     if ($ishome) $data['template'] = 'frontpage';
