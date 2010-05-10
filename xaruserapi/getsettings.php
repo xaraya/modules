@@ -32,7 +32,7 @@ function publications_userapi_getsettings($data)
     $pubtypesettings = $pubtypeobject->properties['configuration']->getValue();
     $globalsettings = publications_userapi_getglobalsettings();
     $settings = $pubtypesettings + $globalsettings;
-    xarCore::setCached('publications', 'context' . $data['ptid'], serialize($settings));
+    xarCore::setCached('publications', 'context' . $data['ptid'], $settings);
     return $settings;
 }
 
