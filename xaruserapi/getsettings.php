@@ -30,6 +30,7 @@ function publications_userapi_getsettings($data)
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
     $pubtypesettings = $pubtypeobject->properties['configuration']->getValue();
+    if (empty($pubtypesettings)) $pubtypesettings = array();
     $globalsettings = publications_userapi_getglobalsettings();
     $settings = $pubtypesettings + $globalsettings;
     xarCore::setCached('publications', 'context' . $data['ptid'], $settings);
