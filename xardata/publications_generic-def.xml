@@ -1,7 +1,6 @@
 <object name="publications_generic">
   <objectid>130</objectid>
   <label>Generic Document</label>
-  <parent>objects</parent>
   <module_id>182</module_id>
   <itemtype>24</itemtype>
   <class>DataObject</class>
