@@ -236,14 +236,6 @@
         {
             $data = parent::modify($data);
 
-            // Defaults
-            if (empty($data['featuredid'])) {$data['featuredid'] = $this->featuredid;}
-            if (empty($data['alttitle'])) {$data['alttitle'] = $this->alttitle;}
-            if (empty($data['altsummary'])) {$data['altsummary'] = $this->altsummary;}
-            if (empty($data['showfeaturedsum'])) {$data['showfeaturedsum'] = $this->showfeaturedsum;}
-            if (empty($data['showfeaturedbod'])) {$data['showfeaturedbod'] = $this->showfeaturedbod;}
-            if (empty($data['moreitems'])) {$data['moreitems'] = $this->moreitems;}
-
             $data['fields'] = array('id', 'title');
 
             if (!is_array($data['state'])) $statearray = array($data['state']);
