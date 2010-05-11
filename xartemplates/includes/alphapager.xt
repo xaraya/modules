@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:if condition="isset($sort) and ($sort eq 'title')">
         <xar:comment>Added to automatically display an alpha pager when publications are sorted by title.</xar:comment>

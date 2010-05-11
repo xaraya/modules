@@ -42,13 +42,13 @@
         <h2>
             <xar:if condition="!empty($pubdate)">
                 <xar:ml>
-                    <xar:mlstring>Publication Date : #(1)</xar:mlstring>
+                    Publication Date : #(1)
                     <xar:mlvar>#$pubdate#</xar:mlvar>
                 </xar:ml>
             </xar:if>
             <xar:if condition="!empty($author)">
                 <xar:ml>
-                    <xar:mlstring>By Author : #(1)</xar:mlstring>
+                    By Author : #(1)
                     <xar:mlvar>#$author#</xar:mlvar>
                 </xar:ml>
             </xar:if>
@@ -80,7 +80,7 @@
         <xar:else />
             <a href="#xarModURL('publications','user','view')#">
                 <xar:ml>
-                    <xar:mlstring>#(1)-column display</xar:mlstring>
+                    #(1)-column display
                     <xar:mlvar>#$context['showcols']#</xar:mlvar>
                 </xar:ml>
             </a>

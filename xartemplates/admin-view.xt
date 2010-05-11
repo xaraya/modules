@@ -27,9 +27,9 @@
                 <h3>
                 <xar:if condition="!empty($pubdate)">
                     <xar:ml>
-                        <xar:mlstring>
+                        
                             Publication Date : #(1)
-                        </xar:mlstring>
+                        
                         <xar:mlvar>
                             #$pubdate#
                         </xar:mlvar>
@@ -37,9 +37,9 @@
                 </xar:if>
                 <xar:if condition="!empty($owner)">
                     <xar:ml>
-                        <xar:mlstring>
+                        
                             By Author : #(1)
-                        </xar:mlstring>
+                        
                         <xar:mlvar>
                             #xarUserGetVar('name',$owner)#
                         </xar:mlvar>
@@ -47,9 +47,9 @@
                 </xar:if>
                 <xar:if condition="!empty($locale)">
                     <xar:ml>
-                        <xar:mlstring>
+                        
                             Language : #(1)
-                        </xar:mlstring>
+                        
                         <xar:mlvar>
                             #$locale#
                         </xar:mlvar>

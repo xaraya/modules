@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:if condition="!empty($pubtypelink)">
         <a href="#$pubtypelink#"><xar:ml><xar:mlstring>More #(1)</xar:mlstring><xar:mlvar>#xarVarPrepForDisplay($pubtypename)#</xar:mlvar></xar:ml></a>
