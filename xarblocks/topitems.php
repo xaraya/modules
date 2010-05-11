@@ -265,25 +265,6 @@
             return $data;
         }    
 
-        public function modify(Array $data=array())
-        {
-            $data = parent::modify($data);
-            if (!isset($data['numitems'])) $data['numitems'] = $this->numitems;
-            if (!isset($data['linkpubtype'])) $data['linkpubtype'] = $this->linkpubtype;
-            if (!isset($data['includechildren'])) $data['includechildren'] = $this->includechildren;
-            if (!isset($data['linkcat'])) $data['linkcat'] = $this->linkcat;
-            if (!isset($data['pubtype_id'])) $data['pubtype_id'] = $this->pubtype_id;
-            if (!isset($data['nopublimit'])) $data['nopublimit'] = $this->nopublimit;
-            if (!isset($data['catfilter'])) $data['catfilter'] = $this->catfilter;
-            if (!isset($data['nocatlimit'])) $data['nocatlimit'] = $this->nocatlimit;
-            if (!isset($data['dynamictitle'])) $data['dynamictitle'] = $this->dynamictitle;
-            if (!isset($data['toptype'])) $data['toptype'] = $this->toptype;
-            if (!isset($data['showvalue'])) $data['showvalue'] = $this->showvalue;
-            if (!isset($data['showsummary'])) $data['showsummary'] = $this->showsummary;
-            if (!isset($data['state'])) $data['state'] = $this->state;
-            return $data;
-        }
-
         public function update(Array $data=array())
         {
             if (!xarVarFetch('numitems',        'int:1:200', $data['numitems'], 5, XARVAR_NOT_REQUIRED)) {return;}
