@@ -45,15 +45,16 @@ class AddressProperty extends TextBoxProperty
             $textbox = DataPropertyMaster::getProperty(array('name' => 'textbox'));
             $textbox->validation_min_length = 3;
 
+            $streetvalidity = false;
             for ($i=1;$i<=$this->display_rows;$i++) {
                 $isvalid = $textbox->checkInput($name . '_line_' . $i);
                 if ($isvalid) {
                     $value['line_' . $i] = $textbox->value;
-                } else {
-                    $invalid[] = 'line_' . $i;
-                }                
-                $validity = $validity && $isvalid;
+                }
+                $streetvalidity = $streetvalidity || $isvalid;
             }
+            $validity = $validity && $streetvalidity;
+            if (!$streetvalidity) $invalid[] = 'line_1';
 
             if ($this->display_show_city) {
                 $isvalid = $textbox->checkInput($name . '_city');
