@@ -108,6 +108,11 @@ class CreditCardProperty extends DataProperty
         return $valuearray;
     }
 
+    public function getValueArray() 
+    {
+        return $this->getValue();
+    }
+
     public function showInput(Array $data = array())
     {
         $data = $this->assemble_creditcard($data);

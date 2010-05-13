@@ -59,7 +59,7 @@ function shop_admin_newattributes()
             $itemid = $data['object']->createItem();
  
             // Jump to the next page
-            xarResponse::redirect(xarModURL('shop','admin','attributes'));
+            xarController::redirect(xarModURL('shop','admin','attributes'));
             return true;
         }
     }

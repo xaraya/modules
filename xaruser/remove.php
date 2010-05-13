@@ -24,7 +24,7 @@ function shop_user_remove($args)
 
     // Return the template variables defined in this function
 
-    xarResponse::redirect($returnurl);
+    xarController::redirect($returnurl);
     return true;
 
 }

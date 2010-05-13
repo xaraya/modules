@@ -45,15 +45,16 @@ class AddressProperty extends TextBoxProperty
             $textbox = DataPropertyMaster::getProperty(array('name' => 'textbox'));
             $textbox->validation_min_length = 3;
 
+            $streetvalidity = false;
             for ($i=1;$i<=$this->display_rows;$i++) {
                 $isvalid = $textbox->checkInput($name . '_line_' . $i);
                 if ($isvalid) {
                     $value['line_' . $i] = $textbox->value;
-                } else {
-                    $invalid[] = 'line_' . $i;
-                }                
-                $validity = $validity && $isvalid;
+                }
+                $streetvalidity = $streetvalidity || $isvalid;
             }
+            $validity = $validity && $streetvalidity;
+            if (!$streetvalidity) $invalid[] = 'line_1';
 
             if ($this->display_show_city) {
                 $isvalid = $textbox->checkInput($name . '_city');
@@ -77,12 +78,7 @@ class AddressProperty extends TextBoxProperty
             }
 
             if ($this->display_show_postal_code) {
-                $isvalid = $textbox->checkInput($name . '_postal_code');
-                if ($isvalid) {
-                    $value['postal_code'] = $textbox->value;
-                } else {
-                    $invalid[] = 'postal_code';
-                }
+                list($isvalid, $value['postal_code']) = $this->fetchValue($name . '_postal_code');
                 $validity = $validity && $isvalid;
             }
             
@@ -117,6 +113,11 @@ class AddressProperty extends TextBoxProperty
         $valuearray['postal_code'] = !empty($valuearray['postal_code']) ? $valuearray['postal_code'] : '';
         $valuearray['country'] = !empty($valuearray['country']) ? $valuearray['country'] : '';
         return $valuearray;
+    }
+    
+    public function getValueArray() 
+    {
+        return $this->getValue();
     }
 
     public function showInput(Array $data = array())

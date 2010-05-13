@@ -65,9 +65,9 @@ function shop_user_newcustomer()
  
             if (isset($returnurl)) {
                 xarMod::APIFunc('authsystem','user','login',array('uname' => $email, 'pass' => $password));
-                xarResponse::redirect($returnurl);
+                xarController::redirect($returnurl);
             } else {
-                xarResponse::redirect(xarModURL('shop'));
+                xarController::redirect(xarModURL('shop'));
             }
 
             // Always add the next line even if processing never reaches it

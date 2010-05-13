@@ -59,7 +59,7 @@ function shop_admin_newpaymentoption()
             $itemid = $data['object']->createItem();
  
             // Jump to the next page
-            xarResponse::redirect(xarModURL('shop','admin','paymentmethods'));
+            xarController::redirect(xarModURL('shop','admin','paymentmethods'));
             return true;
         }
     }

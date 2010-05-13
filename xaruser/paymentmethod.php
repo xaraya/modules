@@ -18,12 +18,12 @@ function shop_user_paymentmethod()
     // Redirects at the start of the user functions are just a way to make sure someone isn't where they don't need to be
     $shippingaddress = xarSession::getVar('shippingaddress');
     if (empty($shippingaddress)) {
-        xarResponse::redirect(xarModURL('shop','user','shippingaddress'));
+        xarController::redirect(xarModURL('shop','user','shippingaddress'));
         return true;
     }
     $shop = xarSession::getVar('shop');
     if (!xarUserIsLoggedIn() || empty($shop)) {
-        xarResponse::redirect(xarModURL('shop','user','main'));
+        xarController::redirect(xarModURL('shop','user','main'));
         return true;
     }
 
@@ -41,6 +41,10 @@ function shop_user_paymentmethod()
     $shippingobject = DataObjectMaster::getObject(array('name' => 'shop_shippingaddresses'));
     $shippingobject->getItem(array('itemid' => xarSession::getVar('shippingaddress')));
     $shippingvals = $shippingobject->getFieldValues();
+	$nameval = $shippingobject->properties['name']->value;
+	$namearray = $shippingobject->properties['name']->getValueArray($nameval);
+	$shippingvals['first'] = $namearray['first'];
+	$shippingvals['last'] = $namearray['last'];
     $data['shippingvals'] = $shippingvals;
 
     // Get the saved payment methods, if any exist
@@ -52,10 +56,10 @@ function shop_user_paymentmethod()
     $paymentmethods = $mylist->getItems($filters);
     $data['paymentmethods'] = $paymentmethods;
 
-    $data['paymentobject'] = DataObjectMaster::getObject(array('name' => 'shop_paymentmethods'));
+    $data['paymentobject'] = DataObjectMaster::getObject(array('name' => 'shop_paymentmethods')); 
     $data['paymentobject']->properties['name']->display_show_salutation = false;
     $data['paymentobject']->properties['name']->display_show_middlename = false;
-    $data['paymentobject']->properties['address']->display_rows = 1;
+    $data['paymentobject']->properties['address']->display_rows = 2;
     $data['paymentobject']->properties['address']->display_show_country = false;
     $data['properties'] = $data['paymentobject']->getProperties();
 
@@ -65,7 +69,7 @@ function shop_user_paymentmethod()
         }
         $data['paymentobject']->getItem(array('itemid' => $remove));
         $data['paymentobject']->deleteItem();
-        xarResponse::redirect(xarModURL('shop','user','paymentmethod'));
+        xarController::redirect(xarModURL('shop','user','paymentmethod'));
         return true;
     }
 
@@ -78,7 +82,7 @@ function shop_user_paymentmethod()
     if ($proceedsaved) {
         
         xarSession::setVar('paymentmethod',$paymentmethod);
-        xarResponse::redirect(xarModURL('shop','user','order')); 
+        xarController::redirect(xarModURL('shop','user','order')); 
         return true;
 
     } elseif ($proceednew) {  // We're not using a saved payment method...
@@ -103,7 +107,7 @@ function shop_user_paymentmethod()
             return xarTplModule('shop','user','paymentmethod', $data);
         } else {
             xarSession::setVar('paymentmethod',$data['paymentobject']->createItem());
-            xarResponse::redirect(xarModURL('shop','user','order')); 
+            xarController::redirect(xarModURL('shop','user','order')); 
             return true;
         }
         
