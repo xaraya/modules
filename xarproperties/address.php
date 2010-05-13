@@ -114,6 +114,11 @@ class AddressProperty extends TextBoxProperty
         $valuearray['country'] = !empty($valuearray['country']) ? $valuearray['country'] : '';
         return $valuearray;
     }
+    
+    public function getValueArray() 
+    {
+        return $this->getValue();
+    }
 
     public function showInput(Array $data = array())
     {
