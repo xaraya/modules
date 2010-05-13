@@ -18,7 +18,7 @@ function shop_user_shippingaddress()
     // Redirects at the start of the user functions are just a way to make sure someone isn't where they don't need to be
     $shop = xarSession::getVar('shop');
     if (!xarUserIsLoggedIn() || empty($shop)) {
-        xarResponse::redirect(xarModURL('shop','user','main'));
+        xarController::redirect(xarModURL('shop','user','main'));
         return true;
     }
 
@@ -26,12 +26,24 @@ function shop_user_shippingaddress()
     if(!xarVarFetch('shipto', 'str', $shipto, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('remove', 'str', $remove, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('next', 'str', $data['next'], NULL, XARVAR_NOT_REQUIRED)) {return;}
+	
+	sys::import('modules.dynamicdata.class.objects.master');
 
-    sys::import('modules.dynamicdata.class.objects.master');
+	// Get the saved shipping addresses, if any exist
+    $mylist = DataObjectMaster::getObjectList(array('name' => 'shop_shippingaddresses'));
+    $filters = array(
+                     'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
+                    'where' => 'customer eq ' . xarUserGetVar('id'),
+                    );
+    $shippingaddresses = $mylist->getItems($filters);
+    if (count($shippingaddresses) > 0) {
+        $data['shippingaddresses'] = $shippingaddresses;
+    }
+    
     $data['shippingobject'] = DataObjectMaster::getObject(array('name' => 'shop_shippingaddresses'));
     $data['shippingobject']->properties['name']->display_show_salutation = false;
     $data['shippingobject']->properties['name']->display_show_middlename = false;
-    $data['shippingobject']->properties['address']->display_rows = 1;
+    $data['shippingobject']->properties['address']->display_rows = 2;
     $data['shippingobject']->properties['address']->display_show_country = false;
     $data['properties'] = $data['shippingobject']->properties;
 
@@ -42,7 +54,7 @@ function shop_user_shippingaddress()
         } else {
             $func = 'paymentmethod';
         }
-            xarResponse::redirect(xarModURL('shop','user',$func));
+            xarController::redirect(xarModURL('shop','user',$func));
             return true;
     }
 
@@ -52,7 +64,7 @@ function shop_user_shippingaddress()
         }
         $data['shippingobject']->getItem(array('itemid' => $remove));
         $data['shippingobject']->deleteItem();
-        xarResponse::redirect(xarModURL('shop','user','shippingaddress'));
+        xarController::redirect(xarModURL('shop','user','shippingaddress'));
         return true;
     }
 
@@ -78,7 +90,7 @@ function shop_user_shippingaddress()
         $rolesobject->properties['name']->value = $name;
         $rolesobject->updateItem();
 
-        xarResponse::redirect(xarModURL('shop','user','paymentmethod'));
+        xarController::redirect(xarModURL('shop','user','paymentmethod'));
         return true;
 
         xarSession::setVar('errors',$errors);

@@ -44,7 +44,7 @@
             </table>
 
         <xar:else />
-            #xarResponse::redirect(xarModURL('shop'))#
+            #xarController::redirect(xarModURL('shop'))#
         </xar:if>
 
         <div class="button_container">

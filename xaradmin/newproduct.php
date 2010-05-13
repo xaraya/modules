@@ -59,7 +59,7 @@ function shop_admin_newproduct()
             $itemid = $data['object']->createItem();
  
             // Jump to the next page
-            xarResponse::redirect(xarModURL('shop','admin','products'));
+            xarController::redirect(xarModURL('shop','admin','products'));
             return true;
         }
     }

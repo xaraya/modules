@@ -71,7 +71,7 @@ function shop_admin_modifycustomer()
             $object->updateItem();
 
             // Jump to the next page 
-            xarResponse::redirect(xarModURL('shop','admin','modifycustomer',array('itemid' => $data['itemid'])));
+            xarController::redirect(xarModURL('shop','admin','modifycustomer',array('itemid' => $data['itemid'])));
             return $data;
         }
     } else {

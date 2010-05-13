@@ -68,7 +68,7 @@ function shop_admin_modify()
             // Jump to the next page
 
             $func = str_replace('shop_','',$name);
-            xarResponse::redirect(xarModURL('shop','admin',$func));
+            xarController::redirect(xarModURL('shop','admin',$func));
             return true;
         }
     } else {

@@ -18,17 +18,17 @@ function shop_user_order()
     // Redirects at the start of the user functions are just a way to make sure someone isn't where they don't need to be
     $shippingaddress = xarSession::getVar('shippingaddress');
     if (empty($shippingaddress)) {
-        xarResponse::redirect(xarModURL('shop','user','shippingaddress'));
+        xarController::redirect(xarModURL('shop','user','shippingaddress'));
         return true;
     }
     $paymentmethod = xarSession::getVar('paymentmethod');
     if (empty($paymentmethod)) {
-        xarResponse::redirect(xarModURL('shop','user','paymentmethod'));
+        xarController::redirect(xarModURL('shop','user','paymentmethod'));
         return true;
     }
     $shop = xarSession::getVar('shop');
     if (!xarUserIsLoggedIn() || empty($shop)) {
-        xarResponse::redirect(xarModURL('shop','user','main'));
+        xarController::redirect(xarModURL('shop','user','main'));
         return;
     }
 
@@ -98,7 +98,7 @@ function shop_user_order()
             xarSession::delVar('shop');
             xarSession::delVar('products');
 
-            xarResponse::redirect(xarModURL('shop','user','complete'));
+            xarController::redirect(xarModURL('shop','user','complete'));
             return true;
 
         } else {
@@ -111,7 +111,7 @@ function shop_user_order()
                 xarSession::setVar('pg_response',$pg_response);
             }
 
-            xarResponse::redirect(xarModURL('shop','user','order'));
+            xarController::redirect(xarModURL('shop','user','order'));
             return true;
         }
 

@@ -12,7 +12,7 @@
 
 
 
-      <h2>Customer Account: #$first_name# #$last_name#</h2>
+      <h2>Customer Account: first_name last_name</h2>
         <xar:set name="withupload">#$object->upload#</xar:set>
         <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
         <xar:if condition="!empty($withupload)">

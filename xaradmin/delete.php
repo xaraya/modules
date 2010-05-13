@@ -54,7 +54,7 @@ function shop_admin_delete()
         $viewfunc = str_replace('shop_','',$name);
         
         // Jump to the next page
-        xarResponse::redirect(xarModURL('shop','admin',$viewfunc));
+        xarController::redirect(xarModURL('shop','admin',$viewfunc));
         return true;
     }
     return $data;
