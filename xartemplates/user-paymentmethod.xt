@@ -11,9 +11,9 @@
     <div class="xar-mod-body">
 
     <xar:set name="cust">xarMod::APIFunc('shop','user','customerinfo')</xar:set>
-
+ 
      <xar:set name="formstyle">'display:block'</xar:set>
-     <xar:if condition="isset($paymentmethods)">
+     <xar:if condition="isset($paymentmethods) and !empty($paymentmethods)">
 
         <form method="post" id="paybysavedmethod" name="paybysavedmethod" action="#xarmodurl('shop','user','paymentmethod')#">
 
