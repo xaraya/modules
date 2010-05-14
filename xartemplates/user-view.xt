@@ -6,5 +6,5 @@
     <xar:if condition="!empty($ptid) or !empty($catid)">
         <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" catid="$catid" showcatcount="$settings['showcatcount']" showempty="1" />
     </xar:if>
-    <xar:data-input type="listingslist" object="$object" layout="user-view" conditions="$conditions" categories="$catid" tplmodule="publications"/>
+    <xar:data-input type="listingslist" object="$object" layout="user-view" conditions="$conditions" module="publications" categories="$catid" tplmodule="publications"/>
 </xar:template>
