@@ -116,12 +116,9 @@
             <legend>Your shipping address:</legend>
             <div class="shippingaddressbox">  
                 <div><span id="name_first_ship">#$shippingvals['first']#</span>&#160;<span id="name_last_ship">#$shippingvals['last']#</span></div>
-                <xar:if condition="!empty($shippingvals['address']['line_1'])">
-			<div><span id="street_line_1_ship">#$shippingvals['address']['line_1']#</span></div>
-		</xar:if>
-		<xar:if condition="!empty($shippingvals['address']['line_2'])">
-			<div><span id="street_line_2_ship">#$shippingvals['address']['line_2']#</span></div>
-		</xar:if>
+                <xar:for start="$i=1" test="$i le $streetrows" iter="$i++">
+			<div><span id="street_line_#$i#_ship">#$shippingvals['address']['line_'.$i]#</span></div>
+		</xar:for>
                 <div><span id="city_addr_ship">#$shippingvals['address']['city']#</span>&#160;<span id="state_addr_ship">#$shippingvals['address']['province']#</span>&#160;<span id="postal_code_ship">#$shippingvals['address']['postal_code']#</span></div>
             </div>
         </fieldset>

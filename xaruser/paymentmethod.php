@@ -59,7 +59,8 @@ function shop_user_paymentmethod()
     $data['paymentobject'] = DataObjectMaster::getObject(array('name' => 'shop_paymentmethods')); 
     $data['paymentobject']->properties['name']->display_show_salutation = false;
     $data['paymentobject']->properties['name']->display_show_middlename = false;
-    $data['paymentobject']->properties['address']->display_rows = 2;
+	$data['streetrows'] = 3;
+    $data['paymentobject']->properties['address']->display_rows = $data['streetrows'];
     $data['paymentobject']->properties['address']->display_show_country = false;
     $data['properties'] = $data['paymentobject']->getProperties();
 

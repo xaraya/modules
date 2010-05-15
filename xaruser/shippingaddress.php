@@ -43,7 +43,7 @@ function shop_user_shippingaddress()
     $data['shippingobject'] = DataObjectMaster::getObject(array('name' => 'shop_shippingaddresses'));
     $data['shippingobject']->properties['name']->display_show_salutation = false;
     $data['shippingobject']->properties['name']->display_show_middlename = false;
-    $data['shippingobject']->properties['address']->display_rows = 2;
+    $data['shippingobject']->properties['address']->display_rows = 3;
     $data['shippingobject']->properties['address']->display_show_country = false;
     $data['properties'] = $data['shippingobject']->properties;
 
