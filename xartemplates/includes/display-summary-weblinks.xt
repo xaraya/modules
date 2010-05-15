@@ -13,16 +13,13 @@
             <xar:data-output property="$properties['title']" />
         </a>
         <br />        
-            Description        
-        : <xar:data-output property="$properties['summary']" />
+            Description: <xar:data-output property="$properties['summary']" />
         <br />
         <xar:if condition="!empty($notes)">            
-            Source            
-        : <xar:data-output property="$properties['notes']" />
+            Source: <xar:data-output property="$properties['notes']" />
             <br />
         </xar:if>        
-            Added on        
-        : #xarLocaleGetFormattedDate('long',$properties['created']->value)# 
+            Added on: #xarLocaleGetFormattedDate('long',$properties['created']->value)# 
           #xarLocaleGetFormattedTime('long',$properties['created']->value)#
         <xar:if condition="!empty($rating)">
             -            
@@ -42,7 +39,7 @@
         </xar:if>
         <xar:if condition="xarModIsHooked('ratings','publications',6)">
             | <a href="#$link#">                
-                    Rate / Comment                
+                    Rate / Comment
             </a>
         </xar:if>
         <div class="xar-publications-keywords">
