@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-norm xar-standard-box-padding">
         <h3>
-        <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
+        <a class="xar-title" href="#xarModURL('publications','user','display',array('id' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
                 <xar:data-output property="$properties['title']" />
             </a>
         </h3>

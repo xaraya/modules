@@ -24,7 +24,7 @@
                             </a>
                         <xar:else />
                             <xar:if condition="$field eq $keyfieldalias AND xarSecurityCheck('ReadListings',0)">
-                                <a href="#xarModURL('publications','user','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $localmodule))#">
+                                <a href="#xarModURL('publications','user','display',array('id' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $localmodule))#">
                                     <xar:data-output property="$properties[$column]" value="$value" />
                                 </a>
                             <xar:else />
