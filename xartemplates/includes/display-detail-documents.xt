@@ -1,9 +1,9 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:set name="ptid">$object->objectid</xar:set>
-    <xar:set name="cids">$properties['categories']->getValue()</xar:set>
     <xar:template file="publinks" type="module" />
     <!--
+    <xar:set name="cids">$properties['categories']->getValue()</xar:set>
     <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$properties['id']" cids="$cids" showcatcount="$settings['showcatcount']" showempty="0" />
     -->
 
