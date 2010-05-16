@@ -1,17 +1,16 @@
 <?php
 /**
  * @package modules
- * @copyright (C) 2008-2009 The Digital Development Foundation
+ * @copyright (C) 2008-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage crispbb module
  * @link http://www.xaraya.com/index.php/release/970.html
- * @author
+ * @author crisp <crisp@crispcreations.co.uk>
  */
 /**
- * @author xardev@invalid.tld
- * @todo make me useful :@)
+ * @author crisp <crisp@crispcreations.co.uk>
  */
 sys::import('xaraya.structures.containers.blocks.basicblock');
 

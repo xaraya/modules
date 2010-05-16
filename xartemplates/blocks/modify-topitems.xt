@@ -29,5 +29,7 @@
         </label>
         <input type="text" name="numitems" id="numitems#$blockid#" size="3" maxlength="3" value="#$numitems#" />
     </div>
+<xar:else />
+    <p>There are no forums available to display items for</p>
 </xar:if>
 </xar:template>
