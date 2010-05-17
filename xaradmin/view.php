@@ -355,7 +355,7 @@ function publications_admin_view($args)
     sys::import('xaraya.structures.query');
     $q = new Query();
     $q->eq('parent_id',0);
-    $q->eq('itemtype',$ptid);
+    $q->eq('pubtype_id',$ptid);
     $data['conditions'] = $q;
 
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
