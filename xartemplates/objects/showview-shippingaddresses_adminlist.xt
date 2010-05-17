@@ -59,8 +59,7 @@
                
             </tr>
 
-	    
-	    
+	     
             <xar:foreach in="$items" key="$itemid" value="$fields">
                 <tr>
 
@@ -71,13 +70,6 @@
 <a href="#xarModURL('shop','admin','modify', array('itemid' => $itemid, 'name' => 'shop_shippingaddresses'))#"><img src="#sys::code()#modules/base/xarimages/icons/modify.png" width="16" height="16" alt="Modify" /></a>
 </div>
            
-<xar:comment>Probably shouldn't make it easy to delete transaction records</xar:comment>		     
-<xar:comment><div>
-<a href="#xarModURL('shop','admin','delete', array('itemid' => $itemid, 'name' => $objectname))#"><img src="#sys::code()#modules/base/xarimages/icons/delete.png" width="16" height="16" alt="Delete" /></a>
-</div></xar:comment>
-
-
-
                         </td>
                     </xar:if>
 
@@ -120,7 +112,7 @@
                     </xar:foreach>
                   
                 </tr>
-            </xar:foreach>
+            </xar:foreach> 
         </table>
  
 </xar:template>
