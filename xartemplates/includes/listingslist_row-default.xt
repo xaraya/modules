@@ -19,7 +19,7 @@
                 <xar:else />
                     <td>
                         <xar:if condition="xarUserIsLoggedIn() AND $field eq $keyfieldalias AND xarSecurityCheck('EditListings',0)">
-                            <a href="#xarModURL('publications','user','modify',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname,'tplmodule' => $localmodule))#">
+                            <a href="#xarModURL('publications','admin','modify',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname,'tplmodule' => $localmodule))#">
                                 <xar:data-output property="$properties[$column]" value="$value" />
                             </a>
                         <xar:else />
@@ -47,15 +47,9 @@
                 <xar:if condition="$field eq $primaryalias AND !$showprimary">
                     <xar:continue />
                 </xar:if>
-                <xar:if condition="substr($field,0,1) eq 'c'">
-                    <td>
-                        #$value#
-                    </td>
-                <xar:else />
-                    <td>
-                        <xar:data-output property="$properties[$column]" value="$value"/>
-                    </td>
-                </xar:if>
+                <td>
+                    <xar:data-output property="$properties[$column]" value="$value"/>
+                </td>
             </xar:foreach>
 
             <xar:template file="listingslist_rowsuffix" module="$localmodule,listings" />
