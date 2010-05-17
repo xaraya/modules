@@ -62,50 +62,10 @@
                     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
 
                     <div style="width: 100%">
-                    <xar:data-input type="listingslist" object="$object" conditions="$conditions" tplmodule="publications" layout="publications"/>
-
+                        <xar:data-input type="listingslist" object="$object" conditions="$conditions" tplmodule="publications" layout="publications"/>
                     </div>
-                    <xar:if condition="!empty($showstate) and count($items) gt 0">
-                        <p>
-                            <label for="state">
-                                Change checked article state to                                
-                            :</label>&#160;
-                            <select name="state" id="state">
-                            <xar:if condition="xarSecurityCheck('ManagePublications',0,'Publication',$id.':All:All:All')">
-                                <option value="-1">
-                                    [Delete All]                                    
-                                </option>
-                            </xar:if>
-                            <xar:foreach in="$states" key="$id" value="$name">
-                                <xar:if condition="$id eq 2">
-                                    <xar:comment>Approved</xar:comment>
-                                    <option value="#$id#" selected="selected">
-                                        #$name#
-                                    </option>
-                                <xar:elseif condition="$id eq 3"/>
-                                    <xar:comment>Frontpage</xar:comment>
-                                    <xar:if condition="xarModVars::get('publications','defaultpubtype') eq $id or xarModVars::get('publications','defaultpubtype') eq ''">
-                                        <option value="#$id#">
-                                            #$name#
-                                        </option>
-                                    </xar:if>
-                                <xar:else/>
-                                    <option value="#$id#">
-                                        #$name#
-                                    </option>
-                                </xar:if>
-                            </xar:foreach>
-                            </select>&#160;
-                            <input type="submit" value="#$changestatelabel#" />&#160;
-                            <a href="javascript:xar_base_checkall(document.getElementById('viewpublications'),true)">Check All</a>&#160;|&#160;
-                            <a href="javascript:xar_base_checkall(document.getElementById('viewpublications'),false)">Uncheck All</a> ]
-                        </p>
-                    </xar:if>
                 </div>
             </form>
-            <!--
-            #$pager#
-            -->
         </div>
     </div>
 </xar:template>
