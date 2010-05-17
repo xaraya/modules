@@ -22,14 +22,6 @@ class Categories_NavigationBlockAdmin extends Categories_NavigationBlock impleme
     {
         $vars = parent::modify($data);
 
-        // Defaults
-        if (empty($vars['layout'])) $vars['layout'] = $this->layout;
-        if (empty($vars['showcatcount'])) $vars['showcatcount'] = $this->showcatcount;
-        if (empty($vars['showchildren'])) $vars['showchildren'] = $this->showchildren;
-        if (empty($vars['startmodule'])) $vars['startmodule'] = $this->startmodule;
-        if (empty($vars['showempty'])) $vars['showempty'] = $this->showempty;
-        if (empty($vars['dynamictitle'])) $vars['dynamictitle'] = $this->dynamictitle;
-
         $vars['modules'] = array();
         $vars['modules'][] = array('id' => '',
                                    'name' => xarML('Adapt dynamically to current page'));

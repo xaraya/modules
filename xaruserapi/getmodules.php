@@ -113,7 +113,7 @@ function categories_userapi_getmodules($args)
 
         $modlist = array();
         while (!$result->EOF) {
-            list($modid,$regid,$itemtype,$numlinks,$numitems,$numcats) = $result->fields;
+            list($modid,$modname,$regid,$itemtype,$numlinks,$numitems,$numcats) = $result->fields;
             if (!isset($modlist[$regid])) {
                 $modlist[$regid] = array();
             }
