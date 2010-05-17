@@ -49,9 +49,9 @@ function shop_admin_transaction($args)
 	
     //$values is an associative array of property names and values, so...
     foreach ($values as $name => $value) {
-        $data[$name] = xarVarPrepForDisplay($value);
+        $data[$name] = $value;
     }
-
+ 
 	$data['products'] = $products;
 
     return $data;

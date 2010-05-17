@@ -27,7 +27,7 @@ TODO: needs shipping address
 	<strong><xar:data-label property="$properties['customer']" />:</strong>&#160;  
 	 <a href="#xarModURL('shop','admin','modifycustomer',array(
 	'itemid'=> $cust['id']
-	))#">#$cust['first_name']# #$cust['last_name']#</a>  
+	))#">#$cust['name']#</a>  
 </td>
 <td> 
 	<strong><xar:data-label property="$properties['total']" />:</strong>  #$total#
@@ -50,14 +50,13 @@ TODO: needs shipping address
 		</tr> 
 	 </xar:foreach>
 	 </table>
-</div>
-
+</div>  
 
 <table style="width:36%; margin-top: 6px; float:left; margin-right: 20px;"> 
-<tr><td><strong><xar:data-label property="$properties['street_addr']" />:</strong></td><td> #$street_addr#</td></tr>
-<tr><td><strong><xar:data-label property="$properties['city_addr']" />:</strong></td><td>#$city_addr#</td></tr>
-<tr><td><strong><xar:data-label property="$properties['state_addr']" />:</strong></td><td>#$state_addr#</td></tr>
-<tr><td><strong><xar:data-label property="$properties['postal_code']" />:</strong></td><td>#$postal_code# </td></tr>
+<tr><td><strong>Street:</strong></td><td> #$address['line_1']#</td></tr>
+<tr><td><strong>City:</strong></td><td>#$address['city']#</td></tr>
+<tr><td><strong>State:</strong></td><td>#$address['province']#</td></tr>
+<tr><td><strong>Postal code:</strong></td><td>#$address['postal_code']# </td></tr>
  </table>
  <table style="width:36%; margin-top: 6px; float:left;">
 <tr><td><strong><xar:data-label property="$properties['card_type']" />:</strong></td><td>#$card_type#</td></tr>
