@@ -25,7 +25,7 @@
 
                 <table id="paymentmethod">
                      <xar:foreach in="$paymentmethods" key="$key" value="$val">
-
+ 
                          <xar:set name="card_last4">substr($val['card_num'], -4)</xar:set>
                          <xar:set name="month">substr($val['exp_date'], 0, 2)</xar:set>
                          <xar:set name="year">substr($val['exp_date'], -2)</xar:set>
@@ -46,7 +46,7 @@
                                 </xar:if> 
                             </td>
                             <td><strong>#$val['card_type']#</strong></td><td>ending: #$card_last4#</td>
-                            <td><strong>#$val['name']['first_name']#</strong>&#160;<strong>#$val['name']['last_name']#</strong></td>
+                            <td><strong>#$val['name']#</strong></td>
 
                             <td>
                                 <xar:if condition="$exp lt $now">
