@@ -27,9 +27,9 @@
                     <xar:foreach in="$shippingaddresses" key="$key" value="$val">
 
                     <div class="shippingaddressbox">
-                    <div>#$val['first_name']# #$val['last_name']#</div>
-                    <div>#$val['street_addr']#</div>
-                    <div>#$val['city_addr']# #$val['state_addr']# #$val['postal_code']#</div>
+                    <div>#$val['name']#</div>
+                    <div>#$val['address']['line_1']#</div>
+                    <div>#$val['address']['city']# #$val['address']['province']# #$val['address']['postal_code']#</div>
                         <xar:if condition="isset($next)">
                             <xar:set name="next">$next</xar:set>
                         <xar:else />

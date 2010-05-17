@@ -106,8 +106,9 @@ function shop_user_paymentmethod()
         
         if (!$isvalid) { 
             return xarTplModule('shop','user','paymentmethod', $data);
-        } else {
-            xarSession::setVar('paymentmethod',$data['paymentobject']->createItem());
+        } else {       
+			$data['paymentobject']->properties['customer']->setValue(xarUserGetVar('id'));
+			xarSession::setVar('paymentmethod',$data['paymentobject']->createItem());
             xarController::redirect(xarModURL('shop','user','order')); 
             return true;
         }

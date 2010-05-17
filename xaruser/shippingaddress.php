@@ -36,16 +36,17 @@ function shop_user_shippingaddress()
                     'where' => 'customer eq ' . xarUserGetVar('id'),
                     );
     $shippingaddresses = $mylist->getItems($filters);
+
     if (count($shippingaddresses) > 0) {
         $data['shippingaddresses'] = $shippingaddresses;
     }
     
-    $data['shippingobject'] = DataObjectMaster::getObject(array('name' => 'shop_shippingaddresses'));
-    $data['shippingobject']->properties['name']->display_show_salutation = false;
-    $data['shippingobject']->properties['name']->display_show_middlename = false;
-    $data['shippingobject']->properties['address']->display_rows = 2;
-    $data['shippingobject']->properties['address']->display_show_country = false;
-    $data['properties'] = $data['shippingobject']->properties;
+    $shippingobject = DataObjectMaster::getObject(array('name' => 'shop_shippingaddresses'));
+    $shippingobject->properties['name']->display_show_salutation = false;
+    $shippingobject->properties['name']->display_show_middlename = false;
+    $shippingobject->properties['address']->display_rows = 2;
+    $shippingobject->properties['address']->display_show_country = false;
+    $data['properties'] = $shippingobject->properties;
 
     if ($shipto) {
         xarSession::setVar('shippingaddress',$shipto);
@@ -62,14 +63,14 @@ function shop_user_shippingaddress()
         if ($remove == xarSession::getVar('shippingaddress')) {
             xarSession::delVar('shippingaddress');
         }
-        $data['shippingobject']->getItem(array('itemid' => $remove));
-        $data['shippingobject']->deleteItem();
+        $shippingobject->getItem(array('itemid' => $remove));
+        $shippingobject->deleteItem();
         xarController::redirect(xarModURL('shop','user','shippingaddress'));
         return true;
     }
 
     if ($proceed) {
-        $isvalid = $data['shippingobject']->checkInput();
+        $isvalid = $shippingobject->checkInput();
         if (!$isvalid) {
             return xarTplModule('shop','user','shippingaddress',$data);
         }
@@ -77,12 +78,13 @@ function shop_user_shippingaddress()
         // Save the customer data
         $custobject = DataObjectMaster::getObject(array('name' => 'shop_customers'));
         $custobject->getItem(array('itemid' => xarUserGetVar('id')));
-        $name = $data['shippingobject']->properties['name']->value;
+        $name = $shippingobject->properties['name']->value;
         $custobject->properties['name']->setValue($name);
         $custobject->updateItem();
 
         // Save the shipping address
-        $itemid= $data['shippingobject']->createItem();
+		$shippingobject->properties['customer']->setValue(xarUserGetVar('id'));
+        $itemid= $shippingobject->createItem();
         xarSession::setVar('shippingaddress',$itemid);
 
         // update the name field in roles to use first and last name instead of email
