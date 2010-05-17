@@ -106,7 +106,7 @@
     </property>
     <property name="itemtype">
       <id>249</id>
-      <label>Itemtype</label>
+      <label>Type</label>
       <type>objectref</type>
       <defaultvalue>7</defaultvalue>
       <source>xar_publications.pubtype_id</source>
