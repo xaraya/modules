@@ -1,47 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:javascript module="publications" filename="tabs.js" />
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:if condition="xarModVars::get('mailer','useModuleAlias')">
-                <xar:var scope="module" module="mailer" name="aliasname"/>
-            <xar:else />
-                Modify Item
-            </xar:if>
+            Publications Administration            
         </span>
     </div>
     <div class="xar-mod-body">
         <h2>
-            <xar:ml>
-                <xar:mlstring>Modify Item #(1) in #(2)</xar:mlstring>
-                <xar:mlvar>#$object:itemid#</xar:mlvar>
-                <xar:mlvar>#$object:label#</xar:mlvar>
-            </xar:ml>
+            Modify Publication
         </h2>
-
-        <xar:if condition="isset($preview)">
-            <fieldset>
-                <legend>Preview</legend>
-                <xar:data-display object="$object" tplmodule="$tplmodule"/>
-            </fieldset>
+        <div style="float:right">
+            <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#">
+                Publications List
+            </a>
+        </div>
+        <div style="clear:both">&#160;</div>
+        <xar:if condition="!empty($object->withupload)">
+            <xar:set name="enctype">
+                'multipart/form-data'
+            </xar:set>
+        <xar:else />
+            <xar:set name="enctype">
+                'application/x-www-form-urlencoded'
+            </xar:set>
         </xar:if>
+        <form method="post" name="post" id="post" action="&xar-modurl-publications-user-update;" enctype="#$enctype#" >
+            <xar:set name="itemcount">count($items)</xar:set>
+            <xar:template file="pagetabs" type="module" />
+            
+            <xar:set name="index">0</xar:set>
+            <xar:foreach in="$items" key="$key" value="$item">
+                <xar:set name="dummy">$object->setFieldValues($item)</xar:set>
+                <xar:set name="dummy">$object->setFieldPrefix($key)</xar:set>
+                <xar:if condition="$tab eq 'preview' AND $index eq 0">
+                    <xar:set name="visible">array('none','none','block')</xar:set>
+                <xar:elseif condition="$tab ne 'preview' AND $index eq 0" />
+                    <xar:set name="visible">array('block','none','none')</xar:set>
+                <xar:else />
+                    <xar:set name="visible">array('none','none','none')</xar:set>
+                </xar:if>
 
-        <form method="post" action="#xarServer::getCurrentURL()#">
-          <fieldset>
-            <legend>Modify item details</legend>
-            <xar:data-form object="$object" tplmodule="$tplmodule"/>
-          </fieldset>
-          <fieldset>
-            <div class="xar-align-center">
-                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
-                <input type="hidden" name="name" id="name" value="#$object:name#"/>
-                <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#"/>
-                <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#"/>
-                <input type="hidden" name="confirm" id="confirm" value="true"/>
-                <xar:var name="label">Update</xar:var>
-                <input type="submit" value="#$label#" class="xar-margin-thickleft"/>
+                <xar:set name="index">$index + 1</xar:set>
+                <div id="page-#$index#" style="display: #$visible[0]#">
+                    <xar:set name="contentfile">'content-' . $object->name</xar:set>
+                    <xar:template file="$contentfile" type="module" />
+                </div>
+
+                <xar:set name="index">$index + 1</xar:set>
+                <div id="page-#$index#" style="display: #$visible[1]#">
+                    <xar:template file="publication-settings" type="module" />
+                </div>
+
+                <xar:set name="index">$index + 1</xar:set>
+                <div id="page-#$index#" style="display: #$visible[2]#">
+                    <fieldset class="xar-standard-box-padding xar-overflow-auto">
+                        <xar:data-display object="$object" tplmodule="publications" fieldprefix="$key" />
+                    </fieldset>
+                </div>
+            </xar:foreach>
+
+            <xar:if condition="!empty($prevart) || !empty($nextart)">
+                <div class="xar-normal xar-overflow-auto">
+                    <xar:if condition="!empty($prevart)">
+                    <a class="xar-floatleft" href="#$prevart#">&lt;
+                    prev</a>&#160;</xar:if>
+                    <xar:if condition="!empty($nextart)">
+                        <a class="xar-floatright" href="#$nextart#">
+                        next&gt;</a>
+                    </xar:if>
+                </div>
+            </xar:if>
+            <xar:template file="navtabs-user" type="module" />
+
+            <div class="xar-form-input-wrapper">
+                <div class="xar-form-container-after">
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#" />
+                    <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+                    <xar:set name="itemkeys">implode(',',array_keys($items))</xar:set>
+                    <input type="hidden" name="items" id="items" value="#$itemkeys#" />
+                    <input type="submit" name="preview" id="preview" value="#xarML('Create Preview')#" />
+                    <input type="submit" value="#xarML('Update Document')#" />
+                    <xar:comment>
+                        show a link to delete the article
+                    </xar:comment>
+                    <!--
+                        <xar:sec mask="ManagePublications" catch="false">
+                            <a href="#xarModURL('publications','admin','delete',array('id' => $object.itemid))#">
+                                Delete Publication                                
+                            </a>
+                        </xar:sec>
+                    -->
+                </div>
             </div>
-          </fieldset>
         </form>
     </div>
 </xar:template>
