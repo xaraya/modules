@@ -155,7 +155,7 @@ function xarpages_funcapi_facet($args)
 
             if ($itemtype_base_cids_count > 0) {
                 for($i = 1; $i <= $itemtype_base_cids_count; $i++) {
-                    $itemtype_base_cat = xarMod::apiFunc(
+                    $itemtype_base_cid = xarMod::apiFunc(
                         'categories', 'user', 'getcatbase',
                         array('modid' => $modid, 'itemtype' => $ptid, 'bid' => $i)
                     );
