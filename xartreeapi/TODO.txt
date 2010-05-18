@@ -1,0 +1,15 @@
+
+- Item up/down (within a single tree only - with removable stops at least)
+- Move item (to any branch, with an appropriate rebuild)
+- Rebuild tree (fix it when stuff gets out of step)
+- Delete item (with option to recursively remove descendants)
+
+- Various queries:
+  - Parent (done)
+  - Root
+  - Siblings (done)
+  - Ancestors (done)
+  - Descendants
+  - Previous sibling (done)
+  - Next sibling (done)
+  - etc.
