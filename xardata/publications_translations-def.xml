@@ -37,7 +37,7 @@
     <property name="source">
       <id>247</id>
       <label>Source Text</label>
-      <type>textarea_large</type>
+      <type>editor</type>
       <defaultvalue></defaultvalue>
       <source>xar_publications.body1</source>
       <status>34</status>
@@ -47,7 +47,7 @@
     <property name="translation">
       <id>247</id>
       <label>Translation</label>
-      <type>textarea_large</type>
+      <type>editor</type>
       <defaultvalue></defaultvalue>
       <source>xar_publications.body2</source>
       <status>34</status>
@@ -57,7 +57,7 @@
     <property name="notes">
       <id>248</id>
       <label>Notes</label>
-      <type>textarea</type>
+      <type>editor</type>
       <defaultvalue></defaultvalue>
       <source>xar_publications.notes</source>
       <status>34</status>
@@ -122,7 +122,7 @@
       <source>xar_publications.pubtype_id</source>
       <status>33</status>
       <seq>24</seq>
-      <configuration>a:4:{s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:18:"xar_publicationss_types";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:11:"description";}</configuration>
+      <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:18:"publications_types";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:11:"description";}</configuration>
     </property>
     <property name="start_date">
       <id>251</id>
