@@ -95,7 +95,7 @@ class AddressProperty extends TextBoxProperty
             
         }
         if (!empty($invalid)) $this->invalid = implode(',',$invalid);
-        $this->value = serialize($value);
+        $this->setValue($value);
         return $validity;
     }
 
@@ -115,6 +115,12 @@ class AddressProperty extends TextBoxProperty
         return $valuearray;
     }
     
+    public function setValue($value=null) 
+    {
+        if (empty($value)) $value = array();
+        $this->value = serialize($value);
+    }
+
     public function getValueArray() 
     {
         return $this->getValue();
