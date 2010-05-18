@@ -9,7 +9,7 @@
     </div>
     <div class="xar-mod-body">
         <h2>
-            Modify Publication
+            Modify <xar:data-output property="$properties['itemtype']" value="$ptid"/>
         </h2>
         <!--
         <xar:comment>
