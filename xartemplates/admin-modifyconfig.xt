@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- common admin menu for this module - remove link to the current function -->
     <div class="xar-mod-head">
-      <span class="xar-mod-title">FedExWS Administration</span>
+      <span class="xar-mod-title">USPSWS Administration</span>
     </div>
     <div class="xar-mod-body">
         <xar:template type="module" file="admintabs" />
@@ -13,14 +13,14 @@
 
         <form method="post" action="#xarServer::getCurrentURL()#">
             <fieldset>
-                <legend>Modify FedExWS Configuration</legend>
-                <xar:data-form object="$module_settings" tplmodule="fedexws" />
-		<h3>FedEx settings:</h3>
-                <xar:data-form object="$object" tplmodule="fedexws" itemid="0" />
+                <legend>Modify USPSWS Configuration</legend>
+                <xar:data-form object="$module_settings" tplmodule="uspsws" />
+		<h3>USPS settings:</h3>
+                <xar:data-form object="$object" tplmodule="uspsws" itemid="0" />
             </fieldset>
 
             <div class="xar-form-input-after">
-                <input type="hidden" name="authid" value="#xarSecGenAuthKey('fedexws')#" />
+                <input type="hidden" name="authid" value="#xarSecGenAuthKey('uspsws')#" />
                 <xar:data-input type="hidden" name="phase" value="update" />
                 <input type="hidden" name="objectid" value="#$object->objectid#" />
                 <input type="hidden" name="itemid" value="0" />

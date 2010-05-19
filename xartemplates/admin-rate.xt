@@ -5,12 +5,12 @@
     <xar:style scope="module" module="base" file="tabs" />
 
     <div class="xar-mod-head">
-      <span class="xar-mod-title">FedExWS Administration</span>
+      <span class="xar-mod-title">USPSWS Administration</span>
     </div>
    
     <div class="xar-mod-body">
         <xar:template type="module" file="admintabs" />
-
+<a name="res"></a>
         <h2>Calculate Rate</h2>
 
   <xar:if condition="isset($msg)">
@@ -18,7 +18,7 @@
 </xar:if>    
 
 
-<form method="post" action="#xarServer::getCurrentURL()#">
+<form method="post" action="#xarServer::getCurrentURL()###res">
           <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
           <input type="hidden" name="confirm" id="confirm" value="true" />
           <fieldset>
@@ -28,9 +28,7 @@
  
                 <xar:comment>The default template for the xar:data-form tag is
         shop/xartemplates/objects/showform.xt</xar:comment>
-                <xar:data-form object="$object" tplmodule="fedexws" />
-
-		<p>TODO: Add the rest of the fedex fields.  They're in fedexws_adminapi_rate(), just not in the object for this test form yet.</p><br />
+                <xar:data-form object="$object" tplmodule="uspsws" />
 
                 <div class="xar-form-input-wrapper-after"> 
                      <input type="submit" value="#xarML('Calculate')#" />
@@ -40,13 +38,19 @@
 
 
 <xar:if condition="isset($response)">
-	<p>Response from FedEx:</p> 
+	<h2>Response from USPS:</h2>
 
 	<xar:if condition="is_object($response)"> 
-		 <p>Rate: <strong>#$charge->Amount# #$charge->Currency#</strong></p> 
-		<p>The whole object returned by FedEx:</p> <xar:set name="dump">var_dump($response)</xar:set>
-	<xar:else />
-		#$response#
+
+		<xar:if condition="isset($error)">
+			Error: #$error#
+		<xar:elseif condition="isset($rate)" />
+
+			<p>Rate: #$rate#</p> 
+			<p><strong>The whole object returned by USPS:</strong></p> <xar:set name="dump">var_dump($response)</xar:set>
+
+		</xar:if>
+
 	</xar:if>
 
 </xar:if>

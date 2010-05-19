@@ -5,16 +5,16 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage fedexws Module
- * @link http://www.xaraya.com/index.php/release/eid/1031
+ * @subpackage uspsws Module
+ * @link http://www.xaraya.com/index.php/release/eid/1033
  * @author potion <ryan@webcommunicate.net>
  */
 /**
- *  FedExWS user main
+ *  USPSWS user main
  */
-function fedexws_user_main() {
+function uspsws_user_main() {
 
-    return xarTplModule('fedexws','user','main');
+    return xarTplModule('uspsws','user','main');
 
 }
 

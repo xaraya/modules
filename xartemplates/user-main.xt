@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-   <xar:style scope="module" module="fedexws" file="storefront" />
+   <xar:style scope="module" module="uspsws" file="storefront" />
    <div class="xar-mod-head">
-    <span class="xar-mod-title">fedexws</span>
+    <span class="xar-mod-title">uspsws</span>
     </div>
     <div class="xar-mod-body">
 
-    <h2>FedExWS</h2> 
+    <h2>USPS Web Services</h2> 
      
-     <p><a href="#xarModURL('fedexws','admin')#">Admin FedExWS module</a></p>
+     <p><a href="#xarModURL('uspsws','admin')#">Admin USPSWS module</a></p>
 
 
     </div>

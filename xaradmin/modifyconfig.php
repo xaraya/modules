@@ -5,18 +5,18 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage fedexws Module
- * @link http://www.xaraya.com/index.php/release/eid/1031
+ * @subpackage uspsws Module
+ * @link http://www.xaraya.com/index.php/release/eid/1033
  * @author potion <ryan@webcommunicate.net>
  */
 /**
  *  Modifyconfig
  */
-function fedexws_admin_modifyconfig()
+function uspsws_admin_modifyconfig()
 {
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('AdminFedExWS')) return;
+    if (!xarSecurityCheck('AdminUSPSWS')) return;
 
     // Check if this template has been submitted, or if we just got here
     if (!xarVarFetch('phase',        'str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
@@ -24,12 +24,12 @@ function fedexws_admin_modifyconfig()
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
     // Get the object we'll be working with for shop-specific configuration
-    $data['object'] = DataObjectMaster::getObject(array('name' => 'fedexws_module_settings'));
+    $data['object'] = DataObjectMaster::getObject(array('name' => 'uspsws_module_settings'));
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
     $data['object']->getItem(array('itemid' => 0));
 
     // Get the object we'll be working with for common configuration settings
-    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'fedexws'));
+    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'uspsws'));
     // Decide which fields are configurable in this module
     $data['module_settings']->setFieldList('user_menu_link');
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention

@@ -7,18 +7,18 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage fedexws Module
- * @link http://www.xaraya.com/index.php/release/eid/1031
+ * @subpackage uspsws Module
+ * @link http://www.xaraya.com/index.php/release/eid/1033
  * @author potion <ryan@webcommunicate.net>
  */
 /**
  * utility function pass individual menu items to the main menu
  *
  * This function will create the links that are shown in the admin menu
- * @author the fedexws module development team
+ * @author the uspsws module development team
  * @return array The array contains the menulinks for the main menu items.
  */
-function fedexws_adminapi_getmenulinks()
+function uspsws_adminapi_getmenulinks()
 {
     $menulinks = array();
     // Add a security check, so only admins can see this link
@@ -26,7 +26,7 @@ function fedexws_adminapi_getmenulinks()
 
     if (xarSecurityCheck('viewcart',0)) {
 
-        $menulinks[] = Array('url'   => xarModURL('fedexws',
+        $menulinks[] = Array('url'   => xarModURL('uspsws',
                                                    'admin',
                                                    'products'),
                               // In order to display the tool tips and label in any language,
@@ -35,10 +35,10 @@ function fedexws_adminapi_getmenulinks()
                               'label' => xarML('Products'));
     }
 
-    if (xarSecurityCheck('Adminfedexws',0)) {
+    if (xarSecurityCheck('Adminuspsws',0)) {
         // Add a link to the module's configuration.
         // We place this link last in the list so have a similar menu for all modules
-        $menulinks[] = Array('url'   => xarModURL('fedexws',
+        $menulinks[] = Array('url'   => xarModURL('uspsws',
                                                    'admin',
                                                    'modifyconfig'),
                               // In order to display the tool tips and label in any language,
@@ -47,10 +47,10 @@ function fedexws_adminapi_getmenulinks()
                               'label' => xarML('Modify Configuration'));
     }
 
-	    if (xarSecurityCheck('Adminfedexws',0)) {
+	    if (xarSecurityCheck('Adminuspsws',0)) {
         // Add a link to the module's configuration.
         // We place this link last in the list so have a similar menu for all modules
-        $menulinks[] = Array('url'   => xarModURL('fedexws',
+        $menulinks[] = Array('url'   => xarModURL('uspsws',
                                                    'admin',
                                                    'overview'),
                               // In order to display the tool tips and label in any language,

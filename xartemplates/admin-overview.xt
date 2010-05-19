@@ -3,17 +3,17 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- common admin menu for this module - remove link to the current function -->
     <div class="xar-mod-head">
-        <span class="xar-mod-title">fedexws Administration</span>
+        <span class="xar-mod-title">uspsws Administration</span>
     </div>
     <div class="xar-mod-body">
         <xar:template type="module" file="admintabs" />
-        <h2>FedExWS Overview</h2>
+        <h2>USPS Web Services Overview</h2>
 
-<p>Test and connect to FedEx web services.</p>  
+<p>USPS rate calculator.</p>  
 
-<p>Use fedexws_xaradminapi_rate() to calculate FedEx shipping rates in your e-commerce module.</p>
+<p>Use uspsws_adminapi_rate() to calculate USPS shipping rates in your e-commerce module.</p>
 
-<p>Enter your FedEx developer credentials in the <a href="#xarModURL('fedexws','admin','modifyconfig')#">Modify Config page</a>.  If you don't have a FedEx developer account, you'll need to set one up <a href="http://www.fedex.com/developer">here</a>.  It's free.</p>
+<p>Enter your USPS developer credentials in the <a href="#xarModURL('uspsws','admin','modifyconfig')#">Modify Config page</a>.  If you haven't registered for USPS Web Tools, you'll need to do so <a href="https://secure.shippingapis.com/registration/">here</a>.  It's free.</p>
 
     </div>
 </xar:template>

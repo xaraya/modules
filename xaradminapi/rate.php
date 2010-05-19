@@ -1,145 +1,104 @@
 <?php
 /**
- * fedexws
+ * uspsws
  *
  * @package modules
  * @copyright (C) 2009 WebCommunicate.net
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage fedexws
- * @link http://xaraya.com/index.php/release/1032.html
+ * @subpackage uspsws
+ * @link http://xaraya.com/index.php/release/1033.html
  * @author Ryan Walker <ryan@webcommunicate.net>
  */
 /**
- * Calculate FedEx rates
+ * Calculate USPS rates
  */
 
-function fedexws_adminapi_rate($args) {
+function uspsws_adminapi_rate($args) {
 
-	require_once('code/modules/fedexws/fedex/library/fedex-common.php');
-	
-	$getobj = false;
+	/* I'm using the USPS production server URL below.  The USPS test server is not very useful.  After you sign up for USPS Web Tools, you can send an email to the tech support address at http://www.usps.com/webtools/technical.htm and request that they upgrade you to a production account.  You will likely get a quick response notifying you that your account has been upgraded. */
+	$url = "http://production.shippingapis.com/ShippingAPI.dll";
 
-	$fedex_key = xarModVars::get('fedexws','key');
-	$fedex_password = xarModVars::get('fedexws','password');
-
-	$fedex_acctnumber = xarModVars::get('fedexws','acctnumber');
-	$fedex_meternumber = xarModVars::get('fedexws','meternumber');
-
-	//Defaults for testing...
-
-	$Shipper = array('Address' => array(
-											  'StreetLines' => array('10 Fed Ex Pkwy'), // Origin details
-											  'City' => 'Memphis',
-											  'StateOrProvinceCode' => 'TN',
-											  'PostalCode' => '38115',
-											  'CountryCode' => 'US'));
-
-	$DropoffType = 'REGULAR_PICKUP'; 
-	$ServiceType = 'FEDEX_GROUND'; 
-	$PackagingType = 'YOUR_PACKAGING';
-
-	$Recipient = array('Address' => array (
-												   'StreetLines' => array('13450 Farmcrest Ct'), // Destination details
-												   'City' => 'Herndon',
-												   'StateOrProvinceCode' => 'VA',
-												   'PostalCode' => '20171',
-												   'CountryCode' => 'US'));
-
-	$PaymentType = 'SENDER';
-	$PayorCountryCode = 'US';
-	$RateRequestTypes = 'ACCOUNT'; 
-	$RateRequestTypes = 'LIST'; // not sure why they set this twice
-	$PackageCount = '2';
-	$PackageDetail = 'INDIVIDUAL_PACKAGES';  //  Or PACKAGE_SUMMARY
-	$RequestedPackageLineItems = array('0' => array('Weight' => array('Value' => 2.0,
-																						'Units' => 'LB'),
-																						'Dimensions' => array('Length' => 10,
-																							'Width' => 10,
-																							'Height' => 3,
-																							'Units' => 'IN')),
-																	   '1' => array('Weight' => array('Value' => 5.0,
-																						'Units' => 'LB'),
-																						'Dimensions' => array('Length' => 20,
-																							'Width' => 20,
-																							'Height' => 10,
-																							'Units' => 'IN')));
-
+	$usps_userid = xarModVars::get('uspsws','userid');
 
 	extract($args);
 
-
-	$newline = "<br />";
-	//The WSDL is not included with the sample code.
-	//Please include and reference in $path_to_wsdl variable.
-	$path_to_wsdl = "code/modules/fedexws/fedex/wsdl/RateService_v7.wsdl";
-
-	ini_set("soap.wsdl_cache_enabled", "0");
-	 
-	$client = new SoapClient($path_to_wsdl, array('trace' => 1)); // Refer to http://us3.php.net/manual/en/ref.soap.php for more information
-
-	$request['WebAuthenticationDetail'] = array('UserCredential' =>
-										  array('Key' => $fedex_key, 'Password' => $fedex_password)); // Replace 'XXX' and 'YYY' with FedEx provided credentials 
-	$request['ClientDetail'] = array('AccountNumber' => $fedex_acctnumber, 'MeterNumber' => $fedex_meternumber);// Replace 'XXX' with your account and meter number
-	$request['TransactionDetail'] = array('CustomerTransactionId' => ' *** Rate Request v7 using PHP ***');
-	$request['Version'] = array('ServiceId' => 'crs', 'Major' => '7', 'Intermediate' => '0', 'Minor' => '0');
-	$request['ReturnTransitAndCommit'] = true;
-	
-	
-	$request['RequestedShipment']['DropoffType'] = $DropoffType; // valid values REGULAR_PICKUP, REQUEST_COURIER, ...
-	$request['RequestedShipment']['ShipTimestamp'] = date('c');
-	$request['RequestedShipment']['ServiceType'] = $ServiceType; // valid values STANDARD_OVERNIGHT, PRIORITY_OVERNIGHT, FEDEX_GROUND, ...
-	$request['RequestedShipment']['PackagingType'] = $PackagingType; // valid values FEDEX_BOX, FEDEX_PAK, FEDEX_TUBE, YOUR_PACKAGING, ...
-	$request['RequestedShipment']['Shipper'] = $Shipper;
-	$request['RequestedShipment']['Recipient'] =$Recipient;
-	$request['RequestedShipment']['ShippingChargesPayment'] = array('PaymentType' => $PaymentType,
-															'Payor' => array('AccountNumber' => $fedex_acctnumber, // payor's account number
-																		 'CountryCode' => $PayorCountryCode));
-	// $request['RequestedShipment']['RateRequestTypes'] = 'ACCOUNT'; // mistake in FedEx's code?
-	$request['RequestedShipment']['RateRequestTypes'] = $RateRequestTypes; 
-	$request['RequestedShipment']['PackageCount'] = $PackageCount;
-	$request['RequestedShipment']['PackageDetail'] = $PackageDetail;  //  Or PACKAGE_SUMMARY
-	$request['RequestedShipment']['RequestedPackageLineItems'] = $RequestedPackageLineItems;
-
-
-	try 
-	{
-		$response = $client ->getRates($request);
-			
-		if ($response -> HighestSeverity != 'FAILURE' && $response -> HighestSeverity != 'ERROR')
-		{
-			if ($getobj) {
-				writeToLog($client);
-				return $response;
-			}
-			$res = xarMod::APIFunc('fedexws','admin','getrequestresponse',$client);
-		}
-		else
-		{
-			$res = 'Error in processing transaction.'. $newline. $newline; 
-			foreach ($response -> Notifications as $notification)
-			{           
-				if(is_array($response -> Notifications))
-				{              
-				   $res .= $notification -> Severity;
-				   $res .= ': ';           
-				   $res .= $notification -> Message . $newline;
-				}
-				else
-				{
-					$res .= $notification . $newline;
-				}
-			} 
-		} 
-
-		writeToLog($client);    // Write to log file  
-		return $res;
-
-	} catch (SoapFault $exception) {
-	   printFault($exception, $client);        
+	function ordinal_suffix($n) {
+		 $n_last = $n % 100;
+		 if (($n_last > 10 && $n_last < 14) || $n == 0){
+			  return "{$n}th";
+		 }
+		 switch(substr($n, -1)) {
+			  case '1':    return "{$n}st";
+			  case '2':    return "{$n}nd";
+			  case '3':    return "{$n}rd";
+			  default:     return "{$n}th";
+		 }
 	}
 
+	$xml = '<RateV3Request USERID="' . $usps_userid . '">';
+
+	$num = 0;
+
+	foreach ($packages as $pkg) {
+
+		$num++;
+		$ID = ordinal_suffix($num);
+		$ID = strtoupper($ID);
+
+		if ($pkg['machinable'] == 1) {
+			$pkg['machinable'] = 'true';
+		} 
+		if ($pkg['machinable'] == 0) {
+			$pkg['machinable'] = 'false';
+		}
+
+		// There may be a few other optional fields you can add to the XML below.  See the USPS documentation at http://www.usps.com/webtools/technical.htm
+
+		$xml .= '<Package ID="' . $ID . '">';
+
+			$xml .= '<Service>' . $pkg['service'] . '</Service>';
+
+			$xml .= '<FirstClassMailType>' . $pkg['firstclassmailtype'] . '</FirstClassMailType>';
+
+			$xml .= '<ZipOrigination>' . $pkg['ziporigination'] . '</ZipOrigination>';
+
+			$xml .= '<ZipDestination>' . $pkg['zipdestination'] . '</ZipDestination>';
+
+			$xml .= '<Pounds>' . $pkg['pounds'] . '</Pounds>';
+
+			$xml .= '<Ounces>' . $pkg['ounces'] . '</Ounces>';
+
+			$xml .= '<Size>' . $pkg['size'] . '</Size>';
+
+			$xml .= '<Machinable>' . $pkg['machinable'] . '</Machinable>';
+
+		$xml .= '</Package>';
+
+	}
+
+	$xml .= '</RateV3Request>';
+
+	$str = 'API=RateV3&XML=' . $xml;
+
+	$request = curl_init();  
+	curl_setopt($request, CURLOPT_URL, $url);  
+	curl_setopt($request, CURLOPT_HEADER, 1);  
+	curl_setopt($request, CURLOPT_RETURNTRANSFER, 1);  
+	curl_setopt($request, CURLOPT_POST, 1); 
+
+	curl_setopt($request, CURLOPT_POSTFIELDS,$str);  
+	$response = curl_exec($request); 
+ 
+	curl_close ($request); // close curl object
+
+	$xml = strstr($response, '<?'); 
+
+	$object = new SimpleXMLElement($xml);
+
+	return $object;
+ 
 }
 
 ?>

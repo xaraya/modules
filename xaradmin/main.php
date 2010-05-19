@@ -5,17 +5,17 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage fedexws Module
- * @link http://www.xaraya.com/index.php/release/eid/1031
+ * @subpackage uspsws Module
+ * @link http://www.xaraya.com/index.php/release/eid/1033
  * @author potion <ryan@webcommunicate.net>
  */
 /**
  *  List customers
  */
-function fedexws_admin_main()
+function uspsws_admin_main()
 {
 
-     return xarTplModule('fedexws','admin','overview');
+     return xarTplModule('uspsws','admin','overview');
 
 }
 

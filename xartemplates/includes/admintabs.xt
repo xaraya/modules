@@ -4,11 +4,11 @@
 <xar:comment>Common Administration menu</xar:comment>
 <xar:style scope="module" module="base" file="tabs" />
 
-<xar:set name="info">xarRequest::getInfo()</xar:set>
+<xar:set name="info">xarController::$request->getInfo()</xar:set>
 <xar:set name="activetab">$info[2]</xar:set>
 <div>
   <ul class="xar-tabs">
-    <xar:sec mask="AdminFedExWS" catch="false">
+    <xar:sec mask="AdminUSPSWS" catch="false">
         <xar:if condition="$activetab eq 'rate'">
             <xar:set name="tabclass">'xar-tab-active'</xar:set>
             <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
@@ -17,12 +17,12 @@
             <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
         </xar:if>
         <li class="#$tabclass#">
-          <a href="#xarModURL('fedexws','admin','rate')#" class="#$linkclass#">
+          <a href="#xarModURL('uspsws','admin','rate')#" class="#$linkclass#">
              Rate
           </a>
         </li>
     </xar:sec>
-    <xar:sec mask="Adminfedexws" catch="false">
+    <xar:sec mask="Adminuspsws" catch="false">
         <xar:if condition="$activetab eq 'modifyconfig'">
             <xar:set name="tabclass">'xar-tab-active'</xar:set>
             <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
@@ -31,12 +31,12 @@
             <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
         </xar:if>
         <li class="#$tabclass#">
-          <a href="#xarModURL('fedexws','admin','modifyconfig')#" class="#$linkclass#">
+          <a href="#xarModURL('uspsws','admin','modifyconfig')#" class="#$linkclass#">
             Modify Config
           </a>
         </li>
     </xar:sec>
-    <xar:sec mask="Editfedexws" catch="false">
+    <xar:sec mask="Edituspsws" catch="false">
         <xar:if condition="$activetab eq 'main' or $activetab eq 'overview' or $activetab eq 'docs'">
             <xar:set name="tabclass">'xar-tab-active'</xar:set>
             <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
@@ -45,7 +45,7 @@
             <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
         </xar:if>
         <li class="#$tabclass#">
-          <a href="#xarModURL('fedexws','admin','overview')#" class="#$linkclass#">
+          <a href="#xarModURL('uspsws','admin','overview')#" class="#$linkclass#">
             Overview
           </a>
         </li>

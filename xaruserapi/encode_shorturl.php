@@ -7,8 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage fedexws Module
- * @link http://www.xaraya.com/index.php/release/eid/1031
+ * @subpackage uspsws Module
+ * @link http://www.xaraya.com/index.php/release/eid/1033
  * @author potion <ryan@webcommunicate.net>
  */
 /**
@@ -19,7 +19,7 @@
  * @returns string
  * @return path to be added to index.php for a short URL, or empty if failed
  */
-function fedexws_userapi_encode_shorturl($args)
+function uspsws_userapi_encode_shorturl($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -37,7 +37,7 @@ function fedexws_userapi_encode_shorturl($args)
     // if we want to add some common arguments as URL parameters below
     $join = '?';
     // we can't rely on xarModGetName() here -> you must specify the modname !
-    $module = 'fedexws';
+    $module = 'uspsws';
 
     // specify some short URLs relevant to your module
     if ($func == 'main') {
