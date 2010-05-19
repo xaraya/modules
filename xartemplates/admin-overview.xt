@@ -11,7 +11,7 @@
 
 <p>Test and connect to FedEx web services.</p>  
 
-<p>Use fedexws_xaradminapi_rate() to calculate FedEx shipping rates in your e-commerce module.</p>
+<p>Use fedexws_adminapi_rate() to calculate FedEx shipping rates in your e-commerce module.</p>
 
 <p>Enter your FedEx developer credentials in the <a href="#xarModURL('fedexws','admin','modifyconfig')#">Modify Config page</a>.  If you don't have a FedEx developer account, you'll need to set one up <a href="http://www.fedex.com/developer">here</a>.  It's free.</p>
 
