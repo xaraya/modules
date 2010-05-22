@@ -30,22 +30,20 @@
         <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
             <tr>
                 <td align="left" valign="top" class="xar-normal">
+                    <xar:if condition="$canedit">
+                        <a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
+                            <img src="#xarTplGetImage('icons/modify.png','base')#"/>
+                        </a>
+                    </xar:if>
+                    <xar:if condition="$candelete">
+                        <a href="#xarModURL('publications', 'user', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
+                            <img src="#xarTplGetImage('icons/delete.png','base')#"/>
+                        </a>
+                    </xar:if>
                     <br />
                     <xar:data-output property="$properties['name']" />
                     <span class="xar-title">
                         <xar:data-output property="$properties['title']" />
-                        <xar:if condition="$canedit">
-                            &#160;
-                            <a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#">
-                                <img src="#xarTplGetImage('icons/modify.png','base')#"/>
-                            </a>
-                        </xar:if>
-                        <xar:if condition="$candelete">
-                            &#160;
-                            <a href="#xarModURL('publications', 'user', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#">
-                                <img src="#xarTplGetImage('icons/delete.png','base')#"/>
-                            </a>
-                        </xar:if>
                     </span>
                     <br />
                     <!--

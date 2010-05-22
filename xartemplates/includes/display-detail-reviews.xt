@@ -31,19 +31,17 @@
             Title:
           </td>
           <td align="left">
-            <xar:data-output property="$properties['title']" />
             <xar:if condition="$canedit">
-                &#160;
-                <a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#">
+                <a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
                     <img src="#xarTplGetImage('icons/modify.png','base')#"/>
                 </a>
             </xar:if>
             <xar:if condition="$candelete">
-                &#160;
-                <a href="#xarModURL('publications', 'user', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#">
+                <a href="#xarModURL('publications', 'user', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
                     <img src="#xarTplGetImage('icons/delete.png','base')#"/>
                 </a>
             </xar:if>
+            <xar:data-output property="$properties['title']" />
             <br />
           </td>
         </tr>
