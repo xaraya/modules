@@ -9,7 +9,10 @@
                 <tr>
                     <td align="left" valign="top" class="xar-normal">
                         <span class="xar-title">#$title#
-                            <xar:if condition="!empty($editurl)"> [<a href="#$editurl#">Edit</a>]
+                            <xar:if condition="!empty($editurl)"> 
+                                <a href="#$editurl#">
+                                    <img src="#xarTplGetImage('icons/modify.png','base')#"/>
+                                </a>
                             </xar:if>
                         </span>
                         <br />
@@ -44,8 +47,8 @@
             <tr>
                 <td align="left">
                     <xar:if condition="!empty($prevart)">
-                        <a href="#$prevart#">&lt;                            
-                            prev
+                        <a href="#$prevart#">                           
+                            <img src="#xarTplGetImage('icons/go-previous.png','base')#"/>
                         </a>
                     </xar:if>
                     &#160;
@@ -54,8 +57,8 @@
                     &#160;
                     <xar:if condition="!empty($nextart)">
                         <a href="#$nextart#">                            
-                            next
-                            &gt;</a>
+                            <img src="#xarTplGetImage('icons/go-next.png','base')#"/>
+                        </a>
                     </xar:if>
                 </td>
             </tr>

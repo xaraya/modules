@@ -99,8 +99,9 @@
                 <xar:if condition="!empty($prevart) || !empty($nextart)">
                     <div class="xar-normal xar-overflow-auto">
                         <xar:if condition="!empty($prevart)">
-                        <a class="xar-floatleft" href="#$prevart#">&lt;
-                        prev</a>&#160;</xar:if>
+                        <a class="xar-floatleft" href="#$prevart#">
+                            <img src="#xarTplGetImage('icons/go-previous.png','base')#"/>
+                        </a>&#160;</xar:if>
                         <xar:if condition="!empty($nextart)">
                             <a class="xar-floatright" href="#$nextart#">
                             next&gt;</a>
@@ -130,7 +131,7 @@
                     <!--
                         <xar:sec mask="ManagePublications" catch="false">
                             <a href="#xarModURL('publications','admin','delete',array('id' => $object.itemid))#">
-                                Delete Publication                                
+                                <img src="#xarTplGetImage('icons/delete.png','base')#"/>
                             </a>
                         </xar:sec>
                     -->

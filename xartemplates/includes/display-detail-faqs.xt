@@ -32,11 +32,15 @@
                         <xar:data-output property="$properties['question']" />
                         <xar:if condition="$canedit">
                             &#160;
-                            [<a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#">Edit</a>]
+                            <a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#">
+                                <img src="#xarTplGetImage('icons/modify.png','base')#"/>
+                            </a>
                         </xar:if>
                         <xar:if condition="$candelete">
                             &#160;
-                            [<a href="#xarModURL('publications', 'user', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#">Delete</a>]
+                            <a href="#xarModURL('publications', 'user', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#">
+                                <img src="#xarTplGetImage('icons/delete.png','base')#"/>
+                            </a>
                         </xar:if>
                     </span>
                     <br />
@@ -86,7 +90,7 @@
                         &#160;
                         <xar:if condition="!empty($nextart)">
                             <a href="#$nextart#">
-                                next &gt;
+                                <img src="#xarTplGetImage('icons/go-next.png','base')#"/>
                             </a>
                         </xar:if>
                     </td>
