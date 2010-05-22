@@ -34,11 +34,15 @@
                     </a>
                     <xar:if condition="$canedit">
                         &#160;
-                        [<a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#">Edit</a>]
+                        <a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#">
+                            <img src="#xarTplGetImage('icons/modify.png','base')#"/>
+                        </a>
                     </xar:if>
                     <xar:if condition="$candelete">
                         &#160;
-                        [<a href="#xarModURL('publications', 'user', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#">Delete</a>]
+                        <a href="#xarModURL('publications', 'user', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#">
+                            <img src="#xarTplGetImage('icons/delete.png','base')#"/>
+                        </a>
                     </xar:if>
                 <br />
                 </td>
@@ -107,8 +111,12 @@
             <br />
                 <table border="0" width="95%">
                     <tr>
-                        <td align="left"><xar:if condition="!empty($prevart)"><a href="#$prevart#">&lt; prev </a></xar:if>&#160;</td>
-                        <td align="right">&#160;<xar:if condition="!empty($nextart)"> <a href="#$nextart#">next &gt;</a></xar:if></td>
+                        <td align="left"><xar:if condition="!empty($prevart)"><a href="#$prevart#">
+                            <img src="#xarTplGetImage('icons/go-previous.png','base')#"/>
+                        </a></xar:if>&#160;</td>
+                        <td align="right">&#160;<xar:if condition="!empty($nextart)"> <a href="#$nextart#">
+                            <img src="#xarTplGetImage('icons/go-next.png','base')#"/>
+                        </a></xar:if></td>
                     </tr>
                 </table>
         </xar:if>

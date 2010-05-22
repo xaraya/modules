@@ -40,11 +40,15 @@
                     </xar:if>
                     <xar:if condition="$canedit">
                         &#160;
-                        [<a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#">Edit</a>]
+                        <a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#">
+                            <img src="#xarTplGetImage('icons/modify.png','base')#"/>
+                        </a>
                     </xar:if>
                     <xar:if condition="$candelete">
                         &#160;
-                        [<a href="#xarModURL('publications', 'user', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#">Delete</a>]
+                        <a href="#xarModURL('publications', 'user', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#">
+                            <img src="#xarTplGetImage('icons/delete.png','base')#"/>
+                        </a>
                     </xar:if>
                 </p>
             </div>
@@ -78,7 +82,9 @@
                                 <li id="previous"><a href="#$prevart#">&#171;</a></li>
                             </xar:if>
                             <xar:if condition="!empty($nextart)">
-                                <li id="next"><a href="#$nextart#">&#187;</a></li>
+                                <li id="next"><a href="#$nextart#">
+                                    <img src="#xarTplGetImage('icons/go-next.png','base')#"/>
+                                </a></li>
                             </xar:if>
                         </ul>
                     </xar:if>
