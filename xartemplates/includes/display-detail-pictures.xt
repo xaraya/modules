@@ -29,6 +29,16 @@
     <xar:else />
         <div id="wrap">
             <div id="header">
+                <xar:if condition="$canedit">
+                    <a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
+                        <img src="#xarTplGetImage('icons/modify.png','base')#"/>
+                    </a>
+                </xar:if>
+                <xar:if condition="$candelete">
+                    <a href="#xarModURL('publications', 'user', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
+                        <img src="#xarTplGetImage('icons/delete.png','base')#"/>
+                    </a>
+                </xar:if>
                 <h1>
                     <xar:data-output property="$properties['title']" />
                 </h1>
@@ -37,18 +47,6 @@
                         ( #$counter#
                             Reads
                         )
-                    </xar:if>
-                    <xar:if condition="$canedit">
-                        &#160;
-                        <a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#">
-                            <img src="#xarTplGetImage('icons/modify.png','base')#"/>
-                        </a>
-                    </xar:if>
-                    <xar:if condition="$candelete">
-                        &#160;
-                        <a href="#xarModURL('publications', 'user', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#">
-                            <img src="#xarTplGetImage('icons/delete.png','base')#"/>
-                        </a>
                     </xar:if>
                 </p>
             </div>
