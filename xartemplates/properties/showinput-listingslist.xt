@@ -29,6 +29,11 @@
             <input type="hidden" name="localmodule" id="localmodule" value="#$localmodule#" />
         </form>
     <xar:elseif condition="$layout eq 'user-view'" />
-        <xar:template file="view-summaries" />
+        <xar:set name="filename">'view-summaries-' . $object->name</xar:set>
+        <xar:if condition="file_exists(xarTplGetThemeDir().'/modules/publications/xartemplates/includes/'.$filename.'.xt') OR file_exists(sys::code().'modules/publications/xartemplates/includes/'.$filename.'.xt')">
+            <xar:template file="$filename" />
+        <xar:else/>
+            <xar:template file="view-summaries" />
+        </xar:if>
     </xar:if>
 </xar:template>
