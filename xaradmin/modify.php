@@ -26,12 +26,16 @@ function publications_admin_modify($args)
 
     // Get parameters
     if (!xarVarFetch('itemid',     'isset', $id, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('return_url', 'str:1', $data['return_url'], NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('name',       'str:1', $name, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('ptid',       'isset', $ptid, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('returnurl',  'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('name',       'str:1', $name, 'publications_types', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
-
-    // FIXME: this is too clumsy
     
+    // FIXME: this is too clumsy
+    if($ptid) {
+        $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+        $name = $pubtypes[$ptid]['name'];
+    }
     // Get our object
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
 
@@ -75,7 +79,7 @@ function publications_admin_modify($args)
 
 
 
-     $ptid = $publication['pubtype_id'];
+    $ptid = $publication['pubtype_id'];
     if (!isset($ptid)) {
        $ptid = '';
     }

@@ -33,7 +33,7 @@ function publications_user_display($args)
     
     // Override xarVarFetch
     extract ($args);
-
+    
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));

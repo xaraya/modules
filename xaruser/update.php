@@ -32,6 +32,8 @@ function publications_user_update()
     if(!xarVarFetch('ptid',         'isset', $data['ptid'],      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('modify_cids',  'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('preview',      'isset', $data['preview'],   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('tab',          'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('returnurl',    'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
 
     // Confirm authorisation code
     // This has been disabled for now
@@ -41,18 +43,20 @@ function publications_user_update()
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
+    $isvalid = $data['object']->checkInput();
     
     // First we need to check all the data on the template
     // If checkInput fails, don't bail
     $itemsdata = array();
     $isvalid = true;
-    foreach ($items as $prefix) {
+    
+    /*foreach ($items as $prefix) {
         $data['object']->setFieldPrefix($prefix);
         $thisvalid = $data['object']->checkInput();
         $isvalid = $isvalid && $thisvalid;
     // Store each item for later processing
         $itemsdata[$prefix] = $data['object']->getFieldValues();
-    }
+    }*/
     
     if ($data['preview'] || !$isvalid) {
         // Preview or bad data: redisplay the form
@@ -61,8 +65,8 @@ function publications_user_update()
         $data['items'] = $itemsdata;
         // Get the settings of the publication type we are using
         $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
-    
-        return xarTplModule('publications','user','modify', $data);    
+        
+        return xarTplModule('publications','admin','modify', $data);
     }
     
 /*    if (empty($itemid) || !is_numeric($itemid)) {
@@ -101,26 +105,28 @@ function publications_user_update()
                                'publications', $data['ptid']);
 
     // Now talk to the database
-    foreach ($itemsdata as $itemid => $itemdata) {
+    /*foreach ($itemsdata as $itemid => $itemdata) {
         $data['object']->setFieldValues($itemdata);
         if (empty($itemid)) $item = $data['object']->createItem();
         else $item = $data['object']->updateItem();
     // Clear the itemid property in preparation for the next round
         unset($data['object']->itemid);
-    }
-
+    }*/
+    
+    if (empty($itemid)) $item = $data['object']->createItem();
+    else $item = $data['object']->updateItem();
     // Success
     xarSession::setVar('statusmsg', xarML('Publication Updated'));
 
     // if we can edit publications, go to admin view, otherwise go to user view
     if (xarSecurityCheck('EditPublications',0,'Publication',$data['ptid'].':All:All:All')) {
-        xarResponse::redirect(xarModURL('publications', 'admin', 'view',
+        xarResponse::redirect(xarModURL('publications', 'admin', $data['returnurl'],
                                       array('ptid' => $data['ptid'])));
     } else {
-        xarResponse::redirect(xarModURL('publications', 'user', 'view',
+        xarResponse::redirect(xarModURL('publications', 'user', $data['returnurl'],
                                       array('ptid' => $data['ptid'])));
     }
-
+    
     return true;
 }
 
