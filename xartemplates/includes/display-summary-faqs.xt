@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <a name="#$id#"></a>
+    <a name="titles"></a>
     <br />
     <xar:if condition="!empty($categories) and count($categories) gt 0">
         [ <xar:foreach in="$categories" value="$cat">
             #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
         </xar:foreach> ]
     </xar:if>
+    <xar:set name="canedit">
+        xarModAPIFunc('publications','user','checksecurity',array('mask' => 'EditPublications', 'publication' => $object->getFieldValues()))
+    </xar:set>
+    <xar:if condition="$canedit">
+        <xar:set name="candelete">
+            xarModAPIFunc('publications','user','checksecurity',array('mask' => 'ManagePublications', 'publication' => $object->getFieldValues()))
+        </xar:set>
+    <xar:else />
+        <xar:set name="candelete">0</xar:set>
+    </xar:if>
+    <xar:if condition="$canedit">
+        <a href="#xarModURL('publications', 'admin', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
+            <img src="#xarTplGetImage('icons/modify.png','base')#"/>
+        </a>
+    </xar:if>
+    <xar:if condition="$candelete">
+        <a href="#xarModURL('publications', 'admin', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
+            <img src="#xarTplGetImage('icons/delete.png','base')#"/>
+        </a>
+    </xar:if>
+
     <a class="xar-title" href="#xarModURL('publications','user','display',array('id' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
         <xar:data-output property="$properties['title']" />
     </a>
