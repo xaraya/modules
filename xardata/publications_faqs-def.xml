@@ -27,7 +27,7 @@
     <property name="question">
       <id>237</id>
       <label>Question</label>
-      <type>textbox</type>
+      <type>textarea</type>
       <defaultvalue>New  FAQ</defaultvalue>
       <source>xar_publications.title</source>
       <status>33</status>
