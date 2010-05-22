@@ -32,6 +32,7 @@ function publications_user_new($args)
     if (!xarVarFetch('ptid',        'id',    $data['ptid'],       xarModVars::get('publications', 'defaultpubtype'),  XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('catid',       'str',   $catid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('itemtype',    'id',    $itemtype,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    $data['items'] = array();
 
 /*    $data['catid'] = $catid;
 
@@ -102,7 +103,7 @@ function publications_user_new($args)
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
     $data['properties'] = $data['object']->getProperties();
-    $data['items'] = array();
+    
 
     if (!empty($data['ptid'])) {
         $template = $pubtypeobject->properties['template']->value;
