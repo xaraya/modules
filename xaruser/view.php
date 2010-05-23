@@ -530,6 +530,7 @@ function publications_user_view($args)
     $q = new Query();
     $q->eq('state',3);
     $q->eq('locale',xarUserGetNavigationLocale());
+    $q->eq('pubtype_id',$ptid);
     $data['conditions'] = $q;
 
     // Throw all the relevant settings we are using into the cache
