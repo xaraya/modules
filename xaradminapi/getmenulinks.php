@@ -26,6 +26,11 @@ function publications_adminapi_getmenulinks()
 
         $menulinks[] = Array('url'   => xarModURL('publications',
                                                    'admin',
+                                                   'view_pages'),
+                              'title' => xarML('View and edit all publications'),
+                              'label' => xarML('View Page Tree'));
+        $menulinks[] = Array('url'   => xarModURL('publications',
+                                                   'admin',
                                                    'view'),
                               'title' => xarML('View and edit all publications'),
                               'label' => xarML('View Publications'));
