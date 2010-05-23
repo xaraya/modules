@@ -6,16 +6,12 @@
     <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$id" cids="$cids" />
     -->
 
-    <xar:set name="canedit">
-        xarModAPIFunc('publications','user','checksecurity',array('mask' => 'EditPublications', 'publication' => $object->getFieldValues()))
-    </xar:set>
-
     <xar:set name="publication_state">
         $properties['state']->value
     </xar:set>
 
-    <xar:if condition="!$canedit AND ($publication_state lt 3)">
-        You have no permission to view this item
+    <xar:if condition="$publication_state lt 3">
+        This item cannot be viewed
     <xar:else />
         <div class="article-view">
             <h3>

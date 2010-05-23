@@ -7,37 +7,24 @@
     <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$properties['id']" cids="$cids" showcatcount="$settings['showcatcount']" showempty="0" />
     -->
 
-    <xar:set name="canedit">
-        xarModAPIFunc('publications','user','checksecurity',array('mask' => 'EditPublications', 'publication' => $object->getFieldValues()))
-    </xar:set>
-    <xar:if condition="$canedit">
-        <xar:set name="candelete">
-            xarModAPIFunc('publications','user','checksecurity',array('mask' => 'ManagePublications', 'publication' => $object->getFieldValues()))
-        </xar:set>
-    <xar:else />
-        <xar:set name="candelete">0</xar:set>
-    </xar:if>
-    
     <xar:set name="publication_state">
         $properties['state']->value
     </xar:set>
 
-    <xar:if condition="!$canedit AND ($publication_state lt 3)">
-        You have no permission to view this item
+    <xar:if condition="$publication_state lt 3">
+        This item cannot be viewed
     <xar:else />
         <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
             <tr>
                 <td align="left" valign="top" class="xar-normal">
-                    <xar:if condition="$canedit">
+                    <xar:sec mask="ManagePublications" catch="false">
                         <a href="#xarModURL('publications', 'admin', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
                             <img src="#xarTplGetImage('icons/modify.png','base')#"/>
                         </a>
-                    </xar:if>
-                    <xar:if condition="$candelete">
                         <a href="#xarModURL('publications', 'admin', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
                             <img src="#xarTplGetImage('icons/delete.png','base')#"/>
                         </a>
-                    </xar:if>
+                    </xar:sec>
                     <span class="xar-title">
                         <xar:data-output property="$properties['title']" />
                     </span>

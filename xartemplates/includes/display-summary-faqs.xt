@@ -8,27 +8,17 @@
             #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
         </xar:foreach> ]
     </xar:if>
-    <xar:set name="canedit">
-        xarModAPIFunc('publications','user','checksecurity',array('mask' => 'EditPublications', 'publication' => $object->getFieldValues()))
-    </xar:set>
-    <xar:if condition="$canedit">
-        <xar:set name="candelete">
-            xarModAPIFunc('publications','user','checksecurity',array('mask' => 'ManagePublications', 'publication' => $object->getFieldValues()))
-        </xar:set>
-    <xar:else />
-        <xar:set name="candelete">0</xar:set>
-    </xar:if>
-    <xar:if condition="$canedit">
+        
+    <xar:sec mask="ManagePublications" catch="false">
         <a href="#xarModURL('publications', 'admin', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
             <img src="#xarTplGetImage('icons/modify.png','base')#"/>
         </a>
-    </xar:if>
-    <xar:if condition="$candelete">
+        &#160;
         <a href="#xarModURL('publications', 'admin', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
             <img src="#xarTplGetImage('icons/delete.png','base')#"/>
         </a>
-    </xar:if>
-
+    </xar:sec>
+        
     <a class="xar-title" href="#xarModURL('publications','user','display',array('id' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
         <xar:data-output property="$properties['question']" />
     </a>

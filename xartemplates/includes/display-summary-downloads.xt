@@ -2,6 +2,17 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-norm xar-standard-box-padding">
+        
+        <xar:sec mask="ManagePublications" catch="false">
+            <a href="#xarModURL('publications', 'admin', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
+                <img src="#xarTplGetImage('icons/modify.png','base')#"/>
+            </a>
+            &#160;
+            <a href="#xarModURL('publications', 'admin', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
+                <img src="#xarTplGetImage('icons/delete.png','base')#"/>
+            </a>
+        </xar:sec>
+        
         <h3>
         <a class="xar-title" href="#xarModURL('publications','user','display',array('id' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
                 <xar:data-output property="$properties['title']" />
