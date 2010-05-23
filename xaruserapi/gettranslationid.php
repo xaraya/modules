@@ -23,9 +23,9 @@ function publications_userapi_gettranslationid($args)
     $c[] = $q->peq('parent_id',$args['id']);
     $q->qor($c);
     $q->eq('locale',xarUserGetNavigationLocale());
-    if (!$q->run()) return $arqs['id'];
+    if (!$q->run()) return $args['id'];
     $result = $q->row();
-    if (empty($result)) return $arqs['id'];
+    if (empty($result)) return $args['id'];
     return $result['id']; 
 }
 ?>
