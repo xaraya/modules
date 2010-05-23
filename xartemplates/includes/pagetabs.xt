@@ -23,7 +23,12 @@
             <xar:set name="index">$index + 1</xar:set>
             <li id="tab-#$index#">
                 <a id="href-#$index#" href="javascript:showtab(#$index#,#$tabs#)">
-                    Content&#160;<xar:data-output property="$properties['locale']" value="$item['locale']" />
+                    <xar:if condition="empty($item['id'])">
+                        New:
+                    <xar:else/>
+                        <xar:data-output property="$properties['id']" value="$item['id']" />:
+                    </xar:if>
+                    &#160;<xar:data-output property="$properties['locale']" value="$item['locale']" />
                 </a>
              </li>
 
@@ -36,7 +41,12 @@
             <xar:set name="index">$index + 1</xar:set>
             <li id="tab-#$index#">
                 <a id="href-#$index#" href="javascript:showtab(#$index#,#$tabs#)">
-                    Settings&#160;<xar:data-output property="$properties['locale']" value="$item['locale']" />
+                    <xar:if condition="empty($item['id'])">
+                        New:
+                    <xar:else/>
+                        <xar:data-output property="$properties['id']" value="$item['id']" />:
+                    </xar:if>
+                    &#160;Settings
                 </a>
             </li>
 
