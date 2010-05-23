@@ -19,7 +19,7 @@
             <tr>
                 <td align="left" valign="top" class="xar-normal">
 
-                    <xar:template name="editicons"/>
+                    <xar:template file="editicons"/>
 
                     <br />
                     <xar:data-output property="$properties['name']" />

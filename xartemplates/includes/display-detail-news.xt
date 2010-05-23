@@ -14,7 +14,7 @@
         This item cannot be viewed
     <xar:else />
 
-        <xar:template name="editicons"/>
+        <xar:template file="editicons"/>
 
         <h1>
             <xar:data-output property="$properties['title']" />

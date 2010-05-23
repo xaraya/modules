@@ -6,7 +6,7 @@
         <xar:foreach in="$categories" value="$cat">#$cat['cjoin']#
         <a href="#$cat['clink']#">#$cat['cname']#</a></xar:foreach>]</xar:if>
         
-        <xar:template name="editicons"/>
+        <xar:template file="editicons"/>
         
         <span class="xar-title">
             <a class="xar-title" href="#xarModURL('publications','user','display',array('id' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">

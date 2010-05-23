@@ -17,7 +17,7 @@
             <tr>
                 <td align="left" valign="top" class="xar-normal">
 
-                    <xar:template name="editicons"/>
+                    <xar:template file="editicons"/>
 
                     <span class="xar-title">
                         <xar:data-output property="$properties['question']" />

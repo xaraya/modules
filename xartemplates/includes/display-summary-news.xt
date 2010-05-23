@@ -10,7 +10,7 @@
             ]
         </xar:if>
         
-        <xar:template name="editicons"/>
+        <xar:template file="editicons"/>
         
         <h1> <a class="xar-title" href="#xarModURL('publications','user','display',array('id' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
                 <xar:data-output property="$properties['title']" />
