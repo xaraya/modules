@@ -52,7 +52,13 @@ function publications_admin_modify($args)
 
     // Get the base document
     $data['object']->getItem(array('itemid' => $id));
-    $data['items'][$id] = $data['object']->getFieldValues();
+    $fieldvalues = $data['object']->getFieldValues();
+    if (!empty($fieldvalues['parent'])) {
+        $id = $fieldvalues['parent'];
+        $data['object']->getItem(array('itemid' => $id));
+        $fieldvalues = $data['object']->getFieldValues();
+    }
+    $data['items'][$id] = $fieldvalues;
 
     // Get any translations of the base document
     $data['objectlist'] = DataObjectMaster::getObjectList(array('name' => $name));

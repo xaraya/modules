@@ -59,7 +59,9 @@
             <!--<xar:set name="class">"active"</xar:set>-->
             <li id="tab-#$index#" style="display: #$visible#">
                 <a id="href-#$index#" href="javascript:showtab(#$index#,#$tabs#)">
-                Preview</a>
+                    <xar:data-output property="$properties['id']" value="$item['id']" />:
+                    &#160;Preview
+                </a>
             </li>
         </xar:foreach>
     </ul>    
