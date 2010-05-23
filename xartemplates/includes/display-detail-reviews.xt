@@ -19,14 +19,9 @@
             Title:
           </td>
           <td align="left">
-            <xar:sec mask="ManagePublications" catch="false">
-                <a href="#xarModURL('publications', 'admin', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
-                    <img src="#xarTplGetImage('icons/modify.png','base')#"/>
-                </a>
-                <a href="#xarModURL('publications', 'admin', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
-                    <img src="#xarTplGetImage('icons/delete.png','base')#"/>
-                </a>
-            </xar:sec>
+
+            <xar:template name="editicons"/>
+
             <xar:data-output property="$properties['title']" />
             <br />
           </td>

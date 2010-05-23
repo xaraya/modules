@@ -13,14 +13,9 @@
     <xar:if condition="$publication_state lt 3">
         This item cannot be viewed
     <xar:else />
-        <xar:sec mask="ManagePublications" catch="false">
-            <a href="#xarModURL('publications', 'admin', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
-                <img src="#xarTplGetImage('icons/modify.png','base')#"/>
-            </a>
-            <a href="#xarModURL('publications', 'admin', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
-                <img src="#xarTplGetImage('icons/delete.png','base')#"/>
-            </a>
-        </xar:sec>
+
+        <xar:template name="editicons"/>
+
         <h3>
             <xar:data-output property="$properties['source']" />
         </h3>

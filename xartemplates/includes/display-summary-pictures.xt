@@ -17,15 +17,7 @@
         <ul>
             <xar:if condition="xarModIsHooked('uploads','publications',$pubtype_id) and substr($body,0,1) eq ';'">
         
-            <xar:sec mask="ManagePublications" catch="false">
-                <a href="#xarModURL('publications', 'admin', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
-                    <img src="#xarTplGetImage('icons/modify.png','base')#"/>
-                </a>
-                &#160;
-                <a href="#xarModURL('publications', 'admin', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
-                    <img src="#xarTplGetImage('icons/delete.png','base')#"/>
-                </a>
-            </xar:sec>
+                <xar:template name="editicons"/>
         
                 <xar:set name="img_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $body, 'multiple' => true))</xar:set>
                 <xar:foreach in="$img_output" key="$fileId" value="$fileInfo">
