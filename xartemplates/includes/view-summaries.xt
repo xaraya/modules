@@ -31,7 +31,7 @@
     </h2>
     <xar:set name="instance">$properties['itemtype']->value.':All:All:All'</xar:set>
     <xar:sec mask="SubmitPublications" instance="$instance" >
-        <a href="#xarModURL('publications','user','new',array('ptid' => $ptid))#">
+        <a href="#xarModURL('publications','admin','new',array('ptid' => $ptid))#">
             Submit a <xar:data-output property="$properties['title']"/>
         </a>
         <div style="clear:both">&#160;</div>

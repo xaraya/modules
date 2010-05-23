@@ -25,7 +25,7 @@
 
 sys::import('modules.dynamicdata.class.objects.master');
 
-function publications_user_create()
+function publications_admin_create()
 {
     if (!xarVarFetch('ptid',       'id',    $data['ptid'])) {return;}
     if (!xarVarFetch('new_cids',   'array', $cids,    NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -45,11 +45,11 @@ function publications_user_create()
     
     $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
     
-    if ($data['preview'] || $isvalid) {
+    if ($data['preview'] || !$isvalid) {
         // Preview or bad data: redisplay the form
         $data['properties'] = $data['object']->getProperties();
         if ($data['preview']) $data['tab'] = 'preview';
-        return xarTplModule('publications','user','new', $data);    
+        return xarTplModule('publications','admin','new', $data);    
     }
 
 /*

@@ -18,7 +18,7 @@
         <div class="xar-form-input-wrapper">
             <xar:var name="label">Language</xar:var>
             <xar:data-label property="$properties['locale']" for="id" label="$label" />
-            <xar:data-input property="$properties['locale']" value="$ptid" />
+            <xar:data-input property="$properties['locale']"/>
         </div>
         <div class="xar-form-input-wrapper">
             <xar:var name="label">Current Version</xar:var>

@@ -37,6 +37,7 @@ function publications_user_display($args)
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
+    $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
     $data['object']->getItem(array('itemid' => $id));
     $publication = $data['object']->getFieldValues();
 
@@ -479,6 +480,7 @@ function publications_user_display($args)
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
+    $id = xarMod::apiFunc('publications','user','getranslationid',array('id' => $id));
     $data['object']->getItem(array('itemid' => $id));
 
     return xarTplModule('publications', 'user', 'display', $data, $template);

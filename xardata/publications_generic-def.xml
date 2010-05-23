@@ -152,7 +152,7 @@
       <source>xar_publications.locale</source>
       <status>33</status>
       <seq>23</seq>
-      <configuration></configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_firstline";s:19:"0,Choose a language";}</configuration>
     </property>
     <property name="itemtype">
       <id>249</id>
