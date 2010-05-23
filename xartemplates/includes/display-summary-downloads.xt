@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-norm xar-standard-box-padding">
         
-        <xar:template name="editicons"/>
+        <xar:template file="editicons"/>
         
         <h3>
         <a class="xar-title" href="#xarModURL('publications','user','display',array('id' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">

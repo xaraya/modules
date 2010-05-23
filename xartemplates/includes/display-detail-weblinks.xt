@@ -18,7 +18,7 @@
                 <td align="left" colspan="2" class="xar-normal">
                     <!-- <a class="xar-title" href="#$redirect#"> -->
                     
-                    <xar:template name="editicons"/>
+                    <xar:template file="editicons"/>
 
                     <a class="xar-title" href="#">
                         <xar:data-output property="$properties['title']" />
