@@ -15,7 +15,7 @@
             </xar:if>
             <xar:if condition="!empty($settings['showsubmit'])">
                 <dd>
-                    <a href="#xarModURL('publications', 'user', 'new', array('ptid' => !empty($ptid) ? $ptid : null))#" title="Submit Publication">
+                    <a href="#xarModURL('publications', 'admin', 'new', array('ptid' => !empty($ptid) ? $ptid : null))#" title="Submit Publication">
                         Contribute 
                     </a>
                 </dd>

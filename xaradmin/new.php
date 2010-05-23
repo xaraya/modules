@@ -114,7 +114,7 @@ function publications_admin_new($args)
     // Get the settings of the publication type we are using
     $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
     
-    return xarTplModule('publications', 'user', 'new', $data, $template);
+    return xarTplModule('publications', 'admin', 'new', $data, $template);
 }
 
 ?>

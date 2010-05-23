@@ -24,7 +24,7 @@
 
 sys::import('modules.dynamicdata.class.objects.master');
 
-function publications_user_update()
+function publications_admin_update()
 {
     // Get parameters
     if(!xarVarFetch('itemid',       'isset', $itemid,       NULL, XARVAR_DONT_SET)) {return;}
@@ -43,20 +43,18 @@ function publications_user_update()
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
-    $isvalid = $data['object']->checkInput();
-    
+
     // First we need to check all the data on the template
     // If checkInput fails, don't bail
     $itemsdata = array();
     $isvalid = true;
-    
-    /*foreach ($items as $prefix) {
+    foreach ($items as $prefix) {
         $data['object']->setFieldPrefix($prefix);
         $thisvalid = $data['object']->checkInput();
         $isvalid = $isvalid && $thisvalid;
     // Store each item for later processing
         $itemsdata[$prefix] = $data['object']->getFieldValues();
-    }*/
+    }
     
     if ($data['preview'] || !$isvalid) {
         // Preview or bad data: redisplay the form
@@ -105,16 +103,14 @@ function publications_user_update()
                                'publications', $data['ptid']);
 
     // Now talk to the database
-    /*foreach ($itemsdata as $itemid => $itemdata) {
+    foreach ($itemsdata as $itemid => $itemdata) {
         $data['object']->setFieldValues($itemdata);
         if (empty($itemid)) $item = $data['object']->createItem();
         else $item = $data['object']->updateItem();
     // Clear the itemid property in preparation for the next round
         unset($data['object']->itemid);
-    }*/
+    }
     
-    if (empty($itemid)) $item = $data['object']->createItem();
-    else $item = $data['object']->updateItem();
     // Success
     xarSession::setVar('statusmsg', xarML('Publication Updated'));
 

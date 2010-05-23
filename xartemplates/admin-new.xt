@@ -22,7 +22,7 @@
             <label title="#xarML('Select a type of publication to add')#" class="xar-form-label">
                 Publication Type:
             </label>
-            <xar:set name="newurl">"document.location.href='" . xarModURL('publications','user','new') . "&amp;ptid='+this.value"</xar:set>
+            <xar:set name="newurl">"document.location.href='" . xarModURL('publications','admin','new') . "&amp;ptid='+this.value"</xar:set>
             <xar:data-input type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$newurl" />
         </div>
         <div style="float:right">
@@ -40,7 +40,7 @@
                 'application/x-www-form-urlencoded'
             </xar:set>
         </xar:if>
-        <form method="post" id="post" action="&xar-modurl-publications-user-create;" enctype="#$enctype#" >
+        <form method="post" id="post" action="#xarModURL('publications','admin','create')#" enctype="#$enctype#" >
             <xar:if condition="isset($tab) AND $tab eq 'preview'">
                 <xar:set name="visible">array('none','none','block')</xar:set>
             <xar:else />
@@ -82,6 +82,7 @@
                     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
                     <xar:comment>The return_url can be set here to return to another page that the admin-view one</xar:comment>
                     <input type="submit" name="preview" id="preview" value="#xarML('Create Preview')#" />
+                    &#160;
                     <input type="submit" value="#xarML('Create Document')#" />
                 </div>
             </div>
