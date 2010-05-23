@@ -171,8 +171,8 @@ function categories_userapi_leftjoin($args)
     if (!empty($modid) && is_numeric($modid)) {
         // FIXME: needs a better soluton
         // CHECKME: module_id here is regid, not id, does this have consequences elsewhere?
-        // $where[] = $leftjoin['module_id'] . ' = ' . xarMod::getID(xarMod::getName($modid));
-        $where[] = $leftjoin['module_id'] . ' = ' . xarMod::getRegID(xarMod::getName($modid));
+        // $where[] = $leftjoin['module_id'] . ' = ' . $modid;
+        $where[] = $leftjoin['module_id'] . ' = ' . $modid;
     }
     // Note : do not default to 0 here, because we want to be able to do things across item types
     if (isset($itemtype)) {
