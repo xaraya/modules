@@ -1,27 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:if condition="xarModVars::get('mailer','useModuleAlias')">
-                <xar:var scope="module" module="mailer" name="aliasname"/>
+            <xar:if condition="xarModVars::get('calendar','useModuleAlias')">
+                <xar:var scope="module" module="calendar" name="aliasname"/>
             <xar:else />
-                Display Mail: #$fields['name']#
+                <xar:mlstring>Display Event</xar:mlstring>
             </xar:if>
         </span>
     </div>
     <div class="xar-mod-body">
-        <xar:if condition="$object->name eq 'mailer_mails'">
-            <h2>#$mail['subject']#</h2>
-            <xar:if condition="$mail['mail_type'] eq 'html'">
-                <fieldset>#$mail['message']#</fieldset>
-            <xar:else/>
-                <pre>#$mail['message']#</pre>
-            </xar:if>
-        <xar:else/>
-            <h2>#$fields['name']#</h2>
-            <xar:data-display object="$object"/>
-        </xar:if>
-
+        <h2>
+            Display Event
+        </h2>
+          <fieldset>
+            <legend><xar:mlstring>Event details</xar:mlstring></legend>
+            <xar:data-display object="$object" fieldlist="name,description,start_time,end_time,duration,recurring_code,recurring_span,start_location,end_location"/>
+          </fieldset>
+          <fieldset>
+            <div class="xar-align-center">
+              <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+              <input type="button" value="#xarML('Back')#" class="xar-margin-thickleft"  onClick="history.go(-1)"/>
+            </div>
+          </fieldset>
     </div>
 </xar:template>
