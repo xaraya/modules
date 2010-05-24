@@ -2,65 +2,50 @@
 //sys::import('xaraya.structures.descriptor');
 //sys::import('modules.calendar.class.calnav');
 
-function calendar_calnavblock_init()
-{
-    return array(
-        'nocache' => 1, // don't cache by default
-        'pageshared' => 1, // share across pages
-        'usershared' => 0, // don't share across users
-        'cacheexpire' => null);
-        $descriptor = new ObjectDescriptor(array(
-                                        'nocache' => 1,
-                                        'usershared' => 0,
-                                        'text_type' => 'Calnav',
-                                        'text_type_long' => 'Calnav selection',
-                                        'module' => 'calendar',
-                                        ));
-        $block = new CalnavBlock($descriptor);
-        return $block->getArgs();
-}
+    sys::import('xaraya.structures.containers.blocks.basicblock');
 
-/**
- * get information on block
- */
-function calendar_calnavblock_info()
-{
-    return array(
-        'text_type' => 'Calnav',
-        'module' => 'calendar',
-        'text_type_long' => 'Calnav selection'
-    );
-}
+    class CalnavBlock extends BasicBlock implements iBlock
+    {
+
+        public $name                = 'CalnavBlock';
+        public $module              = 'calendar';
+        public $text_type           = 'Calnav';
+        public $text_type_long      = 'Calnav selection';
+        public $allow_multiple      = true;
+
+        public $nocache             = 1;
 
 /**
  * Display func.
- * @param $blockinfo array containing title,content
+ * @param $blockinfo array
+ * @returns $blockinfo array
  */
-function calendar_calnavblock_display($blockinfo)
-{
-    // Security check
-    if (!xarSecurityCheck('ReadCalendar', 0, 'Block', "All:" . $blockinfo['title'] . ":" . $blockinfo['bid'])) {return;}
 
-    if (!defined('CALENDAR_ROOT')) {
-        define('CALENDAR_ROOT', xarModVars::get('calendar','pearcalendar_root'));
+        function display(Array $data=array())
+        {
+            $data = parent::display($data);
+            if (empty($data)) return;
+
+            if (!defined('CALENDAR_ROOT')) {
+                define('CALENDAR_ROOT', xarModVars::get('calendar','pearcalendar_root'));
+            }
+            include_once(CALENDAR_ROOT.'Calendar.php');
+
+
+            $tplData['form_action'] = xarModURL('calendar', 'user', 'changecalnav');
+            $tplData['blockid'] = $data['bid'];
+
+            if (xarServer::getVar('REQUEST_METHOD') == 'GET') {
+                // URL of this page
+                $tplData['return_url'] = xarServer::getCurrentURL();
+            } else {
+                // Base URL of the site
+                $tplData['return_url'] = xarServer::getBaseURL();
+            }
+
+            $data['content'] = $tplData;
+
+            return $data;
+        }
     }
-    include_once(CALENDAR_ROOT.'Calendar.php');
-
-
-    $tplData['form_action'] = xarModURL('calendar', 'user', 'changecalnav');
-    $tplData['blockid'] = $blockinfo['bid'];
-
-    if (xarServer::getVar('REQUEST_METHOD') == 'GET') {
-        // URL of this page
-        $tplData['return_url'] = xarServer::getCurrentURL();
-    } else {
-        // Base URL of the site
-        $tplData['return_url'] = xarServer::getBaseURL();
-    }
-
-    $blockinfo['content'] = $tplData;
-
-    return $blockinfo;
-}
-
 ?>

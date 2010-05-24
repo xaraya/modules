@@ -2,16 +2,16 @@
     <xar:style scope="module" module="calendar" file="user-month"/>
 
     <xar:calendar-decorator object="$Month" decorator="Xaraya" name="MonthURI"/>
-    <xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
+    <xar:set name="prevYearTitle">Previous Year</xar:set>
     <xar:set name="prevYearURL">#$MonthURI->prev('year')#</xar:set>
 
-    <xar:set name="prevMonthTitle"><xar:mlstring>Previous Month</xar:mlstring></xar:set>
+    <xar:set name="prevMonthTitle">Previous Month</xar:set>
     <xar:set name="prevMonthURL">#$MonthURI->prev('month')#</xar:set>
 
-    <xar:set name="nextMonthTitle"><xar:mlstring>Next Month</xar:mlstring></xar:set>
+    <xar:set name="nextMonthTitle">Next Month</xar:set>
     <xar:set name="nextMonthURL">#$MonthURI->next('month')#</xar:set>
 
-    <xar:set name="nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
+    <xar:set name="nextYearTitle">Next Year</xar:set>
     <xar:set name="nextYearURL">#$MonthURI->next('year')#</xar:set>
 
     <table id="cal-calendar">
@@ -29,7 +29,7 @@
     <xar:calendar-decorator object="$Month" decorator="Textual" name="MonthText"/>
 
         <tr>
-            <th class="cal-week-title"><xar:mlstring>wk</xar:mlstring></th>
+            <th class="cal-week-title">wk</th>
             <xar:set name="weekdays">$MonthText->orderedWeekdays('one')</xar:set>
             <xar:foreach in="$weekdays" value="$dayName">
             <th class="cal-day-title">#$dayName#</th>

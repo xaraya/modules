@@ -97,7 +97,7 @@ function calendar_init()
 #
 # Set up privileges
 #
-    xarRegisterPrivilege('ViewCalendar','All','calendar','All','All','ACCESS_VIEW');
+    xarRegisterPrivilege('ViewCalendar','All','calendar','All','All','ACCESS_OVERVIEW');
     xarRegisterPrivilege('ReadCalendar','All','calendar','All','All','ACCESS_READ');
     xarRegisterPrivilege('CommentCalendar','All','calendar','All','All','ACCESS_COMMENT');
     xarRegisterPrivilege('ModerateCalendar','All','calendar','All','All','ACCESS_MODERATE');

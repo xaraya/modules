@@ -1,8 +1,8 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Calendar Administration</xar:mlstring></span></div>
-    <div class="xar-mod-body"><h2><xar:mlstring>Delete Calendar</xar:mlstring></h2>
+    <div class="xar-mod-head"><span class="xar-mod-title">Calendar Administration</span></div>
+    <div class="xar-mod-body"><h2>Delete Calendar</h2>
     <div style="margin: auto;text-align: center;">
-    <h3><xar:mlstring>Delete this calendar?</xar:mlstring></h3>
+    <h3>Delete this calendar?</h3>
     <form method="post" action="#xarModURL('calendar','admin','delete_calendar')#">
     <div>
         <input type="hidden" name="authid" id="authid" value="#$authid#"/>
@@ -13,7 +13,7 @@
     </div>
     </form>
     <br />
-    <a href="#xarModURL('calendar','admin','view_calendars')#"><xar:mlstring>Cancel Delete</xar:mlstring></a><br />
+    <a href="#xarModURL('calendar','admin','view_calendars')#">Cancel Delete</a><br />
     </div>
     <xar:if condition="!empty($preview)">
       <div style="width: 100%;padding: 3px;">

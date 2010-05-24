@@ -9,16 +9,16 @@
     -->
     <xar:calendar-decorator object="$Week" decorator="Xaraya" name="WeekURI"/>
 
-    <xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
+    <xar:set name="prevYearTitle">Previous Year</xar:set>
     <xar:set name="prevYearURL">$WeekURI->prev('year')</xar:set>
 
-    <xar:set name="prevWeekTitle"><xar:mlstring>Previous Week</xar:mlstring></xar:set>
+    <xar:set name="prevWeekTitle">Previous Week</xar:set>
     <xar:set name="prevWeekURL">$WeekURI->prev('week')</xar:set>
 
-    <xar:set name="nextWeekTitle"><xar:mlstring>Next Week</xar:mlstring></xar:set>
+    <xar:set name="nextWeekTitle">Next Week</xar:set>
     <xar:set name="nextWeekURL">$WeekURI->next('week')</xar:set>
 
-    <xar:set name="nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
+    <xar:set name="nextYearTitle">Next Year</xar:set>
     <xar:set name="nextYearURL">$WeekURI->next('year')</xar:set>
 
     <xar:set name="startts">$Week->children[1]->getTimeStamp()</xar:set>

@@ -2,10 +2,10 @@
     <xar:style scope="module" module="calendar" file="user-year"/>
 
     <xar:calendar-decorator object="$Year" decorator="Xaraya" name="YearURI"/>
-    <xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
+    <xar:set name="prevYearTitle">Previous Year</xar:set>
     <xar:set name="prevYearURL">#$YearURI->prev('year')#</xar:set>
 
-    <xar:set name="nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
+    <xar:set name="nextYearTitle">Next Year</xar:set>
     <xar:set name="nextYearURL">#$YearURI->next('year')#</xar:set>
 
     <table id="cal-calendar">
@@ -37,7 +37,7 @@
                                 </th>
                             </tr>
                             <tr>
-                                <th class="cal-week-title"><xar:mlstring>wk</xar:mlstring></th>
+                                <th class="cal-week-title">wk</th>
                                 <xar:set name="weekdays">$MonthText->orderedWeekdays('one')</xar:set>
                                 <xar:foreach in="$weekdays" value="$dayName">
                                     <th class="cal-day-title">#$dayName#</th>

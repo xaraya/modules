@@ -9,16 +9,16 @@
     -->
     <xar:calendar-decorator object="$Day" decorator="Xaraya" name="DayURI"/>
 
-    <xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
+    <xar:set name="prevYearTitle">Previous Year</xar:set>
     <xar:set name="prevYearURL">$DayURI->prev('year')</xar:set>
 
-    <xar:set name="prevDayTitle"><xar:mlstring>Previous Day</xar:mlstring></xar:set>
+    <xar:set name="prevDayTitle">Previous Day</xar:set>
     <xar:set name="prevDayURL">$DayURI->prev('day')</xar:set>
 
-    <xar:set name="nextDayTitle"><xar:mlstring>Next Day</xar:mlstring></xar:set>
+    <xar:set name="nextDayTitle">Next Day</xar:set>
     <xar:set name="nextDayURL">$DayURI->next('day')</xar:set>
 
-    <xar:set name="nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
+    <xar:set name="nextYearTitle">Next Year</xar:set>
     <xar:set name="nextYearURL">$DayURI->next('year')</xar:set>
 
     <!--

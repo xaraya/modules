@@ -6,6 +6,6 @@
         </xar:foreach>
         </ul>
     <xar:else/>
-        <xar:mlstring>No calendars available</xar:mlstring>
+        No calendars available
     </xar:if>
 </xar:template>

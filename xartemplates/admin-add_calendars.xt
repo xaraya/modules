@@ -1,24 +1,24 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
-    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>New Event</xar:mlstring></span></div>
+    <div class="xar-mod-head"><span class="xar-mod-title">New Event</span></div>
     <div style="margin: auto;">
     <xar:if condition="$calid ge 1">
       <h2>#$message#</h2>
     </xar:if>
-    <h2><xar:mlstring>Add a calendar to the database</xar:mlstring></h2>
+    <h2>Add a calendar to the database</h2>
     <form method="post" action="#xarModURL('calendar','admin','create_calendars)#">
       <input type="hidden" name="authid" id="authid" value="#$authid#"/>
       <table>
         <tr>
-          <td><xar:mlstring>Calendar name</xar:mlstring></td>
+          <td>Calendar name</td>
           <td>
               <input type="text" name="calname" value="Calendar name"/>
           </td>
         </tr>
-        <tr><td colspan="2"><xar:mlstring>Please specify a file or an URI:</xar:mlstring></td></tr>
+        <tr><td colspan="2">Please specify a file or an URI:</td></tr>
         <tr>
-          <td><xar:mlstring>Database calendar</xar:mlstring><input type="radio" name="addtype" value="db" checked="checked"/></td>
+          <td>Database calendar<input type="radio" name="addtype" value="db" checked="checked"/></td>
           <td>
           </td>
         </tr>
@@ -26,9 +26,9 @@
           <td>File<input type="radio" name="addtype" value="file"/></td>
           <td>
             <xar:if condition="$thereAreIcs eq 0">
-              <xar:mlstring>No new calendars found in var/calendar</xar:mlstring>
+              No new calendars found in var/calendar
             <xar:else />
-              <xar:mlstring>New filenames found in var/config:</xar:mlstring>
+              New filenames found in var/config:
               <select name="location" id="default_cal">
                 <xar:foreach in="$icsfiles" key="$filenumber" value="$filename">
                   <xar:if condition="in_array($filename,$default_cal)">

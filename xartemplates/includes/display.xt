@@ -6,18 +6,14 @@
     </xar:if>
     <div class="xar-form-input-wrapper">
         <label for="windowwidth" title="#xarML('Width of the window the calendar displays in')#" class="xar-form-label">
-            <xar:mlstring>
-                Calendar Window Width
-            </xar:mlstring>
+            Calendar Window Width
         </label>
         <xar:set name="value">xarModItemVars::get('calendar', 'windowwidth', $regid)</xar:set>
         <input type="text" name="windowwidth" id="windowwidth" value="#$value#"/>&#160;px
     </div>
     <div class="xar-form-input-wrapper">
         <label for="minutesperunit" title="#xarML('The unit the grid in day view represents')#" class="xar-form-label">
-            <xar:mlstring>
-                Grid Unit
-            </xar:mlstring>
+            Grid Unit            
         </label>
         <xar:set name="value">xarModItemVars::get('calendar', 'minutesperunit', $regid)</xar:set>
         <xar:set name="options">
@@ -32,28 +28,22 @@
         <xar:data-input type="dropdown" name="minutesperunit" id="minutesperunit" options="$options" value="$value"/>&#160;minutes
     </div>
     <div class="xar-form-input-wrapper">
-        <label for="unitheight" title="#xarML('Height in pixels on the screen of the grid unit')#" class="xar-form-label">
-            <xar:mlstring>
-                Unit height
-            </xar:mlstring>
+        <label for="unitheight" title="#xarML('Height in pixels on the screen of the grid unit')#" class="xar-form-label">            
+            Unit height            
         </label>
         <xar:set name="value">xarModItemVars::get('calendar', 'unitheight', $regid)</xar:set>
         <input type="text" name="unitheight" id="unitheight" value="#$value#"/>&#160;px
     </div>
     <div class="xar-form-input-wrapper">
         <label for="cal_sdow" title="#xarML('The first day of the week shown on the views')#" class="xar-form-label">
-            <xar:mlstring>
-                Week starts
-            </xar:mlstring>
+            Week starts            
         </label>
         <xar:set name="value">xarModItemVars::get('calendar', 'cal_sdow', $regid)</xar:set>
         <xar:data-input type="dropdown" name="cal_sdow" id="cal_sdow" validation="$weekdays" value="$value"/>
     </div>
     <div class="xar-form-input-wrapper">
         <label for="default_view" title="#xarML('The calendar default view')#" class="xar-form-label">
-            <xar:mlstring>
-                Default view
-            </xar:mlstring>
+            Default view            
         </label>
         <xar:set name="options">array(
                                 array('id' => 'day', 'name' => 'Day'),
@@ -67,27 +57,21 @@
     </div>
     <div class="xar-form-input-wrapper">
         <label for="day_start" title="#xarML('The time when the day begins on the calendar displays')#" class="xar-form-label">
-            <xar:mlstring>
-                Morning starts at:
-            </xar:mlstring>
+            Morning starts at:            
         </label>
         <xar:set name="value">xarModVars::get('calendar', 'day_start')</xar:set>
         <xar:data-input type="formattedtime" name="day_start" id="day_start" value="$value" dropdown="true" seconds="false" minutes="false"/>&#160;: 00
     </div>
     <div class="xar-form-input-wrapper">
         <label for="day_end" title="#xarML('The time when the day ends on the calendar displays')#" class="xar-form-label">
-            <xar:mlstring>
-                Evening ends at:
-            </xar:mlstring>
+            Evening ends at:
         </label>
         <xar:set name="value">xarModVars::get('calendar', 'day_end')</xar:set>
         <xar:data-input type="formattedtime" name="day_end" id="day_end" value="$value" dropdown="true" seconds="false" minutes="false"/>&#160;: 00
     </div>
     <div class="xar-form-input-wrapper">
-        <label for="twentyfourhourformat" title="#xarML('The format for displaying hours and minutes')#" class="xar-form-label">
-            <xar:mlstring>
-                Time Display Format
-            </xar:mlstring>
+        <label for="twentyfourhourformat" title="#xarML('The format for displaying hours and minutes')#" class="xar-form-label">            
+            Time Display Format            
         </label>
         <xar:set name="options">array(
                                 array('id' => false, 'name' => 'am/pm'),
