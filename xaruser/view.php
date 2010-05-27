@@ -531,6 +531,10 @@ function publications_user_view($args)
     $q->eq('state',3);
     $q->eq('locale',xarUserGetNavigationLocale());
     $q->eq('pubtype_id',$ptid);
+
+    // Suppress deleted items if not an admin
+    // Remove this once listing property works with dataobject access
+    if (xarIsParent('Administrators',xarUserGetVar('uname'))) $q->ne('state',3);
     $data['conditions'] = $q;
 
     // Throw all the relevant settings we are using into the cache
