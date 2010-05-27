@@ -44,7 +44,7 @@
       <seq>3</seq>
       <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"2";}</configuration>
     </property>
-    <property name="summary">
+    <property name="description">
       <id>238</id>
       <label>Description</label>
       <type>editor</type>

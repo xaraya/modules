@@ -356,6 +356,10 @@ function publications_admin_view($args)
     $q = new Query();
     $q->eq('parent_id',0);
     $q->eq('pubtype_id',$ptid);
+    
+    // Suppress deleted items if not an admin
+    // Remove this once listing property works with dataobject access
+    if (xarIsParent('Administrators',xarUserGetVar('uname'))) $q->ne('state',3);
     $data['conditions'] = $q;
 
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));

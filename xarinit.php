@@ -41,6 +41,7 @@ function publications_init()
             body2 TEXT,
             body3 TEXT,
             notes TEXT,
+            seq integer unsigned NOT NULL DEFAULT '0',
             parent_id integer unsigned NOT NULL DEFAULT '0',
             pubtype_id tinyint NOT NULL DEFAULT '1',
             pages INT UNSIGNED NOT NULL DEFAULT '1',
