@@ -59,7 +59,8 @@
                 if (!xarVarFetch('defaultredirect',    'checkbox',      $defaultredirect, xarModVars::get('mailer', 'defaultredirect'), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('defaultredirectaddress',    'str',      $defaultredirectaddress, xarModVars::get('mailer', 'defaultredirectaddress'), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('savetodb',    'checkbox',      $savetodb, xarModVars::get('mailer', 'savetodb'), XARVAR_NOT_REQUIRED)) return;
-
+                if (!xarVarFetch('defaultheader_x_mailer', 'str', $defaultheader_x_mailer,  xarModVars::get('mailer', 'defaultheader_x_mailer'), XARVAR_NOT_REQUIRED)) return;
+                
                 $modvars = array(
                                 'defaultmastertable',
                                 'defaultuserobject',
@@ -71,6 +72,7 @@
                                 'defaultredirect',
                                 'defaultredirectaddress',
                                 'savetodb',
+                                'defaultheader_x_mailer'
                                 );
 
                 if ($data['tab'] == 'mailer_general') {

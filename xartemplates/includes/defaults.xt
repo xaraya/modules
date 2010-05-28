@@ -33,4 +33,12 @@
         <xar:set name="value">xarModItemVars::get('mailer', 'defaultlocale', $regid)</xar:set>
         <xar:data-input type="language" name="defaultlocale" value="$value"/>
     </div>
+    <div class="xar-form-input-wrapper">
+        <label for="defaultheader_x_mailer" class="xar-form-label" title="#xarML('Enter Text For Mail Header X-Mailer Version Information')#">
+           Header X-mailer 
+        </label>
+        <xar:set name="defaultheader_x_mailer">xarModVars::get('mailer', 'defaultheader_x_mailer', $regid)</xar:set>
+        <xar:data-input type="textbox" name="defaultheader_x_mailer" value="$defaultheader_x_mailer" size="32" />
+    </div>
+    
 </xar:template>

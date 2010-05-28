@@ -39,6 +39,7 @@
             type              tinyint NOT NULL default '3', 
             module_id         integer unsigned NOT NULL default '0', 
             state             tinyint NOT NULL default '3', 
+            header_x_mailer   varchar(254) default '' NOT NULL, 
             PRIMARY KEY  (id) 
         ) TYPE=MyISAM";
         if (!$q->run($query)) return;
@@ -125,7 +126,7 @@
         xarModVars::set('mailer', 'defaultlocale', 'en_US.utf-8');
         xarModVars::set('mailer', 'defaultredirect', 0);
         xarModVars::set('mailer', 'defaultredirectaddress', xarModVars::get('mail','adminmail'));
-
+        xarModVars::set('mailer', 'defaultheader_x_mailer', "NetspanMailer [version 2.00]");
     # --------------------------------------------------------
     #
     # Create DD objects
