@@ -39,8 +39,9 @@
                 <xar:set name="name">$node->name</xar:set>
                 <xar:set name="description">$node->description</xar:set>
                 <xar:set name="child_object">$node->child_object</xar:set>
-                <xar:set name="image">$node->image</xar:set>
-                <!--<xar:set name="map">$node->map</xar:set>-->
+                <!--<xar:set name="image">$node->image</xar:set>
+                <xar:set name="map">$node->map</xar:set>-->
+                <xar:set name="template">$node->template</xar:set>
                 <xar:set name="level">$node->getLevel()</xar:set>
 
                 <xar:if condition="(($displayindex + 1) % 2)">
@@ -59,8 +60,9 @@
                     <td class="#$displayclass#" style="text-align: left; margin-left: 5px;">#$description#</td>
                     <!--
                     <td class="#$displayclass#" style="text-align: left; margin-left: 5px;">#$child_object#</td>
-                    -->
                     <td class="#$displayclass#"><xar:if condition="empty($image)">&#160;<xar:else />#$image#</xar:if></td>
+                    -->
+                    <td class="#$displayclass#"><xar:if condition="empty($template)">&#160;<xar:else />#$template#</xar:if></td>
                     <td class="#$displayclass# xar-align-right">
                         <a href="#xarModURL('crispbb', 'admin', 'modifycat', array('itemid' => $cid))#" class="xar-icon" title="#$modcattitle#"><img class="xar-icon" src="#$modifyicon#" alt="Modify" /></a>
                         <a href="#xarModURL('crispbb', 'admin', 'deletecat', array('itemid' => $cid))#" class="xar-icon" title="#$delcattitle#"><img class="xar-icon" src="#$deleteicon#" alt="Delete" /></a>
