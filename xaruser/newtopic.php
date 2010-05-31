@@ -412,7 +412,7 @@ function crispbb_user_newtopic($args)
             if (empty($return_url)) {
                 $return_url = xarModURL('crispbb', 'user', 'display', array('tid' => $tid));
             }
-            xarResponse::Redirect($return_url);
+            xarController::redirect($return_url);
             return true;
 
         }

@@ -26,7 +26,7 @@ function crispbb_adminapi_getmenulinks($args)
     extract($args);
 
     // get request info
-    $request = xarRequest::getInfo();
+    $request = xarController::$request->getInfo();
 
     // see if calling func specified the current module
     if (!empty($current_module)) {

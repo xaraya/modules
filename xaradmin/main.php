@@ -38,7 +38,7 @@ function crispbb_admin_main()
         $defaultfunc = 'overview';
     }
 
-    xarResponse::Redirect(xarModURL('crispbb', 'admin', $defaultfunc));
+    xarController::redirect(xarModURL('crispbb', 'admin', $defaultfunc));
     return true;
 }
 ?>

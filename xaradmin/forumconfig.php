@@ -81,7 +81,7 @@ function crispbb_admin_forumconfig($args)
                     if (empty($data['return_url'])) {
                         $data['return_url'] = xarModURL('crispbb', 'admin', 'forumconfig');
                     }
-                    xarResponse::Redirect($data['return_url']);
+                    xarController::redirect($data['return_url']);
                     return true;
                 }
                 // failed validation, pass input back to form
@@ -246,7 +246,7 @@ function crispbb_admin_forumconfig($args)
                     if (empty($data['return_url'])) {
                         $data['return_url'] = xarModURL('crispbb', 'admin', 'forumconfig', array('sublink' => $sublink));
                     }
-                    xarResponse::Redirect($data['return_url']);
+                    xarController::redirect($data['return_url']);
                     return true;
                 }
             }
@@ -312,7 +312,7 @@ function crispbb_admin_forumconfig($args)
                     if (empty($data['return_url'])) {
                         $data['return_url'] = xarModURL('crispbb', 'admin', 'forumconfig', array('sublink' => 'privileges'));
                     }
-                    xarResponse::Redirect($data['return_url']);
+                    xarController::redirect($data['return_url']);
                     return true;
                 }
             }

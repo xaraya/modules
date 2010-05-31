@@ -80,7 +80,7 @@ function crispbb_admin_order($args)
         $return_url = xarServer::getVar('HTTP_REFERER');
     }
 
-    xarResponse::Redirect($return_url);
+    xarController::redirect($return_url);
     return true;
 
 }

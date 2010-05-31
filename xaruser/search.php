@@ -55,7 +55,7 @@ function crispbb_user_search()
     $results = array();
     $condition = '';
     $reqfields = array('ttitle', 'pdesc', 'ptext');
-    list($current_module) = xarRequest::getInfo();
+    list($current_module) = xarController::$request->getInfo();
     $data['searchactive'] = $current_module == 'search' ? true : false;
 
     $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));

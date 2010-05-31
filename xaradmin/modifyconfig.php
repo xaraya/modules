@@ -110,7 +110,7 @@ function crispbb_admin_modifyconfig()
             if (empty($data['return_url'])) {
                 $data['return_url'] = xarModURL('crispbb', 'admin', 'modifyconfig');
             }
-            xarResponse::Redirect($data['return_url']);
+            xarController::redirect($data['return_url']);
             return true;
         }
 

@@ -321,7 +321,7 @@ function crispbb_user_moderate($args)
                                     array('component' => 'topics', 'fid' => $fid, 'tstatus' => $tstatus));
                             }
                         }
-                        return xarResponse::Redirect($return_url);
+                        return xarController::redirect($return_url);
                     }
                 }
                 if (empty($return_url)) {
@@ -614,7 +614,7 @@ function crispbb_user_moderate($args)
                                         'fid' => $fid,
                                     ));
                             }
-                            return xarResponse::Redirect($return_url);
+                            return xarController::redirect($return_url);
                         } else {
                             // forum we're moving topics to
                             $target = $checkf;
@@ -682,7 +682,7 @@ function crispbb_user_moderate($args)
                                         'fid' => $fid,
                                     ));
                             }
-                            return xarResponse::Redirect($return_url);
+                            return xarController::redirect($return_url);
                         }
                     }
                 }
@@ -902,7 +902,7 @@ function crispbb_user_moderate($args)
                         if (empty($return_url)) {
                             $return_url = xarModURL('crispbb', 'user', 'display', array('tid' => $tid));
                         }
-                        return xarResponse::Redirect($return_url);
+                        return xarController::redirect($return_url);
                     }
                 }
                 $pstatuses = array(0);
@@ -1268,7 +1268,7 @@ function crispbb_user_moderate($args)
                                 $return_url = xarModURL('crispbb','user', 'display', array('tid' => $tid));
                             }
                         }
-                        return xarResponse::Redirect($return_url);
+                        return xarController::redirect($return_url);
                     }
                 }
 

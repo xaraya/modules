@@ -152,7 +152,7 @@ function crispbb_admin_ordercats($args)
     if (empty($return_url)) {
         $return_url = xarServer::getVar('HTTP_REFERER');
     }
-    xarResponse::Redirect($return_url);
+    xarController::redirect($return_url);
     return true;
 }
 ?>

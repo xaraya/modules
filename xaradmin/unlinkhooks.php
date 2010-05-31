@@ -80,7 +80,7 @@ function crispbb_admin_unlinkhooks()
                              'confirm' => $confirm))) {
         return;
     }
-    xarResponse::Redirect(xarModURL('crispbb', 'admin', 'modifyhooks',
+    xarController::redirect(xarModURL('crispbb', 'admin', 'modifyhooks',
         array('modid' => $modid, 'itemtype' => $itemtype)));
     return true;
 }
