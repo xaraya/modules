@@ -71,7 +71,7 @@
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
       <source>forums.ftype</source>
-      <status>33</status>
+      <status>35</status>
       <seq>6</seq>
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:34:"0,Normal Forum;1,Redirected Forum;";}</configuration>
     </property>
@@ -158,7 +158,7 @@
     <property name="fsettings">
       <id>121</id>
       <label>Forum Settings</label>
-      <type>array</type>
+      <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>forums.fsettings</source>
       <status>33</status>
@@ -168,10 +168,10 @@
     <property name="fprivileges">
       <id>122</id>
       <label>Forum Permissions</label>
-      <type>array</type>
+      <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>forums.fprivileges</source>
-      <status>33</status>
+      <status>35</status>
       <seq>16</seq>
       <configuration></configuration>
     </property>
@@ -180,7 +180,7 @@
       <label>Category</label>
       <type>categories</type>
       <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
+      <source></source>
       <status>33</status>
       <seq>17</seq>
       <configuration></configuration>

@@ -65,6 +65,7 @@
                     <td class="#$displayclass#"><xar:if condition="empty($template)">&#160;<xar:else />#$template#</xar:if></td>
                     <td class="#$displayclass# xar-align-right">
                         <a href="#xarModURL('crispbb', 'admin', 'modifycat', array('itemid' => $cid))#" class="xar-icon" title="#$modcattitle#"><img class="xar-icon" src="#$modifyicon#" alt="Modify" /></a>
+                        &#160;
                         <a href="#xarModURL('crispbb', 'admin', 'deletecat', array('itemid' => $cid))#" class="xar-icon" title="#$delcattitle#"><img class="xar-icon" src="#$deleteicon#" alt="Delete" /></a>
                         <!--
                         <xar:if condition="$level gt 0">

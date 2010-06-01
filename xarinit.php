@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * crispBB Forum Module
  *

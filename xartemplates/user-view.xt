@@ -35,32 +35,32 @@
             <xar:template type="module" file="user-view-menu" />
         </span>
         <xar:if condition="!empty($modforumurl)">
-        <span class="xar-floatright xar-nowrap">
-            <xar:comment>
-            <xar:if condition="!empty($addforumurl)">
-                <a href="#$addforumurl#" title="#xarML('View information about this forum')#"><img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('Information')#" title="#xarML('View information about this forum')#" /></a>
-            </xar:if>
-            </xar:comment>
-            <xar:if condition="!empty($modtopicsurl)">
-            <a href="#$modtopicsurl#" title="#xarML('Topics Awaiting Approval')#"><img src="#xarTPLGetImage('icons/comment_warning.png')#" alt="Submitted" />
-            </a>
-            </xar:if>
-            <xar:if condition="!empty($modtrashcanurl)">
-            <a href="#$modtrashcanurl#" title="#xarML('Deleted Topics')#"><img src="#xarTPLGetImage('icons/bin.png')#" alt="Deleted" />
-            </a>
-            </xar:if>
-            <a href="#$modforumurl#" title="#xarML('Moderate topics')#"><img src="#xarTPLGetImage('icons/comments_wrench_orange.png')#" alt="Moderate" />
-            </a>
-            <xar:if condition="!empty($editforumurl)">
-                <a href="#$editforumurl#"><img src="#xarTPLGetImage('icons/modify.png', 'base')#" alt="#xarML('Modify')#" title="#xarML('Modify this forum')#" /></a>
-            </xar:if>
-            <xar:if condition="!empty($hooksforumurl)">
-                <a href="#$hooksforumurl#"><img src="#xarTPLGetImage('icons/hooks.png', 'base')#" alt="#xarML('Hooks')#" title="#xarML('Modify forum hooks configuration')#" /></a>
-            </xar:if>
-            <xar:if condition="!empty($privsforumurl)">
-                <a href="#$privsforumurl#"><img src="#xarTPLGetImage('icons/privileges.png', 'base')#" alt="#xarML('Privileges')#" title="#xarML('Modify privileges for this forum')#" /></a>
-            </xar:if>
-        </span>
+            <span class="xar-floatright xar-nowrap">
+                <!-->
+                <xar:if condition="!empty($addforumurl)">
+                    <a href="#$addforumurl#" title="#xarML('View information about this forum')#"><img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('Information')#" title="#xarML('View information about this forum')#" /></a>
+                </xar:if>
+                -->
+                <xar:if condition="!empty($modtopicsurl)">
+                <a href="#$modtopicsurl#" title="#xarML('Topics Awaiting Approval')#"><img src="#xarTPLGetImage('icons/comment_warning.png')#" alt="Submitted" />
+                </a>
+                </xar:if>
+                <xar:if condition="!empty($modtrashcanurl)">
+                <a href="#$modtrashcanurl#" title="#xarML('Deleted Topics')#"><img src="#xarTPLGetImage('icons/bin.png')#" alt="Deleted" />
+                </a>
+                </xar:if>
+                <a href="#$modforumurl#" title="#xarML('Moderate topics')#"><img src="#xarTPLGetImage('icons/comments_wrench_orange.png')#" alt="Moderate" />
+                </a>
+                <xar:if condition="!empty($editforumurl)">
+                    <a href="#$editforumurl#"><img src="#xarTPLGetImage('icons/modify.png', 'base')#" alt="#xarML('Modify')#" title="#xarML('Modify this forum')#" /></a>
+                </xar:if>
+                <xar:if condition="!empty($hooksforumurl)">
+                    <a href="#$hooksforumurl#"><img src="#xarTPLGetImage('icons/hooks.png', 'base')#" alt="#xarML('Hooks')#" title="#xarML('Modify forum hooks configuration')#" /></a>
+                </xar:if>
+                <xar:if condition="!empty($privsforumurl)">
+                    <a href="#$privsforumurl#"><img src="#xarTPLGetImage('icons/privileges.png', 'base')#" alt="#xarML('Privileges')#" title="#xarML('Modify privileges for this forum')#" /></a>
+                </xar:if>
+            </span>
         </xar:if>
         <br class="xar-clearboth" />
     </div>
