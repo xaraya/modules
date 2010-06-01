@@ -153,7 +153,7 @@
     <property name="fsettings">
       <id>121</id>
       <label>Forum Settings</label>
-      <type>array</type>
+      <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>xar_crispbb_forums.fsettings</source>
       <status>33</status>
@@ -163,7 +163,7 @@
     <property name="fprivileges">
       <id>122</id>
       <label>Forum Permissions</label>
-      <type>array</type>
+      <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>xar_crispbb_forums.fprivileges</source>
       <status>33</status>
