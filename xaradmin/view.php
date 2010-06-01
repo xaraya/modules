@@ -61,7 +61,7 @@ function crispbb_admin_view($args)
             }
             $catinfo['forums'] = DataObjectMaster::getObjectList(array('name' => 'crispbb_forums'));
             $catinfo['forums']->layout = 'admin';
-            $fieldlist = array('fname', 'fdesc');
+            $fieldlist = array('fname', 'fdesc','fprivileges','ftype');
             $catinfo['forums']->setFieldlist($fieldlist);
             $catinfo['forums']->setCategories($cid);
             $filter = array('sort' => 'forder ASC', 'linkfield' => 'fname', 'catid' => $cid);
