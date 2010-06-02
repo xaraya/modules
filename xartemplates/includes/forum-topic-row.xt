@@ -32,7 +32,9 @@
     <xar:comment>
     <p>
     <span class="xar-sub">By:</span>
-    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $topic['towner']))#" title="#xarML('View profile')#">#$posterlist[$topic['towner']]['name']#</a>
+    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $topic['towner']))#" title="#xarML('View profile')#">
+        <xar:data-output type="name" value="$posterlist[$topic['towner']]['name']"/>
+    </a>
     </p>
     </xar:comment>
 </td>
@@ -64,7 +66,9 @@
     </xar:if>
     <p>
     <span class="xar-sub">By:</span>
-    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $topic['towner']))#" title="#xarML('View profile')#">#$posterlist[$topic['towner']]['name']#</a>
+    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $topic['towner']))#" title="#xarML('View profile')#">
+        <xar:data-output type="name" value="$posterlist[$topic['towner']]['name']"/>
+    </a>
     </p>
     <xar:if condition="!empty($showforum)">
         <p>
@@ -86,7 +90,9 @@
     </span>
     <p>
     <span class="xar-sub">By:</span>
-    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $topic['powner']))#" title="#xarML('View profile')#">#$posterlist[$topic['powner']]['name']#</a>
+    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $topic['powner']))#" title="#xarML('View profile')#">
+        <xar:data-output type="name" value="$posterlist[$topic['towner']]['name']"/>
+    </a>
     </p>
 </td>
 <xar:if condition="!empty($topic['modforumurl'])">
