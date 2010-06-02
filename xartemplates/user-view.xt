@@ -236,7 +236,9 @@
             <xar:if condition="!empty($powner) and !empty($ptime)">
             <li>
                 Last post by
-                <a href="#$pownerurl#" title="#xarML('View Profile')#">#$posterlist[$powner]['name']#</a>
+                <a href="#$pownerurl#" title="#xarML('View Profile')#">
+                    <xar:data-output type="name" value="$posterlist[$powner]['name']"/>
+                </a>
             </li>
             <li>
             <xar:template type="module" module="crispbb" file="user-timestamp" subdata="array('timestamp' =&gt; $ptime)" />
