@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+ 
+        <xar:foreach in="$items" key="$itemid" value="$fields">
+            <table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2" >
+                <xar:foreach in="$properties" key="$name">
+                    <tr>
+                        <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+                            <xar:data-label property="$properties[$name]" />: 
+                        </td>
+                        <xar:if condition="empty($fields[$name])">
+                            <td>&#160;</td>
+                        
+			<xar:else />
+
+                                <td>
+                                    <xar:data-output property="$properties[$name]" value="$fields[$name]" />
+                                </td>
+                        </xar:if>
+                    </tr>
+                </xar:foreach>
+               
+	       <tr><td></td><td><a href="#$links[$itemid]['modify']['olink']#">modify</a></td></tr>
+
+            </table>
+        </xar:foreach>
+ 
+        <xar:if condition="!empty($prevurl) or !empty($nexturl)">
+            <div class="xar-align-center">
+                <xar:if condition="!empty($prevurl)">
+                    <a href="#$prevurl#">&lt;&lt;</a>
+                <xar:else />
+                    &lt;&lt;
+                </xar:if>
+                &#160;&#160;&#160;
+                <xar:if condition="!empty($nexturl)">
+                    <a href="#$nexturl#">&gt;&gt;</a>
+                <xar:else />
+                    &gt;&gt;
+                </xar:if>
+            </div>
+        </xar:if>
+
+
+</xar:template>

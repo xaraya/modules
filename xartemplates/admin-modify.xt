@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">Path Administration</span>
+    </div>
+    <div class="xar-mod-body">
+      <xar:template type="module" file="admintabs" />
+
+      <h2>Edit Item</h2>
+        <xar:set name="withupload">#$object->upload#</xar:set>
+        <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
+        <xar:if condition="!empty($withupload)">
+           <xar:set name="enctype">'multipart/form-data'</xar:set>
+        </xar:if>
+	
+	<p><a href="#xarmodurl('path','admin','view',array('name' => $path_type))#">View Items:  #$label#</a></p>
+               
+        <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
+           
+            <fieldset>
+                <legend>
+                    Modify
+                </legend>
+ 
+                <xar:data-form object="$object" tplmodule="path" />
+		 
+             </fieldset>
+	     
+           <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+                <input type="hidden" name="confirm" id="confirm" value="true" /> 
+                &#160;&#160;&#160;
+                <input type="submit" value="#xarML('Update')#" />
+            </div>  
+        </form>
+    </div>
+</xar:template>

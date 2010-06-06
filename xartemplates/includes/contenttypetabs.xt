@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+<xar:style scope="module" module="base" file="tabs" />
+
+<xar:set name="activetab">''</xar:set>
+
+<xar:if condition="$activetab eq 'view' or $activetab eq 'delete' or $activetab eq 'modify'">
+	<xar:set name="tabclass">'xar-tab-active'</xar:set>
+	<xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+<xar:else />
+	<xar:set name="tabclass">'xar-tab'</xar:set>
+	<xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+</xar:if>
+
+<ul class="xar-tabs">
+<xar:foreach in="$path_types" key="$key" value="$val">
+
+	<xar:set name="name">xarMod::APIFunc('path','admin','slug', array('string' => $val))</xar:set>
+
+	<xar:if condition="isset($path_type) and $path_type eq $name">
+		<xar:set name="tabclass">'xar-tab-active'</xar:set>
+		<xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+	<xar:else />
+		<xar:set name="tabclass">'xar-tab'</xar:set>
+		<xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+	</xar:if>
+
+	 <li class="#$tabclass#"><a href="#xarModURL('path','user','view', array('name' => $val))#" class="#$linkclass#">#$val#</a></li>
+
+</xar:foreach>
+</ul>
+
+</xar:template>

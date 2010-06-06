@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">Path Administration</span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admintabs" />
+        <h2>Path Overview</h2>
+
+ <p>The path module lets you register actions for paths.</p>
+
+ <p>The <em>path</em> is the part of the URL after index.php, or after the hostname for those who remove index.php from their URLs.  Ex.: <strong>/my/awesome/path</strong></p>
+ 
+ <p>An <em>action</em> is stored in the database as a serialized associative array.  It can be expressed as a query string.  Ex.: <strong>module=mymodule&amp;func=view&amp;name=someobject</strong></p>
+
+ <p>The path module helps manage URLs by disallowing registration of duplicate paths and paths that conflict with an existing module alias.  When appropriate, the module will automatically register a module alias for the first part of a path.</p>
+
+<p>Here are some examples of how the path module manages paths and aliases:</p>
+
+<ul>
+<li>You try to register the path <strong>/forks/pitch</strong>.  But that path has already been registered.  An exception is thrown.</li>
+
+<li>You try to register the path <strong>/knives/swiss/camping</strong> with an action that includes <strong>module=cutlery</strong> -- but knives is already an alias for the tools module.  An exception is thrown, because actions must not conflict with a previously registered module alias.</li>
+
+<li>You try to register the path <strong>/knives/swiss/camping</strong> with an action that includes <strong>module=cutlery</strong> and knives is already an alias for the cutlery module.  No problem, as long ast <strong>/knives/swiss/camping</strong> is a unique path. </li>
+
+<li>You try to register the path <strong>/knives/swiss/camping</strong> with an action that includes <strong>module=cutlery</strong> and knives is not yet a module alias.  The path module will register knives as an alias of cutlery.</li>
+</ul>
+
+<p>For most applications, the path module's API functions are meant to be called from the functions of another module.  That's how the end user will most often encounter the path module.  So, for example, if the foo module has a "new" function for adding new items, an input in the module's admin-new form could allow the user to specify a path for displaying the item.  The foo_admin_new() function would construct the action like module=foo&amp;func=display&amp;itemid=123 and pass that action and the corresponding path to the path module via an API function.</p>
+
+    </div>
+</xar:template>

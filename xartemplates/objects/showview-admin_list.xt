@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+ 
+
+<a name="output" />
+ 
+<xar:if condition="!empty($items)">
+
+  
+  <div style="margin: 25px 0 0 1px;">
+  <a href="#xarModURL('path','admin','new')#"><img src="#sys::code()#modules/base/xarimages/icons/add.png" width="16" height="16" alt="Add a Path" /></a>
+</div>
+
+        <table class="xar-norm">
+            <tr>
+                <xar:foreach in="$properties" key="$name">
+                    <th>
+#$name#
+                    </th>
+                </xar:foreach>
+                <xar:if condition="empty($linkfield)">
+                    <th>
+                        &#160;
+                    </th>
+                </xar:if>
+            </tr>
+
+            <xar:foreach in="$items" key="$itemid" value="$fields">
+
+                <tr>
+                    <xar:foreach in="$properties" key="$name">
+                       
+                            <td valign="top">
+			    <xar:if condition="$name eq 'action'">
+				<xar:set name="qs">xarMod::apiFunc('path','user','action2querystring',array('action' => $fields['action']))</xar:set>
+				#$qs#
+			    <xar:else />
+				<xar:data-output property="$properties[$name]" value="$fields[$name]" />
+			    </xar:if>
+			    </td>
+
+                    </xar:foreach>
+                    <xar:if condition="empty($linkfield)">
+                        <td valign="top">
+  
+ &amp;nbsp; <a href="#xarModURL('path','admin','delete', array('itemid' => $itemid, 'name' => 'path'))#"><img src="#sys::code()#modules/base/xarimages/icons/delete.png" width="16" height="16" alt="Delete" /></a> 
+
+  &amp;nbsp; <a href="#xarModURL('path','admin','modify', array('itemid' => $itemid, 'name' => 'path'))#"><img src="#sys::code()#modules/base/xarimages/icons/modify.png" width="16" height="16" alt="Modify" /></a> 
+                          
+                        </td>
+                    </xar:if>
+                </tr>
+            </xar:foreach>
+        </table>
+
+</xar:if>
+</xar:template>
