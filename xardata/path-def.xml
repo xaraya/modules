@@ -1,17 +1,17 @@
 <object name="path">
-  <objectid>83</objectid>
+  <objectid>86</objectid>
   <label>Path</label>
   <module_id>1038</module_id>
   <itemtype>1</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
-  <maxid>0</maxid>
+  <maxid>6</maxid>
   <config>a:0:{}</config>
   <isalias>true</isalias>
   <properties>
     <property name="id">
-      <id>416</id>
+      <id>421</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration></configuration>
     </property>
     <property name="path">
-      <id>417</id>
+      <id>422</id>
       <label>Path</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -31,14 +31,14 @@
       <configuration></configuration>
     </property>
     <property name="action">
-      <id>418</id>
+      <id>423</id>
       <label>Action</label>
       <type>array</type>
-      <defaultvalue></defaultvalue>
+      <defaultvalue>a:4:{s:6:&quot;module&quot;;s:0:&quot;&quot;;s:4:&quot;type&quot;;s:0:&quot;&quot;;s:4:&quot;func&quot;;s:0:&quot;&quot;;s:4:&quot;name&quot;;s:0:&quot;&quot;;}</defaultvalue>
       <source>dynamic_data</source>
       <status>33</status>
       <seq>3</seq>
-      <configuration>a:9:{s:15:"display_columns";s:2:"30";s:12:"display_rows";s:1:"3";s:17:"display_key_label";s:3:"Key";s:19:"display_value_label";s:5:"Value";s:14:"display_layout";s:7:"default";s:24:"initialization_addremove";s:1:"0";s:32:"initialization_associative_array";s:1:"1";s:24:"initialization_prop_type";s:7:"textbox";s:26:"initialization_prop_config";s:0:"";}</configuration>
+      <configuration>a:9:{s:15:"display_columns";s:2:"30";s:12:"display_rows";s:1:"3";s:17:"display_key_label";s:3:"Key";s:19:"display_value_label";s:5:"Value";s:14:"display_layout";s:7:"default";s:24:"initialization_addremove";s:1:"2";s:32:"initialization_associative_array";s:1:"1";s:24:"initialization_prop_type";s:7:"textbox";s:26:"initialization_prop_config";s:0:"";}</configuration>
     </property>
   </properties>
 </object>

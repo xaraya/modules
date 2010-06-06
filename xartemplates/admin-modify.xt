@@ -24,6 +24,8 @@
                     Modify
                 </legend>
  
+ TODO: The checks for duplicate paths and previously registered module aliases aren't set up here yet
+
                 <xar:data-form object="$object" tplmodule="path" />
 		 
              </fieldset>

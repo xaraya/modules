@@ -42,10 +42,10 @@ function path_admin_new()
 				return $data;
 			}
 
-			if($path[0] != '/') {
-				$path = '/' . $path;
-				$object->properties['path']->setValue($path);
+			if($path[0] == '/') {
+				$path = substr($path, 1);
 			}
+			$object->properties['path']->setValue($path);
 
 			// Make sure the path is unique
 			$mylist = DataObjectMaster::getObjectList(array('name' =>  'path'));
@@ -57,8 +57,7 @@ function path_admin_new()
 			if(count($items) != 0) {
 				$data['msg'] = "The path is not unique.";
 				return $data;
-			}
-
+			} 
 			// Make sure there's no module alias conflict
 			$pos = strpos($path, '/');
 			if($pos) {
