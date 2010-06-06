@@ -17,7 +17,6 @@
 function path_admin_view()
 {
     if(!xarVarFetch('startnum', 'isset', $data['startnum'], NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('name', 'isset', $name, NULL, XARVAR_DONT_SET)) {return;}
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
