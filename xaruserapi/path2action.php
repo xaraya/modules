@@ -17,9 +17,6 @@
  */
 function path_userapi_path2action($args)
 {
-
-    if (!xarSecurityCheck('ViewPath')) return;
-
 	extract($args);
 
     sys::import('modules.dynamicdata.class.objects.master');
