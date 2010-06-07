@@ -24,15 +24,26 @@ function path_adminapi_getmenulinks()
     // Add a security check, so only admins can see this link
     // Hide the possible error
 
-    if (xarSecurityCheck('ViewPath',0)) {
+    if (xarSecurityCheck('EditPath',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('path',
                                                    'admin',
-                                                   'viewpathtypes'),
+                                                   'view'),
                               // In order to display the tool tips and label in any language,
                               // we must encapsulate the calls in the xarML in the API.
-                              'title' => xarML('View a list of Path Types'),
-                              'label' => xarML('Path Types'));
+                              'title' => xarML('View Paths'),
+                              'label' => xarML('View'));
+    }
+
+	if (xarSecurityCheck('AddPath',0)) {
+
+        $menulinks[] = Array('url'   => xarModURL('path',
+                                                   'admin',
+                                                   'add'),
+                              // In order to display the tool tips and label in any language,
+                              // we must encapsulate the calls in the xarML in the API.
+                              'title' => xarML('Add'),
+                              'label' => xarML('Add'));
     }
 
     if (xarSecurityCheck('AdminPath',0)) {
@@ -47,7 +58,7 @@ function path_adminapi_getmenulinks()
                               'label' => xarML('Modify Configuration'));
     }
 
-	    if (xarSecurityCheck('AdminPath',0)) {
+	    if (xarSecurityCheck('ViewPath',0)) {
         // Add a link to the module's configuration.
         // We place this link last in the list so have a similar menu for all modules
         $menulinks[] = Array('url'   => xarModURL('path',
