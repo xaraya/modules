@@ -15,8 +15,7 @@
            <xar:set name="enctype">'multipart/form-data'</xar:set>
         </xar:if>
 	
-	<p><a href="#xarmodurl('path','admin','view',array('name' => $path_type))#">View Items:  #$label#</a></p>
-               
+ 
         <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
            
             <fieldset>
@@ -24,7 +23,14 @@
                     Modify
                 </legend>
  
- TODO: The checks for duplicate paths and previously registered module aliases aren't set up here yet
+	<xar:if condition="isset($errors)">
+		<div class="errors">
+		<div>There is a problem with your submission:</div>
+		<xar:foreach in="$errors" key="$key" value="$val">
+		<p>#$val#</p>
+		</xar:foreach>
+		</div>
+	</xar:if>
 
                 <xar:data-form object="$object" tplmodule="path" />
 		 
