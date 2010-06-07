@@ -60,64 +60,65 @@ function path_admin_modify()
         // Get the data from the form
         $isvalid = $object->checkInput();
 
-        if (!$isvalid) {
-            // Bad data: redisplay the form with the data we picked up and with error messages
-            return xarTplModule('path','admin','modify', $data);              
-        } else {
+		$path = $object->properties['path']->getValue();
+		$action = $object->properties['action']->getValue();
 
-			$path = $object->properties['path']->getValue();
-			$action = $object->properties['action']->getValue();
-			if(is_array($action)) {
-				foreach($action as $key=>$val){
-					$action[$key] = trim($val);
-				}
+		$pattern = '/^[\w\-\/]{1,}$/';
+		if (!preg_match($pattern, $path)) {
+			$data['errors'][] = "Path must be at least one character long and can contain only letters, numbers, slashes, underscores and dashes.";
+		}
+
+		if(is_array($action)) {
+			foreach($action as $key=>$val){
+				$action[$key] = trim($val);
 			}
+		}
 
-			$data['errors'] = array();
+		$data['errors'] = array();
 
-			if (empty($action['module']) || empty($action['type']) || empty($action['func'])) {
-				$data['errors'][] = "Action keys must include module, type and func.";
+		if (empty($action['module']) || empty($action['type']) || empty($action['func'])) {
+			$data['errors'][] = "Action keys must include module, type and func.";
+		} else {
+			$object->properties['action']->setValue($action);
+		}
+
+		if($path[0] == '/') {
+			$path = substr($path, 1);
+		}
+
+		// Get the current value of the path before we modify anything
+		$object2 = DataObjectMaster::getObject(array('name' => 'path'));
+		$curritem = $object2->getItem(array('itemid' => $data['itemid']));
+		$currpath = $object2->properties['path']->value;
+
+		// If we're changing the path, make sure the new one is unique
+		if ($path != $currpath) {
+			$checkpath = xarMod::apiFunc('path','admin','checkpath',array('path' => $path));
+			if(!($checkpath)) {
+				$data['errors'][] = "The path you've specified is already in use.  Please try again.";
 			} else {
-				$object->properties['action']->setValue($action);
+				$object->properties['path']->setValue($path);
 			}
+		}
 
-			if($path[0] == '/') {
-				$path = substr($path, 1);
-			}
+		// Make sure we're not creating a module alias conflict
+		$aliascheck = xarMod::apiFunc('path','admin','alias',array('path' => $path, 'actionmodule' => $action['module']));
 
-			// Get the current value of the path before we modify anything
-			$object2 = DataObjectMaster::getObject(array('name' => 'path'));
-			$curritem = $object2->getItem(array('itemid' => $data['itemid']));
-			$currpath = $object2->properties['path']->value;
+		if(is_array($aliascheck)) {
+			$data['errors'][] = 'Sorry, that pathstart ("' . $aliascheck['pathstart'] . '") is already an alias for the <a href="' . xarmodurl('modules','admin','aliases', array('name' => $aliascheck['aliasmodule'])) . '">' . $aliascheck['aliasmodule'] . '</a> module.  Please try a different path or specify a different module for the action.';
+		}
 
-			// If we're changing the path, make sure the new one is unique
-			if ($path != $currpath) {
-				$checkpath = xarMod::apiFunc('path','admin','checkpath',array('path' => $path));
-				if(!($checkpath)) {
-					$data['errors'][] = "The path you've specified is already in use.  Please try again.";
-				} else {
-					$object->properties['path']->setValue($path);
-				}
-			}
+		if(!empty($data['errors'])) {
+			return $data;
+		}
 
-			// Make sure we're not creating a module alias conflict
-			$aliascheck = xarMod::apiFunc('path','admin','alias',array('path' => $path, 'actionmodule' => $action['module']));
+		// Good data: create the item
+		$item = $object->updateItem();
 
-			if(is_array($aliascheck)) {
-				$data['errors'][] = 'Sorry, that pathstart ("' . $aliascheck['pathstart'] . '") is already an alias for the <a href="' . xarmodurl('modules','admin','aliases', array('name' => $aliascheck['aliasmodule'])) . '">' . $aliascheck['aliasmodule'] . '</a> module.  Please try a different path or specify a different module for the action.';
-			}
-
-			if(!empty($data['errors'])) {
-				return $data;
-			}
-
-            // Good data: create the item
-            $item = $object->updateItem();
-
-            // Jump to the next page
-            xarController::Redirect(xarModURL('path','admin','view'));
-            return true;
-        }
+		// Jump to the next page
+		xarController::Redirect(xarModURL('path','admin','view'));
+		return true;
+        
     } else {
         // ?? Get that specific item of the object
         $object->getItem(array('itemid' => $data['itemid']));
