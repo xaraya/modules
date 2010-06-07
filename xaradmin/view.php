@@ -47,7 +47,7 @@ function path_admin_view()
 
 	$data['sort'] = xarMod::ApiFunc('path','admin','sort', array(
 		//how to sort if the URL doesn't say otherwise...
-		'sortfield_fallback' => 'id', 
+		'sortfield_fallback' => 'path', 
 		'ascdesc_fallback' => 'ASC'
 	));
 

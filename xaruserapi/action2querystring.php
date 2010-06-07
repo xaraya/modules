@@ -12,7 +12,8 @@
  * @author potion <ryan@webcommunicate.net>
  */
 /**
- *  format an action as a query string
+ *  Format an action as a query string.  The resulting query string will have modules, type and func as the first three keys, with the rest of the arguments arranged alphabetically by key. (Ex.: module=content&type=user&func=view&axe=yes&bus=yellow&zebra=striped)
+
  * @param args[$action] required action (must be an associative array and can be serialized or not)
  */
 function path_userapi_action2querystring($args)
@@ -27,8 +28,21 @@ function path_userapi_action2querystring($args)
 	}
 
 	$qs = array();
+ 
+	$arr['module'] = $action['module'];
+	$arr['type'] = $action['type'];
+	$arr['func'] = $action['func'];
 
-	foreach ($action as $key=>$value) {
+	unset($action['module']);
+	unset($action['type']);
+	unset($action['func']);
+
+	if(!empty($action)) {
+		ksort($action);
+		$arr = array_merge($arr, $action);
+	}
+
+	foreach($arr as $key=>$value) {
 		$qs[] = $key . '=' . $value;
 	}
 

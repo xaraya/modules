@@ -7,10 +7,12 @@
   <div style="margin: 25px 0 0 1px;">
   <a href="#xarModURL('path','admin','add')#"><img src="#sys::code()#modules/base/xarimages/icons/add.png" width="16" height="16" alt="Add a Path" /></a>
 </div>
-<xar:if condition="!empty($items)">
 
-  
- 
+<xar:if condition="empty($items)">
+
+	     <p>There are no paths.  <a href="#xarmodurl('path','admin','add')#">Add one</a>.</p>
+
+<xar:else />
 
         <table class="xar-norm">
             <tr>
