@@ -157,8 +157,60 @@
         return true;
     }
 
-    function mailer_upgrade()
+    function mailer_upgrade($oldVersion)
     {
+       // Upgrade dependent on old version number
+        switch($oldVersion) {
+            case '1.0.0': 
+                    
+                    # --------------------------------------------------------
+                    #
+                    # Alter table xar_mailer_mails to add column header_x_mailer
+                    #
+                    $q = new Query();
+                    $prefix = xarDB::getPrefix();
+                    
+                    $query = "ALTER TABLE ". $prefix."_mailer_mails ADD header_x_mailer VARCHAR(254) NULL";
+                    if (!$q->run($query)) return;
+                    
+                    # --------------------------------------------------------
+                    #
+                    # Set up modvars
+                    #
+                    xarModVars::set('mailer', 'defaultheader_x_mailer', "NetspanMailer [version 2.00]");
+                    
+                    # --------------------------------------------------------
+                    #
+                    # Add the missing DD property header_x_mailer in mailer_mails
+                    #
+                    sys::import('modules.dynamicdata.class.objects.master');
+                    
+                    $modid = xarMod::getId('mailer');
+            
+                    $objectinfo = DataObjectMaster::getObjectInfo(array('moduleid' => $modid, 'name' => 'mailer_mails'));
+                    if (!isset($objectinfo) || empty($objectinfo['objectid'])) return;
+            
+                    $objectid = $objectinfo['objectid'];
+                    
+                    $propertyid = xarMod::apiFunc('dynamicdata','admin','createproperty', array('name'         => 'header_x_mailer',
+                                                                                                'label'        => 'Header X_Mailer',
+                                                                                                'objectid'     => $objectid,
+                                                                                                'type'         => 2,
+                                                                                                'defaultvalue' => '',
+                                                                                                'source'       => 'xar_mailer_mails.header_x_mailer',
+                                                                                                'status'       => 33,
+                                                                                                'seq'          => 20));
+                    if (empty($propertyid)) return;
+                    // success
+                    // fall through to next upgrade
+
+            case '1.0.2':
+
+                // fall through to next upgrade
+
+            default:
+                break;
+        }
         return true;
     }
 

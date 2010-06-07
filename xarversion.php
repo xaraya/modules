@@ -6,7 +6,7 @@
  */
     $modversion['name']           = 'mailer';
     $modversion['id']             = '30064';
-    $modversion['version']        = '1.0.0';
+    $modversion['version']        = '1.0.1';
     $modversion['displayname']    = xarML('Mailer');
     $modversion['description']    = xarML('A module to manage emails');
     $modversion['credits']        = 'credits.txt';
