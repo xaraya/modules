@@ -29,7 +29,8 @@
 <li>You try to register the path <strong>/knives/swiss/camping</strong> with an action that includes <strong>module=cutlery</strong> and knives is not yet a module alias.  The path module will register knives as an alias of cutlery.</li>
 </ul>
 
-<p>For most applications, the path module's API functions are meant to be called from the functions of another module.  That's how the end user will most often encounter the path module.  So, for example, if the foo module has a "new" function for adding new items, an input in the module's admin-new form could allow the user to specify a path for displaying the item.  The foo_admin_new() function would construct the action like module=foo&amp;func=display&amp;itemid=123 and pass that action and the corresponding path to the path module via an API function.</p>
+<p>For most applications, the path module's API functions are meant to be called from the functions of another module.  So, for example, if the foo module has a "new" function for adding new items, an input in the module's admin-new form could allow the user to specify a path for displaying the item.  The foo_admin_new() function would construct the action like module=foo&amp;func=display&amp;itemid=123 and pass that action and the corresponding path to the path module via an API function.</p>
 
+<p><strong>Note:</strong>  The path module does nothing by itself.  All it does is handle the registration of paths and their actions.  The point of the module is to make available to other modules the path_userapi_new function and other userapi functions.</p>
     </div>
 </xar:template>
