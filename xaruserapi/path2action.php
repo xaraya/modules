@@ -20,12 +20,10 @@ function path_userapi_path2action($args)
 	extract($args);
 
     sys::import('modules.dynamicdata.class.objects.master');
-    sys::import('modules.dynamicdata.class.properties.master');
 
 	$mylist = DataObjectMaster::getObjectList(array('name' =>  'path'));
 
 	$filters = array(
-					 'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
 					 'where'      => 'path eq \'' . $path . '\'',
 					);
 	

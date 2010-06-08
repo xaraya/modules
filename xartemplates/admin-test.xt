@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">Path Administration</span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admintabs" />
+        <h2>Path Test</h2>
+
+How long does it take to call path_userapi_path2action()
+
+<p>response: <strong><xar:if condition="!is_array($res) and $res eq false">false</xar:if>#$res#</strong></p>
+ <p>elapsed: <strong>#$elapsed#</strong> seconds</p>
+
+
+    </div>
+</xar:template>

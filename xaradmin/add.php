@@ -38,21 +38,21 @@ function path_admin_add()
 
         // Get the data from the form
         $isvalid = $object->checkInput();
-		
-		$data['errors'] = array();
 
 		$path = $object->properties['path']->getValue();
 		$action = $object->properties['action']->getValue();
-
-		$pattern = '/^[\w\-\/]{1,}$/';
-		if (!preg_match($pattern, $path)) {
-			$data['errors'][] = "Path must be at least one character long and can contain only letters, numbers, slashes, underscores and dashes.";
-		}
 
 		if(is_array($action)) {
 			foreach($action as $key=>$val){
 				$action[$key] = trim($val);
 			}
+		}
+
+		$data['errors'] = array();
+
+		$pattern = '/^[\w\-\/]{1,}$/';
+		if (!preg_match($pattern, $path)) {
+			$data['errors'][] = "Path must be at least one character long and can contain only letters, numbers, slashes, underscores and dashes.";
 		}
 
 		if (empty($action['module']) || empty($action['type']) || empty($action['func'])) {

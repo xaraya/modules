@@ -42,11 +42,7 @@ function path_userapi_action2querystring($args)
 		$arr = array_merge($arr, $action);
 	}
 
-	foreach($arr as $key=>$value) {
-		$qs[] = $key . '=' . $value;
-	}
-
-	$qs = implode('&', $qs);
+	$qs = http_build_query($arr, NULL, '&');
 
 	return $qs;
 

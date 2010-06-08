@@ -18,17 +18,22 @@
  * @return array containing the menulinks for the overview item on the main manu
  * @since 14 Oct 2005
  */
-function path_admin_overview()
+function path_admin_test()
 {
    /* Security Check */
-   
     if (!xarSecurityCheck('AdminPath',0)) return;
 
-    /* if there is a separate overview function return data to it
-     * else just call the main function that usually displays the overview
-     */
+	$time1 = microtime();
 
-    return xarTplModule('path','admin','overview');
+	$somepath = 'apples/red';   
+	$res = xarMod::apiFunc('path','user','path2action',array('path' =>$somepath));
+	
+	$time2 = microtime();
+
+	$data['elapsed'] = $time2 - $time1;
+	$data['res'] = xarMod::apiFunc('path','user','action2querystring',array('action' =>$res));
+
+    return xarTplModule('path','admin','test', $data);
 }
 
 ?>
