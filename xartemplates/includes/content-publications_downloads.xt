@@ -21,4 +21,7 @@
         <xar:data-label property="$properties['fileupload']" for="id" label="$label" />
         <xar:data-input property="$properties['fileupload']" />
     </div>
+    <div class="xar-form-input-wrapper">
+        <xar:data-input property="$properties['position']"/>
+    </div>
 </xar:template>

@@ -63,7 +63,7 @@ function publications_admin_view_pages($args)
             $adminaccess = $accessproperty->check($args);
 
             // Decide whether this page can be modified by the current user
-            try {
+            /*try {
                 $args = array(
                     'instance' => $thisinstance,
                     'group' => $page['access']['modify_access']['group'],
@@ -71,11 +71,11 @@ function publications_admin_view_pages($args)
                 );
             } catch (Exception $e) {
                 $args = array();
-            }
+            }*/
             $data['pages'][$key]['edit_allowed'] = $adminaccess || $accessproperty->check($args);
-
+            /*
             // Decide whether this page can be deleted by the current user
-            try {
+           try {
                 $args = array(
                     'instance' => $thisinstance,
                     'group' => $page['access']['delete_access']['group'],
@@ -83,7 +83,7 @@ function publications_admin_view_pages($args)
                 );
             } catch (Exception $e) {
                 $args = array();
-            }
+            }*/
             $data['pages'][$key]['delete_allowed'] = $adminaccess ||  $accessproperty->check($args);
         }
     }
