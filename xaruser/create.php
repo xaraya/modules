@@ -25,39 +25,30 @@
 
 sys::import('modules.dynamicdata.class.objects.master');
 
-function publications_admin_create()
+function publications_user_create()
 {
     if (!xarVarFetch('ptid',       'id',    $data['ptid'])) {return;}
     if (!xarVarFetch('new_cids',   'array', $cids,    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('preview',    'str',   $data['preview'], NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('save',       'str',   $save, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    
 
     // Confirm authorisation code
     // This has been disabled for now
-    // if (!xarSecConfirmAuthKey()) return;
+//    if (!xarSecConfirmAuthKey()) return;
 
     $data['items'] = array();
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
-    
-    //FIXME This should be configuration in the celko property itself
-    $data['object']->properties['position']->initialization_celkoparent_id = 'parentpage_id';
-    $data['object']->properties['position']->initialization_celkoright_id = 'rightpage_id';
-    $data['object']->properties['position']->initialization_celkoleft_id  = 'leftpage_id';
-    $xartable = xarDB::getTables();
-    $data['object']->properties['position']->initialization_itemstable = $xartable['publications'];
-    
     $isvalid = $data['object']->checkInput();
     
     $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
     
-    if ($data['preview'] || !$isvalid) {
+    if ($data['preview'] || $isvalid) {
         // Preview or bad data: redisplay the form
         $data['properties'] = $data['object']->getProperties();
         if ($data['preview']) $data['tab'] = 'preview';
-        return xarTplModule('publications','admin','new', $data);    
+        return xarTplModule('publications','user','new', $data);    
     }
 
 /*

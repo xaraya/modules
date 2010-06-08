@@ -1,21 +1,17 @@
 <object name="publications_news">
-  <objectid>27</objectid>
+  <objectid>61</objectid>
   <label>News</label>
   <module_id>182</module_id>
-  <itemtype>12</itemtype>
+  <itemtype>31</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
-  <datastore>relational</datastore>
-  <config>a:1:{s:5:&quot;where&quot;;s:12:&quot;itemtype = 1&quot;;}</config>
-  <sources>a:1:{s:11:&quot;publication&quot;;s:16:&quot;xar_publications&quot;;}</sources>
-  <relations>a:0:{}</relations>
-  <objects>a:0:{}</objects>
-  <isalias>0</isalias>
+  <config>a:1:{s:5:"where";s:12:"itemtype = 1";}</config>
+  <isalias>false</isalias>
   <properties>
     <property name="id">
-      <id>244</id>
+      <id>857</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -25,7 +21,7 @@
       <configuration></configuration>
     </property>
     <property name="name">
-      <id>1460</id>
+      <id>858</id>
       <label>Name</label>
       <type>textbox</type>
       <defaultvalue>New News Item</defaultvalue>
@@ -35,7 +31,7 @@
       <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"2";}</configuration>
     </property>
     <property name="title">
-      <id>245</id>
+      <id>859</id>
       <label>Title</label>
       <type>textbox</type>
       <defaultvalue>New News Item</defaultvalue>
@@ -45,9 +41,9 @@
       <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"2";}</configuration>
     </property>
     <property name="introduction">
-      <id>246</id>
+      <id>860</id>
       <label>Introduction</label>
-      <type>editor</type>
+      <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>xar_publications.description</source>
       <status>34</status>
@@ -55,9 +51,9 @@
       <configuration></configuration>
     </property>
     <property name="body">
-      <id>247</id>
+      <id>861</id>
       <label>Body</label>
-      <type>editor</type>
+      <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>xar_publications.body1</source>
       <status>34</status>
@@ -65,9 +61,9 @@
       <configuration></configuration>
     </property>
     <property name="notes">
-      <id>248</id>
+      <id>862</id>
       <label>Notes</label>
-      <type>editor</type>
+      <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>xar_publications.notes</source>
       <status>34</status>
@@ -75,7 +71,7 @@
       <configuration></configuration>
     </property>
     <property name="parent">
-      <id>1565</id>
+      <id>863</id>
       <label>Parent</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
@@ -85,7 +81,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="author">
-      <id>250</id>
+      <id>864</id>
       <label>Author</label>
       <type>username</type>
       <defaultvalue>xarUserGetVar('uname')</defaultvalue>
@@ -95,7 +91,7 @@
       <configuration>a:6:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";}</configuration>
     </property>
     <property name="state">
-      <id>258</id>
+      <id>865</id>
       <label>State</label>
       <type>dropdown</type>
       <defaultvalue>3</defaultvalue>
@@ -105,7 +101,7 @@
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:50:"0,Deleted;1,Inactive;2,Draft;3,Active;4,Frontpage;";}</configuration>
     </property>
     <property name="pages">
-      <id>254</id>
+      <id>866</id>
       <label>Pages</label>
       <type>integerbox</type>
       <defaultvalue>1</defaultvalue>
@@ -115,7 +111,7 @@
       <configuration></configuration>
     </property>
     <property name="locale">
-      <id>255</id>
+      <id>867</id>
       <label>Language</label>
       <type>language</type>
       <defaultvalue>xarConfigVars::get(null, 'Site.MLS.DefaultLocale')</defaultvalue>
@@ -125,7 +121,7 @@
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_firstline";s:19:"0,Choose a language";}</configuration>
     </property>
     <property name="itemtype">
-      <id>249</id>
+      <id>868</id>
       <label>Type</label>
       <type>objectref</type>
       <defaultvalue>1</defaultvalue>
@@ -135,7 +131,7 @@
       <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:18:"publications_types";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:11:"description";}</configuration>
     </property>
     <property name="start_date">
-      <id>251</id>
+      <id>869</id>
       <label>Start Date</label>
       <type>formatteddatetime</type>
       <defaultvalue>time()</defaultvalue>
@@ -145,7 +141,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="end_date">
-      <id>252</id>
+      <id>870</id>
       <label>End Date</label>
       <type>formatteddatetime</type>
       <defaultvalue>time()+31536000</defaultvalue>
@@ -155,7 +151,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="version">
-      <id>253</id>
+      <id>871</id>
       <label>Version</label>
       <type>integerbox</type>
       <defaultvalue>1</defaultvalue>
@@ -165,17 +161,17 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="categories">
-      <id>303</id>
+      <id>872</id>
       <label>Categories</label>
       <type>categories</type>
       <defaultvalue></defaultvalue>
-      <source></source>
+      <source>dynamic_data</source>
       <status>34</status>
       <seq>28</seq>
       <configuration>a:3:{s:14:"display_layout";s:7:"default";s:21:"validation_categories";s:1:"0";s:19:"validation_override";s:1:"1";}</configuration>
     </property>
     <property name="created">
-      <id>256</id>
+      <id>873</id>
       <label>Created</label>
       <type>formatteddatetime</type>
       <defaultvalue>time()</defaultvalue>
@@ -185,7 +181,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="modified">
-      <id>257</id>
+      <id>874</id>
       <label>Modified</label>
       <type>formatteddatetime</type>
       <defaultvalue>time()</defaultvalue>
@@ -195,7 +191,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="process_state">
-      <id>259</id>
+      <id>875</id>
       <label>Process State</label>
       <type>dropdown</type>
       <defaultvalue>1</defaultvalue>
@@ -203,6 +199,16 @@
       <status>34</status>
       <seq>31</seq>
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:58:"0,Rejected;1,Submitted;2,On Hold;3,Approved;4,Checked Out;";}</configuration>
+    </property>
+    <property name="position">
+      <id>973</id>
+      <label>Position</label>
+      <type>celkoposition</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>34</status>
+      <seq>32</seq>
+      <configuration></configuration>
     </property>
   </properties>
 </object>

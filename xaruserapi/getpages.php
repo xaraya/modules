@@ -158,7 +158,7 @@ function publications_userapi_getpages($args)
         } else {
             // Join to find the root page of the tree containing the required page.
             // This matches the complete tree for the root under the selected page.
-            $query .= ' INNER JOIN ' . $xartable['xarpages_pages'] . ' AS tpages_root'
+            $query .= ' INNER JOIN ' . $xartable['publications'] . ' AS tpages_root'
                 . ' ON tpages_root.leftpage_id <= tpages_member.leftpage_id'
                 . ' AND tpages_root.rightpage_id >= tpages_member.rightpage_id'
                 . ' AND tpages.leftpage_id BETWEEN tpages_root.leftpage_id AND tpages_root.rightpage_id'
@@ -247,7 +247,7 @@ function publications_userapi_getpages($args)
             if (!empty($info['view_access'])) {
                 // Decide whether the current user can create blocks of this type
                 $args = array(
-                    'module' => 'xarpages',
+                    'module' => 'publications',
                     'component' => 'Page',
                     'instance' => $name . ":" . $typename,
                     'group' => $info['view_access']['group'],
@@ -271,7 +271,7 @@ function publications_userapi_getpages($args)
 
             if (!empty($info['display_access'])) {
                 $args = array(
-                    'module' => 'xarpages',
+                    'module' => 'publications',
                     'component' => 'Page',
                     'instance' => $name . ":" . $typename,
                     'group' => $info['display_access']['group'],
@@ -286,7 +286,7 @@ function publications_userapi_getpages($args)
                 }
             }
 
-            if (!xarSecurityCheck('ReadXarpagesPage', 0, 'Page', $name . ':' . $typename, 'xarpages')) {
+            if (!xarSecurityCheck('ReadPublications', 0, 'Page', $name . ':' . $typename, 'publications')) {
                 // We have reached a page that allows only overview access.
                 // Flag all pages with the restricted view until we get past this page.
                 $overview_only_left = $rightpage_id;

@@ -1,0 +1,62 @@
+<adminmenu>
+    <menuitems>
+        <menuitem>
+            <type>admin</type>
+            <includes>
+                <includeitem>view</includeitem>
+            </includes>
+            <target>view</target>
+            <label>Manage Publications</label>
+        </menuitem>
+        <menuitem>
+            <mask>EditPublications</mask>
+            <type>admin</type>
+            <includes>
+                <includeitem>new</includeitem>
+            </includes>
+            <target>new</target>
+            <title>New Publication</title>
+            <label>New Publication</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminPublications</mask>
+            <type>admin</type>
+            <includes>
+                <includeitem>viewpubtypes</includeitem>
+            </includes>
+            <target>viewpubtypes</target>
+            <title>Publication Types</title>
+            <label>Publication Types</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminPublications</mask>
+            <type>admin</type>
+            <includes>
+                <includeitem>stats</includeitem>
+            </includes>
+            <target>stats</target>
+            <title>Import/export and other utilities</title>
+            <label>Utilities</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminDynamicData</mask>
+            <type>admin</type>
+            <includes>
+                <includeitem>modifyconfig</includeitem>
+            </includes>
+            <target>modifyconfig</target>
+            <title>Modify the configuration of this module</title>
+            <label>Modify Configuration</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminPublications</mask>
+            <type>admin</type>
+            <includes>
+                <includeitem>overview</includeitem>
+            </includes>
+            <target>overview</target>
+            <title>Overview this module</title>
+            <label>Overview</label>
+        </menuitem>
+    </menuitems>
+</adminmenu>
