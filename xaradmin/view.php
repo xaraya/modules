@@ -361,7 +361,7 @@ function publications_admin_view($args)
     // Remove this once listing property works with dataobject access
     if (!xarIsParent('Administrators',xarUserGetVar('uname'))) $q->ne('state',0);
     $data['conditions'] = $q;
-$q->qecho();
+
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
     $data['object'] = DataObjectMaster::getObjectList(array('name' => $pubtypeobject->properties['name']->value));
