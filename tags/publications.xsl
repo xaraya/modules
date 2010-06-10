@@ -8,22 +8,13 @@
     xmlns:php="http://php.net/xsl"
     exclude-result-prefixes="php xar">
 
-  <xsl:template match="xar:articles-field">
+  <xsl:template match="xar:publications-outputfield">
     <xsl:processing-instruction name="php">
-        <xsl:choose>
-          <xsl:when test="@definition">
-            <xsl:text>echo xarMod::apiFunc('publications','user','showfield',</xsl:text>
-              <xsl:value-of select="@definition"/>
-            <xsl:text>);</xsl:text>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:text>echo xarMod::apiFunc('publications','user','showfield',</xsl:text>
-              <xsl:call-template name="atts2args">
-                <xsl:with-param name="nodeset" select="@*"/>
-              </xsl:call-template>
-            <xsl:text>);</xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
+        <xsl:text>echo xarMod::apiFunc('publications','user','field-output',</xsl:text>
+          <xsl:call-template name="atts2args">
+            <xsl:with-param name="nodeset" select="@*"/>
+          </xsl:call-template>
+        <xsl:text>);</xsl:text>
     </xsl:processing-instruction>
   </xsl:template>
 
