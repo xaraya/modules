@@ -10,7 +10,7 @@
 
   <xsl:template match="xar:publications-outputfield">
     <xsl:processing-instruction name="php">
-        <xsl:text>echo xarMod::apiFunc('publications','user','field-output',</xsl:text>
+        <xsl:text>echo xarMod::apiFunc('publications','user','fieldoutput',</xsl:text>
           <xsl:call-template name="atts2args">
             <xsl:with-param name="nodeset" select="@*"/>
           </xsl:call-template>
