@@ -90,16 +90,6 @@
       <seq>20</seq>
       <configuration>a:6:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";}</configuration>
     </property>
-    <property name="position">
-      <id>974</id>
-      <label>Position</label>
-      <type>celkoposition</type>
-      <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
-      <status>34</status>
-      <seq>20</seq>
-      <configuration></configuration>
-    </property>
     <property name="state">
       <id>884</id>
       <label>State</label>
@@ -209,6 +199,16 @@
       <status>34</status>
       <seq>31</seq>
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:58:"0,Rejected;1,Submitted;2,On Hold;3,Approved;4,Checked Out;";}</configuration>
+    </property>
+    <property name="position">
+      <id>977</id>
+      <label>Position</label>
+      <type>celkoposition</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>34</status>
+      <seq>32</seq>
+      <configuration></configuration>
     </property>
   </properties>
 </object>

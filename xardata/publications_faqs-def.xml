@@ -201,7 +201,7 @@
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:58:"0,Rejected;1,Submitted;2,On Hold;3,Approved;4,Checked Out;";}</configuration>
     </property>
     <property name="position">
-      <id>972</id>
+      <id>977</id>
       <label>Position</label>
       <type>celkoposition</type>
       <defaultvalue></defaultvalue>
