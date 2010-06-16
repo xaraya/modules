@@ -19,7 +19,7 @@
 
         <h2>View Paths</h2>
   
-       <xar:data-view object="$mylist" tplmodule="path" sort="$sort" template="admin_list" fieldlist="$adminfields" />  
+       <xar:data-view object="$mylist" tplmodule="path" sort="$sort" template="paths" fieldlist="$adminfields" />  
 
     </div>
 </xar:template>

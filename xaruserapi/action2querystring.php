@@ -30,11 +30,9 @@ function path_userapi_action2querystring($args)
 	$qs = array();
  
 	$arr['module'] = $action['module'];
-	$arr['type'] = $action['type'];
 	$arr['func'] = $action['func'];
 
 	unset($action['module']);
-	unset($action['type']);
 	unset($action['func']);
 
 	if(!empty($action)) {

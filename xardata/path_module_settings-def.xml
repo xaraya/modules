@@ -10,9 +10,9 @@
   <config>a:0:{}</config>
   <isalias>false</isalias>
   <properties>
-    <property name="something">
+    <property name="remove_index">
       <id>105</id>
-      <label>Something</label>
+      <label>Remove index.php from links in the admin interface</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
       <source>module variable: path</source>

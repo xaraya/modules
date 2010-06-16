@@ -21,14 +21,14 @@ function path_admin_main()
     // Check to see the current user has edit access to the path module
     if (!xarSecurityCheck('EditPath')) return;
 
-    $refererinfo =  xarController::$request->getInfo(xarServer::getVar('HTTP_REFERER'));
-    $info =  xarController::$request->getInfo();
+    $refererinfo =  xarRequest::getInfo(xarServer::getVar('HTTP_REFERER'));
+    $info =  xarRequest::getInfo();
     $samemodule = $info[0] == $refererinfo[0];
     
     if (((bool)xarModVars::get('modules', 'disableoverview') == false) || $samemodule){
         return xarTplModule('path','admin','overview');
     } else {
-        xarController::Redirect(xarModURL('path', 'admin', 'view'));
+        xarResponse::redirect(xarModURL('path', 'admin', 'view'));
         return true;
     }
 }

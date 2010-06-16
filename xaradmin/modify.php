@@ -76,8 +76,8 @@ function path_admin_modify()
 
 		$data['errors'] = array();
 
-		if (empty($action['module']) || empty($action['type']) || empty($action['func'])) {
-			$data['errors'][] = "Action keys must include module, type and func.";
+		if (empty($action['module']) || empty($action['func'])) {
+			$data['errors'][] = "Action keys must include module and func.";
 		} else {
 			$object->properties['action']->setValue($action);
 		}
@@ -116,7 +116,7 @@ function path_admin_modify()
 		$item = $object->updateItem();
 
 		// Jump to the next page
-		xarController::Redirect(xarModURL('path','admin','view'));
+		xarResponse::redirect(xarModURL('path','admin','view'));
 		return true;
         
     } else {

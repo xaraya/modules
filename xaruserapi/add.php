@@ -65,7 +65,7 @@ function path_userapi_add($args)
 
 	$itemid = $object->createItem();
 
-	xarController::Redirect(xarModURL('path','admin','view'));
+	xarResponse::redirect(xarModURL('path','admin','view'));
 	return true;
 
 }

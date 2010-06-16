@@ -88,12 +88,12 @@ function path_admin_modifyconfig()
             # What we cannot do however is mix these methods, because once we have a moditemvar defined, we can
             # no longer default back to the modvar (unless called specifically as below).
             #
-            /*
+            
                 // Get parameters from whatever input we need.  All arguments to this
                 // function should be obtained from xarVarFetch(), getting them
                 // from other places such as the environment is not allowed, as that makes
                 // assumptions that will not hold in future versions of Xaraya
-                if (!xarVarFetch('bold', 'checkbox', $bold, false, XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('remove_index', 'checkbox', $remove_index, false, XARVAR_NOT_REQUIRED)) return;
 
                 // Confirm authorisation code.  This checks that the form had a valid
                 // authorisation code attached to it.  If it did not then the function will
@@ -101,8 +101,8 @@ function path_admin_modifyconfig()
                 // in false data to the system
                 if (!xarSecConfirmAuthKey()) return;
 
-                xarModVars::set('path', 'bold', $bold);
-            */
+                xarModVars::set('path', 'remove_index', $remove_index);
+            
 
             # --------------------------------------------------------
             #
@@ -112,7 +112,7 @@ function path_admin_modifyconfig()
             # Note that, as in those examples, this code could be placed in the modifyconfig.php file
             # and this file dispensed with.
             #
-            /*
+            
                 // Load the DD master object class. This line will likely disappear in future versions
                 sys::import('modules.dynamicdata.class.objects.master');
                 // Get the object we'll be working with
@@ -123,9 +123,9 @@ function path_admin_modifyconfig()
                 $item = $data['object']->updateItem(array('itemid' => 0));
                 // This function generated no output, and so now it is complete we redirect
                 // the user to an appropriate page for them to carry on their work
-                xarController::redirect(xarModURL('path', 'admin', 'modifyconfig'));
+                xarResponse::redirect(xarModURL('path', 'admin', 'modifyconfig'));
                 return true;
-            */
+            
 
             # --------------------------------------------------------
             #

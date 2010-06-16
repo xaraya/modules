@@ -58,7 +58,7 @@ function path_init()
 # we could also let Xaraya define it, but that would mean we wouldn't have it until
 # we updated the modifyconfig page
 #
-    xarModVars::set('path','bold',true);
+    xarModVars::set('path','remove_index',false);
 
 # --------------------------------------------------------
 #

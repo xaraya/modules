@@ -56,7 +56,7 @@ function path_admin_delete()
 		$item = $data['object']->deleteItem();
         
         // Jump to the next page
-        xarController::Redirect(xarModURL('path','admin','view'));
+        xarResponse::redirect(xarModURL('path','admin','view'));
         return true;
     }
     return $data;

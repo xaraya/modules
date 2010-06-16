@@ -55,8 +55,8 @@ function path_admin_add()
 			$data['errors'][] = "Path must be at least one character long and can contain only letters, numbers, slashes, underscores and dashes.";
 		}
 
-		if (empty($action['module']) || empty($action['type']) || empty($action['func'])) {
-			$data['errors'][] = "Action keys must include module, type and func.";
+		if (empty($action['module']) || empty($action['func'])) {
+			$data['errors'][] = "Action keys must include module and func.";
 		}
 
 		if($path[0] == '/') {
@@ -86,7 +86,7 @@ function path_admin_add()
 
 		$itemid = $object->createItem();
 
-		xarController::Redirect(xarModURL('path','admin','view'));
+		xarResponse::redirect(xarModURL('path','admin','view'));
 		return true;
 
 	} else {

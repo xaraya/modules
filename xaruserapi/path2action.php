@@ -34,7 +34,6 @@ function path_userapi_path2action($args)
 	if(count($items) == 1) {
 		$item = end($items);
 		$action = $item['action'];
-		$action = unserialize($action);
 		return $action;
 	} else {
 		return false;
