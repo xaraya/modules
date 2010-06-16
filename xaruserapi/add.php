@@ -35,8 +35,8 @@ function path_userapi_add($args)
 		}
 	}
 
-	if (empty($action['module']) || empty($action['type']) || empty($action['func'])) {
-		$data['errors'][] = "Action keys must include module, type and func.";
+	if (empty($action['module']) || empty($action['func'])) {
+		$data['errors'][] = "Action keys must include module and func.";
 	}
 
 	if($path[0] == '/') {
