@@ -10,9 +10,9 @@
   <config>a:0:{}</config>
   <isalias>true</isalias>
   <properties>
-    <property name="id">
+    <property name="itemid">
       <id>421</id>
-      <label>ID</label>
+      <label>Itemid</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>

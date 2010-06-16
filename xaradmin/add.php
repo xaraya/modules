@@ -25,9 +25,9 @@ function path_admin_add()
     sys::import('modules.dynamicdata.class.objects.master');
 
 	$object = DataObjectMaster::getObject(array('name' => 'path'));
-	
 	$data['object'] = $object;
-	$data['label'] = $object->label;
+
+	$data['label'] = 'Path';
 
 	if ($data['confirm']) {
 
@@ -39,52 +39,19 @@ function path_admin_add()
         // Get the data from the form
         $isvalid = $object->checkInput();
 
+		if (!$isvalid) {
+			return xarTplModule('path','admin','add', $data);
+		}
+
 		$path = $object->properties['path']->getValue();
 		$action = $object->properties['action']->getValue();
 
-		if(is_array($action)) {
-			foreach($action as $key=>$val){
-				$action[$key] = trim($val);
-			}
+		$pathinfo = xarMod::apiFunc('path','user','setpath', array('path' => $path, 'action' => $action));
+
+		if (isset($pathinfo['errors'])) {
+			$data['errors'] = $pathinfo['errors'];
+			return xarTplModule('path','admin','add', $data);
 		}
-
-		$data['errors'] = array();
-
-		$pattern = '/^[\w\-\/]{1,}$/';
-		if (!preg_match($pattern, $path)) {
-			$data['errors'][] = "Path must be at least one character long and can contain only letters, numbers, slashes, underscores and dashes.";
-		}
-
-		if (empty($action['module']) || empty($action['func'])) {
-			$data['errors'][] = "Action keys must include module and func.";
-		}
-
-		if($path[0] == '/') {
-			$path = substr($path, 1);
-		}
-		$object->properties['path']->setValue($path);
-
-		// Make sure the path is unique
-		$checkpath = xarMod::apiFunc('path','admin','checkpath',array('path' => $path));
-		if(!($checkpath)) {
-			
-			$data['errors'][] = "The path you've specified is already in use.  Please try again.";
-		}  
-
-		// Make sure there's no module alias conflict
-		if (!empty($action['module'])) {
-			$aliascheck = xarMod::apiFunc('path','admin','alias',array('path' => $path, 'actionmodule' => $action['module']));
-
-			if(is_array($aliascheck)) {
-				$data['errors'][] = 'Sorry, that pathstart ("' . $aliascheck['pathstart'] . '") is already an alias for the <a href="' . xarmodurl('modules','admin','aliases', array('name' => $aliascheck['aliasmodule'])) . '">' . $aliascheck['aliasmodule'] . '</a> module.  Please try a different path or specify a different module for the action.';
-			}
-		}
-
-		if(!empty($data['errors'])) {
-			return $data;
-		}
-
-		$itemid = $object->createItem();
 
 		xarResponse::redirect(xarModURL('path','admin','view'));
 		return true;

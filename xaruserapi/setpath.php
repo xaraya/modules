@@ -1,6 +1,6 @@
 <?php
 /**
- * Add (or update) an item
+ * Add a new item
  *
  * @package modules
  * @copyright (C) 2002-2007 The Digital Development Foundation
@@ -15,25 +15,25 @@
  * Create (or update) an item of the path object
   * @param args[$path] required string path
   * @param args[$action] required array action
+  * @param args[$itemid] optional itemid if you want to update an item
  */
-function path_userapi_add($args)
+function path_userapi_setpath($args)
 {
-    extract($args);
+
+	$update = false;
+
+	extract($args);
 
     sys::import('modules.dynamicdata.class.objects.master');
 
 	$object = DataObjectMaster::getObject(array('name' => 'path'));
 
+	$data['errors'] = array();
+
 	$pattern = '/^[\w\-\/]{1,}$/';
 	if (!preg_match($pattern, $path)) {
 		$data['errors'][] = "Path must be at least one character long and can contain only letters, numbers, slashes, underscores and dashes.";
-	}
-
-	if(is_array($action)) {
-		foreach($action as $key=>$val){
-			$action[$key] = trim($val);
-		}
-	}
+	}	
 
 	if (empty($action['module']) || empty($action['func'])) {
 		$data['errors'][] = "Action keys must include module and func.";
@@ -42,14 +42,16 @@ function path_userapi_add($args)
 	if($path[0] == '/') {
 		$path = substr($path, 1);
 	}
-	$object->properties['path']->setValue($path);
-	$object->properties['action']->setValue($action);
+
+	$action = xarMod::apiFunc('path','user','standardizeaction',array('action' => $action));
 
 	// Make sure the path is unique
-	$checkpath = xarMod::apiFunc('path','admin','checkpath',array('path' => $path));
-	if(!($checkpath)) {
-		$data['errors'][] = "The path you've specified is already in use.  Please try again.";
-	}  
+	if (!isset($itemid)) {
+		$checkpath = xarMod::apiFunc('path','admin','checkpath',array('path' => $path));
+		if($checkpath) {
+			$data['errors'][] = "The path you've specified is already in use.  Please try again.";
+		}  
+	}
 
 	// Make sure there's no module alias conflict
 	if (!empty($action['module'])) {
@@ -60,16 +62,21 @@ function path_userapi_add($args)
 		}
 	}
 
-
-
-	if (isset($itemid)) {
-		$itemid = $object->updateItem(array('itemid' => $itemid));
+	if(!empty($data['errors'])) {
+		return $data;
 	} else {
-		$itemid = $object->createItem();
+		$object->properties['path']->setValue($path);
+		$object->properties['action']->setValue($action);
+
+		if (isset($itemid)) {
+			$itemid = $object->updateItem(array('itemid' => $itemid));
+		} else {
+			$itemid = $object->createItem();
+		}
+
+		return array('itemid' => $itemid, 'path' => $path, 'action' => $action);
+
 	}
-
-
-	return $path;
 
 }
 
