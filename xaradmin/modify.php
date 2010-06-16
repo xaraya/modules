@@ -49,7 +49,7 @@ function path_admin_modify()
 		$path = $object->properties['path']->getValue();
 		$action = $object->properties['action']->getValue();
 
-		$pathinfo = xarMod::apiFunc('path','user','setpath', array('path' => $path, 'action' => $action, 'itemid' => $itemid));
+		$pathinfo = xarMod::apiFunc('path','user','set', array('path' => $path, 'action' => $action, 'itemid' => $itemid));
 
 		if (isset($pathinfo['errors'])) {
 			$data['errors'] = $pathinfo['errors'];

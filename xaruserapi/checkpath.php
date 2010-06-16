@@ -1,6 +1,6 @@
 <?php
 /**
- * check if an action is unique
+ * check if a path is unique
  *
  * @package modules
  * @copyright (C) 2002-2007 The Digital Development Foundation
@@ -12,26 +12,28 @@
  * @author potion <ryan@webcommunicate.net>
  */
 /**
- * @param $args['action'] required array the action
+ * @param $args['path'] required string the path
  */
-function path_adminapi_checkaction($args) {
+function path_userapi_checkpath($args) {
 
 	extract($args);
-
-	$action = xarMod::apiFunc('path','user','standardizeaction',array('action' => $action));
-
-	$action = serialize($action);
 
 	sys::import('modules.dynamicdata.class.objects.master');
 	$mylist = DataObjectMaster::getObjectList(array('name' =>  'path'));
 	$filters = array(
-						'where' => 'action eq \'' . $action . '\''
+						'where' => 'path eq \'' . $path . '\''
 					);
 	$items = $mylist->getItems($filters);
 	if(count($items) == 0) {
-		return true;
-	} else {
 		return false;
+	} elseif (count($items) == 1) {
+		$item = end($items);
+		return $item['itemid'];
+	} else {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    'itemcount', 'adminapi', 'checkpath', 'path');
+        throw new Exception($msg);
+		return;
 	}
 }
 ?>

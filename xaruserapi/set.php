@@ -17,7 +17,7 @@
   * @param args[$action] required array action
   * @param args[$itemid] optional itemid if you want to update an item
  */
-function path_userapi_setpath($args)
+function path_userapi_set($args)
 {
 
 	$update = false;
@@ -43,11 +43,11 @@ function path_userapi_setpath($args)
 		$path = substr($path, 1);
 	}
 
-	$action = xarMod::apiFunc('path','user','standardizeaction',array('action' => $action));
+	$action = xarMod::apiFunc('path','admin','standardizeaction',array('action' => $action));
 
 	// Make sure the path is unique
 	if (!isset($itemid)) {
-		$checkpath = xarMod::apiFunc('path','admin','checkpath',array('path' => $path));
+		$checkpath = xarMod::apiFunc('path','user','checkpath',array('path' => $path));
 		if($checkpath) {
 			$data['errors'][] = "The path you've specified is already in use.  Please try again.";
 		}  

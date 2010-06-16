@@ -45,7 +45,7 @@ function path_admin_view()
     // Load the DD master property class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.properties.master');
 
-	$data['sort'] = xarMod::ApiFunc('path','admin','sort', array(
+	$data['sort'] = xarMod::apiFunc('path','admin','sort', array(
 		//how to sort if the URL doesn't say otherwise...
 		'sortfield_fallback' => 'path', 
 		'ascdesc_fallback' => 'ASC'

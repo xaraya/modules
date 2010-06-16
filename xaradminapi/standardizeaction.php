@@ -16,7 +16,7 @@
 
  * @param args[$action] required action (must be an associative array and can be serialized or not)
  */
-function path_userapi_standardizeaction($args)
+function path_adminapi_standardizeaction($args)
 {
 
 	extract($args);

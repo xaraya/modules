@@ -44,7 +44,7 @@
 
 				<a href="#xarServer::getBaseURL()##$index##$fields[$name]#">#$fields[$name]#</a>
 			    <xar:elseif condition="$name eq 'action'" />
-				<xar:set name="qs">xarMod::apiFunc('path','user','action2querystring',array('action' => $fields['action']))</xar:set>
+				<xar:set name="qs">xarMod::apiFunc('path','admin','action2querystring',array('action' => $fields['action']))</xar:set>
 				<a href="#xarServer::getBaseURL()##$index#?#$qs#">#$qs#</a>
 			    <xar:else />
 				<xar:data-output property="$properties[$name]" value="$fields[$name]" />

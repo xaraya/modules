@@ -16,12 +16,12 @@
 
  * @param args[$action] required action (must be an associative array and can be serialized or not)
  */
-function path_userapi_action2querystring($args)
+function path_adminapi_action2querystring($args)
 {
 
 	extract($args);
 
-	$arr = xarMod::apiFunc('path','user','standardizeaction',array('action' => $action));
+	$arr = xarMod::apiFunc('path','admin','standardizeaction',array('action' => $action));
 
 	$qs = http_build_query($arr, NULL, '&');
 
