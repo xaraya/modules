@@ -20,5 +20,8 @@
 
 <hr />
 #$filteredpaths#
+<hr />
+path_userapi_itemurl: #xarMod::apiFunc('path','user','itemurl',array(
+'module' => 'content', 'itemid' => 3))#
     </div>
 </xar:template>
