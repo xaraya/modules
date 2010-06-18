@@ -56,15 +56,23 @@ function path_userapi_set($args)
 	// Make sure there's no module alias conflict
 
 	$aliascheck = xarMod::apiFunc('path','admin','alias',array('path' => $path, 'actionmodule' => $action['module']));
+	if(is_string($aliascheck)) { 
+		$data['errors'][] = 'The pathstart <strong>"'. $aliascheck . '"</strong> is the name of an installed module.';
+	}
 
 	if(is_array($aliascheck)) {
-		$data['errors'][] = 'Sorry, that pathstart ("' . $aliascheck['pathstart'] . '") is already an alias for the <a href="' . xarmodurl('modules','admin','aliases', array('name' => $aliascheck['aliasmodule'])) . '">' . $aliascheck['aliasmodule'] . '</a> module.  Please try a different path or specify a different module for the action.';
+		$data['errors'][] = 'Sorry, that pathstart (<strong>"' . $aliascheck['pathstart'] . '"</strong>) is already an alias for the <a href="' . xarmodurl('modules','admin','aliases', array('name' => $aliascheck['aliasmodule'])) . '">' . $aliascheck['aliasmodule'] . '</a> module.  Please try a different path or specify a different module for the action.';
 	}
 	
 
 	if(!empty($data['errors'])) {
 		return $data;
 	} else {
+
+		if($path[0] != '/') {
+			$path = '/' . $path;
+		}
+
 		$object->properties['path']->setValue($path);
 		$object->properties['action']->setValue($action);
 

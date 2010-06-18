@@ -34,10 +34,17 @@ function path_adminapi_alias($args) {
 		$pathstart = $path;
 	}
 
-
 	$aliases = xarConfigVars::get(null, 'System.ModuleAliases');
 
-	if (empty($aliases[$pathstart])) { 
+	$modulesobject = DataObjectMaster::getObjectList(array('name' => 'modules'));
+	$filters['where'] = 'name eq \'' . $pathstart . '\'';
+	$modules = $modulesobject->getItems($filters);
+
+	if (!empty($modules)) {
+		return $pathstart;
+	}
+ 
+	if (!isset($aliases[$pathstart])) { 
 		// There's no alias for this $pathstart, so register one...
 		xarModAlias::set($pathstart, $actionmodule);
 		return true;

@@ -1,0 +1,45 @@
+<?php
+/**
+ * get all paths or get paths by actionmodule and/or pathstart
+ *
+ * @package modules
+ * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Path Module
+ * @link http://www.xaraya.com/index.php/release/eid/1150
+ * @author potion <ryan@webcommunicate.net>
+ */
+/**
+ * @param $args['pathstart'] optional string pathstart
+ * @param $args['actionmodule'] optional string actionmodule
+ * @return array
+ */
+function path_adminapi_getpaths($args) {
+
+	extract($args);
+
+	sys::import('modules.dynamicdata.class.objects.master');
+	$mylist = DataObjectMaster::getObjectList(array('name' =>  'path'));
+	$where = '';
+	if(isset($actionmodule)) {
+		$where .= 'action LIKE \'%\'' . $actionmodule . '\'%\'';
+	}
+	if(isset($pathstart)) {
+		$where .= 'path LIKE \'\\' . $pathstart . '\\%';
+	}
+	if (!empty($where)) {
+		$filters['where'] = $where;
+	}
+	$items = $mylist->getItems($filters);
+	if(!($items)) {
+		return false;
+	} else {
+		foreach ($items as $item) {
+			$paths[] = $item['path'];
+		}
+		return $paths;
+	}
+}
+?>
