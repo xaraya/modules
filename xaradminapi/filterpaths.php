@@ -28,6 +28,10 @@ function path_adminapi_filterpaths($args) {
 
 	extract($args);
 
+	$result = array();
+
+	if(empty($paths)) return;
+
 	foreach($paths as $path) {
 
 		// Make sure the path starts with a forward slash
@@ -40,11 +44,13 @@ function path_adminapi_filterpaths($args) {
 		if (isset($filters) && !empty($filters)) {
 			foreach($filters as $key=>$val){
 				if (isset($returnpart)) { // Return only the first part, or only the second part, etc., of each path
-					if ($val[$key] == $parts[$key]) { 
-						$result[] = $parts[$returnpart];
+					if ($filters[$key] == $parts[$key]) { 
+						if (isset($parts[$returnpart])) {
+							$result[] = $parts[$returnpart];
+						}
 					}
 				} else {  // Return the full paths
-					if ($val[$key] == $parts[$key]) {
+					if ($filters[$key] == $parts[$key]) {
 						$result[] = $path;
 					}
 				}

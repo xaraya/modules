@@ -31,6 +31,8 @@ function path_adminapi_getpaths($args) {
 	}
 	if (!empty($where)) {
 		$filters['where'] = $where;
+	} else {
+		$filters = array();
 	}
 	$items = $mylist->getItems($filters);
 	if(!($items)) {

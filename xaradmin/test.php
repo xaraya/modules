@@ -23,15 +23,30 @@ function path_admin_test()
    /* Security Check */
     if (!xarSecurityCheck('AdminPath',0)) return;
 
+	$data['res'] = '';
+
+	$paths = xarMod::apiFunc('path','admin','getpaths',array('module' => 'content'));
+	$somepath = $paths[0];
+
 	$time1 = microtime();
-
-	$somepath = 'apples/red';   
+   
 	$res = xarMod::apiFunc('path','user','path2action',array('path' =>$somepath));
-	
+	 
 	$time2 = microtime();
-
+ 
 	$data['elapsed'] = $time2 - $time1;
-	$data['res'] = xarMod::apiFunc('path','user','action2querystring',array('action' =>$res));
+	
+	$data['res'] = xarMod::apiFunc('path','admin','action2querystring',array('action' =>$res)); 
+
+	$filters = array(1 => 'horse'); // get paths where the first part is 'horse'
+	$filteredpaths = xarMod::apiFunc('path','admin','filterpaths',array(
+		'paths' => $paths, 'filters' => $filters, 'returnpart' => 2));
+
+	if (!empty($filteredpaths)) {
+		$data['filteredpaths'] = implode(', ',$filteredpaths);
+	} else {
+		$data['filteredpaths'] = 'empty';
+	}
 
     return xarTplModule('path','admin','test', $data);
 }

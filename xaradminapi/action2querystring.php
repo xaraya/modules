@@ -20,8 +20,10 @@ function path_adminapi_action2querystring($args)
 {
 
 	extract($args);
-
+ 
 	$arr = xarMod::apiFunc('path','admin','standardizeaction',array('action' => $action));
+
+	if (!$arr) return false;
 
 	$qs = http_build_query($arr, NULL, '&');
 

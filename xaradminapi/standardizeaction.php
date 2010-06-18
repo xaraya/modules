@@ -18,14 +18,19 @@
  */
 function path_adminapi_standardizeaction($args)
 {
-
+ 
 	extract($args);
 
 	if (!is_array($action)) {
 		$action = unserialize($action);
 	}
  
-	$array['module'] = $action['module'];
+	if (!isset($action['module'])) {
+		return false;
+	} else {
+		$array['module'] = $action['module'];
+	}
+
 	if (isset($action['func'])) {
 		$array['func'] = $action['func'];
 	}

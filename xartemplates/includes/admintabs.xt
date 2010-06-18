@@ -37,6 +37,20 @@
         </li>
     </xar:sec>
     <xar:sec mask="AdminPath" catch="false">
+        <xar:if condition="$activetab eq 'test'">
+            <xar:set name="tabclass">'xar-tab-active'</xar:set>
+            <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">'xar-tab'</xar:set>
+            <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+          <a href="#xarModURL('path','admin','test')#" class="#$linkclass#">
+            Testing Area
+          </a>
+        </li>
+    </xar:sec>
+    <xar:sec mask="AdminPath" catch="false">
         <xar:if condition="$activetab eq 'modifyconfig'">
             <xar:set name="tabclass">'xar-tab-active'</xar:set>
             <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
