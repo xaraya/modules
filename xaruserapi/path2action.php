@@ -22,7 +22,7 @@ function path_userapi_path2action($args)
     sys::import('modules.dynamicdata.class.objects.master');
 
 	$mylist = DataObjectMaster::getObjectList(array('name' =>  'path'));
-
+ 
 	$filters = array(
 					 'where'      => 'path eq \'' . $path . '\'',
 					);

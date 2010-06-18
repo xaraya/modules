@@ -8,7 +8,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Path Module
- * @link http://xaraya.com/index.php/release/1013.html
+ * @link http://www.xaraya.com/index.php/release/eid/1150
  * @author potion <ryan@webcommunicate.net>
  */
 /**
@@ -71,7 +71,7 @@ function path_admin_modifyconfig()
             #
 
             $isvalid = $data['module_settings']->checkInput();
-            if (!$isvalid) {
+            if (!$isvalid) { 
                 return xarTplModule('path','admin','modifyconfig', $data);
             } else {
                 $itemid = $data['module_settings']->updateItem();

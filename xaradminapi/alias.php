@@ -26,6 +26,7 @@ function path_adminapi_alias($args) {
 
 	extract($args);
 
+	$path = substr($path, 1);
 	$pos = strpos($path, '/');
 	if($pos) {
 		$pathstart = substr($path, 0, $pos);
@@ -33,9 +34,10 @@ function path_adminapi_alias($args) {
 		$pathstart = $path;
 	}
 
+
 	$aliases = xarConfigVars::get(null, 'System.ModuleAliases');
 
-	if (empty($aliases[$pathstart])) {
+	if (empty($aliases[$pathstart])) { 
 		// There's no alias for this $pathstart, so register one...
 		xarModAlias::set($pathstart, $actionmodule);
 		return true;

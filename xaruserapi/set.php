@@ -35,12 +35,12 @@ function path_userapi_set($args)
 		$data['errors'][] = "Path must be at least one character long and can contain only letters, numbers, slashes, underscores and dashes.";
 	}	
 
-	if (empty($action['module']) || empty($action['func'])) {
-		$data['errors'][] = "Action keys must include module and func.";
+	if (empty($action['module'])) {
+		$data['errors'][] = "Action keys must include module";
 	}
 
-	if($path[0] == '/') {
-		$path = substr($path, 1);
+	if($path[0] != '/') {
+		$path = '/' . $path;
 	}
 
 	$action = xarMod::apiFunc('path','admin','standardizeaction',array('action' => $action));
@@ -54,13 +54,13 @@ function path_userapi_set($args)
 	}
 
 	// Make sure there's no module alias conflict
-	if (!empty($action['module'])) {
-		$aliascheck = xarMod::apiFunc('path','admin','alias',array('path' => $path, 'actionmodule' => $action['module']));
 
-		if(is_array($aliascheck)) {
-			$data['errors'][] = 'Sorry, that pathstart ("' . $aliascheck['pathstart'] . '") is already an alias for the <a href="' . xarmodurl('modules','admin','aliases', array('name' => $aliascheck['aliasmodule'])) . '">' . $aliascheck['aliasmodule'] . '</a> module.  Please try a different path or specify a different module for the action.';
-		}
+	$aliascheck = xarMod::apiFunc('path','admin','alias',array('path' => $path, 'actionmodule' => $action['module']));
+
+	if(is_array($aliascheck)) {
+		$data['errors'][] = 'Sorry, that pathstart ("' . $aliascheck['pathstart'] . '") is already an alias for the <a href="' . xarmodurl('modules','admin','aliases', array('name' => $aliascheck['aliasmodule'])) . '">' . $aliascheck['aliasmodule'] . '</a> module.  Please try a different path or specify a different module for the action.';
 	}
+	
 
 	if(!empty($data['errors'])) {
 		return $data;

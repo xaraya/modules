@@ -8,7 +8,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage path
- * @link http://xaraya.com/index.php/release/1013.html
+ * @link http://www.xaraya.com/index.php/release/eid/1150
  * @author Ryan Walker <ryan@webcommunicate.net>
  **/
 $modversion['name']         = 'path';

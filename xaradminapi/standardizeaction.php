@@ -26,7 +26,9 @@ function path_adminapi_standardizeaction($args)
 	}
  
 	$array['module'] = $action['module'];
-	$array['func'] = $action['func'];
+	if (isset($action['func'])) {
+		$array['func'] = $action['func'];
+	}
 
 	unset($action['module']);
 	unset($action['func']);
@@ -34,6 +36,11 @@ function path_adminapi_standardizeaction($args)
 	if(!empty($action)) {
 		ksort($action);
 		$array = array_merge($array, $action);
+	}
+
+	// The dynamicdata array property stores numbers as strings, so if we want to match something in the DB, we must do the same...
+	foreach($array as $key=>$val) {
+		$array[$key] = (string)$val;
 	}
 
 	return $array;
