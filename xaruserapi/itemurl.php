@@ -14,14 +14,18 @@
  *		This assumes all items created by the module have a unique itemid
   * @param args[$module] required string module
   * @param args[$itemid] required itemid
+  * @param args[$display] optional specify a different function name for the xarModURL fallback
+  * @param args[$id] optional specify a different itemid field for the xarModURL fallback
  */
 function path_userapi_itemurl($args){
 
 	$path = xarMod::apiFunc('path','user','action2path',array('action' => $args));
 
-	if (!$path) {
+	if (!$path) { // Try to fall back on xarModURL
+		$id = 'itemid'; 
+		$display = 'display';
 		extract($args);
-		return xarModURL($module,'user','display',array('itemid'=>$itemid));
+		return xarModURL($module,'user',$display,array($id=>$itemid));
 	}
 	//$BaseModURL = xarCore::getSystemVar('BaseModURL', true);
 	if (!isset($BaseModURL)) {

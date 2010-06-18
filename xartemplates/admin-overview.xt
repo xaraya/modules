@@ -31,6 +31,29 @@
 
 <p>For most applications, the path module's API functions are meant to be called from the functions of another module.  So, for example, if the foo module has a "new" function for adding new items, an input in the module's admin-new form could allow the user to specify a path for displaying the item.  The foo_admin_new() function would construct the action like module=foo&amp;func=display&amp;itemid=123 and pass that action and the corresponding path to the path module via an API function.</p>
 
-<p><strong>Note:</strong>  The path module does nothing by itself.  All it does is handle the registration of paths and their actions.  The point of the module is to make available to other modules the path_userapi_add function and other api functions.</p>
+<p><strong>Note:</strong>  The path module does nothing by itself.  All it does is handle the registration of paths and their actions.  The point of the module is to make available to other modules the path_userapi_set function and other api functions.</p>
+
+<h3>The path_userapi_itemurl Function</h3>
+
+<p>The itemurl function is similar in purpose to Xaraya's xarModURL function.  It returns a URL.  The itemurl function is predicated on the idea that the vast majority of resources in a website can be located using just two arguments:  module and itemid.  The function therefore assumes that every one of a module's items has a unique itemid, even if a module has multiple item types.</p>
+
+<p>Here's what an itemurl function call looks like:</p>
+
+<blockquote>##xarMod::apiFunc('path','user','itemurl',array('module' => 'foo', 'itemid' => 123))##</blockquote>
+
+<p>The itemurl function looks for a path that matches the module and itemid you've specified.  If it can find no such path in the path module, it will try to fall back on xarModURL.</p>
+
+<h3>Enabling the Path Module in the Content Module</h3>
+
+<p>In the content module config...</p>
+
+<ul>
+<li>Check the boxes for Enable module alias(es) and for Enable the path module</li>
+<li>Enter the name of one or more of your content types in the text field labeled "Add a path_module property to objects".  Be sure to enter the name of the content type and not the label.  That is, the lowercase name containing only letters and underscores.</li>
+<li>Click Update.</li>
+</ul>
+<p>If all goes well, you should see a message telling you that a path_module field was added to the content type.  Go to the content module and add a new item of that type.  You'll see there's now a field labeled "Path."</p>
+
+
     </div>
 </xar:template>
