@@ -45,7 +45,7 @@
 
 <h3>Enabling the Path Module in the Content Module</h3>
 
-<p>In the content module config...</p>
+<p>In the <a href="http://www.xaraya.com/index.php/release/1015.html">content module</a>&#160;<img src="code/modules/content/xarimages/exit.png" width="10" height="10" alt="leave this website" /> modifyconfig page...</p>
 
 <ul>
 <li>Check the boxes for Enable module alias(es) and for Enable the path module</li>

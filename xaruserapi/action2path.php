@@ -1,5 +1,7 @@
 <?php
 /**
+* Return the path for an action
+*
  * @package modules
  * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -10,28 +12,19 @@
  * @author potion <potion@xaraya.com>
  */
 /**
- *    Given an action (array), try to look up a path
+* Return the path for an action, or return false if there is no path for the action
+ * @param $args['action'] required array action
  */
 function path_userapi_action2path($args) {
 
 	extract($args);
 
-	$action = xarMod::apiFunc('path','admin','standardizeaction',array('action' => $action));
+	$arr = xarMod::apiFunc('path','user','checkaction',array('action' => $action));
 
-	$action = serialize($action);
-
-	sys::import('modules.dynamicdata.class.objects.master');
-
-	$list = DataObjectMaster::getObjectList(array('name' => 'path'));
-	$filters = array(
-		'where' => 'action eq \'' . $action . '\''
-	);
-	$items = $list->getItems($filters);
-	if (empty($items)) {
-		return false;
+	if ($arr) {
+		return reset($arr);
 	} else {
-		$item = end($items);
-		return $item['path'];
+		return false;
 	}
 
 } 

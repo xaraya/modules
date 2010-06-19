@@ -1,6 +1,6 @@
 <?php
 /**
- * Add a new item
+ * Modify an item
  *
  * @package modules
  * @copyright (C) 2002-2007 The Digital Development Foundation

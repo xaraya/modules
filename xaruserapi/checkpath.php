@@ -1,6 +1,6 @@
 <?php
 /**
- * check if a path is unique
+ * Check if a path is unique
  *
  * @package modules
  * @copyright (C) 2002-2007 The Digital Development Foundation
@@ -28,7 +28,10 @@ function path_userapi_checkpath($args) {
 		return false;
 	} elseif (count($items) == 1) {
 		$item = end($items);
-		return $item['itemid'];
+		$itemid = $item['itemid'];
+		$action = $item['action'];
+		$arr = array($itemid => $action);
+		return $arr;
 	} else {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'itemcount', 'adminapi', 'checkpath', 'path');

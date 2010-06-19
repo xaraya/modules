@@ -19,22 +19,10 @@ function path_userapi_path2action($args)
 {
 	extract($args);
 
-    sys::import('modules.dynamicdata.class.objects.master');
+	$arr = xarMod::apiFunc('path','user','checkpath',array('path' => $path));
 
-	$mylist = DataObjectMaster::getObjectList(array('name' =>  'path'));
- 
-	$filters = array(
-					 'where'      => 'path eq \'' . $path . '\'',
-					);
-	
-	$items = $mylist->getItems($filters);
-
-	$qs = array();
-
-	if(count($items) == 1) {
-		$item = end($items);
-		$action = $item['action'];
-		return $action;
+	if ($arr) {
+		return reset($arr);
 	} else {
 		return false;
 	}

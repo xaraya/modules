@@ -1,6 +1,6 @@
 <?php
 /**
- * Format an action as a query string
+ * Standardize the action
  *
  * @package modules
  * @copyright (C) 2002-2007 The Digital Development Foundation
@@ -12,7 +12,7 @@
  * @author potion <ryan@webcommunicate.net>
  */
 /**
- *  Format an action as a query string.  The resulting query string will have modules, type and func as the first three keys, with the rest of the arguments arranged alphabetically by key. (Ex.: module=content&type=user&func=view&axe=yes&bus=yellow&zebra=striped)
+ *  Standardize the ordering of params in actions.  This makes it easier to check if an action is unique, and also makes for more consistent display of actions in the admin interface.
 
  * @param args[$action] required action (must be an associative array and can be serialized or not)
  */

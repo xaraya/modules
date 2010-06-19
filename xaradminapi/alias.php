@@ -1,6 +1,6 @@
 <?php
 /**
- * path2alias
+ * Manage aliases for a path
  *
  * @package modules
  * @copyright (C) 2002-2007 The Digital Development Foundation
@@ -12,7 +12,7 @@
  * @author potion <ryan@webcommunicate.net>
  */
 /**
- * Manage aliases for a path...
+ * Manage aliases for a path
   
 $pathstart = the first part of the path
 
@@ -41,7 +41,8 @@ function path_adminapi_alias($args) {
 	$modules = $modulesobject->getItems($filters);
 
 	if (!empty($modules)) {
-		return $pathstart;
+		$modulename = $pathstart;
+		return $modulename;
 	}
  
 	if (!isset($aliases[$pathstart])) { 

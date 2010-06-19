@@ -27,10 +27,12 @@ function path_userapi_itemurl($args){
 		extract($args);
 		return xarModURL($module,'user',$display,array($id=>$itemid));
 	}
-	//$BaseModURL = xarCore::getSystemVar('BaseModURL', true);
-	if (!isset($BaseModURL)) {
-		$BaseModURL = 'index.php';
-	}
+	    
+	try {
+        $BaseModURL = xarSystemVars::get(sys::LAYOUT, 'BaseModURL');
+    } catch(Exception $e) {
+        $BaseModURL = 'index.php';
+    }
 
 	return xarServer::GetBaseURL() . $BaseModURL . $path;
 	
