@@ -8,7 +8,8 @@
  * @param  $message             the message body
  * @param  $mail_id             the id of the mail to be sent (from another module)
  * @param  $mail_type           the type of the mail to be sent (text, html)
- * @param  $role_id             the ID of the recipient
+ * @param  $locale              the locale of the recipient
+ * @param  $sendername
  * @param  $sendername
  * @param  $senderaddress
  * @param  $recipientname
