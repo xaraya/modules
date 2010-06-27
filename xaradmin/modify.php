@@ -115,6 +115,7 @@ function scheduler_admin_modify()
 
     // Use the current job as $data
     $data = $job;
+
     $modules = xarModAPIFunc('modules', 'admin', 'getlist',
                              array('filter' => array('AdminCapable' => 1)));
     $data['modules'] = array();
@@ -152,7 +153,6 @@ function scheduler_admin_modify()
                                );
     }
 
-    // Return the template variables defined in this function
     return $data;
 }
 ?>

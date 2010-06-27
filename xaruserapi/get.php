@@ -107,7 +107,7 @@ function scheduler_userapi_get($args)
     }
 
     // Return the job information
-    return $jobs;
+    return current($jobs);
 }
 
 ?>
