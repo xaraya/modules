@@ -91,7 +91,7 @@ function scheduler_init()
 
     if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
                        array('modName' => 'scheduler',
-                             'blockType' => 'trigger'))) return;
+                             'blockType' => 'trigger'))) throw new Exception("Trigger block  could not be created");;
 
     // Initialisation successful
     return true;

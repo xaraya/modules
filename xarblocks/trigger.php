@@ -29,7 +29,7 @@ class TriggerBlock extends BasicBlock implements iBlock
     public $form_content        = false;
     public $form_refresh        = false;
 
-    public $showstatus          = false;
+    public $showtriggerstatus   = false;
 
 /**
  * Display func.
@@ -40,13 +40,13 @@ class TriggerBlock extends BasicBlock implements iBlock
         $data = parent::display($data);
         if (empty($data)) return;
 
-        if (empty($data['showstatus'])) $data['showstatus'] = $this->showstatus;
+        if (empty($data['showstatus'])) $data['showstatus'] = $this->showtriggerstatus;
 
     // TODO: this won't work on NFS-mounted or FAT (Win98) file systems, and ISAPI may do weird things too !
     //       So we need to find some better way to see if we're really the only ones playing here...
 
         // let's see if we're the only ones trying to run jobs at this moment
-        $GLOBALS['xarScheduler_LockFileHandle'] = fopen(xarCoreGetVarDirPath().'/cache/templates/scheduler.lock','w+');
+        $GLOBALS['xarScheduler_LockFileHandle'] = fopen(sys::varpath().'/cache/templates/scheduler.lock','w+');
         if (empty($GLOBALS['xarScheduler_LockFileHandle']) || !flock($GLOBALS['xarScheduler_LockFileHandle'], LOCK_EX | LOCK_NB)) {
             fclose($GLOBALS['xarScheduler_LockFileHandle']);
             if (empty($data['showstatus'])) {
@@ -56,7 +56,6 @@ class TriggerBlock extends BasicBlock implements iBlock
                 return $data;
             }
         }
-
         // For some reason, PHP thinks it's in the Apache root during shutdown functions,
         // so we save the current base dir here - otherwise xarModAPIFunc() will fail
         $GLOBALS['xarScheduler_BaseDir'] = realpath('.');
@@ -64,7 +63,7 @@ class TriggerBlock extends BasicBlock implements iBlock
         // register the shutdown function that will execute the jobs after this script finishes
         register_shutdown_function('scheduler_triggerblock_runjobs');
 
-        if (empty($vars['showstatus'])) {
+        if (!$data['showstatus']) {
             return;
         } else {
             $data['content'] = xarML('Running Jobs');
