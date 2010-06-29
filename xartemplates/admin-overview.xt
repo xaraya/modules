@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+    <span class="xar-mod-title">Filters</span>
+    </div>
+    <div class="xar-mod-body">
+
+
+    <h2>Welcome to the Filters module</h2> 
+
+<p>The filters module furnishes an API function, a template and some CSS for a filter widget.  Use the makefilter API function to add a filter to your module's user interface.</p>
+
+<h3>Usage Notes</h3>
+
+<p>A sample function call:</p>
+
+<pre style="margin-left: 40px;">##xarMod::apiFunc('filters','user','makefilter',array(
+			'thisfield' => 'filename',
+			'module' => 'downloads',
+			'startval' => 'File',
+			'filterlabel' => 'Filter:'
+			))##</pre>
+
+<p>See the code comments in the makefilter function for a full list of parameters and descriptions of their use.</p>
+
+<p>From the module developer's perspective, a filter widget doesn't do the filtering for you.  It simply adds parameters to the page's URL based on the submitted value.  You'll need to fetch the values, probably with xarVarFetch, and then use the values in your module function to filter lists of items.</p>
+
+<h3>Examples</h3>
+
+<p>For usage examples, see the <a href="http://www.xaraya.com/index.php/release/eid/1118" target="new">content module's</a>&#160;<img src="code/modules/content/xarimages/exit.png" width="10" height="10" alt="leave this website" /> view and viewcontenttypes functions* and the <a href="http://www.xaraya.com/index.php/release/eid/1152" target="new">downloads module's</a>&#160;<img src="code/modules/content/xarimages/exit.png" width="10" height="10" alt="leave this website" /> view and files functions.</p>
+
+<p>To use the filters in the content<strong>*</strong> module:</p>
+<ol>
+<li>Install the filters module if you haven't already.</li>
+<li>Visit the content module's modifyconfig page to enable and configure the filters.</li>
+</ol>
+
+<p>To use the filters in the downloads module:</p>
+<ol>
+<li>Install the filters module if you haven't already.</li>
+<li>Visit the downloads module's modifyconfig page to enable and configure the filters.</li>
+</ol>
+
+<strong>*</strong> Versions of the content module <strong>later than 0.6.0</strong>.    
+
+    </div>
+</xar:template>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="tabs" />
+
+<xar:set name="info">xarRequest::getInfo()</xar:set>
+
+<xar:set name="activetab">$info[2]</xar:set>
+<div>
+  <ul class="xar-tabs">
+       <xar:sec mask="AdminFilters" catch="false">
+        <xar:if condition="$activetab eq 'main'">
+            <xar:set name="tabclass">'xar-tab-active'</xar:set>
+            <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">'xar-tab'</xar:set>
+            <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+          <a href="#xarModURL('filters','admin','main')#" class="#$linkclass#">
+             Records
+          </a>
+        </li>
+    </xar:sec>
+         
+  </ul>
+</div>
+</xar:template>

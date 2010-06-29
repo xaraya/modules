@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+<xar:style scope="module" module="filters" file="filters" />
+
+<xar:comment>If we don't want to use our theme to override just the width</xar:comment>
+ <xar:if condition="!empty($width)">
+	<xar:set name="style">'width: '. $width</xar:set>
+ <xar:else />
+	<xar:set name="style">''</xar:set>
+ </xar:if>
+
+ <div class="filter" style="#$style#">
+			<div class="filterlabel">#$filterlabel#</div> 
+ 
+<div>
+	<form action="#xarServer::getCurrentURL()#" class="filter" method="get">
+		<input type="text" name="filter" class="filterinput" value="#$filter#" onfocus="if(this.value=='#$startval#')value=''" onblur="if(this.value=='')value='#$startval#';" /> 
+		<input type="image" src="#sys::code()#modules/base/xarimages/icons/system-search.png" alt="filter" value="filter" style="border: none" />
+		
+		<xar:comment>These hidden inputs are all for the return URL</xar:comment>
+		<input type="hidden" name="module" value="#$module#"/>
+		<input type="hidden" name="type" value="#$type#"/>
+		<input type="hidden" name="func" value="#$func#"/>
+		<xar:set name="filterfield">str_replace(' ', '_', $filterfield)</xar:set>
+		<input type="hidden" name="filterfield" value="#$filterfield#"/>
+		<xar:foreach in="$extra" key="$key" value="$val">
+			<input type="hidden" name="#$key#" value="#$val#"/>
+		</xar:foreach> 
+
+	</form>
+
+<xar:if condition="$icon eq 'blank.png'">
+	<img src="#sys::code()#modules/base/xarimages/icons/blank.png" height="16" width="16" class="clearfilter" />
+<xar:else />
+	<form action="#xarServer::getCurrentURL()#" method="get" class="clearfilter">
+		<input type="image" src="#sys::code()#modules/base/xarimages/icons/none.png" alt="reset filters" value="reset filters" style="border: none;" />
+		
+		<xar:comment>These hidden inputs are all for the return URL</xar:comment>
+		<input type="hidden" name="module" value="#$module#"/>
+		<input type="hidden" name="type" value="#$type#"/>
+		<input type="hidden" name="func" value="#$func#"/>
+		<xar:foreach in="$extra" key="$key" value="$val">
+			<input type="hidden" name="#$key#" value="#$val#"/>
+		</xar:foreach> 
+
+	</form>
+</xar:if>
+	
+	</div>
+</div>
+</xar:template>

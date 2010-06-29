@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+    <span class="xar-mod-title">Filters</span>
+    </div>
+    <div class="xar-mod-body">
+
+
+    <h2>Welcome to the Filters module</h2> 
+
+<xar:if condition="xarUserIsLoggedIn()">
+	<p>Please see the <a href="#xarModURL('filters','admin','main')#">module overview</a> for more information.</p>
+</xar:if>
+
+
+    </div>
+</xar:template>
