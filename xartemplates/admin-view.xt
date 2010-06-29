@@ -3,12 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- common admin menu for this module - remove link to the current function -->
     <xar:style scope="module" module="base" file="tabs" />
-
-    <style>
-    pre {
-    display: inline;
-    }
-    </style>
+    <xar:style scope="module" module="path" file="path" />
 
     <div class="xar-mod-head">
       <span class="xar-mod-title">Path Administration</span>
@@ -18,8 +13,36 @@
         <xar:template type="module" file="admintabs" />
 
         <h2>View Paths</h2>
-  
-       <xar:data-view object="$mylist" tplmodule="path" sort="$sort" template="paths" fieldlist="$adminfields" />  
+
+	<xar:if condition="$showfilters">
+
+		#xarMod::apiFunc('filters','user','makefilter',array(
+			'thisfield' => 'path',
+			'func' => 'view',
+			'module' => 'path',
+			'startval' => 'Path',
+			'filterlabel' => 'Filter:' 
+			))#
+
+	</xar:if>
+
+	<xar:if condition="$total eq 0">
+
+		<p>There are no paths.   <a href="#xarModURL('path','admin','add')#">Add one</a>.</p>
+
+	<xar:elseif condition="isset($results) and $results eq 0" /> 
+
+		<p>No paths match your criteria.</p>
+
+	<xar:else />
+		 
+	       <xar:data-view object="$mylist" tplmodule="path" sort="$sort" template="paths" fieldlist="$adminfields" />  
+		<xar:if condition="isset($results)">
+			<xar:set name="total">$results</xar:set>
+		</xar:if>
+		<xar:pager startnum="$mylist->startnum" itemsperpage="$mylist->numitems" total="$total"/>
+	
+	</xar:if>
 
     </div>
 </xar:template>

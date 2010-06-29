@@ -39,10 +39,13 @@
 			<xar:if condition="xarModVars::get('path','remove_index')">
 			   <xar:set name="index">''</xar:set>
 			<xar:else />
-			   <xar:set name="index">'index.php'</xar:set>
+			   <xar:set name="index">'index.php/'</xar:set>
 			</xar:if>
 
-				<a href="#xarServer::getBaseURL()##$index##$fields[$name]#">#$fields[$name]#</a>
+			<xar:set name="pp">xarMod::apiFunc('path','admin','splitpathstart',array('path' => $fields[$name]))</xar:set>
+
+				<a href="#xarServer::getBaseURL()##$index##$pp[0]##$pp[1]##$pp[2]#"><span class="pathstart">#$pp[0]##$pp[1]#</span>#$pp[2]#</a>
+
 			    <xar:elseif condition="$name eq 'action'" />
 				<xar:set name="qs">xarMod::apiFunc('path','admin','action2querystring',array('action' => $fields['action']))</xar:set>
 				#$qs#

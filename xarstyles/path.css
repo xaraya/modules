@@ -1,6 +1,13 @@
+fieldset.mod_settings {
+	border: none;
+}
+
 .errors {
 	color: red;
 }
 .errors span {
 	font-weight: bold;
+}
+.pathstart {
+font-weight: bold;
 }

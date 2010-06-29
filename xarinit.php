@@ -59,6 +59,8 @@ function path_init()
 # we updated the modifyconfig page
 #
     xarModVars::set('path','remove_index',false);
+	xarModVars::set('path','enable_filters',1);     
+	xarModVars::set('path','filters_min_item_count',10);
 
 # --------------------------------------------------------
 #

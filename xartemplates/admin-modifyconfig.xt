@@ -2,6 +2,8 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- common admin menu for this module - remove link to the current function -->
+    <xar:style scope="module" module="path" file="path" />
+
     <div class="xar-mod-head">
       <span class="xar-mod-title">Path Administration</span>
     </div>
@@ -14,7 +16,7 @@
             <fieldset>
                 <legend>Modify path Configuration</legend>
                 <xar:data-form object="$module_settings" />
-                <xar:data-form object="$object" itemid="0" />
+                <xar:data-form object="$object" itemid="0" template="module_settings" />
             </fieldset>
 
             <div class="xar-form-input-after">

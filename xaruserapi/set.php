@@ -28,6 +28,8 @@ function path_userapi_set($args)
 
 	extract($args);
 
+	if(!isset($path) || empty($path)) return;
+
     sys::import('modules.dynamicdata.class.objects.master');
 
 	$object = DataObjectMaster::getObject(array('name' => 'path'));

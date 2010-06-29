@@ -26,6 +26,8 @@ function path_admin_test()
 	$data['res'] = '';
 
 	$paths = xarMod::apiFunc('path','admin','getpaths',array('module' => 'content'));
+	$data['count'] = count($paths);
+
 	$somepath = $paths[0];
 
 	$time1 = microtime();
@@ -36,8 +38,26 @@ function path_admin_test()
  
 	$data['elapsed'] = $time2 - $time1;
 	
+	/*
+	On my laptop:
+	5 paths 0.009 seconds
+	200 paths 0.03 seconds
+	750 paths 0.07 seconds
+	1000 paths .1 seconds
+	2000 paths .2 seconds
+	*/
+	/*
+	On a shared hosting account:
+	100 paths 0.006 seconds
+	300 paths 0.005 seconds
+	500 paths 0.005 seconds
+	1000 paths 0.006 seconds
+	1500 paths 0.006 seconds
+	2000 paths 0.006 seconds
+	*/
+	
 	$data['res'] = xarMod::apiFunc('path','admin','action2querystring',array('action' =>$res)); 
-
+	
 	$filters = array(1 => 'horse'); // get paths where the first part is 'horse'
 	$filteredpaths = xarMod::apiFunc('path','admin','filterpaths',array(
 		'paths' => $paths, 'filters' => $filters, 'returnpart' => 2));
@@ -47,6 +67,18 @@ function path_admin_test()
 	} else {
 		$data['filteredpaths'] = 'empty';
 	}
+
+	/*$rand = array();
+	for ($i=1; $i < 500; $i++) {
+		$randnum = rand(999,9999999);
+		if (!in_array($randnum, $rand)) {
+			$path = '/some/' . $randnum;
+			$action = array('module' => 'content', 'itemid' => $randnum);
+			xarMod::apiFunc('path','user','set',array(
+				'path' => $path, 'action' => $action));
+			$rand[] = $randnum;
+		}
+	}*/
 
     return xarTplModule('path','admin','test', $data);
 }

@@ -54,6 +54,9 @@
 </ul>
 <p>If all goes well, you should see a message telling you that a path_module field was added to the content type.  Go to the content module and add a new item of that type.  You'll see there's now a field labeled "Path."</p>
 
+<h3>Filters</h3>
+
+<p>Install the filters module, and you will see an option in the modifyconfig page to add a filter widget to the path module's admin interface.</p>
 
     </div>
 </xar:template>
