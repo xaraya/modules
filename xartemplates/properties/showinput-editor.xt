@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:javascript filename="ckeditor/ckeditor.js" module="ckeditor" position="head"/>
+
+    <xar:if condition="$version eq 'fckeditor'">
+        #$editor->Create()#
+    <xar:else />
+        <div style="clear: both">
+            <textarea class="ckeditor" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
+        </div>
+    </xar:if> 
+
+    <xar:template file="dataproperty_additions" module="base"/>
+</xar:template>

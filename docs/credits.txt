@@ -1,0 +1,14 @@
+1. Designation: CKEditor module
+
+2. Author: Marc Lutolf <mfl@netspan.ch>
+
+3. Copyright: (C) 2009 Netspan AG
+
+4. License: GPL {@link http://www.gnu.org/licenses/gpl.html}
+
+5. Contributors:
+
+6. Antecedents: based on the Xaraya framework
+
+7. Third party code:
+The CKEditor web editor from www.ckeditor.com
