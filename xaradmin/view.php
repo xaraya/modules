@@ -18,16 +18,19 @@ function path_admin_view()
 {
     if(!xarVarFetch('startnum', 'isset', $data['startnum'], NULL, XARVAR_DONT_SET)) {return;}	
 	if(!xarVarFetch('numitems', 'int',   $numitems,  NULL, XARVAR_DONT_SET)) {return;}
+	if(!xarVarFetch('template', 'str',   $data['template'],  'paths', XARVAR_DONT_SET)) {return;}
 
 	if (empty($numitems)) {
-        $numitems = xarModVars::get('path', 'items_per_page');
+		if ($data['template'] == 'paths') {
+			$numitems = xarModVars::get('path', 'items_per_page');
+		} elseif ($data['template'] == 'sitemap') {
+			$numitems = xarModVars::get('path', 'sitemap_items_per_page');
+		}
     }
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('EditPath')) return;
-
-    $data['items_per_page'] = xarModVars::get('path','items_per_page');
 
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');

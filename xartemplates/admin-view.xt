@@ -12,6 +12,17 @@
     <div class="xar-mod-body">
         <xar:template type="module" file="admintabs" />
 
+	<xar:if condition="$template eq 'paths'">
+		<xar:set name="tpl">'sitemap'</xar:set>
+		<xar:set name="txt">'Sitemap'</xar:set> 
+	<xar:else />
+		<xar:set name="tpl">'paths'</xar:set>
+		<xar:set name="txt">'Full'</xar:set>
+	</xar:if>
+	<div style="display:inline; float:right; margin-right: 50px;">
+		Layout: <a href="#xarModURL('path','admin','view',array('template' => $tpl))#">#$txt#</a>
+	</div>
+
         <h2>View Paths</h2>
 
 	<xar:if condition="$showfilters">
@@ -21,7 +32,8 @@
 			'func' => 'view',
 			'module' => 'path',
 			'startval' => 'Path',
-			'filterlabel' => 'Filter:' 
+			'filterlabel' => 'Filter:',
+			'extra' => array('template' => $template)
 			))#
 
 	</xar:if>
@@ -36,7 +48,7 @@
 
 	<xar:else />
 		 
-	       <xar:data-view object="$mylist" tplmodule="path" sort="$sort" template="paths" fieldlist="$adminfields" />  
+	       <xar:data-view object="$mylist" tplmodule="path" sort="$sort" template="$template" fieldlist="$adminfields" />  
 		<xar:if condition="isset($results)">
 			<xar:set name="total">$results</xar:set>
 		</xar:if>

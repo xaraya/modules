@@ -45,6 +45,7 @@
 			<xar:set name="pp">xarMod::apiFunc('path','admin','splitpathstart',array('path' => $fields[$name]))</xar:set>
 
 				<a href="#xarServer::getBaseURL()##$index##$pp[0]##$pp[1]##$pp[2]#"><span class="pathstart">#$pp[0]##$pp[1]#</span>#$pp[2]#</a>
+				<xar:set name="last">$pp[0]</xar:set>
 
 			    <xar:elseif condition="$name eq 'action'" />
 				<xar:set name="qs">xarMod::apiFunc('path','admin','action2querystring',array('action' => $fields['action']))</xar:set>

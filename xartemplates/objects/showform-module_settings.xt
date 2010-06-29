@@ -6,6 +6,12 @@
   
      <h4>General:</h4>
 
+	<xar:set name="name">'sitemap_items_per_page'</xar:set>
+     <div class="xar-form-input-wrapper">
+		<xar:data-label property="$properties[$name]" for="id" />       
+		<xar:data-input property="$properties[$name]" />		
+     </div>
+
 	<xar:set name="name">'remove_index'</xar:set>
      <div class="xar-form-input-wrapper">
 		<xar:data-label property="$properties[$name]" for="id" />       

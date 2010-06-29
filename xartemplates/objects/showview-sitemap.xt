@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+<h3 class="sitemap">Sitemap:</h3>
+
+<div id="sitemap">
+<xar:if condition="!empty($items)">
+
+       <xar:if condition="xarModVars::get('path','remove_index')">
+			   <xar:set name="index">''</xar:set>
+			<xar:else />
+			   <xar:set name="index">'index.php/'</xar:set>
+			</xar:if>
+
+            <xar:foreach in="$items" key="$itemid" value="$fields">
+
+                <div>
+
+			<xar:set name="path">$fields['path']</xar:set>
+
+			<xar:if condition="isset($prevarr)">
+
+				<xar:set name="patharr">explode('/',$path)</xar:set>
+
+				<xar:set name="same">implode('/',array_intersect_assoc($prevarr, $patharr))</xar:set>
+
+				<xar:set name="sub">str_replace($same,'',$path)</xar:set>
+
+				<span style="color:#999"><strong>#$same#</strong></span>
+
+				<xar:if condition="strlen($same) eq 0">
+					<div style="height: 8px;"></div>
+				</xar:if>
+
+			<xar:else />
+				<xar:set name="same">''</xar:set>
+				<xar:set name="sub">$path</xar:set>
+			</xar:if>
+
+			<xar:set name="urlpath">substr($path,1)</xar:set>
+
+			<a href="#xarServer::getBaseURL()##$index##$urlpath#" class="sitemap"><strong>#$sub#</strong></a>
+				
+			<xar:set name="prevarr">explode('/',$path)</xar:set>
+  
+		</div> 
+            </xar:foreach>
+      
+</xar:if>
+</div>
+
+</xar:template>

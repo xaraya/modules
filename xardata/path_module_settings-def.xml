@@ -40,5 +40,15 @@
       <seq>3</seq>
       <configuration></configuration>
     </property>
+    <property name="sitemap_items_per_page">
+      <id>248</id>
+      <label>Sitemap items per page</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: path</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration></configuration>
+    </property>
   </properties>
 </object>

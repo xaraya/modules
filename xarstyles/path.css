@@ -11,3 +11,17 @@ fieldset.mod_settings {
 .pathstart {
 font-weight: bold;
 }
+
+a.sitemap {
+	text-decoration: none;
+}
+a.sitemap:visited { 
+	color: #2380A8
+}
+#sitemap {
+margin: 18px 0 18px 20px;
+}
+
+h3.sitemap {
+margin-top: 24px;
+}
