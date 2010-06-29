@@ -21,6 +21,13 @@ a.sitemap:visited {
 #sitemap {
 margin: 18px 0 18px 20px;
 }
+#sitemap .spacer {
+	margin-top: 8px;
+}
+#sitemap .same {
+	color:#999;
+	font-weight: bold;
+}
 
 h3.sitemap {
 margin-top: 24px;

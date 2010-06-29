@@ -18,6 +18,7 @@
                 <div>
 
 			<xar:set name="path">$fields['path']</xar:set>
+			<xar:set name="spacer">''</xar:set>
 
 			<xar:if condition="isset($prevarr)">
 
@@ -27,10 +28,8 @@
 
 				<xar:set name="sub">str_replace($same,'',$path)</xar:set>
 
-				<span style="color:#999"><strong>#$same#</strong></span>
-
 				<xar:if condition="strlen($same) eq 0">
-					<div style="height: 8px;"></div>
+					<xar:set name="spacer">'spacer'</xar:set>
 				</xar:if>
 
 			<xar:else />
@@ -40,7 +39,10 @@
 
 			<xar:set name="urlpath">substr($path,1)</xar:set>
 
+			<div class="#$spacer#">
+			<span class="same">#$same#</span>
 			<a href="#xarServer::getBaseURL()##$index##$urlpath#" class="sitemap"><strong>#$sub#</strong></a>
+			</div>
 				
 			<xar:set name="prevarr">explode('/',$path)</xar:set>
   
