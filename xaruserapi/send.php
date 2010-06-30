@@ -185,14 +185,19 @@
                     $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
                     $tplString .= $subject;
                     $tplString .= '</xar:template>';
+
+                    // Make entities BL compatible
+                    $transformarray = xarMod::apiFunc('mailer','admin','transform_entities');
+                    $tplString  = str_replace(array_keys($transformarray), $transformarray, $tplString);
+                    
                     $subject = $blCompiler->compilestring($tplString);
                     $subject = xarTplString($subject,$data);
+
                     $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
                     $tplString .= $message;
                     $tplString .= '</xar:template>';
                     
                     // Make entities BL compatible
-                    $transformarray = xarMod::apiFunc('mailer','admin','transform_entities');
                     $tplString  = str_replace(array_keys($transformarray), $transformarray, $tplString);
                     
                     $message = $blCompiler->compilestring($tplString);
