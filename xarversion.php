@@ -3,7 +3,7 @@
  * Filters
  *
  * @package modules
- * @copyright (C) 2009 WebCommunicate.net
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,7 +13,7 @@
  **/
 $modversion['name']         = 'filters';
 $modversion['id']           = '1039';
-$modversion['version']      = '0.3.0';
+$modversion['version']      = '0.7.0';
 $modversion['displayname']  = xarML('Filters');
 $modversion['description']  = 'Filters';
 $modversion['credits']      = 'xardocs/credits.txt';
