@@ -19,7 +19,7 @@
                 </a>
             </xar:if>
             <xar:if condition="!empty($cal_links.prev_month) and $group eq 'month'">
-                <a href="#xarModURL('ievents','user','view',array_merge($url_params, array('startdate'=&gt;$cal_links.prev_month,'enddate'=&gt;NULL,'range'=&gt;NULL)))#" title="#xarML('Previous month')#">
+                <a href="#xarModURL('ievents','user','view',array_merge($url_params, array('startdate'=&gt;$cal_links.prev_month,'enddate'=&gt;$cal_links.prev_month,'range'=&gt;NULL)))#" title="#xarML('Previous month')#">
                     #$cal_links_labels.prev_month#
                 </a>
             </xar:if>
@@ -53,7 +53,7 @@
                 </a>
             </xar:if>
             <xar:if condition="!empty($cal_links.next_month) and $group eq 'month'">
-                <a href="#xarModURL('ievents','user','view',array_merge($url_params, array('startdate'=&gt;$cal_links.next_month,'enddate'=&gt;NULL,'range'=&gt;NULL)))#" title="#xarML('Next month')#">
+                <a href="#xarModURL('ievents','user','view',array_merge($url_params, array('startdate'=&gt;$cal_links.next_month,'enddate'=&gt;$cal_links.next_month,'range'=&gt;NULL)))#" title="#xarML('Next month')#">
                     #$cal_links_labels.next_month#
                 </a>
             </xar:if>
