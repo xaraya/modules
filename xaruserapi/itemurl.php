@@ -18,6 +18,17 @@
   * @param args[$id] optional specify a different itemid field for the xarModURL fallback
  */
 function path_userapi_itemurl($args){
+	
+	if (isset($args['withscheme'])) {
+		$withscheme = $args['withscheme'];
+		unset($args['withscheme']);
+	} else {
+		$withscheme = true;
+	}
+
+	if (!isset($args['module'])) {
+		$args['module'] = 'content';
+	}
 
 	$path = xarMod::apiFunc('path','user','action2path',array('action' => $args));
 
@@ -34,7 +45,15 @@ function path_userapi_itemurl($args){
         $BaseModURL = 'index.php';
     }
 
-	return xarServer::GetBaseURL() . $BaseModURL . $path;
+	$url = xarServer::GetBaseURL() . $BaseModURL . $path;
+
+	if (!$withscheme) {
+			$url = xarServer::GetBaseURL() . $BaseModURL . $path;
+			$scheme = parse_url($url, PHP_URL_SCHEME);
+			$url = str_replace($scheme . '://', '', $url);
+	}
+
+	return $url;
 	
 }
 ?>
