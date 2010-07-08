@@ -22,6 +22,5 @@
                 <a href="#xarServer::getCurrentURL(array('letter' =&gt; 'other', 'startnum' =&gt; null, 'q' =&gt; null))#">Other</a>
             </xar:if>
         </div>
-
     </xar:if>
 </xar:template>
