@@ -419,7 +419,7 @@
                     <xar:button type="submit" label="$label" />
                     &#160;
                     <xar:set name="label">xarML('Reset')</xar:set>
-                    <xar:button type="reset" label="$label" />
+                    <xar:button type="cancel" label="$label" />
                     <input type="hidden" name="tab" id="tab" value="#$tab#" />
                     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" /> 
                 </div>

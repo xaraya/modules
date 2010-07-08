@@ -48,6 +48,13 @@ function publications_admin_modify($args)
     $xartable = xarDB::getTables();
     $data['object']->properties['position']->initialization_itemstable = $xartable['publications'];
 
+    // Send the publication type and the object properties to the template 
+    $data['properties'] = $data['object']->getProperties();
+    $data['ptid'] = $data['properties']['itemtype']->value;
+    
+    // Get the settings of the publication type we are using
+    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
+    
     // If creating a new translation get an empty copy
     if ($data['tab'] == 'newtranslation') {
         $data['object']->properties['parent']->setValue($id);
@@ -72,10 +79,11 @@ function publications_admin_modify($args)
     $where = "parent = " . $id;
     $items = $data['objectlist']->getItems(array('where' => $where));
     foreach ($items as $key => $value) {
+        // Clear the previous values before starting the next round
+        $data['object']->clearFieldValues();
         $data['object']->getItem(array('itemid' => $key));
         $data['items'][$key] = $data['object']->getFieldValues();
     }
-    
     if (!empty($ptid)) {
         $template = $pubtypes[$ptid]['name'];
     } else {
@@ -83,13 +91,6 @@ function publications_admin_modify($args)
        $template = null;
     }
 
-    // Send the publication type and the object properties to the tempate 
-    $data['properties'] = $data['object']->getProperties();
-    $data['ptid'] = $data['properties']['itemtype']->value;
-    
-    // Get the settings of the publication type we are using
-    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
-    
     return xarTplModule('publications', 'admin', 'modify', $data, $template);
 
 
