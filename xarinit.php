@@ -40,6 +40,7 @@
             module_id         integer unsigned NOT NULL default '0', 
             state             tinyint NOT NULL default '3', 
             header_x_mailer   varchar(254) default '' NOT NULL, 
+            realm_id          integer(64) NOT NULL default '0', 
             PRIMARY KEY  (id) 
         ) TYPE=MyISAM";
         if (!$q->run($query)) return;
@@ -200,6 +201,41 @@
                                                                                                 'source'       => 'xar_mailer_mails.header_x_mailer',
                                                                                                 'status'       => 33,
                                                                                                 'seq'          => 20));
+                    if (empty($propertyid)) return;
+                    // success
+                    // fall through to next upgrade
+
+            case '1.0.1':
+                    
+                    # --------------------------------------------------------
+                    #
+                    # Alter table xar_mailer_mails to add column realm_id
+                    #
+                    $q = new Query();
+                    $prefix = xarDB::getPrefix();
+                    $query = "ALTER TABLE ". $prefix."_mailer_mails ADD realm_id INT( 11 ) NOT NULL DEFAULT 0";
+                    if (!$q->run($query)) return;
+                    
+                    # --------------------------------------------------------
+                    # Add the missing DD property realm_id in mailer_mails
+                    #
+                    sys::import('modules.dynamicdata.class.objects.master');
+                    
+                    $modid = xarMod::getId('mailer');
+            
+                    $objectinfo = DataObjectMaster::getObjectInfo(array('moduleid' => $modid, 'name' => 'mailer_mails'));
+                    if (!isset($objectinfo) || empty($objectinfo['objectid'])) return;
+            
+                    $objectid = $objectinfo['objectid'];
+                    
+                    $propertyid = xarMod::apiFunc('dynamicdata','admin','createproperty', array('name'         => 'realm_id',
+                                                                                                'label'        => 'Realm_ID',
+                                                                                                'objectid'     => $objectid,
+                                                                                                'type'         => 30096,
+                                                                                                'defaultvalue' => 0,
+                                                                                                'source'       => 'xar_mailer_mails.realm_id',
+                                                                                                'status'       => 67,
+                                                                                                'seq'          => 21));
                     if (empty($propertyid)) return;
                     // success
                     // fall through to next upgrade
