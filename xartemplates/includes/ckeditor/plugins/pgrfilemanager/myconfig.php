@@ -1,4 +1,7 @@
 <?php
+
+require('config.plugins.php');
+
 /*
 Copyright (c) 2009 Grzegorz Żydek
 
@@ -29,12 +32,13 @@ THE SOFTWARE.
 //real absolute path to root directory (directory you want to use with PGRFileManager) on your server  
 //i.e  PGRFileManagerConfig::$rootPath = '/home/user/htdocs/userfiles'
 //you can check your absoulte path using
-PGRFileManagerConfig::$rootPath = 'C:\xampp\htdocs\jamaica210rc1\html\code\modules\ckeditor\xartemplates\includes\ckeditor\plugins\pgrfilemanager';
+PGRFileManagerConfig::$rootPath = $pluginsConfiguration['PGRFileManager.rootPath'];
+//$pluginsConfiguration['PGRFileManagerRootPath']; //
 //url path to root directory
 //this path is using to display images and will be returned to ckeditor with relative path to selected file
 //i.e http://my-super-web-page/gallery
 //i.e /gallery
-PGRFileManagerConfig::$urlPath = 'http://localhost/jamaica210rc1/html/code/modules/ckeditor/xartemplates/includes/ckeditor/plugins/pgrfilemanager';
+PGRFileManagerConfig::$urlPath = $pluginsConfiguration['PGRFileManager.urlPath'];
 
 
 //    !!!How to determine rootPath and urlPath!!!

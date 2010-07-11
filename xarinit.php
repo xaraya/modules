@@ -42,7 +42,19 @@
         xarModVars::set('ckeditor', 'useModuleAlias',0);
         xarModVars::set('ckeditor', 'aliasname','CKEditor');
         xarModVars::set('ckeditor', 'defaultmastertable','ckeditor_ckeditor');
-        xarModVars::set('ckeditor', 'editorversion', 'ckeditor');
+
+		$PGRFileManager_rootPath = realpath(sys::varpath().'/uploads');
+		$PGRFileManager_urlPath = xarServer::getBaseURL() . 'var/uploads';
+		xarModVars::set('ckeditor', 'PGRFileManager_rootPath', $PGRFileManager_rootPath);
+		xarModVars::set('ckeditor', 'PGRFileManager_urlPath', $PGRFileManager_urlPath);
+		xarMod::apiFunc('ckeditor','admin','modifypluginsconfig', array(
+			'name' => 'PGRFileManager.rootPath',
+			'value' => $PGRFileManager_rootPath
+			));
+		xarMod::apiFunc('ckeditor','admin','modifypluginsconfig', array(
+			'name' => 'PGRFileManager.urlPath',
+			'value' => $PGRFileManager_urlPath
+			));
 
         // Add variables like this next one when creating utility modules
         // This variable is referenced in the xaradmin/modifyconfig-utility.php file

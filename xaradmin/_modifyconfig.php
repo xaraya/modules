@@ -6,8 +6,8 @@
 
 // Use this version of the modifyconfig file when the module is not a  utility module
 
-    function ckeditor_admin_modifyconfig() {
-
+    function ckeditor_admin_modifyconfig()
+    {
         // Security Check
         if (!xarSecurityCheck('AdminCKEditor')) return;
         if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
@@ -37,29 +37,13 @@
                         if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
                         if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('ckeditor', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
                         if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('ckeditor', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
-                  
-						if (!xarVarFetch('PGRFileManager_rootPath', 'str', $PGRFileManager_rootPath,  xarModVars::get('ckeditor', 'PGRFileManager_rootPath'), XARVAR_NOT_REQUIRED)) return;
-						if (!xarVarFetch('PGRFileManager_urlPath', 'str', $PGRFileManager_urlPath,  xarModVars::get('ckeditor', 'PGRFileManager_urlPath'), XARVAR_NOT_REQUIRED)) return;
+                        if (!xarVarFetch('editorversion', 'str', $editorversion,  xarModVars::get('ckeditor', 'editorversion'), XARVAR_NOT_REQUIRED)) return;
 
                         xarModVars::set('ckeditor', 'itemsperpage', $itemsperpage);
                         xarModVars::set('ckeditor', 'SupportShortURLs', $shorturls);
                         xarModVars::set('ckeditor', 'useModuleAlias', $useModuleAlias);
                         xarModVars::set('ckeditor', 'aliasname', $aliasname);
-
-						xarModVars::set('ckeditor', 'PGRFileManager_rootPath', $PGRFileManager_rootPath);
-						xarModVars::set('ckeditor', 'PGRFileManager_urlPath', $PGRFileManager_urlPath);
-
-						xarMod::apiFunc('ckeditor','admin','modifypluginsconfig', array(
-							'name' => 'PGRFileManager.rootPath',
-							'value' => $PGRFileManager_rootPath
-							));
-
-						xarMod::apiFunc('ckeditor','admin','modifypluginsconfig', array(
-							'name' => 'PGRFileManager.urlPath',
-							'value' => $PGRFileManager_urlPath
-							));
-
-
+                        xarModVars::set('ckeditor', 'editorversion', $editorversion);
                         break;
                     case 'tab2':
                         break;
