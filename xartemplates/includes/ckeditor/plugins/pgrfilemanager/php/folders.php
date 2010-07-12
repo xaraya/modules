@@ -27,6 +27,7 @@ include_once dirname(__FILE__) . '/utils.php';
 
 //get dir from post
 $directory = realpath(PGRFileManagerConfig::$rootDir);
+ 
 $relativePath = ''; 
 
 //check if dir exist

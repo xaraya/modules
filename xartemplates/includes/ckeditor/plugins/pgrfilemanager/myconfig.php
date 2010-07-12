@@ -1,45 +1,35 @@
-<?php
+<?php //Copyright (c) 2009 Grzegorz Żydek
+ 
+require_once('currpageurl.php');
 
-require('config.plugins.php');
+$currurl = curPageURL();
+// Some experimental stuff here
+if (strstr($currurl, 'PGRFileManager.php')) { 
+	$prop = $_GET['CKEditor'];
+	//if (!empty($prop)) print $prop;
+}
 
-/*
-Copyright (c) 2009 Grzegorz Żydek
+// Should work with this commented out, but it doesn't...
+// $prop = 'dd_318';
 
-This file is part of PGRFileManager v2.1.0
+require(realpath(dirname(__FILE__) . '/config.plugins.php'));
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of PGRFileManager and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+$config = $pluginsConfiguration;
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+if (!empty($config[$prop]['PGRFileManager.rootPath'])) {
+	$rootPath = $config[$prop]['PGRFileManager.rootPath'];
+} else {
+	$rootPath = $config['default']['PGRFileManager.rootPath'];
+}
+if (!empty($config[$prop]['PGRFileManager.urlPath'])) {
+	$urlPath = $config[$prop]['PGRFileManager.urlPath'];
+} else {
+	$urlPath = $config['default']['PGRFileManager.urlPath'];
+} 
 
-PGRFileManager IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-*/
+PGRFileManagerConfig::$rootPath = $rootPath;
 
-//Include your own script with authentication if you wish
-//i.e. include($_SERVER['DOCUMENT_ROOT'].'/_files/application/PGRFileManagerConfig.php');
-
-//real absolute path to root directory (directory you want to use with PGRFileManager) on your server  
-//i.e  PGRFileManagerConfig::$rootPath = '/home/user/htdocs/userfiles'
-//you can check your absoulte path using
-PGRFileManagerConfig::$rootPath = $pluginsConfiguration['PGRFileManager.rootPath'];
-//$pluginsConfiguration['PGRFileManagerRootPath']; //
-//url path to root directory
-//this path is using to display images and will be returned to ckeditor with relative path to selected file
-//i.e http://my-super-web-page/gallery
-//i.e /gallery
-PGRFileManagerConfig::$urlPath = $pluginsConfiguration['PGRFileManager.urlPath'];
-
+PGRFileManagerConfig::$urlPath = $urlPath;
 
 //    !!!How to determine rootPath and urlPath!!!
 //    1. Copy mypath.php file to directory which you want to use with PGRFileManager

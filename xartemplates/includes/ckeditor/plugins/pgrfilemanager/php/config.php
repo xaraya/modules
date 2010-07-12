@@ -39,5 +39,6 @@ class PGRFileManagerConfig
     static public $authorizePass;
     static public $ckEditorScriptPath;
     static public $ckEditorExtensions;
+ 
 }
         
