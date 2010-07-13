@@ -8,7 +8,9 @@ span.xar-error {
 color: red;  
 }
 th.titleth {
-width: 22%;
+}
+th.hide, td.hide {
+display:none;
 }
 fieldset {
 }

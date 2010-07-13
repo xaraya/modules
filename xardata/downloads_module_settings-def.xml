@@ -1,5 +1,5 @@
 <object name="downloads_module_settings">
-  <objectid>125</objectid>
+  <objectid>32</objectid>
   <label>Module Settings for Downloads</label>
   <module_id>19741</module_id>
   <itemtype>2</itemtype>
@@ -11,7 +11,7 @@
   <isalias>false</isalias>
   <properties>
     <property name="file_directories">
-      <id>573</id>
+      <id>184</id>
       <label>File Directories</label>
       <type>textarea_medium</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration>a:7:{s:15:"display_columns";s:2:"30";s:12:"display_rows";s:1:"1";s:19:"display_value_label";s:4:"Path";s:14:"display_layout";s:7:"default";s:24:"initialization_addremove";s:1:"2";s:24:"initialization_prop_type";s:7:"textbox";s:26:"initialization_prop_config";s:0:"";}</configuration>
     </property>
     <property name="file_extensions">
-      <id>574</id>
+      <id>185</id>
       <label>Permitted File Extensions</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -31,7 +31,7 @@
       <configuration>a:5:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:16:"validation_regex";s:15:"/^[A-Za-z ,]+$/";s:24:"validation_regex_invalid";s:46:"File extensions must be a comma-separated list";}</configuration>
     </property>
     <property name="maximum_filesize">
-      <id>575</id>
+      <id>186</id>
       <label>Maximum Filesize</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -41,7 +41,7 @@
       <configuration>a:3:{s:12:"display_size";s:2:"12";s:17:"display_maxlength";s:2:"15";s:14:"display_layout";s:7:"default";}</configuration>
     </property>
     <property name="show_xarmodurl">
-      <id>576</id>
+      <id>187</id>
       <label>Show xarModURL call in URL Reference</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -50,9 +50,9 @@
       <seq>5</seq>
       <configuration></configuration>
     </property>
-    <property name="enable_filters">
-      <id>577</id>
-      <label>Enable Filters</label>
+    <property name="admin_list_locations">
+      <id>188</id>
+      <label>Show directory column</label>
       <type>checkbox</type>
       <defaultvalue>1</defaultvalue>
       <source>module variable: downloads</source>
@@ -60,18 +60,38 @@
       <seq>6</seq>
       <configuration></configuration>
     </property>
-    <property name="filters_records_min_item_count">
-      <id>578</id>
-      <label>Show records filters once there are this many records</label>
+    <property name="admin_list_fncharlimit">
+      <id>189</id>
+      <label>Display first N characters of filename</label>
       <type>integerbox</type>
-      <defaultvalue></defaultvalue>
+      <defaultvalue>15</defaultvalue>
       <source>module variable: downloads</source>
       <status>33</status>
       <seq>7</seq>
       <configuration></configuration>
     </property>
+    <property name="enable_filters">
+      <id>190</id>
+      <label>Enable Filters</label>
+      <type>checkbox</type>
+      <defaultvalue>1</defaultvalue>
+      <source>module variable: downloads</source>
+      <status>33</status>
+      <seq>8</seq>
+      <configuration></configuration>
+    </property>
+    <property name="filters_records_min_item_count">
+      <id>191</id>
+      <label>Show records filters once there are this many records</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: downloads</source>
+      <status>33</status>
+      <seq>9</seq>
+      <configuration></configuration>
+    </property>
     <property name="filters_files_min_item_count">
-      <id>579</id>
+      <id>192</id>
       <label>Show files filters once there are this many files</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>

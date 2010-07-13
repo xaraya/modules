@@ -68,6 +68,8 @@ function downloads_init()
 	xarModVars::set('downloads','file_directories','../downloads_module_files');
 	xarModVars::set('downloads','file_extensions','gif, jpg, jpeg, png, pdf, doc, txt');
 	xarModVars::set('downloads','maximum_filesize','1000000');
+	xarModVars::set('downloads','admin_list_locations','1');
+	xarModVars::set('downloads','admin_list_fncharlimit','30');
 	xarModVars::set('downloads','enable_filters',true);
 	xarModVars::set('downloads','show_xarmodurl','1');
 	xarModVars::set('downloads','filters_records_min_item_count','1');
