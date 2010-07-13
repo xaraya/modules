@@ -1,0 +1,84 @@
+<object name="downloads">
+  <objectid>19</objectid>
+  <label>Downloads Items</label>
+  <module_id>19741</module_id>
+  <itemtype>1</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:0:{}</config>
+  <isalias>true</isalias>
+  <properties>
+    <property name="itemid">
+      <id>119</id>
+      <label>Itemid</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_downloads.itemid</source>
+      <status>33</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="title">
+      <id>120</id>
+      <label>Title</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_downloads.title</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="description">
+      <id>121</id>
+      <label>Description</label>
+      <type>textarea_medium</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_downloads.description</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration></configuration>
+    </property>
+    <property name="status">
+      <id>122</id>
+      <label>Status</label>
+      <type>dropdown</type>
+      <defaultvalue>2</defaultvalue>
+      <source>xar_downloads.status</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:34:"0,Submitted;1,Rejected;2,Approved;";}</configuration>
+    </property>
+    <property name="filetype">
+      <id>123</id>
+      <label>File Type</label>
+      <type>hidden</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_downloads.ext</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
+    <property name="filename">
+      <id>124</id>
+      <label>File</label>
+      <type>upload</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_downloads.filename</source>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration>a:7:{s:12:"display_size";s:2:"40";s:14:"display_layout";s:7:"default";s:24:"validation_max_file_size";s:7:"1000000";s:21:"validation_min_length";s:1:"1";s:26:"validation_file_extensions";s:39:"gif, jpg, jpeg, png, bmp, pdf, doc, txt";s:27:"validation_allow_duplicates";s:1:"2";s:28:"initialization_basedirectory";s:25:"../downloads_module_files";}</configuration>
+    </property>
+    <property name="location">
+      <id>125</id>
+      <label>Directory</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_downloads.location</source>
+      <status>33</status>
+      <seq>7</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:50:"xarMod::apiFunc('downloads','user','getlocations')";}</configuration>
+    </property>
+  </properties>
+</object>

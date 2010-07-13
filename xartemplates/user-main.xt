@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+    <span class="xar-mod-title">Downloads</span>
+    </div>
+    <div class="xar-mod-body">
+
+
+    <h2>Welcome to the Downloads module</h2> 
+
+<p>Please see the <a href="#xarModURL('downloads','admin','overview')#">module overview</a> for more information.</p>
+
+
+    </div>
+</xar:template>

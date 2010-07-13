@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <xar:style scope="module" file="downloads" />
+    
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">Downloads Administration</span>
+    </div>
+    <div class="xar-mod-body">
+      <xar:template type="module" file="admintabs" />
+
+      <h2>Record #$itemid#</h2>
+        <xar:set name="withupload">#$object->upload#</xar:set>
+        <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
+        <xar:if condition="!empty($withupload)">
+           <xar:set name="enctype">'multipart/form-data'</xar:set>
+        </xar:if>
+
+	<p align="right" style="margin-top: -30px"><a href="#xarModURL('downloads','admin','delete', array('itemid' => $itemid))#" style="color:red">Delete Record</a></p>
+
+	<xar:if condition="!file_exists($location . '/' . $filename)">
+		<div class="missing">The file for this record was not found: <span class="missing">#$location#/#$filename#</span></div>
+		<xar:set name="clear">true</xar:set>
+	<xar:else />
+		<xar:set name="clear">false</xar:set>
+	</xar:if>
+
+	<xar:if condition="$_GET['func'] eq 'modify' and file_exists($location . '/' . $filename)">
+	<form>
+		<fieldset>
+		<legend>URL reference:</legend>
+
+<xar:set name="full">xarModURL('downloads','user','getfile',array('itemid' => $itemid))</xar:set>
+<xar:set name="base">xarServer::GetBaseURL()</xar:set>
+<xar:set name="displayurl">str_replace($base, '', $full)</xar:set>
+
+
+     <div class="xar-form-input-wrapper"> 
+	<label class="xar-form-label">Path</label>
+	<span class="formurl"><a href="#xarModURL('downloads','user','getfile',array('itemid' => $itemid))#">#$displayurl#</a></span>
+     </div>
+
+	<xar:if condition="xarModVars::get('downloads','show_xarmodurl')">
+		<div class="xar-form-input-wrapper"> 
+			<label class="xar-form-label">xarModURL</label>
+			<input type="text" class="formurl"  onClick="javascript:this.focus();this.select();" value="##xarModURL('downloads','user','getfile',array('itemid' => #$itemid#))##" size="56" style="text-align:center" />
+		</div>
+	</xar:if>
+
+		</fieldset>
+     </form>
+     
+</xar:if>
+               
+        <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
+           
+            <fieldset>
+                <legend>
+                    Modify
+                </legend>
+ 
+                <xar:data-form object="$object" tplmodule="downloads" filename="$filename" location="$location" locpropid="$locpropid" clear="$clear" />
+		 
+             </fieldset>
+	     
+           <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+                <input type="hidden" name="confirm" id="confirm" value="true" /> 
+                &#160;&#160;&#160;
+                <input type="submit" name="saveedit" id="saveedit" value="#xarML('Save and Edit')#" />
+			&#160; 
+		<input type="submit" value="#xarML('Save and Close')#" />
+            </div>  
+        </form>
+
+
+
+    </div>
+</xar:template>

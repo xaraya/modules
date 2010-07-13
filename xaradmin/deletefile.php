@@ -1,0 +1,34 @@
+<?php
+
+function downloads_admin_deletefile() {
+
+	if(!xarVarFetch('file',       'str',    $file,   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('location',       'str',    $location,   NULL, XARVAR_DONT_SET)) {return;}
+	if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
+
+	if (!xarSecurityCheck('DeleteDownloads',0)) return;
+
+	$data['file'] = $file;
+	$data['location'] = $location;
+	 
+	if ($data['confirm']) {
+
+		$delete = xarMod::apiFunc('downloads','admin','deletefile', array(
+			'location' => $location,
+			'file' => $file
+			));
+
+		if ($delete) {
+			xarResponse::redirect(xarModURL('downloads', 'admin', 'files'));
+		} else {
+			$data['error'] = 'some problem';
+			return xarTplModule('downloads','admin','deletefile', $data); 
+		}
+
+	} else {
+		return xarTplModule('downloads','admin','deletefile', $data); 
+	}
+
+}
+
+?>

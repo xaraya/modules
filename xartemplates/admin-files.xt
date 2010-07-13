@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <xar:style scope="module" module="base" file="tabs" />
+    <xar:style scope="module" module="downloads" file="downloads" />
+
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">Downloads Administration</span>
+    </div>
+   
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admintabs" />
+
+        <h2>View Files</h2>
+
+	<xar:if condition="$showfilters">
+		#xarMod::apiFunc('filters','user','makefilter',array(
+			'thisfield' => 'locfilter',
+			'func' => 'files',
+			'module' => 'downloads',
+			'startval' => $locstartval,
+			'filterlabel' => 'Filter:'
+			))#
+
+		#xarMod::apiFunc('filters','user','makefilter',array(
+			'thisfield' => 'filefilter',
+			'func' => 'files',
+			'module' => 'downloads',
+			'startval' => $filestartval,
+			'filterlabel' => 'Filter:'
+			))#
+	</xar:if>
+
+		<xar:if condition="isset($files) and !empty($files)">
+			<div id="viewfiles">
+			<table>
+				<tr>
+				<th>Location</th>
+				<th>Filename</th>
+				<th>Records</th>
+				<th>Delete File</th>
+				</tr>
+				<xar:foreach in="$files" key="$key" value="$val">
+					 
+					<tr>
+					<td>
+					<xar:set name="pos">strpos($key,';')</xar:set>
+					<xar:set name="key">substr($key,0,$pos)</xar:set>
+					
+						#$key#
+					</td>
+					<td>	
+						
+						#$val#
+					</td>
+					
+					<td>	
+					<xar:set name="fileitems">
+					xarMod::apiFunc('downloads','admin','getfileitems',
+						array('location' => $key, 'file' => $val, 'linkslist' => true))
+					</xar:set>
+
+					<xar:if condition="$fileitems">
+					#$fileitems#
+					<xar:else />
+					<a href="#xarModURL('downloads','admin','add',array('location' => $key, 'filename' => $val))#">
+					<img src="#sys::code()#/modules/base/xarimages/icons/add.png" height="16" width="16" /></a>
+					</xar:if>
+					
+					</td>
+
+					<td>	
+	
+	<xar:if condition="xarSecurityCheck('DeleteDownloads',0)"> 
+	&amp;nbsp; <a href="#xarModURL('downloads','admin','deletefile', array('location' => $key, 'file' => $val))#"><img src="#sys::code()#modules/base/xarimages/icons/delete.png" width="16" height="16" alt="Delete" /></a>
+	</xar:if>
+
+					</td>
+					</tr> 
+					
+				</xar:foreach>
+			</table>
+			</div>
+
+		<xar:else />
+
+		<xar:if condition="isset($filtered) and $filtered eq 1">
+			<p>No files match your criteria.</p>
+		<xar:else />
+			<p>There are no files.   <a href="#xarModURL('downloads','admin','new')#">Upload one</a>.</p>
+		</xar:if>
+
+		</xar:if>
+
+
+   </div> 
+</xar:template>

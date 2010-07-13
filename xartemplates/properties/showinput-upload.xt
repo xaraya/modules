@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+ 
+    <xar:if condition="!empty($value) and !($clear)">
+
+		<!-- we're using a hidden field to keep track of any previously uploaded file -->
+	       <span id="#$id#_text">Uploaded file:
+		#$value#
+
+		 &#160; <input type="button" onClick="document.getElementById('#$id#_hidden').value='';document.getElementById('#$id#_text').innerHTML='';document.getElementById('#$id#').setAttribute('style', 'display:inline');" value="#xarML('Clear')#"/>
+		 </span>  
+
+       <input type="hidden" name="#$name#" id="#$id#_hidden" value="#$value#"/> &#160; 
+
+	<xar:set name="fstyle">'display: none'</xar:set>
+
+    <xar:else />
+	
+	<xar:set name="fstyle">''</xar:set>
+	
+    </xar:if>
+	
+		<input type="hidden" name="MAX_FILE_SIZE" value="#$max_file_size#"/>	    
+		<input type="file" name="#$name#" size="#$size#" id="#$id#" tabindex="#$tabindex#" class="fileinput" style="#$fstyle#" value="#$value#" />
+		<xar:template file="dataproperty_additions" module="base"/>
+
+    <xar:if condition="!empty($file_extensions)">
+	<div class="allowed_types">Allowed file types : #$file_extensions#</div>
+    </xar:if>
+
+</xar:template>

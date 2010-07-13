@@ -1,0 +1,72 @@
+div.missing {
+	margin: 10px 0 16px 0;
+}
+span.missing {
+font-weight: bold;
+}
+span.xar-error {
+color: red;  
+}
+th.titleth {
+width: 22%;
+}
+fieldset {
+}
+fieldset.mod_settings {
+border: none;
+}
+
+.xar-form-input-wrapper {
+clear: both;
+}
+.xar-form-input-wrapper label, .xar-form-input-wrapper input {
+margin: 4px 0 3px 0;
+}
+.xar-form-input-wrapper select {
+margin: 4px 0 4px 0;
+}
+
+#displayfile {
+}
+td.left {
+width: 100px;
+font-weight: bold;
+color: #777;
+}
+
+.allowed_types {
+margin: 4px 0 14px 20px;
+}
+
+.fhidden {
+display: none;
+}
+
+.staticinput {
+border: none;
+margin-left: 
+}
+
+.formurl {
+background-color: #fff;
+padding: 2px;
+}
+
+#viewfiles {
+margin: 20px 0 0 0;
+}
+.fileitem span {
+padding: 2px;
+background-color: #fff;
+border: 1px solid #ddd;
+}
+#viewfiles a {
+text-decoration: none;
+}
+#viewfiles a:hover span {
+background-color: blue;
+color: white;
+}
+#viewfiles img {
+margin-top: 2px;
+}

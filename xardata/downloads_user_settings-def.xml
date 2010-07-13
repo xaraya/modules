@@ -1,0 +1,24 @@
+<object name="downloads_user_settings">
+  <objectid>17</objectid>
+  <label>User Settings For Downloads</label>
+  <module_id>182</module_id>
+  <itemtype>11</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:0:{}</config>
+  <isalias>false</isalias>
+  <properties>
+    <property name="items_per_page">
+      <id>107</id>
+      <label>Items per page</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: downloads</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+  </properties>
+</object>
