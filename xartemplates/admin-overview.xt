@@ -19,6 +19,7 @@
                 <xar:set name="inactivetab">'xar-tab'</xar:set>
                 <xar:set name="inactivelink">'xar-norm xar-norm-outline'</xar:set>
 
+		
                 <xar:set name="tabclass">empty($tab)?$activetab:$inactivetab</xar:set>
                 <xar:set name="linkclass">empty($tab)?$activelink:$inactivelink</xar:set>
                 <li class="#$tabclass#">
@@ -43,12 +44,19 @@
                     <a href="#xarServer::getCurrentUrl(array('tab' => 'urls'))#" title="#xarML('Short URLs')#" class="#$linkclass#">
                    Short URLs</a>
                 </li>
-		
+	
 		<xar:set name="tabclass">$tab=='filters'?$activetab:$inactivetab</xar:set>
                 <xar:set name="linkclass">$tab=='filters'?$activelink:$inactivelink</xar:set>
                 <li class="#$tabclass#">
                     <a href="#xarServer::getCurrentUrl(array('tab' => 'filters'))#" title="#xarML('Filters')#" class="#$linkclass#">
                    Filters</a>
+                </li>
+
+		<xar:set name="tabclass">$tab=='reqs'?$activetab:$inactivetab</xar:set>
+                <xar:set name="linkclass">$tab=='reqs'?$activelink:$inactivelink</xar:set>
+                <li class="#$tabclass#">
+                    <a href="#xarServer::getCurrentUrl(array('tab' => 'reqs'))#" title="#xarML('Requirements')#" class="#$linkclass#">
+                    Requirements</a>
                 </li>
 
 	</ul>
@@ -90,6 +98,19 @@
 <h3>Filters</h3>
 
 <p>To add filters to the admin interface, install the <a href="http://www.xaraya.com/index.php/release/eid/1154">Filters module</a>&#160;<img src="#sys::code()#modules/downloads/xarimages/exit.png" height="10" width="10" />, and then enable it in the <a href="#xarmodurl('downloads','admin','modifyconfig')#">Modify Config page</a>.  Filters let you filter records by Title or Filename and filter files by Location or Filename.</p>
+
+<xar:elseif condition="$tab eq 'reqs'" />
+
+<h3>Requirements</h3>
+
+<ul>
+<li>
+Xaraya 2.1.0 or later.
+</li>
+<li>
+A standards-compliant browser.  The showinput-upload.xt template has been tested in Firefox 3x and Chrome.  It will not work in IE7 or earlier.  It should work in IE8 in "standards mode."   
+</li>
+</ul>
 
 </xar:if>
 

@@ -2,9 +2,9 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
  
-    <xar:if condition="!empty($value) and !($clear)">
+    <xar:if condition="!empty($value)">
 
-		<!-- we're using a hidden field to keep track of any previously uploaded file -->
+		<!-- we're using a hidden field to keep track of any previously uploaded file here -->
 	       <span id="#$id#_text">Uploaded file:
 		#$value#
 

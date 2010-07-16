@@ -33,11 +33,6 @@ function downloads_admin_modify()
 
 	$data['itemid'] = $itemid;
 
-	//$instance = $itemid.':'.'downloads'.':'.xarUserGetVar('id');
-	if (!xarSecurityCheck('EditDownloads',0)) {
-		return;
-	}
-
 	sys::import('modules.dynamicdata.class.properties.master');    sys::import('modules.dynamicdata.class.objects.master');
 
     // Get the object we'll be working with
@@ -46,16 +41,20 @@ function downloads_admin_modify()
 
 	$properties = $object->getProperties();
 	$data['locpropid'] = $properties['location']->id;
-
-	if (!$data['confirm']) {
-		$object->getItem(array('itemid' => $itemid));
-		$data['filename'] = $object->properties['filename']->value;
-		$data['location'] = $object->properties['location']->value;
+	
+	$object->getItem(array('itemid' => $itemid));
+	$data['filename'] = $object->properties['filename']->value;
+	if (strstr($data['filename'],'.')) {
+		$parts = explode('.',$data['filename']);
+		$ext = end($parts);
 	} else {
-		$object->getItem(array('itemid' => $itemid));
-		$data['filename'] = $object->properties['filename']->value;
-		$data['location'] = $object->properties['location']->value;
+		$ext = '';
 	}
+	$instance = $itemid.':'.$ext.':'.xarUserGetVar('id');
+	if (!xarSecurityCheck('EditDownloads',0,'Record',$instance)) {
+		return;
+	}
+	$data['location'] = $object->properties['location']->value;
 
 	$object->properties['filename']->initialization_basedirectory = $data['location'];
 
