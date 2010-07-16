@@ -29,6 +29,12 @@
 			 bytes = #$maxmb# megabytes
 	     </div>
 
+	     <xar:set name="name">'auto_approve_privilege'</xar:set>
+	    <div class="xar-form-input-wrapper">
+			<xar:data-label property="$properties[$name]" for="id" />       
+			<xar:data-input property="$properties[$name]" /> 
+	     </div>
+
 	     <xar:set name="name">'show_xarmodurl'</xar:set>
 	    <div class="xar-form-input-wrapper">
 			<xar:data-label property="$properties[$name]" for="id" />       

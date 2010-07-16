@@ -54,19 +54,31 @@
 						
 						#$val#
 					</td>
-					
-					<td>	
-					<xar:set name="fileitems">
-					xarMod::apiFunc('downloads','admin','getfileitems',
-						array('location' => $key, 'file' => $val, 'linkslist' => true))
-					</xar:set>
 
-					<xar:if condition="$fileitems">
-					#$fileitems#
-					<xar:else />
-					<a href="#xarModURL('downloads','admin','add',array('location' => $key, 'filename' => $val))#">
-					<img src="#sys::code()#/modules/base/xarimages/icons/add.png" height="16" width="16" /></a>
-					</xar:if>
+					<td>
+
+	<xar:if condition="strstr($val,'.')">
+		<xar:set name="parts">explode('.',$val)</xar:set>
+		<xar:set name="ext">end($parts)</xar:set>
+	<xar:else />
+		<xar:set name="ext">''</xar:set>
+	</xar:if>
+	
+	<xar:set name="instance">'All:'.$ext.':All'</xar:set>
+					
+	<xar:if condition="xarSecurityCheck('EditDownloads',0,'Record',$instance)">
+		<xar:set name="fileitems">
+		xarMod::apiFunc('downloads','admin','getfileitems',
+			array('location' => $key, 'file' => $val, 'linkslist' => true))
+		</xar:set>
+		
+		<xar:if condition="$fileitems">
+			#$fileitems#
+		<xar:elseif condition="xarSecurityCheck('AddDownloads',0,'Record',$instance)" />
+			<a href="#xarModURL('downloads','admin','add',array('location' => $key, 'filename' => $val))#">
+			<img src="#sys::code()#/modules/base/xarimages/icons/add.png" height="16" width="16" /></a>
+		</xar:if>
+	</xar:if>
 					
 					</td>
 

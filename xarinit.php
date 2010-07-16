@@ -77,6 +77,7 @@ function downloads_init()
 	xarModVars::set('downloads','file_directories','../downloads_module_files');
 	xarModVars::set('downloads','file_extensions','gif, jpg, jpeg, png, pdf, doc, txt');
 	xarModVars::set('downloads','maximum_filesize','1000000');
+	xarModVars::set('downloads','auto_approve_privilege','Administration');
 	xarModVars::set('downloads','admin_list_locations','1');
 	xarModVars::set('downloads','admin_list_fncharlimit','30');
 	xarModVars::set('downloads','enable_filters',true);
@@ -144,6 +145,7 @@ function downloads_init()
     //And standard masks for the rest - keep names the same as any prior so minimal sec checks in templates still work
     xarRegisterMask('ViewDownloads',    'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadDownloads',    'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_READ');
+	xarRegisterMask('SubmitDownloads',    'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_COMMENT');
     xarRegisterMask('EditDownloads',    'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_EDIT');
     xarRegisterMask('AddDownloads',     'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_ADD');
     xarRegisterMask('DeleteDownloads',  'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_DELETE');

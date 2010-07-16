@@ -27,7 +27,7 @@ function downloads_admin_add()
 		$ext = '';
 	}
 
-	$instance = $itemid.':'.$ext.':'.xarUserGetVar('id');
+	$instance = 'All:'.$ext.':'.xarUserGetVar('id');
 	if (!xarSecurityCheck('AddDownloads',0,'Record',$instance)) {
 		return;
 	}

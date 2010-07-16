@@ -68,6 +68,7 @@
 
 <p>Records assign a title, description and URL to a file.  There are two ways to create a record:<br /><br />&#160; (1) Use the <a href="#xarmodurl('downloads','admin','new')#">Add New</a> page; or<br/>&#160; (2) Go to the <a href="#xarmodurl('downloads','admin','files')#">View Files</a> page and click the <img src="#sys::code()#modules/base/xarimages/icons/add.png" height="16" width="16" /> icon for a file that doesn't already have a record.</p>
 <p>You can have multiple records for the same file, but each record refers to only one file.</p>
+<p>Records are auto-approved for users who have Add-level privileges.  For users with less than Add-level privileges, the "Auto-approve privilege" setting in the Modify Config page comes into play.  In the "Auto-approve privilege" text box, enter the name of a privilege.  Uploads will be auto-approved for any user who has that particular privilege.  By default the field is set to "Administration."</p>
 
 <xar:elseif condition="$tab eq 'files'" />
 

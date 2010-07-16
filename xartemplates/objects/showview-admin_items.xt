@@ -113,12 +113,20 @@
 		    <td valign="top"><xar:if condition="!file_exists($fields['location'].'/'.$fields['filename'])"><span class="xar-error">no</span><xar:else />yes</xar:if></td>
                         <td valign="top">
 
-<xar:if condition="xarSecurityCheck('EditDownloads',0)"> 
+<xar:if condition="strstr($fields['filename'],'.')">
+	<xar:set name="parts">explode('.',$fields['filename'])</xar:set>
+	<xar:set name="ext">end($parts)</xar:set>
+<xar:else />
+	<xar:set name="ext">''</xar:set>
+</xar:if>
+
+<xar:set name="instance">'All:'.$ext.':All'</xar:set>
+
+<xar:if condition="xarSecurityCheck('EditDownloads',0,'Record',$instance)"> 
 	<a href="#xarModURL('downloads','admin','modify', array('itemid' => $itemid))#"><img src="#sys::code()#modules/base/xarimages/icons/modify.png" width="16" height="16" alt="Edit" /></a>  
 </xar:if>   
 
-<xar:comment><xar:set name="instance">$itemid.':'.$ctype.':'.xarUserGetVar('id')</xar:set></xar:comment>
-<xar:if condition="xarSecurityCheck('DeleteDownloads',0)"> 
+<xar:if condition="xarSecurityCheck('DeleteDownloads',0,'Record',$instance)"> 
 	&amp;nbsp;  <a href="#xarModURL('downloads','admin','delete', array('itemid' => $itemid))#"><img src="#sys::code()#modules/base/xarimages/icons/delete.png" width="16" height="16" alt="Delete" /></a>
 </xar:if>
 

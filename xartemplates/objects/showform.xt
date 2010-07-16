@@ -26,11 +26,15 @@
 	<xar:data-input property="$properties[$field]" />
      </div>
 
-      <div class="xar-form-input-wrapper">
-	<xar:set name="field">'status'</xar:set>
-	<xar:data-label property="$properties[$field]" for="id" />
-	<xar:data-input property="$properties[$field]" />
-     </div>
+      <xar:if condition="$_GET['func'] eq 'modify'">
+	      <div class="xar-form-input-wrapper">
+		<xar:set name="field">'status'</xar:set>
+		<xar:data-label property="$properties[$field]" for="id" />
+		<xar:data-input property="$properties[$field]" />
+	     </div>
+     <xar:else />
+	<input name="status" type="hidden" value="0" />
+     </xar:if>
 
      <div class="xar-form-input-wrapper">
 	<xar:set name="field">'location'</xar:set>

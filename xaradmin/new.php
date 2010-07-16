@@ -69,7 +69,7 @@ function downloads_admin_new()
 			}
 
 			$instance = 'All:'.$ext.':'.xarUserGetVar('id');
-			if (!xarSecurityCheck('AddDownloads',0,'Record',$instance)) {
+			if (!xarSecurityCheck('SubmitDownloads',0,'Record',$instance)) {
 				return;
 			}
 
@@ -83,6 +83,22 @@ function downloads_admin_new()
 
 			//$object->properties['title']->checkInput();
 			$title = $object->properties['title']->getValue();
+
+			//For starters, set the status to submitted
+			$object->properties['status']->setValue(0);
+
+			$instance = 'All:'.$ext.':'.xarUserGetVar('id');
+			//If we have Add-level privs, set the status to approved
+			if (xarSecurityCheck('AddDownloads',0,'Record',$instance)) {
+				$object->properties['status']->setValue(2);
+			} else {
+				//We don't have Add-level privs, so check for auto approval
+				$trustedpriv = xarModVars::get('downloads','auto_approve_privilege');
+				$trustedpriv = trim($trustedpriv);
+				if (!empty($trustedpriv) && xarModAPIFunc('roles','user','checkprivilege', array('id' => xarUserGetVar('id'), 'privilege' => $trustedpriv))) {
+					$object->properties['status']->setValue(2);
+				} 
+			}
 
 			if (empty($title)) {
 				// We want some spaces in titles so the admin view doesn't get distorted
