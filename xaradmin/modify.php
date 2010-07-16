@@ -7,8 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Downloads Module
- * @link http://www.xaraya.com/index.php/release/eid/1152
+ * @subpackage downloads
+ * @link http://www.xaraya.com/index.php/release/19741.html
  * @author potion <ryan@webcommunicate.net>
  */
 /**
@@ -74,7 +74,20 @@ function downloads_admin_modify()
         if (!$isvalid) {
             return xarTplModule('downloads','admin','modify', $data);              
         } else {
-            // Good data: update the item
+			$filename = $object->properties['filename']->getValue();
+			if (strstr($filename,'.')) {
+				$parts = explode('.',$filename);
+				$ext = end($parts);
+			} else {
+				$ext = '';
+			}
+
+			$instance = $itemid.':'.$ext.':'.xarUserGetVar('id');
+			if (!xarSecurityCheck('EditDownloads',0,'Record',$instance)) {
+				return;
+			}
+
+			$object->properties['filetype']->setValue($ext);
             $object->updateItem(array('itemid' => $itemid));
 
 			if (isset($saveedit)) {

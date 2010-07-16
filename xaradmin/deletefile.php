@@ -6,7 +6,17 @@ function downloads_admin_deletefile() {
     if(!xarVarFetch('location',       'str',    $location,   NULL, XARVAR_DONT_SET)) {return;}
 	if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
 
-	if (!xarSecurityCheck('DeleteDownloads',0)) return;
+	if (strstr($file,'.')) {
+		$parts = explode('.',$file);
+		$ext = end($parts);
+	} else {
+		$ext = '';
+	}
+
+	$instance = $ext; 
+	if (!xarSecurityCheck('DeleteDownloadsFiles',0,'File',$instance)) {
+		return;
+	}
 
 	$data['file'] = $file;
 	$data['location'] = $location;

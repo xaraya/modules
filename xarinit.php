@@ -27,6 +27,7 @@ function downloads_init()
 
     $prefix = xarDB::getPrefix();
     $tables['downloads'] = $prefix . '_downloads';
+	$tables['downloads_ft_instances'] = $prefix . '_downloads_ft_instances';
 
     // Create tables inside a transaction
     try {
@@ -36,13 +37,20 @@ function downloads_init()
         $fields = array(
                         'itemid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
                         'title' => array('type' => 'varchar','size' => 254,'null' => false, 'charset' => $charset),
-						'ext' => array('type' => 'varchar','size' => 4,'null' => false, 'charset' => $charset),
+						'ext' => array('type' => 'varchar','size' => 10,'null' => false, 'charset' => $charset),
 						'description' => array('type' => 'text', 'null' => false, 'charset' => $charset),
 			'status' => array('type' => 'varchar', 'size' => 1, 'null' => false, 'charset' => $charset),
 						'filename' => array('type' => 'varchar','size' => 254,'null' => false, 'charset' => $charset),
 						'location' => array('type' => 'varchar','size' => 254, 'null' => false, 'charset' => $charset)
 			);
         $query = xarDBCreateTable($tables['downloads'],$fields);
+        $dbconn->Execute($query);
+
+		$fields = array(
+                        'itemid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+						'ext' => array('type' => 'varchar','size' => 10,'null' => false, 'charset' => $charset) 
+			);
+        $query = xarDBCreateTable($tables['downloads_ft_instances'],$fields);
         $dbconn->Execute($query);
 
         // We're done, commit
@@ -56,7 +64,8 @@ function downloads_init()
     $objects = array(
                 'downloads',
 				'downloads_module_settings',
-				'downloads_user_settings'
+				'downloads_user_settings',
+				'downloads_ft_instances'
                 );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;    
@@ -108,28 +117,39 @@ function downloads_init()
 						),
 						array(
 							'header' => 'File Type:',
-							'query' => "SELECT DISTINCT ext FROM " . $prefix . "_downloads",
+							'query' => "SELECT DISTINCT ext FROM " . $prefix . "_downloads_ft_instances ORDER BY ext ASC",
 							'limit' => 20
 						),
 						array(
 							'header' => 'Contributor:',
-							'query' => "SELECT DISTINCT uid FROM " . $prefix . "_roles",
+							'query' => "SELECT DISTINCT id FROM " . $prefix . "_roles",
 							'limit' => 20
 						)
                     );
-    xarDefineInstance('downloads', 'Item', $instances);
+    xarDefineInstance('downloads', 'Record', $instances);
+
+    $instances = array(
+						array(
+							'header' => 'File Type:',
+							'query' => "SELECT DISTINCT ext FROM " . $prefix . "_downloads_ft_instances ORDER BY ext ASC",
+							'limit' => 20
+						)
+                    );
+    xarDefineInstance('downloads', 'File', $instances);
 
 # --------------------------------------------------------
 #
 # Register masks
 #
     //And standard masks for the rest - keep names the same as any prior so minimal sec checks in templates still work
-    xarRegisterMask('ViewDownloads',    'All', 'downloads', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadDownloads',    'All', 'downloads', 'Item', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('EditDownloads',    'All', 'downloads', 'Item', 'All:All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddDownloads',     'All', 'downloads', 'Item', 'All:All:All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteDownloads',  'All', 'downloads', 'Item', 'All:All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminDownloads',   'All', 'downloads', 'Item', 'All:All:All', 'ACCESS_ADMIN');
+    xarRegisterMask('ViewDownloads',    'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadDownloads',    'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('EditDownloads',    'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddDownloads',     'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteDownloads',  'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminDownloads',   'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_ADMIN');
+
+	xarRegisterMask('DeleteDownloadsFiles',  'All', 'downloads', 'File', 'All', 'ACCESS_DELETE');
 
 # --------------------------------------------------------
 #

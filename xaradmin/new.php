@@ -7,8 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Downloads Module
- * @link http://www.xaraya.com/index.php/release/eid/1152
+ * @subpackage downloads
+ * @link http://www.xaraya.com/index.php/release/19741.html
  * @author potion <ryan@webcommunicate.net>
  */
 /**
@@ -19,8 +19,8 @@ function downloads_admin_new()
 
 	if(!xarVarFetch('objectid',       'id',    $objectid,   NULL, XARVAR_DONT_SET)) {return;} 
 
-	//$instance = 'All:'.'downloads'.':'.xarUserGetVar('id');
-	if (!xarSecurityCheck('AddDownloads',0)) {
+	$instance = 'All:All:'.xarUserGetVar('id');
+	if (!xarSecurityCheck('AddDownloads',0,'Record',$instance)) {
 		return;
 	}
 
@@ -44,7 +44,6 @@ function downloads_admin_new()
         if (!xarSecConfirmAuthKey()) {
             return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
         }        
-
 		
 		$isvalid = $object->properties['location']->checkInput();
 		$location = $object->properties['location']->getValue();
@@ -61,6 +60,20 @@ function downloads_admin_new()
         } else {	
 			
 			$filename = $object->properties['filename']->getValue();
+			
+			if (strstr($filename,'.')) {
+				$parts = explode('.',$filename);
+				$ext = end($parts);
+			} else {
+				$ext = '';
+			}
+
+			$instance = 'All:'.$ext.':'.xarUserGetVar('id');
+			if (!xarSecurityCheck('AddDownloads',0,'Record',$instance)) {
+				return;
+			}
+
+			$object->properties['filetype']->setValue($ext);
 
 			//$object->properties['location']->checkInput();
 			$location = $object->properties['location']->getValue(); 

@@ -7,8 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Downloads Module
- * @link http://www.xaraya.com/index.php/release/eid/1152
+ * @subpackage downloads
+ * @link http://www.xaraya.com/index.php/release/19741.html
  * @author potion <ryan@webcommunicate.net>
  */
 /**
@@ -20,8 +20,15 @@ function downloads_admin_add()
 	if(!xarVarFetch('filename',       'str',    $filename,   NULL, XARVAR_DONT_SET)) {return;}
 	if(!xarVarFetch('location',       'str',    $location,   NULL, XARVAR_DONT_SET)) {return;}
 
-	//$instance = 'All:'.'downloads'.':'.xarUserGetVar('id');
-	if (!xarSecurityCheck('AddDownloads',0)) {
+	if (strstr($filename,'.')) {
+		$parts = explode('.',$filename);
+		$ext = end($parts);
+	} else {
+		$ext = '';
+	}
+
+	$instance = $itemid.':'.$ext.':'.xarUserGetVar('id');
+	if (!xarSecurityCheck('AddDownloads',0,'Record',$instance)) {
 		return;
 	}
 

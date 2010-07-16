@@ -7,8 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Downloads Module
- * @link http://www.xaraya.com/index.php/release/eid/1152
+ * @subpackage downloads
+ * @link http://www.xaraya.com/index.php/release/19741.html
  * @author potion <ryan@webcommunicate.net>
  */
 /**
@@ -37,8 +37,8 @@ function downloads_admin_delete()
 	$object = DataObjectMaster::getObject(array('name' => 'downloads'));
 	$object->getItem(array('itemid' => $itemid));
 	
-	//$instance = $itemid.':'.'downloads'.':'.xarUserGetVar('id');
-    if (!xarSecurityCheck('DeleteDownloads',1)) {
+	$instance = $itemid.':'.$ext.':'.xarUserGetVar('id');
+    if (!xarSecurityCheck('DeleteDownloads',1,'Record',$instance)) {
 		return;
 	}
 

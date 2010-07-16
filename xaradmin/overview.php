@@ -7,8 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Downloads Module
- * @link http://www.xaraya.com/index.php/release/eid/1152
+ * @subpackage downloads
+ * @link http://www.xaraya.com/index.php/release/19741.html
  * @author potion <ryan@webcommunicate.net>
  */
 /**
@@ -21,7 +21,7 @@
 function downloads_admin_overview()
 {
    /* Security Check */
-   	if (!xarSecurityCheck('ViewDownloads',1,'Item')) {
+   	if (!xarSecurityCheck('ViewDownloads',1,'Record')) {
 		return;
 	}
 
