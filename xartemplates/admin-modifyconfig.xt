@@ -25,39 +25,7 @@
                 <h3>
                     General Options
                 </h3>
-                <fieldset>
-                    <legend>
-                        Page Layout
-                    </legend>
-                    <div class="xar-form-input-wrapper">
-                        <label for="itemsperpage" title="#xarML('Number of items to show on each page.')#" class="xar-form-label">
-                            Items Per Page:
-                        </label>
-                        <xar:set name="value"><xar:var scope="module" module="mailer" name="itemsperpage"/></xar:set>
-                        <input type="text" name="itemsperpage" id="itemsperpage" value="#$value#" maxlength="3" class="xar-form-textshort"/>
-                    </div>
-                    <div class="xar-form-input-wrapper-after">
-                        <xar:set name="checked">xarModVars::get('mailer','SupportShortURLs')</xar:set>
-                        <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$checked"/>
-                        <label for="shorturls" title="#xarML('Enable short URLs for Mailer module')#">
-                            Enable Short URLs
-                        </label>
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
-                            Use a module alias
-                        </label>
-                        <xar:set name="checked">xarModVars::get('mailer','useModuleAlias')</xar:set>
-                        <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked"/>
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
-                                Module Alias Name
-                        </label>
-                        <xar:set name="value"><xar:var scope="module" module="mailer" name="aliasname"/></xar:set>
-                        <input type="text" name="aliasname" id="aliasname" value="#$value#" size="32" maxlength="100"/>
-                    </div>
-                </fieldset>
+                <xar:data-form object="$module_settings"/>
             <xar:else />
                 <h3>
                     <xar:set name="ucname">UCFirst($tabmodule)</xar:set>

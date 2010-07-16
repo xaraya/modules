@@ -25,6 +25,10 @@
             $hooks['tabs'] = array();
         }
 
+        $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'mailer'));
+        $data['module_settings']->setFieldList('items_per_page, use_module_alias, enable_short_urls');
+        $data['module_settings']->getItem();
+
         $regid = xarMod::getRegID($tabmodule);
         switch (strtolower($phase)) {
             case 'modify':
@@ -45,10 +49,6 @@
             case 'update':
                 // Confirm authorisation code
                 if (!xarSecConfirmAuthKey()) return;
-                if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('mailer', 'itemsperpage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-                if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('mailer', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('mailer', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('defaultmastertable',    'str',      $defaultmastertable, xarModVars::get('mailer', 'defaultmastertable'), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('defaultuserobject',    'str',      $defaultuserobject, xarModVars::get('mailer', 'defaultuserobject'), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('defaultmailobject',    'str',      $defaultmailobject, xarModVars::get('mailer', 'defaultmailobject'), XARVAR_NOT_REQUIRED)) return;
@@ -61,6 +61,13 @@
                 if (!xarVarFetch('savetodb',    'checkbox',      $savetodb, xarModVars::get('mailer', 'savetodb'), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('defaultheader_x_mailer', 'str', $defaultheader_x_mailer,  xarModVars::get('mailer', 'defaultheader_x_mailer'), XARVAR_NOT_REQUIRED)) return;
                 
+                $isvalid = $data['module_settings']->checkInput();
+                if (!$isvalid) {
+                    return xarTplModule('dynamicdata','admin','modifyconfig', $data);
+                } else {
+                    $itemid = $data['module_settings']->updateItem();
+                }
+
                 $modvars = array(
                                 'defaultmastertable',
                                 'defaultuserobject',
@@ -76,10 +83,6 @@
                                 );
 
                 if ($data['tab'] == 'mailer_general') {
-                    xarModVars::set('mailer', 'itemsperpage', $itemsperpage);
-                    xarModVars::set('mailer', 'supportshorturls', $shorturls);
-                    xarModVars::set('mailer', 'useModuleAlias', $useModuleAlias);
-                    xarModVars::set('mailer', 'aliasname', $aliasname);
                     foreach ($modvars as $var) if (isset($$var)) xarModVars::set('mailer', $var, $$var);
                 }
                 foreach ($modvars as $var) if (isset($$var)) xarModItemVars::set('mailer', $var, $$var, $regid);
