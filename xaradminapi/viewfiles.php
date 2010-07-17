@@ -23,11 +23,16 @@ function downloads_adminapi_viewfiles($args)
 	$filefilter = '';
 	$sort = 'loc';
 
+	$basepath = xarMod::apiFunc('downloads','admin','getbasepath');
+	
 	extract($args); 
  
 	foreach ($locations as $key => $loc) {
 
-		if (empty($locfilter) || stristr($loc, $locfilter)) {
+		// We don't want the basepath to affect filtering
+		$safeloc = str_replace($basepath,'',$loc);
+
+		if (empty($locfilter) || stristr($safeloc, $locfilter)) {
 
 			if (is_dir($loc) && $handle = opendir($loc)) {
 				/* This is the correct way to loop over the directory. */

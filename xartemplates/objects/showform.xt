@@ -40,7 +40,11 @@
 	<xar:set name="field">'location'</xar:set>
 	<xar:data-label property="$properties[$field]" for="id" />
 	<xar:if condition="$_GET['func'] eq 'modify'">
-		<xar:data-output property="$properties[$field]" /> 
+		<xar:set name="basepath">
+			xarMod::apiFunc('downloads','admin','getbasepath')
+		</xar:set>
+		<xar:set name="locoutput">str_replace($basepath,'',$properties['location']->value)</xar:set>
+		#$locoutput#
 		<xar:data-input property="$properties[$field]" style="display:none" />
 	<xar:else />
 		<xar:data-input property="$properties[$field]" />

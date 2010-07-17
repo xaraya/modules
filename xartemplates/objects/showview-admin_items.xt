@@ -2,6 +2,10 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
+<xar:set name="basepath">
+	xarMod::apiFunc('downloads','admin','getbasepath')
+</xar:set>
+
 <xar:if condition="!empty($items)">		
 
         <table class="xar-norm">
@@ -98,7 +102,13 @@
 					<xar:set name="class">''</xar:set>
 				</xar:if>
 	
-					<td valign="top" class="#$class#"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></td>
+					<td valign="top" class="#$class#">
+			<xar:set name="safeloc">
+				str_replace($basepath,'',$fields['location'])
+			</xar:set>
+			#$safeloc#
+
+					</td>
 				
 
 			<xar:else />

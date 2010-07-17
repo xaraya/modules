@@ -54,7 +54,7 @@ function downloads_admin_files()
 		}
 	}
 
-	$data['locstartval'] = 'Location';
+	$data['locstartval'] = 'Directory';
 	$data['filestartval'] = 'Filename';
 
 	$unfiltered = xarMod::apiFunc('downloads','admin','viewfiles', array('locations' => $locations, 'sort' => $sort));

@@ -5,6 +5,10 @@
     <xar:style scope="module" module="base" file="tabs" />
     <xar:style scope="module" module="downloads" file="downloads" />
 
+	<xar:set name="basepath">
+		xarMod::apiFunc('downloads','admin','getbasepath')
+	</xar:set>
+
     <div class="xar-mod-head">
       <span class="xar-mod-title">Downloads Administration</span>
     </div>
@@ -36,7 +40,7 @@
 			<div id="viewfiles">
 			<table>
 				<tr>
-				<th>Location</th>
+				<th>Directory</th>
 				<th>Filename</th>
 				<th>Records</th>
 				<th>Delete File</th>
@@ -47,8 +51,10 @@
 					<td>
 					<xar:set name="pos">strpos($key,';')</xar:set>
 					<xar:set name="key">substr($key,0,$pos)</xar:set>
+					<xar:set name="key">substr($key,0,$pos)</xar:set>
+					<xar:set name="safekey">str_replace($basepath,'',$key)</xar:set>
 					
-						#$key#
+						#$safekey#
 					</td>
 					<td>	
 						
