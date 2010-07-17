@@ -37,9 +37,6 @@ function downloads_userapi_decode_shorturl($params)
 	if (is_numeric($params[1])) {
 		$func = 'getfile';
 		$args['itemid'] = $params[1];
-	} elseif ($params[1] == 'display' && is_numeric($params[2])) {
-		$func = 'display';
-		$args['itemid'] = $params[2];
 	}
 
 	return array($func, $args);  

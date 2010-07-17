@@ -4,10 +4,12 @@
 
 function downloads_userapi_getfile($args) {
 
-	extract($args);
-
 	if (!xarSecurityCheck('ReadDownloads',0)) return;
+	
+	extract($args);
 	 
+	if ($fullPath == '/') return false;
+
 	if ($fd = fopen ($fullPath, "rb")) {
 	 
 		$fsize = filesize($fullPath);

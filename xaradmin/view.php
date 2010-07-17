@@ -25,7 +25,7 @@ function downloads_admin_view()
 	$data['filter'] = $filter;
 
 	$instance = 'All:All:All';
-	if (!xarSecurityCheck('ViewDownloads',1,'Record',$instance)) {
+	if (!xarSecurityCheck('EditDownloads',1)) {
 		return;
 	}
 

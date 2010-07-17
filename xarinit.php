@@ -74,7 +74,7 @@ function downloads_init()
 #
 # Set up configuration modvars (module specific)
 #
-	xarModVars::set('downloads','file_directories','../downloads_module_files');
+	xarModVars::set('downloads','file_directories','downloads_module_files');
 	xarModVars::set('downloads','file_extensions','gif, jpg, jpeg, png, pdf, doc, txt');
 	xarModVars::set('downloads','maximum_filesize','1000000');
 	xarModVars::set('downloads','auto_approve_privilege','Administration');

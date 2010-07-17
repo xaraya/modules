@@ -80,11 +80,32 @@
 
 <h3>Set Your File Directories</h3>
 
-<p>In the <a href="#xarmodurl('downloads','admin','modifyconfig')#">Modify Config page</a>, set your file directories.  In the "File Directories" field, enter the relative paths one per line or in a comma-separated list.</p>
+<p>In the <a href="#xarmodurl('downloads','admin','modifyconfig')#">Modify Config page</a>, set your file directories.  In the "File Directories" field, enter the directory names one per line or in a comma-separated list.  Enter only the directory names and not the path to the directory.  For better security, the downloads module will ignore any characters that could be used to traverse the filesystem, such as periods and slashes.</p>
 
-<p>It is recommended that you use directories that are not web-accessible.  That way, your site visitors will not be able to download the files other than via the URLs you create and according to the privileges you set in Xaraya.</p>
+<p>The downloads module does not create any directories.  You should set your file directories to directories you've created on the server.</p>
 
-<p>The downloads module does not create directories.  You should set your file directories to directories you've created on the server.</p>
+<h4>Where to locate the file directories?</h4>
+
+<p>By default, the downloads module expects the directories to be located outside  your html directory and at the same level as your html directory.  Optionally, this relative location can be changed by adding a line to your website's config.system.php file like so...</p>
+
+<blockquote>$systemConfiguration['downloads.basepath'] = '../';</blockquote>
+
+<p>There would, however, be no purpose in setting the path to '../', because that is the default location used by the downloads module if no downloads.basepath is set in config.system.php.</p>
+
+<p>Because the downloads module can overwrite files, it is crucial that you not set the basepath to anything that will give users the ability to modify files that are important to the basic functionality of Xaraya or other scripts on your server.  The absolute <strong>worst</strong> thing you could do would be to point the downloads.basepath to your <strong>var</strong> directory.  If you did that, and someone got a hold of your admin password -- or any login with admin privileges for the downloads module -- they could change the settings in the downloads module to allow for uploading php files, and they could potentially modify your config.system.php file.  Subsequently, by altering the downloads.basepath in your config.system.php file, they might thenceforth be able to modify important files in just about any part of your filesystem.  Thus, the safest* thing may be to not set a downloads.basepath at all in config.system.php, and instead put your file directories outside of, and at the same level as, your html directory.</p> 
+
+<p>You should <strong>not</strong> put your file directories anywhere <strong>inside</strong> your html directory, because that would greatly increase the chances that someone could upload and run malicious scripts.</p>
+
+_______________________________________
+<p>*Though it would perhaps be safer yet to create a directory with a complicated and difficult-to-guess name and put it outside your html directory, giving you a directory layout something like this...</p>
+
+<blockquote>&amp;#60;installdirectory&#62;/html<br />
+&amp;#60;installdirectory&#62;/developer<br />
+&amp;#60;installdirectory&#62;/upgrades<br />
+&amp;#60;installdirectory&#62;/mycomplicateddir3432xth9g</blockquote>
+
+<p>Then you could set your downloads.basepath to ../mycomplicateddir3432xth9g/ and create your file directories inside of mycomplicateddir3432xth9g.
+You would also want to put a blank index.html file alongside mycomplicateddir3432xth9g just on the off chance that someone gets web access to the Xaraya install directory.  The index.html file would make it impossible to read the contents of Xaraya install directory.</p>
 
 <xar:elseif condition="$tab eq 'urls'" />
 

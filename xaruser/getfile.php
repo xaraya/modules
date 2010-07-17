@@ -36,11 +36,8 @@ function downloads_user_getfile($args) {
 		$instance = $itemid.':'.$ext.':'.xarUserGetVar('id');
 		if (!xarSecurityCheck('ReadDownloads',1,'Record',$instance)) return;
 
-		$location = $location . '/';
-		$location = str_replace('//','/', $location);
-
 		xarMod::apiFunc('downloads','user','getfile',array(
-			'fullPath' => $location . $filename
+			'fullPath' => $location . '/' . $filename
 			));
 
 		return;

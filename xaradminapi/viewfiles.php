@@ -24,7 +24,7 @@ function downloads_adminapi_viewfiles($args)
 	$sort = 'loc';
 
 	extract($args); 
-
+ 
 	foreach ($locations as $key => $loc) {
 
 		if (empty($locfilter) || stristr($loc, $locfilter)) {

@@ -36,6 +36,15 @@ function downloads_admin_delete()
 	// Get the object name
 	$object = DataObjectMaster::getObject(array('name' => 'downloads'));
 	$object->getItem(array('itemid' => $itemid));
+
+	$filename = $object->properties['filename']->value;
+
+	if (strstr($filename,'.')) {
+		$parts = explode('.',$filename);
+		$ext = end($parts);
+	} else {
+		$ext = '';
+	}
 	
 	$instance = $itemid.':'.$ext.':'.xarUserGetVar('id');
     if (!xarSecurityCheck('DeleteDownloads',1,'Record',$instance)) {
