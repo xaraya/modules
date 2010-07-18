@@ -110,10 +110,12 @@
 
                     </xar:foreach>
 
-
+<xar:set name="basepath">
+	xarMod::apiFunc('downloads','admin','getbasepath')
+</xar:set>
 
                     <xar:if condition="empty($linkfield)">
-		    <td valign="top"><xar:if condition="!file_exists($fields['basepath'] . $fields['directory'].'/'.$fields['filename'])"><span class="xar-error">no</span><xar:else />yes</xar:if></td>
+		    <td valign="top"><xar:if condition="!file_exists($basepath . $fields['directory'].'/'.$fields['filename'])"><span class="xar-error">no</span><xar:else />yes</xar:if></td>
                         <td valign="top">
 
 <xar:if condition="strstr($fields['filename'],'.')">

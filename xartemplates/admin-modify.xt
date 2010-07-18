@@ -18,8 +18,10 @@
         </xar:if>
 
 	<p align="right" style="margin-top: -30px"><a href="#xarModURL('downloads','admin','delete', array('itemid' => $itemid))#" style="color:red">Delete Record</a></p>
+
+	<xar:set name="bp">'&amp;#60;yourbasepath>'</xar:set>
 	<xar:if condition="!file_exists($basepath . $directory . '/' . $filename)">
-		<div class="missing">The file for this record was not found: <span class="missing">#$directory#/#$filename#</span></div>
+		<div class="missing">No file exists at #$bp##$directory#/#$filename#</div>
 		<xar:set name="clear">true</xar:set>
 	<xar:else />
 		<xar:set name="clear">false</xar:set>

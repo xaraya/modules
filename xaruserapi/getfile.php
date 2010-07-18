@@ -7,6 +7,8 @@ function downloads_userapi_getfile($args) {
 	if (!xarSecurityCheck('ReadDownloads',0)) return;
 	
 	extract($args);
+
+	$fullPath = $basepath . $directory . '/' . $filename;
 	 
 	if ($fullPath == '/') return false;
 

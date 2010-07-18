@@ -44,7 +44,7 @@ function downloads_admin_modify()
 	
 	$object->getItem(array('itemid' => $itemid));
 	$data['filename'] = $object->properties['filename']->value;
-	$data['basepath'] = $object->properties['basepath']->value;
+	$data['basepath'] = xarMod::apiFunc('downloads','admin','getbasepath');
 	if (strstr($data['filename'],'.')) {
 		$parts = explode('.',$data['filename']);
 		$ext = end($parts);

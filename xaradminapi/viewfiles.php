@@ -47,7 +47,7 @@ function downloads_adminapi_viewfiles($args)
 
 		}
 	}
-	
+
 	if (isset($files) && $sort == 'dir') {
 		xarMod::apiFunc('downloads','admin','natksort',array('arr2sort' => $files));
 		return $files;

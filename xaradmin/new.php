@@ -84,9 +84,6 @@ function downloads_admin_new()
 			//$object->properties['title']->checkInput();
 			$title = $object->properties['title']->getValue();
 
-			$basepath = xarMod::apiFunc('downloads','admin','getbasepath');
-			$object->properties['basepath']->setValue($basepath);
-
 			//For starters, set the status to submitted
 			$object->properties['status']->setValue(0);
 

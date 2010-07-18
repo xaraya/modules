@@ -38,7 +38,9 @@ function downloads_user_getfile($args) {
 
 		$basepath = xarMod::apiFunc('downloads','admin','getbasepath');
 		xarMod::apiFunc('downloads','user','getfile',array(
-			'fullPath' => $basepath . $directory . '/' . $filename
+			'basepath' => $basepath,
+			'directory' => $directory,
+			'filename' => $filename
 			));
 
 		return;

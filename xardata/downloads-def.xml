@@ -1,5 +1,5 @@
 <object name="downloads">
-  <objectid>87</objectid>
+  <objectid>95</objectid>
   <label>Downloads Items</label>
   <module_id>19741</module_id>
   <itemtype>1</itemtype>
@@ -11,7 +11,7 @@
   <isalias>true</isalias>
   <properties>
     <property name="itemid">
-      <id>460</id>
+      <id>502</id>
       <label>Itemid</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration></configuration>
     </property>
     <property name="title">
-      <id>461</id>
+      <id>503</id>
       <label>Title</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -31,7 +31,7 @@
       <configuration></configuration>
     </property>
     <property name="description">
-      <id>462</id>
+      <id>504</id>
       <label>Description</label>
       <type>textarea_medium</type>
       <defaultvalue></defaultvalue>
@@ -41,7 +41,7 @@
       <configuration></configuration>
     </property>
     <property name="status">
-      <id>463</id>
+      <id>505</id>
       <label>Status</label>
       <type>dropdown</type>
       <defaultvalue>2</defaultvalue>
@@ -51,7 +51,7 @@
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:34:"0,Submitted;1,Rejected;2,Approved;";}</configuration>
     </property>
     <property name="filetype">
-      <id>464</id>
+      <id>506</id>
       <label>File Type</label>
       <type>hidden</type>
       <defaultvalue></defaultvalue>
@@ -61,7 +61,7 @@
       <configuration></configuration>
     </property>
     <property name="filename">
-      <id>465</id>
+      <id>507</id>
       <label>File</label>
       <type>upload</type>
       <defaultvalue></defaultvalue>
@@ -71,7 +71,7 @@
       <configuration>a:7:{s:12:"display_size";s:2:"40";s:14:"display_layout";s:7:"default";s:24:"validation_max_file_size";s:7:"1000000";s:21:"validation_min_length";s:1:"1";s:26:"validation_file_extensions";s:34:"gif, jpg, jpeg, png, pdf, doc, txt";s:27:"validation_allow_duplicates";s:1:"2";s:28:"initialization_basedirectory";s:25:"../downloads_module_files";}</configuration>
     </property>
     <property name="directory">
-      <id>466</id>
+      <id>508</id>
       <label>Directory</label>
       <type>dropdown</type>
       <defaultvalue></defaultvalue>
@@ -79,16 +79,6 @@
       <status>33</status>
       <seq>7</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:52:"xarMod::apiFunc('downloads','user','getdirectories')";}</configuration>
-    </property>
-    <property name="basepath">
-      <id>467</id>
-      <label>Basepath</label>
-      <type>textbox</type>
-      <defaultvalue></defaultvalue>
-      <source>xar_downloads.basepath</source>
-      <status>35</status>
-      <seq>8</seq>
-      <configuration></configuration>
     </property>
   </properties>
 </object>

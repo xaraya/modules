@@ -27,7 +27,7 @@ function downloads_adminapi_getfilerecords($args)
 
 	$list = DataObjectMaster::getObjectList(array(
 							'name' => 'downloads',
-							'where' => 'basepath eq \'' . $basepath . '\' and directory eq \'' . $key . '\' and filename eq \'' . $file
+							'where' => 'directory eq \'' . $key . '\' and filename eq \'' . $file
 							. '\''));
 	$items = $list->getItems();
 	$count = count($items);

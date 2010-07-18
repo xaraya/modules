@@ -31,15 +31,6 @@ function downloads_admin_files()
 	sys::import('modules.dynamicdata.class.objects.master');
 	sys::import('modules.dynamicdata.class.properties.master');
 
-	// Get the object label for the template
-	//$object = DataObjectMaster::getObject(array('name' => 'downloads'));
-	//$data['label'] = $object->label;
-
-	/*$total = DataObjectMaster::getObjectList(array(
-							'name' => 'downloads',
-							));
-	$items = $total->getItems();*/
-
 	$directories = xarMod::apiFunc('downloads','user','getdirectories');
 
 	$locfilter = '';
@@ -58,6 +49,7 @@ function downloads_admin_files()
 	$data['filestartval'] = 'Filename';
 
 	$basepath = xarMod::apiFunc('downloads','admin','getbasepath');
+	
 
 	$unfiltered = xarMod::apiFunc('downloads','admin','viewfiles', array('basepath' => $basepath, 'directories' => $directories, 'sort' => $sort));
 
@@ -83,46 +75,11 @@ function downloads_admin_files()
 		$data['showfilters'] = false;
 	}
 
-	/*$sort = xarMod::apiFunc('downloads','admin','sort', array(
-		//how to sort if the URL or config say otherwise...
-		'object' => $object,
-		'sortfield_fallback' => 'itemid', 
-		'ascdesc_fallback' => 'ASC'
-	));*/
-	//$data['sort'] = $sort;
-
-	/*if (isset($filterfield) && $filter != $filterfield) {
-		$results = DataObjectMaster::getObjectList(array(
-								'name' => 'downloads'
-								));
-		$data['filterfield'] = $filterfield;
-		$filters['where'] = $filterfield . ' LIKE "%' . $data['filter'] . '%"';
-		$items = $results->getItems($filters);
-		// See bug 6536.  For now, do it this way in case we want to add another filterfield.
-		$data['results'] = count($items);
-	}*/
-	
-    /*if (empty($numitems)) {
-        $numitems = xarModVars::get('downloads', 'items_per_page');
-    }*/
-
-	/*$list = DataObjectMaster::getObjectList(array(
-							'name' => 'downloads',
-							'status'    =>DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
-							'startnum'  => $startnum,
-							'numitems'  => $numitems,
-							'sort'      => $sort,
-							'fieldlist' => 'itemid,title,directory,filename'
-							));*/
-
-    /*$data['count'] = $list->countItems();
-    $list->getItems($filters);*/
-    
 	$data['files'] = array();
 	if ($files) {
 		$data['files'] = $files;
 	}
-
+ 
     // Return the template variables defined in this function
     return $data;
 }

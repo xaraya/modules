@@ -54,10 +54,5 @@
      </div>
 
 <xar:data-input property="$properties['filetype']" />
-<xar:set name="basepath">
-	xarMod::apiFunc('downloads','admin','getbasepath')
-</xar:set>
-<xar:data-input property="$properties['basepath']" value="$basepath" />
-
 
 </xar:template>

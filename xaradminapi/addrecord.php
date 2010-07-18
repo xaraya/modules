@@ -33,7 +33,6 @@ function downloads_adminapi_addrecord($args)
 	$filename = str_replace('.',' ',$filename);
 	$object->properties['title']->setValue($filename);
 	$object->properties['status']->setValue($status);
-	$object->properties['basepath']->setValue($basepath);
 
 	$itemid = $object->createItem();
 
