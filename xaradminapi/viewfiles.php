@@ -21,25 +21,24 @@ function downloads_adminapi_viewfiles($args)
 
 	$locfilter = '';
 	$filefilter = '';
-	$sort = 'loc';
-
+	$sort = 'dir';
 
 	extract($args); 
+
+	asort($directories);
  
-	foreach ($locations as $key => $loc) {
+	foreach ($directories as $dir) {
 
-		// We don't want the basepath to affect filtering
-		$locdir = xarMod::apiFunc('downloads','admin','locdir', array('location' => $loc));
+		$loc = $basepath . $dir;
 
-		if (empty($locfilter) || stristr($locdir, $locfilter)) {
+		if (empty($locfilter) || stristr($dir, $locfilter)) {
 
 			if (is_dir($loc) && $handle = opendir($loc)) {
-				/* This is the correct way to loop over the directory. */
 				$num = 1;
 				while (false !== ($file = readdir($handle))) {
 					if (empty($filefilter) || stristr($file, $filefilter)) {
 						if ($file != '.' && $file != '..') {
-							$key = $loc . ';' . $num++;
+							$key = $dir . ';' . $num++;
 							$files[$key] = $file;
 						}
 					}
@@ -49,11 +48,11 @@ function downloads_adminapi_viewfiles($args)
 		}
 	}
 	
-	if (isset($files) && $sort == 'loc') {
-		ksort($files);
+	if (isset($files) && $sort == 'dir') {
+		xarMod::apiFunc('downloads','admin','natksort',array('arr2sort' => $files));
 		return $files;
 	} elseif (isset($files)) { 
-		asort($files);
+		natcasesort($files);
 		return $files;
 	} else {
 		return false;

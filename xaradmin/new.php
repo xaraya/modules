@@ -45,16 +45,16 @@ function downloads_admin_new()
             return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
         }        
 		
-		$isvalid = $object->properties['location']->checkInput();
-		$location = $object->properties['location']->getValue();
+		$isvalid = $object->properties['directory']->checkInput();
+		$directory = $object->properties['directory']->getValue();
 		// Must do this before $object->checkinput()
-		$object->properties['filename']->initialization_basedirectory = $location;
+		$object->properties['filename']->initialization_basedirectory = $directory;
 		
 		$isvalid = $object->checkinput();
 
         if (!$isvalid) {
             // Bad data: redisplay the form with the data we picked up and with error messages
-			$data['location'] = $location;
+			$data['directory'] = $directory;
 			$data['filename'] = $object->properties['filename']->getValue();
             return xarTplModule('downloads','admin','new', $data);             
         } else {	
@@ -75,14 +75,17 @@ function downloads_admin_new()
 
 			$object->properties['filetype']->setValue($ext);
 
-			//$object->properties['location']->checkInput();
-			$location = $object->properties['location']->getValue(); 
+			//$object->properties['directory']->checkInput();
+			$directory = $object->properties['directory']->getValue(); 
 			
 			//$object->properties['description']->checkInput();
 			$object->properties['description']->getValue();
 
 			//$object->properties['title']->checkInput();
 			$title = $object->properties['title']->getValue();
+
+			$basepath = xarMod::apiFunc('downloads','admin','getbasepath');
+			$object->properties['basepath']->setValue($basepath);
 
 			//For starters, set the status to submitted
 			$object->properties['status']->setValue(0);

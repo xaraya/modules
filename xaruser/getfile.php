@@ -23,7 +23,7 @@ function downloads_user_getfile($args) {
 		$object = DataObjectMaster::getObject(array('name' => 'downloads'));
 		$object->getItem(array('itemid' => $itemid));
 		$filename = $object->properties['filename']->getValue();
-		$location = $object->properties['location']->getValue();
+		$directory = $object->properties['directory']->getValue();
 		$status = $object->properties['status']->getValue();
 
 		if (strstr($filename,'.')) {
@@ -36,8 +36,9 @@ function downloads_user_getfile($args) {
 		$instance = $itemid.':'.$ext.':'.xarUserGetVar('id');
 		if (!xarSecurityCheck('ReadDownloads',1,'Record',$instance)) return;
 
+		$basepath = xarMod::apiFunc('downloads','admin','getbasepath');
 		xarMod::apiFunc('downloads','user','getfile',array(
-			'fullPath' => $location . '/' . $filename
+			'fullPath' => $basepath . $directory . '/' . $filename
 			));
 
 		return;

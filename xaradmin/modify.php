@@ -40,10 +40,11 @@ function downloads_admin_modify()
 	$data['object'] = $object; // save for later
 
 	$properties = $object->getProperties();
-	$data['locpropid'] = $properties['location']->id;
+	$data['locpropid'] = $properties['directory']->id;
 	
 	$object->getItem(array('itemid' => $itemid));
 	$data['filename'] = $object->properties['filename']->value;
+	$data['basepath'] = $object->properties['basepath']->value;
 	if (strstr($data['filename'],'.')) {
 		$parts = explode('.',$data['filename']);
 		$ext = end($parts);
@@ -54,9 +55,9 @@ function downloads_admin_modify()
 	if (!xarSecurityCheck('EditDownloads',0,'Record',$instance)) {
 		return;
 	}
-	$data['location'] = $object->properties['location']->value;
+	$data['directory'] = $object->properties['directory']->value;
 
-	$object->properties['filename']->initialization_basedirectory = $data['location'];
+	$object->properties['filename']->initialization_basedirectory = $data['directory'];
 
 	$data['label'] = $object->label;
 

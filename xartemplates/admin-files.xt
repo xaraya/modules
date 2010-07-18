@@ -48,10 +48,7 @@
 					<xar:set name="pos">strpos($key,';')</xar:set>
 					<xar:set name="key">substr($key,0,$pos)</xar:set>
 					<xar:set name="key">substr($key,0,$pos)</xar:set>
-					<xar:set name="locdir">
-						xarMod::apiFunc('downloads','admin','locdir', array('location' => $key))
-					</xar:set>
-					#$locdir#
+					#$key#
 					
 					</td>
 					<td>	
@@ -71,15 +68,18 @@
 	<xar:set name="instance">'All:'.$ext.':All'</xar:set>
 					
 	<xar:if condition="xarSecurityCheck('EditDownloads',0,'Record',$instance)">
+		<xar:set name="basepath">
+			xarMod::apiFunc('downloads','admin','getbasepath')
+		</xar:set>
 		<xar:set name="fileitems">
-		xarMod::apiFunc('downloads','admin','getfileitems',
-			array('location' => $key, 'file' => $val, 'linkslist' => true))
+			xarMod::apiFunc('downloads','admin','getfilerecords',
+			array('basepath' => $basepath, 'directory' => $key, 'file' => $val, 'linkslist' => true))
 		</xar:set>
 		
 		<xar:if condition="$fileitems">
 			#$fileitems#
 		<xar:elseif condition="xarSecurityCheck('AddDownloads',0,'Record',$instance)" />
-			<a href="#xarModURL('downloads','admin','add',array('location' => $key, 'filename' => $val))#">
+			<a href="#xarModURL('downloads','admin','add',array('directory' => $key, 'filename' => $val))#">
 			<img src="#sys::code()#/modules/base/xarimages/icons/add.png" height="16" width="16" /></a>
 		</xar:if>
 	</xar:if>
@@ -89,7 +89,7 @@
 					<td>	
 	
 	<xar:if condition="xarSecurityCheck('DeleteDownloads',0)"> 
-	&amp;nbsp; <a href="#xarModURL('downloads','admin','deletefile', array('location' => $key, 'file' => $val))#"><img src="#sys::code()#modules/base/xarimages/icons/delete.png" width="16" height="16" alt="Delete" /></a>
+	&amp;nbsp; <a href="#xarModURL('downloads','admin','deletefile', array('directory' => $key, 'file' => $val))#"><img src="#sys::code()#modules/base/xarimages/icons/delete.png" width="16" height="16" alt="Delete" /></a>
 	</xar:if>
 
 					</td>

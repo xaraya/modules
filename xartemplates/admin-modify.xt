@@ -18,15 +18,14 @@
         </xar:if>
 
 	<p align="right" style="margin-top: -30px"><a href="#xarModURL('downloads','admin','delete', array('itemid' => $itemid))#" style="color:red">Delete Record</a></p>
-
-	<xar:if condition="!file_exists($location . '/' . $filename)">
-		<div class="missing">The file for this record was not found: <span class="missing">#$location#/#$filename#</span></div>
+	<xar:if condition="!file_exists($basepath . $directory . '/' . $filename)">
+		<div class="missing">The file for this record was not found: <span class="missing">#$directory#/#$filename#</span></div>
 		<xar:set name="clear">true</xar:set>
 	<xar:else />
 		<xar:set name="clear">false</xar:set>
 	</xar:if>
 
-	<xar:if condition="$_GET['func'] eq 'modify' and file_exists($location . '/' . $filename)">
+	<xar:if condition="$_GET['func'] eq 'modify' and file_exists($basepath . $directory . '/' . $filename)">
 	<form>
 		<fieldset>
 		<legend>URL reference:</legend>
@@ -60,7 +59,7 @@
                     Modify
                 </legend>
  
-                <xar:data-form object="$object" tplmodule="downloads" filename="$filename" location="$location" locpropid="$locpropid" clear="$clear" />
+                <xar:data-form object="$object" tplmodule="downloads" filename="$filename" directory="$directory" locpropid="$locpropid" clear="$clear" />
 		 
              </fieldset>
 	     

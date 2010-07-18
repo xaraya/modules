@@ -18,7 +18,7 @@ function downloads_admin_add()
 {
 
 	if(!xarVarFetch('filename',       'str',    $filename,   NULL, XARVAR_DONT_SET)) {return;}
-	if(!xarVarFetch('location',       'str',    $location,   NULL, XARVAR_DONT_SET)) {return;}
+	if(!xarVarFetch('directory',       'str',    $directory,   NULL, XARVAR_DONT_SET)) {return;}
 
 	if (strstr($filename,'.')) {
 		$parts = explode('.',$filename);
@@ -32,8 +32,10 @@ function downloads_admin_add()
 		return;
 	}
 
+	$basepath = xarMod::apiFunc('downloads','admin','getbasepath');
 	xarMod::apiFunc('downloads','admin','addrecord',array(
-		'location' => $location,
+		'basepath' => $basepath,
+		'directory' => $directory,
 		'filename' => $filename,
 		'status' => 2
 		));

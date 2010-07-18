@@ -1,0 +1,50 @@
+<items>
+  <downloads_ft_instances itemid="1">
+    <id>1</id>
+    <extension>txt</extension>
+  </downloads_ft_instances>
+  <downloads_ft_instances itemid="2">
+    <id>2</id>
+    <extension>gif</extension>
+  </downloads_ft_instances>
+  <downloads_ft_instances itemid="3">
+    <id>3</id>
+    <extension>jpeg</extension>
+  </downloads_ft_instances>
+  <downloads_ft_instances itemid="4">
+    <id>4</id>
+    <extension>jpg</extension>
+  </downloads_ft_instances>
+  <downloads_ft_instances itemid="5">
+    <id>5</id>
+    <extension>png</extension>
+  </downloads_ft_instances>
+  <downloads_ft_instances itemid="6">
+    <id>6</id>
+    <extension>bmp</extension>
+  </downloads_ft_instances>
+  <downloads_ft_instances itemid="7">
+    <id>7</id>
+    <extension>pdf</extension>
+  </downloads_ft_instances>
+  <downloads_ft_instances itemid="8">
+    <id>8</id>
+    <extension>doc</extension>
+  </downloads_ft_instances>
+  <downloads_ft_instances itemid="9">
+    <id>9</id>
+    <extension>rtf</extension>
+  </downloads_ft_instances>
+  <downloads_ft_instances itemid="10">
+    <id>10</id>
+    <extension>csv</extension>
+  </downloads_ft_instances>
+  <downloads_ft_instances itemid="11">
+    <id>11</id>
+    <extension>xls</extension>
+  </downloads_ft_instances>
+  <downloads_ft_instances itemid="12">
+    <id>12</id>
+    <extension>xml</extension>
+  </downloads_ft_instances>
+</items>

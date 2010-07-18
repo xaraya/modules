@@ -11,7 +11,7 @@
 
 		<xar:if condition="$name eq 'title'">
 			<xar:set name="class">'titleth'</xar:set>
-		<xar:elseif condition="$name eq 'location' and !xarModVars::get('downloads','admin_list_locations')" />
+		<xar:elseif condition="$name eq 'directory' and !xarModVars::get('downloads','admin_list_directories')" />
 			<xar:set name="class">'hide'</xar:set>
 		<xar:else />
 			<xar:set name="class">''</xar:set>
@@ -90,19 +90,16 @@
 					#$filename#
 				</xar:if>
 				</td>
-                        <xar:elseif condition="$name eq 'location'" />
+                        <xar:elseif condition="$name eq 'directory'" />
 				
-				<xar:if condition="!xarModVars::get('downloads','admin_list_locations')">
+				<xar:if condition="!xarModVars::get('downloads','admin_list_directories')">
 					<xar:set name="class">'hide'</xar:set>
 				<xar:else />
 					<xar:set name="class">''</xar:set>
 				</xar:if>
 	
 					<td valign="top" class="#$class#">
-			<xar:set name="locdir">
-				xarMod::apiFunc('downloads','admin','locdir', array('location' => $fields['location']))
-			</xar:set>
-			#$locdir#
+			<xar:data-output property="$properties['directory']" value="$fields['directory']" />
 
 					</td>
 				
@@ -116,7 +113,7 @@
 
 
                     <xar:if condition="empty($linkfield)">
-		    <td valign="top"><xar:if condition="!file_exists($fields['location'].'/'.$fields['filename'])"><span class="xar-error">no</span><xar:else />yes</xar:if></td>
+		    <td valign="top"><xar:if condition="!file_exists($fields['basepath'] . $fields['directory'].'/'.$fields['filename'])"><span class="xar-error">no</span><xar:else />yes</xar:if></td>
                         <td valign="top">
 
 <xar:if condition="strstr($fields['filename'],'.')">

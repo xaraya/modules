@@ -3,7 +3,7 @@
 function downloads_admin_deletefile() {
 
 	if(!xarVarFetch('file',       'str',    $file,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('location',       'str',    $location,   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('directory',       'str',    $directory,   NULL, XARVAR_DONT_SET)) {return;}
 	if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
 
 	if (strstr($file,'.')) {
@@ -19,10 +19,11 @@ function downloads_admin_deletefile() {
 	}
 
 	$data['file'] = $file;
-	$data['location'] = $location;
+	$data['directory'] = $directory;
 	 
 	if ($data['confirm']) {
 
+		$location = xarMod::apiFunc('downloads','admin','getbasepath') . $directory;
 		$delete = xarMod::apiFunc('downloads','admin','deletefile', array(
 			'location' => $location,
 			'file' => $file

@@ -1,6 +1,6 @@
 <?php
 /**
- * Get full paths to file directories
+ * Get directories
  *
  * @package modules
  * @copyright (C) 2002-2007 The Digital Development Foundation
@@ -12,14 +12,12 @@
  * @author potion <ryan@webcommunicate.net>
  */
 /**
- * get full paths to file directories
+ * get directories
  */
 
-function downloads_userapi_getlocations() {
+function downloads_userapi_getdirectories() {
 
 	$dirs = xarModVars::get('downloads', 'file_directories');
-
-	$basepath = xarMod::apiFunc('downloads','admin','getbasepath');
 
 	$dirs = str_replace(' ',"\r",$dirs);
 	$dirs = str_replace(',',"\r",$dirs);
@@ -34,13 +32,13 @@ function downloads_userapi_getlocations() {
 	
 	foreach ($dirs as $key=>$value) {
 		
-		$value = $basepath . trim($value);
+		$value = trim($value);
 		if (strlen($value) > 0) {
-			$locations[$value] = $value;
+			$directories[$value] = $value;
 		}
 	} 
 
-	return $locations;
+	return $directories;
 
 }
 

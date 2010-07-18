@@ -26,7 +26,7 @@ class UploadProperty extends DataProperty
 	public $validation_min_length_invalid;
 	public $validation_max_length          = null;
 	public $validation_max_length_invalid;
-    public $initialization_basedirectory    = '../uploads';
+    public $initialization_basedirectory    = 'uploads';
     public $initialization_importdirectory  = null;
     public $validation_file_extensions      = 'gif, jpg, jpeg, png, bmp, pdf, doc, txt';
     public $initialization_basepath         = null;
@@ -54,10 +54,10 @@ class UploadProperty extends DataProperty
             $base_directory = './';
         }
 
-        $this->initialization_basepath = $base_directory;
+        $this->initialization_basepath = xarMod::apiFunc('downloads','admin','getbasepath');
 
         if (empty($this->initialization_basedirectory)) {
-            $this->initialization_basedirectory = '../uploads';
+            $this->initialization_basedirectory = 'uploads';
         }
 
         if (empty($this->validation_file_extensions)) {	

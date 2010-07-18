@@ -17,7 +17,7 @@
 function downloads_admin_files()
 {
     if(!xarVarFetch('startnum', 'isset', $startnum, NULL, XARVAR_DONT_SET)) {return;}
-	if(!xarVarFetch('sort', 'str', $sort, 'loc', XARVAR_NOT_REQUIRED)) {return;}
+	if(!xarVarFetch('sort', 'str', $sort, 'dir', XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('numitems', 'int',   $numitems,  NULL, XARVAR_DONT_SET)) {return;}
 	if(!xarVarFetch('filter', 'str', $filter, NULL, XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('filterfield', 'str', $filterfield, NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -40,7 +40,7 @@ function downloads_admin_files()
 							));
 	$items = $total->getItems();*/
 
-	$locations = xarMod::apiFunc('downloads','user','getlocations');
+	$directories = xarMod::apiFunc('downloads','user','getdirectories');
 
 	$locfilter = '';
 	$filefilter = '';
@@ -57,10 +57,12 @@ function downloads_admin_files()
 	$data['locstartval'] = 'Directory';
 	$data['filestartval'] = 'Filename';
 
-	$unfiltered = xarMod::apiFunc('downloads','admin','viewfiles', array('locations' => $locations, 'sort' => $sort));
+	$basepath = xarMod::apiFunc('downloads','admin','getbasepath');
+
+	$unfiltered = xarMod::apiFunc('downloads','admin','viewfiles', array('basepath' => $basepath, 'directories' => $directories, 'sort' => $sort));
 
 	if ($locfilter != $data['locstartval'] && $filefilter != $data['filestartval']) {
-		$files = xarMod::apiFunc('downloads','admin','viewfiles', array('locations' => $locations, 'locfilter' => $locfilter, 'filefilter' => $filefilter, 'sort' => $sort));
+		$files = xarMod::apiFunc('downloads','admin','viewfiles', array('basepath' => $basepath, 'directories' => $directories, 'locfilter' => $locfilter, 'filefilter' => $filefilter, 'sort' => $sort));
 	} else {
 		$files = $unfiltered;
 	}
@@ -110,7 +112,7 @@ function downloads_admin_files()
 							'startnum'  => $startnum,
 							'numitems'  => $numitems,
 							'sort'      => $sort,
-							'fieldlist' => 'itemid,title,location,filename'
+							'fieldlist' => 'itemid,title,directory,filename'
 							));*/
 
     /*$data['count'] = $list->countItems();

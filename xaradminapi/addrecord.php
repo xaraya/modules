@@ -24,15 +24,16 @@ function downloads_adminapi_addrecord($args)
 
 	$object = DataObjectMaster::getObject(array('name' => 'downloads'));
 
-	$object->properties['filename']->initialization_basedirectory = $location;
+	$object->properties['filename']->initialization_basedirectory = $directory;
 	$object->properties['filename']->setValue($filename);
-	$object->properties['location']->setValue($location);
+	$object->properties['directory']->setValue($directory);
 	// We want some spaces in titles so the admin view doesn't get distorted
 	$filename = str_replace('_',' ',$filename);
 	$filename = str_replace('-',' ',$filename);
 	$filename = str_replace('.',' ',$filename);
 	$object->properties['title']->setValue($filename);
 	$object->properties['status']->setValue($status);
+	$object->properties['basepath']->setValue($basepath);
 
 	$itemid = $object->createItem();
 

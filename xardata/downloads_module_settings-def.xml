@@ -60,7 +60,7 @@
       <seq>6</seq>
       <configuration></configuration>
     </property>
-    <property name="admin_list_locations">
+    <property name="admin_list_directories">
       <id>370</id>
       <label>Show directory column</label>
       <type>checkbox</type>
