@@ -21,6 +21,7 @@ function downloads_admin_files()
 	if(!xarVarFetch('numitems', 'int',   $numitems,  NULL, XARVAR_DONT_SET)) {return;}
 	if(!xarVarFetch('filter', 'str', $filter, NULL, XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('filterfield', 'str', $filterfield, NULL, XARVAR_NOT_REQUIRED)) {return;}
+	if(!xarVarFetch('msg', 'str', $data['msg'], NULL, XARVAR_NOT_REQUIRED)) {return;}
 
 	$data['filter'] = $filter;
 

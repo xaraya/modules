@@ -14,6 +14,12 @@
 
         <h2>View Files</h2>
 
+	<xar:if condition="isset($msg)">
+		<p>
+		<span class="xar-error">This file type is not allowed: #$msg#</span>
+		</p>
+	</xar:if>
+
 	<xar:if condition="$showfilters">
 		#xarMod::apiFunc('filters','user','makefilter',array(
 			'thisfield' => 'locfilter',

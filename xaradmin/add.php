@@ -29,6 +29,22 @@ function downloads_admin_add()
 
 	$instance = 'All:'.$ext.':'.xarUserGetVar('id');
 	if (!xarSecurityCheck('AddDownloads',0,'Record',$instance)) {
+		xarResponse::redirect(xarModURL('downloads','admin','files'));
+		return;
+	}
+
+	$extensions = str_replace(' ','',xarModVars::get('downloads', 'file_extensions'));
+	$extensions = explode(',',$extensions);
+
+	if (strstr($filename,'.')) {
+		$parts = explode('.',$filename);
+		$ext = end($parts);
+	} else {
+		$ext = '';
+	}
+
+	if(!in_array($ext,$extensions)) { 
+		xarResponse::redirect(xarModURL('downloads','admin','files',array('msg' => $ext)));
 		return;
 	}
 
