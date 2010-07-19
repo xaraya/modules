@@ -24,6 +24,7 @@ function downloads_adminapi_addrecord($args)
 
 	$object = DataObjectMaster::getObject(array('name' => 'downloads'));
 
+	$object->properties['filename']->initialization_basepath = $basepath;
 	$object->properties['filename']->initialization_basedirectory = $directory;
 	$object->properties['filename']->setValue($filename);
 	$object->properties['directory']->setValue($directory);

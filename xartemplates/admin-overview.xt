@@ -88,9 +88,7 @@
 
 <p>By default, the downloads module expects the directories to be located outside  your html directory and at the same level as your html directory.  Optionally, this relative location can be changed by adding a line to your website's config.system.php file like so...</p>
 
-<blockquote>$systemConfiguration['downloads.basepath'] = '../';</blockquote>
-
-<p>There would, however, be no purpose in setting the path to '../', because that is the default path used by the downloads module if no downloads.basepath is set in config.system.php.</p>
+<blockquote>$systemConfiguration['downloads.basepath'] = '../some-where-else/';</blockquote>
 
 <p>Because the downloads module can overwrite files, it is crucial that you not set the basepath to anything that will give users the ability to modify files that are important to the basic functionality of Xaraya or other scripts on your server.  The  <strong>worst</strong> thing you could do would be to point the downloads.basepath to your <strong>var</strong> directory.  If you did that, and someone was able to acquire your admin password -- or any login with admin privileges for the downloads module -- they could change the settings in the downloads module to allow for uploading php files, and they could potentially modify your config.system.php file.  Subsequently, by altering the downloads.basepath in your config.system.php file, they might thenceforth be able to modify important files in just about any part of your filesystem.  Thus, the safest* thing may be to not set a downloads.basepath at all in config.system.php, and instead put your file directories outside of, and at the same level as, your html directory.</p> 
 

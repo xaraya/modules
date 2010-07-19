@@ -8,7 +8,7 @@ function downloads_admin_deletefile() {
 
 	if (strstr($file,'.')) {
 		$parts = explode('.',$file);
-		$ext = end($parts);
+		$ext = strtolower(end($parts));
 	} else {
 		$ext = '';
 	}

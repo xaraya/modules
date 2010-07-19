@@ -46,15 +46,17 @@ class UploadProperty extends DataProperty
         $this->template  = 'upload';
         $this->filepath   = 'modules/downloads/xarproperties';
 
-        if(xarServer::getVar('PATH_TRANSLATED')) {
+        /*if(xarServer::getVar('PATH_TRANSLATED')) {
             $base_directory = dirname(realpath(xarServer::getVar('PATH_TRANSLATED')));
         } elseif(xarServer::getVar('SCRIPT_FILENAME')) {
             $base_directory = dirname(realpath(xarServer::getVar('SCRIPT_FILENAME')));
         } else {
             $base_directory = './';
-        }
+        }*/
 
-        $this->initialization_basepath = xarMod::apiFunc('downloads','admin','getbasepath');
+		if (empty($this->initialization_basepath)) {
+            $this->initialization_basepath = sys::varpath() . '/';
+        }
 
         if (empty($this->initialization_basedirectory)) {
             $this->initialization_basedirectory = 'uploads';
@@ -153,7 +155,7 @@ class UploadProperty extends DataProperty
             } 
 
             if ($this->use_temporary_file) {
-                $filepath = tempnam(realpath($this->initialization_basepath . '/' . $this->initialization_basedirectory), 'tempdd');
+                $filepath = tempnam(realpath($this->initialization_basepath . $this->initialization_basedirectory), 'tempdd');
 
             //} elseif ($this->obfuscate_filename) {
             // TODO: obfuscate filename + return hash & original filename + handle that combined value in the other methods
@@ -168,7 +170,7 @@ class UploadProperty extends DataProperty
 
             } else {
                 $filename = $file['name'];
-                $filepath = $this->initialization_basepath . '/' . $this->initialization_basedirectory . '/'. $filename;
+                $filepath = $this->initialization_basepath . $this->initialization_basedirectory . '/'. $filename;
                 if ($this->validation_allow_duplicates == 2) {
                     // overwrite existing file if necessary
                 } elseif ($this->validation_allow_duplicates == 1 && file_exists($filepath)) {
@@ -183,11 +185,11 @@ class UploadProperty extends DataProperty
                     }
                     $i = 1;
                     $filename = $filebase . '_' . $i . $fileext;
-                    $filepath = $this->initialization_basepath . '/' . $this->initialization_basedirectory . '/'. $filename;
+                    $filepath = $this->initialization_basepath . $this->initialization_basedirectory . '/'. $filename;
                     while (file_exists($filepath)) {
                         $i++;
                         $filename = $filebase . '_' . $i . $fileext;
-                        $filepath = $this->initialization_basepath . '/' . $this->initialization_basedirectory . '/'. $filename;
+                        $filepath = $this->initialization_basepath . $this->initialization_basedirectory . '/'. $filename;
                     }
                 } elseif ($this->validation_allow_duplicates == 0 && file_exists($filepath)) { 
                     // duplicate files are not allowed

@@ -15,9 +15,11 @@
  * get directories
  */
 
-function downloads_userapi_getdirectories() {
+function downloads_userapi_getdirectories($args) {
 
 	$dirs = xarModVars::get('downloads', 'file_directories');
+
+	extract($args);
 
 	$dirs = str_replace(' ',"\r",$dirs);
 	$dirs = str_replace(',',"\r",$dirs);

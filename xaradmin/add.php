@@ -22,7 +22,7 @@ function downloads_admin_add()
 
 	if (strstr($filename,'.')) {
 		$parts = explode('.',$filename);
-		$ext = end($parts);
+		$ext = strtolower(end($parts));
 	} else {
 		$ext = '';
 	}
@@ -36,19 +36,13 @@ function downloads_admin_add()
 	$extensions = str_replace(' ','',xarModVars::get('downloads', 'file_extensions'));
 	$extensions = explode(',',$extensions);
 
-	if (strstr($filename,'.')) {
-		$parts = explode('.',$filename);
-		$ext = end($parts);
-	} else {
-		$ext = '';
-	}
-
 	if(!in_array($ext,$extensions)) { 
 		xarResponse::redirect(xarModURL('downloads','admin','files',array('msg' => $ext)));
 		return;
 	}
 
 	$basepath = xarMod::apiFunc('downloads','admin','getbasepath');
+
 	xarMod::apiFunc('downloads','admin','addrecord',array(
 		'basepath' => $basepath,
 		'directory' => $directory,

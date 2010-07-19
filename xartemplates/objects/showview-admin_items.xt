@@ -120,7 +120,7 @@
 
 <xar:if condition="strstr($fields['filename'],'.')">
 	<xar:set name="parts">explode('.',$fields['filename'])</xar:set>
-	<xar:set name="ext">end($parts)</xar:set>
+	<xar:set name="ext">strtolower(end($parts))</xar:set>
 <xar:else />
 	<xar:set name="ext">''</xar:set>
 </xar:if>

@@ -28,7 +28,7 @@ function downloads_user_getfile($args) {
 
 		if (strstr($filename,'.')) {
 			$parts = explode('.',$filename);
-			$ext = end($parts);
+			$ext = strtolower(end($parts));
 		} else {
 			$ext = '';
 		}

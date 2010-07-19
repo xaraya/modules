@@ -47,7 +47,7 @@ function downloads_admin_modify()
 	$data['basepath'] = xarMod::apiFunc('downloads','admin','getbasepath');
 	if (strstr($data['filename'],'.')) {
 		$parts = explode('.',$data['filename']);
-		$ext = end($parts);
+		$ext = strtolower(end($parts));
 	} else {
 		$ext = '';
 	}
@@ -58,6 +58,7 @@ function downloads_admin_modify()
 	$data['directory'] = $object->properties['directory']->value;
 
 	$object->properties['filename']->initialization_basedirectory = $data['directory'];
+	$object->properties['filename']->initialization_basepath = $data['basepath'];
 
 	$data['label'] = $object->label;
 
@@ -77,7 +78,7 @@ function downloads_admin_modify()
 			$filename = $object->properties['filename']->getValue();
 			if (strstr($filename,'.')) {
 				$parts = explode('.',$filename);
-				$ext = end($parts);
+				$ext = strtolower(end($parts));
 			} else {
 				$ext = '';
 			}

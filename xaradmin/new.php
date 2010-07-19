@@ -44,10 +44,12 @@ function downloads_admin_new()
         if (!xarSecConfirmAuthKey()) {
             return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
         }        
+
+		$basepath = xarMod::apiFunc('downloads','admin','getbasepath');
 		
 		$isvalid = $object->properties['directory']->checkInput();
 		$directory = $object->properties['directory']->getValue();
-		// Must do this before $object->checkinput()
+		$object->properties['filename']->initialization_basepath = $basepath;
 		$object->properties['filename']->initialization_basedirectory = $directory;
 		
 		$isvalid = $object->checkinput();
@@ -63,7 +65,7 @@ function downloads_admin_new()
 			
 			if (strstr($filename,'.')) {
 				$parts = explode('.',$filename);
-				$ext = end($parts);
+				$ext = strtolower(end($parts));
 			} else {
 				$ext = '';
 			}
