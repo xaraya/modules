@@ -19,7 +19,7 @@ function xarpages_admin_main()
     if (!xarSecurityCheck('AdminXarpagesPage')) return;
 
     // Redirect to the view page.
-    xarResponse::redirect(xarModURL('xarpages', 'admin', 'viewpages'));
+    xarController::redirect(xarModURL('xarpages', 'admin', 'viewpages'));
     return true;
 }
 

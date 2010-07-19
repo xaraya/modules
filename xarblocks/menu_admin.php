@@ -33,15 +33,6 @@
         {
             $data = parent::modify($data);
 
-            // Defaults
-            if (!isset($data['multi_homed'])) {$data['multi_homed'] = $this->multi_homed;}
-            if (!isset($data['current_source'])) {$data['current_source'] = $this->current_source;}
-            if (!isset($data['default_pid'])) {$data['default_pid'] = $this->default_pid;}
-            if (!isset($data['max_level'])) {$data['max_level'] = $this->max_level;}
-            if (!isset($data['start_level'])) {$data['start_level'] = $this->start_level;}
-            if (!isset($data['root_pids'])) {$data['root_pids'] = $this->root_pids;}
-            if (!isset($data['prune_pids'])) {$data['prune_pids'] = $this->prune_pids;}
-
             // Get a list of all pages for the drop-downs.
             // Get the tree of all pages, without the DD for speed.
             $data['all_pages'] = xarMod::apiFunc(

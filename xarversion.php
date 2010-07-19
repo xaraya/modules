@@ -28,7 +28,14 @@ $modversion['securityschema'] = array();
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
 // 147 = 'categories'; 182 = 'Dynamic Data';
-$modversion['dependency']     = array(147, 182);
+$modversion['dependency']     = array(147);
+$modversion['dependencyinfo'] = array(
+                                    0 => array(
+                                            'name' => 'Xaraya Core',
+                                            'version_ge' => '2.1.0'
+                                         ),
+                                      147  => 'categories',
+                                      );
 if (false) {
     xarML('Xarpages');
     xarML('Static pages administration');
