@@ -10,12 +10,12 @@
   <config>a:0:{}</config>
   <isalias>true</isalias>
   <properties>
-    <property name="id">
+    <property name="itemid">
       <id>262</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
-      <source>xar_downloads_ft_instances.id</source>
+      <source>xar_downloads_ft_instances.itemid</source>
       <status>33</status>
       <seq>1</seq>
       <configuration></configuration>
