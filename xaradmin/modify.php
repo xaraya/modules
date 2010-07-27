@@ -16,6 +16,12 @@
         $data['object'] = DataObjectMaster::getObject(array('name' => $name));
         $data['tplmodule'] = 'mailer';
 
+        if (xarModIsAvailable('realms')) {
+            $userrealmid = xarModAPIfunc('realms', 'admin', 'getrealmid');
+            $realmid = xarModAPIfunc('realms', 'admin', 'getrealmid', array('itemid' => $data['itemid'], 'tablename' => 'mailer_mails'));
+            if($userrealmid != 0 && $userrealmid != $realmid) return;
+        }
+        
         if ($data['confirm']) {
         
             // Check for a valid confirmation key

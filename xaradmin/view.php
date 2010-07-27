@@ -15,6 +15,18 @@
 
         // Set a return url
         xarSession::setVar('ddcontext.' . $modulename, array('return_url' => xarServer::getCurrentURL()));
+        
+        $userrealmid = 0;
+        
+        if (xarModIsAvailable('realms')) {
+            $userrealmid = xarModAPIFunc('realms', 'admin', 'getrealmid');
+        }
+
+        $q = new Query();
+        $q->eq('module_id', xarMod::getID('newsletter'));
+        if($userrealmid) $q->eq('realm_id', $userrealmid);
+
+        $data['conditions'] = $q;
 
         // Get the available dropdown options
         $object = DataObjectMaster::getObjectList(array('objectid' => 1));
