@@ -22,13 +22,6 @@
             $userrealmid = xarModAPIFunc('realms', 'admin', 'getrealmid');
         }
 
-        sys::import('xaraya.structures.query');
-        $q = new Query();
-        $q->eq('module_id', xarMod::getID('newsletter'));
-        if($userrealmid) $q->eq('realm_id', $userrealmid);
-
-        $data['conditions'] = $q;
-
         // Get the available dropdown options
         $object = DataObjectMaster::getObjectList(array('objectid' => 1));
         $data['objectname'] = xarModUserVars::get($modulename,'defaultmastertable');
