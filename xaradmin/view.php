@@ -22,6 +22,7 @@
             $userrealmid = xarModAPIFunc('realms', 'admin', 'getrealmid');
         }
 
+        sys::import('xaraya.structures.query');
         $q = new Query();
         $q->eq('module_id', xarMod::getID('newsletter'));
         if($userrealmid) $q->eq('realm_id', $userrealmid);
