@@ -6,7 +6,7 @@
 
     function mailer_admin_main()
     {
-        if(!xarSecurityCheck('AdminMailer')) return;
+        if(!xarSecurityCheck('ManageMailer')) return;
 
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return array();
