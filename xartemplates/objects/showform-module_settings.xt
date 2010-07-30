@@ -60,6 +60,17 @@
 	
 
      </fieldset>
+
+     <fieldset class="mod_settings">
+	    
+	    <h4>Files Admin List:</h4>
+
+	    <xar:set name="name">'filesize_units'</xar:set>
+	    <div class="xar-form-input-wrapper">
+			<xar:data-label property="$properties[$name]" for="id" />       
+			<xar:data-input property="$properties[$name]" />
+	     </div>
+      </fieldset>
     
     <xar:if condition="xarModIsAvailable('filters')">
 	    <fieldset class="mod_settings">

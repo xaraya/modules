@@ -38,12 +38,21 @@
 			))#
 	</xar:if>
 
+	<xar:set name="basepath">
+		xarMod::apiFunc('downloads','admin','getbasepath')
+	</xar:set>
+	<xar:set name="units">
+		xarModVars::get('downloads','filesize_units')
+	</xar:set>
+
 		<xar:if condition="isset($files) and !empty($files)">
 			<div id="viewfiles">
 			<table>
 				<tr>
 				<th>Directory</th>
 				<th>Filename</th>
+				<xar:set name="thunit">ucfirst($units)</xar:set>
+				<th>#$thunit#</th>
 				<th>Records</th>
 				<th>Delete File</th>
 				</tr>
@@ -63,6 +72,22 @@
 					</td>
 
 					<td>
+	<xar:set name="filepath">$basepath . $key . '/' . $val</xar:set>
+ 
+<xar:if condition="$units eq 'kilobytes'">
+	<xar:set name="div">'1024'</xar:set>
+<xar:elseif condition="$units eq 'megabytes'" />
+	<xar:set name="div">'1048576'</xar:set>
+<xar:elseif condition="$units eq 'gigabytes'" />
+	<xar:set name="div">'1073741824'</xar:set>
+</xar:if>
+
+	<xar:set name="bytes">filesize($filepath)</xar:set>
+	<xar:set name="mb">round($bytes/$div, 2)</xar:set>
+	    #$mb#  
+					</td>
+
+					<td>
 
 	<xar:if condition="strstr($val,'.')">
 		<xar:set name="parts">explode('.',$val)</xar:set>
@@ -74,9 +99,7 @@
 	<xar:set name="instance">'All:'.$ext.':All'</xar:set>
 					
 	<xar:if condition="xarSecurityCheck('EditDownloads',0,'Record',$instance)">
-		<xar:set name="basepath">
-			xarMod::apiFunc('downloads','admin','getbasepath')
-		</xar:set>
+		
 		<xar:set name="fileitems">
 			xarMod::apiFunc('downloads','admin','getfilerecords',
 			array('basepath' => $basepath, 'directory' => $key, 'file' => $val, 'linkslist' => true))

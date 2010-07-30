@@ -1,7 +1,8 @@
 div.missing {
-	margin: 10px 0 16px 0;
+margin: 10px 0 16px 0;
+color: red;
 }
-span.missing {
+div.missing span {
 font-weight: bold;
 }
 span.xar-error {

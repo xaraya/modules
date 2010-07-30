@@ -39,7 +39,7 @@ function downloads_adminapi_viewfiles($args)
 					if (empty($filefilter) || stristr($file, $filefilter)) {
 						if ($file != '.' && $file != '..') {
 							$key = $dir . ';' . $num++;
-							$files[$key] = $file;
+							$files[$key] = $file; 
 						}
 					}
 				}

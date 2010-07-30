@@ -47,11 +47,25 @@
 	</xar:if>
      </div>
 
-          <div class="xar-form-input-wrapper">
+      <div class="xar-form-input-wrapper">
 	<xar:set name="field">'filename'</xar:set>
 	<xar:data-label property="$properties[$field]" for="id" />
 	<xar:data-input property="$properties[$field]" clear="$clear" />
      </div>
+
+      <xar:if condition="$_GET['func'] eq 'modify'">
+	<xar:set name="filepath">$basepath . $properties['directory']->value . '/' . $properties['filename']->value</xar:set>
+	<xar:if condition="file_exists($filepath)">
+		<div class="xar-form-input-wrapper">
+		<xar:set name="bytes">filesize($filepath)</xar:set>
+		<xar:set name="mb">round($bytes/1048576, 2)</xar:set>
+		    <label class="xar-form-label" for="filesize"> 
+			Filesize
+		    </label> 
+		    #$mb# megabytes<br />
+		</div>
+	</xar:if>
+     </xar:if>
 
 <xar:data-input property="$properties['filetype']" />
 

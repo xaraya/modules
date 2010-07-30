@@ -85,6 +85,7 @@ function downloads_init()
 	xarModVars::set('downloads','show_xarmodurl','1');
 	xarModVars::set('downloads','filters_records_min_item_count','1');
 	xarModVars::set('downloads','filters_files_min_item_count','1');	
+	xarModVars::set('downloads','filesize_units','kilobytes');
 
 # --------------------------------------------------------
 #

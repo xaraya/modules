@@ -21,7 +21,7 @@
 
 	<xar:set name="bp">'&amp;#60;yourbasepath>'</xar:set>
 	<xar:if condition="!file_exists($basepath . $directory . '/' . $filename)">
-		<div class="missing">No file exists at #$bp##$directory#/#$filename#</div>
+		<div class="missing">No file exists at <span>#$bp##$directory#/#$filename#</span></div>
 		<xar:set name="clear">true</xar:set>
 	<xar:else />
 		<xar:set name="clear">false</xar:set>
@@ -61,7 +61,7 @@
                     Modify
                 </legend>
  
-                <xar:data-form object="$object" tplmodule="downloads" filename="$filename" directory="$directory" locpropid="$locpropid" clear="$clear" />
+                <xar:data-form object="$object" tplmodule="downloads" filename="$filename" directory="$directory" locpropid="$locpropid" clear="$clear" basepath="$basepath" />
 		 
              </fieldset>
 	     
