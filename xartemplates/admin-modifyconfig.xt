@@ -1,333 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<xar:style scope="module" module="base" file="navtabs"/>
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        User Registration Administration
-    </span>
-</div>
-<div class="xar-mod-body">
-     <xar:template type="module" file="admin-menu"/>
-    <h2>
-        Modify Configuration
-    </h2>
-    <div>
-        <ul class="xar-tabs xar-alt xar-norm-outline">
-            <li class="xar-tabs-label help" title="#xarML('Choose an action to perform')#">Configure:</li>
-            <xar:if condition="$tab eq 'general'">
-                <xar:set name="tabclass">'xar-tab-active'</xar:set>
-                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
-            <xar:else />
-                <xar:set name="tabclass">'xar-tab'</xar:set>
-                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
-            </xar:if>
-            <li class="#$tabclass#">
-                <a href="#xarModURL('registration', 'admin', 'modifyconfig', array('tab' => 'general'))#" class="#$linkclass#">General</a>
-            </li>
-            <xar:if condition="$tab eq 'registration'">
-                <xar:set name="tabclass">'xar-tab-active'</xar:set>
-                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
-            <xar:else />
-                <xar:set name="tabclass">'xar-tab'</xar:set>
-                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
-            </xar:if>
-            <li class="#$tabclass#">
-                <a href="#xarModURL('registration', 'admin', 'modifyconfig', array('tab' => 'registration'))#" class="#$linkclass#">Registration</a>
-            </li>
-            <xar:if condition="$tab eq 'filtering'">
-                <xar:set name="tabclass">'xar-tab-active'</xar:set>
-                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
-            <xar:else />
-                <xar:set name="tabclass">'xar-tab'</xar:set>
-                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
-            </xar:if>
-            <li class="#$tabclass#">
-                <a href="#xarModURL('registration', 'admin', 'modifyconfig', array('tab' => 'filtering'))#" class="#$linkclass#">Filtering</a>
-            </li>
-        </ul>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:style scope="module" module="base" file="navtabs"/>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            User Registration Administration
+        </span>
     </div>
-    <xar:comment> Begin General Options
-    </xar:comment>
-    <xar:if condition="$tab eq 'general'">
-        <form method="post" action="&xar-modurl-registration-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
-        <fieldset>
-            <legend>
-                General Options
-            </legend>
-            <xar:data-form object="$module_settings" />
-        </fieldset>
-        <fieldset>
-                <legend>
-                    Service/Privacy
-                </legend>
-                <div class="xar-form-input-wrapper-after">
-                    <xar:set name="checked">xarModVars::get('registration', 'showterms')</xar:set>
-                    <xar:data-input type="checkbox" name="showterms" checked="$checked"/>
-                    <label for="showterms" title="#xarML('Show terms of service in Registration user menu')#">
-                        Show Terms of Service link in the menu?
-                    </label>
-                </div>
-
-                <div class="xar-form-input-wrapper-after">
-                    <xar:set name="checked">xarModVars::get('registration', 'showprivacy')</xar:set>
-                    <xar:data-input type="checkbox" name="showprivacy" checked="$checked"/>
-                    <label for="showprivacy" title="#xarML('Show privacy policy in Registration user menu')#">
-                        Show Privacy Policy link in the menu?
-                    </label>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <xar:set name="value">xarModVars::get('registration', 'termslink')</xar:set>
-                    <label for="showprivacy" title="#xarML('Where to display a custom terms of use statement from')#">
-                        Terms Link
-                    </label>
-                    <xar:data-input type="textbox" name="termslink" value="$value"/>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <xar:set name="value">xarModVars::get('registration', 'privacylink')</xar:set>
-                    <label for="showprivacy" title="#xarML('Where to display a custom privacy statement from')#">
-                        Privacy Link
-                    </label>
-                    <xar:data-input type="textbox" name="privacylink" value="$value"/>
-                </div>
-            </fieldset>
-            <fieldset>
-                <div class="xar-form-input-wrapper-after">
-                    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
-                    <input type="hidden" name="phase" id="phase" value="update"/>
-                    <input type="hidden" name="tab" id="tab" value="#$tab#"/>
-                    <input type="submit" value="#xarML('Update Registration Configuration')#"/>
-                </div>
-            </fieldset>
-        </form>
-        <xar:comment>
-            Begin Registration Options
-        </xar:comment>
-        <xar:elseif condition="$tab eq 'registration'"/>
-        <form method="post" action="&xar-modurl-registration-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
-            <fieldset>
-                <legend>
-                    Basic Configuration
-                </legend>
-                <div class="xar-form-input-wrapper">
-                    <label for="allowregistration" title="#xarML('Allow anonymous users to create accounts')#" class="xar-form-label">
-                        Allow Registration
-                    </label>
-                    <xar:set name="options">
-                        array(
-                            array('id' => 0, 'name' => xarML('No')),
-                            array('id' => 1, 'name' => xarML('Yes')),
-                        )
-                    </xar:set>
-                    <xar:set name="value">xarModVars::get('registration', 'allowregistration')</xar:set>
-                    <xar:data-input type="dropdown" name="allowregistration" options="$options" value="$value"/>
-                    This setting controls all the others
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="defaultregmodule" title="#xarML('Select the DD object used for registration')#" class="xar-form-label">
-                        Registration Object:
-                    </label>
-                    <xar:set name="value">xarModVars::get('registration', 'registrationobject')</xar:set>
-                    <xar:data-input type="object" name="regobjectname" store_prop="name" value="$value"/>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="defaultgroup" title="#xarML('New Users automatically get assigned to this Group')#" class="xar-form-label">
-                        Default Group For New Users:
-                    </label>
-                    <xar:set name="checked">xarModVars::get('registration', 'defaultgroup')</xar:set>
-                    <xar:data-input type="grouplist" name="defaultgroup" id="defaultgroup" value="$checked"/>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="defaultgroup" title="#xarML('New Users automatically get assigned this state')#" class="xar-form-label">
-                        Default State For New Users:
-                    </label>
-                    <xar:set name="value">xarModVars::get('registration', 'defaultuserstate')</xar:set>
-                    <xar:set name="options">
-                        array(
-                            array('id' => xarRoles::ROLES_STATE_INACTIVE, 'name' => xarML('Inactive')),
-                            array('id' => xarRoles::ROLES_STATE_NOTVALIDATED, 'name' => xarML('Not Validated')),
-                            array('id' => xarRoles::ROLES_STATE_ACTIVE, 'name' => xarML('Active')),
-                            array('id' => xarRoles::ROLES_STATE_PENDING, 'name' => xarML('Pending Activation')),
-                        )
-                    </xar:set>
-                    <xar:data-input type="dropdown" name="defaultuserstate" id="defaultuserstate" options="$options" value="$value"/>
-                </div>
-            </fieldset>
-            <fieldset>
-                <legend>
-                    User Settings
-                </legend>
-                <div class="xar-form-input-wrapper">
-                    <label for="minage" title="#xarML('Users need to be this age or older to register')#" class="xar-form-label">
-                        Minimum Age To Be A User:
-                    </label>
-                    <xar:set name="value"><xar:var scope="module" module="registration" name="minage"/></xar:set>
-                    <input type="text" name="minage" id="minage" value="#$value#" maxlength="3" class="xar-form-textshort"/>
-                    A value of 0 disables the age check
-                </div>
-                <div class="xar-form-input-wrapper-after">
-                    <xar:set name="checked">xarModVars::get('registration', 'chooseownpassword')</xar:set>
-                    <xar:data-input type="checkbox" name="chooseownpassword" checked="$checked"/>
-                    <label for="chooseownpassword" title="#xarML('Allow users to choose their own password when registering')#">
-                        Users May Choose Their Own Password
-                    </label>
-                </div>
-            </fieldset>
-            <fieldset>
-                <legend>
-                    Process Settings
-                </legend>
-                <div class="xar-form-input-wrapper-after">
-                    <xar:set name="checked">xarModVars::get('registration', 'explicitapproval')</xar:set>
-                    <xar:data-input type="checkbox" name="explicitapproval" checked="$checked"/>
-                    <label for="explicitapproval" title="#xarML('Administrator must approve and activate new user accounts')#">
-                        User Activation Requires Administrator Approval
-                    </label>
-                </div>
-                <div class="xar-form-input-wrapper-after">
-                    <xar:set name="checked">xarModVars::get('registration', 'requirevalidation')</xar:set>
-                    <xar:data-input type="checkbox" name="requirevalidation" checked="$checked"/>
-                    <label for="requirevalidation" title="#xarML('Users must confirm their accounts via confirmation code')#">
-                        Require Validation Of New Users
-                    </label>
-                </div>
-                <div class="xar-form-input-wrapper-after">
-                    <xar:set name="checked">xarModVars::get('registration', 'allowreview')</xar:set>
-                    <xar:data-input type="checkbox" name="allowreview" checked="$checked"/>
-                    <label for="allowreview" title="#xarML('Users can review and modify their registration information')#">
-                        Allow review of profile
-                    </label>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="reviewobject" title="#xarML('Select the DD object used for reviews (if allowed)')#" class="xar-form-label">
-                        Review Object:
-                    </label>
-                    <xar:set name="value">xarModVars::get('registration', 'reviewobject')</xar:set>
-                    <xar:data-input type="object" name="reviewobjectname" store_prop="name" value="$value"/>
-                </div>
-            </fieldset>
-            <fieldset>
-                <legend>
-                    Notification
-                </legend>
-                <div class="xar-form-input-wrapper">
-                    <label for="notificationmodule" class="xar-form-label" title="#xarML('The module to use for sending notifications')#">
-                        Send notifications with
-                    </label>
-                    <xar:set name="options">
-                        array(
-                            array('id' => 'mail', 'name' => 'Mail'),
-                            array('id' => 'mailer', 'name' => 'Mailer'),
-                        )
-                    </xar:set>
-                    <xar:set name="value">xarModVars::get('registration', 'notificationmodule')</xar:set>
-                    <xar:data-input type="dropdown" name="notificationmodule" id="notificationmodule" options="$options" value="$value"/>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="notifyemail" class="xar-form-label" title="#xarML('Email address for admin notification')#">
-                        Email for notification to Admin
-                    </label>
-                    <input type="text" name="notifyemail" id="notifyemail" value="#$notifyemail#" size="40" maxlength="150"/>
-                </div>
-
-                <div class="xar-form-input-wrapper">
-                    <label for="sendwelcomeemail" title="#xarML('Users can be notified when their account has been created')#" class="xar-form-label">
-                        Send Welcome Email
-                    </label>
-                    <xar:set name="checked">xarModVars::get('registration', 'sendwelcomeemail')</xar:set>
-                    <xar:data-input type="checkbox" name="sendwelcomeemail" checked="$checked"/>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="usermessage" class="xar-form-label" title="#xarML('The name of the email message to send the user')#">
-                        User Message Name
-                    </label>
-                    <xar:set name="value">xarModVars::get('registration', 'usermessage')</xar:set>
-                    <input type="text" name="usermessage" id="usermessage" value="#$value#" size="40" maxlength="150"/>
-                    &#160;(only for Mailer module notifications)
-                </div>
-                <xar:if condition="$checked">
-                    <div class="xar-form-input-wrapper-after">
-                        <a href="#xarModURL('registration','admin','sendtest',array('for' => 'user'))#">
-                            Send me a test message
-                        </a>
-                    </div>
+    <div class="xar-mod-body">
+         <xar:template type="module" file="admin-menu"/>
+        <h2>
+            Modify Configuration
+        </h2>
+        <div>
+            <ul class="xar-tabs xar-alt xar-norm-outline">
+                <li class="xar-tabs-label help" title="#xarML('Choose an action to perform')#">Configure:</li>
+                <xar:if condition="$tab eq 'general'">
+                    <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+                <xar:else />
+                    <xar:set name="tabclass">'xar-tab'</xar:set>
+                    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
                 </xar:if>
-
-                <div class="xar-form-input-wrapper">
-                    <label for="sendnotice" title="#xarML('Notify Admin when users create an account')#" class="xar-form-label">
-                        Send Notice To Admin
-                    </label>
-                    <xar:set name="checked">xarModVars::get('registration', 'sendnotice')</xar:set>
-                    <xar:data-input type="checkbox" name="sendnotice" checked="$checked"/>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="adminmessage" class="xar-form-label" title="#xarML('The name of the email message to send the administrator')#">
-                        Admin Message Name
-                    </label>
-                    <xar:set name="value">xarModVars::get('registration', 'adminmessage')</xar:set>
-                    <input type="text" name="adminmessage" id="adminmessage" value="#$value#" size="40" maxlength="150"/>
-                    &#160;(only for Mailer module notifications)
-                </div>
-                <xar:if condition="$checked">
-                    <div class="xar-form-input-wrapper-after">
-                        <a href="#xarModURL('registration','admin','sendtest',array('for' => 'admin'))#">
-                            Send the administrator a test message
-                        </a>
-                    </div>
+                <li class="#$tabclass#">
+                    <a href="#xarModURL('registration', 'admin', 'modifyconfig', array('tab' => 'general'))#" class="#$linkclass#">General</a>
+                </li>
+                <xar:if condition="$tab eq 'registration'">
+                    <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+                <xar:else />
+                    <xar:set name="tabclass">'xar-tab'</xar:set>
+                    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
                 </xar:if>
-
-                <div class="xar-form-input-wrapper-after xar-padding-thick">
-                    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
-                    <input type="hidden" name="phase" id="phase" value="update"/>
-                    <input type="hidden" name="tab" id="tab" value="#$tab#"/>
-                    <input type="submit" value="#xarML('Update Registration Configuration')#"/>
-                </div>
-                <div class="xar-form-input-wrapper-before">
-                <p>
-                    <xar:set name="mailconfigure">xarModURL('roles','admin','modifynotice')</xar:set>
-                    <xar:ml>
-                        <xar:mlstring>
-                            Further email notifications for user role changes made specifically by Administrators (not this Registration process) can be made
-                            in the <a href="#(1)">Roles Messaging configuration</a>.
-                        </xar:mlstring>
-                        <xar:mlvar>
-                           #$mailconfigure#
-                        </xar:mlvar>
-                    </xar:ml>
-                </p>
-                </div>
-            </fieldset>
-        </form>
-        <xar:comment>
-            Begin Filtering Options
+                <li class="#$tabclass#">
+                    <a href="#xarModURL('registration', 'admin', 'modifyconfig', array('tab' => 'registration'))#" class="#$linkclass#">Registration</a>
+                </li>
+                <xar:if condition="$tab eq 'filtering'">
+                    <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+                <xar:else />
+                    <xar:set name="tabclass">'xar-tab'</xar:set>
+                    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+                </xar:if>
+                <li class="#$tabclass#">
+                    <a href="#xarModURL('registration', 'admin', 'modifyconfig', array('tab' => 'filtering'))#" class="#$linkclass#">Filtering</a>
+                </li>
+            </ul>
+        </div>
+        <xar:comment> Begin General Options
         </xar:comment>
-        <xar:elseif condition="$tab eq 'filtering'"/>
-        <xar:if condition="xarModVars::get('registration', 'allowregistration')">
+        <xar:if condition="$tab eq 'general'">
             <form method="post" action="&xar-modurl-registration-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
-                <fieldset>
+            <fieldset>
+                <legend>
+                    General Options
+                </legend>
+                <xar:data-form object="$module_settings" />
+            </fieldset>
+            <fieldset>
                     <legend>
-                        Filtering Options
+                        Service/Privacy
                     </legend>
-                    <div class="xar-form-input-wrapper">
-                        <label for="disallowednames" title="#xarML('User names to which cannot be used')#" class="xar-form-label">
-                            Disallowed User Names:
+                    <div class="xar-form-input-wrapper-after">
+                        <xar:set name="checked">xarModVars::get('registration', 'showterms')</xar:set>
+                        <xar:data-input type="checkbox" name="showterms" checked="$checked"/>
+                        <label for="showterms" title="#xarML('Show terms of service in Registration user menu')#">
+                            Show Terms of Service link in the menu?
                         </label>
-                        <div class="xar-form-container-after">
-                            <textarea name="disallowednames" id="disallowednames" class="xar-form-textarealarge">#$names# </textarea>
-                        </div>
-                        <p>
-                            Note: Enter each name on a single line. Do not separate with comma, etc
-                        </p>
+                    </div>
+
+                    <div class="xar-form-input-wrapper-after">
+                        <xar:set name="checked">xarModVars::get('registration', 'showprivacy')</xar:set>
+                        <xar:data-input type="checkbox" name="showprivacy" checked="$checked"/>
+                        <label for="showprivacy" title="#xarML('Show privacy policy in Registration user menu')#">
+                            Show Privacy Policy link in the menu?
+                        </label>
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="disallowedips" title="#xarML('Deny access the site from these IP addresses')#" class="xar-form-label">
-                            Disallowed IP Addresses:
+                        <xar:set name="value">xarModVars::get('registration', 'termslink')</xar:set>
+                        <label for="showprivacy" title="#xarML('Where to display a custom terms of use statement from')#">
+                            Terms Link
                         </label>
-                        <div class="xar-form-container-after">
-                            <textarea name="disallowedips" id="disallowedips" class="xar-form-textarealarge">#$ips# </textarea>
-                        </div>
-                        <p class="xar-clearboth">
-                            Note: Enter each name on a single line. Do not separate with comma, etc
-                        </p>
+                        <xar:data-input type="textbox" name="termslink" value="$value"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <xar:set name="value">xarModVars::get('registration', 'privacylink')</xar:set>
+                        <label for="showprivacy" title="#xarML('Where to display a custom privacy statement from')#">
+                            Privacy Link
+                        </label>
+                        <xar:data-input type="textbox" name="privacylink" value="$value"/>
                     </div>
                 </fieldset>
                 <fieldset>
@@ -339,11 +100,251 @@
                     </div>
                 </fieldset>
             </form>
-            <xar:else />
-            <p>
-                User Registration must be enabled.
-            </p>
+            <xar:comment>
+                Begin Registration Options
+            </xar:comment>
+            <xar:elseif condition="$tab eq 'registration'"/>
+            <form method="post" action="&xar-modurl-registration-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+                <fieldset>
+                    <legend>
+                        Basic Configuration
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="allowregistration" title="#xarML('Allow anonymous users to create accounts')#" class="xar-form-label">
+                            Allow Registration
+                        </label>
+                        <xar:set name="options">
+                            array(
+                                array('id' => 0, 'name' => xarML('No')),
+                                array('id' => 1, 'name' => xarML('Yes')),
+                            )
+                        </xar:set>
+                        <xar:set name="value">xarModVars::get('registration', 'allowregistration')</xar:set>
+                        <xar:data-input type="dropdown" name="allowregistration" options="$options" value="$value"/>
+                        This setting controls all the others
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="defaultregmodule" title="#xarML('Select the DD object used for registration')#" class="xar-form-label">
+                            Registration Object:
+                        </label>
+                        <xar:set name="value">xarModVars::get('registration', 'registrationobject')</xar:set>
+                        <xar:data-input type="object" name="regobjectname" store_prop="name" value="$value"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="defaultgroup" title="#xarML('New Users automatically get assigned to this Group')#" class="xar-form-label">
+                            Default Group For New Users:
+                        </label>
+                        <xar:set name="checked">xarModVars::get('registration', 'defaultgroup')</xar:set>
+                        <xar:data-input type="grouplist" name="defaultgroup" id="defaultgroup" value="$checked"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="defaultgroup" title="#xarML('New Users automatically get assigned this state')#" class="xar-form-label">
+                            Default State For New Users:
+                        </label>
+                        <xar:set name="value">xarModVars::get('registration', 'defaultuserstate')</xar:set>
+                        <xar:set name="options">
+                            array(
+                                array('id' => xarRoles::ROLES_STATE_INACTIVE, 'name' => xarML('Inactive')),
+                                array('id' => xarRoles::ROLES_STATE_NOTVALIDATED, 'name' => xarML('Not Validated')),
+                                array('id' => xarRoles::ROLES_STATE_ACTIVE, 'name' => xarML('Active')),
+                                array('id' => xarRoles::ROLES_STATE_PENDING, 'name' => xarML('Pending Activation')),
+                            )
+                        </xar:set>
+                        <xar:data-input type="dropdown" name="defaultuserstate" id="defaultuserstate" options="$options" value="$value"/>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        User Settings
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="minage" title="#xarML('Users need to be this age or older to register')#" class="xar-form-label">
+                            Minimum Age To Be A User:
+                        </label>
+                        <xar:set name="value"><xar:var scope="module" module="registration" name="minage"/></xar:set>
+                        <input type="text" name="minage" id="minage" value="#$value#" maxlength="3" class="xar-form-textshort"/>
+                        A value of 0 disables the age check
+                    </div>
+                    <div class="xar-form-input-wrapper-after">
+                        <xar:set name="checked">xarModVars::get('registration', 'chooseownpassword')</xar:set>
+                        <xar:data-input type="checkbox" name="chooseownpassword" checked="$checked"/>
+                        <label for="chooseownpassword" title="#xarML('Allow users to choose their own password when registering')#">
+                            Users May Choose Their Own Password
+                        </label>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        Process Settings
+                    </legend>
+                    <div class="xar-form-input-wrapper-after">
+                        <xar:set name="checked">xarModVars::get('registration', 'explicitapproval')</xar:set>
+                        <xar:data-input type="checkbox" name="explicitapproval" checked="$checked"/>
+                        <label for="explicitapproval" title="#xarML('Administrator must approve and activate new user accounts')#">
+                            User Activation Requires Administrator Approval
+                        </label>
+                    </div>
+                    <div class="xar-form-input-wrapper-after">
+                        <xar:set name="checked">xarModVars::get('registration', 'requirevalidation')</xar:set>
+                        <xar:data-input type="checkbox" name="requirevalidation" checked="$checked"/>
+                        <label for="requirevalidation" title="#xarML('Users must confirm their accounts via confirmation code')#">
+                            Require Validation Of New Users
+                        </label>
+                    </div>
+                    <div class="xar-form-input-wrapper-after">
+                        <xar:set name="checked">xarModVars::get('registration', 'allowreview')</xar:set>
+                        <xar:data-input type="checkbox" name="allowreview" checked="$checked"/>
+                        <label for="allowreview" title="#xarML('Users can review and modify their registration information')#">
+                            Allow review of profile
+                        </label>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="reviewobject" title="#xarML('Select the DD object used for reviews (if allowed)')#" class="xar-form-label">
+                            Review Object:
+                        </label>
+                        <xar:set name="value">xarModVars::get('registration', 'reviewobject')</xar:set>
+                        <xar:data-input type="object" name="reviewobjectname" store_prop="name" value="$value"/>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        Notification
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="notificationmodule" class="xar-form-label" title="#xarML('The module to use for sending notifications')#">
+                            Send notifications with
+                        </label>
+                        <xar:set name="options">
+                            array(
+                                array('id' => 'mail', 'name' => 'Mail'),
+                                array('id' => 'mailer', 'name' => 'Mailer'),
+                            )
+                        </xar:set>
+                        <xar:set name="value">xarModVars::get('registration', 'notificationmodule')</xar:set>
+                        <xar:data-input type="dropdown" name="notificationmodule" id="notificationmodule" options="$options" value="$value"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="notifyemail" class="xar-form-label" title="#xarML('Email address for admin notification')#">
+                            Email for notification to Admin
+                        </label>
+                        <input type="text" name="notifyemail" id="notifyemail" value="#$notifyemail#" size="40" maxlength="150"/>
+                    </div>
+
+                    <div class="xar-form-input-wrapper">
+                        <label for="sendwelcomeemail" title="#xarML('Users can be notified when their account has been created')#" class="xar-form-label">
+                            Send Welcome Email
+                        </label>
+                        <xar:set name="checked">xarModVars::get('registration', 'sendwelcomeemail')</xar:set>
+                        <xar:data-input type="checkbox" name="sendwelcomeemail" checked="$checked"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="usermessage" class="xar-form-label" title="#xarML('The name of the email message to send the user')#">
+                            User Message Name
+                        </label>
+                        <xar:set name="value">xarModVars::get('registration', 'usermessage')</xar:set>
+                        <input type="text" name="usermessage" id="usermessage" value="#$value#" size="40" maxlength="150"/>
+                        &#160;(only for Mailer module notifications)
+                    </div>
+                    <xar:if condition="$checked">
+                        <div class="xar-form-input-wrapper-after">
+                            <a href="#xarModURL('registration','admin','sendtest',array('for' => 'user'))#">
+                                Send me a test message
+                            </a>
+                        </div>
+                    </xar:if>
+
+                    <div class="xar-form-input-wrapper">
+                        <label for="sendnotice" title="#xarML('Notify Admin when users create an account')#" class="xar-form-label">
+                            Send Notice To Admin
+                        </label>
+                        <xar:set name="checked">xarModVars::get('registration', 'sendnotice')</xar:set>
+                        <xar:data-input type="checkbox" name="sendnotice" checked="$checked"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="adminmessage" class="xar-form-label" title="#xarML('The name of the email message to send the administrator')#">
+                            Admin Message Name
+                        </label>
+                        <xar:set name="value">xarModVars::get('registration', 'adminmessage')</xar:set>
+                        <input type="text" name="adminmessage" id="adminmessage" value="#$value#" size="40" maxlength="150"/>
+                        &#160;(only for Mailer module notifications)
+                    </div>
+                    <xar:if condition="$checked">
+                        <div class="xar-form-input-wrapper-after">
+                            <a href="#xarModURL('registration','admin','sendtest',array('for' => 'admin'))#">
+                                Send the administrator a test message
+                            </a>
+                        </div>
+                    </xar:if>
+
+                    <div class="xar-form-input-wrapper-after xar-padding-thick">
+                        <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                        <input type="hidden" name="phase" id="phase" value="update"/>
+                        <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+                        <input type="submit" value="#xarML('Update Registration Configuration')#"/>
+                    </div>
+                    <div class="xar-form-input-wrapper-before">
+                    <p>
+                        <xar:set name="mailconfigure">xarModURL('roles','admin','modifynotice')</xar:set>
+                        <xar:ml>
+                            <xar:mlstring>
+                                Further email notifications for user role changes made specifically by Administrators (not this Registration process) can be made
+                                in the <a href="#(1)">Roles Messaging configuration</a>.
+                            </xar:mlstring>
+                            <xar:mlvar>
+                               #$mailconfigure#
+                            </xar:mlvar>
+                        </xar:ml>
+                    </p>
+                    </div>
+                </fieldset>
+            </form>
+            <xar:comment>
+                Begin Filtering Options
+            </xar:comment>
+            <xar:elseif condition="$tab eq 'filtering'"/>
+            <xar:if condition="xarModVars::get('registration', 'allowregistration')">
+                <form method="post" action="&xar-modurl-registration-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+                    <fieldset>
+                        <legend>
+                            Filtering Options
+                        </legend>
+                        <div class="xar-form-input-wrapper">
+                            <label for="disallowednames" title="#xarML('User names to which cannot be used')#" class="xar-form-label">
+                                Disallowed User Names:
+                            </label>
+                            <div class="xar-form-container-after">
+                                <textarea name="disallowednames" id="disallowednames" class="xar-form-textarealarge">#$names# </textarea>
+                            </div>
+                            <p>
+                                Note: Enter each name on a single line. Do not separate with comma, etc
+                            </p>
+                        </div>
+                        <div class="xar-form-input-wrapper">
+                            <label for="disallowedips" title="#xarML('Deny access the site from these IP addresses')#" class="xar-form-label">
+                                Disallowed IP Addresses:
+                            </label>
+                            <div class="xar-form-container-after">
+                                <textarea name="disallowedips" id="disallowedips" class="xar-form-textarealarge">#$ips# </textarea>
+                            </div>
+                            <p class="xar-clearboth">
+                                Note: Enter each name on a single line. Do not separate with comma, etc
+                            </p>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="xar-form-input-wrapper-after">
+                            <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                            <input type="hidden" name="phase" id="phase" value="update"/>
+                            <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+                            <input type="submit" value="#xarML('Update Registration Configuration')#"/>
+                        </div>
+                    </fieldset>
+                </form>
+                <xar:else />
+                <p>
+                    User Registration must be enabled.
+                </p>
+            </xar:if>
         </xar:if>
-    </xar:if>
-</div>
+    </div>
 </xar:template>

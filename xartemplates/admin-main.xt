@@ -1,101 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        Registration Administration
-    </span>
-</div>
-<div class="xar-mod-body">
-  <xar:template type="module" file="admin-menu"/>
-    <img src="#xarTplGetImage('admin.gif', 'roles')#" alt="official icon" width="96" height="96" class="xar-module-icon"/>
-    <h2>
-        Overview
-    </h2>
-    <h3>
-        What is it?
-    </h3>
-    <p>
-        The Registration module handles management of User Registration on your site, and options for user registration. 
-    </p>
-    <p>
-        The Registration module is useful when used in conjunction with:
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            Registration Administration
+        </span>
+    </div>
+    <div class="xar-mod-body">
+      <xar:template type="module" file="admin-menu"/>
+        <img src="#xarTplGetImage('admin.gif', 'roles')#" alt="official icon" width="96" height="96" class="xar-module-icon"/>
+        <h2>
+            Overview
+        </h2>
+        <h3>
+            What is it?
+        </h3>
+        <p>
+            The Registration module handles management of User Registration on your site, and options for user registration. 
+        </p>
+        <p>
+            The Registration module is useful when used in conjunction with:
+            <ul>
+               <li>an authentication module (in a default installation this is <strong>Authsystem</strong> in Core) that handles the users' login and authentication process.</li>
+               <li>the <strong>Roles</strong> module that manages Roles on your site. Registered users can be assigned to roles that you setup and configure on your site.</li>
+            </ul>
+        </p>
+        <br />
+        <h3>
+            How to use it?
+        </h3>
+        <ol>
+            <li><strong>Add the Registration module</strong> to your module directory if it is not already present.</li>
+             <li><strong>Install and activate</strong> the Registration module via the Module module.</li>
+             <li><strong>Configure options </strong>through the Admin Panel Modify Config link. General, registration and filter options are available.</li>
+             <li><strong>Check user privileges</strong>. Depending on choices you made at installation time, and additional privilege setups, you may need to create
+             additional privileges and assign to your Anonymous users so they can view the Registration module menu link and login block.</li>
+        </ol>
+        <h4>A. Configurations Options for Administrators</h4>
+        <p>The following options are available through the Modify Config link in the Admin Panel Registration menu.</p>
+         <ol>
+            <li><strong>General Options tab:</strong> allows you to set short urls and options for display of
+                 Terms of Service and Privacy Policy.
+            </li>
+            <li><strong>Registration Options tab :</strong> provides options for user registration including default
+                group for new users, allowing of registration, minimum registration age, notification emails to users and
+                the designated site administrator, enabling users to set their own password and minimum password length,
+                display of Roles module dynamic data fields, and requirement for unique email address.
+            </li>
+            <li><strong>Filtering Options tab :</strong>Enables you to control registrations by blocking
+                registrations on the basis of User Names, IP address or email address.
+            </li>
+         </ol>
+         <h4>B. User Menu Options</h4>
+         <ol>
+            <li>A Registration link will display in the User Menu options when a user is not logged in. On login, this option is not displayed to the user.</li>
+            <li>Links to Terms of Service and Privacy Policy are displayed if these options are selected in the Modify Config Registration tab options.</li>
+         </ol>
+        <br />
+        <h3>
+            Included Blocks
+        </h3>
         <ul>
-           <li>an authentication module (in a default installation this is <strong>Authsystem</strong> in Core) that handles the users' login and authentication process.</li>
-           <li>the <strong>Roles</strong> module that manages Roles on your site. Registered users can be assigned to roles that you setup and configure on your site.</li>
+            <li>
+                <strong>Login Block</strong> allows users to login and also contains a link to user Registration. This block is used instead of the roles login block.
+            </li>
         </ul>
-    </p>
-    <br />
-    <h3>
-        How to use it?
-    </h3>
-    <ol>
-        <li><strong>Add the Registration module</strong> to your module directory if it is not already present.</li>
-         <li><strong>Install and activate</strong> the Registration module via the Module module.</li>
-         <li><strong>Configure options </strong>through the Admin Panel Modify Config link. General, registration and filter options are available.</li>
-         <li><strong>Check user privileges</strong>. Depending on choices you made at installation time, and additional privilege setups, you may need to create
-         additional privileges and assign to your Anonymous users so they can view the Registration module menu link and login block.</li>
-    </ol>
-    <h4>A. Configurations Options for Administrators</h4>
-    <p>The following options are available through the Modify Config link in the Admin Panel Registration menu.</p>
-     <ol>
-        <li><strong>General Options tab:</strong> allows you to set short urls and options for display of
-             Terms of Service and Privacy Policy.
-        </li>
-        <li><strong>Registration Options tab :</strong> provides options for user registration including default
-            group for new users, allowing of registration, minimum registration age, notification emails to users and
-            the designated site administrator, enabling users to set their own password and minimum password length,
-            display of Roles module dynamic data fields, and requirement for unique email address.
-        </li>
-        <li><strong>Filtering Options tab :</strong>Enables you to control registrations by blocking
-            registrations on the basis of User Names, IP address or email address.
-        </li>
-     </ol>
-     <h4>B. User Menu Options</h4>
-     <ol>
-        <li>A Registration link will display in the User Menu options when a user is not logged in. On login, this option is not displayed to the user.</li>
-        <li>Links to Terms of Service and Privacy Policy are displayed if these options are selected in the Modify Config Registration tab options.</li>
-     </ol>
-    <br />
-    <h3>
-        Included Blocks
-    </h3>
-    <ul>
-        <li>
-            <strong>Login Block</strong> allows users to login and also contains a link to user Registration. This block is used instead of the roles login block.
-        </li>
-    </ul>
-    <br />
-    <h3>
-        Included Hooks
-    </h3>
-    <p>
-        None provided at this time. However Dynamic Data properties setup in the Roles module can be displayed at the time of user registration by enabling this option in the Modify Config Registration tab option.
-    </p>
-     <br />
-    <h3>
-        Included Dynamic Data Properties
-    </h3>
-    <p>
-        None
-    </p>
-    <br />
-   <h3>Further Information</h3>
-   <p>
-      Further information on the Registration module can be found at:
-   </p>
-   <ul>
-      <li>Registration Module Extension page at&#160;<a title="#xarML('Registration Module - Xaraya Extension 30205')#" href="http://www.xaraya.com/index.php/release/30205.html">Xaraya Extension and Releases</a>.
-       Click on Version History tab at the bottom to get the latest release information.
-      </li>
-      <li>Related tutorials and documentation on Registration module at&#160;<a href="http://www.xaraya.com/index.php/keywords/registration/" title="#xarML('Related documentation on Registration')#">Xaraya Documentation.</a>
-      </li>
-      <li>Extended information for Developers at&#160;<a href="http://www.xaraya.com/documentation/rfcs/rfc0030.html" title="#xarML('RFC 30')#">Xaraya RFC-30</a>
-      </li>
+        <br />
+        <h3>
+            Included Hooks
+        </h3>
+        <p>
+            None provided at this time. However Dynamic Data properties setup in the Roles module can be displayed at the time of user registration by enabling this option in the Modify Config Registration tab option.
+        </p>
+         <br />
+        <h3>
+            Included Dynamic Data Properties
+        </h3>
+        <p>
+            None
+        </p>
+        <br />
+       <h3>Further Information</h3>
+       <p>
+          Further information on the Registration module can be found at:
+       </p>
+       <ul>
+          <li>Registration Module Extension page at&#160;<a title="#xarML('Registration Module - Xaraya Extension 30205')#" href="http://www.xaraya.com/index.php/release/30205.html">Xaraya Extension and Releases</a>.
+           Click on Version History tab at the bottom to get the latest release information.
+          </li>
+          <li>Related tutorials and documentation on Registration module at&#160;<a href="http://www.xaraya.com/index.php/keywords/registration/" title="#xarML('Related documentation on Registration')#">Xaraya Documentation.</a>
+          </li>
+          <li>Extended information for Developers at&#160;<a href="http://www.xaraya.com/documentation/rfcs/rfc0030.html" title="#xarML('RFC 30')#">Xaraya RFC-30</a>
+          </li>
 
-  </ul>
-  <p class="xar-sub">
-    <strong>&#160;Registration Module Overview</strong><br />&#160;Version 1.0.1&#160; 2006-02-04
-  </p>
-</div>
+      </ul>
+      <p class="xar-sub">
+        <strong>&#160;Registration Module Overview</strong><br />&#160;Version 1.0.1&#160; 2006-02-04
+      </p>
+    </div>
 </xar:template>
-
