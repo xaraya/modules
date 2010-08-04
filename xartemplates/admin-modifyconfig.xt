@@ -69,9 +69,7 @@
                 <h3>
                     General Options
                 </h3>
-                <fieldset>
-                    <xar:data-form object="$module_settings"/>
-                </fieldset>
+                <xar:data-form object="$module_settings"/>
                 <fieldset>
                     <div class="xar-form-input-wrapper-after">
                         <input type="hidden" name="authid" id="authid" value="#$authid#"/>
