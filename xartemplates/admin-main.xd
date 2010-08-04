@@ -16,19 +16,30 @@
   <p>
     <xar:mlstring>To use the Authemail module you need to:</xar:mlstring>
   </p>
-  <xar:set name="defaultauthmodule">xarModGetNameFromID(xarModGetVar('roles','defaultauthmodule'))</xar:set>
-  <xar:set name="configlink">xarModURL('roles','admin','modifyconfig',array('tab'=>'general'))</xar:set>
- <ul>
+  <xar:set name="configlink">xarModURL('base','admin','modifyconfig',array('tab'=>'security'))</xar:set>
+ <ol>
     <li><xar:mlstring>Install and activate the Authemail module</xar:mlstring></li>
     <li>
+        <xar:set name="uniquelink">xarModURL('roles','admin','modifyconfig',array('tab'=>'restrictions'))</xar:set>
         <xar:ml>
-        <xar:mlstring>Check and ensure the Authemail module is the 'default' authentication module set in the
-        Roles module. The current default authentication module is <strong>#(1)</strong>. To change this go to <a href="#(2)">Roles Configuration</a></xar:mlstring>
-        <xar:mlvar>#$defaultauthmodule#</xar:mlvar>
+            <xar:mlstring>Ensure that you are using UNIQUE emails for each registered user.
+            To check and change this go to Roles Modify configuration at the <a href="#(1)">Roles Restrictions Tab</a> and set the 
+            checkbox for 'Email Address Must Be Unique To Each Registered User'.
+        </xar:mlstring>
+        <xar:mlvar>#$uniquelink#</xar:mlvar>
+        </xar:ml>
+    </li>
+    <li>
+        <xar:ml>
+        <xar:mlstring>Authemail can be used as the first method of authentication with fall back to normal Authsystem checks. To do so, 
+        check and ensure the Authemail module is the 'default' authentication module set in the
+        Base module on the security tab. It should be installed and moved to the first place in the list of Authentication Modules.
+        To check or change this go to <a href="#(1)">Base Module Configuration</a></xar:mlstring>
         <xar:mlvar>#$configlink#</xar:mlvar>
         </xar:ml>
     </li>
-  </ul>
+
+  </ol>
 
   <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
   <p>
@@ -57,7 +68,7 @@
     </li>
   </ul>
   <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>Authemail Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.3&nbsp; 2006-07-10
+    <strong>&nbsp;<xar:mlstring>Authemail Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.4&nbsp; 2010-05-20
   </p>
 </div>
 
