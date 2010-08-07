@@ -9,7 +9,7 @@
     {
         if (!xarSecurityCheck('ManageFoo')) return;
 
-        if (!xarVarFetch('name',       'str:1',  $name,    '',     XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('name',       'str:1',  $name,    'foo_foo',     XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('itemid' ,     'int',    $data['itemid'] , '' ,          XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('confirm',    'str:1',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
 
