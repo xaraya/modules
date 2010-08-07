@@ -11,7 +11,7 @@
 
         if (!xarVarFetch('name',       'str:1',  $name,    '',     XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('itemid' ,     'int',    $data['itemid'] , '' ,          XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('confirm',    'str:1',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
 
         $data['object'] = DataObjectMaster::getObject(array('name' => $name));
         $data['object']->getItem(array('itemid' => $data['itemid']));
