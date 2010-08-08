@@ -128,8 +128,8 @@ function uploads_userapi_db_getall_files( $args )
     $uploadDir = xarModVars::get('uploads','path.uploads-directory');
 
     // remove the '/' at the end of the path
-    $importDir = eregi_replace('/$', '', $importDir);
-    $uploadDir = eregi_replace('/$', '', $uploadDir);
+    $importDir = str_replace('/$', '', $importDir);
+    $uploadDir = str_replace('/$', '', $uploadDir);
 
     if(xarServer::getVar('PATH_TRANSLATED')) {
         $base_directory = dirname(realpath(xarServer::getVar('PATH_TRANSLATED')));
