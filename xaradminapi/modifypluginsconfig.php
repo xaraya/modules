@@ -11,8 +11,8 @@
  *  To be used whenever plugin configurations need to be modified by the ckeditor module
  */
 
-function ckeditor_adminapi_modifypluginsconfig($args)
-{
+function ckeditor_adminapi_modifypluginsconfig($args) {
+
     extract($args);
 
     $pluginsConfigFile = sys::code() . 'modules/ckeditor/xartemplates/includes/ckeditor/plugins/pgrfilemanager/config.plugins.php';

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:style scope="module" module="base" file="navtabs"/>
+    
     <div class="xar-mod-head">
         <span class="xar-mod-title">
             <xar:if condition="xarModVars::get('ckeditor','useModuleAlias')">
@@ -11,6 +11,9 @@
             </xar:if>
         </span>
     </div>
+
+    <xar:template scope="module" file="admintabs"/>
+
     <div class="xar-mod-body">
         <h2>
             <xar:mlstring>
@@ -63,7 +66,6 @@
                     <div class="xar-form-input-wrapper-after">
                         <input type="hidden" name="authid" id="authid" value="#$authid#"/>
                         <input type="hidden" name="phase" id="phase" value="update"/>
-                        <input type="hidden" name="tab" id="tab" value="#$tab#"/>
                         <input type="submit" value="#xarML('Update CKEditor Configuration')#"/>
                     </div>
                 </fieldset>

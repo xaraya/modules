@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+     
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:if condition="xarModVars::get('ckeditor','useModuleAlias')">
+                <xar:var scope="module" module="ckeditor" name="aliasname"/>
+            <xar:else />
+                <xar:mlstring>CKEditor Administration</xar:mlstring>
+            </xar:if>
+        </span>
+    </div>
+
+    <xar:template scope="module" file="admintabs"/>
+
+    <div class="xar-mod-body">
+        <h2>
+            <xar:mlstring>Overview</xar:mlstring>
+        </h2>
+
+	<p>The CKEditor module supplies the "editor" property type for use in your objects.  To use CKEditor with a Dynamic Data object, simply add one or more "editor" properties to your object.</p> 
+
+        <p>Configuration settings for CKEditor are found in
+	<strong><a href="#sys::code()#modules/ckeditor/xartemplates/includes/ckeditor/config.js">ckeditor/xartemplates/includes/ckeditor/config.js</a></strong>
+	</p>
+
+	<p>
+	There, you can control the style of the editor, which buttons to include in the toolbars, language, size, which plugins to load, etc.  The official CKEditor documentation includes a <a href="http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html" target="new">reference for config settings</a>&#160;<img src="code/modules/ckeditor/xarimages/exit.png" width="10" height="10" alt="leave this website" />.   
+        </p>
+	<h4>PGRFileManager</h4>
+	<p>
+	The CKEditor module comes with the <a href="http://pgrfilemanager.sourceforge.net/" target="new">PGRFileManager</a>&#160;<img src="code/modules/ckeditor/xarimages/exit.png" width="10" height="10" alt="leave this website" /> plugin, which is enabled by default.  In the editor, you can access this file manager by clicking on the link button or image button and then clicking on Browse Server.  To disable the file manager, comment out this line in CKEditor's config.js:
+	<blockquote>CKEDITOR.plugins.load('pgrfilemanager');</blockquote>
+	</p>
+	<p>
+	Options for creating and deleting directories are available in the file manager by right-clicking on directories in the directory tree.  You can also drag directories around, and can drag directories into other directories and drag files into directories.  
+	</p>
+	<p>
+	The <a href="#xarmodurl('ckeditor','admin','modifyconfig')#">modify config page</a> has two settings for PGRFileManager: rootPath and urlPath.  By default, these are set to your var/uploads directory.
+	</p>
+	<p>
+	Note: Display of file thumbnails can be buggy in Windows.   You may find that files will upload but their thumbs will not always display in the pane where you expect them.</p>
+
+        <div style="clear:both">&#160;</div>
+    </div>
+</xar:template>

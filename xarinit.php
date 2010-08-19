@@ -38,10 +38,10 @@
     #
     # Set up modvars
     #
-        xarModVars::set('ckeditor', 'itemsperpage', 20);
-        xarModVars::set('ckeditor', 'useModuleAlias',0);
-        xarModVars::set('ckeditor', 'aliasname','CKEditor');
-        xarModVars::set('ckeditor', 'defaultmastertable','ckeditor_ckeditor');
+        //xarModVars::set('ckeditor', 'itemsperpage', 20);
+        //xarModVars::set('ckeditor', 'useModuleAlias',0);
+        //xarModVars::set('ckeditor', 'aliasname','CKEditor');
+        //xarModVars::set('ckeditor', 'defaultmastertable','ckeditor_ckeditor');
 
 		$PGRFileManager_rootPath = realpath(sys::varpath().'/uploads');
 		$PGRFileManager_urlPath = xarServer::getBaseURL() . 'var/uploads';
