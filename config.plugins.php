@@ -4,6 +4,18 @@
 
 	$config['PGRFileManager.urlPath'] = 'http://localhost/lsc/html/var/uploads';
 
+	$config['PGRFileManager.allowedExtensions'] = 'pdf, txt, rtf, jpg, gif, jpeg, png';  //'' means all files
+
+	$config['PGRFileManager.imagesExtensions'] = 'jpg, gif, jpeg, png, bmp';
+	
+	$config['PGRFileManager.fileMaxSize'] = 1024 * 1024 * 10; // bytes
+
+	$config['PGRFileManager.imageMaxHeight'] = 724;
+
+	$config['PGRFileManager.imageMaxWidth'] = 1280;
+
+	$config['PGRFileManager.allowEdit'] = false;
+
 	// This is from an attempt to allow different paths for different objects...
 	/*if (!empty($prop)) {
 

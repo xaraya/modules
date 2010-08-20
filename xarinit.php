@@ -43,10 +43,23 @@
         //xarModVars::set('ckeditor', 'aliasname','CKEditor');
         //xarModVars::set('ckeditor', 'defaultmastertable','ckeditor_ckeditor');
 
-		$PGRFileManager_rootPath = realpath(sys::varpath().'/uploads');
+		if (strstr(realpath(sys::varpath()), '/')) { 
+			$str = '/uploads';
+		} else {
+			$str = '\uploads';
+		}
+		$PGRFileManager_rootPath = realpath(sys::varpath()) . $str;
 		$PGRFileManager_urlPath = xarServer::getBaseURL() . 'var/uploads';
+ 
 		xarModVars::set('ckeditor', 'PGRFileManager_rootPath', $PGRFileManager_rootPath);
 		xarModVars::set('ckeditor', 'PGRFileManager_urlPath', $PGRFileManager_urlPath);
+		xarModVars::set('ckeditor', 'PGRFileManager_allowedExtensions', 'pdf, txt, rtf, jpg, gif, jpeg, png');
+		xarModVars::set('ckeditor', 'PGRFileManager_imagesExtensions', 'jpg, gif, jpeg, png, bmp');
+		xarModVars::set('ckeditor', 'PGRFileManager_fileMaxSize', 1024 * 1024 * 10);
+		xarModVars::set('ckeditor', 'PGRFileManager_imageMaxHeight', 724);
+		xarModVars::set('ckeditor', 'PGRFileManager_imageMaxWidth', 1280);
+		xarModVars::set('ckeditor', 'PGRFileManager_allowEdit', 'true');
+
 		xarMod::apiFunc('ckeditor','admin','modifypluginsconfig', array(
 			'name' => 'PGRFileManager.rootPath',
 			'value' => $PGRFileManager_rootPath

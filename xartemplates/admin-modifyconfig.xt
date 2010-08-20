@@ -47,19 +47,32 @@
 		    <fieldset>
 		    <legend>Plugins Config</legend>
 
-		    <div class="xar-form-input-wrapper">
-                      <label for="PGRFileManager_rootPath" class="xar-form-label"><xar:mlstring>PGRFileManager rootPath</xar:mlstring></label>
-                     
-                         <xar:set name="PGRFileManager_rootPath">xarModVars::get('ckeditor','PGRFileManager_rootPath')</xar:set>
-                        <xar:data-input type="textbox" name="PGRFileManager_rootPath" value="$PGRFileManager_rootPath" />
-                    </div>
+<h3>PGRFileManager settings</h3>
+		    <xar:set name="pgrconfig">array(
+				'rootPath' => '',
+				'urlPath' => '',
+				'allowedExtensions' => 'Leave empty to allow all extensions',
+				/*'imagesExtensions' => '',*/
+				'fileMaxSize' => '',
+				'imageMaxHeight' => '',
+				'imageMaxWidth' => '',
+				'allowEdit' => ''
+			);</xar:set>
 
+		<xar:foreach in="$pgrconfig" key="$key" value="$note">
+			<xar:set name="pgrsetting">'PGRFileManager_'.$key</xar:set>
 		    <div class="xar-form-input-wrapper">
-                      <label for="PGRFileManager_rootPath" class="xar-form-label"><xar:mlstring>PGRFileManager urlPath</xar:mlstring></label>
+                      <label for="#$pgrsetting#" class="xar-form-label">#$key#</label>
                      
-                         <xar:set name="PGRFileManager_urlPath">xarModVars::get('ckeditor','PGRFileManager_urlPath')</xar:set>
-                        <xar:data-input type="textbox" name="PGRFileManager_urlPath" value="$PGRFileManager_urlPath" />
-                    </div>
+                         <xar:set name="setting">xarModVars::get('ckeditor',$pgrsetting)</xar:set>
+			 <xar:if condition="$key eq 'allowEdit'">
+				<xar:set name="options">array('false', 'true')</xar:set>
+				<xar:data-input type="dropdown" options="$options" name="$pgrsetting" value="$setting" />
+			<xar:else />
+				<xar:data-input type="textbox" name="$pgrsetting" value="$setting" /> #$note#
+			</xar:if>
+                    </div><br />
+		</xar:foreach>
 
                 </fieldset>
                 <fieldset>
