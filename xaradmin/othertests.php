@@ -5,7 +5,7 @@
  */
     function xarayatesting_admin_othertests($args)
     {
-        xarResponse::Redirect(xarModURL('xarayatesting','user','othertests',$args));
+        xarController::redirect(xarModURL('xarayatesting','user','othertests',$args));
         return true;
     }
 ?>
