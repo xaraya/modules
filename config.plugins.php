@@ -14,7 +14,7 @@
 
 	$config['PGRFileManager.imageMaxWidth'] = 1280;
 
-	$config['PGRFileManager.allowEdit'] = true;
+	$config['PGRFileManager.allowEdit'] = 'true';
 
 	// This is from an attempt to allow different paths for different objects...
 	/*if (!empty($prop)) {

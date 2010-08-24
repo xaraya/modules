@@ -30,14 +30,24 @@
         </p>
 	<h4>PGRFileManager</h4>
 	<p>
-	The CKEditor module comes with the <a href="http://pgrfilemanager.sourceforge.net/" target="new">PGRFileManager</a>&#160;<img src="code/modules/ckeditor/xarimages/exit.png" width="10" height="10" alt="leave this website" /> plugin, which is enabled by default.  In the editor, you can access this file manager by clicking on the link button or image button and then clicking on Browse Server.  To disable the file manager, comment out this line in CKEditor's config.js:
-	<blockquote>CKEDITOR.plugins.load('pgrfilemanager');</blockquote>
+	The CKEditor module comes with the <a href="http://pgrfilemanager.sourceforge.net/" target="new">PGRFileManager</a>&#160;<img src="code/modules/ckeditor/xarimages/exit.png" width="10" height="10" alt="leave this website" /> plugin, which is disabled by default.  To enable the file manager, uncomment this line in CKEditor's config.js:
+	<blockquote>//CKEDITOR.plugins.load('pgrfilemanager');</blockquote>
+	</p>
+	<p>
+	Once you've enabled pgrfilemanager, you can access it in the editor by clicking on the link button or image button and then clicking on Browse Server. 
 	</p>
 	<p>
 	Options for creating and deleting directories are available in the file manager by right-clicking on directories in the directory tree.  You can also drag directories around, and can drag directories into other directories and drag files into directories.  
 	</p>
 	<p>
-	The <a href="#xarmodurl('ckeditor','admin','modifyconfig')#">modify config page</a> has two settings for PGRFileManager: rootPath and urlPath.  By default, these are set to your var/uploads directory.
+	The <a href="#xarmodurl('ckeditor','admin','modifyconfig')#">modify config page</a> has a number of settings for PGRFileManager:
+	<blockquote><strong>rootPath</strong> -- The root location for your directories and files.<br />
+	<strong>urlPath</strong> -- The base URL used by the editor to link to your files.<br />
+	<strong>allowedExtensions</strong> -- Comma-separated list of file extensions that are permissible to upload.<br />
+	<strong>fileMaxSize</strong> -- Maximum file size of an upload.<br />
+	<strong>imageMaxHeight</strong> -- Maximum height for image uploads.<br />
+	<strong>imageMaxWidth</strong> -- Maximum width for image uploads.<br />
+	<strong>allowEdit</strong> -- Whether the file manager will allow new uploads and editing of previously uploaded files and directories.  If set to false, you will only be able to select from previously uploaded files.</blockquote>
 	</p>
 	<p>
 	Note: Display of file thumbnails can be buggy in Windows.   You may find that files will upload but their thumbs will not always display in the pane where you expect them.</p>
