@@ -34,9 +34,15 @@ PGRFileManagerConfig::$imageMaxHeight = $config['PGRFileManager.imageMaxHeight']
 //Max image file width in px
 PGRFileManagerConfig::$imageMaxWidth = $config['PGRFileManager.imageMaxWidth'];
 //Allow or disallow edit, delete, move, upload, rename files and folders
+if ($config['PGRFileManager.allowEdit'] == 'true') {
+	$config['PGRFileManager.allowEdit'] = true;
+} else {
+	$config['PGRFileManager.allowEdit'] = false;
+}
+
 PGRFileManagerConfig::$allowEdit = $config['PGRFileManager.allowEdit'];
 
-//Autorization
+//Authorization
 PGRFileManagerConfig::$authorize = false;        // true - false
 PGRFileManagerConfig::$authorizeUser = 'user';
 PGRFileManagerConfig::$authorizePass = 'password';

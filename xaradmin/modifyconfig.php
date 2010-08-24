@@ -37,7 +37,7 @@ function ckeditor_admin_modifyconfig() {
 				'fileMaxSize' => 'int',
 				'imageMaxHeight' => 'int',
 				'imageMaxWidth' => 'int',
-				'allowEdit' => 'bool'
+				'allowEdit' => 'str'
 			);
 
 			foreach ($pgrconfig as $key => $type) { 
