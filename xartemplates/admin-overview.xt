@@ -41,13 +41,13 @@
 	</p>
 	<p>
 	The <a href="#xarmodurl('ckeditor','admin','modifyconfig')#">modify config page</a> has a number of settings for PGRFileManager:
-	<blockquote><strong>rootPath</strong> -- The root location for your directories and files.<br />
-	<strong>urlPath</strong> -- The base URL used by the editor to link to your files.<br />
+	<blockquote><strong>rootPath</strong> -- Root location for your directories and files.  Set this to a directory that exists on your server.<br />
+	<strong>urlPath</strong> -- Base URL used by the editor to link to your files.  (Must be the URL equivalent of rootPath.)<br />
 	<strong>allowedExtensions</strong> -- Comma-separated list of file extensions that are permissible to upload.<br />
 	<strong>fileMaxSize</strong> -- Maximum file size of an upload.<br />
 	<strong>imageMaxHeight</strong> -- Maximum height for image uploads.<br />
 	<strong>imageMaxWidth</strong> -- Maximum width for image uploads.<br />
-	<strong>allowEdit</strong> -- Whether the file manager will allow new uploads and editing of previously uploaded files and directories.  If set to false, you will only be able to select from previously uploaded files.</blockquote>
+	<strong>allowEdit</strong> -- This setting controls whether the file manager will allow new uploads and editing of previously uploaded files and directories.  If set to false, you will only be able to select from previously uploaded files.</blockquote>
 	</p>
 	<p>
 	Note: Display of file thumbnails can be buggy in Windows.   You may find that files will upload but their thumbs will not always display in the pane where you expect them.</p>
