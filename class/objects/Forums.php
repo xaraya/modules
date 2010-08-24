@@ -408,6 +408,7 @@ class ForumsList extends DataObjectList
     {
         if (empty($itemid)) return array();
         $data['itemid'] = $itemid;
+        $data['catid'] = !empty($this->catid) && is_numeric($this->catid) ? $this->catid : null;
         // import our own class to handle link cache (less code required)
         sys::import('modules.crispbb.class.cache.links');
         // insist on using fid in urlargs (for now)
