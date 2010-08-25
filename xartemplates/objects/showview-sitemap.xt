@@ -39,7 +39,7 @@
 
 			<xar:set name="urlpath">substr($path,1)</xar:set>
 
-			<div class="#$spacer#">
+			<div class="#$spacer#">  
 			<span class="same">#$same#</span>
 			<a href="#xarServer::getBaseURL()##$index##$urlpath#" class="sitemap"><strong>#$sub#</strong></a>
 			</div>

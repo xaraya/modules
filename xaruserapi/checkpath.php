@@ -26,11 +26,11 @@ function path_userapi_checkpath($args) {
 	$items = $mylist->getItems($filters);
 	if(count($items) == 0) {
 		return false;
-	} elseif (count($items) == 1) {
+	} elseif (count($items) == 1) { 
 		$item = end($items);
 		$itemid = $item['itemid'];
 		$action = $item['action'];
-		$arr = array($itemid => $action);
+		$arr = array($itemid => $action);  
 		return $arr;
 	} else {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',

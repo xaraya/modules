@@ -45,7 +45,13 @@ function path_userapi_itemurl($args){
         $BaseModURL = 'index.php';
     }
 
-	$url = xarServer::GetBaseURL() . $BaseModURL . $path;
+	$start = xarServer::GetBaseURL() . $BaseModURL;
+
+	if (substr($start, -1, 1) == '/') {
+		$path = substr($path,1);
+	}
+
+	$url = $start . $path;
 
 	if (!$withscheme) {
 			$url = xarServer::GetBaseURL() . $BaseModURL . $path;

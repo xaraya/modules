@@ -12,12 +12,11 @@
  * @author potion <ryan@webcommunicate.net>
  */
 /**
- * Create a new item of the path object
+ * Modify a path
  */
 function path_admin_modify()
 {
-    // See if the current user has the privilege to add an item. We cannot pass any extra arguments here
-    if (!xarSecurityCheck('AddPath')) return;
+    if (!xarSecurityCheck('EditPath')) return;
 
 	if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('itemid',       'id',    $itemid,   NULL, XARVAR_DONT_SET)) {return;}

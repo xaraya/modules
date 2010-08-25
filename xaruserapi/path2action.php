@@ -20,7 +20,7 @@ function path_userapi_path2action($args)
 	extract($args);
 
 	$arr = xarMod::apiFunc('path','user','checkpath',array('path' => $path));
-
+ 
 	if ($arr) {
 		return reset($arr);
 	} else {
