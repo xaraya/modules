@@ -1,94 +1,31 @@
 <adminmenu>
     <menuitems>
         <menuitem>
-            <mask>ManagePublications</mask>
-            <type>admin</type>
             <includes>
-                <includeitem>view_pages</includeitem>
+                <includeitem>main</includeitem>
+                <includeitem>overview</includeitem>
             </includes>
-            <target>view_pages</target>
-            <title>View Publications Tree</title>
-            <label>View Publications Tree</label>
+            <target>main</target>
+            <title>Short documentation of this module</title>
+            <label>Foo Overview</label>
         </menuitem>
         <menuitem>
-            <mask>ManagePublications</mask>
-            <type>admin</type>
+            <mask>ManageFoo</mask>
             <includes>
                 <includeitem>view</includeitem>
             </includes>
             <target>view</target>
-            <title>Manage Publications</title>
-            <label>Manage Publications</label>
+            <title>Manage the master tables of thsi module</title>
+            <label>Master Tables</label>
         </menuitem>
         <menuitem>
-            <mask>ManagePublications</mask>
-            <type>admin</type>
-            <includes>
-                <includeitem>new</includeitem>
-            </includes>
-            <target>new</target>
-            <title>New Publication</title>
-            <label>New Publication</label>
-        </menuitem>
-        <menuitem>
-            <mask>AdminPublications</mask>
-            <type>admin</type>
-            <includes>
-                <includeitem>view_pubtypes</includeitem>
-            </includes>
-            <target>view_pubtypes</target>
-            <title>Publication Types</title>
-            <label>Publication Types</label>
-        </menuitem>
-        <menuitem>
-            <mask>AdminPublications</mask>
-            <type>admin</type>
-            <includes>
-                <includeitem>templates_type</includeitem>
-            </includes>
-            <target>templates_type</target>
-            <title>Manage templates</title>
-            <label>Templates</label>
-        </menuitem>
-        <menuitem>
-            <mask>AdminPublications</mask>
-            <type>admin</type>
-            <includes>
-                <includeitem>stylesheet_type</includeitem>
-            </includes>
-            <target>stylesheet_type</target>
-            <title>Manage stylesheets</title>
-            <label>Stylesheets</label>
-        </menuitem>
-        <menuitem>
-            <mask>AdminPublications</mask>
-            <type>admin</type>
-            <includes>
-                <includeitem>stats</includeitem>
-            </includes>
-            <target>stats</target>
-            <title>Import/export and other utilities</title>
-            <label>Utilities</label>
-        </menuitem>
-        <menuitem>
-            <mask>AdminPublications</mask>
-            <type>admin</type>
+            <mask>AdminFoo</mask>
             <includes>
                 <includeitem>modifyconfig</includeitem>
             </includes>
             <target>modifyconfig</target>
-            <title>Modify the configuration of this module</title>
+            <title>Modify the configuration settings of this module</title>
             <label>Modify Configuration</label>
-        </menuitem>
-        <menuitem>
-            <mask>AdminPublications</mask>
-            <type>admin</type>
-            <includes>
-                <includeitem>overview</includeitem>
-            </includes>
-            <target>overview</target>
-            <title>Overview this module</title>
-            <label>Overview</label>
         </menuitem>
     </menuitems>
 </adminmenu>

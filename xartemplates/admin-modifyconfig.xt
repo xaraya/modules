@@ -16,50 +16,32 @@
             Modify Configuration
         </h2>
         <div>
-            <dl class="xar-tabs">
-                <dt class="help">
-                    Actions:
-                </dt>
+            <ul class="xar-tabs xar-alt xar-norm-outline">
                 <xar:if condition="$tab eq 'general'">
-                    <dd class="active">
-                        <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=general">
-                            General
-                        </a>
-                    </dd>
-                    <xar:else />
-                    <dd>
-                        <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=general">
-                            General
-                        </a>
-                    </dd>
+                    <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+                <xar:else />
+                    <xar:set name="tabclass">'xar-tab'</xar:set>
+                    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
                 </xar:if>
+                <li class="#$tabclass#">
+                    <a href="#xarModURL('foo','admin','modifyconfig',array('tab'=>'general'))#" class="#$linkclass#">
+                        General
+                    </a>
+                </li>
                 <xar:if condition="$tab eq 'tab2'">
-                    <dd class="active">
-                        <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=tab2">
-                            Tab2
-                        </a>
-                    </dd>
-                    <xar:else />
-                    <dd>
-                        <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=tab2">
-                            Tab2
-                        </a>
-                    </dd>
+                    <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+                <xar:else />
+                    <xar:set name="tabclass">'xar-tab'</xar:set>
+                    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
                 </xar:if>
-                <xar:if condition="$tab eq 'tab3'">
-                    <dd class="active">
-                        <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=tab3">
-                            Tab3
-                        </a>
-                    </dd>
-                    <xar:else />
-                    <dd>
-                        <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=tab3">
-                            Tab3
-                        </a>
-                    </dd>
-                </xar:if>
-            </dl>
+                <li class="#$tabclass#">
+                    <a href="#xarModURL('foo','admin','modifyconfig',array('tab'=>'tab2'))#" class="#$linkclass#">
+                        Tab 2
+                    </a>
+                </li>
+            </ul>
         </div>
         <xar:comment>
              - - - - - - - - - - - - - - - - - - - Begin General Options  - - - - - - - - - - - - - - - - - - -
