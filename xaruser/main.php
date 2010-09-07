@@ -23,6 +23,7 @@ function registration_user_main()
     $allowregistration = xarModVars::get('registration', 'allowregistration');
 
     if (xarUserIsLoggedIn()) {
+        // FIXME: terms are optional and can't be relied upon as a destination here 
         xarResponse::redirect(xarModURL('registration', 'user', 'terms'));
 
     } elseif ($allowregistration != true) {
@@ -35,6 +36,7 @@ function registration_user_main()
 
     } else { //allow user to register
         $minage = xarModVars::get('registration', 'minage');
+        // FIXME: if the user goes directly to the register function this check is skipped entirely
         if (($minage)>0) {
             xarResponse::redirect(xarModURL('registration','user','register', array('phase'=>'checkage')));
         }else{

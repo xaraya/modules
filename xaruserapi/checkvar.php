@@ -48,6 +48,7 @@ function registration_userapi_checkvar($args)
                 $disallowedips = unserialize($disallowedips);
                 $disallowedips = explode("\r\n", $disallowedips);
                 if (in_array ($ip, $disallowedips)) {
+                    // CHECKME: do we really want to return this unfriendly message?
                     $invalid = xarML('Your IP is on the banned list');
                 }
             }
@@ -60,6 +61,8 @@ function registration_userapi_checkvar($args)
                 $invalid = xarML('You must provide a preferred username to continue.');
 
             // check the length of the username
+            // CHECKME: 255 characters for a username? really?
+            // TODO: make the min and max length configurable in roles. 
             } elseif (strlen($username) > 255) {
                 $invalid = xarML('Your username is too long.');
             } else {

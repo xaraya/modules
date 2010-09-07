@@ -48,156 +48,144 @@ function registration_user_register()
         return xarResponse::Forbidden($msg);
     }
 
-    //we could turn of registration, but let's check for site lock . We don't want people  registering during this period
-     $lockvars = unserialize(xarModVars::get('roles','lockdata'));
-     if ($lockvars['locked'] ==1) {
+    // Check for site lock - we don't want people registering during this period
+    $lockvars = unserialize(xarModVars::get('roles','lockdata'));
+    if ($lockvars['locked'] ==1) {
         return xarResponse::Forbidden($lockvars['message']);
-     }
-
-    xarTplSetPageTitle(xarML('New Account'));
-    if (!xarVarFetch('phase','str:1:100',$phase,'request',XARVAR_NOT_REQUIRED)) return;
-
-
+    }
+    
+    if (!xarVarFetch('phase', 'pre:trim:lower:enum:registerform:registerformcycle:checkregistration:createuser', $phase, 'registerform', XARVAR_NOT_REQUIRED)) return;
+    
     $regobjectname = xarModVars::get('registration', 'registrationobject');
-    $authid = xarSecGenAuthKey();
 
-    switch(strtolower($phase)) {
-
-        case 'choices':
-            xarTplSetPageTitle(xarML('Log In'));
-            $loginlabel = xarML('Sign In');
-            $data       = xarTplModule('authsystem','user', 'choices', array('loginlabel' => $loginlabel));
-            break;
-
-        case 'checkage':
-            $minage     = xarModVars::get('registration', 'minage');
-            $submitlink = xarModURL('registration', 'user', 'register',array('phase' => 'registerform'));
-            $data       = xarTplModule('registration','user', 'checkage',
-                                 array('minage'     => $minage,
-                                       'submitlink' => $submitlink));
-            break;
-
+    switch ($phase) {
         case 'registerformcycle':
             $fieldvalues = xarSession::getVar('Registration.UserInfo');
-        case 'registerform':
+        case 'registerform': // display form to user 
         default:
-
-            $object = DataObjectMaster::getObject(array('name' => $regobjectname));
-            if(empty($object)) return;
-
-            if (isset($fieldvalues)) {
-                $object->setFieldValues($fieldvalues);
-            }
-
-            /* Call hooks here, others than just dyn data
-             * We pass the phase in here to tell the hook it should check the data
-             */
-            $item['module'] = 'registration';
-            $item['itemid'] = '';
-            $item['values'] = $object->getFieldValues();
-            $item['phase']  = $phase;
-            $hooks = xarModCallHooks('item', 'new', '', $item);
-
-            if (empty($hooks)) {
-                $hookoutput = array();
-            } else {
-                $hookoutput = $hooks;
-            }
-
-            $data = xarTplModule('registration','user', 'registerform',
-                           array('authid'     => $authid,
-                                 'object'    => $object,
-                                 'hookoutput' => $hookoutput));
-            break;
-
-        case 'checkregistration':
-            if (!xarVarFetch('agreetoterms', 'checkbox',  $agreetoterms, false, XARVAR_NOT_REQUIRED)) return;
-
-//            if (!xarSecConfirmAuthKey()) return;
-
+        
+            // Check for disallowed IP here, pointless waiting until the user has attempted to register
             $ip = xarServer::getVar('REMOTE_ADDR');
             $invalid = xarMod::apiFunc('registration','user','checkvar', array('type'=>'ip', 'var'=>$ip));
             if (!empty($invalid)) {
                 return xarResponse::Forbidden($invalid);
+            }  
+
+            // see if we have a minimum age requirement...
+            // NOTE: this is done here instead of in the checkage phase used previously
+            // to prevent user bypass by going directly to the registerform phase 
+            $minage = xarModVars::get('registration', 'minage');
+            // if minage is empty we can skip this check entirely            
+            if (empty($minage)) {
+                $ageconfirm = true;
+            } else {
+                // see if user confirmed agecheck by following the submitlink 
+                if (!xarVarFetch('ageconfirm', 'checkbox', $ageconfirm, false, XARVAR_NOT_REQUIRED))return;
+                // see if agecheck was confirmed previously (if we're in the form cycle) 
+                if (empty($ageconfirm))
+                    $ageconfirm = xarSession::getVar('registration.ageconfirm');
+            } 
+            // unconfirmed, present the confirmation template to user 
+            if (!$ageconfirm) {
+                $tpldata = array(
+                    'submitlink' => xarModURL('registration', 'user', 'register', 
+                                        array('phase' => 'registerform', 'ageconfirm' => 1)),
+                    'minage' => $minage,
+                );
+                return xarTplModule('registration', 'user', 'checkage', $tpldata);
             }
-
+            // age confirmed, set confirmation to session variable (for form cycle)
+            xarSession::setVar('registration.ageconfirm', $ageconfirm);
+            
+            // initialise registration object
             $object = DataObjectMaster::getObject(array('name' => $regobjectname));
-            $isvalid = $object->checkInput();
+            if (empty($object)) return;
 
-            /* Call hooks here, others than just dyn data
-             * We pass the phase in here to tell the hook it should check the data
-             */
+            if (isset($fieldvalues)) 
+                $object->setFieldValues($fieldvalues);
+            
+            $item = array();          
             $item['module'] = 'registration';
             $item['itemid'] = '';
-            $item['values'] = $object->getFieldValues(); // TODO: this includes the password. Do we want this?
+            $item['itemtype'] = xarRoles::ROLES_USERTYPE;
+            // CHECKME: hooks don't normally need these, are they specific to a particular hook?
+            $item['values'] = $object->getFieldValues();
             $item['phase']  = $phase;
-            $hooks = xarModCallHooks('item', 'new','', $item);
+            $hooks = xarModCallHooks('item', 'new', '', $item);
+            
+            $data = array();
+            $data['object'] = $object;            
+            $data['hookoutput'] = !empty($hooks) ? $hooks : '';
+            $data['authid'] = xarSecGenAuthKey();
+            
+            xarTplSetPageTitle(xarML('New Account'));
+            return xarTplModule('registration', 'user', 'registerform', $data);              
+            
+        break;
+        
+        case 'checkregistration': // validate input and ask for account create confirmation
+        
+            // this prevents users passing input via get params and by-passing age/ip check
+            if (!xarSession::getVar('registration.ageconfirm'))
+                xarResponse::redirect(xarModURL('registration', 'user', 'register'));
 
-            if (empty($hooks)) {
-                $hookoutput = array();
-            } else {
-                 $hookoutput = $hooks;
-            }
-
-            if (!$isvalid || !$agreetoterms) {
-                $data = array('authid'     => $authid,
-                              'object'     => $object,
-                              'hookoutput' => $hookoutput);
-                if (!$agreetoterms) $data['termsmsg'] = true;
-                return xarTplModule('registration','user', 'registerform',$data);
-            }
-            // invalid fields (we'll check this below)
+            // initialise registration object
+            $object = DataObjectMaster::getObject(array('name' => $regobjectname));
+            if (empty($object)) return;            
+            // Check object input            
+            $isvalid = $object->checkInput();
+            
             $invalid = array();
+            // Check terms agreement
+            if (!xarVarFetch('agreetoterms', 'checkbox', $agreetoterms, false, XARVAR_NOT_REQUIRED)) return;
+            if (!$agreetoterms)
+                $invalid['agreetoterms'] = xarMod::apiFunc('registration','user','checkvar', 
+                    array('type'=>'agreetoterms', 'var'=>$agreetoterms));
 
-            $values = $object->getFieldValues();
+            // check unique email if necessary 
             if (xarModVars::get('roles','uniqueemail')) {
+                $email = $object->properties['email']->value;
                 $user = xarMod::apiFunc('roles','user', 'get', array('email' => $email));
-                if ($user) throw new DuplicateException(array('email',$email));
-            }
-
-            // agree to terms (kind of dumb, but for completeness)
-            $invalid['agreetoterms'] = xarMod::apiFunc('registration','user','checkvar', array('type'=>'agreetoterms', 'var'=>$agreetoterms));
-
-            // Check password and set
-            // @todo find a better way to turn choose own password on and off that works nicely with dd objects
-            //$pass = '';
-            if (xarModVars::get('registration', 'chooseownpassword')) {
-                /*$invalid['pass1'] = xarMod::apiFunc('registration','user','checkvar', array('type'=>'pass1', 'var'=>$pass1 ));
-                if (empty($invalid['pass1'])) {
-                    $invalid['pass2'] = xarMod::apiFunc('registration','user','checkvar', array('type'=>'pass2', 'var'=>array($pass1,$pass2) ));
+                //if ($user) throw new DuplicateException(array('email',$email));
+                if ($user) {
+                    $isvalid = false;
+                    $object->properties['email']->invalid = xarML('This email address is already registered');
                 }
-                if (empty($invalid['pass1']) && empty($invalid['pass2']))   {
-                    $pass = $pass1;
-                }*/
             }
 
-            $count = 0;
-            foreach ($invalid as $k => $v) if (!empty($v)) $count + 1;
-            // @todo add preview?
-            if (!$isvalid || ($count > 0)) {
+            $item = array();          
+            $item['module'] = 'registration';
+            $item['itemid'] = '';
+            $item['itemtype'] = xarRoles::ROLES_USERTYPE;
+            // CHECKME: hooks don't normally need these, are they specific to a particular hook?
+            $item['values'] = $object->getFieldValues();
+            $item['phase']  = $phase;
+            $hooks = xarModCallHooks('item', 'new', '', $item);
+
+            if (!$isvalid || !empty($invalid)) {
                 $data = array();
-                $data['authid'] = $authid;
-                $data['object'] = & $object;
+                $data['object'] = $object;            
+                $data['hookoutput'] = !empty($hooks) ? $hooks : '';
+                $data['authid'] = xarSecGenAuthKey();
                 $data['invalid'] = $invalid;
-                //$data['preview'] = $preview;
-                $item = array();
-                $item['module'] = 'registration';
-                $item['phase'] = $phase;
-                $data['hookoutput'] = xarModCallHooks('item','new','',$item);
                 return xarTplModule('registration','user','registerform', $data);
             }
+            
+            // Set values to session for form cycle and create user phases
+            xarSession::setVar('Registration.UserInfo',$object->getFieldValues());
+            
+            $data = array();
+            $data['object'] = $object;
+            $data['authid'] = xarSecGenAuthKey();
+            $data['hookoutput'] = !empty($hooks) ? $hooks : '';
+            
+            return xarTplModule('registration','user', 'confirmregistration', $data);
 
-            xarSession::setVar('Registration.UserInfo',$values);
-            // everything seems OK -> go on to the next step
-            $data = xarTplModule('registration','user', 'confirmregistration',
-                                 array('object'      => $object,
-                                       'authid'      => $authid,
-                                       'hookoutput'  => $hookoutput));
+        break;
+        
+        case 'createuser': // create account 
 
-            break;
-
-        case 'createuser':
-
+        /* commenting this out for now since payments doesn't exist in the repo's
             // Branch off to payment here if required
             $module = xarMod::getRegID('registration');
             if (xarModIsAvailable('payments') && xarModItemVars::get('payments','payments_active', $module)) {
@@ -230,9 +218,11 @@ function registration_user_register()
             } else {
                 // If we don't branch off to payments do the check
                 if (!xarSecConfirmAuthKey()) return;
-            }
-
-        case 'confirmcreateuser':
+            }        
+        */
+        
+            if (!xarSecConfirmAuthKey()) 
+                return xarTplModule('privileges', 'user', 'errors', array('layout' => 'bad_author'));
 
             $fieldvalues = xarSessionGetVar('Registration.UserInfo');
 
@@ -264,9 +254,11 @@ function registration_user_register()
 
                 // Create confirmation code
                 $confcode = xarMod::apiFunc('roles', 'user', 'makepass');
+                $fieldvalues['validationcode'] = $confcode;            
             } else {
                 $confcode = '';
             }
+            
 
             // Update the field values and create the user
             $object->setFieldValues($fieldvalues,1);
@@ -284,6 +276,7 @@ function registration_user_register()
             if (empty($id)) return;
             xarModVars::set('roles', 'lastuser', $id);
 
+/* Already done in createItem()
             //Make sure the user email setting is off unless the user sets it
             xarModUserVars::set('roles','allowemail', false, $id);
 
@@ -292,7 +285,7 @@ function registration_user_register()
             $hookdata['module'] = 'registration';
             $hookdata['itemid'] = $id;
             xarModCallHooks('item', 'create', $id, $hookdata);
-
+*/
             // We allow "state" or "roles_state"
             if (!isset($fieldvalues['state'])) {
                 if (isset($fieldvalues['roles_state'])) {
@@ -312,7 +305,8 @@ function registration_user_register()
                               'pass'       => $pass,
                               'rememberme' => 0));
                 */
-                $data = xarTplModule('registration','user', 'accountstate', array('state' => $fieldvalues['state']));
+                $data = xarTplModule('registration','user', 'accountstate', 
+                    array('state' => $fieldvalues['state']));
 
             } else if ($fieldvalues['state'] == xarRoles::ROLES_STATE_PENDING) {
                 // If we are still waiting on admin to review pending accounts send the user to a page to notify them
@@ -322,9 +316,13 @@ function registration_user_register()
             } else { // $state == xarRoles::ROLES_STATE_NOTVALIDATED
                 $data = xarTplModule('registration','user', 'waitingconfirm');
             }
-
-            break;
+            // Clean up session vars
+            xarSession::delVar('Registration.UserInfo');
+            xarSession::delVar('registration.ageconfirm');
+            return $data;
+        break;   
+    
     }
-    return $data;
+    
 }
 ?>

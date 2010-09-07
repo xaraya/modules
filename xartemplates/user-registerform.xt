@@ -39,7 +39,7 @@
                     I agree to be bound by this website's 
                     <a href="&xar-modurl-registration-user-terms;" target="_blank">Terms of Use</a>.
                 </label>
-                <xar:if condition="isset($termsmsg)">
+                <xar:if condition="!empty($invalid['agreetoterms'])">
                     <span class="xar-error">Please agree to the terms</span>
                 </xar:if>
             </div>
@@ -53,7 +53,7 @@
                     <a href="&xar-modurl-registration-user-terms;" target="_blank">Terms of Use</a>&#160;and&#160;<a href="&xar-modurl-registration-user-privacy;">Privacy Policy</a>.
                  </label>
             </div>
-                <xar:if condition="isset($termsmsg)">
+                <xar:if condition="!empty($invalid['agreetoterms'])">
                     <span class="xar-error">Please agree to the terms</span>
                  </xar:if>
 
