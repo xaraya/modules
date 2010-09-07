@@ -308,7 +308,7 @@ function crispbb_user_moderate($args)
                                 'lasttid' => !empty($lastpost['tid']) ? $lastpost['tid'] : 0,
                                 'nohooks' => true
                             ))) return;
-                        if (empty($return_url)) {
+                        if (empty($return_url) && $modaction != 'delete' && $modaction != 'purge') {
                             $return_url = xarSessionGetVar('crispbb_return_url');
                         }
                         xarSessionSetVar('crispbb_return_url', '');
