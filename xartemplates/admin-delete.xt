@@ -17,7 +17,7 @@
                 <label for="confirm">
                     Confirm deleting this item?
                 </label>
-
+ 
                 <xar:data-display object="$object" itemid="$itemid" tplmodule="path"  />
             </div>
         </fieldset>

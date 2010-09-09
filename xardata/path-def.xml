@@ -6,7 +6,7 @@
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
-  <maxid>7</maxid>
+  <maxid>0</maxid>
   <config>a:0:{}</config>
   <isalias>true</isalias>
   <path_module></path_module>

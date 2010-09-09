@@ -47,7 +47,7 @@ function path_userapi_set($args)
 
 	if($path[0] != '/') {
 		$path = '/' . $path;
-	}
+	} 
 
 	// Make sure the new path is unique
 	// If we're passing an itemid, then we must be trying to update an existing path and don't want this check 
@@ -69,7 +69,7 @@ function path_userapi_set($args)
 
 	// Make sure there's no module alias conflict
 	$aliascheck = xarMod::apiFunc('path','admin','alias',array('path' => $path, 'actionmodule' => $action['module']));
-	if(is_string($aliascheck)) { 
+	if(is_string($aliascheck)) {  
 		$data['errors'][] = 'The pathstart <strong>"'. $aliascheck . '"</strong> is the name of an installed module.';
 	}
 
@@ -90,7 +90,6 @@ function path_userapi_set($args)
 		$object->properties['path']->setValue($path);
 		$object->properties['action']->setValue($action);
 
-		// If both itemid and currpath are set, prefer the itemid
 		if (!isset($itemid) && isset($currpath)) {
 			$currinfo = xarMod::apiFunc('path','user','checkpath',array('path' => $currpath));
 			if ($currinfo) {
@@ -98,12 +97,12 @@ function path_userapi_set($args)
 				$curritemid = reset($arr);
 			}
 		}
- 
+
 		if (isset($itemid)) {
 			$itemid = $object->updateItem(array('itemid' => $itemid));
 		} elseif (isset($curritemid)) {
 			$itemid = $object->updateItem(array('itemid' => $curritemid));
-		} else {
+		} else {  
 			$itemid = $object->createItem();
 		}
 
