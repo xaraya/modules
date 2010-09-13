@@ -96,6 +96,13 @@
 	     </div>
 
 	     </fieldset>
+	<xar:else /> 
+	 <div style="display:none">
+		<xar:set name="ffid">$properties['enable_filters']->id</xar:set>
+		<input type="checkbox" name="dd_#$ffid#" value="false" />
+		<xar:data-input property="$properties['filters_records_min_item_count']" />
+		<xar:data-input property="$properties['filters_files_min_item_count']" />
+	 </div>
      </xar:if>
      
 
