@@ -154,11 +154,11 @@
       <id>224</id>
       <label>Module</label>
       <type>objectref</type>
-      <defaultvalue>xarMod::getID('mailer')</defaultvalue>
+      <defaultvalue>xarMod::getRegId('mailer')</defaultvalue>
       <source>xar_mailer_mails.module_id</source>
       <status>34</status>
       <seq>15</seq>
-      <configuration>a:5:{s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:7:"modules";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";s:22:"initialization_options";s:15:"0,Choose Module";}</configuration>
+      <configuration>a:6:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:7:"modules";s:25:"initialization_store_prop";s:5:"regid";s:27:"initialization_display_prop";s:4:"name";s:22:"initialization_options";s:15:"0,Choose Module";}</configuration>
     </property>
     <property name="alias">
       <id>225</id>

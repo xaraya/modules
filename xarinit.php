@@ -241,7 +241,14 @@
                     // fall through to next upgrade
 
             case '1.0.2':
+                $q = new Query();
+                $prefix = xarDB::getPrefix();
+                $module='"mailer"';
+                $configuration = 'a:6:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:7:"modules";s:25:"initialization_store_prop";s:5:"regid";s:27:"initialization_display_prop";s:4:"name";s:22:"initialization_options";s:15:"0,Choose Module";}';
+                $query = "UPDATE `".$prefix."_dynamic_properties` SET `defaultvalue` = 'xarMod::getRegId($module)', `configuration` = '$configuration' WHERE `source` = '".$prefix."_mailer_mails.module_id'";
+                if (!$q->run($query)) return;
 
+            case '1.0.3':
                 // fall through to next upgrade
 
             default:
