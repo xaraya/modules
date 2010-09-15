@@ -232,7 +232,7 @@ class UploadProperty extends DataProperty
                 $this->invalid = xarML('The file type is not allowed');
                 $this->value = null;
                 return false;
-            } elseif (!file_exists($this->initialization_basedirectory . '/'. $value) || !is_file($this->initialization_basedirectory . '/'. $value)) {
+            } elseif (!file_exists($this->initialization_basepath . $this->initialization_basedirectory . '/'. $value) || !is_file($this->initialization_basepath . $this->initialization_basedirectory . '/'. $value)) {
                 $this->invalid = xarML('The file cannot be found');
                 $this->value = null;
                 return false;
