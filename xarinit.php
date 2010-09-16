@@ -248,6 +248,9 @@
                 $query = "UPDATE `".$prefix."_dynamic_properties` SET `defaultvalue` = 'xarMod::getRegId($module)', `configuration` = '$configuration' WHERE `source` = '".$prefix."_mailer_mails.module_id'";
                 if (!$q->run($query)) return;
 
+                $query = "UPDATE `".$prefix."_mailer_mails` SET `module_id` = (SELECT `regid` from `xar_modules` WHERE `".$prefix."_mailer_mails`.`module_id` = `".$prefix."_modules`.`id`);";
+                if (!$q->run($query)) return;
+
             case '1.0.3':
                 // fall through to next upgrade
 
