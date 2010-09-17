@@ -812,7 +812,7 @@ Owner of DHTMLgoodies.com
 				if(menuItems[no].className){
 					folderImg.src = this.imageFolder + menuItems[no].className;
 				}else{
-					folderImg.src = this.imageFolder + this.folderImage;
+					folderImg.src = 'code/modules/base/xarimages/icons/move.png';
 				}
 				menuItems[no].insertBefore(folderImg,aTag);
 				

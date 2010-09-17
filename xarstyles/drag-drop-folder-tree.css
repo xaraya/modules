@@ -33,9 +33,10 @@
 		text-decoration:none;
 		font-family:arial;
 		font-size:1em;
-		padding-left:1px;
+		padding: 0 1px 0 1px;
 		line-height:14px;
 		margin-left:2px;
+		background-color: #fff;
 		
 	}
 	.dhtmlgoodies_tree li a.highlightedNodeItem{
@@ -54,5 +55,6 @@
 		margin:0px;
 		padding:0px;
 		height:14px;
-		width: 350px; 
+		width: 400px;  
+		background-color: yellow;
 	}

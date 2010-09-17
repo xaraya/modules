@@ -20,11 +20,11 @@
 	<xar:if condition="!isset($childul)">
 
 		<ul id="dhtmlgoodies_tree2" class="dhtmlgoodies_tree">
-			<li id="node#$parentid#" noDrag="true" noSiblings="true" noDelete="true" noRename="true"><a href="#xarServer::getCurrentURL()##"><xar:if condition="$parentid eq 0">root<xar:else />#$parent['link']# &#160;<span class="linkid">[ID: #$parentid#]</span></xar:if> </a>
+			<li id="node#$parentid#" noDrag="true" noSiblings="true" noDelete="true" noRename="true"><a href="#xarServer::getCurrentURL()##"><xar:if condition="$parentid eq 0">root<xar:else />#$parent['link']# &#160;</xar:if></a>
 				<ul>
 				<xar:foreach in="$m_arr" key="$key" value="$val"> 
-					<li id="node#$key#"><a href="#xarServer::getCurrentURL()##">#$val['link']#</a>    &#160;<span class="linkid">[ID: #$key#<xar:if condition="!empty($val['children'])"> - <a class="focus"  href="#xarmodurl('menutree','admin','menus',array('parentid' => $key))#">Focus</a></xar:if>]</span>
-						
+					<li id="node#$key#"><a href="#xarServer::getCurrentURL()##" onMouseOver="return highlight(#$key#);" onMouseOut="return unhighlight(#$key#);">#$val['link']#</a> &#160; <span class="linkid" id="linkid#$key#">ID: #$key#</span>   
+
 					<xar:if condition="!empty($val['children'])">
 						<xar:template file="adminmenutree" type="module" module="menutree" subdata="array('parentid' => $key, 'childul' => true)" />
 					</xar:if>
@@ -42,10 +42,10 @@
 
 		<xar:foreach in="$m_arr" key="$key" value="$val">
 	 
-			<li id="node#$key#"><a href="#xarServer::getCurrentURL()##">#$val['link']#</a> &#160;<span class="linkid">[ID: #$key#<xar:if condition="!empty($val['children'])"> - <a class="focus"  href="#xarmodurl('menutree','admin','menus',array('parentid' => $key))#">Focus</a></xar:if>]</span>
+			<li id="node#$key#"><a href="#xarServer::getCurrentURL()##" onMouseOver="javascript: highlight(#$key#)" onMouseOut="javascript: unhighlight(#$key#)">#$val['link']#</a> &#160; <span class="linkid" id="linkid#$key#">ID: #$key#</span>   
 				
 			<xar:if condition="!empty($val['children'])">
-				<xar:template file="tree" type="module" module="menutree" subdata="array('parentid' => $key, 'childul' => true)" />
+				<xar:template file="adminmenutree" type="module" module="menutree" subdata="array('parentid' => $key, 'childul' => true)" />
 			</xar:if>
 
 			</li>
