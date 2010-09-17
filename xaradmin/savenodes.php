@@ -30,7 +30,7 @@ function menutree_admin_savenodes($args) {
 
 	}
 
-	xarResponse::Redirect(xarModURL('menutree','admin','main'));
+	xarResponse::Redirect(xarModURL('menutree','admin','menus'));
 	return true;
 		 
 
