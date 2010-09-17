@@ -8,7 +8,7 @@ margin-top: 20px;
 }
 
 .linkid {
-color: #666;
+display:none;
 }
 span.linkid, span.highlight {
 float: right; 
