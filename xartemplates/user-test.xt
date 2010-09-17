@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+    <span class="xar-mod-title">Menu Tree</span>
+    </div>
+    <div class="xar-mod-body">
+
+
+    <h2>Welcome to the Menu Tree module</h2>
+
+<xar:comment>One way to control depth...
+<xar:set name="depth">4</xar:set>
+<style>
+.menutree_outer<xar:for start="$i = 0" test="$i le $depth" iter="$i++"> li</xar:for>
+{
+display:none;
+}
+</style>
+</xar:comment>
+
+    <xar:template file="menutree" type="module" module="menutree" subdata="array('parentid' => 1)" /> 
+
+
+    </div>
+</xar:template>

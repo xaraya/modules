@@ -1,0 +1,15 @@
+#expand_collapse {
+margin: 20px 0 13px 0;
+}
+
+#savestructure {
+margin-top: 20px; 
+}
+
+.linkid, .linkid a.focus {
+color: #006600;
+}
+
+a.focus {
+font-weight: bold; 
+}

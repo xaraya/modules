@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+ 
+<xar:style scope="module" module="menutree" file="drag-drop-folder-tree" />
+<xar:style scope="module" module="menutree" file="context-menu" /> 
+<xar:style scope="module" module="menutree" file="module" /> 
+<xar:javascript module="menutree" filename="savemytree.js" position="head"/> 
+<xar:javascript module="menutree" filename="ajax.js" position="head"/>
+<xar:javascript module="menutree" filename="context-menu.js" position="head"/>
+<xar:comment>IMPORTANT! INCLUDE THE context-menu.js FILE BEFORE drag-drop-folder-tree.js </xar:comment>
+<xar:javascript module="menutree" filename="drag-drop-folder-tree.js" position="head"/> 
+
+<div class="xar-mod-head">
+	<span class="xar-mod-title">Menu Tree Administration</span>
+</div>
+<div class="xar-mod-body">
+
+<xar:template type="module" file="admintabs" />
+
+<xar:comment>
+Credit for the javascript...
+
+(C) www.dhtmlgoodies.com, July 2006
+Update log:
+This is a script from www.dhtmlgoodies.com. You will find this and a lot of other scripts at our website.	
+Terms of use:
+You are free to use this script as long as the copyright message is kept intact.
+For more detailed license information, see http://www.dhtmlgoodies.com/index.html?page=termsOfUse 
+Thank you!
+www.dhtmlgoodies.com
+Alf Magne Kalleland
+</xar:comment>
+
+
+<form id="savestructure" name="myForm" method="post" action="#xarModURL('menutree', 'admin', 'savenodes')#">
+	<input type="hidden" name="saveString" />
+	<input type="button" onclick="saveMyTree_byForm()" value="Save Changes to Menu Hierarchy" />
+</form>
+	
+<div id="expand_collapse">
+<a href="#xarServer::GetCurrentURL()##" onclick="treeObj.collapseAll()">Collapse all</a> | 
+<a href="#xarServer::GetCurrentURL()##" onclick="treeObj.expandAll()">Expand</a> | <a href="#xarModURL('menutree','admin','menus')#">Refresh</a> | <a href="#xarmodurl('menutree','user','test')#" target="blank">View</a> 
+&#160; <span style="color: #666">(Right-click on the menu items below to edit)</span></div> 
+
+<xar:template file="adminmenutree" type="module" module="menutree" subdata="array('parentid' => $parentid)" /> 
+
+<script type="text/javascript">	
+treeObj = new JSDragDropTree();
+treeObj.setTreeId('dhtmlgoodies_tree2');
+treeObj.setMaximumDepth(7);
+treeObj.setMessageMaximumDepthReached('Maximum depth reached'); // If you want to show a message when maximum depth is reached, i.e. on drop.
+treeObj.initTree();
+treeObj.expandAll();
+</script>
+
+</div>
+
+</xar:template>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    
+
+    <div class="xar-mod-head">
+	<span class="xar-mod-title">Menu Tree Administration</span>
+	</div>
+	<div class="xar-mod-body">
+
+	<xar:template type="module" file="admintabs" />
+   
+   
+    <h2>Welcome to the Menu Tree module</h2>
+
+<h3>Usage / Theming</h3>
+
+<p>Position a menu in your template like so...</p>
+
+<pre>&#160; &#60;xar:template file="menutree" type="module" module="menutree"
+&#160; subdata="array('parentid' => 123, 'onlyactive' => true)" /&#62;</pre>
+
+<p>...where "123" is the itemid of the parent.</p>
+
+<p>Use CSS to control menu depth.  See the <a href="#sys::code()#modules/menutree/xartemplates/user-test.xt" target="new">user-text.xt</a> template for an example.  <a href="#xarmodurl('menutree','user','test')#" target="new">View the test menu</a>.  Note: The test menu isn't styled at all.  That's left up to you.</p>
+
+<h3>Menu Tree Admin Interface</h3>
+
+<p>Under the Menu Tree tab you'll find an interface for re-arranging, editing and deleting menu items.  Drag and drop items.  Right-click on items to edit or delete.  Click the "Focus" links to view only that part of the tree.  Click the Save button at the top to save any changes to the menu hierarchy.  You do not need to click the Save button to save edits and deletions for menu items.</p>
+
+<h3>Link Format</h3>
+
+Link text, URL and status are stored in the Link field.  Here are three examples of valid formats for the Link field:
+
+<blockquote>Washington, DC | http://www.dc.gov | 1<br />
+Washington, DC <br />
+Washington, DC | # | 0<br /></blockquote>
+
+<p>Components of a link are separated by a vertical bar.  The first part is link text.  The second part is the URL.  The third part sets the link status.  A status of 0 means the link is inactive.  A status of 1 means active.  Active is the default, so the first two examples above are active.</p>
+
+<h3>Link Status</h3>
+
+<p>The optional onlyactive parameter controls whether all menu items are displayed or only the active menu items:</p>
+
+<pre>&#160; &#60;xar:template file="menutree" type="module" module="menutree"
+&#160; subdata="array('parentid' => 123, 'onlyactive' => true)" /&#62;</pre>
+
+<p>The onlyactive argument defaults to false.</p>
+
+    </div>
+</xar:template>

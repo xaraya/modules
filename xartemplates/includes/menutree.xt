@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+ 
+<xar:set name="m_arr">xarMod::apiFunc('menutree','user','getmenutree',array('parentid' => $parentid, 'onlyactive' => true))</xar:set>
+
+<xar:if condition="!isset($childul)">
+	<xar:set name="ulid">'dhtmlgoodies_tree2'</xar:set>
+	<xar:set name="ulclass">'dhtmlgoodies_tree'</xar:set>
+<xar:else />
+	<xar:set name="ulid">''</xar:set>
+	<xar:set name="ulclass">''</xar:set>
+</xar:if>
+
+<xar:set name="parent">xarMod::apiFunc('menutree','user','getitem',array('itemid' => $parentid, 'onlyactive' => true))</xar:set>
+
+<xar:if condition="!empty($m_arr)">
+
+	<xar:if condition="!isset($childul)">
+
+		<ul class="menutree_outer">
+			<li id="node#$parentid#" noDrag="true" noSiblings="true" noDelete="true" noRename="true">
+			<a href="xarServer::getCurrentURL()##"><xar:if condition="$parentid eq 0">root<xar:else />#$parent['link']#</xar:if></a>
+
+				<ul>
+				<xar:foreach in="$m_arr" key="$key" value="$val"> 
+					<xar:set name="link">xarMod::apiFunc('menutree','user','link',array('link' => $val['link']))</xar:set>
+
+					<li id="node#$key#"><a href="#$link['url']#">#$link['text']#</a>
+
+					<xar:if condition="!empty($val['children'])">
+						<xar:template file="menutree" type="module" module="menutree" subdata="array('parentid' => $key, 'childul' => true)" />
+					</xar:if>
+
+					</li>
+
+				</xar:foreach>
+				</ul>
+			</li>
+		</ul>
+
+	<xar:else />
+
+		<ul>
+
+		<xar:foreach in="$m_arr" key="$key" value="$val">
+			<xar:set name="link">xarMod::apiFunc('menutree','user','link',array('link' => $val['link']))</xar:set>
+
+			<li id="node#$key#"><a href="#$link['url']#">#$link['text']#</a>
+				
+			<xar:if condition="!empty($val['children'])">
+				<xar:template file="menutree" type="module" module="menutree" subdata="array('parentid' => $key, 'childul' => true)" />
+			</xar:if>
+
+			</li>
+
+		</xar:foreach>
+
+		</ul>
+
+	</xar:if>
+
+</xar:if>
+
+
+</xar:template>
