@@ -52,9 +52,13 @@
 	
 	.dhtmlgoodies_tree input.folderTreeTextBox{	/* Css for the text input - rename item */
 		font-size:12px;
-		margin:0px;
-		padding:0px;
-		height:14px;
-		width: 400px;  
+		margin:0px; 
+		padding:1px;  
+		width: 230px; /* more width here will increase the chances of the layout getting distorted */
 		background-color: yellow;
+		display:inline;
+	}
+	.dhtmlgoodies_tree form {
+	display: inline;
+	margin: 0; 
 	}

@@ -10,6 +10,11 @@ function menutree_userapi_link($args) {
 	$data['text'] = $info[0];
 	if (isset($info[1])) {
 		$data['url'] = $info[1];
+
+		if (xarMod::isAvailable('path')) {
+			$data['url'] = xarMod::apiFunc('path','user','transform',array('subj' => $data['url']));
+		}
+
 	} else {
 		$data['url'] = xarServer::getCurrentURL(). '#';
 	}

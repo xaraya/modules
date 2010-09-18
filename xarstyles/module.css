@@ -11,11 +11,9 @@ margin-top: 20px;
 display:none;
 }
 span.linkid, span.highlight {
-float: right; 
+padding: 0 1px 0 1px;
 }
 span.highlight {
 color: #006600;
-font-weight: bold;
 background-color: #fff;
-padding: 0 1px 0 1px;
 }
