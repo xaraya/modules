@@ -33,11 +33,31 @@
 
 Link text, URL and status are stored in the Link field.  Here are three examples of valid formats for the Link field:
 
-<blockquote>Washington, DC | http://www.dc.gov | 1<br />
-Washington, DC <br />
-Washington, DC | # | 0<br /></blockquote>
+<blockquote>My Link Text | http://www.dc.gov | 1<br />
+My Link Text <br />
+My Link Text | 234<br />
+My Link Text | a:99:5<br />
+My Link Text | a:user:view:NULL:5<br />
+My Link Text | c:user:view:NULL:apples | 0<br />
+My Link Text | 234 | 0<br />
+My Link Text | NULL | 0<br /></blockquote>
 
-<p>Components of a link are separated by a vertical bar.  The first part is link text.  The second part is the URL.  The third part sets the link status.  A status of 0 means the link is inactive.  A status of 1 means active.  Active is the default, so the first two examples above are active.</p>
+<p>Components of a link are separated by a vertical bar.  The first part is link text.  The second part is the URL.  The third part sets the link status.  A status of 0 means the link is inactive.  A status of 1 means active.  Active is the default, so the first five examples above are active.</p>
+
+<p>If the URL component is omitted or NULL, the URL will be the page's current URL with a pound sign appended.</p>
+
+<p>For the URL component a shortcut syntax is available for articles module URLs and content module URLs.  Rules for the shortcut syntax: 
+<ul>
+<li>If the URL component is numeric (the "234" examples above), then the item is assumed to be a content module item and the content_user_display function is called for that itemid.</li>
+<li>If the URL component begins with "c:", it is assumed to be a content module URL and is evaluated as follows:
+<pre>&#160; c:&#60;type&#62;:&#60;func&#62;:&#60;itemid&#62;:&#60;ctype&#62;:key1,value1;key2,value2 etc</pre></li> 
+<li>If the URL component begins with "a:", it is assumed to be an articles module URL and is evaluated as follows:
+<pre>&#160; a:&#60;type&#62;:&#60;func&#62;:&#60;aid&#62;:&#60;ptid&#62;:key1,value1;key2,value2 etc</pre></li>
+<li>If the first part after "c:" or "a:" is numeric, then the number is used for the itemid/aid, and the user display function is called for content or articles respectively.</li>
+<li>Use NULL as a placekeeper to omit the itemid / aid for functions where it's not appropriate (e.g., view).</li>
+</ul>
+</p>
+<p>If the Path module is available, the URL arguments are passed to the module's checkaction function. <strong>(No testing has been done with articles + path.)</strong> If the Path module is not available, the URL arguments are passed to xarModURL.  </p>
 
 <h3>Link Status</h3>
 
