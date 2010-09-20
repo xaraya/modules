@@ -103,7 +103,7 @@ Owner of DHTMLgoodies.com
 		this.deleteAllowed = true;
 		this.currentlyActiveItem = false;
 		this.filePathRenameItem = '?module=menutree&type=admin&func=updateitem';
-		this.filePathDeleteItem = '?module=menutree&type=admin&func=deleteitem';
+		this.filePathDeleteItem = '?module=menutree&type=admin&func=deleteitems';
 		this.ajaxObjects = new Array();
 		this.helpObj = false;
 		
