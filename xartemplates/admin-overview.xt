@@ -31,7 +31,7 @@
 
 <h3>Link Format</h3>
 
-Link text, URL and status are stored in the Link field.  Here are three examples of valid formats for the Link field:
+Link text, URL and status are stored in the Link field.  Here are some examples of valid formats for the Link field:
 
 <blockquote>My Link Text | http://www.dc.gov | 1<br />
 My Link Text <br />
