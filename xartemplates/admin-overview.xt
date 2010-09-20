@@ -59,14 +59,19 @@ My Link Text | NULL | 0<br /></blockquote>
 </p>
 <p>If the Path module is available, the URL arguments are passed to the module's checkaction function. <strong>(No testing has been done with articles + path.)</strong> If the Path module is not available, the URL arguments are passed to xarModURL.  </p>
 
-<h3>Link Status</h3>
+<h3>Menu Display Options</h3>
 
-<p>The optional onlyactive parameter controls whether all menu items are displayed or only the active menu items:</p>
+<p>Optional parameters:</p>
+
+<ul>
+<li>onlyactive -- Display only the active items.  Default is false.</li>
+<li>showtopparent -- Show the top parent.  Default is false.</li>
+</ul> 
+
+<p>Example:</p>
 
 <pre>&#160; &#60;xar:template file="menutree" type="module" module="menutree"
-&#160; subdata="array('parentid' => 123, 'onlyactive' => true)" /&#62;</pre>
-
-<p>The onlyactive argument defaults to false.</p>
+&#160; subdata="array('parentid' => 123, 'onlyactive' => true, 'showtopparent' => true)" /&#62;</pre>
 
     </div>
 </xar:template>
