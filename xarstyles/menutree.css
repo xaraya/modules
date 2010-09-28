@@ -1,0 +1,28 @@
+ 
+#expand_collapse {
+margin: 20px 0 13px 0;
+}
+
+#savestructure {
+margin-top: 20px; 
+}
+
+.linkid {
+display:none;
+}
+span.linkid, span.highlight {
+padding: 0 1px 0 1px;
+}
+span.highlight {
+display: inline;
+color: #006600;
+background-color: #fff;
+}
+
+.dhtmlgoodies_tree li a.no_bg {
+background: none;
+}
+
+.create {
+margin-top: 8px;
+}

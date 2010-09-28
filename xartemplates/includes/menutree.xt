@@ -5,40 +5,60 @@
  
 <xar:set name="m_arr">xarMod::apiFunc('menutree','user','getmenutree',array('parentid' => $parentid, 'onlyactive' => true))</xar:set>
 
+<xar:if condition="!isset($childul)">
+	<xar:set name="ulid">'dhtmlgoodies_tree2'</xar:set>
+	<xar:set name="ulclass">'dhtmlgoodies_tree'</xar:set>
+<xar:else />
+	<xar:set name="ulid">''</xar:set>
+	<xar:set name="ulclass">''</xar:set>
+</xar:if>
+
 <xar:set name="parent">xarMod::apiFunc('menutree','user','getitem',array('itemid' => $parentid, 'onlyactive' => true))</xar:set>
 
 <xar:if condition="!empty($m_arr)">
 
 	<xar:if condition="!isset($childul)">
-		<xar:set name="class">'menu_outer'</xar:set>
+
+		<ul class="menutree_outer">
+			<li id="node#$parentid#" noDrag="true" noSiblings="true" noDelete="true" noRename="true">
+			<a href="xarServer::getCurrentURL()##"><xar:if condition="$parentid eq 0">root<xar:else />#$parent['link']#</xar:if></a>
+
+				<ul>
+				<xar:foreach in="$m_arr" key="$key" value="$val"> 
+					<xar:set name="link">xarMod::apiFunc('menutree','user','link',array('link' => $val['link']))</xar:set>
+
+					<li id="node#$key#"><a href="#$link['url']#">#$link['text']#</a>
+
+					<xar:if condition="!empty($val['children'])">
+						<xar:template file="menutree" type="module" module="menutree" subdata="array('parentid' => $key, 'childul' => true)" />
+					</xar:if>
+
+					</li>
+
+				</xar:foreach>
+				</ul>
+			</li>
+		</ul>
+
 	<xar:else />
-		<xar:set name="class">''</xar:set>
-	</xar:if>
 
-	<ul class="#$class#">
-		<xar:if condition="isset($showtopparent) and $showtopparent">
-			&#60;li id="node#$parentid#"&#62;
-			<a href="xarServer::getCurrentURL()##">
-				<xar:if condition="$parentid eq 0">root<xar:else />#$parent['link']#</xar:if>
-			</a>
-			&#60;ul&#62;
-		</xar:if>
-			<xar:foreach in="$m_arr" key="$key" value="$val"> 
-				<xar:set name="link">xarMod::apiFunc('menutree','user','link',array('link' => $val['link']))</xar:set>
+		<ul>
 
-				<li id="node#$key#"><a href="#$link['url']#">#$link['text']#</a>
+		<xar:foreach in="$m_arr" key="$key" value="$val">
+			<xar:set name="link">xarMod::apiFunc('menutree','user','link',array('link' => $val['link']))</xar:set>
 
-				<xar:if condition="!empty($val['children'])">
-					<xar:template file="menutree" type="module" subdata="array('parentid' => $key, 'onlyactive' => true, 'childul' => true)" />
-				</xar:if>
+			<li id="node#$key#"><a href="#$link['url']#">#$link['text']#</a>
+				
+			<xar:if condition="!empty($val['children'])">
+				<xar:template file="menutree" type="module" module="menutree" subdata="array('parentid' => $key, 'childul' => true)" />
+			</xar:if>
 
-				</li>
+			</li>
 
-			</xar:foreach>
-			</ul>
-	<xar:if condition="isset($showtopparent) and $showtopparent">	
-		&#60;/li&#62;
-		&#60;/ul&#62;
+		</xar:foreach>
+
+		</ul>
+
 	</xar:if>
 
 </xar:if>

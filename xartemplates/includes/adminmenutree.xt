@@ -5,56 +5,43 @@
   
 <xar:set name="m_arr">xarMod::apiFunc('menutree','user','getmenutree',array('parentid' => $parentid))</xar:set>
 
-<xar:if condition="!isset($childul)">
-	<xar:set name="ulid">'dhtmlgoodies_tree2'</xar:set>
-	<xar:set name="ulclass">'dhtmlgoodies_tree'</xar:set>
-<xar:else />
-	<xar:set name="ulid">''</xar:set>
-	<xar:set name="ulclass">''</xar:set>
-</xar:if>
-
-<xar:set name="parent">xarMod::apiFunc('menutree','user','getitem',array('itemid' => $parentid))</xar:set>
+<xar:set name="parent">xarMod::apiFunc('menutree','user','getitem',array('itemid' => $parentid, 'onlyactive' => true))</xar:set>
 
 <xar:if condition="!empty($m_arr)">
 
-	<xar:if condition="!isset($childul)">
-
-		<ul id="dhtmlgoodies_tree2" class="dhtmlgoodies_tree">
-			<li id="node#$parentid#" noDrag="true" noSiblings="true" noDelete="true" noRename="true"><a href="#xarServer::getCurrentURL()##"><xar:if condition="$parentid eq 0">root<xar:else />#$parent['link']# &#160;</xar:if></a>
-				<ul>
-				<xar:foreach in="$m_arr" key="$key" value="$val"> 
-					<li id="node#$key#"><a href="#xarServer::getCurrentURL()##" onMouseOver="return highlight(#$key#);" onMouseOut="return unhighlight(#$key#);">#$val['link']#</a>  &#160; <span class="linkid" id="linkid#$key#">ID: #$key#</span>    
-
-					<xar:if condition="!empty($val['children'])">
-						<xar:template file="adminmenutree" type="module" module="menutree" subdata="array('parentid' => $key, 'childul' => true)" />
-					</xar:if>
-
-					</li>
-
-				</xar:foreach>
-				</ul>
-			</li>
-		</ul>
-
-	<xar:else />
-
-		<ul>
-
-		<xar:foreach in="$m_arr" key="$key" value="$val">
-	 
-			<li id="node#$key#"><a href="#xarServer::getCurrentURL()##" onMouseOver="javascript: highlight(#$key#)" onMouseOut="javascript: unhighlight(#$key#)">#$val['link']#</a>  &#160; <span class="linkid" id="linkid#$key#">ID: #$key#</span>  
-				
-			<xar:if condition="!empty($val['children'])">
-				<xar:template file="adminmenutree" type="module" module="menutree" subdata="array('parentid' => $key, 'childul' => true)" />
+	<ul id="dhtmlgoodies_tree2" class="dhtmlgoodies_tree">
+		<xar:if condition="isset($showtopparent) and $showtopparent">
+			&#60;li id="node#$parentid#" noDrag="true" noSiblings="true" noDelete="true" noRename="true"&#62;
+			<xar:if condition="$parentid eq 0">
+				<xar:set name="toplinktext">'root'</xar:set>
+				<xar:set name="toplinkurl">xarServer::getCurrentURL()
+				. '#'</xar:set>
+				<xar:set name="class">'no_bg'</xar:set>
+			<xar:else /> 
+				<xar:set name="toplinktext">$parent['link']</xar:set>
+				<xar:set name="toplinkurl">$parent['link']</xar:set>
+				<xar:set name="class">''</xar:set>
 			</xar:if>
+			<a href="#$toplinkurl#" class="#$class#">
+				#$toplinktext#
+			</a>
+			&#60;ul&#62;
+		</xar:if>
 
-			</li>
+			<xar:foreach in="$m_arr" key="$key" value="$val"> 
+				<li id="node#$key#"><a href="#xarServer::getCurrentURL()##" onMouseOver="return highlight(#$key#);" onMouseOut="return unhighlight(#$key#);">#$val['link']#</a>  &#160; <span class="linkid" id="linkid#$key#">Link ID: #$key#</span>    
+				
+				<xar:if condition="!empty($val['children'])">
+					<xar:template file="adminmenutree" type="module" module="menutree" subdata="array('parentid' => $key, 'childul' => true)" />
+				</xar:if>
+				</li>
+			</xar:foreach>
 
-		</xar:foreach>
-
-		</ul>
-
-	</xar:if>
+		<xar:if condition="isset($showtopparent) and $showtopparent">	
+			&#60;/ul&#62;
+			&#60;/li&#62;
+		</xar:if>
+	</ul>
 
 </xar:if>
 

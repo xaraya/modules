@@ -1,5 +1,5 @@
 <object name="menutree">
-  <objectid>193</objectid>
+  <objectid>303</objectid>
   <label>Menu Tree</label>
   <module_id>19748</module_id>
   <itemtype>2</itemtype>
@@ -11,7 +11,7 @@
   <isalias>true</isalias>
   <properties>
     <property name="itemid">
-      <id>1026</id>
+      <id>1410</id>
       <label>Itemid</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration></configuration>
     </property>
     <property name="link">
-      <id>1027</id>
+      <id>1411</id>
       <label>Link</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -30,44 +30,64 @@
       <seq>2</seq>
       <configuration></configuration>
     </property>
-    <property name="position">
-      <id>1028</id>
+    <property name="seq">
+      <id>1412</id>
       <label>Position</label>
-      <type>integerbox</type>
+      <type>hidden</type>
       <defaultvalue></defaultvalue>
-      <source>xar_menutree.position</source>
-      <status>33</status>
+      <source>xar_menutree.seq</source>
+      <status>164</status>
       <seq>4</seq>
       <configuration></configuration>
     </property>
-    <property name="parentid">
-      <id>1029</id>
-      <label>ParentId</label>
+    <property name="relative">
+      <id>1413</id>
+      <label>Relative</label>
       <type>dropdown</type>
       <defaultvalue></defaultvalue>
-      <source>xar_menutree.parentid</source>
+      <source>dummy</source>
       <status>33</status>
       <seq>5</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:50:"xarMod::apiFunc('menutree','user','relvalidation')";}</configuration>
+    </property>
+    <property name="relationship">
+      <id>1414</id>
+      <label>Relationship</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>dummy</source>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:43:"1,Right before;2,Right after;3,First child;";}</configuration>
+    </property>
+    <property name="parentid">
+      <id>1415</id>
+      <label>ParentId</label>
+      <type>hidden</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_menutree.parentid</source>
+      <status>35</status>
+      <seq>7</seq>
       <configuration>a:4:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_firstline";s:4:"root";s:23:"initialization_function";s:74:"xarMod::apiFunc('menutree','user','getall',array('forvalidation' => true))";}</configuration>
     </property>
     <property name="no_rename">
-      <id>1030</id>
+      <id>1416</id>
       <label>No Rename</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
       <source>xar_menutree.no_rename</source>
-      <status>33</status>
-      <seq>6</seq>
+      <status>35</status>
+      <seq>7</seq>
       <configuration></configuration>
     </property>
     <property name="no_delete">
-      <id>1031</id>
+      <id>1417</id>
       <label>No Delete</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
       <source>xar_menutree.no_delete</source>
-      <status>33</status>
-      <seq>7</seq>
+      <status>35</status>
+      <seq>8</seq>
       <configuration></configuration>
     </property>
   </properties>

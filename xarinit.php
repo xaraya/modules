@@ -36,7 +36,7 @@ function menutree_init()
         $fields = array(
                         'itemid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
                         'link' => array('type' => 'varchar','size' => 255,'null' => false, 'charset' => $charset),
-						'position' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => false), 
+						'seq' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => false), 
 						'parentid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => false), 
 						'no_rename' => array('type' => 'boolean',
 						 'default'     => false), 

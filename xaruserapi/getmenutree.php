@@ -13,7 +13,7 @@ function menutree_userapi_getmenutree($args)
 	$list = DataObjectMaster::getObjectList(array(
 							'name' => 'menutree',
 							'where' => 'parentid eq ' . $parentid,
-							'sort' => 'position ASC, itemid ASC',
+							'sort' => 'seq ASC, itemid ASC',
 							'numitems' => NULL
 		));
 	$items = $list->getItems();

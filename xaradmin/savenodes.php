@@ -21,11 +21,11 @@ function menutree_admin_savenodes($args) {
 		$vals = explode('-', $item);
 		$itemid = $vals[0];
 		$parentid = $vals[1];
-		$position = $key;
+		$seq = $key;
  
 		$object->getItem(array('itemid' => $itemid));
 		$object->properties['parentid']->setValue($parentid);
-		$object->properties['position']->setValue($position);
+		$object->properties['seq']->setValue($seq);
 		$object->updateItem();
 
 	}

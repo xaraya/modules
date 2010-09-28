@@ -2,6 +2,9 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- common admin menu for this module - remove link to the current function -->
+    
+<xar:style scope="module" module="menutree" file="menutree" /> 
+
     <div class="xar-mod-head">
       <span class="xar-mod-title">Menu Tree Administration</span>
     </div>
@@ -33,11 +36,9 @@
                 <xar:comment>The default template for the xar:data-form tag is
         menutree/xartemplates/objects/showform.xt</xar:comment>
                 <xar:data-form object="$object" />
-
-                <div class="xar-form-input-wrapper-after">
-                    <input type="submit" name="preview" value="#xarML('Preview')#"/>
-                    &#160;&#160;&#160;
-                    <input type="submit" value="#xarML('Create')#"/>
+ 
+                <div class="xar-form-input-wrapper-after"> 
+                    <input type="submit" value="#xarML('Create')#" class="create" />
                 </div>
           </fieldset>
         </form>

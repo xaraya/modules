@@ -5,13 +5,13 @@
  
 <xar:style scope="module" module="menutree" file="drag-drop-folder-tree" />
 <xar:style scope="module" module="menutree" file="context-menu" /> 
-<xar:style scope="module" module="menutree" file="module" /> 
-<xar:javascript module="menutree" filename="highlight.js" position="head"/>
+<xar:style scope="module" module="menutree" file="menutree" /> 
 <xar:javascript module="menutree" filename="savemytree.js" position="head"/> 
 <xar:javascript module="menutree" filename="ajax.js" position="head"/>
 <xar:javascript module="menutree" filename="context-menu.js" position="head"/>
 <xar:comment>IMPORTANT! INCLUDE THE context-menu.js FILE BEFORE drag-drop-folder-tree.js </xar:comment>
 <xar:javascript module="menutree" filename="drag-drop-folder-tree.js" position="head"/> 
+<xar:javascript module="menutree" filename="highlight.js" position="head"/> 
 
 <div class="xar-mod-head">
 	<span class="xar-mod-title">Menu Tree Administration</span>
@@ -41,9 +41,8 @@ Alf Magne Kalleland
 </form>
 	
 <div id="expand_collapse">
-<a href="#xarServer::GetCurrentURL()##" onclick="treeObj.collapseAll()">Collapse all</a> | 
-<a href="#xarServer::GetCurrentURL()##" onclick="treeObj.expandAll()">Expand</a> | <a href="#xarmodurl('menutree','user','test')#" target="blank">View Test Page</a> 
-&#160; <span style="color: #666">(Right-click on the menu items below to edit)</span></div>  
+<a href="#xarServer::GetCurrentURL()##" onclick="treeObj.expandAll()">Expand All</a> | <a href="#xarmodurl('menutree','user','test')#" target="blank">View Test Page</a> 
+&#160; <span style="color: #666">(Right-click on the menu items below to edit)</span></div> 
 
 <xar:template file="adminmenutree" type="module" module="menutree" subdata="array('parentid' => $parentid)" /> 
 

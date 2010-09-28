@@ -21,7 +21,7 @@
 <pre>&#160; &#60;xar:template file="menutree" type="module" module="menutree"
 &#160; subdata="array('parentid' => 123, 'onlyactive' => true)" /&#62;</pre>
 
-<p>...where "123" is the itemid of the parent.</p>
+<p>...where "123" is the itemid of the parent.  To find the itemid of a menu item, mouse over the item in the <a href="#xarmodurl('menutree','admin','menus')#">Menu Tree tab</a>.</p>
 
 <p>Use CSS to control menu depth.  See the <a href="#sys::code()#modules/menutree/xartemplates/user-test.xt" target="new">user-text.xt</a> template for an example.  <a href="#xarmodurl('menutree','user','test')#" target="new">View the test menu</a>.  Note: The test menu isn't styled at all.  That's left up to you.</p>
 

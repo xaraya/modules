@@ -23,6 +23,9 @@ function menutree_admin_new()
     sys::import('modules.dynamicdata.class.objects.master');
     // Get the object we'll be working with
     $data['object'] = DataObjectMaster::getObject(array('name' => 'menutree'));
+	$properties = $data['object']->getProperties();
+	$relative_propname = 'dd_' . $properties['relative']->id; 
+	$relationship_propname = 'dd_' . $properties['relationship']->id;
 
     // Check if we are in 'preview' mode from the input here - the rest is handled by checkInput()
     // Here we are testing for a button clicked, so we test for a string
@@ -30,7 +33,12 @@ function menutree_admin_new()
 
     // Check if we are submitting the form
     // Here we are testing for a hidden field we define as true on the template, so we can use a boolean (true/false)
-    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
+    
+	if (!xarVarFetch($relative_propname, 'int', $data['relative'],  NULL, XARVAR_NOT_REQUIRED)) {return;}
+	if (!xarVarFetch($relationship_propname, 'int', $data['relationship'],  1, XARVAR_NOT_REQUIRED)) {return;}
+	if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
+
+	$data['relationship'] = (int)$data['relationship'];
 
     if ($data['confirm']) {
 
@@ -41,7 +49,10 @@ function menutree_admin_new()
 
         // Get the data from the form and see if it is all valid
         // Either way the values are now stored in the object
-        $isvalid = $data['object']->checkInput();
+		//$data['object']->properties['seq']->setInputStatus(DataPropertyMaster::DD_INPUTSTATE_IGNORED);  
+		
+		//$isvalid = $data['object']->checkInput();
+        $isvalid = $data['object']->properties['link']->checkInput();
 
         if (!$isvalid) {
             // Bad data: redisplay the form with the data we picked up and with error messages
@@ -50,8 +61,74 @@ function menutree_admin_new()
             // Show a preview, same thing as the above essentially
             return xarTplModule('menutree','admin','new', $data);        
         } else {
-            // Good data: create the item
-            $item = $data['object']->createItem();
+            // Good data: create the item 
+
+			if(is_numeric($data['relative'])) {
+				if ($data['relationship'] < 3) {
+					// item will have same parentid as relative
+					$obj = DataObjectMaster::getObject(array('name' => 'menutree'));
+					$item = $obj->getItem(array('itemid' => $data['relative']));
+					$item = $obj->getFieldValues(); 
+					$parentid = $item['parentid'];
+					$relpos = $item['seq']; 
+					if ($data['relationship'] == 1) { 
+						$seq = (int)$relpos;
+						// shift all seqs backward starting with relative seq
+						$obj = DataObjectMaster::getObjectList(array(
+							'name' => 'menutree',
+							'where' => 'seq ge ' . $relpos
+						));
+					} else {
+						$seq = $relpos + 1; 
+						// shift all seqs backward if seq value higher than relative
+						$obj = DataObjectMaster::getObjectList(array(
+							'name' => 'menutree',
+							'where' => 'seq gt ' . $relpos
+						));
+					}
+					$items = $obj->getItems();
+					foreach ($items as $item) { 
+						$obj = DataObjectMaster::getObject(array(
+							'name' => 'menutree'
+						));
+						$obj->getItem(array('itemid' => $item['itemid']));
+						$new = $item['seq']+1; 
+						$obj->properties['seq']->setValue($new);
+						$obj->updateItem();
+					}
+				} else {
+					// first child
+					$parentid = $data['relative'];
+					$obj = DataObjectMaster::getObject(array(
+						'name' => 'menutree' 
+					));
+					$obj->getItem(array('itemid' => $data['relative'])); 
+					$values = $obj->getFieldValues();
+					$seq = $values['seq'] + 1;
+					
+					$obj = DataObjectMaster::getObjectList(array(
+							'name' => 'menutree',
+							'where' => 'seq ge ' . $seq
+						));
+					$items = $obj->getItems();
+					foreach ($items as $item) {
+						$obj = DataObjectMaster::getObject(array(
+							'name' => 'menutree' 
+						));
+						$obj->getItem(array('itemid' => $item['itemid']));
+						$new = $item['seq']+1;
+						$obj->properties['seq']->setValue($new);
+						$obj->updateItem();
+					}
+				}
+			} else { // relative is null: no menu items yet
+				$seq = '';
+				$parentid = '';
+			} 
+
+			$data['object']->properties['seq']->setValue($seq);
+			$data['object']->properties['parentid']->setValue($parentid);
+			$item = $data['object']->createItem();
 
             // Jump to the next page
             xarResponse::Redirect(xarModURL('menutree','admin','menus'));
