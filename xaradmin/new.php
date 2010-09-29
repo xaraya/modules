@@ -67,34 +67,55 @@ function menutree_admin_new()
 				if ($data['relationship'] < 3) {
 					// item will have same parentid as relative
 					$obj = DataObjectMaster::getObject(array('name' => 'menutree'));
-					$item = $obj->getItem(array('itemid' => $data['relative']));
+					$item = $obj->getItem(array('itemid' => $data['relative'])); 
 					$item = $obj->getFieldValues(); 
 					$parentid = $item['parentid'];
-					$relpos = $item['seq']; 
-					if ($data['relationship'] == 1) { 
-						$seq = (int)$relpos;
+					if ($data['relationship'] == 1) {
+						$seq = (int)$item['seq'];
 						// shift all seqs backward starting with relative seq
 						$obj = DataObjectMaster::getObjectList(array(
 							'name' => 'menutree',
-							'where' => 'seq ge ' . $relpos
+							'where' => 'seq ge ' . $seq
 						));
-					} else {
-						$seq = $relpos + 1; 
+					} else { // get the highest seq of the relative's offspring
+						$offspring = xarMod::apiFunc('menutree','user','getoptions',array('parentid' => $data['relative']));
+						if(!empty($offspring)) { 
+							foreach ($offspring as $key=>$value) {
+								$obj = DataObjectMaster::getObject(array(
+									'name' => 'menutree' 
+								)); 
+								$obj->getItem(array('itemid' => $key));
+								$vals = $obj->getFieldValues();
+								$seq_arr[] = $vals['seq'];
+							}
+							asort($seq_arr);
+							$seq = end($seq_arr);
+						} else {
+							$obj = DataObjectMaster::getObject(array(
+									'name' => 'menutree' 
+								)); 
+							$obj->getItem(array('itemid' => $data['relative']));
+							$vals = $obj->getFieldValues();
+							$seq = $vals['seq'];
+						}
+
 						// shift all seqs backward if seq value higher than relative
 						$obj = DataObjectMaster::getObjectList(array(
 							'name' => 'menutree',
-							'where' => 'seq gt ' . $relpos
+							'where' => 'seq gt ' . $seq
 						));
 					}
-					$items = $obj->getItems();
-					foreach ($items as $item) { 
-						$obj = DataObjectMaster::getObject(array(
-							'name' => 'menutree'
-						));
-						$obj->getItem(array('itemid' => $item['itemid']));
-						$new = $item['seq']+1; 
-						$obj->properties['seq']->setValue($new);
-						$obj->updateItem();
+					if($obj) {
+						$items = $obj->getItems();
+						foreach ($items as $item) { 
+							$obj = DataObjectMaster::getObject(array(
+								'name' => 'menutree'
+							));
+							$obj->getItem(array('itemid' => $item['itemid']));
+							$new = $item['seq']+1; 
+							$obj->properties['seq']->setValue($new);
+							$obj->updateItem();
+						}
 					}
 				} else {
 					// first child

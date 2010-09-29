@@ -32,8 +32,7 @@ function menutree_userapi_getoptions($args)
 	if (!empty($items)) {
 		
 		foreach($items as $key => $item) { 
-
-			$sort = $item['seq'];
+ 
 			$items[$key]['level'] = $level;
 
 			$children = xarMod::apiFunc('menutree','user','getoptions', array('parentid' => $key, 'level' => $level));
