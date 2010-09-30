@@ -171,6 +171,7 @@ function publications_init()
     }
 
 */
+/*
     // Register blocks
     if (!xarModAPIFunc('blocks',
                        'admin',
@@ -211,6 +212,7 @@ function publications_init()
                            'publications', 'admin', 'waitingcontent')) {
         return false;
     }
+    */
 
 # --------------------------------------------------------
 #

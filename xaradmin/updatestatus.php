@@ -102,7 +102,7 @@ function publications_admin_updatestate()
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {
             extract($lastviewarray);
-            xarResponse::redirect(xarModURL('publications', 'admin', 'view',
+            xarController::redirect(xarModURL('publications', 'admin', 'view',
                                           array('ptid' => $ptid,
                                                 'catid' => $catid,
                                                 'state' => $state,
@@ -114,7 +114,7 @@ function publications_admin_updatestate()
     if (empty($catid)) {
         $catid = null;
     }
-    xarResponse::redirect(xarModURL('publications', 'admin', 'view',
+    xarController::redirect(xarModURL('publications', 'admin', 'view',
                                   array('ptid' => $ptid, 'catid' => $catid)));
 
     return true;
