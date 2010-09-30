@@ -1,16 +1,19 @@
 <?php
 /**
- * menutree
+ *  
  *
  * @package modules
- * @copyright (C) 2009 WebCommunicate.net
+ * @copyright see the html/credits.html file in this release
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage downloads
- * @link http://www.xaraya.com/index.php/release/19741.html
- * @author Ryan Walker <ryan@webcommunicate.net>
- **/
+ * @subpackage Menu Tree Module
+ * @link http://xaraya.com/index.php/release/eid/1162
+ * @author potion <ryan@webcommunicate.net>
+ */
+/**
+ *  
+ */
 $modversion['name']         = 'menutree';
 $modversion['id']           = '19748';
 $modversion['version']      = '0.5.0';

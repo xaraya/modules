@@ -1,8 +1,19 @@
 <?php
 /**
- 
-***/
-
+ * Update an item's link field.  This function is called by drag-drop-folder-tree.js
+ *
+ * @package modules
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Menu Tree Module
+ * @link http://xaraya.com/index.php/release/eid/1162
+ * @author potion <ryan@webcommunicate.net>
+ */
+/**
+ *  
+ */
 function menutree_admin_updateitem($args) {
 	
 	extract($args);

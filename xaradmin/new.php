@@ -3,19 +3,18 @@
  * Add a new item
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright see the html/credits.html file in this release
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Menu Tree Module
- * @link http://xaraya.com/index.php/release/66.html
- * @author mikespub <mikespub@xaraya.com>
+ * @link http://xaraya.com/index.php/release/eid/1162
+ * @author potion <ryan@webcommunicate.net>
  */
 /**
- * Create a new item of the menutree object
+ * Create a new item of the menutree object and adjust seq of other items accordingly
  */
-function menutree_admin_new()
-{
+function menutree_admin_new() {
     //See if the current user has the privilege to add an item. We cannot pass any extra arguments here
     if (!xarSecurityCheck('AddMenuTree')) return;
 

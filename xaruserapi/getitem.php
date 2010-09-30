@@ -1,11 +1,20 @@
 <?php
 /**
- 
-/**
- * 
+ *  Get a single item
+ *
+ * @package modules
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Menu Tree Module
+ * @link http://xaraya.com/index.php/release/eid/1162
+ * @author potion <ryan@webcommunicate.net>
  */
-function menutree_userapi_getitem($args)
-{
+/**
+ *  
+ */
+function menutree_userapi_getitem($args) {
 	$onlyactive = false;
 
 	extract($args);

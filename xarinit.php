@@ -1,16 +1,16 @@
 <?php
 /**
- * menutree
+ *  
  *
  * @package modules
- * @copyright (C) 2009 WebCommunicate.net
+ * @copyright see the html/credits.html file in this release
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage menutree
- * @link http://www.xaraya.com/index.php/release/19741.html
- * @author Ryan Walker <ryan@webcommunicate.net>
- */
+ * @subpackage Menu Tree Module
+ * @link http://xaraya.com/index.php/release/eid/1162
+ * @author potion <ryan@webcommunicate.net>
+ */ 
 sys::import('xaraya.tableddl');
 /**
  * Initialise the module
@@ -19,8 +19,7 @@ sys::import('xaraya.tableddl');
  * module instance
  * @return bool True on succes of init
  */
-function menutree_init()
-{
+function menutree_init() {
 
     $dbconn =& xarDB::getConn();
     $tables =& xarDB::getTables();

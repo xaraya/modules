@@ -1,23 +1,20 @@
 <?php
 /**
- * Main administration
+ * Main
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright see the html/credits.html file in this release
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Menu Tree Module
- * @link http://xaraya.com/index.php/release/66.html
- * @author mikespub <mikespub@xaraya.com>
+ * @link http://xaraya.com/index.php/release/eid/1162
+ * @author potion <ryan@webcommunicate.net>
  */
 /**
- * the main administration function
- * @param none
- * @return array
+ *  
  */
-function menutree_admin_main()
-{
+function menutree_admin_main() {
     // Check to see the current user has edit access to the menutree module
     if (!xarSecurityCheck('ReadMenuTree')) return;
     

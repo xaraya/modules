@@ -1,12 +1,24 @@
 <?php
-
+/**
+ * Save changes to the hierarchy.  This function is called by savemytree.js
+ *
+ * @package modules
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Menu Tree Module
+ * @link http://xaraya.com/index.php/release/eid/1162
+ * @author potion <ryan@webcommunicate.net>
+ */
+/**
+ *  
+ */
 function menutree_admin_savenodes($args) {
 
 	extract($args);
 
 	if(!xarVarFetch('saveString',       'str',    $savestring,   NULL, XARVAR_DONT_SET)) {return;}
-
-	/* Input to this file - $_GET['saveString']; */
 
 	if(!isset($savestring)) die("no input"); 
 
@@ -33,8 +45,6 @@ function menutree_admin_savenodes($args) {
 	xarResponse::Redirect(xarModURL('menutree','admin','menus'));
 	return true;
 		 
-
 }
-
 
 ?>

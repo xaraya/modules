@@ -3,20 +3,19 @@
  * Modify config
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright see the html/credits.html file in this release
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Menu Tree Module
- * @link http://xaraya.com/index.php/release/66.html
- * @author mikespub <mikespub@xaraya.com>
+ * @link http://xaraya.com/index.php/release/eid/1162
+ * @author potion <ryan@webcommunicate.net>
  */
 /**
  * This is a standard function to modify and update the configuration parameters of the
  * module
  */
-function menutree_admin_modifyconfig()
-{
+function menutree_admin_modifyconfig() {
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('AdminMenuTree')) return;
