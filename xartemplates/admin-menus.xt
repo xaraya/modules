@@ -42,9 +42,20 @@ Alf Magne Kalleland
 	
 <div id="expand_collapse">
 <a href="#xarServer::GetCurrentURL()##" onclick="treeObj.expandAll()">Expand All</a> | <a href="#xarmodurl('menutree','user','test')#" target="blank">View Test Page</a> 
-&#160; <span style="color: #666">(Right-click on the menu items below to edit)</span></div> 
+</div> 
 
 <xar:template file="adminmenutree" type="module" module="menutree" subdata="array('parentid' => $parentid)" /> 
+
+<br style="clear:both" />
+<div style="color: #444;">
+<p>Hints:</p>
+<ul>
+<li>Right-click on a menu item to edit/delete it.</li>
+<li>To delete many menu items quickly, drag them into the same tree and then delete the parent.  When you delete a parent item, you also delete all of its children, grandchildren, etc.</li>
+<li>Changes to the hierarchy aren't saved unless you click the save button, so if you make a mistake and have trouble restoring things, just refresh/reload the page in your browser to try again.</li> 
+<li>When you're moving an item (and its children), snap it into place by dragging it directly above or below some other relative item. You'll see a black bar when you've moved it to the same level (sibling) as the relative, and an arrow if you've positioned it as a child of the relative.</li>
+</ul>
+</div> 
 
 <script type="text/javascript">	
 treeObj = new JSDragDropTree();

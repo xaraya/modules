@@ -13,7 +13,7 @@
  **/
 $modversion['name']         = 'menutree';
 $modversion['id']           = '19748';
-$modversion['version']      = '0.2.0';
+$modversion['version']      = '0.5.0';
 $modversion['displayname']  = xarML('Menu Tree');
 $modversion['description']  = 'menutree';
 $modversion['credits']      = 'xardocs/credits.txt';

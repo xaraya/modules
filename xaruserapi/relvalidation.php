@@ -7,20 +7,16 @@
 function menutree_userapi_relvalidation($args)
 {
 
-	$arr = xarMod::apiFunc('menutree','user','getoptions');
-
-	function leadingZeros($num,$numDigits) {
-		return sprintf("%0".$numDigits."d",$num);
-	}
+	$arr = xarMod::apiFunc('menutree','user','getitemlevels');
 
 	foreach ($arr as $key => $value) {
-		$the_key = $value['seq'] . str_pad($value['itemid'], 15, "0", STR_PAD_LEFT);
+		// start the key with the seq for sorting purposes, but add the padded itemid for uniqueness
+		$sortkey = $value['seq'] . str_pad($value['itemid'], 25, "0", STR_PAD_LEFT);
 		$prepend = '';
 		for ($i=1; $i < $value['level']; $i++) {
 			$prepend .= '&#8212;';
 		}
-		//$prepend .= '+';
-		$items[$the_key] = array($prepend . '&#160;' . $value['link'], $key, $value['itemid']);
+		$items[$sortkey] = array($value['itemid'], $prepend . '&#160;' . $value['link']);
 	}
 
 	ksort($items);
@@ -28,8 +24,7 @@ function menutree_userapi_relvalidation($args)
 	unset($arr);
 
 	foreach ($items as $key => $value) {
-		$the_key = (int)$value[2]; 
-		$arr[] = array('id' => $value[2], 'name' => $value[0]);
+		$arr[] = array('id' => $value[0], 'name' => $value[1]);
 	}
 
 	return $arr;
