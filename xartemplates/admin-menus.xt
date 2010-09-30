@@ -55,7 +55,7 @@ Alf Magne Kalleland
 	<li>To delete many menu items quickly, drag them into the same tree and then delete the parent.  When you delete a parent item, you also delete all of its children, grandchildren, etc.</li>
 	<li>Changes to the hierarchy aren't saved unless you click the save button, so if you make a mistake and have trouble restoring things, just refresh/reload the page in your browser to try again.</li> 
 	<li>When you're moving an item (and its children), snap it into place by dragging it onto the handle <img src="http://localhost/lsc/html/code/modules/base/xarimages/icons/move.png" width="16" height="16" alt="handle" /> or link of the item you want it to appear below.  If you want it to be the next sibling of foo, drag it onto foo's handle -- you'll see a black bar appear below foo's handle.  If you want it to be the first child of foo, drag it onto foo's link -- you'll see a black arrow appear below foo's link.</li>
-	<li>You can only drag items/branches to position them *below* a relative, not above.  Thus, if you want to move foo above the top parent ("Motor Vehicles" in the sample data), you need to drag the top parent below foo. Attempts to drag foo above the top parent will have no effect.</li>
+	<li>You can only drag items/branches to position them *below* a relative, not above.  Thus, if you want to move foo above the top parent ("Motor Vehicles" in the sample data), you need to drag the top parent below foo.</li>
 	</ul>
 	</div> 
 </xar:if>
