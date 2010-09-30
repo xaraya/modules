@@ -11,8 +11,7 @@
       
         <form method="post" action="#xarServer::getCurrentURL()#">
             <fieldset>
-                <legend>Modify Menu Tree Configuration</legend>
-                <xar:data-form object="$module_settings"/>
+                <legend>Admin Interface</legend>
                 <xar:data-form object="$object" itemid="0"/>
             </fieldset>
 

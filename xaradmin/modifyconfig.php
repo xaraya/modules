@@ -30,12 +30,12 @@ function menutree_admin_modifyconfig() {
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
     $data['object']->getItem(array('itemid' => 0));
 
-    // Get the object we'll be working with for common configuration settings
+   /* // Get the object we'll be working with for common configuration settings
     $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'menutree'));
     // Decide which fields are configurable in this module
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_user_menu, user_menu_link');
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
-    $data['module_settings']->getItem();
+    $data['module_settings']->getItem();*/
 
     // Run the appropriate code depending on whether the template was submitted or not
     switch (strtolower($phase)) {
@@ -67,12 +67,12 @@ function menutree_admin_modifyconfig() {
             # when you're dealing with checkboxes (they're either checked or they aren't)
             #
 
-            $isvalid = $data['module_settings']->checkInput();
+            /*$isvalid = $data['module_settings']->checkInput();
             if (!$isvalid) {
                 return xarTplModule('menutree','admin','modifyconfig', $data);
             } else {
                 $itemid = $data['module_settings']->updateItem();
-            }
+            }*/
 
             # --------------------------------------------------------
             #

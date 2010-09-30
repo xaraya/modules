@@ -85,11 +85,11 @@ Owner of DHTMLgoodies.com
 		if(document.all){
 			this.indicator_offsetX = 2;	// Offset position of small black lines indicating where nodes would be dropped.
 			this.indicator_offsetX_sub = 4;
-			this.indicator_offsetY = 2;
+			this.indicator_offsetY = 4;
 		}else{
-			this.indicator_offsetX = 1;	// Offset position of small black lines indicating where nodes would be dropped.
-			this.indicator_offsetX_sub = 3;
-			this.indicator_offsetY = 2;			
+			this.indicator_offsetX = -1;	// Offset position of small black lines indicating where nodes would be dropped.
+			this.indicator_offsetX_sub = 1;
+			this.indicator_offsetY = 5;			
 		}
 		if(navigator.userAgent.indexOf('Opera')>=0){
 			this.indicator_offsetX = 2;	// Offset position of small black lines indicating where nodes would be dropped.

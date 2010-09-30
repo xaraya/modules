@@ -66,7 +66,7 @@ function menutree_init() {
 #
 # Set up configuration modvars (module specific)
 #
-	//xarModVars::set('menutree','file_directories','menutree_module_files');
+	xarModVars::set('menutree','show_hints',1);
 
 # --------------------------------------------------------
 #

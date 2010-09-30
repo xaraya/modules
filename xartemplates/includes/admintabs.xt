@@ -36,6 +36,20 @@
           </a>
         </li>
     </xar:sec> 
+    <xar:sec mask="AdminMenuTree" catch="false">
+	<xar:if condition="$activetab eq 'modifyconfig'">
+	    <xar:set name="tabclass">'xar-tab-active'</xar:set>
+	    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+	<xar:else />
+	    <xar:set name="tabclass">'xar-tab'</xar:set>
+	    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+	</xar:if>
+	<li class="#$tabclass#">
+	  <a href="#xarModURL('menutree','admin','modifyconfig')#" class="#$linkclass#">
+	    Modify Config
+	  </a>
+	</li>
+	</xar:sec> 
 	<xar:sec mask="ReadMenuTree" catch="false">
 	<xar:if condition="$activetab eq 'overview' or $activetab eq 'main'">
 	    <xar:set name="tabclass">'xar-tab-active'</xar:set>
