@@ -139,7 +139,7 @@ function publications_admin_privileges($args)
         if (empty($id)) return; // throw back
 
         // redirect to the privilege
-        xarResponse::redirect(xarModURL('privileges', 'admin', 'modifyprivilege',
+        xarController::redirect(xarModURL('privileges', 'admin', 'modifyprivilege',
                                       array('id' => $id)));
         return true;
     }

@@ -10,7 +10,7 @@ function publications_admin_multiops()
     if(!xarVarFetch('operation',   'isset', $operation,  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('returnurl',   'str',   $returnurl,  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('object',      'str',   $object,     'listings_listing', XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('localmodule', 'str',   $module,     'listings', XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('module', 'str',   $module,     'listings', XARVAR_DONT_SET)) {return;}
 
     if(!xarVarFetch('redirecttarget', 'str',  $redirecttarget, 'list',    XARVAR_NOT_REQUIRED)) {return;}
 
@@ -20,15 +20,15 @@ function publications_admin_multiops()
 
     switch ($operation) {
         case 0:
-        xarResponse::redirect(xarModURL('publications','user','delete',$args));
+        xarController::redirect(xarModURL('publications','user','delete',$args));
         break;
 
         case 'delete_customer':
-        xarResponse::redirect(xarModURL('ledgerar','user','delete_customer',array('idlist' => $idlist)));
+        xarController::redirect(xarModURL('ledgerar','user','delete_customer',array('idlist' => $idlist)));
         break;
 
         case 'customerlist':
-        xarResponse::redirect(xarModURL('ledgerar','user','view_customers'));
+        xarController::redirect(xarModURL('ledgerar','user','view_customers'));
         break;
     }
     return true;
@@ -46,7 +46,7 @@ function publications_admin_multiops()
     }
     $ids = explode(',',$idlist);
     $totalids = count($ids);
-    if (($totalids <=0) or ($operation == 0)) xarResponse::redirect($returnurl);
+    if (($totalids <=0) or ($operation == 0)) xarController::redirect($returnurl);
 
 
     // doin stuff with items
@@ -79,7 +79,7 @@ function publications_admin_multiops()
         break;
     } // end switch
 
-    xarResponse::redirect($returnurl);
+    xarController::redirect($returnurl);
 
     return true;
 }

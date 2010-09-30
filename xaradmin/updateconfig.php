@@ -97,7 +97,7 @@ function publications_admin_updateconfig()
         }
 
     }
-    xarResponse::redirect(xarModURL('publications', 'admin', 'modifyconfig',
+    xarController::redirect(xarModURL('publications', 'admin', 'modifyconfig',
                                   array('ptid' => $ptid, 'tab' => $data['tab'])));
     return true;
 }
