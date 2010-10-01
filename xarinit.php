@@ -3,25 +3,20 @@
  * Publications module
  *
  * @package modules
+ * @subpackage Publications Module 
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Publications Module
- 
- * @author mikespub
+ * @author Marc Lutolf (mfl@netspan.ch)
  */
+
 /**
- * initialise the publications module
+ * Install this module
  */
+
 function publications_init()
 {
-    // Get database information
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
-
-    //Load Table Maintainance API
-    sys::import('xaraya.tableddl');
     sys::import('xaraya.structures.query');
 
 # --------------------------------------------------------
@@ -220,11 +215,6 @@ function publications_init()
 #
     sys::import('xaraya.structures.hooks.observer');
 
-    $observer = new BasicObserver('publications','admin','getconfighook');
-    $observer->register('module', 'getconfig', 'API');
-    $subject = new HookSubject('listings');
-    $subject->attach($observer);
-
     // Enable publications hooks for search
     if (xarModIsAvailable('search')) {
         xarModAPIFunc('modules','admin','enablehooks',
@@ -309,8 +299,9 @@ function publications_init()
 }
 
 /**
- * upgrade the publications module from an old version
+ * Upgrade this module from an old version
  */
+ 
 function publications_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
@@ -319,16 +310,17 @@ function publications_upgrade($oldversion)
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here
 
-        case '2.5.0':
-            // Code to upgrade from version 2.5 goes here
+        case '2.1.0':
+            // Code to upgrade from version 2.1 goes here
             break;
     }
     return true;
 }
 
 /**
- * delete the publications module
+ * Remove this module
  */
+ 
 function publications_delete()
 {
     $module = 'publications';
