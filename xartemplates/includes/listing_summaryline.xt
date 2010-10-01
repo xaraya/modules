@@ -1,25 +1,37 @@
-<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-
     <xar:set name="thispageno">count($items);</xar:set>
-    <div class="xar-clearleft xar-floatleft xar-padding-thick xar-halfwidth" style="float: left; padding-top:1em;">
-        <xar:if condition="$total gt $items_per_page">
+    <xar:if condition="empty($layout)">
+        <xar:set name="layout">'publications'</xar:set>
+    </xar:if>
+    <div class="xar-clearleft xar-floatleft xar-padding-thick xar-halfwidth xar-align-left" style="padding-top:1em;">
+        <xar:if condition="$total gt $itemsperpage">
           <xar:ml>
               <xar:mlstring>Displaying #(1) of #(2) selected</xar:mlstring>
-              <xar:mlvar>#$thispageno#</xar:mlvar>
+          <xar:mlvar>#$thispageno#</xar:mlvar>
             <xar:mlvar>#$total#</xar:mlvar>
           </xar:ml>
         <xar:else />
-          <xar:ml>
-            Total selected: ##(1)
-            <xar:mlvar>#$total#</xar:mlvar>
-          </xar:ml>           
+           Total selected: #$total#
         </xar:if>
     </div>
-    <div class="xar-floatright xar-padding-thick xar-halfwidth xar-align-right" style="padding-top:1em;">
-        <xar:sec mask="AddCalendar" catch="false">
-            <xar:set name="returnurl">xarModURL('calendar','user','view')</xar:set>
-            <a style="font-weight:bold;" href ="#xarModURL('calendar','user','new',array('name'=> $objectname, 'tplmodule'=> $module))#">Add A New Event</a>
-        </xar:sec>
-    </div>
+    <xar:if condition="($layout eq 'publications') or ($layout eq 'default')">
+        <div class="xar-floatright xar-padding-thick xar-halfwidth xar-align-right" style="padding-top:1em;">
+            <xar:sec mask="AddListings" catch="false">
+                <a style="font-weight:bold;" href ="#xarModURL('publications','user','new',array('ptid'=> $object->properties['itemtype']->defaultvalue, 'tplmodule'=> $module))#">Add A New Publication</a>
+            </xar:sec>
+        </div>
+    <xar:elseif condition="$layout eq 'pubtypes'" />
+        <div class="xar-floatright xar-padding-thick xar-halfwidth xar-align-right" style="padding-top:1em;">
+            <xar:sec mask="ManagePublications" catch="false">
+                <a href="#xarModURL('dynamicdata','util','import')#">                
+                    Import a Publication Type from XML                
+                </a>
+                &#160;|&#160;
+                <xar:set name="args">DataObjectDescriptor::getObjectID(array('name' => 'publications_types'))</xar:set>
+                <a style="font-weight:bold;" href ="#xarModURL('dynamicdata','admin','new',array('objectid' => $args['objectid']))#">
+                    Add a new Publication Type
+                </a>
+            </xar:sec>
+        </div>
+    </xar:if>
 </xar:template>
