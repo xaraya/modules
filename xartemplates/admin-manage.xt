@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">Fulltext Search Administration</span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admin-menu"/>
+        <h2>Manage Fulltext Search Configuration</h2>
+        <xar:template type="module" file="admin-manage"/>
+        <form method="post" action="#xarModURL('fulltext', 'admin', 'manage')#">
+            <fieldset>
+                <legend>Fulltext Search Configuration</legend>
+                #$modulemodifyconfig#
+            </fieldset>
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="phase" id="phase" value="update"/>
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                    <input type="hidden" name="searchmodule" id="searchmodule" value="#$searchmodule#"/>
+                    <input type="hidden" name="searchitemtype" id="searchitemtype" value="#$searchitemtype#"/>
+                    <input type="submit" value="#xarML('Update Configuration')#"/>                
+                </div>            
+            </fieldset>
+        </form>
+    </div>
+</xar:template>

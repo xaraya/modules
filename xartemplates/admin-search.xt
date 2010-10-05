@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">Fulltext Search Administration</span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admin-menu"/>
+        <form method="post" action="#xarModURL('fulltext', 'admin', 'search')#">
+            <fieldset>
+                <legend>Search Site</legend>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label" for="fulltext_q">Search:</label>
+                    <xar:data-input type="textbox" class="xar-form-textxxlong" name="q" id="fulltext_q" value="$q"/>
+                    <input type="submit" name="search" id="search" value="#xarML('Search')#"/>
+                </div>            
+            </fieldset>        
+        </form>
+        <xar:if condition="!empty($results)">
+            <h3>Search Results</h3>            
+            <ul>
+                <xar:foreach in="$results" value="$result">
+                    <li>
+                    <h4><a href="#$result['url']#" title="#$result['title']#">#$result['label']#</a></h4>
+                    <a href="#$result['url']#">#$result['url']#</a>                    
+                    </li>
+                </xar:foreach>            
+            </ul>
+        </xar:if>
+    </div>
+</xar:template>

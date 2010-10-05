@@ -1,0 +1,20 @@
+<fulltext>
+    <module name="roles">
+        <!-- default search fields, optional,
+             when specified, applied to all itemtypes without a specific entry below -->
+        <searchfields>
+            <field>uname</field>
+            <field>name</field>
+        </searchfields>
+        <!-- Over-rides for specific itemtypes, optional, 
+             when specified will be used instead of default search fields -->
+        <itemtypes>
+            <!-- only search display name for groups -->
+            <itemtype id="2">
+                <searchfields>
+                    <field>name</field>
+                </searchfields>
+            </itemtype>
+        </itemtypes>
+    </module>
+</fulltext>    

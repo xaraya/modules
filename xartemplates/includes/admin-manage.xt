@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+        <xar:style scope="module" module="base" file="navtabs"/>
+        <div>
+            <ul class="xar-tabs xar-alt xar-norm-outline">
+                <li class="xar-tabs-label help" title="#xarML('Choose a module to configure fulltext search for')#">Module:</li>
+                <xar:set name="activetab">'xar-tab-active'</xar:set>
+                <xar:set name="activelink">'xar-accent xar-accent-outline'</xar:set>
+                <xar:set name="inactivetab">'xar-tab'</xar:set>
+                <xar:set name="inactivelink">'xar-norm xar-norm-outline'</xar:set>
+                
+                <xar:set name="tabclass">empty($searchmodule)?$activetab:$inactivetab</xar:set>
+                <xar:set name="linkclass">empty($searchmodule)?$activelink:$inactivelink</xar:set>
+                <li class="#$tabclass#">
+                    <a href="#xarServer::getCurrentUrl(array('searchmodule' => null))#" title="#xarML('Configure Defaults')#" class="#$linkclass#">
+                    Defaults</a>
+                </li>
+                <xar:if condition="!empty($subjects)">
+                    <xar:foreach in="$subjects" key="$modname" value="$modinfo">
+                        <xar:set name="tabclass">$searchmodule==$modname?$activetab:$inactivetab</xar:set>
+                        <xar:set name="linkclass">$searchmodule==$modname?$activelink:$inactivelink</xar:set>  
+                        <li class="#$tabclass#">
+                            <a href="#xarServer::getCurrentUrl(array('searchmodule' => $modname))#" title="#xarML('Configure Module Settings')#" class="#$linkclass#">
+                            #$modinfo['displayname']#</a>
+                        </li>
+                    </xar:foreach>
+                </xar:if>                   
+            </ul>
+        </div>
+        <div>
+            <ul class="xar-tabs xar-alt xar-norm-outline">
+                <li class="xar-tabs-label help" title="#xarML('Choose a module itemtype to configure fulltext search for')#">Itemtype:</li>
+                
+                <xar:set name="tabclass">empty($searchitemtype)?$activetab:$inactivetab</xar:set>
+                <xar:set name="linkclass">empty($searchitemtype)?$activelink:$inactivelink</xar:set>
+                <li class="#$tabclass#">
+                    <a href="#xarServer::getCurrentUrl(array('searchitemtype' => null))#" title="#xarML('Configure Defaults')#" class="#$linkclass#">
+                    Defaults</a>
+                </li>
+                <xar:if condition="!empty($subjects[$searchmodule]['itemtypes'])">
+                    <xar:foreach in="$subjects[$searchmodule]['itemtypes']" key="$typeid" value="$typeinfo">
+                        <xar:set name="tabclass">$searchitemtype==$typeid?$activetab:$inactivetab</xar:set>
+                        <xar:set name="linkclass">$searchitemtype==$typeid?$activelink:$inactivelink</xar:set>
+                        <li class="#$tabclass#">
+                            <a href="#xarServer::getCurrentUrl(array('searchitemtype' => $typeid))#" title="#xarML('Configure Itemtype Settings')#" class="#$linkclass#">
+                            #$typeinfo['label']#</a>
+                        </li>
+                    </xar:foreach>
+                </xar:if>
+            </ul>
+        </div>
+
+</xar:template>
