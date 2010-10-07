@@ -33,24 +33,31 @@ function publications_admin_modify($args)
     if (!xarVarFetch('name',       'str:1', $name, 'publications_types', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
     
-    // FIXME: this is too clumsy
-    if($ptid) {
-        $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
-        $name = $pubtypes[$ptid]['name'];
+    $publication_type = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
+    if(!empty($ptid)) {
+        $where = 'itemtype = ' . $ptid;
+    } else {
+        $where = "name = '" . $name . "'";
     }
-    // Get our object
-    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+    $publication_type_fields = $publication_type->getItems(array('where' => $where));
+    $publication_type_fields = reset($publication_type_fields);
+    $data['object'] = DataObjectMaster::getObject(array('name' => $publication_type_fields['name']));
     
-    //FIXME This should be configuration in the celko property itself
+    $data['ptid'] = $publication_type_fields['id'];
+
+    
+    //FIXME This should be a configuration in the celko property itself
+
     $data['object']->properties['position']->initialization_celkoparent_id = 'parentpage_id';
     $data['object']->properties['position']->initialization_celkoright_id = 'rightpage_id';
     $data['object']->properties['position']->initialization_celkoleft_id  = 'leftpage_id';
     $xartable = xarDB::getTables();
     $data['object']->properties['position']->initialization_itemstable = $xartable['publications'];
 
+    $data['object']->properties['itemtype']->value = $data['ptid'];
+
     // Send the publication type and the object properties to the template 
     $data['properties'] = $data['object']->getProperties();
-    $data['ptid'] = $data['properties']['itemtype']->value;
     
     // Get the settings of the publication type we are using
     $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
@@ -85,7 +92,7 @@ function publications_admin_modify($args)
         $data['items'][$key] = $data['object']->getFieldValues();
     }
     if (!empty($ptid)) {
-        $template = $pubtypes[$ptid]['name'];
+        $template = $publication_type_fields['name'];
     } else {
 // TODO: allow templates per category ?
        $template = null;
@@ -96,9 +103,7 @@ function publications_admin_modify($args)
 
 
     $ptid = $publication['pubtype_id'];
-    if (!isset($ptid)) {
-       $ptid = '';
-    }
+
     $data = array();
     $data['ptid'] = $ptid;
     $data['id'] = $id;
