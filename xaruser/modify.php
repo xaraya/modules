@@ -64,7 +64,7 @@ function publications_user_modify($args)
        $template = null;
     }
 
-    // Send the publication type and the object properties to the tempate 
+    // Send the publication type and the object properties to the template 
     $data['properties'] = $data['object']->getProperties();
     $data['ptid'] = $data['properties']['itemtype']->value;
     

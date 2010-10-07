@@ -165,7 +165,7 @@
       <label>Categories</label>
       <type>categories</type>
       <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
+      <source>dummy</source>
       <status>32</status>
       <seq>28</seq>
       <configuration>a:3:{s:14:"display_layout";s:7:"default";s:21:"validation_categories";s:1:"0";s:19:"validation_override";s:1:"1";}</configuration>
@@ -205,7 +205,7 @@
       <label>Position</label>
       <type>celkoposition</type>
       <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
+      <source>dummy</source>
       <status>34</status>
       <seq>32</seq>
       <configuration></configuration>
