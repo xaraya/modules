@@ -7,7 +7,7 @@
 <xar:set name="blockvarCacheDir">file_exists(sys::varpath() . '/cache/output/cache.blocklevel');</xar:set>
 <xar:set name="modulevarCacheDir">file_exists(sys::varpath() . '/cache/output/cache.modulelevel');</xar:set>
 <xar:set name="objectvarCacheDir">file_exists(sys::varpath() . '/cache/output/cache.objectlevel');</xar:set>
-<xar:set name="request">xarRequest::getInfo()</xar:set>
+<xar:set name="request">xarRequestGetInfo()</xar:set>
 <xar:set name="activetab">#$request.2#</xar:set>
 <div>
   <dl class="xar-tabs">
