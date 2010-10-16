@@ -14,6 +14,8 @@
     <h2>Module Cache Statistics</h2>
   <xar:elseif condition="$tab eq 'object'"/>
     <h2>Object Cache Statistics</h2>
+  <xar:elseif condition="$tab eq 'variable'"/>
+    <h2>Variable Cache Statistics</h2>
   <xar:elseif condition="$tab eq 'autocache'"/>
     <h2>Auto-Cache Statistics</h2>
   <xar:else/>
@@ -30,7 +32,7 @@
         <xar:template type="module" file="stats-overview" module="xarcachemanager" />
 
     <!--  Begin Page / Block / Module / Object Statistics -->
-    <xar:elseif condition="$tab eq 'page' or $tab eq 'block' or $tab eq 'module' or $tab eq 'object'" />
+    <xar:elseif condition="$tab eq 'page' or $tab eq 'block' or $tab eq 'module' or $tab eq 'object' or $tab eq 'variable'" />
 
         <xar:template type="module" file="stats-details" module="xarcachemanager" />
 

@@ -449,6 +449,88 @@
 
       </td>
 -->
+      <td valign="top">
+
+        <h3><a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'variable'))#">Variable Cache</a></h3>
+
+        <xar:if condition="!empty($VariableCachingEnabled)">
+        <table class="xar-norm">
+            <tr>
+                <th>
+                    <xar:mlstring>Cache Storage</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($settings['VariableCacheStorage'])">
+                        <strong>#$settings['VariableCacheStorage']#</strong>
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <xar:mlstring>Cache Size (MB)</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($variablecache['size'])">
+                        #$variablecache['size']#
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <xar:mlstring>Cache Items</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($variablecache['items'])">
+                        #$variablecache['items']#
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <xar:mlstring>Cache Ratio</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($variablecache['ratio'])">
+                        <strong>#$variablecache['ratio']#%</strong>&#160;of&#160;#$variablecache['total']#
+                    <xar:else/>
+                        <strong>N/A</strong>
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <xar:mlstring>Log File</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($settings['VariableLogFile'])">
+                        #$settings['VariableLogFile']#
+                    </xar:if>
+                </td>
+            </tr>
+            <xar:if condition="!empty($settings['VariableLogFile'])">
+                <tr>
+                    <th>
+                        <xar:mlstring>Log Size (MB)</xar:mlstring>
+                    </th>
+                    <td>
+                        #$variablelog['size']#
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <xar:mlstring>Log Ratio</xar:mlstring>
+                    </th>
+                    <td>
+                        <strong>#$variablelog['ratio']#%</strong>&#160;of&#160;#$variablelog['lines']#
+                    </td>
+                </tr>
+            </xar:if>
+        </table>
+        <xar:else/>
+            <xar:mlstring>Disabled</xar:mlstring>
+        </xar:if>
+
+      </td>
     </tr>
     </table>
     <p>
