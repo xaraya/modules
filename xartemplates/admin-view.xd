@@ -1,9 +1,9 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- License:GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
-  <xar:template type="module" file="admin-menu" />
+  <xar:template type="module" file="admin-menu"/>
   <h2><xar:mlstring>View HTML Tags</xar:mlstring></h2>
     <table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2">
         <tr>

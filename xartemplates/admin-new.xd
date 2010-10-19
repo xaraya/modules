@@ -1,5 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- License:GPL http://www.gnu.org/copyleft/gpl.html -->
 <script type="text/javascript">
 <!--
     // Enter name of mandatory fields
@@ -10,11 +10,11 @@
 </script>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
-  <xar:template type="module" file="admin-menu" />
+  <xar:template type="module" file="admin-menu"/>
     <h2><xar:mlstring>Add Tag</xar:mlstring></h2>
 
     <form  method="post" action="&xar-modurl-html-admin-create;" onsubmit="return xar_base_formCheck(this, html_fieldRequired, html_fieldDescription);" enctype="application/x-www-form-urlencoded">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
         <fieldset>
         <legend>
             <strong><xar:mlstring>Tag Settings</xar:mlstring></strong>
@@ -23,7 +23,7 @@
             <label for="tag" class="xar-form-label" title="#xarML('Tag')#">
                 <xar:mlstring>Tag</xar:mlstring>:
             </label>
-            <input type="text" name="tag" id="tag" value="" size="32" maxlength="100" tabindex="1" />
+            <input type="text" name="tag" id="tag" value="" size="32" maxlength="100" tabindex="1"/>
         </div>
         <div class="xar-form-input-wrapper">
             <label for="type" class="xar-form-label" title="#xarML('Tag type')#">
@@ -40,19 +40,19 @@
                 <xar:mlstring>Choose State</xar:mlstring>
             </label>
             <p class="xar-form-container-after">
-                   <input type="radio" value="0" name="allowed" id="0" tabindex="3" />
+                   <input type="radio" value="0" name="allowed" id="0" tabindex="3"/>
                    &#160;&#160;<xar:mlstring>Not Allowed</xar:mlstring>
                    <br />
-                   <input type="radio" value="1" name="allowed" id="1" tabindex="4" />
+                   <input type="radio" value="1" name="allowed" id="1" tabindex="4"/>
                    &#160;&#160;<xar:mlstring>Allowed</xar:mlstring>
                    <br />
-                   <input type="radio" value="2" name="allowed" id="2" tabindex="5" checked="checked" />
+                   <input type="radio" value="2" name="allowed" id="2" tabindex="5" checked="checked"/>
                    &#160;&#160;<xar:mlstring>Allowed with Parameters</xar:mlstring>
             </p>
          </div>
         </fieldset>
         <div class="xar-form-input-wrapper">
-            <input type="submit" value="#$createbutton#" />
+            <input type="submit" value="#$createbutton#"/>
         </div>
     </form>
 

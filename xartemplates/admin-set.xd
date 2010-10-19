@@ -1,8 +1,8 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- License:GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
-  <xar:template type="module" file="admin-menu" />
+  <xar:template type="module" file="admin-menu"/>
     <h2><xar:mlstring>Set Tags</xar:mlstring></h2>
     <form class="xar-fullwidth" method="post" action="&xar-modurl-html-admin-updateset;" enctype="application/x-www-form-urlencoded">
         <table>
@@ -46,28 +46,28 @@
                     <td class="#$rowclass#" align="center">
                         <xar:if condition="$loop:item['allowed'] eq 0">
                             <span class="help" title="#xarML('This Tag will not be allowed at all with this setting.')#"></span>
-                            <input type="radio" value="0" name="tags[#$loop:item['cid']#]" id="#$loop:item['cid']#" checked="checked" />
+                            <input type="radio" value="0" name="tags[#$loop:item['cid']#]" id="#$loop:item['cid']#" checked="checked"/>
                         <xar:else />
                             <span class="help" title="#xarML('This Tag will not be allowed at all with this setting.')#"></span>
-                            <input type="radio" value="0" name="tags[#$loop:item['cid']#]" id="#$loop:item['cid']#" />
+                            <input type="radio" value="0" name="tags[#$loop:item['cid']#]" id="#$loop:item['cid']#"/>
                         </xar:if>
                     </td>
                     <td class="#$rowclass#" align="center">
                         <xar:if condition="$loop:item['allowed'] eq 1">
                             <span class="help" title="#xarML('This Tag will be allowed, but without added attributes.  IE li is allowed, but li style=something will not be allowed.')#"></span>
-                            <input type="radio" value="1" name="tags[#$loop:item['cid']#]" id="#$loop:item['cid']#" checked="checked" />
+                            <input type="radio" value="1" name="tags[#$loop:item['cid']#]" id="#$loop:item['cid']#" checked="checked"/>
                         <xar:else />
                             <span class="help" title="#xarML('This Tag will be allowed, but without added attributes.  IE li is allowed, but li style=something will not be allowed.')#"></span>
-                            <input type="radio" value="1" name="tags[#$loop:item['cid']#]" id="#$loop:item['cid']#" />
+                            <input type="radio" value="1" name="tags[#$loop:item['cid']#]" id="#$loop:item['cid']#"/>
                         </xar:if>
                     </td>
                     <td class="#$rowclass#" align="center">
                         <xar:if condition="$loop:item['allowed'] eq 2">
                             <span class="help" title="#xarML('This Tag will be allowed with any parameter.')#"></span>
-                            <input type="radio" value="2" name="tags[#$loop:item['cid']#]" id="#$loop:item['cid']#" checked="checked" />
+                            <input type="radio" value="2" name="tags[#$loop:item['cid']#]" id="#$loop:item['cid']#" checked="checked"/>
                         <xar:else />
                             <span class="help" title="#xarML('This Tag will be allowed with any parameter.')#"></span>
-                            <input type="radio" value="2" name="tags[#$loop:item['cid']#]" id="#$loop:item['cid']#" />
+                            <input type="radio" value="2" name="tags[#$loop:item['cid']#]" id="#$loop:item['cid']#"/>
                         </xar:if>
                     </td>
                     <td class="#$rowclass#" align="center">
@@ -81,8 +81,8 @@
             </xar:loop>
         </table>
         <br /><br />
-        <input type="hidden" name="authid" value="#$authid#" />
-        <input type="submit" value="#$submitlabel#" />
+        <input type="hidden" name="authid" value="#$authid#"/>
+        <input type="submit" value="#$submitlabel#"/>
     </form>
 </div>
 </xar:template>
