@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/779.html
  * @author John Cox
  */
-$modversion['name']         = 'HTML'; 
+$modversion['name']         = 'HTML';
 $modversion['id']           = '779';
 $modversion['version']      = '1.4.0';
 $modversion['displayname']  = xarML('HTML');
