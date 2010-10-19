@@ -72,9 +72,9 @@ function comments_user_displayall($args)
             $modname[$modid][0] = ucwords($module);
             $modview[$modid][0] = xarModURL($module,'user','view');
             // Get the list of all item types for this module (if any)
-            $mytypes = xarMod::apiFunc($module,'user','getitemtypes',
-                                     // don't throw an exception if this function doesn't exist
-                                     array(), 0);
+			if (file_exists('../../' . $module . '/userapi/getitemtypes.php')) {
+				$mytypes = xarMod::apiFunc($module,'user','getitemtypes', array());
+			}
             if (!empty($mytypes) && count($mytypes) > 0) {
                  foreach (array_keys($mytypes) as $itemtype) {
                      $modname[$modid][$itemtype] = $mytypes[$itemtype]['label'];

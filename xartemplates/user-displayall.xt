@@ -4,14 +4,13 @@
 <xar:comment> DISPLAY WHERE THE COMMENTS ARE COMING FROM </xar:comment>
   <span class="xar-title">
     <xar:mlstring>Showing comments n.</xar:mlstring>
-    &#160;#$first# - #$first+$howmany-1#&#160;
+    <xar:set name="math">$first+$howmany-1</xar:set>
+    &#160;#$first# - #$math#&#160;
     <xar:if condition="$modarray[0]!='all'">
       <xar:mlstring>from</xar:mlstring>
       <xar:foreach in="$modarray" key="$i">
         #$modlist[$modarray[$i]]#
-        <xar:if condition= "($i ge 0) and ($i lt count($modarray)-1)">
-          ,
-        </xar:if>
+        <xar:if condition= "($i ge 0) and ($i lt count($modarray)-1)">,</xar:if>
       </xar:foreach>
     <xar:else />
       <xar:mlstring>from all modules</xar:mlstring>
@@ -30,7 +29,9 @@
   <xar:comment> DISPLAY COMMENTS </xar:comment>
     <xar:if condition="count($commentlist)">
       <xar:foreach in="$commentlist" key="$daylabel" value="$commentsthisday">
-        <xar:if condition="$adddaysep=='on'">
+      
+	
+	<xar:if condition="$adddaysep=='on'">
           <xar:if condition="$daylabel">
             <xar:comment> DAY SEPARATOR </xar:comment>
               <span class="xar-title"><b>#$daylabel#</b></span>
@@ -90,7 +91,7 @@
         </ul>
       </xar:foreach>
     <xar:else />
-      <p><xar:mlstring>There are no comments</xar:mlstring></p>
+      <p><xar:mlstring>'There are no comments'</xar:mlstring></p>
       <p />
     </xar:if>
     <p />
