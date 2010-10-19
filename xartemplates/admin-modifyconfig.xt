@@ -4,10 +4,10 @@
   
   <style>
   .xar-form-input-wrapper {
-  margin-bottom: 9px;
+	margin-bottom: 9px;
   }
   hr {
-  margin-bottom: 12px;
+	margin-bottom: 12px;
   }
   </style>
     <div class="xar-mod-head">

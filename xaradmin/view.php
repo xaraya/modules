@@ -23,6 +23,9 @@ function comments_admin_view()
         return;
     }
 
-    return array();
+	$data['items'] = xarMod::apiFunc('comments','user','getitems');
+
+    return xarTplModule('comments', 'admin', 'view', $data);
+
 }
 ?>
