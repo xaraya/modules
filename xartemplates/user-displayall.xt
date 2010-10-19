@@ -3,7 +3,7 @@
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:comment> DISPLAY WHERE THE COMMENTS ARE COMING FROM </xar:comment>
   <span class="xar-title">
-    <xar:mlstring>Showing comments n.</xar:mlstring>
+    <xar:mlstring>Showing comments #</xar:mlstring>
     <xar:set name="math">$first+$howmany-1</xar:set>
     &#160;#$first# - #$math#&#160;
     <xar:if condition="$modarray[0]!='all'">
