@@ -1,0 +1,192 @@
+/* * {outline:thin red solid;} */
+/* Classes for Overridden Templates for Comments module */
+
+.xar-cm-wrapper {
+    height: 3.5em;
+    padding-bottom:10px;
+    margin-bottom: 5px;
+}
+
+.xar-cm-settings {
+    float: left;
+    width: 19%;
+    font-size: 90%;
+    font-weight: bold;
+    text-align: center;
+    padding: 0px;
+}
+
+.xar-cm-note {
+    text-align: right;
+    line-height: 1em;
+    margin:0;
+    padding:0;
+}
+
+.xar-cm-comment {
+/*     color: #15506E !important; */
+/*     font-size: 10px; */
+    line-height: 110%;
+    margin-bottom: .15em;
+    padding: .5em;
+}
+
+.xar-cm-comment p {
+/*     font-size: 10px; */
+/*     line-height: 130%; */
+    padding: 0;
+}
+
+form.xar-cm-actions {
+    float: right;
+    width:auto;
+    padding:0;
+    margin:0;
+}
+
+form.xar-cm-actions > input {
+    width:auto;
+    padding-left:.25em;
+}
+
+/* fancy input box classes */
+.xar-ib-wrapper {
+    margin: 0;
+    padding: .25em;
+    height: 19em;
+}
+.xar-ib-leftpanel {
+    margin:0;
+}
+.xar-ib-leftpanelshort {
+    margin-right:15em;
+}
+.xar-ib-leftpanel label, .xar-ib-leftpanelshort label {
+    padding: 0 .25em;
+    margin: .5em 0;
+    font-weight: bold;
+}
+
+input.xar-ib-field, textarea.xar-ib-fieldtext {
+    width:97%;
+/*     text-align:left; */
+}
+
+
+.xar-ib-actionpanel {
+    width: 14em;
+    float: right;
+    padding: 0 .25em;;
+    height:19em;
+}
+
+.xar-ib-actionpanel span {
+    display:block;
+    text-align:center;
+    margin: .25em auto;
+}
+
+.xar-ib-actionpanel select {
+    width:50%;
+    margin:.25em 0;
+}
+
+.xar-ib-actionpanel input {
+    width:30%;
+    margin:.25em 0;
+}
+
+.xar-ib-actionpanel label {
+/*     display:block; */
+    font-weight: bold;
+    font-size: x-small;
+}
+
+.xar-ib-actionpanel input.helpline {
+    width: 90%;
+/*     height:4em; */
+    background-color: transparent;
+    font-size: x-small;
+}
+/* .xar-ib-control{ */
+/*     width: 10em; */
+/* } */
+/*  */
+/* .xar-ib-control input { */
+/*     width: 10em; */
+/*     padding-top: .5em; */
+/* } */
+
+/* .xar-ib-field { */
+/*     width: 98%; */
+/* } */
+
+.xar-ib-fieldtext {
+    height: 7em;
+    display:block;
+    margin-bottom: .5em;
+}
+
+/* threaded view stuff */
+.xar-tr-wrapper {
+    height: 21px;
+    padding-left: 5px;
+}
+
+.xar-tr-image {
+    float: left;
+    /*     width:60% */
+    margin: 0;
+    padding: 0;
+}
+
+/* .xar-tr-viewimage a { */
+/*     float: left; */
+/*     margin: 5px; */
+/* } */
+
+.xar-tr-title {
+    clear:left;
+    float: left;
+    width: 50%;
+    height: 21px;
+    line-height:1.5em;
+    overflow:hidden;
+}
+
+.xar-tr-title a {
+    margin-left:.5em;
+    margin-right:.5em;
+}
+
+.xar-tr-author {
+    float: left;
+    width: 20%;
+/*     white-space: nowrap; */
+    line-height:1.5em;
+    overflow:hidden;
+    text-align:right;
+}
+
+.xar-tr-date {
+    float: left;
+    width:29%;
+/*     font-size: 90%; */
+    white-space: nowrap;
+    text-align:right;
+}
+
+.xar-tr-collapsed {
+    display: none;
+    margin-top: 5px;
+}
+
+label.xar-tr-title,
+label.xar-tr-author,
+label.xar-tr-date
+{
+    font-weight: bold;
+/*     font-size: 1em; */
+    margin:0;
+    padding:0;
+}
