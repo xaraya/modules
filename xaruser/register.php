@@ -90,7 +90,7 @@ function registration_user_register()
             if(empty($object)) return;
 
             if (isset($fieldvalues)) {
-                $object->setFieldValues($fieldvalues);
+                $object->setFieldValues($fieldvalues,1);
             }
 
             /* Call hooks here, others than just dyn data
@@ -154,7 +154,6 @@ function registration_user_register()
             // invalid fields (we'll check this below)
             $invalid = array();
 
-            $values = $object->getFieldValues();
             if (xarModVars::get('roles','uniqueemail')) {
                 $user = xarModAPIFunc('roles','user', 'get', array('email' => $email));
                 if ($user) throw new DuplicateException(array('email',$email));
@@ -192,6 +191,7 @@ function registration_user_register()
                 return xarTplModule('registration','user','registerform', $data);
             }
 
+            $values = $object->getFieldValues(array(),1);
             xarSession::setVar('Registration.UserInfo',$values);
             // everything seems OK -> go on to the next step
             $data = xarTplModule('registration','user', 'confirmregistration',
