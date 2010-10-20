@@ -48,67 +48,12 @@
             </ul>
         </div>
         <xar:comment> Begin General Options
-    <xar:comment> Begin General Options
-    </xar:comment>
-    <xar:if condition="$tab eq 'general'">
-        <form method="post" action="&xar-modurl-registration-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
-
-        <xar:data-form object="$module_settings" />
-
-        <fieldset>
-                <legend>
-                    Service/Privacy
-                </legend>
-                <div class="xar-form-input-wrapper-after">
-                    <xar:set name="checked">xarModVars::get('registration', 'showterms')</xar:set>
-                    <xar:data-input type="checkbox" name="showterms" checked="$checked"/>
-                    <label for="showterms" title="#xarML('Show terms of service in Registration user menu')#">
-                        Show Terms of Service link in the menu?
-                    </label>
-                </div>
-
-                <div class="xar-form-input-wrapper-after">
-                    <xar:set name="checked">xarModVars::get('registration', 'showprivacy')</xar:set>
-                    <xar:data-input type="checkbox" name="showprivacy" checked="$checked"/>
-                    <label for="showprivacy" title="#xarML('Show privacy policy in Registration user menu')#">
-                        Show Privacy Policy link in the menu?
-                    </label>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <xar:set name="value">xarModVars::get('registration', 'termslink')</xar:set>
-                    <label for="showprivacy" title="#xarML('Where to display a custom terms of use statement from')#">
-                        Terms Link
-                    </label>
-                    <xar:data-input type="textbox" name="termslink" value="$value"/>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <xar:set name="value">xarModVars::get('registration', 'privacylink')</xar:set>
-                    <label for="showprivacy" title="#xarML('Where to display a custom privacy statement from')#">
-                        Privacy Link
-                    </label>
-                    <xar:data-input type="textbox" name="privacylink" value="$value"/>
-                </div>
-            </fieldset>
-            <fieldset>
-                <div class="xar-form-input-wrapper-after">
-                    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
-                    <input type="hidden" name="phase" id="phase" value="update"/>
-                    <input type="hidden" name="tab" id="tab" value="#$tab#"/>
-                    <input type="submit" value="#xarML('Update Registration Configuration')#"/>
-                </div>
-            </fieldset>
-        </form>
-        <xar:comment>
-            Begin Registration Options
         </xar:comment>
         <xar:if condition="$tab eq 'general'">
             <form method="post" action="&xar-modurl-registration-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
-            <fieldset>
-                <legend>
-                    General Options
-                </legend>
-                <xar:data-form object="$module_settings" />
-            </fieldset>
+
+            <xar:data-form object="$module_settings" />
+    
             <fieldset>
                     <legend>
                         Service/Privacy
@@ -120,7 +65,7 @@
                             Show Terms of Service link in the menu?
                         </label>
                     </div>
-
+    
                     <div class="xar-form-input-wrapper-after">
                         <xar:set name="checked">xarModVars::get('registration', 'showprivacy')</xar:set>
                         <xar:data-input type="checkbox" name="showprivacy" checked="$checked"/>
