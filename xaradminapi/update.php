@@ -37,8 +37,8 @@ function ephemerids_adminapi_update($args)
     if(!xarSecurityCheck('EditEphemerids')) return;
     $elanguage = 'all';
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $ephemtable = $xartable['ephem'];
 

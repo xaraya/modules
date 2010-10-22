@@ -37,9 +37,9 @@ function ephemerids_ephemblock_display($blockinfo)
 
     // Database information
     xarModDBInfoLoad('ephemerids');
-    $dbconn =& xarDBGetConn();
+    $dbconn =& xarDB::getConn();
 
-    $xartable =& xarDBGetTables();
+    $xartable =& xarDB::getTables();
     $ephemtable = $xartable['ephem'];
 
     $data['items'] = array();

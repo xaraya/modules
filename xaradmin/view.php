@@ -33,10 +33,11 @@ function ephemerids_admin_view()
     $data['optionslabel'] = xarVarPrepForDisplay(xarML('Options'));
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
-    $data['pager'] = xarTplGetPager($startnum,
+    sys::import('modules.base.class.pager');
+    $data['pager'] = xarTplPager::getPager($startnum,
                                     xarModAPIFunc('ephemerids', 'user', 'countitems'),
                                     xarModURL('ephemerids', 'admin', 'view', array('startnum' => '%%')),
-                                    xarModGetVar('ephemerids', 'itemsperpage'));
+                                    xarModVars::get('ephemerids', 'itemsperpage'));
 
     // The admin API function is called.
     $ephemlist = xarModAPIFunc('ephemerids',

@@ -19,7 +19,7 @@ function ephemerids_xartables()
     $xartable = array();
 
     // Name for ephemerids database entities
-    $ephem = xarDBGetSiteTablePrefix() . '_ephem';
+    $ephem = xarDB::getPrefix() . '_ephem';
 
     // Table name
     $xartable['ephem'] = $ephem;

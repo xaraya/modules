@@ -20,8 +20,8 @@ function ephemerids_adminapi_display()
     // Security Check
     if(!xarSecurityCheck('EditEphemerids')) return;
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $ephemtable = $xartable['ephem'];
 

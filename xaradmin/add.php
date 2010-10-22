@@ -49,7 +49,7 @@ function ephemerids_admin_add()
     if (!isset($emp) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
-    xarResponseRedirect(xarModURL('ephemerids', 'admin', 'view'));
+    xarController::redirect(xarModURL('ephemerids', 'admin', 'view'));
     // Return
     return true;
 }

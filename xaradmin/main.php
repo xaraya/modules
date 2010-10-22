@@ -20,7 +20,7 @@ function ephemerids_admin_main()
     // Security Check
     if(!xarSecurityCheck('EditEphemerids')) return;
     // we only really need to show the default view (overview in this case)
-    xarResponseRedirect(xarModURL('ephemerids', 'admin', 'view'));
+    xarController::redirect(xarModURL('ephemerids', 'admin', 'view'));
     // success
     return true;
 }

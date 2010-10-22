@@ -11,7 +11,7 @@
         <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of example items per page')#">
           <xar:mlstring>Items Per Page:</xar:mlstring>
         </label>
-        <input type="text" name="itemsperpage" id="itemsperpage" value="#xarModGetVar('ephemerids', 'itemsperpage')#" maxlength="3" class="xar-form-textshort" />
+        <input type="text" name="itemsperpage" id="itemsperpage" value="#xarModVars::get('ephemerids', 'itemsperpage')#" maxlength="3" class="xar-form-textshort" />
       </div>
       </fieldset>
         <xar:set name="$updatebutton"><xar:mlstring>Update Ephemerids Configuration</xar:mlstring></xar:set>

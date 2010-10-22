@@ -30,8 +30,8 @@ function ephemerids_adminapi_delete($args)
 
     // Security Check
     if(!xarSecurityCheck('DeleteEphemerids')) return;
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $ephemtable = $xartable['ephem'];
 
     $query = "DELETE FROM $ephemtable WHERE xar_eid = ?";

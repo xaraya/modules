@@ -40,7 +40,7 @@ function ephemerids_admin_delete($args)
                       array('eid' => $eid))) {
 
     }
-    xarResponseRedirect(xarModURL('ephemerids', 'admin', 'view'));
+    xarController::redirect(xarModURL('ephemerids', 'admin', 'view'));
     // Return
     return true;
 }

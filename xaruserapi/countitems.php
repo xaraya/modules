@@ -21,8 +21,8 @@
 function ephemerids_userapi_countitems()
 {
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     // Security Check
     if(!xarSecurityCheck('OverviewEphemerids')) return;
     $ephemtable = $xartable['ephem'];

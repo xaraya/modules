@@ -14,17 +14,16 @@
 /**
  * init ephemerids module
  */
+sys::import('xaraya.tableddl');
+
 function ephemerids_init()
 {
     // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     // Create tables
     $ephemtable = $xartable['ephem'];
-
-    // adodb does not provide the functionality to abstract table creates
-    xarDBLoadTableMaintenanceAPI();
 
     // Define the table structure
     $fields = array(
@@ -43,7 +42,7 @@ function ephemerids_init()
     if (!$result) return;
 
     // Set up module variables
-    xarModSetVar('ephemerids', 'itemsperpage', 20);
+    xarModVars::set('ephemerids', 'itemsperpage', 20);
 
     // Register blocks
     if (!xarModAPIFunc('blocks',
@@ -81,7 +80,7 @@ function ephemerids_upgrade($oldversion)
     switch($oldversion) {
         case '1.4.0':
             // Code to upgrade from version 1.3 goes here
-            xarModSetVar('ephemerids', 'itemsperpage', 20);
+            xarModVars::set('ephemerids', 'itemsperpage', 20);
             xarModDelVar('ephemerids', 'detail');
             xarModDelVar('ephemerids', 'table');
         case '1.4.1':

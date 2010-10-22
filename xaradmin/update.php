@@ -44,7 +44,7 @@ function ephemerids_admin_update($args)
         return; // throw back
     }
     //Redirect
-    xarResponseRedirect(xarModURL('ephemerids', 'admin', 'view'));
+    xarController::redirect(xarModURL('ephemerids', 'admin', 'view'));
     // Return
     return true;
 }

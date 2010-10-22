@@ -34,8 +34,8 @@ function ephemerids_adminapi_add($args)
     // Security Check
     if(!xarSecurityCheck('AddEphemerids')) return;
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $elanguage = 'all';
     $ephemtable = $xartable['ephem'];
     $nextId = $dbconn->GenId($ephemtable);

@@ -51,8 +51,8 @@ function ephemerids_userapi_getall($args)
     $items = array();
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $ephemtable = $xartable['ephem'];
     $query = "SELECT xar_eid,
                      xar_tid,
