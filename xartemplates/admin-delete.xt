@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:style scope="module" module="comments" file="comments"/>
     <div class="xar-mod-head">
         <span class="xar-mod-title">
             <xar:mlstring>Comments Administration</xar:mlstring>
@@ -22,21 +23,35 @@
 
 			<xar:if condition="$dtype eq 'item'"> 
 
-				<div class="xar-form-input-wrapper">
+				<div class="xar-form-input-wrapper" id="confirm_msg">
 				    <label for="commentdelete" class="xar-form-label" title="#xarML('Confirm deletion of this comment')#">
 				       <xar:mlstring>Are you sure you want to delete this comment?</xar:mlstring>
 				   </label>
-				   <input type="radio"  name="node" value="true"/>&#160;<label><xar:mlstring>Attach child comments to parent</xar:mlstring></label><br />
-				   <input type="radio"  name="branch" value="true"/>&#160;<label><xar:mlstring>Delete this comment and all children</xar:mlstring></label><br />
+
+				   <xar:if condition="$haschildren">
+				   <div id="info_msg">
+				   The comment has one or more replies.
+				   </div>
+					   <input type="radio" name="deletebranch" value="false" checked="checked" id="deletebranch_false" />&#160;<label for="deletebranch_false"><xar:mlstring>Do not delete the replies</xar:mlstring></label><br />
+					   <input type="radio" name="deletebranch" value="true" id="deletebranch_true" />&#160;<label for="deletebranch_true"><xar:mlstring>Delete the comment and all replies</xar:mlstring></label><br />
+				    <xar:else />
+				            <input type="hidden"  name="deletebranch" value="false"/>
+				    </xar:if>
+				          
 				</div>
 
 			<xar:else />
-				<p>Are you sure you want to delete #$count# comments?</p>  
+			<div class="xar-form-input-wrapper" id="confirm_msg">
+				<label for="commentdelete" class="xar-form-label" title="#xarML('Confirm deletion of comments')#">
+				       <xar:mlstring>Are you sure you want to delete</xar:mlstring>
+				        #$count# 
+				       <xar:mlstring>comments?</xar:mlstring>
+				   </label> 
 				
 				<xar:if condition="isset($modname)">
-					<p>The comments are attached to items of the #$modname# module<xar:if condition="isset($itemtype)">, itemtype #$itemtype#</xar:if>.</p>
+					<div id="info_msg">The comments are attached to items of the #$modname# module<xar:if condition="isset($itemtype)">, itemtype #$itemtype#</xar:if>.</div>
 				</xar:if>
-				 
+			</div>
 
 			</xar:if>
  
@@ -56,7 +71,7 @@
 		<xar:else />
 			<input type="hidden" name="redirect" value="view"/>
 		</xar:if>
-                <input type="submit" name="submitted" id="submitted" value="submit"/>
+                <input type="submit" name="submitted" id="submitted" value="Delete"/>
             </div>
 
         </form>

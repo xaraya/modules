@@ -21,7 +21,7 @@ function comments_admin_delete()
 	if (!xarSecurityCheck('DeleteComments')) return;
 
 	if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('branch',    'bool',   $data['branch'], false,       XARVAR_NOT_REQUIRED)) return;
+	if (!xarVarFetch('deletebranch',    'bool',   $deletebranch, false,       XARVAR_NOT_REQUIRED)) return;
 	if (!xarVarFetch('redirect',    'str',   $data['redirect'], '',       XARVAR_NOT_REQUIRED)) return;
 	if (!xarVarFetch('itemtype',    'str',   $data['itemtype'], NULL,       XARVAR_NOT_REQUIRED)) return;
 	if (!xarVarFetch('dtype', 'str:1:', $dtype)) return;
@@ -119,13 +119,21 @@ function comments_admin_delete()
 
 		}
 
-	} else {
+	} else { // $dtype == 'item'
 		if ($data['confirm']) {
 			if (!xarSecConfirmAuthKey()) return;
-			if ($data['branch']) {
-				xarMod::apiFunc('comments','admin','delete_branch',array('node' => $id)); 
-			} else {
+			if ($deletebranch) {
+				xarMod::apiFunc('comments','admin','delete_branch',array('node' => $id));				
+			} else { 
 				xarMod::apiFunc('comments','admin','delete_node',array('node' => $id, 'pid' =>$values['pid'])); 
+			}
+		} else {
+			$comments = xarMod::apiFunc('comments','user','get_one',
+                                       array('id' => $id));
+			if ($comments[0]['right_id'] == $comments[0]['left_id'] + 1) {
+				$data['haschildren'] = false;
+			} else {
+				$data['haschildren'] = true;
 			}
 		}
 	}

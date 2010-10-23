@@ -21,7 +21,7 @@
              <xar:if condition="empty($package['settings']['edittimelimit']) or (time() le ($item['xar_date'] + ($package['settings']['edittimelimit'] * 60)) or xarSecurityCheck('Comments-Admin'))">
             <form action="#xarModURL('comments', 'user', 'modify')#" method="post" class="xar-cm-actions">
                 <div>
-                
+                    <input type="hidden" name="objecturl" value="#xarServer::getCurrentURL()#"/>
                     <input type="hidden" name="header[modid]" value="#$header['modid']#"/>
                     <input type="hidden" name="header[itemtype]" value="#$header['itemtype']#"/>
                     <input type="hidden" name="header[objectid]" value="#$header['objectid']#"/>
@@ -37,6 +37,8 @@
     <xar:sec catch="false" mask="DeleteComments" instance="$header[modid]:$header[objectid]:$item[id]">
         <form action="#xarModURL('comments', 'user', 'delete')#" method="post" class="xar-cm-actions">
             <div>
+
+		<input type="hidden" name="objecturl" value="#xarServer::getCurrentURL()#"/>
                 <input type="hidden" name="header[modid]" value="#$header['modid']#"/>
                 <input type="hidden" name="header[itemtype]" value="#$header['itemtype']#"/>
                 <input type="hidden" name="header[objectid]" value="#$header['objectid']#"/>
