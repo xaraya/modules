@@ -146,6 +146,7 @@ function comments_init()
 	$module = 'comments';
     $objects = array(
                 'comments',
+				'comments_module_settings',
 				'blacklist'
                 );
 
@@ -172,6 +173,16 @@ function comments_init()
     xarModVars::set('comments', 'wrap', false);
     xarModVars::set('comments', 'showtitle', false);
     xarModVars::set('comments', 'useblacklist', false);
+	xarModVars::set('comments','enable_filters',1);     
+	xarModVars::set('comments','filters_min_item_count',3);
+
+	# --------------------------------------------------------
+#
+# Set up configuration modvars (general)
+#
+
+        $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'comments'));
+        $module_settings->initialize();
 
 # --------------------------------------------------------
 #

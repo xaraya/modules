@@ -7,6 +7,22 @@
         <xar:template type="module" file="admintabs"/>
 
         <h2><xar:mlstring>View Comments</xar:mlstring></h2>
+
+	<xar:if condition="$showfilters"> 
+		<xar:foreach in="$makefilters" key="$thisfield" value="$startval">
+
+		#xarMod::apiFunc('filters','user','makefilter',array(
+			'thisfield' => $thisfield,
+			'func' => 'view',
+			'module' => 'comments',
+			'startval' => $startval,
+			'filterlabel' => 'Filter:'
+			))#
+		
+		</xar:foreach>
+
+	</xar:if>
+
         <div style="padding: 1px;" class="xar-norm-outline">
              
 
@@ -20,7 +36,7 @@
 	<td>
 	<a href="#xarmodurl('comments','admin','delete',array('id' => $val['id'], 'dtype' => 'item','redirect' => 'view'))#">delete</a> 
 	 - 
-	<a href="#xarmodurl('comments','user','modify',array('id' => $val['id'],'adminreturn' => 'yes'))#">edit</a> 
+	<a href="#xarmodurl('comments','admin','modify',array('id' => $val['id']))#">edit</a> 
 	</td>
 	
 	</tr>

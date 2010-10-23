@@ -1,175 +1,164 @@
-<object name="comments"> 
+<object name="comments">
+  <objectid>396</objectid>
   <label>Comments</label>
-  <module_id>182</module_id>
-  <itemtype>-1</itemtype>
+  <module_id>14</module_id>
+  <itemtype>1</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
-  <maxid>0</maxid> <config></config>
-  <isalias>0</isalias> 
-  <properties>  
-    <property name="id">  
-      <label>Id</label> 
-      <type>itemid</type> 
-      <id>1</id> 
-      <defaultvalue></defaultvalue> 
-      <source>xar_comments.id</source> 
-      <status>1</status> 
-      <seq>1</seq> 
-      <validation></validation> 
-      <configuration></configuration> 
-    </property> 
-    <property name="pid">  
-      <label>Pid</label> 
-      <type>integerbox</type> 
-      <id>2</id> 
-      <defaultvalue></defaultvalue> 
-      <source>xar_comments.pid</source> 
-      <status>1</status> 
-      <seq>2</seq> 
-      <validation></validation> 
-      <configuration></configuration> 
-    </property> 
-    <property name="modid">  
-      <label>Modid</label> 
-      <type>integerbox</type> 
-      <id>3</id> 
-      <defaultvalue></defaultvalue> 
-      <source>xar_comments.modid</source> 
-      <status>1</status> 
-      <seq>3</seq> 
-      <validation></validation> 
-      <configuration></configuration> 
-    </property> 
-    <property name="itemtype">  
-      <label>Itemtype</label> 
-      <type>integerbox</type> 
-      <id>4</id> 
-      <defaultvalue></defaultvalue> 
-      <source>xar_comments.itemtype</source> 
-      <status>1</status> 
-      <seq>4</seq> 
-      <validation></validation> 
-      <configuration></configuration> 
-    </property> 
-    <property name="objectid">  
-      <label>Objectid</label> 
-      <type>textbox</type> 
-      <id>5</id> 
-      <defaultvalue></defaultvalue> 
-      <source>xar_comments.objectid</source> 
-      <status>1</status> 
-      <seq>5</seq> 
-      <validation>0:255</validation> 
-      <configuration>0:255</configuration> 
-    </property> 
-    <property name="date">  
-      <label>Date</label> 
-      <type>integerbox</type> 
-      <id>6</id> 
-      <defaultvalue></defaultvalue> 
-      <source>xar_comments.date</source> 
-      <status>1</status> 
-      <seq>6</seq> 
-      <validation></validation> 
-      <configuration></configuration> 
-    </property> 
-    <property name="author">  
-      <label>Author</label> 
-      <type>integerbox</type> 
-      <id>7</id> 
-      <defaultvalue>1</defaultvalue> 
-      <source>xar_comments.author</source> 
-      <status>1</status> 
-      <seq>7</seq> 
-      <validation></validation> 
-      <configuration></configuration> 
-    </property> 
-    <property name="title">  
-      <label>Title</label> 
-      <type>textbox</type> 
-      <id>8</id> 
-      <defaultvalue></defaultvalue> 
-      <source>xar_comments.title</source> 
-      <status>1</status> 
-      <seq>8</seq> 
-      <validation>0:100</validation> 
-      <configuration>0:100</configuration> 
-    </property> 
-	    <property name="objecturl">  
-      <label>Object URL</label> 
-      <type>textarea_medium</type> 
-      <id>8</id> 
-      <defaultvalue></defaultvalue> 
-      <source>xar_comments.objecturl</source> 
-      <status>1</status> 
-      <seq>9</seq> 
-      <validation></validation> 
-      <configuration></configuration> 
-    </property> 
-    <property name="hostname">  
-      <label>Hostname</label> 
-      <type>textbox</type> 
-      <id>9</id> 
-      <defaultvalue></defaultvalue> 
-      <source>xar_comments.hostname</source> 
-      <status>1</status> 
-      <seq>10</seq> 
-      <validation>0:255</validation> 
-      <configuration>0:255</configuration> 
-    </property> 
-    <property name="text">  
-      <label>Text</label> 
-      <type>textarea_medium</type> 
-      <id>10</id> 
-      <defaultvalue></defaultvalue> 
-      <source>xar_comments.text</source> 
-      <status>2</status> 
-      <seq>11</seq> 
-      <validation></validation> 
-      <configuration></configuration> 
-    </property> 
-    <property name="left_id">  
-      <label>Left Id</label> 
-      <type>integerbox</type> 
-      <id>11</id> 
-      <defaultvalue></defaultvalue> 
-      <source>xar_comments.left_id</source> 
-      <status>1</status> 
-      <seq>12</seq> 
-      <validation></validation> 
-      <configuration></configuration> 
-    </property> 
-    <property name="right_id">  
-      <label>Right Id</label> 
-      <type>integerbox</type> 
-      <id>12</id> 
-      <defaultvalue></defaultvalue> 
-      <source>xar_comments.right_id</source> 
-      <status>1</status> 
-      <seq>13</seq> 
-      <validation></validation> 
-      <configuration></configuration> 
-    </property> 
-    <property name="status">  
-      <label>Status</label> 
-      <type>integerbox</type> 
-      <id>13</id> 
-      <defaultvalue></defaultvalue> 
-      <source>xar_comments.status</source> 
-      <status>1</status> 
-      <seq>14</seq> 
-      <validation>tinyint (4)</validation> 
-      <configuration>tinyint (4)</configuration> 
-    </property> 
-    <property name="anonpost">  
-      <label>Anonpost</label> 
-      <type>integerbox</type> 
-      <id>14</id> 
-      <defaultvalue></defaultvalue> 
-      <source>xar_comments.anonpost</source> 
-      <status>1</status> 
-      <seq>15</seq> 
-      <validation>tinyint (4)</validation> 
-      <configuration>tinyint (4)</configuration> 
-    </property> 
- </properties>
-</object> 
+  <maxid>0</maxid>
+  <config>a:1:{s:12:"filterfields";s:30:"title,Title;text,Comment Text;";}</config>
+  <isalias>false</isalias>
+  <properties>
+    <property name="id">
+      <id>2030</id>
+      <label>Id</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.id</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="pid">
+      <id>2031</id>
+      <label>Pid</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.pid</source>
+      <status>65</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="modid">
+      <id>2032</id>
+      <label>Modid</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.modid</source>
+      <status>65</status>
+      <seq>3</seq>
+      <configuration></configuration>
+    </property>
+    <property name="itemtype">
+      <id>2033</id>
+      <label>Itemtype</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.itemtype</source>
+      <status>65</status>
+      <seq>4</seq>
+      <configuration></configuration>
+    </property>
+    <property name="objectid">
+      <id>2034</id>
+      <label>Objectid</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.objectid</source>
+      <status>65</status>
+      <seq>5</seq>
+      <configuration>0:255</configuration>
+    </property>
+    <property name="date">
+      <id>2035</id>
+      <label>Date</label>
+      <type>calendar</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.date</source>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration></configuration>
+    </property>
+    <property name="author">
+      <id>2036</id>
+      <label>Author</label>
+      <type>userlist</type>
+      <defaultvalue>1</defaultvalue>
+      <source>xar_comments.author</source>
+      <status>33</status>
+      <seq>7</seq>
+      <configuration></configuration>
+    </property>
+    <property name="title">
+      <id>2037</id>
+      <label>Title</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.title</source>
+      <status>33</status>
+      <seq>8</seq>
+      <configuration>0:100</configuration>
+    </property>
+    <property name="objecturl">
+      <id>2038</id>
+      <label>Object URL</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.objecturl</source>
+      <status>33</status>
+      <seq>9</seq>
+      <configuration>a:3:{s:12:"display_size";s:3:"100";s:17:"display_maxlength";s:3:"300";s:14:"display_layout";s:7:"default";}</configuration>
+    </property>
+    <property name="hostname">
+      <id>2039</id>
+      <label>Hostname</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.hostname</source>
+      <status>65</status>
+      <seq>10</seq>
+      <configuration>0:255</configuration>
+    </property>
+    <property name="text">
+      <id>2040</id>
+      <label>Text</label>
+      <type>textarea_medium</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.text</source>
+      <status>33</status>
+      <seq>11</seq>
+      <configuration></configuration>
+    </property>
+    <property name="left_id">
+      <id>2041</id>
+      <label>Left Id</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.left_id</source>
+      <status>65</status>
+      <seq>12</seq>
+      <configuration></configuration>
+    </property>
+    <property name="right_id">
+      <id>2042</id>
+      <label>Right Id</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.right_id</source>
+      <status>65</status>
+      <seq>13</seq>
+      <configuration></configuration>
+    </property>
+    <property name="status">
+      <id>2043</id>
+      <label>Status</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.status</source>
+      <status>33</status>
+      <seq>14</seq>
+      <configuration>tinyint (4)</configuration>
+    </property>
+    <property name="anonpost">
+      <id>2044</id>
+      <label>Anonpost</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.anonpost</source>
+      <status>33</status>
+      <seq>15</seq>
+      <configuration>tinyint (4)</configuration>
+    </property>
+  </properties>
+</object>

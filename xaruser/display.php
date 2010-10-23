@@ -189,9 +189,11 @@ function comments_user_display($args)
 
     $hooks = xarMod::apiFunc('comments','user','formhooks');
 
-	$baseurl = xarServer::getCurrentURL();
-	foreach($package['comments'] as $key => $val) {
-		$package['comments'][$key]['objecturl'] = str_replace($baseurl, '',$package['comments'][$key]['objecturl']);
+	if (!empty($package['comments'])) {
+		$baseurl = xarServer::getCurrentURL();
+		foreach($package['comments'] as $key => $val) {
+			$package['comments'][$key]['objecturl'] = str_replace($baseurl, '',$package['comments'][$key]['objecturl']);
+		}
 	}
 
     $data['hooks']   = $hooks;

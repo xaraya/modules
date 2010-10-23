@@ -1,157 +1,151 @@
 <?php
 /**
+ * Modify config
+ *
  * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage comments
- * @link http://xaraya.com/index.php/release/14.html
- * @author Carl P. Corliss <rabbitt@xaraya.com>
+ * @subpackage comments Module
+ * @link http://www.xaraya.com/index.php/release/14.html 
  */
-sys::import('modules.comments.xarincludes.defines');
+ sys::import('modules.comments.xarincludes.defines');
 /**
- * This is a standard function to modify the configuration parameters of the
+ * This is a standard function to modify and update the configuration parameters of the
  * module
  */
-
 function comments_admin_modifyconfig()
-{
-    // Security Check
-    if(!xarSecurityCheck('AdminComments')) return;
-    //$numstats       = xarModVars::get('comments','numstats');
-  //  $rssnumitems    = xarModVars::get('comments','rssnumitems');
-    
-    if (empty($rssnumitems)) {
-        //xarModVars::set('comments', 'rssnumitems', 25);
-    }
-    if (empty($numstats)) {
-        //xarModVars::set('comments', 'numstats', 100);
-    }
+{ 
 
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'comments_general', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('tabmodule', 'str:1:100', $tabmodule, 'comments', XARVAR_NOT_REQUIRED)) return;
-    $hooks = xarModCallHooks('module', 'getconfig', 'comments');
-    if (!empty($hooks) && isset($hooks['tabs'])) {
-        foreach ($hooks['tabs'] as $key => $row) {
-            $configarea[$key]  = $row['configarea'];
-            $configtitle[$key] = $row['configtitle'];
-            $configcontent[$key] = $row['configcontent'];
-        }
-        array_multisort($configtitle, SORT_ASC, $hooks['tabs']);
-    } else {
-        $hooks['tabs'] = array();
-    }
+    // Security check - important to do this as early as possible to avoid
+    // potential security holes or just too much wasted processing
+    if (!xarSecurityCheck('Admincomments')) return;
+
+    // Check if this template has been submitted, or if we just got here
+    if (!xarVarFetch('phase',        'str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return; 
+ 
+    // Load the DD master object class. This line will likely disappear in future versions
+    sys::import('modules.dynamicdata.class.objects.master');
+    // Get the object we'll be working with for comments-specific configuration
+    $object = DataObjectMaster::getObject(array('name' => 'comments_module_settings'));
+    // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
+    $object->getItem(array('itemid' => 0));
+	$data['object'] = $object;
+	
+    // Get the object we'll be working with for common configuration settings
+    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'comments'));
+    // Decide which fields are configurable in this module
+    $data['module_settings']->setFieldList('items_per_page, enable_user_menu, user_menu_link');
+    // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
+    $data['module_settings']->getItem();
+
+    // Run the appropriate code depending on whether the template was submitted or not
     switch (strtolower($phase)) {
         case 'modify':
         default:
-            switch ($data['tab']) {
-                case 'comments_general':
-                default:
-                    //check for comments hook in case it's set independently elsewhere
-                    if (xarModIsHooked('comments', 'roles')) {
-                        xarModVars::set('comments','usersetrendering',true);
-                    } else {
-                        xarModVars::set('comments','usersetrendering',false);
-                    }
-                    break;
-            }
-
             break;
 
         case 'update':
-            // Confirm authorisation code
-           // if (!xarSecConfirmAuthKey()) return;
-            //if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('comments', 'itemsperpage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-            //if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-            //if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('comments', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
-            //if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('comments', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('editstamp','int',$editstamp, xarModVars::get('comments', 'editstamp'),XARVAR_NOT_REQUIRED)) return;
-           
-            if (!xarVarFetch('wrap','checkbox', $wrap, xarModVars::get('comments', 'wrap'),XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('numstats', 'str', $numstats, 20, XARVAR_NOT_REQUIRED)) return;
-            
-            if (!xarVarFetch('rssnumitems', 'int', $rssnumitems, xarModVars::get('comments', 'rssnumitems'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('showtitle', 'checkbox', $showtitle, xarModVars::get('comments', 'showtitle'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('postanon', 'checkbox', $postanon, xarModVars::get('comments', 'postanon'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('useblacklist', 'checkbox', $useblacklist, xarModVars::get('comments', 'useblacklist'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('useblacklist', 'checkbox', $useblacklist, 1, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('depth', 'str:1:', $depth, _COM_MAX_DEPTH, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('render', 'str:1:', $render, _COM_VIEW_THREADED, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('sortby', 'str:1:', $sortby, _COM_SORTBY_THREAD, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('order', 'str:1:', $order, _COM_SORT_ASC, XARVAR_NOT_REQUIRED)) return;
-           // if (!xarVarFetch('authorize', 'checkbox', $authorize, xarModVars::get('comments', 'authorize'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('authorize', 'checkbox', $authorize, 1, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('usersetrendering', 'checkbox', $usersetrendering, xarModVars::get('comments', 'usersetrendering'), XARVAR_NOT_REQUIRED)) return;
+            # --------------------------------------------------------
+            #
+            # Confirm the authorisation code
+            #
+            # This is done to make sure this was submitted by a human to this module and not called programatically
+            # However in this case we need to disable ît because although the common configuration below is
+            # handled in this module, the module-specific part at the end of the page is sent to be done by
+            # the dynamicdata module, where the same check is done. Since both checks cannot simultaneously
+            # be passed, (the act of checking resets the check) the one below is disabled in this example.
+            #
+            //if (!xarSecConfirmAuthKey()) return;
 
+            # --------------------------------------------------------
+            #
+            # Updating the common configuration
+            #
+            # We do this before anything else, because the checkInput error checking might
+            # decide something is not right and redisplay the form. In such a case we don't want to
+            # already have saved data. The module-specific code active at the bottom of the page does no
+            # such error checking. This is not really a problem because you can't really get input errors
+            # when you're dealing with checkboxes (they're either checked or they aren't)
+            #
 
-            if ($data['tab'] == 'comments_general') {
-               // xarModVars::set('comments', 'itemsperpage', $itemsperpage);
-               // xarModVars::set('comments', 'supportshorturls', $shorturls);
-               // xarModVars::set('comments', 'useModuleAlias', $useModuleAlias);
-               // xarModVars::set('comments', 'aliasname', $aliasname);
-                xarModVars::set('comments', 'AllowPostAsAnon', $postanon);
-                xarModVars::set('comments', 'AuthorizeComments', $authorize);
-                xarModVars::set('comments', 'depth', $depth);
-                xarModVars::set('comments', 'render', $render);
-                xarModVars::set('comments', 'sortby', $sortby);
-                xarModVars::set('comments', 'order', $order);
-                xarModVars::set('comments', 'editstamp', $editstamp);
-                xarModVars::set('comments', 'wrap', $wrap);
-                xarModVars::set('comments', 'numstats', $numstats);
-                xarModVars::set('comments', 'rssnumitems', $rssnumitems);
-                xarModVars::set('comments', 'showtitle', $showtitle);
-                xarModVars::set('comments', 'useblacklist', $useblacklist);
-                xarModVars::set('comments','usersetrendering',$usersetrendering);
+            $isvalid = $data['module_settings']->checkInput();
+            if (!$isvalid) {
+                return xarTplModule('comments','admin','modifyconfig', $data);
+            } else {
+                $itemid = $data['module_settings']->updateItem();
             }
-            $regid = xarMod::getRegID($tabmodule);
-            xarModItemVars::set('comments', 'AllowPostAsAnon', $postanon, $regid);
-            xarModItemVars::set('comments', 'AuthorizeComments', $authorize, $regid);
-            xarModItemVars::set('comments', 'depth', $depth, $regid);
-            xarModItemVars::set('comments', 'render', $render, $regid);
-            xarModItemVars::set('comments', 'sortby', $sortby, $regid);
-            xarModItemVars::set('comments', 'order', $order, $regid);
-            xarModItemVars::set('comments', 'editstamp', $editstamp, $regid);
-            xarModItemVars::set('comments', 'wrap', $wrap, $regid);
-            xarModItemVars::set('comments', 'numstats', $numstats, $regid);
-            xarModItemVars::set('comments', 'rssnumitems', $rssnumitems, $regid);
-            xarModItemVars::set('comments', 'showtitle', $showtitle, $regid);
-            xarModItemVars::set('comments', 'useblacklist', $useblacklist, $regid);
-            xarModItemVars::set('comments','usersetrendering',$usersetrendering, $regid);
 
-            /* Blacklist feed unavailable
-            xarModVars::set('comments', 'useblacklist', $useblacklist);
-            if ($useblacklist == true){
-                if (!xarMod::apiFunc('comments', 'admin', 'import_blacklist')) return;
-            }
+            # --------------------------------------------------------
+            #
+            # Updating the comments configuration without using DD
+            #
+            # In this case we get each value from the template and set the appropriate modvar
+            # Note that in this case we are setting modvars, whereas in the other two ways below we are actually
+            # setting moditemvars with the itemid = 1
+            # This can work because in the absence of a moditemvar the corresponding modvar is returned
+            # What we cannot do however is mix these methods, because once we have a moditemvar defined, we can
+            # no longer default back to the modvar (unless called specifically as below).
+            #
+            /*
+                // Get parameters from whatever input we need.  All arguments to this
+                // function should be obtained from xarVarFetch(), getting them
+                // from other places such as the environment is not allowed, as that makes
+                // assumptions that will not hold in future versions of Xaraya
+                if (!xarVarFetch('bold', 'checkbox', $bold, false, XARVAR_NOT_REQUIRED)) return;
+
+                // Confirm authorisation code.  This checks that the form had a valid
+                // authorisation code attached to it.  If it did not then the function will
+                // proceed no further as it is possible that this is an attempt at sending
+                // in false data to the system
+                if (!xarSecConfirmAuthKey()) return;
+
+                xarModVars::set('comments', 'bold', $bold);
             */
-             if ($usersetrendering == true) {
-             //check and hook Comments to roles if not already hooked
-                 if (!xarModIsHooked('comments', 'roles')) {
-                     xarMod::apiFunc('modules','admin','enablehooks',
-                                         array('callerModName' => 'roles',
-                                               'hookModName' => 'comments'));
-                 }
 
-             } else {
-               if (xarModIsHooked('comments', 'roles')) {
-                //unhook Comments from roles
-                     xarMod::apiFunc('modules','admin','disablehooks',
-                                         array('callerModName' => 'roles',
-                                               'hookModName' => 'comments'));
-                  }
-             }
+            # --------------------------------------------------------
+            #
+            # Updating the comments configuration with DD class calls
+            #
+            # This is the same as the examples of creating, modifying or deleting an item
+            # Note that, as in those examples, this code could be placed in the modifyconfig.php file
+            # and this file dispensed with.
+            #
+            
+                // Load the DD master object class. This line will likely disappear in future versions
+                sys::import('modules.dynamicdata.class.objects.master');
+                // Get the object we'll be working with
+                $object = DataObjectMaster::getObject(array('name' => 'comments_module_settings'));
+                // Get the data from the form
+                $isvalid = $object->checkInput();
+                // Update the item with itemid = 0
+				 
+				
+                $item = $object->updateItem(array('itemid' => 0));
 
-            xarResponse::redirect(xarModURL('comments', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
-            // Return
-            return true;
+				xarResponse::redirect(xarModURL('comments','admin','modifyconfig'));
+
+            # --------------------------------------------------------
+            #
+            # Updating the comments configuration with a DD API call
+            #
+            # This is a special case using the dynamicdata_admin_update function.
+            # It depends on finding all the relevant information on the template we are submitting, i.e.
+            # - objectid of the comments_module_settings object
+            # - itemid (1 in this case)
+            # - returnurl, telling us where to jump to after update
+            #
+            # This needs to be the last thing happening on this page because it redirects. Code below
+            # this point will not execute
+
+                if (!xarMod::guiFunc('comments','admin','update')) return;
+
             break;
-
     }
-    $data['hooks'] = $hooks;
-    $data['tabmodule'] = $tabmodule;
-    $data['authid'] = xarSecGenAuthKey();
+
+    // Return the template variables defined in this function
     return $data;
 }
+
 ?>
