@@ -74,7 +74,6 @@ function comments_admin_modifyconfig()
             
             if (!xarVarFetch('rssnumitems', 'int', $rssnumitems, xarModVars::get('comments', 'rssnumitems'), XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('showtitle', 'checkbox', $showtitle, xarModVars::get('comments', 'showtitle'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('showoptions', 'checkbox', $showoptions, xarModVars::get('comments', 'showoptions'), XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('postanon', 'checkbox', $postanon, xarModVars::get('comments', 'postanon'), XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('useblacklist', 'checkbox', $useblacklist, xarModVars::get('comments', 'useblacklist'), XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('useblacklist', 'checkbox', $useblacklist, 1, XARVAR_NOT_REQUIRED)) return;
@@ -103,7 +102,6 @@ function comments_admin_modifyconfig()
                 xarModVars::set('comments', 'numstats', $numstats);
                 xarModVars::set('comments', 'rssnumitems', $rssnumitems);
                 xarModVars::set('comments', 'showtitle', $showtitle);
-                xarModVars::set('comments', 'showoptions', $showoptions);
                 xarModVars::set('comments', 'useblacklist', $useblacklist);
                 xarModVars::set('comments','usersetrendering',$usersetrendering);
             }
@@ -119,7 +117,6 @@ function comments_admin_modifyconfig()
             xarModItemVars::set('comments', 'numstats', $numstats, $regid);
             xarModItemVars::set('comments', 'rssnumitems', $rssnumitems, $regid);
             xarModItemVars::set('comments', 'showtitle', $showtitle, $regid);
-            xarModItemVars::set('comments', 'showoptions', $showoptions, $regid);
             xarModItemVars::set('comments', 'useblacklist', $useblacklist, $regid);
             xarModItemVars::set('comments','usersetrendering',$usersetrendering, $regid);
 

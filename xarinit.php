@@ -171,7 +171,6 @@ function comments_init()
     xarModVars::set('comments','rssnumitems',25);
     xarModVars::set('comments', 'wrap', false);
     xarModVars::set('comments', 'showtitle', false);
-    xarModVars::set('comments', 'showoptions', false);
     xarModVars::set('comments', 'useblacklist', false);
 
 # --------------------------------------------------------

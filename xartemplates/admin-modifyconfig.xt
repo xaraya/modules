@@ -45,17 +45,6 @@
 
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
                 <div class="xar-form-input-wrapper">
-                    <xar:set name="checked">
-                        xarModVars::get('comments','showoptions')
-                    </xar:set>
-                    <label for="showoptions" class="xar-form-label" title="#xarML('Disabled, this will kill the options bar on comments')#">
-                            <xar:mlstring>
-                                Show rendering options
-                            </xar:mlstring>
-                    </label> <xar:data-input type="checkbox" name="showoptions" id="showoptions" checked="$checked"/>
-                </div>
-
-                <div class="xar-form-input-wrapper">
                     <label for="depth" class="xar-form-label" title="#xarML('The rendering depth to be used as default')#">
                             <xar:mlstring>
                                 Default Rendering Depth
