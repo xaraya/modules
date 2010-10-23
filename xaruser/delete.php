@@ -78,11 +78,11 @@ function comments_user_delete()
             return true;
     }
 
-    $output['header'] = $header;
-    $output['receipt'] = $receipt;
-    $output['package']['delete_url'] = xarModURL('comments','user','delete');
+    $data['header'] = $header;
+    $data['receipt'] = $receipt;
+    $data['package']['delete_url'] = xarModURL('comments','user','delete');
 
-    return $output;
+    return $data;
 }
 
 ?>

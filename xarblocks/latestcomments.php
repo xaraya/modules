@@ -130,7 +130,7 @@ function comments_latestcommentsblock_modify($blockinfo)
     }
 
     // Send content to template
-    $output = xarTplBlock('comments','latestcommentsblockadmin',
+    $data = xarTplBlock('comments','latestcommentsblockadmin',
                           array(
                                 'howmany' => $vars['howmany'],
                                 'modid' => $vars['modid'],
@@ -145,7 +145,7 @@ function comments_latestcommentsblock_modify($blockinfo)
                                 'addprevious' => $vars['addprevious']
                                 ));
 
-    return $output;
+    return $data;
 }
 
 /**

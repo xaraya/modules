@@ -248,7 +248,7 @@ function comments_user_displayall($args)
     $templateargs['order']          =$settings['order'];
 
     if ($args['block_is_calling']==0 )   {
-        $output=xarTplModule('comments', 'user','displayall', $templateargs);
+        $data=xarTplModule('comments', 'user','displayall', $templateargs);
     } else {
         $templateargs['olderurl']=xarModURL('comments','user','displayall',
                                             array(
@@ -257,9 +257,9 @@ function comments_user_displayall($args)
                                                 'modid'=>$modarray
                                                 )
                                             );
-        $output=xarTplBlock('comments', 'latestcommentsblock', $templateargs );
+        $data = xarTplBlock('comments', 'latestcommentsblock', $templateargs );
     }
 
-    return $output;
+    return $data;
 }
 ?>

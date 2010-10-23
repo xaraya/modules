@@ -132,9 +132,9 @@ function comments_user_modify()
             $package['comments'][0]['id']  = $header['id'];
             $receipt['action']                  = 'modify';
 
-            $output['header']                   = $header;
-            $output['package']                  = $package;
-            $output['receipt']                  = $receipt;
+            $data['header']                   = $header;
+            $data['package']                  = $package;
+            $data['receipt']                  = $receipt;
 
             break;
         case 'preview':
@@ -195,15 +195,15 @@ function comments_user_modify()
     $hooks['iteminput'] = xarModCallHooks('item', 'modify', $header['id'], $args);
 */
 
-    $output['hooks']              = $hooks;
-    $output['header']             = $header;
-    $output['package']            = $package;
-    $output['package']['date']    = time();
-    $output['package']['role_id']     = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('id') : 2);
-    $output['package']['uname']   = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('uname') : 'anonymous');
-    $output['package']['name']    = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
-    $output['receipt']            = $receipt;
-    return $output;
+    $data['hooks']              = $hooks;
+    $data['header']             = $header;
+    $data['package']            = $package;
+    $data['package']['date']    = time();
+    $data['package']['role_id']     = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('id') : 2);
+    $data['package']['uname']   = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('uname') : 'anonymous');
+    $data['package']['name']    = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
+    $data['receipt']            = $receipt;
+    return $data;
 
 }
 ?>

@@ -19,13 +19,20 @@
  * @param    integer    $args['modid']              the module id
  * @param    integer    $args['itemtype']           the item type
  * @param    string     $args['objectid']           the item id
- * @param    string     $args['returnurl']          the url to return to
  * @param    integer    $args['depth']              depth of comment thread to display
  * @param    integer    [$args['selected_id']]      optional: the cid of the comment to view (only for displaying single comments)
  * @param    integer    [$args['thread']]           optional: display the entire thread following cid
  * @param    integer    [$args['preview']]          optional: an array containing a single (preview) comment used with adding/editing comments
  * @return   array      returns whatever needs to be parsed by the BlockLayout engine
  */
+
+ /*
+	generally speaking...
+	$package = the comment data
+	$header = info describing the item that we're commenting on 
+	$receipt = particulars of the form submission
+ */
+
 function comments_user_display($args)
 {
     if (!xarSecurityCheck('ReadComments', 0)) return;
@@ -48,13 +55,10 @@ function comments_user_display($args)
         }
     }
 
-    // TODO: now clean up the rest :-)
-
     $header   = xarRequest::getVar('header');
     $package  = xarRequest::getVar('package');
     $receipt  = xarRequest::getVar('receipt');
 
-    // Fetch the module ID
     if (isset($args['modid'])) {
         $header['modid'] = $args['modid'];
     } elseif (isset($header['modid'])) {
@@ -91,17 +95,8 @@ function comments_user_display($args)
         $header['itemtype'] = $itemtype;
     }
 
-	
     $package['settings'] = xarMod::apiFunc('comments','user','getoptions',$header);
 
-    // FIXME: clean up return url handling
-
-    /*$settings_uri = "&#38;depth={$package['settings']['depth']}"
-        . "&#38;order={$package['settings']['order']}"
-        . "&#38;sortby={$package['settings']['sortby']}"
-        . "&#38;render={$package['settings']['render']}";*/
-
-    // Fetch the object ID
     if (isset($args['objectid'])) {
         $header['objectid'] = $args['objectid'];
     } elseif (isset($header['objectid'])) {
@@ -132,9 +127,6 @@ function comments_user_display($args)
         $msg = xarML('Unable to load #(1) #(2)', 'comments', 'renderer');
         throw new BadParameterException($msg);
     }
-
-	// testing
-	//$header['selected_id'] = 3;
 
     if (!isset($header['selected_id']) || isset($thread)) {
         $package['comments'] = xarMod::apiFunc('comments','user','get_multiple',$header);
@@ -191,54 +183,6 @@ function comments_user_display($args)
     // Bug 6175: removed xarVarPrepForDisplay() from the title, as articles already
     // does this *but* maybe needs fixing in articles instead?
     $package['new_title']             = xarVarGetCached('Comments.title', 'title');
-	
-    // Let's honour the phpdoc entry at the top :-)
-   /* if(isset($args['returnurl'])) {
-        $receipt['returnurl']['raw'] = $args['returnurl'];
-    }
-    if (empty($ishooked) && empty($receipt['returnurl'])) {
-        // get the title and link of the original object
-        $modinfo = xarModGetInfo($header['modid']);
-        try{
-            $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
-                array('itemtype' => $header['itemtype'], 'itemids' => array($header['objectid'])));
-        } catch (Exception $e) {}
-
-        if (!empty($itemlinks) && !empty($itemlinks[$header['objectid']])) {
-            $url = $itemlinks[$header['objectid']]['url'];
-            if (!strstr($url, '?')) {
-                $url .= '?';
-            }
-            $header['objectlink'] = $itemlinks[$header['objectid']]['url'];
-            $header['objecttitle'] = $itemlinks[$header['objectid']]['label'];
-        } else {
-            $url = xarModURL($modinfo['name'], 'user', 'main');
-        }
-
-        $receipt['returnurl'] = array('encoded' => rawurlencode($url), 'decoded' => $url);
-    } elseif (!isset($receipt['returnurl']['raw'])) {
-        if (empty($args['extrainfo'])) {
-            $modinfo = xarModGetInfo($args['modid']);
-            $receipt['returnurl']['raw'] = xarModURL($modinfo['name'],'user','main');
-        } elseif (is_array($args['extrainfo']) && isset($args['extrainfo']['returnurl'])) {
-            $receipt['returnurl']['raw'] = $args['extrainfo']['returnurl'];
-        } elseif (is_string($args['extrainfo'])) {
-            $receipt['returnurl']['raw'] = $args['extrainfo'];
-        } else {
-            $receipt['returnurl']['raw'] = '';
-        }
-        if (!stristr($receipt['returnurl']['raw'], '?')) {
-            $receipt['returnurl']['raw'] .= '?';
-        }
-        $receipt['returnurl']['decoded'] = $receipt['returnurl']['raw'];// . $settings_uri;
-        $receipt['returnurl']['encoded'] = rawurlencode($receipt['returnurl']['decoded']);
-    } else {
-        if (!stristr($receipt['returnurl']['raw'],'?')) {
-            $receipt['returnurl']['raw'] .= '?';
-        }
-        $receipt['returnurl']['encoded'] = rawurlencode($receipt['returnurl']['raw']);
-        $receipt['returnurl']['decoded'] = $receipt['returnurl']['raw'] . $settings_uri;
-    }*/
 
     $receipt['post_url']              = xarModURL('comments', 'user', 'reply');
     $receipt['action']                = 'display';
@@ -250,13 +194,11 @@ function comments_user_display($args)
 		$package['comments'][$key]['objecturl'] = str_replace($baseurl, '',$package['comments'][$key]['objecturl']);
 	}
 
-    //if (time() - ($package['comments']['xar_date'] - ($package['settings']['edittimelimit'] * 60))) {
-    //}
-    $output['hooks']   = $hooks;
-    $output['header']  = $header;
-    $output['package'] = $package;
-    $output['receipt'] = $receipt;
+    $data['hooks']   = $hooks;
+    $data['header']  = $header;
+    $data['package'] = $package;
+    $data['receipt'] = $receipt;
 
-    return $output;
+    return $data;
 }
 ?>

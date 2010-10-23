@@ -20,6 +20,13 @@
  * @returns  array      returns whatever needs to be parsed by the BlockLayout engine
  */
 
+ /*
+	generally speaking...
+	$package = the comment data
+	$header = info describing the item that we're commenting on 
+	$receipt = particulars of the form submission
+ */
+
 function comments_user_reply()
 {
     if (!xarSecurityCheck('PostComments'))
@@ -30,7 +37,7 @@ function comments_user_reply()
     $receipt                      = xarRequest::getVar('receipt');
     $receipt['post_url']          = xarModURL('comments','user','reply');
     $header['input-title']        = xarML('Post a reply');
-	xarVarFetch('objecturl', 'str', $output['objecturl'], '', XARVAR_NOT_REQUIRED); 
+	xarVarFetch('objecturl', 'str', $data['objecturl'], '', XARVAR_NOT_REQUIRED); 
 
     if (!isset($package['postanon'])) {
         $package['postanon'] = 0;
@@ -68,7 +75,7 @@ function comments_user_reply()
 				$status = _COM_STATUS_OFF;
 			}
 
-			xarMod::apiFunc('comments','user','add',
+			$newid = xarMod::apiFunc('comments','user','add',
 									   array('modid'    => $header['modid'],
 											 'itemtype' => $header['itemtype'],
 											 'objectid' => $header['objectid'],
@@ -76,11 +83,11 @@ function comments_user_reply()
 											 'comment'  => $package['text'],
 											 'title'    => $package['title'],
 											 'postanon' => $package['postanon'],
-											'objecturl' => $output['objecturl'],
+											'objecturl' => $data['objecturl'],
 											 'status' => $status
 			));  
 
-            xarResponse::redirect($output['objecturl']);
+            xarResponse::redirect($data['objecturl'].'#'.$newid);
             return true;
         case 'reply':
 
@@ -141,16 +148,15 @@ function comments_user_reply()
                                          array($comments[0]['text'],
                                                $comments[0]['title']));
 
-
             $comments[0]['text']         = xarVarPrepHTMLDisplay($comments[0]['text']);
             $comments[0]['title']        = xarVarPrepForDisplay($comments[0]['title']);
 
             $package['comments']             = $comments;
             $package['new_title']            = xarVarPrepForDisplay($new_title);
             $receipt['action']               = 'reply';
-            $output['header']                = $header;
-            $output['package']               = $package;
-            $output['receipt']               = $receipt;
+            $data['header']                = $header;
+            $data['package']               = $package;
+            $data['receipt']               = $receipt;
 
             break;
         case 'preview':
@@ -206,15 +212,16 @@ function comments_user_reply()
 */
 
     $anonuid = xarConfigVars::get(null,'Site.User.AnonymousUID');
-    $output['hooks']              = $hooks;
-    $output['header']             = $header;
-    $output['package']            = $package;
-    $output['package']['date']    = time();
-    $output['package']['role_id']     = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('id') : $anonuid);
-    $output['package']['uname']   = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('uname') : 'anonymous');
-    $output['package']['name']    = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
-    $output['receipt']            = $receipt;
-    return $output;
+    $data['hooks']              = $hooks;
+    $data['header']             = $header;
+    $data['package']            = $package;
+    $data['package']['date']    = time();
+    $data['package']['role_id']     = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('id') : $anonuid);
+    $data['package']['uname']   = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('uname') : 'anonymous');
+    $data['package']['name']    = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
+    $data['receipt']            = $receipt;
+
+    return $data;
 }
 
 ?>
