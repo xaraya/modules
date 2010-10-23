@@ -70,7 +70,7 @@
                 </p>
                 <xar:if condition="isset($loop:item['branchout']) and $loop:item['branchout'] eq 1">
                     <br />
-                    <a href="#$receipt['returnurl']['decoded']#&#38;header[modid]=#$header['modid']#&#38;header[itemtype]=#$header['itemtype']#&#38;header[objectid]=#$header['objectid']#&#38;header[branchout]=1&#38;header[id]=#$loop:item['id']#&#38;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['nested_text']# </a>&#160;
+                    <a href=""> #$loop:item['nested_text']# </a>&#160;
                 </xar:if>
             </xar:if>
         </div>

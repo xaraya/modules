@@ -22,10 +22,10 @@
                       <xar:elseif condition="!empty($receipt['directurl'])"/>
                           <a href="#xarModURL('comments','user','display',array('id' => $loop:item['id']))#"> #$loop:item['title']# </a>
                       <xar:else/>
-                          <a href="#$receipt['returnurl']['decoded']#&#38;header[modid]=#$header['modid']#&#38;header[itemtype]=#$header['itemtype']#&#38;header[objectid]=#$header['objectid']#&#38;header[selected_id]=#$loop:item['id']#&#38;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['title']# </a>
+                          <a href=""> #$loop:item['title']# </a>
                       </xar:if>
                     <xar:else />
-                        <a href="#$receipt['returnurl']['decoded']#&#38;header[modid]=#$header['modid']#&#38;header[itemtype]=#$header['itemtype']#&#38;header[objectid]=#$header['objectid']#&#38;header[branchout]=1&#38;header[id]=#$loop:item['id']#&#38;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#">
+                        <a href="">
                             #$loop:item['title']# #$loop:item['thread_text']#
                         </a>
                     </xar:if>
@@ -69,7 +69,7 @@
     <xar:comment> FIXME: nested if's don't seem right here </xar:comment>
                         <xar:if condition="isset($loop:item['branchout']) and $loop:item['branchout'] eq 1">
                             <br />
-                            <a href="#$receipt['returnurl']['decoded']#&#38;header[modid]=#$header['modid']#&#38;header[itemtype]=#$header['itemtype']#&#38;header[objectid]=#$header['objectid']#&#38;header[branchout]=1&#38;header[id]=#$loop:item['id']#&#38;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['nested_text']# </a>&#160;
+                            <a href=""> #$loop:item['nested_text']# </a>&#160;
                         </xar:if>
                     </xar:if>
                     <!-- show changelog -->
@@ -105,10 +105,10 @@
                       <xar:elseif condition="!empty($receipt['directurl'])"/>
                           <a href="#xarModURL('comments','user','display',array('id' => $loop:item['id']))#"> #$loop:item['title']# </a>
                       <xar:else/>
-                          <a href="#$receipt['returnurl']['decoded']#&#38;header[modid]=#$header['modid']#&#38;header[itemtype]=#$header['itemtype']#&#38;header[objectid]=#$header['objectid']#&#38;header[selected_id]=#$loop:item['id']#&#38;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['title']# </a>
+                          <a href=""> #$loop:item['title']# </a>
                       </xar:if>
                     <xar:else />
-                        <a href="#$receipt['returnurl']['decoded']#&#38;header[modid]=#$header['modid']#&#38;header[itemtype]=#$header['itemtype']#&#38;header[objectid]=#$header['objectid']#&#38;header[branchout]=1&#38;header[id]=#$loop:item['id']#&#38;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['title']# #$loop:item['thread_text']#</a>
+                        <a href=""> #$loop:item['title']# #$loop:item['thread_text']#</a>
                     </xar:if>
                 </span>
 
@@ -152,7 +152,7 @@
     <xar:comment> FIXME: nested if's don't seem right here </xar:comment>
                         <xar:if condition="isset($loop:item['branchout']) and $loop:item['branchout'] eq 1">
                             <br />
-                            <a href="#$receipt['returnurl']['decoded']#&#38;header[modid]=#$header['modid']#&#38;header[itemtype]=#$header['itemtype']#&#38;header[objectid]=#$header['objectid']#&#38;header[branchout]=1&#38;header[id]=#$loop:item['id']#&#38;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['nested_text']# </a>&#160;
+                            <a href=""> #$loop:item['nested_text']# </a>&#160;
                         </xar:if>
                     </xar:if>
                     <!-- show changelog -->

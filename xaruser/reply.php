@@ -80,7 +80,7 @@ function comments_user_reply()
 											 'status' => $status
 			));  
 
-            xarResponse::redirect($receipt['returnurl']['decoded']);
+            xarResponse::redirect($output['permalink']);
             return true;
         case 'reply':
 
@@ -128,10 +128,10 @@ function comments_user_reply()
             } else {
                 $url = xarModURL($modinfo['name'],'user','main');
             }
-            if (empty($receipt['returnurl'])) {
+            /*if (empty($receipt['returnurl'])) {
                 $receipt['returnurl'] = array('encoded' => rawurlencode($url),
                                               'decoded' => $url);
-            }
+            }*/
 
             list($comments[0]['text'],
                  $comments[0]['title']) =

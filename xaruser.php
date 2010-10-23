@@ -127,8 +127,7 @@ function comments_userapi_expand( )
     $args['receipt[returnurl][encoded]'] = $receipt['returnurl']['encoded'];
     $args['receipt[returnurl][decoded]'] = $receipt['returnurl']['decoded'];
 
-    $url = $args['receipt[returnurl][decoded]'];
-
+r
     foreach ($args as $k=>$v) {
         $url .= "&#38;$k=$v";
     }

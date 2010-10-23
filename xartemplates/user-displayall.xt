@@ -96,7 +96,7 @@
     <p />
     <xar:comment> FORM SELECTING DISPLAY OPTIONS (should add a module variable here) </xar:comment>
     <br />
-      <form action="#$decoded_returnurl#" method="post">
+      <form action="" method="post">
         <xar:comment> CHOOSE HOW MANY TO DISPLAY </xar:comment>
         <span class="xar-normal">
           <xar:mlstring>Show</xar:mlstring>

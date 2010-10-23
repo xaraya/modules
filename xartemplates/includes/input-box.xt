@@ -89,8 +89,6 @@
               <xar:if condition="isset($receipt['action']) and $receipt['action'] eq 'modify'">
                 <input type="hidden" name="header[id]" id="header-id" value="#$header['id']#"/>
               </xar:if>
-              <input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#"/>
-              <!--<input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#"/>-->
               <input type="hidden" name="receipt[action]" id="receipt-action"/>
 	      <xar:if condition="isset($permalink)">
 		<input type="hidden" name="permalink" value="#$permalink#" />
@@ -183,8 +181,6 @@
               <xar:if condition="isset($receipt['action']) and $receipt['action'] eq 'modify'">
                 <input type="hidden" name="header[id]" id="header-id" value="#$header['id']#"/>
               </xar:if>
-              <input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#"/>
-              <!--<input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#"/>-->
               <input type="hidden" name="receipt[action]" id="receipt-action"/>
 	      <xar:if condition="isset($permalink)">
 		<input type="hidden" name="permalink" value="#$permalink#" />

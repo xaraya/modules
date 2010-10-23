@@ -42,9 +42,9 @@
                     </p>
                 </xar:if>
             <xar:else/>
-                <xar:if condition="!isset($header['selected_id'])">
+                <xar:comment><xar:if condition="!isset($header['selected_id'])">
                     <xar:template file="option_bar" type="module"/>
-                </xar:if>
+                </xar:if></xar:comment>
                 <xar:if condition="$package['settings']['render'] eq 'nested'">
                     <xar:template file="view-nested" type="module"/>
                 <xar:elseif condition="$package['settings']['render'] eq 'threaded'"/>

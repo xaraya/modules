@@ -179,9 +179,9 @@ class CommentsProperty extends DataProperty
         $package['new_title']             = xarVarGetCached('Comments.title', 'title');
 
         // Let's honour the phpdoc entry at the top :-)
-        if(isset($data['returnurl'])) {
+        /*if(isset($data['returnurl'])) {
             $receipt['returnurl']['raw'] = $data['returnurl'];
-        }
+        }*/
 
         // get the title and link of the original object
         $modinfo = xarModGetInfo($header['modid']);
@@ -201,7 +201,7 @@ class CommentsProperty extends DataProperty
             $url = xarModURL($modinfo['name'], 'user', 'main');
         }
 
-        $receipt['returnurl'] = array('encoded' => rawurlencode($url), 'decoded' => $url);
+        /*$receipt['returnurl'] = array('encoded' => rawurlencode($url), 'decoded' => $url);*/
 
         $receipt['post_url']              = xarModURL('comments', 'user', 'reply');
         $receipt['action']                = 'display';

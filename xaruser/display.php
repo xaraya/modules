@@ -96,10 +96,10 @@ function comments_user_display($args)
 
     // FIXME: clean up return url handling
 
-    $settings_uri = "&#38;depth={$package['settings']['depth']}"
+    /*$settings_uri = "&#38;depth={$package['settings']['depth']}"
         . "&#38;order={$package['settings']['order']}"
         . "&#38;sortby={$package['settings']['sortby']}"
-        . "&#38;render={$package['settings']['render']}";
+        . "&#38;render={$package['settings']['render']}";*/
 
     // Fetch the object ID
     if (isset($args['objectid'])) {
@@ -191,9 +191,9 @@ function comments_user_display($args)
     // Bug 6175: removed xarVarPrepForDisplay() from the title, as articles already
     // does this *but* maybe needs fixing in articles instead?
     $package['new_title']             = xarVarGetCached('Comments.title', 'title');
-
+	
     // Let's honour the phpdoc entry at the top :-)
-    if(isset($args['returnurl'])) {
+   /* if(isset($args['returnurl'])) {
         $receipt['returnurl']['raw'] = $args['returnurl'];
     }
     if (empty($ishooked) && empty($receipt['returnurl'])) {
@@ -230,7 +230,7 @@ function comments_user_display($args)
         if (!stristr($receipt['returnurl']['raw'], '?')) {
             $receipt['returnurl']['raw'] .= '?';
         }
-        $receipt['returnurl']['decoded'] = $receipt['returnurl']['raw'] . $settings_uri;
+        $receipt['returnurl']['decoded'] = $receipt['returnurl']['raw'];// . $settings_uri;
         $receipt['returnurl']['encoded'] = rawurlencode($receipt['returnurl']['decoded']);
     } else {
         if (!stristr($receipt['returnurl']['raw'],'?')) {
@@ -238,7 +238,7 @@ function comments_user_display($args)
         }
         $receipt['returnurl']['encoded'] = rawurlencode($receipt['returnurl']['raw']);
         $receipt['returnurl']['decoded'] = $receipt['returnurl']['raw'] . $settings_uri;
-    }
+    }*/
 
     $receipt['post_url']              = xarModURL('comments', 'user', 'reply');
     $receipt['action']                = 'display';

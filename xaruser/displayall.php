@@ -51,7 +51,7 @@ function comments_user_displayall($args)
         $args['addprevious']=0;
     }
 
-    $args['returnurl'] = '';
+    /*$args['returnurl'] = '';*/
     $modarray = $args['modid'];
     // get the list of modules+itemtypes that comments is hooked to
     $hookedmodules = xarMod::apiFunc('modules', 'admin', 'gethookedmodules',
@@ -200,7 +200,7 @@ function comments_user_displayall($args)
         if (isset($modview[$modid][$itemtype])) $comments[$i]['modview']=$modview[$modid][$itemtype];
 
         //$comments[$i]['returnurl'] = urlencode($modview[$modid][$itemtype]);
-        $comments[$i]['returnurl'] = null;
+        //$comments[$i]['returnurl'] = null;
         if ($args['truncate']) {
             if ( strlen($comments[$i]['subject']) >$args['truncate']+3 )  {
                 $comments[$i]['subject']=substr($comments[$i]['subject'],0,$args['truncate']).'...';
@@ -238,7 +238,7 @@ function comments_user_displayall($args)
     $templateargs['modid']          =$modarray;
     $templateargs['itemtype']       =isset($itemtype)?$itemtype:0;
     $templateargs['modlist']        =$modlist;
-    $templateargs['decoded_returnurl'] = rawurldecode(xarModURL('comments','user','displayall'));
+    /*$templateargs['decoded_returnurl'] = rawurldecode(xarModURL('comments','user','displayall'));*/
     $templateargs['decoded_nexturl'] = xarModURL('comments','user','displayall',array(
                                                                          'first'=>$args['first']+$args['howmany'],
                                                                             'howmany'=>$args['howmany'],

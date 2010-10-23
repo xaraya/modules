@@ -106,8 +106,6 @@ function comments_user_search( $args )
         $header['modid'] = $package['comments'][0]['modid'];
         $header['itemtype'] = $package['comments'][0]['itemtype'];
         $header['objectid'] = $package['comments'][0]['objectid'];
-        $receipt['returnurl']['decoded'] = xarModURL('comments','user','display', $postinfo);
-        $receipt['returnurl']['encoded'] = rawurlencode($receipt['returnurl']['decoded']);
 
         $receipt['directurl'] = true;
 

@@ -10,8 +10,7 @@
                 <input type="hidden" name="header[itemtype]" value="#$header['itemtype']#"/>
                 <input type="hidden" name="header[objectid]" value="#$header['objectid']#"/>
                 <input type="hidden" name="header[pid]" value="#$item['id']#"/>
-                <input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#"/>
-                <input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#"/>
+           
                 <input type="hidden" name="receipt[action]" value="reply"/>
                 <input type="submit" name="submit" id="submit-reply#$item['id']#" value="#xarML('Reply')#"/>
             </div>
@@ -27,8 +26,7 @@
                     <input type="hidden" name="header[itemtype]" value="#$header['itemtype']#"/>
                     <input type="hidden" name="header[objectid]" value="#$header['objectid']#"/>
                     <input type="hidden" name="header[id]" value="#$item['id']#"/>
-                    <input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#"/>
-                    <input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#"/>
+  
                     <input type="hidden" name="receipt[action]" value="modify"/> 
                     <input type="submit" name="submit-modify#$item['id']#" id="submit" value="#xarML('Modify')#"/> 
                 </div>
@@ -44,8 +42,7 @@
                 <input type="hidden" name="header[objectid]" value="#$header['objectid']#"/>
                 <input type="hidden" name="header[id]" value="#$item['id']#"/>
                 <input type="hidden" name="header[pid]" value="#$item['pid']#"/>
-                <input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#"/>
-                <input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#"/>
+                
                 <input type="hidden" name="receipt[action]" value="confirm-delete"/>
                 <input type="submit" name="submit" id="submit-delete#$item['id']#" value="#xarML('Delete')#"/> 
             </div>

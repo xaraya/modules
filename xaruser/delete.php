@@ -59,22 +59,22 @@ function comments_user_delete()
             } else {
                 $url = xarModURL($modinfo['name'],'user','main');
             }
-            if (empty($receipt['returnurl'])) {
+           /* if (empty($receipt['returnurl'])) {
                 $receipt['returnurl'] = array('encoded' => rawurlencode($url),
                                               'decoded' => $url);
-            }
+            }*/
 
             break;
         case 'reparent':
             xarMod::apiFunc('comments','admin','delete_node',
                           array('node' => $header['id'],
                                 'pid'  => $header['pid']));
-            xarResponse::redirect($receipt['returnurl']['decoded']);
+            //xarResponse::redirect($receipt['returnurl']['decoded']);
             return true;
         case 'thread':
             xarMod::apiFunc('comments','admin','delete_branch',
                           array('node' => $header['id']));
-            xarResponse::redirect($receipt['returnurl']['decoded']);
+           // xarResponse::redirect($receipt['returnurl']['decoded']);
             return true;
     }
 

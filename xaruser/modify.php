@@ -73,10 +73,10 @@ function comments_user_modify()
     } else {
         $url = xarModURL($modinfo['name'],'user','main');
     }
-    if (empty($receipt['returnurl'])) {
+    /*if (empty($receipt['returnurl'])) {
         $receipt['returnurl'] = array('encoded' => rawurlencode($url),
                                       'decoded' => $url);
-    }
+    }*/
 
     $package['settings'] = xarMod::apiFunc('comments','user','getoptions',$header);
 
@@ -108,7 +108,7 @@ function comments_user_modify()
                                               'postanon' => $package['postanon'],
                                               'authorid' => $author_id));
             } 
-            xarResponse::redirect($receipt['returnurl']['decoded']);
+            /*xarResponse::redirect($receipt['returnurl']['decoded']);*/
             return true;
         case 'modify':
             list($comments[0]['transformed-text'],
