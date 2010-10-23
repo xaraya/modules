@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:comment>jojodee - this template and the associated function seem redundant - handled by overview function</xar:comment>
+    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Comments</xar:mlstring></span></div>
+    <div class="xar-mod-body">
+    
+        <xar:template type="module" file="admintabs"/>
+
+        <h2><xar:mlstring>View Comments</xar:mlstring></h2>
+        <div style="padding: 1px;" class="xar-norm-outline">
+             
+
+	     <table cellspacing="0" cellpadding="0">
+	<tr><th>id</th><th>date</th><th>title</th><th>author</th><th>status</th><th>actions</th></tr>
+
+	     <xar:foreach in="$comments" key="$key" value="$val">
+
+	<tr><td>#$val['id']#</td><td>#date('M j, Y',$val['date'])#</td><td>#$val['title']#</td> <td>#xarUserGetVar('name',$val['author'])#</td><td><xar:if condition="$val['status'] eq 2">approved<xar:else />inactive</xar:if></td>
+	
+	<td>
+	<a href="#xarmodurl('comments','admin','delete',array('id' => $val['id'], 'dtype' => 'item','redirect' => 'view'))#">delete</a> 
+	 - 
+	<a href="#xarmodurl('comments','user','modify',array('id' => $val['id']))#">edit</a> 
+	</td>
+	
+	</tr>
+
+	     </xar:foreach>
+
+	     </table>
+
+        </div>
+    </div>
+</xar:template>

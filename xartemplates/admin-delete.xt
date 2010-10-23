@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Comments Administration</xar:mlstring>
+        </span>
+    </div>
+
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admintabs"/>
+
+        <h2>
+            <xar:mlstring>Delete Comments</xar:mlstring>
+        </h2>
+
+        <form method="post" action="#xarModURL('comments','admin','delete')#">
+
+            <fieldset>
+                <legend><xar:mlstring>Delete Confirmation</xar:mlstring></legend>
+
+                <div class="xar-form-input-wrapper">
+
+			<xar:if condition="$dtype eq 'item'"> 
+
+				<div class="xar-form-input-wrapper">
+				    <label for="commentdelete" class="xar-form-label" title="#xarML('Confirm deletion of this comment')#">
+				       <xar:mlstring>Are you sure you want to delete this comment?</xar:mlstring>
+				   </label>
+				   <input type="radio"  name="node" value="true"/>&#160;<label><xar:mlstring>Attach child comments to parent</xar:mlstring></label><br />
+				   <input type="radio"  name="branch" value="true"/>&#160;<label><xar:mlstring>Delete this comment and all children</xar:mlstring></label><br />
+				</div>
+
+			<xar:else />
+				<p>Are you sure you want to delete #$count# comments?</p>  
+				
+				<xar:if condition="isset($modname)">
+					<p>The comments are attached to items of the #$modname# module<xar:if condition="isset($itemtype)">, itemtype #$itemtype#</xar:if>.</p>
+				</xar:if>
+				 
+
+			</xar:if>
+ 
+                            <input type="hidden" name="confirm" value="true" /> 
+
+		</div>
+             </fieldset>
+
+            <div class="xar-form-input-wrapper">
+		<xar:foreach in="$delete_args" key="$key" value="$val">
+		   <input type="hidden" name="#$key#" value="#$val#" /> 
+	        </xar:foreach>
+                <input type="hidden" name="authid" value="#$authid#"/>
+		<input type="hidden" name="dtype" value="#$dtype#"/>
+		<xar:if condition="isset($redirect)">
+			<input type="hidden" name="redirect" value="#$redirect#"/>
+		<xar:else />
+			<input type="hidden" name="redirect" value="view"/>
+		</xar:if>
+                <input type="submit" name="submitted" id="submitted" value="submit"/>
+            </div>
+
+        </form>
+    </div>
+</xar:template>

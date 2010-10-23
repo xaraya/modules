@@ -1,0 +1,8 @@
+Carl P. Corliss    - Author, Comments API
+Jason Paquette     - helping me to brainstorm the lineages algorithm
+LadyOfDragons      - Motivation to do this project and initial groundwork on lineages
+Gregor J. Rothfuss - Motivation and guidance
+Jim McDonald       - Inspiration
+Doug Daulton       - HTML Design of the Renderings
+hidetaka <gdtjpmw@users.sourceforge.jp> -- Bug 4210
+comment blacklist  - Inspiration and install routing from Fahim (fahim@farook.org).  Original MT_Blacklist Jay Allen's (http://jayallen.org)

@@ -1,0 +1,280 @@
+<items>
+  <comments itemid="1">
+    <id>1</id>
+    <pid>0</pid>
+    <modid>1015</modid>
+    <itemtype>0</itemtype>
+    <objectid>6</objectid>
+    <date>1287519459</date>
+    <author>1</author>
+    <title>ROOT NODE - PLACEHOLDER. DO NOT DELETE!</title>
+    <hostname></hostname>
+    <text>This is for internal use and works only as a place holder. PLEASE do NOT delete this comment as it could have detrimental effects on the consistency of the comments table.</text>
+    <left_id>1</left_id>
+    <right_id>42</right_id>
+    <status>3</status>
+    <anonpost></anonpost>
+  </comments>
+  <comments itemid="2">
+    <id>2</id>
+    <pid>1</pid>
+    <modid>1015</modid>
+    <itemtype>0</itemtype>
+    <objectid>6</objectid>
+    <date>1287519459</date>
+    <author>6</author>
+    <title>fruit</title>
+    <hostname>127.0.0.1</hostname>
+    <text>apples
+ 
+</text>
+    <left_id>2</left_id>
+    <right_id>21</right_id>
+    <status>2</status>
+    <anonpost>0</anonpost>
+  </comments>
+  <comments itemid="3">
+    <id>3</id>
+    <pid>2</pid>
+    <modid>1015</modid>
+    <itemtype>0</itemtype>
+    <objectid>6</objectid>
+    <date>1287521743</date>
+    <author>6</author>
+    <title>cars</title>
+    <hostname>127.0.0.1</hostname>
+    <text> honda
+
+</text>
+    <left_id>3</left_id>
+    <right_id>20</right_id>
+    <status>2</status>
+    <anonpost>0</anonpost>
+  </comments>
+  <comments itemid="4">
+    <id>4</id>
+    <pid>3</pid>
+    <modid>1015</modid>
+    <itemtype>0</itemtype>
+    <objectid>6</objectid>
+    <date>1287521768</date>
+    <author>6</author>
+    <title>bike</title>
+    <hostname>127.0.0.1</hostname>
+    <text>unicycle
+
+</text>
+    <left_id>4</left_id>
+    <right_id>15</right_id>
+    <status>2</status>
+    <anonpost>0</anonpost>
+  </comments>
+  <comments itemid="7">
+    <id>7</id>
+    <pid>5</pid>
+    <modid>1015</modid>
+    <itemtype>0</itemtype>
+    <objectid>6</objectid>
+    <date>1287525306</date>
+    <author>6</author>
+    <title>squares are</title>
+    <hostname>127.0.0.1</hostname>
+    <text> rectangular
+
+
+
+</text>
+    <left_id>6</left_id>
+    <right_id>7</right_id>
+    <status>1</status>
+    <anonpost>0</anonpost>
+  </comments>
+  <comments itemid="8">
+    <id>8</id>
+    <pid>3</pid>
+    <modid>1015</modid>
+    <itemtype>0</itemtype>
+    <objectid>6</objectid>
+    <date>1287532200</date>
+    <author>6</author>
+    <title>trees</title>
+    <hostname>127.0.0.1</hostname>
+    <text> maple
+
+</text>
+    <left_id>16</left_id>
+    <right_id>17</right_id>
+    <status>2</status>
+    <anonpost>0</anonpost>
+  </comments>
+  <comments itemid="10">
+    <id>10</id>
+    <pid>1</pid>
+    <modid>1015</modid>
+    <itemtype>0</itemtype>
+    <objectid>6</objectid>
+    <date>1287534099</date>
+    <author>6</author>
+    <title>flower</title>
+    <hostname>127.0.0.1</hostname>
+    <text> daisy
+
+</text>
+    <left_id>22</left_id>
+    <right_id>23</right_id>
+    <status>2</status>
+    <anonpost>0</anonpost>
+  </comments>
+  <comments itemid="11">
+    <id>11</id>
+    <pid>1</pid>
+    <modid>1015</modid>
+    <itemtype>0</itemtype>
+    <objectid>6</objectid>
+    <date>1287534310</date>
+    <author>6</author>
+    <title>lumber</title>
+    <hostname>127.0.0.1</hostname>
+    <text>2 x 4
+
+</text>
+    <left_id>24</left_id>
+    <right_id>25</right_id>
+    <status>2</status>
+    <anonpost>0</anonpost>
+  </comments>
+  <comments itemid="13">
+    <id>13</id>
+    <pid>1</pid>
+    <modid>1015</modid>
+    <itemtype>0</itemtype>
+    <objectid>6</objectid>
+    <date>1287541203</date>
+    <author>6</author>
+    <title>cutlery</title>
+    <hostname>127.0.0.1</hostname>
+    <text>knife
+
+</text>
+    <left_id>34</left_id>
+    <right_id>37</right_id>
+    <status>2</status>
+    <anonpost>0</anonpost>
+  </comments>
+  <comments itemid="14">
+    <id>14</id>
+    <pid>13</pid>
+    <modid>1015</modid>
+    <itemtype>0</itemtype>
+    <objectid>6</objectid>
+    <date>1287541215</date>
+    <author>6</author>
+    <title>nasa</title>
+    <hostname>127.0.0.1</hostname>
+    <text>rocket
+
+</text>
+    <left_id>35</left_id>
+    <right_id>36</right_id>
+    <status>2</status>
+    <anonpost>0</anonpost>
+  </comments>
+  <comments itemid="15">
+    <id>15</id>
+    <pid>1</pid>
+    <modid>1015</modid>
+    <itemtype>0</itemtype>
+    <objectid>6</objectid>
+    <date>1287541254</date>
+    <author>6</author>
+    <title>animal</title>
+    <hostname>127.0.0.1</hostname>
+    <text> badger
+
+</text>
+    <left_id>38</left_id>
+    <right_id>39</right_id>
+    <status>2</status>
+    <anonpost>0</anonpost>
+  </comments>
+  <comments itemid="18">
+    <id>18</id>
+    <pid>1</pid>
+    <modid>1015</modid>
+    <itemtype>0</itemtype>
+    <objectid>6</objectid>
+    <date>1287599248</date>
+    <author>6</author>
+    <title>under bike</title>
+    <hostname>127.0.0.1</hostname>
+    <text> a nice bike</text>
+    <left_id>40</left_id>
+    <right_id>41</right_id>
+    <status>2</status>
+    <anonpost>0</anonpost>
+  </comments>
+  <comments itemid="19">
+    <id>19</id>
+    <pid>5</pid>
+    <modid>1015</modid>
+    <itemtype>0</itemtype>
+    <objectid>6</objectid>
+    <date>1287599280</date>
+    <author>6</author>
+    <title>Re: wheels are</title>
+    <hostname>127.0.0.1</hostname>
+    <text> under wheels</text>
+    <left_id>10</left_id>
+    <right_id>11</right_id>
+    <status>2</status>
+    <anonpost>0</anonpost>
+  </comments>
+  <comments itemid="24">
+    <id>24</id>
+    <pid>0</pid>
+    <modid>1015</modid>
+    <itemtype>0</itemtype>
+    <objectid>7</objectid>
+    <date>1287712673</date>
+    <author>1</author>
+    <title>ROOT NODE - PLACEHOLDER. DO NOT DELETE!</title>
+    <hostname></hostname>
+    <text>This is for internal use and works only as a place holder. PLEASE do NOT delete this comment as it could have detrimental effects on the consistency of the comments table.</text>
+    <left_id>1</left_id>
+    <right_id>6</right_id>
+    <status>3</status>
+    <anonpost></anonpost>
+  </comments>
+  <comments itemid="27">
+    <id>27</id>
+    <pid>24</pid>
+    <modid>1015</modid>
+    <itemtype>0</itemtype>
+    <objectid>7</objectid>
+    <date>1287770496</date>
+    <author>6</author>
+    <title>mud</title>
+    <hostname>127.0.0.1</hostname>
+    <text> dirt and water</text>
+    <left_id>2</left_id>
+    <right_id>5</right_id>
+    <status>2</status>
+    <anonpost>0</anonpost>
+  </comments>
+  <comments itemid="28">
+    <id>28</id>
+    <pid>27</pid>
+    <modid>1015</modid>
+    <itemtype>0</itemtype>
+    <objectid>7</objectid>
+    <date>1287770509</date>
+    <author>6</author>
+    <title>Re: mud</title>
+    <hostname>127.0.0.1</hostname>
+    <text> about mud</text>
+    <left_id>3</left_id>
+    <right_id>4</right_id>
+    <status>2</status>
+    <anonpost>0</anonpost>
+  </comments>
+</items>
