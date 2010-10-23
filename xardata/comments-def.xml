@@ -94,16 +94,16 @@
       <validation>0:100</validation> 
       <configuration>0:100</configuration> 
     </property> 
-	    <property name="permalink">  
-      <label>Permalink</label> 
-      <type>textbox</type> 
+	    <property name="objecturl">  
+      <label>Object URL</label> 
+      <type>textarea_medium</type> 
       <id>8</id> 
       <defaultvalue></defaultvalue> 
-      <source>xar_comments.permalink</source> 
+      <source>xar_comments.objecturl</source> 
       <status>1</status> 
       <seq>9</seq> 
-      <validation>0:255</validation> 
-      <configuration>0:255</configuration> 
+      <validation></validation> 
+      <configuration></configuration> 
     </property> 
     <property name="hostname">  
       <label>Hostname</label> 

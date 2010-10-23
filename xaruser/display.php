@@ -247,7 +247,7 @@ function comments_user_display($args)
 
 	$baseurl = xarServer::getCurrentURL();
 	foreach($package['comments'] as $key => $val) {
-		$package['comments'][$key]['permalink'] = str_replace($baseurl, '',$package['comments'][$key]['permalink']);
+		$package['comments'][$key]['objecturl'] = str_replace($baseurl, '',$package['comments'][$key]['objecturl']);
 	}
 
     //if (time() - ($package['comments']['xar_date'] - ($package['settings']['edittimelimit'] * 60))) {

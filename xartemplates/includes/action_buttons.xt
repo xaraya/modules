@@ -5,7 +5,7 @@
     <xar:sec catch="false" mask="ReplyComments" instance="$header[modid]:$header[objectid]:ALL">
         <form action="#xarModURL('comments', 'user', 'reply')#" method="post" class="xar-cm-actions">
             <div>
-		<input type="hidden" name="permalink" value="#xarServer::getCurrentURL()#"/>
+		<input type="hidden" name="objecturl" value="#xarServer::getCurrentURL()#"/>
                 <input type="hidden" name="header[modid]" value="#$header['modid']#"/>
                 <input type="hidden" name="header[itemtype]" value="#$header['itemtype']#"/>
                 <input type="hidden" name="header[objectid]" value="#$header['objectid']#"/>

@@ -20,7 +20,7 @@
             <description>
                 #$loop:item['rsssummary']#
             </description>
-            <guid isPermaLink="true">
+            <guid isobjecturl="true">
                 #$loop:item['link']#
             </guid>
             -->

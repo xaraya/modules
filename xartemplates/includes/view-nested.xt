@@ -57,14 +57,14 @@
             <xar:if condition="isset($package['transformed-text'])">
                 #$package['transformed-text']#
                 <p>
-                    <a href="#xarModURL('comments','user','display',array('id' => $loop:item['id']))#" title="#xarML('Permalink')#" rel="bookmark">
+                    <a href="#xarModURL('comments','user','display',array('id' => $loop:item['id']))#" title="#xarML('objecturl')#" rel="bookmark">
                         #
                     </a>
                 </p>
                 <xar:else />
                 #$loop:item['text']#
                 <p>
-                    <a href="#xarModURL('comments','user','display',array('id' => $loop:item['id']))#" title="#xarML('Permalink')#" rel="bookmark">
+                    <a href="#xarModURL('comments','user','display',array('id' => $loop:item['id']))#" title="#xarML('objecturl')#" rel="bookmark">
                         #
                     </a>
                 </p>

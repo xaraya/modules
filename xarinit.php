@@ -41,7 +41,7 @@ function comments_init()
         'date'      => array('type'=>'integer',  'null'=>FALSE),
         'author'    => array('type'=>'integer',  'null'=>FALSE,  'size'=>'medium','default'=>1),
         'title'     => array('type'=>'varchar',  'null'=>FALSE,  'size'=>100),
-		'permalink'     => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
+		'objecturl'     => array('type'=>'text',  'null'=>FALSE,  'size'=>'medium'),
         'hostname'  => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
         'text'      => array('type'=>'text',     'null'=>TRUE,   'size'=>'medium'),
         'left_id'      => array('type'=>'integer',  'null'=>FALSE),

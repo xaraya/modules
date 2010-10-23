@@ -30,7 +30,7 @@ function comments_user_reply()
     $receipt                      = xarRequest::getVar('receipt');
     $receipt['post_url']          = xarModURL('comments','user','reply');
     $header['input-title']        = xarML('Post a reply');
-	xarVarFetch('permalink', 'str', $output['permalink'], '', XARVAR_NOT_REQUIRED); 
+	xarVarFetch('objecturl', 'str', $output['objecturl'], '', XARVAR_NOT_REQUIRED); 
 
     if (!isset($package['postanon'])) {
         $package['postanon'] = 0;
@@ -76,11 +76,11 @@ function comments_user_reply()
 											 'comment'  => $package['text'],
 											 'title'    => $package['title'],
 											 'postanon' => $package['postanon'],
-											'permalink' => $output['permalink'],
+											'objecturl' => $output['objecturl'],
 											 'status' => $status
 			));  
 
-            xarResponse::redirect($output['permalink']);
+            xarResponse::redirect($output['objecturl']);
             return true;
         case 'reply':
 

@@ -55,14 +55,14 @@
                     <xar:if condition="isset($package['transformed-text'])">
                         #$package['transformed-text']#
                         <p>
-                            <a href="#$loop:item['permalink']###comment#$loop:item['id']#" title="#xarML('Permalink')#" rel="bookmark">
+                            <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('objecturl')#" rel="bookmark">
 				#
                             </a>
                         </p>
                         <xar:else />
                         #$loop:item['text']#
                         <p>
-                            <a href="#$loop:item['permalink']###comment#$loop:item['id']#" title="#xarML('Permalink')#" rel="bookmark">
+                            <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('objecturl')#" rel="bookmark">
 				#
                             </a>
                         </p>
@@ -138,14 +138,14 @@
                     <xar:if condition="isset($package['transformed-text'])">
                         #$package['transformed-text']#
                         <p>
-                            <a href="#$loop:item['permalink']###comment#$loop:item['id']#" title="#xarML('Permalink')#" rel="bookmark">
+                            <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('objecturl')#" rel="bookmark">
 				#
                             </a>
                         </p>
                         <xar:else />
                         #$loop:item['text']#
                         <p>
-                            <a href="#$loop:item['permalink']###comment#$loop:item['id']#" title="#xarML('Permalink')#" rel="bookmark">
+                            <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('objecturl')#" rel="bookmark">
 				#
                             </a>
                         </p>

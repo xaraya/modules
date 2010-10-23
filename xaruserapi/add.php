@@ -180,7 +180,7 @@ function comments_userapi_add($args)
                  'hostname',
                  'left_id',
                  'right_id',
-				'permalink',
+				'objecturl',
                  'pid',
                  'status');
 
