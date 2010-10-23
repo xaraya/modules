@@ -182,6 +182,9 @@
                 <input type="hidden" name="header[id]" id="header-id" value="#$header['id']#"/>
               </xar:if>
               <input type="hidden" name="receipt[action]" id="receipt-action"/>
+	      <xar:if condition="isset($adminreturn)">
+		<input type="hidden" name="adminreturn" value="yes" />
+	      </xar:if>
 	      <xar:if condition="isset($objecturl)">
 		<input type="hidden" name="objecturl" value="#$objecturl#" />
 	      <xar:else />

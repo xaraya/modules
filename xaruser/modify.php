@@ -29,6 +29,9 @@ function comments_user_modify()
     $receipt                      = xarRequest::getVar('receipt');
     $receipt['post_url']          = xarModURL('comments','user','modify');
     $header['input-title']        = xarML('Modify Comment');
+	
+	if (!xarVarFetch('objecturl', 'str', $objecturl, 0, XARVAR_NOT_REQUIRED)) return;
+	if (!xarVarFetch('adminreturn', 'str', $data['adminreturn'], NULL, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('id', 'int:1:', $id, 0, XARVAR_NOT_REQUIRED)) return;
     if (!empty($id)) {
@@ -36,6 +39,7 @@ function comments_user_modify()
     }
 
     $comments = xarMod::apiFunc('comments','user','get_one', array('id' => $header['id']));
+ 
     $author_id = $comments[0]['role_id'];
 
     if ($author_id != xarUserGetVar('id')) {
@@ -79,7 +83,7 @@ function comments_user_modify()
     }*/
 
     $package['settings'] = xarMod::apiFunc('comments','user','getoptions',$header);
-
+ 
     switch (strtolower($receipt['action'])) {
         case 'submit':
             if (empty($package['title'])) {
@@ -108,7 +112,12 @@ function comments_user_modify()
                                               'postanon' => $package['postanon'],
                                               'authorid' => $author_id));
             } 
-            /*xarResponse::redirect($receipt['returnurl']['decoded']);*/
+			 
+			if (isset($data['adminreturn']) && $data['adminreturn'] == 'yes') { // if we got here via the admin side  
+				xarResponse::redirect(xarModURL('comments','admin','view'));
+			} else {
+				xarResponse::redirect($comments[0]['objecturl'].'#'.$header['id']);
+			}
             return true;
         case 'modify':
             list($comments[0]['transformed-text'],

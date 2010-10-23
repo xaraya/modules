@@ -20,7 +20,7 @@
 	<td>
 	<a href="#xarmodurl('comments','admin','delete',array('id' => $val['id'], 'dtype' => 'item','redirect' => 'view'))#">delete</a> 
 	 - 
-	<a href="#xarmodurl('comments','user','modify',array('id' => $val['id']))#">edit</a> 
+	<a href="#xarmodurl('comments','user','modify',array('id' => $val['id'],'adminreturn' => 'yes'))#">edit</a> 
 	</td>
 	
 	</tr>
