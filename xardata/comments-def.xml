@@ -1,5 +1,5 @@
 <object name="comments">
-  <objectid>396</objectid>
+  <objectid>411</objectid>
   <label>Comments</label>
   <module_id>14</module_id>
   <itemtype>1</itemtype>
@@ -7,11 +7,11 @@
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
-  <config>a:1:{s:12:"filterfields";s:30:"title,Title;text,Comment Text;";}</config>
+  <config>a:2:{s:12:"filterfields";s:30:"title,Title;text,Comment Text;";s:11:"adminfields";s:61:"id,objectid,date,title,author,status,modid,itemtype,objecturl";}</config>
   <isalias>false</isalias>
   <properties>
     <property name="id">
-      <id>2030</id>
+      <id>2170</id>
       <label>Id</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -21,8 +21,8 @@
       <configuration></configuration>
     </property>
     <property name="pid">
-      <id>2031</id>
-      <label>Pid</label>
+      <id>2171</id>
+      <label>Parent ID</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
       <source>xar_comments.pid</source>
@@ -31,9 +31,9 @@
       <configuration></configuration>
     </property>
     <property name="modid">
-      <id>2032</id>
-      <label>Modid</label>
-      <type>integerbox</type>
+      <id>2172</id>
+      <label>Module</label>
+      <type>module</type>
       <defaultvalue></defaultvalue>
       <source>xar_comments.modid</source>
       <status>65</status>
@@ -41,27 +41,27 @@
       <configuration></configuration>
     </property>
     <property name="itemtype">
-      <id>2033</id>
+      <id>2173</id>
       <label>Itemtype</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
       <source>xar_comments.itemtype</source>
-      <status>65</status>
+      <status>66</status>
       <seq>4</seq>
       <configuration></configuration>
     </property>
     <property name="objectid">
-      <id>2034</id>
+      <id>2174</id>
       <label>Objectid</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>xar_comments.objectid</source>
-      <status>65</status>
+      <status>66</status>
       <seq>5</seq>
       <configuration>0:255</configuration>
     </property>
     <property name="date">
-      <id>2035</id>
+      <id>2175</id>
       <label>Date</label>
       <type>calendar</type>
       <defaultvalue></defaultvalue>
@@ -71,7 +71,7 @@
       <configuration></configuration>
     </property>
     <property name="author">
-      <id>2036</id>
+      <id>2176</id>
       <label>Author</label>
       <type>userlist</type>
       <defaultvalue>1</defaultvalue>
@@ -81,7 +81,7 @@
       <configuration></configuration>
     </property>
     <property name="title">
-      <id>2037</id>
+      <id>2177</id>
       <label>Title</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -91,17 +91,17 @@
       <configuration>0:100</configuration>
     </property>
     <property name="objecturl">
-      <id>2038</id>
+      <id>2178</id>
       <label>Object URL</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>xar_comments.objecturl</source>
-      <status>33</status>
+      <status>34</status>
       <seq>9</seq>
       <configuration>a:3:{s:12:"display_size";s:3:"100";s:17:"display_maxlength";s:3:"300";s:14:"display_layout";s:7:"default";}</configuration>
     </property>
     <property name="hostname">
-      <id>2039</id>
+      <id>2179</id>
       <label>Hostname</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -111,7 +111,7 @@
       <configuration>0:255</configuration>
     </property>
     <property name="text">
-      <id>2040</id>
+      <id>2180</id>
       <label>Text</label>
       <type>textarea_medium</type>
       <defaultvalue></defaultvalue>
@@ -121,7 +121,7 @@
       <configuration></configuration>
     </property>
     <property name="left_id">
-      <id>2041</id>
+      <id>2181</id>
       <label>Left Id</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
@@ -131,7 +131,7 @@
       <configuration></configuration>
     </property>
     <property name="right_id">
-      <id>2042</id>
+      <id>2182</id>
       <label>Right Id</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
@@ -141,17 +141,17 @@
       <configuration></configuration>
     </property>
     <property name="status">
-      <id>2043</id>
+      <id>2183</id>
       <label>Status</label>
-      <type>integerbox</type>
+      <type>dropdown</type>
       <defaultvalue></defaultvalue>
       <source>xar_comments.status</source>
       <status>33</status>
       <seq>14</seq>
-      <configuration>tinyint (4)</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:20:"2,Active;1,Inactive;";}</configuration>
     </property>
     <property name="anonpost">
-      <id>2044</id>
+      <id>2184</id>
       <label>Anonpost</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>

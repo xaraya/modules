@@ -24,8 +24,16 @@ function comments_admin_view()
         return;
     }
 
+	$sort = xarMod::apiFunc('comments','admin','sort', array(
+		//how to sort if the URL or config say otherwise...
+		'sortfield_fallback' => 'date', 
+		'ascdesc_fallback' => 'DESC'
+	));
+	$data['sort'] = $sort;
+
 	$object = DataObjectMaster::getObject(array('name' => 'comments'));
 	$config = $object->configuration; 
+	$adminfields = $config['adminfields'];
 
 	$filters = array();
 
@@ -104,12 +112,16 @@ function comments_admin_view()
 	$filters['where'] .= 'status ne ' . _COM_STATUS_ROOT_NODE;
 
 	$list = DataObjectMaster::getObjectList(array(
-							'name' => 'comments'
+							'name' => 'comments',
+							'sort' => $sort,
+							'fieldlist' => $adminfields
 		));
 
 	if (!is_object($list)) return;
 
-	$data['comments'] = $list->getItems($filters);  
+	$list->getItems($filters);
+	
+	$data['list'] = $list;
 
     return $data;
 

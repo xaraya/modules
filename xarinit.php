@@ -162,7 +162,7 @@ function comments_init()
     xarModVars::set('comments','depth', _COM_MAX_DEPTH);
     xarModVars::set('comments','AllowPostAsAnon',1);
     xarModVars::set('comments','AuthorizeComments',0);
-    xarModVars::set('comments','AllowCollapsableThreads',1);
+	xarModVars::set('comments','AllowCollapsableThreads',1);
     xarModVars::set('comments','CollapsedBranches',serialize(array()));
     xarModVars::set('comments','editstamp',1);
     xarModVars::set('comments','usersetrendering',false);
