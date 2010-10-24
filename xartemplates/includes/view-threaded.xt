@@ -7,6 +7,9 @@
     </div>
 
     <xar:loop name="$package['comments']">
+
+    <xar:set name="id">#$loop:item['id']#</xar:set>
+
         <xar:if condition="(($loop:index + 1) % 2)">
             <div class="xar-tr-wrapper">
                 <span class="xar-tr-title">
@@ -25,9 +28,22 @@
                           <a href=""> #$loop:item['title']# </a>
                       </xar:if>
                     <xar:else />
-                        <a href="#xarServer::getCurrentURL()#?header[id]=#$loop:item['id']###comment#$loop:item['id']#">
-                               #$loop:item['title']# #$loop:item['thread_text']#
-                        </a>
+
+			<xar:if condition="isset($_GET['header']['id'])">
+				<xar:set name="newurl">
+				str_replace('header[id]='.$_GET['header']['id'], 'header[id]='.$id, xarServer::getCurrentURL())
+				</xar:set>
+			<xar:else />
+				<xar:if condition="strstr(xarServer::getCurrentURL(),'?')">
+					<xar:set name="start">xarServer::getCurrentURL().'&#38;'</xar:set>
+				<xar:else/>
+					<xar:set name="start">xarServer::getCurrentURL().'?'</xar:set>
+				</xar:if>
+				<xar:set name="newurl">$start . 'header[id]='.$id</xar:set>
+			</xar:if>
+
+                        <a href="#$newurl#">#$loop:item['title']# #$loop:item['thread_text']#</a>
+ 
                     </xar:if>
                 </span>
                 <span class="xar-tr-author">
@@ -108,12 +124,22 @@
                           <a href=""> #$loop:item['title']# </a>
                       </xar:if>
                     <xar:else />
-		       <xar:if condition="strstr(xarServer::getCurrentURL(),'?')">
-				<xar:set name="start">xarServer::getCurrentURL().'&#38;'</xar:set>
-		       <xar:else/>
-				<xar:set name="start">xarServer::getCurrentURL().'?'</xar:set>
-		       </xar:if>
-                        <a href="#$start#header[id]=#$loop:item['id']#">#$loop:item['title']# #$loop:item['thread_text']#</a>
+
+		       <xar:if condition="isset($_GET['header']['id'])">
+				<xar:set name="newurl">
+				str_replace('header[id]='.$_GET['header']['id'], 'header[id]='.$id, xarServer::getCurrentURL())
+				</xar:set>
+			<xar:else />
+				<xar:if condition="strstr(xarServer::getCurrentURL(),'?')">
+					<xar:set name="start">xarServer::getCurrentURL().'&#38;'</xar:set>
+				<xar:else/>
+					<xar:set name="start">xarServer::getCurrentURL().'?'</xar:set>
+				</xar:if>
+				<xar:set name="newurl">$start . 'header[id]='.$id</xar:set>
+			</xar:if>
+
+                        <a href="#$newurl#">#$loop:item['title']# #$loop:item['thread_text']#</a>
+
                     </xar:if>
                 </span>
 
