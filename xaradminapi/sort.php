@@ -27,11 +27,6 @@ function comments_adminapi_sort($args)
 
 	if(!xarVarFetch($url_sortfield,     'isset', $sortfield,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch($url_ascdesc, 'isset', $ascdesc, NULL, XARVAR_NOT_REQUIRED)) {return;}
-
-	if (!isset($sortfield) && !isset($ascdesc)) {
-		$sortfield = xarModVars::get('comments', 'adminsortby');
-		$ascdesc = xarModVars::get('comments', 'adminorder');
-	}
 	
 	if (!isset($sort)) {
 		if (!isset($sortfield)) {
