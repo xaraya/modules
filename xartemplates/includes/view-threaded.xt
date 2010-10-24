@@ -25,8 +25,8 @@
                           <a href=""> #$loop:item['title']# </a>
                       </xar:if>
                     <xar:else />
-                        <a href="">
-                            #$loop:item['title']# #$loop:item['thread_text']#
+                        <a href="#xarServer::getCurrentURL()#?header[id]=#$loop:item['id']###comment#$loop:item['id']#">
+                               #$loop:item['title']# #$loop:item['thread_text']#
                         </a>
                     </xar:if>
                 </span>
@@ -108,7 +108,12 @@
                           <a href=""> #$loop:item['title']# </a>
                       </xar:if>
                     <xar:else />
-                        <a href=""> #$loop:item['title']# #$loop:item['thread_text']#</a>
+		       <xar:if condition="strstr(xarServer::getCurrentURL(),'?')">
+				<xar:set name="start">xarServer::getCurrentURL().'&#38;'</xar:set>
+		       <xar:else/>
+				<xar:set name="start">xarServer::getCurrentURL().'?'</xar:set>
+		       </xar:if>
+                        <a href="#$start#header[id]=#$loop:item['id']#">#$loop:item['title']# #$loop:item['thread_text']#</a>
                     </xar:if>
                 </span>
 
@@ -152,7 +157,7 @@
     <xar:comment> FIXME: nested if's don't seem right here </xar:comment>
                         <xar:if condition="isset($loop:item['branchout']) and $loop:item['branchout'] eq 1">
                             <br />
-                            <a href=""> #$loop:item['nested_text']# </a>&#160;
+                            <a href=""> #$loop:item['nested_text']#</a>&#160;
                         </xar:if>
                     </xar:if>
                     <!-- show changelog -->
