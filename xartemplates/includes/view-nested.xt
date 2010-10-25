@@ -8,9 +8,9 @@
             <xar:template file="action_buttons"/>
         
             <xar:if condition="isset($package['transformed-title'])">
-                <h4>#$package['transformed-title']#</h4>
+                <h4>#$package['transformed-title']#</h4><a name="comment#$loop:item['id']#" class="anchor">&#160;</a>
             <xar:else />
-                <h4>#$loop:item['title']#</h4>
+                <h4>#$loop:item['title']#</h4><a name="comment#$loop:item['id']#" class="anchor">&#160;</a>
             </xar:if>
             <!-- show changelog -->
             <xar:sec mask="ModerateComments" catch="false">
@@ -57,14 +57,14 @@
             <xar:if condition="isset($package['transformed-text'])">
                 #$package['transformed-text']#
                 <p>
-                    <a href="#xarModURL('comments','user','display',array('id' => $loop:item['id']))#" title="#xarML('objecturl')#" rel="bookmark">
+                    <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('objecturl')#" rel="bookmark">
                         #
                     </a>
                 </p>
                 <xar:else />
                 #$loop:item['text']#
                 <p>
-                    <a href="#xarModURL('comments','user','display',array('id' => $loop:item['id']))#" title="#xarML('objecturl')#" rel="bookmark">
+                    <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('objecturl')#" rel="bookmark">
                         #
                     </a>
                 </p>

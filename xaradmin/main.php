@@ -20,7 +20,7 @@ function comments_admin_main()
         return;
     }
     // we only really need to show the default view (stats in this case)
-    xarResponse::redirect(xarModURL('comments', 'admin', 'stats'));
+    xarResponse::redirect(xarModURL('comments', 'admin', 'view'));
     // success
     return true;
 }
