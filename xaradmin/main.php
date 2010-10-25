@@ -1,19 +1,26 @@
 <?php
 /**
- * Main admin GUI function, entry point
- *
+ * Main admin function, entry point
+ * @package ckeditor
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+
+ * @subpackage CKEditor Module
+ * @link http://www.xaraya.com/index.php/release/eid/
+ * @author Marc Lutolf <mfl@netspan.ch> and Ryan Walker <ryan@webcommunicate.net>
  */
 
-    function ckeditor_admin_main()
-    {
-        if(!xarSecurityCheck('AdminCKEditor')) return;
+function ckeditor_admin_main() {
 
-        if (xarModVars::get('modules', 'disableoverview') == 0) {
-            xarResponse::Redirect(xarModURL('ckeditor', 'admin', 'overview'));
-        } else {
-            xarResponse::Redirect(xarModURL('ckeditor', 'admin', 'modifyconfig'));
-        }
-        // success
-        return true;
-    }
+	if(!xarSecurityCheck('AdminCKEditor')) return;
+
+	if (xarModVars::get('modules', 'disableoverview') == 0) {
+		xarResponse::Redirect(xarModURL('ckeditor', 'admin', 'overview'));
+	} else {
+		xarResponse::Redirect(xarModURL('ckeditor', 'admin', 'modifyconfig'));
+	}
+	// success
+	return true;
+}
 ?>
