@@ -13,7 +13,7 @@
  * Utilizes JavaScript based WYSIWYG Editor, CKEditor
  *
  * @author M. Lutolf (mfl@netspan.ch)
- * @package ckeditor
+ * @package modules
  */
 sys::import('modules.base.xarproperties.textarea');
 
