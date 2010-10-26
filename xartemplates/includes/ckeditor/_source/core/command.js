@@ -1,17 +1,19 @@
 ﻿/*
-Copyright (c) 2003-2009, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 CKEDITOR.command = function( editor, commandDefinition )
 {
+	this.uiItems = [];
+
 	this.exec = function( data )
 	{
 		if ( this.state == CKEDITOR.TRISTATE_DISABLED )
 			return false;
 
-		// The editor will always have the focus when executing a command.
-		editor.focus();
+		if ( this.editorFocus )     // Give editor focus if necessary (#4355).
+			editor.focus();
 
 		return ( commandDefinition.exec.call( this, editor, data ) !== false );
 	};
@@ -20,6 +22,7 @@ CKEDITOR.command = function( editor, commandDefinition )
 		// Defaults
 		{
 			modes : { wysiwyg : 1 },
+			editorFocus : true,
 			state : CKEDITOR.TRISTATE_OFF
 		});
 

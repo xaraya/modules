@@ -25,4 +25,4 @@ CKEDITOR.config.toolbar_Full =
 
 /******** Plugins *********/
 
-//CKEDITOR.plugins.load('pgrfilemanager');
+CKEDITOR.plugins.load('pgrfilemanager');
