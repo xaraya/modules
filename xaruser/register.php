@@ -224,7 +224,7 @@ function registration_user_register()
             if (!xarSecConfirmAuthKey()) 
                 return xarTplModule('privileges', 'user', 'errors', array('layout' => 'bad_author'));
 
-            $fieldvalues = xarSessionGetVar('Registration.UserInfo');
+            $fieldvalues = xarSession::getVar('Registration.UserInfo');
 
             $object = DataObjectMaster::getObject(array('name' => $regobjectname));
             if(empty($object)) return;
