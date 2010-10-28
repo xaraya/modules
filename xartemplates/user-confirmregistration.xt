@@ -4,6 +4,9 @@
     <div class="xar-mod-head"><span class="xar-mod-title">
         Create User Account</span>
     </div>
+
+    <xar:set name="dummy">var_dump(xarSession::getVar('Registration.UserInfo'))</xar:set>
+
     <div class="xar-mod-body">
         <form action="&xar-modurl-registration-user-register;" method="post" enctype="application/x-www-form-urlencoded">
             <xar:data-display object="$object"/>
