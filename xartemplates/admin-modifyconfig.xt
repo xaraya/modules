@@ -35,7 +35,7 @@
             </xar:if>
             <dd class="#$class#">
                 <a href="#xarModURL('publications', 'admin', 'modifyconfig', array('tab' => 'pubtypes'))#">
-                Punlication Types</a>
+                Publication Types</a>
             </dd>
         </dl>
 
