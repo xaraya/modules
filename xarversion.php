@@ -3,7 +3,7 @@
  * Dynamic Data Example Module - documented module template
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -27,4 +27,11 @@ $modversion['admin']        = true;
 $modversion['user']         = true;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
+$modversion['dependencyinfo'] = array(
+                                    0 => array(
+                                            'name' => 'Xaraya Core',
+                                            'version_ge' => '2.1.0',
+                                            'version_le' => '2.1.99',
+                                         ),
+                                      );
 ?>
