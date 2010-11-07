@@ -28,4 +28,11 @@ $modversion['user']           = 0;
 $modversion['securityschema'] = array('xarCacheManager::' => '::');
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Miscellaneous';
+$modversion['dependencyinfo'] = array(
+                                    0 => array(
+                                            'name' => 'Xaraya Core',
+                                            'version_ge' => '2.1.0',
+                                            'version_le' => '2.1.99',
+                                         ),
+                                      );
 ?>
