@@ -36,6 +36,11 @@ $modversion['category']     = 'Content';
 // this module depends on the categories module
 $modversion['dependency']   = array(147);
 $modversion['dependencyinfo'] = array(
+                                    0 => array(
+                                            'name' => 'Xaraya Core',
+                                            'version_ge' => '2.1.0',
+                                            'version_le' => '2.1.99',
+                                         ),
                                       147 => 'categories',
                                      );
 ?>
