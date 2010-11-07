@@ -5,7 +5,7 @@
  * Categories System
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @copyright (C) 2002-2010 by the Xaraya Development Team.
  * @link http://www.xaraya.com
  *
  * @subpackage categories module
@@ -32,7 +32,8 @@
 $modversion['dependencyinfo'] = array(
                                     0 => array(
                                             'name' => 'Xaraya Core',
-                                            'version_ge' => '2.1.0'
+                                            'version_ge' => '2.1.0',
+                                            'version_le' => '2.1.99',
                                          ),
                                       );
 ?>
