@@ -16,4 +16,11 @@ $modversion['user'] = true;
 $modversion['securityschema'] = array('translations::' => 'Locale string:Backend name:Module name');
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
+$modversion['dependencyinfo'] = array(
+                                    0 => array(
+                                            'name' => 'Xaraya Core',
+                                            'version_ge' => '2.1.0',
+                                            'version_le' => '2.1.99',
+                                         ),
+                                      );
 ?>
