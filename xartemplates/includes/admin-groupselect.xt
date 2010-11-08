@@ -21,7 +21,7 @@
                 <li style="float:left;background:none;">
                     can send to members of:
                     <br />
-                    <xar:data-input type="grouplist" name="childgroups" value="$selectedGroups" size="4"/>
+                    <xar:data-input type="grouplist" name="childgroups" value="$selectedGroups" size="5"/>
                     <input type="hidden" name="childgroupsimploded" id="childgroupsimploded"/>
                 </li>
                 <li style="float:left;background:none;padding-top: 10px;">
@@ -37,7 +37,7 @@
                 </li>
                 <li style="float:left;background:none;padding-top: 10px;">
                    <!-- <xar:data-input type="grouplist" name="childgroupsselect" id="childgroupsselect"/>-->
-                    <xar:data-input type="grouplist" name="childgroupsselect"/>
+                    <xar:data-input type="grouplist" name="childgroupsselect" size="5"/>
                 </li>
             </ul>
         </div>       
