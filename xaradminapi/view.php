@@ -24,7 +24,7 @@ function messages_adminapi_view( $args )
 
     // The itemtype is a must!
     if (empty( $itemtype) ) {
-        xarResponse::redirect(
+        xarController::redirect(
             xarModURL('messages', 'user', 'main' ));
     }
 

@@ -16,6 +16,11 @@
         if($phase == 'Update Messages Configuration'){
             $phase = 'update';
         }
+
+        $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'messages'));
+        $data['module_settings']->setFieldList('items_per_page, use_module_alias, enable_short_urls');
+        $data['module_settings']->getItem();
+
         switch (strtolower($phase)) {
             case 'modify':
             default:
@@ -37,21 +42,18 @@
                 if (!xarSecConfirmAuthKey()) return;
                 switch ($data['tab']) {
                     case 'general':
-                        if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('messages', 'itemsperpage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-                        if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-                        if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('messages', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
-                        if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('messages', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
                         if (!xarVarFetch('awaymsg', 'checkbox', $awaymsg,  xarModVars::get('messages', 'awaymsg'), XARVAR_NOT_REQUIRED)) return;
                         if (!xarVarFetch('drafts', 'checkbox', $drafts,  xarModVars::get('messages', 'drafts'), XARVAR_NOT_REQUIRED)) return;
 
-                        xarModVars::set('messages', 'itemsperpage', $itemsperpage);
-                        xarModVars::set('messages', 'SupportShortURLs', $shorturls);
-                        xarModVars::set('messages', 'useModuleAlias', $useModuleAlias);
-                        xarModVars::set('messages', 'aliasname', $aliasname);
                         xarModVars::set('messages', 'awaymsg', $awaymsg);
                         xarModVars::set('messages', 'drafts', $drafts);
-                        xarModVars::set('messages', 'awaymsg', $awaymsg);
-                        xarModVars::set('messages', 'drafts', $drafts);
+
+                        $isvalid = $data['module_settings']->checkInput();
+                        if (!$isvalid) {
+                            return xarTplModule('messages','admin','modifyconfig', $data);
+                        } else {
+                            $itemid = $data['module_settings']->updateItem();
+                        }
 
                         //Psspl:Modifided the code for allowedsend to selected group configuration.
                         if (!xarVarFetch('childgroupsimploded',  'str',    $childgroupsimploded, 0, XARVAR_NOT_REQUIRED)) return;   
@@ -66,7 +68,7 @@
                         break;
                 }
 
-                //xarResponse::redirect(xarModURL('messages', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+                //xarController::redirect(xarModURL('messages', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
                 // Return
                 //return true;
                 //break;

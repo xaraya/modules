@@ -64,7 +64,7 @@ function messages_init()
     if (!$result) return;
 
     xarModVars::set('messages', 'buddylist', 0);
-    xarModVars::set('messages', 'itemsperpage', 10);
+    xarModVars::set('messages', 'items_per_page', 10);
     xarModVars::set('messages', 'limitsaved', 12);
     xarModVars::set('messages', 'limitout', 10);
     xarModVars::set('messages', 'limitinbox', 10);
@@ -76,7 +76,7 @@ function messages_init()
     xarModVars::set('messages', 'from', 'Webmaster@YourSite.com');
     xarModVars::set('messages', 'inboxurl', 'http://www.yoursite.com/index.php?module=messages&type=user&func=display');
     xarModVars::set('messages', 'serverpath', '/home/yourdir/public_html/modules/messages');
-    xarModVars::set('messages', 'SupportShortURLs', false );
+    xarModVars::set('messages', 'enable_short_urls', false );
     xarModVars::set('messages', 'awaymsg', true );
     xarModVars::set('messages', 'drafts', true );
     xarModVars::set('messages', 'allowedSendMessages', serialize(array()));

@@ -120,7 +120,7 @@ function messages_user_modify( $args )
             }
             $id = $data['object']->updateItem();
 
-            xarResponse::redirect(xarModURL('messages','user','view',array('folder' => xarSession::getVar('messages_currentfolder'))));
+            xarController::redirect(xarModURL('messages','user','view',array('folder' => xarSession::getVar('messages_currentfolder'))));
             return true;
             break;
 

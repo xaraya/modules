@@ -68,7 +68,7 @@ function messages_user_delete()
 
             $data['object']->updateItem();
 
-            xarResponse::redirect(xarModURL('messages','user','view',array('folder' => $folder)));
+            xarController::redirect(xarModURL('messages','user','view',array('folder' => $folder)));
             break;
 
         case "check":
