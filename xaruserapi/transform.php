@@ -26,7 +26,6 @@ function path_userapi_transform($args){
 	extract($args);
 
 	if (strstr($subj,'pathURL:')) {
-		 
 		$trans = preg_replace_callback('/pathURL:(\w+):(\d+)/i',
 			create_function(
 				   '$matches',

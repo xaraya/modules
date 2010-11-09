@@ -37,8 +37,8 @@ function path_userapi_itemurl($args){
 		$display = 'display';
 		extract($args);
 		return xarModURL($module,'user',$display,array($id=>$itemid));
-	}
-	    
+	} 
+
 	try {
         $BaseModURL = xarSystemVars::get(sys::LAYOUT, 'BaseModURL');
     } catch(Exception $e) {

@@ -32,7 +32,7 @@ function path_userapi_checkaction($args) {
 	$items = $mylist->getItems($filters);
 	if(count($items) == 0) {
 		return false;
-	} elseif (count($items) == 1) {
+	} elseif (count($items) == 1) { 
 		$item = end($items);
 		$arr = array($item['itemid'] => $item['path']);
 		return $arr;
