@@ -16,7 +16,7 @@ sys::import('modules.messages.xarincludes.defines');
 
 function messages_user_main()
 {
-    xarController::redirect(xarModURL('messages','user','view'));
+    xarResponse::redirect(xarModURL('messages','user','view'));
     return;
 
 }

@@ -68,7 +68,7 @@
                         break;
                 }
 
-                //xarController::redirect(xarModURL('messages', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+                //xarResponse::redirect(xarModURL('messages', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
                 // Return
                 //return true;
                 //break;
