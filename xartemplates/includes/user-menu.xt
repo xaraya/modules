@@ -21,7 +21,7 @@
         </xar:if>
         <li class="#$tabclass#">
           <a href="#xarModURL('messages','user','view')#">
-            <xar:mlstring>Inbox</xar:mlstring>&#160;(&#160;<xar:if condition="$unread eq 0">#$unread#<xar:else/><span class="xar-messages-tab-unread">#$unread#</span></xar:if>&#160;/&#160;#$total#&#160;)
+            Inbox&#160;(&#160;<xar:if condition="$unread eq 0">#$unread#<xar:else/><span class="xar-messages-tab-unread">#$unread#</span></xar:if>&#160;/&#160;#$total#&#160;)
           </a>
         </li>
         <xar:if condition="($activetab eq 'view' or $activetab eq 'viewsent') and (empty($folder) or $folder eq 'sent')">
@@ -31,7 +31,7 @@
         </xar:if>
         <li class="#$tabclass#">
           <a href="#xarModURL('messages','user','view',array('folder'=>'sent'))#">
-            <xar:mlstring>Sent</xar:mlstring> &#160;(&#160;#$sent#&#160;)
+            Sent &#160;(&#160;#$sent#&#160;)
           </a>
         </li>
         <xar:if condition="xarModVars::get('messages','drafts') eq 1">
@@ -42,7 +42,7 @@
             </xar:if>
             <li class="#$tabclass#">
               <a href="#xarModURL('messages','user','view',array('folder'=>'drafts'))#">
-                <xar:mlstring>Drafts</xar:mlstring> &#160;(&#160;#$drafts#&#160;)
+                Drafts &#160;(&#160;#$drafts#&#160;)
               </a>
             </li>
         </xar:if>
@@ -53,7 +53,7 @@
         <xar:set name="tabclass">$activetab=='new'?'xar-tab-active':'xar-tab'</xar:set>
         <li class="#$tabclass#">
           <a href="#xarModURL('messages','user','new', array('action'=>'post'))#">
-            <xar:mlstring>New Message</xar:mlstring>
+            New Message
           </a>
         </li>
     </xar:sec>
@@ -63,7 +63,7 @@
             <xar:set name="tabclass">$activetab=='new'?'xar-tab-active':'xar-tab'</xar:set>
             <li class="#$tabclass#">
             <a href="#xarModURL('messages','user','new')#">
-                <xar:mlstring>No Message Tab</xar:mlstring>
+                No Message Tab
             </a>
             </li>
         </xar:sec>

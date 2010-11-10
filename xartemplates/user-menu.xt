@@ -4,13 +4,13 @@
 
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>Messages</xar:mlstring>
+            Messages
         </span>
     </div>
 
     <div class="xar-mod-body">
         <h2>
-            <xar:mlstring>Messages Menu</xar:mlstring>
+            Messages Menu
         </h2>
         <div align="center">
 
@@ -19,7 +19,7 @@
 <xar:else />
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>Messages</xar:mlstring>
+            Messages
         </span>
     </div>
     <br />

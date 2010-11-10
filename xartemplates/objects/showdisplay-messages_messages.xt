@@ -33,12 +33,12 @@
         </xar:set>
     </xar:if>
     <xar:comment>
-    <!-- <xar:mlstring>Message-Posting-Host:</xar:mlstring> #$message['posting-host']# -->
+    <!-- Message-Posting-Host: #$message['posting-host']# -->
     </xar:comment>
 
     <div class="xar-form-input-wrapper">
         <span class="xar-form-label">
-            <xar:mlstring>From:</xar:mlstring>
+            From:
         </span>
         <xar:comment>Psspl:Modifided the code for anonymous message</xar:comment>
         <xar:if condition="!$postanon AND $is_sendtouser">
@@ -46,46 +46,46 @@
                 #xarUserGetVar('name',$author)#
             </a>
         <xar:else/>
-            <xar:mlstring>Anonymous</xar:mlstring>
+            Anonymous
         </xar:if>
     </div>
 
     <div class="xar-form-input-wrapper">
         <span class="xar-form-label">
-            <xar:mlstring>To:</xar:mlstring>
+            To:
         </span>
         <xar:if condition="$action eq 'reply' OR  $action eq 'modify'">
             <xar:if condition="xarSession::getVar('role_id') eq $recipient">
                 #xarUserGetVar('name',$recipient)#
             <xar:else/>
                 <xar:if condition="isset($previousanon) AND $previousanon">
-                    <xar:mlstring>Anonymous</xar:mlstring>
+                    Anonymous
                     <xar:data-input property="$properties['to']" hidden="hidden"/>
                 <xar:elseif condition="$is_sendtouser"/>
                     #xarUserGetVar('name',$recipient)#
                 <xar:else/>
-                    <xar:mlstring>Anonymous</xar:mlstring>
+                    Anonymous
                 </xar:if>
             </xar:if>
         <xar:else/>
             <xar:if condition="$is_sendtouser">
                 #xarUserGetVar('name',$recipient)#
             <xar:else/>
-                <xar:mlstring>Anonymous</xar:mlstring>
+                Anonymous
             </xar:if>
         </xar:if>
     </div>
 
     <div class="xar-form-input-wrapper">
         <span class="xar-form-label">
-            <xar:mlstring>Date:</xar:mlstring>
+            Date:
         </span>
         <xar:data-output property="$properties['time']"/>
     </div>
 
     <div class="xar-form-input-wrapper">
         <span class="xar-form-label">
-            <xar:mlstring>Subject:</xar:mlstring>
+            Subject:
         </span>
         <xar:data-output property="$properties['subject']"/>
     </div>

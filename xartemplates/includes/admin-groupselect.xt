@@ -5,12 +5,12 @@
     <xar:javascript filename="joomla.javascript.js" module="messages" position="head"/>
     <xar:javascript position="body" type="code" code="sortDropDown('group');document.getElementById('Refresh').click();"/>
     <fieldset>
-          <legend><xar:mlstring>Message Send Lists</xar:mlstring></legend>
+          <legend>Message Send Lists</legend>
           <!--Psspl:Added the code for selecting group configuration for allowedsendGroup-->
            <!--Psspl:call the groupmulti select-->
             <div class="xar-form-input-wrapper" style="padding-bottom: 10px;">
             <label for="group" title="#xarML('Manage the members of this group')#" class="xar-form-label">
-                <xar:mlstring>Members of this group:</xar:mlstring>
+                Members of this group:
             </label>
             <xar:data-input type="grouplist" name="group" value="$group" onchange="javascript:submit();"/>
             &#160;

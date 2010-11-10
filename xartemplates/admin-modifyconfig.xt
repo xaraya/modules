@@ -8,15 +8,13 @@
         <xar:if condition="xarModVars::get('messages','useModuleAlias')">
             <xar:var scope="module" module="messages" name="aliasname"/>
         <xar:else />
-            <xar:mlstring>Messages Administration</xar:mlstring>
+            Messages Administration
         </xar:if>
     </span>
 </div>
 <div class="xar-mod-body">
     <h2>
-        <xar:mlstring>
-            Modify Configuration
-        </xar:mlstring>
+        Modify Configuration
     </h2>
     <div>
         <ul class="xar-tabs xar-alt xar-norm-outline">
@@ -41,28 +39,22 @@
     <xar:if condition="$tab eq 'general'">
         <form method="post" action="&xar-modurl-messages-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
             <h3>
-                <xar:mlstring>
-                    General Options
-                </xar:mlstring>
+                General Options
             </h3>
             <xar:data-form object="$module_settings"/>
             <fieldset>
             <legend>Display Options</legend>
                 <div class="xar-form-input-wrapper">
                 <xar:set name="checked">xarModVars::get('messages','awaymsg')</xar:set>
-                    <label for = "awaymsg" class="xar-form-label" title="#xarML('Do not allow an Away Message')#">
-                        <xar:mlstring>
-                            Enable Away Message
-                        </xar:mlstring>
+                    <label for = "awaymsg" class="xar-form-label" title="#xarML('Do not allow an Away Message')#">                        
+                        Enable Away Message
                     </label>
                     <xar:data-input type="checkbox" name="awaymsg" id="awaymsg" checked="$checked"/>
                 </div>
                 <div class="xar-form-input-wrapper">
                 <xar:set name="checked">xarModVars::get('messages','drafts')</xar:set>
                     <label for = "drafts" class="xar-form-label" title="#xarML('Do not allow an Away Message')#">
-                        <xar:mlstring>
-                            Enable Drafts
-                        </xar:mlstring>
+                        Enable Drafts
                     </label>
                     <xar:data-input type="checkbox" name="drafts" id="drafts" checked="$checked"/>
                 </div>

@@ -15,7 +15,7 @@
     <xar:else />
         <div class="xar-form-input-wrapper">
             <label for="refmsgid" class="xar-form-label help" title="#xarML('Message relationship hiearchy.')#">
-                <xar:mlstring>In relation to</xar:mlstring>
+                In relation to
             </label>
             <select name="#$name#_refmsgid" id="#$name#_refmsgid">
                 <xar:for start="$i = 0" test="$i lt count($messages)" iter="$i++">
@@ -34,7 +34,7 @@
         <!-->The position needs to be set after messages select because There is no position which we can have a selected message that will work in all cases-->
         <div class="xar-form-input-wrapper">
             <label for="#$name#_position" class="xar-form-label help" title="#xarML('Position of this message.')#">
-                <xar:mlstring>Position</xar:mlstring>
+                Position
             </label>
             <xar:set name="options">
                 array(

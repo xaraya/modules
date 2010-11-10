@@ -40,17 +40,17 @@
             <xar:if condition="isset($previousanon) AND $previousanon eq 0 AND $is_sendtouser">
                 #xarUserGetVar('name',$recipient)#      
             <xar:else/>
-                <xar:mlstring>Anonymous</xar:mlstring>
+                Anonymous
             </xar:if>
             <xar:data-input property="$properties['to']" hidden="hidden"/>
         <xar:elseif condition="$action eq 'modify'"/>
             <xar:if condition="isset($previousanon) AND $previousanon">
-                <xar:mlstring>Anonymous</xar:mlstring>
+                Anonymous
                 <xar:data-input property="$properties['to']" hidden="hidden"/>
             <xar:elseif condition="$is_sendtouser"/>
                 <xar:data-input property="$properties['to']"/>
             <xar:else/>
-                <xar:mlstring>Anonymous</xar:mlstring>
+                Anonymous
                 <xar:data-input property="$properties['to']" hidden="hidden"/>
             </xar:if>   
         <xar:else/>

@@ -2,7 +2,7 @@
     <xar:style scope="module" module="messages" file="messages"/>
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>Away Message</xar:mlstring>
+            Away Message
         </span>
     </div>
     <!--Psspl:Modifided the code for adding return action -->

@@ -1,26 +1,26 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:style scope="module" module="messages" file="messages"/>
     <div class="xar-mod-head">
-        <span class="xar-mod-title"><xar:mlstring>Private Messages</xar:mlstring></span>
+        <span class="xar-mod-title">Private Messages</span>
     </div>
     <div class="xar-mod-body">
         <xar:comment>Psspl: Added the code for configuring NewMessages tab</xar:comment>
         <xar:template type="module" file="user-menu"/>
 
-        <h2><xar:mlstring>View Message</xar:mlstring></h2>
+        <h2>View Message</h2>
 
         <xar:data-display object="$object" tplmodule="messages" action="$action" folder="$folder"/>
         <div class="xar-margin-thicktop">
             <xar:if condition="xarSecurityCheck('AddMessages', 0)">
-                <a href="#xarModURL('messages','user','reply',array('id' => $object->properties['id']->value, 'folder' => $folder))#" title="#xarML('Delete Message')#"><xar:mlstring>Reply</xar:mlstring></a>
+                <a href="#xarModURL('messages','user','reply',array('id' => $object->properties['id']->value, 'folder' => $folder))#" title="#xarML('Delete Message')#">Reply</a>
             <xar:else/>
-                <xar:mlstring>Reply</xar:mlstring>
+                Reply
             </xar:if>
              | 
             <xar:if condition="xarSecurityCheck('ManageMessages', 0)">
-                <a href="#xarModURL('messages','user','delete',array('id' => $object->properties['id']->value, 'folder' => $folder))#" title="#xarML('Delete Message')#"><xar:mlstring>Delete</xar:mlstring></a>
+                <a href="#xarModURL('messages','user','delete',array('id' => $object->properties['id']->value, 'folder' => $folder))#" title="#xarML('Delete Message')#">Delete</a>
             <xar:else/>
-                <xar:mlstring>Delete</xar:mlstring>
+                Delete
             </xar:if>
         </div>
     </div>

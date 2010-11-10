@@ -1,47 +1,47 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Messages Administration</xar:mlstring></span>
+    <span class="xar-mod-title">Messages Administration</span>
 </div>
 <div class="xar-mod-body">
   <!-- include a standard tabbed admin menu via include file in the xartemplates/include folder -->
   <xar:template type="module" file="admin-menu"/>
   <img src="#xarTplGetImage('xaraya_logo.gif','messages')#" class="xar-module-icon" alt="official icon"   />
 
-  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+  <h2>Overview</h2>
 
   <h3>
-      <xar:mlstring>What is it?</xar:mlstring>
+      What is it?
   </h3>
   <p>
-      <xar:mlstring>The Messages module gives your users a way to send messages to another users inbox.</xar:mlstring>
+      The Messages module gives your users a way to send messages to another users inbox.
   </p>
   <h3>
-      <xar:mlstring>How to use it?</xar:mlstring>
+      How to use it?
   </h3>
       <p>
-            <xar:mlstring>You must be logged into the site before you can send messages. Select Messages from the user menu and select a user from the drop down list to send your message too. Compose your message and select the send button.</xar:mlstring>
-            <xar:mlstring>From the Admin menu you can specify the support of short urls for the messages module.</xar:mlstring>
+            You must be logged into the site before you can send messages. Select Messages from the user menu and select a user from the drop down list to send your message too. Compose your message and select the send button.
+            From the Admin menu you can specify the support of short urls for the messages module.
       </p>
-  <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+  <h3>Included Blocks</h3>
         <p>
-            <xar:mlstring>The Messages Module has one block included at this time.</xar:mlstring>
+            The Messages Module has one block included at this time.
             <ul>
             <li>
-            <xar:mlstring><strong>newmessages :</strong> Displays a block that lists any new unread messages for the user with a link to the view messages page.</xar:mlstring>
+            <strong>newmessages :</strong> Displays a block that lists any new unread messages for the user with a link to the view messages page.
             </li>
             </ul>
         </p>
   <h3>
-    <xar:mlstring>Further Information</xar:mlstring>
+    Further Information
   </h3>
   <p>
-    <xar:mlstring>Further information on the Messages module can be found at</xar:mlstring>
+    Further information on the Messages module can be found at
   </p>
   <ul>
-    <li><xar:mlstring>Messages Extension page at</xar:mlstring> <a title="#xarML('Messages Module - Xaraya Extension 6')#" href="http://www.xaraya.com/index.php/release/6.html">Xaraya Extension and Releases</a>.
-      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    <li>Messages Extension page at <a title="#xarML('Messages Module - Xaraya Extension 6')#" href="http://www.xaraya.com/index.php/release/6.html">Xaraya Extension and Releases</a>.
+       Click on Version History tab at the bottom to get the latest release information.
     </li>
-    <li><xar:mlstring>Related tutorials and documentation on Messages found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/messages/" title="#xarML('Related documentation on Messages')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    <li>Related tutorials and documentation on Messages found at <a href="http://www.xaraya.com/index.php/keywords/messages/" title="#xarML('Related documentation on Messages')#">Xaraya Documentation.</a>
     </li>
   </ul>
 

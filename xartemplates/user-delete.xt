@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="messages" file="messages"/>
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Private Messages</xar:mlstring></span>
+    <span class="xar-mod-title">Private Messages</span>
 </div>
 <div class="xar-mod-body">
     <xar:comment>Psspl: Added the code for configuring NewMessages tab</xar:comment>
@@ -9,7 +9,7 @@
 
     <h2>
         <xar:if condition="!isset($folder)">
-            <xar:mlstring>Delete Message</xar:mlstring>
+            Delete Message
         <xar:else />
             <xar:set name="displayfolder">xarML(ucfirst($folder))</xar:set>
             <xar:ml>
@@ -28,7 +28,7 @@
     <xar:else />
         <div class="xar-mod-head">
             <span class="xar-mod-title">
-                <xar:mlstring>Messages</xar:mlstring>
+                Messages
             </span>
         </div>
 

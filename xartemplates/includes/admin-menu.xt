@@ -9,20 +9,20 @@
 <div>
   <dl class="xar-tabs">
     <dt class="help" title="Choose an action to perform">
-      <xar:mlstring>Actions:</xar:mlstring>
+      Actions:
     </dt>
     <xar:sec mask="AdminMessages" catch="false">
         <xar:set name="tabclass">$activetab=='config'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-messages-admin-config;">
-            <xar:mlstring>Modify Config</xar:mlstring>
+            Modify Config
           </a>
         </dd>
     </xar:sec>
     <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
     <dd class="#$tabclass#">
       <a href="&xar-modurl-messages-admin-overview;">
-        <xar:mlstring>Overview</xar:mlstring>
+        Overview
       </a>
     </dd>
   </dl>
