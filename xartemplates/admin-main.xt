@@ -6,7 +6,7 @@
     </div>
     <div class="xar-mod-body">
         <xar:template type="module" file="admintabs"/>
-       <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon"/>
+
         <h2>
             <xar:mlstring>Overview</xar:mlstring>
         </h2>
@@ -52,9 +52,6 @@
                   <li><xar:mlstring>Related tutorials and documentation on Comments Module found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/comments/" title="#xarML('Related documentation on Comments')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
                   </li>
              </ul>
-             <p class="xar-sub">
-                 <strong>&#160;<xar:mlstring>Comments Module Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 1.0.2&#160; 2006-03-26
-             </p>
 
     </div>
 </xar:template>
