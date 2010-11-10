@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <xar:style scope="module" module="comments" file="comments" />
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">Comments Administration</span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admintabs" />
+        <h2>Modify Default Configuration</h2>
+
+
+        <form method="post" action="#xarServer::getCurrentURL()#">
+            <fieldset>
+                <legend>Modify content Configuration</legend>
+                <div id="mod_settings">
+		<h4>General:</h4>
+                <xar:data-form object="$module_settings" />
+                </div>
+		<xar:data-form object="$object" itemid="0" template="module_settings" />
+            </fieldset>
+
+            <div class="xar-form-input-after">
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                <xar:data-input type="hidden" name="phase" value="update" />
+                <input type="hidden" name="objectid" value="#$object->objectid#" />
+                <input type="hidden" name="itemid" value="0" />
+                <input type="hidden" name="return_url" value="#xarServer::getCurrentURL()#" />
+                <xar:var name="label">Update</xar:var>
+                <xar:button type="submit" label="$label" />
+            </div>
+        </form>
+ 
+    </div>
+</xar:template>

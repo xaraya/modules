@@ -1,0 +1,27 @@
+1. Add 'TrackBack' functionality
+2. Finish up permissions layout
+3. Finish comment activation/deactivation scheme
+4. pagination
+5. Add collapseable/expandable threads -- do this in prune_excessdepth()
+6. Simplify the options-bar
+7. fix the author display on flat-view when user is posting anonymously
+8. Add the ability to dissallow specific users from posting anonymously
+
+
+
+
+
+
+
+
+
+
+
+
+Changes:
+
+Fixed 'Post As Anonymous' such that, if the admin turns off the 'Allow Anon Posting'
+option, all anonymous posts will not lose their anonymity. Prior to this fix, had the
+Administrator turned off the 'Allow Anonymous Posting' option, any post that had previously
+been set as 'Anonymous' would instead show the identity of the author. It will now only ever
+show the identity of the author to moderators and above.

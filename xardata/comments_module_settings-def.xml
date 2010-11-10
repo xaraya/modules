@@ -1,0 +1,135 @@
+<object name="comments_module_settings">
+  <objectid>409</objectid>
+  <label>Comments Module Settings</label>
+  <module_id>14</module_id>
+  <itemtype>2</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:0:{}</config>
+  <isalias>true</isalias>
+  <properties>
+    <property name="depth">
+      <id>2154</id>
+      <label>Default Rendering Depth</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: comments</source>
+      <status>33</status>
+      <seq>1</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:36:"1,1;2,2;3,3;4,4;5,5;6,6;7,7;8,8;9,9;";}</configuration>
+    </property>
+    <property name="render">
+      <id>2155</id>
+      <label>Default Rendering Style</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: comments</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:65:"nested,Nested;flat,Flat;threaded,Threaded;nocomments,No Comments;";}</configuration>
+    </property>
+    <property name="usersetrendering">
+      <id>2156</id>
+      <label>Allow users to set comment rendering style in their account?</label>
+      <type>checkbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: comments</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration></configuration>
+    </property>
+    <property name="sortby">
+      <id>2157</id>
+      <label>Default Sorting Mode</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: comments</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:33:"1,Author;2,Date;3,Thread;4,Title;";}</configuration>
+    </property>
+    <property name="order">
+      <id>2158</id>
+      <label>Default Sorting Order</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: comments</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:25:"1,Ascending;2,Descending;";}</configuration>
+    </property>
+    <property name="AllowPostAsAnon">
+      <id>2159</id>
+      <label>Allow anonymous posting</label>
+      <type>checkbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: comments</source>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration></configuration>
+    </property>
+    <property name="editstamp">
+      <id>2160</id>
+      <label>Use Comment Edit Stamp</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: comments</source>
+      <status>33</status>
+      <seq>7</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:39:"0,None;2,Yes;3,Yes - exclude for Admin;";}</configuration>
+    </property>
+    <property name="wrap">
+      <id>2161</id>
+      <label>Wrap Long Entries</label>
+      <type>checkbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: comments</source>
+      <status>33</status>
+      <seq>8</seq>
+      <configuration></configuration>
+    </property>
+    <property name="numstats">
+      <id>2162</id>
+      <label>Number of Items in Statistics</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: comments</source>
+      <status>33</status>
+      <seq>9</seq>
+      <configuration></configuration>
+    </property>
+    <property name="showtitle">
+      <id>2163</id>
+      <label>Show Title in Statistics</label>
+      <type>checkbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: comments</source>
+      <status>33</status>
+      <seq>10</seq>
+      <configuration></configuration>
+    </property>
+    <property name="enable_filters">
+      <id>2164</id>
+      <label>Enable Filters</label>
+      <type>checkbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: comments</source>
+      <status>33</status>
+      <seq>11</seq>
+      <configuration></configuration>
+    </property>
+    <property name="filters_min_item_count">
+      <id>2165</id>
+      <label>Show item filters once there are this many items</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: comments</source>
+      <status>33</status>
+      <seq>12</seq>
+      <configuration></configuration>
+    </property>
+
+  </properties>
+</object>
