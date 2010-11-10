@@ -24,7 +24,7 @@
            </h3>
             <p><xar:mlstring>Simply enable the comments hook to any content module, and on the display pages, comments will be available to be used.</xar:mlstring>
             </p>
-             <h3>
+        <!--      <h3>
                 <xar:mlstring>Included Blocks</xar:mlstring>
             </h3>
             <p>
@@ -32,7 +32,7 @@
                 recent comments made on your site. The number of comments, date of
                 comment, comments from which modules, comment author and other configuration
                 variables can be set.</xar:mlstring>
-            </p>
+            </p> -->
             <h3>
                 <xar:mlstring>Included Hooks</xar:mlstring>
         </h3>
