@@ -95,7 +95,7 @@
       <id>83</id>
       <label>Post Anonymously</label>
       <type>checkbox</type>
-      <defaultvalue>1</defaultvalue>
+      <defaultvalue>0</defaultvalue>
       <source>xar_messages.anonpost</source>
       <status>34</status>
       <seq>12</seq>

@@ -25,12 +25,15 @@
         <xar:data-input property="$properties['from']" hidden="$hidden"/>
 
         <!--Psspl:Modified the code for anonymous message-->
-        <xar:if condition="$action ne 'reply' OR ($action ne 'modify' AND !isset($previousanon)) AND $is_sendtouser">
-            <div class="xar-form-input-wrapper">
-                <xar:data-label property="$properties['postanon']" for="id" label="Post Anonymously"/>
-                <xar:data-input property="$properties['postanon']"/>
-            </div>
-        </xar:if>
+        <xar:if condition="xarModVars::get('messages', 'allowanonymous')">
+		<xar:if condition="$action ne 'reply' OR ($action ne 'modify' AND !isset($previousanon)) AND $is_sendtouser">
+		    <div class="xar-form-input-wrapper">
+			<xar:data-label property="$properties['postanon']" for="id" label="Post Anonymously"/>
+			<xar:data-input property="$properties['postanon']"/>
+		    </div>
+		</xar:if>
+	</xar:if>
+
     </div>
 
     <div class="xar-form-input-wrapper">
@@ -84,7 +87,7 @@
                 $properties['author_status']->value == MESSAGES_STATUS_DRAFT
             </xar:set>
             <xar:data-input type="checkbox" id="is_draft" name="is_draft" value="$is_draft"/>
-            <label for="is_draft" label="Post Anonymously">
+            <label for="is_draft" label="Save as draft">
                 Save as draft
             </label>
         </div>

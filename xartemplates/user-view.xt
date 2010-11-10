@@ -82,9 +82,9 @@
                         <th nowrap="nowrap" width="50%" align="left" style="border-bottom:1px solid grey;">
                             Subject
                         </th>
-                        <th class="xar-align-center xar-messages-mailboxlistattachment" style="border-bottom:1px solid grey;">
-                            <img src="#xarTplGetImage('attachment.png')#" style="width:16px;" alt="#xarML('Attachment')#" title="#xarML('Attachment')#"/>
-                        </th>
+                        <!-- <th class="xar-align-center xar-messages-mailboxlistattachment" style="border-bottom:1px solid grey;">
+                             <img src="#xarTplGetImage('attachment.png')#" style="width:16px;" alt="#xarML('Attachment')#" title="#xarML('Attachment')#"/>
+                        </th> -->
                         <th nowrap="nowrap" width="15%" align="left" style="border-bottom:1px solid grey;">
                             Date
                         </th>
@@ -154,9 +154,9 @@
                             <td class="#$rowclass# xar-align-left xar-messages-mailboxlistsubject">
                                 <a href="#xarModURL('messages','user','display',array('id' => $loop:item['id']))#">#xarVarPrepForDisplay($loop:item['subject'])#</a>
                             </td>
-                            <td class="#$rowclass# xar-align-center xar-messages-mailboxlistattachment">
+                            <!-- <td class="#$rowclass# xar-align-center xar-messages-mailboxlistattachment">
                                 <xar:comment> TODO: check for attachements </xar:comment>
-                            </td>
+                            </td> -->
                             <td class="#$rowclass# xar-align-left xar-nowrap xar-messages-mailboxlistdate">
                                 <xar:set name="rawdate">$loop->item['raw_date']</xar:set>
                            <!-- <xar:data-output type="formatteddatetime" value="$rawdate"/> -->

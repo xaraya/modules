@@ -43,10 +43,12 @@
                 switch ($data['tab']) {
                     case 'general':
                         if (!xarVarFetch('awaymsg', 'checkbox', $awaymsg,  xarModVars::get('messages', 'awaymsg'), XARVAR_NOT_REQUIRED)) return;
+						if (!xarVarFetch('allowanonymous', 'checkbox', $allowanonymous,  xarModVars::get('messages', 'allowanonymous'), XARVAR_NOT_REQUIRED)) return;
                         if (!xarVarFetch('drafts', 'checkbox', $drafts,  xarModVars::get('messages', 'drafts'), XARVAR_NOT_REQUIRED)) return;
 
                         xarModVars::set('messages', 'awaymsg', $awaymsg);
                         xarModVars::set('messages', 'drafts', $drafts);
+						xarModVars::set('messages', 'allowanonymous', $allowanonymous);
 
                         $isvalid = $data['module_settings']->checkInput();
                         if (!$isvalid) {

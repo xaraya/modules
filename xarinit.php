@@ -69,6 +69,7 @@ function messages_init()
     xarModVars::set('messages', 'limitout', 10);
     xarModVars::set('messages', 'limitinbox', 10);
     xarModVars::set('messages', 'smilies', false);
+	xarModVars::set('messages', 'allowanonymous', false);
     xarModVars::set('messages', 'allow_html', false);
     xarModVars::set('messages', 'allow_bbcode', false);
     xarModVars::set('messages', 'mailsubject', 'You have a new private message !');

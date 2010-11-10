@@ -31,7 +31,8 @@
     </xar:if>
     <h3>#$input_title#</h3>
     <form id="inputbox" action="#$post_url#" method="post" enctype="multipart/form-data">
-        <xar:if condition="$action eq 'reply'">
+        
+	<xar:if condition="$action eq 'reply'">
             <xar:set name="previousanon">
                 $previousobject->properties['postanon']->value
             </xar:set>
@@ -39,6 +40,7 @@
         <xar:else /> 
             <xar:data-form object="$object" tplmodule="messages" action="$action"/>
         </xar:if>
+
         <div class="xar-align-center xar-margin-thick">
             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
 
