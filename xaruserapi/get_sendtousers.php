@@ -22,10 +22,10 @@ sys::import('modules.messages.xarincludes.defines');
         $q->addfield('r.id');
         $q->addfield('r.name');
         $q->addfield('r.uname');
-        $q->eq('r.state', ROLES_STATE_ACTIVE);
+        $q->eq('r.state', xarRoles::ROLES_STATE_ACTIVE);
         $q->ne('r.email', '');
         $q->ne('r.name' , 'Myself');
-        $q->eq('r.itemtype' , ROLES_USERTYPE);//check for user
+        $q->eq('r.itemtype' , xarRoles::ROLES_USERTYPE);//check for user
             
         /*Psspl:get the selected groups only*/
         $user_c = array();
