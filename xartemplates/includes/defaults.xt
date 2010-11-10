@@ -12,6 +12,6 @@
             </xar:mlstring>
         </label>
         <xar:set name="value">xarModItemVars::get('ckeditor', 'bar', $regid)</xar:set>
-        <xar:data-input type="textbox" name="bar" value="$value" />
+        <xar:data-input type="textbox" name="bar" value="$value"/>
     </div>
 </xar:template>

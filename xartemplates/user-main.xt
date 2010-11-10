@@ -4,7 +4,7 @@
     <div class="xar-mod-head">
         <span class="xar-mod-title">
             <xar:if condition="xarModVars::get('ckeditor','useModuleAlias')">
-                <xar:var scope="module" module="ckeditor" name="aliasname" />
+                <xar:var scope="module" module="ckeditor" name="aliasname"/>
             <xar:else />
                 <xar:mlstring>CKEditor</xar:mlstring>
             </xar:if>
@@ -15,9 +15,8 @@
             <xar:mlstring>Overview</xar:mlstring>
         </h2>
 
-        <p>
-            <xar:mlstring>Dummy ckeditor text</xar:mlstring>
-        </p>
+	<p><a href="#xarmodurl('ckeditor','admin','overview')#">Module overview</a></p>
+     
         <div style="clear:both">&#160;</div>
     </div>
 </xar:template>

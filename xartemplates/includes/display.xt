@@ -12,6 +12,6 @@
             </xar:mlstring>
         </label>
         <xar:set name="value">xarModItemVars::get('ckeditor', 'defaultmastertable', $regid)</xar:set>
-        <xar:data-input type="object" name="defaultmastertable" value="$value" store_prop="name" firstline="Choose a master table object" />
+        <xar:data-input type="object" name="defaultmastertable" value="$value" store_prop="name" firstline="Choose a master table object"/>
     </div>
 </xar:template>

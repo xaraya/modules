@@ -1,65 +1,77 @@
 <?php
 /**
- * Main configuration page for the ckeditor module
- *
+ * Modify configuration
+ * @package modules
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+
+ * @subpackage CKEditor Module
+ * @link http://www.xaraya.com/index.php/release/eid/1166
+ * @author Marc Lutolf <mfl@netspan.ch> and Ryan Walker <ryan@webcommunicate.net>
  */
 
-// Use this version of the modifyconfig file when the module is not a  utility module
+function ckeditor_admin_modifyconfig() {
 
-    function ckeditor_admin_modifyconfig()
-    {
-        // Security Check
-        if (!xarSecurityCheck('AdminCKEditor')) return;
-        if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-        if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
-        switch (strtolower($phase)) {
-            case 'modify':
-            default:
-                switch ($data['tab']) {
-                    case 'general':
-                        break;
-                    case 'tab2':
-                        break;
-                    case 'tab3':
-                        break;
-                    default:
-                        break;
-                }
+	// Security Check
+	if (!xarSecurityCheck('AdminCKEditor')) return;
+	if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 
-                break;
+	switch (strtolower($phase)) {
+		case 'modify':
+			break;
 
-            case 'update':
-                // Confirm authorisation code
-                if (!xarSecConfirmAuthKey()) return;
-                switch ($data['tab']) {
-                    case 'general':
-                        if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('ckeditor', 'itemsperpage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-                        if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-                        if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('ckeditor', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
-                        if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('ckeditor', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
-                        if (!xarVarFetch('editorversion', 'str', $editorversion,  xarModVars::get('ckeditor', 'editorversion'), XARVAR_NOT_REQUIRED)) return;
+		case 'update':
+			
+			// Confirm authorisation code
+			if (!xarSecConfirmAuthKey()) return;
 
-                        xarModVars::set('ckeditor', 'itemsperpage', $itemsperpage);
-                        xarModVars::set('ckeditor', 'SupportShortURLs', $shorturls);
-                        xarModVars::set('ckeditor', 'useModuleAlias', $useModuleAlias);
-                        xarModVars::set('ckeditor', 'aliasname', $aliasname);
-                        xarModVars::set('ckeditor', 'editorversion', $editorversion);
-                        break;
-                    case 'tab2':
-                        break;
-                    case 'tab3':
-                        break;
-                    default:
-                        break;
-                }
+			/*if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('ckeditor', 'itemsperpage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+			if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('ckeditor', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('ckeditor', 'aliasname'), XARVAR_NOT_REQUIRED)) return;*/
+	  
+			$pgrconfig = array(
+				'rootPath' => 'str',
+				'urlPath' => 'str',
+				'allowedExtensions' => 'str',
+				//'imagesExtensions' => 'str',
+				'fileMaxSize' => 'int',
+				'imageMaxHeight' => 'int',
+				'imageMaxWidth' => 'int',
+				'allowEdit' => 'str'
+			);
 
-                xarResponse::Redirect(xarModURL('ckeditor', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
-                // Return
-                return true;
-                break;
+			foreach ($pgrconfig as $key => $type) { 
 
-        }
-        $data['authid'] = xarSecGenAuthKey();
-        return $data;
-    }
+				$setting = 'PGRFileManager_'.$key;
+				if (!xarVarFetch($setting, $type, ${$setting},  xarModVars::get('ckeditor', $setting), XARVAR_NOT_REQUIRED)) return;
+				
+				if ($key == 'imagesExtensions' || $key == 'allowedExtensions') {
+					${$setting} = str_replace(' ', '', ${$setting});
+					$arr = explode(',', ${$setting});
+					$end = end($arr);
+					if (empty($end)) {
+						array_pop($arr);
+					}
+					${$setting} = implode(', ', $arr);
+				}
+
+				xarModVars::set('ckeditor', $setting, ${$setting}); 
+				xarMod::apiFunc('ckeditor','admin','modifypluginsconfig', array(
+				'name' => 'PGRFileManager.' . $key,
+				'value' => ${$setting}
+				));
+
+			}
+	
+			xarResponse::Redirect(xarModURL('ckeditor', 'admin', 'modifyconfig'));
+			// Return
+			return true;
+			break;
+
+	}
+	$data['authid'] = xarSecGenAuthKey();
+	return $data;
+}
 ?>

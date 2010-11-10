@@ -21,4 +21,10 @@
     $modversion['class']          = 'Complete';
     $modversion['category']       = 'Utility';
     $modversion['securityschema'] = array();
+    $modversion['dependencyinfo'] = array(
+                                        0 => array(
+                                                'name' => 'Xaraya Core',
+                                                'version_ge' => '2.1.0'
+                                             ),
+                                          );
 ?>
