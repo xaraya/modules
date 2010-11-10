@@ -8,7 +8,7 @@
  * @subpackage comments
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
- */
+ */ 
 /**
  * Comments API
  * @package Xaraya
