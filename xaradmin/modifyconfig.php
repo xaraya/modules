@@ -87,6 +87,7 @@
             $data['selectedGroups'] = array();
             $data['selectedGroupsStr'] = "";
         }
+        $data['groups'] = xarMod::apiFunc('roles', 'user', 'getallgroups');
         return $data;
     }
 
