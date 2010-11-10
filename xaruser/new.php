@@ -86,7 +86,11 @@ function messages_user_new()
                 // add reply indicator to the subject in a smart way
                 $subject = $data['previousobject']->properties['subject']->value;
 
-                if (eregi('^(re\:|re\([0-9]+\))',$subject)) {
+			// replace the deprecated eregi stuff below
+			$subject = preg_replace('/^re:/i','',$subject);
+			$new_subject = 'Re: '.$subject;
+
+             /*   if (eregi('^(re\:|re\([0-9]+\))',$subject)) {
                     if (eregi('^re\:',$subject)) {
                         $new_subject = preg_replace("'re\:'i",
                                                   'Re(1): ',
@@ -103,7 +107,7 @@ function messages_user_new()
                     }
                 } else {
                     $new_subject = 'Re: ' . $subject;
-                }
+                }*/
 
                 $data['object']->properties['subject']->value = $new_subject;
             }

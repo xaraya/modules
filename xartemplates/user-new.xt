@@ -36,7 +36,7 @@
                 $previousobject->properties['postanon']->value
             </xar:set>
             <xar:data-form object="$object" tplmodule="messages" action="$action" previousanon="$previousanon"/>
-        <xar:else />
+        <xar:else /> 
             <xar:data-form object="$object" tplmodule="messages" action="$action"/>
         </xar:if>
         <div class="xar-align-center xar-margin-thick">

@@ -159,7 +159,9 @@
                             </td>
                             <td class="#$rowclass# xar-align-left xar-nowrap xar-messages-mailboxlistdate">
                                 <xar:set name="rawdate">$loop->item['raw_date']</xar:set>
-                                <xar:data-output type="formatteddatetime" value="$rawdate"/>
+                           <!-- <xar:data-output type="formatteddatetime" value="$rawdate"/> -->
+				<xar:set name="formatted">date('M j, Y', $rawdate)</xar:set>
+				#$formatted#
                             </td>
                             <td class="#$rowclass# xar-align-center xar-nowrap xar-messages-mailboxlistaction">
                                 <xar:if condition="$folder ne 'drafts'">                                  
