@@ -18,7 +18,7 @@ function messages_admin_main()
 
 
     // No we shouldn't. So we redirect to the admin_view() function.
-    xarController::redirect(
+    xarResponse::redirect(
         xarModURL(
             'messages'
             ,'admin'

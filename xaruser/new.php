@@ -317,7 +317,7 @@ function messages_user_new()
         elseif ($state == MESSAGES_STATUS_READ) $folder = 'sent';
         else $folder = 'inbox';
 
-        xarController::redirect(xarModURL('messages','user','view', array('folder' => $folder)));
+        xarResponse::redirect(xarModURL('messages','user','view', array('folder' => $folder)));
         return true;
     }
     return $data;

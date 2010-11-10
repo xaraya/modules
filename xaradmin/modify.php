@@ -29,7 +29,7 @@ function messages_admin_modify( $args )
 
         // This function generated no output, and so now it is complete we redirect
         // the user to an appropriate page for them to carry on their work
-        xarController::redirect(
+        xarResponse::redirect(
             xarModURL('messages', 'admin', 'view', array('itemtype' => $itemtype )));
     }
 
@@ -48,7 +48,7 @@ function messages_admin_modify( $args )
                     return xarModAPIFunc('messages', 'admin', 'create', $args );
                 default:
                     // TODO // Add statusmessage
-                    xarController::redirect(
+                    xarResponse::redirect(
                         xarModURL('messages', 'admin', 'view' ));
             }
         }
@@ -61,7 +61,7 @@ function messages_admin_modify( $args )
 
         default:
             // TODO // Add statusmessage
-            xarController::redirect(
+            xarResponse::redirect(
                 xarModURL('messages', 'admin', 'view'));
     }
 }
