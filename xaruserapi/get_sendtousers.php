@@ -9,9 +9,11 @@ sys::import('modules.messages.xarincludes.defines');
 
     function messages_userapi_get_sendtousers( $args )
     {
-        $sendtogroups = xarModAPIFunc('messages','user','get_sendtogroups',$args);
-        ;  
-        // Get the uses these allowed groups contain
+        $sendtogroups = xarModAPIFunc('messages','user','get_sendtogroups',$args); 
+         
+		if (empty($sendtogroups)) return array();
+
+        // Get the users these allowed groups contain
         sys::import('xaraya.structures.query');
         $xartable = xarDB::getTables();
         $q = new Query('SELECT');

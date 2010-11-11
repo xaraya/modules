@@ -61,8 +61,11 @@
 
                         //Psspl:Modifided the code for allowedsend to selected group configuration.
 
+						//sys::import('modules.dynamicdata.class.properties.master');
 						
 						foreach ($data['groups'] as $key => $value) {
+							//$property = DataPropertyMaster::getProperty(array('name' => 'roleid_'.$key)); 
+							//$property->checkInput('roleid_'.$key); 
 							if (!xarVarFetch('roleid_'.$key,  'array',    $roleid_{$key}, 0, XARVAR_NOT_REQUIRED)) return; 
 							xarModItemVars::set('messages', "allowedSendMessages", serialize($roleid_{$key}),$key);
 						}

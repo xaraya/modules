@@ -75,19 +75,20 @@
 <fieldset>
 	<legend>Role Groups</legend>
 		<div class="xar-form-input-wrapper">
-<xar:foreach in="$groups" key="$key" value="$val">
+<xar:foreach in="$groups" value="$val">
 
-<xar:set name="input_name">'roleid_'.$key</xar:set>
+	<xar:set name="key">$val['id']</xar:set>
+	<xar:set name="input_name">'roleid_'.$key</xar:set>
 
-<div>
-<label for="$input_name" class="xar-form-label" title="#$val['name']#">#$val['name']# can send to...</label> <a href="#xarServer::getCurrentURL()###" onClick="document.getElementById('collapse#$key#').style.display='';document.getElementById('expand#$key#').style.display='none';document.getElementById('roleid_#$key#_div').style.display='';return true;" id="expand#$key#">Show recipients</a>  <a href="#xarServer::getCurrentURL()###" onClick="document.getElementById('expand#$key#').style.display='';document.getElementById('collapse#$key#').style.display='none';document.getElementById('roleid_#$key#_div').style.display='none';return true;" id="collapse#$key#" style="display:none">Hide recipients</a>
+	<div>
+	<label for="$input_name" class="xar-form-label" title="#$val['name']# can send to...">#$val['name']# can send to...</label> <a href="#xarServer::getCurrentURL()###" onClick="document.getElementById('collapse#$key#').style.display='';document.getElementById('expand#$key#').style.display='none';document.getElementById('roleid_#$key#_div').style.display='';return true;" id="expand#$key#">Show recipients</a>  <a href="#xarServer::getCurrentURL()###" onClick="document.getElementById('expand#$key#').style.display='';document.getElementById('collapse#$key#').style.display='none';document.getElementById('roleid_#$key#_div').style.display='none';return true;" id="collapse#$key#" style="display:none">Hide recipients</a>
 
-	<xar:set name="selected">unserialize(xarModItemVars::get('messages', "allowedSendMessages", $key))</xar:set>
+		<xar:set name="selected">unserialize(xarModItemVars::get('messages', "allowedSendMessages", $key))</xar:set>
 
-	<div id="roleid_#$key#_div" style="display:none" class="role_list">
-	<xar:data-input type="checkboxlist" name="$input_name" id="$input_name" options="$groups" value="$selected" layout="vertical" />
-	</div>
-</div>	 
+		<div id="roleid_#$key#_div" style="display:none" class="role_list">
+		<xar:data-input type="checkboxlist" name="$input_name" id="$input_name" options="$groups" value="$selected" layout="vertical" />
+		</div>
+	</div>	 
 
 </xar:foreach>
  </div>        

@@ -19,14 +19,15 @@ sys::import('modules.messages.xarincludes.defines');
         $q->eq('id', $currentuser);
 
         if(!$q->run()) return;
-        $parents =  $q->output();
-
+        $parents =  $q->output(); 
+ 
         // Find the groups these parents can send to
         $sendtogroups = array();  
         foreach ($parents as $parent) {
-            $allowedgroups = unserialize(xarModItemVars::get('messages',"allowedSendMessages",$parent['parent_id']));
+            $allowedgroups = unserialize(xarModItemVars::get('messages',"allowedSendMessages",$parent['parent_id'])); 
             foreach ($allowedgroups as $allowedgroup) $sendtogroups[$allowedgroup] = $allowedgroup;
         }                
+	 
         return $sendtogroups;
     }
 ?>
