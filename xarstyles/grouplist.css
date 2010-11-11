@@ -1,0 +1,32 @@
+
+.groups_highlight {
+color: green; 
+}
+.groups_active select {
+color: green;
+padding: 2px;
+min-width: 120px;
+}
+.groups_active .xar-form-label {
+width: 75px;
+}
+.groups_inactive {
+background-color: #fff;
+}
+.groups_inactive select {
+color: #666;
+}
+.grouplist_widget {
+padding-top: 12px;
+}
+.grouplist_widget div {
+ float: left;
+}
+.groups_modify {
+padding: 10px; 
+margin: 5px 0 0 50px; 
+background-color: white;
+}
+.groups_modify .button, .groups_buttons {
+width: 150px; 
+} 

@@ -16,7 +16,7 @@
     <h2>
         Modify Configuration
     </h2>
-    <div>
+   <!--  <div>
         <ul class="xar-tabs xar-alt xar-norm-outline">
             <xar:if condition="$tab eq 'general'">
                 <li class="active">
@@ -32,16 +32,13 @@
                 </li>
             </xar:if>
         </ul>
-    </div>
+    </div> -->
     <xar:comment>
          - - - - - - - - - - - - - - - - - - - Begin General Options  - - - - - - - - - - - - - - - - - - -
     </xar:comment>
     <xar:if condition="$tab eq 'general'">
         <form method="post" action="&xar-modurl-messages-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
-            <h3>
-                General Options
-            </h3>
-
+          
             <xar:data-form object="$module_settings"/>
 
             <fieldset>
@@ -49,14 +46,14 @@
                 <div class="xar-form-input-wrapper">
                 <xar:set name="checked">xarModVars::get('messages','awaymsg')</xar:set>
                     <label for = "awaymsg" class="xar-form-label" title="#xarML('Do not allow an Away Message')#">                        
-                        Enable Away Message
+                        Enable away message
                     </label>
                     <xar:data-input type="checkbox" name="awaymsg" id="awaymsg" checked="$checked"/>
                 </div>
                 <div class="xar-form-input-wrapper">
                 <xar:set name="checked">xarModVars::get('messages','drafts')</xar:set>
                     <label for = "drafts" class="xar-form-label" title="#xarML('Do not allow an Away Message')#">
-                        Enable Drafts
+                        Enable drafts
                     </label>
                     <xar:data-input type="checkbox" name="drafts" id="drafts" checked="$checked"/>
                 </div>   
@@ -67,13 +64,14 @@
 		<div class="xar-form-input-wrapper">
                 <xar:set name="checked">xarModVars::get('messages','allowanonymous')</xar:set>
                     <label for = "drafts" class="xar-form-label" title="#xarML('Do not allow an Away Message')#">
-                        Allow Anonymous Messages
+                        Allow anonymous messages
                     </label>
                     <xar:data-input type="checkbox" name="allowanonymous" id="allowanonymous" checked="$checked"/>
                 </div>        
 		</fieldset>
 
             <xar:template file="admin-groupselect"/>
+
             <fieldset>
                 <div class="xar-form-input-wrapper-after">
                     <input type="hidden" name="authid" id="authid" value="#$authid#"/>
