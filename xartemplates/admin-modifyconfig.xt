@@ -3,6 +3,8 @@
     License: GPL http://www.gnu.org/copyleft/gpl.html
 </xar:comment>
 <xar:style scope="module" module="base" file="tabs"/>
+<xar:style scope="module" file="grouplist" />
+
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:if condition="xarModVars::get('messages','useModuleAlias')">
@@ -77,12 +79,15 @@
 
 <xar:set name="input_name">'roleid_'.$key</xar:set>
 
-<label for="$input_name" class="xar-form-label" title="#$val['name']# #xarML('can send to...')#">#$val['name']# can send to...</label>
+<div>
+<label for="$input_name" class="xar-form-label" title="#$val['name']#">#$val['name']# can send to...</label> <a href="#xarServer::getCurrentURL()###" onClick="document.getElementById('collapse#$key#').style.display='';document.getElementById('expand#$key#').style.display='none';document.getElementById('roleid_#$key#_div').style.display='';return true;" id="expand#$key#">Show recipients</a>  <a href="#xarServer::getCurrentURL()###" onClick="document.getElementById('expand#$key#').style.display='';document.getElementById('collapse#$key#').style.display='none';document.getElementById('roleid_#$key#_div').style.display='none';return true;" id="collapse#$key#" style="display:none">Hide recipients</a>
 
 	<xar:set name="selected">unserialize(xarModItemVars::get('messages', "allowedSendMessages", $key))</xar:set>
 
-	<xar:data-input type="checkboxlist" name="$input_name" id="$input_name" options="$groups" value="$selected" />
-	<hr />
+	<div id="roleid_#$key#_div" style="display:none" class="role_list">
+	<xar:data-input type="checkboxlist" name="$input_name" id="$input_name" options="$groups" value="$selected" layout="vertical" />
+	</div>
+</div>	 
 
 </xar:foreach>
  </div>        
@@ -93,7 +98,7 @@
                     <input type="hidden" name="authid" id="authid" value="#$authid#"/>
                     <!-- <input type="hidden" name="phase" id="phase" value="update"/> -->
                     <input type="hidden" name="tab" id="tab" value="#$tab#"/>
-                    <input type="submit" name="phase" id="phase" value="#xarML('Update Messages Configuration')#"/>
+                    <input type="submit" name="phase" id="phase" value="#xarML('Update')#"/>
                 </div>
             </fieldset>
         </form>
