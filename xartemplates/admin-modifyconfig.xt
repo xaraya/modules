@@ -70,7 +70,23 @@
                 </div>        
 		</fieldset>
 
-            <xar:template file="admin-groupselect"/>
+<fieldset>
+	<legend>Role Groups</legend>
+		<div class="xar-form-input-wrapper">
+<xar:foreach in="$groups" key="$key" value="$val">
+
+<xar:set name="input_name">'roleid_'.$key</xar:set>
+
+<label for="$input_name" class="xar-form-label" title="#$val['name']# #xarML('can send to...')#">#$val['name']# can send to...</label>
+
+	<xar:set name="selected">unserialize(xarModItemVars::get('messages', "allowedSendMessages", $key))</xar:set>
+
+	<xar:data-input type="checkboxlist" name="$input_name" id="$input_name" options="$groups" value="$selected" />
+	<hr />
+
+</xar:foreach>
+ </div>        
+		</fieldset>
 
             <fieldset>
                 <div class="xar-form-input-wrapper-after">

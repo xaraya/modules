@@ -11,11 +11,13 @@
         if (!xarSecurityCheck('AdminMessages')) return;
         if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
         if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('group',  'int',    $group, 1, XARVAR_NOT_REQUIRED)) return;
+        //if (!xarVarFetch('group',  'int',    $group, 1, XARVAR_NOT_REQUIRED)) return;
         //Psspl:Modifided the code for resolving group configuration update issue.
         if($phase == 'Update Messages Configuration'){
             $phase = 'update';
         }
+
+        $data['groups'] = xarMod::apiFunc('roles', 'user', 'getallgroups');
 
         $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'messages'));
         $data['module_settings']->setFieldList('items_per_page, use_module_alias, enable_short_urls');
@@ -58,9 +60,17 @@
                         }
 
                         //Psspl:Modifided the code for allowedsend to selected group configuration.
-                        if (!xarVarFetch('childgroupsimploded',  'str',    $childgroupsimploded, 0, XARVAR_NOT_REQUIRED)) return;   
-                        $selectedGroup = explode(",", $childgroupsimploded);
-                        xarModItemVars::set('messages', "allowedSendMessages", serialize($selectedGroup),$group);
+
+						
+						foreach ($data['groups'] as $key => $value) {
+							if (!xarVarFetch('roleid_'.$key,  'array',    $roleid_{$key}, 0, XARVAR_NOT_REQUIRED)) return; 
+							xarModItemVars::set('messages', "allowedSendMessages", serialize($roleid_{$key}),$key);
+						}
+						
+
+                        //if (!xarVarFetch('childgroupsimploded',  'str',    $childgroupsimploded, 0, XARVAR_NOT_REQUIRED)) return;  
+                        //$selectedGroup = explode(",", $childgroupsimploded);
+                        
                         break;
                     case 'tab2':
                         break;
@@ -78,18 +88,17 @@
         }
         $data['action']     = xarModURL('messages','admin','modifyconfig' );
         $data['authid'] = xarSecGenAuthKey();
-        $data['group'] = $group;
-        $data['selectedGroupStr'] = xarModAPIFunc('messages','admin','getconfig',array('group'=>$group));
+        //$data['group'] = $group;
+        //$data['selectedGroupStr'] = xarModAPIFunc('messages','admin','getconfig',array('group'=>$group));
         $data['supportshorturls']   = xarModVars::get('messages', 'SupportShortURLs');
 
-        try {
+        /*try {
             $data['selectedGroups'] = unserialize(xarModItemVars::get('messages', "allowedSendMessages", $group));
             $data['selectedGroupsStr'] = implode(",", $data['selectedGroups']);//convert array into comma seprated string.
         } catch(Exception $e) {
             $data['selectedGroups'] = array();
             $data['selectedGroupsStr'] = "";
-        }
-        $data['groups'] = xarMod::apiFunc('roles', 'user', 'getallgroups');
+        }*/
         return $data;
     }
 
