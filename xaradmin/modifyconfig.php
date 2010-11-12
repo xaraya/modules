@@ -17,7 +17,6 @@
  */
 function messages_admin_modifyconfig()
 {
-	xarModVars::set('messages', 'enable_short_urls', true);
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
@@ -82,11 +81,13 @@ function messages_admin_modifyconfig()
 
 			//sys::import('modules.dynamicdata.class.properties.master');
 						
+
 			foreach ($data['groups'] as $key => $value) {
 				//$property = DataPropertyMaster::getProperty(array('name' => 'roleid_'.$key)); 
 				//$property->checkInput('roleid_'.$key); 
-				if (!xarVarFetch('roleid_'.$key,  'array',    $roleid_{$key}, 0, XARVAR_NOT_REQUIRED)) return; 
-				xarModItemVars::set('messages', "allowedsendmessages", serialize($roleid_{$key}),$key);
+				$the_key = $value['id'];
+				if (!xarVarFetch('roleid_'.$the_key,  'array',    $roleid_{$the_key}, 0, XARVAR_NOT_REQUIRED)) return; 
+				xarModItemVars::set('messages', "allowedsendmessages", serialize($roleid_{$the_key}),$the_key);
 			}
 
             # --------------------------------------------------------
