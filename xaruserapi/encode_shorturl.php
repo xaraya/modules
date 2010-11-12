@@ -55,6 +55,10 @@ function messages_userapi_encode_shorturl($args) {
     switch ($func) {
         case 'delete':
             $path .= '/delete';
+			if (isset($id)) {
+                $path .= '/' . $id;
+                unset($id);
+            } 
             break;
         case 'new':
 			$path .= '/new';
@@ -74,8 +78,10 @@ function messages_userapi_encode_shorturl($args) {
             }
 			break; 
 		case 'display':
+			$path .= '/' . $id;
+			break;
         case 'main':
-        default: // display, main, view
+        default: // main, view
             if (isset($folder)) {
 				if ($folder == 'sent') {
 					$path .= '/sent';
@@ -85,14 +91,10 @@ function messages_userapi_encode_shorturl($args) {
 			} else { 
 				$path .= '/inbox'; // default
 			}
-			if (isset($id)) {
-				$path .= '/' . $id;
-				unset($id);
-			} 
             break;
     }
 
-    if (isset($id)) {
+    if (isset($id) && $func != 'display' && $func != 'reply' && $func != 'delete') {
         $rest['id'] = $id;
     }
 
