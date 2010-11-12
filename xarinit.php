@@ -63,26 +63,48 @@ function messages_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    xarModVars::set('messages', 'buddylist', 0);
-    xarModVars::set('messages', 'items_per_page', 10);
-    xarModVars::set('messages', 'limitsaved', 12);
-    xarModVars::set('messages', 'limitout', 10);
-    xarModVars::set('messages', 'limitinbox', 10);
-    xarModVars::set('messages', 'smilies', false);
-	xarModVars::set('messages', 'allowanonymous', false);
-    xarModVars::set('messages', 'allow_html', false);
-    xarModVars::set('messages', 'allow_bbcode', false);
-    xarModVars::set('messages', 'mailsubject', 'You have a new private message !');
-    xarModVars::set('messages', 'fromname', 'Webmaster');
-    xarModVars::set('messages', 'from', 'Webmaster@YourSite.com');
-    xarModVars::set('messages', 'inboxurl', 'http://www.yoursite.com/index.php?module=messages&type=user&func=display');
-    xarModVars::set('messages', 'serverpath', '/home/yourdir/public_html/modules/messages');
-    xarModVars::set('messages', 'enable_short_urls', false );
+
+	# --------------------------------------------------------
+	#
+	# Create DD objects
+	#
+    $module = 'messages';
+    $objects = array(
+					'messages_user_settings',
+					'messages_module_settings',
+					'messages_messages'
+                     );
+
+    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+
+	xarModVars::set('messages', 'sendemail', false);
     xarModVars::set('messages', 'awaymsg', true );
     xarModVars::set('messages', 'drafts', true );
-    xarModVars::set('messages', 'allowedSendMessages', serialize(array()));
+	xarModVars::set('messages', 'allowanonymous', false);
+	xarModVars::set('messages', 'allowedsendmessages', serialize(array()));
 
-    xarModVars::set('messages', 'away_message', '');
+	//xarModVars::set('messages', 'buddylist', 0);
+    //xarModVars::set('messages', 'limitsaved', 12);
+    //xarModVars::set('messages', 'limitout', 10);
+    //xarModVars::set('messages', 'limitinbox', 10);
+    //xarModVars::set('messages', 'smilies', false);
+    //xarModVars::set('messages', 'allow_html', false);
+    //xarModVars::set('messages', 'allow_bbcode', false);
+    //xarModVars::set('messages', 'mailsubject', 'You have a new private message !');
+    //xarModVars::set('messages', 'fromname', 'Webmaster');
+    //xarModVars::set('messages', 'from', 'Webmaster@YourSite.com');
+    //xarModVars::set('messages', 'inboxurl', 'http://www.yoursite.com/index.php?module=messages&type=user&func=display');
+    //xarModVars::set('messages', 'serverpath', '/home/yourdir/public_html/modules/messages');
+    //xarModVars::set('messages', 'away_message', '');
+
+	# --------------------------------------------------------
+	#
+	# Set up configuration modvars (general)
+	#
+
+	$module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'messages'));
+	$module_settings->initialize();
+
 
     /*
      * REGISTER BLOCKS
@@ -153,17 +175,6 @@ function messages_init()
 
     xarAssignPrivilege('ManageMessages','Users');
     xarAssignPrivilege('DenyReadMessages','Everybody');
-
-# --------------------------------------------------------
-#
-# Create DD objects
-#
-    $module = 'messages';
-    $objects = array(
-                   'messages_messages',
-                     );
-
-    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
     // Initialisation successful
     return true;

@@ -14,7 +14,7 @@ function messages_adminapi_setconfig( $args )
     
     $selectedGroup = explode(",", $childgroupsimploded);
     
-    xarModItemVars::set('messages', "allowedSendMessages", serialize($selectedGroup),$group);
+    xarModItemVars::set('messages', "allowedsendmessages", serialize($selectedGroup),$group);
     
     return true;
 }

@@ -24,7 +24,7 @@ sys::import('modules.messages.xarincludes.defines');
         // Find the groups these parents can send to
         $sendtogroups = array();  
         foreach ($parents as $parent) {
-            $allowedgroups = unserialize(xarModItemVars::get('messages',"allowedSendMessages",$parent['parent_id'])); 
+            $allowedgroups = unserialize(xarModItemVars::get('messages',"allowedsendmessages",$parent['parent_id'])); 
             foreach ($allowedgroups as $allowedgroup) $sendtogroups[$allowedgroup] = $allowedgroup;
         }                
 	 

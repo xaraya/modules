@@ -1,0 +1,15 @@
+fieldset.mod_settings {
+border: none;
+}
+
+.xar-form-input-wrapper {
+clear: both;
+}
+
+.xar-form-input-wrapper input {
+margin: 4px 0 3px 0;
+}
+
+.xar-form-input-wrapper select {
+margin: 4px 0 4px 0;
+}

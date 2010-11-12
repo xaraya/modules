@@ -1,0 +1,115 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html
+</xar:comment>
+<xar:style scope="module" module="base" file="tabs"/>
+<xar:style scope="module" file="grouplist" />
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:if condition="xarModVars::get('messages','useModuleAlias')">
+            <xar:var scope="module" module="messages" name="aliasname"/>
+        <xar:else />
+            Messages Administration
+        </xar:if>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        Modify Configuration
+    </h2>
+   <!--  <div>
+        <ul class="xar-tabs xar-alt xar-norm-outline">
+            <xar:if condition="$tab eq 'general'">
+                <li class="active">
+                    <a href="&xar-modurl-messages-admin-modifyconfig;&amp;tab=general">
+                        General
+                    </a>
+                </li>
+                <xar:else />
+                <li>
+                    <a href="&xar-modurl-messages-admin-modifyconfig;&amp;tab=general">
+                        General
+                    </a>
+                </li>
+            </xar:if>
+        </ul>
+    </div> -->
+    <xar:comment>
+         - - - - - - - - - - - - - - - - - - - Begin General Options  - - - - - - - - - - - - - - - - - - -
+    </xar:comment>
+    <xar:if condition="$tab eq 'general'">
+        <form method="post" action="&xar-modurl-messages-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+          
+            <xar:data-form object="$module_settings"/>
+
+            <fieldset>
+            <legend>Display Options</legend>
+                <div class="xar-form-input-wrapper">
+                <xar:set name="checked">xarModVars::get('messages','awaymsg')</xar:set>
+                    <label for = "awaymsg" class="xar-form-label" title="#xarML('Do not allow an Away Message')#">                        
+                        Enable away message
+                    </label>
+                    <xar:data-input type="checkbox" name="awaymsg" id="awaymsg" checked="$checked"/>
+                </div>
+                <div class="xar-form-input-wrapper">
+                <xar:set name="checked">xarModVars::get('messages','drafts')</xar:set>
+                    <label for = "drafts" class="xar-form-label" title="#xarML('Do not allow an Away Message')#">
+                        Enable drafts
+                    </label>
+                    <xar:data-input type="checkbox" name="drafts" id="drafts" checked="$checked"/>
+                </div>   
+		</fieldset>
+
+		<fieldset>
+		<legend>Other</legend>
+		<div class="xar-form-input-wrapper">
+                <xar:set name="checked">xarModVars::get('messages','sendemail')</xar:set>
+                    <label for="sendemail" class="xar-form-label" title="#xarML('Enable email notifications')#">
+                        Enable email notifications
+                    </label>
+                    <xar:data-input type="checkbox" name="sendemail" id="sendemail" checked="$checked"/>
+                </div>  
+		<div class="xar-form-input-wrapper">
+                <xar:set name="checked">xarModVars::get('messages','allowanonymous')</xar:set>
+                    <label for="allowanonymous" class="xar-form-label" title="#xarML('Allow anonymous messages')#">
+                        Allow anonymous messages
+                    </label>
+                    <xar:data-input type="checkbox" name="allowanonymous" id="allowanonymous" checked="$checked"/>
+                </div>   
+		</fieldset>
+
+<fieldset>
+	<legend>Role Groups</legend>
+		<div class="xar-form-input-wrapper">
+<xar:foreach in="$groups" value="$val">
+
+	<xar:set name="key">$val['id']</xar:set>
+	<xar:set name="input_name">'roleid_'.$key</xar:set>
+
+	<div>
+	<label for="$input_name" class="xar-form-label" title="#$val['name']# can send to...">#$val['name']# can send to...</label> <a href="#xarServer::getCurrentURL()###" onClick="document.getElementById('collapse#$key#').style.display='';document.getElementById('expand#$key#').style.display='none';document.getElementById('roleid_#$key#_div').style.display='';return true;" id="expand#$key#">Show recipients</a>  <a href="#xarServer::getCurrentURL()###" onClick="document.getElementById('expand#$key#').style.display='';document.getElementById('collapse#$key#').style.display='none';document.getElementById('roleid_#$key#_div').style.display='none';return true;" id="collapse#$key#" style="display:none">Hide recipients</a>
+
+		<xar:set name="selected">unserialize(xarModItemVars::get('messages', "allowedsendmessages", $key))</xar:set>
+
+		<div id="roleid_#$key#_div" style="display:none" class="role_list">
+		<xar:data-input type="checkboxlist" name="$input_name" id="$input_name" options="$groups" value="$selected" layout="vertical" />
+		</div>
+	</div>	 
+
+</xar:foreach>
+ </div>        
+		</fieldset>
+
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                    <!-- <input type="hidden" name="phase" id="phase" value="update"/> -->
+                    <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+                    <input type="submit" name="phase" id="phase" value="#xarML('Update')#"/>
+                </div>
+            </fieldset>
+        </form>
+    </xar:if>
+</div>
+</xar:template>

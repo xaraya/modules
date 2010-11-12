@@ -37,17 +37,17 @@ function messages_userapi_isset_grouplist( $args )
         $id=$CurrentUser[0]['parent_id'];
         $groupID=$CurrentUser[0]['parent_id'];
         
-        $allowedSendMessages = unserialize(xarModItemVars::get('messages',"allowedSendMessages",$groupID));
+        $allowedsendmessages = unserialize(xarModItemVars::get('messages',"allowedsendmessages",$groupID));
         
-        if(isset($allowedSendMessages)) {
-            if(empty($allowedSendMessages[0])) {
+        if(isset($allowedsendmessages)) {
+            if(empty($allowedsendmessages[0])) {
                 return false;
             }
             $data['users'] = xarModAPIFunc('messages','user','get_sendtousers');
             if(empty($data['users'])){
                 return false;
             }
-            return $allowedSendMessages;
+            return $allowedsendmessages;
         } else {
             return false;
         }

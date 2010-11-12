@@ -8,7 +8,7 @@ function messages_adminapi_getconfig( $args )
 {
     extract( $args );
         
-    $selectedGroup = unserialize(xarModItemVars::get('messages',"allowedSendMessages",$group));
+    $selectedGroup = unserialize(xarModItemVars::get('messages',"allowedsendmessages",$group));
     
     if (!empty($selectedGroup)) {        
         
