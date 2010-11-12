@@ -14,19 +14,15 @@
 
 sys::import('modules.messages.xarincludes.defines');
 
-function messages_userapi_encode_shorturl( $args )
-{
+function messages_userapi_encode_shorturl($args) {
 
-    $func       = NULL;
-    $module     = NULL;
-    $id        = NULL;
-    $rest       = array();
-    //print_r($args);
-    //exit();
-    foreach( $args as $name => $value ) {
+    $func = NULL;
+    $module = NULL;
+    $id = NULL;
+    $rest = array();
 
-        switch( $name ) {
-
+    foreach($args as $name => $value) {
+        switch($name) {
             case 'module':
                 $module = $value;
                 break;
@@ -36,14 +32,16 @@ function messages_userapi_encode_shorturl( $args )
             case 'func':
                 $func = $value;
                 break;
+			case 'folder':
+                $folder = $value;
+                break;
             default:
                 $rest[$name] = $value;
-
        }
     }
 
     // kind of a assertion :-))
-    if( isset( $module ) && $module != 'messages' ) {
+    if(isset($module) && $module != 'messages') {
         return;
     }
 
@@ -52,25 +50,45 @@ function messages_userapi_encode_shorturl( $args )
      */
     $path = '/messages';
 
-    if ( empty( $func ) )
-        return;
+    if (empty($func)) return;
 
     switch ($func) {
-        case 'send':
-            $path .= '/Outbox';
-            break;
         case 'delete':
-            $path .= '/Trash';
+            $path .= '/delete';
             break;
-        case 'view':
-        case 'display':
-        case 'main':
-        default:
-            $path .= '/Inbox';
-            if (isset($id)) {
+        case 'new':
+			$path .= '/new';
+			break;
+        case 'modify':
+			$path .= '/modify'; 
+			if (isset($id)) {
+                $path .= '/' . $id;
+                unset($id);
+            } 
+			break;
+		case 'reply':
+			$path .= '/reply';
+			if (isset($id)) {
                 $path .= '/' . $id;
                 unset($id);
             }
+			break; 
+		case 'display':
+        case 'main':
+        default: // display, main, view
+            if (isset($folder)) {
+				if ($folder == 'sent') {
+					$path .= '/sent';
+				} elseif ($folder == 'drafts') {
+					$path .= '/drafts';
+				} 
+			} else { 
+				$path .= '/inbox'; // default
+			}
+			if (isset($id)) {
+				$path .= '/' . $id;
+				unset($id);
+			} 
             break;
     }
 
@@ -79,14 +97,14 @@ function messages_userapi_encode_shorturl( $args )
     }
 
     $add = array();
-    foreach ( $rest as $key => $value ) {
+    foreach ($rest as $key => $value) {
         if (isset($rest[$key])) {
             $add[] =  $key . '=' . $value;
         }
     }
 
-    if ( count( $add ) > 0 ) {
-        $path = $path . '?' . implode( '&', $add );
+    if (count($add) > 0) {
+        $path = $path . '?' . implode('&', $add);
     }
 
     return $path;

@@ -59,7 +59,7 @@ function messages_user_new()
     
     switch($data['action']) {
         case "post":
-            xarTplSetPageTitle( xarML('Post Message') );
+            xarTplSetPageTitle(xarML('Post Message'));
             $data['input_title']    = xarML('Compose Message');
             break;
         
@@ -75,7 +75,7 @@ function messages_user_new()
                 $data['previousobject']->properties['author_status']->setValue(MESSAGES_STATUS_READ);
 
                 $data['id'] = $id;
-                xarTplSetPageTitle( xarML('Messages :: Reply') );
+                xarTplSetPageTitle(xarML('Messages :: Reply'));
                 $data['input_title']    = xarML('Compose a Reply');
 
                 $data['object']->properties['postanon']->setValue(0);
@@ -96,14 +96,14 @@ function messages_user_new()
                                                   'Re(1): ',
                                                   $subject,
                                                   1
-                                                 );
+                                                );
                     } else {
                         preg_match("/^re\(([0-9]+)?/i",$subject, $matches);
                         $new_subject = preg_replace("'re\([0-9]+\)\:'i",
                                                   'Re('.($matches[1] + 1).'): ',
                                                   $subject,
                                                   1
-                                                 );
+                                                );
                     }
                 } else {
                     $new_subject = 'Re: ' . $subject;
@@ -152,7 +152,7 @@ function messages_user_new()
                     xarVarFetch('id',   'int:1', $id,   null, XARVAR_NOT_REQUIRED);
                     if(isset($id) and $id != null){
 
-                    xarTplSetPageTitle( xarML('Messages :: Reply') );
+                    xarTplSetPageTitle(xarML('Messages :: Reply'));
 
                         $replymessages = xarModAPIFunc('messages', 'user', 'get', array('id' => $id));
 
@@ -194,7 +194,7 @@ function messages_user_new()
 
                 xarVarFetch('id',   'int:1', $id,   null, XARVAR_NOT_REQUIRED); 
 
-                xarTplSetPageTitle( xarML('Messages :: Reply') );
+                xarTplSetPageTitle(xarML('Messages :: Reply'));
 
                 $replymessages = xarModAPIFunc('messages', 'user', 'get', array('id' => $id));
 
@@ -281,7 +281,7 @@ function messages_user_new()
                                                $id,
                                                array($body));
                 */
-                xarTplSetPageTitle( xarML('Post Message') );
+                xarTplSetPageTitle(xarML('Post Message'));
 
                 $data['input_title']                = xarML('Compose Message');
                 $data['action']                     = 'preview';

@@ -2,7 +2,7 @@
 
 sys::import('modules.messages.xarincludes.defines');
 
-    function messages_userapi_get_sendtogroups( $args )
+    function messages_userapi_get_sendtogroups($args)
     {
         extract($args);
         if (!isset($currentuser)) $currentuser = xarUserGetVar('id');
@@ -25,7 +25,11 @@ sys::import('modules.messages.xarincludes.defines');
         $sendtogroups = array();  
         foreach ($parents as $parent) {
             $allowedgroups = unserialize(xarModItemVars::get('messages',"allowedsendmessages",$parent['parent_id'])); 
-            foreach ($allowedgroups as $allowedgroup) $sendtogroups[$allowedgroup] = $allowedgroup;
+			if (!empty($allowedgroups)) {
+				foreach ($allowedgroups as $allowedgroup) {
+					$sendtogroups[$allowedgroup] = $allowedgroup;
+				}
+			}
         }                
 	 
         return $sendtogroups;
