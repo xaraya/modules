@@ -1,25 +1,34 @@
 <?php
 /**
+ * Mailer Module
+ *
+ * @package modules
+ * @subpackage mailer module
+ * @copyright (C) 2010 Netspan AG
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Marc Lutolf <mfl@netspan.ch>
+ */
+/**
  * Send an email
  *
- * @param  $id      OR          the ID of the message to be sent
- * @param  $name    OR          the name/designation of the message to be sent
- * @param  $subject             the message subject
- * @param  $message             the message body
- * @param  $mail_id             the id of the mail to be sent (from another module)
- * @param  $mail_type           the type of the mail to be sent (text, html)
- * @param  $locale              the locale of the recipient
- * @param  $sendername
- * @param  $sendername
- * @param  $senderaddress
- * @param  $recipientname
- * @param  $recipientaddress
- * @param  $ccaddresses         format is an array with elements emailaddr => name
- * @param  $bccaddresses        format is an array with elements emailaddr => name
- * @param  $module              the module where the user object is defined
- * @param  $messagemodule       the module where the message to be sent is defined (for the history only)
- * @param  $header_x_mailer     the text for X-Mailer header
- * @param  $data
+ * @param  integer $id      OR          the ID of the message to be sent
+ * @param  string  $name    OR          the name/designation of the message to be sent
+ * @param  string  $subject             the message subject
+ * @param  string  $message             the message body
+ * @param  integer $mail_id             the id of the mail to be sent (from another module)
+ * @param  string  $mail_type           the type of the mail to be sent (text, html)
+ * @param  string  $locale              the locale of the recipient
+ * @param  string  $sendername
+ * @param  string  $sendername
+ * @param  string  $senderaddress
+ * @param  string  $recipientname
+ * @param  string  $recipientaddress
+ * @param  string  $ccaddresses         format is an array with elements emailaddr => name
+ * @param  string  $bccaddresses        format is an array with elements emailaddr => name
+ * @param  string  $module              the module where the user object is defined
+ * @param  string  $messagemodule       the module where the message to be sent is defined (for the history only)
+ * @param  string  $header_x_mailer     the text for X-Mailer header
+ * @param  array   $data                optional array of data to be passed to the template
  *
  * We can define a message by:
  * - its raw content
@@ -29,7 +38,7 @@
  * The sequence of overrides is
  *  1. params passed to this function
  *  2. settings specific to the message to be sent
- *  3. settings of the module passed ot this function
+ *  3. settings of the module passed to this function
  *  4. settings of the mailer module
  *
  * Returns
