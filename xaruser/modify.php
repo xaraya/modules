@@ -14,185 +14,72 @@
 
 sys::import('modules.messages.xarincludes.defines');
 
-function messages_user_modify( $args )
+function messages_user_modify()
 {
-    if (!xarSecurityCheck('EditMessages')) return;
+    if(!xarVarFetch('id',       'id',    $id,   NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return; 
 
-    if (!xarVarFetch('action', 'enum:modify:submit:preview', $data['action'], 'modify', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('object', 'str', $object, 'messages_messages', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('id', 'int:1', $id, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $data['folder'], 'inbox', XARVAR_NOT_REQUIRED)) return;
-
-    xarVarFetch('preview', 'checkbox', $preview, false, XARVAR_NOT_REQUIRED);
-    xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED);
-
-    $data['object'] = DataObjectMaster::getObject(array('name' => $object));
-    $data['object']->getItem(array('itemid' => $id));
-
-    if ($preview === true) {
-        $data['action'] = 'preview';
-    } elseif ($confirm === true) {
-        $data['action'] = 'submit';
-    } else {
-        $data['action'] = 'modify';
-    }
-    $data['post_url']       = xarModURL('messages','user','modify');
-    $data['input_title']    = xarML('Modify this message');
-    xarTplSetPageTitle( xarML('Modify Message') );
-    $data['id']             = $id;
-        
-    // Check that the current user is either author or recipient
-    if (($data['object']->properties['to']->value != xarSession::getVar('role_id')) &&
-        ($data['object']->properties['from']->value != xarSession::getVar('role_id'))) {
-        return xarTplModule('messages','user','message_errors',array('layout' => 'bad_id'));
+    // Check if we still have no id of the item to modify.
+    if (empty($id)) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    'id', 'user', 'modify', 'messages');
+        throw new Exception($msg);
     }
 
-    //Psspl:Added the code for configuring the user-menu
-//    $data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
-        
+	$data['id'] = $id;
 
-    //Psspl:Modifided the code for getting user list.
-    $data['users'] = xarModAPIFunc('messages','user','get_sendtousers');    
+    // Load the DD master object class. This line will likely disappear in future versions
+    sys::import('modules.dynamicdata.class.objects.master');
 
-    if ($data['object']->properties['pid']->value) {
-        // If this is a reply get the previous message
+	// Get the object name
+	$object = DataObjectMaster::getObject(array('name' => 'messages_messages'));
+	$object->getItem(array('itemid' => $id)); 
 
-        xarTplSetPageTitle( xarML('Messages :: Reply') );
-        $data['input_title']    = xarML('Modify this reply');
+	$draft = $object->properties['author_status']->value;
 
-        $data['previousobject'] = DataObjectMaster::getObject(array('name' => $object));
-        $data['previousobject']->getItem(array('itemid' => $data['object']->properties['pid']->value));
-        $data['object']->properties['postanon']->setValue(0);
-        $data['object']->properties['pid']->value = $data['previousobject']->properties['id']->value;;
-        $data['object']->properties['to']->value = $data['previousobject']->properties['from']->value;
-    }
+	if ($draft != 0) { // no reason to modify something that isn't a draft
+		return;
+	}
 
-    switch($data['action']) {
-        case "submit":
+	if (!xarSecurityCheck('Editmessages',0)) {
+		return;
+	}
+	
+	$data['action'] = 'draft';
 
-            $isvalid = $data['object']->checkInput();
-            
-            if(!$isvalid){
+	$data['object'] = $object; // save for later
 
-                xarTplSetPageTitle( xarML('Modify Message') );
-                $data['action']                     = 'post';
+	$data['label'] = $object->label;
+   
+    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
 
-                return xarTplModule('messages','user','new',$data);
+    if ($data['confirm']) {
 
-                $data['action']                     = 'post';
-    
-                $data['message']['author']          = xarUserGetVar('name');
-                $data['message']['author_id']        = xarUserGetVar('id');
-                $data['message']['recipient']       = xarUserGetVar('name',$recipient);
-                $data['message']['recipient_id']    = $recipient;
-                $data['message']['subject']         = $subject;
-                $data['message']['date']            = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', time());
-                $data['message']['raw_date']        = time();
-                $data['message']['body']            = $body;
-    
-                $data['recipient']                  = $recipient;
-                $data['subject']                    = $subject;
-                $data['body']                       = $body;
+        // Check for a valid confirmation key
+        if (!xarSecConfirmAuthKey()) {
+            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+        }        
 
-                //Psspl:Comment code for resolving draft messages error. 
-                // added call to transform text srg 09/22/03
-                /*list($data['message']['body']) = xarModCallHooks('item',
-                     'transform',
-                     $id,
-                     array($data['message']['body']));*/
-               
-                $data['postanon']       = $postanon;
-                $data['action']     = 'modify';
-                $data['folder']     = 'drafts';                
-                return $data;
-            }
+        // Get the data from the form
+        $isvalid = $data['object']->checkInput();
 
-            $checkbox = DataPropertyMaster::getProperty(array('name' => 'checkbox'));
-            $checkbox->checkInput('is_draft');
-            
-            // If this is to be a draft, adjust the state
-            if ($checkbox->value) {
-                $data['object']->properties['author_status']->setValue(MESSAGES_STATUS_DRAFT);
-                $data['object']->properties['recipient_status']->setValue(MESSAGES_STATUS_DRAFT);
-            } else {
-                $data['object']->properties['author_status']->setValue(MESSAGES_STATUS_READ);
-                $data['object']->properties['recipient_status']->setValue(MESSAGES_STATUS_UNREAD);
-            }
-            $id = $data['object']->updateItem();
+        if (!$isvalid) { 
+            return xarTplModule('messages','user','modify', $data);          
+        } else {
+            // Good data: update the item
 
-            xarResponse::redirect(xarModURL('messages','user','view',array('folder' => xarSession::getVar('messages_currentfolder'))));
+            $data['object']->updateItem(array('itemid' => $id));
+
+			xarResponse::redirect(xarModURL('messages','user','modify', array('id'=>$id))); 
+
             return true;
-            break;
-
-        case 'preview';
-            //Psspl:modifided code for Error Handling;
-            xarVarFetch('subject',   'str:1', $subject,   null, XARVAR_NOT_REQUIRED);
-            //minimum length is 7 character it sets &#160; for processing
-            xarVarFetch('body',   'str:7', $body,   null, XARVAR_NOT_REQUIRED); 
-            xarVarFetch('recipient',   'int:1', $recipient,   null, XARVAR_NOT_REQUIRED);
-            
-            if($subject == null) {
-                $data['no_subject'] = 1;
-                //xarErrorHandled();
-            }
-            if($body == null) {
-                $data['no_body'] = 1;
-                //xarErrorHandled();
-            }
-            if($recipient == null){
-                $data['no_recipient'] = 1;
-                //xarErrorHandled();
-            }
-            // added call to transform text srg 09/22/03
-            list($body) = xarModCallHooks('item',
-                                          'transform',
-                                           $id,
-                                           array($body));
-
-            xarTplSetPageTitle( xarML('Modify Message') );
-
-            $data['input_title']                = xarML('Compose Message');
-            $data['action']                     = 'modify';
-            $data['folder']                     = 'drafts';
-            $data['message']                    = $messages[0];
-
-            $data['message']['author']          = xarUserGetVar('name');
-            $data['message']['author_id']        = xaruserGetVar('id');
-            $data['message']['recipient']       = xarUserGetVar('name',$recipient);
-            $data['message']['recipient_id']    = $recipient;
-            $data['message']['subject']         = $subject;
-            $data['message']['date']            = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', time());
-            $data['message']['raw_date']        = time();
-            $data['message']['body']            = $body;
-            $data['message']['postanon']        = $postanon;
-            $data['recipient']                  = $recipient;
-            $data['subject']                    = $subject;
-            $data['body']                       = $body;
-            $data['message']['date']            = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', time());
-            $data['message']['raw_date']        = time();
-
-            // added call to transform text srg 09/22/03
-            list($data['message']['body']) = xarModCallHooks('item',
-                 'transform',
-                 $id,
-                 array($data['message']['body']));
-
-
-            return $data;
-            break;
-
-        case 'modify':
-            $data['folder']         = 'drafts';
-
-/*            // added call to transform text srg 09/22/03
-            list($data['message']['body']) = xarModCallHooks('item',
-                                                             'transform',
-                                                             $id,
-                                                             array($data['message']['body']));
-
-*/
-            return $data;
-            break;
+        }
+    } else {
+        $data['object']->getItem(array('itemid' => $id));
     }
+
+
+    return $data;
 }
+
 ?>

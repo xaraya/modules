@@ -7,7 +7,7 @@
         
 <xar:template file="user-menu" scope="module" />
 
-	<xar:data-view object="$list" tplmodule="messages" sort="$sort" />  
+	<xar:data-view object="$list" tplmodule="messages" sort="$sort" folder="$folder" />  
 
 	<xar:if condition="isset($results)">
 		<xar:set name="total">$results</xar:set>

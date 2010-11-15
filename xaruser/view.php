@@ -29,21 +29,9 @@ function messages_user_view( )
 	if (empty($numitems)) {
 		$numitems = xarModVars::get('messages', 'items_per_page');
 	}
-		
-    
-    //Psspl:Added the code for paging
-   /* $link_data = xarModAPIFunc('messages', 
-                               'user', 
-                               'get_prev_next_link',
-                                array('folder'   => $folder,
-                                      'startnum' => $startnum));*/
-    
-    //$data = array_merge($data,$link_data);
 
     //Psspl:Added the code for configuring the user-menu
 //    $data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
-    
-    //$messages = xarModAPIFunc('messages', 'user', 'getall', array('folder' => $folder, 'startnum' => $startnum));    
 
 	switch($folder){
         case 'inbox':
@@ -81,19 +69,7 @@ function messages_user_view( )
 	
 	$list->getItems();
     $data['list'] = $list; 
-
-    /*if (is_array($messages)) {
-
-        //Psspl:Comment the code for sorting messages.
-        //krsort($messages);
-
-        $data['messages']                = $messages;
-        
-        //Psspl:Added the code for read unread messages.
-          
-    } else {
-        $list = array();
-    }*/
+ 
     if (xarUserIsLoggedIn()) {
         if (!xarVarFetch('away','str',$away,null,XARVAR_NOT_REQUIRED)) return;
         if (isset($away)) {
