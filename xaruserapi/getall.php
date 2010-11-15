@@ -32,9 +32,10 @@ function messages_userapi_getall( $args )
                                    'user',
                                    'get_multiple',
                                     array('recipient'   => xarUserGetVar('id'),
-                                          'delete'      => MESSAGES_ACTIVE,
+                                          'delete'      => MESSAGES_NOTDELETED,
                                           'orderby'     => 'id DESC',
-                                          'startnum'    => $startnum,'inbox'=>true,
+                                          'startnum'    => $startnum,
+											'inbox'=>true,
                                           'numitems'    => $numitems));
             break;
         case 'sent':
@@ -42,7 +43,7 @@ function messages_userapi_getall( $args )
                                    'user',
                                    'get_multiple',
                                     array('author'      => xarUserGetVar('id'),
-                                          'delete'      => MESSAGES_ACTIVE,
+                                          'delete'      => MESSAGES_NOTDELETED,
                                           'orderby'     => 'id DESC',
                                           'startnum'    => $startnum,
                                           'numitems'    => $numitems));
@@ -53,7 +54,7 @@ function messages_userapi_getall( $args )
                                    'get_multiple',
                                     array('author'      => xarUserGetVar('id'),
                                           'status'      => MESSAGES_STATUS_DRAFT,
-                                          'delete'      => MESSAGES_ACTIVE,
+                                          'delete'      => MESSAGES_NOTDELETED,
                                           'orderby'     => 'id DESC',
                                           'startnum'    => $startnum,
                                           'numitems'    => $numitems));

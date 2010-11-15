@@ -52,7 +52,7 @@ function messages_userapi_get_count($args)
     $bindvars = array();
     if (isset($recipient)) {
         $sql .= "recipient_delete=? AND recipient=? AND author_status!=?";
-        $bindvars[] = MESSAGES_ACTIVE;
+        $bindvars[] = MESSAGES_NOTDELETED;
         $bindvars[] = (int) $recipient;
         $bindvars[] = MESSAGES_STATUS_DRAFT;
         if (isset($unread)) {
@@ -61,11 +61,11 @@ function messages_userapi_get_count($args)
         }
     } elseif (isset($author)) {
         $sql .= " author_delete=? AND author=?";
-        $bindvars[] = MESSAGES_ACTIVE;
+        $bindvars[] = MESSAGES_NOTDELETED;
         $bindvars[] = (int) $author;
         if (isset($unread)) {
             $sql .= " AND author_status=?";
-            $bindvars[] = MESSAGES_ACTIVE;
+            $bindvars[] = MESSAGES_NOTDELETED;
         } elseif (isset($drafts)) {
             $sql .= " AND author_status=?";
             $bindvars[] = MESSAGES_STATUS_DRAFT;
