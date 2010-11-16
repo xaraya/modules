@@ -1,58 +1,74 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:comment>Common Administration menu</xar:comment>
 <xar:style scope="module" module="base" file="tabs"/>
 
-<xar:set name="request">xarRequest::getInfo()</xar:set>
-<xar:set name="activetab">$request[2]</xar:set>
-<xar:set name="activetype">$request[1]</xar:set>
+<xar:set name="info">xarRequest::getInfo()</xar:set>
+
+<xar:set name="activetab">$info[2]</xar:set>
+
 <xar:set name="unread">xarMod::apiFunc('messages','user','get_count',array('recipient' => xarUserGetVar('id'),'unread'=>true))</xar:set>
 <xar:set name="sent">xarMod::apiFunc('messages','user','get_count',array('author' => xarUserGetVar('id')))</xar:set>
 <xar:set name="total">xarMod::apiFunc('messages','user','get_count',array('recipient' => xarUserGetVar('id')))</xar:set>
 <xar:set name="drafts">xarMod::apiFunc('messages','user','get_count',array('author' => xarUserGetVar('id'), 'drafts' => true))</xar:set>
+ 
 
 <div>
-  <ul class="xar-tabs xar-alt xar-norm-outline">
+  <ul class="xar-tabs">
     <xar:sec mask="ReadMessages" catch="false">
-        <xar:if condition="($activetab eq 'view') and (empty($folder) or $folder eq 'inbox')">
+        <xar:if condition="!isset($folder) or empty($folder) or $folder eq 'inbox'">
             <xar:set name="tabclass">'xar-tab-active'</xar:set>
+	    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
         <xar:else />
             <xar:set name="tabclass">'xar-tab'</xar:set>
+	    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
         </xar:if>
         <li class="#$tabclass#">
-          <a href="#xarModURL('messages','user','view')#">
-            Inbox&#160;(&#160;<xar:if condition="$unread eq 0">#$unread#<xar:else/><span class="xar-messages-tab-unread">#$unread#</span></xar:if>&#160;/&#160;#$total#&#160;)
+          <a href="#xarModURL('messages','user','view')#" class="#$linkclass#">
+		Inbox&#160;(&#160;<xar:if condition="$unread eq 0">#$unread#<xar:else/>
+		<span class="xar-messages-tab-unread">#$unread#</span></xar:if>&#160;/&#160;#$total#&#160;)
           </a>
         </li>
-        <xar:if condition="($activetab eq 'view' or $activetab eq 'viewsent') and (empty($folder) or $folder eq 'sent')">
-            <xar:set name="tabclass">'xar-tab-active'</xar:set>
-        <xar:else />
-            <xar:set name="tabclass">'xar-tab'</xar:set>
-        </xar:if>
-        <li class="#$tabclass#">
-          <a href="#xarModURL('messages','user','view',array('folder'=>'sent'))#">
-            Sent &#160;(&#160;#$sent#&#160;)
-          </a>
-        </li>
-        <xar:if condition="xarModVars::get('messages','drafts') eq 1">
-            <xar:if condition="($activetab eq 'view' or $activetab eq 'modify') and (empty($folder) or $folder eq 'drafts')">
-                <xar:set name="tabclass">'xar-tab-active'</xar:set>
-            <xar:else />
-                <xar:set name="tabclass">'xar-tab'</xar:set>
-            </xar:if>
-            <li class="#$tabclass#">
-              <a href="#xarModURL('messages','user','view',array('folder'=>'drafts'))#">
-                Drafts &#160;(&#160;#$drafts#&#160;)
-              </a>
-            </li>
-        </xar:if>
+
+	<xar:if condition="$folder eq 'sent'">
+		<xar:set name="tabclass">'xar-tab-active'</xar:set>
+		<xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+	<xar:else />
+		<xar:set name="tabclass">'xar-tab'</xar:set>
+		<xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+	</xar:if>
+	<li class="#$tabclass#">
+	  <a href="#xarModURL('messages','user','view',array('folder'=>'sent'))#" class="#$linkclass#">
+		Sent &#160;(&#160;#$sent#&#160;)
+	  </a>
+	</li>
+      
+	<xar:if condition="$folder eq 'drafts'">
+		<xar:set name="tabclass">'xar-tab-active'</xar:set>
+		<xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+	<xar:else />
+		<xar:set name="tabclass">'xar-tab'</xar:set>
+		<xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+	</xar:if>
+	<li class="#$tabclass#">
+	  <a href="#xarModURL('messages','user','view',array('folder'=>'drafts'))#" class="#$linkclass#">
+		Drafts &#160;(&#160;#$drafts#&#160;)
+	  </a>
+	</li>
     </xar:sec>
     <xar:comment>Psspl: Added the code for configuring NewMessages tab</xar:comment>
     <xar:if condition="xarMod::apiFunc('messages' , 'user' , 'isset_grouplist')"> 
     <xar:sec mask="AddMessages" catch="false">
-        <xar:set name="tabclass">$activetab=='new'?'xar-tab-active':'xar-tab'</xar:set>
+        <xar:if condition="$folder eq 'new'">
+		<xar:set name="tabclass">'xar-tab-active'</xar:set>
+		<xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+	<xar:else />
+		<xar:set name="tabclass">'xar-tab'</xar:set>
+		<xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+	</xar:if>
         <li class="#$tabclass#">
-          <a href="#xarModURL('messages','user','new')#">
+          <a href="#xarModURL('messages','user','new')#" class="#$linkclass#">
             New Message
           </a>
         </li>

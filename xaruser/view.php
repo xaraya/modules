@@ -45,6 +45,7 @@ function messages_user_view() {
 		case 'sent':
 			$where = 'from eq ' . xarUserGetVar('id');
 			$where .= ' and author_delete eq ' . MESSAGES_NOTDELETED;
+			$where .= ' and author_status ne ' . MESSAGES_STATUS_DRAFT;
 			$data['fieldlist'] = 'to,subject,time,author_status';
 			xarTplSetPageTitle(xarML('Sent Messages'));
 			$data['input_title']    = xarML('Sent Messages');
@@ -96,7 +97,7 @@ function messages_user_view() {
     } else {
         $data['away_message'] = '';
     }
-
+ 
     $data['folder'] = $folder;
 
     return $data;

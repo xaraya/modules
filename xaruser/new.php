@@ -46,6 +46,7 @@ function messages_user_new() {
 	} else {
 		$folder = 'inbox';
 	}
+	$data['folder'] = 'new';
 
 	if ($send) {
 		$time = $object->properties['time']->value;

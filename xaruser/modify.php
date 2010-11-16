@@ -95,6 +95,8 @@ function messages_user_modify() {
         }
     } 
 
+	$data['folder'] = 'drafts';
+
     return $data;
 }
 
