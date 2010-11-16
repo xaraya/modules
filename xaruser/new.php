@@ -26,10 +26,12 @@ function messages_user_new() {
 
 	if (!xarVarFetch('send',    'str',   $send, '',       XARVAR_NOT_REQUIRED)) return; 
 	if (!xarVarFetch('draft',    'str',   $draft, '',       XARVAR_NOT_REQUIRED)) return; 
+	if (!xarVarFetch('saveandedit',    'str',   $saveandedit, '',       XARVAR_NOT_REQUIRED)) return;
 	if(!xarVarFetch('id',       'id',    $id,   NULL, XARVAR_NOT_REQUIRED)) {return;}
 
 	$send = (!empty($send)) ? true : false;
 	$draft = (!empty($draft)) ? true : false;
+	$saveandedit = (!empty($saveandedit)) ? true : false;
 
     $object = DataObjectMaster::getObject(array('name' => 'messages_messages'));
 	$data['object'] = $object;
@@ -61,7 +63,12 @@ function messages_user_new() {
 		$data['input_title']    = xarML('Reply to Message');
 	}
 
-	if ($send || $draft) {
+	if ($send || $draft || $saveandedit) {
+
+		// Check for a valid confirmation key
+        if (!xarSecConfirmAuthKey()) {
+            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+        } 
 
 		$isvalid = $object->checkInput();
 
@@ -88,33 +95,13 @@ function messages_user_new() {
 			
 		$id = $object->createItem();
 
-		if (xarModVars::get('messages','sendemail')) {
-			$msgurl = xarModURL('messages','user','display',array('id' => $id));
-			$to = $data['object']->properties['to']->value;
-			$from = xarUserGetVar('name');
-			$msgdata['info'] = xarUserGetVar('email',$to);
-			$msgdata['name'] = xarUserGetVar('name',$to); 
-			
-			/* See if we have templates at var/messaging/messages.
-			We're looking for newmessage-subject.xt and newmessage-message.xt.
-			Note: In getmessagestrings, we must find both the subject and message template or we can't use either. */
-			try {
-				$tpl_args['template'] = 'newmessage';
-				$tpl_data = xarMod::apiFunc('mail','admin','getmessagestrings',$tpl_args);
-				} catch (Exception $e) {
-				}
-			if (isset($tpl_data)) {
-				$tpl_data['to_name'] = xarUserGetVar('name',$to);
-				$tpl_data['from_name'] = $from;
-				$tpl_data['htmlmessage'] = ''; //avoid error in mail_admin_replace
-				$replace = xarMod::apiFunc('mail','admin','replace', $tpl_data);
-				$msgdata = array_merge($msgdata, $replace);
-			} else {
-				$msgdata['subject'] = $msgdata['name'] . ': New message from ' . $from;
-				$msgdata['message'] = 'You have a new message from ' . $from . '.';
-				$msgdata['message'] .= 'View your message: ' . $msgurl;
-			}   
-			$sendmail = xarMod::apiFunc('mail','admin','sendmail', $msgdata);
+		if ($send && xarModVars::get('messages','sendemail')) {
+			xarMod::apiFunc('messages','user','sendmail',array('object' => $data['object']));
+		}
+
+		if ($saveandedit) {
+			xarResponse::redirect(xarModURL('messages','user','modify', array('id' => $id)));
+			return true;
 		}
 
 		xarResponse::redirect(xarModURL('messages','user','view', array('folder' => $folder)));

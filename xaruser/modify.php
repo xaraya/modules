@@ -18,10 +18,15 @@ function messages_user_modify() {
 
 	if (!xarVarFetch('send',    'str',   $send, '',       XARVAR_NOT_REQUIRED)) return; 
 	if (!xarVarFetch('draft',    'str',   $draft, '',       XARVAR_NOT_REQUIRED)) return; 
+	if (!xarVarFetch('saveandedit',    'str',   $saveandedit, '',       XARVAR_NOT_REQUIRED)) return; 
 	if(!xarVarFetch('id',       'id',    $id,   NULL, XARVAR_NOT_REQUIRED)) {return;}
 
 	$send = (!empty($send)) ? true : false;
 	$draft = (!empty($draft)) ? true : false;
+	$saveandedit = (!empty($saveandedit)) ? true : false;
+
+	xarTplSetPageTitle(xarML('Edit Draft'));
+	$data['input_title']    = xarML('Edit Draft');
 
     // Check if we still have no id of the item to modify.
     if (empty($id)) {
@@ -39,6 +44,7 @@ function messages_user_modify() {
 	$object = DataObjectMaster::getObject(array('name' => 'messages_messages'));
 	$object->getItem(array('itemid' => $id)); 
 	$replyto = $object->properties['replyto']->value;
+	$data['replyto'] = $replyto;
 
 	$data['reply'] = ($replyto > 0) ? true : false;
 
@@ -50,7 +56,7 @@ function messages_user_modify() {
 
 	$data['label'] = $object->label;
 
-    if ($send || $draft) {
+    if ($send || $draft || $saveandedit) {
 
         // Check for a valid confirmation key
         if (!xarSecConfirmAuthKey()) {
@@ -66,14 +72,26 @@ function messages_user_modify() {
             // Good data: update the item
 
 			if ($send) {
+				$object->properties['time']->setValue(time());
 				$object->properties['author_status']->setValue(MESSAGES_STATUS_UNREAD);
 			}
 
             $object->updateItem(array('itemid' => $id));
 
-			xarResponse::redirect(xarModURL('messages','user','modify', array('id'=>$id))); 
+			if ($saveandedit) {
+				xarResponse::redirect(xarModURL('messages','user','modify', array('id'=>$id))); 
+				return true;
+			} elseif ($draft) {
+				xarResponse::redirect(xarModURL('messages','user','view', array('folder'=> 'drafts'))); 
+				return true;
+			} elseif ($send) {
+				if (xarModVars::get('messages','sendemail')) {
+					xarMod::apiFunc('messages','user','sendmail',array('object' => $data['object']));
+				}
+				xarResponse::redirect(xarModURL('messages','user','view')); 
+				return true;
+			}
 
-            return true;
         }
     } 
 

@@ -42,7 +42,7 @@
         </span>
         <xar:comment>Psspl:Modifided the code for anonymous message</xar:comment>
         <xar:if condition="!$postanon AND $is_sendtouser">
-            <a href="#$author#" title="#xarML('View user info')#">
+            <a href="#xarmodurl('roles','user','display',array('id' => $author))#" title="#xarML('View user info')#">
                 #xarUserGetVar('name',$author)#
             </a>
         <xar:else/>

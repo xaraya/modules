@@ -59,7 +59,13 @@ function messages_user_view() {
 			break;
 	}
 
-	$data['sort'] = 'id DESC'; // for now
+	$sort = xarMod::apiFunc('messages','admin','sort', array(
+		//how to sort if the URL or config say otherwise...
+		//'object' => $object,
+		'sortfield_fallback' => 'time', 
+		'ascdesc_fallback' => 'DESC'
+	));
+	$data['sort'] = $sort;
 
 	$total = DataObjectMaster::getObjectList(array(
 							'name' => 'messages_messages',

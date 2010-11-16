@@ -29,12 +29,12 @@
                 <xar:set name="arrow">'desc'</xar:set>
             </xar:if>
 
-            <a href="#xarModURL('messages','admin','view', array('sortfield' => $name, 'ascdesc' => strtoupper($arrow)))#"><img src="#sys::code()#modules/base/xarimages/icons/sort-#$arrow#.png" width="16" height="16" alt="reverse order" /></a>
+            <a href="#xarModURL('messages','user','view', array('sortfield' => $name, 'ascdesc' => strtoupper($arrow), 'folder' => $folder))#"><img src="#sys::code()#modules/base/xarimages/icons/sort-#$arrow#.png" width="16" height="16" alt="reverse order" /></a>
 
         <xar:else />
 
         <xar:comment>we're not sorting on this column, so we should make the column head a link</xar:comment>
-            <a href="#xarModURL('messages','admin','view', array('sortfield' => $name))#"><xar:data-label property="$properties[$name]" /></a>
+            <a href="#xarModURL('messages','user','view', array('folder' => $folder, 'sortfield' => $name))#"><xar:data-label property="$properties[$name]" /></a>
 
         </xar:if>
 

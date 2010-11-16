@@ -11,7 +11,7 @@
 
   <p>A private messaging module.</p>
 
-  <p>Before using this module you will need to specify who can send to whom.  This is done in the Role Groups fieldset in the <a href="#xarModURL('messages','admin','modifyconfig')#">Modify Config tab</a>.</p>
+  <p>Before using this module you must specify who should be permitted to send to whom.  This is done in the Role Groups fieldset in the <a href="#xarModURL('messages','admin','modifyconfig')#">Modify Config tab</a>.</p>
 
 </div>
 </xar:template>

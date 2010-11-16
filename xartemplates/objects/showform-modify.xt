@@ -40,7 +40,6 @@
         <xar:if condition="$reply"> 
             <xar:data-output property="$properties['to']" />
             <xar:data-input property="$properties['to']" hidden="hidden"/> 
-	    <xar:data-input property="$properties['replyto']" hidden="hidden"/> 
         <xar:else/>
             <xar:set name="users">$properties['to']->getOptions()</xar:set>
             <xar:if condition="empty($users)">
@@ -50,6 +49,7 @@
                 <xar:data-input property="$properties['to']"/>
             </xar:if>
         </xar:if>
+	<input type="hidden" name="replyto" value="#$replyto#" />
     </div>
 
     <div class="xar-form-input-wrapper">
@@ -63,18 +63,6 @@
         <xar:data-label property="$properties['body']" title="$title" for="id"/>
         <xar:data-input property="$properties['body']" tabindex="1"/>
     </div>
-
-    <xar:if condition="xarModVars::get('messages','drafts') eq 1">
-        <div class="xar-form-input-wrapper-after">
-            <xar:set name="is_draft">
-                $properties['author_status']->value == MESSAGES_STATUS_DRAFT
-            </xar:set>
-            <xar:data-input type="checkbox" id="is_draft" name="is_draft" value="$is_draft"/>
-            <label for="is_draft" label="Save as draft">
-                Save as draft
-            </label>
-        </div>
-    </xar:if>
 
     <xar:data-input property="$properties['id']" hidden="hidden"/>
     <xar:data-input property="$properties['time']" hidden="hidden"/>

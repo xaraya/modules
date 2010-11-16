@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <!-- common admin menu for this module - remove link to the current function -->
+<xar:style scope="module" module="messages" file="messages"/>
+
     <div class="xar-mod-head">
         <span class="xar-mod-title">Private Messages</span>
     </div>
@@ -19,14 +19,15 @@
 	 
         <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
            
-                <xar:data-form object="$object" tplmodule="messages" template="modify" reply="$reply" />
+                <xar:data-form object="$object" tplmodule="messages" template="modify" reply="$reply" replyto="$replyto" />
 		
            <div class="xar-form-input-wrapper-after">
-                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
                 <input type="hidden" name="id" id="id" value="#$id#" />
               
-		<input type="submit" name="draft" value="#xarML('Save as Draft')#" />
-                <input type="submit" name ="send" value="#xarML('Send')#" />
+		<input type="submit" name="draft" id="draft" value="#xarML('Save draft')#" class="xar-margin-thickright" />
+		<input type="submit" name="saveandedit" id="saveandedit" value="#xarML('Save draft and edit')#" class="xar-margin-thickright"/>
+                <input type="submit" name ="send" id="send" value="#xarML('Send')#" class="xar-margin-thickright" />
             </div>  
         </form>
     </div>
