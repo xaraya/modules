@@ -5,11 +5,12 @@
     <div class="xar-mod-head">
         <span class="xar-mod-title">Private Messages</span>
     </div>
-    <div class="xar-mod-body">
-    
-<xar:template file="user-menu" scope="module" />
 
-      <h2>Edit Message</h2>
+<xar:template type="module" file="user-menu"/>
+    
+    <div class="xar-mod-body">
+
+    <h2>#$input_title#</h2>
         <xar:set name="withupload">#$object->upload#</xar:set>
         <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
         <xar:if condition="!empty($withupload)">
@@ -18,22 +19,14 @@
 	 
         <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
            
-            <fieldset>
-                <legend>
-                    Modify
-                </legend>
- 
-                <xar:data-form object="$object" tplmodule="messages" action="$action" />
-		 
-             </fieldset>
-	     
+                <xar:data-form object="$object" tplmodule="messages" template="modify" reply="$reply" />
+		
            <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-		<input type="hidden" name="recipient_status" id="recipient_status" value="1" />
                 <input type="hidden" name="id" id="id" value="#$id#" />
-                <input type="hidden" name="confirm" id="confirm" value="true" /> 
-                &#160;&#160;&#160;
-                <input type="submit" value="#xarML('Save')#" />
+              
+		<input type="submit" name="draft" value="#xarML('Save as Draft')#" />
+                <input type="submit" name ="send" value="#xarML('Send')#" />
             </div>  
         </form>
     </div>

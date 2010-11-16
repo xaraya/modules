@@ -14,10 +14,14 @@
 
 sys::import('modules.messages.xarincludes.defines');
 
-function messages_user_modify()
-{
-    if(!xarVarFetch('id',       'id',    $id,   NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return; 
+function messages_user_modify() {
+
+	if (!xarVarFetch('send',    'str',   $send, '',       XARVAR_NOT_REQUIRED)) return; 
+	if (!xarVarFetch('draft',    'str',   $draft, '',       XARVAR_NOT_REQUIRED)) return; 
+	if(!xarVarFetch('id',       'id',    $id,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+
+	$send = (!empty($send)) ? true : false;
+	$draft = (!empty($draft)) ? true : false;
 
     // Check if we still have no id of the item to modify.
     if (empty($id)) {
@@ -34,26 +38,19 @@ function messages_user_modify()
 	// Get the object name
 	$object = DataObjectMaster::getObject(array('name' => 'messages_messages'));
 	$object->getItem(array('itemid' => $id)); 
+	$replyto = $object->properties['replyto']->value;
 
-	$draft = $object->properties['author_status']->value;
+	$data['reply'] = ($replyto > 0) ? true : false;
 
-	if ($draft != 0) { // no reason to modify something that isn't a draft
-		return;
-	}
+	$data['object'] = $object;
 
 	if (!xarSecurityCheck('Editmessages',0)) {
 		return;
 	}
-	
-	$data['action'] = 'draft';
-
-	$data['object'] = $object; // save for later
 
 	$data['label'] = $object->label;
-   
-    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
 
-    if ($data['confirm']) {
+    if ($send || $draft) {
 
         // Check for a valid confirmation key
         if (!xarSecConfirmAuthKey()) {
@@ -61,23 +58,24 @@ function messages_user_modify()
         }        
 
         // Get the data from the form
-        $isvalid = $data['object']->checkInput();
+        $isvalid = $object->checkInput();
 
         if (!$isvalid) { 
             return xarTplModule('messages','user','modify', $data);          
         } else {
             // Good data: update the item
 
-            $data['object']->updateItem(array('itemid' => $id));
+			if ($send) {
+				$object->properties['author_status']->setValue(MESSAGES_STATUS_UNREAD);
+			}
+
+            $object->updateItem(array('itemid' => $id));
 
 			xarResponse::redirect(xarModURL('messages','user','modify', array('id'=>$id))); 
 
             return true;
         }
-    } else {
-        $data['object']->getItem(array('itemid' => $id));
-    }
-
+    } 
 
     return $data;
 }

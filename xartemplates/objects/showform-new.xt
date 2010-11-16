@@ -1,0 +1,43 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+     
+     <div class="xar-form-input-wrapper">
+        <xar:if condition="$reply">
+	<h3>Your reply:</h3> 
+            <xar:data-input property="$properties['to']" hidden="hidden" value="$to" />   
+        <xar:else/>
+		<xar:var name="title">To whom the message will be sent</xar:var>
+		<xar:data-label property="$properties['to']" title="$title" for="id"/>
+            <xar:set name="users">$properties['to']->getOptions()</xar:set>
+            <xar:if condition="empty($users)">
+                No recipients available
+                <xar:data-input property="$properties['to']" hidden="hidden"/>
+            <xar:else />
+                <xar:data-input property="$properties['to']"/>
+            </xar:if>
+        </xar:if>
+	<input type="hidden" name="replyto" value="#$replyto#" />
+    </div>
+
+    <div class="xar-form-input-wrapper">
+        <xar:var name="title">Message subject</xar:var>
+        <xar:data-label property="$properties['subject']" title="$title" for="id"/>
+        <xar:data-input property="$properties['subject']" tabindex="1"/>
+    </div>
+
+    <div class="xar-form-input-wrapper">
+        <xar:var name="title">Message text</xar:var>
+        <xar:data-label property="$properties['body']" title="$title" for="id"/>
+        <xar:data-input property="$properties['body']" tabindex="1"/>
+    </div>
+
+    <div class="xar-form-input-wrapper">
+	<!--Psspl:Modified the code for anonymous message-->
+	<xar:if condition="xarModVars::get('messages', 'allowanonymous') and !$reply">
+		    <div class="xar-form-input-wrapper">
+			<xar:data-label property="$properties['postanon']" for="id" label="Post Anonymously"/>
+			<xar:data-input property="$properties['postanon']"/>
+		    </div> 
+	</xar:if>
+    </div>
+
+</xar:template>

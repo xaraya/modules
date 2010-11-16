@@ -90,8 +90,7 @@
         <xar:data-output property="$properties['subject']"/>
     </div>
 
-    <hr class="xar-clearboth"/>
-    <div>
+    <div id="message_body">
         <xar:data-output property="$properties['body']"/>
     </div>
     <xar:comment>Psspl:Added the code for folder type</xar:comment>

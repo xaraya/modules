@@ -26,12 +26,10 @@
 
         <!--Psspl:Modified the code for anonymous message-->
         <xar:if condition="xarModVars::get('messages', 'allowanonymous')">
-		<xar:if condition="$action ne 'reply' OR ($action ne 'modify' AND !isset($previousanon)) AND $is_sendtouser">
-		    <div class="xar-form-input-wrapper">
+		<div class="xar-form-input-wrapper">
 			<xar:data-label property="$properties['postanon']" for="id" label="Post Anonymously"/>
 			<xar:data-input property="$properties['postanon']"/>
-		    </div>
-		</xar:if>
+		</div>
 	</xar:if>
 
     </div>
@@ -39,27 +37,12 @@
     <div class="xar-form-input-wrapper">
         <xar:var name="title">To whom the message will be sent</xar:var>
         <xar:data-label property="$properties['to']" title="$title" for="id"/>
-        <xar:if condition="$action eq 'reply'">
-            <xar:if condition="isset($previousanon) AND $previousanon eq 0 AND $is_sendtouser">
-                #xarUserGetVar('name',$recipient)#      
-            <xar:else/>
-                Anonymous
-            </xar:if>
-            <xar:data-input property="$properties['to']" hidden="hidden"/>
-        <xar:elseif condition="$action eq 'modify'"/>
-            <xar:if condition="isset($previousanon) AND $previousanon">
-                Anonymous
-                <xar:data-input property="$properties['to']" hidden="hidden"/>
-            <xar:elseif condition="$is_sendtouser"/>
-                <xar:data-input property="$properties['to']"/>
-            <xar:else/>
-                Anonymous
-                <xar:data-input property="$properties['to']" hidden="hidden"/>
-            </xar:if>   
+        <xar:if condition="$reply"> 
+            <xar:data-output property="$properties['to']" />
+            <xar:data-input property="$properties['to']" hidden="hidden"/> 
+	    <xar:data-input property="$properties['replyto']" hidden="hidden"/> 
         <xar:else/>
-            <xar:set name="users">
-                $properties['to']->getOptions()
-            </xar:set>
+            <xar:set name="users">$properties['to']->getOptions()</xar:set>
             <xar:if condition="empty($users)">
                 No recipients available
                 <xar:data-input property="$properties['to']" hidden="hidden"/>

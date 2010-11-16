@@ -29,7 +29,10 @@ function messages_userapi_encode_shorturl($args) {
             case 'id':
                 $id = $value;
                 break;
-            case 'func':
+            case 'replyto':
+                $replyto = $value;
+                break;
+			case 'func':
                 $func = $value;
                 break;
 			case 'folder':
@@ -72,9 +75,8 @@ function messages_userapi_encode_shorturl($args) {
 			break;
 		case 'reply':
 			$path .= '/reply';
-			if (isset($id)) {
-                $path .= '/' . $id;
-                unset($id);
+			if (isset($replyto)) {
+                $path .= '/' . $replyto;
             }
 			break; 
 		case 'display':
@@ -96,6 +98,10 @@ function messages_userapi_encode_shorturl($args) {
 
     if (isset($id) && $func != 'display' && $func != 'reply' && $func != 'delete') {
         $rest['id'] = $id;
+    }
+
+	if (isset($replyto)) {
+        $rest['replyto'] = $replyto;
     }
 
     $add = array();

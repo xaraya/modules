@@ -79,7 +79,6 @@ function messages_init()
 
 	xarModVars::set('messages', 'sendemail', false);
     xarModVars::set('messages', 'awaymsg', true );
-    xarModVars::set('messages', 'drafts', true );
 	xarModVars::set('messages', 'allowanonymous', false);
 	xarModVars::set('messages', 'allowedsendmessages', serialize(array()));
 

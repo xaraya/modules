@@ -14,8 +14,8 @@
 
 sys::import('modules.messages.xarincludes.defines');
 
-function messages_user_view( )
-{
+function messages_user_view() {
+
     if (!xarSecurityCheck('ReadMessages')) return;
 
 	if(!xarVarFetch('startnum', 'isset', $startnum, NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -37,15 +37,25 @@ function messages_user_view( )
         case 'inbox':
 			$where = 'to eq ' . xarUserGetVar('id');
 			$where .= ' and recipient_delete eq ' . MESSAGES_NOTDELETED;
+			$where .= ' and author_status ne ' . MESSAGES_STATUS_DRAFT;
+			$data['fieldlist'] = 'from,subject,time,author_status';
+			xarTplSetPageTitle(xarML('Inbox'));
+			$data['input_title']    = xarML('Inbox');
 			break;
 		case 'sent':
 			$where = 'from eq ' . xarUserGetVar('id');
 			$where .= ' and author_delete eq ' . MESSAGES_NOTDELETED;
+			$data['fieldlist'] = 'to,subject,time,author_status';
+			xarTplSetPageTitle(xarML('Sent Messages'));
+			$data['input_title']    = xarML('Sent Messages');
 			break;
 		case 'drafts':
 			$where = 'author_status eq 0';
 			$where .= ' and from eq ' . xarUserGetVar('id');
 			$where .= ' and author_delete eq ' . MESSAGES_NOTDELETED;
+			$data['fieldlist'] = 'to,subject,time,author_status';
+			xarTplSetPageTitle(xarML('Drafts'));
+			$data['input_title']    = xarML('Drafts');
 			break;
 	}
 
@@ -64,6 +74,7 @@ function messages_user_view( )
 							'status'    =>DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
 							'startnum'  => $startnum,
 							'numitems' => $numitems,
+							'sort' => $data['sort'],
 							'where' => $where
 							));
 	

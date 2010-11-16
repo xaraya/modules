@@ -14,13 +14,18 @@
 
 sys::import('modules.messages.xarincludes.defines');
 
-function messages_user_display( $args )
+function messages_user_display($args)
 {
-    if (!xarSecurityCheck('ViewMessages')) return;
+	extract($args);
 
+    if (!xarSecurityCheck('ViewMessages')) return;
+   
     if (!xarVarFetch('object', 'str', $object, 'messages_messages', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('id', 'int:1', $id, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('id', 'int', $id, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $data['folder'], 'inbox', XARVAR_NOT_REQUIRED)) return;
+
+	xarTplSetPageTitle(xarML('Read Message'));
+	$data['input_title']    = xarML('Read Message');
     
     //Psspl:Added the code for configuring the user-menu
     $data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');

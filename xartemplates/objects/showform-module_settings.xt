@@ -18,12 +18,6 @@
 			<xar:data-input property="$properties[$name]" />		
 	     </div>
 
-	     <xar:set name="name">'drafts'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
-
 	     <xar:set name="name">'allowanonymous'</xar:set>
 	    <div class="xar-form-input-wrapper">
 			<xar:data-label property="$properties[$name]" for="id" />       

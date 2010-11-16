@@ -26,14 +26,14 @@ function messages_userapi_decode_shorturl($params) {
 	}
 
     switch ($params[1]) {
-        case 'new':
+        case 'new': 
             return array('new', array());
             break;
 		case 'modify':
             return array('modify', array('id' => $params[2]));
             break;
 		case 'reply':
-            return array('reply', array('id' => $params[2]));
+            return array('reply', array('replyto' => $params[2]));
             break;
 		case 'sent':
             return array('view', array('folder' => 'sent'));

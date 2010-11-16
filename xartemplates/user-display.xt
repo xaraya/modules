@@ -3,16 +3,18 @@
     <div class="xar-mod-head">
         <span class="xar-mod-title">Private Messages</span>
     </div>
-    <div class="xar-mod-body">
-        <xar:comment>Psspl: Added the code for configuring NewMessages tab</xar:comment>
-        <xar:template type="module" file="user-menu"/>
 
-        <h2>View Message</h2>
+<xar:template type="module" file="user-menu"/>
+    
+    <div class="xar-mod-body">
+
+    <h2>#$input_title#</h2>
 
         <xar:data-display object="$object" tplmodule="messages" action="$action" folder="$folder"/>
+
         <div class="xar-margin-thicktop">
             <xar:if condition="xarSecurityCheck('AddMessages', 0)">
-                <a href="#xarModURL('messages','user','reply',array('id' => $object->properties['id']->value, 'folder' => $folder))#" title="#xarML('Delete Message')#">Reply</a>
+                <a href="#xarModURL('messages','user','reply',array('replyto' => $object->properties['id']->value, 'folder' => $folder))#" title="#xarML('Delete Message')#">Reply</a>
             <xar:else/>
                 Reply
             </xar:if>
