@@ -48,11 +48,11 @@ function messages_user_modify( $args )
     }
 
     //Psspl:Added the code for configuring the user-menu
-//    $data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
+//    $data['allow_newpm'] = xarMod::apiFunc('messages' , 'user' , 'isset_grouplist');
         
 
     //Psspl:Modifided the code for getting user list.
-    $data['users'] = xarModAPIFunc('messages','user','get_sendtousers');    
+    $data['users'] = xarMod::apiFunc('messages','user','get_sendtousers');    
 
     if ($data['object']->properties['pid']->value) {
         // If this is a reply get the previous message

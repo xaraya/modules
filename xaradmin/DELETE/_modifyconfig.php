@@ -94,7 +94,7 @@
         $data['action']     = xarModURL('messages','admin','modifyconfig' );
         $data['authid'] = xarSecGenAuthKey();
         //$data['group'] = $group;
-        //$data['selectedGroupStr'] = xarModAPIFunc('messages','admin','getconfig',array('group'=>$group));
+        //$data['selectedGroupStr'] = xarMod::apiFunc('messages','admin','getconfig',array('group'=>$group));
         $data['supportshorturls']   = xarModVars::get('messages', 'SupportShortURLs');
 
         /*try {

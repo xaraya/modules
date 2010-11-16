@@ -30,16 +30,16 @@ function messages_userapi_get( $args )
         $status = MESSAGES_STATUS_READ;
     }
 
-    $list1 = xarModAPIFunc('messages',
+    $list1 = xarMod::apiFunc('messages',
                                    'user',
                                    'get_multiple',
                                     array('author'       => xarUserGetVar('id'),
                                           'status'      => MESSAGES_STATUS_READ));
-    $list = xarModAPIFunc('messages',
+    $list = xarMod::apiFunc('messages',
                            'user',
                            'get_one',
                             array('id' => $id));
-    $unread_list = xarModAPIFunc('messages',
+    $unread_list = xarMod::apiFunc('messages',
                                     'user',
                                     'get_multiple',
                                     array('recipient' => xarUserGetVar('id'),

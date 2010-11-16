@@ -23,12 +23,12 @@ function messages_adminapi_modify( $args )
     if (!xarVarFetch('itemtype', 'int:0:', $itemtype, 0, XARVAR_NOT_REQUIRED)) return;
 
     // Retrieve the object
-    $object = xarModAPIFunc('messages', 'user', 'get',
+    $object = xarMod::apiFunc('messages', 'user', 'get',
             array('itemtype'  => 1, 'itemid'    => $itemid));
 
     if ( empty( $object ) ) return;
 
-    $item_title = xarModAPIFunc('messages', 'user', 'gettitle',
+    $item_title = xarMod::apiFunc('messages', 'user', 'gettitle',
                 array('object' => $object, 'itemtype' =>  $itemtype ));
 
     $data = messages_admin_common( 'Reply Messages ' .$item_title . $from_userid );

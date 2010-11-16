@@ -28,7 +28,7 @@ function messages_userapi_getall( $args )
     switch($folder){
     
         case 'inbox':
-            $list = xarModAPIFunc('messages',
+            $list = xarMod::apiFunc('messages',
                                    'user',
                                    'get_multiple',
                                     array('recipient'   => xarUserGetVar('id'),
@@ -39,7 +39,7 @@ function messages_userapi_getall( $args )
                                           'numitems'    => $numitems));
             break;
         case 'sent':
-            $list = xarModAPIFunc('messages',
+            $list = xarMod::apiFunc('messages',
                                    'user',
                                    'get_multiple',
                                     array('author'      => xarUserGetVar('id'),
@@ -49,7 +49,7 @@ function messages_userapi_getall( $args )
                                           'numitems'    => $numitems));
             break;
         case 'drafts':
-            $list = xarModAPIFunc('messages',
+            $list = xarMod::apiFunc('messages',
                                    'user',
                                    'get_multiple',
                                     array('author'      => xarUserGetVar('id'),

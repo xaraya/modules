@@ -46,7 +46,7 @@ function messages_admin_update($args)
     // in false data to the system
     if (!xarSecConfirmAuthKey()) return;
 
-    if(!xarModAPIFunc('messages', 'admin', 'update',
+    if(!xarMod::apiFunc('messages', 'admin', 'update',
                     array('msg_id' => $msg_id,
                           'name' => $name,
                           'number' => $number))) {

@@ -87,7 +87,7 @@ function messages_userapi_get_tree($args)
         {
             // We have the message ID but we need
             // to know its left and right values
-            $msg = xarModAPIFunc('messages','user','get_one',Array('id' => $id));
+            $msg = xarMod::apiFunc('messages','user','get_one',Array('id' => $id));
             if ($msg == false) {
                 xarSession::setVar('errormsg', xarML('Message does not exist'));
                 return Array();

@@ -14,8 +14,8 @@
 
 sys::import('modules.messages.xarincludes.defines');
 
-function messages_user_display($args)
-{
+function messages_user_display($args) {
+
 	extract($args);
 
     if (!xarSecurityCheck('ViewMessages')) return;
@@ -28,7 +28,7 @@ function messages_user_display($args)
 	$data['input_title']    = xarML('Read Message');
     
     //Psspl:Added the code for configuring the user-menu
-    $data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
+    $data['allow_newpm'] = xarMod::apiFunc('messages' , 'user' , 'isset_grouplist');
         
     $data['object'] = DataObjectMaster::getObject(array('name' => $object));
     $data['object']->getItem(array('itemid' => $id));

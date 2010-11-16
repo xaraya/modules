@@ -40,7 +40,7 @@ function messages_adminapi_view( $args )
     $itemsperpage = xarModVars::get('messages', 'itemsperpage.' . $itemtype );
 
     $role_id = xarSession::getVar('role_id');
-    $objects = xarModAPIFunc('messages', 'user', 'getall',
+    $objects = xarMod::apiFunc('messages', 'user', 'getall',
              array('itemtype'  => $itemtype, 'numitems'  => $itemsperpage,
                    'startnum'  => $startnum, 'sort'=> array('msg_id'),
                    'fieldlist' => array( 'subject', 'from_userid', 'to_userid', 'msg_time', 'read_msg')));
@@ -58,20 +58,20 @@ function messages_adminapi_view( $args )
     $data['numitems'] = & $objects->numitems;
 
 
-    $data['pager'] = xarTplGetPager($startnum, xarModAPIFunc('messages', 'user', 'count', array( 'itemtype' => $itemtype )),
+    $data['pager'] = xarTplGetPager($startnum, xarMod::apiFunc('messages', 'user', 'count', array( 'itemtype' => $itemtype )),
                    xarModURL('messages', $type, 'display',
                    array('startnum'  => '%%', 'itemtype' => $itemtype )),$itemsperpage );
 
-        $numitems = xarModAPIFunc('messages', 'user', 'counttotal',
+        $numitems = xarMod::apiFunc('messages', 'user', 'counttotal',
                   array('module'     => 'messages', 'itemtype'  => $itemtype));
 
          $data['totalin'] = $numitems;
 
-         $numitems = xarModAPIFunc('messages', 'user', 'counttotalout',
+         $numitems = xarMod::apiFunc('messages', 'user', 'counttotalout',
                    array('module'     => 'messages', 'itemtype'  => $itemtype));
 
          $data['totalout'] =$numitems;
-         $numitems = xarModAPIFunc('messages', 'user', 'countunread',
+         $numitems = xarMod::apiFunc('messages', 'user', 'countunread',
                    array('module' => 'messages', 'itemtype'  => $itemtype));
 
          $data['unread'] = $numitems;

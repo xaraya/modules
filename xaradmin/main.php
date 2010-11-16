@@ -11,41 +11,22 @@
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
  */
-function messages_admin_main()
-{
+function messages_admin_main() {
 
-    if (!xarSecurityCheck( 'EditMessages')) return;
+    if (!xarSecurityCheck('EditMessages')) return;
 
+    $refererinfo =  xarRequest::getInfo(xarServer::getVar('HTTP_REFERER'));
+    $info =  xarRequest::getInfo();
+    $samemodule = $info[0] == $refererinfo[0];
+    
+    if (((bool)xarModVars::get('modules', 'disableoverview') == false) || $samemodule){
+		if(!xarVarFetch('tab',   'str', $data['tab'],   '', XARVAR_NOT_REQUIRED)) {return;}
+        return xarTplModule('messages','admin','overview',$data);
+    } else {
+        xarResponse::redirect(xarModURL('messages', 'admin', 'modifyconfig'));
+        return true;
+    } 
 
-    // No we shouldn't. So we redirect to the admin_view() function.
-    xarResponse::redirect(
-        xarModURL(
-            'messages'
-            ,'admin'
-            ,'modifyconfig' ));
-    return true;
-
-}
-
-function messages_admin_common( $title = 'Undefined' )
-{
-         $common = array();
-         $common['menu'] = array();
-
-         // Initialize the statusmessage
-         $statusmsg = xarSession::getVar( 'messages_statusmsg' );
-         if ( isset($statusmsg)){
-              xarSessionDelVar('messages_statusmsg');
-         }
-
-         // Set the page title
-         xarTplSetPageTitle( 'messages :: ' . $title );
-
-         // Initialize the title
-         $common['pagetitle'] = $title;
-         $common['type'] = 'Messages Administration';
-
-         return array( 'common' => $common );
 }
 
 ?>

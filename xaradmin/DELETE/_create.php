@@ -29,7 +29,7 @@ function messages_admin_create($args)
     // in false data to the system
     if (!xarSecConfirmAuthKey()) return;
 
-    $msg_id = xarModAPIFunc('messages', 'admin','create',
+    $msg_id = xarMod::apiFunc('messages', 'admin','create',
                         array('name' => $name,
                               'number' => $number));
 

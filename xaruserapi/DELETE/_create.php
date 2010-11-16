@@ -71,7 +71,7 @@ function messages_userapi_create( $args )
 
     // parentid != zero then we need to verify the parent is valid
     if ($pid != 0) {
-        $parent = xarModAPIFunc('messages','user','get_one',
+        $parent = xarMod::apiFunc('messages','user','get_one',
                                    array('id' => $pid));
 
         if (!$parent) {
@@ -89,7 +89,7 @@ function messages_userapi_create( $args )
     // there should be -at-least- one affected row -- if not
     // then raise an exception. btw, at the very least,
     // the 'right' value of the parent node would have been affected.
-    if (!xarModAPIFunc('messages',
+    if (!xarMod::apiFunc('messages',
                        'user',
                        'create_gap',
                         array('startpoint' => $parent_right))) {

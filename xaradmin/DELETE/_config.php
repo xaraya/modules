@@ -30,7 +30,7 @@ function messages_admin_config( $args )
 
     switch( $itemtype ) {
         case 1:
-            return xarModAPIFunc('messages','messages','config',$args );
+            return xarMod::apiFunc('messages','messages','config',$args );
 
         default:
             return messages_adminpriv_config( $args );
@@ -73,10 +73,10 @@ function messages_adminpriv_config( $args )
     } // Save the changes
     //Psspl:Added the code for modify action for storing selected information.
    if ($action == 'Modify') {
-                xarModAPIFunc('messages','admin','setconfig',array('group'=>$data['group'],'childgroupsimploded' => $childgroupsimploded));
+                xarMod::apiFunc('messages','admin','setconfig',array('group'=>$data['group'],'childgroupsimploded' => $childgroupsimploded));
         
     }
-    $data['selectedGroupStr'] = xarModAPIFunc('messages','admin','getconfig',array('group'=>$data['group']));
+    $data['selectedGroupStr'] = xarMod::apiFunc('messages','admin','getconfig',array('group'=>$data['group']));
     $data['common']['menu_label'] = 'Configure';
     $data['common']['menu']       = messages_adminpriv_configmenu();
 

@@ -11,7 +11,7 @@
         </xar:set>
     <xar:else />
         <xar:set name="is_sendtouser">
-            xarModAPIFunc('messages','user','is_sendtouser', 
+            xarMod::apiFunc('messages','user','is_sendtouser', 
                 array(
                     'sendtouser' => $recipient,
                 )

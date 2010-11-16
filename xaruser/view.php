@@ -31,14 +31,14 @@ function messages_user_view() {
 	}
 
     //Psspl:Added the code for configuring the user-menu
-//    $data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
+	//$data['allow_newpm'] = xarMod::apiFunc('messages' , 'user' , 'isset_grouplist');
 
 	switch($folder){
         case 'inbox':
 			$where = 'to eq ' . xarUserGetVar('id');
 			$where .= ' and recipient_delete eq ' . MESSAGES_NOTDELETED;
 			$where .= ' and author_status ne ' . MESSAGES_STATUS_DRAFT;
-			$data['fieldlist'] = 'from,subject,time,author_status';
+			$data['fieldlist'] = 'from,subject,time,recipient_status';
 			xarTplSetPageTitle(xarML('Inbox'));
 			$data['input_title']    = xarML('Inbox');
 			break;

@@ -112,7 +112,7 @@
                                 <xar:set name="recipient">$loop->item['recipient_id']</xar:set>
                                 <xar:if condition="$folder eq 'inbox'">
                                     <xar:set name="is_sendtouser">
-                                        xarModAPIFunc('messages','user','is_sendtouser', 
+                                        xarMod::apiFunc('messages','user','is_sendtouser', 
                                             array(
                                                 'currentuser' => $recipient,
                                                 'sendtouser' => $author,
@@ -128,7 +128,7 @@
                                     </xar:if>
                                 <xar:else />
                                     <xar:set name="is_sendtouser">
-                                        xarModAPIFunc('messages','user','is_sendtouser', 
+                                        xarMod::apiFunc('messages','user','is_sendtouser', 
                                             array(
                                                 'currentuser' => $author,
                                                 'sendtouser' => $recipient,

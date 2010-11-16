@@ -6,10 +6,10 @@
 <xar:set name="request">xarRequest::getInfo()</xar:set>
 <xar:set name="activetab">$request[2]</xar:set>
 <xar:set name="activetype">$request[1]</xar:set>
-<xar:set name="unread">xarModAPIFunc('messages','user','get_count',array('recipient' => xarUserGetVar('id'),'unread'=>true))</xar:set>
-<xar:set name="sent">xarModAPIFunc('messages','user','get_count',array('author' => xarUserGetVar('id')))</xar:set>
-<xar:set name="total">xarModAPIFunc('messages','user','get_count',array('recipient' => xarUserGetVar('id')))</xar:set>
-<xar:set name="drafts">xarModAPIFunc('messages','user','get_count',array('author' => xarUserGetVar('id'), 'drafts' => true))</xar:set>
+<xar:set name="unread">xarMod::apiFunc('messages','user','get_count',array('recipient' => xarUserGetVar('id'),'unread'=>true))</xar:set>
+<xar:set name="sent">xarMod::apiFunc('messages','user','get_count',array('author' => xarUserGetVar('id')))</xar:set>
+<xar:set name="total">xarMod::apiFunc('messages','user','get_count',array('recipient' => xarUserGetVar('id')))</xar:set>
+<xar:set name="drafts">xarMod::apiFunc('messages','user','get_count',array('author' => xarUserGetVar('id'), 'drafts' => true))</xar:set>
 
 <div>
   <ul class="xar-tabs xar-alt xar-norm-outline">
@@ -48,11 +48,11 @@
         </xar:if>
     </xar:sec>
     <xar:comment>Psspl: Added the code for configuring NewMessages tab</xar:comment>
-    <xar:if condition="xarModAPIFunc('messages' , 'user' , 'isset_grouplist')"> 
+    <xar:if condition="xarMod::apiFunc('messages' , 'user' , 'isset_grouplist')"> 
     <xar:sec mask="AddMessages" catch="false">
         <xar:set name="tabclass">$activetab=='new'?'xar-tab-active':'xar-tab'</xar:set>
         <li class="#$tabclass#">
-          <a href="#xarModURL('messages','user','new', array('action'=>'post'))#">
+          <a href="#xarModURL('messages','user','new')#">
             New Message
           </a>
         </li>

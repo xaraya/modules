@@ -9,7 +9,7 @@ sys::import('modules.messages.xarincludes.defines');
 
     function messages_userapi_get_sendtousers( $args )
     {
-        $sendtogroups = xarModAPIFunc('messages','user','get_sendtogroups',$args); 
+        $sendtogroups = xarMod::apiFunc('messages','user','get_sendtogroups',$args); 
          
 		if (empty($sendtogroups)) return array();
 

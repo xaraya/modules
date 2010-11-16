@@ -75,7 +75,7 @@ function messages_init()
 					'messages_messages'
                      );
 
-    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
 	xarModVars::set('messages', 'sendemail', false);
     xarModVars::set('messages', 'awaymsg', true );
@@ -109,7 +109,7 @@ function messages_init()
      * REGISTER BLOCKS
      */
 
-    if (!xarModAPIFunc('blocks',
+    if (!xarMod::apiFunc('blocks',
                        'admin',
                        'register_block_type',
                        array('modName'  => 'messages',
@@ -119,7 +119,7 @@ function messages_init()
      */
 
     // Hook into the roles module (Your Account page)
-    xarModAPIFunc(
+    xarMod::apiFunc(
         'modules'
         ,'admin'
         ,'enablehooks'
@@ -128,7 +128,7 @@ function messages_init()
             ,'callerModName'    => 'messages'));
 /*
      // Hook into the Dynamic Data module
-    xarModAPIFunc(
+    xarMod::apiFunc(
         'modules'
         ,'admin'
         ,'enablehooks'
@@ -138,7 +138,7 @@ function messages_init()
 
 
 
-    $objectid = xarModAPIFunc('dynamicdata','util','import',
+    $objectid = xarMod::apiFunc('dynamicdata','util','import',
                               array('file' => 'modules/messages/messages.data.xml'));
     if (empty($objectid)) return;
     // save the object id for later
@@ -223,13 +223,13 @@ function messages_delete()
      * UNREGISTER BLOCKS
      */
 
-    if (!xarModAPIFunc('blocks',
+    if (!xarMod::apiFunc('blocks',
                        'admin',
                        'unregister_block_type',
                        array('modName'  => 'messages',
                              'blockType'=> 'newmessages'))) return;
 
-    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'messages'));
+    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => 'messages'));
 }
 
 ?>

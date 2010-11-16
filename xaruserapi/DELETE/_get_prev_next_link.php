@@ -13,13 +13,13 @@ function messages_userapi_get_prev_next_link( $args )
     switch($folder)
     {
         case 'inbox' :  
-            $total_record = xarModAPIFunc('messages','user','get_count',array('recipient'=>xarUserGetVar('id')));     
+            $total_record = xarMod::apiFunc('messages','user','get_count',array('recipient'=>xarUserGetVar('id')));     
             break;
         case 'sent'  :  
-            $total_record = xarModAPIFunc('messages','user','get_count',array('author'=>xarUserGetVar('id')));
+            $total_record = xarMod::apiFunc('messages','user','get_count',array('author'=>xarUserGetVar('id')));
             break;
         case 'drafts':  
-              $total_record  =  xarModAPIFunc('messages','user','get_count',array('author'=>xarUserGetVar('id'),'drafts'=>true));    
+              $total_record  =  xarMod::apiFunc('messages','user','get_count',array('author'=>xarUserGetVar('id'),'drafts'=>true));    
               break;        
     }
     

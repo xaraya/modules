@@ -40,7 +40,7 @@ function messages_userapi_get_multiple($args)
     if (!isset($id) || !is_numeric($id)) {
         $id = 0;
     } else {
-        $node = xarModAPIFunc('messages',
+        $node = xarMod::apiFunc('messages',
                                 'user',
                                 'get',
                                  array('id' => $id));

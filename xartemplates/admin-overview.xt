@@ -1,0 +1,17 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<div class="xar-mod-head">
+    <span class="xar-mod-title">Messages Administration</span>
+</div>
+
+<xar:template type="module" file="admintabs"/>
+
+<div class="xar-mod-body">
+
+  <h2>Messages Overview</h2>
+
+  <p>A private messaging module.</p>
+
+  <p>Before using this module you will need to specify who can send to whom.  This is done in the Role Groups fieldset in the <a href="#xarModURL('messages','admin','modifyconfig')#">Modify Config tab</a>.</p>
+
+</div>
+</xar:template>

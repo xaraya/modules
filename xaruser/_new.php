@@ -45,10 +45,10 @@ function messages_user_new()
     $data['post_url']       = xarModURL('messages','user','new');
     
     //Psspl:Added the code for configuring the user-menu
-    $data['allow_newpm']    = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
+    $data['allow_newpm']    = xarMod::apiFunc('messages' , 'user' , 'isset_grouplist');
         
     /*if($phase != 'submit') {
-        $data['users'] = xarModAPIFunc('messages','user','get_sendtousers');
+        $data['users'] = xarMod::apiFunc('messages','user','get_sendtousers');
         //Psspl:Added the code for checking user list
         if(empty($data['users'])) {
             $msg = xarML('There are no active users for sending messages');
@@ -126,7 +126,7 @@ function messages_user_new()
                     return xarTplModule('messages','user','new',$data);
                 }
     /*
-                    $users = xarModAPIFunc('roles',
+                    $users = xarMod::apiFunc('roles',
                                            'user',
                                            'getall',
                                             array('state'             => 3,
@@ -154,7 +154,7 @@ function messages_user_new()
 
                     xarTplSetPageTitle(xarML('Messages :: Reply'));
 
-                        $replymessages = xarModAPIFunc('messages', 'user', 'get', array('id' => $id));
+                        $replymessages = xarMod::apiFunc('messages', 'user', 'get', array('id' => $id));
 
 
 
@@ -196,7 +196,7 @@ function messages_user_new()
 
                 xarTplSetPageTitle(xarML('Messages :: Reply'));
 
-                $replymessages = xarModAPIFunc('messages', 'user', 'get', array('id' => $id));
+                $replymessages = xarMod::apiFunc('messages', 'user', 'get', array('id' => $id));
 
 
 

@@ -18,7 +18,7 @@ function messages_admin_view($args)
     switch( $itemtype ) {
 
         case 1:
-            return xarModAPIFunc('messages', 'admin', 'view' );
+            return xarMod::apiFunc('messages', 'admin', 'view' );
 
 
         default:

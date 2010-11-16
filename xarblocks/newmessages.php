@@ -38,7 +38,7 @@
             $role_id = xarSession::getVar('role_id');
         
             // Count total Messages
-            $totalin = xarModAPIFunc('messages',
+            $totalin = xarMod::apiFunc('messages',
                                       'user',
                                       'get_count',
                                       array(
@@ -47,7 +47,7 @@
             $data['totalin'] = $totalin;
         
             // Count Unread Messages
-            $unread = xarModAPIFunc('messages',
+            $unread = xarMod::apiFunc('messages',
                                       'user',
                                       'get_count',
                                       array(

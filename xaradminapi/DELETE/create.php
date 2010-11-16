@@ -20,7 +20,7 @@ function messages_adminapi_create( $args )
     if (!xarVarFetch('itemtype', 'int',    $itemtype, 0,XARVAR_NOT_REQUIRED)) return;
 
     // Retrieve the object via the dynamicdata module api.
-    $object = xarModAPIFunc('dynamicdata', 'user', 'getobject', 
+    $object = xarMod::apiFunc('dynamicdata', 'user', 'getobject', 
                          array('module' => 'messages','itemtype'  => 1));
 
     if ( empty($object) ) return;
@@ -46,7 +46,7 @@ function messages_adminapi_create( $args )
         $hooks = xarModCallHooks('item', 'create', $itemid, $args, 'messages' );
 
 
-        $item_title = xarModAPIFunc('messages', 'user', 'gettitle', 
+        $item_title = xarMod::apiFunc('messages', 'user', 'gettitle', 
                       array('object'    =>  $object, 'itemtype' =>  $itemtype ));
 
         // This function generated no output, and so now it is complete we redirect

@@ -13,7 +13,7 @@ function messages_userapi_isset_grouplist( $args )
 
     extract($args);
     
-        $users = xarModAPIFunc('roles', 'user',
+        $users = xarMod::apiFunc('roles', 'user',
                                         'getall',
                                         array('state'   => 3,
                                         'include_anonymous' => false,
@@ -43,7 +43,7 @@ function messages_userapi_isset_grouplist( $args )
             if(empty($allowedsendmessages[0])) {
                 return false;
             }
-            $data['users'] = xarModAPIFunc('messages','user','get_sendtousers');
+            $data['users'] = xarMod::apiFunc('messages','user','get_sendtousers');
             if(empty($data['users'])){
                 return false;
             }

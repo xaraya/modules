@@ -32,7 +32,6 @@ function messages_user_delete()
     $data['object'] = DataObjectMaster::getObject(array('name' => $object));
     $data['object']->getItem(array('itemid' => $id));
 
-
     // Check the folder, and that the current user is either author or recipient
     switch ($folder) {
         case 'inbox':
@@ -41,6 +40,10 @@ function messages_user_delete()
             }
             break;
         case 'drafts':
+			if ($data['object']->properties['from']->value != xarSession::getVar('role_id')) {
+                return xarTplModule('messages','user','message_errors',array('layout' => 'bad_id'));
+            }
+			break;
         case 'sent':
             if ($data['object']->properties['from']->value != xarSession::getVar('role_id')) {
                 return xarTplModule('messages','user','message_errors',array('layout' => 'bad_id'));

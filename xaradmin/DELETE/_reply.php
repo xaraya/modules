@@ -46,7 +46,7 @@ function messages_admin_reply( $args )
 
             switch( $itemtype ) {
                 case 1:
-                    return xarModAPIFunc('messages', 'admin', 'update', $args );
+                    return xarMod::apiFunc('messages', 'admin', 'update', $args );
 
                 default:
                     // TODO // Add statusmessage
@@ -59,7 +59,7 @@ function messages_admin_reply( $args )
     switch( $itemtype ) {
 
         case 1:
-            return xarModAPIFunc('messages', 'admin', 'modify', $args );
+            return xarMod::apiFunc('messages', 'admin', 'modify', $args );
 
         default:
             // TODO // Add statusmessage

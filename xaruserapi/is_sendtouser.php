@@ -8,7 +8,7 @@ sys::import('modules.messages.xarincludes.defines');
         if (!isset($sendtouser)) throw new Exception(xarML('No sendto user candidate passed'));
 
         // Get the groups the current user can send to
-        $sendtogroups = xarModAPIFunc('messages','user','get_sendtogroups',$args);
+        $sendtogroups = xarMod::apiFunc('messages','user','get_sendtogroups',$args);
         
         // Now get the parents of the candidate sendto user
         $xartable = xarDB::getTables();

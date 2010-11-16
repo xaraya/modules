@@ -63,9 +63,9 @@
 
 	<xar:if condition="$folder eq 'drafts'">
 		<a href="#xarModURL('messages','user','modify', array('id' => $id))#"><img src="#sys::code()#modules/base/xarimages/icons/modify.png" width="16" height="16" alt="Edit" /></a>  
-	</xar:if>
+	</xar:if> 
 
-	&amp;nbsp;  <a href="#xarModURL('messages','user','delete', array('id' => $id))#"><img src="#sys::code()#modules/base/xarimages/icons/delete.png" width="16" height="16" alt="Delete" /></a>
+	&amp;nbsp;  <a href="#xarModURL('messages','user','delete', array('id' => $id, 'folder' => $folder))#"><img src="#sys::code()#modules/base/xarimages/icons/delete.png" width="16" height="16" alt="Delete" /></a>
 
 	<xar:if condition="$folder ne 'drafts'">
 		<xar:set name="itemurl">xarModURL('messages','user','display', array('id' => $id))</xar:set>

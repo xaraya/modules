@@ -104,6 +104,10 @@ function messages_userapi_encode_shorturl($args) {
         $rest['replyto'] = $replyto;
     }
 
+	if (isset($folder)) {
+        $rest['folder'] = $folder;
+    }
+
     $add = array();
     foreach ($rest as $key => $value) {
         if (isset($rest[$key])) {

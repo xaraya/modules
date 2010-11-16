@@ -49,7 +49,7 @@ function messages_userapi_update( $args )
     // check the authorisation key
     if (!xarSecConfirmAuthKey()) return; // throw back
 
-    $messages = xarModAPIFunc('messages','user','get',array('id' => $id, 'status' => 1));
+    $messages = xarMod::apiFunc('messages','user','get',array('id' => $id, 'status' => 1));
 
     if (!count($messages) || !is_array($messages)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -57,7 +57,7 @@ function messages_userapi_update( $args )
         throw new Exception($msg);
     }
 
-    $id = xarModAPIFunc('messages',
+    $id = xarMod::apiFunc('messages',
                          'user',
                          'modify',
                           array('id'          => $id,

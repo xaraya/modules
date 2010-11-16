@@ -18,7 +18,7 @@ function messages_adminapi_new( $args )
     if (!xarVarFetch('itemid', 'id', $itemid, NULL, XARVAR_NOT_REQUIRED)) return;
 
     // Retrieve the object via the dynamicdata module api.
-    $object = xarModAPIFunc('dynamicdata', 'user', 'getobject', 
+    $object = xarMod::apiFunc('dynamicdata', 'user', 'getobject', 
               array('module'     => 'messages', 'itemtype'  => 1));
 
     if ( empty($object) ) return;
