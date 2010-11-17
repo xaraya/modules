@@ -31,7 +31,6 @@
             if (empty($data)) return;
             $vars = $data['content'];
 
-            $data = array();
             $itemtype=1;
         
             // Get Logged in Users ID
@@ -44,7 +43,7 @@
                                       array(
                                           'recipient' => $role_id
                         ));
-            $data['totalin'] = $totalin;
+            $vars['totalin'] = $totalin;
         
             // Count Unread Messages
             $unread = xarMod::apiFunc('messages',
@@ -54,28 +53,27 @@
                                           'recipient' => xarUserGetVar('id'),
                                           'unread'=>true
                         ));
-            $data['unread'] = $unread;
+            $vars['unread'] = $unread;
         
             // No messages return emptymessage
             if (empty($unread) || $unread == 0){
-                $data['emptymessage'] = xarML('No Unread messages in mailbox');
-                $data['content'] = 'No new Messages';
+                $vars['emptymessage'] = xarML('No Unread messages in mailbox');
+                $vars['content'] = 'No new Messages';
+                if (empty($vars['title'])){
+                    $vars['title'] = xarML('My Messages');
+                }
+        
+                $data['content'] = $vars;
+            } else {
+                $vars['emptymessage'] = '';
+                $vars['numitems'] = $numitems;
+                $data['content'] = $vars;
+        
                 if (empty($data['title'])){
                     $data['title'] = xarML('My Messages');
                 }
-        
-                $blockinfo['content'] = $data;
-                return $blockinfo;
-            } else {
-                $data['emptymessage'] = '';
-                $data['numitems'] = $numitems;
-                $blockinfo['content'] = $data;
-        
-                if (empty($blockinfo['title'])){
-                    $blockinfo['title'] = xarML('My Messages');
-                }
             }
-            return $blockinfo;
+            return $data;
         }
     }        
 ?>
