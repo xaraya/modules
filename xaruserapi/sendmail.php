@@ -15,7 +15,7 @@
  * Send an email to a message recipient
  * @author Ryan Walker (ryan@webcommunicate.net) 
  * @param int	$id the id of the message
- * @param object	$object the messages_messages object
+ * @param int	$to the uid of the recipient 
  * @return true
  */
 
@@ -23,8 +23,7 @@ function messages_userapi_sendmail($args) {
 
 	extract($args);
 
-	$msgurl = xarModURL('messages','user','display',array('id' => $id));
-	$to = $object->properties['to']->value;
+	$msgurl = xarModURL('messages','user','display',array('id' => $id)); 
 	$from = xarUserGetVar('name');
 	$msgdata['info'] = xarUserGetVar('email',$to);
 	$msgdata['name'] = xarUserGetVar('name',$to); 

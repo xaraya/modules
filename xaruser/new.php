@@ -98,7 +98,8 @@ function messages_user_new() {
 		$id = $object->createItem();
 
 		if ($send && xarModVars::get('messages','sendemail')) {
-			xarMod::apiFunc('messages','user','sendmail',array('id' => $id, 'object' => $data['object']));
+			$to = $object->properties['to']->value;
+			xarMod::apiFunc('messages','user','sendmail',array('id' => $id, 'to' => $to));
 		}
 
 		if ($saveandedit) {
