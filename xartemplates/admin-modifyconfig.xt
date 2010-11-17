@@ -12,8 +12,9 @@
 
     <div class="xar-mod-body">
      
-        <h2>Modify Default Configuration</h2>
+	<div style="float: right;"><a href="#xarmodurl('messages','user','view')#">View Inbox</a> | <a href="#xarmodurl('messages','user','new')#">New Message</a></div>
 
+        <h2>Modify Default Configuration</h2>
 
         <form method="post" action="#xarServer::getCurrentURL()#">
               

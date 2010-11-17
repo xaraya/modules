@@ -58,7 +58,7 @@
 	</li>
     </xar:sec>
     <xar:comment>Psspl: Added the code for configuring NewMessages tab</xar:comment>
-    <xar:if condition="xarMod::apiFunc('messages' , 'user' , 'isset_grouplist')"> 
+     
     <xar:sec mask="AddMessages" catch="false">
         <xar:if condition="$folder eq 'new'">
 		<xar:set name="tabclass">'xar-tab-active'</xar:set>
@@ -72,19 +72,7 @@
             New Message
           </a>
         </li>
-    </xar:sec>
-    <xar:else />
-    <xar:comment>
-        <xar:sec mask="AddMessages" catch="false">
-            <xar:set name="tabclass">$activetab=='new'?'xar-tab-active':'xar-tab'</xar:set>
-            <li class="#$tabclass#">
-            <a href="#xarModURL('messages','user','new')#">
-                No Message Tab
-            </a>
-            </li>
-        </xar:sec>
-    </xar:comment>
-    </xar:if>
+    </xar:sec> 
   </ul>
 </div>
 </xar:template>

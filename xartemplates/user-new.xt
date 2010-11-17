@@ -10,6 +10,8 @@
     
     <div class="xar-mod-body">
 
+    <xar:if condition="xarMod::apiFunc('messages' , 'user' , 'isset_grouplist')">
+
     <h2>#$input_title#</h2>
 
     <form id="inputbox" action="#$post_url#" method="post" enctype="multipart/form-data">
@@ -28,5 +30,15 @@
             <input type="submit" name="send" id="send" value="#xarML('Send')#" class="xar-margin-thickright"/>
         </div>
     </form>
+
+    <xar:else />
+
+		No recipients are configured for your group.
+
+		<xar:sec mask="AdminMessages" catch="false">
+			<a href="#xarmodurl('messages','admin','modifyconfig')#">Modify the allowed recipients in the Role Groups settings</a>.			
+		</xar:sec>
+
+    </xar:if>
 </div>
 </xar:template>
