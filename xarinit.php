@@ -127,6 +127,7 @@ function messages_init()
         ,array(
             'hookModName'       => 'roles'
             ,'callerModName'    => 'messages'));
+
 /*
      // Hook into the Dynamic Data module
     xarMod::apiFunc(
@@ -136,8 +137,6 @@ function messages_init()
         ,array(
             'hookModName'       => 'dynamicdata'
             ,'callerModName'    => 'messages'));
-
-
 
     $objectid = xarMod::apiFunc('dynamicdata','util','import',
                               array('file' => 'modules/messages/messages.data.xml'));

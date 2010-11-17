@@ -1,8 +1,8 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:style scope="module" module="messages" file="messages"/>
-<!--     <xar:set name="action">
+    <xar:set name="action">
         isset($action) ? $action : 'check'
-    </xar:set> -->
+    </xar:set>
     <xar:set name="postanon">
         $properties['postanon']->value
     </xar:set>
@@ -12,13 +12,13 @@
     <xar:set name="author">
         $properties['from']->value
     </xar:set>
-   <!--  <xar:set name="vettor">
+    <xar:set name="vettor">
         xarSession::getVar('role_id') == $recipient ? $recipient : $author
     </xar:set>
     <xar:set name="vettee">
         xarSession::getVar('role_id') == $recipient ? $author : $recipient
-    </xar:set> -->
-    <!-- <xar:if condition="empty($vettee)">
+    </xar:set>
+    <xar:if condition="empty($vettee)">
         <xar:set name="is_sendtouser">
             1
         </xar:set>
@@ -31,7 +31,7 @@
                 )
             )
         </xar:set>
-    </xar:if> -->
+    </xar:if>
 
     <xar:comment>
     <!-- Message-Posting-Host: #$message['posting-host']# --> 
@@ -42,7 +42,7 @@
             From:
         </span>
         <xar:comment>Psspl:Modifided the code for anonymous message</xar:comment>
-        <xar:if condition="!$postanon">
+        <xar:if condition="!$postanon AND $is_sendtouser">
             <a href="#xarmodurl('roles','user','display',array('id' => $author))#" title="#xarML('View user info')#">
                 #xarUserGetVar('name',$author)#
             </a>
@@ -55,7 +55,26 @@
         <span class="xar-form-label">
             To:
         </span>
-         #xarUserGetVar('name',$recipient)# 
+        <xar:if condition="$action eq 'reply' OR  $action eq 'modify'">
+            <xar:if condition="xarSession::getVar('role_id') eq $recipient">
+                #xarUserGetVar('name',$recipient)#
+            <xar:else/>
+                <xar:if condition="isset($previousanon) AND $previousanon">
+                    Anonymous
+                    <xar:data-input property="$properties['to']" hidden="hidden"/>
+                <xar:elseif condition="$is_sendtouser"/>
+                    #xarUserGetVar('name',$recipient)#
+                <xar:else/>
+                    Anonymous
+                </xar:if>
+            </xar:if>
+        <xar:else/>
+            <xar:if condition="$is_sendtouser">
+                #xarUserGetVar('name',$recipient)#
+            <xar:else/>
+                Anonymous
+            </xar:if>
+        </xar:if>
     </div>
 
     <div class="xar-form-input-wrapper">
@@ -75,10 +94,10 @@
     <div id="message_body">
         <xar:data-output property="$properties['body']"/>
     </div>
-
     <xar:comment>Psspl:Added the code for folder type</xar:comment>
+    <div class="xar-form-input-wrapper">
         <xar:if condition="isset($folder)">
             <input type="hidden" value="#$folder#" name="folder" id="folder"/>    
-        </xar:if> 
-
+        </xar:if>
+    </div>
 </xar:template>

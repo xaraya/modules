@@ -13,7 +13,7 @@
  */
 function messages_admin_main() {
 
-    if (!xarSecurityCheck('EditMessages')) return;
+    if (!xarSecurityCheck('AdminMessages')) return;
 
     $refererinfo =  xarRequest::getInfo(xarServer::getVar('HTTP_REFERER'));
     $info =  xarRequest::getInfo();

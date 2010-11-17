@@ -16,7 +16,7 @@ sys::import('modules.messages.xarincludes.defines');
 
 function messages_user_view() {
 
-    if (!xarSecurityCheck('ReadMessages')) return;
+    if (!xarSecurityCheck('ViewMessages')) return;
 
 	if(!xarVarFetch('startnum', 'isset', $startnum, NULL, XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('numitems', 'int',   $numitems,  NULL, XARVAR_NOT_REQUIRED)) {return;}

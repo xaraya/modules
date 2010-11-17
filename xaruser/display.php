@@ -18,7 +18,7 @@ function messages_user_display($args) {
 
 	extract($args);
 
-    if (!xarSecurityCheck('ViewMessages')) return;
+    if (!xarSecurityCheck('ReadMessages')) return;
    
     if (!xarVarFetch('object', 'str', $object, 'messages_messages', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('id', 'int', $id, 0, XARVAR_NOT_REQUIRED)) return;

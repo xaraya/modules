@@ -17,7 +17,7 @@
 function messages_admin_overview()
 {
    /* Security Check */
-    if (!xarSecurityCheck('AdminMessages',0)) return;
+    if (!xarSecurityCheck('AdminMessages')) return;
 
     $data=array();
 

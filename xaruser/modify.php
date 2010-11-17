@@ -16,6 +16,10 @@ sys::import('modules.messages.xarincludes.defines');
 
 function messages_user_modify() {
 
+	if (!xarSecurityCheck('EditMessages',0)) {
+		return;
+	}
+
 	if (!xarVarFetch('send',    'str',   $send, '',       XARVAR_NOT_REQUIRED)) return; 
 	if (!xarVarFetch('draft',    'str',   $draft, '',       XARVAR_NOT_REQUIRED)) return; 
 	if (!xarVarFetch('saveandedit',    'str',   $saveandedit, '',       XARVAR_NOT_REQUIRED)) return; 
@@ -50,6 +54,8 @@ function messages_user_modify() {
 	
 	$data['object'] = $object;
 
+	$data['to'] = NULL;
+
 	if ($data['reply']) {
 		$reply = DataObjectMaster::getObject(array('name' => 'messages_messages'));
 		$reply->getItem(array('itemid' => $replyto)); // get the message we're replying to
@@ -57,10 +63,6 @@ function messages_user_modify() {
 		$data['display'] = $reply;
 		xarTplSetPageTitle(xarML('Reply to Message'));
 		$data['input_title']    = xarML('Reply to Message');
-	}
-
-	if (!xarSecurityCheck('Editmessages',0)) {
-		return;
 	}
 
 	$data['label'] = $object->label;

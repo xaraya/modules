@@ -5,6 +5,8 @@ sys::import('modules.messages.xarincludes.defines');
     function messages_userapi_is_sendtouser( $args )
     {
         extract($args);
+
+		// what do we do with this $sendtouser variable?  doesn't seem like it's used anywhere
         if (!isset($sendtouser)) throw new Exception(xarML('No sendto user candidate passed'));
 
         // Get the groups the current user can send to

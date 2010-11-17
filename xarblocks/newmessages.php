@@ -66,7 +66,7 @@
                 $data['content'] = $vars;
             } else {
                 $vars['emptymessage'] = '';
-                $vars['numitems'] = $numitems;
+                $vars['numitems'] = $unread;
                 $data['content'] = $vars;
         
                 if (empty($data['title'])){

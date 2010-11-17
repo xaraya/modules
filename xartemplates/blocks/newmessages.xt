@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div>
     <xar:if condition="empty($unread) or $unread eq 0">
@@ -12,7 +13,7 @@
         <a href="#xarModURL('messages','user','view')#">#$unread#</a>
         Unread Messages<br />
         <a href="#xarModURL('messages','user','view')#">
-            <img src="modules/messages/xarimages/unread.gif" border="0"/>
+            View messages
         </a>
     </xar:if>
 </div>

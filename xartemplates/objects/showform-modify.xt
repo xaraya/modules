@@ -70,8 +70,6 @@
     <xar:data-input property="$properties['author_delete']" hidden="hidden"/>
     <xar:data-input property="$properties['recipient_delete']" hidden="hidden"/>
     <xar:data-input property="$properties['recipient_status']" hidden="hidden"/>
-    <xar:data-input property="$properties['pid']" hidden="hidden"/>
-<!--    <xar:data-input property="$properties['left_id']" hidden="hidden"/>
-    <xar:data-input property="$properties['right_id']" hidden="hidden"/> -->
+    <xar:data-input property="$properties['pid']" hidden="hidden"/> 
     <xar:data-input property="$properties['author_status']" hidden="hidden"/>
 </xar:template>

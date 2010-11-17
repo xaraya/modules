@@ -3,8 +3,9 @@
 sys::import('modules.messages.xarincludes.defines');
 
     function messages_userapi_get_sendtogroups($args)
-    {
+    { 
         extract($args);
+
         if (!isset($currentuser)) $currentuser = xarUserGetVar('id');
     
         // First we get all the parents of the current user
