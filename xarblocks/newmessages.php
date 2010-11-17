@@ -19,7 +19,6 @@
 
     class Messages_NewmessagesBlock extends BasicBlock
     {
-
         public $name                = 'NewMessagesBlock';
         public $module              = 'messages';
         public $text_type           = 'Messages';
@@ -30,7 +29,6 @@
         {
             $data = parent::display($data);
             if (empty($data)) return;
-			
             $vars = $data['content'];
 
             $data = array();
@@ -67,7 +65,6 @@
                 }
         
                 $blockinfo['content'] = $data;
-
                 return $blockinfo;
             } else {
                 $data['emptymessage'] = '';
@@ -77,8 +74,7 @@
                 if (empty($blockinfo['title'])){
                     $blockinfo['title'] = xarML('My Messages');
                 }
-				return $blockinfo;
-            }  
+            }
             return $blockinfo;
         }
     }        
