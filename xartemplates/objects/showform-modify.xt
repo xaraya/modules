@@ -1,5 +1,6 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:set name="postanon">
+ <!--    <xar:set name="postanon">
         $properties['postanon']->value
     </xar:set>
     <xar:set name="recipient">
@@ -17,14 +18,14 @@
                 )
             )
         </xar:set>
-    </xar:if>
-    <div class="xar-form-input-wrapper">
+    </xar:if> -->
+<!--     <div class="xar-form-input-wrapper">
         <xar:var name="title">The author of the message</xar:var>
         <xar:data-label property="$properties['from']" title="$title" for="id"/>
         #xarUserGetVar('name')#
         <xar:data-input property="$properties['from']" hidden="$hidden"/>
 
-        <!--Psspl:Modified the code for anonymous message-->
+         
         <xar:if condition="xarModVars::get('messages', 'allowanonymous')">
 		<div class="xar-form-input-wrapper">
 			<xar:data-label property="$properties['postanon']" for="id" label="Post Anonymously"/>
@@ -32,15 +33,15 @@
 		</div>
 	</xar:if>
 
-    </div>
+    </div> -->
 
-    <div class="xar-form-input-wrapper">
-        <xar:var name="title">To whom the message will be sent</xar:var>
-        <xar:data-label property="$properties['to']" title="$title" for="id"/>
-        <xar:if condition="$reply"> 
-            <xar:data-output property="$properties['to']" />
-            <xar:data-input property="$properties['to']" hidden="hidden"/> 
+     <div class="xar-form-input-wrapper">
+        <xar:if condition="$reply">
+	<h3>Your reply:</h3> 
+            <xar:data-input property="$properties['to']" hidden="hidden" value="$to" />   
         <xar:else/>
+		<xar:var name="title">To whom the message will be sent</xar:var>
+		<xar:data-label property="$properties['to']" title="$title" for="id"/>
             <xar:set name="users">$properties['to']->getOptions()</xar:set>
             <xar:if condition="empty($users)">
                 No recipients available

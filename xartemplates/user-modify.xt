@@ -19,11 +19,16 @@
 	 
         <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
            
-                <xar:data-form object="$object" tplmodule="messages" template="modify" reply="$reply" replyto="$replyto" />
+	   	<xar:if condition="$reply">
+			<xar:data-display object="$display" tplmodule="messages" />
+		</xar:if>
+
+
+                <xar:data-form object="$object" tplmodule="messages" template="modify" reply="$reply" replyto="$replyto" to="$to" />
 		
            <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
-                <input type="hidden" name="id" id="id" value="#$id#" />
+                <!-- <input type="hidden" name="id" id="id" value="#$id#" /> -->
               
 		<input type="submit" name="draft" id="draft" value="#xarML('Save draft')#" class="xar-margin-thickright" />
 		<input type="submit" name="saveandedit" id="saveandedit" value="#xarML('Save draft and edit')#" class="xar-margin-thickright"/>

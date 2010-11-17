@@ -47,8 +47,17 @@ function messages_user_modify() {
 	$data['replyto'] = $replyto;
 
 	$data['reply'] = ($replyto > 0) ? true : false;
-
+	
 	$data['object'] = $object;
+
+	if ($data['reply']) {
+		$reply = DataObjectMaster::getObject(array('name' => 'messages_messages'));
+		$reply->getItem(array('itemid' => $replyto)); // get the message we're replying to
+		$data['to'] = $reply->properties['from']->value; // get the user we're replying to
+		$data['display'] = $reply;
+		xarTplSetPageTitle(xarML('Reply to Message'));
+		$data['input_title']    = xarML('Reply to Message');
+	}
 
 	if (!xarSecurityCheck('Editmessages',0)) {
 		return;
