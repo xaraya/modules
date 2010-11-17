@@ -1,20 +1,25 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div>
+<xar:style scope="module" module="messages" file="messages"/>
+<div id="newmessages_block">
     <xar:if condition="empty($unread) or $unread eq 0">
-        #$emptymessage#
+        <div id="newmessages_empty">
+		#xarML('You have no unread messages')#
+        </div>
     <xar:else />
-        You have
-        <a href="#xarModURL('messages','user','view')#">#$totalin#</a>
-        Total Messages
-        <br />
-    
-        You have
-        <a href="#xarModURL('messages','user','view')#">#$unread#</a>
-        Unread Messages<br />
-        <a href="#xarModURL('messages','user','view')#">
-            View messages
-        </a>
+        <!-- <div id="newmessages_total">
+		You have <a href="#xarModURL('messages','user','view')#">#$totalin#</a>
+		total message<xar:if condition="$totalin ne 1">s</xar:if>
+        </div> -->
+        <div id="newmessages_unread">
+		You have <a href="#xarModURL('messages','user','view')#">#$unread#</a>
+		new message<xar:if condition="$unread ne 1">s</xar:if>
+        </div> 
+        <div id="newmessages_view">
+		<a href="#xarModURL('messages','user','view')#">
+		    View messages
+		</a>
+        </div>
     </xar:if>
 </div>
 </xar:template>

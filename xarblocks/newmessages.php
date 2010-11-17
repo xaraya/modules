@@ -56,16 +56,13 @@
             $vars['unread'] = $unread;
         
             // No messages return emptymessage
-            if (empty($unread) || $unread == 0){
-                $vars['emptymessage'] = xarML('No Unread messages in mailbox');
-                $vars['content'] = 'No new Messages';
-                if (empty($vars['title'])){
-                    $vars['title'] = xarML('My Messages');
+            if (empty($unread) || $unread == 0){ 
+                $vars['content'] = 'No new messages';
+                if (empty($data['title'])){
+                    $data['title'] = xarML('My Messages');
                 }
-        
                 $data['content'] = $vars;
             } else {
-                $vars['emptymessage'] = '';
                 $vars['numitems'] = $unread;
                 $data['content'] = $vars;
         

@@ -1,6 +1,17 @@
 #send{
 font-weight: bold;
 }
+
+#newmessages_empty {
+margin: 6px 0 6px 0;
+}
+#newmessages_total {
+margin: 6px 0 3px 0;
+}
+#newmessages_view {
+margin: 4px 0 6px 0;
+}
+
 table.xar-messages-mailboxsummary {
 	border-collapse: collapse;
 	margin-bottom: 1em;
