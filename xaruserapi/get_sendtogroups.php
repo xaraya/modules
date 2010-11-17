@@ -1,4 +1,20 @@
 <?php
+/**
+ * Messages Module
+ *
+ * @package modules
+ * @copyright (C) copyright-placeholder
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Messages Module
+ * @link http://xaraya.com/index.php/release/6.html
+ * @author XarayaGeek
+ */ 
+/**
+ * Get the list of groups this user can send to
+ * @return array		$sendtogroups the IDs of groups this user can send to
+ */
 
 sys::import('modules.messages.xarincludes.defines');
 

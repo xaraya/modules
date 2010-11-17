@@ -1,14 +1,26 @@
 <?php
-/**Psspl:Added the code for allow the members of a
- * given group to only send messages to another group.
- * 
- * 
+/**
+ * Messages Module
+ *
+ * @package modules
+ * @copyright (C) copyright-placeholder
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Messages Module
+ * @link http://xaraya.com/index.php/release/6.html
+ * @author XarayaGeek
+ */ 
+/**
+ * Get the list of users this user can send to
+ * Pretty sure this function takes no args
+ * @return array		$users the IDs of users this user can send to
  */
  
 sys::import('modules.messages.xarincludes.defines');
 
-    function messages_userapi_get_sendtousers( $args )
-    {
+    function messages_userapi_get_sendtousers($args)
+    { 
         $sendtogroups = xarMod::apiFunc('messages','user','get_sendtogroups',$args); 
          
 		if (empty($sendtogroups)) return array();

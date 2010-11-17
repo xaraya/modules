@@ -1,15 +1,16 @@
 <?php
 /**
- * Modify config
+ * Messages Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Content Module
- * @link http://www.xaraya.com/index.php/release/1015.html
- * @author potion <ryan@webcommunicate.net>
+ * @subpackage Messages Module
+ * @link http://xaraya.com/index.php/release/6.html
+ * @author XarayaGeek
+ * @author Ryan Walker
  */
 /**
  * This is a standard function to modify and update the configuration parameters of the

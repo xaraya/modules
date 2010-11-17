@@ -10,7 +10,8 @@
  * @subpackage Messages Module
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
- */
+ * @author Ryan Walker
+*/
 
 sys::import('modules.messages.xarincludes.defines');
 

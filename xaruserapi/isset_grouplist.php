@@ -1,16 +1,27 @@
 <?php
 /**
- * Psspl:Adeded the function for selecting the 
- * group configuration for "send_allow_list"
- * @param unknown_type $args
- * @return array of groups selected if not configured return false
+ * Messages Module
+ *
+ * @package modules
+ * @copyright (C) copyright-placeholder
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Messages Module
+ * @link http://xaraya.com/index.php/release/6.html
+ * @author XarayaGeek
+ */ 
+/**
+ * Check to see if a user has any recipients they can send to
+ * Pretty sure this function doesn't take any args
+ * @return array|boolean $allowedsendmessages the IDs of groups this user can send to, or false if there are no groups the user can send to
  */
 
 sys::import('modules.messages.xarincludes.defines');
 
 /*Check if there are any possible recipients for the logged in user*/
 
-function messages_userapi_isset_grouplist( $args )
+function messages_userapi_isset_grouplist($args)
 {
     extract($args);
     

@@ -10,6 +10,7 @@
  * @subpackage Messages Module
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
+ * @author Ryan Walker
  */
 /**
  * Overview function that displays the standard Overview page

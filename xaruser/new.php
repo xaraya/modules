@@ -10,6 +10,7 @@
  * @subpackage Messages Module
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
+ * @author Ryan Walker
  */
 
 sys::import('modules.messages.xarincludes.defines');
@@ -97,7 +98,7 @@ function messages_user_new() {
 		$id = $object->createItem();
 
 		if ($send && xarModVars::get('messages','sendemail')) {
-			xarMod::apiFunc('messages','user','sendmail',array('object' => $data['object']));
+			xarMod::apiFunc('messages','user','sendmail',array('id' => $id, 'object' => $data['object']));
 		}
 
 		if ($saveandedit) {

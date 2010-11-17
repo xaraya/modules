@@ -11,6 +11,13 @@
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
  */ 
+/**
+ * Send an email to a message recipient
+ * @author Ryan Walker (ryan@webcommunicate.net) 
+ * @param int	$id the id of the message
+ * @param object	$object the messages_messages object
+ * @return true
+ */
 
 function messages_userapi_sendmail($args) {
 
@@ -41,7 +48,9 @@ function messages_userapi_sendmail($args) {
 		$msgdata['message'] = 'You have a new message from ' . $from . '.';
 		$msgdata['message'] .= 'View your message: ' . $msgurl;
 	}   
+
 	$sendmail = xarMod::apiFunc('mail','admin','sendmail', $msgdata);
+	return true;
 
 }
 ?>

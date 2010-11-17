@@ -1,21 +1,21 @@
 <?php
 /**
- * Sorting
+ * Messages Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Content Module
- * @link http://xaraya.com/index.php/release/1118.html
- * @author potion <ryan@webcommunicate.net>
- */
+ * @subpackage Messages Module
+ * @link http://xaraya.com/index.php/release/6.html
+ * @author XarayaGeek
+ */ 
 /**
  * Sorting
  *
- * @author potion <ryan@webcommunicate.net>
- * @return a string like 'itemid ASC';
+ * @author Ryan Walker
+ * @return string $sort (ex. 'subject ASC');
  */
 function messages_adminapi_sort($args)
 {
