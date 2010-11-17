@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+     #$to_name#: new message from #$from_name# 
+</xar:template>
