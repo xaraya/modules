@@ -1,7 +1,7 @@
 <object name="messages_module_settings">
   <objectid>70</objectid>
   <label>Messages Module Settings</label>
-  <module_id>182</module_id>
+  <module_id>6</module_id>
   <itemtype>20</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>

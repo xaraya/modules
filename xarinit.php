@@ -83,6 +83,10 @@ function messages_init()
 	xarModVars::set('messages', 'allowanonymous', false);
 	xarModVars::set('messages', 'allowedsendmessages', serialize(array()));
 
+	xarModVars::set('messages', 'user_sendmail', true);
+	xarModVars::set('messages', 'enable_autoreply', false);
+	xarModVars::set('messages', 'autoreply', '');
+
 	//xarModVars::set('messages', 'buddylist', 0);
     //xarModVars::set('messages', 'limitsaved', 12);
     //xarModVars::set('messages', 'limitout', 10);

@@ -1,8 +1,8 @@
 <object name="messages_user_settings">
-  <objectid>17</objectid>
-  <label>User Settings For Messages</label>
-  <module_id>182</module_id>
-  <itemtype>11</itemtype>
+  <objectid>93</objectid>
+  <label>Messages</label>
+  <module_id>6</module_id>
+  <itemtype>1</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
@@ -10,14 +10,34 @@
   <config>a:0:{}</config>
   <isalias>false</isalias>
   <properties>
-    <property name="items_per_page">
-      <id>107</id>
-      <label>Items per page</label>
-      <type>integerbox</type>
+    <property name="user_sendemail">
+      <id>687</id>
+      <label>Email me when I receive a new message</label>
+      <type>checkbox</type>
       <defaultvalue></defaultvalue>
       <source>module variable: messages</source>
       <status>33</status>
       <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="enable_autoreply">
+      <id>688</id>
+      <label>Enable auto-reply</label>
+      <type>checkbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: messages</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="autoreply">
+      <id>689</id>
+      <label>Auto-reply</label>
+      <type>textarea_medium</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: messages</source>
+      <status>33</status>
+      <seq>3</seq>
       <configuration></configuration>
     </property>
   </properties>
