@@ -98,7 +98,8 @@ function messages_user_modify() {
 				return true;
 			} elseif ($send) {
 				if (xarModVars::get('messages','sendemail')) {
-					xarMod::apiFunc('messages','user','sendmail',array('object' => $data['object']));
+					$to = $object->properties['to']->value;
+					xarMod::apiFunc('messages','user','sendmail',array('id' => $id, 'to' => $to));
 				}
 				xarResponse::redirect(xarModURL('messages','user','view')); 
 				return true;

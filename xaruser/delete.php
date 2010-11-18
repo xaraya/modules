@@ -32,6 +32,8 @@ function messages_user_delete()
     $data['object'] = DataObjectMaster::getObject(array('name' => $object));
     $data['object']->getItem(array('itemid' => $id));
 
+	$folder = xarSession::getVar('messages_currentfolder');
+
     // Check the folder, and that the current user is either author or recipient
     switch ($folder) {
         case 'inbox':

@@ -1,5 +1,5 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:style scope="module" module="messages" file="messages"/>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"> 
+
 <!--     <xar:set name="action">
         isset($action) ? $action : 'check'
     </xar:set> -->
@@ -36,6 +36,8 @@
     <xar:comment>
     <!-- Message-Posting-Host: #$message['posting-host']# --> 
     </xar:comment>
+
+
 
     <div class="xar-form-input-wrapper">
         <span class="xar-form-label">
@@ -80,5 +82,7 @@
         <xar:if condition="isset($folder)">
             <input type="hidden" value="#$folder#" name="folder" id="folder"/>    
         </xar:if> 
+
+
 
 </xar:template>

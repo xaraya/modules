@@ -20,7 +20,9 @@
         <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
            
 	   	<xar:if condition="$reply">
+			<div id="message_display">
 			<xar:data-display object="$display" tplmodule="messages" />
+			</div>
 		</xar:if>
 
 

@@ -1,6 +1,38 @@
 #send{
 font-weight: bold;
 }
+form.button {
+display: inline;
+margin-right: 8px;
+}
+form.button input {
+width: 80px;
+}
+.user-display-buttons {
+margin: 20px 40px 0 0;
+text-align: center;
+}
+#message_display {
+margin-right: 100px;
+}
+#message_display .xar-form-label {
+width: 120px;
+}
+#message_display .xar-form-input-wrapper {
+border-bottom: 1px dotted #ddd;
+padding: 4px 3px 5px 6px;
+margin-bottom: 0;
+}
+.reply_display {
+margin-bottom: 30px;
+}
+#message_body {
+background-color: #f9f9f9;
+margin: 0 0 10px 0;
+padding: 12px 6px 12px 6px;
+}
+
+
 
 #newmessages_empty {
 margin: 6px 0 6px 0;

@@ -17,7 +17,9 @@
     <form id="inputbox" action="#$post_url#" method="post" enctype="multipart/form-data">
 	 
 	<xar:if condition="$reply">
+	<div id="message_display" class="reply_display">
 		<xar:data-display object="$display" tplmodule="messages" />
+	</div>
 	</xar:if>
 
             <xar:data-form object="$object" tplmodule="messages" template="new" reply="$reply" replyto="$replyto" to="$to" /> 
