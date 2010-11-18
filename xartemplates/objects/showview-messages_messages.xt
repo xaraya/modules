@@ -58,7 +58,11 @@
                             <td valign="top">&#160;</td>
                         <xar:elseif condition="!empty($linkfield) and $linkfield eq $name"/>
                             <td valign="top"><a href="#$links[$id]['display']['olink']#"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></a></td>
-                        <xar:else />
+                        <xar:elseif condition="$fields['postanon'] eq 1 and $name eq 'from'" />
+			    <td valign="top">Anonymous</td>
+			<xar:elseif condition="$name eq 'to' and is_numeric($fields['replyto']) and xarMod::apiFunc('messages','user','checkanonymous',array('id' => $fields['replyto']))" />
+			    <td valign="top">Anonymous</td>
+			<xar:else />
                             <td valign="top"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></td>
                         </xar:if>
                     </xar:foreach>

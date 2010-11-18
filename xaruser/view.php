@@ -48,6 +48,9 @@ function messages_user_view() {
 			$where .= ' and author_delete eq ' . MESSAGES_NOTDELETED;
 			$where .= ' and author_status ne ' . MESSAGES_STATUS_DRAFT;
 			$data['fieldlist'] = 'to,subject,time,author_status,recipient_status';
+			if (xarModVars::get('messages','allowanonymous')) {
+				$data['fieldlist'] .= ',postanon';
+			}
 			xarTplSetPageTitle(xarML('Sent Messages'));
 			$data['input_title']    = xarML('Sent Messages');
 			break;

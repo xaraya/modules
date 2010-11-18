@@ -37,8 +37,6 @@
     <!-- Message-Posting-Host: #$message['posting-host']# --> 
     </xar:comment>
 
-
-
     <div class="xar-form-input-wrapper">
         <span class="xar-form-label">
             From:
@@ -57,7 +55,11 @@
         <span class="xar-form-label">
             To:
         </span>
+	<xar:if condition="is_numeric($replyto) and xarMod::apiFunc('messages','user','checkanonymous',array('id' => $replyto))">
+	Anonymous
+	<xar:else />
          #xarUserGetVar('name',$recipient)# 
+	 </xar:if>
     </div>
 
     <div class="xar-form-input-wrapper">

@@ -13,7 +13,7 @@
 
     <div id="message_display">
 
-        <xar:data-display object="$object" tplmodule="messages" action="$action" folder="$folder"/>
+        <xar:data-display object="$object" tplmodule="messages" action="$action" folder="$folder" replyto="$replyto" />
  
 
 	<xar:set name="folder">xarSession::getVar('messages_currentfolder')</xar:set>
