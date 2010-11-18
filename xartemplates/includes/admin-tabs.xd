@@ -1,0 +1,22 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="menulinks">xarModAPIFunc('twitter', 'admin', 'getmenulinks')</xar:set>
+<xar:if condition="!empty($menulinks)">
+    <xar:set name="request">xarRequestGetInfo()</xar:set>
+    <xar:set name="activefunc">$request[2]</xar:set>
+    <xar:style scope="module" module="base" file="navtabs" />
+    <div>
+        <dl class="xar-tabs">
+            <dt class="help">
+                <xar:mlstring>View</xar:mlstring>:
+            </dt>
+            <xar:foreach in="$menulinks" value="$menulink">
+                <xar:set name="activetab">(!empty($menulink['active']) and is_array($menulink['active']) and in_array($activefunc, $menulink['active'])) ? 'active' : ''</xar:set>
+                <dd class="#$activetab#">
+                    <a href="#$menulink.url#">
+                        #$menulink.label#
+                    </a>
+                </dd>
+            </xar:foreach>
+        </dl>
+    </div>
+</xar:if>

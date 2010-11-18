@@ -1,0 +1,21 @@
+<xar:if condition="!empty($content)">
+    <xar:if condition="!empty($content['error'])">
+        <p>Problem communicating with Twitter, last response: <span class="xar-error">#$content['error']#</span></p>
+    <xar:else/>    
+    <xar:foreach in="$content" value="$user">
+        <div class="twitter">
+            <span class="profile-image">
+                <img src="#$user.profile_image_url#" alt="#xarML('image')#"/>
+            </span>
+            <span class="profile-image-after" id="status-user">
+                <a href="http://twitter.com/##!/#$user.screen_name#" title="#$user.description#">#$user.screen_name#</a> #$user.name#
+            </span>
+            <xar:if condition="!empty($user['status'])">
+            <span class="profile-image-after" id="status-text">
+                #$user.status.text_transformed#
+            </span>
+            </xar:if>
+        </div>
+    </xar:foreach>
+    </xar:if>
+</xar:if>

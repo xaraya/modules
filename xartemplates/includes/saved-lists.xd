@@ -1,0 +1,11 @@
+<xar:if condition="!empty($content)">
+    <xar:if condition="!empty($content['error'])">
+        <p>Problem communicating with Twitter, last response: <span class="xar-error">#$content['error']#</span></p>
+    <xar:else/>
+        <ul>
+        <xar:foreach in="$content['lists']['list']" value="$list">
+            <li><a href="http://twitter.com/##!#$list.uri#">#$list.name#</a></li>
+        </xar:foreach>
+        </ul>
+    </xar:if>
+</xar:if>

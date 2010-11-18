@@ -1,21 +1,9 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-form-input-wrapper">
-    <label for="username#$blockid#" title="#xarML('Your twitter screen name')#" class="xar-form-label help">
-        <xar:mlstring>Username:</xar:mlstring>
+    <label for="screen_name#$blockid#" title="#xarML('Twitter screen name to display timeline for')#" class="xar-form-label help">
+        <xar:mlstring>Screen Name:</xar:mlstring>
     </label>
-    <input type="text" size="20" maxlength="64" value="#$username#" id="username#$blockid#" name="username" autocomplete="off" />
-</div>
-<div class="xar-form-input-wrapper">
-    <label for="password#$blockid#" title="#xarML('Your twitter password')#" class="xar-form-label help">
-        <xar:mlstring>Password:</xar:mlstring>
-    </label>
-    <input type="password" size="20" maxlength="64" value="#$password#" id="password#$blockid#" name="password" autocomplete="off" />
-</div>
-<div class="xar-form-input-wrapper">
-    <label for="timeline#$blockid#" title="#xarML('Your twitter screen name')#" class="xar-form-label help">
-        <xar:mlstring>Timeline to display:</xar:mlstring>
-    </label>
-    <xar:data-input type="dropdown" name="timeline" options="$timelines" value="$timeline" />
+    <input type="text" size="20" maxlength="64" value="#$screen_name#" id="screen_name#$blockid#" name="screen_name" autocomplete="off" /> <xar:mlstring>(leave empty to display Public Timline)</xar:mlstring>
 </div>
 <div class="xar-form-input-wrapper">
     <label for="numitems#$blockid#" title="#xarML('Number of tweets to display')#" class="xar-form-label help">
@@ -23,6 +11,7 @@
     </label>
     <input type="text" size="4" maxlength="3" value="#$numitems#" id="numitems#$blockid#" name="numitems" />
 </div>
+<xar:comment>
 <div class="xar-form-input-wrapper">
     <label for="truncate#$blockid#" title="#xarML('Truncate messages, leave empty to show full message')#" class="xar-form-label help">
         <xar:mlstring>Truncate messages to:</xar:mlstring>
@@ -42,18 +31,21 @@
     </label>
     <xar:data-input type="checkbox" name="showimages" checked="$showimages" />
 </div>
+</xar:comment>
 <div class="xar-form-input-wrapper">
     <label for="showsource#$blockid#" title="#xarML('Show the source of each tweet')#" class="xar-form-label help">
         <xar:mlstring>Show tweet source:</xar:mlstring>
     </label>
     <xar:data-input type="checkbox" name="showsource" checked="$showsource" />
 </div>
+<xar:comment>
 <div class="xar-form-input-wrapper">
     <label for="showmodule#$blockid#" title="#xarML('Show a link to the module display of this timeline')#" class="xar-form-label help">
         <xar:mlstring>Show module link:</xar:mlstring>
     </label>
     <xar:data-input type="checkbox" name="showmodule" checked="$showmodule" />
 </div>
+</xar:comment>
 <div class="xar-form-input-wrapper">
     <label for="showfollow#$blockid#" title="#xarML('Show a link to follow you at twitter')#" class="xar-form-label help">
         <xar:mlstring>Show follow link:</xar:mlstring>

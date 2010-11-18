@@ -1,53 +1,16 @@
-/**
- * Twitter Module
- *
- * @package modules
- * @copyright (C) 2009 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Twitter Module
- * @link http://xaraya.com/index.php/release/991.html
- * @author Chris Powis (crisp@crispcreations.co.uk)
- */
-/**
- * Standard Style Sheet
- *
- * @author Chris Powis (crisp@crispcreations.co.uk)
- */
+.twitter {
+    position: relative;
+    min-height:50px;
+    padding: 5px 0;
+    border-bottom: 1px dotted #ccc;
+}
 
-.twitter {}
-
-.twitter a.url, .twitter-block a.url {
+.twitter a {
   color:#2FC2EF;
   text-decoration: none;
 }
-.twitter a.url:hover, .twitter-block a.url:hover {
+.twitter a:hover {
   text-decoration: underline;
-}
-
-.twitter ul.statuses {
-  font-size:1.2em;
-}
-.twitter ul.statuses, .twitter-block ul.statuses {
-  list-style-image:none;
-  list-style-position:outside;
-  list-style-type:none;
-}
-
-.twitter ul.statuses li:first-child, .twitter-block ul.statuses li:first-child  {
-  border-top:1px dashed #D2DADA;
-}
-
-.twitter ul.statuses li {
-  line-height:1.1em;
-  padding:0.7em 0 0.6em;
-}
-
-.twitter ul.statuses li, .twitter-block ul.statuses li {
-  border-bottom: 1px dashed #d2dada;
-  position:relative;
-  background-image: none;
 }
 
 .twitter span.profile-image {
@@ -60,85 +23,50 @@
   width:50px;
 }
 
-.twitter-block li span.profile-image {
-  display:block;
-  height:20px;
-  left:0;
-  overflow:hidden;
-  position:absolute;
-  width:20px;
-}
-
-.twitter-block li span.profile-image img {
-  height:20px;
-  width:20px;
-  }
-
-.twitter span.status-body {
+.twitter span.profile-image-after {
   display:block;
   margin-left:65px;
-  min-height:50px;
   overflow:hidden;
 }
-.twitter-block span.status-body {
-  display:block;
-  margin-left:25px;
-  min-height:20px;
-  overflow:hidden;
-  font-weight: normal;
-}
 
-.twitter .profile-image-after {
-  margin-left:65px;
-}
-
-.twitter span.status-info, .twitter-block span.status-info  {
+.twitter span#status-user {
   color:#999999;
-  display:block;
+}
+
+.twitter span#status-text {
+    padding: 3px 0;
+}
+
+.twitter span#status-info {
+  color:#999999;
   font-family:georgia;
   font-size:0.8em;
   font-style:italic;
-  margin:3px 0 0;
 }
 
-.twitter .user-element {
-  padding:0.7em 0 0.6em;
+div.status-form-wrapper {
+    position: relative;
+    max-height: 50px;
+}
+div.status-form-wrapper span.status-form-textarea {
+    display: block;
+    height:40px;
+    left:0;
+    margin: 0 10px 5px 0px;
+    width: 500px;
+    position: absolute;
 }
 
-.twitter .user-element .user-basic {
-  width: 49%;
-  float: left;
-  position: relative;
+div.status-form-wrapper span.status-form-textarea textarea {
+    height: 40px;
+    width: 480px;
+    margin: 0;
 }
 
-.twitter .user-element .user-info {
-  width: 49%;
-  float: right;
-  position: relative;
-}
-
-.twitter-block span.module {
-  position: relative;
-  display:block;
-  min-height:50px;
-  overflow:hidden;
-}
-
-.twitter-block span.module span.profile-image {
-  display:block;
-  height:50px;
-  left:0;
-  overflow:hidden;
-  position:absolute;
-  width:50px;
-}
-.twitter-block span.module span.profile-image img {
-  height: 48px;
-  width: 48px;
-  }
-.twitter-block span.profile-image-after {
-  margin-left:50px;
-  font-weight: bold;
-  font-size: 1.2em;
-  display: block;
+div.status-form-wrapper span.status-form-input {
+    margin-left: 501px;
+    display: block;
+    width: 60px;
+    line-height: 50px;
+    vertical-align: middle;
 }

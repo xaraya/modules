@@ -1,0 +1,24 @@
+<xar:style scope="module" module="base" file="navtabs" />
+<xar:if condition="!empty($account)">
+    <div>
+        <dl class="xar-tabs">
+            <dt title="#xarML('Profile settings')#" class="xar-tabs-label help">
+                <xar:mlstring>Settings</xar:mlstring>:
+            </dt>
+            <xar:set name="activeclass">'active'</xar:set>
+            <xar:set name="inactiveclass">''</xar:set>
+            <xar:set name="activetab">empty($rt)?$activeclass:$inactiveclass</xar:set>
+            <dd class="#$activetab#">
+                <a href="#xarServerGetCurrentUrl(array('tab' => 'profile', 'method' => 'settings', 'rt' => null))#" title="#xarML('Profile')#" >
+                    <xar:mlstring>Profile</xar:mlstring>
+                </a>
+            </dd> 
+            <xar:set name="activetab">$rt=='design'?$activeclass:$inactiveclass</xar:set>
+            <dd class="#$activetab#">
+                <a href="#xarServerGetCurrentUrl(array('tab' => 'profile', 'method' => 'settings', 'rt' => 'design'))#" title="#xarML('Design')#" >
+                    <xar:mlstring>Design</xar:mlstring>
+                </a>
+            </dd>    
+        </dl>
+    </div>
+</xar:if>

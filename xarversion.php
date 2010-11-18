@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'twitter';
 $modversion['id']             = '991';
-$modversion['version']        = '0.1.2';
+$modversion['version']        = '0.9.0';
 $modversion['displayname']    = 'Twitter';
 $modversion['description']    = 'Twitter module';
 $modversion['changelog']      = 'xardocs/changelog.txt';
@@ -21,10 +21,10 @@ $modversion['official']       = 1;
 $modversion['author']         = 'Chris Powis';
 $modversion['contact']        = 'http://crispcreations.co.uk/';
 $modversion['admin']          = 1;
-$modversion['user']           = 1;
+$modversion['user']           = 0;
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
-
+$modversion['dependency']     = array(189201,189206); // depends on LibOAuth, LibTwitterOAuth modules 
 if (false) {
     xarML('Twitter');
     xarML('Twitter module');

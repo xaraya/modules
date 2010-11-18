@@ -21,12 +21,22 @@
 function twitter_adminapi_getmenulinks()
 {
     if (xarSecurityCheck('AdminTwitter', 0)) {
-        $menulinks[] = array('url' => xarModURL('twitter','admin','modifyconfig'),
-            'title' => xarML('Modify the configuration for the module'),
-            'label' => xarML('Modify Config'));
+
         $menulinks[] = array('url' => xarModURL('twitter','admin','overview'),
             'title' => xarML('View module overview'),
-            'label' => xarML('Overview'));
+            'label' => xarML('Overview'),
+            'active' => array('main', 'overview'));
+
+        $menulinks[] = array('url' => xarModURL('twitter','admin','account'),
+            'title' => xarML('View/manage Site Account'),
+            'label' => xarML('Site Account'),
+            'active' => array('account'));
+
+        $menulinks[] = array('url' => xarModURL('twitter','admin','modifyconfig'),
+            'title' => xarML('Modify the configuration for the module'),
+            'label' => xarML('Modify Config'),
+            'active' => array('modifyconfig'));
+
     }
 
     if (empty($menulinks)) {

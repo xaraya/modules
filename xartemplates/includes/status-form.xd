@@ -1,0 +1,89 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="xarVarIsCached('Blocks.twitter', 'status_update_text')">
+    <xar:set name="status_update_text">xarVarGetCached('Blocks.twitter', 'status_update_text')</xar:set>
+</xar:if>
+<xar:if condition="empty($status_update_text)">
+    <xar:set name="status_update_text">xarSessionGetVar('twitter.status_update_text')</xar:set>
+</xar:if>
+<xar:if condition="xarVarIsCached('Blocks.twitter', 'status_update_error')">
+    <xar:set name="status_update_error">xarVarGetCached('Blocks.twitter', 'status_update_error')</xar:set>
+</xar:if>
+<xar:if condition="empty($status_update_error)">
+    <xar:set name="status_update_error">xarSessionGetVar('twitter.status_update_error')</xar:set>
+</xar:if>
+<xar:if condition="xarVarIsCached('Blocks.twitter', 'status_update_success')">
+    <xar:set name="status_update_success">xarVarGetCached('Blocks.twitter', 'status_update_success')</xar:set>
+</xar:if>
+<xar:if condition="empty($status_update_success)">
+    <xar:set name="status_update_success">xarSessionGetVar('twitter.status_update_success')</xar:set>
+</xar:if>
+<xar:if condition="empty($status_update_url)">
+    <xar:set name="status_update_url">xarModURL('twitter', 'user', 'status_update')</xar:set>
+</xar:if>
+<xar:if condition="empty($return_url)">
+    <xar:set name="return_url">#xarServerGetCurrentURL()#</xar:set>
+</xar:if>
+<xar:if condition="xarVarIsCached('Blocks.twitter', 'form_index')">
+    <xar:set name="form_index">xarVarGetCached('Blocks.twitter', 'form_index')</xar:set>
+<xar:else/>
+    <xar:set name="form_index">0</xar:set>
+<script type="text/javascript">
+<!-- Dynamic Version by: Nannette Thacker -->
+<!-- http://www.shiningstar.net -->
+<!-- Original by :  Ronnie T. Moore -->
+<!-- Web Site:  The JavaScript Source -->
+<!-- Use one function for multiple text areas on a page -->
+<!-- Limit the number of characters per textarea -->
+<!-- Begin
+function textCounter(field,cntfield,maxlimit) {
+if (field.value.length > maxlimit) // if too long...trim it!
+field.value = field.value.substring(0, maxlimit);
+// otherwise, update 'characters left' counter
+else
+cntfield.value = maxlimit - field.value.length;
+}
+//  End -->
+</script>
+</xar:if>
+<form method="post" id="status_update_#$form_index#" name="tweet_#$form_index#" class="twitter-status xar-margin-nonetop" action="#$status_update_url#">
+    <fieldset class="xar-margin-nonetop">
+        <legend>
+            <xar:mlstring>What's happening</xar:mlstring>?
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <textarea name="status_update_text" id="status_update_text_#$form_index#" cols="60" rows="2"
+onKeyDown="textCounter(document.tweet_#$form_index#.status_update_text,document.tweet_#$form_index#.status_update_rem,140)"
+onKeyUp="textCounter(document.tweet_#$form_index#.status_update_text,document.tweet_#$form_index#.status_update_rem,140)">#$status_update_text#</textarea>
+            <span class="xar-floatright xar-align-right">
+                <input type="hidden" name="phase" id="phase_#$form_index#" value="update" />
+                <input type="hidden" name="authid" id="authid_#$form_index#" value="#xarSecGenAuthKey()#" />
+                <input type="hidden" name="return_url" id="return_url_#$form_index#" value="#$return_url#" />
+                <input readonly="readonly" type="text" name="status_update_rem" id="status_update_rem_#$form_index#" size="3" maxlength="3" value="140"/>
+                <xar:comment>
+                <xar:mlstring>characters left</xar:mlstring>
+                </xar:comment>
+                <p>
+                <input type="submit" value="#xarML('Tweet')#" />
+                </p>
+            </span>
+            <xar:if condition="!empty($status_update_error)">
+                <div>
+                    <span class="xar-error">#$status_update_error#</span>                
+                </div>
+            <xar:elseif condition="!empty($status_update_success)"/>
+                <div>
+                    <span class="twitter-success">#$status_update_success#</span>                
+                </div>
+            </xar:if>   
+        </div>
+    </fieldset>
+</form>
+
+<xar:if condition="xarVarSetCached('Blocks.twitter', 'status_update_text', $status_update_text)"></xar:if>
+<xar:if condition="xarVarSetCached('Blocks.twitter', 'status_update_error', $status_update_error)"></xar:if>
+<xar:if condition="xarVarSetCached('Blocks.twitter', 'status_update_success', $status_update_success)"></xar:if>
+<xar:if condition="empty($form_index)?xarVarSetCached('Blocks.twitter','form_index',1):xarVarSetCached('Blocks.twitter','form_index',$form_index++)"></xar:if>
+
+<xar:if condition="xarSessionDelVar('twitter.status_update_text')"></xar:if>
+<xar:if condition="xarSessionDelVar('twitter.status_update_error')"></xar:if>
+<xar:if condition="xarSessionDelVar('twitter.status_update_success')"></xar:if>

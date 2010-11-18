@@ -1,0 +1,30 @@
+<xar:style scope="module" module="base" file="navtabs" />
+<xar:if condition="!empty($account)">
+    <div>
+        <dl class="xar-tabs">
+            <dt title="#xarML('View/manage account')#" class="xar-tabs-label help">
+                <xar:mlstring>Retweets</xar:mlstring>:
+            </dt>
+            <xar:set name="activeclass">'active'</xar:set>
+            <xar:set name="inactiveclass">''</xar:set>
+            <xar:set name="activetab">empty($rt)?$activeclass:$inactiveclass</xar:set>
+            <dd class="#$activetab#">
+                <a href="#xarServerGetCurrentUrl(array('tab' => null, 'method' => 'retweets', 'rt' => null))#" title="#xarML('Retweets')#" >
+                    <xar:mlstring>By You</xar:mlstring>
+                </a>
+            </dd>
+            <xar:set name="activetab">$rt=='byothers'?$activeclass:$inactiveclass</xar:set>
+            <dd class="#$activetab#">
+                <a href="#xarServerGetCurrentUrl(array('tab' => null, 'method' => 'retweets', 'rt' => 'byothers'))#" title="#xarML('Retweets by others')#" >
+                    <xar:mlstring>By Others</xar:mlstring>
+                </a>
+            </dd>
+            <xar:set name="activetab">$rt=='ofyou'?$activeclass:$inactiveclass</xar:set>
+            <dd class="#$activetab#">
+                <a href="#xarServerGetCurrentUrl(array('tab' => null, 'method' => 'retweets', 'rt' => 'ofyou'))#" title="#xarML('Your tweets, retweeted')#" >
+                    <xar:mlstring>Yours, Retweeted</xar:mlstring>
+                </a>
+            </dd>    
+        </dl>
+    </div>
+</xar:if>

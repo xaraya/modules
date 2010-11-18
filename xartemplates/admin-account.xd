@@ -1,0 +1,174 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" module="twitter" file="style"/>
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Twitter Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-tabs"/>
+
+    <xar:if condition="!empty($invalid)">
+        <p>Problem connecting to Twitter: <span class="xar-invalid">#$invalid#</span></p>
+    <xar:else/>        
+        <xar:template file="account-tabs"/>
+
+            <xar:if condition="empty($tab)">
+                <xar:module main="false" module="twitter" type="admin" func="status_update"/>
+                <!-- Home -->
+                <xar:template file="account-tabs-home"/>
+                <xar:if condition="empty($method)">
+                    <!-- Timeline -->
+                    <xar:template file="status-messages"/>
+                <xar:elseif condition="$method eq 'mentions'"/>
+                    <!-- @mentions -->
+                    <h4>Tweets mentioning @#$account.screen_name#</h4>
+                    <xar:template file="status-messages"/>
+                <xar:elseif condition="$method eq 'retweets'"/>
+                    <!-- Retweets -->
+                    <xar:template file="account-tabs-home-retweets"/>
+                    <xar:if condition="empty($rt)">
+                        <h4>Retweets by you</h4>
+                    <xar:elseif condition="$rt eq 'byothers'"/>
+                        <h4>Retweets by others</h4>
+                    <xar:elseif condition="$rt eq 'ofyou'"/>
+                        <h4>Your tweets, retweeted</h4>
+                    </xar:if>
+                    <xar:template file="status-messages"/>                    
+                <xar:elseif condition="$method eq 'searches'"/>
+                    <!-- Searches -->
+                    <xar:if condition="empty($q)">
+                        <h4>Your saved searches</h4>
+                        <xar:template file="saved-searches"/>
+                    <xar:else/>
+                        <h4>Search results for #$q#</h4>
+                    </xar:if>
+                <xar:elseif condition="$method eq 'lists'"/>
+                    <!-- Lists -->
+                    <h4>Your lists</h4>
+                    <xar:template file="saved-lists"/>
+                </xar:if>
+            <xar:elseif condition="$tab eq 'profile'"/>
+                <xar:template file="account-profile"/>
+                <!-- Profile -->
+                <xar:template file="account-tabs-profile"/>
+                <xar:if condition="empty($method)">
+                    <!-- Timeline -->
+                    <xar:template file="status-messages"/>
+                <xar:elseif condition="$method eq 'favorites'"/>
+                    <!-- Favourites -->
+                    <h4><xar:mlstring>Your Favorites</xar:mlstring></h4>
+                    <xar:template file="status-messages"/>
+                <xar:elseif condition="$method eq 'following'"/>
+                    <!-- Following -->
+                    <h4>You follow #$account.friends_count# people</h4>
+                    <xar:template file="user-profiles"/>
+                <xar:elseif condition="$method eq 'followers'"/>
+                    <!-- Followers -->
+                    <h4>Your #$account.followers_count# followers</h4>
+                    <xar:template file="user-profiles"/>
+                <xar:elseif condition="$method eq 'lists'"/>
+                    <!-- Lists -->
+                    <h4>Your lists</h4>
+                    <xar:template file="saved-lists"/>                
+                <xar:elseif condition="$method eq 'settings'"/>
+                    <!-- Settings -->
+                    <xar:template file="account-tabs-profile-settings"/>
+                    <form action="#xarModURL('twitter', 'admin', 'account')#" method="post">
+
+                        <xar:if condition="empty($rt)">
+                            <fieldset>
+                                <legend><xar:mlstring>Profile</xar:mlstring></legend>
+                                <div class="xar-form-input-wrapper">
+                                    <label for="twitter_name" class="xar-form-label"><xar:mlstring>Name</xar:mlstring>:</label>
+                                    <div class="xar-form-container-after">
+                                        <input type="text" name="twitter_name" id="twitter_name" value="#$account.name#"/>
+                                    </div>                           
+                                </div>
+                                <div class="xar-form-input-wrapper">
+                                    <label for="twitter_location" class="xar-form-label"><xar:mlstring>Location</xar:mlstring>:</label>
+                                    <div class="xar-form-container-after">
+                                        <input type="text" name="twitter_location" id="twitter_location" value="#$account.location#"/>
+                                    </div>                           
+                                </div>
+                                <div class="xar-form-input-wrapper">
+                                    <label for="twitter_url" class="xar-form-label"><xar:mlstring>Web</xar:mlstring>:</label>
+                                    <div class="xar-form-container-after">
+                                        <input type="text" name="twitter_url" id="twitter_url" value="#$account.url#"/>
+                                    </div>                           
+                                </div>
+                                <div class="xar-form-input-wrapper">
+                                    <label for="twitter_description" class="xar-form-label"><xar:mlstring>Bio</xar:mlstring>:</label>
+                                    <div class="xar-form-container-after">
+                                        <textarea name="twitter_description" id="twitter_description" cols="60" rows="3">#$account.description#</textarea>
+                                    </div>                           
+                                </div>
+                            </fieldset>  
+                        <xar:elseif condition="$rt == 'design'"/>
+                        <!--
+                            <fieldset>
+                                <legend><xar:mlstring>Change Background Image</xar:mlstring></legend>
+                                <div class="xar-form-input-wrapper">
+                                    <label for="profile_background_image" class="xar-form-label"><xar:mlstring>todo</xar:mlstring>:</label>
+                                    <div class="xar-form-container-after">
+                                        <input type="text" name="profile_background_image" id="profile_background_image" value="#$account.profile_background_image#"/>
+                                    </div>                           
+                                </div>
+                            </fieldset>
+                        --> 
+                            <fieldset>
+                                <legend><xar:mlstring>Change Design Colors</xar:mlstring></legend>
+                                <div class="xar-form-input-wrapper">
+                                    <label for="profile_background_color" class="xar-form-label"><xar:mlstring>Background</xar:mlstring>:</label>
+                                    <div class="xar-form-container-after">
+                                        <input type="text" name="profile_background_color" id="profile_background_color" value="#$account.profile_background_color#"/>
+                                    </div>                           
+                                </div>
+                                <div class="xar-form-input-wrapper">
+                                    <label for="profile_text_color" class="xar-form-label"><xar:mlstring>Text</xar:mlstring>:</label>
+                                    <div class="xar-form-container-after">
+                                        <input type="text" name="profile_text_color" id="profile_text_color" value="#$account.profile_text_color#"/>
+                                    </div>                           
+                                </div>
+                                <div class="xar-form-input-wrapper">
+                                    <label for="profile_link_color" class="xar-form-label"><xar:mlstring>Links</xar:mlstring>:</label>
+                                    <div class="xar-form-container-after">
+                                        <input type="text" name="profile_link_color" id="profile_link_color" value="#$account.profile_link_color#"/>
+                                    </div>                           
+                                </div>
+                                <div class="xar-form-input-wrapper">
+                                    <label for="profile_text_color" class="xar-form-label"><xar:mlstring>Sidebar Fill</xar:mlstring>:</label>
+                                    <div class="xar-form-container-after">
+                                        <input type="text" name="profile_sidebar_fill_color" id="profile_sidebar_fill_color" value="#$account.profile_sidebar_fill_color#"/>
+                                    </div>                           
+                                </div>
+                                <div class="xar-form-input-wrapper">
+                                    <label for="profile_sidebar_border_color" class="xar-form-label"><xar:mlstring>Sidebar Border</xar:mlstring>:</label>
+                                    <div class="xar-form-container-after">
+                                        <input type="text" name="profile_sidebar_border_color" id="profile_sidebar_border_color" value="#$account.profile_sidebar_border_color#"/>
+                                    </div>                           
+                                </div>
+                            </fieldset>     
+                        </xar:if>
+                        <fieldset>
+                            <div class="xar-form-input-wrapper">
+                                <div class="xar-form-container-after">
+                                    <input type="hidden" name="phase" id="phase" value="update"/>
+                                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                                    <input type="hidden" name="rt" id="rt" value="#$rt#"/>
+                                    <input type="hidden" name="method" id="method" value="settings"/>
+                                    <input type="hidden" name="tab" id="tab" value="profile"/>
+                                    <input type="submit" value="#xarML('Update Settings')#"/>
+                                </div>                            
+                            </div>                        
+                        </fieldset>
+                    </form>                
+                </xar:if>
+            <xar:elseif condition="$tab eq 'messages'"/>
+                <xar:if condition="empty($method)">
+                    <xar:template file="direct-messages"/>
+                <xar:else/>
+               
+                </xar:if>            
+            </xar:if>   
+        
+    </xar:if>
+</div>

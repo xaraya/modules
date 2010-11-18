@@ -1,0 +1,16 @@
+<xar:if condition="!empty($account)">
+    <div class="twitter">
+        <span class="profile-image">
+            <img src="#$account.profile_image_url#" alt="#xarML('image')#"/>
+        </span>
+        <span class="profile-image-after" id="profile-name">
+            <strong>#$account.name#</strong>
+        </span>
+        <span class="profile-image-after" id="profile-info">
+            @#$account.screen_name# #$account.location#
+        </span>
+        <span class="profile-image-after" id="profile-url">
+            <a href="#$account.url#">#$account.url#</a>
+        </span>
+    </div>
+</xar:if>

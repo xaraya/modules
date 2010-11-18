@@ -20,13 +20,34 @@
  */
 function twitter_init()
 {
+        // set up the cache directory
+        $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+        $twitterCacheDir = $varCacheDir . '/twitter';
+        if (!is_dir($twitterCacheDir) && is_writable($varCacheDir)) {
+            $old_umask = umask(0);
+            mkdir($twitterCacheDir, 0770);
+            umask($old_umask);
+            if (!file_exists($twitterCacheDir.'/index.html')) {
+                @touch($twitterCacheDir.'/index.html');
+            }            
+        }
+        if (!is_dir($twitterCacheDir) || !is_writable($twitterCacheDir)) {
+            // tell them that cache needs to be writable or manually create output dir
+            $msg=xarML('The #(1) directory must be writable by the web server 
+                       for the Twitter module to set up caching. 
+                       The Twitter module cache is not configured, 
+                       please make the #(1) directory writable by the web server
+                       if you want to take advantage of caching.  
+                       Alternatively, you can manually create the #(2) directory
+                        - the #(2) directory must be writable by the web server for 
+                       caching to work.',
+                       $varCacheDir,
+                       $twitterCacheDir);
+            xarErrorSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
+                            new SystemException($msg));
+            return false;
+        }
 
-    xarModSetVar('twitter', 'username', '');
-    xarModSetVar('twitter', 'password', '');
-    xarModSetVar('twitter', 'useModuleAlias', false);
-    xarModSetVar('twitter', 'aliasname', '');
-    xarModSetVar('twitter', 'SupportShortURLs', 0);
-    xarModSetVar('twitter', 'itemsperpage', 20);
 
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -35,7 +56,7 @@ function twitter_init()
                 'blockType' => 'timeline'))) return;
 
     if (!xarModRegisterHook('item', 'create', 'API',
-            'twitter', 'user', 'createhook')) {
+            'twitter', 'hooks', 'itemcreate')) {
         return false;
     }
     $xartable =& xarDBGetTables();
@@ -53,15 +74,10 @@ function twitter_init()
 
     xarRegisterMask('ReadTwitterBlock', 'All', 'twitter', 'Block', 'All', 'ACCESS_OVERVIEW');
     /* Then for all operations */
-    xarRegisterMask('ViewTwitter',   'All', 'twitter', 'All', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadTwitter',   'All', 'twitter', 'All', 'All', 'ACCESS_READ');
-    xarRegisterMask('EditTwitter',   'All', 'twitter', 'All', 'All', 'ACCESS_EDIT');
     xarRegisterMask('AddTwitter',    'All', 'twitter', 'All', 'All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteTwitter', 'All', 'twitter', 'All', 'All', 'ACCESS_DELETE');
     xarRegisterMask('AdminTwitter',  'All', 'twitter', 'All', 'All', 'ACCESS_ADMIN');
-
-    /* This init function brings our module to version 0.0.1, run the upgrades for the rest of the initialisation */
-    return twitter_upgrade('0.0.1');
+    
+    return true;
 }
 
 /**
@@ -146,8 +162,59 @@ function twitter_upgrade($oldversion)
       case '0.1.1':
           // Bug 6397: strip html entities from urls created by hooks
       case '0.1.2':
-          // current version
+              $data['consumer_key'] = xarModGetVar('twitter', 'consumer_key');
+              $data['consumer_secret'] = xarModGetVar('twitter', 'consumer_secret');
+              $data['access_token'] = xarModGetVar('twitter', 'access_token');
+              $data['access_token_secret'] = xarModGetVar('twitter', 'access_token_secret');
+          // Remove all vars
+          xarModDelAllVars('twitter');
+          foreach ($data as $k => $v)
+              xarModSetVar('twitter', $k, $v);
+          // unregister hook
+          if (!xarModUnregisterHook('item', 'create', 'API',
+              'twitter', 'user', 'createhook')) return false;
+          // register hooks
+          if (!xarModRegisterHook('item', 'create', 'API',
+              'twitter', 'hooks', 'itemcreate')) return false;
+          if (!xarModRegisterHook('module', 'modifyconfig', 'GUI',
+              'twitter', 'hooks', 'modulemodifyconfig')) return false;
+          if (!xarModRegisterHook('module', 'updateconfig', 'API',
+              'twitter', 'hooks', 'moduleupdateconfig')) return false;
 
+          // remove masks
+          xarRemoveMasks('twitter');
+          // register required masks
+          xarRegisterMask('ReadTwitterBlock', 'All', 'twitter', 'Block', 'All', 'ACCESS_OVERVIEW');
+          xarRegisterMask('AddTwitter',    'All', 'twitter', 'All', 'All', 'ACCESS_ADD');
+          xarRegisterMask('AdminTwitter',  'All', 'twitter', 'All', 'All', 'ACCESS_ADMIN');
+        // set up the cache directory
+        $varCacheDir = 'var/cache';
+        $twitterCacheDir = $varCacheDir . '/twitter';
+        if (!is_dir($twitterCacheDir) && is_writable($varCacheDir)) {
+            $old_umask = umask(0);
+            mkdir($twitterCacheDir, 0770);
+            umask($old_umask);
+            if (!file_exists($twitterCacheDir.'/index.html')) {
+                @touch($twitterCacheDir.'/index.html');
+            }            
+        }
+        if (!is_dir($twitterCacheDir) || !is_writable($twitterCacheDir)) {
+            // tell them that cache needs to be writable or manually create output dir
+            $msg=xarML('The #(1) directory must be writable by the web server 
+                       for the Twitter module to set up caching. 
+                       The Twitter module cache is not configured, 
+                       please make the #(1) directory writable by the web server
+                       if you want to take advantage of caching.  
+                       Alternatively, you can manually create the #(2) directory
+                        - the #(2) directory must be writable by the web server for 
+                       caching to work.',
+                       $varCacheDir,
+                       $twitterCacheDir);
+            xarErrorSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
+                            new SystemException($msg));
+            return false;
+        }
+      case '0.9.0': //current version         
       break;
     }
     /* Update successful */
