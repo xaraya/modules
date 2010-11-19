@@ -74,7 +74,7 @@ function calendar_userapi_currentMonthURL()
                 'buildURL',
                 array(
                     'cal_view'=>'month',
-                    'cal_date'=>xarLocaleFormatDate('%Y%m')
+                    'cal_date'=>xarLocaleFormatDate('%Y%m%d')
                     )
                 );
 }
@@ -87,7 +87,7 @@ function calendar_userapi_currentWeekURL()
                 'buildURL',
                 array(
                     'cal_view'=>'week',
-                    'cal_date'=>xarLocaleFormatDate('%Y%m')
+                    'cal_date'=>xarLocaleFormatDate('%Y%m%d')
                     )
                 );
 }
@@ -100,7 +100,7 @@ function calendar_userapi_currentDayURL()
                 'buildURL',
                 array(
                     'cal_view'=>'day',
-                    'cal_date'=>xarLocaleFormatDate('%Y%m')
+                    'cal_date'=>xarLocaleFormatDate('%Y%m%d')
                     )
                 );
 }
