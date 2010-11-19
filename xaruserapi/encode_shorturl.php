@@ -63,7 +63,14 @@ function messages_userapi_encode_shorturl($args) {
                 unset($id);
             } 
             break;
-        case 'new':
+        case 'markunread':
+			$path .= '/markunread';
+			if (isset($id)) {
+                $path .= '/' . $id;
+                unset($id);
+            }
+			break;
+		case 'new':
 			$path .= '/new';
 			break;
         case 'modify':
@@ -104,7 +111,7 @@ function messages_userapi_encode_shorturl($args) {
         $rest['replyto'] = $replyto;
     }
 
-	if ($func == 'display' && isset($folder)) {
+	if (($func = 'markunread' || $func == 'display') && isset($folder)) {
         $rest['folder'] = $folder;
     }
 

@@ -18,7 +18,7 @@
 	 
 	<xar:if condition="$reply">
 	<div id="message_display" class="reply_display">
-		<xar:data-display object="$display" tplmodule="messages" />
+		<xar:data-display object="$display" tplmodule="messages" replyto="$replyto" />
 	</div>
 	</xar:if>
 

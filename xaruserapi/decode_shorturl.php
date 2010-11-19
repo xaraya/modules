@@ -35,6 +35,9 @@ function messages_userapi_decode_shorturl($params) {
 		case 'reply':
             return array('reply', array('replyto' => $params[2]));
             break;
+		case 'markunread':
+            return array('markunread', array('id' => $params[2]));
+            break;
 		case 'sent':
             return array('view', array('folder' => 'sent'));
             break;

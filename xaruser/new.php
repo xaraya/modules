@@ -21,7 +21,7 @@ function messages_user_new() {
 
 	if (!xarVarFetch('replyto', 'int', $replyto,   0, XARVAR_NOT_REQUIRED)) return; 
 	$reply = ($replyto > 0) ? true : false;
-	$data['reply'] = $reply; 
+	$data['reply'] = $reply;  
 	$data['replyto'] = $replyto; 
 	$data['to'] = '';
 

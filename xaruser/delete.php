@@ -26,6 +26,7 @@ function messages_user_delete()
 
     if (!xarVarFetch('action', 'enum:confirmed:check', $data['action'], 'check', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('object', 'str', $object, 'messages_messages', XARVAR_NOT_REQUIRED)) return;
+	if (!xarVarFetch('replyto', 'int', $data['replyto'], 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('id', 'int:1', $id, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox', XARVAR_NOT_REQUIRED)) return;
 

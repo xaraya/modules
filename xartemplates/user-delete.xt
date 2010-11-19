@@ -21,7 +21,7 @@
 
     <xar:if condition="!isset($error)">
         <div class="xar-margin-thick xar-padding-thick xar-border-thin">
-            <xar:data-display object="$object" tplmodule="messages" action="$action"/>
+            <xar:data-display object="$object" tplmodule="messages" action="$action" replyto="$replyto" />
         </div>
 
         <xar:template file="delete-message" type="module"/>
