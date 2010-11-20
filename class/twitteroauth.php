@@ -7,7 +7,7 @@
  */
 
 /* Load OAuth lib. Depends on the LibOAuth module */
-require_once("modules/liboauth/class/OAuth.php");
+sys::import("modules.liboauth.class.OAuth");
 
 /**
  * Twitter OAuth class
