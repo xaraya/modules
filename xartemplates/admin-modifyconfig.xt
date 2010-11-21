@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
@@ -36,13 +38,13 @@
                         
                     </legend>
                     <div class="xar-form-input-wrapper">
-                        <label for="itemsperpage" title="#xarML('Number of items to show on each page.')#" class="xar-form-label">
+                        <label for="items_per_page" title="#xarML('Number of items to show on each page.')#" class="xar-form-label">
                             
                                 Items Per Page:
                             
                         </label>
-                        <xar:set name="value"><xar:var scope="module" module="calendar" name="itemsperpage"/></xar:set>
-                        <input type="text" name="itemsperpage" id="itemsperpage" value="#$value#" maxlength="3" class="xar-form-textshort"/>
+                        <xar:set name="value"><xar:var scope="module" module="calendar" name="items_per_page"/></xar:set>
+                        <input type="text" name="items_per_page" id="items_per_page" value="#$value#" maxlength="3" class="xar-form-textshort"/>
                     </div>
                     <div class="xar-form-input-wrapper-after">
                         <xar:if condition="xarModVars::get('calendar', 'supportshorturls')">
@@ -216,7 +218,7 @@
           <td><label for="default_cal">Default calendar ics file(s)</label>
               (NOTE: put your ics files in var/calendar)
               <br /><b>NOTE TO DEVS: default filenames are stored in array xarModVars::get('calendar', 'default_cal'); the directory is
-              xarCoreGetVarDirPath() . '/calendar'</b>
+              sys::varpath() . '/calendar'</b>
           </td>
           <td>
             <xar:if condition="$thereAreIcs eq 0">
@@ -352,8 +354,8 @@
     <tr><td><label for="bold">#$boldlabel#</label></td>
     <td><input type="checkbox" name="bold" id="bold" value="1" #$boldchecked# /></td></tr>
 
-    <tr><td><label for="itemsperpage">#$itemslabel#</label></td>
-    <td><input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsvalue#"/></td></tr>
+    <tr><td><label for="items_per_page">#$itemslabel#</label></td>
+    <td><input type="text" name="items_per_page" id="items_per_page" size="3" maxlength="3" value="#$itemsvalue#"/></td></tr>
 
 
     <tr><td colspan="2">

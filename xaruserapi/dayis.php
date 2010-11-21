@@ -19,7 +19,7 @@ function calendar_userapi_dayIs($args)
     if(!xarVarValidate('int::',$date)) {
         return;
     }
-    $c = xarModAPIFunc('calendar','user','factory','calendar');
+    $c = xarMod::apiFunc('calendar','user','factory','calendar');
     return $c->dayIs($day,$date);
 }
 

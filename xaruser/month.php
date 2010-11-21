@@ -5,7 +5,7 @@
 
     function calendar_user_month()
     {
-        $data = xarModAPIFunc('calendar','user','getUserDateTimeInfo');
+        $data = xarMod::apiFunc('calendar','user','getUserDateTimeInfo');
 
         $MonthEvents = new Calendar_Month_Weekdays(
             $data['cal_year'],

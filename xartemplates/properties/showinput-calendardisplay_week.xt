@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+
     <xar:style scope="module" module="calendar" file="user-month"/>
     <!-- we want to add the textual decorator to the month class so we have day names and such -->
 
@@ -9,16 +11,16 @@
     -->
     <xar:calendar-decorator object="$Week" decorator="Xaraya" name="WeekURI"/>
 
-    <xar:set name="prevYearTitle">Previous Year</xar:set>
+    <xar:var name="prevYearTitle">Previous Year</xar:var>
     <xar:set name="prevYearURL">$WeekURI->prev('year')</xar:set>
 
-    <xar:set name="prevWeekTitle">Previous Week</xar:set>
+    <xar:var name="prevWeekTitle">Previous Week</xar:var>
     <xar:set name="prevWeekURL">$WeekURI->prev('week')</xar:set>
 
-    <xar:set name="nextWeekTitle">Next Week</xar:set>
+    <xar:var name="nextWeekTitle">Next Week</xar:var>
     <xar:set name="nextWeekURL">$WeekURI->next('week')</xar:set>
 
-    <xar:set name="nextYearTitle">Next Year</xar:set>
+    <xar:var name="nextYearTitle">Next Year</xar:var>
     <xar:set name="nextYearURL">$WeekURI->next('year')</xar:set>
 
     <xar:set name="startts">$Week->children[1]->getTimeStamp()</xar:set>
@@ -26,12 +28,12 @@
     <table id="cal-calendar">
         <tr>
             <th class="cal-navigation" colspan="7">
-                <a href="#$prevYearURL#" title="#$prevYearTitle#">&lt;&lt;</a>
-                <a href="#$prevWeekURL#" title="#$prevWeekTitle#">&lt;</a>
+                <a href="#$prevYearURL#" title="#$prevYearTitle#">&#60;&#60;</a>
+                <a href="#$prevWeekURL#" title="#$prevWeekTitle#">&#60;</a>
                 #xarLocaleFormatDate('%B %d %Y',$startts)# -
                 #xarLocaleFormatDate('%B %d %Y',$endts)#
-                <a href="#$nextWeekURL#" title="#$nextWeekTitle#">&gt;</a>
-                <a href="#$nextYearURL#" title="#$nextYearTitle#">&gt;&gt;</a>
+                <a href="#$nextWeekURL#" title="#$nextWeekTitle#">&#62;</a>
+                <a href="#$nextYearURL#" title="#$nextYearTitle#">&#62;&#62;</a>
             </th>
         </tr>
         <tr>

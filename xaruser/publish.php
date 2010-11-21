@@ -32,7 +32,7 @@ function calendar_user_publish($args)
             exit;
          }
 */
-         $calendars = xarModAPIFunc('calendar','user','get',
+         $calendars = xarMod::apiFunc('calendar','user','get',
                                     array('calid' => $calid,
                                           'calname' => $calname));
          if (!isset($calendars)) return;
@@ -100,7 +100,7 @@ function calendar_user_publish($args)
          }
     }
     $data = array();
-    $data['calendars'] = xarModAPIFunc('calendar','user','getall');
+    $data['calendars'] = xarMod::apiFunc('calendar','user','getall');
 
     return $data;
 }

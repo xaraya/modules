@@ -1,19 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+
     <xar:style scope="module" module="calendar" file="user-year"/>
 
     <xar:calendar-decorator object="$Year" decorator="Xaraya" name="YearURI"/>
-    <xar:set name="prevYearTitle">Previous Year</xar:set>
-    <xar:set name="prevYearURL">#$YearURI->prev('year')#</xar:set>
+    <xar:var name="prevYearTitle">Previous Year</xar:var>
+    <xar:set name="prevYearURL">$YearURI->prev('year')</xar:set>
 
-    <xar:set name="nextYearTitle">Next Year</xar:set>
-    <xar:set name="nextYearURL">#$YearURI->next('year')#</xar:set>
+    <xar:var name="nextYearTitle">Next Year</xar:var>
+    <xar:set name="nextYearURL">$YearURI->next('year')</xar:set>
 
     <table id="cal-calendar">
         <tr>
             <th class="cal-navigation">
-                <a href="#$prevYearURL#" title="#$prevYearTitle#">&lt;</a>
+                <a href="#$prevYearURL#" title="#$prevYearTitle#">&#60;</a>
                 #xarLocaleFormatDate('%Y',$Year->getTimeStamp())#
-                <a href="#$nextYearURL#" title="#$nextYearTitle#">&gt;</a>
+                <a href="#$nextYearURL#" title="#$nextYearTitle#">&#62;</a>
             </th>
         </tr>
     </table>
@@ -49,7 +51,7 @@
                                     <!-- Start a new row -->
                                     <xar:set name="WeekDate">xarLocaleFormatDate('%Y%m%d',$Day->thisDay('timestamp'))</xar:set>
                                     <xar:set name="WeekUrl">xarModURL('calendar','user','week',array('cal_date'=>$WeekDate))</xar:set>
-                                    <xar:set name="WeekNum">xarModAPIFunc('calendar','user','getWeekNumber',array('cal_date'=>$WeekDate))</xar:set>
+                                    <xar:set name="WeekNum">xarMod::apiFunc('calendar','user','getWeekNumber',array('cal_date'=>$WeekDate))</xar:set>
                                     <tr>
                                         <td>
                                             <a href="#$WeekUrl#">#xarLocaleFormatDate('%U',$Day->getTimeStamp())#</a>

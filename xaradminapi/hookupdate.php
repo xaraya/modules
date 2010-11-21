@@ -10,7 +10,7 @@
         // extrainfo or the current module
         if (empty($data['module'])) {
             if (!empty($data['extrainfo']['module'])) $data['module'] = $data['extrainfo']['module'];
-            else $data['module'] = xarModGetName();
+            else $data['module'] = xarMod::getName();
         }
         $data['module_id'] = xarMod::getID(($data['module']));
         if (empty($data['module_id']))  throw new IDNotFoundException("module id for " . $data['modname']);

@@ -1,8 +1,8 @@
 <?php
 function calendar_admin_modifyconfig()
 {
-    $data = xarModAPIFunc('calendar', 'admin', 'menu');
-    $data = array_merge($data,xarModAPIFunc('calendar', 'admin', 'get_calendars'));
+    $data = xarMod::apiFunc('calendar', 'admin', 'menu');
+    $data = array_merge($data,xarMod::apiFunc('calendar', 'admin', 'get_calendars'));
     if (!xarSecurityCheck('AdminCalendar')) return;
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'calendar_general', XARVAR_NOT_REQUIRED)) return;
@@ -34,7 +34,7 @@ function calendar_admin_modifyconfig()
         case 'update':
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
-            if (!xarVarFetch('itemsperpage', 'str:1:4:', $itemsperpage, '20', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+            if (!xarVarFetch('items_per_page', 'str:1:4:', $items_per_page, '20', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
             if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('calendar', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('calendar', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
@@ -51,7 +51,7 @@ function calendar_admin_modifyconfig()
             $day_end = $timeproperty->checkInput('day_end') ? $timeproperty->getValue() : xarModVars::get('calendar','day_end');
 
             if ($data['tab'] == 'calendar_general') {
-                xarModVars::set('calendar', 'itemsperpage', $itemsperpage);
+                xarModVars::set('calendar', 'items_per_page', $items_per_page);
                 xarModVars::set('calendar', 'supportshorturls', $shorturls);
                 xarModVars::set('calendar', 'useModuleAlias', $useModuleAlias);
                 xarModVars::set('calendar', 'aliasname', $aliasname);

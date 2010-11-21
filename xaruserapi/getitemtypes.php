@@ -20,7 +20,7 @@
                               'url'   => xarModURL('calendar','user','view')
                              );
         // @todo let's use DataObjectMaster::getModuleItemType here, but not until roles brings in dd automatically
-        $extensionitemtypes = xarModAPIFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 7, 'native' =>false));
+        $extensionitemtypes = xarMod::apiFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 7, 'native' =>false));
 
         $keys = array_merge(array_keys($itemtypes),array_keys($extensionitemtypes));
         $values = array_merge(array_values($itemtypes),array_values($extensionitemtypes));

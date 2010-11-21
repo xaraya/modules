@@ -24,5 +24,5 @@ Boston, MA  02111-1307  USA
 To read the license please read the docs/license.txt or visit
 http://www.gnu.org/copyleft/gpl.html
 */
-xarModAPILoad('calendar','defines');
+xarMod::apiLoad('calendar','defines');
 ?>

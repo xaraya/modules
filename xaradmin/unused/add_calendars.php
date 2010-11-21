@@ -7,7 +7,7 @@ function calendar_admin_add_calendars()
     if (!xarVarFetch('calid', 'int:0:', $calid, '0', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('calname', 'str', $calname, '', XARVAR_NOT_REQUIRED)) {return;}
 
-    $data = xarModAPIFunc('calendar', 'admin', 'get_calendars');
+    $data = xarMod::apiFunc('calendar', 'admin', 'get_calendars');
 
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();

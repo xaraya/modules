@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+
     <tr>
         <xar:template file="listingslist_headerprefix" module="$module,listings"/>
         <xar:foreach in="$fields" key="$column" value="$field">
@@ -6,7 +8,7 @@
                 <xar:continue />
             </xar:if>
             <th>
-                <xar:set name="url">xarServer::getCurrentURL(array('letter' => $letter, 'search' => $search, 'order' => $column, 'op' => 'column'))</xar:set>
+                <xar:set name="url">xarServer::getCurrentURL(array('letter' => $letter, 'order' => $column, 'op' => 'column'))</xar:set>
                 <a href="#$url#" alt="Click to order by this field" title="Order by #$field#">
                     #$field#
                 </a>

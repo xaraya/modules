@@ -11,7 +11,7 @@
 
 /**
  * Delete a calendar from database
- * Usage : if (xarModAPIFunc('calendar', 'admin', 'delete', $calendar)) {...}
+ * Usage : if (xarMod::apiFunc('calendar', 'admin', 'delete', $calendar)) {...}
  *
  * @param $args['calid'] ID of the calendar
  * @returns bool
@@ -35,10 +35,10 @@ function calendar_adminapi_delete_calendar($args)
 
     // TODO: Security check
 /*
-    if (!xarModAPILoad('calendar', 'user')) return;
+    if (!xarMod::apiLoad('calendar', 'user')) return;
 
     $args['mask'] = 'DeleteCalendars';
-    if (!xarModAPIFunc('calendar','user','checksecurity',$args)) {
+    if (!xarMod::apiFunc('calendar','user','checksecurity',$args)) {
         $msg = xarML('Not authorized to delete #(1) items',
                     'Calendar');
         throw new Exception($msg);

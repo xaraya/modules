@@ -19,7 +19,7 @@ function calendar_admin_create_calendars()
 //    if(!xarSecurityCheck('AddCalendar', 0, 'Calendar')) {return;}
     
     // Check if module name has already been used.
-    $checkname = xarModAPIFunc('calendar', 'user', 'get', array('calname' => $calname));
+    $checkname = xarMod::apiFunc('calendar', 'user', 'get', array('calname' => $calname));
     if (!empty($checkname)) {
         $msg = xarML('Calendar name "#(1)" already exists. Please go back and enter a
                       different name', $calname);
@@ -35,7 +35,7 @@ function calendar_admin_create_calendars()
     }    
     
     // Pass to API
-    $calid = xarModAPIFunc(
+    $calid = xarMod::apiFunc(
         'calendar', 'admin', 'create_calendars',
             array(  'calname'      => $calname
                    ,'fileuri'     => $fileuri 

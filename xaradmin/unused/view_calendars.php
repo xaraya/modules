@@ -10,7 +10,7 @@ function calendar_admin_view_calendars()
     $data['default_cal'] = unserialize(xarModVars::get('calendar', 'default_cal'));
 
     // Return the template variables defined in this function
-    $data['calendars'] = xarModAPIFunc('calendar',
+    $data['calendars'] = xarMod::apiFunc('calendar',
                              'user',
                              'getall');
 

@@ -48,7 +48,7 @@ function calendar_user_delete($args)
     if(!xarSecurityCheck('DeleteDynamicDataItem',1,'Item',$data['moduleid'].":".$data['itemtype'].":".$data['itemid'])) return;
 
     // recover any session var information and remove it from the var
-    $data = array_merge($data,xarModAPIFunc('dynamicdata','user','getcontext',array('module' => $tplmodule)));
+    $data = array_merge($data,xarMod::apiFunc('dynamicdata','user','getcontext',array('module' => $tplmodule)));
     //xarSession::setVar('ddcontext.' . $tplmodule, array('tplmodule' => $tplmodule));
     extract($data);
 

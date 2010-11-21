@@ -28,11 +28,11 @@
         $isvalid = $myobject->checkInput(array(), 0, 'dd');
 
         // recover any session var information
-        $data = xarModAPIFunc('dynamicdata','user','getcontext',array('module' => $tplmodule));
+        $data = xarMod::apiFunc('dynamicdata','user','getcontext',array('module' => $tplmodule));
         extract($data);
 
         if (!empty($preview) || !$isvalid) {
-            $data = array_merge($data, xarModAPIFunc('dynamicdata','admin','menu'));
+            $data = array_merge($data, xarMod::apiFunc('dynamicdata','admin','menu'));
             $data['object'] = & $myobject;
 
             $data['objectid'] = $myobject->objectid;
@@ -44,8 +44,8 @@
             }
 
             // Makes this hooks call explictly from DD
-            // $modinfo = xarModGetInfo($myobject->moduleid);
-            $modinfo = xarModGetInfo(182);
+            // $modinfo = xarMod::getInfo($myobject->moduleid);
+            $modinfo = xarMod::getInfo(182);
             $item = array();
             foreach (array_keys($myobject->properties) as $name) {
                 $item[$name] = $myobject->properties[$name]->value;

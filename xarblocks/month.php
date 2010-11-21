@@ -2,7 +2,7 @@
 
     sys::import('xaraya.structures.containers.blocks.basicblock');
 
-    class MonthBlock extends BasicBlock
+    class Calendar_MonthBlock extends BasicBlock
     {
         public $name                = 'Month';
         public $module              = 'calendar';
@@ -24,7 +24,7 @@
             sys::import("modules.calendar.class.Calendar.Decorator.Xaraya");
 
             // Build the month
-            $data['content'] = xarModAPIFunc('calendar','user','getuserdatetimeinfo');
+            $data['content'] = xarMod::apiFunc('calendar','user','getuserdatetimeinfo');
             $data['content']['MonthCal'] = new Calendar_Month_Weekdays(
                 $data['content']['cal_year'],
                 $data['content']['cal_month'],

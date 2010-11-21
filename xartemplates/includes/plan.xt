@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+
     <h5>Todo</h5>
         <ol>
             <li>(roger working on this?) Getting the ics parser to work</li>

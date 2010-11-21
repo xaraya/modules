@@ -4,7 +4,7 @@
 
     sys::import('xaraya.structures.containers.blocks.basicblock');
 
-    class CalnavBlock extends BasicBlock implements iBlock
+    class Calendar_CalnavBlock extends BasicBlock implements iBlock
     {
 
         public $name                = 'CalnavBlock';

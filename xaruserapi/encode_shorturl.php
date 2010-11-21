@@ -11,7 +11,7 @@ function calendar_userapi_encode_shorturl(&$params)
     // default path is empty -> no short URL
     $path = '';
     $extra = '';
-    // we can't rely on xarModGetName() here (yet) !
+    // we can't rely on xarMod::getName() here (yet) !
     $module = 'calendar';
     if(isset($params['cal_date']) && !empty($params['cal_date'])) {
         $year = substr($params['cal_date'],0,4);

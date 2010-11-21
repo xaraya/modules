@@ -13,7 +13,7 @@
 /* Include files needed */
 sys::import('modules.dynamicdata.class.properties');
 sys::import('xaraya.structures.query');
-xarModAPILoad('calendar','user');
+xarMod::apiLoad('calendar','user');
 
 class CalendarDisplayProperty extends DataProperty
 {
@@ -72,7 +72,7 @@ class CalendarDisplayProperty extends DataProperty
     
     public function setup($timeframe, $role_id)
     {
-        $data = xarModAPIFunc('calendar','user','getUserDateTimeInfo');
+        $data = xarMod::apiFunc('calendar','user','getUserDateTimeInfo');
         switch ($timeframe) {
             case 'week':
                 $WeekEvents = new Calendar_Week($data['cal_year'],$data['cal_month'],$data['cal_day'],CALENDAR_FIRST_DAY_OF_WEEK);

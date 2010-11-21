@@ -1,4 +1,4 @@
 <?php
-xarModAPILoad('calendar','defines');
+xarMod::apiLoad('calendar','defines');
 
 ?>

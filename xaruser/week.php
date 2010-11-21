@@ -5,7 +5,7 @@
 
     function calendar_user_week()
     {
-        $data = xarModAPIFunc('calendar','user','getUserDateTimeInfo');
+        $data = xarMod::apiFunc('calendar','user','getUserDateTimeInfo');
 
         $WeekEvents = new Calendar_Week($data['cal_year'],$data['cal_month'],$data['cal_day'],CALENDAR_FIRST_DAY_OF_WEEK);
 

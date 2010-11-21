@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <!--
     This is a generic admin list template for any DD object. You can use a specific template
@@ -23,14 +25,14 @@
     <p>
         <xar:if condition="!empty($prevurl)">
             <a href="#$prevurl#">
-                &lt;&lt;
+                &#60;&#60;
             </a>
             <xar:else />
             ---
         </xar:if>
         <xar:if condition="!empty($nexturl)">
             <a href="#$nexturl#">
-                &gt;&gt;
+                &#62;&#62;
             </a>
             <xar:else />
             ---

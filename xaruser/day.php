@@ -9,13 +9,13 @@
 
     function calendar_user_day()
     {
-        $data = xarModAPIFunc('calendar','user','getUserDateTimeInfo');
+        $data = xarMod::apiFunc('calendar','user','getUserDateTimeInfo');
         $DayEvents = new Calendar_Day($data['cal_year'],$data['cal_month'],$data['cal_day'],CALENDAR_FIRST_DAY_OF_WEEK);
         $args = array(
             'day' => &$Day,
         );
         $day_endts = $DayEvents->getTimestamp() + xarModVars::get('calendar','day_end') + 3600;
-//        $events = xarModAPIFunc('icalendar','user','getevents',$args);
+//        $events = xarMod::apiFunc('icalendar','user','getevents',$args);
 
         // get all the events. need to improve this query
         $xartable = xarDB::getTables();

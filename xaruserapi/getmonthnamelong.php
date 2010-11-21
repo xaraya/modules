@@ -9,7 +9,7 @@ function calendar_userapi_getMonthNameLong($args)
     if(!xarVarValidate('int:1:12',$month)) {
         return;
     }
-    $c = xarModAPIFunc('calendar','user','factory','calendar');
+    $c = xarMod::apiFunc('calendar','user','factory','calendar');
     return $c->MonthLong($month);
 }
 

@@ -116,7 +116,7 @@ function calendar_init()
     xarModVars::set('calendar','pearcalendar_root',sys::code() . 'modules/calendar/pear/Calendar/');
 
     // get list of calendar ics files
-    $data = xarModAPIFunc('calendar', 'admin', 'get_calendars');
+    $data = xarMod::apiFunc('calendar', 'admin', 'get_calendars');
     xarModVars::set('calendar','default_cal',serialize($data['icsfiles']));
 
     // Other variables from phpIcalendar config.inc.php
@@ -168,8 +168,8 @@ function calendar_init()
 # --------------------------------------------------------
 #  Register block types
 #
-    xarModAPIFunc('blocks', 'admin','register_block_type', array('modName' => 'calendar','blockType' => 'calnav'));
-    xarModAPIFunc('blocks', 'admin','register_block_type', array('modName' => 'calendar','blockType' => 'month'));
+    xarMod::apiFunc('blocks', 'admin','register_block_type', array('modName' => 'calendar','blockType' => 'calnav'));
+    xarMod::apiFunc('blocks', 'admin','register_block_type', array('modName' => 'calendar','blockType' => 'month'));
 
 //TODO::Register our blocklayout tags to allow using Objects in the templates
 //<xar:calendar-decorator object="$Month" decorator="Xaraya" name="$MonthURI"/>
@@ -198,8 +198,8 @@ function calendar_init()
     $observer->register('item', 'delete', 'API');
 
     // Register config hook
-    $observer = new BasicObserver('quotas','admin','getconfighook');
-    $observer->register('module', 'getconfig', 'API');
+//    $observer = new BasicObserver('quotas','admin','getconfighook');
+//    $observer->register('module', 'getconfig', 'API');
     
     // Set up the hook to listings
     $subject = new HookSubject('listings');
@@ -215,7 +215,7 @@ function calendar_init()
                    'calendar_event',
                      );
 
-    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
     return true;
 }
@@ -287,9 +287,9 @@ function calendar_delete()
     #
     # Remove block types
     #
-        if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type', array('modName'  => 'calendar', 'blockType'=> 'month'))) return;
+        if (!xarMod::apiFunc('blocks', 'admin', 'unregister_block_type', array('modName'  => 'calendar', 'blockType'=> 'month'))) return;
 
-    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'calendar'));
+    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => 'calendar'));
 /*
     // Remove all tables (see example module for comments)
     $dbconn = xarDB::getConn();

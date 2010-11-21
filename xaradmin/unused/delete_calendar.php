@@ -10,7 +10,7 @@ function calendar_admin_delete_calendar()
     if (!xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) return;
 
     // Get calendar information
-    $calendar = xarModAPIFunc('calendar',
+    $calendar = xarMod::apiFunc('calendar',
                              'user',
                              'get',
                              array('calid' => $calid));
@@ -26,7 +26,7 @@ function calendar_admin_delete_calendar()
     $input['mask'] = 'DeleteCalendars';
 
 /* TODO: security
-    if (!xarModAPIFunc('calendar','user','checksecurity',$input)) {
+    if (!xarMod::apiFunc('calendar','user','checksecurity',$input)) {
         $msg = xarML('You have no permission to delete item #(1)',
                      xarVarPrepForDisplay($calid));
         throw new Exception($msg);
@@ -40,8 +40,8 @@ function calendar_admin_delete_calendar()
         $data['calid'] = $calid;
 
         // Use articles user GUI function (not API) for preview
-        if (!xarModLoad('calendar','user')) return;
-        $data['preview'] = xarModFunc('calendar', 'user', 'display',
+        if (!xarMod::load('calendar','user')) return;
+        $data['preview'] = xarMod::guiFunc('calendar', 'user', 'display',
                                       array('calid' => $calid));
 
         // Add some other data you'll want to display in the template
@@ -59,7 +59,7 @@ function calendar_admin_delete_calendar()
     if (!xarSecConfirmAuthKey()) return;
 
     // Pass to API
-    if (!xarModAPIFunc('calendar',
+    if (!xarMod::apiFunc('calendar',
                      'admin',
                      'delete_calendar',
                      array('calid' => $calid))) {

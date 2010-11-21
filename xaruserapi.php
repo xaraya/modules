@@ -33,7 +33,7 @@ if (!defined('CALENDAR_ROOT')) {
 //======================================================================
 // Define directory locations for this module
 //======================================================================
-$modinfo = xarModGetInfo(xarModGetIdFromName('calendar'));
+$modinfo = xarMod::getInfo(xarMod::getRegID('calendar'));
 if (!defined('CALENDAR_MODULE_ROOT')) {
     define('CALENDAR_MODULE_ROOT',"code/modules/{$modinfo['directory']}/");
 }
@@ -68,7 +68,7 @@ function calendar_userapi_buildURL($args=array())
 
 function calendar_userapi_currentMonthURL()
 {
-    return xarModAPIFunc(
+    return xarMod::apiFunc(
                 'calendar',
                 'user',
                 'buildURL',
@@ -81,7 +81,7 @@ function calendar_userapi_currentMonthURL()
 
 function calendar_userapi_currentWeekURL()
 {
-    return xarModAPIFunc(
+    return xarMod::apiFunc(
                 'calendar',
                 'user',
                 'buildURL',
@@ -94,7 +94,7 @@ function calendar_userapi_currentWeekURL()
 
 function calendar_userapi_currentDayURL()
 {
-    return xarModAPIFunc(
+    return xarMod::apiFunc(
                 'calendar',
                 'user',
                 'buildURL',
@@ -107,7 +107,7 @@ function calendar_userapi_currentDayURL()
 
 function calendar_userapi_currentYearURL()
 {
-    return xarModAPIFunc(
+    return xarMod::apiFunc(
                 'calendar',
                 'user',
                 'buildURL',

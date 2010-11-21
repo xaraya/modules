@@ -1,27 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+
     <xar:style scope="module" module="calendar" file="user-month"/>
 
     <xar:calendar-decorator object="$Month" decorator="Xaraya" name="MonthURI"/>
-    <xar:set name="prevYearTitle">Previous Year</xar:set>
-    <xar:set name="prevYearURL">#$MonthURI->prev('year')#</xar:set>
+    <xar:var name="prevYearTitle">Previous Year</xar:var>
+    <xar:set name="prevYearURL">$MonthURI->prev('year')</xar:set>
 
-    <xar:set name="prevMonthTitle">Previous Month</xar:set>
-    <xar:set name="prevMonthURL">#$MonthURI->prev('month')#</xar:set>
+    <xar:var name="prevMonthTitle">Previous Month</xar:var>
+    <xar:set name="prevMonthURL">$MonthURI->prev('month')</xar:set>
 
-    <xar:set name="nextMonthTitle">Next Month</xar:set>
-    <xar:set name="nextMonthURL">#$MonthURI->next('month')#</xar:set>
+    <xar:var name="nextMonthTitle">Next Month</xar:var>
+    <xar:set name="nextMonthURL">$MonthURI->next('month')</xar:set>
 
-    <xar:set name="nextYearTitle">Next Year</xar:set>
-    <xar:set name="nextYearURL">#$MonthURI->next('year')#</xar:set>
+    <xar:var name="nextYearTitle">Next Year</xar:var>
+    <xar:set name="nextYearURL">$MonthURI->next('year')</xar:set>
 
     <table id="cal-calendar">
         <tr>
             <th class="cal-navigation" colspan="8">
-                <a href="#$prevYearURL#" title="#$prevYearTitle#">&lt;&lt;</a>
-                <a href="#$prevMonthURL#" title="#$prevMonthTitle#">&lt;</a>
+                <a href="#$prevYearURL#" title="#$prevYearTitle#">&#60;&#60;</a>
+                <a href="#$prevMonthURL#" title="#$prevMonthTitle#">&#60;</a>
                 #xarLocaleFormatDate('%B %Y',$Month->getTimeStamp())#
-                <a href="#$nextMonthURL#" title="#$nextMonthTitle#">&gt;</a>
-                <a href="#$nextYearURL#" title="#$nextYearTitle#">&gt;&gt;</a>
+                <a href="#$nextMonthURL#" title="#$nextMonthTitle#">&#62;</a>
+                <a href="#$nextYearURL#" title="#$nextYearTitle#">&#62;&#62;</a>
             </th>
         </tr>
 
@@ -49,7 +51,7 @@
                 -->
                 <xar:set name="WeekDate">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
                 <xar:set name="WeekUrl">xarModURL('calendar','user','week',array('cal_date'=>$WeekDate))</xar:set>
-                <xar:set name="WeekNum">xarModAPIFunc('calendar','user','getWeekNumber',array('cal_date'=>$WeekDate))</xar:set>
+                <xar:set name="WeekNum">xarMod::apiFunc('calendar','user','getWeekNumber',array('cal_date'=>$WeekDate))</xar:set>
                 <tr>
                     <th class="cal-week">
                         <a href="#$WeekUrl#">#xarLocaleFormatDate('%U',$Day->getTimeStamp())#</a>

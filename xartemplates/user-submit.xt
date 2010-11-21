@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+
     <form name="cal_submit" method="post" action="#xarModURL('calendar','user','submit')#">
 
     <p>

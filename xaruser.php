@@ -19,5 +19,5 @@
 //  This allows us to load Module defaults without loading
 //  any actual API functions for each page called in this module
 //======================================================================
-xarModAPILoad('calendar','user');
+xarMod::apiLoad('calendar','user');
 ?>

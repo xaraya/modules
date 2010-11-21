@@ -6,7 +6,7 @@ function calendar_admin_add_event()
     if (!xarSecurityCheck('Admincalendar')) return;
 
     // Generate a one-time authorisation code for this operation
-    $data = xarModAPIFunc('calendar', 'admin', 'get_calendars');
+    $data = xarMod::apiFunc('calendar', 'admin', 'get_calendars');
     $data['authid'] = xarSecGenAuthKey();
     $data['default_cal'] = unserialize(xarModVars::get('calendar', 'default_cal'));
 
