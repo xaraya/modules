@@ -16,7 +16,7 @@
                 #$dm.text_transformed#
             </span>
             <span class="profile-image-after" id="status-info">
-                <a href="http://twitter.com/##!/#$dm.recipient_screen_name#/status/#$dm.id#"><xar:base-timesince stamp="$dm['created_at_unix']" /></a> <xar:mlstring>ago</xar:mlstring>
+                <a href="http://twitter.com/##!/#$dm.recipient_screen_name#/status/#$dm.id#"><xar:base-timesince stamp="$dm['created_at_unix']" /></a> ago
             </span>
         </div>
     </xar:foreach>
