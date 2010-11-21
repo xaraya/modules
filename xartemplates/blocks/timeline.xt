@@ -29,7 +29,7 @@
                 #$item.text_transformed#
                 <br/>
                 <span class="status-info">
-                    <xar:base-timesince stamp="$item['created_at_unix']" /> <xar:mlstring>ago, via </xar:mlstring>#$item.source#
+                    <xar:base-timesince stamp="$item['created_at_unix']" /> ago, via #$item.source#
                 </span>
             </span>
         </li>
@@ -39,7 +39,7 @@
 <xar:if condition="$showfollow and !empty($screen_name)">
     <p class="xar-align-right xar-sub">
         <a href="http://twitter.com/#$screen_name#" rel="external">
-            <xar:mlstring>Follow</xar:mlstring> #$screen_name#
+            Follow #$screen_name#
         </a>
     </p>
 </xar:if>

@@ -48,13 +48,12 @@ function twitter_init()
             return false;
         }
 
-    /*
     if (!xarMod::apiFunc('blocks',
             'admin',
             'register_block_type',
             array('modName' => 'twitter',
                 'blockType' => 'timeline'))) return;
-    */
+
     if (!xarModRegisterHook('item', 'create', 'API',
             'twitter', 'hooks', 'itemcreate')) {
         return false;
@@ -94,7 +93,6 @@ function twitter_upgrade($oldversion)
     /* Upgrade dependent on old version number */
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     switch ($oldversion) {
       case '0.0.1':
         // to v0.0.2
@@ -232,7 +230,6 @@ function twitter_delete()
 {
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     //$twittertable = $xartable['twitter'];
     // $result = $datadict->dropTable($twittertable);
 
