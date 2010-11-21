@@ -15,8 +15,8 @@ function twitter_admin_account($args)
 {
     if (!xarSecurityCheck('AdminTwitter')) return;
     
-    $access_token = xarModGetVar('twitter', 'access_token');
-    $access_token_secret = xarModGetVar('twitter', 'access_token_secret');
+    $access_token = xarModVars::get('twitter', 'access_token');
+    $access_token_secret = xarModVars::get('twitter', 'access_token_secret');
     
     if (empty($access_token) || empty($access_token_secret)) {
         $data['invalid'] = xarML('You must first set the Application and Site Access Tokens');
@@ -30,7 +30,7 @@ function twitter_admin_account($args)
     if (!xarVarFetch('method', 'pre:trim:lower:str:1:', 
         $data['method'], null, XARVAR_NOT_REQUIRED)) return;
 
-    $data['account'] = xarModAPIFunc('twitter', 'rest', 'account', 
+    $data['account'] = xarMod::apiFunc('twitter', 'rest', 'account', 
         array(
             'method' => 'verify_credentials',
             'access_token' => $access_token,
@@ -111,11 +111,11 @@ function twitter_admin_account($args)
             // we show the status update form here,
             // set the token/secret for use by the status_update function
             // (Do NOT set these hidden in the form input) 
-            xarSessionSetVar('twitter.access_token', $access_token);
-            xarSessionSetVar('twitter.access_token_secret', $access_token_secret);
+            xarSession::setVar('twitter.access_token', $access_token);
+            xarSession::setVar('twitter.access_token_secret', $access_token_secret);
             // set the status_update url for the form action 
             $data['status_update_url'] = xarModURL('twitter', 'admin', 'status_update');
-            $data['return_url'] = xarServerGetCurrentURL();
+            $data['return_url'] = xarServer::getCurrentURL();
         break;
     
         case 'profile':
@@ -177,7 +177,7 @@ function twitter_admin_account($args)
                                     if (strlen($twitter_description) > 160) 
                                         $invalid['twitter_description'] = xarML('Description must be 160 characters or less');
                                     if (empty($invalid)) {
-                                        $response = xarModAPIFunc('twitter', 'rest', 'account',
+                                        $response = xarMod::apiFunc('twitter', 'rest', 'account',
                                             array(
                                                 'method' => 'update_profile',
                                                 'name' => $twitter_name,
@@ -190,14 +190,14 @@ function twitter_admin_account($args)
                                     }
                                 }
                                 if (empty($invalid)) 
-                                    xarSessionSetVar('twitter.update_profile_success', 
+                                    xarSession::setVar('twitter.update_profile_success', 
                                         xarML('Success: Profile Updated'));
                             break;
                         }
                         if (empty($return_url))
                             $return_url = xarModURL('twitter', 'admin', 'account');
                         
-                        xarResponseRedirect($return_url);
+                        xarResponse::redirect($return_url);
                     }
                     
                 break;
@@ -226,7 +226,7 @@ function twitter_admin_account($args)
         $params['access_token'] = $access_token;
         $params['access_token_secret'] = $access_token_secret;
         //$params['expires'] = 1;
-        $data['content'] = xarModAPIFunc('twitter', 'rest', $rest_func, $params);
+        $data['content'] = xarMod::apiFunc('twitter', 'rest', $rest_func, $params);
         //print_r($data['content']);    
     }
     

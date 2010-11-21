@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="base" file="navtabs" />
 <xar:if condition="!empty($account)">
     <div>
@@ -9,16 +11,17 @@
             <xar:set name="inactiveclass">''</xar:set>
             <xar:set name="activetab">empty($rt)?$activeclass:$inactiveclass</xar:set>
             <dd class="#$activetab#">
-                <a href="#xarServerGetCurrentUrl(array('tab' => 'profile', 'method' => 'settings', 'rt' => null))#" title="#xarML('Profile')#" >
+                <a href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => 'settings', 'rt' => null))#" title="#xarML('Profile')#" >
                     <xar:mlstring>Profile</xar:mlstring>
                 </a>
             </dd> 
             <xar:set name="activetab">$rt=='design'?$activeclass:$inactiveclass</xar:set>
             <dd class="#$activetab#">
-                <a href="#xarServerGetCurrentUrl(array('tab' => 'profile', 'method' => 'settings', 'rt' => 'design'))#" title="#xarML('Design')#" >
+                <a href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => 'settings', 'rt' => 'design'))#" title="#xarML('Design')#" >
                     <xar:mlstring>Design</xar:mlstring>
                 </a>
             </dd>    
         </dl>
     </div>
 </xar:if>
+</xar:template>

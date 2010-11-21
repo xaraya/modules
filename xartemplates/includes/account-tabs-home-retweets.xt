@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="base" file="navtabs" />
 <xar:if condition="!empty($account)">
     <div>
@@ -9,22 +11,23 @@
             <xar:set name="inactiveclass">''</xar:set>
             <xar:set name="activetab">empty($rt)?$activeclass:$inactiveclass</xar:set>
             <dd class="#$activetab#">
-                <a href="#xarServerGetCurrentUrl(array('tab' => null, 'method' => 'retweets', 'rt' => null))#" title="#xarML('Retweets')#" >
+                <a href="#xarServer::getCurrentURL(array('tab' => null, 'method' => 'retweets', 'rt' => null))#" title="#xarML('Retweets')#" >
                     <xar:mlstring>By You</xar:mlstring>
                 </a>
             </dd>
             <xar:set name="activetab">$rt=='byothers'?$activeclass:$inactiveclass</xar:set>
             <dd class="#$activetab#">
-                <a href="#xarServerGetCurrentUrl(array('tab' => null, 'method' => 'retweets', 'rt' => 'byothers'))#" title="#xarML('Retweets by others')#" >
+                <a href="#xarServer::getCurrentURL(array('tab' => null, 'method' => 'retweets', 'rt' => 'byothers'))#" title="#xarML('Retweets by others')#" >
                     <xar:mlstring>By Others</xar:mlstring>
                 </a>
             </dd>
             <xar:set name="activetab">$rt=='ofyou'?$activeclass:$inactiveclass</xar:set>
             <dd class="#$activetab#">
-                <a href="#xarServerGetCurrentUrl(array('tab' => null, 'method' => 'retweets', 'rt' => 'ofyou'))#" title="#xarML('Your tweets, retweeted')#" >
+                <a href="#xarServer::getCurrentURL(array('tab' => null, 'method' => 'retweets', 'rt' => 'ofyou'))#" title="#xarML('Your tweets, retweeted')#" >
                     <xar:mlstring>Yours, Retweeted</xar:mlstring>
                 </a>
             </dd>    
         </dl>
     </div>
 </xar:if>
+</xar:template>

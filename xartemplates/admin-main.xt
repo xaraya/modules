@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+  <span class="xar-mod-title">
+    Twitter Administration
+  </span>
+</div>
+<div id="twitter-admin-main" class="xar-mod-body">
+  <xar:template type="module" module="twitter" file="admin-tabs" />
+  <img src="#xarTplGetImage('twitter-module-icon3.png','twitter')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+  <h3>What is it?</h3>
+  <p>
+    <em>Twitter Module provides a wrapper for Twitters API functions and acts as a web client allowing you to interact with Twitter from your own site.</em></p>
+  <p>
+    It is currently responsible for accomplishing these main tasks:
+  </p>
+  <ol>
+    <li>Provide a means to manage your Twitter account and send status updates from your site.</li>
+    <li>Optionally display your account timeline to your site visitors.</li>
+    <li>Optionally display the Twitter public timeline.</li>
+  </ol>
+  
+  <h3>How to use it?</h3>
+    
+  <p>Before you can use the Twitter module you must first register it as an application.</p>
+  <h4>Register your application</h4>  
+  <p>First login to Twitter using the account you wish to manage from your site, then visit <a href="http://twitter.com/apps">http://twitter.com/apps/new</a> and fill in the form. Once complete, you will be given an application Consumer Key and Secret, these are they keys to your application.</p>
+  <p>Once you have obtained your Consumer Key, and Consumer Secret, enter those into the fields in Modify Config.</p>
+  <p>Having registered your application, you then need to associate it with your account.</p>
+  
+  <h4>Obtain your account tokens</h4>
+  <p>To associate your account, whilst still logged in to Twitter, visit <a href="http://dev.twitter.com/apps">http://dev.twitter.com/apps/</a>. This lists all your registered applications, find the one you registered for your site, and click on its name to view it. In the right hand panel you will see a My Access Token link. Click on that and get the unique Access Token and Access Token Secret for your application and enter those into the fields in Modify Config.</p>
+  <p>Once you have entered the tokens, you should be able to visit the Site Account link above and view and manage your Twitter account from your site.</p>
+  
+  <h3>Included Blocks</h3>
+  <ul>
+    <li>timeline -- Allows you to display any available timeline within a block</li>
+  </ul>
+
+  <h3>Included Hooks</h3>
+  <ul>
+    <li>Create -- Allows a status update to be sent from the site account when new items are created. The hook allows you to send an update for content created by all users, or just items created by the site account owner. Status will include a link to the new item. You can optionally specify a field to include an excerpt from.</li>
+  </ul>
+  <p>
+            In these cases, the Twitter module provides the hook functionality.
+            To activate the hooks go to <a href="#xarModURL('modules','admin','hooks', array('hook' => 'twitter'))#">Modules - Configure Hooks - Twitter Module.</a>.
+            From there choose the module(s) and/or itemtype(s) you want to activate create hooks for.
+            You can then configure settings per module/itemtype from <a href="#xarModURL('twitter', 'admin', 'modifyconfig', array('tab' => 'hooks'))#">Twitter - Modify Config - Hooks</a>.    
+  </p>
+
+  <h3>
+    Further Information
+  </h3>
+  <p>
+    Further information on the Twitter module can be found at
+  </p>
+  <ul>
+    <li><a title="#xarML('Xaraya Twitter Module')#" href="http://crispcreations.co.uk/xar/mods/twitter">Twitter Module home page</a>  at CrispCreations
+    </li>
+    <li>Twitter Extension page at <a title="#xarML('Twitter Module - Xaraya Extension 991')#" href="http://www.xaraya.com/index.php/release/991.html">Xaraya Extension and Releases</a>.
+       Click on Version History tab at the bottom to get the latest release information.
+    </li>
+    <li>Related tutorials and documentation on Twitter Module found at <a href="http://www.xaraya.com/index.php/keywords/twitter/" title="#xarML('Related documentation on Twitter')#">Xaraya Documentation.</a>
+    </li>
+    <li>Twitter Module uses the TwitterAPI, more details of which can be found at the <a href="http://apiwiki.twitter.com/">Twitter API Wiki</a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&#160;Twitter Module - Overview</strong><br />&#160;Version #$version#
+  </p>
+</div>
+
+
+</xar:template>

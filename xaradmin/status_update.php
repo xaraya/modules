@@ -15,8 +15,8 @@ function twitter_admin_status_update($args)
         $return_url, '', XARVAR_NOT_REQUIRED)) return;
 
     $data = array();
-    $access_token = xarSessionGetVar('twitter.access_token');
-    $access_token_secret = xarSessionGetVar('twitter.access_token_secret');
+    $access_token = xarSession::getVar('twitter.access_token');
+    $access_token_secret = xarSession::getVar('twitter.access_token_secret');
 
     if (empty($access_token) || empty($access_token_secret)) {
         $data['invalid'] = xarML('You must first set the Application and Site Access Tokens');
@@ -24,7 +24,7 @@ function twitter_admin_status_update($args)
         return $data;
     }
 
-    $data['account'] = xarModAPIFunc('twitter', 'rest', 'account', 
+    $data['account'] = xarMod::apiFunc('twitter', 'rest', 'account', 
         array(
             'method' => 'verify_credentials',
             'access_token' => $access_token,
@@ -62,15 +62,15 @@ function twitter_admin_status_update($args)
             }
         }
         if (!empty($status_update_error)) {
-            xarSessionSetVar('twitter.status_update_text', $status_update_text);
-            xarSessionSetVar('twitter.status_update_error', $status_update_error);
+            xarSession::setVar('twitter.status_update_text', $status_update_text);
+            xarSession::setVar('twitter.status_update_error', $status_update_error);
         } else {
             $status_update_success = xarML('Success: Tweet Sent');
-            xarSessionSetVar('twitter.status_update_success', $status_update_success);
+            xarSession::setVar('twitter.status_update_success', $status_update_success);
         }
                   
         if (!empty($return_url)) 
-            xarResponseRedirect($return_url);
+            xarResponse::redirect($return_url);
                     
     }
 
@@ -79,7 +79,7 @@ function twitter_admin_status_update($args)
     $data['status_update_success'] = !empty($status_update_success) ? $status_update_success : '';
     $data['status_update_url'] = !empty($status_update_url) ? $status_update_url : xarModURL('twitter', 'admin', 'status_update');    
     $data['compare'] = xarModURL('twitter', 'admin', 'status_update');
-    $data['return_url'] = empty($return_url) ? xarServerGetCurrentURL() : $return_url;
+    $data['return_url'] = empty($return_url) ? xarServer::getCurrentURL() : $return_url;
 
     if (!xarVarFetch('tplmodule', 'pre:trim:lower:str:1:', 
         $tplmodule, 'twitter', XARVAR_NOT_REQUIRED)) return;

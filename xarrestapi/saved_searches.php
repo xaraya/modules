@@ -64,8 +64,8 @@ function twitter_restapi_saved_searches($args)
         $http_method = 'get';
 
     if (empty($consumer_key) || empty($consumer_secret)) {
-        $consumer_key = xarModGetVar('twitter', 'consumer_key');
-        $consumer_secret = xarModGetVar('twitter', 'consumer_secret');    
+        $consumer_key = xarModVars::get('twitter', 'consumer_key');
+        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');    
     }
     
     if (empty($access_token) || empty($access_token_secret)) {
@@ -73,7 +73,7 @@ function twitter_restapi_saved_searches($args)
         $access_token_secret = null;
     }
 
-    $response = xarModAPIFunc('twitter', 'rest', '_process', 
+    $response = xarMod::apiFunc('twitter', 'rest', '_process', 
         array(
             'path' => $path,
             'params' => $params,

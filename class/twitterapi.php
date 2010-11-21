@@ -1,5 +1,5 @@
 <?php
-require_once('modules/libtwitteroauth/class/twitteroauth.php');
+sys::import('modules.libtwitteroauth.class.twitteroauth');
 class TwitterAPI extends TwitterOAuth
 {
     // Overloaded properties from TwitterOAuth
@@ -7,8 +7,6 @@ class TwitterAPI extends TwitterOAuth
     public $format = 'xml';
     
     // Caching properties specific to TwitterAPI
-    public $cachedir = 'var/cache';
-    public $cachetype = 'twitter'; 
     public $cached = true;
     public $expires = 300;
 
@@ -20,13 +18,12 @@ class TwitterAPI extends TwitterOAuth
     {
         // add caching to GET requests
         if ($this->cached) {
-            if (!function_exists('xarCache_getStorage'))
-                require_once('includes/xarCache.php');
+            sys::import('xaraya.caching');
             // init the filesystem cache object
-            $fileCache = xarCache_getStorage(array(
+            $fileCache = xarCache::getStorage(array(
                 'storage' => 'filesystem', 
-                'cachedir' => $this->cachedir, 
-                'type' => $this->cachetype,
+                'cachedir' => sys::varpath() . '/cache', 
+                'type' => 'twitter',
                 'expire' => $this->expires,
                 'code' => $this->format,
             ));
@@ -260,7 +257,7 @@ Class TwitterUtil
         $text = trim($text);
         if (empty($text)) return "";
 
-        // replace &amp;s (from xml urls)
+        // replace &#38;s (from xml urls)
         $text = str_replace('&amp;', '&', $text);
         if (strlen($text) <= $limit) return $text; // string within limits 
 
@@ -323,7 +320,7 @@ Class TwitterUtil
     public static function encodetinyurl($url)
     {
         if (empty($url)) return false;
-        // replace &amp;s (from xml urls)
+        // replace &#38;s (from xml urls)
         $url = str_replace('&amp;', '&', $url);
         if (function_exists('curl_init')) {
             $ch = curl_init();

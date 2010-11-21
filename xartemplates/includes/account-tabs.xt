@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="base" file="navtabs" />
 <xar:if condition="!empty($account)">
     <div>
@@ -9,22 +11,23 @@
             <xar:set name="inactiveclass">''</xar:set>
             <xar:set name="activetab">empty($tab)?$activeclass:$inactiveclass</xar:set>
             <dd class="#$activetab#">
-                <a href="#xarServerGetCurrentUrl(array('tab' => null, 'method' => null, 'rt' => null))#" title="#xarML('Home Timeline')#" >
+                <a href="#xarServer::getCurrentURL(array('tab' => null, 'method' => null, 'rt' => null))#" title="#xarML('Home Timeline')#" >
                     <xar:mlstring>Home</xar:mlstring>
                 </a>
             </dd>
             <xar:set name="activetab">$tab=='profile'?$activeclass:$inactiveclass</xar:set>
             <dd class="#$activetab#">
-                <a href="#xarServerGetCurrentUrl(array('tab' => 'profile', 'method' => null, 'rt' => null))#" title="#xarML('Profile')#" >
+                <a href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => null, 'rt' => null))#" title="#xarML('Profile')#" >
                     <xar:mlstring>Profile</xar:mlstring>
                 </a>
             </dd>
             <xar:set name="activetab">$tab=='messages'?$activeclass:$inactiveclass</xar:set>
             <dd class="#$activetab#">
-                <a href="#xarServerGetCurrentUrl(array('tab' => 'messages', 'method' => null, 'rt' => null))#" title="#xarML('Messages')#" >
+                <a href="#xarServer::getCurrentURL(array('tab' => 'messages', 'method' => null, 'rt' => null))#" title="#xarML('Messages')#" >
                     <xar:mlstring>Messages</xar:mlstring>
                 </a>
             </dd>    
         </dl>
     </div>
 </xar:if>
+</xar:template>

@@ -41,10 +41,10 @@ function twitter_hooksapi_itemcreate($args)
         if (!empty($extrainfo['module'])) {
             $modname = $extrainfo['module'];
         } else {
-            $modname = xarModGetName();
+            $modname = xarMod::getName();
         }
     }
-    $modid = xarModGetIDFromName($modname);
+    $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module name', 'hooksapi', 'itemcreate', 'twitter');
@@ -61,14 +61,14 @@ function twitter_hooksapi_itemcreate($args)
          }
     }
     
-    $settings = xarModAPIFunc('twitter', 'hooks', 'getsettings',
+    $settings = xarMod::apiFunc('twitter', 'hooks', 'getsettings',
         array(
             'module' => $modname,
             'itemtype' => $itemtype,
         ));
 
     // try and get a link for this item using the modules own getitemlinks api function    
-    $itemlink = xarModAPIFunc($modname, 'user', 'getitemlinks',
+    $itemlink = xarMod::apiFunc($modname, 'user', 'getitemlinks',
         array(
             'itemtype' => $itemtype,
             'itemids' => array($objectid)
@@ -105,12 +105,12 @@ function twitter_hooksapi_itemcreate($args)
     $text = TwitterUtil::prepstatus($text);
     
     if (!empty($text) && strlen($text) <= 140) {
-        $extrainfo['twitter_update'] = xarModAPIFunc('twitter', 'rest', 'status',
+        $extrainfo['twitter_update'] = xarMod::apiFunc('twitter', 'rest', 'status',
             array(
                 'method' => 'update',
                 'status' => $text,
-                'access_token' => xarModGetVar('twitter', 'access_token'),
-                'access_token_secret' => xarModGetVar('twitter', 'access_token_secret'),
+                'access_token' => xarModVars::get('twitter', 'access_token'),
+                'access_token_secret' => xarModVars::get('twitter', 'access_token_secret'),
             ));                
     }
     

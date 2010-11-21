@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="!empty($content)">
     <xar:if condition="!empty($content['error'])">
         <p>Problem communicating with Twitter, last response: <span class="xar-error">#$content['error']#</span></p>
@@ -9,3 +11,4 @@
         </ul>
     </xar:if>
 </xar:if>
+</xar:template>

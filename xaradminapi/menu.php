@@ -21,14 +21,14 @@
 function twitter_adminapi_menu()
 {
     $menu = $data = array();
-    $owner = xarModGetVar('twitter', 'owner');
+    $owner = xarModVars::get('twitter', 'owner');
     $uid = xarUserGetVar('uid');
     $isowner = $uid == $owner ? true :false;
-    list($modname, $modtype, $modfunc) = xarRequestGetInfo();
-    $username = xarModGetVar('twitter', 'username');
-    $password = !empty($username) ? xarModGetVar('twitter', 'password') : '';
+    list($modname, $modtype, $modfunc) = xarRequest::getInfo();
+    $username = xarModVars::get('twitter', 'username');
+    $password = !empty($username) ? xarModVars::get('twitter', 'password') : '';
     if (!empty($username) && !empty($password)) {
-      $userinfo = xarModAPIFunc('twitter', 'user', 'account_methods',
+      $userinfo = xarMod::apiFunc('twitter', 'user', 'account_methods',
         array(
           'method' => 'verify_credentials',
           'username' => $username,
@@ -39,7 +39,7 @@ function twitter_adminapi_menu()
       if (!$userinfo) {
         $userinfo = xarML('Couldn\'t validate account named #(1)', $username);
       } else {
-        $statuslimit = xarModAPIFunc('twitter', 'user', 'account_methods',
+        $statuslimit = xarMod::apiFunc('twitter', 'user', 'account_methods',
           array(
             'method' => 'rate_limit_status',
             'username' => $username,

@@ -22,7 +22,7 @@
  */
 function twitter_admin_overview()
 {
-    xarResponseRedirect(xarModURL('twitter', 'admin', 'main'));
+    xarResponse::redirect(xarModURL('twitter', 'admin', 'main'));
 
     return true;
 }

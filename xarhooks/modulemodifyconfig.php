@@ -13,10 +13,10 @@ function twitter_hooks_modulemodifyconfig($args)
         } elseif (!empty($objectid) && is_string($objectid)) {
             $module = $objectid;
         } else {
-            list($module) = xarRequestGetInfo();
+            list($module) = xarRequest::getInfo();
         }
     }
-    $module_id = xarModGetIDFromName($module);
+    $module_id = xarMod::getRegID($module);
     if (!$module_id) 
         $invalid[] = 'module';
 
@@ -39,7 +39,7 @@ function twitter_hooks_modulemodifyconfig($args)
     }
 
     // get settings for current module
-    $data = xarModAPIFunc('twitter', 'hooks', 'getsettings', 
+    $data = xarMod::apiFunc('twitter', 'hooks', 'getsettings', 
         array('module' => $module, 'itemtype' => $itemtype));
         
     return $data;

@@ -1,32 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:if condition="xarVarIsCached('Blocks.twitter', 'status_update_text')">
     <xar:set name="status_update_text">xarVarGetCached('Blocks.twitter', 'status_update_text')</xar:set>
 </xar:if>
 <xar:if condition="empty($status_update_text)">
-    <xar:set name="status_update_text">xarSessionGetVar('twitter.status_update_text')</xar:set>
+    <xar:set name="status_update_text">xarSession::getVar('twitter.status_update_text')</xar:set>
 </xar:if>
 <xar:if condition="xarVarIsCached('Blocks.twitter', 'status_update_error')">
     <xar:set name="status_update_error">xarVarGetCached('Blocks.twitter', 'status_update_error')</xar:set>
 </xar:if>
 <xar:if condition="empty($status_update_error)">
-    <xar:set name="status_update_error">xarSessionGetVar('twitter.status_update_error')</xar:set>
+    <xar:set name="status_update_error">xarSession::getVar('twitter.status_update_error')</xar:set>
 </xar:if>
 <xar:if condition="xarVarIsCached('Blocks.twitter', 'status_update_success')">
     <xar:set name="status_update_success">xarVarGetCached('Blocks.twitter', 'status_update_success')</xar:set>
 </xar:if>
 <xar:if condition="empty($status_update_success)">
-    <xar:set name="status_update_success">xarSessionGetVar('twitter.status_update_success')</xar:set>
+    <xar:set name="status_update_success">xarSession::getVar('twitter.status_update_success')</xar:set>
 </xar:if>
 <xar:if condition="empty($status_update_url)">
     <xar:set name="status_update_url">xarModURL('twitter', 'user', 'status_update')</xar:set>
 </xar:if>
 <xar:if condition="empty($return_url)">
-    <xar:set name="return_url">#xarServerGetCurrentURL()#</xar:set>
+    <xar:set name="return_url">#xarServer::getCurrentURL()#</xar:set>
 </xar:if>
 <xar:if condition="xarVarIsCached('Blocks.twitter', 'form_index')">
     <xar:set name="form_index">xarVarGetCached('Blocks.twitter', 'form_index')</xar:set>
 <xar:else/>
     <xar:set name="form_index">0</xar:set>
+<![CDATA[
 <script type="text/javascript">
 <!-- Dynamic Version by: Nannette Thacker -->
 <!-- http://www.shiningstar.net -->
@@ -44,6 +47,7 @@ cntfield.value = maxlimit - field.value.length;
 }
 //  End -->
 </script>
+]]>
 </xar:if>
 <form method="post" id="status_update_#$form_index#" name="tweet_#$form_index#" class="twitter-status xar-margin-nonetop" action="#$status_update_url#">
     <fieldset class="xar-margin-nonetop">
@@ -84,6 +88,7 @@ onKeyUp="textCounter(document.tweet_#$form_index#.status_update_text,document.tw
 <xar:if condition="xarVarSetCached('Blocks.twitter', 'status_update_success', $status_update_success)"></xar:if>
 <xar:if condition="empty($form_index)?xarVarSetCached('Blocks.twitter','form_index',1):xarVarSetCached('Blocks.twitter','form_index',$form_index++)"></xar:if>
 
-<xar:if condition="xarSessionDelVar('twitter.status_update_text')"></xar:if>
-<xar:if condition="xarSessionDelVar('twitter.status_update_error')"></xar:if>
-<xar:if condition="xarSessionDelVar('twitter.status_update_success')"></xar:if>
+<xar:if condition="xarSession::delVar('twitter.status_update_text')"></xar:if>
+<xar:if condition="xarSession::delVar('twitter.status_update_error')"></xar:if>
+<xar:if condition="xarSession::delVar('twitter.status_update_success')"></xar:if>
+</xar:template>

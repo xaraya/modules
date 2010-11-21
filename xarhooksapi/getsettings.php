@@ -3,20 +3,20 @@ function twitter_hooksapi_getsettings($args)
 {
     extract($args);
     if (empty($module))
-        $module = xarModGetName();
+        $module = xarMod::getName();
     if (empty($itemtype))
         $itemtype = 0;
     
     $modvar = "hooks_{$module}";
     
     if (!empty($itemtype))
-        $string = xarModGetVar('twitter', "{$modvar}_{$itemtype}");
+        $string = xarModVars::get('twitter', "{$modvar}_{$itemtype}");
     
     if (empty($string) && !empty($itemtype))
-        $string = xarModGetVar('twitter', "$modvar");
+        $string = xarModVars::get('twitter', "$modvar");
     
     if (empty($string))
-        $string = xarModGetVar('twitter', 'hooks_twitter');
+        $string = xarModVars::get('twitter', 'hooks_twitter');
         
     if (!empty($string))
         $settings = @unserialize($string);
@@ -54,7 +54,7 @@ function twitter_hooksapi_getsettings($args)
         $func = isset($meta['functions']['getitemstates']['func']) ? 
                 $meta['functions']['getitemstates']['func'] : 'getitemstates';
         // attempt to get states 
-        $itemstates = xarModAPIFunc($module, $type, $func, array(), false);         
+        $itemstates = xarMod::apiFunc($module, $type, $func, array(), false);         
     }
     $settings['itemstates'] = $itemstates;
     if (empty($itemstates) || !isset($settings['states']))

@@ -1,12 +1,12 @@
 <?php
-require_once('modules/twitter/class/twitterapi.php');
+sys::import('modules.twitter.class.twitterapi');
 function twitter_restapi__process($args)
 {
     extract($args);
     
     if (empty($consumer_key) || empty($consumer_secret)) {
-        $consumer_key = xarModGetVar('twitter', 'consumer_key');
-        $consumer_secret = xarModGetVar('twitter', 'consumer_secret');    
+        $consumer_key = xarModVars::get('twitter', 'consumer_key');
+        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');    
     }
     
     if (empty($access_token) || empty($access_token_secret)) {

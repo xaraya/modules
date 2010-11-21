@@ -26,8 +26,8 @@ function twitter_admin_main()
    
     // get current module version for display
     $modname = 'twitter';
-    $modid = xarModGetIDFromName($modname);
-    $modinfo = xarModGetInfo($modid);
+    $modid = xarMod::getRegID($modname);
+    $modinfo = xarMod::getInfo($modid);
     $data['version'] = $modinfo['version'];
     return $data;
 

@@ -71,12 +71,12 @@ function twitter_timelineblock_display($blockinfo)
     $defaults = twitter_timelineblock_init();
     
     if (empty($vars['screen_name'])) {
-        $items = xarModAPIFunc('twitter', 'rest', 'timeline',
+        $items = xarMod::apiFunc('twitter', 'rest', 'timeline',
             array(
                 'method' => 'public_timeline',
             ));
     } else {
-        $items = xarModAPIFunc('twitter', 'rest', 'timeline',
+        $items = xarMod::apiFunc('twitter', 'rest', 'timeline',
             array(
                 'method' => 'user_timeline',
                 'screen_name' => $vars['screen_name'],

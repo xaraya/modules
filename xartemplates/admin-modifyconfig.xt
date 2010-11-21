@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>Twitter Administration</xar:mlstring></span>
@@ -104,8 +106,8 @@
              </dd>
         </dl>
     </div>
-    <xar:if condition="xarSessionGetVar('statusmsg') != ''">
-        <p class="xar-error">#xarSessionGetVar('statusmsg')#</p>
+    <xar:if condition="xarSession::getVar('statusmsg') != ''">
+        <p class="xar-error">#xarSession::getVar('statusmsg')#</p>
     </xar:if>
     <form method="post" id="post" action="&xar-modurl-twitter-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
         <xar:comment> Begin Module Configuration </xar:comment>
@@ -178,7 +180,7 @@
             <fieldset>
                 <legend>
                     <xar:mlstring>Site Twitter Account</xar:mlstring>
-                    [<a href="#xarServerGetCurrentURL()###whatsthis" title="#xarML('What\'s this?')#">?</a>]
+                    [<a href="#xarServer::getCurrentURL()###whatsthis" title="#xarML('What\'s this?')#">?</a>]
                 </legend>
                 <div class="xar-form-input-wrapper">
                     <label for="username" class="xar-form-label help">
@@ -350,7 +352,7 @@
             </fieldset>
         <xar:comment> Begin Hooks Configuration </xar:comment>
         <xar:elseif condition="$tab eq 'hooks'" />
-            <xar:base-include-javascript module="base" filename="toggle.js" />
+            <xar:javascript module="base" filename="toggle.js" />
             <xar:if condition="!empty($hookmods)">
             <div>
                 <dl class="xar-tabs">
@@ -458,4 +460,6 @@
     </form>
 </div>
  -->
-<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
+<xar:if condition="xarSession::setVar('statusmsg', '')"></xar:if>
+
+</xar:template>

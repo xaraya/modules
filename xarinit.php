@@ -21,7 +21,7 @@
 function twitter_init()
 {
         // set up the cache directory
-        $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+        $varCacheDir = sys::varpath() . '/cache';
         $twitterCacheDir = $varCacheDir . '/twitter';
         if (!is_dir($twitterCacheDir) && is_writable($varCacheDir)) {
             $old_umask = umask(0);
@@ -48,18 +48,18 @@ function twitter_init()
             return false;
         }
 
-
-    if (!xarModAPIFunc('blocks',
+    /*
+    if (!xarMod::apiFunc('blocks',
             'admin',
             'register_block_type',
             array('modName' => 'twitter',
                 'blockType' => 'timeline'))) return;
-
+    */
     if (!xarModRegisterHook('item', 'create', 'API',
             'twitter', 'hooks', 'itemcreate')) {
         return false;
     }
-    $xartable =& xarDBGetTables();
+    $xartable =& xarDB::getTables();
 
     $instancestable = $xartable['block_instances'];
     $typestable = $xartable['block_types'];
@@ -92,57 +92,57 @@ function twitter_init()
 function twitter_upgrade($oldversion)
 {
     /* Upgrade dependent on old version number */
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     switch ($oldversion) {
       case '0.0.1':
         // to v0.0.2
-        xarModSetVar('twitter', 'deftimeline', 'public');
-        xarModSetVar('twitter', 'showpublic', true);
-        xarModSetVar('twitter', 'showuser', false);
-        xarModSetVar('twitter', 'showfriends', false);
+        xarModVars::set('twitter', 'deftimeline', 'public');
+        xarModVars::set('twitter', 'showpublic', true);
+        xarModVars::set('twitter', 'showuser', false);
+        xarModVars::set('twitter', 'showfriends', false);
       case '0.0.2':
         // to v0.0.3
-        xarModSetVar('twitter', 'screen_name', '');
-        xarModSetVar('twitter', 'screen_pass', '');
+        xarModVars::set('twitter', 'screen_name', '');
+        xarModVars::set('twitter', 'screen_pass', '');
       case '0.0.3':
         // to v0.0.4
-        xarModSetVar('twitter', 'friends_timeline', 0);
-        xarModSetVar('twitter', 'user_timeline', 0);
-        xarModSetVar('twitter', 'profile_image', 0);
-        xarModSetVar('twitter', 'profile_description',0);
-        xarModSetVar('twitter', 'profile_location',0);
-        xarModSetVar('twitter', 'followers_count',0);
-        xarModSetVar('twitter', 'friends_count',0);
-        xarModSetVar('twitter', 'last_status',0);
+        xarModVars::set('twitter', 'friends_timeline', 0);
+        xarModVars::set('twitter', 'user_timeline', 0);
+        xarModVars::set('twitter', 'profile_image', 0);
+        xarModVars::set('twitter', 'profile_description',0);
+        xarModVars::set('twitter', 'profile_location',0);
+        xarModVars::set('twitter', 'followers_count',0);
+        xarModVars::set('twitter', 'friends_count',0);
+        xarModVars::set('twitter', 'last_status',0);
         xarRegisterMask('CommentTwitter',   'All', 'twitter', 'All', 'All', 'ACCESS_COMMENT');
-        xarModSetVar('twitter', 'main_tab', '');
-        xarModSetVar('twitter', 'profile_tab', '');
-        xarModSetVar('twitter', 'statuses_count', 0);
-        xarModSetVar('twitter', 'favourites_display', 0);
-        xarModSetVar('twitter', 'friends_display', 0);
-        $public_timeline = xarModGetVar('twitter', 'showpublic');
-        xarModSetVar('twitter', 'public_timeline', $public_timeline);
-        $account_display = (xarModGetVar('twitter', 'showuser') || xarModGetVar('twitter', 'showfriends')) ? true : false;
-        xarModSetVar('twitter', 'account_display', $account_display);
-        xarModSetVar('twitter', 'users_display', true);
-        $site_screen_name = xarModGetVar('twitter', 'username');
-        $site_screen_pass = xarModGetVar('twitter', 'password');
-        $site_screen_role = xarModGetVar('roles', 'admin');
-        xarModSetVar('twitter', 'site_screen_pass', $site_screen_pass);
-        xarModSetVar('twitter', 'site_screen_name', $site_screen_name);
-        xarModSetVar('twitter', 'site_screen_role', $site_screen_role);
+        xarModVars::set('twitter', 'main_tab', '');
+        xarModVars::set('twitter', 'profile_tab', '');
+        xarModVars::set('twitter', 'statuses_count', 0);
+        xarModVars::set('twitter', 'favourites_display', 0);
+        xarModVars::set('twitter', 'friends_display', 0);
+        $public_timeline = xarModVars::get('twitter', 'showpublic');
+        xarModVars::set('twitter', 'public_timeline', $public_timeline);
+        $account_display = (xarModVars::get('twitter', 'showuser') || xarModVars::get('twitter', 'showfriends')) ? true : false;
+        xarModVars::set('twitter', 'account_display', $account_display);
+        xarModVars::set('twitter', 'users_display', true);
+        $site_screen_name = xarModVars::get('twitter', 'username');
+        $site_screen_pass = xarModVars::get('twitter', 'password');
+        $site_screen_role = xarModVars::get('roles', 'admin');
+        xarModVars::set('twitter', 'site_screen_pass', $site_screen_pass);
+        xarModVars::set('twitter', 'site_screen_name', $site_screen_name);
+        xarModVars::set('twitter', 'site_screen_role', $site_screen_role);
 
-        xarModDelVar('twitter', 'username');
-        xarModDelVar('twitter', 'password');
-        xarModDelVar('twitter', 'owner');
-        xarModDelVar('twitter', 'showpublic');
-        xarModDelVar('twitter', 'friends_timeline');
-        xarModDelVar('twitter', 'showuser');
-        xarModDelVar('twitter', 'showfriends');
-        xarModDelVar('twitter', 'screen_name');
-        xarModDelVar('twitter', 'screen_pass');
+        xarModVars::delete('twitter', 'username');
+        xarModVars::delete('twitter', 'password');
+        xarModVars::delete('twitter', 'owner');
+        xarModVars::delete('twitter', 'showpublic');
+        xarModVars::delete('twitter', 'friends_timeline');
+        xarModVars::delete('twitter', 'showuser');
+        xarModVars::delete('twitter', 'showfriends');
+        xarModVars::delete('twitter', 'screen_name');
+        xarModVars::delete('twitter', 'screen_pass');
       case '0.0.4':
         // to v0.1.0 - 2nd point upgrade, signifies addition of approved twitter source param
       case '0.1.0':
@@ -158,18 +158,18 @@ function twitter_upgrade($oldversion)
             'fieldname' => '',
             'urlextra' => '',
         );
-        xarModSetVar('twitter', 'twitter', serialize($settings));
+        xarModVars::set('twitter', 'twitter', serialize($settings));
       case '0.1.1':
           // Bug 6397: strip html entities from urls created by hooks
       case '0.1.2':
-              $data['consumer_key'] = xarModGetVar('twitter', 'consumer_key');
-              $data['consumer_secret'] = xarModGetVar('twitter', 'consumer_secret');
-              $data['access_token'] = xarModGetVar('twitter', 'access_token');
-              $data['access_token_secret'] = xarModGetVar('twitter', 'access_token_secret');
+              $data['consumer_key'] = xarModVars::get('twitter', 'consumer_key');
+              $data['consumer_secret'] = xarModVars::get('twitter', 'consumer_secret');
+              $data['access_token'] = xarModVars::get('twitter', 'access_token');
+              $data['access_token_secret'] = xarModVars::get('twitter', 'access_token_secret');
           // Remove all vars
-          xarModDelAllVars('twitter');
+          xarModVars::delete_all('twitter');
           foreach ($data as $k => $v)
-              xarModSetVar('twitter', $k, $v);
+              xarModVars::set('twitter', $k, $v);
           // unregister hook
           if (!xarModUnregisterHook('item', 'create', 'API',
               'twitter', 'user', 'createhook')) return false;
@@ -230,21 +230,21 @@ function twitter_upgrade($oldversion)
  */
 function twitter_delete()
 {
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     //$twittertable = $xartable['twitter'];
     // $result = $datadict->dropTable($twittertable);
 
-    $aliasname = xarModGetVar('twitter','aliasname');
-    $isalias = xarModGetAlias($aliasname);
+    $aliasname = xarModVars::get('twitter','aliasname');
+    $isalias = xarModAlias::resolve($aliasname);
     if (isset($isalias) && ($isalias =='twitter')){
-        xarModDelAlias($aliasname,'twitter');
+        xarModAlias::delete($aliasname,'twitter');
     }
 
-    xarModDelAllVars('twitter');
+    xarModVars::delete_all('twitter');
 
-    if (!xarModAPIFunc('blocks',
+    if (!xarMod::apiFunc('blocks',
             'admin',
             'unregister_block_type',
             array('modName' => 'twitter',
