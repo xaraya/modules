@@ -3,31 +3,36 @@
 <xar:style scope="module" module="base" file="navtabs" />
 <xar:if condition="!empty($account)">
     <div>
-        <dl class="xar-tabs">
-            <dt title="#xarML('View/manage account')#" class="xar-tabs-label help">
+        <ul class="xar-tabs xar-alt xar-norm-outline">
+            <li title="#xarML('View/manage account')#" class="xar-tabs-label help">
                 @#$account.screen_name#
-            </dt>
-            <xar:set name="activeclass">'active'</xar:set>
-            <xar:set name="inactiveclass">''</xar:set>
+            </li>
+            <xar:set name="activeclass">'xar-tab-active'</xar:set>
+            <xar:set name="activelink">'xar-accent xar-accent-outline'</xar:set>
+            <xar:set name="inactiveclass">'xar-tab'</xar:set>
+            <xar:set name="inactivelink">'xar-norm xar-norm-outline'</xar:set>
             <xar:set name="activetab">empty($tab)?$activeclass:$inactiveclass</xar:set>
-            <dd class="#$activetab#">
-                <a href="#xarServer::getCurrentURL(array('tab' => null, 'method' => null, 'rt' => null))#" title="#xarML('Home Timeline')#" >
-                    <xar:mlstring>Home</xar:mlstring>
+            <xar:set name="linkclass">empty($tab)?$activelink:$inactivelink</xar:set>
+            <li class="#$activetab#">
+                <a class="#$linkclass#" href="#xarServer::getCurrentURL(array('tab' => null, 'method' => null, 'rt' => null))#" title="#xarML('Home Timeline')#" >
+                    Home
                 </a>
-            </dd>
+            </li>
             <xar:set name="activetab">$tab=='profile'?$activeclass:$inactiveclass</xar:set>
-            <dd class="#$activetab#">
-                <a href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => null, 'rt' => null))#" title="#xarML('Profile')#" >
-                    <xar:mlstring>Profile</xar:mlstring>
+            <xar:set name="linkclass">$tab=='profile'?$activelink:$inactivelink</xar:set>
+            <li class="#$activetab#">
+                <a class="#$linkclass#" href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => null, 'rt' => null))#" title="#xarML('Profile')#" >
+                    Profile
                 </a>
-            </dd>
+            </li>
             <xar:set name="activetab">$tab=='messages'?$activeclass:$inactiveclass</xar:set>
-            <dd class="#$activetab#">
-                <a href="#xarServer::getCurrentURL(array('tab' => 'messages', 'method' => null, 'rt' => null))#" title="#xarML('Messages')#" >
-                    <xar:mlstring>Messages</xar:mlstring>
+            <xar:set name="linkclass">$tab=='messages'?$activelink:$inactivelink</xar:set>
+            <li class="#$activetab#">
+                <a class="#$linkclass#" href="#xarServer::getCurrentURL(array('tab' => 'messages', 'method' => null, 'rt' => null))#" title="#xarML('Messages')#" >
+                    Messages
                 </a>
-            </dd>    
-        </dl>
+            </li>    
+        </ul>
     </div>
 </xar:if>
 </xar:template>

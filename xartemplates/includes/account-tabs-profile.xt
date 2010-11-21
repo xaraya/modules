@@ -3,49 +3,57 @@
 <xar:style scope="module" module="base" file="navtabs" />
 <xar:if condition="!empty($account)">
     <div>
-        <dl class="xar-tabs">
-            <dt title="#xarML('View/manage account profile')#" class="xar-tabs-label help">
-                <xar:mlstring>Profile</xar:mlstring>:
-            </dt>
-            <xar:set name="activeclass">'active'</xar:set>
-            <xar:set name="inactiveclass">''</xar:set>
+        <ul class="xar-tabs xar-alt xar-norm-outline">
+            <li title="#xarML('View/manage account profile')#" class="xar-tabs-label help">
+                Profile:
+            </li>
+            <xar:set name="activeclass">'xar-tab-active'</xar:set>
+            <xar:set name="activelink">'xar-accent xar-accent-outline'</xar:set>
+            <xar:set name="inactiveclass">'xar-tab'</xar:set>
+            <xar:set name="inactivelink">'xar-norm xar-norm-outline'</xar:set>
             <xar:set name="activetab">empty($method)?$activeclass:$inactiveclass</xar:set>
-            <dd class="#$activetab#">
-                <a href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => null, 'rt' => null))#" title="#xarML('Your Timeline')#" >
-                    <xar:mlstring>Timeline</xar:mlstring>
+            <xar:set name="linkclass">empty($method)?$activelink:$inactivelink</xar:set>
+            <li class="#$activetab#">
+                <a class="#$linkclass#" href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => null, 'rt' => null))#" title="#xarML('Your Timeline')#" >
+                    Timeline
                 </a>
-            </dd>
+            </li>
             <xar:set name="activetab">$method=='favorites'?$activeclass:$inactiveclass</xar:set>
-            <dd class="#$activetab#">
-                <a href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => 'favorites', 'rt' => null))#" title="#xarML('Your Favorites')#" >
-                    <xar:mlstring>Favorites</xar:mlstring>
+            <xar:set name="linkclass">$method=='favorites'?$activelink:$inactivelink</xar:set>
+            <li class="#$activetab#">
+                <a class="#$linkclass#" href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => 'favorites', 'rt' => null))#" title="#xarML('Your Favorites')#" >
+                    Favorites
                 </a>
-            </dd>
+            </li>
             <xar:set name="activetab">$method=='following'?$activeclass:$inactiveclass</xar:set>
-            <dd class="#$activetab#">
-                <a href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => 'following', 'rt' => null))#" title="#xarML('Your Friends')#" >
-                    <xar:mlstring>Following</xar:mlstring>
+            <xar:set name="linkclass">$method=='following'?$activelink:$inactivelink</xar:set>
+            <li class="#$activetab#">
+                <a class="#$linkclass#" href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => 'following', 'rt' => null))#" title="#xarML('Your Friends')#" >
+                    Following
                 </a>
-            </dd>    
+            </li>    
             <xar:set name="activetab">$method=='followers'?$activeclass:$inactiveclass</xar:set>
-            <dd class="#$activetab#">
-                <a href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => 'followers', 'rt' => null))#" title="#xarML('Your Followers')#" >
-                    <xar:mlstring>Followers</xar:mlstring>
+            <xar:set name="linkclass">$method=='followers'?$activelink:$inactivelink</xar:set>
+            <li class="#$activetab#">
+                <a class="#$linkclass#" href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => 'followers', 'rt' => null))#" title="#xarML('Your Followers')#" >
+                    Followers
                 </a>
-            </dd>   
+            </li>   
             <xar:set name="activetab">$method=='lists'?$activeclass:$inactiveclass</xar:set>
-            <dd class="#$activetab#">
-                <a href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => 'lists', 'rt' => null))#" title="#xarML('Your Lists')#" >
-                    <xar:mlstring>Lists</xar:mlstring>
+            <xar:set name="linkclass">$method=='lists'?$activelink:$inactivelink</xar:set>
+            <li class="#$activetab#">
+                <a class="#$linkclass#" href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => 'lists', 'rt' => null))#" title="#xarML('Your Lists')#" >
+                    Lists
                 </a>
-            </dd>
+            </li>
             <xar:set name="activetab">$method=='settings'?$activeclass:$inactiveclass</xar:set>
-            <dd class="#$activetab#">
-                <a href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => 'settings', 'rt' => null))#" title="#xarML('Your Profile Settings')#" >
-                    <xar:mlstring>Settings</xar:mlstring>
+            <xar:set name="linkclass">$method=='settings'?$activelink:$inactivelink</xar:set>
+            <li class="#$activetab#">
+                <a class="#$linkclass#" href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => 'settings', 'rt' => null))#" title="#xarML('Your Profile Settings')#" >
+                    Settings
                 </a>
-            </dd>
-        </dl>
+            </li>
+        </ul>
     </div>
 </xar:if>
 </xar:template>
