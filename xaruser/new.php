@@ -91,15 +91,47 @@ function messages_user_new() {
 		 
 		if ($send) {
 			$object->properties['author_status']->setValue(MESSAGES_STATUS_UNREAD);
+
 		} else {
 			$object->properties['author_status']->setValue(MESSAGES_STATUS_DRAFT);
 		}
 			
 		$id = $object->createItem();
 
+		$to = $object->properties['to']->value;
+
+		// admin setting
 		if ($send && xarModVars::get('messages','sendemail')) {
-			$to = $object->properties['to']->value;
-			xarMod::apiFunc('messages','user','sendmail',array('id' => $id, 'to' => $to));
+			// user setting
+			if (xarModItemVars::get('messages', "user_sendemail", $to)) {
+				xarMod::apiFunc('messages','user','sendmail',array('id' => $id, 'to' => $to));
+			}
+		}
+
+		// Send the autoreply if one is enabled by the admin and by the recipient
+		if ($send && xarModVars::get('messages','awaymsg')) { 
+			$autoreply = '';
+			if (xarModItemVars::get('messages', "enable_autoreply", $to)) {
+				$autoreply = xarModItemVars::get('messages', "autoreply", $to);
+			}
+			if (!empty($autoreply)) { 
+				$autoreplyobj = DataObjectMaster::getObject(array('name' => 'messages_messages'));
+				$autoreplyobj->properties['author_status']->setValue(MESSAGES_STATUS_UNREAD);
+				$autoreplyobj->properties['from']->setValue(xarUserGetVar('uname',$to));
+				$autoreplyobj->properties['to']->setValue(xarUserGetVar('id'));
+				$data['from_name'] = xarUserGetVar('name',$to);
+				$subject = xarTplModule('messages','user','autoreply-subject', $data); 
+				$data['autoreply'] = $autoreply;
+				$autoreply = xarTplModule('messages','user','autoreply-body', $data);
+				// useful for eliminating html template comments
+				if (xarModVars::get('messages','strip_tags')) {
+					$subject = strip_tags($subject);
+					$autoreply = strip_tags($autoreply);
+				}
+				$autoreplyobj->properties['subject']->setValue($subject);
+				$autoreplyobj->properties['body']->setValue($autoreply);
+				$itemid = $autoreplyobj->createItem(); 
+			}
 		}
 
 		if ($saveandedit) {

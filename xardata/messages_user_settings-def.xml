@@ -1,5 +1,5 @@
 <object name="messages_user_settings">
-  <objectid>93</objectid>
+  <objectid>105</objectid>
   <label>Messages</label>
   <module_id>6</module_id>
   <itemtype>1</itemtype>
@@ -11,7 +11,7 @@
   <isalias>false</isalias>
   <properties>
     <property name="user_sendemail">
-      <id>687</id>
+      <id>767</id>
       <label>Email me when I receive a new message</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration></configuration>
     </property>
     <property name="enable_autoreply">
-      <id>688</id>
+      <id>768</id>
       <label>Enable auto-reply</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -31,7 +31,7 @@
       <configuration></configuration>
     </property>
     <property name="autoreply">
-      <id>689</id>
+      <id>769</id>
       <label>Auto-reply</label>
       <type>textarea_medium</type>
       <defaultvalue></defaultvalue>

@@ -1,5 +1,5 @@
 <object name="messages_messages">
-  <objectid>95</objectid>
+  <objectid>107</objectid>
   <label>Messages</label>
   <module_id>182</module_id>
   <itemtype>19</itemtype>
@@ -11,7 +11,7 @@
   <isalias>true</isalias>
   <properties>
     <property name="id">
-      <id>694</id>
+      <id>775</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration></configuration>
     </property>
     <property name="to">
-      <id>695</id>
+      <id>776</id>
       <label>To</label>
       <type>dropdown</type>
       <defaultvalue></defaultvalue>
@@ -31,7 +31,7 @@
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:50:"xarModAPIFunc('messages','user','get_sendtousers')";}</configuration>
     </property>
     <property name="from">
-      <id>696</id>
+      <id>777</id>
       <label>From</label>
       <type>username</type>
       <defaultvalue></defaultvalue>
@@ -41,7 +41,7 @@
       <configuration>a:6:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";}</configuration>
     </property>
     <property name="subject">
-      <id>697</id>
+      <id>778</id>
       <label>Subject</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -51,7 +51,7 @@
       <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"3";}</configuration>
     </property>
     <property name="body">
-      <id>698</id>
+      <id>779</id>
       <label>Body</label>
       <type>textarea_medium</type>
       <defaultvalue></defaultvalue>
@@ -61,7 +61,7 @@
       <configuration>a:3:{s:12:"display_rows";s:1:"8";s:15:"display_columns";s:2:"50";s:14:"display_layout";s:7:"default";}</configuration>
     </property>
     <property name="postanon">
-      <id>699</id>
+      <id>780</id>
       <label>Anonymous</label>
       <type>checkbox</type>
       <defaultvalue>0</defaultvalue>
@@ -71,7 +71,7 @@
       <configuration></configuration>
     </property>
     <property name="replyto">
-      <id>700</id>
+      <id>781</id>
       <label>Reply</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
@@ -81,7 +81,7 @@
       <configuration></configuration>
     </property>
     <property name="author_delete">
-      <id>701</id>
+      <id>782</id>
       <label>Author Deleted</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
@@ -91,7 +91,7 @@
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:24:"0,Not Deleted;1,Deleted;";}</configuration>
     </property>
     <property name="recipient_delete">
-      <id>702</id>
+      <id>783</id>
       <label>Recipient Deleted</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
@@ -101,7 +101,7 @@
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:24:"0,Not Deleted;1,Deleted;";}</configuration>
     </property>
     <property name="time">
-      <id>703</id>
+      <id>784</id>
       <label>Time</label>
       <type>calendar</type>
       <defaultvalue>time()</defaultvalue>
@@ -111,7 +111,7 @@
       <configuration></configuration>
     </property>
     <property name="author_status">
-      <id>704</id>
+      <id>785</id>
       <label>Author Status</label>
       <type>dropdown</type>
       <defaultvalue>2</defaultvalue>
@@ -121,7 +121,7 @@
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:24:"0,Draft;1,Unread;2,Read;";}</configuration>
     </property>
     <property name="recipient_status">
-      <id>705</id>
+      <id>786</id>
       <label>Recipient Status</label>
       <type>dropdown</type>
       <defaultvalue>1</defaultvalue>

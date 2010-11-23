@@ -1,6 +1,6 @@
 <?php
 /**
- * Handle roles_user_settings object
+ * Handle messages_user_settings object
  *
  * @package modules
  * @copyright see the html/credits.html file in this release
@@ -53,7 +53,7 @@ function messages_userapi_usermenu($args)
     }
     // only get the fields we need
     $fieldlist = array();
-    //$settings = explode(',',xarModVars::get('roles', 'duvsettings'));
+    $settings = explode(',',xarModVars::get('roles', 'duvsettings'));
     $fieldlist[] = 'user_sendemail';
 	$fieldlist[] = 'enable_autoreply';
 	$fieldlist[] = 'autoreply';
@@ -81,9 +81,9 @@ function messages_userapi_usermenu($args)
             // any extra data needed can be added to the $formdata array. This will be
             // available in your showform- template as #$formdata#. Use this if
             // your form needs data not available from the object itself.
-            //$data['formdata'] = array(
-              //  'settings' => $settings
-            //);
+            $data['formdata'] = array(
+                'settings' => $settings
+            );
             // if you want to provide your own update function, you can specify
             // the form action url to be used. When the form is POSTed your function
             // will be used. (see roles user usermenu for an example).
@@ -139,7 +139,7 @@ function messages_userapi_usermenu($args)
         **/
         case 'updateitem':
             // if you added the module name when you generated the authkey,
-            // be sure to use it here when confirming :)
+            // be sure to use it here when confirming :) 
             if (!xarSecConfirmAuthKey('messages')) return;
             // data is already validated, go ahead and update the item
             $object->updateItem();

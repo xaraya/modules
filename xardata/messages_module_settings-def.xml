@@ -1,8 +1,8 @@
 <object name="messages_module_settings">
-  <objectid>70</objectid>
+  <objectid>106</objectid>
   <label>Messages Module Settings</label>
   <module_id>6</module_id>
-  <itemtype>20</itemtype>
+  <itemtype>2</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
@@ -11,7 +11,7 @@
   <isalias>false</isalias>
   <properties>
     <property name="sendemail">
-      <id>538</id>
+      <id>770</id>
       <label>Enable email delivery</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration></configuration>
     </property>
     <property name="allowanonymous">
-      <id>539</id>
+      <id>771</id>
       <label>Allow anonymous messages</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -31,7 +31,7 @@
       <configuration></configuration>
     </property>
     <property name="awaymsg">
-      <id>540</id>
+      <id>772</id>
       <label>Enable away message</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -41,12 +41,22 @@
       <configuration></configuration>
     </property>
     <property name="allowedsendmessages">
-      <id>542</id>
+      <id>773</id>
       <label>allowedsendmessages</label>
       <type>array</type>
       <defaultvalue></defaultvalue>
       <source>module variable: messages</source>
       <status>161</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
+    <property name="strip_tags">
+      <id>774</id>
+      <label>Strip tags from emails and autoreplies</label>
+      <type>checkbox</type>
+      <defaultvalue>1</defaultvalue>
+      <source>module variable: messages</source>
+      <status>33</status>
       <seq>5</seq>
       <configuration></configuration>
     </property>
