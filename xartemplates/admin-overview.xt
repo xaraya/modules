@@ -22,7 +22,7 @@
 		<p><em>Enable email delivery</em> -- Check this box to enable email notifications for message recipients.  If User Settings are enabled, individual users can configure this delivery option in their own account in the Roles module.</p>
 		<p><em>Enable away message</em> -- Check this box to allow users to set an Autoreply in their user settings.  If User Settings are enabled, individual users can compose and enable an autoreply in their account in the Roles module.</p>
 		<p><em>Allow anonymous messages</em> -- Allow users to send messages anonymously.</p> 
-		<p><em>Strip tags from emails and autoreplies</em> -- Strip tags from emails and autoreplies.  If you do not enable this, and you turn on the "Show template filenames" settings in the themes module, HTML comments may appear in emails and may otherwise affect functionality.  It is recommended that you leave this checked.</p>
+		<p><em>Strip tags from autoreplies</em> -- If you do not enable this, and you turn on the "Show template filenames" settings in the themes module, HTML comments will appear in autoreplies.  It is recommended that you leave this checked.</p>
 
 	<h3>User Settings</h3>
 

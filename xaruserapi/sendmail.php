@@ -37,11 +37,6 @@ function messages_userapi_sendmail($args) {
 	$data['to_email'] = $msgdata['info'];
 	$subject = xarTplModule('messages','user','email-subject', $data);
 	$body = xarTplModule('messages','user','email-body', $data);
-	// remove html template comments
-	if (xarModVars::get('messages','strip_tags')) {
-		$subject = strip_tags($subject);
-		$body = strip_tags($body);
-	}
 	$msgdata['subject'] = $subject;
 	$msgdata['message']  = $body;
 

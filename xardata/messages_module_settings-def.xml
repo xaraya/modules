@@ -1,5 +1,5 @@
 <object name="messages_module_settings">
-  <objectid>106</objectid>
+  <objectid>112</objectid>
   <label>Messages Module Settings</label>
   <module_id>6</module_id>
   <itemtype>2</itemtype>
@@ -11,7 +11,7 @@
   <isalias>false</isalias>
   <properties>
     <property name="sendemail">
-      <id>770</id>
+      <id>810</id>
       <label>Enable email delivery</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration></configuration>
     </property>
     <property name="allowanonymous">
-      <id>771</id>
+      <id>811</id>
       <label>Allow anonymous messages</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -31,7 +31,7 @@
       <configuration></configuration>
     </property>
     <property name="awaymsg">
-      <id>772</id>
+      <id>812</id>
       <label>Enable away message</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -41,7 +41,7 @@
       <configuration></configuration>
     </property>
     <property name="allowedsendmessages">
-      <id>773</id>
+      <id>813</id>
       <label>allowedsendmessages</label>
       <type>array</type>
       <defaultvalue></defaultvalue>
@@ -51,8 +51,8 @@
       <configuration></configuration>
     </property>
     <property name="strip_tags">
-      <id>774</id>
-      <label>Strip tags from emails and autoreplies</label>
+      <id>814</id>
+      <label>Strip tags from autoreplies</label>
       <type>checkbox</type>
       <defaultvalue>1</defaultvalue>
       <source>module variable: messages</source>
