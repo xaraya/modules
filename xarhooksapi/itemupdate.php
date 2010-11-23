@@ -12,14 +12,14 @@
  * @author Chris Powis (crisp@crispcreations.co.uk)
  */
 /**
- * send status update on new item - hook for ('item','itemcreate','API')
+ * send status update on updated item - hook for ('item','itemupdate','API')
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
  * @return array extrainfo array
  * @throws BAD_PARAM exception
  */
-function twitter_hooksapi_itemcreate($args)
+function twitter_hooksapi_itemupdate($args)
 {
     extract($args);
 
@@ -29,7 +29,7 @@ function twitter_hooksapi_itemcreate($args)
 
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID', 'hooksapi', 'itemcreate', 'twitter');
+                    'object ID', 'hooksapi', 'itemupdate', 'twitter');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return $extrainfo;
@@ -47,7 +47,7 @@ function twitter_hooksapi_itemcreate($args)
     $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module name', 'hooksapi', 'itemcreate', 'twitter');
+                    'module name', 'hooksapi', 'itemupdate', 'twitter');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return $extrainfo;
@@ -67,8 +67,8 @@ function twitter_hooksapi_itemcreate($args)
             'itemtype' => $itemtype,
         ));
     
-    // Check if we're tweeting new items...
-    if (empty($settings['tweetcreated']))
+    // Check if we're tweeting updated items...
+    if (empty($settings['tweetupdated']))
         return $extrainfo;
         
     // Status check if module supplied states...
@@ -80,7 +80,7 @@ function twitter_hooksapi_itemcreate($args)
             return $extrainfo;
     }
     
-    $text = !empty($settings['textcreated']) ? $settings['textcreated'] : '';
+    $text = !empty($settings['textupdated']) ? $settings['textupdated'] : '';
     
     $field = $settings['field'];
     if (!empty($field) && 
@@ -110,7 +110,7 @@ function twitter_hooksapi_itemcreate($args)
                 ));
         
         }
-        if (!empty($linkurl))
+        if (!empty($linkurl)) 
             $text .= ' ' . $linkurl;
     }
     
@@ -119,7 +119,7 @@ function twitter_hooksapi_itemcreate($args)
     $text = TwitterUtil::prepstatus($text);
     
     if (!empty($text) && strlen($text) <= 140) {
-        $extrainfo['twitter_create'] = xarMod::apiFunc('twitter', 'rest', 'status',
+        $extrainfo['twitter_update'] = xarMod::apiFunc('twitter', 'rest', 'status',
             array(
                 'method' => 'update',
                 'status' => $text,

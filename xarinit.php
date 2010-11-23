@@ -55,9 +55,16 @@ function twitter_init()
                 'blockType' => 'timeline'))) return;
 
     if (!xarModRegisterHook('item', 'create', 'API',
-            'twitter', 'hooks', 'itemcreate')) {
-        return false;
-    }
+        'twitter', 'hooks', 'itemcreate')) return false;
+    if (!xarModRegisterHook('item', 'update', 'API',
+        'twitter', 'hooks', 'itemupdate')) return false;
+    if (!xarModRegisterHook('module', 'modifyconfig', 'GUI',
+        'twitter', 'hooks', 'modulemodifyconfig')) return false;
+    if (!xarModRegisterHook('module', 'updateconfig', 'API',
+        'twitter', 'hooks', 'moduleupdateconfig')) return false;
+    if (!xarModRegisterHook('module', 'remove', 'API',
+        'twitter', 'hooks', 'moduleremove')); return false;
+
     $xartable =& xarDB::getTables();
 
     $instancestable = $xartable['block_instances'];
@@ -178,7 +185,10 @@ function twitter_upgrade($oldversion)
               'twitter', 'hooks', 'modulemodifyconfig')) return false;
           if (!xarModRegisterHook('module', 'updateconfig', 'API',
               'twitter', 'hooks', 'moduleupdateconfig')) return false;
-
+          if (!xarModRegisterHook('item', 'update', 'API',
+              'twitter', 'hooks', 'itemupdate')) return false;
+          if (!xarModRegisterHook('module', 'remove', 'API',
+              'twitter', 'hooks', 'moduleremove')); return false;
           // remove masks
           xarRemoveMasks('twitter');
           // register required masks

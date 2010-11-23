@@ -32,6 +32,11 @@ function twitter_adminapi_getmenulinks()
             'label' => xarML('Site Account'),
             'active' => array('account'));
 
+        $menulinks[] = array('url' => xarModURL('twitter','admin','hooks'),
+            'title' => xarML('View/manage Twitter hooks'),
+            'label' => xarML('Manage Hooks'),
+            'active' => array('hooks'));
+
         $menulinks[] = array('url' => xarModURL('twitter','admin','modifyconfig'),
             'title' => xarML('Modify the configuration for the module'),
             'label' => xarML('Modify Config'),

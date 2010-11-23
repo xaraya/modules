@@ -1,12 +1,9 @@
 <?php
-function twitter_hooks_modulemodifyconfig($args)
+function twitter_hooksapi_moduleupdateconfig($args)
 {
     extract($args);
 
     if (empty($extrainfo)) $extrainfo = array();
-
-    if (!xarSecurityCheck('AdminTwitter', 0)) return '';
-
     if (!is_array($extrainfo))
         $invalid[] = 'extrainfo';    
     
@@ -22,7 +19,7 @@ function twitter_hooks_modulemodifyconfig($args)
     $module_id = xarMod::getRegID($module);
     if (!$module_id) 
         $invalid[] = 'module';
-
+    /*
     if (empty($itemtype)) {
         if (isset($extrainfo['itemtype'])) {
             $itemtype = $extrainfo['itemtype'];
@@ -32,24 +29,19 @@ function twitter_hooks_modulemodifyconfig($args)
     }
     if (!empty($itemtype) && !is_numeric($itemtype))
         $invalid[] = 'itemtype';
-        
+    */  
     if (!empty($invalid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'hooks', 'modulemodifyconfig', 'Twitter');
+            join(', ', $invalid), 'hooksapi', 'moduleupdateconfig', 'Twitter');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
-        return '';
+        return $extrainfo;
     }
-
-    // get settings for current module
-    $data = xarMod::apiFunc('twitter', 'hooks', 'getsettings', 
-        array('module' => $module, 'itemtype' => $itemtype));
-        
-    // @todo: fieldoptions, stateoptions
-   
-    $data['module'] = $module;
-    $data['itemtype'] = $itemtype;
-    //print_r($data);  
-    return $data;
+    $modvar = "hooks_{$module}";    
+    xarModVars::delete('twitter', $modvar);
+    $extrainfo['twitter_moduleremove'] = $module;
+    
+    return $extrainfo;    
+    
 }
 ?>

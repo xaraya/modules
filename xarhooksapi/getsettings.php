@@ -6,43 +6,60 @@ function twitter_hooksapi_getsettings($args)
         $module = xarMod::getName();
     if (empty($itemtype))
         $itemtype = 0;
-    
-    $modvar = "hooks_{$module}";
-    
-    if (!empty($itemtype))
-        $string = xarModVars::get('twitter', "{$modvar}_{$itemtype}");
-    
-    if (empty($string) && !empty($itemtype))
-        $string = xarModVars::get('twitter', "$modvar");
-    
-    if (empty($string))
-        $string = xarModVars::get('twitter', 'hooks_twitter');
         
-    if (!empty($string))
-        $settings = @unserialize($string);
-        
-    if (empty($settings) || !is_array($settings))
-        $settings = array(
+    $defaults = @unserialize(xarModVars::get('twitter', 'hooks_twitter'));
+    if (empty($defaults) || !isset($defaults[0])) {
+        $defaults = array();
+        $defaults[0] = array(
+            'includelink' => true,
             'typeparam' => 'user',
             'funcparam' => 'display',
             'itypeparam' => 'itemtype',
             'itemparam' => 'itemid',
-            'pre' => '',
+            'tweetcreated' => true,
+            'tweetupdated' => false,
+            'textcreated' => '',
+            'textupdated' => '',
             'field' => '',
-            'states' => array(),       
+            'states' => array(),      
         );
+    }
     
-    $settings['hasitemlinks'] = file_exists("modules/{$module}/xaruserapi/getitemlinks.php");
+    $modvar = "hooks_{$module}";
+    $configs = @unserialize(xarModVars::get('twitter', $modvar));
+      
+    if (!is_array($configs) || empty($configs))
+        $configs = $defaults;    
+    
+    if (!isset($configs[0]))
+        $configs = array_unshift($configs, $defaults[0]);
+    
+    if (!empty($itemtype) && isset($configs[$itemtype])) 
+        $settings = $configs[$itemtype];
+
+    if (empty($settings))
+        $settings = $configs[0];    
+    
+    $settings['hasitemlinks'] = file_exists(sys::code() . "modules/{$module}/xaruserapi/getitemlinks.php");
+   
+    // see if module supplies an array of valid fieldnames/labels for items of this module (+itemtype) 
+    try {
+        // attempt to get field settings 
+        $itemfields = xarModAPIFunc($module, 'user', 'getitemfields', 
+            array('itemtype' => $itemtype));         
+    } catch (Exception $e) {
+        $itemfields = array();
+    }
+    $settings['itemfields'] = $itemfields;
 
     // check for module supplied metadata file
-    $file = "modules/{$module}/xardata/meta.xml";
+    $file = sys::code() . "modules/{$module}/xardata/meta.xml";
     if (!file_exists($file)) {
         // check for metadata file supplied by twitter module
-        $file = "modules/twitter/xardata/{$module}-meta.xml";    
-    }    
-
+        $file = sys::code() . "modules/twitter/xardata/{$module}-meta.xml";    
+    } 
     if (file_exists($file)) {
-        require_once("modules/twitter/class/twitterapi.php");
+        sys::import("modules.twitter.class.twitterapi");
         $meta = TwitterUtil::getMeta($file);
     }  
 
@@ -53,12 +70,18 @@ function twitter_hooksapi_getsettings($args)
                 $meta['functions']['getitemstates']['type'] : 'user';
         $func = isset($meta['functions']['getitemstates']['func']) ? 
                 $meta['functions']['getitemstates']['func'] : 'getitemstates';
-        // attempt to get states 
-        $itemstates = xarMod::apiFunc($module, $type, $func, array(), false);         
+        $stateparam = isset($meta['functions']['getitemstates']['param']) ? 
+                $meta['functions']['getitemstates']['param'] : 'status';
+        // attempt to get states
+        try {
+            $itemstates = xarMod::apiFunc($module, $type, $func, array());
+            $settings['stateparam'] = $stateparam;
+        } catch (Exception $e) {
+            $itemstates = array();
+            $settings['stateparam'] = '';
+        }        
     }
     $settings['itemstates'] = $itemstates;
-    if (empty($itemstates) || !isset($settings['states']))
-        $settings['states'] = array();
         
     return $settings;  
 }

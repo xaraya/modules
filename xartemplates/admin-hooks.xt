@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        Twitter Administration
+    </span>
+</div>
+<div id="twitter-admin-hooks" class="xar-mod-body">
+    <xar:template type="module" module="twitter" file="admin-tabs" />
+    <h2>Manage Twitter Hooks</h2>
+    <xar:template type="module" module="twitter" file="admin-tabs-hooks"/>
+        <form method="post" action="#xarModURL('twitter', 'admin', 'hooks')#">
+            <fieldset>
+                <legend>Twitter Hooks Configuration</legend>
+                #$hookconfig#
+            </fieldset>
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="phase" id="phase" value="update"/>
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                    <input type="hidden" name="hookmodule" id="hookmodule" value="#$hookmodule#"/>
+                    <input type="hidden" name="hookitemtype" id="hookitemtype" value="#$hookitemtype#"/>
+                    <input type="submit" value="#xarML('Update Configuration')#"/>                
+                </div>            
+            </fieldset>
+        </form>
+</div>
+</xar:template>
