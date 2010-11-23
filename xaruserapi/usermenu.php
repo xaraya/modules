@@ -70,8 +70,8 @@ function messages_userapi_usermenu($args)
         case 'showform':
         default:
             // optionally specify the module template and layout to use
-            //$object->tplmodule = 'messages'; // roles/xartemplates/objects/
-            //$object->template = 'usermenu'; // showform-usermenu.xt
+            $object->tplmodule = 'messages'; // roles/xartemplates/objects/
+            $object->template = 'usermenu'; // showform-usermenu.xt
             //$object->layout = 'messages_user_settings';
             $object->getItem(array('itemid' => $id));
 
@@ -89,8 +89,8 @@ function messages_userapi_usermenu($args)
             // will be used. (see roles user usermenu for an example).
             $data['formaction'] = xarModURL('roles', 'user', 'usermenu');
             // not necessary, but for completeness pass back any fields you changed
-            //$data['tplmodule'] = 'roles';
-            //$data['template'] = 'usermenu';
+            $data['tplmodule'] = 'messages';
+            $data['template'] = 'usermenu';
             //$data['layout'] = 'roles_user_settings';
             // pass the module name in when setting the authkey, this avoids clashes
             // when the output contained within another modules display (eg in xarpages)

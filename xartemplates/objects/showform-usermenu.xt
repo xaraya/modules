@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- This is the generic form for any modules dd user_settings object. -->
+    
+        <!--
+            This is the default layout, used when a module doesn't provide it's own showform-usermenu template
+        --> 
+        <fieldset>
+
+            <legend>#$object->label#</legend>
+            
+	    <xar:if condition="xarModVars::get('messages', 'sendemail')">
+		<xar:set name="name">'user_sendemail'</xar:set>
+                <div class="xar-form-input-wrapper">
+                    <xar:data-label property="$properties[$name]" for="id"/>
+                    <xar:data-input property="$properties[$name]"/>
+                </div>
+		<br />
+	   </xar:if>
+
+	<xar:if condition="xarModVars::get('messages', 'awaymsg')">
+		<xar:set name="name">'enable_autoreply'</xar:set>
+                <div class="xar-form-input-wrapper">
+                    <xar:data-label property="$properties[$name]" for="id"/>
+                    <xar:data-input property="$properties[$name]"/>
+                </div>
+
+		<xar:set name="name">'autoreply'</xar:set>
+                <div class="xar-form-input-wrapper">
+                    <xar:data-label property="$properties[$name]" for="id"/>
+                    <xar:data-input property="$properties[$name]"/>
+                </div>
+	</xar:if>
+
+        </fieldset> 
+ 
+</xar:template>
