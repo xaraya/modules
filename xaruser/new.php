@@ -22,12 +22,13 @@ function messages_user_new() {
 	if (!xarVarFetch('replyto', 'int', $replyto,   0, XARVAR_NOT_REQUIRED)) return; 
 	$reply = ($replyto > 0) ? true : false;
 	$data['reply'] = $reply;  
-	$data['replyto'] = $replyto; 
-	$data['to'] = '';
+	$data['replyto'] = $replyto;  
 
 	if (!xarVarFetch('send',    'str',   $send, '',       XARVAR_NOT_REQUIRED)) return; 
 	if (!xarVarFetch('draft',    'str',   $draft, '',       XARVAR_NOT_REQUIRED)) return; 
 	if (!xarVarFetch('saveandedit',    'str',   $saveandedit, '',       XARVAR_NOT_REQUIRED)) return;
+	if(!xarVarFetch('to',       'id',    $data['to'],   NULL, XARVAR_NOT_REQUIRED)) {return;}
+	if(!xarVarFetch('opt',       'bool',    $data['opt'],   false, XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('id',       'id',    $id,   NULL, XARVAR_NOT_REQUIRED)) {return;}
 
 	$send = (!empty($send)) ? true : false;
@@ -76,8 +77,7 @@ function messages_user_new() {
 
 		if ($reply) { // we really only need this if we're saving a draft
 			$object->properties['replyto']->setValue($replyto); 
-		} else {
-			$data['to'] = NULL;
+		} else { 
 			$object->properties['replyto']->setValue(0);
 		}
 		

@@ -32,6 +32,25 @@
 	<p><em>Enable autoreply</em> -- Turn on/off the autoreply.</p>
 	<p><em>Autoreply</em> -- The text of the autoreply.</p>
 
+	<h3>Create a Link to Message a Specific User</h3>
+
+	<p>In these examples, 11 is the user ID of the recipient:</p>
+	
+	<style>
+	pre { margin-left: 10px; }
+	</style>
+
+	<pre>##xarModURL('messages','user','new',array('to' => 11))##</pre>
+
+	<p>Optionally, set the 'opt' argument to true if you would like the form to display a userlist dropdown with the value set to the specified user:</p>
+	<pre>##xarModURL('messages','user','new',array('to' => 11, 'opt' => true))##</pre>
+	<p>If you don't set 'opt' to true, the form will display the recipient's username and pass the user ID in a hidden input.</p>
+	<p>Depending on context, a link might look something like...</p>
+	<pre>&lt;a href="##xarModURL('messages','user','new',array('to' => $uid))##">
+	Send a PM to ##xarUserGetVar('name',$uid)##
+&lt;/a></pre>
+
+
 	 <h3>Message Templates</h3>
 
 	 <p>In the Messages module's xartemplates directory, some default message templates are provided:</p>

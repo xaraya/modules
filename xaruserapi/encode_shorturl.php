@@ -72,6 +72,13 @@ function messages_userapi_encode_shorturl($args) {
 			break;
 		case 'new':
 			$path .= '/new';
+			if (isset($to)) {
+                $path .= '/' . $to;
+                unset($to);
+            }
+			if (isset($opt) && $opt) {
+                $path .= '/opt';
+            }
 			break;
         case 'modify':
 			$path .= '/modify'; 

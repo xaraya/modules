@@ -27,7 +27,14 @@ function messages_userapi_decode_shorturl($params) {
 
     switch ($params[1]) {
         case 'new': 
-            return array('new', array());
+			$args = array();
+			if (isset($params[2])) {
+				$args['to'] = $params[2];
+			}
+			if (isset($params[3]) && $params[3] == 'opt') {
+				$args['opt'] = true;
+			}
+            return array('new', $args);
             break;
 		case 'modify':
             return array('modify', array('id' => $params[2]));

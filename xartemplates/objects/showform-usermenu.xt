@@ -17,6 +17,8 @@
                     <xar:data-input property="$properties[$name]"/>
                 </div>
 		<br />
+	<xar:else />
+		<xar:data-input property="$properties['user_sendemail']" hidden="hidden" />
 	   </xar:if>
 
 	<xar:if condition="xarModVars::get('messages', 'awaymsg')">
@@ -31,6 +33,9 @@
                     <xar:data-label property="$properties[$name]" for="id"/>
                     <xar:data-input property="$properties[$name]"/>
                 </div>
+	<xar:else />
+		<xar:data-input property="$properties['enable_autoreply']" hidden="hidden" />
+		<xar:data-input property="$properties['autoreply']" hidden="hidden" />
 	</xar:if>
 
         </fieldset> 

@@ -12,8 +12,11 @@
             <xar:if condition="empty($users)">
                 No recipients available
                 <xar:data-input property="$properties['to']" hidden="hidden"/>
-            <xar:else />
-                <xar:data-input property="$properties['to']"/>
+            <xar:elseif condition="!isset($to) or $opt" />
+                <xar:data-input property="$properties['to']" value="$to" />
+	    <xar:else />
+		#xarUserGetVar('name',$to)#
+                <xar:data-input property="$properties['to']" value="$to" hidden="hidden" />
             </xar:if>
         </xar:if>
 	<input type="hidden" name="replyto" value="#$replyto#" />
