@@ -36,18 +36,19 @@
   
   <h3>Included Blocks</h3>
   <ul>
-    <li>timeline -- Allows you to display any available timeline within a block</li>
+    <li>timeline -- Allows you to display any available timeline within a block.</li>
   </ul>
 
   <h3>Included Hooks</h3>
   <ul>
-    <li>Create -- Allows a status update to be sent from the site account when new items are created. The hook allows you to send an update for content created by all users, or just items created by the site account owner. Status will include a link to the new item. You can optionally specify a field to include an excerpt from.</li>
+    <li>Item Create -- allows you to send a status update (tweet) when new items are created by modules Twitter is hooked to.</li>
+    <li>Item Update -- allows you to send a status update (tweet) when items are updated by modules Twitter is hooked to.</li>
   </ul>
   <p>
             In these cases, the Twitter module provides the hook functionality.
             To activate the hooks go to <a href="#xarModURL('modules','admin','hooks', array('hook' => 'twitter'))#">Modules - Configure Hooks - Twitter Module.</a>.
             From there choose the module(s) and/or itemtype(s) you want to activate create hooks for.
-            You can then configure settings per module/itemtype from <a href="#xarModURL('twitter', 'admin', 'modifyconfig', array('tab' => 'hooks'))#">Twitter - Modify Config - Hooks</a>.    
+            You can then configure settings per module/itemtype from <a href="#xarModURL('twitter', 'admin', 'hooks')#">Twitter - Admin - Hooks</a>.    
   </p>
 
   <h3>
