@@ -35,6 +35,9 @@ function messages_userapi_encode_shorturl($args) {
 			case 'func':
                 $func = $value;
                 break;
+			case 'to':
+                $to = $value;
+                break;
 			case 'folder':
                 $folder = $value;
                 break;
