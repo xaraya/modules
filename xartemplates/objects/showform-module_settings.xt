@@ -2,17 +2,20 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
+
     <fieldset>
     
-    <legend>General</legend>
- 
-	     <xar:set name="name">'sendemail'</xar:set>
+    <legend>User Settings</legend>
+
+    <p>Which settings should be available to users in their Roles account?</p><br />
+
+	<xar:set name="name">'allowusersendredirect'</xar:set>
 	    <div class="xar-form-input-wrapper">
 			<xar:data-label property="$properties[$name]" for="id" />       
 			<xar:data-input property="$properties[$name]" />		
 	     </div>
-	     
-	     <xar:set name="name">'allowanonymous'</xar:set>
+
+	     	     <xar:set name="name">'sendemail'</xar:set>
 	    <div class="xar-form-input-wrapper">
 			<xar:data-label property="$properties[$name]" for="id" />       
 			<xar:data-input property="$properties[$name]" />		
@@ -23,7 +26,20 @@
 			<xar:data-label property="$properties[$name]" for="id" />       
 			<xar:data-input property="$properties[$name]" />		
 	     </div> 
-	     
+
+    </fieldset>
+
+
+    <fieldset>
+    
+    <legend>Admin Settings</legend>
+ 
+	     <xar:set name="name">'allowanonymous'</xar:set>
+	    <div class="xar-form-input-wrapper">
+			<xar:data-label property="$properties[$name]" for="id" />       
+			<xar:data-input property="$properties[$name]" />		
+	     </div>
+
 	     <xar:set name="name">'strip_tags'</xar:set>
 	    <div class="xar-form-input-wrapper">
 			<xar:data-label property="$properties[$name]" for="id" />       
@@ -36,19 +52,10 @@
 			<xar:data-input property="$properties[$name]" />		
 	     </div>
 
-	     <xar:set name="name">'allowusersendredirect'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
-
-	     
-
 	    
-
-
 	</fieldset>
-     
+      
+
  
      <fieldset>
 	<legend>Role Groups</legend>

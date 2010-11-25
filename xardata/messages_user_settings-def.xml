@@ -1,5 +1,5 @@
 <object name="messages_user_settings">
-  <objectid>114</objectid>
+  <objectid>117</objectid>
   <label>Messages</label>
   <module_id>6</module_id>
   <itemtype>1</itemtype>
@@ -11,7 +11,7 @@
   <isalias>false</isalias>
   <properties>
     <property name="user_sendemail">
-      <id>830</id>
+      <id>853</id>
       <label>Email me when I receive a new message</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration></configuration>
     </property>
     <property name="enable_autoreply">
-      <id>831</id>
+      <id>854</id>
       <label>Enable my auto-reply</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -31,7 +31,7 @@
       <configuration></configuration>
     </property>
     <property name="autoreply">
-      <id>832</id>
+      <id>855</id>
       <label>Auto-reply text</label>
       <type>textarea_medium</type>
       <defaultvalue></defaultvalue>
@@ -41,7 +41,7 @@
       <configuration></configuration>
     </property>
     <property name="user_send_redirect">
-      <id>833</id>
+      <id>856</id>
       <label>Tab to open after sending message</label>
       <type>dropdown</type>
       <defaultvalue>1</defaultvalue>
