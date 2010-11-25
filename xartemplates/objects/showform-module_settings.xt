@@ -11,24 +11,40 @@
 			<xar:data-label property="$properties[$name]" for="id" />       
 			<xar:data-input property="$properties[$name]" />		
 	     </div>
-
-	     <xar:set name="name">'awaymsg'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
-
+	     
 	     <xar:set name="name">'allowanonymous'</xar:set>
 	    <div class="xar-form-input-wrapper">
 			<xar:data-label property="$properties[$name]" for="id" />       
 			<xar:data-input property="$properties[$name]" />		
 	     </div>
 
+	     <xar:set name="name">'allowautoreply'</xar:set>
+	    <div class="xar-form-input-wrapper">
+			<xar:data-label property="$properties[$name]" for="id" />       
+			<xar:data-input property="$properties[$name]" />		
+	     </div> 
+	     
 	     <xar:set name="name">'strip_tags'</xar:set>
 	    <div class="xar-form-input-wrapper">
 			<xar:data-label property="$properties[$name]" for="id" />       
 			<xar:data-input property="$properties[$name]" />		
 	     </div>
+
+	     <xar:set name="name">'send_redirect'</xar:set>
+	    <div class="xar-form-input-wrapper">
+			<xar:data-label property="$properties[$name]" for="id" />       
+			<xar:data-input property="$properties[$name]" />		
+	     </div>
+
+	     <xar:set name="name">'allowusersendredirect'</xar:set>
+	    <div class="xar-form-input-wrapper">
+			<xar:data-label property="$properties[$name]" for="id" />       
+			<xar:data-input property="$properties[$name]" />		
+	     </div>
+
+	     
+
+	    
 
 
 	</fieldset>

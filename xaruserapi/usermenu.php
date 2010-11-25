@@ -57,6 +57,7 @@ function messages_userapi_usermenu($args)
     $fieldlist[] = 'user_sendemail';
 	$fieldlist[] = 'enable_autoreply';
 	$fieldlist[] = 'autoreply';
+	$fieldlist[] = 'user_send_redirect';
     
     $object->setFieldList(join(',',$fieldlist));
     switch (strtolower($phase)) {

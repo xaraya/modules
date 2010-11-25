@@ -1,5 +1,5 @@
 <object name="messages_user_settings">
-  <objectid>105</objectid>
+  <objectid>114</objectid>
   <label>Messages</label>
   <module_id>6</module_id>
   <itemtype>1</itemtype>
@@ -11,7 +11,7 @@
   <isalias>false</isalias>
   <properties>
     <property name="user_sendemail">
-      <id>767</id>
+      <id>830</id>
       <label>Email me when I receive a new message</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -21,8 +21,8 @@
       <configuration></configuration>
     </property>
     <property name="enable_autoreply">
-      <id>768</id>
-      <label>Enable auto-reply</label>
+      <id>831</id>
+      <label>Enable my auto-reply</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
       <source>module variable: messages</source>
@@ -31,14 +31,24 @@
       <configuration></configuration>
     </property>
     <property name="autoreply">
-      <id>769</id>
-      <label>Auto-reply</label>
+      <id>832</id>
+      <label>Auto-reply text</label>
       <type>textarea_medium</type>
       <defaultvalue></defaultvalue>
       <source>module variable: messages</source>
       <status>33</status>
       <seq>3</seq>
       <configuration></configuration>
+    </property>
+    <property name="user_send_redirect">
+      <id>833</id>
+      <label>Tab to open after sending message</label>
+      <type>dropdown</type>
+      <defaultvalue>1</defaultvalue>
+      <source>module variable: messages</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:38:"1,Inbox;2,Sent;3,Drafts;4,New Message;";}</configuration>
     </property>
   </properties>
 </object>

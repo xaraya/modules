@@ -17,7 +17,7 @@
  * module
  */
 function messages_admin_modifyconfig()
-{
+{ 
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing

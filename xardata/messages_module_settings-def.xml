@@ -1,5 +1,5 @@
 <object name="messages_module_settings">
-  <objectid>112</objectid>
+  <objectid>115</objectid>
   <label>Messages Module Settings</label>
   <module_id>6</module_id>
   <itemtype>2</itemtype>
@@ -11,7 +11,7 @@
   <isalias>false</isalias>
   <properties>
     <property name="sendemail">
-      <id>810</id>
+      <id>834</id>
       <label>Enable email delivery</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration></configuration>
     </property>
     <property name="allowanonymous">
-      <id>811</id>
+      <id>835</id>
       <label>Allow anonymous messages</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -30,9 +30,9 @@
       <seq>2</seq>
       <configuration></configuration>
     </property>
-    <property name="awaymsg">
-      <id>812</id>
-      <label>Enable away message</label>
+    <property name="allowautoreply">
+      <id>836</id>
+      <label>Enable autoreplies</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
       <source>module variable: messages</source>
@@ -41,23 +41,43 @@
       <configuration></configuration>
     </property>
     <property name="allowedsendmessages">
-      <id>813</id>
+      <id>837</id>
       <label>allowedsendmessages</label>
       <type>array</type>
       <defaultvalue></defaultvalue>
       <source>module variable: messages</source>
       <status>161</status>
-      <seq>5</seq>
+      <seq>4</seq>
       <configuration></configuration>
     </property>
     <property name="strip_tags">
-      <id>814</id>
+      <id>838</id>
       <label>Strip tags from autoreplies</label>
       <type>checkbox</type>
       <defaultvalue>1</defaultvalue>
       <source>module variable: messages</source>
       <status>33</status>
       <seq>5</seq>
+      <configuration></configuration>
+    </property>
+    <property name="send_redirect">
+      <id>839</id>
+      <label>Tab to open after sending message</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: messages</source>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:38:"1,Inbox;2,Sent;3,Drafts;4,New Message;";}</configuration>
+    </property>
+    <property name="allowusersendredirect">
+      <id>840</id>
+      <label>Users can set tab to open after sending</label>
+      <type>checkbox</type>
+      <defaultvalue>0</defaultvalue>
+      <source>module variable: messages</source>
+      <status>33</status>
+      <seq>7</seq>
       <configuration></configuration>
     </property>
   </properties>

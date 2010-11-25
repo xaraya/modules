@@ -10,6 +10,7 @@
  * @subpackage Messages Module
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
+ * @author Ryan Walker
  */
 /**
  * initialise the messages module
@@ -79,15 +80,18 @@ function messages_init()
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
 	xarModVars::set('messages', 'sendemail', false); // Note the 'e' in 'sendemail'
-    xarModVars::set('messages', 'awaymsg', true );
+    xarModVars::set('messages', 'allowautoreply', true );
 	xarModVars::set('messages', 'allowanonymous', false);
 	xarModVars::set('messages', 'allowedsendmessages', serialize(array()));
 	xarModVars::set('messages', 'strip_tags', true);
+	xarModVars::set('messages', 'send_redirect', 1);
+	xarModVars::set('messages', 'allowusersendredirect', false);
 
 	// not sure if the following are needed?
 	xarModVars::set('messages', 'user_sendemail', true); // Note the 'e' in 'user_sendemail'
 	xarModVars::set('messages', 'enable_autoreply', false);
 	xarModVars::set('messages', 'autoreply', '');
+	xarModVars::set('messages', 'user_send_redirect', 1);
 
 	//xarModVars::set('messages', 'buddylist', 0);
     //xarModVars::set('messages', 'limitsaved', 12);
@@ -207,7 +211,10 @@ function messages_upgrade($oldversion)
             break;
         case '1.9':
         case '1.9.0':
-            // Code to upgrade from version 2.0 goes here
+			xarModVars::set('messages', 'send_redirect', true);
+			xarModVars::set('messages', 'user_send_redirect', 1);
+			xarModVars::set('messages', 'allowusersendredirect', false);
+			xarModVars::set('messages', 'allowautoreply', true );
             break;
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here

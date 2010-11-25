@@ -108,8 +108,10 @@ function messages_user_new() {
 			}
 		}
 
+		$uid = xarUserGetVar('id');
+
 		// Send the autoreply if one is enabled by the admin and by the recipient
-		if ($send && xarModVars::get('messages','awaymsg')) { 
+		if ($send && xarModVars::get('messages','allowautoreply')) { 
 			$autoreply = '';
 			if (xarModItemVars::get('messages', "enable_autoreply", $to)) {
 				$autoreply = xarModItemVars::get('messages', "autoreply", $to);
@@ -118,7 +120,7 @@ function messages_user_new() {
 				$autoreplyobj = DataObjectMaster::getObject(array('name' => 'messages_messages'));
 				$autoreplyobj->properties['author_status']->setValue(MESSAGES_STATUS_UNREAD);
 				$autoreplyobj->properties['from']->setValue(xarUserGetVar('uname',$to));
-				$autoreplyobj->properties['to']->setValue(xarUserGetVar('id'));
+				$autoreplyobj->properties['to']->setValue($uid);
 				$data['from_name'] = xarUserGetVar('name',$to);
 				$subject = xarTplModule('messages','user','autoreply-subject', $data); 
 				$data['autoreply'] = $autoreply;
@@ -139,7 +141,19 @@ function messages_user_new() {
 			return true;
 		}
 
-		xarResponse::redirect(xarModURL('messages','user','view', array('folder' => $folder)));
+		if (xarModVars::get('messages', 'allowusersendredirect')) {
+			$redirect = xarModItemVars::get('messages', 'user_send_redirect', $uid);
+		} else {
+			$redirect = xarModVars::get('messages', 'send_redirect');
+		} 
+		$tabs = array(1 => 'inbox', 2 => 'sent', 3 => 'drafts', 4 => 'new');
+		$redirect = $tabs[$redirect];
+		
+		if ($redirect == 'new') {
+			xarResponse::redirect(xarModURL('messages','user','new'));
+		} else {
+			xarResponse::redirect(xarModURL('messages','user','view', array('folder' => $redirect)));
+		}
 		return true;
 	}
 
