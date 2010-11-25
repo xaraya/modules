@@ -32,7 +32,7 @@
     </property>
     <property name="allowautoreply">
       <id>859</id>
-      <label>Enable autoreplies</label>
+      <label>Autoreply</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
       <source>module variable: messages</source>
@@ -62,7 +62,7 @@
     </property>
     <property name="send_redirect">
       <id>862</id>
-      <label>Default tab to open after sending message</label>
+      <label>Default tab to open after send</label>
       <type>dropdown</type>
       <defaultvalue></defaultvalue>
       <source>module variable: messages</source>
@@ -72,7 +72,7 @@
     </property>
     <property name="allowusersendredirect">
       <id>863</id>
-      <label>Tab to open after sending</label>
+      <label>Tab to open after send</label>
       <type>checkbox</type>
       <defaultvalue>0</defaultvalue>
       <source>module variable: messages</source>

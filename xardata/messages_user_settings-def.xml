@@ -22,7 +22,7 @@
     </property>
     <property name="enable_autoreply">
       <id>854</id>
-      <label>Enable my auto-reply</label>
+      <label>Enable my autoreply</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
       <source>module variable: messages</source>
@@ -32,7 +32,7 @@
     </property>
     <property name="autoreply">
       <id>855</id>
-      <label>Auto-reply text</label>
+      <label>Autoreply text</label>
       <type>textarea_medium</type>
       <defaultvalue></defaultvalue>
       <source>module variable: messages</source>

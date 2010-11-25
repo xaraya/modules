@@ -20,7 +20,7 @@
 
 	<h3>Enable User Settings</h3>
 
-	<p>To enable User Settings, check the box for "Enable User Settings" in the <a href="#xarmodurl('messages','admin','modifyconfig')#">Modify Config</a> tab.  Choose the specific settings to enable in the <strong>User Settings</strong> fieldset.  Depending on which settings you enable, the following may be configurable by users in their Roles account:</p>
+	<p>To enable User Settings, check the box for "Enable User Settings" in the <a href="#xarmodurl('messages','admin','modifyconfig')#">Modify Config tab</a> and choose the specific settings to enable in the <strong>User Settings</strong> fieldset.  Depending on which settings you enable, the following may be configurable by users in their Roles account:</p>
 
 	<ul><li><em>Tab to open after sending message</em> -- Redirect to this tab after sending a message.</li>
 	<li><em>Email me when I receive a new message</em> -- Enable email delivery to the user's email address.</li>
@@ -38,7 +38,7 @@
 
 	<li><em>Strip tags from autoreplies</em> -- If you do not enable this, and you turn on the "Show template filenames" settings in the themes module, HTML comments will appear in autoreplies.  It is recommended that you leave this checked.</li>
 
-	<li><em>Default tab to open after sending message</em> -- Redirect to this tab after sending a message.  The "Tab to open" user setting will override this admin setting.</li>
+	<li><em>Default tab to open after send</em> -- Redirect to this tab after sending a message.  The "Tab to open" user setting will override this admin setting.</li>
 	</ul>
 
 	<h3>How to Create a Link to Message a Specific User</h3>
