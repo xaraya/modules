@@ -28,8 +28,8 @@ $modversion['dependency']     = array(189201,189206); // depends on LibOAuth, Li
 $modversion['dependencyinfo'] = array(
                                     0 => array(
                                             'name' => 'Xaraya Core',
-                                            'version_ge' => '2.1.0',
-                                            'version_le' => '2.1.99',
+                                            'version_ge' => '2.2.0',
+                                            //'version_le' => '2.1.99',
                                          ),
                                     189201 => array('name' => 'liboauth'),
                                     189206 => array('name' => 'libtwitteroauth'),
