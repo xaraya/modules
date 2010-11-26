@@ -3,7 +3,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:set name="menulinks">xarMod::apiFunc('twitter', 'admin', 'getmenulinks')</xar:set>
 <xar:if condition="!empty($menulinks)">
-    <xar:set name="request">xarRequest::getInfo()</xar:set>
+    <xar:set name="request">xarController::$request->getInfo()</xar:set>
     <xar:set name="activefunc">$request[2]</xar:set>
     <xar:style scope="module" module="base" file="navtabs" />
     <div>

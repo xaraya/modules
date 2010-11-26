@@ -16,7 +16,7 @@ function twitter_hooks_modulemodifyconfig($args)
         } elseif (!empty($objectid) && is_string($objectid)) {
             $module = $objectid;
         } else {
-            list($module) = xarRequest::getInfo();
+            list($module) = xarController::$request->getInfo();
         }
     }
     $module_id = xarMod::getRegID($module);
