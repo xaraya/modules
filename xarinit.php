@@ -63,7 +63,7 @@ function twitter_init()
     if (!xarModRegisterHook('module', 'updateconfig', 'API',
         'twitter', 'hooks', 'moduleupdateconfig')) return false;
     if (!xarModRegisterHook('module', 'remove', 'API',
-        'twitter', 'hooks', 'moduleremove')); return false;
+        'twitter', 'hooks', 'moduleremove')) return false;
 
     $xartable =& xarDB::getTables();
 
