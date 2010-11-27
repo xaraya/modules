@@ -214,25 +214,20 @@ function messages_upgrade($oldversion)
             break;
         case '1.9':
         case '1.9.0':
-			
-			// we need this value because we're renaming the property
-			$awaymsg = xarModVars::get('messages', 'awaymsg');
 
 			xarMod::apiFunc('dynamicdata','util','import', array(
-							'file' => sys::code() . 'modules/messages/xardata/messages_module_settings-def.xml',
-							'overwrite' => true
+						'file' => sys::code() . 'modules/messages/xardata/messages_module_settings-def.xml',
+						'overwrite' => true
 						));
-			
-			// renamed module var
-			xarModVars::set('messages', 'allowautoreply', $awaymsg);
-
+			 
 			// new module vars
+			xarModVars::set('messages', 'allowautoreply', true);
 			xarModVars::set('messages', 'send_redirect', true);
 			xarModVars::set('messages', 'allowusersendredirect', false);
 
 			xarMod::apiFunc('dynamicdata','util','import', array(
-							'file' => sys::code() . 'modules/messages/xardata/messages_user_settings-def.xml',
-							'overwrite' => true
+						'file' => sys::code() . 'modules/messages/xardata/messages_user_settings-def.xml',
+						'overwrite' => true
 						));
 			
 			// new user vars
