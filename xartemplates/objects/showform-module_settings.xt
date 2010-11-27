@@ -7,9 +7,10 @@
     
     <legend>User Settings</legend>
 
-    <p>Which settings should be available to users in their Roles account?</p><br />
+    <div style="margin-bottom: 12px">Which settings should be available to users in their Roles account?</div>
 
-	<xar:set name="name">'allowusersendredirect'</xar:set>
+	<div style="margin-left: 10px">
+	     <xar:set name="name">'allowusersendredirect'</xar:set>
 	    <div class="xar-form-input-wrapper">
 			<xar:data-label property="$properties[$name]" for="id" />       
 			<xar:data-input property="$properties[$name]" />		
@@ -25,7 +26,8 @@
 	    <div class="xar-form-input-wrapper">
 			<xar:data-label property="$properties[$name]" for="id" />       
 			<xar:data-input property="$properties[$name]" />		
-	     </div> 
+	     </div>
+	  </div> 
 
     </fieldset>
 

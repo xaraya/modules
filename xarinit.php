@@ -17,6 +17,9 @@
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
+
+sys::import('modules.dynamicdata.class.objects.master');
+
 function messages_init()
 {
     //Load Table Maintenance API
@@ -211,10 +214,30 @@ function messages_upgrade($oldversion)
             break;
         case '1.9':
         case '1.9.0':
+			
+			// we need this value because we're renaming the property
+			$awaymsg = xarModVars::get('messages', 'awaymsg');
+
+			xarMod::apiFunc('dynamicdata','util','import', array(
+							'file' => sys::code() . 'modules/messages/xardata/messages_module_settings-def.xml',
+							'overwrite' => true
+						));
+			
+			// renamed module var
+			xarModVars::set('messages', 'allowautoreply', $awaymsg);
+
+			// new module vars
 			xarModVars::set('messages', 'send_redirect', true);
-			xarModVars::set('messages', 'user_send_redirect', 1);
 			xarModVars::set('messages', 'allowusersendredirect', false);
-			xarModVars::set('messages', 'allowautoreply', true );
+
+			xarMod::apiFunc('dynamicdata','util','import', array(
+							'file' => sys::code() . 'modules/messages/xardata/messages_user_settings-def.xml',
+							'overwrite' => true
+						));
+			
+			// new user vars
+			xarModVars::set('messages', 'user_send_redirect', 1);
+
             break;
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here
