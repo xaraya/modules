@@ -158,6 +158,14 @@ function messages_init()
     xarModVars::set('messages','objectid',$objectid);
 */
 
+# --------------------------------------------------------
+#
+# Create privilege instances
+#
+
+	xarDefineInstance('messages', 'Block', array());
+	xarDefineInstance('messages', 'Item', array());
+
     /*
      * REGISTER MASKS
      */
@@ -165,13 +173,13 @@ function messages_init()
     // Register Block types (this *should* happen at activation/deactivation)
     //xarBlockTypeRegister('messages', 'incomming');
     xarRegisterMask('ReadMessagesBlock','All','messages','Block','All','ACCESS_OVERVIEW');
-    xarRegisterMask('ViewMessages','All','messages','Item','All:All:All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadMessages','All','messages','Item','All:All:All','ACCESS_READ');
-    xarRegisterMask('EditMessages','All','messages','Item','All:All:All','ACCESS_EDIT');
-    xarRegisterMask('AddMessages','All','messages','Item','All:All:All','ACCESS_ADD');
-    xarRegisterMask('DenyReadMessages','All','messages','Item','All:All:All','ACCESS_NONE');
-    xarRegisterMask('ManageMessages','All','messages','Item','All:All:All','ACCESS_DELETE');
-    xarRegisterMask('AdminMessages','All','messages','Item','All:All:All','ACCESS_ADMIN');
+    xarRegisterMask('ViewMessages','All','messages','Item','All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadMessages','All','messages','Item','All','ACCESS_READ');
+    xarRegisterMask('EditMessages','All','messages','Item','All','ACCESS_EDIT');
+    xarRegisterMask('AddMessages','All','messages','Item','All','ACCESS_ADD');
+    xarRegisterMask('DenyReadMessages','All','messages','Item','All','ACCESS_NONE');
+    xarRegisterMask('ManageMessages','All','messages','Item','All','ACCESS_DELETE');
+    xarRegisterMask('AdminMessages','All','messages','Item','All','ACCESS_ADMIN');
     /*********************************************************************
     * Enter some default privileges
     * Format is
@@ -259,6 +267,8 @@ function messages_delete()
                        'unregister_block_type',
                        array('modName'  => 'messages',
                              'blockType'=> 'newmessages'))) return;
+
+	xarRemovePrivileges('messages');
 
     return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => 'messages'));
 }

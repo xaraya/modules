@@ -18,7 +18,7 @@ sys::import('modules.messages.xarincludes.defines');
 function messages_user_new() {
  
     if (!xarSecurityCheck('AddMessages')) return;
-
+ 
 	if (!xarVarFetch('replyto', 'int', $replyto,   0, XARVAR_NOT_REQUIRED)) return; 
 	$reply = ($replyto > 0) ? true : false;
 	$data['reply'] = $reply;  
