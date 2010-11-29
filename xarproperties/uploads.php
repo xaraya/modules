@@ -34,7 +34,7 @@ class UploadProperty extends FileUploadProperty
     public $display_size                      = 40;
     public $validation_max_file_size          = 0;
 //    public $initialization_basepath         = null;
-    public $initialization_basedirectory      = 'var/uploads';
+    public $initialization_basedirectory      = 'html/var/uploads';
     public $initialization_import_directory   = null;
     public $initialization_directory_name     = 'User_';
     public $initialization_file_input_methods = array(5,2,1,7);
@@ -68,7 +68,7 @@ class UploadProperty extends FileUploadProperty
 
         // this is used by DD's importpropertytypes() function
         if (empty($args['skipInit'])) {                            // this parameter is not found in the core code
-            // Note : {user} will be replaced by the current user uploading the file - e.g. var/uploads/{user} -&gt; var/uploads/myusername_123
+            // Note : {user} will be replaced by the current user uploading the file - e.g. var/uploads/{user} -> var/uploads/myusername_123
             $uid = xarSession::getVar('role_id');
             if (!empty($this->initialization_basedirectory) && preg_match('/\{user\}/',$this->initialization_basedirectory)) {
                 // Note: we add the userid just to make sure it's unique e.g. when filtering
@@ -87,6 +87,7 @@ class UploadProperty extends FileUploadProperty
         }
         $this->validation_max_file_size = xarModVars::get('uploads', 'file.maxsize');
         $this->initialization_import_directory = sys::root() . "/" . xarModVars::get('uploads', 'path.imports-directory');
+        $this->initialization_basedirectory    = sys::root() . "/" . $this->initialization_basedirectory;
         
         // Save the value in a separate var that won't be changed with this->value
     }
