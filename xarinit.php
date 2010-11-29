@@ -268,8 +268,6 @@ function messages_delete()
                        array('modName'  => 'messages',
                              'blockType'=> 'newmessages'))) return;
 
-	xarRemovePrivileges('messages');
-
     return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => 'messages'));
 }
 
