@@ -124,8 +124,8 @@ function uploads_userapi_db_getall_files( $args )
         return array();
     }
 
-    $importDir = xarModVars::get('uploads','path.imports-directory');
-    $uploadDir = xarModVars::get('uploads','path.uploads-directory');
+    $importDir = sys::root() . "/" . xarModVars::get('uploads','path.imports-directory');
+    $uploadDir = sys::root() . "/" . xarModVars::get('uploads','path.uploads-directory');
 
     // remove the '/' at the end of the path
     $importDir = str_replace('/$', '', $importDir);

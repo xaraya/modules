@@ -266,8 +266,8 @@ function uploads_userapi_db_get_file( $args )
         return array();
     }
 
-    $importDir = xarModVars::get('uploads','path.imports-directory');
-    $uploadDir = xarModVars::get('uploads','path.uploads-directory');
+    $importDir = sys::root() . "/" . xarModVars::get('uploads','path.imports-directory');
+    $uploadDir = sys::root() . "/" . xarModVars::get('uploads','path.uploads-directory');
 
     // remove the '/' from the path
     $importDir = str_replace('/$', '', $importDir);

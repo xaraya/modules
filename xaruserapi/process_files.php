@@ -57,11 +57,11 @@ function uploads_userapi_process_files( $args )
                 @touch($upload_directory . '/index.html');
             } else {
             // CHECKME: fall back to common uploads directory, or fail ?
-                $upload_directory = xarModVars::get('uploads','path.uploads-directory');
+                $upload_directory = sys::root() . "/" . xarModVars::get('uploads','path.uploads-directory');
             }
         }
     } else {
-        $upload_directory = xarModVars::get('uploads','path.uploads-directory');
+        $upload_directory = sys::root() . "/" . xarModVars::get('uploads','path.uploads-directory');
     }
 
     // Check for override of upload obfuscation and set accordingly

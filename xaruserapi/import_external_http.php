@@ -41,7 +41,7 @@ function uploads_userapi_import_external_http( $args )
     }
 
     if (!isset($savePath)) {
-        $savePath = xarModVars::get('uploads', 'path.uploads-directory');
+        $savePath = sys::root() . "/" . xarModVars::get('uploads', 'path.uploads-directory');
     }
 
     // if no port, use the default port (21)

@@ -128,7 +128,7 @@ function uploads_adminapi_validatevalue($args)
 
         // CHECKME: use 'imports' name like in db_get_file() ?
             // replace /trusted coming from showinput() again
-            $importDir = xarModVars::get('uploads', 'path.imports-directory');
+            $importDir = sys::root() . "/" . xarModVars::get('uploads', 'path.imports-directory');
             foreach ($fileList as $file) {
                 $file = str_replace('/trusted', $importDir, $file);
                 $args['fileList']["$file"] = xarModAPIFunc('uploads', 'user', 'file_get_metadata',

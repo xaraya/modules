@@ -57,7 +57,7 @@ function uploads_userapi_prepare_uploads( $args )
     }
 
     if (!isset($savePath)) {
-        $savePath = xarModVars::get('uploads', 'path.uploads-directory');
+        $savePath = sys::root() . "/" . xarModVars::get('uploads', 'path.uploads-directory');
     }
 
     // If we don't have the right data structure, then we can't do much

@@ -23,7 +23,7 @@ function uploads_userapi_prepare_imports( $args )
     }
 
     if (!isset($import_directory)) {
-        $import_directory = xarModVars::get('uploads', 'path.imports-directory');
+        $import_directory = sys::root() . "/" . xarModVars::get('uploads', 'path.imports-directory');
     }
 
     if (!isset($import_obfuscate)) {

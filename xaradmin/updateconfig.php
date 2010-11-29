@@ -44,13 +44,12 @@ function uploads_admin_updateconfig()
             // check to make sure that the value passed in is
             // a real uploads module variable
             $value = trim(ereg_replace('\/$', '', $value));
+            $location = sys::root() . "/" . $value;
             if (NULL !== xarModVars::get('uploads', 'path.' . $varname)) {
-                if (!file_exists($value) || !is_dir($value)) {
-                    $msg = xarML('Location [#(1)] either does not exist or is not a valid directory!', $value);
-                    throw new BadParameterException(null,$msg);
-                } elseif (!is_writable($value)) {
-                    $msg = xarML('Location [#(1)] can not be written to - please check permissions and try again!', $value);
-                    throw new BadParameterException(null,$msg);
+                if (!file_exists($location) || !is_dir($location)) {
+                    return xarTplModule('uploads','user','errors',array('layout' => 'dir_not_found', 'location' => $value));
+                } elseif (!is_writable($location)) {
+                    return xarTplModule('uploads','user','errors',array('layout' => 'dir_not_writable', 'location' => $value));
                 } else {
                     xarModVars::set('uploads', 'path.' . $varname, $value);
                 }

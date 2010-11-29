@@ -86,7 +86,7 @@ class UploadProperty extends FileUploadProperty
             }
         }
         $this->validation_max_file_size = xarModVars::get('uploads', 'file.maxsize');
-        $this->initialization_import_directory = xarModVars::get('uploads', 'path.imports-directory');
+        $this->initialization_import_directory = sys::root() . "/" . xarModVars::get('uploads', 'path.imports-directory');
         
         // Save the value in a separate var that won't be changed with this->value
     }

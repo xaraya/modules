@@ -157,7 +157,7 @@ function uploads_admin_view( )
         $data['diskUsage']['stored_size_filtered'] = xarModAPIFunc('uploads', 'user', 'db_diskusage', $filter);
         $data['diskUsage']['stored_size_total']    = xarModAPIFunc('uploads', 'user', 'db_diskusage');
 
-        $uploadsdir = realpath(xarModVars::get('uploads', 'path.uploads-directory'));
+        $uploadsdir = realpath(sys::root() . "/" . xarModVars::get('uploads', 'path.uploads-directory'));
         $data['diskUsage']['device_free']  = @disk_free_space($uploadsdir);
         $data['diskUsage']['device_total'] = @disk_total_space($uploadsdir);
         $data['diskUsage']['device_used']  = $data['diskUsage']['device_total'] - $data['diskUsage']['device_free'];
