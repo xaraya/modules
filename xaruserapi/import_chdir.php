@@ -28,8 +28,8 @@ function uploads_userapi_import_chdir( $args )
         $dirName = NULL;
     }
 
-    $cwd = xarModUserVars::get('uploads', 'path.imports-cwd');
-    $importDir = xarModVars::get('uploads', 'path.imports-directory');
+    $cwd = sys::root() . "/" . xarModUserVars::get('uploads', 'path.imports-cwd');
+    $importDir = sys::root() . "/" . xarModVars::get('uploads', 'path.imports-directory');
 
     if (!empty($dirName)) {
         if ($dirName == '...') {
