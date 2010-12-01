@@ -243,6 +243,11 @@ class UploadProperty extends FileUploadProperty
         return true;
     }
 
+    function updateValue($itemid=0)
+    {
+        return $this->createValue($itemid);
+    }
+
     function createValue($itemid=0)
     {
         $data = $this->propertydata;
