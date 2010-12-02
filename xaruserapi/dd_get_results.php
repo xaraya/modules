@@ -1,6 +1,6 @@
 <?php
 /**
- * Filters module - Allows users to post comments on items
+ * Filters module 
  *
  * @package modules
  * @copyright (C) 2002-2007 The copyright-placeholder
@@ -56,7 +56,7 @@ function filters_userapi_dd_get_results($args) {
 				$filters['where'] = $filterfield . ' LIKE "%' . $data['filter'] . '%"';
 	
 				$results = DataObjectMaster::getObjectList(array(
-											'name' => 'comments',
+											'name' => $object,
 											));
 				$items = $results->getItems($filters);
 				$data['results'] = count($items);	
