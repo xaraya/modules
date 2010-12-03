@@ -321,7 +321,7 @@
                             )
                         </xar:set>
                         <xar:set name="value"><xar:var scope="module" module="uploads" name="permit_download"/></xar:set>
-                        <xar:data-input type="dropdown" name="permitted" options="$options" value="$value"/>
+                        <xar:data-input type="dropdown" name="permit_download" options="$options" value="$value"/>
                     </div>
                 </fieldset>
                 <fieldset>

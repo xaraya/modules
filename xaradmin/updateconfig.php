@@ -46,7 +46,7 @@ function uploads_admin_updateconfig()
         foreach ($path as $varname => $value) {
             // check to make sure that the value passed in is
             // a real uploads module variable
-            $value = trim(ereg_replace('\/$', '', $value));
+            $value = trim(str_replace('\/$', '', $value));
             $location = sys::root() . "/" . $value;
             if (NULL !== xarModVars::get('uploads', 'path.' . $varname)) {
                 if (!file_exists($location) || !is_dir($location)) {
