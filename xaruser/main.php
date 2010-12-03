@@ -17,6 +17,6 @@
  */
 function uploads_user_main($args)
 {
-    xarResponse::redirect(xarModFunc('uploads','user','download',$args));
+    return xarModFunc('uploads','user','download',$args);
 }
 ?>
