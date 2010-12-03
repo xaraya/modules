@@ -39,8 +39,8 @@ function uploads_user_download()
             $permitted = true;
         break;
     }
-    if (!permitted) {
-        xarResponse::redirect(sys::code() . 'modules/uploads/xarimages/notapproved.gif');
+    if (!$permitted) {
+        return xarResponse::NotFound();
     }
     
     // the file should be the first indice in the array
