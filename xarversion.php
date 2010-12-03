@@ -13,7 +13,7 @@
  **/
 $modversion['name']         = 'filters';
 $modversion['id']           = '1039';
-$modversion['version']      = '0.7.0';
+$modversion['version']      = '0.7.1';
 $modversion['displayname']  = xarML('Filters');
 $modversion['description']  = 'Filters';
 $modversion['credits']      = 'xardocs/credits.txt';
