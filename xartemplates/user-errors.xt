@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+ 
+   <div class="xar-mod-head">
+    <span class="xar-mod-title">Error</span>
+    </div>
+    <div class="xar-mod-body">
+
+    <xar:if condition="$layout eq 'cbui_response'">
+	<p>Error: Your transaction could not be completed.</p>
+	<p>Amazon did not return the following data: #$missing#</p>
+    </xar:if>
+
+    <xar:if condition="$layout eq 'pay_response'">
+	<p>Error: Amazon could not finalize your payment.</p>
+	<hr />
+	#$amazon_error#
+    </xar:if>
+
+    <xar:if condition="$layout eq 'nokeys'">
+	<p>Error: Please make sure you <a href="#xarmodurl('amazonfps','admin','modifyconfig')#">enter your Amazon Web Services access keys</a>.</p>
+	 
+    </xar:if>
+
+    </div>
+</xar:template>

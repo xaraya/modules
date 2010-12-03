@@ -1,0 +1,104 @@
+<object name="amazonfps_payments">
+  <objectid>239</objectid>
+  <label>Amazon FPS Payments</label>
+  <module_id>1045</module_id>
+  <itemtype>1</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>35</maxid>
+  <config>a:2:{s:11:"adminfields";s:68:"itemid, refitemid, modulename, objectname, description, amount, paid";s:12:"filterfields";s:37:"description,Description;amount,Amount";}</config>
+  <isalias>true</isalias>
+  <properties>
+    <property name="itemid">
+      <id>1819</id>
+      <label>Itemid</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="refitemid">
+      <id>1820</id>
+      <label>Reference Itemid</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>65</status>
+      <seq>3</seq>
+      <configuration></configuration>
+    </property>
+    <property name="modulename">
+      <id>1821</id>
+      <label>Ref Module</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>66</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
+    <property name="objectname">
+      <id>1822</id>
+      <label>Ref Object Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>66</status>
+      <seq>6</seq>
+      <configuration></configuration>
+    </property>
+    <property name="amount">
+      <id>1823</id>
+      <label>Amount</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>65</status>
+      <seq>7</seq>
+      <configuration></configuration>
+    </property>
+    <property name="currency">
+      <id>1824</id>
+      <label>Currency</label>
+      <type>textbox</type>
+      <defaultvalue>USD</defaultvalue>
+      <source>dynamic_data</source>
+      <status>65</status>
+      <seq>7</seq>
+      <configuration></configuration>
+    </property>
+    <property name="description">
+      <id>1825</id>
+      <label>Description</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>65</status>
+      <seq>7</seq>
+      <configuration></configuration>
+    </property>
+    <property name="paid">
+      <id>1826</id>
+      <label>Paid</label>
+      <type>checkbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>65</status>
+      <seq>8</seq>
+      <configuration></configuration>
+    </property>
+    <property name="success_url">
+      <id>1829</id>
+      <label>Success URL</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>65</status>
+      <seq>9</seq>
+      <configuration></configuration>
+    </property>
+  </properties>
+</object>

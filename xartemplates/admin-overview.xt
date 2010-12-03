@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+<style>
+p {
+margin-left: 5px;
+}
+h3 {
+margin-top: 18px;
+}
+</style>
+
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">amazonfps Administration</span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admintabs" />
+        <h2>Amazon FPS Overview</h2>
+
+<h3>The Purchase Process</h3>
+<ul>
+	<li>Use the <strong>amazonfps_userapi_cbui</strong> function to send the buyer to the Amazon pipeline with the relevant product &amp; payment info.</li>
+	<li>When the buyer is finished with their purchase, Amazon returns a tokenID and other data to the amazonfps_user_pay function.</li>
+	<li>The amazonfps_userapi_pay function then sends the token back to Amazon to finalize the payment.  At this point, the payment is complete and the Paid column for this payment in the <a href="#xarmodurl('amazonfps','admin','view')#">View Payments page</a> will say "Yes".</li>
+	<li>Lastly, the buyer is redirected to a success page.  Note: You can specify the URL of this success page in your call to amazonfps_userapi_cbui.</li>
+</ul>
+
+ 
+<h3>Adding Filters to the Admin Interface</h3>
+
+<p>Filter widgets are available in the admin interface if you install the <a href="http://www.xaraya.com/index.php/release/eid/1154" target="new">filters module</a>&#160;<img src="code/modules/amazonfps/xarimages/exit.png" width="10" height="10" alt="leave this website" /> and enable it in the <a href="#xarmodurl('amazonfps','admin','modifyconfig')#">Modify Config page</a>.</p>
+
+<h3>Some Amazon Resources</h3>
+
+<p><a href="http://aws.amazon.com/fps/">Sign up for Amazon FPS (Flexible Payment Service)</a></p>
+
+<p>Once you have signed up and have your keys, you'll need to enter them in the <a href="#xarmodurl('amazonfps','admin','modifyconfig')#">Modify Config page</a>.</p>
+
+<p><a href="https://payments-sandbox.amazon.com/sdui/sdui/business?sn=devfps/o"> Overview of FPS</a></p>
+<p><a href="http://docs.amazonwebservices.com/AmazonFPS/2008-09-17/FPSBasicGuide/">Another overview of FPS</a>
+</p>
+
+<p>How to find your security credentials:<br />
+<a href="http://aws.amazon.com/">http://aws.amazon.com/</a> -> Account tab -> Security Credentials -> scroll down to Access Credentials section</p>
+
+<p><a href="https://forums.aws.amazon.com/forum.jspa?forumID=35">FPS support forum</a></p>
+
+
+    </div>
+</xar:template>

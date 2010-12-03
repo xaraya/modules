@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">Amazon FPS Administration</span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admintabs" />
+        <h2>Modify Default Configuration</h2>
+ 
+<style>
+.mod_settings fieldset {
+	border: none;
+ } 
+ .mod_settings h4 {
+	margin-top: 7px;
+ }
+</style>
+
+<p align="right"><a href="http://localhost/keys.txt" style="color: #999">test keys and acct numbers</a></p>
+
+
+        <form method="post" action="#xarServer::getCurrentURL()#">
+           <fieldset class="mod_settings">
+                <legend>Modify Amazon FPS Configuration</legend>
+		<h4>General Settings:</h4>
+                <xar:data-form object="$module_settings" />
+                <xar:data-form object="$object" itemid="0" template="module_settings" />
+	  </fieldset>
+
+            <div class="xar-form-input-after">
+                <input type="hidden" name="authid" value="#xarSecGenAuthKey('amazonfps')#" />
+                <xar:data-input type="hidden" name="phase" value="update" />
+                <input type="hidden" name="objectid" value="#$object->objectid#" />
+                <input type="hidden" name="itemid" value="0" />
+                <input type="hidden" name="return_url" value="#xarServer::getCurrentURL()#" />
+                <xar:var name="label">Update</xar:var>
+                <xar:button type="submit" label="$label" />
+            </div>
+        </form>
+ 
+ 
+
+    </div>
+</xar:template>
