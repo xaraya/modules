@@ -3,7 +3,7 @@
  * Filters
  *
  * @package modules
- * @copyright (C) 2009 WebCommunicate.net
+ * @copyright (C) 2002-2010 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *

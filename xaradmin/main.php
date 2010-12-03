@@ -7,8 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Filters Module
- * @link http://www.xaraya.com/index.php/release/eid/1154
+ * @subpackage filters
+ * @link http://www.xaraya.com/index.php/release/1039.html
  * @author potion <ryan@webcommunicate.net>
  */
 /**

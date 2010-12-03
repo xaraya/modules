@@ -11,17 +11,17 @@
  */
 /**
  *    Make a filter
-* @param required $thisfield name of the property you're filtering on
-* @param required $module module for return URL
-* @param	optional $type type for return URL
-* @param optional $func func for return URL
-* @param optional $extra extra params for return URL
-* @param optional $startval starting value to display in inputs
-* @param optional $clearicon icon for clearing the form
-* @param optional $filterlabel label for in front of the input
-* @param optional $filterparam URL param
-* @param optional $filterfieldparam URL param
-* @param optional $width override the CSS filter width (px or %)
+* @param	str		$thisfield	required name of the property you're filtering on
+* @param	str		$module	required module for return URL
+* @param	str		$type type for return URL
+* @param str		$func func for return URL
+* @param array	 $extra extra params for return URL
+* @param str	 $startval starting value to display in inputs
+* @param str	 $clearicon icon for clearing the form
+* @param str	 $filterlabel label for in front of the input
+* @param str	 $filterparam URL param
+* @param str	 $filterfieldparam URL param
+* @param str	 $width override the CSS filter width (px or %)
 */
 function filters_userapi_makefilter($args) {
 

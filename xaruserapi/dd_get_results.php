@@ -3,16 +3,18 @@
  * Filters module 
  *
  * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
+ * @copyright (C) 2002-2010 The copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage filters
+ * @link http://www.xaraya.com/index.php/release/1039.html
+ * @author Ryan Walker <ryan@webcommunicate.net>
  */
 /**
- * @param required str $object the object name
- * @param required str $filterfields list of filterfields in this format: propname,label;propname,label;propname,label; etc
- * @return an array of data describing our filters and number of results for this page load
+ * @param		str		$object	 required the object name
+ * @param		str		$filterfields	required list of filterfields in this format: propname,label;propname,label;propname,label; etc
+ * @return		array	 $data	an array of data describing our filters and number of results for this page load
  */
 function filters_userapi_dd_get_results($args) {		
 

@@ -7,9 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Filters Module
- * @link http://www.xaraya.com/index.php/release/eid/1154
- * @author potion <ryan@webcommunicate.net>
+ * @subpackage filters
+ * @link http://www.xaraya.com/index.php/release/1039.html 
  */
 /**
  * utility function pass individual menu items to the main menu
