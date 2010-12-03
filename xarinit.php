@@ -333,7 +333,8 @@ function uploads_upgrade($oldversion)
             xarModVars::set('uploads', 'dd.fileupload.stored',   TRUE);
             xarModVars::set('uploads', 'dd.fileupload.external', TRUE);
             xarModVars::set('uploads', 'dd.fileupload.upload',   TRUE);
-            xarModVars::set('uploads', 'dd.fileupload.trusted',  TRUE);
+
+            xarModVars::set('uploads', 'permit_download',  3);
 
             $data['filters']['inverse']                     = FALSE;
             $data['filters']['mimetypes'][0]['typeId']      = 0;
