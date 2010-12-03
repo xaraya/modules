@@ -21,12 +21,28 @@ function uploads_user_download()
 
     if (empty($fileInfo) || !count($fileInfo)) {
         xarResponse::redirect(sys::code() . 'modules/uploads/xarimages/notapproved.gif');
-        return TRUE;
-    //    $msg = xarML('Unable to retrieve information on file [#(1)]', $fileId);
-    //    xarErrorSet(XAR_USER_EXCEPTION, 'UPLOADS_ERR_NO_FILE', new SystemException($msg));
-    //    return;
+        return true;
     }
-
+    
+    // Check whether download is permitted
+    switch (xarModVars::get('uploads', 'permit_download')) {
+        // No download permitted
+        case 0:
+            $permitted = false;
+        break;
+        // Owned files only
+        case 1:
+            $permitted = $fileInfo['userId'] == xarSession::getVar('role_id') ? true : false;
+        break;
+        // All files
+        case 3:
+            $permitted = true;
+        break;
+    }
+    if (!permitted) {
+        xarResponse::redirect(sys::code() . 'modules/uploads/xarimages/notapproved.gif');
+    }
+    
     // the file should be the first indice in the array
     $fileInfo = end($fileInfo);
 
@@ -39,7 +55,7 @@ function uploads_user_download()
 
     // If you are an administrator OR the file is approved, continue
     if ($fileInfo['fileStatus'] != _UPLOADS_STATUS_APPROVED && !xarSecurityCheck('EditUploads', 0, 'File', $instance)) {
-        $msg = xarML('You do not have the necessary permissions for this object.');
+        $msg = xarML('You do not have the necessary privileges for this object.');
         throw new Exception($msg);             
     }
 
