@@ -24,6 +24,9 @@ function uploads_user_download()
         return true;
     }
     
+    // the file should be the first indice in the array
+    $fileInfo = end($fileInfo);
+
     // Check whether download is permitted
     switch (xarModVars::get('uploads', 'permit_download')) {
         // No download permitted
@@ -43,9 +46,6 @@ function uploads_user_download()
         return xarResponse::NotFound();
     }
     
-    // the file should be the first indice in the array
-    $fileInfo = end($fileInfo);
-
     $instance[0] = $fileInfo['fileTypeInfo']['typeId'];
     $instance[1] = $fileInfo['fileTypeInfo']['subtypeId'];
     $instance[2] = xarSession::getVar('uid');
