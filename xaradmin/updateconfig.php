@@ -22,9 +22,12 @@ function uploads_admin_updateconfig()
     if (!xarVarFetch('path',   'list:str:1:', $path,   '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('view',   'list:str:1:', $view,   '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ddprop', 'array:1:',    $ddprop, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('permit_download', 'int',    $permit_download, 0, XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
+
+    xarModVars::set('uploads', 'permit_download',  $permit_download);
 
     if (isset($file) && is_array($file)) {
         foreach ($file as $varname => $value) {
