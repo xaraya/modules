@@ -134,7 +134,6 @@ class UploadProperty extends FileUploadProperty
 
                 $data['upload'] =& $_FILES[$name . '_attach_upload'];
 
-/* Extension validation is now done client side
                 if (empty($data['upload']['name'])) {
                     // No file name entered, ignore
                     $this->value = '';
@@ -144,7 +143,7 @@ class UploadProperty extends FileUploadProperty
                     $this->value = null;
                     return false;
                 }
-*/
+
                 break;
             case _UPLOADS_GET_EXTERNAL:
                 // minimum external import link must be: ftp://a.ws  <-- 10 characters total
