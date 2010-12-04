@@ -1,5 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <h1 align="center">
-      <a href="#xarModURL('uploads', 'admin')#"><xar:mlstring>Uploads Administration</xar:mlstring></a>
+      <a href="#xarModURL('uploads', 'admin')#">Uploads Administration</a>
     </h1>
 </xar:template >

@@ -3,7 +3,7 @@
     <xar:javascript filename="openDialog.js"/> 
     <div class="xar-uploads-attachment-wrapper xar-accent-outline">
         <h2>
-            &#160;<xar:mlstring>List of Attachments:</xar:mlstring>
+            &#160;List of Attachments:
         </h2>
         <a name="Attachments"/>
         <xar:template file="attachment-list" type="module"/>

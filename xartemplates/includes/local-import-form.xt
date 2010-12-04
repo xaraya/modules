@@ -5,7 +5,7 @@
           <p>
             <span>
               <strong>
-                <xar:mlstring>Current Directory:</xar:mlstring>
+                Current Directory:
                 &#160;<xar:var scope="module" module="uploads" name="path.imports-directory"/>#$curDir#
               </strong>
             </span>
@@ -19,9 +19,9 @@
         <form name="local_import_form" id="local_import_form" action="#$local_import_post_url#" method="post">
       <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
         <tr>
-          <th width="10%"><xar:mlstring>Select</xar:mlstring></th>
-          <th width="65%"><xar:mlstring>File / Directory</xar:mlstring></th>
-          <th width="25%"><xar:mlstring>Size (in bytes)</xar:mlstring></th>
+          <th width="10%">Select</th>
+          <th width="65%">File / Directory</th>
+          <th width="25%">Size (in bytes)</th>
         </tr>
         <xar:if condition="isset($noPrevDir) AND ($noPrevDir eq FALSE)">
           <tr>
@@ -33,13 +33,13 @@
                  alt="#xarML('Open Folder')#"
                  title="#xarML('Open Folder')#">
                 <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18"/>
-                <xar:mlstring>
+                
                   <strong>Previous Folder</strong>
-                </xar:mlstring>
+                
               </a>
             </td>
             <td width="25%" class="xar-norm" align="right">
-              &#160;<xar:mlstring>N/A</xar:mlstring>
+              &#160;N/A
             </td>
           </tr>
         </xar:if>
@@ -51,10 +51,10 @@
           </td>
           <td width="65%" align="left">&#160;
             <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18"/>&#160;
-              <xar:mlstring><strong>Current Folder</strong></xar:mlstring>
+              <strong>Current Folder</strong>
           </td>
           <td width="25%" align="right">
-            &#160;<xar:mlstring>N/A</xar:mlstring>
+            &#160;N/A
           </td>
         </tr>
 

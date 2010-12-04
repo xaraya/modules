@@ -1,5 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:mlstring>Attach a file from the Trusted directory:</xar:mlstring><br />
+    Attach a file from the Trusted directory:<br />
 
     <xar:set name="multiple"> 
         "multiple_{$id}"

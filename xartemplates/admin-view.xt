@@ -1,23 +1,23 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>File Uploads Administration</xar:mlstring>
+            File Uploads Administration
         </span>
     </div>
     <div class="xar-mod-body">
         <xar:template type="module" file="admin-menu"/>
-        <h2><xar:mlstring>View Files</xar:mlstring></h2>
+        <h2>View Files</h2>
             <xar:if condition="isset($diskUsage)">
                 <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
                     <tr>
-                        <th><xar:mlstring>Physical Device Space</xar:mlstring></th>
-                        <th><xar:mlstring>Stored File Size Usage</xar:mlstring></th>
-                        <th><xar:mlstring>Number of Files</xar:mlstring></th>
+                        <th>Physical Device Space</th>
+                        <th>Stored File Size Usage</th>
+                        <th>Number of Files</th>
                     </tr>
                     <tr>
-                        <td class="xar-norm" align="center"><xar:mlstring>Total / Used / Free</xar:mlstring></td>
-                        <td class="xar-norm" align="center"><xar:mlstring>current view / stored total</xar:mlstring></td>
-                        <td class="xar-norm" align="center"><xar:mlstring>current view / stored total</xar:mlstring></td>
+                        <td class="xar-norm" align="center">Total / Used / Free</td>
+                        <td class="xar-norm" align="center">current view / stored total</td>
+                        <td class="xar-norm" align="center">current view / stored total</td>
                     </tr>
                     <tr>
                         <td class="xar-norm" align="center">
@@ -40,13 +40,13 @@
 
             <table summary="Files" border="0" class="xar-fullwidth xar-accent-outline">
                     <tr>
-                        <th><a href="#xarModURL('uploads','admin','view')#"><xar:mlstring>Select</xar:mlstring></a></th>
-                        <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'name'))#"><xar:mlstring>File Name</xar:mlstring></a></th>
+                        <th><a href="#xarModURL('uploads','admin','view')#">Select</a></th>
+                        <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'name'))#">File Name</a></th>
                         <th>&#160;</th>
-                        <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'size'))#"><xar:mlstring>File Size</xar:mlstring></a></th>
-                        <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'id'))#"><xar:mlstring>File Date</xar:mlstring></a></th>
-                        <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'user'))#"><xar:mlstring>Uploaded By</xar:mlstring></a></th>
-                        <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'status'))#"><xar:mlstring>Status</xar:mlstring></a></th>
+                        <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'size'))#">File Size</a></th>
+                        <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'id'))#">File Date</a></th>
+                        <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'user'))#">Uploaded By</a></th>
+                        <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'status'))#">Status</a></th>
                     </tr>
             <xar:if condition="count($items)">
                 <form id="viewfiles" action="#xarModUrl('uploads','admin','view')#" method="post">
@@ -87,7 +87,7 @@
             </xar:loop>
                     <tr>
                         <td colspan="7" class="xar-norm xar-align-center">
-    [&#160;<a href="javascript:xar_base_checkall(document.forms['viewfiles'],true)"><xar:mlstring>Check All</xar:mlstring></a>&#160;|&#160;<a href="javascript:xar_base_checkall(document.forms['viewfiles'],false)"><xar:mlstring>Uncheck All</xar:mlstring></a>&#160;]
+    [&#160;<a href="javascript:xar_base_checkall(document.forms['viewfiles'],true)">Check All</a>&#160;|&#160;<a href="javascript:xar_base_checkall(document.forms['viewfiles'],false)">Uncheck All</a>&#160;]
                  #$pager#
                         </td>
                     </tr>
@@ -131,9 +131,9 @@
                 <tr>
                     <td class="xar-norm" colspan="7" align="center">
                         <p>
-                            <xar:mlstring>
+                            
                                 There are currently no files to view with the filter you have chosen.
-                            </xar:mlstring>
+                            
                         </p>
                     </td>
                 </tr>

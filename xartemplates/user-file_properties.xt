@@ -3,13 +3,13 @@
     <head>
         <xar:blockgroup name="header" id="header"/>
         <title>
-            <xar:mlstring>
+            
                 File Properties
-            </xar:mlstring>
+            
             <xar:if condition="!isset($error) AND isset($fileInfo['fileName'])">
                 :: #$fileInfo['fileName']#
             <xar:else />
-                :: <xar:mlstring>Error encountered!</xar:mlstring>
+                :: Error encountered!
             </xar:if>
         </title> 
         <base href="&xar-baseurl;index.php"/>
@@ -72,9 +72,9 @@
                         <table width="100%" border="0" cellspacing="0" cellpadding="0" class="xar-norm">
                             <tr> 
                                 <td class="xar-norm" width="20%">
-                                    <xar:mlstring>
+                                    
                                         File ID
-                                    </xar:mlstring>
+                                    
                                 </td>
                                 <td class="xar-norm" width="80%">&#160;
                                     #$fileInfo['fileId']#
@@ -82,9 +82,9 @@
                             </tr>
                             <tr>
                                 <td class="xar-accent" width="20%">
-                                    <xar:mlstring>
+                                    
                                         Type
-                                    </xar:mlstring>
+                                    
                                 </td>
                                 <td class="xar-norm" width="80%">&#160;
                                     #$fileInfo['fileType']#
@@ -92,9 +92,9 @@
                             </tr>
                             <tr>
                                 <td class="xar-norm" width="20%">
-                                    <xar:mlstring>
+                                    
                                         Location
-                                    </xar:mlstring>
+                                    
                                 </td>
                                 <td class="xar-norm" width="80%">&#160;
                                     #$fileInfo['fileHashName']#
@@ -102,9 +102,9 @@
                             </tr>
                             <tr>
                                 <td class="xar-accent" width="20%">
-                                    <xar:mlstring>
+                                    
                                         Store Type
-                                    </xar:mlstring>
+                                    
                                 </td>
                                 <td class="xar-norm" width="80%">&#160;
                                     #$fileInfo['storeType']['long']# (#$fileInfo['storeType']['short']#)
@@ -112,9 +112,9 @@
                             </tr>
                             <tr>
                                 <td class="xar-norm" width="20%">
-                                    <xar:mlstring>
+                                    
                                         Uploaded By
-                                    </xar:mlstring>
+                                    
                                 </td>
                                 <td class="xar-norm" width="80%">&#160;
                                     #$fileInfo['userName']# (#$fileInfo['userId']#)
@@ -122,9 +122,9 @@
                             </tr>
                             <tr>
                                 <td class="xar-accent" width="20%">
-                                    <xar:mlstring>
+                                    
                                         File Size
-                                    </xar:mlstring>
+                                    
                                 </td>
                                 <td class="xar-norm" width="80%">&#160;
                                     #$fileInfo['size']['short']# (#$fileInfo['size']['long']# bytes)
@@ -132,9 +132,9 @@
                             </tr>
                             <tr>
                                 <td class="xar-norm" width="20%">
-                                    <xar:mlstring>
+                                    
                                         Reference String
-                                    </xar:mlstring>
+                                    
                                 </td>
                                 <td class="xar-norm" width="80%">&#160;
                                     file:#$fileInfo['fileId']# 
@@ -142,15 +142,15 @@
                             </tr>
                             <tr>
                                 <td class="xar-accent" width="20%">
-                                    <xar:mlstring>
+                                    
                                         Known Associations
-                                    </xar:mlstring>
+                                    
                                 </td>
                                 <td class="xar-accent" width="80%">&#160;
                                     #$fileInfo['numassoc']# 
                                     <xar:if condition="!empty($fileInfo['numassoc']) and xarSecurityCheck('AdminUploads',0)">
                                         [<a target="main" href="#xarModURL('uploads','admin','assoc',array('fileId' => $fileInfo['fileId']))#">
-                                            <xar:mlstring>view</xar:mlstring>
+                                            view
                                         </a>]
                                     </xar:if>
                                 </td>
@@ -178,9 +178,9 @@
                             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="xar-norm">
                                 <tr>
                                     <td width="20%">
-                                        <xar:mlstring>
+                                        
                                             Preview:
-                                        </xar:mlstring>
+                                        
                                     </td>
                                 </tr>
                                 <tr>
@@ -202,9 +202,9 @@
                             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="xar-norm">
                                 <tr>
                                     <td width="100%">
-                                        <xar:mlstring>
+                                        
                                             Download File:
-                                        </xar:mlstring>&#160;
+                                        &#160;
                                         <a href="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#" 
                                            alt="#xarMl('Download this file.')#">#$fileInfo['fileName']#
                                         </a>

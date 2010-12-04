@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:javascript filename="jquery-1.2.6.pack.js" module="jquery" position="head"/>
     <xar:javascript filename="jquery.MultiFile.pack.js" module="jquery" position="head"/>
-    <xar:mlstring>Upload a file: </xar:mlstring><br />
+    Upload a file: <br />
     <input type="hidden" name="#$name#_max_file_size" value="#$max_file_size#"/>
     <!--
     <input type="file" name="#$name#_attach_upload" id="#$name#_attach_upload_id"/>

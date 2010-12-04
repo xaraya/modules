@@ -1,9 +1,9 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>
+            
                 Uploads Administration
-            </xar:mlstring>
+            
         </span>
     </div>
     <div class="xar-mod-body">
@@ -30,9 +30,9 @@
             <table border="1" cellpadding="8" cellspacing="0">
                 <tr>
                     <th>
-                        <xar:mlstring>
+                        
                             MIME Type
-                        </xar:mlstring>
+                        
                     </th>
                     <td>
                         <select name="mimetype" id="mimetype" onchange="this.form.submit();">
@@ -52,9 +52,9 @@
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>
+                        
                             MIME SubType
-                        </xar:mlstring>
+                        
                     </th>
                     <td>
                         <select name="subtype" id="subtypeList" onchange="this.form.submit();">
@@ -74,9 +74,9 @@
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>
+                        
                             User
-                        </xar:mlstring>
+                        
                     </th>
                     <td>
                         <select name="userId" id="userNameList" onchange="this.form.submit();">
@@ -97,9 +97,9 @@
                 </tr>
                 <tr>
                     <th>
-                        <xar:mlstring>
+                        
                             File
-                        </xar:mlstring>
+                        
                     </th>
                     <td>
                         <select name="fileId" id="fileList" onchange="this.form.submit();">
@@ -119,44 +119,44 @@
                 </tr>
                 <tr>
                     <th valign="top" align="right">
-                        <xar:mlstring>Access Level</xar:mlstring>
+                        Access Level
                     </th>
                     <td>
                         <select name="extlevel" id="extlevel">
                             <xar:if condition="$extlevel eq 0">
-                                <option value="0" selected="selected"><xar:mlstring>No Access</xar:mlstring></option>
+                                <option value="0" selected="selected">No Access</option>
                             <xar:else />
-                                <option value="0"><xar:mlstring>No Access</xar:mlstring></option>
+                                <option value="0">No Access</option>
                             </xar:if>
                             <xar:if condition="$extlevel eq 100">
-                                <option value="100" selected="selected"><xar:mlstring>Overview</xar:mlstring></option>
+                                <option value="100" selected="selected">Overview</option>
                             <xar:else />
-                                <option value="100"><xar:mlstring>Overview</xar:mlstring></option>
+                                <option value="100">Overview</option>
                             </xar:if>
                             <xar:if condition="$extlevel eq 200">
-                                <option value="200" selected="selected"><xar:mlstring>Read</xar:mlstring></option>
+                                <option value="200" selected="selected">Read</option>
                             <xar:else />
-                                <option value="200"><xar:mlstring>Read</xar:mlstring></option>
+                                <option value="200">Read</option>
                             </xar:if>
                             <xar:if condition="$extlevel eq 300">
-                                <option value="300" selected="selected"><xar:mlstring>Submit (Comment)</xar:mlstring></option>
+                                <option value="300" selected="selected">Submit (Comment)</option>
                             <xar:else />
-                                <option value="300"><xar:mlstring>Submit (Comment)</xar:mlstring></option>
+                                <option value="300">Submit (Comment)</option>
                             </xar:if>
                             <xar:if condition="$extlevel eq 500">
-                                <option value="500" selected="selected"><xar:mlstring>Edit / Approve</xar:mlstring></option>
+                                <option value="500" selected="selected">Edit / Approve</option>
                             <xar:else />
-                                <option value="500"><xar:mlstring>Edit / Approve</xar:mlstring></option>
+                                <option value="500">Edit / Approve</option>
                             </xar:if>
                             <xar:if condition="$extlevel eq 700">
-                                <option value="700" selected="selected"><xar:mlstring>Delete</xar:mlstring></option>
+                                <option value="700" selected="selected">Delete</option>
                             <xar:else />
-                                <option value="700"><xar:mlstring>Delete</xar:mlstring></option>
+                                <option value="700">Delete</option>
                             </xar:if>
                             <xar:if condition="$extlevel eq 800">
-                                <option value="800" selected="selected"><xar:mlstring>Admin</xar:mlstring></option>
+                                <option value="800" selected="selected">Admin</option>
                             <xar:else />
-                                <option value="800"><xar:mlstring>Admin</xar:mlstring></option>
+                                <option value="800">Admin</option>
                             </xar:if>
                         </select>
                     </td>

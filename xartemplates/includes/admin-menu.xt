@@ -8,13 +8,13 @@
     <div>
       <dl class="xar-tabs">
         <dt class="help" title="Choose an action to perform">
-          <xar:mlstring>Actions:</xar:mlstring>
+          Actions:
         </dt>
         <xar:sec mask="EditUploads" catch="false">
             <xar:set name="tabclass">$activetab=='view'?'active':''</xar:set>
             <dd class="#$tabclass#">
               <a href="&xar-modurl-uploads-admin-view;">
-                <xar:mlstring>View Files</xar:mlstring>
+                View Files
               </a>
             </dd>
             <xar:if condition="$activetab eq 'get_files' or $activetab eq 'addfile-status' or $activetab eq 'purge_rejected'">
@@ -24,13 +24,13 @@
             </xar:if>
             <dd class="#$tabclass#">
                 <a href="#xarModURL('uploads','admin','get_files')#">
-                    <xar:mlstring>Add File</xar:mlstring>
+                    Add File
                 </a>
             </dd>
             <xar:set name="tabclass">$activetab=='assoc'?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-uploads-admin-assoc;">
-                    <xar:mlstring>View Associations</xar:mlstring>
+                    View Associations
                 </a>
             </dd>
         </xar:sec>
@@ -38,14 +38,14 @@
             <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
             <dd class="#$tabclass#">
               <a href="&xar-modurl-uploads-admin-modifyconfig;">
-                <xar:mlstring>Modify Config</xar:mlstring>
+                Modify Config
               </a>
             </dd>
         </xar:sec>
         <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-uploads-admin-overview;">
-            <xar:mlstring>Overview</xar:mlstring>
+            Overview
           </a>
         </dd>
       </dl>

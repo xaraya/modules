@@ -4,7 +4,7 @@
         <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
             <xar:if condition="isset($orientation) and $orientation eq 'vertical'">
             <tr>
-                <th class="xar-align-center"><xar:mlstring>Browse for File:</xar:mlstring></th>
+                <th class="xar-align-center">Browse for File:</th>
             </tr>
             <tr>
                 <td class="xar-norm xar-align-left" width="45%">
@@ -12,7 +12,7 @@
                 </td>
             </tr>
             <tr>
-                <th class="xar-align-center"><xar:mlstring>Save Location<br />DB / FS</xar:mlstring></th>
+                <th class="xar-align-center">Save Location<br />DB / FS</th>
             </tr>
             <tr>
                 <td class="xar-norm xar-align-center" width="28%">
@@ -21,7 +21,7 @@
                 </td>
             </tr>
             <tr>
-                <th align="center"><xar:mlstring>Action</xar:mlstring></th>
+                <th align="center">Action</th>
             </tr>
             <tr>
                 <td class="xar-norm xar-align-center" width="27%">
@@ -33,9 +33,9 @@
             </tr>
             <xar:else />
             <tr>
-                <th class="xar-align-center"><xar:mlstring>Browse for File:</xar:mlstring></th>
-                <th class="xar-align-center"><xar:mlstring>Save Location<br />DB / FS</xar:mlstring></th>
-                <th class="xar-align-center"><xar:mlstring>Action</xar:mlstring></th>
+                <th class="xar-align-center">Browse for File:</th>
+                <th class="xar-align-center">Save Location<br />DB / FS</th>
+                <th class="xar-align-center">Action</th>
             </tr>
             <tr>
                 <td class="xar-norm xar-align-left" width="45%">

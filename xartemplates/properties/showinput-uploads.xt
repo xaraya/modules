@@ -2,33 +2,33 @@
     <xar:javascript module="uploads" filename="switchImport.js"/>
     <xar:style scope="module" module="uploads" file="uploads"/>
     <xar:if condition="count($file_input_methods) gt 1">
-        <xar:mlstring>Attach file(s) from source:</xar:mlstring><br />
+        Attach file(s) from source:<br />
         <xar:if condition="in_array($getAction['LOCAL'],$file_input_methods)">
             <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(#$getAction['LOCAL']#, '#$id#');true;" 
-               name="attach_trusted_#$id#" title="#xarML('Attach file from Trusted Directory')#"><xar:mlstring>Trusted</xar:mlstring>
+               name="attach_trusted_#$id#" title="#xarML('Attach file from Trusted Directory')#">Trusted
             </a> |
         </xar:if>
 
         <xar:if condition="in_array($getAction['EXTERNAL'],$file_input_methods)">
             <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(#$getAction['EXTERNAL']#, '#$id#');true;" 
-               name="attach_external_#$id#" title="#xarML('Attach file from external source (http(s)|ftp)')#"><xar:mlstring>External</xar:mlstring>
+               name="attach_external_#$id#" title="#xarML('Attach file from external source (http(s)|ftp)')#">External
             </a> |
         </xar:if>
 
         <xar:if condition="in_array($getAction['UPLOAD'],$file_input_methods)">
             <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(#$getAction['UPLOAD']#, '#$id#');true;" 
-               name="attach_upload_#$id#" title="#xarML('Attach uploaded file')#"><xar:mlstring>Upload</xar:mlstring>
+               name="attach_upload_#$id#" title="#xarML('Attach uploaded file')#">Upload
             </a> |
         </xar:if>
 
         <xar:if condition="in_array($getAction['STORED'],$file_input_methods)">
             <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(#$getAction['STORED']#, '#$id#');true;" 
-               name="attach_stored_#$id#" title="#xarML('Attach previously stored file')#"><xar:mlstring>Stored</xar:mlstring>
+               name="attach_stored_#$id#" title="#xarML('Attach previously stored file')#">Stored
             </a> |
         </xar:if>
 
         <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(-1, '#$id#');true;" 
-           name="attach_reset_#$id#" title="#xarML('Revert to initial state')#"><xar:mlstring>Reset</xar:mlstring>
+           name="attach_reset_#$id#" title="#xarML('Revert to initial state')#">Reset
         </a>
         <br />
     </xar:if>
@@ -42,7 +42,7 @@
             <xar:set name="name">$id . '_clear'</xar:set>
             <xar:data-input type="checkbox" name="$name"/> 
             <label for="#$id#_attach_clear" title="#xarML('Clear stored value')#">
-                <xar:mlstring>Remove</xar:mlstring>
+                Remove
             </label>
         </span>
     </xar:if>
