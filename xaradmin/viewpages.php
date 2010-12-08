@@ -78,9 +78,9 @@ function xarpages_admin_viewpages($args)
                 $tmppage['children'] = $children[$pid];
             } else {
                 $children[$parent] = array();
-                if (isset($children[$cid])) {
-                    ksort($children[$cid], SORT_NUMERIC);
-                    $tmpcat['children'] = $children[$cid];
+                if (isset($children[$pid])) {
+                    ksort($children[$pid], SORT_NUMERIC);
+                    $tmpcat['children'] = $children[$pid];
                 }
             }
             $parentid = $parent;
