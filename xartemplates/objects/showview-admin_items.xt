@@ -54,8 +54,8 @@
                             <td valign="top">&#160;</td>
                         <xar:elseif condition="!empty($linkfield) and $linkfield eq $propname"/>
                             <td valign="top"><a href="#$links[$itemid]['display']['olink']#"><xar:data-output property="$properties[$propname]" value="$fields[$propname]" /></a></td>
-			 <xar:elseif condition="$propname eq 'refitemid'" />
-			<td valign="top"><a href="#xarmodurl($fields['modulename'],'admin','display',array('itemid' => $fields['refitemid'], 'name' => $fields['objectname']))#">#$fields['refitemid']#</a></td>
+			 <xar:elseif condition="$propname eq 'description'" />
+			<td valign="top"><a href="#xarmodurl($fields['modulename'],'admin','display',array('itemid' => $fields['refitemid'], 'name' => $fields['objectname']))#">#$fields['description']#</a></td>
                         <xar:else />
                             <td valign="top"><xar:data-output property="$properties[$propname]" value="$fields[$propname]" /></td>
                         </xar:if>

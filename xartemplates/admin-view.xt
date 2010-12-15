@@ -5,21 +5,17 @@
     <xar:style scope="module" module="base" file="tabs" /> 
 
     <div class="xar-mod-head">
-      <span class="xar-mod-title">AmazonFPS Administration</span>
+      <span class="xar-mod-title">Amazon FPS Administration</span>
     </div>
    
     <div class="xar-mod-body">
         <xar:template type="module" file="admintabs" />
 
-	<xar:if condition="isset($label)">
-		<xar:set name="label">': ' . $label</xar:set>
-	<xar:else />
-		<xar:set name="label">''</xar:set>
-	</xar:if>
+	<img src="#sys::code()#modules/amazonfps/xarimages/PBAWS_LOGO_152_60.jpg" alt="powered by Amazon Web Services" width="152" height="60" class="xar-module-icon" />
 
 <xar:if condition="isset($name)">
 
-        <h2>View Items#$label#</h2>
+        <h2>View Payments</h2>
 
 
 <xar:if condition="$showfilters">
