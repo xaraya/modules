@@ -15,22 +15,25 @@
  *  Until this function runs, there hasn't really been a payment.
  */
 
-$modulepath = sys::code() . 'modules/amazonfps/';
-require_once($modulepath . '.config.inc.php');
-require_once($modulepath . 'Amazon/CBUI/CBUISingleUsePipeline.php');
+$modulepath = sys::code() . 'modules/amazonfps/'; 
+require_once($modulepath . 'xarincludes/.config.inc.php');
+
+sys::import('modules.amazonfps.Amazon.FPS.Client');
+sys::import('modules.amazonfps.Amazon.FPS.Model.Amount');
+sys::import('modules.amazonfps.Amazon.FPS.Model.PayRequest');
 
 function amazonfps_userapi_pay($args) {
 
-	if (!xarSecurityCheck('AddAmazonFPS')) return;
-
-	$service = new Amazon_FPS_Client(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
+	//if (!xarSecurityCheck('AddAmazonFPS')) return;
 
 	$currency = 'USD';
 
 	extract($args);
 
-	$request =  new Amazon_FPS_Model_PayRequest();
-	$request->setSenderTokenId($tokenID);//set the proper senderToken here.
+	$service = new Amazon_FPS_Client(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
+
+	$request = new Amazon_FPS_Model_PayRequest();
+	$request->setSenderTokenId($tokenID); //set the proper senderToken here.
 	$amount = new Amazon_FPS_Model_Amount();
 	$amount->setCurrencyCode($currency);
 	$amount->setValue($paymentamount); //set the transaction amount here;
@@ -53,6 +56,7 @@ function amazonfps_userapi_pay($args) {
 				$result['TransactionStatus'] = $payResult->getTransactionStatus();
 			}
 		} 
+
 		if ($response->isSetResponseMetadata()) {  
 			$responseMetadata = $response->getResponseMetadata();
 			if ($responseMetadata->isSetRequestId()) { 
@@ -60,18 +64,18 @@ function amazonfps_userapi_pay($args) {
 			}
 		} 
 
-		} catch (Amazon_FPS_Exception $ex) {
+	} catch (Amazon_FPS_Exception $ex) {
 			$result['error'] .= "Caught Exception: " . $ex->getMessage() . "<br />";
 			$result['error'] .= "Response Status Code: " . $ex->getStatusCode() . "<br />";
 			$result['error'] .= "Error Code: " . $ex->getErrorCode() . "<br />";
 			$result['error'] .= "Error Type: " . $ex->getErrorType() . "<br />";
 			$result['error'] .= "Request ID: " . $ex->getRequestId() . "<br />";
 			$result['error'] .= "XML: " . $ex->getXML();
-		}
+			print $result['error'];
+			return;
 	}
 
 	return $result;
-
+	
 }
-
 ?>

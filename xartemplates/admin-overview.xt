@@ -18,10 +18,16 @@ margin-top: 18px;
         <xar:template type="module" file="admintabs" />
         <h2>Amazon FPS Overview</h2>
 
-<h3>The Purchase Process</h3>
+<h3>Acronyms</h3>
+
+<div>AWS ~ Amazon Web Services</div>
+<div>FPS ~ Flexible Payment Service</div>
+<div>CBUI ~ Co-Branded User Interface (this is the checkout process on Amazon's server)</div>
+
+<h3>Order Flow</h3>
 <ul>
-	<li>Use the <strong>amazonfps_userapi_cbui</strong> function to send the buyer to the Amazon pipeline with the relevant product &amp; payment info.</li>
-	<li>When the buyer is finished with their purchase, Amazon returns a tokenID and other data to the amazonfps_user_pay function.</li>
+	<li>Use the <strong>amazonfps_userapi_cbui</strong> function to send the buyer to the Amazon pipeline with the relevant product info.</li>
+	<li>When the buyer is finished with their purchase, Amazon returns a tokenID and other data to this module's amazonfps_user_pay function.</li>
 	<li>The amazonfps_userapi_pay function then sends the token back to Amazon to finalize the payment.  At this point, the payment is complete and the Paid column for this payment in the <a href="#xarmodurl('amazonfps','admin','view')#">View Payments page</a> will say "Yes".</li>
 	<li>Lastly, the buyer is redirected to a success page.  Note: You can specify the URL of this success page in your call to amazonfps_userapi_cbui.</li>
 </ul>

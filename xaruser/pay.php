@@ -16,7 +16,8 @@
  *	 purchase.
  */
 
-$modulepath = sys::code() . 'modules/amazonfps/';
+$modulepath = sys::code() . 'modules/amazonfps/'; 
+require_once($modulepath . 'xarincludes/.config.inc.php');
 require_once($modulepath . 'Amazon/IpnReturnUrlValidation/SignatureUtilsForOutbound.php');
 
 function amazonfps_user_pay()
@@ -27,7 +28,7 @@ function amazonfps_user_pay()
 	$data['missing'] = array();
 
 	// returnurl from the cbui will contain: expiry, tokenID, status, callerReference and signature
-	$params = array('tokenID' => 'str:1', 'expiry' => 'str:7', 'status' => 'str:1', 'callerReference' => 'str:1', 'signature' => 'str:1', 'amount' => 'int:1', 'signatureMethod' => 'str:1', 'signatureVersion' => 'str:1', 'certificateUrl' => 'str:1');
+	$params = array('tokenID' => 'str:1:', 'expiry' => 'str:7:7', 'status' => 'str:1:', 'amount' => 'str', 'callerReference' => 'str:1:', 'signature' => 'str:1:', 'signatureMethod' => 'str:1:', 'signatureVersion' => 'str:1:', 'certificateUrl' => 'str:1:');
 
 	foreach ($params as $key => $val) {
 		if (!xarVarFetch($key, $val, ${$key}, NULL, XARVAR_NOT_REQUIRED)) return;
@@ -38,15 +39,8 @@ function amazonfps_user_pay()
 		}
 	}
 
-	$urlEndPoint = xarModURL('amazonfps','user','pay');
-	//$urlEndPoint = str_replace('&amp;','&',xarModURL('amazonfps','user','pay'));
-	
-	/*print $urlEndPoint . '<hr />';
-	var_dump($sigvalidation);
-	exit;*/
-
-	/*xarSession::setVar('test2',implode("\n", $sigvalidation));
-	return xarTplModule('amazonfps','user','pay');*/
+	//$urlEndPoint = xarModURL('amazonfps','user','pay');
+	$urlEndPoint = str_replace('&amp;','&',xarModURL('amazonfps','user','pay',array('amount' => $amount)));
 	
 	// validate the signature to make sure this request came from Amazon
 	$utils = new Amazon_FPS_SignatureUtilsForOutbound();
@@ -66,16 +60,18 @@ function amazonfps_user_pay()
 		'signature' => $signature 
 		); 
 
-	var_dump($args); exit;
+	$result = xarMod::APIFunc('amazonfps','user','pay',$args);
 
-	$result = xarMod::APIFunc('amazonfps','admin','pay',$args);
+	$amazon_error = $result['error'];
 
-	if (!empty($result['error'])) {
+	if (empty($amazon_error)) {
 		sys::import('modules.dynamicdata.class.objects.master');
 
 		$object = DataObjectMaster::getObject(array('name' => 'amazonfps_payments')); 
+
+		$callerItemid = str_replace('p', '', $callerReference);
 		
-		$object->getItem(array('itemid' => $callerReference));
+		$object->getItem(array('itemid' => $callerItemid));
 		$success_url = $object->properties['success_url']->value;
 		$object->properties['paid']->setValue(1); // we've now successfully paid
 		$object->updateItem();
@@ -84,9 +80,9 @@ function amazonfps_user_pay()
 		return true;
 
 	} else {
-		$data['amazon_error'] = $result['error'];
+		$data['amazon_error'] = $amazon_error;
 		$data['layout'] = 'pay_response';
-		return xarTplModule('amazonfps','user','error',$data);
+		return xarTplModule('amazonfps','user','errors',$data);
 	}
 }
 

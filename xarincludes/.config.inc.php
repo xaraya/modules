@@ -37,7 +37,9 @@
     * Only needed when running library from local directory.
     * If library is installed in PHP include path, this is not needed
     ***********************************************************************/   
-    set_include_path(get_include_path() . PATH_SEPARATOR . '../../../.');    
+
+	$modpath = str_replace('/xarincludes/.config.inc.php','',realpath(__FILE__));
+    set_include_path(get_include_path() . PATH_SEPARATOR . $modpath);    
     
    /************************************************************************ 
     * OPTIONAL ON SOME INSTALLATIONS  

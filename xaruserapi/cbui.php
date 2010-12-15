@@ -35,6 +35,7 @@ function amazonfps_userapi_cbui($args) {
 
 	$currency = 'USD';
 	$success_url = xarModURL('amazonfps','user','success');
+	$callerprefix = 'p'; //optionally add a prefix to the callerReference to ensure uniqueness, for example, if you move from a test server to a production server and start over again at 1 with the payment itemids
 
 	extract($args);
 
@@ -64,10 +65,10 @@ function amazonfps_userapi_cbui($args) {
 
 	$pipeline = new Amazon_FPS_CBUISingleUsePipeline(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
 
-	$returnurl = str_replace('&amp;','&',xarModURL('amazonfps','user','pay'));
+	$returnurl = str_replace('&amp;','&',xarModURL('amazonfps','user','pay',array('amount' => $amount)));
  
 	$pipeline->setMandatoryParameters(
-			$itemid, // callerReference is always the payment itemid
+			$callerprefix . $itemid, // callerReference uses the payment itemid
 			$returnurl, // returnurl
 			$amount // amount
 		);
