@@ -28,7 +28,7 @@ margin-top: 18px;
 
 <h3>Order Flow</h3>
 <ul>
-	<li>Use the <strong>amazonfps_userapi_cbui</strong> function to send the buyer to the Amazon pipeline with the relevant product info.</li>
+	<li>Use the <strong>amazonfps_userapi_cbui</strong> function to send the buyer to the Amazon pipeline with the relevant product info.  <a href="#xarServer::getCurrentURL()###usage">See the Usage Example below</a>.</li>
 	<li>When the buyer is finished with their purchase, Amazon returns a tokenID and other data to this module's amazonfps_user_pay function.</li>
 	<li>The amazonfps_userapi_pay function then sends the token back to Amazon to finalize the payment.  At this point, the payment is complete and the Paid column for this payment in the <a href="#xarmodurl('amazonfps','admin','view')#">View Payments page</a> will say "Yes".</li>
 	<li>Lastly, the buyer is redirected to a success page.  Note: You can specify the URL of this success page in your call to amazonfps_userapi_cbui.</li>
@@ -59,6 +59,42 @@ margin-top: 18px;
 
 <p><a href="https://forums.aws.amazon.com/forum.jspa?forumID=35">FPS support forum</a></p>
 
+<a name="usage">&#160;</a>
+<h3 style="margin-top:0">Usage Example</h3>
+
+<p>To send a patron to the CBUI, call the amazonfps_userapi_cbui function from your module and then redirect to the URL it returns.  The following is a snippet from a function for processing contributions:</p>
+
+     <pre style="margin-left: 24px;">    
+$isvalid = $object->checkInput();
+
+if (!$isvalid) {
+
+	// Bad data: redisplay the form with the data we picked up and with error messages
+	return xarTplModule('contributions','user','new', $data); 
+
+} else {
+
+	$itemid = $object->createItem();
+
+	// This contribution is a donation, so we take a payment
+	if ($data['type'] == 3) {
+
+		// get the CBUI URL for this payment
+		$data['redirect'] = xarMod::apiFunc('amazonfps','user','cbui', array(
+			'modulename' => 'contributions',
+			'objectname' => 'contributions_contributions',
+			'refitemid' => $itemid,
+			'amount' => $data['amount'], 
+			'description' => 'Contribution ' . $itemid
+		));
+
+	}
+
+	// Redirect to the CBUI
+	xarResponse::redirect($data['redirect']); 
+	return true;
+}
+</pre>
 
     </div>
 </xar:template>
