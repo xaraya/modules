@@ -36,7 +36,8 @@ margin-top: 18px;
 
 <h3>CallerReference Prefix</h3>
 
-<p>The CallerReference is an ID assigned to a payment before you send the buyer to the CBUI.  The AWS requires that this ID be unique for each payment.  Furthermore, it must be unique over the life of your Amazon account.  The amazonfps module uses the payment's itemid for this CallerReference.  However, if you start over with a fresh database (when you move from testing to production, for example), re-install the module, or otherwise do something to clear the payment items and start over with an itemid of 1, then the CallerReference you pass to Amazon will no longer be unique over the life of your account.  Thus, if you need to start over at itemid 1, you should specify a new CallerReference Prefix so you won't submit a CallerReference to Amazon that you've previously submitted.  A single letter or word for the prefix will work.</p>
+<p>In Amazon's FPS, the CallerReference is the ID your web application assigns to a pending payment before you send the buyer to the CBUI.  The AWS requires that this ID be unique for each payment.  Furthermore, it must be unique over the life of your Amazon account.</p>
+<p>The amazonfps module uses the payment's itemid for this CallerReference.  However, if you start over with a fresh database -- for example, when you move from testing to production -- or otherwise do something to clear the payment items in the amazonfps module and start over with an itemid of 1, then the CallerReference you pass to Amazon will no longer be unique over the life of your account.  In that case you must specify a new CallerReference Prefix in the <a href="#xarmodurl('amazonfps','admin','modifyconfig')#">Modify Config page</a> to keep the CallerReference unique.  A single letter or word for the prefix will work, as long as it's something you haven't used before.</p>
 
  
 <h3>Adding Filters to the Admin Interface</h3>
