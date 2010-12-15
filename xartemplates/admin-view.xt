@@ -11,9 +11,7 @@
     <div class="xar-mod-body">
         <xar:template type="module" file="admintabs" />
 
-	<img src="#sys::code()#modules/amazonfps/xarimages/PBAWS_LOGO_152_60.jpg" alt="powered by Amazon Web Services" width="152" height="60" class="xar-module-icon" />
-
-<xar:if condition="isset($name)">
+	<img src="#sys::code()#modules/amazonfps/xarimages/PBAWS_LOGO_152_60.jpg" alt="powered by Amazon Web Services" width="152" height="60" class="xar-module-icon" style="margin-bottom: 8px;" />
 
         <h2>View Payments</h2>
 
@@ -52,7 +50,5 @@
 	<xar:pager startnum="$list->startnum" itemsperpage="$list->numitems" total="$total"/>
 </xar:if>
 	
-
- </xar:if>
    </div> 
 </xar:template>
