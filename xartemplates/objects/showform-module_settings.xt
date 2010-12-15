@@ -2,6 +2,12 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     
+    <xar:set name="name">'callerreference_prefix'</xar:set>
+	    <div class="xar-form-input-wrapper">
+			<xar:data-label property="$properties[$name]" for="id" />       
+			<xar:data-input property="$properties[$name]" />		
+	     </div>
+
 	<fieldset>
 
 	<h4>Amazon Credentials:</h4>

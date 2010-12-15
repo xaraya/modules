@@ -69,7 +69,7 @@ function amazonfps_user_pay()
 
 		$object = DataObjectMaster::getObject(array('name' => 'amazonfps_payments')); 
 
-		$callerItemid = str_replace('p', '', $callerReference);
+		$callerItemid = str_replace(trim(xarModVars::get('amazonfps','callerreference_prefix')), '', $callerReference);
 		
 		$object->getItem(array('itemid' => $callerItemid));
 		$success_url = $object->properties['success_url']->value;

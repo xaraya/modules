@@ -50,5 +50,15 @@
       <seq>4</seq>
       <configuration></configuration>
     </property>
+    <property name="callerreference_prefix">
+      <id>1870</id>
+      <label>CallerReference Prefix</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: amazonfps</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
   </properties>
 </object>

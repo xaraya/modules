@@ -35,7 +35,7 @@ function amazonfps_userapi_cbui($args) {
 
 	$currency = 'USD';
 	$success_url = xarModURL('amazonfps','user','success');
-	$callerprefix = 'p'; //optionally add a prefix to the callerReference to ensure uniqueness, for example, if you move from a test server to a production server and start over again at 1 with the payment itemids
+	$callerprefix = trim(xarModVars::get('amazonfps','callerreference_prefix')); //optionally add a prefix to the callerReference to ensure uniqueness, for example, if you move from a test server to a production server and start over again at 1 with the payment itemids
 
 	extract($args);
 

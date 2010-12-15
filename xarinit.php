@@ -34,6 +34,7 @@ function amazonfps_init()
 	
 	xarModVars::set('amazonfps','enable_filters',1);  
 	xarModVars::set('amazonfps','filters_min_items',9);   
+	xarModVars::set('amazonfps','callerreference_prefix','');  
 
 	$module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'amazonfps'));
 	$module_settings->initialize();
