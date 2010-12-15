@@ -15,7 +15,7 @@
       <label>Itemid</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
+      <source>xar_amazonfps_payments.itemid</source>
       <status>65</status>
       <seq>1</seq>
       <configuration></configuration>
@@ -25,7 +25,7 @@
       <label>Reference Itemid</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
+      <source>xar_amazonfps_payments.refitemid</source>
       <status>65</status>
       <seq>3</seq>
       <configuration></configuration>
@@ -35,7 +35,7 @@
       <label>Ref Module</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
+      <source>xar_amazonfps_payments.modulename</source>
       <status>66</status>
       <seq>5</seq>
       <configuration></configuration>
@@ -45,7 +45,7 @@
       <label>Ref Object Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
+      <source>xar_amazonfps_payments.objectname</source>
       <status>66</status>
       <seq>6</seq>
       <configuration></configuration>
@@ -55,7 +55,7 @@
       <label>Amount</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
+      <source>xar_amazonfps_payments.amount</source>
       <status>65</status>
       <seq>7</seq>
       <configuration></configuration>
@@ -65,7 +65,7 @@
       <label>Currency</label>
       <type>textbox</type>
       <defaultvalue>USD</defaultvalue>
-      <source>dynamic_data</source>
+      <source>xar_amazonfps_payments.currency</source>
       <status>65</status>
       <seq>7</seq>
       <configuration></configuration>
@@ -75,7 +75,7 @@
       <label>Description</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
+      <source>xar_amazonfps_payments.description</source>
       <status>65</status>
       <seq>7</seq>
       <configuration></configuration>
@@ -85,7 +85,7 @@
       <label>Paid</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
+      <source>xar_amazonfps_payments.paid</source>
       <status>65</status>
       <seq>8</seq>
       <configuration></configuration>
@@ -95,7 +95,7 @@
       <label>Success URL</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>dynamic_data</source>
+      <source>xar_amazonfps_payments.success_url</source>
       <status>65</status>
       <seq>9</seq>
       <configuration></configuration>

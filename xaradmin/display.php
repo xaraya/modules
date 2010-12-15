@@ -19,8 +19,6 @@ function amazonfps_admin_display()
     if(!xarVarFetch('itemid',       'id',    $itemid,   NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return; 
 
-	print xarModURL('amazonfps','user','pay'); exit;
-
     // Check if we still have no id of the item to modify.
     if (empty($itemid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',

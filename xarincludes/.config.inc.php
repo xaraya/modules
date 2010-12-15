@@ -26,8 +26,8 @@
     * Access Key ID and Secret Acess Key ID, obtained from:
     * http://aws.amazon.com
     ***********************************************************************/
-    define('AWS_ACCESS_KEY_ID', xarModVars::get('amazonfps','public_key'));
-    define('AWS_SECRET_ACCESS_KEY', xarModVars::get('amazonfps','secret_key'));  
+    define('AWS_ACCESS_KEY_ID', trim(xarModVars::get('amazonfps','public_key')));
+    define('AWS_SECRET_ACCESS_KEY', trim(xarModVars::get('amazonfps','secret_key')));  
 
  
    /************************************************************************ 
@@ -38,7 +38,7 @@
     * If library is installed in PHP include path, this is not needed
     ***********************************************************************/   
 
-	$modpath = str_replace('/xarincludes/.config.inc.php','',realpath(__FILE__));
+	$modpath = sys::root() . sys::code() . 'modules/amazonfps';
     set_include_path(get_include_path() . PATH_SEPARATOR . $modpath);    
     
    /************************************************************************ 

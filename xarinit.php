@@ -11,6 +11,7 @@
  * @link http://xaraya.com/index.php/release/1033.html
  * @author Ryan Walker <ryan@webcommunicate.net>
  */
+sys::import('xaraya.tableddl');
 /**
  * Initialise the module
  *
@@ -20,6 +21,38 @@
  */
 function amazonfps_init()
 {
+
+	$dbconn =& xarDB::getConn();
+    $tables =& xarDB::getTables();
+
+    $prefix = xarDB::getPrefix();
+    $tables['payments'] = $prefix . '_amazonfps_payments'; 
+
+    // Create tables inside a transaction
+    try {
+        $charset = xarSystemVars::get(sys::CONFIG, 'DB.Charset');
+        $dbconn->begin();
+
+		$fields = array(
+                        'itemid' => array('type' => 'integer', 'unsigned' => true, 'null' =>		false, 'increment' => true, 'primary_key' => true),
+                        'refitemid' => array('type' => 'integer', 'unsigned' => true, 'null' => false),
+						'modulename' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset),
+						'objectname' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset),
+						'amount' =>  array('type' => 'integer', 'unsigned' => true, 'null' =>		false),
+						'currency' => array('type' => 'varchar','size' => 254,'null' => false,		'charset' => $charset),
+						'description' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset),
+						'paid' => 	 array('type'        => 'boolean', 'default'     => false),
+						'success_url' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset)
+			);
+        $query = xarDBCreateTable($tables['payments'],$fields);
+        $dbconn->Execute($query);
+
+        $dbconn->commit();
+
+	} catch (Exception $e) {
+        $dbconn->rollback();
+        throw $e;
+    }
 
     $module = 'amazonfps';
     $objects = array(
