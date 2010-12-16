@@ -20,8 +20,7 @@ $modulepath = sys::code() . 'modules/amazonfps/';
 require_once($modulepath . 'xarincludes/.config.inc.php');
 require_once($modulepath . 'Amazon/IpnReturnUrlValidation/SignatureUtilsForOutbound.php');
 
-function amazonfps_user_pay()
-{
+function amazonfps_user_pay() {
 
     if (!xarSecurityCheck('AddAmazonFPS')) return;
 

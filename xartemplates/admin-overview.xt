@@ -29,6 +29,9 @@ margin-top: 18px;
 <div>AWS ~ Amazon Web Services</div>
 <div>FPS ~ Flexible Payment Service</div>
 <div>CBUI ~ Co-Branded User Interface (this is the checkout process on Amazon's server)</div>
+<div>
+IPN ~ Instant Payment Notification
+</div>
 
 <h3>Order Flow</h3>
 <ul>
@@ -50,19 +53,22 @@ margin-top: 18px;
 
 <h3>Some Amazon Resources</h3>
 
-<p><a href="http://aws.amazon.com/fps/">Sign up for Amazon FPS (Flexible Payment Service)</a></p>
+<p><a href="http://aws.amazon.com/fps/">Sign up for Amazon FPS (Flexible Payment Service)</a>.</p>
 
-<p>Once you have signed up and have your keys, you'll need to enter them in the <a href="#xarmodurl('amazonfps','admin','modifyconfig')#">Modify Config page</a>.</p>
+<p>Once you have signed up for FPS and have your keys, you'll need to enter them in the <a href="#xarmodurl('amazonfps','admin','modifyconfig')#">Modify Config page</a>.</p>
 
-<p><a href="https://payments-sandbox.amazon.com/sdui/sdui/business?sn=devfps/o"> Overview of FPS</a></p>
-<p><a href="http://docs.amazonwebservices.com/AmazonFPS/2008-09-17/FPSBasicGuide/">Another overview of FPS</a>
-</p>
-<p><a href="https://aws.amazon.com/co-marketing/#logo-program">Amazon logos</a></p>
+<p><a href="https://forums.aws.amazon.com/forum.jspa?forumID=35">FPS support forum</a>.</p>
+
+<p><a href="https://payments-sandbox.amazon.com/sdui/sdui/business?sn=devfps/o"> Overview of FPS</a>.</p>
+<p><a href="http://docs.amazonwebservices.com/AmazonFPS/2008-09-17/FPSBasicGuide/">Another overview of FPS</a>.</p>
+
+<p>You can use <a href="https://aws.amazon.com/co-marketing/#logo-program">Amazon logos</a> to let your site visitors know they'll be paying via Amazon.</p>
 
 <p>How to find your security credentials:<br />
-<a href="http://aws.amazon.com/">http://aws.amazon.com/</a> -> Account tab -> Security Credentials -> scroll down to Access Credentials section</p>
+<a href="http://aws.amazon.com/">http://aws.amazon.com/</a> -> Account tab -> Security Credentials -> scroll down to Access Credentials section.</p>
 
-<p><a href="https://forums.aws.amazon.com/forum.jspa?forumID=35">FPS support forum</a></p>
+<p>Set your <strong>IPN URL</strong> at payments.amazon.com --> Edit My Account Settings --> Manage Developer and Seller Preferences<br />
+The aforementioned link is *not* accessible until you upgrade your personal Amazon account to a Business account (there's no cost for this).  If you have not done so, you can upgrade to a Business account here: <a href="https://payments.amazon.com/sdui/sdui/premiumaccount?referringcaller=UXMWPQBXUHZO79832VCRG7PAI73KHQCQD32746">https://payments.amazon.com/sdui/sdui/premiumaccount</a>.  Note: Setting the IPN URL is not necessary in order to execute payments.  However, IPN does enable Amazon to ping your site to let you know when a payment status has changed.  Thus, if you don't set the IPN URL, your website will show the status of all payments as "Pending" regardless of their true status at Amazon.  You should set the URL to http://www.mysite.com/?module=amazonfps&amp;func=ipn<br />The HTTP protocol will work for testing.  For production, Amazon recommends use of the HTTPS protocol.</p>
 
 <a name="usage">&#160;</a>
 <h3 style="margin-top:0">Usage Example</h3>
