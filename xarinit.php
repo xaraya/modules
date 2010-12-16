@@ -42,7 +42,10 @@ function amazonfps_init()
 						'currency' => array('type' => 'varchar','size' => 254,'null' => false,		'charset' => $charset),
 						'description' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset),
 						'paid' => 	 array('type'        => 'boolean', 'default'     => false),
-						'success_url' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset)
+						'success_url' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset),
+						'transactionid' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset),
+						'transactionstatus' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset),
+						'requestid' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset)
 			);
         $query = xarDBCreateTable($tables['payments'],$fields);
         $dbconn->Execute($query);

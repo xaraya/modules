@@ -24,7 +24,7 @@ sys::import('modules.amazonfps.Amazon.FPS.Model.PayRequest');
 
 function amazonfps_userapi_pay($args) {
 
-	//if (!xarSecurityCheck('AddAmazonFPS')) return;
+	if (!xarSecurityCheck('AddAmazonFPS')) return;
 
 	$currency = 'USD';
 
@@ -48,11 +48,9 @@ function amazonfps_userapi_pay($args) {
 		if ($response->isSetPayResult()) {
 			$payResult = $response->getPayResult();
 			if ($payResult->isSetTransactionId()) {
-				//$msg .= "                TransactionId\n";
 				$result['TransactionId'] = $payResult->getTransactionId();
 			}
 			if ($payResult->isSetTransactionStatus()) {
-				//$msg .= "                TransactionStatus\n";
 				$result['TransactionStatus'] = $payResult->getTransactionStatus();
 			}
 		} 

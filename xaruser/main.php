@@ -5,8 +5,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage amazonfps Module
- * @link http://www.xaraya.com/index.php/release/eid/1033
+ * @subpackage amazonfps
+ * @link http://xaraya.com/index.php/release/eid/1169
  * @author potion <ryan@webcommunicate.net>
  */
 /**

@@ -38,16 +38,16 @@ function amazonfps_user_pay()
 			$sigvalidation[$key] = ${$key};
 		}
 	}
-
-	//$urlEndPoint = xarModURL('amazonfps','user','pay');
-	$urlEndPoint = str_replace('&amp;','&',xarModURL('amazonfps','user','pay',array('amount' => $amount)));
 	
-	// validate the signature to make sure this request came from Amazon
-	$utils = new Amazon_FPS_SignatureUtilsForOutbound();
-	
-	$utils->validateRequest($sigvalidation, $urlEndPoint, "GET"); 
+	if (empty($data['missing'])) {
 
-	if (!empty($data['missing'])) {
+		$urlEndPoint = str_replace('&amp;','&',xarModURL('amazonfps','user','pay',array('amount' => $amount)));
+		
+		// validate the signature to make sure this request came from Amazon
+		$utils = new Amazon_FPS_SignatureUtilsForOutbound();
+		$utils->validateRequest($sigvalidation, $urlEndPoint, "GET"); 
+
+	} else {
 		$data['layout'] = 'cbui_response';
 		$data['missing'] = implode(', ',$data['missing']);
 		return xarTplModule('amazonfps','user','errors',$data);
@@ -60,6 +60,7 @@ function amazonfps_user_pay()
 		'signature' => $signature 
 		); 
 
+	// if we've made it this far, execute the payment
 	$result = xarMod::APIFunc('amazonfps','user','pay',$args);
 
 	$amazon_error = $result['error'];
@@ -73,6 +74,9 @@ function amazonfps_user_pay()
 		
 		$object->getItem(array('itemid' => $callerItemid));
 		$success_url = $object->properties['success_url']->value;
+		$object->properties['transactionid']->setValue($result['TransactionId']);
+		$object->properties['transactionstatus']->setValue($result['TransactionStatus']);
+		$object->properties['requestid']->setValue($result['RequestId']);
 		$object->properties['paid']->setValue(1); // we've now successfully paid
 		$object->updateItem();
 
