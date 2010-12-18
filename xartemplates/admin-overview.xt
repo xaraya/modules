@@ -40,25 +40,30 @@ IPN ~ Instant Payment Notification
 	<li>The amazonfps_userapi_pay function then sends the token back to Amazon to finalize the payment.  At this point, the payment is complete* and the Conversion column for this payment in the <a href="#xarmodurl('amazonfps','admin','view')#">View Payments page</a> will say "Yes".</li>
 	<li>Lastly, the buyer is redirected to a success page.  Note: You can specify the URL of this success page in your call to amazonfps_userapi_cbui.</li>
 </ul>
-<p>* This does not always mean the buyer's bank or credit card company has approved the payment yet.  There may be a processing delay of up to several days, and it's always possible the payment will be rejected.  If you've enabled IPN, as explained in the Amazon Resources section below, then the payment's display page will indicate whether the payment has been approved.</p>
+<p>* This does not always mean the buyer's bank or credit card company has approved the payment yet.  There may be a processing delay of up to several days, and it's always possible the payment will be rejected.  If you've enabled IPN, as explained in <a href="#xarServer::getCurrentURL()###ipn">the IPN section below</a>, then the payment's display page will indicate whether the payment has been approved.</p>
 
 <h3>CallerReference Prefix</h3>
 
 <p>In Amazon's FPS, the CallerReference is the ID your web application assigns to a pending payment before you send the buyer to the CBUI.  The AWS requires that this ID be unique for each payment.  Furthermore, it must be unique over the life of your Amazon account.</p>
 <p>The amazonfps module uses the payment's itemid for this CallerReference.  However, if you start over with a fresh database -- for example, when you move from testing to production -- or otherwise do something to clear the payment items in the amazonfps module and start over with an itemid of 1, then the CallerReference you pass to Amazon will no longer be unique over the life of your account.  In that case you must specify a new CallerReference Prefix in the <a href="#xarmodurl('amazonfps','admin','modifyconfig')#">Modify Config page</a> to keep the CallerReference unique.  A single letter or word for the prefix will work, as long as it's something you haven't used before.</p>
 
- 
-<h3>Adding Filters to the Admin Interface</h3>
-
-<p>Filter widgets are available in the admin interface if you install the <a href="http://www.xaraya.com/index.php/release/eid/1154" target="new">filters module</a>&#160;<img src="code/modules/amazonfps/xarimages/exit.png" width="10" height="10" alt="leave this website" /> and enable it in the <a href="#xarmodurl('amazonfps','admin','modifyconfig')#">Modify Config page</a>.</p>
-
 <h3>Amazon Resources</h3>
 
-<p><a href="http://aws.amazon.com/fps/">Sign up for Amazon FPS (Flexible Payment Service)</a>.</p>
+<em>Developer access:</em>
 
-https://payments.amazon.com/sdui/sdui/business?sn=devfps/o
+<p><a href="http://aws.amazon.com/fps/">Sign up for Amazon FPS (developer account)</a>.  Once you have signed up for FPS and have your keys, you'll need to enter them in the <a href="#xarmodurl('amazonfps','admin','modifyconfig')#">Modify Config page</a>.</p>
 
-<p>Once you have signed up for FPS and have your keys, you'll need to enter them in the <a href="#xarmodurl('amazonfps','admin','modifyconfig')#">Modify Config page</a>.</p>
+<p>How to find your keys:<br />
+<a href="http://aws.amazon.com/">http://aws.amazon.com/</a> -> Account tab -> Security Credentials -> scroll down to Access Credentials section.</p>
+
+<em>Business access:</em>
+
+<p><a href="https://payments.amazon.com/sdui/sdui/business?sn=devfps/o">Sign up for Amazon FPS (business account)</a>. Click the signup button in the right column.  Then click the "Enter the Sandbox" link if you are still testing your app.</p> 
+
+<p>Sign into the business account: <a href="https://payments.amazon.com">https://payments.amazon.com</a><br />
+Sign into the sandbox business account: <a href="https://payments-sandbox.amazon.com">https://payments-sandbox.amazon.com</a></p>
+
+<em>Amazon support:</em>
 
 <p><a href="https://forums.aws.amazon.com/forum.jspa?forumID=35">FPS support forum</a>.</p>
 
@@ -67,11 +72,16 @@ https://payments.amazon.com/sdui/sdui/business?sn=devfps/o
 
 <p>You can use <a href="https://aws.amazon.com/co-marketing/#logo-program">Amazon logos</a> to let your site visitors know they'll be paying via Amazon.</p>
 
-<p>How to find your security credentials:<br />
-<a href="http://aws.amazon.com/">http://aws.amazon.com/</a> -> Account tab -> Security Credentials -> scroll down to Access Credentials section.</p>
+<a name="ipn">&#160;</a>
+<h3 style="margin-top:0">IPN</h3>
 
-<p>Set your <strong>IPN URL</strong> at payments.amazon.com --> Edit My Account Settings --> Manage Developer and Seller Preferences<br />
-The aforementioned link is *not* accessible until you upgrade your personal Amazon account to a Business account (there's no cost for this).  If you have not done so, you can upgrade to a Business account here: <a href="https://payments.amazon.com/sdui/sdui/premiumaccount?referringcaller=UXMWPQBXUHZO79832VCRG7PAI73KHQCQD32746">https://payments.amazon.com/sdui/sdui/premiumaccount</a>.  Note: Setting the IPN URL is not necessary in order to execute payments.  However, IPN does enable Amazon to ping your site to let you know when a payment status has changed.  Thus, if you don't set the IPN URL, your website will show the status of all payments as "Pending" regardless of their true status at Amazon.  You should set the URL to http://www.mysite.com/?module=amazonfps&amp;func=ipn<br />The HTTP protocol will work for testing.  For production, Amazon recommends use of the HTTPS protocol.</p>
+<p>Enabling IPN is not necessary in order to execute payments.  However, IPN does allow Amazon to ping your site to let you know when a payment status has changed.  Thus, if you don't enable IPN, your website will show the status of all payments as "Pending" regardless of their true status at Amazon.</p>
+
+<p>To enable IPN, you need to set an IPN URL in your business account or sandbox business account. If you have not done so, you must upgrade to a Business account here: <a href="https://payments.amazon.com/sdui/sdui/premiumaccount?referringcaller=UXMWPQBXUHZO79832VCRG7PAI73KHQCQD32746">https://payments.amazon.com/sdui/sdui/premiumaccount</a></p>
+
+<p>To find the IPN URL setting, enter your <a href="https://payments.amazon.com">business account</a> (or <a href="https://payments-sandbox.amazon.com">sandbox business account</a>), go to "Edit My Account Settings" and then "Manage Developer and Seller Preferences".</p>
+
+<p>Set the IPN URL to <strong>#xarServer::getBaseURL()#?module=amazonfps&amp;func=ipn</strong><br />The HTTP protocol will work for testing.  For production, Amazon recommends use of the HTTPS protocol.</p>
 
 <a name="usage">&#160;</a>
 <h3 style="margin-top:0">Usage Example</h3>
@@ -109,6 +119,11 @@ if (!$isvalid) {
 	return true;
 }
 </pre>
+
+
+<h3>Adding Filters to the Admin Interface</h3>
+
+<p>Filter widgets are available in the admin interface if you install the <a href="http://www.xaraya.com/index.php/release/eid/1154" target="new">filters module</a>&#160;<img src="code/modules/amazonfps/xarimages/exit.png" width="10" height="10" alt="leave this website" /> and enable it in the <a href="#xarmodurl('amazonfps','admin','modifyconfig')#">Modify Config page</a>.</p>
 
     </div>
 </xar:template>
