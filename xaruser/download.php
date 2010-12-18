@@ -55,20 +55,17 @@ function uploads_user_download()
 
     // If you are an administrator OR the file is approved, continue
     if ($fileInfo['fileStatus'] != _UPLOADS_STATUS_APPROVED && !xarSecurityCheck('EditUploads', 0, 'File', $instance)) {
-        $msg = xarML('You do not have the necessary privileges for this object.');
-        throw new Exception($msg);             
+        return xarTplModule('uploads','user','errors',array('layout' => 'no_permission'));
     }
 
     if (xarSecurityCheck('ViewUploads', 1, 'File', $instance)) {
         if ($fileInfo['storeType'] & _UPLOADS_STORE_FILESYSTEM || ($fileInfo['storeType'] == _UPLOADS_STORE_DB_ENTRY)) {
             if (!file_exists($fileInfo['fileLocation'])) {
-                $msg = xarML('File [#(1)] does not exist in FileSystem.', $fileInfo['fileName']);
-                throw new Exception($msg);             
+                return xarTplModule('uploads','user','errors',array('layout' => 'not_accessible'));
             }
         } elseif ($fileInfo['storeType'] & _UPLOADS_STORE_DB_FULL) {
             if (!xarModAPIFunc('uploads', 'user', 'db_count_data', array('fileId' => $fileInfo['fileId']))) {
-                $msg = xarML('File [#(1)] does not exist in Database.', $fileInfo['fileName']);
-                throw new Exception($msg);             
+                return xarTplModule('uploads','user','errors',array('layout' => 'not_accessible'));
             }
         }
 

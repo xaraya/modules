@@ -13,11 +13,19 @@
                 <br />Please contact the system administrator.</div>
             <xar:elseif condition="$layout eq 'dir_not_found'"/>
                 <div style="margin-top: 20px">
-                    The loocation [#$location#] either does not exist or is not a valid directory.
+                    The location [#$location#] either does not exist or is not a valid directory.
                 </div>
             <xar:elseif condition="$layout eq 'dir_not_writable'"/>
                 <div style="margin-top: 20px">
                     The location [#$location#] cannot be written to - please check permissions and try again
+                </div>
+            <xar:elseif condition="$layout eq 'not_accessible'"/>
+                <div style="margin-top: 20px">
+                    The file ou requested is not available.
+                </div>
+            <xar:elseif condition="$layout eq 'no_permission'"/>
+                <div style="margin-top: 20px">
+                    You are not allowed to access this file.
                 </div>
             <xar:else />
                 <div style="margin-top: 20px">No error message is available. 
