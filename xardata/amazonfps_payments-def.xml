@@ -1,5 +1,5 @@
 <object name="amazonfps_payments">
-  <objectid>252</objectid>
+  <objectid>46</objectid>
   <label>Amazon FPS Payments</label>
   <module_id>1045</module_id>
   <itemtype>1</itemtype>
@@ -7,11 +7,11 @@
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>35</maxid>
-  <config>a:2:{s:11:"adminfields";s:68:"itemid, refitemid, modulename, objectname, description, amount, paid";s:12:"filterfields";s:37:"description,Description;amount,Amount";}</config>
+  <config>a:2:{s:11:"adminfields";s:74:"itemid, refitemid, modulename, objectname, description, amount, conversion";s:12:"filterfields";s:37:"description,Description;amount,Amount";}</config>
   <isalias>true</isalias>
   <properties>
     <property name="itemid">
-      <id>1888</id>
+      <id>308</id>
       <label>Itemid</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration></configuration>
     </property>
     <property name="refitemid">
-      <id>1889</id>
+      <id>309</id>
       <label>Reference Itemid</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
@@ -31,7 +31,7 @@
       <configuration></configuration>
     </property>
     <property name="modulename">
-      <id>1890</id>
+      <id>310</id>
       <label>Ref Module</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -41,7 +41,7 @@
       <configuration></configuration>
     </property>
     <property name="objectname">
-      <id>1891</id>
+      <id>311</id>
       <label>Ref Object Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -51,7 +51,7 @@
       <configuration></configuration>
     </property>
     <property name="amount">
-      <id>1892</id>
+      <id>312</id>
       <label>Amount</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
@@ -61,7 +61,7 @@
       <configuration></configuration>
     </property>
     <property name="currency">
-      <id>1893</id>
+      <id>313</id>
       <label>Currency</label>
       <type>textbox</type>
       <defaultvalue>USD</defaultvalue>
@@ -71,7 +71,7 @@
       <configuration></configuration>
     </property>
     <property name="description">
-      <id>1894</id>
+      <id>314</id>
       <label>Description</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -80,18 +80,18 @@
       <seq>7</seq>
       <configuration></configuration>
     </property>
-    <property name="paid">
-      <id>1895</id>
-      <label>Paid</label>
+    <property name="conversion">
+      <id>315</id>
+      <label>Conversion</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
-      <source>xar_amazonfps_payments.paid</source>
+      <source>xar_amazonfps_payments.conversion</source>
       <status>65</status>
       <seq>8</seq>
       <configuration></configuration>
     </property>
     <property name="success_url">
-      <id>1896</id>
+      <id>316</id>
       <label>Success URL</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -101,7 +101,7 @@
       <configuration></configuration>
     </property>
     <property name="transactionid">
-      <id>1885</id>
+      <id>317</id>
       <label>Amazon TransactionId</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -111,7 +111,7 @@
       <configuration></configuration>
     </property>
     <property name="transactionstatus">
-      <id>1886</id>
+      <id>318</id>
       <label>Amazon TransactionStatus</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -121,7 +121,7 @@
       <configuration></configuration>
     </property>
     <property name="requestid">
-      <id>1887</id>
+      <id>319</id>
       <label>Amazon RequestId</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -131,7 +131,7 @@
       <configuration></configuration>
     </property>
     <property name="paymentmethod">
-      <id>1888</id>
+      <id>320</id>
       <label>Amazon PaymentMethod</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>

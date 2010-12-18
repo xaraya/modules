@@ -76,7 +76,7 @@ function amazonfps_user_pay() {
 		$object->properties['transactionid']->setValue($result['TransactionId']);
 		$object->properties['transactionstatus']->setValue($result['TransactionStatus']);
 		$object->properties['requestid']->setValue($result['RequestId']);
-		$object->properties['paid']->setValue(1); // we've now successfully paid
+		$object->properties['conversion']->setValue(1); // checkout is complete
 		$object->updateItem();
 
 		xarResponse::redirect($success_url);

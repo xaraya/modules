@@ -21,26 +21,34 @@ require_once($modulepath . 'Amazon/IpnReturnUrlValidation/SignatureUtilsForOutbo
 function amazonfps_user_ipn() {
 
 	$data['missing'] = array();
+	
+	// Available post vars: transactionId, statusMessage, transactionDate, signatureVersion, signatureMethod, buyerEmail, notificationType, callerReference, operation, transactionAmount, transactionStatus, recipientEmail, buyerName, signature, recipientName, paymentMethod, certificateUrl, statusCode
 
-	// local (Xaraya) validation for params can be somewhat loose, as we'll do the real validation below with the validateRequest method
-	$params['transactionId'] = 'str:1:';
-    $params['transactionDate'] = 'int';
-    $params['status'] = 'str:1:';
-    $params['notificationType'] = 'str:1:';
-    $params['callerReference'] = 'str:1:';
-    $params['operation'] = 'str:1:';
-    $params['transactionAmount'] = 'str:1:';
-    $params['buyerName'] = 'str:1:';
-    $params['paymentMethod'] = 'str:1:';
-    $params['paymentReason'] = 'str:1:';
-    $params['recipientEmail'] = 'str:1:';
+	// Local (Xaraya) validation for params can be somewhat loose, as we'll do the real validation below with the validateRequest method.
+
+	// required
+	$params['paymentMethod'] = 'str:1:';
+	$params['statusCode'] = 'str:1:';
     $params['signatureMethod'] = 'str:1:';
     $params['signatureVersion'] = 'int';
     $params['certificateUrl'] = 'str:1:';
     $params["signature"] = "str:1:";
+	$params['callerReference'] = 'str:1:';
+
+	// not required?
+	$params['notificationType'] = 'str:1:';
+	$params['transactionId'] = 'str:1:';
+    $params['transactionDate'] = 'int';
+    $params['recipientEmail'] = 'str:1:';
+    $params['operation'] = 'str:1:';
+    $params['transactionAmount'] = 'str:1:';
+    $params['buyerName'] = 'str:1:';
 
 	foreach ($params as $key => $val) {
-		if (!xarVarFetch($key, $val, ${$key}, NULL, XARVAR_NOT_REQUIRED)) return;
+		if (!xarVarFetch($key, $val, ${$key}, NULL, XARVAR_POST_ONLY)) {
+			//mail('test@test.com','test',$key);
+			return;
+		}
 		if (!${$key}) {
 			$data['missing'][] = $key;
 		} else {
@@ -63,7 +71,7 @@ function amazonfps_user_ipn() {
 		$callerItemid = str_replace(trim(xarModVars::get('amazonfps','callerreference_prefix')), '', $callerReference);
 		
 		$object->getItem(array('itemid' => $callerItemid));
-		$object->properties['transactionstatus']->setValue($status);
+		$object->properties['transactionstatus']->setValue($statusCode);
 		$object->properties['paymentmethod']->setValue($paymentMethod);
 		$object->updateItem();
 

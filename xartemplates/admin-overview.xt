@@ -37,9 +37,10 @@ IPN ~ Instant Payment Notification
 <ul>
 	<li>Use the <strong>amazonfps_userapi_cbui</strong> function to send the buyer to the Amazon pipeline with the relevant product info.  <a href="#xarServer::getCurrentURL()###usage">See the Usage Example below</a>.</li>
 	<li>When the buyer is finished with their purchase, Amazon returns a tokenID and other data to this module's amazonfps_user_pay function.</li>
-	<li>The amazonfps_userapi_pay function then sends the token back to Amazon to finalize the payment.  At this point, the payment is complete and the Paid column for this payment in the <a href="#xarmodurl('amazonfps','admin','view')#">View Payments page</a> will say "Yes".</li>
+	<li>The amazonfps_userapi_pay function then sends the token back to Amazon to finalize the payment.  At this point, the payment is complete* and the Conversion column for this payment in the <a href="#xarmodurl('amazonfps','admin','view')#">View Payments page</a> will say "Yes".</li>
 	<li>Lastly, the buyer is redirected to a success page.  Note: You can specify the URL of this success page in your call to amazonfps_userapi_cbui.</li>
 </ul>
+<p>* This does not always mean the buyer's bank or credit card company has approved the payment yet.  There may be a processing delay of up to several days, and it's always possible the payment will be rejected.  If you've enabled IPN, as explained in the Amazon Resources section below, then the payment's display page will indicate whether the payment has been approved.</p>
 
 <h3>CallerReference Prefix</h3>
 
@@ -51,9 +52,11 @@ IPN ~ Instant Payment Notification
 
 <p>Filter widgets are available in the admin interface if you install the <a href="http://www.xaraya.com/index.php/release/eid/1154" target="new">filters module</a>&#160;<img src="code/modules/amazonfps/xarimages/exit.png" width="10" height="10" alt="leave this website" /> and enable it in the <a href="#xarmodurl('amazonfps','admin','modifyconfig')#">Modify Config page</a>.</p>
 
-<h3>Some Amazon Resources</h3>
+<h3>Amazon Resources</h3>
 
 <p><a href="http://aws.amazon.com/fps/">Sign up for Amazon FPS (Flexible Payment Service)</a>.</p>
+
+https://payments.amazon.com/sdui/sdui/business?sn=devfps/o
 
 <p>Once you have signed up for FPS and have your keys, you'll need to enter them in the <a href="#xarmodurl('amazonfps','admin','modifyconfig')#">Modify Config page</a>.</p>
 

@@ -41,7 +41,7 @@ function amazonfps_init()
 						'amount' =>  array('type' => 'integer', 'unsigned' => true, 'null' =>		false),
 						'currency' => array('type' => 'varchar','size' => 254,'null' => false,		'charset' => $charset),
 						'description' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset),
-						'paid' => 	 array('type'        => 'boolean', 'default'     => false),
+						'conversion' => 	 array('type'        => 'boolean', 'default'     => false),
 						'success_url' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset),
 						'transactionid' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset),
 						'transactionstatus' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset),
