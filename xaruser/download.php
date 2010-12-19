@@ -43,8 +43,7 @@ function uploads_user_download()
             if (empty($rawfunction)) $permitted = false;
             $funcparts = explode('_',$rawfunction);
             try {
-                $allowedusers = xarMod::apiFunc($funcparts[0],$funcparts[1],$funcparts[2]);
-                $permitted = in_array(xarSession::getVar('role_id'), $allowedusers) ? true : false;
+                $permitted = xarMod::apiFunc($funcparts[0],$funcparts[1],$funcparts[2]);
             } catch (Exception $e) {
                 $permitted = false;
             }
