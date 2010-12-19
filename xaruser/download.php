@@ -43,7 +43,7 @@ function uploads_user_download()
             if (empty($rawfunction)) $permitted = false;
             $funcparts = explode('_',$rawfunction);
             try {
-                $permitted = xarMod::apiFunc($funcparts[0],$funcparts[1],$funcparts[2]);
+                $permitted = xarMod::apiFunc($funcparts[0],$funcparts[1],$funcparts[2],array('fileInfo' => $fileInfo));
             } catch (Exception $e) {
                 $permitted = false;
             }
