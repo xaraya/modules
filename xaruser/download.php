@@ -41,7 +41,7 @@ function uploads_user_download()
         case 2:
             $rawfunction = xarModVars::get('uploads', 'permit_download_function');
             if (empty($rawfunction)) $permitted = false;
-            $funcparts = explode('_',$rawfunction);
+            $funcparts = explode(',',$rawfunction);
             try {
                 $permitted = xarMod::apiFunc($funcparts[0],$funcparts[1],$funcparts[2],array('fileInfo' => $fileInfo));
             } catch (Exception $e) {
