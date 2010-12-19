@@ -47,7 +47,6 @@ function uploads_user_download()
             } catch (Exception $e) {
                 $permitted = false;
             }
-            $permitted = $fileInfo['userId'] == xarSession::getVar('role_id') ? true : false;
         break;
         // All files
         case 3:
