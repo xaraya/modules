@@ -33,8 +33,21 @@ function uploads_user_download()
         case 0:
             $permitted = false;
         break;
-        // Owned files only
+        // Personally files only
         case 1:
+            $permitted = $fileInfo['userId'] == xarSession::getVar('role_id') ? true : false;
+        break;
+        // Group files only
+        case 2:
+            $rawfunction = xarModVars::get('uploads', 'permit_download_function');
+            if (empty($rawfunction)) $permitted = false;
+            $funcparts = explode('_',$rawfunction);
+            try {
+                $allowedusers = xarMod::apiFunc($funcparts[0],$funcparts[1],$funcparts[2]);
+                $permitted = in_array(xarSession::getVar('role_id'), $allowedusers) ? true : false;
+            } catch (Exception $e) {
+                $permitted = false;
+            }
             $permitted = $fileInfo['userId'] == xarSession::getVar('role_id') ? true : false;
         break;
         // All files

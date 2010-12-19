@@ -335,6 +335,7 @@ function uploads_upgrade($oldversion)
             xarModVars::set('uploads', 'dd.fileupload.upload',   TRUE);
 
             xarModVars::set('uploads', 'permit_download',  3);
+            xarModVars::set('uploads', 'permit_download_function',  1);
 
             $data['filters']['inverse']                     = FALSE;
             $data['filters']['mimetypes'][0]['typeId']      = 0;

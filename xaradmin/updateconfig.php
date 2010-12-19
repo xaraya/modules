@@ -23,11 +23,13 @@ function uploads_admin_updateconfig()
     if (!xarVarFetch('view',   'list:str:1:', $view,   '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ddprop', 'array:1:',    $ddprop, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('permit_download', 'int',    $permit_download, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('permit_download_function', 'str',    $permit_download_function, '', XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
 
     xarModVars::set('uploads', 'permit_download',  $permit_download);
+    xarModVars::set('uploads', 'permit_download_function',  $permit_download_function);
 
     if (isset($file) && is_array($file)) {
         foreach ($file as $varname => $value) {
