@@ -52,7 +52,7 @@
             </xar:if>
         </div>
         <div class="xar-floatright xar-padding-thick xar-halfwidth xar-align-right" style="padding-top:1em;">
-            <xar:sec mask="AddListings" catch="false">
+            <xar:sec mask="AddNailer" catch="false">
                 <xar:set name="returnurl">xarModURL('listings','user','view')</xar:set>
                 <a style="font-weight:bold;" href ="#xarModURL('mailer','admin','new',array('name'=> $objectname, 'tplmodule'=> $module))#">Add A New Item</a>
             </xar:sec>

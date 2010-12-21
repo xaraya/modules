@@ -5,7 +5,7 @@
             Action
         </th>
      </xar:if>
-     <xar:if condition="xarUserIsLoggedIn() AND xarSecurityCheck('DeleteListings',0)">
+     <xar:if condition="xarUserIsLoggedIn() AND xarSecurityCheck('DeleteMailer',0)">
          <th width="5%" style="text-align: center;">
             Option
          </th>

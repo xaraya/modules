@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <tr class="#$item_class#">
-        <xar:template file="listingslist_rowprefix" module="$module,listings"/>
+        <xar:template file="listing_rowprefix" module="$module" property="listing"/>
         <xar:foreach in="$fields" key="$field">
             <xar:set name="value">$loopitem[$field]</xar:set>
             <xar:set name="column">$columns[$field]</xar:set>
@@ -14,12 +14,12 @@
                 </td>
             <xar:else />
                 <td>
-                    <xar:if condition="xarUserIsLoggedIn() AND $field eq $keyfieldalias AND xarSecurityCheck('EditListings',0)">
+                    <xar:if condition="xarUserIsLoggedIn() AND $field eq $keyfieldalias AND xarSecurityCheck('EditNailer',0)">
                         <a href="#xarModURL('mailer','admin','modify',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname,'tplmodule' => $module))#">
                             <xar:data-output property="$properties[$column]" value="$value"/>
                         </a>
                     <xar:else />
-                        <xar:if condition="$field eq $keyfieldalias AND xarSecurityCheck('ReadListings',0)">
+                        <xar:if condition="$field eq $keyfieldalias AND xarSecurityCheck('ReadNailer',0)">
                             <a href="#xarModURL('dynamicdata','user','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $module))#">
                                 <xar:data-output property="$properties[$column]" value="$value"/>
                             </a>
@@ -35,6 +35,6 @@
                 <a href="#xarModURL('mailer','admin','view_mailer',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $module))#">View</a>
             </td>
         </xar:if>
-        <xar:template file="listingslist_rowsuffix" module="$module,listings"/>
+        <xar:template file="listing_rowsuffix" module="$module" property="listing"/>
     </tr>
 </xar:template>

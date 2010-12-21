@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:style scope="module" module="base" file="navtabs"/>
+    <xar:style scope="module" module="base" file="tabs"/>
     <br />
-    <dl class="xar-tabs">
-        <dt class="help">
-            Applies to:
-        </dt>
+    <ul class="xar-tabs xar-alt xar-norm-outline">
         <xar:if condition="$tab eq 'mailer_general'">
-            <xar:set name="class">"active"</xar:set>
+            <xar:set name="class">"xar-tab-active"</xar:set>
         <xar:else/>
-            <xar:set name="class">""</xar:set>
+            <xar:set name="class">"xar-tab"</xar:set>
         </xar:if>
-        <dd class="#$class#">
+        <li class="#$class#">
             <a href="#xarModURL('mailer', 'admin', 'modifyconfig', array('tabmodule' => 'mailer', 'tab' => 'mailer_general'))#">
             General</a>
-        </dd>
+        </li>
         <xar:set name="tabs">$hooks['tabs']</xar:set>
         <xar:foreach in="$tabs" value="$thistab">
             <xar:set name="configtab">$thistab['module'] . "_" . $thistab['configarea']</xar:set>
@@ -29,5 +26,5 @@
                 </a>
             </dd>
         </xar:foreach>
-    </dl>
+    </ul>
 </xar:template>

@@ -30,9 +30,7 @@
     $modversion['class']          = 'Complete';
     $modversion['category']       = 'Content';
     $modversion['securityschema'] = array();
-    $modversion['dependency'] = array(30012, 30046);
+    $modversion['dependency'] = array();
     $modversion['dependencyinfo'] = array(
-                                          30012 => 'math',
-                                          30046 => 'listings',
                                           );
 ?>

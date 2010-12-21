@@ -155,14 +155,6 @@
     #
     # Set up hooks
     #
-        // This is a GUI hook for the roles module that enhances the roles profile page
-        if (!xarModRegisterHook('item', 'usermenu', 'GUI',
-                'mailer', 'user', 'usermenu')) {
-            return false;
-        }
-
-   /*     xarModAPIFunc('modules', 'admin', 'enablehooks',
-            array('callerModName' => 'mailer', 'hookModName' => 'mailer'));*/
 
         return true;
     }

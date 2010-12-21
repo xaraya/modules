@@ -20,7 +20,7 @@
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return array();
         } else {
-            xarResponse::redirect(xarModURL('mailer', 'admin', 'view'));
+            xarController::redirect(xarModURL('mailer', 'admin', 'view'));
         }
         // success
         return true;

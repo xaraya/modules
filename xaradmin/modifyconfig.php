@@ -96,7 +96,7 @@
                 }
                 foreach ($modvars as $var) if (isset($$var)) xarModItemVars::set('mailer', $var, $$var, $regid);
 
-                xarResponse::redirect(xarModURL('mailer', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+                xarController::redirect(xarModURL('mailer', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
                 // Return
                 return true;
                 break;
