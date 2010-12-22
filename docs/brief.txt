@@ -14,5 +14,7 @@ The Mailer module offers:
 
 4. Requirments:
 
-- Xaraya 2.2.0 or higher
-- Listing property
+- Xaraya 2.2.0 or higher (required)
+- Listing property (recommended)
+- Datetime property (recommended)
+- CodeMirror property (recommended)

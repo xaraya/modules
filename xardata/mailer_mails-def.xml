@@ -83,7 +83,7 @@
     <property name="body">
       <id>217</id>
       <label>Body</label>
-      <type>static</type>
+      <type>codemirror</type>
       <defaultvalue></defaultvalue>
       <source>xar_mailer_mails.body</source>
       <status>34</status>
