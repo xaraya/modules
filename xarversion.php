@@ -1,5 +1,5 @@
 <?php
-/**
+/** 
  * Mailer Module
  *
  * @package modules
