@@ -44,7 +44,7 @@
     <property name="created">
       <id>1063</id>
       <label>Created</label>
-      <type>formatteddatetime</type>
+      <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>xar_mailer_headers.timecreated</source>
       <status>65</status>

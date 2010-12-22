@@ -2,7 +2,7 @@
   <mailer_headers itemid="1">
     <id>1</id>
     <name>Test Header</name>
-    <body>This is the default header text for messages sent by the mailer module.-----------------------------------------------------------------------
+    <body>This is the default header text for messages sent by the mailer module.\n-----------------------------------------------------------------------
     </body>
     <created>1232012708</created>
   </mailer_headers>

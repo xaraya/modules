@@ -6,12 +6,22 @@
             <xar:if condition="xarModVars::get('mailer','useModuleAlias')">
                 <xar:var scope="module" module="mailer" name="aliasname"/>
             <xar:else />
-                Display Item
+                Display Mail: #$fields['name']#
             </xar:if>
         </span>
     </div>
     <div class="xar-mod-body">
-        <h2><xar:data-label object="$object"/></h2>
-        <xar:data-display object="$object"/>
+        <xar:if condition="$object->name eq 'mailer_mails'">
+            <h2>#$mail['subject']#</h2>
+            <xar:if condition="$mail['mail_type'] eq 'html'">
+                <fieldset>#$mail['message']#</fieldset>
+            <xar:else/>
+                <pre>#$mail['message']#</pre>
+            </xar:if>
+        <xar:else/>
+            <h2>#$fields['name']#</h2>
+            <xar:data-display object="$object"/>
+        </xar:if>
+
     </div>
 </xar:template>

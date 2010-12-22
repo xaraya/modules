@@ -23,7 +23,7 @@
     <name>Second Test Email (BL)</name>
     <sender_name></sender_name>
     <sender_address></sender_address>
-    <subject>Mailer Module Test Email</subject>
+    <subject>Mailer Module Test Email (BL)</subject>
     <header>2</header>
     <body>This email uses Blocklayout tags for layout&lt;xar:br /&gt;
 &lt;xar:br /&gt;

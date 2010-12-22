@@ -1,62 +1,38 @@
 <?php
 /**
- * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * Mailer Module
  *
- * @subpackage shop Module
- * @link http://www.xaraya.com/index.php/release/eid/1031
- * @author potion <ryan@webcommunicate.net>
+ * @package modules
+ * @subpackage mailer module
+ * @copyright (C) 2010 Netspan AG
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
- * Display an item
+ * Modify an item of the mailer object
+ *
  */
-function shop_user_display($args)
-{
-
-    if(!xarVarFetch('itemid',   'id', $itemid,   NULL, XARVAR_DONT_SET)) {return;} 
-
-    extract($args);
-
-    if (!empty($objectid)) {
-        $itemid = $objectid;
-    }
-
-    if (empty($itemid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'item id', 'user', 'display', 'shop');
-        throw new Exception($msg);
-    }
-
-// Make sure user has read privileges for the item
-    if (!xarSecurityCheck('ReadShop',1,'Item',$itemid)) return;
-
-  // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
-    // Get the object definition we'll be working with
-    $object = DataObjectMaster::getObject(array('name' => 'shop_products'));
+    
+    function mailer_user_display()
+    {
+        if (!xarSecurityCheck('ReadMailer')) return;
 
-    $data['object'] = $object;
+        if (!xarVarFetch('name',       'str',    $name,            'mailer_mailer', XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
 
-    //We don't really have the item until we call getItem()
-    $some_id = $object->getItem(array('itemid' => $itemid));
+        $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+        $data['tplmodule'] = 'mailer';
 
-    //Make sure we got something
-    if (!isset($some_id) || $some_id != $itemid) return;
-
-    //Get the property names and values for the item with the getFieldValues() method
-    $values = $object->getFieldValues();
-
-    $data['itemid'] = $itemid;
+        if (xarModIsAvailable('realms')) {
+            $userrealmid = xarModAPIfunc('realms', 'admin', 'getrealmid');
+            $realmid = xarModAPIfunc('realms', 'admin', 'getrealmid', array('itemid' => $data['itemid'], 'tablename' => 'mailer_mails'));
+            if($userrealmid != 0 && $userrealmid != $realmid) return;
+        }
         
-    //$values is an associative array of property names and values, so...
-    foreach ($values as $name => $value) {
-        $data[$name] = xarVarPrepForDisplay($value);
+        $data['object']->getItem(array('itemid' => $data['itemid']));
+        $data['fields'] = $data['object']->getFieldValues();
+        $data['mail'] = xarMod::apiFunc('mailer','user','prepare',array('id' => $data['itemid']));
+        return $data;
     }
-
-    return xarTplModule('shop','user','product', $data);
-
-}
-
 ?>

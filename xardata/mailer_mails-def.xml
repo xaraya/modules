@@ -173,7 +173,7 @@
     <property name="created">
       <id>226</id>
       <label>Created</label>
-      <type>formatteddatetime</type>
+      <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>xar_mailer_mails.timecreated</source>
       <status>66</status>
@@ -183,7 +183,7 @@
     <property name="modified">
       <id>227</id>
       <label>Modified</label>
-      <type>formatteddatetime</type>
+      <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>xar_mailer_mails.timemodified</source>
       <status>65</status>
