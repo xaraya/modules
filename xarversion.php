@@ -13,7 +13,7 @@
  **/
 $modversion['name']         = 'path';
 $modversion['id']           = '1038';
-$modversion['version']      = '0.7.2';
+$modversion['version']      = '0.7.3';
 $modversion['displayname']  = xarML('Path');
 $modversion['description']  = 'Path';
 $modversion['credits']      = 'xardocs/credits.txt';
@@ -27,4 +27,7 @@ $modversion['admin']        = true;
 $modversion['user']         = true;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
+$modversion['dependencyinfo'] = array(
+		0 => array('name' => 'core', 'version_ge' => '2.1.0')
+	);
 ?>
