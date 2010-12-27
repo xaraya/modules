@@ -32,7 +32,7 @@ function uploads_user_download()
         try {
             $result = xarModAPIFunc('uploads', 'user', 'file_push', $fileInfo);
         } catch (Exception $e) {
-            return false;
+            return xarTplModule('uploads','user','errors',array('layout' => 'not_accessible'));
         }
 
         // Let any hooked modules know that we've just pushed a file

@@ -26,7 +26,7 @@
                 </div>
             <xar:elseif condition="$layout eq 'not_accessible'"/>
                 <div style="margin-top: 20px">
-                    The file ou requested is not available.
+                    The file you requested is not available.
                 </div>
             <xar:elseif condition="$layout eq 'no_permission'"/>
                 <div style="margin-top: 20px">
