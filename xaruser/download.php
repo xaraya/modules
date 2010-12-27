@@ -29,7 +29,11 @@ function uploads_user_download()
     
         $fileInfo = xarVarGetCached('Uploads.downloads',$fileName);
         
-        $result = xarModAPIFunc('uploads', 'user', 'file_push', $fileInfo);
+        try {
+            $result = xarModAPIFunc('uploads', 'user', 'file_push', $fileInfo);
+        } catch (Exception $e) {
+            return false;
+        }
 
         // Let any hooked modules know that we've just pushed a file
         // the hitcount module in particular needs to know to save the fact
@@ -121,7 +125,7 @@ function uploads_user_download()
             exit();
     
         } else {
-            return FALSE;
+            return false;
         }
     }
 }
