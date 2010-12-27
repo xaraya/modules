@@ -163,8 +163,8 @@ class CelkoPositionProperty extends DataProperty
           }
 
           // TODO: besided portability, also check performance here
-          $SQLquery = "UPDATE " . $this->initialization_itemstable . " SET
-                       left_id = CASE
+          $SQLquery = "UPDATE " . $this->initialization_itemstable . " SET ".
+                       $this->initialization_celkoleft_id ." = CASE
                         WHEN " . $this->initialization_celkoright_id . " BETWEEN ".$cat['left_id']." AND ".$cat['right_id']."
                            THEN " . $this->initialization_celkoleft_id . " + ($distance)
                         WHEN " . $this->initialization_celkoleft_id . " BETWEEN $between_string
@@ -197,6 +197,7 @@ class CelkoPositionProperty extends DataProperty
                        " SET " . $this->initialization_celkoparent_id . " = ?
                        WHERE id = ?";
         $result = $dbconn->Execute($SQLquery,array($parent_id, $itemid));
+        
         if (!$result) return;
 
        } 

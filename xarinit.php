@@ -35,8 +35,7 @@ function categories_init()
     $prefix = xarDB::getPrefix();
 
     $fields = array(
-        'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-//        'id'         => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
+        'id'          => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
         'name'        => array('type'=>'varchar','size'=>64,'null'=>false),
         'description' => array('type'=>'varchar','size'=>255,'null'=>false),
         'image'       => array('type'=>'varchar','size'=>255,'null'=>false),
@@ -130,6 +129,7 @@ function categories_init()
     # --------------------------------------------------
 
     /* Don't implement for now
+    sys::import('xaraya.structures.query');
     $q = new Query();
     $query = "DROP TABLE IF EXISTS " . $prefix . "_categories_linkage_summary";
     if (!$q->run($query)) return;

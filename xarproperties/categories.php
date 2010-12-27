@@ -245,7 +245,7 @@ class CategoriesProperty extends DataProperty
             $data['categories_localmodule'] = $data['module'];
             unset($data['module']);
         }
-        
+
         if (!isset($data['itemtype'])) {
             if (!empty($this->localitemtype)) {
                 $data['categories_localitemtype'] = $this->localitemtype;

@@ -31,7 +31,7 @@ function categories_admin_update()
     }
 
     $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
-    xarResponse::redirect(xarModURL('categories','admin','modify',array('itemid' => $itemid)));
+    xarController::redirect(xarModURL('categories','admin','modify',array('itemid' => $itemid)));
     return true;
 }
 ?>

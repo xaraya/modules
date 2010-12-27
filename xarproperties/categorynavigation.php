@@ -52,7 +52,8 @@ class CategoryNavigationProperty extends SelectProperty
 
     public function showInput(Array $data = array())
     {
-        return parent::showInput($data);
+        // No real input here
+        return $this->showOutput($data);
     }
 
     public function showOutput(Array $data = array())
