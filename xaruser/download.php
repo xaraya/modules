@@ -27,7 +27,7 @@ function uploads_user_download()
     
     if (!empty($fileName)) {
     
-        $fileInfo = xarVarGetCached('Uploads.downloads',$fileName);
+        $fileInfo = xarSession::getVar($fileName);
         
         try {
             $result = xarModAPIFunc('uploads', 'user', 'file_push', $fileInfo);
