@@ -56,18 +56,18 @@
         <div class="xar-cm-comment xar-accent">
             <xar:if condition="isset($package['transformed-text'])">
                 #$package['transformed-text']#
-                <p>
+                <div class="permalink">
                     <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('objecturl')#" rel="bookmark">
                         #
                     </a>
-                </p>
+                </div>
                 <xar:else />
                 #$loop:item['text']#
-                <p>
+                <div class="permalink">
                     <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('objecturl')#" rel="bookmark">
                         #
                     </a>
-                </p>
+                </div>
                 <xar:if condition="isset($loop:item['branchout']) and $loop:item['branchout'] eq 1">
                     <br />
                     <a href=""> #$loop:item['nested_text']# </a>&#160;
