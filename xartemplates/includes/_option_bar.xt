@@ -225,9 +225,9 @@
                     <input type="hidden" id="header-id" name="header[id]" value="#$header['id']#"/>
                     <input type="hidden" id="header-branchout" name="header[branchout]" value="#$header['branchout']#"/>
                 </xar:if>
-                <xar:comment><input type="hidden" id="receipt-returnurl-encoded" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#"/>
+                <!--<input type="hidden" id="receipt-returnurl-encoded" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#"/>
                 <input type="hidden" id="receipt-returnurl-decoded" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#"/>
-                </xar:comment><input type="submit" value="#xarML('Refresh')#"/>
+                 --><input type="submit" value="#xarML('Refresh')#"/>
             </div>
         </form>
     </div>
