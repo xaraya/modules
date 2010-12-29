@@ -156,8 +156,8 @@ function comments_init()
 #
 # Set up modvars
 #
-    xarModVars::set('comments','render',_COM_VIEW_THREADED);
-    xarModVars::set('comments','sortby',_COM_SORTBY_THREAD);
+    xarModVars::set('comments','render',_COM_VIEW_FLAT);
+    xarModVars::set('comments','sortby',_COM_SORTBY_DATE);
     xarModVars::set('comments','order',_COM_SORT_ASC);
     xarModVars::set('comments','depth', _COM_MAX_DEPTH);
     xarModVars::set('comments','AllowPostAsAnon',1);

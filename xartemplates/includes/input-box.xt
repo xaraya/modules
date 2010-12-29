@@ -3,7 +3,9 @@
     <xar:comment> for this module specific css rules look at comments/xarstyles/comments.css file [andyv] </xar:comment>
     <script type="text/javascript" src="modules/base/xartemplates/includes/submitonce.js"></script>
     <xar:sec mask="ReplyComments" catch="false">
-      <h3>#$header['input-title']#</h3> 
+ <div id="comment_input_box">
+ <a name="comment" id="comment_anchor">&amp;#160;</a>
+<h3>#$header['input-title']#</h3> 
 <!--      <form action="#$receipt['post_url']#" method="post" name="post" id="post" onSubmit="submitonce(this)" #$hooks['formaction']# >-->
       <form action="#$receipt['post_url']#" method="post" name="post" id="post" onSubmit="submitonce(this)">
         <div class="xar-ib-wrapper xar-accent-outline">
@@ -69,7 +71,7 @@
               <xar:if condition="isset($package['text'])">
                 <textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2">#$package['text']#</textarea>
               <xar:else />
-                <textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2">&#160;</textarea>
+                <textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2"></textarea>
               </xar:if>
               <!-- TODO: show item new/modify hook here somehow
                 <xar:if condition="!empty($hooks['iteminput'])">
@@ -161,7 +163,7 @@
               <xar:if condition="isset($package['text'])">
                 <textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2">#$package['text']#</textarea>
               <xar:else />
-                <textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2">&#160;</textarea>
+                <textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2"></textarea>
               </xar:if>
               <!-- TODO: show item new/modify hook here somehow
                 <xar:if condition="!empty($hooks['iteminput'])">
@@ -196,5 +198,6 @@
           </xar:if>
         </div>
       </form>
+     </div>
     </xar:sec>
 </xar:template>

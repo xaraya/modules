@@ -54,14 +54,18 @@ function comments_user_reply()
     switch (strtolower($receipt['action'])) {
         case 'submit':
             if (empty($package['title'])) {
-                $msg = xarML('Missing [#(1)] field on new #(2)','title','comment');
-                throw new BadParameterException($msg);
+				//something to click on in the threaded template
+                $package['title'] = 'no title'; 
             }
 			xarVarFetch('id', 'int:1:', $id, 0, XARVAR_NOT_REQUIRED);
+			
+			$package['text'] = trim($package['text']); 
 
             if (empty($package['text'])) {
-                $msg = xarML('Missing [#(1)] field on new #(2)','body','comment');
-                throw new BadParameterException($msg);
+                /*$msg = xarML('Missing [#(1)] field on new #(2)','body','comment');
+                throw new BadParameterException($msg);*/
+				xarResponse::redirect($data['objecturl'].'#comment');
+				return true;
             }
             // call transform input hooks
             // should we look at the title as well?

@@ -53,17 +53,18 @@ function comments_userapi_add($args)
         $pid = 0;
     }
 
-    if (!isset($title) || empty($title)) {
+	/*    
+	if (!isset($title) || empty($title)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                                  'title', 'userapi', 'add', 'comments');
         throw new BadParameterException($msg);
-    }
+    }*/
 
-    if (!isset($comment) || empty($comment)) {
+    /*if (!isset($comment) || empty($comment)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                                  'comment text', 'userapi', 'add', 'comments');
         throw new BadParameterException($msg);
-    }
+    }*/
 
     if (!isset($postanon) || empty($postanon)) {
         $postanon = 0;

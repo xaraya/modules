@@ -38,13 +38,13 @@
                 </xar:if>
             </xar:comment>
             <xar:if condition="$number_of_comments eq 0">
-                    <p>
+                    <p class="comments_display_msg">
                         <xar:mlstring>There are no comments attached to this item.</xar:mlstring>
                     </p>
                 <xar:if condition="!isset($header['selected_id'])">
                     <xar:template file="input-box" type="module"/>
                 <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
-                    <p>
+                    <p class="comments_display_msg">
                         <xar:mlstring>Return to</xar:mlstring>
                         <a href="#$header['objectlink']#">#$header['objecttitle']#</a>
                     </p>
@@ -63,14 +63,14 @@
                 <xar:if condition="!isset($header['selected_id'])">
                     <xar:template file="input-box" type="module"/>
                 <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
-                    <p>
+                    <p class="comments_display_msg">
                         <xar:mlstring>Return to</xar:mlstring>
                         <a href="#$header['objectlink']#">#$header['objecttitle']#</a>
                     </p>
                 </xar:if>
             </xar:if>
         <xar:else />
-            <p>
+            <p class="comments_display_msg">
                 <xar:mlstring>Comments display and submission are currently disabled.</xar:mlstring>
                 <xar:if condition="$number_of_comments ne 0">
                     <xar:mlstring>Total number of attached comments:</xar:mlstring> #$number_of_comments#
