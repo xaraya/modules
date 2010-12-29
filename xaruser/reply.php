@@ -56,7 +56,9 @@ function comments_user_reply()
 
 			xarVarFetch('id', 'int:1:', $id, 0, XARVAR_NOT_REQUIRED);
 			
-			$package['title'] = trim($package['title']);
+			if (isset($package['title'])) {
+				$package['title'] = trim($package['title']);
+			}
 			$package['text'] = trim($package['text']); 
 
             if (empty($package['text'])) {
@@ -77,20 +79,24 @@ function comments_user_reply()
 				$status = _COM_STATUS_OFF;
 			}
 
-			$newid = xarMod::apiFunc('comments','user','add',
-									   array('modid'    => $header['modid'],
-											 'itemtype' => $header['itemtype'],
-											 'objectid' => $header['objectid'],
-											 'pid'      => $header['pid'],
-											 'comment'  => $package['text'],
-											 'title'    => $package['title'],
-											 'postanon' => $package['postanon'],
-											'objecturl' => $data['objecturl'],
-											 'status' => $status
-			));  
+			$args = array();
+			$args['modid'] = $header['modid'];
+			$args['itemtype'] =  $header['itemtype'];
+			$args['objectid'] =  $header['objectid'];
+			$args['pid'] = $header['pid'];
+			$args['comment'] = $package['text'];
+			if (!isset($package['title'])) {
+				$args['title'] = '';
+			}
+			$args['postanon'] =  $package['postanon'];
+			$args['objecturl'] =  $data['objecturl'];
+			$args['status'] = $status;
+
+			$newid = xarMod::apiFunc('comments','user','add', $args);  
 
             xarResponse::redirect($data['objecturl'].'#'.$newid);
             return true;
+
         case 'reply':
 
             $comments = xarMod::apiFunc('comments','user','get_one',
