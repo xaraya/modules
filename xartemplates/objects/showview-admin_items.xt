@@ -52,7 +52,9 @@
             <xar:foreach in="$items" key="$id" value="$fields">
                 <tr>
                     <xar:foreach in="$properties" key="$name">
-                        <xar:if condition="empty($fields[$name]) and $fields[$name] nd '0'">
+                        <xar:if condition="$name eq 'title' and empty($fields['title'])">
+			    <td valign="top"><xar:mlstring>no title</xar:mlstring></td>
+			<xar:elseif condition="empty($fields[$name]) and $fields[$name] nd '0'" />
                             <td valign="top">&amp;nbsp;</td>
                         <xar:elseif condition="!empty($linkfield) and $linkfield eq $name"/>
                             <td valign="top"><a href="#$links[$id]['display']['olink']#"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></a></td>
@@ -68,11 +70,10 @@
 </xar:if>   
 
 <xar:if condition="xarSecurityCheck('DeleteComments',0)"> 
-	&amp;nbsp;  <a href="#xarModURL('comments','admin','delete', array('id' => $id, 'dtype' => 'object', 'modid' => $fields['modid'], 'objectid' => $fields['objectid'],'itemtype' => $fields['itemtype']))#"><img src="#sys::code()#modules/base/xarimages/icons/delete.png" width="16" height="16" alt="Delete" /></a>
+	&#160;  <a href="#xarModURL('comments','admin','delete', array('id' => $id, 'dtype' => 'object', 'modid' => $fields['modid'], 'objectid' => $fields['objectid'],'itemtype' => $fields['itemtype']))#"><img src="#sys::code()#modules/base/xarimages/icons/delete.png" width="16" height="16" alt="Delete" /></a>
 </xar:if>
 
-
-&amp;nbsp;  <a href="#$fields['objecturl']####$id#"><img src="#sys::code()#modules/base/xarimages/icons/display.png" width="16" height="16" alt="Display" /></a>
+&#160;  <a href="#$fields['objecturl']####$id#"><img src="#sys::code()#modules/base/xarimages/icons/display.png" width="16" height="16" alt="Display" /></a>
                         </td>
                     </xar:if>
                 </tr>

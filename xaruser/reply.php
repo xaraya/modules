@@ -53,12 +53,10 @@ function comments_user_reply()
 
     switch (strtolower($receipt['action'])) {
         case 'submit':
-            if (empty($package['title'])) {
-				//something to click on in the threaded template
-                $package['title'] = 'no title'; 
-            }
+
 			xarVarFetch('id', 'int:1:', $id, 0, XARVAR_NOT_REQUIRED);
 			
+			$package['title'] = trim($package['title']);
 			$package['text'] = trim($package['text']); 
 
             if (empty($package['text'])) {

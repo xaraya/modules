@@ -4,15 +4,8 @@
 .permalink {
 margin: 8px 0 0 0;
 }
-
-fieldset.mod_settings, div#mod_settings fieldset {
-	border-bottom: 1px solid #ccc;
-	padding-bottom: 15px;
-	margin-bottom: 7px;
-	border-top: none;
-} 
-fieldset#mod_settings_last {
-	border-bottom: 1px solid transparent; 
+a.planchor {
+display: none;
 }
 
 #info_msg {
@@ -51,7 +44,8 @@ fieldset#mod_settings_last {
 /*     font-size: 10px; */
     line-height: 110%;
     margin-bottom: .15em;
-    padding: .5em;
+    padding-top: .5em;
+	padding-bottom: .5em;
 }
 
 .xar-cm-comment p {
