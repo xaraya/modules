@@ -8,9 +8,9 @@
             <xar:template file="action_buttons"/>
         
             <xar:if condition="isset($package['transformed-title'])">
-                <h4>#$package['transformed-title']#</h4><a name="comment#$loop:item['id']#" class="anchor">&#160;</a>
+                <h4>#$package['transformed-title']#</h4><a name="comment#$loop:item['id']#" class="anchor">&amp;nbsp;</a>
             <xar:else />
-                <h4>#$loop:item['title']#</h4><a name="comment#$loop:item['id']#" class="anchor">&#160;</a>
+                <h4>#$loop:item['title']#</h4><a name="comment#$loop:item['id']#" class="anchor">&amp;nbsp;</a>
             </xar:if>
             <!-- show changelog -->
             <xar:sec mask="ModerateComments" catch="false">
@@ -70,7 +70,7 @@
                 </div>
                 <xar:if condition="isset($loop:item['branchout']) and $loop:item['branchout'] eq 1">
                     <br />
-                    <a href=""> #$loop:item['nested_text']# </a>&#160;
+                    <a href=""> #$loop:item['nested_text']# </a>&amp;nbsp;
                 </xar:if>
             </xar:if>
         </div>

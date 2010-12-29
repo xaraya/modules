@@ -42,7 +42,7 @@
                 </xar:foreach>
                 <xar:if condition="empty($linkfield)">
                     <th>
-                        &#160;
+                        &amp;nbsp;
                     </th>
                 </xar:if>
             </tr>
@@ -53,7 +53,7 @@
                 <tr>
                     <xar:foreach in="$properties" key="$name">
                         <xar:if condition="empty($fields[$name]) and $fields[$name] nd '0'">
-                            <td valign="top">&#160;</td>
+                            <td valign="top">&amp;nbsp;</td>
                         <xar:elseif condition="!empty($linkfield) and $linkfield eq $name"/>
                             <td valign="top"><a href="#$links[$id]['display']['olink']#"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></a></td>
                         <xar:else />

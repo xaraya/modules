@@ -21,7 +21,7 @@
                       <xar:if condition="isset($loop:item['text'])">
                         <a href="#" id="collapser" name="collapser" onclick="document.getElementById('#$loop:item['id']#').style.display = (document.getElementById('#$loop:item['id']#').style.display == 'block') ? 'none' : 'block'; return false;" title="#xarML('Toggle the full view of comment..')#">
                             #$loop:item['title']#
-                        </a><a name="comment#$loop:item['id']#" class="anchor">&#160;</a>
+                        </a><a name="comment#$loop:item['id']#" class="anchor">&amp;nbsp;</a>
                       <xar:elseif condition="!empty($receipt['directurl'])"/>
                           <a href="#xarModURL('comments','user','display',array('id' => $loop:item['id']))#"> #$loop:item['title']# </a>
                       <xar:else/>
@@ -85,7 +85,7 @@
     <!-- FIXME: nested if's don't seem right here  -->
                         <xar:if condition="isset($loop:item['branchout']) and $loop:item['branchout'] eq 1">
                             <br />
-                            <a href=""> #$loop:item['nested_text']# </a>&#160;
+                            <a href=""> #$loop:item['nested_text']# </a>&amp;nbsp;
                         </xar:if>
                     </xar:if>
                     <!-- show changelog -->
@@ -117,7 +117,7 @@
                       <xar:if condition="isset($loop:item['text'])">
                         <a href="#" id="collapser" name="collapser" onclick="document.getElementById('#$loop:item['id']#').style.display = (document.getElementById('#$loop:item['id']#').style.display == 'block') ? 'none' : 'block'; return false;" title="#xarML('Toggle the full view of comment..')#">
                             #$loop:item['title']#
-                        </a><a name="comment#$loop:item['id']#" class="anchor">&#160;</a>
+                        </a><a name="comment#$loop:item['id']#" class="anchor">&amp;nbsp;</a>
                       <xar:elseif condition="!empty($receipt['directurl'])"/>
                           <a href="#xarModURL('comments','user','display',array('id' => $loop:item['id']))#"> #$loop:item['title']# </a>
                       <xar:else/>
@@ -183,7 +183,7 @@
     <!-- FIXME: nested if's don't seem right here  -->
                         <xar:if condition="isset($loop:item['branchout']) and $loop:item['branchout'] eq 1">
                             <br />
-                            <a href=""> #$loop:item['nested_text']#</a>&#160;
+                            <a href=""> #$loop:item['nested_text']#</a>&amp;nbsp;
                         </xar:if>
                     </xar:if>
                     <!-- show changelog -->

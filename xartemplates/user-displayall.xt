@@ -4,7 +4,7 @@
 <!-- DISPLAY WHERE THE COMMENTS ARE COMING FROM  -->
   <span class="xar-title">
     <xar:mlstring>Showing comments n.</xar:mlstring>
-    &#160;#$first# - #$first+$howmany-1#&#160;
+    &amp;nbsp;#$first# - #$first+$howmany-1#&amp;nbsp;
     <xar:if condition="$modarray[0]!='all'">
       <xar:mlstring>from</xar:mlstring>
       <xar:foreach in="$modarray" key="$i">
@@ -131,7 +131,7 @@
             <option value="DESC"><xar:mlstring>Descending</xar:mlstring></option>
           </xar:if>
         </select> <xar:mlstring>date</xar:mlstring>
-        &#160;&#160;
+        &amp;nbsp;&amp;nbsp;
         <input type="submit" value="#xarML('Refresh')#"/>
         <br />
       </form>

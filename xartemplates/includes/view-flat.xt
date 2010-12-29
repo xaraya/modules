@@ -3,15 +3,18 @@
      <xar:loop name="$package['comments']">
         <div class="xar-accent-outline xar-cm-comment">
         <div>
-             <a name="#$loop:item['id']#"></a>
+             <a name="#$loop:item['id']#">&amp;nbsp;</a>
                 <xar:set name="item">#$loop:item#</xar:set>
                 <xar:template file="action_buttons"/>
 
                 <xar:if condition="isset($package['transformed-title'])">
-                    <h4>#$package['transformed-title']#</h4><a name="comment#$loop:item['id']#" class="anchor">&#160;</a>
-                    <xar:else />
-                    <h4>#$loop:item['title']#</h4><a name="comment#$loop:item['id']#" class="anchor">&#160;</a>
+                    <h4>#$package['transformed-title']#</h4>
+                <xar:else />
+                    <h4>#$loop:item['title']#</h4>
                 </xar:if>
+		
+		<a name="comment#$loop:item['id']#" class="anchor">&amp;nbsp;</a>
+
                 <!-- show changelog -->
                 <xar:sec mask="ModerateComments" catch="false">
                 <xar:if condition="xarModIsHooked('changelog','comments')">
@@ -70,7 +73,7 @@
                     <xar:if condition="isset($loop:item['branchout']) and $loop:item['branchout'] eq 1">
     <!--                     <br /> -->
                         <a href=""> #$loop:item['nested_text']# </a>
-                        &#160;
+                         
                     </xar:if>
                 </xar:if>
 

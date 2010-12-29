@@ -30,8 +30,8 @@
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                 <input type="hidden" name="id" id="id" value="#$id#" />
                 <input type="hidden" name="confirm" id="confirm" value="true" /> 
-                &#160;&#160;&#160;
-                <input type="submit" value="#xarML('Save and Edit')#" />&#160;
+                &amp;nbsp;&amp;nbsp;&amp;nbsp;
+                <input type="submit" value="#xarML('Save and Edit')#" />&amp;nbsp;
 		<input type="submit" value="#xarML('Save and Display')#" name="view" />
             </div>  
         </form>

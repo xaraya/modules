@@ -4,7 +4,7 @@
     <script type="text/javascript" src="modules/base/xartemplates/includes/submitonce.js"></script>
     <xar:sec mask="ReplyComments" catch="false">
  <div id="comment_input_box">
- <a name="comment" id="comment_anchor">&amp;#160;</a>
+ <a name="comment" id="comment_anchor">&amp;nbsp;</a>
 <h3>#$header['input-title']#</h3> 
 <!--      <form action="#$receipt['post_url']#" method="post" name="post" id="post" onSubmit="submitonce(this)" #$hooks['formaction']# >-->
       <form action="#$receipt['post_url']#" method="post" name="post" id="post" onSubmit="submitonce(this)">
