@@ -81,7 +81,7 @@ function logconfig_admin_update($args)
      }
 
     // let's go back to the admin view
-    xarResponseRedirect(xarModURL('logconfig', 'admin', 'view'));
+    xarController::redirect(xarModURL('logconfig', 'admin', 'view'));
 
     // Return
     return true;

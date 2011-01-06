@@ -79,7 +79,7 @@ function logconfig_admin_delete($args)
     $itemid = $object->deleteItem();
     if (empty($itemid)) return;
 
-    xarResponseRedirect(xarModURL('logconfig', 'admin', 'view'));
+    xarController::redirect(xarModURL('logconfig', 'admin', 'view'));
 
     // Return
     return true;

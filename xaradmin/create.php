@@ -50,7 +50,7 @@ function logconfig_admin_create($args)
         if (!xarModAPIFunc('logconfig','admin','saveconfig')) return;
      }
     // let's go back to the admin view
-    xarResponseRedirect(xarModURL('logconfig', 'admin', 'view'));
+    xarController::redirect(xarModURL('logconfig', 'admin', 'view'));
 
     // Return
     return true;

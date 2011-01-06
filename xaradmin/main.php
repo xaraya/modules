@@ -20,7 +20,7 @@ function logconfig_admin_main()
 
     $data = xarModAPIFunc('logconfig','admin','menu');
 
-    xarResponseRedirect(xarModURL('logconfig', 'admin', 'view'));
+    xarController::redirect(xarModURL('logconfig', 'admin', 'view'));
 
     // Return the template variables defined in this function
     return $data;
