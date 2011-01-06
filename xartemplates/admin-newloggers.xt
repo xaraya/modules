@@ -1,20 +1,23 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>LogConfig Administration</xar:mlstring></span></div>
-<xar:template file="menu" />
-
-<h2><xar:mlstring>Add a Logger</xar:mlstring></h2>
-<p></p>
-
-<table width="100%" border="1" cellspacing="0" cellpadding="4">
-    <tr>
-           <th align="center">Type</th>
-           <th align="center">Description</th>
-           <th align="center">Add</th>
-    </tr>
-     <xar:foreach in="$objects" key="$itemtype" value="$vars">
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>LogConfig Administration</xar:mlstring></span></div>
+    <xar:template file="menu" />
+    
+    <h2><xar:mlstring>Add a Logger</xar:mlstring></h2>
+    <p></p>
+    
+    <table width="100%" border="1" cellspacing="0" cellpadding="4">
         <tr>
-               <td align="center">#xarML($vars['type'])#</td>
-               <td align="center">#xarML($vars['description'])#</td>
-               <td align="center"><a href="#xarModURL('logconfig','admin','new',array('itemtype'=>$itemtype))#">Click here</a></td>
+               <th align="center">Type</th>
+               <th align="center">Description</th>
+               <th align="center">Add</th>
         </tr>
-    </xar:foreach>
-</table>
+         <xar:foreach in="$objects" key="$itemtype" value="$vars">
+            <tr>
+                   <td align="center">#xarML($vars['type'])#</td>
+                   <td align="center">#xarML($vars['description'])#</td>
+                   <td align="center"><a href="#xarModURL('logconfig','admin','new',array('itemtype'=>$itemtype))#">Click here</a></td>
+            </tr>
+        </xar:foreach>
+    </table>
+</xar:template>

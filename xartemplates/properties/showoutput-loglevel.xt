@@ -1,26 +1,29 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
-    <table>
-        <tr>
-            <th>Level</th>
-            <th>Status</th>
-        </tr>
-
-    <xar:foreach in="$options" value="$option" >
-        <tr>
-            <td>#$option#</td>
-            <td>
-                <xar:if condition="!isset($value[$option]) || ($value[$option] eq 'ON')" >
-                    <span style="color: green;">ON</span>
-                <xar:else />
-                    <span style="color: red;">OFF</span>
-                </xar:if>
-            </td>
-        </tr>
-    </xar:foreach>
-
-    </table>
-
-<xar:if condition="!empty($invalid)">
-    <span class="xar-error">#$invalid#</span>
-</xar:if>
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    
+        <table>
+            <tr>
+                <th>Level</th>
+                <th>Status</th>
+            </tr>
+    
+        <xar:foreach in="$options" value="$option" >
+            <tr>
+                <td>#$option#</td>
+                <td>
+                    <xar:if condition="!isset($value[$option]) || ($value[$option] eq 'ON')" >
+                        <span style="color: green;">ON</span>
+                    <xar:else />
+                        <span style="color: red;">OFF</span>
+                    </xar:if>
+                </td>
+            </tr>
+        </xar:foreach>
+    
+        </table>
+    
+    <xar:if condition="!empty($invalid)">
+        <span class="xar-error">#$invalid#</span>
+    </xar:if>
+</xar:template>

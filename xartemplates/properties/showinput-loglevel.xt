@@ -1,27 +1,30 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
-    <table>
-        <tr>
-            <th>Logging Level</th>
-            <th>On</th>
-            <th>Off</th>
-        </tr>
-
-    <xar:foreach in="$options" value="$option" >
-        <tr>
-            <td>#$option#</td>
-            <xar:if condition="empty($value) || !isset($value[$option]) || ($value[$option] eq 'ON')" >
-                <td><input type="radio" name="#$name#[#$option#]" id="#$name#_#$option#_true" value="ON" checked="checked" /></td>
-                <td><input type="radio" name="#$name#[#$option#]" id="#$name#_#$option#_false" value="OFF" /></td>
-            <xar:else />
-                <td><input type="radio" name="#$name#[#$option#]" id="#$name#_#$option#_true" value="ON" /></td>
-                <td><input type="radio" name="#$name#[#$option#]" id="#$name#_#$option#_false" value="OFF" checked="checked" /></td>
-            </xar:if>
-        </tr>
-    </xar:foreach>
-
-    </table>
-
-<xar:if condition="!empty($invalid)">
-    <span class="xar-error">#$invalid#</span>
-</xar:if>
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    
+        <table>
+            <tr>
+                <th>Logging Level</th>
+                <th>On</th>
+                <th>Off</th>
+            </tr>
+    
+        <xar:foreach in="$options" value="$option" >
+            <tr>
+                <td>#$option#</td>
+                <xar:if condition="empty($value) || !isset($value[$option]) || ($value[$option] eq 'ON')" >
+                    <td><input type="radio" name="#$name#[#$option#]" id="#$name#_#$option#_true" value="ON" checked="checked" /></td>
+                    <td><input type="radio" name="#$name#[#$option#]" id="#$name#_#$option#_false" value="OFF" /></td>
+                <xar:else />
+                    <td><input type="radio" name="#$name#[#$option#]" id="#$name#_#$option#_true" value="ON" /></td>
+                    <td><input type="radio" name="#$name#[#$option#]" id="#$name#_#$option#_false" value="OFF" checked="checked" /></td>
+                </xar:if>
+            </tr>
+        </xar:foreach>
+    
+        </table>
+    
+    <xar:if condition="!empty($invalid)">
+        <span class="xar-error">#$invalid#</span>
+    </xar:if>
+</xar:template>

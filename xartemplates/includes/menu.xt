@@ -1,23 +1,26 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:style scope="module" module="base" file="navtabs" />
-<dl class="xar-tabs">
-    <dt class="help" title="#xarML('Menu links for this module')#">
-        <xar:mlstring>
-            Actions
-        </xar:mlstring> 
-        :
-    </dt>
-    <xar:foreach in="$menulinks" value="$linkarray">
-        <div>
-            <xar:if condition="$linkarray['func'] == $activelink">
-            <dd class="active">
-                <a href="#$linkarray['url']#" class="active" title="#$linkarray['title']#">#xarML($linkarray['label'])#</a>
-            </dd>
-            <xar:else />
-            <dd>
-                <a href="#$linkarray['url']#" title="#$linkarray['title']#">#xarML($linkarray['label'])#</a>
-            </dd>
-            </xar:if>
-        </div>    
-    </xar:foreach>
-</dl>
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <xar:style scope="module" module="base" file="navtabs" />
+    <dl class="xar-tabs">
+        <dt class="help" title="#xarML('Menu links for this module')#">
+            <xar:mlstring>
+                Actions
+            </xar:mlstring> 
+            :
+        </dt>
+        <xar:foreach in="$menulinks" value="$linkarray">
+            <div>
+                <xar:if condition="$linkarray['func'] == $activelink">
+                <dd class="active">
+                    <a href="#$linkarray['url']#" class="active" title="#$linkarray['title']#">#xarML($linkarray['label'])#</a>
+                </dd>
+                <xar:else />
+                <dd>
+                    <a href="#$linkarray['url']#" title="#$linkarray['title']#">#xarML($linkarray['label'])#</a>
+                </dd>
+                </xar:if>
+            </div>    
+        </xar:foreach>
+    </dl>
+</xar:template>

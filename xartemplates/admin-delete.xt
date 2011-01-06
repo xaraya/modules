@@ -1,20 +1,22 @@
-<xar:template file="menu" />
-
-<h2><xar:mlstring>Delete Logger</xar:mlstring></h2>
-
-<div align="center"><b><xar:mlstring>Confirm deleting this item ?</xar:mlstring></b></div><br />
-
-<xar:data-display object="$object" />
-
-<div align="center">
-<form method="post" action="#xarModURL('logconfig', 'admin', 'delete')#">
-    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-    <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
-    <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
-
-    <input type="submit" name="confirm" value=" #xarML('Yes')# " />
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <input type="submit" name="noconfirm" value="  #xarML('No')#  " />
-</form>
-</div>
-
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:template file="menu" />
+    
+    <h2><xar:mlstring>Delete Logger</xar:mlstring></h2>
+    
+    <div align="center"><b><xar:mlstring>Confirm deleting this item ?</xar:mlstring></b></div><br />
+    
+    <xar:data-display object="$object" />
+    
+    <div align="center">
+    <form method="post" action="#xarModURL('logconfig', 'admin', 'delete')#">
+        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+        <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+        <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
+    
+        <input type="submit" name="confirm" value=" #xarML('Yes')# " />
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="submit" name="noconfirm" value="  #xarML('No')#  " />
+    </form>
+    </div>
+</xar:template>

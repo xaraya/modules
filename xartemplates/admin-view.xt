@@ -1,18 +1,20 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>LogConfig Administration</xar:mlstring></span></div>
-<xar:template file="menu" />
-
-<xar:if condition="$fallbackOn">
-    <br />
-    <div style="color: #9ACD32">
-        <xar:ml>
-            <xar:mlstring>Because the file #(1) is present and writable, it is being used as the fallback mechanism for logging purposes.</xar:mlstring>
-            <xar:mlvar>#$fallbackFile#</xar:mlvar>
-        </xar:ml>
-    </div>
-    <br />
-</xar:if>
-
-<h2><xar:mlstring>List of Loggers</xar:mlstring></h2>
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>LogConfig Administration</xar:mlstring></span></div>
+    <xar:template file="menu" />
+    
+    <xar:if condition="$fallbackOn">
+        <br />
+        <div style="color: #9ACD32">
+            <xar:ml>
+                <xar:mlstring>Because the file #(1) is present and writable, it is being used as the fallback mechanism for logging purposes.</xar:mlstring>
+                <xar:mlvar>#$fallbackFile#</xar:mlvar>
+            </xar:ml>
+        </div>
+        <br />
+    </xar:if>
+    
+    <h2><xar:mlstring>List of Loggers</xar:mlstring></h2>
 
     <div style="text-align: center;">
     <table width="100%" border="1" cellspacing="0" cellpadding="4">
@@ -86,3 +88,4 @@
     </xar:ml>
     <br />
     <xar:mlstring>For this fallback mechanism to work, it is necessary for this file to exist and be writable by the http server user.</xar:mlstring>
+</xar:template>
