@@ -31,7 +31,7 @@ function logconfig_admin_view()
     // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('AdminLogConfig')) return;
 
-    $data['itemsnum'] = xarModGetVar('logconfig','itemstypenumber');
+    $data['itemsnum'] = xarModVars::get('logconfig','itemstypenumber');
 
     if (!xarModAPIFunc('logconfig','admin','islogon') && xarLogFallbackPossible() ) {
         $data['fallbackOn'] = true;

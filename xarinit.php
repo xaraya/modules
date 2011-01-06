@@ -64,10 +64,10 @@ function logconfig_init()
 
     // save the object ids for later
     //TODO: Review if this is needed
-    xarModSetVar('logconfig','objectids',serialize($ids));
+    xarModVars::set('logconfig','objectids',serialize($ids));
 
     //This is used in admin/view
-    xarModSetVar('logconfig','itemstypenumber',$itemsnum);
+    xarModVars::set('logconfig','itemstypenumber',$itemsnum);
 
     xarRegisterMask('AdminLogConfig','All','logconfig','Item','All','ACCESS_ADMIN');
 
@@ -107,7 +107,7 @@ function logconfig_upgrade($oldversion)
 function logconfig_delete()
 {
     // delete the dynamic objects and their properties
-    $objectids = unserialize(xarModGetVar('logconfig','objectids'));
+    $objectids = unserialize(xarModVars::get('logconfig','objectids'));
     foreach ($objectids as $objectid) {
         if (!empty($objectid)) {
             xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));

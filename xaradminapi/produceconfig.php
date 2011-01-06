@@ -16,7 +16,7 @@
  */
 function logconfig_adminapi_produceconfig()
 {
-    $itemsnum = xarModGetVar('logconfig','itemstypenumber');
+    $itemsnum = xarModVars::get('logconfig','itemstypenumber');
 
     $loggers = array();
     $loggers_i = 0;

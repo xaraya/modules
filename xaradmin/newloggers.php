@@ -21,7 +21,7 @@ function logconfig_admin_newloggers()
     if (!xarSecurityCheck('AdminLogConfig')) return;
 
     //This is used in admin/view
-    $itemsnum = xarModGetVar('logconfig','itemstypenumber');
+    $itemsnum = xarModVars::get('logconfig','itemstypenumber');
 
     $data['objects'] = array();
     for ($itemtype = 1; $itemtype <= $itemsnum; $itemtype++)

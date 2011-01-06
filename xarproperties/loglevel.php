@@ -18,15 +18,24 @@
  * @author nuncanada <nuncanada@xaraya.com>
  * @package dynamicdata
  */
-include_once "modules/dynamicdata/class/properties.php";
-class Dynamic_LogLevel_Property extends Dynamic_Property
-{
-    var $options = array ('Emergency', 'Alert', 'Critical', 'Error', 'Warning', 'Notice', 'Info', 'Debug');
-    var $value = array();
+sys::import('modules.dynamicdata.class.properties.base');
 
-    function Dynamic_LogLevel_Property($args)
+class LogLevelProperty extends DataProperty
+{
+    public $id   = 107;
+    public $name = 'loglevel';
+    public $desc = 'Logging Level';
+    public $reqmodules = array('logconfig');
+
+    public $options = array ('Emergency', 'Alert', 'Critical', 'Error', 'Warning', 'Notice', 'Info', 'Debug');
+    public $value = array();
+
+    function __construct(ObjectDescriptor $descriptor)
     {
-        $this->Dynamic_Property($args);
+        parent::__construct($descriptor);
+        $this->template  = 'loglevel';
+        $this->tplmodule = 'logconfig';
+        $this->filepath   = 'modules/logconfig/xarproperties';
     }
 
     function validateValue($value = null)
@@ -96,33 +105,6 @@ class Dynamic_LogLevel_Property extends Dynamic_Property
         return xarTplProperty('logconfig', 'loglevel', 'showoutput', $data);
         // return $out;
     }
-
-    /**
-     * Get the base information for this property.
-     *
-     * @returns array
-     * @return base information for this property
-     **/
-     function getBasePropertyInfo()
-     {
-         $args = array();
-         $baseInfo = array(
-                              'id'         => 107,
-                              'name'       => 'loglevel',
-                              'label'      => 'Logging Level',
-                              'format'     => '107',
-                              'validation' => '',
-                              'source'         => '',
-                              'dependancies'   => '',
-//                              'requiresmodule' => 'logconfig',
-                              'requiresmodule' => '',
-                              'aliases'        => '',
-                              'args'           => serialize($args),
-                            // ...
-                           );
-        return $baseInfo;
-     }
-
 }
 
 ?>
