@@ -29,8 +29,8 @@ function logconfig_admin_newloggers()
         $object = xarModAPIFunc('dynamicdata','user','getobjectlist',
                                          array('module' => 'logconfig',
                                                   'itemtype' => $itemtype));
-         $data['objects'][$itemtype] = array ('type' => $object->properties['loggerType']->default,
-                                                                       'description' => $object->properties['description']->default);
+         $data['objects'][$itemtype] = array ('type' => $object->properties['type']->value,
+                                                                       'description' => $object->properties['description']->value);
     }
 
     // Return the template variables defined in this function

@@ -27,13 +27,13 @@
 
         <xar:for start="$i = 1" test="$i le $itemsnum" iter="$i++">
 
-            <xar:data-getitems properties="$properties" values="$values" module="logconfig" itemtype="$i" />
+            <xar:data-getitems properties="properties" values="values" module="logconfig" itemtype="$i" />
 
             <xar:foreach in="$values" key="$itemid" value="$fields">
                 <tr>
                     <td>
-                        <xar:if condition="!empty($fields['loggerType'])">
-                               <xar:data-output property="$properties['loggerType']" value="$fields['loggerType']" />
+                        <xar:if condition="!empty($fields['type'])">
+                               <xar:data-output property="$properties['type']" value="$fields['type']" />
                         <xar:else />
                                &#160;
                         </xar:if>
@@ -49,14 +49,14 @@
                     <td><table border="1">
                         <tr>
                             <xar:foreach in="$properties" key="$name">
-                                <xar:if condition="($name ne 'loggerType') and ($name ne 'description')">
+                                <xar:if condition="($name ne 'type') and ($name ne 'description')">
                                     <th><xar:data-label property="$properties[$name]" /></th>
                                 </xar:if>
                             </xar:foreach>
                           </tr>
                           <tr>
                             <xar:foreach in="$properties" key="$name">
-                                <xar:if condition="($name ne 'loggerType') and ($name ne 'description')">
+                                <xar:if condition="($name ne 'type') and ($name ne 'description')">
                                     <xar:if condition="!empty($fields[$name])">
                                            <td><xar:data-output property="$properties[$name]" value="$fields[$name]" /></td>
                                     <xar:else />

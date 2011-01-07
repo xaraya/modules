@@ -30,9 +30,9 @@ function logconfig_adminapi_produceconfig()
 
         foreach ($items as $itemid => $properties) {
             $loggers[$loggers_i] = array();
-            $loggers[$loggers_i]['type'] = $properties['loggerType'];
+            $loggers[$loggers_i]['type'] = $properties['type'];
 
-            unset($properties['loggerType']);
+            unset($properties['type']);
             unset($properties['description']);
 
             //fix log level:
