@@ -2,9 +2,9 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:template file="menu" />
     
-    <h2><xar:mlstring>Delete Logger</xar:mlstring></h2>
+    <h2>Delete Logger</h2>
     
-    <div align="center"><b><xar:mlstring>Confirm deleting this item ?</xar:mlstring></b></div><br />
+    <div align="center"><b>Confirm deleting this item ?</b></div><br />
     
     <xar:data-display object="$object" />
     
@@ -15,7 +15,7 @@
         <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
     
         <input type="submit" name="confirm" value=" #xarML('Yes')# " />
-        &nbsp;&nbsp;&nbsp;&nbsp;
+        &#160;&#160;&#160;&#160;
         <input type="submit" name="noconfirm" value="  #xarML('No')#  " />
     </form>
     </div>

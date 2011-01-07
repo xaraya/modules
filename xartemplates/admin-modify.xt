@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div class="xar-mod-head">
-      <span class="xar-mod-title"><xar:mlstring>LogConfig Administration</xar:mlstring></span>
+      <span class="xar-mod-title">LogConfig Administration</span>
     </div>
     <xar:template file="menu" />
     
-    <h2><xar:mlstring>Modify a Logger</xar:mlstring></h2>
+    <h2>Modify a Logger</h2>
     
     <table width="100%" border="1" cellspacing="0" cellpadding="4">
       <tr>
         <td align="center">
-          <b><xar:mlstring>Preview</xar:mlstring></b>
+          <b>Preview</b>
         </td>
       </tr>
       <tr>
@@ -29,7 +29,7 @@
       <!-- this does most of the hard work :) -->
       <xar:data-form object="$object" />
       <input type="submit" name="preview" value="#xarML('Preview')#" />
-      &nbsp;&nbsp;&nbsp;
+      &#160;&#160;&#160;
       <input type="submit" value="#xarML('Update')#" />
       
     </form>

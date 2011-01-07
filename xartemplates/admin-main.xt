@@ -2,45 +2,45 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
     <div class="xar-mod-head">
-        <span class="xar-mod-title"><xar:mlstring>LogConfig Administration</xar:mlstring></span>
+        <span class="xar-mod-title">LogConfig Administration</span>
     </div>
     <div class="xar-mod-body">
         <xar:template file="menu" />
-        <h2><xar:mlstring>Overview</xar:mlstring></h2>
+        <h2>Overview</h2>
             <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
-            <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+            <h3>What is it?</h3>
     
-            <p><xar:mlstring>The LogConfig Module controls the Xaraya logging system.</xar:mlstring></p>
+            <p>The LogConfig Module controls the Xaraya logging system.</p>
     
-            <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
-            <p><xar:mlstring>From the menu, you have three choices. </xar:mlstring></p>
+            <h3>How to use it?</h3>
+            <p>From the menu, you have three choices. </p>
             <ul>
-                <li><xar:mlstring>Add logger -- Allows you add a new logger to the configuration. You can choose the type most applicable to your situation.</xar:mlstring></li>
-                <li><xar:mlstring>List loggers -- List the loggers that are currently configured. From here you can also edit the settings for each logger.</xar:mlstring></li>
-                <li><xar:mlstring>Turn logging on/off -- Makes Xaraya log according to the loggers configured or not.</xar:mlstring></li>
+                <li>Add logger -- Allows you add&#160; a new logger to the configuration. You can choose the type most applicable to your situation.</li>
+                <li>List loggers -- List the loggers that are currently configured. From here you can also edit the settings for each logger.</li>
+                <li>Turn logging on/off -- Makes Xaraya log according to the loggers configured or not.</li>
             </ul>
             <p>
-                <xar:mlstring>The Xaraya loggers are shipped with the core and are located in /includes/log/loggers</xar:mlstring>
+                The Xaraya loggers are shipped with the core and are located in /includes/log/loggers
             </p>
     
-            <h3><xar:mlstring>Fallback System:</xar:mlstring></h3>
-            <p><xar:mlstring>If the logging is set to off in this module (if this module is not active, it turns off logging automatically) and there is no logging configuration in config.system.php (old configuration style) then there is a fallback system that will log to var/logs/log.txt whenever it is present .</xar:mlstring></p>
+            <h3>Fallback System:</h3>
+            <p>If the logging is set to off in this module (if this module is not active, it turns off logging automatically) and there is no logging configuration in config.system.php (old configuration style) then there is a fallback system that will log to var/logs/log.txt whenever it is present .</p>
             <h3>
-                <xar:mlstring>Available loggers</xar:mlstring>
+                Available loggers
             </h3>
             <ul>
-                <li><xar:mlstring>The sql logger</xar:mlstring></li>
-                <li><xar:mlstring>The mail logger</xar:mlstring></li>
-                <li><xar:mlstring>The html logger</xar:mlstring></li>
-                <li><xar:mlstring>The mozilla logger</xar:mlstring></li>
-                <li><xar:mlstring>The simple logger</xar:mlstring></li>
-                <li><xar:mlstring>The syslog logger</xar:mlstring></li>
+                <li>The sql logger</li>
+                <li>The mail logger</li>
+                <li>The html logger</li>
+                <li>The mozilla logger</li>
+                <li>The simple logger</li>
+                <li>The syslog logger</li>
             </ul>
             <h3>
-                <xar:mlstring>Notes on the sql logger</xar:mlstring>
+                Notes on the sql logger
             </h3>
             <p>
-                <xar:mlstring>The sql logger needs a database table to write its data to. This table should be added to your database with the following code:</xar:mlstring>
+                The sql logger needs a database table to write its data to. This table should be added to your database with the following code:
             </p>
                 <code>
     
@@ -55,32 +55,32 @@
     
                 </code>
             <p>
-                <xar:mlstring>The sql logger will log all messages to a database table. Currently, there is no interface to manage the entries.</xar:mlstring>
+                The sql logger will log all messages to a database table. Currently, there is no interface to manage the entries.
             </p>
             <h3>
-                <xar:mlstring>Notes on the mail logger</xar:mlstring>
+                Notes on the mail logger
             </h3>
             <p>
-                <xar:mlstring>The mail logger will send you an email with the error message and some additional information. You cannot edit the lay-out and content of the message via the mail templates as the message is created by PHP code.</xar:mlstring>
+                The mail logger will send you an email with the error message and some additional information. You cannot edit the lay-out and content of the message via the mail templates as the message is created by PHP code.
             </p>
             <p>
-                <xar:mlstring>The logging level can be set with the dynamic "Logging Level" property.</xar:mlstring>
+                The logging level can be set with the dynamic "Logging Level" property.
             </p>
             <h3>
-                <xar:mlstring>Further Information</xar:mlstring>
+                Further Information
             </h3>
             <p>
-                <xar:mlstring>Further information on the LogConfig module can be found at</xar:mlstring>
+                Further information on the LogConfig module can be found at
             </p>
             <ul>
-                <li><xar:mlstring>LogConfig Extension page at</xar:mlstring> <a title="#xarML('LogConfig Module - Xaraya Extension 6969')#" href="http://www.xaraya.com/index.php/release/6969.html">Xaraya Extension and Releases</a>.
-                    <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+                <li>LogConfig Extension page at <a title="#xarML('LogConfig Module - Xaraya Extension 6969')#" href="http://www.xaraya.com/index.php/release/6969.html">Xaraya Extension and Releases</a>.
+                     Click on Version History tab at the bottom to get the latest release information.
                 </li>
-                <li><xar:mlstring>Related tutorials and documentation on LogConfig found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/logconfig/" title="#xarML('Related documentation on LogConfig')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+                <li>Related tutorials and documentation on LogConfig found at <a href="http://www.xaraya.com/index.php/keywords/logconfig/" title="#xarML('Related documentation on LogConfig')#">Xaraya Documentation.</a>
                 </li>
             </ul>
             <p class="xar-sub">
-                <strong>&nbsp;<xar:mlstring>LogConfig Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.1.0&nbsp; 2007-12-05
+                <strong>&#160;LogConfig Module Overview</strong><br />&#160;Version 1.1.0&#160; 2007-12-05
             </p>
     </div>
 </xar:template>

@@ -4,10 +4,7 @@
     <xar:style scope="module" module="base" file="navtabs" />
     <dl class="xar-tabs">
         <dt class="help" title="#xarML('Menu links for this module')#">
-            <xar:mlstring>
-                Actions
-            </xar:mlstring> 
-            :
+                Actions:
         </dt>
         <xar:foreach in="$menulinks" value="$linkarray">
             <div>

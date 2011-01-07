@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>LogConfig Administration</xar:mlstring></span></div>
+    <div class="xar-mod-head"><span class="xar-mod-title">LogConfig Administration</span></div>
     <xar:template file="menu" />
     
     <xar:if condition="$fallbackOn">
         <br />
-        <div style="color: #9ACD32">
-            <xar:ml>
+        <div style="color: ##9ACD32">
+            <xar:mlxxx>
                 <xar:mlstring>Because the file #(1) is present and writable, it is being used as the fallback mechanism for logging purposes.</xar:mlstring>
                 <xar:mlvar>#$fallbackFile#</xar:mlvar>
-            </xar:ml>
+            </xar:mlxxx>
         </div>
         <br />
     </xar:if>
     
-    <h2><xar:mlstring>List of Loggers</xar:mlstring></h2>
+    <h2>List of Loggers</h2>
 
     <div style="text-align: center;">
     <table width="100%" border="1" cellspacing="0" cellpadding="4">
         <tr>
-                <th><xar:mlstring>Type</xar:mlstring></th>
-                <th width="100"><xar:mlstring>Description</xar:mlstring></th>
-                <th><xar:mlstring>Configuration</xar:mlstring></th>
-                <th><xar:mlstring>Options</xar:mlstring></th>
+                <th>Type</th>
+                <th width="100">Description</th>
+                <th>Configuration</th>
+                <th>Options</th>
         </tr>
 
         <xar:for start="$i = 1" test="$i le $itemsnum" iter="$i++">
 
-            <xar:data-getitems name="$properties" value="$values" module="logconfig" itemtype="$i" />
+            <xar:data-getitems properties="$properties" values="$values" module="logconfig" itemtype="$i" />
 
             <xar:foreach in="$values" key="$itemid" value="$fields">
                 <tr>
@@ -35,14 +35,14 @@
                         <xar:if condition="!empty($fields['loggerType'])">
                                <xar:data-output property="$properties['loggerType']" value="$fields['loggerType']" />
                         <xar:else />
-                               &nbsp;
+                               &#160;
                         </xar:if>
                     </td>
                     <td>
                         <xar:if condition="!empty($fields['description'])">
                                <xar:data-output property="$properties['description']" value="$fields['description']" />
                         <xar:else />
-                               &nbsp;
+                               &#160;
                         </xar:if>
                     </td>
 
@@ -60,16 +60,16 @@
                                     <xar:if condition="!empty($fields[$name])">
                                            <td><xar:data-output property="$properties[$name]" value="$fields[$name]" /></td>
                                     <xar:else />
-                                           <td>&nbsp;</td>
+                                           <td>&#160;</td>
                                     </xar:if>
                                 </xar:if>
                             </xar:foreach>
                         </tr>
                     </table></td>
                     <td>
-                        <a href="#xarModURL('logconfig','admin','modify',array('itemtype'=>$i, 'itemid' => $itemid))#"><xar:mlstring>Edit</xar:mlstring></a>
+                        <a href="#xarModURL('logconfig','admin','modify',array('itemtype'=>$i, 'itemid' => $itemid))#">Edit</a>
                         <br />
-                        <a href="#xarModURL('logconfig','admin','delete',array('itemtype'=>$i, 'itemid' => $itemid))#"><xar:mlstring>Delete</xar:mlstring></a>
+                        <a href="#xarModURL('logconfig','admin','delete',array('itemtype'=>$i, 'itemid' => $itemid))#">Delete</a>
                     </td>
 
                 </tr>
@@ -82,10 +82,10 @@
     <br />
     <br />
 
-    <xar:ml>
+    <xar:mlxxx>
         <xar:mlstring>There exists a fallback mechanism which will log to file #(1) even if the logging is turned off, so admins can still log if unable to install/use the logconfig module.</xar:mlstring>
         <xar:mlvar>#$fallbackFile#</xar:mlvar>
-    </xar:ml>
+    </xar:mlxxx>
     <br />
-    <xar:mlstring>For this fallback mechanism to work, it is necessary for this file to exist and be writable by the http server user.</xar:mlstring>
+    For this fallback mechanism to work, it is necessary for this file to exist and be writable by the http server user.
 </xar:template>

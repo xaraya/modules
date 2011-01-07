@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>LogConfig Administration</xar:mlstring></span></div>
+    <div class="xar-mod-head"><span class="xar-mod-title">LogConfig Administration</span></div>
     <xar:template file="menu" />
     
-    <h2><xar:mlstring>Switching Log State: On/Off</xar:mlstring></h2>
+    <h2>Switching Log State: On/Off</h2>
     
     <br />
     <div style="text-align: center;">
