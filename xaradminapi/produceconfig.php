@@ -46,13 +46,13 @@ function logconfig_adminapi_produceconfig()
                                   'Debug'     => 128);
 
             $newlevel = 0;
-            $level = unserialize($properties['logLevel']);
+            $level = unserialize($properties['loglevel']);
             foreach ($level as $name => $state) {
                 if ($state == 'ON') {
                     $newlevel += $translation[$name];
                 }
             }
-            $properties['logLevel'] = $newlevel;
+            $properties['loglevel'] = $newlevel;
 
             $loggers[$loggers_i]['config'] = $properties;
             $loggers_i++;
