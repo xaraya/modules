@@ -26,7 +26,7 @@ $modversion['contact']      = 'http://www.xaraya.com/';
 $modversion['admin']        = 1;
 $modversion['user']         = 0;
 $modversion['class']        = 'Admin';
-$modversion['category']     = 'Global';
+$modversion['category']     = 'System';
 $modversion['dependency']   = array(182);
 
 ?>

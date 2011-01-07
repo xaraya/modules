@@ -59,10 +59,9 @@ class LogLevelProperty extends DataProperty
         return true;
     }
 
-//    function showInput($name = '', $value = null, $options = array(), $id = '', $tabindex = '')
-    function showInput($args = array())
+    public function showInput(Array $data = array())
     {
-        extract($args);
+        extract($data);
         $data = array();
 
         if (!isset($value)) {
@@ -86,9 +85,9 @@ class LogLevelProperty extends DataProperty
         return xarTplProperty('logconfig', 'loglevel', 'showinput', $data);
     }
 
-    function showOutput($args = array())
+    public function showOutput(Array $data = array())
     {
-         extract($args);
+        extract($data);
         if (!isset($value)) {
             $value = $this->value;
         }

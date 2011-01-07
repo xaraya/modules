@@ -63,7 +63,7 @@
     <property name="loglevel">
       <id>138</id>
       <label>Log Level</label>
-      <type>static</type>
+      <type>loglevel</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
       <status>33</status>
