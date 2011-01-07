@@ -1,84 +1,84 @@
 <object name="syslog_logger">
+  <objectid>20</objectid>
   <label>System Logger</label>
-  <moduleid>6969</moduleid>
-  <itemtype>5</itemtype>
+  <module_id>6969</module_id>
+  <itemtype>7</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
-  <config></config>
-  <isalias>0</isalias>
+  <config>a:0:{}</config>
+  <isalias>false</isalias>
   <properties>
-
     <property name="id">
-      <label>Id</label>
+      <id>139</id>
+      <label>ID</label>
       <type>itemid</type>
-      <default></default>
+      <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
-      <status>2</status>
-      <order>1</order>
-      <validation></validation>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration></configuration>
     </property>
-
-    <property name="loggerType">
-      <label>Logger Type</label>
+    <property name="type">
+      <id>140</id>
+      <label>Type</label>
       <type>static</type>
-      <default>syslog</default>
+      <defaultvalue>syslog</defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
-      <order>2</order>
-      <validation></validation>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
     </property>
-
     <property name="description">
-      <label>Logger Description</label>
+      <id>141</id>
+      <label>Description</label>
       <type>static</type>
-      <default>This logger will sent all log messages to your own operational system logging system. Please look at php.net Manual for the function openlog to figure out how to properly configure this logger.</default>
+      <defaultvalue>This logger will sent all log messages to your own operational system logging system. Please look at php.net Manual for the function openlog to figure out how to properly configure this logger.</defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
-      <order>3</order>
-      <validation></validation>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration></configuration>
     </property>
-
     <property name="facility">
+      <id>142</id>
       <label>Facility</label>
       <type>textbox</type>
-      <default>LOG_LOCAL0</default>
+      <defaultvalue>LOG_LOCAL0</defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
-      <order>4</order>
-      <validation>1:15</validation>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration>1:15</configuration>
     </property>
-
     <property name="options">
+      <id>143</id>
       <label>Options</label>
       <type>textbox</type>
-      <default>LOG_CONS | LOG_ODELAY | LOG_PID</default>
+      <defaultvalue>LOG_CONS | LOG_ODELAY | LOG_PID</defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
-      <order>5</order>
-      <validation>1:40</validation>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration>1:40</configuration>
     </property>
-
-
-    <property name="timeFormat">
+    <property name="timeformat">
+      <id>144</id>
       <label>Time Format</label>
       <type>dateformat</type>
-      <default>%Y/%m/%d %H:%M:%S</default>
+      <defaultvalue>%Y/%m/%d %H:%M:%S</defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
-      <order>6</order>
-      <validation></validation>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration></configuration>
     </property>
-
-    <property name="logLevel">
+    <property name="loglevel">
+      <id>145</id>
       <label>Log Level</label>
-      <type>loglevel</type>
-      <default></default>
+      <type>static</type>
+      <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
-      <order>7</order>
-      <validation></validation>
+      <status>33</status>
+      <seq>7</seq>
+      <configuration></configuration>
     </property>
-
   </properties>
-
 </object>

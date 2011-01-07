@@ -1,93 +1,94 @@
 <object name="simple_logger">
+  <objectid>18</objectid>
   <label>File Logger</label>
-  <moduleid>6969</moduleid>
-  <itemtype>1</itemtype>
+  <module_id>6969</module_id>
+  <itemtype>5</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config>Logs to a file in text format.</config>
-  <isalias>0</isalias>
+  <isalias>false</isalias>
   <properties>
-
     <property name="id">
-      <label>Id</label>
+      <id>125</id>
+      <label>ID</label>
       <type>itemid</type>
-      <default></default>
+      <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
-      <status>2</status>
-      <order>1</order>
-      <validation></validation>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration></configuration>
     </property>
-
-    <property name="loggerType">
-      <label>Logger Type</label>
+    <property name="type">
+      <id>126</id>
+      <label>Type</label>
       <type>static</type>
-      <default>simple</default>
+      <defaultvalue>simple</defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
-      <order>2</order>
-      <validation></validation>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
     </property>
-
     <property name="description">
-      <label>Logger Description</label>
+      <id>127</id>
+      <label>Description</label>
       <type>static</type>
-      <default>This logger will put the log into a file. You will need to enter its path and name.</default>
+      <defaultvalue>This logger will put the log into a file. You will need to enter its path and name.</defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
-      <order>3</order>
-      <validation></validation>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration></configuration>
     </property>
-
     <property name="fileName">
+      <id>128</id>
       <label>File</label>
       <type>textbox</type>
-      <default>var/logs/log.txt</default>
+      <defaultvalue>var/logs/log.txt</defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
-      <order>4</order>
-      <validation>1:60</validation>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration>1:60</configuration>
     </property>
-
     <property name="mode">
+      <id>129</id>
       <label>File Mode</label>
       <type>integerbox</type>
-      <default>644</default>
+      <defaultvalue>644</defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
-      <order>5</order>
-      <validation>0:777</validation>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration>0:777</configuration>
     </property>
-
-    <property name="maxFileSize">
+    <property name="maxfilesize">
+      <id>130</id>
       <label>Maximum File Size</label>
       <type>integerbox</type>
-      <default>1048576</default>
+      <defaultvalue>1048576</defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
-      <order>6</order>
-      <validation>0:104857600</validation>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration>0:104857600</configuration>
     </property>
-
-    <property name="timeFormat">
+    <property name="timeformat">
+      <id>131</id>
       <label>Time Format</label>
       <type>dateformat</type>
-      <default>%Y/%m/%d %H:%M:%S</default>
+      <defaultvalue>%Y/%m/%d %H:%M:%S</defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
-      <order>7</order>
-      <validation></validation>
+      <status>33</status>
+      <seq>7</seq>
+      <configuration></configuration>
     </property>
-
-    <property name="logLevel">
+    <property name="loglevel">
+      <id>132</id>
       <label>Log Level</label>
-      <type>loglevel</type>
-      <default></default>
+      <type>static</type>
+      <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
-      <order>8</order>
-      <validation></validation>
+      <status>33</status>
+      <seq>8</seq>
+      <configuration></configuration>
     </property>
-
   </properties>
-
 </object>
