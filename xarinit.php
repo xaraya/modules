@@ -30,44 +30,26 @@ function logconfig_init()
         return;
     }
 
-    /**
-     * import the object definition and properties from some XML file (exported from DD)
-     * FIXME: this SUCCEEDS, but the objects are not correct. The loglevel property will
-     * only be available after *this* module is active, so the import makes this a 'static text' property
-     * Q: it should fail?
-     * Q: with a slight modification, we could use the dd api function importprops to import the property
-     *    before importing.
+# --------------------------------------------------------
+#
+# Create DD objects
+#
+    PropertyRegistration::importPropertyTypes(false,array('modules/logconfig/xarproperties'));
 
-    // Make sure we import our property
-    $mypropdirs = array('modules/logconfig/xarproperties/');
-    $result = xarModApiFunc('dynamicdata','admin','importpropertytypes',array('dirs' => $mypropdirs));
-     */
-    $ids = array();
-    $dir = "modules/logconfig/loggers/";
-    $itemsnum = 0;
-
-    if (is_dir($dir)) {
-        if ($dh = opendir($dir)) {
-            while (($file = readdir($dh)) !== false) {
-                if (substr($file, -4) == '.xml')
-                {
-                    $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => "modules/logconfig/loggers/$file"));
-                    if (empty($objectid)) return;
-                    $ids[] = $objectid;
-                    $itemsnum++;
-                }
-            }
-            closedir($dh);
-        }
-    }
-
-    // save the object ids for later
-    //TODO: Review if this is needed
-    xarModVars::set('logconfig','objectids',serialize($ids));
+    $module = 'logconfig';
+    $objects = array(
+                     'html_logger',
+                     'javascript_logger',
+                     'mail_logger',
+                     'mozilla_logger',
+                     'simple_logger',
+                     'sql_logger',
+                     'syslog_logger',
+                     );
+    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
     //This is used in admin/view
-    xarModVars::set('logconfig','itemstypenumber',$itemsnum);
+    xarModVars::set('logconfig','itemstypenumber',7);
 
     xarRegisterMask('AdminLogConfig','All','logconfig','Item','All','ACCESS_ADMIN');
 
@@ -106,23 +88,8 @@ function logconfig_upgrade($oldversion)
  */
 function logconfig_delete()
 {
-    // delete the dynamic objects and their properties
-    $objectids = unserialize(xarModVars::get('logconfig','objectids'));
-    foreach ($objectids as $objectid) {
-        if (!empty($objectid)) {
-            xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
-        }
-    }
-
-    xarModDelVar('logconfig','objectids');
-    xarModDelVar('logconfig','itemstypenumber');
-
-    // Remove Masks and Instances
-    xarRemoveMasks('logconfig');
-    xarRemoveInstances('logconfig');
-
-    // Deletion successful
-    return true;
+    $module = 'logconfig';
+    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => $module));
 }
 
 ?>
