@@ -19,17 +19,6 @@
  */
 function logconfig_init()
 {
-    // this module can't work without the dynamicdata module
-    $testmod = xarModIsAvailable('dynamicdata');
-    if (!isset($testmod)) return; // some other exception got in our way [locale for instance :)]
-
-    if (!$testmod) {
-        $msg = xarML('Please activate the Dynamic Data module first...');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MODULE_NOT_ACTIVE',
-                        new DefaultUserException($msg));
-        return;
-    }
-
 # --------------------------------------------------------
 #
 # Create DD objects
