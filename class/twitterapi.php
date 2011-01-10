@@ -53,6 +53,42 @@ class TwitterAPI extends TwitterOAuth
 
         return $response;
     }
+
+    /**
+     * POST wrapper for oAuthRequest.
+     */
+    function post($url, $parameters = array()) 
+    {
+        $response = $this->oAuthRequest($url, 'POST', $parameters);
+        if ($this->format === 'json' && $this->decode_json) {
+            return json_decode($response);
+        } elseif ($this->format === 'xml') {
+            $response = TwitterUtil::xml2arr($response);
+            if (!is_array($response)) {
+                $response = array('error' => xarML('Invalid response from Twitter'));
+                return $response;
+            }
+        }
+        return $response;
+   }
+
+    /**
+     * DELETE wrapper for oAuthReqeust.
+     */
+    function delete($url, $parameters = array()) 
+    {
+        $response = $this->oAuthRequest($url, 'DELETE', $parameters);
+        if ($this->format === 'json' && $this->decode_json) {
+            return json_decode($response);
+        } elseif ($this->format === 'xml') {
+            $response = TwitterUtil::xml2arr($response);
+            if (!is_array($response)) {
+                $response = array('error' => xarML('Invalid response from Twitter'));
+                return $response;
+            }
+        }
+        return $response;
+    }
   
     /**
      * Generate cacheKey for a GET request

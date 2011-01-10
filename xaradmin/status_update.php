@@ -48,7 +48,7 @@ function twitter_admin_status_update($args)
             $status_update_error = xarML('Error: Your message cannot be longer than 140 characters');
         }
         if (empty($status_update_error)) {
-            $response = xarModPIFunc('twitter', 'rest', 'status',
+            $response = xarModAPIFunc('twitter', 'rest', 'status',
                 array(
                     'method' => 'update',
                     'status' => $status_update_text,

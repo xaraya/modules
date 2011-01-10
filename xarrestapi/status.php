@@ -181,7 +181,7 @@ function twitter_restapi_status($args)
             'cached' => isset($cached) ? $cached : null,
             'expires' => isset($expires) ? $expires : null,
         ));
-    
+
     return $response;
     
 }
