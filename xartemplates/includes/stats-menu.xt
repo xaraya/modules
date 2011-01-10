@@ -7,106 +7,103 @@
         <xar:set name="tab">'none'</xar:set>
     </xar:if>
     <div>
-        <dl class="xar-tabs">
-            <dt class="help">
-                <xar:mlstring>
-                    Statistics
-                </xar:mlstring>
-                : 
+        <ul class="xar-tabs">
+            <dt class="help">                
+                    Statistics: 
             </dt>
             <xar:if condition="empty($tab) or $tab eq 'overview'">
-                <dd class="active">
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'overview'))#">
-                        <xar:mlstring>Summary</xar:mlstring>
+                <li class="xar-tab-active">
+                    <a class="xar-accent xar-accent-outline" href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'overview'))#">
+                        Summary
                     </a>
-                </dd>    
+                </li>    
             <xar:else />
-                <dd>
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'overview'))#">    
-                        <xar:mlstring>Summary</xar:mlstring>
+                <li class="xar-tab">
+                    <a class="xar-norm xar-norm-outline" href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'overview'))#">    
+                        Summary
                     </a>
-                </dd>    
+                </li>    
             </xar:if>
             <xar:if condition="$tab eq 'page'">
-                <dd class="active">
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'page'))#">
-                        <xar:mlstring>Pages</xar:mlstring>
+                <li class="xar-tab-active">
+                    <a class="xar-accent xar-accent-outline" href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'page'))#">
+                        Pages
                     </a>
-                </dd>    
+                </li>    
             <xar:else />
-                <dd>
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'page'))#">    
-                        <xar:mlstring>Pages</xar:mlstring>
+                <li class="xar-tab">
+                    <a class="xar-norm xar-norm-outline" href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'page'))#">    
+                        Pages
                     </a>
-                </dd>    
+                </li>    
             </xar:if>
             <xar:if condition="$tab eq 'block'">
-                <dd class="active">
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'block'))#">
-                        <xar:mlstring>Blocks</xar:mlstring>
+                <li class="xar-tab-active">
+                    <a class="xar-accent xar-accent-outline" href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'block'))#">
+                        Blocks
                     </a>
-                </dd>    
+                </li>    
             <xar:else />
-                <dd>
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'block'))#">    
-                        <xar:mlstring>Blocks</xar:mlstring>
+                <li class="xar-tab">
+                    <a class="xar-norm xar-norm-outline" href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'block'))#">    
+                        Blocks
                     </a>
-                </dd>    
+                </li>    
             </xar:if>
             <xar:if condition="$tab eq 'module'">
-                <dd class="active">
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'module'))#">
-                        <xar:mlstring>Modules</xar:mlstring>
+                <li class="xar-tab-active">
+                    <a class="xar-accent xar-accent-outline" href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'module'))#">
+                        Modules
                     </a>
-                </dd>    
+                </li>    
             <xar:else />
-                <dd>
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'module'))#">    
-                        <xar:mlstring>Modules</xar:mlstring>
+                <li class="xar-tab">
+                    <a class="xar-norm xar-norm-outline" href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'module'))#">    
+                        Modules
                     </a>
-                </dd>    
+                </li>    
             </xar:if>
             <xar:if condition="$tab eq 'object'">
-                <dd class="active">
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'object'))#">
-                        <xar:mlstring>Objects</xar:mlstring>
+                <li class="xar-tab-active">
+                    <a class="xar-accent xar-accent-outline" href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'object'))#">
+                        Objects
                     </a>
-                </dd>    
+                </li>    
             <xar:else />
-                <dd>
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'object'))#">    
-                        <xar:mlstring>Objects</xar:mlstring>
+                <li class="xar-tab">
+                    <a class="xar-norm xar-norm-outline" href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'object'))#">    
+                        Objects
                     </a>
-                </dd>    
+                </li>    
             </xar:if>
 <!-- Not supported with Creole
             <xar:if condition="$tab eq 'query'">
-                <dd class="active">
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'query'))#">
-                        <xar:mlstring>Queries</xar:mlstring>
+                <li class="xar-tab-active">
+                    <a class="xar-accent xar-accent-outline" href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'query'))#">
+                        Queries
                     </a>
-                </dd>    
+                </li>    
             <xar:else />
-                <dd>
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'query'))#">    
-                        <xar:mlstring>Queries</xar:mlstring>
+                <li class="xar-tab">
+                    <a class="xar-norm xar-norm-outline" href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'query'))#">    
+                        Queries
                     </a>
-                </dd>    
+                </li>    
             </xar:if>
 -->
             <xar:if condition="$tab eq 'autocache'">
-                <dd class="active">
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'autocache'))#">
-                        <xar:mlstring>Auto-Cache</xar:mlstring>
+                <li class="xar-tab-active">
+                    <a class="xar-accent xar-accent-outline" href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'autocache'))#">
+                        Auto-Cache
                     </a>
-                </dd>    
+                </li>    
             <xar:else />
-                <dd>
-                    <a href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'autocache'))#">    
-                        <xar:mlstring>Auto-Cache</xar:mlstring>
+                <li class="xar-tab">
+                    <a class="xar-norm xar-norm-outline" href="#xarModURL('xarcachemanager', 'admin', 'stats', array('tab' => 'autocache'))#">    
+                        Auto-Cache
                     </a>
-                </dd>    
+                </li>    
             </xar:if>
-        </dl>
+        </ul>
     </div>
 </xar:template>

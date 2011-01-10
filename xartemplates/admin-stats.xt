@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!--  License: GPL http://www.gnu.org/copyleft/gpl.html  -->
 <xar:style scope="module" module="base" file="navtabs" />
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title">xarCacheManager Administration</span></div>
 <div class="xar-mod-body">
   <xar:template type="module" file="admin-menu" module="xarcachemanager" />
 
@@ -39,8 +39,8 @@
     <!--  Begin Query Statistics -->
     <xar:elseif condition="$tab eq 'query'" />
 
-        <h3><xar:mlstring>Query Cache Statistics</xar:mlstring></h3>
-        <xar:mlstring>to be defined</xar:mlstring>
+        <h3>Query Cache Statistics</h3>
+        to be defined
 
     <!--  Begin Auto-Cache Statistics -->
     <xar:elseif condition="$tab eq 'autocache'" />

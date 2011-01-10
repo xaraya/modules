@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title">xarCacheManager Administration</span></div>
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" module="xarcachemanager" />
-    <h2><xar:mlstring>Configure Object Output Caching</xar:mlstring></h2>
+    <h2>Configure Object Output Caching</h2>
 
     <xar:if condition="empty($objects) or count($objects) lt 1">
-      <xar:mlstring>Object caching is currently disabled</xar:mlstring>
+      Object caching is currently disabled
     <xar:else/>
       <xar:javascript module="base" filename="checkall.js" />
       <form action="&xar-modurl-xarcachemanager-admin-objects;" name="objectcache_form" id="objectcache_form" method="post">
@@ -18,8 +18,8 @@
         <table border="1" cellpadding="4" cellspacing="0">
           <tr>
             <th class="xar-align-center"><label title="Do you want to enable caching for this object method ?">Enable<br/>Caching</label></th>
-            <th class="xar-align-center"><xar:mlstring>Object</xar:mlstring></th>
-            <th class="xar-align-center"><xar:mlstring>Method</xar:mlstring></th>
+            <th class="xar-align-center">Object</th>
+            <th class="xar-align-center">Method</th>
             <th class="xar-align-center"><label title="Is the output of this object method identical for all users, or for all members of the same group ?">User Sharing</label></th>
             <th class="xar-align-center"><label title="Do you want to override the default expiration time for this object method ?">Expiration Time<br />(hh:mm:ss)</label></th>
           </tr>
@@ -44,20 +44,20 @@
             </td>
             <td class="xar-align-center">
               <select name="usershared[#$object['name']#][#$method#]" id="usershared_#$object['name']#_#$method#" size="1">
-                <option value="0"> <xar:mlstring>No Sharing</xar:mlstring></option>
+                <option value="0"> No Sharing</option>
                 <xar:if condition="$settings['usershared'] eq 1">
                   <option value="1" selected="selected">
-                    <xar:mlstring>Group Members</xar:mlstring></option>
+                    Group Members</option>
                 <xar:else />
                   <option value="1">
-                    <xar:mlstring>Group Members</xar:mlstring></option>
+                    Group Members</option>
                 </xar:if>
                 <xar:if condition="$settings['usershared'] eq 2">
                   <option value="2" selected="selected">
-                    <xar:mlstring>All Users</xar:mlstring></option>
+                    All Users</option>
                 <xar:else />
                   <option value="2">
-                    <xar:mlstring>All Users</xar:mlstring></option>
+                    All Users</option>
                 </xar:if>
               </select>
             </td>
@@ -69,8 +69,8 @@
         </xar:foreach>
         <tr>
           <td class="xar-align-center">
-            <a href="javascript:xar_base_checkall(document.forms['objectcache_form'],true)"><xar:mlstring>Check All</xar:mlstring></a><br/>
-            <a href="javascript:xar_base_checkall(document.forms['objectcache_form'],false)"><xar:mlstring>Clear All</xar:mlstring></a>
+            <a href="javascript:xar_base_checkall(document.forms['objectcache_form'],true)">Check All</a><br/>
+            <a href="javascript:xar_base_checkall(document.forms['objectcache_form'],false)">Clear All</a>
           </td>
           <td>
             <input type="hidden" name="authid" value="#$authid#" />

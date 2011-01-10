@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title">xarCacheManager Administration</span></div>
 <div class="xar-mod-body">
   <xar:template type="module" file="admin-menu" module="xarcachemanager" />
-  <h2><xar:mlstring>Flush Output Cache Files</xar:mlstring></h2>
+  <h2>Flush Output Cache Files</h2>
     <xar:template type="module" file="stats-menu" module="xarcachemanager" />
   <xar:if condition="$message eq false">
 
     <form action="#xarModURL('xarcachemanager', 'admin', 'flushcache')#" method="post" enctype="application/x-www-form-urlencoded">
       <fieldset>
             <legend>
-                <xar:mlstring>Select Cache for Flushing</xar:mlstring>
+                Select Cache for Flushing
             </legend>
             <p class="xar-form-input-wrapper-before">
                 #$instructions# #$instructionhelp#
@@ -52,13 +52,13 @@
     </xar:if>
 
     <fieldset>
-        <legend><xar:mlstring>Output Cache Size Reference</xar:mlstring></legend>
+        <legend>Output Cache Size Reference</legend>
         <div class="xar-form-input-wrapper">
         <table border="1">
             <thead>
                 <tr>
-                    <th><xar:mlstring>Cache Type</xar:mlstring></th>
-                    <th><xar:mlstring>Size in MB</xar:mlstring></th>
+                    <th>Cache Type</th>
+                    <th>Size in MB</th>
                 </tr>
             </thead>
             <tbody>
