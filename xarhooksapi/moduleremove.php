@@ -1,5 +1,5 @@
 <?php
-function twitter_hooksapi_moduleupdateconfig($args)
+function twitter_hooksapi_moduleremove($args)
 {
     extract($args);
 

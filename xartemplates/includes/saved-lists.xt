@@ -4,11 +4,15 @@
     <xar:if condition="!empty($content['error'])">
         <p>Problem communicating with Twitter, last response: <span class="xar-error">#$content['error']#</span></p>
     <xar:else/>
-        <ul>
+        <xar:if condition="is_array($content['lists']['list'])">
+        <ul>        
         <xar:foreach in="$content['lists']['list']" value="$list">
             <li><a href="http://twitter.com/##!#$list.uri#">#$list.name#</a></li>
         </xar:foreach>
         </ul>
+        <xar:else/>
+        <p>No Lists</p>
+        </xar:if>
     </xar:if>
 </xar:if>
 </xar:template>
