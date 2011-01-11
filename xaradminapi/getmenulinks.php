@@ -21,8 +21,8 @@ function logconfig_adminapi_getmenulinks()
 {
     $menulinks = array();
 
-    if (xarSecurityCheck('AdminLogConfig',0)) {
 
+    if (xarSecurityCheck('ManageLogConfig',0)) {
         $menulinks[] = array('url'   => xarModURL('logconfig',
                                                    'admin',
                                                    'newloggers'),
@@ -41,40 +41,21 @@ function logconfig_adminapi_getmenulinks()
                               'label' => xarML('List loggers'),
                               'func' => 'view');
 
-        if (!xarModAPIFunc('logconfig','admin','islogon')) {
-            $menulinks[] = array('url'   => xarModURL('logconfig',
-                                                       'admin',
-                                                       'switchonoff',
-                                                       array('authid' => xarSecGenAuthKey())),
-                                  // In order to display the tool tips and label in any language,
-                                  // we must encapsulate the calls in the xarML in the API.
-                                  'title' => xarML('Make logging work as configured.'),
-                                  'label' => xarML('Turn logging on'),
-                                  'func' => 'switchonoff');
-        } else {
-            $menulinks[] = array('url'   => xarModURL('logconfig',
-                                                       'admin',
-                                                       'switchonoff',
-                                                       array('authid' => xarSecGenAuthKey())),
-                                  // In order to display the tool tips and label in any language,
-                                  // we must encapsulate the calls in the xarML in the API.
-                                  'title' => xarML('Make logging stop working.'),
-                                  'label' => xarML('Turn logging off'),
-                                  'func' => 'switchonoff');
-        }
+    }
+    if (xarSecurityCheck('AdminLogConfig',0)) {
+        $menulinks[] = array('url'   => xarModURL('logconfig',
+                                                   'admin',
+                                                   'modifyconfig'),
+                              'title' => xarML('Modify the configuration settings of this module'),
+                              'label' => xarML('Modify Configuration'),
+                              'func' => 'modifyconfig');
+    }
         $menulinks[] = array('url'   => xarModURL('logconfig',
                                                    'admin',
                                                    'overview'),
                               'title' => xarML('Overview'),
                               'label' => xarML('Overview'),
                               'func' => 'main');
-    }
-        $menulinks[] = array('url'   => xarModURL('logconfig',
-                                                   'admin',
-                                                   'modifyconfig'),
-                              'title' => xarML('Modify the configuration settings of this module'),
-                              'label' => xarML('Modify Configuration'),
-                              );
     return $menulinks;
 }
 

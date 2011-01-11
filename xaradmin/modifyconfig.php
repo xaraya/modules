@@ -55,6 +55,32 @@
                         }
 
                         if (!xarVarFetch('logenabled','int',$logenabled,0,XARVAR_NOT_REQUIRED)) return;
+                        
+                        if ((xarSystemVars::get(sys::CONFIG, 'Log.Enabled') == 0) && ($logenabled == 1)) {
+                        // Turn logging on: create and save the log config file
+                            try {
+                                xarModAPIFunc('logconfig','admin','saveconfig');
+                            } catch (Exception $e) {
+                                throw new Exception(xarML('Could not save the log configuration file'));
+                            }
+                        } elseif ((xarSystemVars::get(sys::CONFIG, 'Log.Enabled') == 1) && ($logenabled == 0)) {
+                        // Turn logging off: delete the log config file
+                            $filename = xarModAPIFunc('logconfig','admin','filename');
+                        
+                            if (file_exists($filename)) {
+                                //Turn off
+                        
+                                //In a busy site, this might be dificult to delete.
+                                $time = time();
+                                while (!unlink($filename) && ( ($time-time()) < 3) ) {}
+                        
+                                 if (file_exists($filename)) {
+                                    $msg = xarML('Unable to delete file (#(1))', $filename);
+                                    xarErrorSet(XAR_SYSTEM_MESSAGE, 'UNABLE_DELETE_FILE', $msg);
+                                    return;
+                                 }
+                            }
+                        }
                         $variables = array('Log.Enabled' => $logenabled);
                         xarMod::apiFunc('installer','admin','modifysystemvars', array('variables'=> $variables));
                         xarController::redirect(xarModURL('logconfig', 'admin', 'modifyconfig', array('tab' => 'general')));

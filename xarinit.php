@@ -40,6 +40,7 @@ function logconfig_init()
     //This is used in admin/view
     xarModVars::set('logconfig','itemstypenumber',7);
 
+    xarRegisterMask('ManageLogConfig','All','logconfig','Item','All','ACCESS_DELETE');
     xarRegisterMask('AdminLogConfig','All','logconfig','Item','All','ACCESS_ADMIN');
 
     // Initialisation successful
