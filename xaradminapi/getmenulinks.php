@@ -69,6 +69,12 @@ function logconfig_adminapi_getmenulinks()
                               'label' => xarML('Overview'),
                               'func' => 'main');
     }
+        $menulinks[] = array('url'   => xarModURL('logconfig',
+                                                   'admin',
+                                                   'modifyconfig'),
+                              'title' => xarML('Modify the configuration settings of this module'),
+                              'label' => xarML('Modify Configuration'),
+                              );
     return $menulinks;
 }
 

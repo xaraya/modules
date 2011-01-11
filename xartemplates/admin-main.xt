@@ -20,7 +20,7 @@
                 <li>Turn logging on/off -- Makes Xaraya log according to the loggers configured or not.</li>
             </ul>
             <p>
-                The Xaraya loggers are shipped with the core and are located in /includes/log/loggers
+                The Xaraya loggers are shipped with the core and are located in lib/xaraya/log/loggers
             </p>
     
             <h3>Fallback System:</h3>
