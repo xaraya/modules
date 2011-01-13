@@ -276,6 +276,16 @@ function registration_user_register()
             if (empty($id)) return;
             xarModVars::set('roles', 'lastuser', $id);
 
+			if (xarModVars::get('registration', 'requirevalidation')) {
+				$ret = xarModApiFunc('registration','user','createnotify', array(  
+						'username'  => $fieldvalues['uname'],
+						'realname'  => $fieldvalues['name'],
+						'email'     => $fieldvalues['email'],
+						'password'      => (xarModVars::get('registration', 'chooseownpassword')) ? '' : $pass,
+						'id'       => $id,
+						'state'     => $fieldvalues['state'])); 
+			}
+
 /* Already done in createItem()
             //Make sure the user email setting is off unless the user sets it
             xarModUserVars::set('roles','allowemail', false, $id);
