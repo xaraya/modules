@@ -23,7 +23,7 @@
                     <input type="checkbox" name="agreetoterms" id="agreetoterms" value="1"/>
                 </span>
                 <label for="agreetoterms"  title="#xarML('Please check to agree to the website requirements')#">
-                    I agree to be bound by this website's 
+                    I agree to be bound by this website's
                     <a href="&xar-modurl-registration-user-privacy;">Privacy Policy</a>.
                 </label>
                     <xar:if condition="!empty($invalid['agreetoterms'])">
@@ -36,7 +36,7 @@
                     <input type="checkbox" name="agreetoterms" id="agreetoterms" value="1"/>
                 </span>
                 <label for="agreetoterms" title="#xarML('Please check to agree to the website requirements')#">
-                    I agree to be bound by this website's 
+                    I agree to be bound by this website's
                     <a href="&xar-modurl-registration-user-terms;" target="_blank">Terms of Use</a>.
                 </label>
                 <xar:if condition="!empty($invalid['agreetoterms'])">

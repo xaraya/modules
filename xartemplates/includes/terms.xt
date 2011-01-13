@@ -60,7 +60,7 @@
             <xar:set name="curnum">++$curnum</xar:set>
             <h3 id="service">#$curnum#.&#160;Our Service</h3>
                 <!-- **NOTE: Feel free to add in a general description of your web site. -->
-                 <p>Our web site and services provided to you 
+                 <p>Our web site and services provided to you
                 <!-- **NOTE: you may wish to soften the disclaimer -->
                     on and through our web site on an "AS IS" basis.You agree that the owners of this web
                     site exclusively reserve the right and may, at any time and without notice and any liability to you,

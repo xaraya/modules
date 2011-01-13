@@ -8,7 +8,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Registration module
- * @link http://xaraya.com/index.php/release/30205.html 
+ * @link http://xaraya.com/index.php/release/30205.html
  */
 /**
  * @author Jo Dalle Nogare <jojodee@xaraya.com>

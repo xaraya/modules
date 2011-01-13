@@ -62,7 +62,7 @@ function registration_userapi_checkvar($args)
 
             // check the length of the username
             // CHECKME: 255 characters for a username? really?
-            // TODO: make the min and max length configurable in roles. 
+            // TODO: make the min and max length configurable in roles.
             } elseif (strlen($username) > 255) {
                 $invalid = xarML('Your username is too long.');
             } else {

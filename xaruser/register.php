@@ -53,42 +53,42 @@ function registration_user_register()
     if ($lockvars['locked'] ==1) {
         return xarResponse::Forbidden($lockvars['message']);
     }
-    
+
     if (!xarVarFetch('phase', 'pre:trim:lower:enum:registerform:registerformcycle:checkregistration:createuser', $phase, 'registerform', XARVAR_NOT_REQUIRED)) return;
-    
+
     $regobjectname = xarModVars::get('registration', 'registrationobject');
 
     switch ($phase) {
         case 'registerformcycle':
             $fieldvalues = xarSession::getVar('Registration.UserInfo');
-        case 'registerform': // display form to user 
+        case 'registerform': // display form to user
         default:
-        
+
             // Check for disallowed IP here, pointless waiting until the user has attempted to register
             $ip = xarServer::getVar('REMOTE_ADDR');
             $invalid = xarMod::apiFunc('registration','user','checkvar', array('type'=>'ip', 'var'=>$ip));
             if (!empty($invalid)) {
                 return xarResponse::Forbidden($invalid);
-            }  
+            }
 
             // see if we have a minimum age requirement...
             // NOTE: this is done here instead of in the checkage phase used previously
-            // to prevent user bypass by going directly to the registerform phase 
+            // to prevent user bypass by going directly to the registerform phase
             $minage = xarModVars::get('registration', 'minage');
-            // if minage is empty we can skip this check entirely            
+            // if minage is empty we can skip this check entirely
             if (empty($minage)) {
                 $ageconfirm = true;
             } else {
-                // see if user confirmed agecheck by following the submitlink 
+                // see if user confirmed agecheck by following the submitlink
                 if (!xarVarFetch('ageconfirm', 'checkbox', $ageconfirm, false, XARVAR_NOT_REQUIRED))return;
-                // see if agecheck was confirmed previously (if we're in the form cycle) 
+                // see if agecheck was confirmed previously (if we're in the form cycle)
                 if (empty($ageconfirm))
                     $ageconfirm = xarSession::getVar('registration.ageconfirm');
-            } 
-            // unconfirmed, present the confirmation template to user 
+            }
+            // unconfirmed, present the confirmation template to user
             if (!$ageconfirm) {
                 $tpldata = array(
-                    'submitlink' => xarModURL('registration', 'user', 'register', 
+                    'submitlink' => xarModURL('registration', 'user', 'register',
                                         array('phase' => 'registerform', 'ageconfirm' => 1)),
                     'minage' => $minage,
                 );
@@ -96,15 +96,15 @@ function registration_user_register()
             }
             // age confirmed, set confirmation to session variable (for form cycle)
             xarSession::setVar('registration.ageconfirm', $ageconfirm);
-            
+
             // initialise registration object
             $object = DataObjectMaster::getObject(array('name' => $regobjectname));
             if (empty($object)) return;
 
-            if (isset($fieldvalues)) 
+            if (isset($fieldvalues))
                 $object->setFieldValues($fieldvalues);
-            
-            $item = array();          
+
+            $item = array();
             $item['module'] = 'registration';
             $item['itemid'] = '';
             $item['itemtype'] = xarRoles::ROLES_USERTYPE;
@@ -112,37 +112,37 @@ function registration_user_register()
             $item['values'] = $object->getFieldValues();
             $item['phase']  = $phase;
             $hooks = xarModCallHooks('item', 'new', '', $item);
-            
+
             $data = array();
-            $data['object'] = $object;            
+            $data['object'] = $object;
             $data['hookoutput'] = !empty($hooks) ? $hooks : '';
             $data['authid'] = xarSecGenAuthKey();
-            
+
             xarTplSetPageTitle(xarML('New Account'));
-            return xarTplModule('registration', 'user', 'registerform', $data);              
-            
+            return xarTplModule('registration', 'user', 'registerform', $data);
+
         break;
-        
+
         case 'checkregistration': // validate input and ask for account create confirmation
-        
+
             // this prevents users passing input via get params and by-passing age/ip check
             if (!xarSession::getVar('registration.ageconfirm'))
                 xarResponse::redirect(xarModURL('registration', 'user', 'register'));
 
             // initialise registration object
             $object = DataObjectMaster::getObject(array('name' => $regobjectname));
-            if (empty($object)) return;            
-            // Check object input            
+            if (empty($object)) return;
+            // Check object input
             $isvalid = $object->checkInput();
-            
+
             $invalid = array();
             // Check terms agreement
             if (!xarVarFetch('agreetoterms', 'checkbox', $agreetoterms, false, XARVAR_NOT_REQUIRED)) return;
             if (!$agreetoterms)
-                $invalid['agreetoterms'] = xarMod::apiFunc('registration','user','checkvar', 
+                $invalid['agreetoterms'] = xarMod::apiFunc('registration','user','checkvar',
                     array('type'=>'agreetoterms', 'var'=>$agreetoterms));
 
-            // check unique email if necessary 
+            // check unique email if necessary
             if (xarModVars::get('roles','uniqueemail')) {
                 $email = $object->properties['email']->value;
                 $user = xarMod::apiFunc('roles','user', 'get', array('email' => $email));
@@ -153,7 +153,7 @@ function registration_user_register()
                 }
             }
 
-            $item = array();          
+            $item = array();
             $item['module'] = 'registration';
             $item['itemid'] = '';
             $item['itemtype'] = xarRoles::ROLES_USERTYPE;
@@ -164,26 +164,26 @@ function registration_user_register()
 
             if (!$isvalid || !empty($invalid)) {
                 $data = array();
-                $data['object'] = $object;            
+                $data['object'] = $object;
                 $data['hookoutput'] = !empty($hooks) ? $hooks : '';
                 $data['authid'] = xarSecGenAuthKey();
                 $data['invalid'] = $invalid;
                 return xarTplModule('registration','user','registerform', $data);
             }
-            
+
             // Set values to session for form cycle and create user phases
             xarSession::setVar('Registration.UserInfo',$object->getFieldValues());
-            
+
             $data = array();
             $data['object'] = $object;
             $data['authid'] = xarSecGenAuthKey();
             $data['hookoutput'] = !empty($hooks) ? $hooks : '';
-            
+
             return xarTplModule('registration','user', 'confirmregistration', $data);
 
         break;
-        
-        case 'createuser': // create account 
+
+        case 'createuser': // create account
 
         /* commenting this out for now since payments doesn't exist in the repo's
             // Branch off to payment here if required
@@ -218,10 +218,10 @@ function registration_user_register()
             } else {
                 // If we don't branch off to payments do the check
                 if (!xarSecConfirmAuthKey()) return;
-            }        
+            }
         */
-        
-            if (!xarSecConfirmAuthKey()) 
+
+            if (!xarSecConfirmAuthKey())
                 return xarTplModule('privileges', 'user', 'errors', array('layout' => 'bad_author'));
 
             $fieldvalues = xarSessionGetVar('Registration.UserInfo');
@@ -254,11 +254,11 @@ function registration_user_register()
 
                 // Create confirmation code
                 $confcode = xarMod::apiFunc('roles', 'user', 'makepass');
-                $fieldvalues['validationcode'] = $confcode;            
+                $fieldvalues['valcode'] = $confcode;
             } else {
                 $confcode = '';
             }
-            
+
 
             // Update the field values and create the user
             $object->setFieldValues($fieldvalues,1);
@@ -276,15 +276,15 @@ function registration_user_register()
             if (empty($id)) return;
             xarModVars::set('roles', 'lastuser', $id);
 
-			if (xarModVars::get('registration', 'requirevalidation')) {
-				$ret = xarModApiFunc('registration','user','createnotify', array(  
-						'username'  => $fieldvalues['uname'],
-						'realname'  => $fieldvalues['name'],
-						'email'     => $fieldvalues['email'],
-						'password'      => (xarModVars::get('registration', 'chooseownpassword')) ? '' : $pass,
-						'id'       => $id,
-						'state'     => $fieldvalues['state'])); 
-			}
+            if (xarModVars::get('registration', 'requirevalidation')) {
+                $ret = xarModApiFunc('registration','user','createnotify', array(
+                        'username'  => $fieldvalues['uname'],
+                        'realname'  => $fieldvalues['name'],
+                        'email'     => $fieldvalues['email'],
+                        'password'      => (xarModVars::get('registration', 'chooseownpassword')) ? '' : $pass,
+                        'id'       => $id,
+                        'state'     => $fieldvalues['state']));
+            }
 
 /* Already done in createItem()
             //Make sure the user email setting is off unless the user sets it
@@ -315,7 +315,7 @@ function registration_user_register()
                               'pass'       => $pass,
                               'rememberme' => 0));
                 */
-                $data = xarTplModule('registration','user', 'accountstate', 
+                $data = xarTplModule('registration','user', 'accountstate',
                     array('state' => $fieldvalues['state']));
 
             } else if ($fieldvalues['state'] == xarRoles::ROLES_STATE_PENDING) {
@@ -330,9 +330,9 @@ function registration_user_register()
             xarSession::delVar('Registration.UserInfo');
             xarSession::delVar('registration.ageconfirm');
             return $data;
-        break;   
-    
+        break;
+
     }
-    
+
 }
 ?>

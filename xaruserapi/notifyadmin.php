@@ -30,8 +30,8 @@ function registration_userapi_notifyadmin ($args)
     if (!xarVarFetch('adminemail', 'str:1:', $adminemail, xarModVars::get('mail','adminemail'))) return;
     if (!xarVarFetch('adminname',  'str:1:', $adminname,  'Administrator', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('terms',      'str:1:', $terms,      '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    
-    // Bug 6546: get $values for the user if not passed in from calling function (eg, from roles) 
+
+    // Bug 6546: get $values for the user if not passed in from calling function (eg, from roles)
     if (!isset($values) && isset($args['id'])) {
         sys::import('modules.dynamicdata.class.objects.master');
         $regobjectname = xarModVars::get('registration', 'registrationobject');
@@ -40,8 +40,8 @@ function registration_userapi_notifyadmin ($args)
         if (empty($object)) return;
         $object->getItem(array('itemid' => $args['id']));
         $values = $object->getFieldValues();
-    }        
-    
+    }
+
     //set a title and link to the user role
     $id = $values['id'];
     $state = $values['state'];

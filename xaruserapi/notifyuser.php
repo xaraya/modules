@@ -36,7 +36,7 @@ function registration_userapi_notifyuser ($args)
             $message= xarTplModule('registration', 'user', 'newuserwelcome', $emailvars,'text');
         break;
     }
-    
+
     //send the email
     try {
         xarMod::apiFunc('mail', 'admin', 'sendmail',

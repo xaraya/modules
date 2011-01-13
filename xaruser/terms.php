@@ -21,7 +21,7 @@ function registration_user_terms()
     if (!xarSecurityCheck('ViewRegistration')) return;
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Terms of Usage')));
     $data['link'] = '';
-    
+
     /*$link = xarModVars::get('registration','termslink');
     if (!empty($link)) {
         $url_parts = parse_url($link);

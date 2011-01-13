@@ -19,7 +19,7 @@ function registration_user_review()
     $responses = $listobject->getItems(
                              array('where'    => $where,
                                    ));
-                                   
+
     // Check if this is allowed
     if (!xarUserIsLoggedIn() || !xarModVars::get('registration','allowreview') || count($responses) == 0) {
         xarResponse::redirect(xarModURL('roles', 'user', 'account'));

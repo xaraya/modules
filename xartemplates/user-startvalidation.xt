@@ -22,8 +22,8 @@
     <xar:else />
         <form action="&xar-modurl-roles-user-getvalidation;" method="post" enctype="application/x-www-form-urlencoded">
             <fieldset>
-                <legend>                    
-                    Start Validation                    
+                <legend>
+                    Start Validation
                 </legend>
                 <div class="xar-form-input-wrapper">
                       <p>Please enter your username and validation code below:</p>
@@ -51,8 +51,8 @@
         <p>If you did not receive your validation code, we will try to resend it now.</p>
         <form action="&xar-modurl-roles-user-getvalidation;" method="post" enctype="application/x-www-form-urlencoded">
             <fieldset>
-                <legend>                    
-                    Resend Validation                    
+                <legend>
+                    Resend Validation
                 </legend>
                 <div class="xar-form-input-wrapper">
                     <label for="unameresend" class="xar-form-label" title="#xarML('Please enter your username')#">

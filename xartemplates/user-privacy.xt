@@ -55,7 +55,7 @@
     <xar:set name="curnum">++$curnum</xar:set>
     <h3 id="collection">#$curnum#.&#160;Collection of Data</h3>
         <p>
-            
+
                 Our registration process requires only a valid e-mail address and a unique user ID and
                 password. Providing us with other information is at your option. Please take note that
                 your user name, e-mail address, or other submissions that you make on this site may contain
@@ -63,7 +63,7 @@
                 this site. Like many web sites, we may also automatically receive general information that
                 is contained in our server log files such as your IP address and cookie information. Information
                 about how advertising may be served on this site (if at all) is set forth below.
-            
+
         </p>
 
     <xar:set name="curnum">++$curnum</xar:set>
@@ -81,7 +81,7 @@
                 in the same manner as we can as set forth in this Policy. In the event you choose to use links
                 that appear on our site to visit other web sites, you are advised to read the privacy policies
                 that appear on those sites.
-            
+
         </p>
 
     <xar:set name="curnum">++$curnum</xar:set>

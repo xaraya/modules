@@ -3,7 +3,7 @@
  * @author  Marc Lutolf
  * get a particular field value of a particular member
  * @param int   id  user's role id
- * @param str   field  field name (dataprooerty name) 
+ * @param str   field  field name (dataprooerty name)
  * @return mixed
  */
 
