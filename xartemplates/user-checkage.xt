@@ -19,7 +19,7 @@
         </p>
         <p>
 
-            <a href="&xar-baseurl;">
+            <a href="#xarServer::getBaseURL()#">
                 <xar:ml><xar:mlstring>I am not #(1) or older</xar:mlstring><xar:mlvar>#$minage#</xar:mlvar></xar:ml>
             </a>
         </p>

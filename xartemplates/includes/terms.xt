@@ -85,7 +85,7 @@
                     <xar:mlvar>#$mina#</xar:mlvar>
                 </xar:ml>
                 </xar:if>
-                 When registering, you explicitly agree to our <a href="&xar-modurl-registration-user-terms;">Terms of Use</a> and as may be modified by us from time to time and available here.</p>
+                 When registering, you explicitly agree to our <a href="#xarModURL('registration','user','terms')#">Terms of Use</a> and as may be modified by us from time to time and available here.</p>
 
         <xar:if condition="xarModVars::get('registration', 'showprivacy')">
             <xar:set name="curnum">++$curnum</xar:set>

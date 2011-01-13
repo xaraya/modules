@@ -2,7 +2,7 @@
     <xar:comment>
         License: GPL http://www.gnu.org/copyleft/gpl.html
     </xar:comment>
-    <form action="&xar-modurl-authsystem-user-login;" method="post" class="xar-margin-none">
+    <form action="#xarModURL('authsystem','user','login')#" method="post" class="xar-margin-none">
         <p>
             <input type="hidden" name="redirecturl" id="returnurl#$blockid#" value="#$return_url#"/>
             <label for="uname#$blockid#" title="#xarML('Enter your user name')#">
@@ -30,14 +30,14 @@
 
         <xar:if condition="xarModVars::get('registration', 'allowregistration')">
             <p>
-                <a href="&xar-modurl-registration-user-main;">
+                <a href="#xarModURL('registration','user','main')#">
                         Register new account
                 </a>
             </p>
         </xar:if>
 
         <p>
-            <a href="&xar-modurl-roles-user-lostpassword;">
+            <a href="#xarModURL('roles','user','lostpassword')#">
                 Request new password
             </a>
         </p>

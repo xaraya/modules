@@ -12,7 +12,7 @@
         <xar:set name="enc_type">'application/x-www-form-urlencoded'</xar:set>
     </xar:if>
 
-    <form method="post" id="post" action="&xar-modurl-registration-user-register;" enctype="#$enc_type#">
+    <form method="post" id="post" action="#xarModURL('registration','user','register')#" enctype="#$enc_type#">
         <fieldset>
         <legend>Registration Requirements</legend>
 
@@ -24,7 +24,7 @@
                 </span>
                 <label for="agreetoterms"  title="#xarML('Please check to agree to the website requirements')#">
                     I agree to be bound by this website's
-                    <a href="&xar-modurl-registration-user-privacy;">Privacy Policy</a>.
+                    <a href="#xarModURL('registration','user','privacy')#">Privacy Policy</a>.
                 </label>
                     <xar:if condition="!empty($invalid['agreetoterms'])">
                         <span class="xar-error">#$invalid['agreetoterms']#</span>
@@ -37,7 +37,7 @@
                 </span>
                 <label for="agreetoterms" title="#xarML('Please check to agree to the website requirements')#">
                     I agree to be bound by this website's
-                    <a href="&xar-modurl-registration-user-terms;" target="_blank">Terms of Use</a>.
+                    <a href="#xarModURL('registration','user','terms')#" target="_blank">Terms of Use</a>.
                 </label>
                 <xar:if condition="!empty($invalid['agreetoterms'])">
                     <span class="xar-error">Please agree to the terms</span>
@@ -50,7 +50,7 @@
                 </span>
                 <label for="agreetoterms"  title="#xarML('Please check to agree to the website requirements')#">
                     I agree to be bound by this website's&#160;
-                    <a href="&xar-modurl-registration-user-terms;" target="_blank">Terms of Use</a>&#160;and&#160;<a href="&xar-modurl-registration-user-privacy;">Privacy Policy</a>.
+                    <a href="#xarModURL('registration','user','terms')#" target="_blank">Terms of Use</a>&#160;and&#160;<a href="#xarModURL('registration','user','privacy')#">Privacy Policy</a>.
                  </label>
             </div>
                 <xar:if condition="!empty($invalid['agreetoterms'])">

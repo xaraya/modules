@@ -14,7 +14,7 @@
         Modify Profile
     </h2>
 
-    <form method="post" action="&xar-modurl-dynamicdata-admin-update;">
+    <form method="post" action="#xarModURL('dynamicdata','admin','update')#">
       <fieldset>
         <legend>Modify profile details</legend>
 
