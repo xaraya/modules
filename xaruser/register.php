@@ -36,6 +36,8 @@ function registration_user_register()
 {
     if (!xarSecurityCheck('ViewRegistration')) return;
 
+	if (!xarVarFetch('returnurl', 'str', $data['returnurl'], NULL, XARVAR_NOT_REQUIRED)) return; 
+
     //If a user is already logged in, no reason to see this.
     //We are going to send them to their account.
     if (xarUserIsLoggedIn()) {
@@ -113,12 +115,13 @@ function registration_user_register()
             $item['phase']  = $phase;
             $hooks = xarModCallHooks('item', 'new', '', $item);
 
-            $data = array();
+			//don't unset $data['returnurl'], if any is set
+            //$data = array();
             $data['object'] = $object;
             $data['hookoutput'] = !empty($hooks) ? $hooks : '';
             $data['authid'] = xarSecGenAuthKey();
 
-            xarTplSetPageTitle(xarML('New Account'));
+            xarTplSetPageTitle(xarML('New Account'));  
             return xarTplModule('registration', 'user', 'registerform', $data);
 
         break;
@@ -174,7 +177,8 @@ function registration_user_register()
             // Set values to session for form cycle and create user phases
             xarSession::setVar('Registration.UserInfo',$object->getFieldValues());
 
-            $data = array();
+			//don't unset $data['returnurl'], if any is set
+            //$data = array();
             $data['object'] = $object;
             $data['authid'] = xarSecGenAuthKey();
             $data['hookoutput'] = !empty($hooks) ? $hooks : '';
@@ -277,6 +281,12 @@ function registration_user_register()
             xarModVars::set('roles', 'lastuser', $id);
 
             if (xarModVars::get('registration', 'requirevalidation')) {
+
+				//for use in other modules / themes
+				if ($data['returnurl']) {
+					xarSession::setVar('Registration.returnurl',$data['returnurl']);
+				}
+
                 $ret = xarModApiFunc('registration','user','createnotify', array(
                         'username'  => $fieldvalues['uname'],
                         'realname'  => $fieldvalues['name'],
