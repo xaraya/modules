@@ -105,6 +105,9 @@ function registration_user_register()
             $object = DataObjectMaster::getObject(array('name' => $regobjectname));
             if (empty($object)) return;
 
+			$properties = $object->getProperties();
+			$data['statepropid'] = $properties['state']->id;
+
             if (isset($fieldvalues))
                 $object->setFieldValues($fieldvalues);
 
@@ -114,6 +117,7 @@ function registration_user_register()
             $item['itemtype'] = xarRoles::ROLES_USERTYPE;
             // CHECKME: hooks don't normally need these, are they specific to a particular hook?
             $item['values'] = $object->getFieldValues();
+
             $item['phase']  = $phase;
             $hooks = xarModCallHooks('item', 'new', '', $item);
 
@@ -139,10 +143,12 @@ function registration_user_register()
             $isvalid = $object->checkInput();
 			$values = $object->getFieldValues();
 
-			if (!xarVarFetch('agreetoterms', 'checkbox', $values['agreetoterms'], false, XARVAR_NOT_REQUIRED))return;
+			if (!xarVarFetch('agreetoterms', 'checkbox', $values['agreetoterms'], false, XARVAR_NOT_REQUIRED)) return;
 
-            $invalid['agreetoterms'] = xarMod::apiFunc('registration','user','checkvar',
+			if (xarModVars::get('registration', 'showterms')) {
+				$invalid['agreetoterms'] = xarMod::apiFunc('registration','user','checkvar',
                     array('type'=>'agreetoterms', 'var'=> $values['agreetoterms']));
+			}
 
             $invalid['email'] = xarMod::apiFunc('registration','user','checkvar',
                     array('type'=>'email', 'var'=> $values['email']));
@@ -177,7 +183,7 @@ function registration_user_register()
             }
 
             // Set values to session for form cycle and create user phases
-            xarSession::setVar('Registration.UserInfo',$object->getFieldValues());
+            xarSession::setVar('Registration.UserInfo',$values);
 
             $data['object'] = $object;
             $data['authid'] = xarSecGenAuthKey();

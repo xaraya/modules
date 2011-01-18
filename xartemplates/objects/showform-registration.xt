@@ -4,7 +4,9 @@
     <xar:foreach in="$properties" key="$name" value="$property">
         <div class="xar-form-input-wrapper">
             
-	    <xar:data-label property="$properties[$name]" for="id"/>
+	    <xar:if condition="$name ne 'state'">
+		<xar:data-label property="$properties[$name]" for="id"/>
+	    </xar:if>
             <xar:if condition="$name eq 'name'">
                 <xar:data-input property="$properties[$name]" layout="single"/>
             <xar:else/>

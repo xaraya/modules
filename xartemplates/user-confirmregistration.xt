@@ -6,7 +6,7 @@
     </div>
     <div class="xar-mod-body">
         <form action="#xarModURL('registration','user','register')#" method="post" enctype="application/x-www-form-urlencoded">
-            <xar:data-display object="$object"/>
+            <xar:data-display object="$object" tplmodule="registration" template="registration"/>
 
             <!-- all the hooks here, loop over each one of them -->
             <xar:if condition="!empty($hookoutput)">

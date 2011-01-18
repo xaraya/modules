@@ -4,6 +4,10 @@
     <span class="xar-mod-title">Create User Account</span>
 </div>
 
+<style>
+##dd_#$statepropid# { display:none; }
+</style>
+
 <div class="xar-mod-body">
     <h2>Registration</h2>
     <xar:if condition="$object:upload">
