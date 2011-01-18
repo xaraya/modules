@@ -60,6 +60,8 @@ function registration_user_register()
 
     $regobjectname = xarModVars::get('registration', 'registrationobject');
 
+	$data['invalid'] = array();
+
     switch ($phase) {
         case 'registerformcycle':
             $fieldvalues = xarSession::getVar('Registration.UserInfo');
@@ -115,8 +117,6 @@ function registration_user_register()
             $item['phase']  = $phase;
             $hooks = xarModCallHooks('item', 'new', '', $item);
 
-			//don't unset $data['returnurl'], if any is set
-            //$data = array();
             $data['object'] = $object;
             $data['hookoutput'] = !empty($hooks) ? $hooks : '';
             $data['authid'] = xarSecGenAuthKey();
@@ -129,7 +129,7 @@ function registration_user_register()
         case 'checkregistration': // validate input and ask for account create confirmation
 
             // this prevents users passing input via get params and by-passing age/ip check
-            if (!xarSession::getVar('registration.ageconfirm'))
+            if (!xarSession::getVar('registration.ageconfirm')) 
                 xarResponse::redirect(xarModURL('registration', 'user', 'register'));
 
             // initialise registration object
@@ -137,36 +137,38 @@ function registration_user_register()
             if (empty($object)) return;
             // Check object input
             $isvalid = $object->checkInput();
+			$values = $object->getFieldValues();
 
-            $invalid = array();
-            // Check terms agreement
-            if (!xarVarFetch('agreetoterms', 'checkbox', $agreetoterms, false, XARVAR_NOT_REQUIRED)) return;
-            if (!$agreetoterms)
-                $invalid['agreetoterms'] = xarMod::apiFunc('registration','user','checkvar',
-                    array('type'=>'agreetoterms', 'var'=>$agreetoterms));
+			if (!xarVarFetch('agreetoterms', 'checkbox', $values['agreetoterms'], false, XARVAR_NOT_REQUIRED))return;
 
-            // check unique email if necessary
-            if (xarModVars::get('roles','uniqueemail')) {
-                $email = $object->properties['email']->value;
-                $user = xarMod::apiFunc('roles','user', 'get', array('email' => $email));
-                //if ($user) throw new DuplicateException(array('email',$email));
-                if ($user) {
-                    $isvalid = false;
-                    $object->properties['email']->invalid = xarML('This email address is already registered');
-                }
-            }
+            $invalid['agreetoterms'] = xarMod::apiFunc('registration','user','checkvar',
+                    array('type'=>'agreetoterms', 'var'=> $values['agreetoterms']));
+
+            $invalid['email'] = xarMod::apiFunc('registration','user','checkvar',
+                    array('type'=>'email', 'var'=> $values['email']));
+
+			$invalid['uname'] = xarMod::apiFunc('registration','user','checkvar',
+                    array('type'=>'uname', 'var'=> $values['uname']));
+			
+			/*$invalid['password'] = xarMod::apiFunc('registration','user','checkvar',
+                    array('type'=>'password', 'var'=> $values['password']));*/
+
+			foreach ($invalid as $key=>$value) {
+				if (empty($invalid[$key])) unset($invalid[$key]);
+			}
 
             $item = array();
             $item['module'] = 'registration';
             $item['itemid'] = '';
             $item['itemtype'] = xarRoles::ROLES_USERTYPE;
             // CHECKME: hooks don't normally need these, are they specific to a particular hook?
-            $item['values'] = $object->getFieldValues();
+            $item['values'] = $values;
+
             $item['phase']  = $phase;
             $hooks = xarModCallHooks('item', 'new', '', $item);
 
             if (!$isvalid || !empty($invalid)) {
-                $data = array();
+                $data = $values; // ?
                 $data['object'] = $object;
                 $data['hookoutput'] = !empty($hooks) ? $hooks : '';
                 $data['authid'] = xarSecGenAuthKey();
@@ -177,8 +179,6 @@ function registration_user_register()
             // Set values to session for form cycle and create user phases
             xarSession::setVar('Registration.UserInfo',$object->getFieldValues());
 
-			//don't unset $data['returnurl'], if any is set
-            //$data = array();
             $data['object'] = $object;
             $data['authid'] = xarSecGenAuthKey();
             $data['hookoutput'] = !empty($hooks) ? $hooks : '';

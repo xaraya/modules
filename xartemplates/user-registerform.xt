@@ -16,7 +16,8 @@
         <fieldset>
         <legend>Registration Requirements</legend>
 
-            <xar:data-form object="$object"/>
+            <xar:data-form object="$object" invalid="$invalid" tplmodule="registration" template="registration"/>
+
             <xar:if condition="xarModVars::get('registration','showterms') eq 0 and xarModVars::get('registration','showprivacy') eq 1">
             <div class="xar-form-input-wrapper">
                 <span class="xar-form-label-short">

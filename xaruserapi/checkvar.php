@@ -54,21 +54,21 @@ function registration_userapi_checkvar($args)
             }
             break;
 
-        case 'username':
-            $username = $var;
+        case 'uname':
+            $uname = $var;
             // check if the username is empty
-            if (empty($username)) {
+            if (empty($uname)) {
                 $invalid = xarML('You must provide a preferred username to continue.');
 
             // check the length of the username
             // CHECKME: 255 characters for a username? really?
             // TODO: make the min and max length configurable in roles.
-            } elseif (strlen($username) > 255) {
+            } elseif (strlen($uname) > 255) {
                 $invalid = xarML('Your username is too long.');
             } else {
                 // check for duplicate usernames
                 $user = xarMod::apiFunc('roles', 'user', 'get',
-                                array('uname' => $username));
+                                array('uname' => $uname));
 
                 if ($user != false) {
                     unset($user);
@@ -80,7 +80,7 @@ function registration_userapi_checkvar($args)
                     if (!empty($disallowednames)) {
                         $disallowednames = unserialize($disallowednames);
                         $disallowednames = explode("\r\n", $disallowednames);
-                        if (in_array ($username, $disallowednames)) {
+                        if (in_array ($uname, $disallowednames)) {
                             $invalid = xarML('That username is either reserved or not allowed on this website');
                         }
                     }
@@ -95,7 +95,7 @@ function registration_userapi_checkvar($args)
             }
             break;
 
-        case 'pass1':
+        /*case 'pass1':
             break;
 
         case 'pass2':
@@ -106,7 +106,14 @@ function registration_userapi_checkvar($args)
             } elseif ($pass1 != $pass2) {
                 $invalid = xarML('The passwords do not match');
             }
-            break;
+            break;*/
+		
+		case 'password':
+			$password = $var;
+			if (!$password) {
+                $invalid = xarML('The password is invalid.  Please make sure both passwords match.');
+            }
+			break;
 
         case 'email':
         default:
