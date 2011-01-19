@@ -36,7 +36,8 @@ function registration_user_register()
 {
     if (!xarSecurityCheck('ViewRegistration')) return;
 
-	if (!xarVarFetch('returnurl', 'str', $data['returnurl'], NULL, XARVAR_NOT_REQUIRED)) return; 
+	if (!xarVarFetch('redirecturl', 'str', $redirecturl, NULL, XARVAR_NOT_REQUIRED)) return; 
+	$data['redirecturl'] = $redirecturl;
 
     //If a user is already logged in, no reason to see this.
     //We are going to send them to their account.
@@ -288,18 +289,12 @@ function registration_user_register()
 
             if (xarModVars::get('registration', 'requirevalidation')) {
 
-				//for use in other modules / themes
-				if ($data['returnurl']) {
-					xarSession::setVar('Registration.returnurl',$data['returnurl']);
-				}
+				$vargs = $fieldvalues;
+                $vargs['password'] = (xarModVars::get('registration', 'chooseownpassword')) ? '' : $pass;
+                $vargs['id'] = $id;
+				if (isset($redirecturl)) $vargs['redirecturl'] = $redirecturl;
 
-                $ret = xarModApiFunc('registration','user','createnotify', array(
-                        'username'  => $fieldvalues['uname'],
-                        'realname'  => $fieldvalues['name'],
-                        'email'     => $fieldvalues['email'],
-                        'password'      => (xarModVars::get('registration', 'chooseownpassword')) ? '' : $pass,
-                        'id'       => $id,
-                        'state'     => $fieldvalues['state']));
+                $ret = xarModApiFunc('registration','user','createnotify', $vargs);
             }
 
 /* Already done in createItem()

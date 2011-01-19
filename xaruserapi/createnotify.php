@@ -38,6 +38,7 @@ function registration_userapi_createnotify($args)
                             'mailtype'     => 'confirmation',
                             'ip'           => xarServer::getVar('REMOTE_ADDR'),
                             'pass'         => $password );
+		if (isset($redirecturl)) $emailargs['redirecturl'] = $redirecturl;
 
         if (!xarMod::apiFunc('roles', 'admin', 'senduseremail', $emailargs)) {
             $msg = xarML('Problem sending confirmation email');

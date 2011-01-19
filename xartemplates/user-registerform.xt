@@ -87,8 +87,8 @@
             <div class="xar-form-input-wrapper-after">
                 <input type="submit" value="#xarML('Submit')#"/>
             </div>
-	    <xar:if condition="isset($returnurl)">
-		<input type="hidden" name="returnurl" id="returnurl" value="#$returnurl#"/>
+	    <xar:if condition="isset($redirecturl)">
+		<input type="hidden" name="redirecturl" id="returnurl" value="#$redirecturl#"/>
 	    </xar:if>
             <input type="hidden" name="authid" id="authid" value="#$authid#"/>
             <input type="hidden" name="phase" id="phase" value="checkregistration"/>
