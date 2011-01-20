@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <table class="xar-fullwidth">
+        <xar:foreach in="$properties" key="$name" value="$property">
+		<xar:if condition="$name eq 'password'">
+			<xar:data-output property="$properties['password']" hidden="hidden"/>
+		<xar:else/>
+		    <tr><td>
+		    <div class="xar-form-input-wrapper">
+			<xar:data-label property="$properties[$name]" for="id"/>
+			<xar:if condition="$name eq 'name'">
+			    <xar:data-output property="$properties[$name]" layout="single"/>
+			<xar:else/>
+			    <xar:data-output property="$properties[$name]"/>
+			</xar:if>
+		    </div>
+		    </td></tr> 
+	        </xar:if>
+        </xar:foreach>
+    </table>
+</xar:template>

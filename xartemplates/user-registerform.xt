@@ -4,10 +4,6 @@
     <span class="xar-mod-title">Create User Account</span>
 </div>
 
-<style>
-##dd_#$statepropid# { display:none; }
-</style>
-
 <div class="xar-mod-body">
     <h2>Registration</h2>
     <xar:if condition="$object:upload">
@@ -20,7 +16,7 @@
         <fieldset>
         <legend>Registration Requirements</legend>
 
-            <xar:data-form object="$object" invalid="$invalid" tplmodule="registration" template="registration"/>
+            <xar:data-form object="$object" invalid="$invalid" tplmodule="registration"/>
 
             <xar:if condition="xarModVars::get('registration','showterms') eq 0 and xarModVars::get('registration','showprivacy') eq 1">
             <div class="xar-form-input-wrapper">

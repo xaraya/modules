@@ -46,6 +46,7 @@ function registration_init()
     $module = 'registration';
     $objects = array(
                    'registration_users',
+					'registration_compact',
                      );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
