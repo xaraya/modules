@@ -49,7 +49,7 @@
                 <xar:mlstring>
                     on
                 </xar:mlstring>
-                #xarLocaleFormatDate("%B %d, %Y %I:%M %p",$loop:item['date'])#
+             #xarLocaleFormatDate("%B %d, %Y %I:%M %p",$loop:item['date'])#
             </span>
 
         </div>
