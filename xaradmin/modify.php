@@ -60,6 +60,7 @@ function downloads_admin_modify()
 	$object->properties['filename']->initialization_basedirectory = $data['directory'];
 	$object->properties['filename']->initialization_basepath = $data['basepath'];
 
+	$data['roleid'] = $object->properties['roleid']->value;
 	$data['label'] = $object->label;
 
     if ($data['confirm']) {

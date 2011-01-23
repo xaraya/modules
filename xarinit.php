@@ -174,11 +174,55 @@ function downloads_init()
  */
 function downloads_upgrade($oldversion)
 {
-    // Upgrade dependent on old version number
-    switch($oldversion) {
-        case '2.0.0':
-            // Code to upgrade from version 2.0 goes here
-            break;
+	$old = str_replace('.','',$oldversion);
+	$old = (int)$old;
+    if($old < 62) {
+		try {
+			$dbconn =& xarDB::getConn();
+			$tables =& xarDB::getTables();
+
+			$prefix = xarDB::getPrefix();
+			$tables['downloads'] = $prefix . '_downloads';
+			$query = xarDBAlterTable($tables['downloads'], array(
+				 'command' => 'add',
+				 'field' => 'roleid',
+				 'type' => 'integer',
+				'unsigned' => true, 
+				'null' => false,
+			 )); 
+
+			sys::import('modules.dynamicdata.class.objects.master');
+			$object = DataObjectMaster::getObject(array(
+				'name' => 'downloads'
+			));
+			$objectid = $object->objectid;
+			xarMod::apiFunc('downloads','util','upgradepre062',array(
+				'objectid' => $objectid,
+				'prefix' => $prefix
+				));
+
+			if($objectid) {
+				$dbconn->Execute($query);
+				$dbconn->commit();
+			}
+
+			$object = DataObjectMaster::getObjectList(array('name' => 'downloads'));
+
+			$items = $object->getItems();
+			if (!empty($items)) {
+				foreach ($items as $key => $value) {
+					$object = DataObjectMaster::getObject(array('name' => 'downloads'));
+					$object->getItem(array('itemid' => $key));
+					$object->properties['roleid']->setValue(6);
+					$object->updateItem();
+				}
+			}
+
+		} catch (Exception $e) {
+			$dbconn->rollback();
+			throw $e;
+		}
+       
     }
 
     // Update successful

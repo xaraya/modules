@@ -68,7 +68,8 @@
            <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                 <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
-                <input type="hidden" name="confirm" id="confirm" value="true" /> 
+                <input type="hidden" name="roleid" id="roleid" value="#$roleid#" />
+		<input type="hidden" name="confirm" id="confirm" value="true" /> 
                 &#160;&#160;&#160;
                 <input type="submit" name="saveedit" id="saveedit" value="#xarML('Save and Edit')#" />
 			&#160; 
