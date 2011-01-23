@@ -42,7 +42,8 @@ function downloads_init()
 			'status' => array('type' => 'varchar', 'size' => 1, 'null' => false, 'charset' => $charset),
 						'filename' => array('type' => 'varchar','size' => 254,'null' => false, 'charset' => $charset),
 						'directory' => array('type' => 'varchar','size' => 254, 'null' => false, 'charset' => $charset),
-						'basepath' => array('type' => 'varchar','size' => 254, 'null' => false, 'charset' => $charset)
+						'roleid' =>  array('type' => 'integer', 'unsigned' => true, 'null' => false),
+						//'basepath' => array('type' => 'varchar','size' => 254, 'null' => false, 'charset' => $charset)
 			);
         $query = xarDBCreateTable($tables['downloads'],$fields);
         $dbconn->Execute($query);
@@ -60,6 +61,8 @@ function downloads_init()
         $dbconn->rollback();
         throw $e;
     }
+
+	PropertyRegistration::importPropertyTypes(false,array('modules/downloads/xarproperties'));
 
     $module = 'downloads';
     $objects = array(
@@ -79,7 +82,7 @@ function downloads_init()
 	xarModVars::set('downloads','file_extensions','gif, jpg, jpeg, png, pdf, doc, txt');
 	xarModVars::set('downloads','maximum_filesize','1000000');
 	xarModVars::set('downloads','auto_approve_privilege','Administration');
-	xarModVars::set('downloads','admin_list_directories','1');
+	xarModVars::set('downloads','admin_list_directories','0');
 	xarModVars::set('downloads','admin_list_fncharlimit','30');
 	xarModVars::set('downloads','enable_filters',true);
 	xarModVars::set('downloads','show_xarmodurl','1');

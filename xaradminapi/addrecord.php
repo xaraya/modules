@@ -32,6 +32,7 @@ function downloads_adminapi_addrecord($args)
 	$filename = str_replace('_',' ',$filename);
 	$filename = str_replace('-',' ',$filename);
 	$filename = str_replace('.',' ',$filename);
+	$object->properties['roleid']->setValue(xarUserGetVar('id'));
 	$object->properties['title']->setValue($filename);
 	$object->properties['status']->setValue($status);
 

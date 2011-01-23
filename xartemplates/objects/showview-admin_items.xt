@@ -48,6 +48,8 @@
 		<xar:comment>we're not sorting on this column, so we should make the column head a link</xar:comment>
 		<xar:if condition="$name eq 'filename'">
 			<a href="#xarModURL('downloads','admin','view', array('sortfield' => $name))#">Filename</a>
+		<xar:elseif condition="$name eq 'roleid'" />
+			User
 		<xar:else />
 			<a href="#xarModURL('downloads','admin','view', array('sortfield' => $name))#"><xar:data-label property="$properties[$name]" /></a>
 		</xar:if>

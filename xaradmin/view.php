@@ -85,7 +85,7 @@ function downloads_admin_view()
 							'startnum'  => $startnum,
 							'numitems'  => $numitems,
 							'sort'      => $sort,
-							'fieldlist' => 'itemid,title,directory,filename'
+							'fieldlist' => 'itemid,title,directory,filename,roleid'
 							));
 
     $data['count'] = $list->countItems();
