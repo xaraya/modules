@@ -114,7 +114,7 @@ function publications_init()
 #
 # Set up modvars
 #
-    xarModVars::set('publications', 'itemsperpage', 20);
+    xarModVars::set('publications', 'items_per_page', 20);
     xarModVars::set('publications', 'useModuleAlias',0);
     xarModVars::set('publications', 'aliasname','Publications');
     xarModVars::set('publications', 'defaultmastertable','publications_documents');
@@ -355,7 +355,7 @@ function publications_delete()
     // Delete module variables
 
     //FIXME: This is breaking the removal of the module...
-    xarModVars::delete('publications', 'itemsperpage');
+    xarModVars::delete('publications', 'items_per_page');
 
     xarModVars::delete('publications', 'SupportShortURLs');
 
