@@ -178,10 +178,10 @@
                             </td>
                             <td valign="top" style="width: 50%">
                                 <div class="xar-form-input-wrapper">
-                                    <label for="itemsperpage" class="help xar-form-label" title="#xarML('Number of items to display on user view.')#">
+                                    <label for="items_per_page" class="help xar-form-label" title="#xarML('Number of items to display on user view.')#">
                                         Items per page on user view
                                     </label> 
-                                    <input type="text" name="settings[itemsperpage]" id="settings_itemsperpage" size="3" maxlength="3" value="#$settings['itemsperpage']#" />
+                                    <input type="text" name="settings[items_per_page]" id="settings_items_per_page" size="3" maxlength="3" value="#$settings['items_per_page']#" />
                                 </div>
                                 <div class="xar-form-input-wrapper">
                                     <label for="adminitemsperpage" class="help xar-form-label" title="#xarML('Number of items to display on admin view.')#">
