@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+	<div class="caption">
+	#$caption#
+	</div>
+
+	<img src="#$image_url#" alt="#$description#" title="#$description#" width="#$image_width#" height="#$image_height#" />
+
+	<xar:if condition="!empty($editurl)">
+		<div class="adminlink">[ <a href="#$editurl#">Edit this image</a> ]</div>
+	</xar:if>
+
+</xar:template>

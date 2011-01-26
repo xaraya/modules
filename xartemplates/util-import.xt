@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+ 
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">Content Administration</span>
+    </div>
+    <div class="xar-mod-body">
+
+        <xar:template type="module" file="admintabs"/>
+
+        <h2>Import Content Type</h2> 
+
+        <xar:if condition="!empty($warning)">
+            <span class="xar-error">#$warning#</span>
+        </xar:if>
+        <form method="post" action="#xarModURL('content','util','import')#">
+            <fieldset>
+             
+                <div class="xar-form-input-wrapper">
+                    <xar:var name="label">Object definition to import.</xar:var>
+                    <label for="xml" title="#$label#" class="xar-form-label">
+                        Paste the object definition here:
+                    </label>
+                    <div class="xar-form-container-after">
+                        <xar:set name="empty">''</xar:set>
+                        <textarea name="xml" id="xml" class="xar-form-textarealarge">#$empty#</textarea>
+                    </div>
+                </div>
+                
+            </fieldset>
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                    <xar:var name="label">Submit</xar:var>
+                    <input type="submit" value="#$label#"/>
+                </div>
+            </fieldset>
+        </form>
+ Notes: 
+ <ul>
+ <li>To export a content type, use the <a href="#xarmodurl('dynamicdata','util','export')#">dynamicdata export utility</a> to export its object definition.</li>
+ <li>To import a content type, use the form above.</li></ul>
+    </div>
+</xar:template>

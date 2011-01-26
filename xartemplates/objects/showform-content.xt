@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+        <xar:foreach in="$properties" key="$name" value="$property">
+            <div class="xar-form-input-wrapper">
+                <xar:if condition="$_GET['func'] eq 'modify' and $name eq 'model'">
+			<xar:data-label property="$properties[$name]" for="id" />
+			 #$properties[$name]->showOutput(array('value'))#
+		<xar:elseif condition="$name eq 'path_module'" />
+			<xar:if condition="xarSecurityCheck('EditPath',0)">
+				<xar:data-label property="$properties['path_module']" for="id" />
+				<xar:data-input property="$properties['path_module']" value="$pathval" />
+			<xar:else />
+				<input type="hidden" name="dd_#$properties['path_module']->id#" value="#$pathval#" />
+			</xar:if>
+		<xar:elseif condition="$_GET['func'] eq 'new' and ($name eq 'date_modified' or $name eq 'date_created')" />
+			<xar:data-input property="$properties[$name]" />
+		<xar:else/>
+			<xar:data-label property="$properties[$name]" for="id" />
+			<xar:data-input property="$properties[$name]" />
+		</xar:if>
+            </div>
+        </xar:foreach> 
+
+</xar:template>

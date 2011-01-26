@@ -1,0 +1,54 @@
+<object name="content_types">
+  <objectid>38</objectid>
+  <label>Content Types</label>
+  <module_id>1015</module_id>
+  <itemtype>2</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:1:{s:12:"filterfields";s:23:"label,Label;model,Model";}</config>
+  <isalias>true</isalias>
+  <properties>
+    <property name="itemid">
+      <id>296</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_content_types.itemid</source>
+      <status>67</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="label">
+      <id>297</id>
+      <label>Label</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_content_types.label</source>
+      <status>33</status>
+      <seq>1</seq>
+      <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"1";}</configuration>
+    </property>
+    <property name="content_type">
+      <id>298</id>
+      <label>Object Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_content_types.content_type</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration>a:6:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"1";s:29:"validation_min_length_invalid";s:44:"Content Type must be at least 1 letter long.";}</configuration>
+    </property>
+    <property name="model">
+      <id>299</id>
+      <label>Model</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_content_types.model</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration>a:5:{s:14:"display_layout";s:7:"default";s:20:"validation_notequals";s:15:"-Please Select-";s:28:"validation_notequals_invalid";s:22:"Please select a model.";s:24:"initialization_firstline";s:15:"-Please Select-";s:23:"initialization_function";s:46:"xarMod::APIFunc('content','admin','getmodels')";}</configuration>
+    </property>
+  </properties>
+</object>

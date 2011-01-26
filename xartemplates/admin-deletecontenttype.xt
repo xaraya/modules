@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">Content Administration</span>
+    </div>
+    <div class="xar-mod-body">
+      <xar:template type="module" file="admintabs" />
+      <h2>Delete Item</h2>
+        <form method="post" action="#xarServer::getCurrentURL()#">
+        <fieldset>
+            <legend>
+                Delete Confirmation
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="confirm">
+                    Confirm deleting the <strong>#$label#</strong> content type and its <strong>#$count#</strong> item<xar:if condition="$count ne 1">s</xar:if>?
+                </label>
+            </div>
+        </fieldset>
+
+        <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+            <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+            <input type="hidden" name="confirm" id="confirm" value="true" />
+            <xar:var name="label">Yes</xar:var>
+            <xar:button type="submit" label="$label" />
+            &#160;&#160;&#160;&#160;
+            <xar:var name="label">No</xar:var>
+            <xar:button type="cancel" label="$label" />
+        </div>
+        </form>
+    </div>
+</xar:template>

@@ -1,0 +1,44 @@
+<object name="content">
+  <objectid>37</objectid>
+  <label>Content Items</label>
+  <module_id>1015</module_id>
+  <itemtype>1</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:0:{}</config>
+  <isalias>true</isalias>
+  <properties>
+    <property name="itemid">
+      <id>294</id>
+      <label>Itemid</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_content.itemid</source>
+      <status>33</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="content_type">
+      <id>295</id>
+      <label>Content Type</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_content.content_type</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="path">
+      <id>2196</id>
+      <label>Path</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_content.path</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration></configuration>
+    </property>
+  </properties>
+</object>

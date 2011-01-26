@@ -1,0 +1,114 @@
+<object name="content_module_settings">
+  <objectid>16</objectid>
+  <label>Module Settings for Content</label>
+  <module_id>1015</module_id>
+  <itemtype>3</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:0:{}</config>
+  <isalias>false</isalias>
+  <properties>
+    <property name="default_ctype">
+      <id>105</id>
+      <label>Default Content Type</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: content</source>
+      <status>33</status>
+      <seq>1</seq>
+      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:52:"xarMod::apiFunc('content','admin','getcontenttypes')";}</configuration>
+    </property>
+    <property name="filters_min_ct_count">
+      <id>106</id>
+      <label>Show content type filters once there are this many content types</label>
+      <type>integerbox</type>
+      <defaultvalue>9</defaultvalue>
+      <source>module variable: content</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
+    <property name="enable_filters">
+      <id>107</id>
+      <label>Enable Filters</label>
+      <type>checkbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: content</source>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration></configuration>
+    </property>
+    <property name="default_itemid">
+      <id>767</id>
+      <label>Default Itemid</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: content</source>
+      <status>33</status>
+      <seq>7</seq>
+      <configuration>a:4:{s:12:"display_size";s:2:"10";s:17:"display_maxlength";s:2:"30";s:14:"display_layout";s:7:"default";s:20:"validation_min_value";s:1:"1";}</configuration>
+    </property>
+    <property name="default_display_page_tpl">
+      <id>768</id>
+      <label>Default Display Page Template</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: content</source>
+      <status>33</status>
+      <seq>8</seq>
+      <configuration></configuration>
+    </property>
+    <property name="default_view_page_tpl">
+      <id>769</id>
+      <label>Default View Page Template</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: content</source>
+      <status>33</status>
+      <seq>9</seq>
+      <configuration></configuration>
+    </property>
+    <property name="filters_min_item_count">
+      <id>108</id>
+      <label>Show item filters once there are this many items</label>
+      <type>integerbox</type>
+      <defaultvalue>1</defaultvalue>
+      <source>module variable: content</source>
+      <status>33</status>
+      <seq>10</seq>
+      <configuration></configuration>
+    </property>
+    <property name="default_main_page_tpl">
+      <id>771</id>
+      <label>Default Main Page Template</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: content</source>
+      <status>33</status>
+      <seq>11</seq>
+      <configuration></configuration>
+    </property>
+    <property name="path_module">
+      <id>109</id>
+      <label>Enable the path module</label>
+      <type>checkbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: content</source>
+      <status>33</status>
+      <seq>15</seq>
+      <configuration></configuration>
+    </property>
+    <property name="path_module_objects">
+      <id>110</id>
+      <label>Add a path_module property to objects.  List objects separated by commas:</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>module variable: content</source>
+      <status>33</status>
+      <seq>20</seq>
+      <configuration></configuration>
+    </property>
+  </properties>
+</object>

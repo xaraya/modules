@@ -1,0 +1,26 @@
+.hidden {
+display: none; 
+}
+.xar-form-container-after {
+margin-top: 10px; 
+}
+#config {
+max-width: 650px;
+}
+#config input {
+display: none;
+float: right;
+}
+#config .xar-form-textlong {
+display: inline;
+min-width: 300px;
+}
+#config label {
+display: none;
+}
+#config .xar-form-label {
+display: inline;
+}
+#config label.configlabel { 
+display: inline;
+}

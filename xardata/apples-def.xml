@@ -1,0 +1,84 @@
+<object name="content_apples">
+  <objectid>133</objectid>
+  <label>Apples</label>
+  <module_id>182</module_id>
+  <itemtype>21</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:5:{s:11:"adminfields";s:41:"title,publication_date,publication_status";s:12:"filterfields";s:12:"title,Title;";s:13:"page_template";s:0:"";s:4:"sort";s:21:"publication_date DESC";s:8:"numitems";s:2:"20";}</config>
+  <isalias>true</isalias>
+  <properties>
+    <property name="itemid">
+      <id>566</id>
+      <label>Itemid</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>67</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="title">
+      <id>567</id>
+      <label>Title</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="summary">
+      <id>568</id>
+      <label>Summary</label>
+      <type>textarea_medium</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration></configuration>
+    </property>
+    <property name="body">
+      <id>569</id>
+      <label>Body</label>
+      <type>textarea_large</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration></configuration>
+    </property>
+    <property name="publication_date">
+      <id>570</id>
+      <label>Publication Date</label>
+      <type>calendar</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>255</seq>
+      <configuration></configuration>
+    </property>
+    <property name="publication_status">
+      <id>571</id>
+      <label>Status</label>
+      <type>dropdown</type>
+      <defaultvalue>2</defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>255</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:46:"0,Submitted;1,Rejected;2,Approved;3,Frontpage;";}</configuration>
+    </property>
+    <property name="publication_author">
+      <id>572</id>
+      <label>Author</label>
+      <type>userlist</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>255</seq>
+      <configuration></configuration>
+    </property>
+  </properties>
+</object>

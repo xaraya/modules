@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">Content Administration</span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admintabs" />
+        <h2>Overview</h2>
+
+<p style="margin-bottom: 30px;">A content management module for Xaraya 2.1.0.</p>
+
+	        <div class="xar-clearboth">
+            <ul class="xar-tabs xar-alt xar-norm-outline">
+                <li class="xar-tabs-label help" title="#xarML('Choose an action to perform')#">Overview:</li>
+                <xar:set name="activetab">'xar-tab-active'</xar:set>
+                <xar:set name="activelink">'xar-accent xar-accent-outline'</xar:set>
+                <xar:set name="inactivetab">'xar-tab'</xar:set>
+                <xar:set name="inactivelink">'xar-norm xar-norm-outline'</xar:set>
+
+                <xar:set name="tabclass">empty($tab)?$activetab:$inactivetab</xar:set>
+                <xar:set name="linkclass">empty($tab)?$activelink:$inactivelink</xar:set>
+                <li class="#$tabclass#">
+                    <a href="#xarServer::getCurrentUrl(array('tab' => null))#" title="#xarML('Content Types')#" class="#$linkclass#">
+                    Content Types</a>
+                </li>
+		<xar:set name="tabclass">$tab=='ctconfig'?$activetab:$inactivetab</xar:set>
+                <xar:set name="linkclass">$tab=='ctconfig'?$activelink:$inactivelink</xar:set>
+                <li class="#$tabclass#">
+                    <a href="#xarServer::getCurrentUrl(array('tab' => 'ctconfig'))#" title="#xarML('Content Type Config')#" class="#$linkclass#">
+                   Content Type Config</a>
+                </li>
+                <xar:set name="tabclass">$tab=='urls'?$activetab:$inactivetab</xar:set>
+                <xar:set name="linkclass">$tab=='urls'?$activelink:$inactivelink</xar:set>
+                <li class="#$tabclass#">
+                    <a href="#xarServer::getCurrentUrl(array('tab' => 'urls'))#" title="#xarML('URLs')#" class="#$linkclass#">
+                    URLs</a>
+                </li>
+                <xar:set name="tabclass">$tab=='templates'?$activetab:$inactivetab</xar:set>
+                <xar:set name="linkclass">$tab=='templates'?$activelink:$inactivelink</xar:set>
+                <li class="#$tabclass#">
+                    <a href="#xarServer::getCurrentUrl(array('tab' => 'templates'))#" title="#xarML('Templates')#" class="#$linkclass#">
+                    Templates</a>
+                </li>
+                
+                <xar:set name="tabclass">$tab=='filtering'?$activetab:$inactivetab</xar:set>
+                <xar:set name="linkclass">$tab=='filtering'?$activelink:$inactivelink</xar:set>
+                <li class="#$tabclass#">
+                    <a href="#xarServer::getCurrentUrl(array('tab' => 'filtering'))#" title="#xarML('Filtering')#" class="#$linkclass#">
+                    Filtering</a>
+                </li>
+                <!-- add tabs as required here, then add a condition for them below -->
+            </ul>
+        </div>
+
+ 
+ <xar:if condition="empty($tab)">
+
+<h3>Creating New Content Types</h3>
+
+<p>When you go to <a href="#xarModURL('content','admin','newcontenttype')#">create a new content type</a>, you'll see your models in the Model dropdown menu.  You can think of the models as generic templates for creating new content types. The job of the models is to allow you to very quickly create content types that approximate what you want.  You can then further refine each content type by adding or removing properties for its DataObject, changing configuration, etc.</p>
+
+<p>The Model dropdown is populated according to the XML files in modules/content/xardata.  The content module comes with some of these XML files to get you started. To create a new model, <a href="#xarModURL('dynamicdata','admin','new')#">create a DataObject using the dynamicdata module</a>, export it as XML and add the XML file to modules/content/xardata.</p>
+
+<p>Create as many content types from each model as you like. Once you create a content type, it is its own DataObject and is no longer dependent on the XML file in modules/content/xardata. </p>
+
+<h3>Item Controls</h3>
+
+<p>When you first create a content type, it will include the fields from the model as well as any of the item controls you check off.  Item controls are special fields that affect visibility, presentation or authorship of content items.  These include <em>display template</em>, <em>publication date</em>, <em>expiration date</em>, <em>status</em>, <em>author</em>, <em>date created</em> and <em>date modified</em>.</p>
+
+<p>As you would expect, an item whose <em>publication date</em> is still in the future will not display on a site.  An item whose <em>expiration date</em> has passed will no longer display.  An item whose <em>status</em> is set to rejected or submitted will only be visible to users with edit privileges for that particular item.</p>
+
+<h4 align="right">Next: <a href="#xarmodurl('content','admin','overview',array('tab' => 'ctconfig'))#">Configuring Your Content Types</a></h4>
+
+<xar:elseif condition="$tab eq 'ctconfig'" />
+
+<h3>Configuring Your Content Types</h3>
+
+<p>Access the content type configuration via the <img src="#sys::code()#/modules/base/xarimages/icons/modify-config.png" /> icons in the <a href="#xarmodurl('content','admin','viewcontenttypes')#">Content Types page</a>.</p>
+
+<p>Here are some standard config options:</p>
+
+<style>
+##options { border: none; }
+##options td { padding-bottom: 5px;}
+</style>
+<table id="options">
+<tr><td valign="top"><strong>adminfields</strong></td><td valign="top"> A comma-separated list of the name of properties to display in the View Items page.</td></tr>
+<tr><td valign="top"><strong>filterfields</strong></td><td valign="top"> A list of fields for which to add filter widgets in the View Items page.  The format should be propertyname,label;propertyname,label; etc.  The labels need not be the real labels of the DD properties.  <a href="#xarModURL('content','admin','overview',array('tab' => 'filtering'))#">More on filtering</a>.</td></tr>
+<tr><td valign="top"><strong>page_template</strong>&#160;&#160; </td><td valign="top"> The name of an alternate page template for this content type.</td></tr>
+<tr><td valign="top"><strong>sort</strong></td><td valign="top"> The default sorting for this content type, in a format like title ASC.</td></tr>
+<tr><td valign="top"><strong>numitems</strong></td><td valign="top"> The number of items per page.</td></tr>
+</table>
+
+<h4 align="right">Next: <a href="#xarmodurl('content','admin','overview',array('tab' => 'urls'))#">URLs</a></h4>
+
+<xar:elseif condition="$tab eq 'urls'" />
+<h3>URLs</h3>
+
+<p>Below are some examples of valid URLs.  In the examples, assume "apples" is the name of a content type and is also an alias for the content module.  Assume 3 is an itemid.  Assume also that we've enabled module aliases in the <a href="#xarmodurl('content','admin','modifyconfig')#">Modify Config page</a>.  Lastly, assume that we're using an .htaccess file and mod_rewrite to <a href="http://www.xaraya.com/index.php/documentation/300" target="new">remove the index.php part</a>&#160;<img src="code/modules/content/xarimages/exit.png" width="10" height="10" alt="leave this website" /> of the URL.</p>
+
+<p>Some query string URLs:</p>
+
+<blockquote>?module=content *<br />
+?module=apples *<br />
+?module=content&amp;func=view&amp;name=apples<br />
+?module=content&amp;func=display&amp;itemid=3</blockquote>
+
+<p>If you have short URLs enabled:</p>
+
+<blockquote>/content *<br />
+/apples **<br />
+/content/view/apples<br />
+/apples/view<br />
+/content/display/3<br />
+/apples/display/3<br />
+/content/3<br />
+/apples/3</blockquote>
+
+<p>* These URLs will call the main function.<br />
+** This URL will call the main function if apples is an alias and is <strong>not</strong> a content type.  It will call the view function if apples is an alias and is a content type.</p>
+
+<p>Note that use of "display" is optional in short URLs.  If the second part of the URL is numeric, the display function will be called.</p>
+
+<p>If you use the <a href="http://www.xaraya.com/index.php/release/eid/1150" target="new">path module</a>&#160;<img src="code/modules/content/xarimages/exit.png" width="10" height="10" alt="leave this website" />, your URLs can be just about anything you want:</p>
+
+<blockquote>/jupiter<br />
+/mammals/bats<br />
+/because/i/said/so<br />
+/two/plus/two/equals/five</blockquote>
+
+<p>As explained in the path module documentation, the <strong>first part</strong> of the URL must not usurp another module's name, or the alias of another module.  For example, this would not work:</p>
+
+<blockquote>/<strong>roles</strong>/is/already/taken<br /></blockquote>
+
+<p>And if 'oranges' is an alias for the foo module, this will not work for the content module:</p>
+
+<blockquote>/<strong>oranges</strong>/is/occupied</blockquote>
+
+<h4 align="right">Next: <a href="#xarmodurl('content','admin','overview',array('tab' => 'templates'))#">Templates</a></h4>
+
+<xar:elseif condition="$tab eq 'templates'" />
+
+<h3>Templates</h3>
+
+<p>For those familiar with the articles module, templating here is similar, with display, summary and view templates.</p>
+
+<blockquote>
+user-display.xt<br />
+user-display-&#38;#60;contenttype&#62;.xt<br />
+user-display-itemid&#38;#60;itemid&#62;.xt
+</blockquote>
+
+<blockquote>
+user-summary.xt<br />
+user-summary-&#38;#60;contenttype&#62;.xt
+</blockquote>
+
+<blockquote>
+user-view.xt<br />
+user-view-&#38;#60;contenttype&#62;.xt
+</blockquote>
+
+<p>Here, &#38;#60;contenttype&#62; would be the object name -- not the label or model.  For example, the <strong>user-display-static_content.xt</strong> template that comes with the module is only invoked if you create a content type whose object name is 'static_content'.  That particular template is <em>not</em> automatically invoked for all content types based on the static content model.</p>
+
+<p>In display templates, the itemid takes precedence over the object name.  Thus, if you have a content type whose object name is "ducks" and you have an item of that content type whose itemid is 54, then user-display-itemid54.xt (if it exists) would override user-display-ducks.xt for that particular item.</p>
+
+<h3>The Display Template Field</h3>
+
+<p>For added flexibility, you can add a display template field to your content type.  (See also the Item Controls section under the <a href="#xarmodurl('content','admin','overview')#">Content Types tab</a> of this overview.) The display template field will override all the above-mentioned display template inheritance rules.  It is useful in situations when you want to use a template for multiple items of the same content type, but you don't want the template to affect all items of the content type.</p>
+
+<p>This display template field is a dropdown where the first option is "-inherit-", the second option is "user-display".  The rest of the options are all other templates -- including those in the content module's xartemplates directory and those in your theme at modules/content -- whose filenames start with user-display-&#38;#60;contenttype&#62;.  For example, if you have a content type named "apples", you could have a template named user-display-apples-something.xt.</p>
+
+<p>Set the dropdown to "-inherit-" and the display template field will have no effect.  Set it to "user-display" to force the use of the generic user-display.xt template.  Set it to another display template to force the use of that template.</p>
+
+<h4 align="right">Next: <a href="#xarmodurl('content','admin','overview',array('tab' => 'filtering'))#">Filtering</a></h4>
+
+<xar:elseif condition="$tab eq 'filtering'" />
+
+<h3>Adding Filters to the Admin Interface</h3>
+
+<p>Filter widgets are available in the admin interface if you install the <a href="http://www.xaraya.com/index.php/release/eid/1154" target="new">filters module</a>&#160;<img src="code/modules/content/xarimages/exit.png" width="10" height="10" alt="leave this website" /> and enable it in the Modify Config page.</p>
+
+<p>Keep in mind that filtering is done on the database value of a property, not on the output.  For example, if you filter on a publication_date, and you filter for "june", you will get no results since the publication_date is stored as a unix timestamp.  It's best to filter on properties like "title" that are the same in the database and in output.</p>
+
+</xar:if>
+
+    </div>
+</xar:template>

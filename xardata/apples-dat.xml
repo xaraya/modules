@@ -1,0 +1,33 @@
+<items>
+  <apples itemid="1">
+    <id>1</id>
+    <title>Red Delicious</title>
+    <summary>A nice red apple.</summary>
+    <body>The Red Delicious is a clone of apple cultigen, now comprising more than 50 cultivars, that was recognized in Wellsburg, Iowa, United States, in 1880. As new cultivars with improved color and earlier harvestability have replaced the original cultivar in commercial orchards, the taste and texture of the harvested commodity have deteriorated, and many customers have begun to reject the Red Delicious at the food market.</body>
+    <publication_date>1276627248</publication_date>
+    <publication_status>2</publication_status>
+    <publication_author>6</publication_author>
+  </apples>
+  <apples itemid="2">
+    <id>2</id>
+    <title>Crabapples</title>
+    <summary>Crabapples are an excellent source of pectin, and their juice can be made into a ruby-coloured preserve with a full, spicy flavor.</summary>
+    <body>Crabapples are widely grown as ornamental trees, grown for their beautiful flowers or fruit, with numerous cultivars selected for these qualities and for resistance to disease.
+
+Some crabapples are used as rootstocks for domestic apples to add beneficial characteristics. For example, varieties of Baccata, also called Siberian crab, rootstock is used to give additional cold hardiness to the combined plant for orchards in cold northern areas.</body>
+    <publication_date>1276627842</publication_date>
+    <publication_status>2</publication_status>
+    <publication_author>6</publication_author>
+  </apples>
+  <apples itemid="3">
+    <id>3</id>
+    <title>Gala</title>
+    <summary>Gala apples are small and are usually red with a portion being greenish or yellow-green, vertically striped. Gala apples are fairly resistant to bruising and are sweet, grainy, with a mild flavour and a thinner skin than most apples. Quality indices include firmness, crispness, and sweetness.</summary>
+    <body>The first Gala apple tree was one of many seedlings resulting from a cross between a Golden Delicious and a Kidd's Orange Red planted in New Zealand in the 1930s by orchardist J.H. Kidd. Donald W. McKenzie, an employee of Stark Bros Nursery, obtained a US plant patent for the cultivar on October 15, 1974.
+
+	The variety is also an increasingly popular option for UK top fruit farmers. It is a relatively new introduction to the UK, first planted in commercial volumes during the 1980s. The variety now represents about 20% of the total volume of the commercial production of eating apples grown in the UK, often replacing Cox's Orange Pippin.</body>
+    <publication_date>1276629183</publication_date>
+    <publication_status>2</publication_status>
+    <publication_author>6</publication_author>
+  </apples>
+</items>

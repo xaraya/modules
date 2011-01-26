@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+<xar:if condition="!empty($content_types) and (count($content_types) gt 1 or $type eq 'admin')">
+
+<xar:set name="info">xarRequest::getInfo()</xar:set>
+
+<div id="contenttypetabs">
+
+<xar:set name="activetab">''</xar:set>
+
+<xar:if condition="$activetab eq 'view' or $activetab eq 'delete' or $activetab eq 'modify'">
+	<xar:set name="tabclass">'xar-tab-active'</xar:set>
+	<xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+<xar:else />
+	<xar:set name="tabclass">'xar-tab'</xar:set>
+	<xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+</xar:if>
+
+<ul class="xar-tabs">
+<xar:foreach in="$content_types" key="$key" value="$val">
+
+	<xar:if condition="isset($ctype) and $ctype eq $key">
+		<xar:set name="tabclass">'xar-tab-active'</xar:set>
+		<xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+	<xar:else />
+		<xar:set name="tabclass">'xar-tab'</xar:set>
+		<xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+	</xar:if>
+
+	 <li class="#$tabclass#"><a href="#xarModURL('content',$info[1],'view', array('ctype' => $key))#" class="#$linkclass#">#$val#</a></li>
+
+</xar:foreach>
+</ul>
+
+</div>
+
+</xar:if>
+
+</xar:template>

@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+     <xar:style scope="module" module="content" file="content" />
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">Content Administration</span>
+    </div>
+    <div class="xar-mod-body">
+      <xar:template type="module" file="admintabs" />
+
+<div class="admin-internal-link"><a href="#xarmodurl('content','util','import')#">Import content type</a></div>
+
+        <h2>Add a Content Type</h2>
+
+        <xar:set name="withupload">#$object->upload#</xar:set>
+        <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
+        <xar:if condition="!empty($withupload)">
+            <xar:set name="enctype">'multipart/form-data'</xar:set>
+        </xar:if>
+ 
+
+        <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
+          <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+          <input type="hidden" name="confirm" id="confirm" value="true" />
+          <fieldset>
+              <legend>
+                  Create new
+              </legend>
+
+                <xar:comment>The default template for the xar:data-form tag is
+        content/xartemplates/objects/showform.xt</xar:comment>
+                <xar:data-form object="$object" tplmodule="content" />
+
+		<div id="extra_fields">
+
+			<h3>Item controls</h3>
+
+			<p>Special fields that affect visibility, presentation or authorship of content items:</p>
+
+			<div id="item_controls">
+
+				<div class="xar-form-input-wrapper">
+				<label class="xar-form-label" for="add_dtemplate">
+				Display Template
+				</label>
+
+				<xar:if condition="isset($add_dtemplate) and !($add_dtemplate)">
+					<input type="checkbox" id="add_dtemplate" name="add_dtemplate" value="true" />
+				<xar:else />
+					<input type="checkbox" id="add_dtemplate" name="add_dtemplate" value="true" checked="checked" />
+				</xar:if>
+			
+				</div>
+
+				<div class="xar-form-input-wrapper">
+				<label class="xar-form-label" for="add_pdate">
+				Publication Date
+				</label>
+
+				<xar:if condition="isset($add_pdate) and !($add_pdate)">
+					<input type="checkbox" id="add_pdate" name="add_pdate" value="true" />
+				<xar:else />
+					<input type="checkbox" id="add_pdate" name="add_pdate" value="true" checked="checked" />
+				</xar:if>
+			
+				</div>
+
+				<div class="xar-form-input-wrapper">
+				<label class="xar-form-label" for="add_expdate">
+				Expiration Date
+				</label>
+
+				<xar:if condition="isset($add_expdate) and $add_expdate">
+					<input type="checkbox" id="add_expdate" name="add_expdate" value="true" checked="checked" />
+				<xar:else />
+					<input type="checkbox" id="add_expdate" name="add_expdate" value="true" />
+				</xar:if>
+			
+				</div>
+
+				<div class="xar-form-input-wrapper">
+				<label class="xar-form-label" for="add_pstatus">
+				Status
+				</label>
+
+				<xar:if condition="isset($add_pstatus) and !($add_pstatus)">
+					<input type="checkbox" id="add_pstatus" name="add_pstatus" value="true" />
+				<xar:else />
+					<input type="checkbox" id="add_pstatus" name="add_pstatus" value="true" checked="checked" />
+				</xar:if>
+				</div>
+
+				<div class="xar-form-input-wrapper">
+				<label class="xar-form-label" for="add_pauthor">
+				Author
+				</label>
+				<xar:if condition="isset($add_pauthor) and !($add_pauthor)">
+					<input type="checkbox" id="add_pauthor" name="add_pauthor" value="true" />
+				<xar:else />
+					<input type="checkbox" id="add_pauthor" name="add_pauthor" value="true" checked="checked" />
+				</xar:if>
+				</div>
+				
+				<div class="xar-form-input-wrapper">
+				<label class="xar-form-label" for="add_pauthor">
+				Date Created
+				</label>
+				<xar:if condition="isset($add_datecreated) and !($add_datecreated)">
+					<input type="checkbox" id="add_datecreated" name="add_datecreated" value="true" checked="checked" />
+				<xar:else />
+					<input type="checkbox" id="add_datecreated" name="add_datecreated" value="true" />
+				</xar:if>
+				</div>
+				
+				<div class="xar-form-input-wrapper">
+				<label class="xar-form-label" for="add_pauthor">
+				Date Modified
+				</label>
+				<xar:if condition="isset($add_datemodified) and !($add_datemodified)">
+					<input type="checkbox" id="add_datemodified" name="add_datemodified" value="true" checked="checked" />
+				<xar:else />
+					<input type="checkbox" id="add_datemodified" name="add_datemodified" value="true" />
+				</xar:if>
+				</div>
+
+			</div>
+
+		</div>
+
+                <div class="xar-form-input-wrapper-after"> 
+                     <input type="submit" value="#xarML('Submit')#" />
+                </div>
+
+
+          </fieldset>
+        </form>
+
+    </div>
+</xar:template>

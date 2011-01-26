@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">Content Administration</span>
+    </div>
+    <div class="xar-mod-body">
+      <xar:template type="module" file="admintabs" />
+      <xar:style scope="module" file="modifycontenttype" />
+
+      <h2>Configure Content Type</h2>
+        <xar:set name="withupload">#$object->upload#</xar:set>
+        <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
+        <xar:if condition="!empty($withupload)">
+           <xar:set name="enctype">'multipart/form-data'</xar:set>
+        </xar:if>
+
+        <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
+           
+            <fieldset>
+                <legend>
+                    Modify
+                </legend>
+ 
+                <xar:data-form object="$object" tplmodule="content" template="modifycontenttype" isalias="$isalias" ctype="$ctype" resolvealias="$resolvealias" />
+		 
+             </fieldset>
+	     
+           <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                <input type="hidden" name="objectid" id="itemid" value="#$objectid#" />
+                <input type="hidden" name="confirm" id="confirm" value="true" /> 
+                &#160;&#160;&#160;
+                <input type="submit" value="#xarML('Update')#" />
+            </div>  
+        </form>
+
+<xar:if condition="xarSecurityCheck('AdminDynamicData',0)">	
+	<p align="right" style="margin-right: 20px; font-weight: bold;"><a href="#xarModURL('dynamicdata','admin','modifyprop', array('itemid' => $objectid))#">Modify properties</a> in the dynamicdata module.</p>  
+</xar:if>
+
+    </div>
+</xar:template>

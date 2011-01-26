@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+	 
+	<xar:data-label property="$properties['module_id']" for="id" class="hidden"/>
+	<xar:set name="onchange">"this.form.action='" . xarServer::getCurrentURL() . "';this.form.submit();"</xar:set>
+	<xar:data-input property="$properties['module_id']" onchange="$onchange" store_prop="regid" class="hidden" />
+
+	<div class="xar-form-input-wrapper">
+		<xar:data-label property="$properties['objectid']" for="id" class="xar-form-label"/>
+		<xar:data-input property="$properties['objectid']" class="xar-form-textxlong" />
+	</div>
+
+	<div class="xar-form-input-wrapper">
+		<xar:data-label property="$properties['label']" for="id" class="xar-form-label"/>
+		<xar:data-input property="$properties['label']" class="xar-form-textxlong" />
+	</div>
+
+	<xar:if condition="$resolvealias ne $ctype and $resolvealias ne 'content'">
+		<p id="alias_reserved">
+		Note: '#$ctype#' is not available for use as an alias in short URLs, because it is currently an alias for the <a href="#xarmodurl('modules','admin','aliases',array('name' => $resolvealias))#">#$resolvealias#</a> module.
+		</p>
+	<xar:else />
+		<br style="clear:both" />
+		<div class="xar-form-input-wrapper">
+
+			<label class="xar-form-label" for="isalias" style="width: 290px;">Allow use of '#$ctype#' as an alias in short URLs</label>
+			 
+			<xar:if condition="$isalias">
+				<xar:data-input type="checkbox" name="isalias" checked="checked" class="xar-form-textxlong" />
+			<xar:else />
+				<xar:data-input type="checkbox" name="isalias" class="xar-form-textxlong" />
+			</xar:if> 
+			 
+			
+		</div>
+		<br style="clear:both" />
+	</xar:if>
+
+	<div class="xar-form-input-wrapper">
+		<xar:data-label property="$properties['config']" for="id" class="xar-form-label"/>
+		<div id="config">
+			<xar:data-input property="$properties['config']" class="xar-form-textxlong" fixedkeys="true" /> 
+		</div>
+	</div>
+ 
+    <xar:foreach in="$properties" key="$name" value="$property">
+
+	<xar:set name="class">'hidden'</xar:set>
+	<xar:set name="labelclass">'hidden'</xar:set>
+	
+
+	<xar:if condition="!in_array($name, array('module_id', 'config', 'label', 'objectid'))">
+
+		<div class="xar-form-input-wrapper">
+			<xar:data-label property="$properties[$name]" for="id" class="$labelclass"/>
+			<xar:data-input property="$properties[$name]" class="$class" />
+		</div>
+
+        </xar:if>
+
+    </xar:foreach>
+
+</xar:template>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+<div class="static_content">
+
+	<xar:if condition="$display_title">
+		<h3>#$title#</h3>
+	</xar:if>
+
+	<div class="body">
+	#$body#
+	</div>
+
+	<xar:if condition="!empty($editurl)">
+		<div class="adminlink"><a href="#$editurl#">Edit this item</a></div>
+	</xar:if>
+
+</div>
+
+
+</xar:template>

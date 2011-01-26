@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+<div class="summary">
+
+<xar:if condition="isset($title) and !empty($title)">
+	<h3><a href="#xarmodurl('content','user','display',array('itemid' => $itemid, 'ctype' => $ctype))#">#$title#</a></h3>
+</xar:if>
+
+<xar:if condition="isset($summary) and !empty($summary)">
+	#$summary#
+</xar:if>
+ 
+</div>
+
+</xar:template>

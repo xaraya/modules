@@ -1,0 +1,33 @@
+#item_controls {
+margin: 14px 0 0 6px;
+}
+.mod_settings fieldset {
+border: none;
+ } 
+ .mod_settings h4 {
+margin-top: 7px;
+ }
+
+.xar-form-input-wrapper {
+clear: both;
+}
+.xar-form-input-wrapper label, .xar-form-input-wrapper input {
+margin: 4px 0 3px 0;
+}
+.xar-form-input-wrapper select {
+margin: 4px 0 4px 0;
+}
+
+#extra_fields {
+margin: 0 0 16px 0;
+}
+
+#path_errors {
+color: red;
+margin-bottom: 8px;
+}
+
+.admin-internal-link {
+float:right; 
+display:inline;
+}

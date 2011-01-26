@@ -1,0 +1,54 @@
+<object name="content_news_article">
+  <objectid>120</objectid>
+  <label>News Article</label>
+  <module_id>182</module_id>
+  <itemtype>19</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+ <config>a:5:{s:11:"adminfields";s:41:"title,publication_date,publication_status";s:12:"filterfields";s:12:"title,Title;";s:13:"page_template";s:0:"";s:4:"sort";s:21:"publication_date DESC";s:8:"numitems";s:2:"20";}</config>
+  <isalias>true</isalias>
+  <properties>
+    <property name="itemid">
+      <id>557</id>
+      <label>Itemid</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>67</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="title">
+      <id>558</id>
+      <label>Title</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="summary">
+      <id>559</id>
+      <label>Summary</label>
+      <type>textarea_medium</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration></configuration>
+    </property>
+    <property name="body">
+      <id>560</id>
+      <label>Body</label>
+      <type>textarea_large</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration></configuration>
+    </property>
+  </properties>
+</object>

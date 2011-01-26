@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+    <span class="xar-mod-title">Content</span>
+    </div>
+    <div class="xar-mod-body">
+
+<p><em>For now, this is here for demo purposes.  This user-view-apples.xt template is invoked if the content type = apples.</em></p>
+
+    <h2>Content</h2> 
+
+    <xar:template type="module" file="contenttypetabs" />
+
+	#$output#
+
+    </div>
+</xar:template>

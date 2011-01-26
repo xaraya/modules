@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+<p><em>For now, this is here for demo purposes.  This user-display-itemid2.xt template is invoked when the itemid = 2.</em></p>
+
+<h3>#$title#</h3>
+
+#$body#
+
+<xar:if condition="!empty($editurl)">
+	<div class="adminlink"><a href="#$editurl#">Edit this item</a></div>
+</xar:if>
+
+</xar:template>

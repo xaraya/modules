@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:if condition="empty($layout) or $layout eq 'default'">
+        <xar:foreach in="$properties" key="$name" value="$property">
+            <div class="xar-form-input-wrapper">
+                <xar:data-label property="$properties[$name]" for="id" />
+                <xar:if condition="$_GET['func'] eq 'modify' and $name eq 'model'">
+			 #$properties[$name]->showOutput(array('value'))#
+		<xar:elseif condition="$name eq 'path_module'" />
+			<xar:data-input property="$properties[$name]" value="$the_path" />
+		<xar:else />
+			<xar:data-input property="$properties[$name]" />
+		</xar:if>
+            </div>
+        </xar:foreach>
+    <xar:else />
+        <p>
+            Specify your own layout here...
+        </p>
+        <p>
+            You can also specify a separate template, e.g. if you want to handle
+            individual fields differently for a particular module / itemtype
+        </p>
+    </xar:if>
+</xar:template>

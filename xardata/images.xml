@@ -1,0 +1,94 @@
+<object name="content_images">
+  <objectid>189</objectid>
+  <label>Images</label>
+  <module_id>182</module_id>
+  <itemtype>37</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:5:{s:11:"adminfields";s:45:"itemid,description,image_url,publication_date";s:12:"filterfields";s:44:"description,Description;image_url,Image URL;";s:13:"page_template";s:0:"";s:4:"sort";s:21:"publication_date DESC";s:8:"numitems";s:2:"20";}</config>
+  <isalias>true</isalias>
+  <properties>
+    <property name="itemid">
+      <id>1037</id>
+      <label>Itemid</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="description">
+      <id>1038</id>
+      <label>Description</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="caption">
+      <id>1039</id>
+      <label>Caption</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration></configuration>
+    </property>
+    <property name="image_url">
+      <id>1040</id>
+      <label>Image URL</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
+    <property name="align">
+      <id>1043</id>
+      <label>Align</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>7</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:35:"None;Left;Right;Top Left;Top Right;";}</configuration>
+    </property>
+    <property name="image_height">
+      <id>1044</id>
+      <label>Image Height</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>8</seq>
+      <configuration></configuration>
+    </property>
+    <property name="image_width">
+      <id>1045</id>
+      <label>Image Width</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>9</seq>
+      <configuration></configuration>
+    </property>
+    <property name="publication_status">
+      <id>1042</id>
+      <label>Status</label>
+      <type>dropdown</type>
+      <defaultvalue>2</defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>235</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:46:"0,Submitted;1,Rejected;2,Approved;3,Frontpage;";}</configuration>
+    </property>
+  </properties>
+</object>

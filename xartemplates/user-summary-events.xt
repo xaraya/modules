@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:style scope="module" module="content" file="events" />
+
+<div class="event_summary">
+
+	<xar:if condition="isset($title) and !empty($title)">
+		<h3><a href="#xarmodurl('content','user','display',array('itemid' => $itemid, 'ctype' => $ctype))#">#$title#</a></h3>
+	</xar:if>
+	<xar:if condition="!empty($summary)">
+		<div class="summary">
+		#$summary#
+		</div>
+	</xar:if>
+
+	<div class="start_date date">
+	<label>Start date:</label> <xar:set name="start_date">date('M j, Y', $start_date)</xar:set> #$start_date#
+	</div>
+
+	<div class="end_date date">
+	<xar:if condition="$end_date ne '-1'"><label>End date:</label> <xar:set name="end_date">date('M j, Y', $end_date)</xar:set> #$end_date#</xar:if>
+	</div>
+ 
+</div>
+
+</xar:template>
