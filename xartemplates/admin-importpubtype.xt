@@ -35,7 +35,7 @@
         <br />
         Select a file in the list above, or paste the definition in here:
         <br />
-        <textarea name="xml" id="xml" rows="30" cols="80">&#160;</textarea>
+        <textarea name="xml" id="xml" rows="30" cols="80"></textarea>
     </form>
 </div>
 </xar:template>
