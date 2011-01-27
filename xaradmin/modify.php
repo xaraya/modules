@@ -40,12 +40,19 @@ function publications_admin_modify($args)
     }
     // Get our object
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+
     
+
     //FIXME This should be configuration in the celko property itself
+
     $data['object']->properties['position']->initialization_celkoparent_id = 'parentpage_id';
+
     $data['object']->properties['position']->initialization_celkoright_id = 'rightpage_id';
+
     $data['object']->properties['position']->initialization_celkoleft_id  = 'leftpage_id';
+
     $xartable = xarDB::getTables();
+
     $data['object']->properties['position']->initialization_itemstable = $xartable['publications'];
 
     // If creating a new translation get an empty copy

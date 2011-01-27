@@ -5,7 +5,7 @@
     </xar:if>
     <xar:if condition="($layout eq 'publications') or ($layout eq 'default')">
         <tr class="#$item_class#">
-            <xar:template file="listingslist_rowprefix" module="$localmodule,listings" />
+            <xar:template file="listing_rowprefix" module="$localmodule" propertiy="listing" />
             <xar:foreach in="$fields" key="$field">
                 <xar:set name="value">$loopitem[$field]</xar:set>
                 <xar:set name="column">$columns[$field]</xar:set>
@@ -36,11 +36,11 @@
                 </xar:if>
             </xar:foreach>
 
-            <xar:template file="listingslist_rowsuffix" module="$localmodule,listings" />
+            <xar:template file="listing_rowsuffix" module="$localmodule" propertiy="listing" />
         </tr>
     <xar:elseif condition="$layout eq 'pubtypes'" />
         <tr class="#$item_class#">
-            <xar:template file="listingslist_rowprefix" module="$localmodule,listings" />
+            <xar:template file="listing_rowprefix" module="$localmodule" propertiy="listing" />
             <xar:foreach in="$fields" key="$field">
                 <xar:set name="value">$loopitem[$field]</xar:set>
                 <xar:set name="column">$columns[$field]</xar:set>
@@ -52,7 +52,7 @@
                 </td>
             </xar:foreach>
 
-            <xar:template file="listingslist_rowsuffix" module="$localmodule,listings" />
+            <xar:template file="listing_rowsuffix" module="$localmodule" propertiy="listing" />
         </tr>
     </xar:if>
 </xar:template>
