@@ -524,7 +524,7 @@ function publications_user_view($args)
     
     $object = DataObjectMaster::getObjectList(array('name' => $data['pubtypeobject']->properties['name']->value));
     $data['items'] = $object->getItems();
-    $data['object'] = DataObjectMaster::getObject(array('name' => $data['pubtypeobject']->properties['name']->value));
+    $data['object'] = DataObjectMaster::getObjectList(array('name' => $data['pubtypeobject']->properties['name']->value));
     
     sys::import('xaraya.structures.query');
     $q = new Query();

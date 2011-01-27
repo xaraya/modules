@@ -123,10 +123,10 @@ function publications_admin_update()
 
     // if we can edit publications, go to admin view, otherwise go to user view
     if (xarSecurityCheck('EditPublications',0,'Publication',$data['ptid'].':All:All:All')) {
-        xarResponse::redirect(xarModURL('publications', 'admin', $data['returnurl'],
+        xarController::redirect(xarModURL('publications', 'admin', 'view',
                                       array('ptid' => $data['ptid'])));
     } else {
-        xarResponse::redirect(xarModURL('publications', 'user', $data['returnurl'],
+        xarController::redirect(xarModURL('publications', 'user', 'view',
                                       array('ptid' => $data['ptid'])));
     }
     

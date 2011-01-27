@@ -59,7 +59,7 @@ function publications_user_redirect($args)
                                           ),
                                      'publications'
                                     );
-            xarResponse::redirect($publication[$field]);
+            xarController::redirect($article[$field]);
             return true;
         } elseif ($value['format'] == 'urltitle' && !empty($publication[$field]) && substr($publication[$field],0,2) == 'a:') {
             $array = unserialize($publication[$field]);
@@ -70,7 +70,7 @@ function publications_user_redirect($args)
                                               ),
                                          'publications'
                                         );
-                xarResponse::redirect($array['link']);
+                xarController::redirect($array['link']);
                 return true;
             }
         }

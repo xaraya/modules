@@ -8,22 +8,22 @@
         <xar:set name="url">xarServer::getCurrentURL($params)</xar:set>
 
         <xar:style scope="module" module="base" file="navtabs" />
-        <xar:template file="listing_alphabet" module="$localmodule" propertiy="listing" />
+        <xar:template file="listing_alphabet" module="$module" property="listing" />
 
         <br />
 
-        <xar:template file="listing_searchboxline" module="$localmodule" propertiy="listing" />
-        <xar:template file="listing_summaryline" module="$localmodule" propertiy="listing" />
-        <xar:template file="listing_pagerline" module="$localmodule" propertiy="listing" />
+        <xar:template file="listing_searchboxline" module="$module" property="listing" />
+        <xar:template file="listing_summaryline" module="$module" property="listing" />
+        <xar:template file="listing_pagerline" module="$module" property="listing" />
         <table style="clear:both; width: 100%" border="0">
-            <xar:template file="listing_header" module="$localmodule" propertiy="listing" />
-            <xar:template file="listing_body" module="$localmodule" propertiy="listing" />
+            <xar:template file="listing_header" module="$module" property="listing" />
+            <xar:template file="listing_body" module="$module" property="listing" />
         </table>
         <xar:if condition="empty($total)">
                   <p class="xar-align-center">There are no items selected</p>
         </xar:if>
-        <form  action="#xarModURL('publications','admin','multiops')#" method="post" onsubmit = "listings_getchecked('idlist');document.getElementById('redirecttarget').value = this.value;" style="clear: both">
-            <xar:template file="listing_footerline" module="$localmodule" propertiy="listing" />
+        <form  action="#xarModURL('publications','admin','multiops')#" method="post" onsubmit = "listing_getchecked('idlist');document.getElementById('redirecttarget').value = this.value;" style="clear: both">
+            <xar:template file="listing_footerline" module="$module" property="listing" />
             <input type="hidden" name="returnurl" id="returnurl" value="#xarServer::getCurrentURL()#" />
             <input type="hidden" name="object" id="object" value="#$objectname#" />
             <input type="hidden" name="module" id="module" value="#$module#" />
