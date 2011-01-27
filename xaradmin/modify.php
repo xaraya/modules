@@ -39,19 +39,21 @@ function publications_admin_modify($args)
     } else {
         $where = "name = '" . $name . "'";
     }
-    $publication_type_fields = $publication_type->getItems(array('where' => $where));
-    $publication_type_fields = reset($publication_type_fields);
-    $data['object'] = DataObjectMaster::getObject(array('name' => $publication_type_fields['name']));
-    
-    $data['ptid'] = $publication_type_fields['id'];
+    // Get our object
+    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
 
     
-    //FIXME This should be a configuration in the celko property itself
+
+    //FIXME This should be configuration in the celko property itself
 
     $data['object']->properties['position']->initialization_celkoparent_id = 'parentpage_id';
+
     $data['object']->properties['position']->initialization_celkoright_id = 'rightpage_id';
+
     $data['object']->properties['position']->initialization_celkoleft_id  = 'leftpage_id';
+
     $xartable = xarDB::getTables();
+
     $data['object']->properties['position']->initialization_itemstable = $xartable['publications'];
 
     $data['object']->properties['itemtype']->value = $data['ptid'];

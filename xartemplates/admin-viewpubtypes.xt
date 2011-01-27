@@ -14,6 +14,6 @@
         <xar:if condition="isset($statusmsg) and $statusmsg ne ''">
             <p class="xar-error">#$statusmsg#</p>
         </xar:if>
-        <xar:data-input type="listingslist" object="publications_types" fieldlist="name,description" layout="pubtypes"/>
+        <xar:data-input type="listing" objectname="publications_types" fieldlist="name,description" layout="pubtypes"/>
     </div>
 </xar:template>
