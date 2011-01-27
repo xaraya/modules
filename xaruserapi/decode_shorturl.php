@@ -23,115 +23,85 @@
 function content_userapi_decode_shorturl($params)
 {
 
-	$func = 'main';
-
     // Initialise the argument list we will return
     $args = array();
 
-	$baseurl = xarServer::GetBaseURL();
-	$url = xarServer::GetCurrentURL();
-	$path = str_replace($baseurl, '/', $url);
-	$path = str_replace('/index.php', '', $path);
-
-	if (isset($_GET)) {
-		$qs = '';
-		$join = '';
-		foreach($_GET as $key => $val) { 
-			$qs .= $join . $key;
-			if (!empty($val) || $val == 0) {
-				$qs .= "=" . $val; 
-			}
-			$join = '&amp;';
-		}  
-		$path = str_replace('?'.$qs,'',urldecode($path));
-	}
-
 	$ctalias = false;
 
-	if ($params[0] != 'content') {
-		$alias = true;
+	if ($params[0] == 'content') {
+		if (!isset($params[1]) {
+			//always 
+			return array('view', array());
+		} 
+		if (is_numeric($params[1])) { 
+			return array('display', array('itemid' => $params[1]));
+		}
+		if ($params[1] == 'display') { 
+			if (is_numeric($params[2])) { 
+				return array('display', array('itemid' => $params[2]));
+			} 
+		}
+		$checkpath = false;
+	} else {
 		// check if the alias is a ctype
 		$content_types = xarMod::apiFunc('content','admin','getcontenttypes');
 		if (isset($content_types[$params[0]])) {
-			$ctalias = true;
+			if (!isset($params[1] || $params[1] == 'view') {
+				//always
+				return array('view', array('name' => $params[0]));
+			}
+			//it still could be a display function
 		} 
-	} else {
-		$alias = false;
-	}
 
-	if (xarModVars::get('content','path_module')) {
+		if (!isset($params[1]) {
+			//must be a module alias but not a content type
+			return array('view', array());
+		}
+
+		if (is_numeric($params[1])) {
+			//always
+			return array('display', array('itemid' => $params[1]));
+		}
+
+		// no longer any chance it's a view function...
+
+		$baseurl = xarServer::GetBaseURL();
+		$url = xarServer::GetCurrentURL();
+		$path = str_replace($baseurl, '/', $url);
+		$path = str_replace('/index.php', '', $path);
+
+		if (isset($_GET)) {
+			$qs = '';
+			$join = '';
+			foreach($_GET as $key => $val) { 
+				$qs .= $join . $key;
+				if (!empty($val) || $val == 0) {
+					$qs .= "=" . $val; 
+				}
+				$join = '&amp;';
+			}  
+			$path = str_replace('?'.$qs,'',urldecode($path));
+		}
+		// checking the path in here means we aren't going to allow /content/foo/etc
+		$checkpath = xarMod::apiFunc('content','user','checkpath',array('path' => $path)); 
+	} 
+
+	/*if (xarModVars::get('content','path_module')) {
 		$action = xarMod::apiFunc('path','user','path2action',array('path' => $path)); 
 	} else {
 		$action = false;
-	} 
+	} */
 
-	if($action) {
-		$action = unserialize($action);
-		foreach ($action as $key=>$value) {
-			$args[$key] = $action[$key];
-		} 
-
-		if (isset($args['func'])) {
-			$func = $args['func'];
+	if ($checkpath) {
+		if(isset($q)) {
+			array_merge($args, $_GET);
 		}
-
-		if (isset($args['itemid']) && !isset($args['func'])) {
-			$func = 'display';
-		}
-
-	} elseif ($ctalias) {
-
-		$args['ctype'] = $params[0];
-
-		if (isset($params[1])) {
-			if (is_numeric($params[1])) {
-				$func = 'display';
-				$args['itemid'] = $params[1];
-			} else {
-				$func = $params[1];
-				if ($func == 'display') {
-					if (isset($params[2])) {
-						$args['itemid'] = $params[2];
-					} else {
-						return;
-					}
-				}
-			}
-		} else {
-			$func = 'view';
-		}
-
+		$args['itemid'] = $checkpath;
+		return array('display',$args);
 	} else {
- 
-		if (isset($params[1])) {
-			if (is_numeric($params[1])) {
-				$func = 'display';
-				$args['itemid'] = $params[1];
-			} else {
-				$func = $params[1];
-				if ($func == 'display') {
-					if (isset($params[2])) {
-						$args['itemid'] = $params[2];
-					} else {
-						return;
-					}
-				} elseif ($func == 'view') {
-					if (isset($params[2])) {
-						$args['ctype'] = $params[2];
-					}
-				}
-			}
-		} else {
-			$func = xarModVars::get('modules', 'defaultmodulefunction');
-		}
-
+		$msg = 'You\'re seeing this message because the itemid ' . $itemid . ' does not exist in the content module.';
+		return xarTplModule('base','message','notfound',array('msg' => $msg));
 	}
-
-	if(isset($q)) {
-		array_merge($args, $_GET);
-	}
-
-	return array($func, $args);  
 
 }
 

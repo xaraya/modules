@@ -124,18 +124,16 @@ function content_user_view($args)
 
 		$last = end($items);
 
-		if (xarModIsAvailable('path') && xarModVars::get('content','path_module') && isset($object->properties['path_module'])) {
+		/*if (xarModIsAvailable('path') && xarModVars::get('content','path_module') && isset($object->properties['path_module'])) {
 			$dopath = true;
 		} else {
 			$dopath = false;
-		}
+		}*/
 
 		foreach ($items as $item) { 
 			
 			$itemid = $item['itemid'];
-			if ($dopath) {
-				$item['link'] = xarMod::apiFunc('path','user','itemurl', array('itemid' => $itemid));
-			} elseif (xarModAlias::resolve($ctype) == 'content') {
+			if (xarModAlias::resolve($ctype) == 'content') {
 				$item['link'] = xarModURL('content','user','display', array('itemid'=>$itemid, 'ctype' => $ctype));
 			} else { 
 				$item['link'] = xarModURL('content','user','display', array('itemid'=>$itemid));
