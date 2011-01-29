@@ -43,12 +43,12 @@ function content_user_display($args)
  
 	$instance = $itemid.':'.$ctype.':'.xarUserGetVar('id');
 	if (!xarSecurityCheck('ReadContent',1,'Item',$instance)) return;
-	
-	$data['ctype'] = $ctype;
 
 	if (xarSecurityCheck('EditContent',0,'Item',$instance)) {
 		$data['editurl'] = xarModURL('content','admin','modify',array('itemid' => $itemid));
 	}
+
+	$data['ctype'] = $ctype;
 
 	// Get the item's field values
     $object = DataObjectMaster::getObject(array('name' => $ctype));

@@ -14,8 +14,8 @@
 /**
  * view content items
  */
-function content_user_view($args)
-{ 
+function content_user_view($args) {
+	
 	extract($args);
 
     if(!xarVarFetch('startnum', 'isset', $startnum, NULL, XARVAR_NOT_REQUIRED)) {return;}

@@ -38,8 +38,6 @@ function content_userapi_decode_shorturl($params)
 		}  
 	}
 
-	$ctalias = false;
-
 	if ($params[0] == 'content') {
 		if (!isset($params[1])) {
 			$args = array();
@@ -63,13 +61,13 @@ function content_userapi_decode_shorturl($params)
 			return array('view', $args); 
 		}
 		$checkpath = false;
+
 	} else {
 		// it's an alias
 
 		if (isset($params[1])) {
 			if (is_numeric($params[1])) {
 				$args['itemid'] = $params[1];
-				$args['ctype'] = $params[0]; //in the display function we'll look for the itemid in this object first
 				if ($_GET) array_merge($args, $_GET);
 				return array('display', $args);
 			}
