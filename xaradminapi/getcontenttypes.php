@@ -1,7 +1,7 @@
 <?php
 function content_adminapi_getcontenttypes($args){
 
-	$names = false;
+	$getlabels = false;
 
 	extract($args);
 
@@ -13,10 +13,14 @@ function content_adminapi_getcontenttypes($args){
 	$content_types = array();
 
 	foreach ($types as $val) {
-		$object = DataObjectMaster::getObject(array('name' => $val['content_type']));
 		$name = $val['content_type'];
-		if(is_object($object)) {
-			$content_types[$name] = $object->label;
+		if ($getlabels) {
+			$object = DataObjectMaster::getObject(array('name' => $name));
+			if(is_object($object)) {
+				$content_types[$name] = $object->label;
+			}
+		} else {
+			$content_types[$name] = $name;
 		}
 	}
 

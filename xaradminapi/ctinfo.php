@@ -1,4 +1,5 @@
 <?php
+// not used anywhere in content module
 
 function content_adminapi_ctinfo($args) {
 

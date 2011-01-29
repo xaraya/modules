@@ -23,15 +23,11 @@ function content_user_view($args)
 	if(!xarVarFetch('ctype', 'str',   $ctype,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('page_template', 'str', $page_template, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
-	$ctinfo = xarMod::apiFunc('content','admin','ctinfo');
-	if (!$ctinfo) {
-		$data['content_types'] = array();
-		return $data;
-	}
+	sys::import('modules.dynamicdata.class.objects.master');
 
-	$data['content_types'] = $ctinfo['content_types'];
-	if (!isset($ctype)) {
-		$ctype = $ctinfo['ctype'];
+	$data['content_types'] = xarMod::apiFunc('content','admin','getcontenttypes');
+	if (!isset($ctype) || !isset($data['content_types'][$ctype])) {
+		$ctype = xarModVars::get('content', 'default_ctype');
 	}
 
 	$instance = 'All:'.$ctype.':All';

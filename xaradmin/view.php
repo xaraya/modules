@@ -14,25 +14,23 @@
 /**
  * view items
  */
-function content_admin_view()
-{
+function content_admin_view() {
+
+	if(!xarVarFetch('ctype', 'isset', $ctype, NULL, XARVAR_DONT_SET)) {return;}
+	
 	$data['showfilters'] = false;
 
-	$ctinfo = xarMod::apiFunc('content','admin','ctinfo');
-	if (!$ctinfo) {
-		$data['content_types'] = array();
-		return $data;
+	$data['content_types'] = xarMod::apiFunc('content','admin','getcontenttypes');
+	if (!isset($ctype) || !isset($data['content_types'][$ctype])) {
+		$ctype = xarModVars::get('content', 'default_ctype');
 	}
-
-	$data['content_types'] = $ctinfo['content_types'];
-	$ctype = $ctinfo['ctype'];
-	$data['ctype'] = $ctype;
 
 	$instance = 'All:'.$ctype.':'.xarUserGetVar('id');
 	if (!xarSecurityCheck('EditContent',1,'Item',$instance)) {
 		return;
 	}
 
+	$data['ctype'] = $ctype;
 	$data['type'] = 'admin'; //For content_type tabs
 
 	sys::import('modules.dynamicdata.class.objects.master');
