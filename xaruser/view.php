@@ -20,6 +20,7 @@ function content_user_view($args)
 
     if(!xarVarFetch('startnum', 'isset', $startnum, NULL, XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('numitems', 'int',   $numitems,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+	if(!xarVarFetch('ctype', 'str',   $ctype,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('page_template', 'str', $page_template, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
 	$ctinfo = xarMod::apiFunc('content','admin','ctinfo');

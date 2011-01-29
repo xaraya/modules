@@ -21,87 +21,122 @@
  *         string arguments, or empty if it failed
  */
 function content_userapi_decode_shorturl($params)
-{
-
+{ 
     // Initialise the argument list we will return
     $args = array();
+
+	$qs = '';
+
+	if (isset($_GET)) {
+		$join = '';
+		foreach($_GET as $key => $val) { 
+			$qs .= $join . $key;
+			if (!empty($val) || $val == 0) {
+				$qs .= "=" . $val; 
+			}
+			$join = '&';
+		}  
+	}
 
 	$ctalias = false;
 
 	if ($params[0] == 'content') {
-		if (!isset($params[1]) {
-			//always 
-			return array('view', array());
+		if (!isset($params[1])) {
+			$args = array();
+			if ($_GET) $args = $_GET;
+			return array('view', $args);
 		} 
 		if (is_numeric($params[1])) { 
-			return array('display', array('itemid' => $params[1]));
+			$args['itemid'] = $params[1];
+			if ($_GET) array_merge($args, $_GET);
+			return array('display', $args);
 		}
 		if ($params[1] == 'display') { 
 			if (is_numeric($params[2])) { 
-				return array('display', array('itemid' => $params[2]));
+				$args['itemid'] = $params[2];
+				if ($_GET) array_merge($args, $_GET);
+				return array('display', $args);
 			} 
+		}
+		if ($params[1] == 'view' && isset($params[2])) { 
+			$args['ctype'] = $params[2];
+			return array('view', $args); 
 		}
 		$checkpath = false;
 	} else {
+		// it's an alias
+
+/*
 		// check if the alias is a ctype
 		$content_types = xarMod::apiFunc('content','admin','getcontenttypes');
 		if (isset($content_types[$params[0]])) {
 			if (!isset($params[1] || $params[1] == 'view') {
 				//always
+				// TODO: what if there's a query string to pass on?
 				return array('view', array('name' => $params[0]));
 			}
 			//it still could be a display function
-		} 
+		}
+*/
 
-		if (!isset($params[1]) {
-			//must be a module alias but not a content type
-			return array('view', array());
+		if (isset($params[1])) {
+			if (is_numeric($params[1])) {
+				$args['itemid'] = $params[1];
+				$args['ctype'] = $params[0]; //in the display function we'll look for the itemid in this object first
+				if ($_GET) array_merge($args, $_GET);
+				return array('display', $args);
+			}
+			if ($params[1] == 'view') {
+				$args['ctype'] = $params[0];  
+				if ($_GET) array_merge($args, $_GET);
+				return array('view', $args);
+			}
 		}
 
-		if (is_numeric($params[1])) {
-			//always
-			return array('display', array('itemid' => $params[1]));
+		if (!isset($params[1])) {
+			$args['ctype'] = $params[0]; // if this is not a ctype we'll find out in the view function?
+			if ($_GET) array_merge($args, $_GET);
+			return array('view', $args);
 		}
-
-		// no longer any chance it's a view function...
+		
+		// no view functions allowed down here...
 
 		$baseurl = xarServer::GetBaseURL();
 		$url = xarServer::GetCurrentURL();
 		$path = str_replace($baseurl, '/', $url);
 		$path = str_replace('/index.php', '', $path);
-
-		if (isset($_GET)) {
-			$qs = '';
-			$join = '';
-			foreach($_GET as $key => $val) { 
-				$qs .= $join . $key;
-				if (!empty($val) || $val == 0) {
-					$qs .= "=" . $val; 
-				}
-				$join = '&amp;';
-			}  
-			$path = str_replace('?'.$qs,'',urldecode($path));
-		}
+		
 		// checking the path in here means we aren't going to allow /content/foo/etc
 		$checkpath = xarMod::apiFunc('content','user','checkpath',array('path' => $path)); 
+
+		if ($checkpath) {
+			if(!empty($qs)) {
+				array_merge($args, $_GET);
+			}
+			$args['itemid'] = $checkpath;
+			return array('display',$args);
+		} else {
+			$msg = 'You\'re seeing this message because the resource <span class="path_not_found">' . $path . '</span> does not exist in the content module.';
+			return array('notfound',array('msg' => $msg));
+		}
 	} 
 
 	/*if (xarModVars::get('content','path_module')) {
 		$action = xarMod::apiFunc('path','user','path2action',array('path' => $path)); 
 	} else {
 		$action = false;
-	} */
+	} */ 
 
-	if ($checkpath) {
-		if(isset($q)) {
+	/*if ($checkpath) {
+		if(!empty($qs)) {
 			array_merge($args, $_GET);
 		}
 		$args['itemid'] = $checkpath;
 		return array('display',$args);
 	} else {
-		$msg = 'You\'re seeing this message because the itemid ' . $itemid . ' does not exist in the content module.';
-		return xarTplModule('base','message','notfound',array('msg' => $msg));
-	}
+		$msg = 'You\'re seeing this message because the resource <span class="path_not_found">' . $path . '</span> does not exist in the content module.';
+		return array('notfound',array('msg' => $msg));
+	}*/
 
 }
 
