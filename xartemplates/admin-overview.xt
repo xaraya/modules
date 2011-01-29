@@ -119,7 +119,11 @@
 /apples/3</blockquote>
 
 <p>* These URLs will call the main function.<br />
-** This URL will call the main function if apples is an alias and is <strong>not</strong> a content type.  It will call the view function if apples is an alias and is a content type.</p>
+** This URL will call the view function if apples is an alias and is a content type.  If apples is <strong>not</strong> a content type, it will look up the path to see if the display function should be called.  If no such path is found, it will call the main function.</p> 
+<!-- 
+How it worked before path integration:
+** This URL will call the main function if apples is an alias and is <strong>not</strong> a content type.  It will call the view function if apples is an alias and is a content type. -->
+
 
 <p>Note that use of "display" is optional in short URLs.  If the second part of the URL is numeric, the display function will be called.</p>
 

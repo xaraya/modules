@@ -34,14 +34,14 @@ function content_userapi_encode_shorturl($args)
         return;
     }
 
-	if (xarModVars::get('content','path_module')) {
+	/*if (xarModVars::get('content','path_module')) {
 		$args['module'] = 'content';
 		$action = xarMod::apiFunc('path','admin','standardizeaction',array('action' => $args));
 		$path = xarMod::apiFunc('path','user','action2path',array('action' => $action));
 		if ($path) {
 			return '/' . $path;
 		}
-	}
+	}*/
 
     // default path is empty -> no short URL
     $path = '';
@@ -57,30 +57,31 @@ function content_userapi_encode_shorturl($args)
 			$module = $ctype;
 		}
 	}
-	
 
-    // specify some short URLs relevant to your module
     if ($func == 'main') {
-        $path = '/' . $module . '/';
 
-        // Note : if your main function calls some other function by default,
-        // you should set the path to directly to that other function
+        $path = '/' . $module . '/';
 
     } elseif ($func == 'view') {
 
 		$path = '/' . $module;
 
-		// If we're not using an alias, we'll need the name after the func
 		if ($module == 'content' && isset($ctype)) {
 			$path .= '/view/' . $ctype;
 		}
 
     } elseif ($func == 'display') {
- 
-		$path = '/' . $module;
-
+  
 		if(isset($args['itemid'])) {
+
+			$object = DataObjectMaster::getObject(array('name' => 'content'));
+			$object->getItem(array('itemid' => $itemid));
+			$path = $object->properties['path']->value;
+			if (!empty($path)) return $path;
+			
+			$path = '/' . $module;
 			$path .= '/' . $itemid;
+
 		} else { // no itemid
 			return;
 		}

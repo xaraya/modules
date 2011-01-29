@@ -20,8 +20,8 @@
  * @return array containing func the function to be called and args the query
  *         string arguments, or empty if it failed
  */
-function content_userapi_decode_shorturl($params)
-{ 
+function content_userapi_decode_shorturl($params) { 
+
     // Initialise the argument list we will return
     $args = array();
 
@@ -42,7 +42,7 @@ function content_userapi_decode_shorturl($params)
 		if (!isset($params[1])) {
 			$args = array();
 			if ($_GET) $args = $_GET;
-			return array('view', $args);
+			return array('main', $args);
 		} 
 		if (is_numeric($params[1])) { 
 			$args['itemid'] = $params[1];
@@ -56,10 +56,11 @@ function content_userapi_decode_shorturl($params)
 				return array('display', $args);
 			} 
 		}
-		if ($params[1] == 'view' && isset($params[2])) { 
-			$args['ctype'] = $params[2];
+		if ($params[1] == 'view') {  
+			if (isset($params[2])) $args['ctype'] = $params[2];
 			return array('view', $args); 
-		}
+		} 
+
 		$checkpath = false;
 
 	} else {
@@ -71,22 +72,28 @@ function content_userapi_decode_shorturl($params)
 				if ($_GET) array_merge($args, $_GET);
 				return array('display', $args);
 			}
-			if ($params[1] == 'view') {
+			// add 'view' to the end of URLs to avoid the processing & db hits below
+			if ($params[1] == 'view' && !isset($params[2])) {
 				$args['ctype'] = $params[0];  
 				if ($_GET) array_merge($args, $_GET);
 				return array('view', $args);
 			}
-		}
-
-		if (!isset($params[1])) {
-			$args['ctype'] = $params[0]; 
-			//tell the view func to check if the alias is a ctype
-			$args['check_ctype'] = true; 
-			if ($_GET) array_merge($args, $_GET);
-			return array('view', $args);
+		} else {
+			// we have a 1-param URL.  If the param is a ctype, call the view function.
+				$data['content_types'] = xarMod::apiFunc('content','admin','getcontenttypes');
+				$alias = $params[0];
+				if (isset($data['content_types'][$alias])) {
+					$args['ctype'] = $params[0];   
+					if ($_GET) array_merge($args, $_GET);
+					return array('view', $args);
+				}
 		}
 		
-		// no view functions allowed down here...
+		 /*  We have ruled out these URLs:
+			 /<alias>/123  (display func)
+			 /<alias>/view (view func)
+			 /<alias> (view func if alias is a ctype) 
+		*/
 
 		$baseurl = xarServer::GetBaseURL();
 		$url = xarServer::GetCurrentURL();
@@ -95,16 +102,26 @@ function content_userapi_decode_shorturl($params)
 		
 		// checking the path in here means we aren't going to allow /content/foo/etc
 		$checkpath = xarMod::apiFunc('content','user','checkpath',array('path' => $path)); 
-
+ 
 		if ($checkpath) {
+
 			if(!empty($qs)) {
 				array_merge($args, $_GET);
 			}
 			$args['itemid'] = $checkpath;
 			return array('display',$args);
+
+		} elseif (!isset($params[1])) {
+			// If we're here, we had to do both a ctype lookup and a path lookup.  
+			if(!empty($qs)) {
+				array_merge($args, $_GET);
+			}
+			return array('main',$args);
 		} else {
-			$msg = 'You\'re seeing this message because the resource <span class="path_not_found">' . $path . '</span> does not exist in the content module.';
-			return array('notfound',array('msg' => $msg));
+
+			$notfound = 'You\'re seeing this message because the resource <span class="path_not_found">' . $path . '</span> does not exist in the content module.';
+			return array('notfound',array('msg' => $notfound));
+
 		}
 	} 
 

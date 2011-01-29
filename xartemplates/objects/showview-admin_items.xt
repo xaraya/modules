@@ -72,13 +72,7 @@
 	&amp;nbsp;  <a href="#xarModURL('content','admin','delete', array('itemid' => $itemid, 'ctype' => $ctype))#"><img src="#sys::code()#modules/base/xarimages/icons/delete.png" width="16" height="16" alt="Delete" /></a>
 </xar:if>
 
-<xar:if condition="xarModVars::get('content','path_module')"> 
-	<xar:set name="itemurl">xarMod::apiFunc('path','user','itemurl', array('module' => 'content', 'itemid' => $itemid))</xar:set> 
-<xar:else />
-	<xar:set name="itemurl">xarModURL('content','user','display', array('ctype' => $ctype, 'itemid' => $itemid))</xar:set>
-</xar:if>
-
-&amp;nbsp;  <a href="#$itemurl#"><img src="#sys::code()#modules/base/xarimages/icons/display.png" width="16" height="16" alt="Display" /></a>
+&amp;nbsp;  <a href="#xarModURL('content','user','display', array('itemid' => $itemid, 'ctype' => $ctype))#"><img src="#sys::code()#modules/base/xarimages/icons/display.png" width="16" height="16" alt="Display" /></a>
                         </td>
                     </xar:if>
                 </tr>

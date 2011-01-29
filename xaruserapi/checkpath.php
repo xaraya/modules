@@ -16,6 +16,8 @@
  */
 function content_userapi_checkpath($args) {
 
+	$failsilently = false;
+
 	extract($args);
 
 	sys::import('modules.dynamicdata.class.objects.master');
@@ -30,6 +32,8 @@ function content_userapi_checkpath($args) {
 		$item = end($items);
 		$itemid = $item['itemid'];
 		return $itemid;
+	} elseif ($failsilently) {
+		return false;
 	} else {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'item count', 'userapi', 'checkpath', 'content');

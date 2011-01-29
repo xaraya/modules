@@ -20,19 +20,10 @@ function content_user_view($args) {
 
     if(!xarVarFetch('startnum', 'isset', $startnum, NULL, XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('numitems', 'int',   $numitems,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-	if(!xarVarFetch('ctype', 'str',   $ctype,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-	if(!xarVarFetch('check_ctype', 'bool',   $check_ctype,  false, XARVAR_NOT_REQUIRED)) {return;}
+	if(!xarVarFetch('ctype', 'str',   $ctype,  xarModVars::get('content', 'default_ctype'), XARVAR_NOT_REQUIRED)) {return;} 
 	if(!xarVarFetch('page_template', 'str', $page_template, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
 	sys::import('modules.dynamicdata.class.objects.master');
-	
-	// don't get the content types unless we have to
-	if ($check_ctype) {
-		$data['content_types'] = xarMod::apiFunc('content','admin','getcontenttypes');
-		if (!isset($data['content_types'][$ctype])) {
-			$ctype = xarModVars::get('content', 'default_ctype');
-		}
-	}
 
 	$instance = 'All:'.$ctype.':All';
 	if (!xarSecurityCheck('ViewContent',1,'Item',$instance)) return;
