@@ -8,7 +8,7 @@
 
     <h2>Content</h2> 
 
-    <xar:template type="module" file="contenttypetabs" />
+    <xar:template type="module" file="user-menu" />
 
 	<xar:if condition="isset($output)">
 		#$output#

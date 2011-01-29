@@ -6,7 +6,7 @@
         <span class="xar-mod-title">Content Administration</span>
     </div>
     <div class="xar-mod-body">
-        <xar:template type="module" file="admintabs" />
+        <xar:template type="module" file="admin-menu" />
         <h2>Overview</h2>
 
 <p style="margin-bottom: 30px;">A content management module for Xaraya 2.1.0.</p>

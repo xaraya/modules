@@ -66,19 +66,6 @@ function content_userapi_decode_shorturl($params)
 	} else {
 		// it's an alias
 
-/*
-		// check if the alias is a ctype
-		$content_types = xarMod::apiFunc('content','admin','getcontenttypes');
-		if (isset($content_types[$params[0]])) {
-			if (!isset($params[1] || $params[1] == 'view') {
-				//always
-				// TODO: what if there's a query string to pass on?
-				return array('view', array('name' => $params[0]));
-			}
-			//it still could be a display function
-		}
-*/
-
 		if (isset($params[1])) {
 			if (is_numeric($params[1])) {
 				$args['itemid'] = $params[1];
@@ -94,7 +81,9 @@ function content_userapi_decode_shorturl($params)
 		}
 
 		if (!isset($params[1])) {
-			$args['ctype'] = $params[0]; // if this is not a ctype we'll find out in the view function?
+			$args['ctype'] = $params[0]; 
+			//tell the view func to check if the alias is a ctype
+			$args['check_ctype'] = true; 
 			if ($_GET) array_merge($args, $_GET);
 			return array('view', $args);
 		}
@@ -120,23 +109,6 @@ function content_userapi_decode_shorturl($params)
 			return array('notfound',array('msg' => $msg));
 		}
 	} 
-
-	/*if (xarModVars::get('content','path_module')) {
-		$action = xarMod::apiFunc('path','user','path2action',array('path' => $path)); 
-	} else {
-		$action = false;
-	} */ 
-
-	/*if ($checkpath) {
-		if(!empty($qs)) {
-			array_merge($args, $_GET);
-		}
-		$args['itemid'] = $checkpath;
-		return array('display',$args);
-	} else {
-		$msg = 'You\'re seeing this message because the resource <span class="path_not_found">' . $path . '</span> does not exist in the content module.';
-		return array('notfound',array('msg' => $msg));
-	}*/
 
 }
 

@@ -10,7 +10,7 @@
 
     <h2>Content</h2> 
 
-    <xar:template type="module" file="contenttypetabs" />
+    <xar:template type="module" file="user-menu" />
 
 	#$output#
 
