@@ -23,7 +23,7 @@ function content_userapi_checkpath($args) {
 	sys::import('modules.dynamicdata.class.objects.master');
 	$list = DataObjectMaster::getObjectList(array('name' =>  'content'));
 	$filters = array(
-						'where' => 'path eq \'' . $path . '\''
+						'where' => 'item_path eq \'' . $path . '\''
 					);
 	$items = $list->getItems($filters);
 	if(count($items) == 0) {

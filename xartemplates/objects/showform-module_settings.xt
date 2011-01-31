@@ -81,43 +81,5 @@
 	 </div>
    </xar:if>
      
-     
-    <xar:if condition="xarModIsAvailable('path')">
-
-	<fieldset class="mod_settings">
-
-	<h4>Path Module:</h4>
-
-	<xar:set name="name">'path_module'</xar:set>
-	<div class="xar-form-input-wrapper">
-		<xar:data-label property="$properties[$name]" for="id" />       
-		<xar:data-input property="$properties[$name]" />		
-	</div>
-
-	<a name="res" />
-	<xar:set name="name">'path_module_objects'</xar:set>
-	<div class="xar-form-input-wrapper">
-		<xar:data-label property="$properties[$name]" for="id" />       
-		<xar:data-input property="$properties[$name]" />
-		
-		<xar:if condition="isset($_GET['path_result'])">
-			<xar:set name="path_result">explode('|',$_GET['path_result'])</xar:set>
-
-			<xar:if condition="!empty($path_result[0])">
-				<div style="color: green;">Success!  A path_module property was added to these objects: <strong>#$path_result[0]#</strong></div>
-			<xar:elseif condition="!empty($path_result[1])" />
-				<div style="color: red;">These objects either do not exist, are not content types or already have a path_module property: <strong>#$path_result[1]#</strong></div>
-			</xar:if>
-		</xar:if>		
-	</div>
-
-	</fieldset>
-    <xar:else /> 
-	 <div style="display:none">
-		<xar:set name="ffid">$properties['path_module']->id</xar:set>
-		<input type="checkbox" name="dd_#$ffid#" value="false" />
-		<xar:data-input property="$properties['path_module_objects']" />
-	 </div>
-     </xar:if>
 
 </xar:template>

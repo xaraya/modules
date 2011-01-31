@@ -23,31 +23,14 @@ function content_userapi_encode_shorturl($args)
 {
     // Get arguments from argument array
     extract($args);
-	/*
-	xarModURL('content','user','display',array('itemid'=>1))
-	xarModURL('content','user','view',array('name'=>'apples'))
-	array(2) { ["name"]=> string(6) "apples" ["func"]=> string(4) "view" }
-	*/
 
     // Check if we have something to work with
     if (!isset($func)) {
         return;
     }
-
-	/*if (xarModVars::get('content','path_module')) {
-		$args['module'] = 'content';
-		$action = xarMod::apiFunc('path','admin','standardizeaction',array('action' => $args));
-		$path = xarMod::apiFunc('path','user','action2path',array('action' => $action));
-		if ($path) {
-			return '/' . $path;
-		}
-	}*/
-
-    // default path is empty -> no short URL
+ 
     $path = '';
-    // if we want to add some common arguments as URL parameters below
-    $join = '?';
-    // we can't rely on xarModGetName() here -> you must specify the modname !
+    $join = '?'; 
     $module = 'content';
 
 	if (isset($args['ctype'])) {
@@ -76,7 +59,7 @@ function content_userapi_encode_shorturl($args)
 
 			$object = DataObjectMaster::getObject(array('name' => 'content'));
 			$object->getItem(array('itemid' => $itemid));
-			$path = $object->properties['path']->value;
+			$path = $object->properties['item_path']->value;
 			if (!empty($path)) return $path;
 			
 			$path = '/' . $module;

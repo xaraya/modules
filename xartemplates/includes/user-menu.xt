@@ -1,13 +1,10 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-
-<xar:if condition="!isset($getlabels)">
-	<xar:set name="getlabels">true</xar:set>
-</xar:if>
+ 
 <xar:if condition="!isset($content_types)">
 	<xar:set name="content_types">
-	xarMod::apiFunc('content','admin','getcontenttypes', array('getlabels' => $getlabels))
+	xarMod::apiFunc('content','admin','getcontenttypes')
 	</xar:set>
 </xar:if>
 

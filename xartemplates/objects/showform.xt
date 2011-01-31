@@ -7,8 +7,6 @@
                 <xar:data-label property="$properties[$name]" for="id" />
                 <xar:if condition="$_GET['func'] eq 'modify' and $name eq 'model'">
 			 #$properties[$name]->showOutput(array('value'))#
-		<xar:elseif condition="$name eq 'path_module'" />
-			<xar:data-input property="$properties[$name]" value="$the_path" />
 		<xar:else />
 			<xar:data-input property="$properties[$name]" />
 		</xar:if>

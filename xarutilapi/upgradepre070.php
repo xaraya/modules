@@ -16,20 +16,46 @@ function content_utilapi_upgradepre070($args) {
 
 	extract($args);
 
+	// 1. Add a label field to the content_types table
+	
+	try {
+		$dbconn =& xarDB::getConn();
+		$tables =& xarDB::getTables();
+
+		$prefix = xarDB::getPrefix();
+		$tables['content_types'] = $prefix . '_content_types';
+		$query = xarDBAlterTable($tables['content_types'], array(
+			 'command' => 'add',
+			 'field' => 'label',
+			 'type' => 'varchar',
+			 'size' => 254,
+			'null' => false
+		 )); 
+
+		$dbconn->Execute($query);
+		$dbconn->commit();
+
+	} catch (Exception $e) {
+		$dbconn->rollback();
+		throw $e;
+	} 
+
+	// 2. Add a label property to the the content_types object 
 	sys::import('modules.dynamicdata.class.objects.master');
+	$object = DataObjectMaster::getObject(array(
+		'name' => 'content_types'
+	));
+	$objectid = $object->objectid;
 
-	// First check to see if the object already has a property named publication_date
+	// does the content_types object already have a property named label?
 	$pobject = DataObjectMaster::getObjectList(array('name' => 'properties'));
-
 	$filters = array(
 		'where' => 'objectid eq ' . $objectid . ' and name eq \'label\''
 	);
-
 	$items = $pobject->getItems($filters);
 
 	if (count($items) == 0) {
-
-		// Add a label
+		// add the label property
 		$values = array(
 			'name' => 'label',
 			'label' => 'Label',
@@ -46,16 +72,15 @@ function content_utilapi_upgradepre070($args) {
 
 	}
 
-	#####################
-	#####################
+	// 3. Modify the label for the content_type property in the content_types object.  Set it to 'Object Name'.
 
+	// have to get the properties objectlist because we're going to be working with a different property here than in step 2 above
 	$pobject = DataObjectMaster::getObjectList(array('name' => 'properties'));
 	$filters = array(
 		'where' => 'objectid eq ' . $objectid . ' and name eq \'content_type\''
 	);
-
 	$items = $pobject->getItems($filters);
-	$item = end($items);
+	$item = end($items); // if there is more than one record, hopefully the last one is the one that matters?
 	
 	$pobject = DataObjectMaster::getObject(array('name' => 'properties'));
 	$pobject->getItem(array('itemid' => $item['id']));

@@ -37,7 +37,7 @@ function content_init()
         $fields = array(
                         'itemid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
                         'content_type' => array('type' => 'varchar','size' => 254,'null' => false, 'charset' => $charset),
-                        'path' => array('type' => 'varchar','size' => 254,'null' => false, 'charset' => $charset)
+                        'item_path' => array('type' => 'varchar','size' => 254,'null' => false, 'charset' => $charset)
 			);
         $query = xarDBCreateTable($tables['content'],$fields);
         $dbconn->Execute($query);
@@ -96,8 +96,8 @@ function content_init()
 	xarModVars::set('content','enable_filters',1);  
 	xarModVars::set('content','filters_min_ct_count',9);    
 	xarModVars::set('content','filters_min_item_count',1);
-	xarModVars::set('content','path_module',false);
-	xarModVars::set('content','path_module_objects','');
+	//xarModVars::set('content','path_module',false);
+	//xarModVars::set('content','path_module_objects','');
 	xarModVars::set('content','default_itemid',1);
 	xarModVars::set('content','default_main_page_tpl','content');
 	xarModVars::set('content','default_display_page_tpl','content');
@@ -185,50 +185,18 @@ function content_init()
 
 /**
  * Upgrade the module from an old version
- *
- * This function can be called multiple times
  */
 function content_upgrade($oldversion)
 {
 	$old = str_replace('.','',$oldversion);
 	$old = (int)$old;
+
     if($old < 70) {
-		try {
-			$dbconn =& xarDB::getConn();
-			$tables =& xarDB::getTables();
-
-			$prefix = xarDB::getPrefix();
-			$tables['content_types'] = $prefix . '_content_types';
-			$query = xarDBAlterTable($tables['content_types'], array(
-				 'command' => 'add',
-				 'field' => 'label',
-				 'type' => 'varchar',
-				 'size' => 254,
-				'null' => false
-			 )); 
-			
-			sys::import('modules.dynamicdata.class.properties.master');
-			sys::import('modules.dynamicdata.class.objects.master');
-			$object = DataObjectMaster::getObject(array(
-				'name' => 'content_types'
-			));
-			$objectid = $object->objectid;
-			xarMod::apiFunc('content','util','upgradepre070',array(
-				'objectid' => $objectid,
-				'prefix' => $prefix
-				));
-
-			if($objectid) {
-				$dbconn->Execute($query);
-				$dbconn->commit();
-			}
-
-		} catch (Exception $e) {
-			$dbconn->rollback();
-			throw $e;
-		}
-       
-    }
+		xarMod::apiFunc('content','util','upgradepre070')
+    } 
+	if ($old < 90) {
+		xarMod::apiFunc('content','util','upgradepre090');
+	}
 
     // Update successful
     return true;

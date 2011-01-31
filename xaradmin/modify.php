@@ -54,7 +54,7 @@ function content_admin_modify()
 	}
 	
 	$data['ctype'] = $ctype;
-	$data['pathval'] = '';
+	//$data['pathval'] = '';
 
     // Get the object we'll be working with
     $object = DataObjectMaster::getObject(array('name' => $ctype));
@@ -101,51 +101,16 @@ function content_admin_modify()
             return xarTplModule('content','admin','modify', $data);        
         } else {
             // Good data: update the item
-			/*if ($dopath) {
-				$path = $object->properties['path_module']->getValue();
-				if ($path != $pathval) { // The path was edited
-					//If we've changed the path and the new path is not a dupe
-					$action['module'] = 'content';
-					$action['itemid'] = $itemid;
-					$pargs = array(
-						'path' => $path, 
-						'action' => $action,
-						'currpath' => $pathval
-						);
-
-					$pathinfo = xarMod::apiFunc('path','user','set',$pargs);
-
-					if (isset($pathinfo['errors'])) {
-						$path_errors = $pathinfo['errors'];
-						if (isset($path_errors[5])) {
-							$args['pathstart'] = $path_errors[5];
-						}
-						if (isset($path_errors[6])) {
-							$vals = explode('|',$path_errors[6]);
-							$args['pathstart'] = $vals[0];
-							$args['pathaliasmodule'] = $vals[1];  
-						}
-						$path_errors = array_keys($path_errors);
-						$path_error = reset($path_errors); //There will never be multiple errors
-						if (!$pathval) {
-							$pathval = '';
-						}
-						$data['object']->properties['path_module']->setValue($pathval);
-					} else { 
-						$val = $pathinfo['path'];
-						$data['object']->properties['path_module']->setValue($val);
-					}
-				}
-			}*/
 			
 			$properties = array_keys($data['object']->getProperties());
 
-			if (in_array('path', $properties)) {
-				$path = $data['object']->properties['path']->getValue(); 
+			if (in_array('item_path', $properties)) {
+				$item_path = $data['object']->properties['item_path']->getValue(); 
 				$contentobject = DataObjectMaster::getObject(array('name' => 'content'));
 				$contentobject->getItem(array('itemid' => $itemid));
-				$contentobject->properties['path']->setValue($path);
-				$contentobject->updateItem(array('itemid' => $itemid));			
+				$contentobject->properties['item_path']->setValue($item_path);
+				$contentobject->updateItem(array('itemid' => $itemid));
+				$data['object']->properties['item_path']->setValue($item_path);
 			}
 
 			// never an empty publication_date

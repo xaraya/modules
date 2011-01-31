@@ -30,12 +30,12 @@
       <seq>2</seq>
       <configuration></configuration>
     </property>
-    <property name="path">
+    <property name="item_path">
       <id>2196</id>
       <label>Path</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>xar_content.path</source>
+      <source>xar_content.item_path</source>
       <status>33</status>
       <seq>3</seq>
       <configuration></configuration>

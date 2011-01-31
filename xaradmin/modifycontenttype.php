@@ -29,7 +29,7 @@ function content_admin_modifycontenttype()
 
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
-	sys::import('modules.dynamicdata.class.properties.master');
+	//sys::import('modules.dynamicdata.class.properties.master');
 
 	// Get the objectid
 	$list = DataObjectMaster::getObjectList(array('name' => 'objects'));

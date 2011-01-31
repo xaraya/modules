@@ -90,25 +90,5 @@
       <seq>11</seq>
       <configuration></configuration>
     </property>
-    <property name="path_module">
-      <id>109</id>
-      <label>Enable the path module</label>
-      <type>checkbox</type>
-      <defaultvalue></defaultvalue>
-      <source>module variable: content</source>
-      <status>33</status>
-      <seq>15</seq>
-      <configuration></configuration>
-    </property>
-    <property name="path_module_objects">
-      <id>110</id>
-      <label>Add a path_module property to objects.  List objects separated by commas:</label>
-      <type>textbox</type>
-      <defaultvalue></defaultvalue>
-      <source>module variable: content</source>
-      <status>33</status>
-      <seq>20</seq>
-      <configuration></configuration>
-    </property>
   </properties>
 </object>

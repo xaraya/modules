@@ -20,7 +20,6 @@ function content_admin_new()
     if (!xarSecurityCheck('AddContent')) return;
 
 	if(!xarVarFetch('objectid',       'id',    $objectid,   NULL, XARVAR_DONT_SET)) {return;}
-	//if(!xarVarFetch('path',       'str',    $path,   NULL, XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('ctype',    'str', $ctype,     NULL,  XARVAR_GET_ONLY)) {return;}
 	
 	$data['content_type'] = $ctype;
@@ -30,7 +29,7 @@ function content_admin_new()
 		return;
 	}
 
-	$data['pathval'] = '';
+	//$data['pathval'] = '';
 
 	// Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
@@ -68,8 +67,8 @@ function content_admin_new()
             return xarTplModule('content','admin','new', $data);        
         } else {
 
-			if (isset($object->properties['path'])) {
-				$path = $object->properties['path']->getValue();
+			if (isset($object->properties['item_path'])) {
+				$path = $object->properties['item_path']->getValue();
 			} else {
 				$path = '';
 			}
@@ -77,25 +76,8 @@ function content_admin_new()
 			// Create the item for the content object
 			$contentobject = DataObjectMaster::getObject(array('name' => 'content'));
 			$contentobject->properties['content_type']->setValue($ctype);
-			$contentobject->properties['path']->setValue($path);
+			$contentobject->properties['item_path']->setValue($path);
 			$itemid = $contentobject->createItem();
-			
-			/*if (xarModVars::get('content','path_module') && isset($object->properties['path_module'])) {
-				$path = $object->properties['path_module']->getValue();
-				$action['module'] = 'content';
-				$action['itemid'] = $itemid;
-				$pathinfo = xarMod::apiFunc('path','user','set',array(
-					'path' => $path,
-					'action' => $action
-					));
-				if (isset($pathinfo['errors'])) {
-					// Don't save a bad path; save an empty string instead
-					$object->properties['path_module']->setValue(''); 
-					// The bad path should not interrupt creation of the item.  Thus processing continues...
-				} else {
-					$object->properties['path_module']->setValue($pathinfo['path']);
-				}
-			}*/
 
 			if (isset($object->properties['publication_date'])) {
 				$pubdate = $object->properties['publication_date']->getValue();
@@ -112,24 +94,6 @@ function content_admin_new()
 
 			// Same itemid for this
 			$itemid = $object->createItem(array('itemid' => $itemid));
-
-			/*if (isset($pathinfo['errors'])) {
-				$path_errors = $pathinfo['errors'];
-				if (isset($path_errors[5])) {
-					$args['pathstart'] = $path_errors[5];
-				}
-				if (isset($path_errors[6])) {
-					$vals = explode('|',$path_errors[6]);
-					$args['pathstart'] = $vals[0];
-					$args['pathaliasmodule'] = $vals[1];  
-				}
-				$path_errors = array_keys($path_errors);
-				$path_error = reset($path_errors); //There will never be multiple errors
-				$args['ctype'] = $ctype;
-				$args['itemid'] = $itemid;
-				$args['path_error'] = $path_error;
-				xarResponse::redirect(xarModURL('content','admin','modify', $args));
-			}*/
  
             // Jump to the next page
             xarResponse::redirect(xarModURL('content','admin','view', array('ctype' => $ctype)));

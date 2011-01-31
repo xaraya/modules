@@ -40,7 +40,7 @@
                     Modify
                 </legend>
  
-                <xar:data-form object="$object" tplmodule="content" pathval="$pathval" template="content" />
+                <xar:data-form object="$object" tplmodule="content" template="content" />
 		 
              </fieldset>
 	     

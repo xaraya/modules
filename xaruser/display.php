@@ -59,10 +59,7 @@ function content_user_display($args)
 		$msg = 'You\'re seeing this message because the itemid ' . $itemid . ' does not exist in the content module.';
 		if ($itemid == xarModVars::get('content','default_itemid')) {
 			$msg .= ' Please check the Default Itemid setting for the content module to be sure it is set to an itemid that exists.';
-		} 
-		if (xarModVars::get('content','path_module')) {
-			$msg .= ' It\'s possible you\'re seeing this because the action for the URL path references a non-existent itemid in the content module.';
-		}
+		}  
 		return xarTplModule('base','message','notfound',array('msg' => $msg));
 	}
 

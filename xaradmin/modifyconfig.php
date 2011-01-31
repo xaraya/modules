@@ -123,7 +123,8 @@ function content_admin_modifyconfig()
                 // Get the data from the form
                 $isvalid = $object->checkInput();
                 // Update the item with itemid = 0
-				$path_module_objects = $object->properties['path_module_objects']->getValue();
+
+				/*$path_module_objects = $object->properties['path_module_objects']->getValue();
 				if (isset($path_module_objects) && !empty($path_module_objects)) {
 					$pmobjects = explode(',',$path_module_objects);
 					foreach ($pmobjects as $pmobject) {
@@ -161,11 +162,11 @@ function content_admin_modifyconfig()
 					$path_result = '';
 				}
 				// Clear the input
-				$object->properties['path_module_objects']->setValue('');
+				$object->properties['path_module_objects']->setValue('');*/
 				
                 $item = $object->updateItem(array('itemid' => 0));
 
-				xarResponse::redirect(xarModURL('content','admin','modifyconfig', array('path_result' => $path_result)).'#res');
+				xarResponse::redirect(xarModURL('content','admin','modifyconfig'));
 
             # --------------------------------------------------------
             #

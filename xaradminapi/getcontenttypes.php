@@ -1,8 +1,6 @@
 <?php
 function content_adminapi_getcontenttypes($args){
 
-	$getlabels = false;
-
 	extract($args);
 
 	sys::import('modules.dynamicdata.class.objects.master');
@@ -14,14 +12,15 @@ function content_adminapi_getcontenttypes($args){
 
 	foreach ($types as $val) {
 		$name = $val['content_type'];
-		if ($getlabels) {
+		$content_types[$name] = $val['label'];
+		/*if ($getlabels) {
 			$object = DataObjectMaster::getObject(array('name' => $name));
 			if(is_object($object)) {
 				$content_types[$name] = $object->label;
 			}
 		} else {
 			$content_types[$name] = $name;
-		}
+		}*/
 	}
 
 	asort($content_types);
