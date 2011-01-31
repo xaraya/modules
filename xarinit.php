@@ -191,8 +191,8 @@ function content_upgrade($oldversion)
 	$old = str_replace('.','',$oldversion);
 	$old = (int)$old;
 
-    if($old < 70) {
-		xarMod::apiFunc('content','util','upgradepre070')
+    if ($old < 70) {
+		xarMod::apiFunc('content','util','upgradepre070');
     } 
 	if ($old < 90) {
 		xarMod::apiFunc('content','util','upgradepre090');

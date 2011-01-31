@@ -8,13 +8,8 @@
  * @subpackage content
  * @link http://www.xaraya.com/index.php/release/1015.html
  * @author potion <potion@xaraya.com>
- */
-/**
- *  Add a label field to the content_types object (for upgrades from 0.6.0)
- */
-function content_utilapi_upgradepre070($args) {
-
-	extract($args);
+ */ 
+function content_utilapi_upgradepre070() {
 
 	// 1. Add a label field to the content_types table
 	
