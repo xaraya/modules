@@ -43,8 +43,8 @@ function content_utilapi_upgradepre090() {
 			));
 	$objectid = $object->objectid;
 	$values = array(
-		'name' => 'label',
-		'label' => 'Label',
+		'name' => 'item_path',
+		'label' => 'Path',
 		'objectid' => $objectid,
 		'type' => 2,
 		'source' => $prefix . '_content.path',
