@@ -10,9 +10,9 @@
  * @author potion <potion@xaraya.com>
  */
 /**
- *    Add an path_module proprety to a content type
+ *    Add a path property to a content type
  */
-function content_adminapi_addpathmodule($args) {
+function content_adminapi_addpath($args) {
 
 	extract($args);
 
@@ -22,7 +22,7 @@ function content_adminapi_addpathmodule($args) {
 	$pobject = DataObjectMaster::getObjectList(array('name' => 'properties'));
 
 	$filters = array(
-		'where' => 'objectid eq ' . $objectid . ' and name eq \'path_module\''
+		'where' => 'objectid eq ' . $objectid . ' and name eq \'item_path\''
 	);
 
 	$items = $pobject->getItems($filters);
@@ -31,9 +31,9 @@ function content_adminapi_addpathmodule($args) {
 		return false;
 	}
 
-	// Add a path_module field to all content types
+	// Add a path field to all content types
 	$values = array(
-		'name' => 'path_module',
+		'name' => 'item_path',
 		'label' => 'Path',
 		'objectid' => $objectid,
 		'type' => 2,

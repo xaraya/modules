@@ -68,6 +68,7 @@ function content_admin_newcontenttype()
 		if (!xarVarFetch('add_pauthor',    'checkbox',   $data['add_pauthor'], false,     XARVAR_NOT_REQUIRED)) return;
 		if (!xarVarFetch('add_dtemplate',    'checkbox',   $data['add_dtemplate'], false,     XARVAR_NOT_REQUIRED)) return;
 		if (!xarVarFetch('add_datecreated',    'checkbox',   $data['add_datecreated'], false,     XARVAR_NOT_REQUIRED)) return;
+		if (!xarVarFetch('add_path',    'checkbox',   $data['add_path'], false,     XARVAR_NOT_REQUIRED)) return;
 		if (!xarVarFetch('add_datemodified',    'checkbox',   $data['add_datemodified'], false,     XARVAR_NOT_REQUIRED)) return;
 
 		// Fill in any values in the fields if we have to return because validation failed
@@ -128,6 +129,10 @@ function content_admin_newcontenttype()
 
 			if ($data['add_datemodified']) {
 				$pauthor = xarMod::apiFunc('content','admin','adddatemodified',array('objectid' => $objectid));
+			}
+
+			if ($data['add_path']) {
+				$dtemplate = xarMod::apiFunc('content','admin','addpath',array('objectid' => $objectid));
 			}
 
 			if (isset($objectid)) { // Good data: create the item

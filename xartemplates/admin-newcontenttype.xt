@@ -44,46 +44,50 @@
 				<label class="xar-form-label" for="add_dtemplate">
 				Display Template
 				</label>
-
 				<xar:if condition="isset($add_dtemplate) and !($add_dtemplate)">
 					<input type="checkbox" id="add_dtemplate" name="add_dtemplate" value="true" />
 				<xar:else />
 					<input type="checkbox" id="add_dtemplate" name="add_dtemplate" value="true" checked="checked" />
 				</xar:if>
-			
+				</div>
+
+								<div class="xar-form-input-wrapper">
+				<label class="xar-form-label" for="add_path">
+				Path
+				</label>
+				<xar:if condition="isset($add_path) and !($add_path)">
+					<input type="checkbox" id="add_path" name="add_path" value="true" checked="checked" />
+				<xar:else />
+					<input type="checkbox" id="add_path" name="add_path" value="true" />
+				</xar:if>
 				</div>
 
 				<div class="xar-form-input-wrapper">
 				<label class="xar-form-label" for="add_pdate">
 				Publication Date
 				</label>
-
 				<xar:if condition="isset($add_pdate) and !($add_pdate)">
 					<input type="checkbox" id="add_pdate" name="add_pdate" value="true" />
 				<xar:else />
 					<input type="checkbox" id="add_pdate" name="add_pdate" value="true" checked="checked" />
 				</xar:if>
-			
 				</div>
 
 				<div class="xar-form-input-wrapper">
 				<label class="xar-form-label" for="add_expdate">
 				Expiration Date
 				</label>
-
 				<xar:if condition="isset($add_expdate) and $add_expdate">
 					<input type="checkbox" id="add_expdate" name="add_expdate" value="true" checked="checked" />
 				<xar:else />
 					<input type="checkbox" id="add_expdate" name="add_expdate" value="true" />
 				</xar:if>
-			
 				</div>
 
 				<div class="xar-form-input-wrapper">
 				<label class="xar-form-label" for="add_pstatus">
 				Status
 				</label>
-
 				<xar:if condition="isset($add_pstatus) and !($add_pstatus)">
 					<input type="checkbox" id="add_pstatus" name="add_pstatus" value="true" />
 				<xar:else />
@@ -103,7 +107,7 @@
 				</div>
 				
 				<div class="xar-form-input-wrapper">
-				<label class="xar-form-label" for="add_pauthor">
+				<label class="xar-form-label" for="add_datecreated">
 				Date Created
 				</label>
 				<xar:if condition="isset($add_datecreated) and !($add_datecreated)">
@@ -114,7 +118,7 @@
 				</div>
 				
 				<div class="xar-form-input-wrapper">
-				<label class="xar-form-label" for="add_pauthor">
+				<label class="xar-form-label" for="add_datemodified">
 				Date Modified
 				</label>
 				<xar:if condition="isset($add_datemodified) and !($add_datemodified)">
