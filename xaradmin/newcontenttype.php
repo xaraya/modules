@@ -104,35 +104,35 @@ function content_admin_newcontenttype()
 			$ctobject->updateItem();
 			
 			if ($data['add_dtemplate']) {
-				$dtemplate = xarMod::apiFunc('content','admin','adddisplaytemplate',array('objectid' => $objectid, 'ctype' => $ctype));
+				xarMod::apiFunc('content','admin','adddisplaytemplate',array('objectid' => $objectid, 'ctype' => $ctype));
 			}
 
 			if ($data['add_pdate']) {
-				$pdate = xarMod::apiFunc('content','admin','addpubdate',array('objectid' => $objectid));
+				xarMod::apiFunc('content','admin','addpubdate',array('objectid' => $objectid));
 			}
 
 			if ($data['add_expdate']) {
-				$pdate = xarMod::apiFunc('content','admin','addexpdate',array('objectid' => $objectid));
+				xarMod::apiFunc('content','admin','addexpdate',array('objectid' => $objectid));
 			}
 
 			if ($data['add_pstatus']) {
-				$pstatus = xarMod::apiFunc('content','admin','addpubstatus',array('objectid' => $objectid));
+				xarMod::apiFunc('content','admin','addpubstatus',array('objectid' => $objectid));
 			}
 
 			if ($data['add_pauthor']) {
-				$pauthor = xarMod::apiFunc('content','admin','addpubauthor',array('objectid' => $objectid));
+				xarMod::apiFunc('content','admin','addpubauthor',array('objectid' => $objectid));
 			}
 
 			if ($data['add_datecreated']) {
-				$pauthor = xarMod::apiFunc('content','admin','adddatecreated',array('objectid' => $objectid));
+				xarMod::apiFunc('content','admin','adddatecreated',array('objectid' => $objectid));
 			}
 
 			if ($data['add_datemodified']) {
-				$pauthor = xarMod::apiFunc('content','admin','adddatemodified',array('objectid' => $objectid));
+				xarMod::apiFunc('content','admin','adddatemodified',array('objectid' => $objectid));
 			}
 
 			if ($data['add_path']) {
-				$dtemplate = xarMod::apiFunc('content','admin','addpath',array('objectid' => $objectid));
+				xarMod::apiFunc('content','admin','addpath',array('objectid' => $objectid));
 			}
 
 			if (isset($objectid)) { // Good data: create the item
