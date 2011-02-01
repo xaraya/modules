@@ -36,7 +36,7 @@ function content_adminapi_addpath($args) {
 		'name' => 'item_path',
 		'label' => 'Path',
 		'objectid' => $objectid,
-		'type' => 2,
+		'type' => 1038,
 		'source' => 'dynamic_data',
 		'status' => 33,
 		'seq' => 255 // make it the last field

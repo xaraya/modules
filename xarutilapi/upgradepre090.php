@@ -56,13 +56,14 @@ function content_utilapi_upgradepre090() {
 	$pobject->setFieldValues($values);
 	$pobject->createItem();
 	
-	// 3. Copy any path_module data in content type objects to the content object
+	// 3. Copy any path_module data in content type objects to the content object; rename path_module properties to item_path
 	$object = DataObjectMaster::getObjectList(array('name' => 'content_types'));
 	$ctypes = $object->getItems();
 	
 	if (!empty($ctypes)) {
 		foreach ($ctypes as $val) {
 			$ctobject = DataObjectMaster::getObject(array('name' => $val['content_type']));
+			$objectid = $ctobject->objectid; //save for later
 			$properties = array_keys($ctobject->getProperties());
 
 			if (in_array('path_module', $properties)) {
@@ -76,6 +77,23 @@ function content_utilapi_upgradepre090() {
 						$content->updateItem();
 					}
 				}
+
+				// rename the path_module properties to item_path
+				$pobject = DataObjectMaster::getObjectList(array('name' => 'properties'));
+				$filters = array(
+					'where' => 'objectid eq ' . $objectid . ' and name eq \'path_module\''
+				);
+				$items = $pobject->getItems($filters);
+				$item = end($items); // if there is more than one record, hopefully the last one is the one that matters?
+
+				$pobject = DataObjectMaster::getObject(array('name' => 'properties'));
+				$pobject->getItem(array('itemid' => $item['id']));
+				$values = $pobject->getFieldValues();
+				$values['name'] = 'item_path';
+
+				$pobject->setFieldValues($values);
+				$pobject->updateItem(array('itemid' => $item['id']));
+
 			}
 		}
 	}

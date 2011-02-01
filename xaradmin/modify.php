@@ -22,9 +22,6 @@ function content_admin_modify()
 {
     if(!xarVarFetch('itemid',       'id',    $itemid,   NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
-	//if (!xarVarFetch('path_error',    'str',   $data['path_error'], NULL,       XARVAR_NOT_REQUIRED)) return;
-	//if (!xarVarFetch('pathaliasmodule',    'str',   $data['pathaliasmodule'], NULL,       XARVAR_NOT_REQUIRED)) return;
-	//if (!xarVarFetch('pathstart',    'str',   $data['pathstart'], NULL,       XARVAR_NOT_REQUIRED)) return;
 	if (!xarVarFetch('view',    'str',   $data['view'], '',       XARVAR_NOT_REQUIRED)) return;
 
     // Check if we still have no id of the item to modify.
@@ -60,26 +57,6 @@ function content_admin_modify()
     $object = DataObjectMaster::getObject(array('name' => $ctype));
 	$data['object'] = $object; // save for later
 
-	// TODO: check if path module is installed
-	/*if (xarModIsAvailable('path') && xarModVars::get('content','path_module') && isset($object->properties['path_module'])) {
-		$dopath = true;
-	} else {
-		$dopath = false;
-	}*/
-
-	/*if ($dopath) {
-		// Get the field value from the path module, in case a change was made there
-		$pathval = xarMod::apiFunc('path','user','action2path',array(
-				'action' => array('module' => 'content', 'itemid' => $itemid)
-				));
-		if ($pathval) {
-			if($pathval[0] != '/') {
-				$pathval = '/' . $pathval;
-			}
-			$data['pathval'] = $pathval;
-		}
-	}*/
-
 	$data['label'] = $object->label;
    
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
@@ -105,12 +82,11 @@ function content_admin_modify()
 			$properties = array_keys($data['object']->getProperties());
 
 			if (in_array('item_path', $properties)) {
-				$item_path = $data['object']->properties['item_path']->getValue(); 
+				$item_path = $data['object']->properties['item_path']->getValue();  
 				$contentobject = DataObjectMaster::getObject(array('name' => 'content'));
 				$contentobject->getItem(array('itemid' => $itemid));
 				$contentobject->properties['item_path']->setValue($item_path);
 				$contentobject->updateItem(array('itemid' => $itemid));
-				$data['object']->properties['item_path']->setValue($item_path);
 			}
 
 			// never an empty publication_date

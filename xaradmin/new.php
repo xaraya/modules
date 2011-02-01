@@ -67,16 +67,15 @@ function content_admin_new()
             return xarTplModule('content','admin','new', $data);        
         } else {
 
-			if (isset($object->properties['item_path'])) {
-				$path = $object->properties['item_path']->getValue();
-			} else {
-				$path = '';
-			}
-
 			// Create the item for the content object
 			$contentobject = DataObjectMaster::getObject(array('name' => 'content'));
 			$contentobject->properties['content_type']->setValue($ctype);
-			$contentobject->properties['item_path']->setValue($path);
+			if (isset($object->properties['item_path'])) {
+				$item_path = $object->properties['item_path']->getValue();
+			} else {
+				$item_path = '';
+			}
+			$contentobject->properties['item_path']->setValue($item_path);
 			$itemid = $contentobject->createItem();
 
 			if (isset($object->properties['publication_date'])) {

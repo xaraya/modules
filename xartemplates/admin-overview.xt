@@ -67,9 +67,9 @@
 
 <h3>Item Controls</h3>
 
-<p>When you first create a content type, it will include the fields from the model as well as any of the item controls you check off.  Item controls are special fields that affect visibility, presentation or authorship of content items.  These include <em>display template</em>, <em>publication date</em>, <em>expiration date</em>, <em>status</em>, <em>author</em>, <em>date created</em> and <em>date modified</em>.</p>
+<p>When you first create a content type, it will include the fields from the model as well as any of the item controls you check off.  Item controls are special fields that affect visibility, presentation or authorship of content items.  These include <em>display_template</em>, <em>item_path</em>, <em>publication_date</em>, <em>expiration_date</em>, <em>publication_status</em>, <em>publication_author</em>, <em>date_created</em> and <em>date_modified</em>.</p>
 
-<p>As you would expect, an item whose <em>publication date</em> is still in the future will not display on a site.  An item whose <em>expiration date</em> has passed will no longer display.  An item whose <em>status</em> is set to rejected or submitted will only be visible to users with edit privileges for that particular item.</p>
+<p>As you would expect, an item whose <em>publication_date</em> is still in the future will not display on a site.  An item whose <em>expiration_date</em> has passed will no longer display.  An item whose <em>publication_status</em> is set to rejected or submitted will only be visible to users with edit privileges for that particular item.</p>
 
 <h4 align="right">Next: <a href="#xarmodurl('content','admin','overview',array('tab' => 'ctconfig'))#">Configuring Your Content Types</a></h4>
 
@@ -124,17 +124,16 @@
 How it worked before path integration:
 ** This URL will call the main function if apples is an alias and is <strong>not</strong> a content type.  It will call the view function if apples is an alias and is a content type. -->
 
-
 <p>Note that use of "display" is optional in short URLs.  If the second part of the URL is numeric, the display function will be called.</p>
 
-<p>If you use the <a href="http://www.xaraya.com/index.php/release/eid/1150" target="new">path module</a>&#160;<img src="code/modules/content/xarimages/exit.png" width="10" height="10" alt="leave this website" />, your URLs can be just about anything you want:</p>
+<p>If you use a path property, your URLs can be just about anything you want:</p>
 
 <blockquote>/jupiter<br />
 /mammals/bats<br />
 /because/i/said/so<br />
 /two/plus/two/equals/five</blockquote>
 
-<p>As explained in the path module documentation, the <strong>first part</strong> of the URL must not usurp another module's name, or the alias of another module.  For example, this would not work:</p>
+<p>The <strong>first part</strong> of the URL must not usurp another module's name, or the alias of another module.  For example, this would not work:</p>
 
 <blockquote>/<strong>roles</strong>/is/already/taken<br /></blockquote>
 
