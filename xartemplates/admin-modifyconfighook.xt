@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:style scope="module" module="comments" file="comments"/>
+
+<fieldset class="formelements xar-norm">
+    <legend> 
+            Comments 
+    </legend>
+    <!-- @todo allow this to be per itemtype instead of globally -->
+    <xar:if condition="xarModVars::get('comments','allowhookoverride')"> 
+        <xar:template file="modifyconfig_common" />
+   <xar:else />
+       Hook overrides are currrently disabled. They can be enabled
+       <a href="#xarModURL('comments','admin','modifyconfig')#">Here</a>
+   </xar:if>
+</fieldset>
+
+</xar:template>

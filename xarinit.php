@@ -206,14 +206,13 @@ function comments_init()
     if (!xarModRegisterHook('module', 'remove', 'API','comments', 'admin', 'remove_module'))
         return false;
 
-    if (!xarModRegisterHook('module', 'modifyconfig', 'GUI',
-                            'comments', 'admin', 'modifyconfighook')) {
+    if (!xarModRegisterHook('module', 'modifyconfig', 'GUI',  'comments', 'admin', 'modifyconfighook')) {
         return false;
     }
-    if (!xarModRegisterHook('module', 'updateconfig', 'API',
-                            'comments', 'admin', 'updateconfighook')) {
+    if (!xarModRegisterHook('module', 'updateconfig', 'API',  'comments', 'admin', 'updateconfighook')) {
         return false;
     }
+
     /**
      * Define instances for this module
      * Format is
