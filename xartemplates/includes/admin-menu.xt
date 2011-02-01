@@ -9,7 +9,7 @@
     <div>
       <dl class="xar-tabs">
         <dt class="help" title="#xarML('Choose an action to perform')#">
-          <xar:mlstring>Actions:</xar:mlstring>
+          Actions:
         </dt>
         <xar:sec mask="AdminComments" catch="false">
             <xar:if condition="$activetab eq 'stats' or $activetab eq 'module_stats' or $activetab eq 'delete'">
@@ -19,7 +19,7 @@
             </xar:if>
             <dd class="#$tabclass#">
               <a href="&xar-modurl-comments-admin-stats;">
-                <xar:mlstring>View Statistics</xar:mlstring>
+                View Statistics
               </a>
             </dd>
         </xar:sec>
@@ -27,7 +27,7 @@
             <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
             <dd class="#$tabclass#">
               <a href="&xar-modurl-comments-admin-modifyconfig;">
-                <xar:mlstring>Modify Configuration</xar:mlstring>
+                Modify Configuration
               </a>
             </dd>
         </xar:sec>
@@ -36,7 +36,7 @@
             <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-comments-admin-overview;">
-                    <xar:mlstring>Overview</xar:mlstring>
+                    Overview
                 </a>
             </dd>
         </xar:sec>

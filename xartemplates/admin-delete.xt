@@ -3,7 +3,7 @@
 <xar:style scope="module" module="comments" file="comments"/>
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>Comments Administration</xar:mlstring>
+            Comments Administration
         </span>
     </div>
 
@@ -11,13 +11,13 @@
         <xar:template type="module" file="admintabs"/>
 
         <h2>
-            <xar:mlstring>Delete Comments</xar:mlstring>
+            Delete Comments
         </h2>
 
         <form method="post" action="#xarModURL('comments','admin','delete')#">
 
             <fieldset>
-                <legend><xar:mlstring>Delete Confirmation</xar:mlstring></legend>
+                <legend>Delete Confirmation</legend>
 
                 <div class="xar-form-input-wrapper">
 
@@ -25,15 +25,15 @@
 
 				<div class="xar-form-input-wrapper" id="confirm_msg">
 				    <label for="commentdelete" class="xar-form-label" title="#xarML('Confirm deletion of this comment')#">
-				       <xar:mlstring>Are you sure you want to delete this comment?</xar:mlstring>
+				       Are you sure you want to delete this comment?
 				   </label>
 
 				   <xar:if condition="$haschildren">
 				   <div id="info_msg">
 				   The comment has one or more replies.
 				   </div>
-					   <input type="radio" name="deletebranch" value="false" checked="checked" id="deletebranch_false" />&amp;nbsp;<label for="deletebranch_false"><xar:mlstring>Do not delete the replies</xar:mlstring></label><br />
-					   <input type="radio" name="deletebranch" value="true" id="deletebranch_true" />&amp;nbsp;<label for="deletebranch_true"><xar:mlstring>Delete the comment and all replies</xar:mlstring></label><br />
+					   <input type="radio" name="deletebranch" value="false" checked="checked" id="deletebranch_false" />&amp;nbsp;<label for="deletebranch_false">Do not delete the replies</label><br />
+					   <input type="radio" name="deletebranch" value="true" id="deletebranch_true" />&amp;nbsp;<label for="deletebranch_true">Delete the comment and all replies</label><br />
 				    <xar:else />
 				            <input type="hidden"  name="deletebranch" value="false"/>
 				    </xar:if>
@@ -43,9 +43,9 @@
 			<xar:else />
 			<div class="xar-form-input-wrapper" id="confirm_msg">
 				<label for="commentdelete" class="xar-form-label" title="#xarML('Confirm deletion of comments')#">
-				       <xar:mlstring>Are you sure you want to delete</xar:mlstring>
+				       Are you sure you want to delete
 				        #$count# 
-				       <xar:mlstring>comments?</xar:mlstring>
+				       comments?
 				   </label> 
 				
 				<xar:if condition="isset($modname)">

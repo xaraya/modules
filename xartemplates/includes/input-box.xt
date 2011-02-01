@@ -12,9 +12,9 @@
           <xar:if condition="$hooks['formdisplay'] ne ''">
             <div class="xar-ib-actionpanel xar-accent">
               <span>
-                <xar:mlstring>
+                
                   BBCode Actions
-                </xar:mlstring>
+                
                 :
               </span>
               <span>
@@ -23,17 +23,17 @@
             </div>
             <div class="xar-ib-leftpanelshort">
               <p>
-                <xar:mlstring>
+                
                   Name
-                </xar:mlstring>
+                
                 :
                 <xar:if condition="strtolower(xarUserGetVar('uname')) ne 'anonymous'">
-                  <a href="&xar-modurl-roles-user-display;&#38;role_id=#$package['role_id']#"> #$package['name']# </a>
+                  <a href="&xar-modurl-roles-user-display;&#38;role_id=#$package['role_id']#">#$package['name']#</a>
                   <xar:if condition="$receipt['action'] ne 'modify' and xarUserIsLoggedIn()">
                     [ <a class="xar-norm" href="&xar-modurl-authsystem-user-logout;">
-                      <xar:mlstring>
+                      
                         Logout
-                      </xar:mlstring>
+                      
                     </a> ]
                   </xar:if>
                   <xar:if condition="xarModVars::get('comments','AllowPostAsAnon') eq '1'">
@@ -42,9 +42,9 @@
                     <xar:else />
                       <input type="checkbox" name="package[postanon]" id="package-postanon"/>
                     </xar:if>
-                    <xar:mlstring>
+                    
                       Post anonymously
-                    </xar:mlstring>
+                    
                     <br />
                   </xar:if>
                 <xar:else />
@@ -52,9 +52,9 @@
                 </xar:if>
               </p>
               <label for="package-title">
-                <xar:mlstring>
+                
                   Title:
-                </xar:mlstring>
+                
               </label>
               <xar:if condition="isset($package['new_title'])">
                 <input class="xar-ib-field" type="text" name="package[title]" id="package-title" value="#$package['new_title']#" tabindex="1"/>
@@ -64,9 +64,9 @@
                 <input class="xar-ib-field" type="text" name="package[title]" id="package-title" value="" tabindex="1"/>
               </xar:if>
               <label for="package-text">
-                <xar:mlstring>
+                
                   Comment:
-                </xar:mlstring>
+                
               </label>
               <xar:if condition="isset($package['text'])">
                 <textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2">#$package['text']#</textarea>
@@ -103,17 +103,17 @@
           <xar:else/><!--$hooks['formdisplay'] eq '' -->
             <div class="xar-ib-leftpanel">
               <p>
-                <xar:mlstring>
+                
                   Name
-                </xar:mlstring>
+                
                 :
                 <xar:if condition="strtolower(xarUserGetVar('uname')) ne 'anonymous'">
-                  <a href="&xar-modurl-roles-user-display;&#38;role_id=#$package['role_id']#"> #$package['name']# </a>
+                  <a href="&xar-modurl-roles-user-display;&#38;role_id=#$package['role_id']#">#$package['name']#</a>
                   <xar:if condition="$receipt['action'] ne 'modify' and xarUserIsLoggedIn()">
                     [ <a class="xar-norm" href="&xar-modurl-authsystem-user-logout;">
-                      <xar:mlstring>
+                      
                         Logout
-                      </xar:mlstring>
+                      
                     </a> ]
                   </xar:if>
                     <!--Psspl:Added the code for anonomous comment -->
@@ -123,9 +123,9 @@
                     <xar:else />
                       <input type="checkbox" name="package[postanon]" id="package-postanon"/>
                     </xar:if>
-                    <xar:mlstring>
+                    
                       Post anonymously
-                    </xar:mlstring>
+                    
                     <br />
                   </xar:if>
                   <xar:if condition="$receipt['action'] eq 'modify'">
@@ -134,9 +134,9 @@
                     <xar:else />
                       <input type="checkbox" name="package[postanon]" id="package-postanon"/>
                     </xar:if>
-                    <xar:mlstring>
+                    
                       Post anonymously
-                    </xar:mlstring>
+                    
                     <br />
                   </xar:if>
                 <xar:else />
@@ -144,9 +144,9 @@
                 </xar:if>
               </p>
               <label for="package-title">
-                <xar:mlstring>
+                
                   Title:
-                </xar:mlstring>
+                
               </label>
               <xar:if condition="isset($package['new_title'])">
                 <input class="xar-ib-field" type="text" name="package[title]" id="package-title" value="#$package['new_title']#" tabindex="1"/>
@@ -156,9 +156,9 @@
                 <input class="xar-ib-field" type="text" name="package[title]" id="package-title" value="" tabindex="1"/>
               </xar:if>
               <label for="package-text">
-                <xar:mlstring>
+                
                   Comment:
-                </xar:mlstring>
+                
               </label>
               <xar:if condition="isset($package['text'])">
                 <textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2">#$package['text']#</textarea>

@@ -17,38 +17,38 @@
             <xar:if condition="xarModIsHooked('changelog','comments')">
             <span class="xar-sub" style="float:right;">
                 <a href="#xarModURL('changelog','admin','showlog',array('modid' => 14, 'itemid'=> $loop:item['id']))#" title="#xarML('View Changes')#">
-                    <xar:mlstring>
+                    
                         View changes
-                    </xar:mlstring>
+                    
                 </a>
             </span>
             </xar:if>
             </xar:sec>
             <!-- end changelog -->
             <span class="xar-sub">
-                <xar:mlstring>
+                
                     Posted by:
-                </xar:mlstring>
+                
                 <xar:if condition="$loop:item['postanon'] eq 0">
                     #$loop:item['author']#
                     <xar:else />
                     <xar:sec catch="false" mask="ModerateComments">
-                        <xar:mlstring>
+                        
                             Anonymous
-                        </xar:mlstring>
+                        
                         (#$loop:item['author']#)
                         <xar:else />
-                        <xar:mlstring>
+                        
                             Anonymous
-                        </xar:mlstring>
+                        
                     </xar:sec>
                 </xar:if>
                 <xar:sec mask="AdminComments" catch="false">
                     [ip: #$loop:item['hostname']#]
                 </xar:sec>
-                <xar:mlstring>
+                
                     on
-                </xar:mlstring>
+                
              #xarLocaleFormatDate("%B %d, %Y %I:%M %p",$loop:item['date'])#
             </span>
 

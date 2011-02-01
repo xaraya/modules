@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div class="xar-tr-wrapper xar-accent">
-        <label class="xar-tr-title"><xar:mlstring>Title</xar:mlstring></label>
-        <label class="xar-tr-author"><xar:mlstring>Author</xar:mlstring></label>
-        <label class="xar-tr-date"><xar:mlstring>Date-Time</xar:mlstring></label>
+        <label class="xar-tr-title">Title</label>
+        <label class="xar-tr-author">Author</label>
+        <label class="xar-tr-date">Date-Time</label>
     </div>
 
     <xar:loop name="$package['comments']">
@@ -50,9 +50,9 @@
                     <xar:if condition="$loop:item['postanon'] eq 0 and strtolower($loop:item['author']) ne 'anonymous'">
                         #$loop:item['author']#
                     <xar:else />
-                        <xar:mlstring>
+                        
                             Anonymous
-                        </xar:mlstring>
+                        
                     </xar:if>
                 </span>
                 <span class="xar-tr-date">
@@ -94,9 +94,9 @@
                        <br />
                         <span class="xar-sub">
                             <a href="#xarModURL('changelog','admin','showlog',array('modid' => 14, 'itemid'=> $loop:item['id']))#" title="#xarML('View Changes')#">
-                                <xar:mlstring>
+                                
                                     View changes
-                                </xar:mlstring>
+                                
                             </a>
                         </span>
                     </xar:if>
@@ -147,9 +147,9 @@
                     <xar:if condition="$loop:item['postanon'] eq 0 and strtolower($loop:item['author']) ne 'anonymous'">
                         #$loop:item['author']#
                     <xar:else />
-                        <xar:mlstring>
+                        
                             Anonymous
-                        </xar:mlstring>
+                        
                     </xar:if>
                 </span>
 
@@ -192,7 +192,7 @@
                     <br />
                         <span class="xar-sub">
                             <a href="#xarModURL('changelog','admin','showlog',array('modid' => 14, 'itemid'=> $loop:item['id']))#" title="#xarML('View Changes')#">
-                                 <xar:mlstring>View changes</xar:mlstring>
+                                 View changes
                             </a>
                         </span>
                     </xar:if>

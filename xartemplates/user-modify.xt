@@ -7,6 +7,6 @@
     <xar:template file="view-flat" type="module"/>
     <xar:template file="input-box" type="module"/>
     <xar:if condition="!empty($header['objectlink']) and !empty($header['objecttitle'])">
-        <p><xar:mlstring>Return to</xar:mlstring> <a href="#$header['objectlink']#">#$header['objecttitle']#</a></p>
+        <p>Return to <a href="#$header['objectlink']#">#$header['objecttitle']#</a></p>
     </xar:if>
 </xar:template>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!--jojodee - this template and the associated function seem redundant - handled by overview function -->
-    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Comments</xar:mlstring></span></div>
+    <div class="xar-mod-head"><span class="xar-mod-title">Administration - Comments</span></div>
     <div class="xar-mod-body">
     
         <xar:template type="module" file="admintabs"/>
 
-        <h2><xar:mlstring>View Comments</xar:mlstring></h2>
+        <h2>View Comments</h2>
 
 	<xar:if condition="$showfilters"> 
 		<xar:foreach in="$makefilters" key="$thisfield" value="$startval">

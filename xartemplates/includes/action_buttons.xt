@@ -3,7 +3,7 @@
 <!-- actions buttons -->
 <xar:if condition="!isset($receipt['action']) or ($receipt['action'] ne 'reply' and $receipt['action'] ne 'modify')">
     <xar:sec catch="false" mask="ReplyComments" instance="$header[modid]:$header[objectid]:ALL">
-        <form action="#xarModURL('comments', 'user', 'reply')#" method="post" class="xar-cm-actions">
+        <form action="#xarModURL('comments', 'user', 'reply')#" method="post" class="xar-cm-actions reply">
             <div>
 		<input type="hidden" name="objecturl" value="#xarServer::getCurrentURL()#"/>
                 <input type="hidden" name="header[modid]" value="#$header['modid']#"/>
@@ -19,7 +19,7 @@
     <xar:if condition="xarUserIsLoggedIn()">
         <xar:if condition="xarSecurityCheck('EditComments',0,'',$header['modid'].':'.$header['objectid'].':'.$item['id']) or $item['role_id'] eq $package['role_id']">
              <xar:if condition="empty($package['settings']['edittimelimit']) or (time() le ($item['xar_date'] + ($package['settings']['edittimelimit'] * 60)) or xarSecurityCheck('Comments-Admin'))">
-            <form action="#xarModURL('comments', 'user', 'modify')#" method="post" class="xar-cm-actions">
+            <form action="#xarModURL('comments', 'user', 'modify')#" method="post" class="xar-cm-actions modify">
                 <div>
                     <input type="hidden" name="objecturl" value="#xarServer::getCurrentURL()#"/>
                     <input type="hidden" name="header[modid]" value="#$header['modid']#"/>
@@ -35,7 +35,7 @@
         </xar:if>
     </xar:if>
     <xar:sec catch="false" mask="DeleteComments" instance="$header[modid]:$header[objectid]:$item[id]">
-        <form action="#xarModURL('comments', 'user', 'delete')#" method="post" class="xar-cm-actions">
+        <form action="#xarModURL('comments', 'user', 'delete')#" method="post" class="xar-cm-actions delete">
             <div>
 
 		<input type="hidden" name="objecturl" value="#xarServer::getCurrentURL()#"/>

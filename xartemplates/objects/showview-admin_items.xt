@@ -53,7 +53,7 @@
                 <tr>
                     <xar:foreach in="$properties" key="$name">
                         <xar:if condition="$name eq 'title' and empty($fields['title'])">
-			    <td valign="top"><xar:mlstring>no title</xar:mlstring></td>
+			    <td valign="top">no title</td>
 			<xar:elseif condition="empty($fields[$name]) and $fields[$name] nd '0'" />
                             <td valign="top">&amp;nbsp;</td>
                         <xar:elseif condition="!empty($linkfield) and $linkfield eq $name"/>

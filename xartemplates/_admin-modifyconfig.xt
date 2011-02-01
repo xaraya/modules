@@ -19,16 +19,16 @@
             <xar:if condition="xarModVars::get('comments','useModuleAlias')">
                 <xar:var scope="module" module="comments" name="aliasname"/>
             <xar:else />
-                <xar:mlstring>Comments Administration</xar:mlstring>
+                Comments Administration
             </xar:if>
         </span>
     </div>
     <div class="xar-mod-body">
         <xar:template type="module" file="admintabs"/>
         <h2>
-            <xar:mlstring>
+            
                 Modify Configuration
-            </xar:mlstring>
+            
         </h2>
         <!--<div>
             <xar:template file="headerconfig" type="module"/>
@@ -37,18 +37,18 @@
             <fieldset>
                 <legend>
                     <strong>
-                        <xar:mlstring>
+                        
                             Comment Settings
-                        </xar:mlstring>
+                        
                     </strong>
                 </legend>
 
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
                 <div class="xar-form-input-wrapper">
                     <label for="depth" class="xar-form-label" title="#xarML('The rendering depth to be used as default')#">
-                            <xar:mlstring>
+                            
                                 Default Rendering Depth
-                            </xar:mlstring>
+                            
                     </label>
                     <xar:set name="depth">xarModVars::get('comments','depth')</xar:set>
                     <xar:set name="max_depth">_COM_MAX_DEPTH - 1</xar:set>
@@ -65,9 +65,9 @@
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="render" class="xar-form-label" title="#xarML('The rendering style to be used as default.')#">
-                             <xar:mlstring>
+                             
                                 Default Rendering Style
-                            </xar:mlstring>
+                            
                     </label>
                     <xar:set name="options">
                         array(
@@ -87,18 +87,18 @@
                         xarModVars::get('comments','usersetrendering')
                     </xar:set>
                     <label for="usersetrendering" title="#xarML('Allow users to set their own comment rendering style in their account?')#">
-                            <xar:mlstring>
+                            
                                 Allow users to set comment rendering style in their account?
-                            </xar:mlstring>
+                            
                     </label>
 		    <xar:data-input type="checkbox" name="usersetrendering" id="usersetrendering" checked="$checked"/>
                 </div>
 		<hr />
                 <div class="xar-form-input-wrapper">
                     <label for="sortby" class="xar-form-label" title="#xarML('The sorting mode to be used as default.')#">
-                               <xar:mlstring>
+                               
                                 Default Sorting Mode
-                            </xar:mlstring>
+                            
                     </label>
                     <xar:set name="options">
                         array(
@@ -115,9 +115,9 @@
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="order" class="xar-form-label" title="#xarML('The sorting order to be used as default.')#">
-                             <xar:mlstring>
+                             
                                 Default Sorting Order
-                            </xar:mlstring>
+                            
                     </label>
                     <xar:set name="options">
                         array(
@@ -136,18 +136,18 @@
                         xarModVars::get('comments','AllowPostAsAnon')
                     </xar:set>
                     <label for="postanon" class="xar-form-label" title="#xarML('Admin will see the name of who posted.')#">
-                            <xar:mlstring>
+                            
                                 Allow anonymous posting
-                            </xar:mlstring>
+                            
                     </label>
 		    <xar:data-input type="checkbox" name="postanon" id="postanon" checked="$checked"/>
                 </div>
                
                 <div class="xar-form-input-wrapper">
                     <label for="editstamp" class="xar-form-label" title="#xarML('Default value for Comment Edit Stamp use')#">
-                            <xar:mlstring>
+                            
                                 Use Comment Edit Stamp
-                            </xar:mlstring>
+                            
                     </label>
                     <xar:set name="options">
                         array(
@@ -166,18 +166,18 @@
                         xarModVars::get('comments','wrap')
                     </xar:set>
                     <label for="wrap" class="xar-form-label" title="#xarML('Long strings will be wrapped, including URLS when checked')#">
-                            <xar:mlstring>
+                            
                                 Wrap Long Entries
-                            </xar:mlstring>
+                            
                     </label>
 		    <xar:data-input type="checkbox" name="wrap" id="wrap" checked="$checked"/>
                 </div>
 		<hr />
 		 <div class="xar-form-input-wrapper">
                     <label for="numstats" class="xar-form-label"  title="#xarML('Statistics page ordering.')#">
-                            <xar:mlstring>
+                            
                                 Number of Items in Statistics
-                            </xar:mlstring>
+                            
                     </label>
                     <xar:set name="numstats">xarModVars::get('comments','numstats')</xar:set>
                     <input type="text" name="numstats" id="numstats" size="4" maxlength="4" value="#$numstats#"/>
@@ -187,17 +187,17 @@
                         xarModVars::get('comments','showtitle')
                     </xar:set>
                     <label for="showtitle" class="xar-form-label" title="#xarML('Show the titles of items that the comments are attached to.')#">
-                            <xar:mlstring>
+                            
                                 Show Title in Statistics
-                            </xar:mlstring>
+                            
                     </label>
 		    <xar:data-input type="checkbox" name="showtitle" id="showtitle" checked="$checked"/>
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="rssnumitems" class="xar-form-label" title="#xarML('Number of items in RSS Feed')#">
-                        <xar:mlstring>
+                        
                              Number of Items in Statistics
-                        </xar:mlstring>
+                        
                     </label>
                     <xar:set name="rssnumitems">xarModVars::get('comments','rssnumitems')</xar:set>
                     <input type="text" name="rssnumitems" id="rssnumitems" size="4" maxlength="4" value="#$rssnumitems#"/>
@@ -206,9 +206,9 @@
                 <!-- Black list not available
                 <div class="xar-form-input-wrapper">
                     <label for="useblacklist" class="xar-form-input-wrapper" title="#xarML('Use comment blacklist for comment spam checking.')#">
-                            <xar:mlstring>
+                            
                                 Use Blacklist for Spam Check
-                            </xar:mlstring>
+                            
                     </label>
                     <xar:set name="checked">
                         xarModVars::get('comments','useblacklist')

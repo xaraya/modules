@@ -3,15 +3,15 @@
 <div style="clear: both; padding-top: 10px;"> 
   <span style="float: left; width: 100%; text-align: left;">
     <b>
-      <xar:mlstring>Special Options</xar:mlstring>
+      Special Options
     </b>
-    <p> <xar:ml><xar:mlstring>(please see the <a href="#(1)#notes">notes</a> below)</xar:mlstring><xar:mlvar>#xarServer::getCurrentURL()#</xar:mlvar></xar:ml> </p>
+    <p> <xar:ml>(please see the <a href="#(1)#notes">notes</a> below)<xar:mlvar>#xarServer::getCurrentURL()#</xar:mlvar></xar:ml> </p>
   </span>
 </div>
 
 <div style="clear: both; padding-top: 10px;"> 
   <span style="float: left; width: 20%; text-align: right;">
-    <xar:mlstring>Number of comments to display</xar:mlstring>
+    Number of comments to display
   </span>
   <span style="float: right; width: 78%; text-align: left;">
     <input type="text" name="howmany" value="#$howmany#" size="3" maxlength="3" tabindex="1"/>
@@ -19,7 +19,7 @@
 </div>
 <div style="clear: both; padding-top: 10px;"> 
   <span style="float: left; width: 20%; text-align: right;">
-    <xar:mlstring>Truncate long titles to no more than</xar:mlstring> 
+    Truncate long titles to no more than 
   </span>
   <span style="float: right; width: 78%; text-align: left;">
     <input type="text" name="truncate" value="#$truncate#" size="3" maxlength="3" tabindex="2"/>
@@ -28,7 +28,7 @@
 </div>
 <div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 20%; text-align: right;">
-    <xar:mlstring>Include comments from the following modules</xar:mlstring>
+    Include comments from the following modules
   </span>
   <span style="float: right; width: 78%; text-align: left;">
     <select name="modid[]" tabindex="3" multiple="multiple" size="3">
@@ -44,44 +44,44 @@
 </div>
 <div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 20%; text-align: right;">
-    <xar:mlstring>Comment title</xar:mlstring>
+    Comment title
   </span>
   <span style="float: right; width: 78%; text-align: left;">        
     <select tabindex="5" name="addcomment">
       <xar:if condition="$addcomment eq '0'">
         <option value="0" selected="selected">
-          <xar:mlstring>Don't show</xar:mlstring>
+          Don't show
         </option>
       <xar:else/>
         <option value="0">
-          <xar:mlstring>Don't show</xar:mlstring>
+          Don't show
         </option>
       </xar:if>
       <xar:if condition="$addcomment eq '1'">
         <option value="1" selected="selected">
-          <xar:mlstring>Show without link</xar:mlstring>
+          Show without link
         </option>
         <xar:else/>
         <option value="1">
-          <xar:mlstring>Show without link</xar:mlstring>
+          Show without link
         </option>
       </xar:if>
       <xar:if condition="$addcomment eq '20'">
         <option value="20" selected="selected">
-          <xar:mlstring>Show with link to comment alone</xar:mlstring>
+          Show with link to comment alone
         </option>
         <xar:else/>
         <option value="20">
-          <xar:mlstring>Show with link to comment alone</xar:mlstring>
+          Show with link to comment alone
         </option>
       </xar:if>
       <xar:if condition="$addcomment eq '21'">
         <option value="21" selected="selected">
-          <xar:mlstring>Show with link to object*</xar:mlstring>
+          Show with link to object*
         </option>
         <xar:else/>
         <option value="21">
-          <xar:mlstring>Show with link to object*</xar:mlstring>
+          Show with link to object*
         </option>
       </xar:if>
     </select>
@@ -89,44 +89,44 @@
 </div>
 <div style="clear: both; padding-top: 10px;">    
   <span style="float: left; width: 20%; text-align: right;">
-    <xar:mlstring>Author name</xar:mlstring>
+    Author name
   </span>
   <span style="float: right; width: 78%; text-align: left;">
     <select name="addauthor" tabindex="6">
       <xar:if condition="$addauthor eq '0'">
         <option value="0" selected="selected">
-          <xar:mlstring>Don't show</xar:mlstring>
+          Don't show
         </option>
         <xar:else/>
         <option value="0">
-          <xar:mlstring>Don't show</xar:mlstring>
+          Don't show
         </option>
       </xar:if>
       <xar:if condition="$addauthor eq '1'">
         <option value="1" selected="selected">
-          <xar:mlstring>Show without link</xar:mlstring>
+          Show without link
         </option>
         <xar:else/>
         <option value="1">
-          <xar:mlstring>Show without link</xar:mlstring>
+          Show without link
         </option>
       </xar:if>
       <xar:if condition="$addauthor eq '21'">
         <option value="21" selected="selected" disabled="disabled">
-          <xar:mlstring>Show with link to author info**</xar:mlstring>
+          Show with link to author info**
         </option>
         <xar:else/>
         <option value="21" disabled="disabled">
-          <xar:mlstring>Show with link to author info**</xar:mlstring>
+          Show with link to author info**
         </option>
       </xar:if>
       <xar:if condition="$addauthor eq '22'">
         <option value="22" selected="selected" disabled="disabled">
-          <xar:mlstring>Show with link to author email**</xar:mlstring>
+          Show with link to author email**
         </option>
         <xar:else/>
         <option value="22" disabled="disabled">
-          <xar:mlstring>Show with link to author email**</xar:mlstring>
+          Show with link to author email**
         </option>
       </xar:if>
     </select>        
@@ -134,35 +134,35 @@
 </div>
 <div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 20%; text-align: right;">
-    <xar:mlstring>Module name</xar:mlstring>
+    Module name
   </span>
   <span style="float: right; width: 78%; text-align: left;">
     <select name="addmodule" tabindex="7">
       <xar:if condition="$addmodule eq '0'">
         <option value="0" selected="selected">
-          <xar:mlstring>Don't show</xar:mlstring>
+          Don't show
         </option>
         <xar:else/>
         <option value="0">
-          <xar:mlstring>Don't show</xar:mlstring>
+          Don't show
         </option>
       </xar:if>
       <xar:if condition="$addmodule eq '1'">
         <option value="1" selected="selected">
-          <xar:mlstring>Show without link</xar:mlstring>
+          Show without link
         </option>
         <xar:else/>
         <option value="1">
-          <xar:mlstring>Show without link</xar:mlstring>
+          Show without link
         </option>
       </xar:if>
       <xar:if condition="$addmodule eq '2'">
         <option value="2" selected="selected">
-          <xar:mlstring>Show with link to module*</xar:mlstring>
+          Show with link to module*
         </option>
         <xar:else/>
         <option value="2">
-          <xar:mlstring>Show with link to module*</xar:mlstring>
+          Show with link to module*
         </option>
       </xar:if>
     </select>
@@ -170,44 +170,44 @@
 </div>
 <div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 20%; text-align: right;">
-    <xar:mlstring>Object title* (e.g. article title)</xar:mlstring>
+    Object title* (e.g. article title)
   </span>
   <span style="float: right; width: 78%; text-align: left;">        
     <select name="addobject" tabindex="8">
       <xar:if condition="$addobject eq '0'">
         <option value="0" selected="selected">
-          <xar:mlstring>Don't show</xar:mlstring>
+          Don't show
         </option>
         <xar:else/>
         <option value="0">
-          <xar:mlstring>Don't show</xar:mlstring>
+          Don't show
         </option>
       </xar:if>
       <xar:if condition="$addobject eq '1'">
         <option value="1" selected="selected">
-          <xar:mlstring>Show without link*</xar:mlstring>
+          Show without link*
         </option>
         <xar:else/>
         <option value="1">
-          <xar:mlstring>Show without link*</xar:mlstring>
+          Show without link*
         </option>
       </xar:if>
       <xar:if condition="$addobject eq '20'">
         <option value="20" selected="selected">
-          <xar:mlstring>Show with link to object*</xar:mlstring>
+          Show with link to object*
         </option>
         <xar:else/>
         <option value="20">
-          <xar:mlstring>Show with link to object*</xar:mlstring>
+          Show with link to object*
         </option>
       </xar:if>
       <xar:if condition="$addobject eq '21'">
         <option value="21" selected="selected">
-          <xar:mlstring>Show with link to comment***</xar:mlstring>
+          Show with link to comment***
         </option>
         <xar:else/>
         <option value="21">
-          <xar:mlstring>Show with link to comment***</xar:mlstring>
+          Show with link to comment***
         </option>
       </xar:if>
     </select>
@@ -215,7 +215,7 @@
 </div>
 <div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 20%; text-align: right;">
-    <xar:mlstring>Add date</xar:mlstring>
+    Add date
   </span>
   <span style="float: right; width: 78%; text-align: left;">
     <input type="hidden" name="adddate" value="off"/>
@@ -228,7 +228,7 @@
 </div>
 <div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 20%; text-align: right;">
-    <xar:mlstring>Add separator between comments posted in different days****</xar:mlstring>
+    Add separator between comments posted in different days****
   </span>
   <span style="float: right; width: 78%; text-align: left;">
     <input type="hidden" name="adddaysep" value="off"/>
@@ -241,7 +241,7 @@
 </div>
 <div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 20%; text-align: right;">
-    <xar:mlstring>Add link to older comments</xar:mlstring>
+    Add link to older comments
   </span>
   <span style="float: right; width: 78%; text-align: left;">
     <input type="hidden" name="addprevious" value="off"/>
@@ -256,30 +256,30 @@
 <div style="clear: both; padding-top: 10px;"> 
   <span style="float: left; width: 100%; text-align: left;">
     <a name="notes"> 
-      <b><xar:mlstring>Notes</xar:mlstring></b>
+      <b>Notes</b>
     </a>
   </span>
 </div>
 
 <div style="clear: both; padding-top: 10px;"> 
   <span style="float: left; width: 100%; text-align: left;">
-    *<xar:mlstring>Not all modules may support this</xar:mlstring>
+    *Not all modules may support this
   </span>
 </div>
 <div style="clear: both; padding-top: 10px;"> 
   <span style="float: left; width: 100%; text-align: left;">
-    **<xar:mlstring>Option not yet implemented</xar:mlstring>
+    **Option not yet implemented
   </span>
 </div>
 <div style="clear: both; padding-top: 10px;"> 
   <span style="float: left; width: 100%; text-align: left;">
-    ***<xar:mlstring>Relevant only when comments are displayed in flat or nested mode</xar:mlstring>
+    ***Relevant only when comments are displayed in flat or nested mode
   </span>
 </div>
 <div style="clear: both; padding-top: 10px;"> 
   <span style="float: left; width: 100%; text-align: left;">
-    ****<xar:mlstring>The separator will place "Today", "Yesterday", or the day of the week whenever
-      appropriate</xar:mlstring>
+    ****The separator will place "Today", "Yesterday", or the day of the week whenever
+      appropriate
   </span>
 </div>
 </xar:template>

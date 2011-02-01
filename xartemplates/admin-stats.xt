@@ -3,32 +3,32 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>Comments Administration</xar:mlstring>
+            Comments Administration
         </span>
     </div>
     <div class="xar-mod-body">
         <xar:template type="module" file="admintabs"/>
         <h2>
-            <xar:mlstring>Comments Module Statistics</xar:mlstring>
+            Comments Module Statistics
         </h2>
 
         <div class="xar-align-center">
             <table border="0" cellpadding="2" cellspacing="1">
                 <tr>
                     <th class="xar-valign-middle">
-                        <xar:mlstring><b>Module<br />Name</b></xar:mlstring>
+                        <b>Module<br />Name</b>
                     </th>
                     <th class="xar-valign-middle xar-align-center">
-                        <xar:mlstring><b>Module<br />Items</b></xar:mlstring>
+                        <b>Module<br />Items</b>
                     </th>
                     <th class="xar-valign-middle xar-align-center">
-                        <xar:mlstring><b>Total<br />Comments</b></xar:mlstring>
+                        <b>Total<br />Comments</b>
                     </th>
                     <th class="xar-valign-middle xar-align-center">
-                        <xar:mlstring><b>Inactive<br />Comments</b></xar:mlstring>
+                        <b>Inactive<br />Comments</b>
                     </th>
                     <th class="xar-valign-middle xar-align-center">
-                        <xar:mlstring><b>Action</b></xar:mlstring>
+                        <b>Action</b>
                     </th>
                 </tr>
 
@@ -36,9 +36,9 @@
                     <tr>
                         <td colspan="5" align="center">
                             <br />
-                            <xar:mlstring>
+                            
                                 There are currently no comments in the database...
-                            </xar:mlstring>
+                            
                             <br />
                             <br />
                         </td>
@@ -67,7 +67,7 @@
                     </xar:loop>
                     <tr>
                         <td class="xar-valign-middle">
-                            <b><xar:mlstring>Totals</xar:mlstring></b>
+                            <b>Totals</b>
                         </td>
                         <td class="xar-valign-middle xar-align-center" valign="center">
                             <b>#$gt_items#</b>
@@ -86,12 +86,12 @@
                 </xar:if>
                </table>
                 <p class="xar-accent xar-norm-outline">
-                            <xar:mlstring>
+                            
                                 By clicking on <b>Delete</b> you can delete all comments associated with a particular
                                 module. Clicking on a module will take you to that module's statistics page containing
                                 the figures for each of that module's items that have comments associated with them.
                                 From there you can delete all comments associated with a particular item.
-                            </xar:mlstring>
+                            
                </p>
         </div>
     </div>

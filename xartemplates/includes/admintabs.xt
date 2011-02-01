@@ -19,7 +19,7 @@
         </xar:if>
         <li class="#$tabclass#">
           <a href="#xarModURL('comments','admin','view')#" class="#$linkclass#">
-                <xar:mlstring>View Comments</xar:mlstring>
+                View Comments
               </a>
         </li>
     </xar:sec>
@@ -33,7 +33,7 @@
         </xar:if>
         <li class="#$tabclass#">
           <a href="#xarModURL('comments','admin','stats')#" class="#$linkclass#">
-                <xar:mlstring>View Statistics</xar:mlstring>
+                View Statistics
               </a>
         </li>
     </xar:sec>
@@ -47,7 +47,7 @@
         </xar:if>
         <li class="#$tabclass#">
           <a href="#xarModURL('comments','admin','modifyconfig')#" class="#$linkclass#">
-                <xar:mlstring>Modify Configuration</xar:mlstring>
+                Modify Configuration
               </a>
         </li>
     </xar:sec>
@@ -61,7 +61,7 @@
         </xar:if>
         <li class="#$tabclass#">
           <a href="#xarModURL('comments','admin','overview')#" class="#$linkclass#">
-                    <xar:mlstring>Overview</xar:mlstring>
+                    Overview
                 </a>
         </li>
     </xar:sec>

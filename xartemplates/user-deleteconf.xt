@@ -3,22 +3,22 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-body">
         <h2>
-            <xar:mlstring>
+            
                 Delete Comment
-            </xar:mlstring>
+            
         </h2>
 
         <form action="">
              <fieldset>
                 <legend>
-                    <xar:mlstring>Confirm Comment Deletion</xar:mlstring>
+                    Confirm Comment Deletion
                 </legend>
                 <div class="xar-form-input-wrapper">
                     <label for="commentdelete" class="xar-form-label" title="#xarML('Confirm deletion of this comment')#">
-                       <xar:mlstring>Are you sure you want to delete this comment?</xar:mlstring>
+                       Are you sure you want to delete this comment?
                    </label>
-                   <input type="radio" name="delete" id="delete_reparent" value="reparent"/>&amp;nbsp;<label for="delete_reparent"><xar:mlstring>Attach child comments to parent</xar:mlstring></label><br />
-                   <input type="radio" name="delete" id="delete_abandon" value="thread"/>&amp;nbsp;<label for="delete_abandon"><xar:mlstring>Delete this comment and all children</xar:mlstring></label><br />
+                   <input type="radio" name="delete" id="delete_reparent" value="reparent"/>&amp;nbsp;<label for="delete_reparent">Attach child comments to parent</label><br />
+                   <input type="radio" name="delete" id="delete_abandon" value="thread"/>&amp;nbsp;<label for="delete_abandon">Delete this comment and all children</label><br />
                 </div>
              </fieldset>
             <div class="xar-form-input-wrapper">

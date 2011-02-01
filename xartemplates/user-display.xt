@@ -39,13 +39,13 @@
             -->
             <xar:if condition="$number_of_comments eq 0">
                     <p class="comments_display_msg">
-                        <xar:mlstring>There are no comments attached to this item.</xar:mlstring>
+                        There are no comments attached to this item.
                     </p>
                 <xar:if condition="!isset($header['selected_id'])">
                     <xar:template file="input-box" type="module"/>
                 <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
                     <p class="comments_display_msg">
-                        <xar:mlstring>Return to</xar:mlstring>
+                        Return to
                         <a href="#$header['objectlink']#">#$header['objecttitle']#</a>
                     </p>
                 </xar:if>
@@ -64,18 +64,18 @@
                     <xar:template file="input-box" type="module"/>
                 <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
                     <p class="comments_display_msg">
-                        <xar:mlstring>Return to</xar:mlstring>
+                        Return to
                         <a href="#$header['objectlink']#">#$header['objecttitle']#</a>
                     </p>
                 </xar:if>
             </xar:if>
         <xar:else />
             <p class="comments_display_msg">
-                <xar:mlstring>Comments display and submission are currently disabled.</xar:mlstring>
+                Comments display and submission are currently disabled.
                 <xar:if condition="$number_of_comments ne 0">
-                    <xar:mlstring>Total number of attached comments:</xar:mlstring> #$number_of_comments#
+                    Total number of attached comments: #$number_of_comments#
                 <xar:else />
-                    <xar:mlstring>There are no comments attached to this item.</xar:mlstring>
+                    There are no comments attached to this item.
                 </xar:if>
             </p>
         </xar:if>

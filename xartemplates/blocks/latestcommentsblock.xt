@@ -34,7 +34,7 @@
               <xar:if condition="!empty($comment['title'])">
                 <xar:if condition="$addobject ge 20">
                   <!-- OBJECT TITLE -->
-                  <xar:mlstring>in</xar:mlstring>
+                  in
                   <span class="xar-title">
                     <xar:if condition="$addobject ge 21">
                       <a href="#$comment['objurl']####$comment['id']#">
@@ -47,14 +47,14 @@
                     </xar:if>
                   </span>
                 <xar:elseif condition="$addobject eq 1"/>
-                  <xar:mlstring>in</xar:mlstring>
+                  in
                   <span class="xar-title">#$comment['title']#</span>
                 </xar:if>
               </xar:if>
               <xar:if condition="$addmodule ge 1">
                 <!-- MODULE NAME-->
                 <span class="xar-normal">
-                  <br /><xar:mlstring>in</xar:mlstring>
+                  <br />in
                   <xar:if condition="$addmodule ge 2">
                     <a href="#$comment['modview']#">
                       #$comment['modname']#
@@ -67,7 +67,7 @@
               <span class="xar-normal">
                 <xar:if condition="$addauthor ge 1">
                   <!-- AUTHOR NAME-->
-                  <xar:mlstring>by</xar:mlstring>
+                  by
                   <xar:if condition="$comment['postanon'] eq 0 or xarModVars::get('comments','AllowPostAsAnon') eq 0">
                     <xar:if condition="$addauthor ge 2">
                       <a href="#xarModURL('users','user','view')#">
@@ -77,12 +77,12 @@
                       #$comment['author']#
                     </xar:if>
                   <xar:else />
-                    <xar:mlstring>Anonymous</xar:mlstring>
+                    Anonymous
                   </xar:if>
                 </xar:if>
                 <xar:if condition="$adddate=='on'">
                   <!-- DATE -->
-                  <xar:mlstring>on</xar:mlstring>&amp;nbsp;#xarLocaleFormatDate("%B %d, %Y %I:%M %p",$comment['date'])#
+                  on&amp;nbsp;#xarLocaleFormatDate("%B %d, %Y %I:%M %p",$comment['date'])#
                 </xar:if>
               </span>
             </li>
@@ -91,11 +91,11 @@
       </xar:foreach>
       <xar:if condition="$addprevious=='on'">
           <p><a href="#$olderurl#">
-          <xar:mlstring>Older comments</xar:mlstring>
+          Older comments
           </a>
           </p>
       </xar:if>
     <xar:else />
-      <xar:mlstring>There are no comments</xar:mlstring>
+      There are no comments
     </xar:if>
 </xar:template>
