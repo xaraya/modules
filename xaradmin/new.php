@@ -68,10 +68,11 @@ function content_admin_new()
         } else {
 
 			// Create the item for the content object
+			$values = $object->getFieldValues(); 
 			$contentobject = DataObjectMaster::getObject(array('name' => 'content'));
 			$contentobject->properties['content_type']->setValue($ctype);
-			if (isset($object->properties['item_path'])) {
-				$item_path = $object->properties['item_path']->getValue();
+			if (isset($values['item_path'])) {
+				$item_path = $values['item_path'];
 			} else {
 				$item_path = '';
 			}

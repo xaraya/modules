@@ -64,7 +64,7 @@ function content_userapi_decode_shorturl($params) {
 		$checkpath = false;
 
 	} else {
-		// it's an alias
+		// it's an alias 
 
 		if (isset($params[1])) {
 			if (is_numeric($params[1])) {

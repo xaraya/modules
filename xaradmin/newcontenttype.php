@@ -97,49 +97,57 @@ function content_admin_newcontenttype()
 			$objectid = xarMod::apiFunc('dynamicdata','util','import',array('file' => $file));
 			$data['objectid'] = $objectid;
 
-			$ctobject = DataObjectMaster::getObject(array('name' => 'objects'));
-			$ctobject->getItem(array('itemid' => $objectid));
-			$ctobject->properties['name']->setValue($ctype);
-			$ctobject->properties['label']->setValue($label);
-			$ctobject->updateItem();
-			
-			if ($data['add_dtemplate']) {
-				xarMod::apiFunc('content','admin','adddisplaytemplate',array('objectid' => $objectid, 'ctype' => $ctype));
-			}
-
-			if ($data['add_pdate']) {
-				xarMod::apiFunc('content','admin','addpubdate',array('objectid' => $objectid));
-			}
-
-			if ($data['add_expdate']) {
-				xarMod::apiFunc('content','admin','addexpdate',array('objectid' => $objectid));
-			}
-
-			if ($data['add_pstatus']) {
-				xarMod::apiFunc('content','admin','addpubstatus',array('objectid' => $objectid));
-			}
-
-			if ($data['add_pauthor']) {
-				xarMod::apiFunc('content','admin','addpubauthor',array('objectid' => $objectid));
-			}
-
-			if ($data['add_datecreated']) {
-				xarMod::apiFunc('content','admin','adddatecreated',array('objectid' => $objectid));
-			}
-
-			if ($data['add_datemodified']) {
-				xarMod::apiFunc('content','admin','adddatemodified',array('objectid' => $objectid));
-			}
-
-			if ($data['add_path']) {
-				xarMod::apiFunc('content','admin','addpath',array('objectid' => $objectid));
-			}
-
 			if (isset($objectid)) { // Good data: create the item
+
+				$ctobject = DataObjectMaster::getObject(array('name' => 'objects'));
+				$ctobject->getItem(array('itemid' => $objectid));
+				$ctobject->properties['name']->setValue($ctype);
+				$ctobject->properties['label']->setValue($label);
+				$ctobject->updateItem();
+				
+				if ($data['add_dtemplate']) {
+					xarMod::apiFunc('content','admin','adddisplaytemplate',array('objectid' => $objectid, 'ctype' => $ctype));
+				}
+
+				if ($data['add_pdate']) {
+					xarMod::apiFunc('content','admin','addpubdate',array('objectid' => $objectid));
+				}
+
+				if ($data['add_expdate']) {
+					xarMod::apiFunc('content','admin','addexpdate',array('objectid' => $objectid));
+				}
+
+				if ($data['add_pstatus']) {
+					xarMod::apiFunc('content','admin','addpubstatus',array('objectid' => $objectid));
+				}
+
+				if ($data['add_pauthor']) {
+					xarMod::apiFunc('content','admin','addpubauthor',array('objectid' => $objectid));
+				}
+
+				if ($data['add_datecreated']) {
+					xarMod::apiFunc('content','admin','adddatecreated',array('objectid' => $objectid));
+				}
+
+				if ($data['add_datemodified']) {
+					xarMod::apiFunc('content','admin','adddatemodified',array('objectid' => $objectid));
+				}
+
+				if ($data['add_path']) {
+					xarMod::apiFunc('content','admin','addpath',array('objectid' => $objectid));
+				}
+
 				//We want these content types to have the same itemid as the associated DataObject
 				$object->properties['content_type']->setValue($ctype);
 				$object->properties['label']->setValue($label);
 				$item = $object->createItem(array('itemid' => $objectid));
+
+				$aliases = xarConfigVars::get(null, 'System.ModuleAliases');
+				if (!isset($aliases[$ctype])) { 
+					// $ctype is not an alias, so register one...
+					xarModAlias::set($ctype, 'content');
+				} 
+
 			} else {
 				print 'some error';
 			}

@@ -23,7 +23,9 @@ function content_admin_view() {
 	$data['content_types'] = xarMod::apiFunc('content','admin','getcontenttypes', array('getlabels' => true));
 	if (!isset($ctype) || !isset($data['content_types'][$ctype])) {
 		$ctype = xarModVars::get('content', 'default_ctype');
-	}
+		// TODO: this returns the first value when a default ctype is deleted.  need to add something to the deletecontenttype function to check if a deleted ctype was the default and if so set a new default
+	} 
+	
 
 	$instance = 'All:'.$ctype.':'.xarUserGetVar('id');
 	if (!xarSecurityCheck('EditContent',1,'Item',$instance)) {
