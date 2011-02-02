@@ -93,7 +93,7 @@ function content_admin_newcontenttype()
         } else {
 
 			//import
-			$file = 'code/modules/content/xardata/'. $model . '.xml';
+			$file = sys::code() . 'modules/content/xardata/'. $model . '.xml';
 			$objectid = xarMod::apiFunc('dynamicdata','util','import',array('file' => $file));
 			$data['objectid'] = $objectid;
 

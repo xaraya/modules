@@ -93,15 +93,13 @@ function content_init()
 # Set up configuration modvars (module specific)
 #
 	xarModVars::set('content','default_ctype','');
+	xarModVars::set('content','default_itemid',1);
+	xarModVars::set('content','default_main_page_tpl','default');
+	xarModVars::set('content','default_display_page_tpl','default');
+	xarModVars::set('content','default_view_page_tpl','default');
 	xarModVars::set('content','enable_filters',1);  
 	xarModVars::set('content','filters_min_ct_count',9);    
 	xarModVars::set('content','filters_min_item_count',1);
-	//xarModVars::set('content','path_module',false);
-	//xarModVars::set('content','path_module_objects','');
-	xarModVars::set('content','default_itemid',1);
-	xarModVars::set('content','default_main_page_tpl','content');
-	xarModVars::set('content','default_display_page_tpl','content');
-	xarModVars::set('content','default_view_page_tpl','content');
 
 # --------------------------------------------------------
 #

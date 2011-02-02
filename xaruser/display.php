@@ -115,18 +115,22 @@ function content_user_display($args)
 	}
 
 	// first see if the $pagetpl is set explicitly for this call
-	if (isset($page_template)) {
-		xarTplSetPageTemplateName($page_template);
-	} else {
-		// next, see if this content type has a page template configured
+	if (isset($page_template)) { 
+		$pagetpl = $page_template;
+	} else { 
+		// see if this content type has a page template configured
 		$config = $object->configuration;
 		if (!empty($config['page_template'])) {
-			xarTplSetPageTemplateName($config['page_template']);
-		// if all else fails, use the default content page template
-		} else {
-			$pagetpl = xarModVars::get('content','default_display_page_tpl');
-			xarTplSetPageTemplateName($pagetpl);
+			$pagetpl = $config['page_template'];
+		} else { 
+			$pagetpl = xarModVars::get('content','default_display_page_tpl'); 
 		}
+	}
+
+	try {
+		xarTplSetPageTemplateName($pagetpl);
+	} catch (Exception $e) {
+		xarTplSetPageTemplateName('default');
 	}
 
 	$item['returnurl'] = xarServer::getCurrentURL();

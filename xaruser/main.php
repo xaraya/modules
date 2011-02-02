@@ -32,8 +32,18 @@ function content_user_main()
         $data['seccheck'] = TRUE;
     }
 
-	$pagetpl = xarModVars::get('content','default_main_page_tpl');
-	xarTplSetPageTemplateName($pagetpl);
+	// first see if the $pagetpl is set explicitly for this call
+	if (isset($page_template)) { 
+		$pagetpl = $page_template;
+	} else { 
+		$pagetpl = xarModVars::get('content','default_main_page_tpl'); 
+	}
+
+	try {
+		xarTplSetPageTemplateName($pagetpl);
+	} catch (Exception $e) {
+		xarTplSetPageTemplateName('default');
+	}
 
     // Return the template variables defined in this function
     return $data;

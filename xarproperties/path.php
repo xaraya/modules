@@ -14,7 +14,7 @@ sys::import('modules.base.xarproperties.textbox');
 class PathProperty extends TextBoxProperty
 {
 	public $id = 1038;
-	public $name	 = 'item_path';
+	public $name	 = 'path';
     public $desc	= 'Path'; 
     public $reqmodules = array('content');
 
