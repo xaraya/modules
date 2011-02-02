@@ -33,16 +33,12 @@ function content_user_main()
     }
 
 	// first see if the $pagetpl is set explicitly for this call
-	if (isset($page_template)) { 
-		$pagetpl = $page_template;
+	if (isset($page_template) && !empty($page_template)) {   
+		xarTplSetPageTemplateName($page_template);
 	} else { 
-		$pagetpl = xarModVars::get('content','default_main_page_tpl'); 
-	}
-
-	try {
+		$pagetpl = xarModVars::get('content','default_main_page_tpl');  
+		if (empty($pagetpl)) $pagetpl = 'default';
 		xarTplSetPageTemplateName($pagetpl);
-	} catch (Exception $e) {
-		xarTplSetPageTemplateName('default');
 	}
 
     // Return the template variables defined in this function
