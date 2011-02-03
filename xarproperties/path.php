@@ -32,26 +32,28 @@ class PathProperty extends TextBoxProperty
 
 	public function setValue($value=null)
 	{
-		if ($value[0] != '/') {
-			$value = '/' . $value;
-		} 
-		$value = preg_replace('~//+~', '/', $value);
-		$value = strtolower($value);
+		if (!empty($value)) {
+			if ($value[0] != '/') {
+				$value = '/' . $value;
+			} 
+			$value = preg_replace('~//+~', '/', $value);
+			$value = strtolower($value);
 
-        $this->value = $value;
+			$path = substr($value, 1);
+			$pos = strpos($path, '/');
+			if($pos) {
+				$pathstart = substr($path, 0, $pos);
+			} else {
+				$pathstart = $path;
+			}
+			$aliases = xarConfigVars::get(null, 'System.ModuleAliases');
+			if (!isset($aliases[$pathstart])) { 
+				// $pathstart is not an alias, so register one...
+				xarModAlias::set($pathstart, 'content');
+			}
+		}
 
-		$path = substr($value, 1);
-		$pos = strpos($path, '/');
-		if($pos) {
-			$pathstart = substr($path, 0, $pos);
-		} else {
-			$pathstart = $path;
-		}
-		$aliases = xarConfigVars::get(null, 'System.ModuleAliases');
-		if (!isset($aliases[$pathstart])) { 
-			// $pathstart is not an alias, so register one...
-			xarModAlias::set($pathstart, 'content');
-		}
+		$this->value = $value;
 
     }
 
