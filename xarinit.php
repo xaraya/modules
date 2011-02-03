@@ -79,22 +79,9 @@ function content_init()
 	$def_file = sys::code() . 'modules/content/xardata/apples-def.xml';
 	if(!xarMod::apiFunc('content','util','import', array('file' => $def_file))) return; 
 	
+	// use the dd import function for the items
 	$dat_file = sys::code() . 'modules/content/xardata/apples-dat.xml';
 	xarMod::apiFunc('dynamicdata','util','import', array('file' => $dat_file));
-
-	// Programmatically create the apples item in content_types.  This way we can set the itemid equal to the objectid of the apples object
-	// sys::import('modules.dynamicdata.class.objects.master');
-	// why not just do $object->objectid
-	// why not use the import function?
-	/*$objectid = xarMod::apiFunc('content','admin','ctname2objectid',array(
-		'content_type' => 'apples', 'object' => 'objects', 'id' => 'objectid'
-	));
-	$ctobject = DataObjectMaster::getObject(array('name' => 'content_types'));
-	$ctobject->properties['content_type']->setValue('apples');
-	$ctobject->properties['label']->setValue('Apples');
-	$ctobject->properties['model']->setValue('news_article');
-	$ctobject->createItem(array('itemid' => $objectid));*/
-
 
 # --------------------------------------------------------
 #

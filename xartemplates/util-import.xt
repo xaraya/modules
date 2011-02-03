@@ -40,6 +40,6 @@
  Notes: 
  <ul>
  <li>To export a content type, use the <a href="#xarmodurl('dynamicdata','util','export')#">dynamicdata export utility</a> to export its object definition.</li>
- <li>To import a content type, use the form above.</li></ul>
+ <li>To import a content type, you can use the form above, or you can upload the XML file to modules/content/xardata and then use the <a href="#xarmodurl('content','admin','newcontenttype')#">"Add a Content Type" form</a>.  See also the "Creating a New Content Type" section of the <a href="#xarmodurl('content','admin','overview')#">module overview</a>.</li></ul>
     </div>
 </xar:template>
