@@ -1,14 +1,14 @@
 <items>
   <content itemid="1">
     <itemid>1</itemid>
-    <content_type>apples</content_type>
+    <content_type>content_apples</content_type>
   </content>
   <content itemid="2">
     <itemid>2</itemid>
-    <content_type>apples</content_type>
+    <content_type>content_apples</content_type>
   </content>
   <content itemid="3">
     <itemid>3</itemid>
-    <content_type>apples</content_type>
+    <content_type>content_apples</content_type>
   </content>
 </items>

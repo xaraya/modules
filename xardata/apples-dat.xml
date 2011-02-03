@@ -1,5 +1,5 @@
 <items>
-  <apples itemid="1">
+  <content_apples itemid="1">
     <id>1</id>
     <title>Red Delicious</title>
     <summary>A nice red apple.</summary>
@@ -7,8 +7,8 @@
     <publication_date>1276627248</publication_date>
     <publication_status>2</publication_status>
     <publication_author>6</publication_author>
-  </apples>
-  <apples itemid="2">
+  </content_apples>
+  <content_apples itemid="2">
     <id>2</id>
     <title>Crabapples</title>
     <summary>Crabapples are an excellent source of pectin, and their juice can be made into a ruby-coloured preserve with a full, spicy flavor.</summary>
@@ -18,8 +18,8 @@ Some crabapples are used as rootstocks for domestic apples to add beneficial cha
     <publication_date>1276627842</publication_date>
     <publication_status>2</publication_status>
     <publication_author>6</publication_author>
-  </apples>
-  <apples itemid="3">
+  </content_apples>
+  <content_apples itemid="3">
     <id>3</id>
     <title>Gala</title>
     <summary>Gala apples are small and are usually red with a portion being greenish or yellow-green, vertically striped. Gala apples are fairly resistant to bruising and are sweet, grainy, with a mild flavour and a thinner skin than most apples. Quality indices include firmness, crispness, and sweetness.</summary>
@@ -29,5 +29,5 @@ Some crabapples are used as rootstocks for domestic apples to add beneficial cha
     <publication_date>1276629183</publication_date>
     <publication_status>2</publication_status>
     <publication_author>6</publication_author>
-  </apples>
+  </content_apples>
 </items>

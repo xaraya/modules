@@ -123,46 +123,6 @@ function content_admin_modifyconfig()
                 // Get the data from the form
                 $isvalid = $object->checkInput();
                 // Update the item with itemid = 0
-
-				/*$path_module_objects = $object->properties['path_module_objects']->getValue();
-				if (isset($path_module_objects) && !empty($path_module_objects)) {
-					$pmobjects = explode(',',$path_module_objects);
-					foreach ($pmobjects as $pmobject) {
-						$pmobject = trim($pmobject);
-						$objectid = xarMod::apiFunc('content','admin','ctname2objectid',array(
-							'content_type' => $pmobject
-						));
-						$result = false;
-	
-						if (is_numeric($objectid)) {
-								$result = xarMod::apiFunc('content','admin','addpathmodule',array(
-								'objectid' => $objectid
-							));
-						} 
-						if($result) {
-							$success[] = $pmobject;
-						} else {
-							$failure[] = $pmobject;
-						}
-					}
-				}
-				if (isset($success)) {
-					$success = implode(', ',$success);
-				} else {
-					$success = '';
-				}
-				if (isset($failure)) {
-					$failure = implode(', ',$failure);
-				} else {
-					$failure = '';
-				}
-				if (isset($success)) {
-					$path_result = $success . '|' . $failure;
-				} else {
-					$path_result = '';
-				}
-				// Clear the input
-				$object->properties['path_module_objects']->setValue('');*/
 				
                 $item = $object->updateItem(array('itemid' => 0));
 

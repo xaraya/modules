@@ -31,7 +31,7 @@
 		<xar:set name="label">''</xar:set>
 	</xar:if>
 
-<xar:if condition="isset($ctype)">
+<xar:if condition="!empty($ctype)">
 
         <h2>View Items#$label#</h2>
 

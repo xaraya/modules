@@ -51,7 +51,7 @@ function content_admin_modify()
 	}
 	
 	$data['ctype'] = $ctype;
-	//$data['pathval'] = '';
+	//$data['pathval'] = ''; 
 
     // Get the object we'll be working with
     $object = DataObjectMaster::getObject(array('name' => $ctype));

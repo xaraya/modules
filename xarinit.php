@@ -70,22 +70,30 @@ function content_init()
                 'content',
 				'content_types',
 				'content_module_settings',
-				'content_user_settings',
-				'apples' // apples content type for testing/demo
+				'content_user_settings' 
                 );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;    
 
+	// create an 'apples' content type for testing and demo
+	$def_file = sys::code() . 'modules/content/xardata/apples-def.xml';
+	if(!xarMod::apiFunc('content','util','import', array('file' => $def_file))) return; 
+	
+	$dat_file = sys::code() . 'modules/content/xardata/apples-dat.xml';
+	xarMod::apiFunc('dynamicdata','util','import', array('file' => $dat_file));
+
 	// Programmatically create the apples item in content_types.  This way we can set the itemid equal to the objectid of the apples object
-	sys::import('modules.dynamicdata.class.objects.master');
-	$objectid = xarMod::apiFunc('content','admin','ctname2objectid',array(
+	// sys::import('modules.dynamicdata.class.objects.master');
+	// why not just do $object->objectid
+	// why not use the import function?
+	/*$objectid = xarMod::apiFunc('content','admin','ctname2objectid',array(
 		'content_type' => 'apples', 'object' => 'objects', 'id' => 'objectid'
 	));
 	$ctobject = DataObjectMaster::getObject(array('name' => 'content_types'));
 	$ctobject->properties['content_type']->setValue('apples');
 	$ctobject->properties['label']->setValue('Apples');
 	$ctobject->properties['model']->setValue('news_article');
-	$ctobject->createItem(array('itemid' => $objectid));
+	$ctobject->createItem(array('itemid' => $objectid));*/
 
 
 # --------------------------------------------------------
@@ -122,10 +130,7 @@ function content_init()
 #
 # Create privilege instances
 #
-    //$object = DataObjectMaster::getObject(array('name' => 'content'));
-    //$objectid = $object->objectid;
 
-    // Note : we could add some other fields in here too, based on the properties we imported above
     $instances = array(
 						array(
 							'header' => 'Itemid:',
@@ -220,8 +225,7 @@ function content_delete()
 	$content_types = xarMod::apiFunc('content','admin','getcontenttypes');
 
 	sys::import('modules.dynamicdata.class.objects.master');
-	$object = DataObjectMaster::getObject(array('name' => 'objects'));
-	
+
 	foreach ($content_types as $key=>$value) {
 		$list = DataObjectMaster::getObjectList(array('name' => 'objects'));
 		$filters = array(
@@ -230,6 +234,7 @@ function content_delete()
 		$items = $list->getItems($filters);
 		$item = reset($items);
 		$objectid = $item['objectid'];
+		$object = DataObjectMaster::getObject(array('name' => 'objects'));
 		$object->deleteItem(array('itemid' => $objectid));
 	}
  
