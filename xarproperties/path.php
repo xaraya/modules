@@ -32,7 +32,7 @@ class PathProperty extends TextBoxProperty
 
 	public function setValue($value=null)
 	{
-		if (!empty($value)) {
+		if (!empty($value) && $value != '/') {
 			if ($value[0] != '/') {
 				$value = '/' . $value;
 			} 
@@ -65,7 +65,15 @@ class PathProperty extends TextBoxProperty
 		$itemid = $this->objectref->properties['itemid']->value;
 		$name = $this->name;
 		$oldval = $this->objectref->properties[$name]->value;
-		$path = $value;
+	
+		$path = preg_replace('~//+~', '/', $value);
+
+		$alphanum = preg_replace('/[^a-zA-Z0-9]/','',$path);
+		if (empty($alphanum)) {
+			$this->invalid = xarML('Illegal path. Path must contain at least one letter or number.');
+			$this->value = $oldval;
+            return false;
+		}
 
 		$pattern = '/^[\w\-\/]{1,}$/';
 		if (!preg_match($pattern, $path)) {
