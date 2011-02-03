@@ -3,7 +3,7 @@ sys::import('modules.libtwitteroauth.class.twitteroauth');
 class TwitterAPI extends TwitterOAuth
 {
     // Overloaded properties from TwitterOAuth
-    public $useragent = 'xarTwitter v0.1.2';
+    public $useragent = 'xarTwitter v0.9.0';
     public $format = 'xml';
     
     // Caching properties specific to TwitterAPI
