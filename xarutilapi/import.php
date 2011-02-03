@@ -18,8 +18,24 @@
  */
 
 function content_utilapi_import($args) {
+
+	$data = $args;
+
+	extract($args);
+
+	// for now, prohibit importation of items
+	if (!empty($file)) {
+        $xmlobject = simplexml_load_file($file);
+        xarLogMessage('DD: import file ' . $file); 
+    } elseif (!empty($xml)) { 
+        $xml = preg_replace('/>[^<]+$/s','>', $xml);
+        $xmlobject = new SimpleXMLElement($xml);
+    } 
+    $dom = dom_import_simplexml ($xmlobject);
+    $roottag = $dom->tagName;
+	if ($roottag == 'items') die("We don't want to import items here");
   
-	$objectid = xarMod::apiFunc('dynamicdata','util','import',$args);
+	$objectid = xarMod::apiFunc('dynamicdata','util','import',$data);
   
 	if (empty($objectid)) return false;
 
