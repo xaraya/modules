@@ -11,7 +11,7 @@
  * @link http://www.xaraya.com/index.php/release/1015.html
  * @author Ryan Walker <ryan@webcommunicate.net>
  */
-sys::import('xaraya.tableddl');
+sys::import('xaraya.tableddl'); 
 /**
  * Initialise the module
  *
