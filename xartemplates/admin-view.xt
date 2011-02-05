@@ -6,7 +6,7 @@
 <xar:set name="icon_deactivate">xarTplGetImage('icons/deactivate.png', 'base')</xar:set>
 <xar:set name="icon_info">xarTplGetImage('icons/info.png', 'base')</xar:set>
 <xar:base-js-framework name="jquery" />
-<xar:base-js-plugin name="ui" framework="jquery" file="jquery-ui-1.7.2.custom.min.js" style="jquery-ui-1.7.2.custom.css" />
+<xar:base-js-plugin name="ui" framework="jquery" style="jquery-ui-1.8.8.custom.css" />
 <xar:set name="autolinkscode">"
 // dimensions of the delete prompt dialog
 var delete_dialog_width = 300;
