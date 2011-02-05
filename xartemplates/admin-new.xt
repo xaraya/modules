@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:base-js-framework name="jquery" />
-<xar:base-js-plugin name="ui" framework="jquery" file="jquery-ui-1.7.2.custom.min.js" style="jquery-ui-1.7.2.custom.css" />
+<xar:base-js-plugin name="ui" framework="jquery" style="jquery-ui-1.8.8.custom.css" />
 <xar:base-js-plugin name="validate" framework="jquery"  />
 <xar:set name="htmlcode">"
 jQuery('#"."newtag').validate({
