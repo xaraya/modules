@@ -3,7 +3,7 @@
   We are using multipart/form-data to cater for uploads which should not be a problem for use in all cases. 
   Alternatively you can test for the presence or not of upload properties and base enctype on that.
 </xar:comment>
-<xar:base-js-framework module="base" name="jquery" file="jquery-1.3.2.min.js" />
+<xar:base-js-framework module="base" name="jquery" />
 <xar:set name="pagecode">"
 jQuery('select#ptid').change(function(event) {
     this.form.submit();

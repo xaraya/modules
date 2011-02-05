@@ -1,7 +1,7 @@
 <xar:style scope="module" module="xarpages" file="xarpages" />
-<xar:base-js-framework module="base" name="jquery" file="jquery-1.3.2.min.js" />
-<xar:base-js-plugin name="ui" framework="jquery" file="jquery-ui-1.7.2.custom.min.js" style="jquery-ui-1.7.2.custom.css" />
-<xar:base-js-plugin name="bgiframe" framework="jquery" file="jquery.bgiframe.min.js"  />
+<xar:base-js-framework module="base" name="jquery" />
+<xar:base-js-plugin name="ui" framework="jquery" style="jquery-ui-1.8.8.custom.css" />
+<xar:base-js-plugin name="bgiframe" framework="jquery" />
 <xar:set name="xarpagescode">"
 var dialog_width = 300;
 var dialog_height = 200;
