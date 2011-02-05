@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:base-js-framework module="base" name="jquery" file="jquery-1.3.2.min.js" />
-<xar:base-js-plugin name="validate" framework="jquery" file="jquery.validate.min.js"  />
+<xar:base-js-framework module="base" name="jquery" />
+<xar:base-js-plugin name="validate" framework="jquery" />
 <xar:set name="configcode">"
 jQuery('#"."categoriesconfigform').validate({
     rules: {
