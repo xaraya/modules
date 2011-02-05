@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:style scope="module" module="articles" file="gallery" />
-<xar:base-js-framework module="base" name="jquery" file="jquery-1.3.2.min.js" />
+<xar:base-js-framework module="base" name="jquery" />
 <xar:base-js-plugin name="cluetip" framework="jquery" />
 <xar:set name="gallerycode">"
 jQuery('div.gallery-content a').cluetip({
