@@ -20,8 +20,19 @@ function content_user_view($args) {
 
     if(!xarVarFetch('startnum', 'isset', $startnum, NULL, XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('numitems', 'int',   $numitems,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-	if(!xarVarFetch('ctype', 'str',   $ctype,  xarModVars::get('content', 'default_ctype'), XARVAR_NOT_REQUIRED)) {return;} 
+	if(!xarVarFetch('ctype', 'str',   $ctype,  NULL, XARVAR_NOT_REQUIRED)) {return;} 
 	if(!xarVarFetch('page_template', 'str', $page_template, NULL, XARVAR_NOT_REQUIRED)) {return;}
+
+	$data['content_types'] = xarMod::apiFunc('content','admin','getcontenttypes', array('getlabels' => true));
+	if (empty($ctype) || !isset($data['content_types'][$ctype])) {
+		$ctype = xarModVars::get('content', 'default_ctype');
+		if (empty($ctype) || !isset($data['content_types'][$ctype])) {
+			$ctypes = array_keys($data['content_types']);
+			asort($ctypes);
+			$ctype = reset($ctypes);
+			xarModVars::set('content', 'default_ctype', $ctype);
+		}
+	}   
 
 	sys::import('modules.dynamicdata.class.objects.master');
 

@@ -64,6 +64,7 @@ function content_init()
         $dbconn->rollback();
         throw $e;
     }
+	PropertyRegistration::importPropertyTypes(false,array('modules/content/xarproperties'));
 
     $module = 'content';
     $objects = array(
@@ -186,6 +187,9 @@ function content_upgrade($oldversion)
     } 
 	if ($old < 90) {
 		xarMod::apiFunc('content','util','upgradepre090');
+	}
+	if ($old < 91) {
+		PropertyRegistration::importPropertyTypes(false,array('modules/content/xarproperties'));
 	}
 
     // Update successful

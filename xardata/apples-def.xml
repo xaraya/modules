@@ -1,8 +1,8 @@
-<object name="content_apples">
-  <objectid>133</objectid>
+<object name="apples">
+  <objectid>391</objectid>
   <label>Apples</label>
   <module_id>182</module_id>
-  <itemtype>21</itemtype>
+  <itemtype>45</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
@@ -11,7 +11,7 @@
   <isalias>true</isalias>
   <properties>
     <property name="itemid">
-      <id>566</id>
+      <id>2876</id>
       <label>Itemid</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration></configuration>
     </property>
     <property name="title">
-      <id>567</id>
+      <id>2877</id>
       <label>Title</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -31,7 +31,7 @@
       <configuration></configuration>
     </property>
     <property name="summary">
-      <id>568</id>
+      <id>2878</id>
       <label>Summary</label>
       <type>textarea_medium</type>
       <defaultvalue></defaultvalue>
@@ -41,7 +41,7 @@
       <configuration></configuration>
     </property>
     <property name="body">
-      <id>569</id>
+      <id>2879</id>
       <label>Body</label>
       <type>textarea_large</type>
       <defaultvalue></defaultvalue>
@@ -50,34 +50,84 @@
       <seq>4</seq>
       <configuration></configuration>
     </property>
+    <property name="display_template">
+      <id>2880</id>
+      <label>Display Template</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:84:"xarMod::apiFunc('content','admin','getdisplaytemplates',array('ctype' => 'apples2'))";}</configuration>
+    </property>
     <property name="publication_date">
-      <id>570</id>
+      <id>2881</id>
       <label>Publication Date</label>
       <type>calendar</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
       <status>33</status>
-      <seq>255</seq>
+      <seq>6</seq>
+      <configuration></configuration>
+    </property>
+    <property name="expiration_date">
+      <id>2882</id>
+      <label>Expiration Date</label>
+      <type>calendar</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>7</seq>
       <configuration></configuration>
     </property>
     <property name="publication_status">
-      <id>571</id>
+      <id>2883</id>
       <label>Status</label>
       <type>dropdown</type>
       <defaultvalue>2</defaultvalue>
       <source>dynamic_data</source>
       <status>33</status>
-      <seq>255</seq>
+      <seq>8</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:46:"0,Submitted;1,Rejected;2,Approved;3,Frontpage;";}</configuration>
     </property>
     <property name="publication_author">
-      <id>572</id>
+      <id>2884</id>
       <label>Author</label>
       <type>userlist</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
       <status>33</status>
-      <seq>255</seq>
+      <seq>9</seq>
+      <configuration></configuration>
+    </property>
+    <property name="date_created">
+      <id>2885</id>
+      <label>Date created</label>
+      <type>calendar</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>66</status>
+      <seq>10</seq>
+      <configuration></configuration>
+    </property>
+    <property name="date_modified">
+      <id>2886</id>
+      <label>Last Modified</label>
+      <type>calendar</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>66</status>
+      <seq>11</seq>
+      <configuration></configuration>
+    </property>
+    <property name="item_path">
+      <id>2887</id>
+      <label>Path</label>
+      <type>path</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>12</seq>
       <configuration></configuration>
     </property>
   </properties>
