@@ -46,7 +46,7 @@ function registration_init()
     $module = 'registration';
     $objects = array(
                    'registration_users',
-					'registration_compact',
+					'registration_compact'
                      );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
@@ -54,6 +54,7 @@ function registration_init()
 /** --------------------------------------------------------
  * Define modvars
  */
+	xarModVars::set('registration', 'createdirectory', false);
     xarModVars::set('registration', 'allowregistration', true);
     xarModVars::set('registration', 'requirevalidation', false);
     xarModVars::set('registration', 'uniqueemail', true); //move back to roles - better there
@@ -153,7 +154,9 @@ function registration_upgrade($oldVersion)
 {
     // Upgrade dependent on old version number
     switch ($oldVersion) {
-        case '1.0.2': //current version
+        case '2.0.0': //current version
+
+			xarModVars::set('registration', 'createdirectory', true);
 
             break;
     }

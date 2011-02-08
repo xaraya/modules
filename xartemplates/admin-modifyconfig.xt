@@ -168,6 +168,13 @@
                         Users May Choose Their Own Password
                     </label>
                 </div>
+		<div class="xar-form-input-wrapper-after">
+                    <xar:set name="checked">xarModVars::get('registration', 'createdirectory')</xar:set>
+                    <xar:data-input type="checkbox" name="createdirectory" checked="$checked"/>
+                    <label for="createdirectory" title="#xarML('Create an uploads directory for each registered user')#">
+                        Create an uploads directory for each registered user
+                    </label>
+                </div>
             </fieldset>
             <fieldset>
                 <legend>

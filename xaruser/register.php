@@ -132,7 +132,7 @@ function registration_user_register()
         break;
 
         case 'checkregistration': // validate input and ask for account create confirmation
-
+ 
             // this prevents users passing input via get params and by-passing age/ip check
             if (!xarSession::getVar('registration.ageconfirm')) 
                 xarResponse::redirect(xarModURL('registration', 'user', 'register'));
@@ -145,7 +145,7 @@ function registration_user_register()
 			$values = $object->getFieldValues();
 
 			if (!xarVarFetch('agreetoterms', 'checkbox', $values['agreetoterms'], false, XARVAR_NOT_REQUIRED)) return;
-
+ 
 			if (xarModVars::get('registration', 'showterms')) {
 				$invalid['agreetoterms'] = xarMod::apiFunc('registration','user','checkvar',
                     array('type'=>'agreetoterms', 'var'=> $values['agreetoterms']));
@@ -296,6 +296,10 @@ function registration_user_register()
 
                 $ret = xarModApiFunc('registration','user','createnotify', $vargs);
             }
+
+			if (xarModVars::get('registration', 'createdirectory')) {
+				mkdir(sys::varpath() . '/uploads/user_' . $id, 0747);
+			}
 
 /* Already done in createItem()
             //Make sure the user email setting is off unless the user sets it

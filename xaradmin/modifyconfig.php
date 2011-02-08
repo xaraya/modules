@@ -67,6 +67,7 @@ function registration_admin_modifyconfig()
                 if (!xarVarFetch('usermessage',       'str',      $usermessage,  xarModVars::get('registration', 'usermessage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                 if (!xarVarFetch('adminmessage',      'str',      $adminmessage,  xarModVars::get('registration', 'adminmessage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                 if (!xarVarFetch('notificationmodule','str',      $notificationmodule,  xarModVars::get('registration', 'notificationmodule'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+				if (!xarVarFetch('createdirectory',       'checkbox', $createdirectory,       false, XARVAR_NOT_REQUIRED)) return;
 
                 xarModVars::set('registration', 'chooseownpassword', $chooseownpassword);
                 xarModVars::set('registration', 'defaultgroup', $defaultgroup);
@@ -84,6 +85,7 @@ function registration_admin_modifyconfig()
                 xarModVars::set('registration', 'usermessage', $usermessage);
                 xarModVars::set('registration', 'adminmessage', $adminmessage);
                 xarModVars::set('registration', 'notificationmodule', $notificationmodule);
+				xarModVars::set('registration', 'createdirectory', $createdirectory);
                 xarResponse::redirect($data['return_url']);
                 return true;
             }
