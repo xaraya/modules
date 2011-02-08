@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	#$output#
+</urlset>
+</xar:template>
