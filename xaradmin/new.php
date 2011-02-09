@@ -85,6 +85,12 @@ function content_admin_new()
 					$object->properties['publication_date']->setValue(time());
 				}
 			}
+			if (isset($object->properties['expiration_date'])) {
+				$expdate = $object->properties['expiration_date']->getValue();
+				if ($expdate == -1) {
+					$object->properties['expiration_date']->setValue(2145938400);
+				}
+			}
 			if (isset($object->properties['date_created'])) {
 				$data['object']->properties['date_created']->setValue(time());
 			}

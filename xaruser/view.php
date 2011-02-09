@@ -97,7 +97,7 @@ function content_user_view($args) {
 	}
 	//expiration_date can be empty
 	if (in_array('expiration_date', $properties)) {
-		$where .=  $join . 'expiration_date gt ' . time() . ' or expiration_date eq -1';
+		$where .=  $join . 'expiration_date gt ' . time();
 		$join = ' and ';
 	}
 	if (in_array('publication_status', $properties)) {

@@ -38,7 +38,7 @@ function content_adminapi_addexpdate($args) {
 		'objectid' => $objectid,
 		'type' => 8,
 		'source' => 'dynamic_data',
-		'status' => 33,
+		'status' => 33, 
 		'seq' => 200 // make it the last field
 	);
 	$pobject = DataObjectMaster::getObject(array('name' => 'properties'));

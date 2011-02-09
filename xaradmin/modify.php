@@ -100,6 +100,12 @@ function content_admin_modify()
 					$data['object']->properties['publication_date']->setValue($pubdate);
 				}
 			}
+			if (in_array('expiration_date', $properties)) {
+				$expdate = $object->properties['expiration_date']->getValue();
+				if ($expdate == -1) {
+					$data['object']->properties['expiration_date']->setValue(2145938400);
+				}
+			}
 			if (in_array('date_modified', $properties)) {
 				$data['object']->properties['date_modified']->setValue(time());
 			}

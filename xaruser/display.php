@@ -74,7 +74,7 @@ function content_user_display($args)
 	if (isset($values['publication_date']) && $values['publication_date'] > time()) return;
 
 	// publication_date should never be empty, but expiration_date may be empty
-	if (isset($values['expiration_date']) && $values['expiration_date'] != -1 && $values['expiration_date'] < time()) return;
+	if (isset($values['expiration_date']) && $values['expiration_date'] < time()) return;
 
 	if (isset($values['display_template']) && !empty($values['display_template'])) { // if a display_template is set, first look for that
 		$dtemplate = $values['display_template']; 
