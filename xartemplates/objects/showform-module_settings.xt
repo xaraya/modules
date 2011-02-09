@@ -47,6 +47,19 @@
 	
 
      </fieldset>
+
+     <fieldset class="mod_settings">
+    
+    <h4>XML Sitemap:</h4>
+
+		<xar:set name="name">'sitemap_exclude'</xar:set>
+	    <div class="xar-form-input-wrapper">
+			<xar:data-label property="$properties[$name]" for="id" />   
+			<!-- <xar:set name="sitemap_exclude">xarModVars::get('content','sitemap_exclude')</xar:set>it's a serialized array: #$sitemap_exclude# -->
+			<xar:data-input property="$properties[$name]"/>
+	     </div>
+
+     </fieldset>
     
     <xar:if condition="xarModIsAvailable('filters')">
 	    <fieldset class="mod_settings">

@@ -20,12 +20,22 @@
  */
 function content_admin_modifycontenttype()
 {
+	//xarModVars::set('content','sitemap_exclude',serialize(array()));
 	if(!xarVarFetch('ctype', 'str', $ctype, NULL, XARVAR_DONT_SET)) {return;}
 	if(!xarVarFetch('isalias', 'checkbox', $isalias, false, XARVAR_NOT_REQUIRED)) {return;}
-    
+	if(!xarVarFetch('sitemap_exclude', 'checkbox', $sitemap_exclude, false, XARVAR_NOT_REQUIRED)) {return;}
+     
 	// Check if the user can Edit in the content module, and then specifically for this item.
     // We pass the itemid to the SecurityCheck
     if (!xarSecurityCheck('AdminContent',1)) return;
+
+	$arr = xarModVars::get('content','sitemap_exclude');
+	$arr = explode(',',$arr);
+	if (!in_array($ctype, $arr)) {  
+		$data['sitemap_exclude'] = false;
+	} else {
+		$data['sitemap_exclude'] = true;
+	}
 
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
@@ -84,6 +94,22 @@ function content_admin_modifycontenttype()
 			} else {
 				xarModAlias::delete($ctype, 'content');
 			}
+
+			if ($sitemap_exclude) {
+				if (!in_array($ctype, $arr)) {  
+					$arr[] = $ctype;
+				}
+				$data['sitemap_exclude'] = true;
+			} else {
+				if (in_array($ctype, $arr)) {
+					foreach ($arr as $key => $val) {
+						if ($val == $ctype) unset($arr[$key]);
+					}
+				}
+				$data['sitemap_exclude'] = false;
+			} 
+
+			xarModVars::set('content','sitemap_exclude',implode(',',$arr)); 
 
 			$label = $ctobject->properties['label']->getValue();
             $ctobject->updateItem(array('itemid' => $objectid));

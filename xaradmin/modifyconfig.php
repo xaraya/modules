@@ -17,7 +17,7 @@
  */
 function content_admin_modifyconfig()
 {
-	xarModVars::set('content', 'enable_short_urls', true);
+	xarModVars::set('content', 'enable_short_urls', true); 
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
@@ -35,6 +35,9 @@ function content_admin_modifyconfig()
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
     $object->getItem(array('itemid' => 0));
 	$data['object'] = $object;
+ 
+	/*$sitemap_exclude_id = $object->properties['sitemap_exclude']->id; 
+	if (!xarVarFetch('dd_'.$sitemap_exclude_id, 'array', $sitemap_exclude, array(), XARVAR_NOT_REQUIRED)) return;*/
 
     // Get the object we'll be working with for common configuration settings
     $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'content'));
@@ -78,6 +81,9 @@ function content_admin_modifyconfig()
                 return xarTplModule('content','admin','modifyconfig', $data);
             } else {
                 $itemid = $data['module_settings']->updateItem();
+
+				/*var_dump($sitemap_exclude);
+				xarModVars::set('content','sitemap_exclude',serialize($sitemap_exclude));*/
             }
 
             # --------------------------------------------------------

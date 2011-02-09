@@ -23,7 +23,7 @@
                     Modify
                 </legend>
  
-                <xar:data-form object="$object" tplmodule="content" template="modifycontenttype" isalias="$isalias" ctype="$ctype" resolvealias="$resolvealias" />
+                <xar:data-form object="$object" tplmodule="content" template="modifycontenttype" isalias="$isalias" ctype="$ctype" resolvealias="$resolvealias" sitemap_exclude="$sitemap_exclude"/>
 		 
              </fieldset>
 	     

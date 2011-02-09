@@ -96,6 +96,7 @@ function content_init()
 	xarModVars::set('content','enable_filters',1);  
 	xarModVars::set('content','filters_min_ct_count',9);    
 	xarModVars::set('content','filters_min_item_count',1);
+	xarModVars::set('content','sitemap_exclude', serialize(array()));
 
 # --------------------------------------------------------
 #
@@ -189,7 +190,10 @@ function content_upgrade($oldversion)
 		xarMod::apiFunc('content','util','upgradepre090');
 	}
 	if ($old < 91) {
-		PropertyRegistration::importPropertyTypes(false,array('modules/content/xarproperties'));
+		PropertyRegistration::importPropertyTypes(false, array('modules/content/xarproperties'));
+	}
+	if ($old < 92) {
+		xarMod::apiFunc('content','util','upgradepre092');	
 	}
 
     // Update successful

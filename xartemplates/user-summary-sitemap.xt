@@ -4,7 +4,11 @@
 
  <url>
 
-<xar:set name="url">xarModURL('content','user','display',array('itemid' => $itemid, 'ctype' => $content_type))</xar:set>
+<xar:if condition="isset($content_type)">
+	<xar:set name="url">xarModURL('content','user','display',array('itemid' => $itemid, 'ctype' => $content_type))</xar:set>
+<xar:else/>
+	<xar:set name="url">xarModURL('content','user','display',array('itemid' => $itemid))</xar:set>
+</xar:if>
 <!-- not sure this str_replace is necessary -->
 <xar:set name="loc">str_replace('&amp;', '&#38;', $url)</xar:set>
 
