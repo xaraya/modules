@@ -47,7 +47,6 @@ function content_user_sitemap() {
 			$where .= 'publication_date lt ' . time();
 			$join = ' and ';
 		}
-		//expiration_date can be empty
 		if (in_array('expiration_date', $properties)) {
 			$where .=  $join . 'expiration_date gt ' . time();
 			$join = ' and ';
@@ -76,7 +75,7 @@ function content_user_sitemap() {
 		ksort($all_items);
 
 		foreach ($all_items as $item) { 
-			$output .= xarTplModule('content','user','summary', $item, 'sitemap');
+			$output .= xarTplModule('content','user','sitemap', $item, 'url');
 		}
 	}
 
@@ -94,7 +93,7 @@ function content_user_sitemap() {
 
 	$data['output'] = $output;
 
-    return xarTplModule('content','user','view', $data, 'sitemap');
+    return xarTplModule('content','user','sitemap', $data);
 }
 
 ?>

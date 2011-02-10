@@ -15,6 +15,8 @@
  * view content items
  */
 function content_user_view($args) {
+
+	$where = '';
 	
 	extract($args);
 
@@ -82,20 +84,15 @@ function content_user_view($args) {
 
 	// publication_date and publication_status properties are programmatically added to every content type created by the module, but can be safely removed by admins
 
-	if (!isset($where)) {
-		$where = '';
-		$join = '';
-	} elseif (!empty($where)) {
-		$where = $where . ' and ';
-	} else {
-		$where = '';
-	}
-
-	if (in_array('publication_date', $properties)) {
-		$where .= 'publication_date lt ' . time();
+	$join = '';
+	// first, the $where from extract($args)
+	if (!empty($where)) { 		
 		$join = ' and ';
-	}
-	//expiration_date can be empty
+	} 
+	if (in_array('publication_date', $properties)) {
+		$where .= $join . 'publication_date lt ' . time();
+		$join = ' and ';
+	} 
 	if (in_array('expiration_date', $properties)) {
 		$where .=  $join . 'expiration_date gt ' . time();
 		$join = ' and ';

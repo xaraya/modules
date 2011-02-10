@@ -44,7 +44,7 @@
 
 	<div class="xar-form-input-wrapper">
 
-		<label class="xar-form-label" for="sitemap_exclude" style="width: 290px;">Exclude from XML sitemap</label>
+		<label class="xar-form-label" for="sitemap_exclude">Exclude from <a href="#xarmodurl('content','user','sitemap')#">XML sitemap</a></label>
 		 
 		<xar:if condition="$sitemap_exclude">
 			<xar:data-input type="checkbox" name="sitemap_exclude" checked="checked" class="xar-form-textxlong" />

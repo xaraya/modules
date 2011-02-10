@@ -1,0 +1,84 @@
+<object name="content_bios">
+  <objectid>434</objectid>
+  <label>Bios</label>
+  <module_id>182</module_id>
+  <itemtype>46</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:5:{s:11:"adminfields";s:17:"itemid,name,photo";s:12:"filterfields";s:10:"name,Name;";s:13:"page_template";s:0:"";s:4:"sort";s:10:"weight ASC";s:8:"numitems";s:2:"20";}</config>
+  <isalias>true</isalias>
+  <properties>
+    <property name="itemid">
+      <id>3146</id>
+      <label>Itemid</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="name">
+      <id>3147</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="summary">
+      <id>3148</id>
+      <label>Summary</label>
+      <type>editor</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration></configuration>
+    </property>
+    <property name="body">
+      <id>3149</id>
+      <label>Body</label>
+      <type>editor</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
+    <property name="photo">
+      <id>3150</id>
+      <label>Photo</label>
+      <type>fileupload</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration>a:6:{s:12:"display_size";s:2:"40";s:14:"display_layout";s:7:"default";s:24:"validation_max_file_size";s:6:"500000";s:26:"validation_file_extensions";s:22:"gif | jpg | jpeg | png";s:27:"validation_allow_duplicates";s:1:"2";s:28:"initialization_basedirectory";s:11:"var/uploads";}</configuration>
+    </property>
+    <property name="weight">
+      <id>3151</id>
+      <label>Weight (for sorting)</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>7</seq>
+      <configuration></configuration>
+    </property>
+    <property name="publication_status">
+      <id>3152</id>
+      <label>Status</label>
+      <type>dropdown</type>
+      <defaultvalue>2</defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>235</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:46:"0,Submitted;1,Rejected;2,Approved;3,Frontpage;";}</configuration>
+    </property>
+  </properties>
+</object>

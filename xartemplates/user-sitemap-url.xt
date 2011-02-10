@@ -24,7 +24,7 @@
 	
 <xar:if condition="isset($changefreq)">
 	<changefreq>#$changefreq#</changefreq>
-<xar:elseif condition="$loc eq xarServer::getBaseURL()"/>
+<xar:elseif condition="$itemid eq xarModVars::get('content','default_itemid')"/>
 	<changefreq>weekly</changefreq>
 <xar:else/>
 	<changefreq>monthly</changefreq>
@@ -32,7 +32,7 @@
       
 <xar:if condition="isset($priority)">
 	<priority>#$priority#</priority>
-<xar:elseif condition="$loc eq xarServer::getBaseURL()"/>
+<xar:elseif condition="$itemid eq xarModVars::get('content','default_itemid')"/>
 	<priority>1.0</priority>
 <xar:else/>
 	<priority>0.5</priority>
