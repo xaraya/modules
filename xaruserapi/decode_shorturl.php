@@ -36,7 +36,7 @@ function content_userapi_decode_shorturl($params) {
 			}
 			$join = '&';
 		}  
-	}
+	} 
 
 	if ($params[0] == 'content') {
 		if (!isset($params[1])) {
@@ -99,7 +99,8 @@ function content_userapi_decode_shorturl($params) {
 		$url = xarServer::GetCurrentURL();
 		$path = str_replace($baseurl, '/', $url);
 		$path = str_replace('/index.php', '', $path);
-		
+		$path = str_replace('?'.$qs, '', $path); 
+
 		// checking the path in here means we aren't going to allow /content/foo/etc
 		$checkpath = xarMod::apiFunc('content','user','checkpath',array('path' => $path)); 
  
