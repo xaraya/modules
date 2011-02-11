@@ -25,18 +25,20 @@ function content_userapi_decode_shorturl($params) {
     // Initialise the argument list we will return
     $args = array();
 
+	/*
 	$qs = '';
 
-	if (isset($_GET)) {
+	if (isset($_GET)) { 
 		$join = '';
 		foreach($_GET as $key => $val) { 
 			$qs .= $join . $key;
-			if (!empty($val) || $val == 0) {
+			if (!empty($val) || $val === '0') {
 				$qs .= "=" . $val; 
 			}
 			$join = '&';
 		}  
 	} 
+	*/ 
 
 	if ($params[0] == 'content') {
 		if (!isset($params[1])) {
@@ -97,16 +99,19 @@ function content_userapi_decode_shorturl($params) {
 
 		$baseurl = xarServer::GetBaseURL();
 		$url = xarServer::GetCurrentURL();
-		$path = str_replace($baseurl, '/', $url);
+		$url = parse_url($url);
+		$path = $url['path'];
+
+		/*$path = str_replace($baseurl, '/', $url);
 		$path = str_replace('/index.php', '', $path);
-		$path = str_replace('?'.$qs, '', $path); 
+		$path = str_replace('?'.$qs, '', $path);  */
 
 		// checking the path in here means we aren't going to allow /content/foo/etc
 		$checkpath = xarMod::apiFunc('content','user','checkpath',array('path' => $path)); 
  
 		if ($checkpath) {
 
-			if(!empty($qs)) {
+			if(isset($_GET)) {
 				array_merge($args, $_GET);
 			}
 			$args['itemid'] = $checkpath;
@@ -114,7 +119,7 @@ function content_userapi_decode_shorturl($params) {
 
 		} elseif (!isset($params[1])) {
 			// If we're here, we had to do both a ctype lookup and a path lookup.  
-			if(!empty($qs)) {
+			if(isset($_GET)) {
 				array_merge($args, $_GET);
 			}
 			return array('main',$args);
