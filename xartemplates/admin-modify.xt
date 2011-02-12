@@ -18,7 +18,13 @@
 	
 	<p><a href="#xarmodurl('content','admin','view',array('ctype' => $ctype))#">View Items:  #$label#</a></p>
 
-	<xar:if condition="isset($path_error)"> 
+	<xar:if condition="$invalid">
+		<div id="invalid">
+			<span class="xar-error">There was a problem with your submission.  Please correct any invalid fields highlighted in the form below.</span>
+		</div>
+	</xar:if>
+
+	<!-- <xar:if condition="isset($path_error)"> 
 		<div id="path_errors">
 			Path error:
 			<xar:if condition="$path_error eq 1">
@@ -31,7 +37,7 @@
 				The first part of the path you entered ("#$pathstart#") is already an alias for the #$pathaliasmodule# module.  Please try another path.
 			</xar:if> 
 		</div>
-	</xar:if>
+	</xar:if> -->
                
         <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
            

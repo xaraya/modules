@@ -99,17 +99,17 @@ function content_userapi_decode_shorturl($params) {
 
 		$baseurl = xarServer::GetBaseURL();
 		$url = xarServer::GetCurrentURL();
-		$url = parse_url($url);
-		$path = $url['path'];
-
-		/*$path = str_replace($baseurl, '/', $url);
+		$path = str_replace($baseurl, '/', $url); 
 		$path = str_replace('/index.php', '', $path);
-		$path = str_replace('?'.$qs, '', $path);  */
+		$url = parse_url($path); //it works even after we remove baseurl + /index.php
+		$path = $url['path'];  
+		
+		/*$path = str_replace('?'.$qs, '', $path);  */
 
 		// checking the path in here means we aren't going to allow /content/foo/etc
 		$checkpath = xarMod::apiFunc('content','user','checkpath',array('path' => $path)); 
  
-		if ($checkpath) {
+		if ($checkpath) { 
 
 			if(isset($_GET)) {
 				array_merge($args, $_GET);

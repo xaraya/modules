@@ -32,6 +32,7 @@ function content_admin_modify()
     }
 
 	$data['itemid'] = $itemid;
+	$data['invalid'] = false;
 
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
@@ -56,7 +57,7 @@ function content_admin_modify()
     // Get the object we'll be working with
     $object = DataObjectMaster::getObject(array('name' => $ctype));
 	$data['object'] = $object; // save for later
-
+ 
 	$data['label'] = $object->label;
    
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
@@ -72,6 +73,7 @@ function content_admin_modify()
         $isvalid = $data['object']->checkInput();
 
         if (!$isvalid) {
+			$data['invalid'] = true;
             return xarTplModule('content','admin','modify', $data);        
         } elseif (isset($data['preview'])) {
             // Show a preview, same thing as the above essentially

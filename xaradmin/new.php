@@ -23,6 +23,7 @@ function content_admin_new()
 	if(!xarVarFetch('ctype',    'str', $ctype,     NULL,  XARVAR_GET_ONLY)) {return;}
 	
 	$data['content_type'] = $ctype;
+	$data['invalid'] = false;
 
 	$instance = 'All:'.$ctype.':'.xarUserGetVar('id');
 	if (!xarSecurityCheck('AddContent',0,'Item',$instance)) {
@@ -60,7 +61,8 @@ function content_admin_new()
         $isvalid = $object->checkInput();
 
         if (!$isvalid) {
-            // Bad data: redisplay the form with the data we picked up and with error messages
+            // Bad data: redisplay the form  
+			$data['invalid'] = true;
             return xarTplModule('content','admin','new', $data);        
         } elseif (isset($data['preview'])) {
             // Show a preview, same thing as the above essentially

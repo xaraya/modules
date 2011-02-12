@@ -15,6 +15,12 @@
             <xar:set name="enctype">'multipart/form-data'</xar:set>
         </xar:if>
 
+	<xar:if condition="$invalid">
+		<div id="invalid">
+			<span class="xar-error">There was a problem with your submission.  Please correct any invalid fields highlighted in the form below.</span>
+		</div>
+	</xar:if>
+
         <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
           <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
           <input type="hidden" name="confirm" id="confirm" value="true" />

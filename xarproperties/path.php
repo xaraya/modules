@@ -31,27 +31,7 @@ class PathProperty extends TextBoxProperty
     }
 
 	public function setValue($value=null)
-	{
-		if (!empty($value) && $value != '/') {
-			if ($value[0] != '/') {
-				$value = '/' . $value;
-			} 
-			$value = preg_replace('~//+~', '/', $value);
-			$value = strtolower($value);
-
-			$path = substr($value, 1);
-			$pos = strpos($path, '/');
-			if($pos) {
-				$pathstart = substr($path, 0, $pos);
-			} else {
-				$pathstart = $path;
-			}
-			$aliases = xarConfigVars::get(null, 'System.ModuleAliases');
-			if (!isset($aliases[$pathstart])) { 
-				// $pathstart is not an alias, so register one...
-				xarModAlias::set($pathstart, 'content');
-			}
-		}
+	{  
 
 		$this->value = $value;
 
@@ -75,13 +55,13 @@ class PathProperty extends TextBoxProperty
             return false;
 		}
 
-		$pattern = '/^[\w\-\/]{1,}$/';
+		$pattern = '/^[\w\-\/ ]{1,}$/';
 		if (!preg_match($pattern, $path)) {
-			$this->invalid = xarML('Path must be at least one character long and can contain only letters, numbers, slashes, underscores and dashes.');
+			$this->invalid = xarML('Path must be at least one character long and can contain only letters, numbers, forward slashes, underscores and dashes.');
 			$this->value = $oldval;
             return false;
 		}	  
-
+ 
 		$check = explode('/',$path);
 		if (isset($check[2])) {
 			if (is_numeric($check[2])) {
@@ -116,6 +96,30 @@ class PathProperty extends TextBoxProperty
 			$this->value = $oldval;
             return false;
 		}	
+
+		if (!empty($this->value) && $this->value != '/') { 
+			$value = $this->value;
+			if ($value[0] != '/') {
+				$value = '/' . $value;
+			} 
+			$value = preg_replace('~//+~', '/', $value);
+			$value = strtolower($value);
+			$path = str_replace(' ', '_', $value);
+			
+			//See if we can register an alias
+			$str = substr($path, 1);
+			$pos = strpos($str, '/');
+			if($pos) {
+				$pathstart = substr($str, 0, $pos);
+			} else {
+				$pathstart = $str;
+			}
+			$aliases = xarConfigVars::get(null, 'System.ModuleAliases');
+			if (!isset($aliases[$pathstart])) { 
+				// $pathstart is not an alias, so register one...
+				xarModAlias::set($pathstart, 'content');
+			}
+		}
 
 		return true;
 
