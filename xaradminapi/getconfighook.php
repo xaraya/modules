@@ -1,18 +1,28 @@
 <?php
 /**
+ * Sitemapper Module
+ *
+ * @package modules
+ * @subpackage sitemapper module
+ * @category Third Party Xaraya Module
+ * @copyright (C) 2011 Netspan AG
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Marc Lutolf <mfl@netspan.ch>
+ */
+/**
  * Handle getconfig hook calls
  *
  */
 
-    function xarayatesting_adminapi_getconfighook($args)
+    function sitemapper_adminapi_getconfighook($args)
     {
         extract($args);
         if (!isset($extrainfo['tabs'])) $extrainfo['tabs'] = array();
-        $module = 'xarayatesting';
+        $module = 'sitemapper';
         $tabinfo = array(
                 'module'  => $module,
                 'configarea'  => 'general',
-                'configtitle'  => xarML('Xarayatesting'),
+                'configtitle'  => xarML('Sitemapper'),
                 'configcontent' => ''
         );
         $extrainfo['tabs'][] = $tabinfo;

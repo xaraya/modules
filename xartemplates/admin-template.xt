@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:if condition="xarModVars::get('sitemapper','use_module_alias')">
+                <xar:var scope="module" module="sitemapper" name="module_alias_name"/>
+            <xar:else />
+                Modify Submission Template
+            </xar:if>
+        </span>
+        <xar:template type="module" file="admin-menu"/>
+    </div>
+    <div class="xar-mod-body">
+        <h2>
+            Modify Submission Template
+        </h2>
+
+        <form method="post" action="#xarServer::getCurrentURL()#">
+          <fieldset>
+            <legend>Modify Submission Template</legend>
+            <xar:data-input type="codemirror" name="template" value="$template"/>
+          </fieldset>
+          <fieldset>
+            <div class="xar-align-center">
+                <input type="hidden" name="confirm" id="confirm" value="true"/>
+                <xar:var name="label">Update</xar:var>
+                <input type="submit" value="#$label#" class="xar-margin-thickleft"/>
+            </div>
+          </fieldset>
+        </form>
+    </div>
+</xar:template>

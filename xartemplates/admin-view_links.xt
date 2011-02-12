@@ -5,15 +5,20 @@
             <xar:if condition="xarModVars::get('sitemapper','use_module_alias')">
                 <xar:var scope="module" module="sitemapper" name="module_alias_name"/>
             <xar:else />
-                <xar:mlstring>Manage Sitemapper Master Tables</xar:mlstring>
+                Update the Links
             </xar:if>
         </span>
         <xar:template type="module" file="admin-menu"/>
     </div>
     <div class="xar-mod-body">
-        <form method="post" action="#xarServer::getCurrentURL()#" style="margin-top: 10px; margin-bottom: 10px;">
-            Choose an object:&#160;<xar:data-input type="dropdown" name="objectname" value="$objectname" options="$options" onchange="javascript:submit()"/>
-        </form>
-        <xar:data-input type="listing" objectname="$objectname"/>
+        <div>
+            <form method="post" action="#xarServer::getCurrentURL()#">
+                <xar:data-input type="checkbox" name="regenerate" value="$regenerate"/>&#160;
+                <xar:var name="label">Regenerate</xar:var>
+                <xar:button type="submit" label="$label"/>
+            </form>
+            <br/>
+        </div>
+        <xar:data-input type="listing" objectname="sitemapper_links"/>
     </div>
 </xar:template>

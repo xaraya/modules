@@ -1,13 +1,23 @@
 <?php
 /**
- * View items of the xarayatesting object
+ * Sitemapper Module
+ *
+ * @package modules
+ * @subpackage sitemapper module
+ * @category Third Party Xaraya Module
+ * @copyright (C) 2011 Netspan AG
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Marc Lutolf <mfl@netspan.ch>
+ */
+/**
+ * View items of the sitemapper object
  *
  */
-    function xarayatesting_admin_view($args)
+    function sitemapper_admin_view($args)
     {
-        if (!xarSecurityCheck('ManageXarayatesting')) return;
+        if (!xarSecurityCheck('ManageSitemapper')) return;
 
-        $modulename = 'xarayatesting';
+        $modulename = 'sitemapper';
 
         // Define which object will be shown
         if (!xarVarFetch('objectname', 'str', $objectname, null, XARVAR_DONT_SET)) return;

@@ -1,13 +1,14 @@
-1. Designation: Xarayatesting module
+1. Designation: Sitemapper module
 
 2. Author: Marc Lutolf <mfl@netspan.ch>
 
-3. Copyright: (C) 2008 Netspan AG
+3. Copyright: (C) 2011 Netspan AG
 
 4. License: GPL {@link http://www.gnu.org/licenses/gpl.html}
 
 5. Contributors:
 
-6. Antecedents: based on the Xaraya testing framework classes created by MrB, besfed and jan 
+6. Antecedents: based on the XML Sitemapper module in Drupal by Dave Reid. For information check here:
+http://drupal.org/project/usage/xmlsitemapper
 
 7. Third party code:

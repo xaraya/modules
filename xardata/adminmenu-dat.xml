@@ -9,49 +9,43 @@
             <label>Overview</label>
         </menuitem>
         <menuitem>
-            <mask>EditXarayatesting</mask>
+            <mask>ManageSitemapper</mask>
             <includes>
-                <includeitem>view</includeitem>
+                <includeitem>view_links</includeitem>
             </includes>
-            <target>sitetests</target>
-            <title>Display the site test suites</title>
-            <label>Site Tests</label>
+            <target>view_links</target>
+            <title>Generate the links information for submission</title>
+            <label>View Links</label>
         </menuitem>
         <menuitem>
-            <mask>EditXarayatesting</mask>
+            <mask>ManageSitemapper</mask>
             <includes>
-                <includeitem>view</includeitem>
+                <includeitem>create_files</includeitem>
             </includes>
-            <target>testpage</target>
-            <title>Run the unit test suites</title>
-            <label>Run Xaraya Unit Tests</label>
+            <target>create_files</target>
+            <title>Generate a sitemapper file</title>
+            <label>Generate File</label>
         </menuitem>
         <menuitem>
-            <mask>ManageRoles</mask>
+            <mask>ManageSitemapper</mask>
             <includes>
-                <includeitem>purge</includeitem>
+                <includeitem>template</includeitem>
             </includes>
-            <target>purge</target>
-            <title>Undelete or permanently remove users/groups</title>
-            <label>Recall/Purge</label>
+            <target>template</target>
+            <title>Manage the submission template</title>
+            <label>Submisson Template</label>
         </menuitem>
         <menuitem>
-            <mask>EditXarayatesting</mask>
-            <target>othertests</target>
-            <title>Run installation scans</title>
-            <label>Run Other Xaraya Tests</label>
-        </menuitem>
-        <menuitem>
-            <mask>ManageXarayatesting</mask>
+            <mask>ManageSitemapper</mask>
             <includes>
                 <includeitem>view</includeitem>
             </includes>
             <target>view</target>
-            <title>Manage the master tables of thsi module</title>
+            <title>Manage the master tables of this module</title>
             <label>Master Tables</label>
         </menuitem>
         <menuitem>
-            <mask>AdminXarayatesting</mask>
+            <mask>AdminSitemapper</mask>
             <includes>
                 <includeitem>modifyconfig</includeitem>
             </includes>

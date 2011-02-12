@@ -1,0 +1,114 @@
+<object name="sitemapper_sources">
+  <objectid>56</objectid>
+  <label>Sitemapper_sources</label>
+  <module_id>182</module_id>
+  <itemtype>12</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:0:{}</config>
+  <isalias>true</isalias>
+  <properties>
+    <property name="id">
+      <id>373</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_sitemapper_sources.id</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="module">
+      <id>374</id>
+      <label>Module</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_sitemapper_sources.module</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="source_type">
+      <id>382</id>
+      <label>Source Type</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_sitemapper_sources.source_type</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:20:"1,Single;2,Multiple;";}</configuration>
+    </property>
+    <property name="gen_type">
+      <id>375</id>
+      <label>Generation Type</label>
+      <type>textbox</type>
+      <defaultvalue>userapi</defaultvalue>
+      <source>xar_sitemapper_sources.gen_type</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration></configuration>
+    </property>
+    <property name="gen_function">
+      <id>376</id>
+      <label>Generation Function</label>
+      <type>textbox</type>
+      <defaultvalue>getall</defaultvalue>
+      <source>xar_sitemapper_sources.gen_function</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
+    <property name="display_type">
+      <id>380</id>
+      <label>Display Type</label>
+      <type>textbox</type>
+      <defaultvalue>user</defaultvalue>
+      <source>xar_sitemapper_sources.dis_type</source>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration></configuration>
+    </property>
+    <property name="display_function">
+      <id>381</id>
+      <label>Display Function</label>
+      <type>textbox</type>
+      <defaultvalue>display</defaultvalue>
+      <source>xar_sitemapper_sources.dis_function</source>
+      <status>33</status>
+      <seq>7</seq>
+      <configuration></configuration>
+    </property>
+    <property name="parameters">
+      <id>377</id>
+      <label>Parameters</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_sitemapper_sources.parameters</source>
+      <status>33</status>
+      <seq>8</seq>
+      <configuration></configuration>
+    </property>
+    <property name="modified">
+      <id>379</id>
+      <label>Modified</label>
+      <type>datetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>xar_sitemapper_sources.modified</source>
+      <status>65</status>
+      <seq>9</seq>
+      <configuration></configuration>
+    </property>
+    <property name="state">
+      <id>378</id>
+      <label>State</label>
+      <type>dropdown</type>
+      <defaultvalue>3</defaultvalue>
+      <source>xar_sitemapper_sources.state</source>
+      <status>33</status>
+      <seq>10</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:30:"0,Deleted;1,Inactive;3,Active;";}</configuration>
+    </property>
+  </properties>
+</object>

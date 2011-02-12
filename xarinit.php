@@ -1,11 +1,21 @@
 <?php
 /**
+ * Sitemapper Module
  *
- * Initialise or remove the xarayatesting module
+ * @package modules
+ * @subpackage sitemapper module
+ * @category Third Party Xaraya Module
+ * @copyright (C) 2011 Netspan AG
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Marc Lutolf <mfl@netspan.ch>
+ */
+/**
+ *
+ * Initialise or remove the sitemapper module
  *
  */
 
-    function xarayatesting_init()
+    function sitemapper_init()
     {
     # --------------------------------------------------------
     #
@@ -15,78 +25,134 @@
         $q = new Query();
         $prefix = xarDB::getPrefix();
 
-        $query = "DROP TABLE IF EXISTS " . $prefix . "_xarayatesting_test";
+        $query = "DROP TABLE IF EXISTS " . $prefix . "_sitemapper_links";
         if (!$q->run($query)) return;
-        $query = "CREATE TABLE " . $prefix . "_xarayatesting_test (
+        $query = "CREATE TABLE " . $prefix . "_sitemapper_links (
           id                   integer unsigned NOT NULL auto_increment,
-          code                 varchar(64) NULL,
-          name                 varchar(64) NULL,
-          testsuite            varchar(64) NULL,
-          testgroup            varchar(64) NULL,
-          description          text,
-          expected             text,
-          step01               text,
-          step02               text,
-          step03               text,
-          step04               text,
-          step05               text,
-          step06               text,
-          step07               text,
-          step08               text,
-          step09               text,
-          step10               text,
+          type                 varchar(64) NULL,
+          subtype              varchar(64) NULL,
+          location             varchar(254) NULL,
+          language             varchar(64) NULL,
+          access               tinyint unsigned default 0 NOT NULL,
+          last_modified        integer unsigned default 0 NOT NULL,
+          change_frequency     varchar(64) NULL,
+          priority             float default 0.5 NOT NULL,
+          change_count         integer unsigned default 0 NOT NULL,
           state                tinyint unsigned default 0 NOT NULL,
-          timestamp            integer default 0 NOT NULL,
         PRIMARY KEY  (id)
         ) TYPE=MyISAM";
         if (!$q->run($query)) return;
 
+        $query = "DROP TABLE IF EXISTS " . $prefix . "_sitemapper_maps";
+        if (!$q->run($query)) return;
+        $query = "CREATE TABLE " . $prefix . "_sitemapper_maps (
+          id                   integer unsigned NOT NULL auto_increment,
+          context_hash         varchar(64) NULL,
+          context              text,
+          links                integer unsigned default 0 NOT NULL,
+          chunks               integer unsigned default 0 NOT NULL,
+          max_filesize         integer unsigned default 0 NOT NULL,
+          state                tinyint unsigned default 0 NOT NULL,
+          modified             integer unsigned default 0 NOT NULL,
+        PRIMARY KEY  (id)
+        ) TYPE=MyISAM";
+        if (!$q->run($query)) return;
+        
+        $query = "DROP TABLE IF EXISTS " . $prefix . "_sitemapper_engines";
+        if (!$q->run($query)) return;
+        $query = "CREATE TABLE " . $prefix . "_sitemapper_engines (
+          id                   integer unsigned NOT NULL auto_increment,
+          name                 varchar(64) NULL,
+          submission_url       varchar(254) NULL,
+          help_url             varchar(254) NULL,
+          state                tinyint unsigned default 0 NOT NULL,
+          modified             integer unsigned default 0 NOT NULL,
+        PRIMARY KEY  (id)
+        ) TYPE=MyISAM";
+        if (!$q->run($query)) return;
+
+        $query = "DROP TABLE IF EXISTS " . $prefix . "_sitemapper_sources";
+        if (!$q->run($query)) return;
+        $query = "CREATE TABLE " . $prefix . "_sitemapper_sources (
+          id                   integer unsigned NOT NULL auto_increment,
+          module               varchar(64) NULL,
+          source_type          tinyint unsigned default 1 NOT NULL,
+          gen_type             varchar(64) NULL,
+          gen_function         varchar(64) NULL,
+          dis_type             varchar(64) NULL,
+          dis_function         varchar(64) NULL,
+          parameters           varchar(254) NULL,
+          state                tinyint unsigned default 0 NOT NULL,
+          modified             integer unsigned default 0 NOT NULL,
+        PRIMARY KEY  (id)
+        ) TYPE=MyISAM";
+        if (!$q->run($query)) return;
     # --------------------------------------------------------
     #
     # Set up masks
     #
-        xarRegisterMask('ViewXarayatesting','All','xarayatesting','All','All','ACCESS_OVERVIEW');
-        xarRegisterMask('ReadXarayatesting','All','xarayatesting','All','All','ACCESS_READ');
-        xarRegisterMask('EditXarayatesting','All','xarayatesting','All','All','ACCESS_EDIT');
-        xarRegisterMask('ManageXarayatesting','All','xarayatesting','All','All','ACCESS_DELETE');
-        xarRegisterMask('AdminXarayatesting','All','xarayatesting','All','All','ACCESS_ADMIN');
+        xarRegisterMask('ViewSitemapper','All','sitemapper','All','All','ACCESS_OVERVIEW');
+        xarRegisterMask('ReadSitemapper','All','sitemapper','All','All','ACCESS_READ');
+        xarRegisterMask('EditSitemapper','All','sitemapper','All','All','ACCESS_EDIT');
+        xarRegisterMask('AddSitemapper','All','sitemapper','All','All','ACCESS_ADD');
+        xarRegisterMask('ManageSitemapper','All','sitemapper','All','All','ACCESS_DELETE');
+        xarRegisterMask('AdminSitemapper','All','sitemapper','All','All','ACCESS_ADMIN');
 
     # --------------------------------------------------------
     #
     # Set up privileges
     #
-        xarRegisterPrivilege('ManageXarayatesting','All','xarayatesting','All','All','ACCESS_DELETE');
-        xarRegisterPrivilege('AdminXarayatesting','All','xarayatesting','All','All','ACCESS_ADMIN');
+        xarRegisterPrivilege('ManageSitemapper','All','sitemapper','All','All','ACCESS_DELETE');
+        xarRegisterPrivilege('AdminSitemapper','All','sitemapper','All','All','ACCESS_ADMIN');
 
     # --------------------------------------------------------
     #
     # Set up configuration modvars (general)
     #
-            $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'xarayatesting'));
+            $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'sitemapper'));
             $module_settings->initialize();
 
     # --------------------------------------------------------
     #
     # Set up modvars
     #
-        xarModVars::set('xarayatesting', 'defaultmastertable', 'xarayatesting_tests');
-
+        xarModVars::set('sitemapper', 'defaultmastertable', 'sitemapper_engines');
+        xarModVars::set('sitemapper', 'submit_engines', 'a:0:{}');
+        xarModVars::set('sitemapper', 'file_create_xml', true);
+        xarModVars::set('sitemapper', 'file_create_zip', true);
+        xarModVars::set('sitemapper', 'xml_filename', 'sitemap');
+        xarModVars::set('sitemapper', 'zip_filename', 'sitemap');
+        xarModVars::set('sitemapper', 'template', '
+<urlset xmlns="http://www.sitemappers.org/schemas/sitemapper/0.9">
+  <xar:foreach in="$items" value="$item">
+    <url>
+      <loc>#$item["location"]#</loc>
+      <xar:set name="last_modified">date("Y-m-d",$item["last_modified"])</xar:set>
+      <lastmod>#$last_modified#</lastmod>
+      <changefreq>#$item["change_frequency"]#</changefreq>
+      <priority>#$item["priority"]#</priority>
+    </url>
+  </xar:foreach>
+</urlset>');
     # --------------------------------------------------------
     #
     # Set up hooks
     #
-        sys::import('xaraya.structures.hooks.observer');
-        $observer = new BasicObserver('xarayatesting');
-        $subject = new HookSubject('comments');
-        $subject->attach($observer);
+//        sys::import('xaraya.structures.hooks.observer');
+//        $observer = new BasicObserver('sitemapper');
+//        $subject = new HookSubject('comments');
+//        $subject->attach($observer);
 
     # --------------------------------------------------------
     #
     # Create DD objects
     #
-        $module = 'xarayatesting';
+        $module = 'sitemapper';
         $objects = array(
-//                       'xarayatesting_tests',
+//                       'sitemapper_maps',
+                       'sitemapper_engines',
+                       'sitemapper_sources',
+                       'sitemapper_links',
                          );
 
         if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
@@ -94,56 +160,17 @@
         return true;
     }
 
-    function xarayatesting_upgrade()
+    function sitemapper_upgrade()
     {
         return true;
     }
 
-    function xarayatesting_delete()
+    function sitemapper_delete()
     {
         // Only change the next line. No need for anything else
-        $this_module = 'xarayatesting';
+        $module = 'sitemapper';
 
-    # --------------------------------------------------------
-    #
-    # Remove database tables
-    #
-        // Load table maintenance API
-        sys::import('xaraya.tableddl');
-
-        // Generate the SQL to drop the table using the API
-        $prefix = xarDB::getPrefix();
-        $table = $prefix . "_" . $this_module;
-        $query = xarDBDropTable($table);
-        if (empty($query)) return; // throw back
-
-    # --------------------------------------------------------
-    #
-    # Delete all DD objects created by this module
-    #
-        try {
-            $dd_objects = unserialize(xarModVars::get($this_module,$this_module . '_objects'));
-            foreach ($dd_objects as $key => $value)
-                $result = xarMod::apiFunc('dynamicdata','admin','deleteobject',array('objectid' => $value));
-        } catch (Exception $e) {}
-
-    # --------------------------------------------------------
-    #
-    # Remove the categories
-    #
-        try {
-            xarMod::apiFunc('categories', 'admin', 'deletecat',
-                                 array('cid' => xarModVars::get($this_module, 'basecategory'))
-                                );
-        } catch (Exception $e) {}
-
-    # --------------------------------------------------------
-    #
-    # Remove modvars, masks and privilege instances
-    #
-        xarRemoveMasks($this_module);
-        xarRemoveInstances($this_module);
-        xarModVars::delete_all($this_module);
+        if(!xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module))) return false;
 
         return true;
     }

@@ -6,85 +6,109 @@
     <xar:style scope="module" module="base" file="navtabs"/>
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:if condition="xarModVars::get('xarayatesting','use_module_alias')">
-                <xar:var scope="module" module="xarayatesting" name="module_alias_name"/>
+            <xar:if condition="xarModVars::get('sitemapper','use_module_alias')">
+                <xar:var scope="module" module="sitemapper" name="module_alias_name"/>
             <xar:else />
-                <xar:mlstring>Xarayatesting Administration</xar:mlstring>
+                <xar:mlstring>Sitemapper Administration</xar:mlstring>
             </xar:if>
         </span>
+        <xar:template type="module" file="admin-menu"/>
     </div>
     <div class="xar-mod-body">
         <h2>
             <xar:mlstring>
-                Modify XarayaTesting Configuration
+                Modify Sitemapper Configuration
             </xar:mlstring>
         </h2>
         <div>
-            <dl class="xar-tabs">
-                <dt class="help">
-                    <xar:mlstring>
-                        Actions:
-                    </xar:mlstring>
-                </dt>
+            <ul class="xar-tabs xar-alt xar-norm-outline">
                 <xar:if condition="$tab eq 'general'">
-                    <dd class="active">
-                        <a href="&xar-modurl-xarayatesting-admin-modifyconfig;&amp;tab=general">
-                            <xar:mlstring>
-                                General
-                            </xar:mlstring>
-                        </a>
-                    </dd>
-                    <xar:else />
-                    <dd>
-                        <a href="&xar-modurl-xarayatesting-admin-modifyconfig;&amp;tab=general">
-                            <xar:mlstring>
-                                General
-                            </xar:mlstring>
-                        </a>
-                    </dd>
+                    <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+                <xar:else />
+                    <xar:set name="tabclass">'xar-tab'</xar:set>
+                    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
                 </xar:if>
-                <xar:if condition="$tab eq 'tab2'">
-                    <dd class="active">
-                        <a href="&xar-modurl-xarayatesting-admin-modifyconfig;&amp;tab=tab2">
-                            <xar:mlstring>
-                                Tab2
-                            </xar:mlstring>
-                        </a>
-                    </dd>
-                    <xar:else />
-                    <dd>
-                        <a href="&xar-modurl-xarayatesting-admin-modifyconfig;&amp;tab=tab2">
-                            <xar:mlstring>
-                                Tab2
-                            </xar:mlstring>
-                        </a>
-                    </dd>
-                </xar:if>
-                <xar:if condition="$tab eq 'tab3'">
-                    <dd class="active">
-                        <a href="&xar-modurl-xarayatesting-admin-modifyconfig;&amp;tab=tab3">
-                            <xar:mlstring>
-                                Tab3
-                            </xar:mlstring>
-                        </a>
-                    </dd>
-                    <xar:else />
-                    <dd>
-                        <a href="&xar-modurl-xarayatesting-admin-modifyconfig;&amp;tab=tab3">
-                            <xar:mlstring>
-                                Tab3
-                            </xar:mlstring>
-                        </a>
-                    </dd>
-                </xar:if>
-            </dl>
+                <li class="#$tabclass#">
+                    <a href="#xarModURL('logconfig','admin','modifyconfig',array('tab'=>'general'))#" class="#$linkclass#">
+                        General
+                    </a>
+                </li>
+            </ul>
         </div>
         <xar:comment>
              - - - - - - - - - - - - - - - - - - - Begin General Options  - - - - - - - - - - - - - - - - - - -
         </xar:comment>
         <xar:if condition="$tab eq 'general'">
-            <form method="post" action="&xar-modurl-xarayatesting-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+            <form method="post" action="&xar-modurl-sitemapper-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
                 <xar:data-form object="$module_settings"/>
+                <fieldset>
+                    <legend>Files</legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="file_create_xml" title="#xarML('Create an unzipped XML file')#" class="xar-form-label">                                
+                            Create an XML file:                                
+                        </label>
+                        <xar:set name="value">xarModVars::get('sitemapper', 'file_create_xml')</xar:set>
+                        <xar:data-input type="checkbox" name="file_create_xml" value="$value" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="file_xml_filename" title="#xarML('The name of the XML file')#" class="xar-form-label">                                
+                            XML file name:                                
+                        </label>
+                        <xar:set name="value">xarModVars::get('sitemapper', 'xml_filename')</xar:set>
+                        <xar:data-input type="textbox" name="file_xml_filename" value="$value" />.xml
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="file_create_zip" title="#xarML('Create an zipped XML file')#" class="xar-form-label">                                
+                            Create a zipped XML file:                                
+                        </label>
+                        <xar:set name="value">xarModVars::get('sitemapper', 'file_create_zip')</xar:set>
+                        <xar:data-input type="checkbox" name="file_create_zip" value="$value" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="file_zip_filename" title="#xarML('The name of the zipped file')#" class="xar-form-label">                                
+                            Zip file name:                                
+                        </label>
+                        <xar:set name="value">xarModVars::get('sitemapper', 'zip_filename')</xar:set>
+                        <xar:data-input type="textbox" name="file_zip_filename" value="$value" />.gz
+                    </div>
+                </fieldset>                
+                <fieldset>
+                    <legend>Modules</legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="modules_to_map" title="#xarML('Modules to include in the sitemapper')#" class="xar-form-label">                                
+                            Modules to map:                                
+                        </label>
+                        <xar:data-input type="checkboxlist" name="modules_to_map" value="" />
+                    </div>
+                </fieldset>                
+                <fieldset>
+                    <legend>Engine Submissions</legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="submit_engines" title="#xarML('The search engines we submit this site tog')#" class="xar-form-label">                                
+                            Submit to:                                
+                        </label>
+                        <xar:data-input type="checkboxlist" name="submit_engines" value="$submit_engines" options="$engines"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="submit_frequency" title="#xarML('The cipher we are using')#" class="xar-form-label">                                
+                            Submit at most every:                                
+                        </label>
+                        <xar:data-input type="timeperiod" name="submit_frequency" value="" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="submit_after_updates" title="#xarML('Only submit if the sitemapper has been updated since the last submission')#" class="xar-form-label">                                
+                            Only submit after updates:                                
+                        </label>
+                        <xar:data-input type="checkbox" name="submit_after_updates" value="" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="submit_after_updates" title="#xarML('Enter one URL per line. The token [sitemapper] will be replaced with the URL to your sitemappern')#" class="xar-form-label">                                
+                            Custom URLs:                                
+                        </label>
+                        <xar:data-input type="textarea" name="submit_custom_urls" rows="5" value="" />
+                    </div>
+                </fieldset>
                 <fieldset>
                     <div class="xar-form-input-wrapper-after">
                         <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>

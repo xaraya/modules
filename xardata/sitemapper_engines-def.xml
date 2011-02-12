@@ -1,0 +1,74 @@
+<object name="sitemapper_engines">
+  <objectid>28</objectid>
+  <label>Sitemapper Engines</label>
+  <module_id>182</module_id>
+  <itemtype>9</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:0:{}</config>
+  <isalias>true</isalias>
+  <properties>
+    <property name="id">
+      <id>193</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_sitemapper_engines.id</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="name">
+      <id>194</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_sitemapper_engines.name</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="submission_url">
+      <id>195</id>
+      <label>Submission URL</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_sitemapper_engines.submission_url</source>
+      <status>34</status>
+      <seq>3</seq>
+      <configuration></configuration>
+    </property>
+    <property name="help_url">
+      <id>196</id>
+      <label>Help URL</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_sitemapper_engines.help_url</source>
+      <status>34</status>
+      <seq>4</seq>
+      <configuration></configuration>
+    </property>
+    <property name="state">
+      <id>197</id>
+      <label>State</label>
+      <type>dropdown</type>
+      <defaultvalue>3</defaultvalue>
+      <source>xar_sitemapper_engines.state</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:30:"0,Deleted;1,Inactive;3,Active;";}</configuration>
+    </property>
+    <property name="modified">
+      <id>198</id>
+      <label>Modified</label>
+      <type>datetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>xar_sitemapper_engines.modified</source>
+      <status>65</status>
+      <seq>6</seq>
+      <configuration></configuration>
+    </property>
+  </properties>
+</object>
