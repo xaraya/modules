@@ -9,9 +9,12 @@
        <h2><xar:mlstring>Modify Event</xar:mlstring></h2>
     </xar:if>
 
+    <xar:comment>show form only if everything ok</xar:comment>
     <xar:if condition="!empty($message)"><p class="xar-error">#$result#: #$message#</p></xar:if>
+    <xar:if condition="empty($noform)">
+        <form method="post" action="#xarModURL('ievents','user','modify')#">
+    </xar:if>
 
-    <form method="post" action="#xarModURL('ievents','user','modify')#">
 
     <xar:if condition="!empty($properties)">
         <xar:loop name="$properties">
@@ -61,20 +64,22 @@
         </xar:if>
     </div>
 
-    <div class="xar-margin-thickends xar-align-center">
-        <input type="hidden" name="eid" value="#$eid#" />
-        <input type="hidden" name="authid" value="#xarSecGenAuthKey('ievents')#" />
-        <input type="hidden" name="return_url" value="#xarVarPrepForDisplay($return_url)#" />
-        <xar:if condition="!empty($return_url)">
-            <input type="submit" name="submit" value="#xarML('Save and Return')#" />
-        </xar:if>
-        <input type="submit" name="submitview" value="#xarML('Save and View')#" />
-        <input type="submit" name="save" value="#xarML('Save and Edit')#" />
-        <xar:if condition="!empty($eid)">
-            <input type="submit" name="submitcopy" value="#xarML('Save as Copy')#" />
-        </xar:if>
-    </div>
+    <xar:if condition="empty($noform)">
+        <div class="xar-margin-thickends xar-align-center">
+            <input type="hidden" name="eid" value="#$eid#" />
+            <input type="hidden" name="authid" value="#xarSecGenAuthKey('ievents')#" />
+            <input type="hidden" name="return_url" value="#xarVarPrepForDisplay($return_url)#" />
+            <xar:if condition="!empty($return_url)">
+                <input type="submit" name="submit" value="#xarML('Save and Return')#" />
+            </xar:if>
+            <input type="submit" name="submitview" value="#xarML('Save and View')#" />
+            <input type="submit" name="save" value="#xarML('Save and Edit')#" />
+            <xar:if condition="!empty($eid)">
+                <input type="submit" name="submitcopy" value="#xarML('Save as Copy')#" />
+            </xar:if>
+        </div>
 
-    </form>
+        </form>
+    </xar:if>
 
 </div>

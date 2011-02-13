@@ -170,6 +170,7 @@ function ievents_adminapi_modify($args)
         $calendars = xarModAPIfunc('ievents', 'user', 'list_calendars');
         if (empty($calendars)) {
             $data['message'] = xarML('There are no calendars you are permitted to submit to');
+            $data['noform'] = true;
             return $data;
         }
     }
@@ -191,7 +192,7 @@ function ievents_adminapi_modify($args)
 
         // Update the object only if it is valid.
         if (!empty($isvalid)) {
-            // At this point we can alter some of the values 
+            // At this point we can alter some of the values
             // before storing (e.g. remove time from dates)
 
             // Here we should have the calendar ID, whether creating or updating.
