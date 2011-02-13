@@ -144,7 +144,7 @@
                     <xar:data-input name="datetype" id="datetype" type="6" validation="$datetypelist" value="$datetype" />
 
                     <input type="hidden" name="group" value="#$group#" />
-                    <input type="submit" name="submit" value="Get Events" />
+                    <input type="submit" name="submit" value="#xarML('Get Events')#" />
                 </div>
             </form>
         </div>
