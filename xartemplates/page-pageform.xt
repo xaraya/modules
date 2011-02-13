@@ -48,7 +48,7 @@
             <xar:if condition="!empty($pageform['pf'])">
                 <input type="hidden" name="pf" value="#$pageform['pf']#" />
             </xar:if>
-            <xar:set name="submitlabel">"Submit"</xar:set>
+            <xar:set name="submitlabel">xarML("Submit")</xar:set>
             <xar:if condition="!empty($current_page.dd.submit_label)">
                 <xar:set name="submitlabel">$current_page['dd']['submit_label']</xar:set>
             </xar:if>

@@ -90,7 +90,7 @@ function xarpages_funcapi_pageform($args)
 */
 	// default submit button
 	if (empty($dd['submit_label'])) {
-		$args['current_page']['dd']['submit_label'] = 'Submit';
+		$args['current_page']['dd']['submit_label'] = xarML('Submit');
 	}
 
     $args['pageform']['pf'] = $pf;
