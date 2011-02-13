@@ -194,8 +194,14 @@ function _pageform_getnav( $args, $pf, $isaction = 0 )
     // action is the next page (or current if we're on the action)
     if ($isaction)
         $nav['action_pid'] = $currentpid;
-    else
-        $nav['action_pid'] = $keys[ $indexes[$currentpid] + 1 ];
+    else {
+        // bug 6401: sometimes leads to error Undefined offset:  3
+        // TODO: find the reason instead using this fix
+        if(isset($keys[ $indexes[$currentpid] + 1 ]))
+            $nav['action_pid'] = $keys[ $indexes[$currentpid] + 1 ]; // orig
+        else
+            $nav['action_pid'] = $keys[ $indexes[$currentpid]]; // fix
+    }
     $nav['action_url'] = _pageform_url( $nav['action_pid'], $pf);
 
     // back is the previous form (or cancel if none)
