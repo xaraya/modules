@@ -138,7 +138,7 @@ function ievents_monthblock_display($blockinfo)
     }
 
     if ($months > 0) {
-        for ($i = 0; $i<= $months-1; $i++) { 
+        for ($i = 0; $i<= $months-1; $i++) {
            if ($i ==0) {
                 $callist[] = strtotime($yyyymm01);
             } else {
@@ -265,21 +265,45 @@ function ievents_monthblock_display($blockinfo)
             // Add the event detail to the calendar.
             // At the moment only a count of the events is shown on the small calendar, but the details
             // are all there if needed.
-            $cal->addEvent(
-                $eventvalue['startdate'],
-                $eventvalue['title'],
-                $eventvalue['detail_url'],
-                $eventvalue['all_day'],
-                xarModURL('ievents','user','view',array(
-                    'startdate' => date('Ymd', $eventvalue['startdate']),
-                    'enddate' => date('Ymd', $eventvalue['startdate']),
-                    'group' => 'day',
-                    'range' => 'custom',
-                    'eid' => $eventvalue['eid'],
-                    'title' => $eventvalue['title'],
-                    'summary' => $eventvalue['summary'],
-                ))
-            );
+
+            // if default_drule == overlap, shoe more days event in all it's days
+            // TODO: allow to config it individually for each event
+            $dates = array();
+            extract(xarModAPIfunc('ievents', 'user', 'params', array('knames' => 'default_drule')));
+            if ($default_drule == 'overlap' && date('Ymd', $eventvalue['enddate']) > date('Ymd', $eventvalue['startdate'])) {
+
+                $event_startdate = date('Ymd', $eventvalue['startdate']);
+                // event started some month before - start from 1st this month
+                if (date('m', $eventvalue['startdate']) < $cal->calMonth) $event_startdate = $cal->calYear . $cal->calMonth . "01";
+                for ($i = $event_startdate; $i <= date('Ymd', $eventvalue['enddate']); $i = date('Ymd', strtotime("+1 day ".$i))) {
+                    $date = strtotime($i);
+                    if ($cal->calMonth == date('m', $date)) $dates[] = $date;
+                    elseif ($cal->calMonth < date('m', $date)) break; // we're in next month
+                }
+            }
+            else {
+                $dates[] = $eventvalue['startdate'];
+            }
+
+            foreach ($dates as $date) {
+                $cal->addEvent(
+                    $date,
+
+                    $eventvalue['title'],
+                    $eventvalue['detail_url'],
+                    $eventvalue['all_day'],
+                    xarModURL('ievents','user','view',array(
+                        'startdate' => date('Ymd', $eventvalue['startdate']),
+                        'enddate' => date('Ymd', $eventvalue['startdate']),
+                        'group' => 'day',
+                        'range' => 'custom',
+                        'eid' => $eventvalue['eid'],
+                        'title' => $eventvalue['title'],
+                        'summary' => $eventvalue['summary'],
+                    ))
+                );
+
+            }
         }
 
         if ($vars['usecalname'] && !empty($vars['cid'])) {
