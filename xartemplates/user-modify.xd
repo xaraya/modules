@@ -9,11 +9,9 @@
        <h2><xar:mlstring>Modify Event</xar:mlstring></h2>
     </xar:if>
 
-    <xar:comment>show form only if everything ok</xar:comment>
     <xar:if condition="!empty($message)"><p class="xar-error">#$result#: #$message#</p></xar:if>
-    <xar:if condition="empty($noform)">
-        <form method="post" action="#xarModURL('ievents','user','modify')#">
-    </xar:if>
+    <xar:comment>show form only if everything ok</xar:comment>
+    <xar:if condition="empty($noform)"><form method="post" action="#xarModURL('ievents','user','modify')#"></xar:if>
 
 
     <xar:if condition="!empty($properties)">
@@ -64,6 +62,7 @@
         </xar:if>
     </div>
 
+    <xar:comment>show form only if everything ok</xar:comment>
     <xar:if condition="empty($noform)">
         <div class="xar-margin-thickends xar-align-center">
             <input type="hidden" name="eid" value="#$eid#" />
