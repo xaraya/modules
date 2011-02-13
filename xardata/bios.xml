@@ -33,7 +33,7 @@
     <property name="summary">
       <id>3148</id>
       <label>Summary</label>
-      <type>editor</type>
+      <type>textarea_medium</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
       <status>33</status>
@@ -43,7 +43,7 @@
     <property name="body">
       <id>3149</id>
       <label>Body</label>
-      <type>editor</type>
+      <type>textarea_large</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
       <status>33</status>
