@@ -56,14 +56,18 @@ function ievents_userapi_params($args)
         $params['days_updated'] = xarModGetVar($module,'days_updated');
 
         // Default events per page in listing.
-         $params['default_numitems'] = xarModGetVar($module, 'default_numitems');
-         $params['max_numitems'] = xarModGetVar($module, 'max_numitems');
+        $params['default_numitems'] = xarModGetVar($module, 'default_numitems');
+        $params['max_numitems'] = xarModGetVar($module, 'max_numitems');
 
         // Default start and end dates, in 'strtotime' format.
         // TODO: allow a default 'daterange' name instead.
         $params['default_startdate'] = xarModGetVar($module, 'default_startdate');
         $params['default_enddate'] = xarModGetVar($module, 'default_enddate');
         $params['default_daterange'] = xarModGetVar($module, 'default_daterange');
+
+        // drule for getevents userapi
+        // value: start|overlap
+        $params['default_drule'] = 'start';
 
         // Output transform fields.
         // Only these fields will be passed through the output transform.

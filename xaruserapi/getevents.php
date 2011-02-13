@@ -104,7 +104,10 @@ function ievents_userapi_getevents($args)
     // - fetch any event that starts within a given date range ('start' - the default)
     // - fetch any event that falls anywhere within a given date range ('overlap')
     // The 'overlap' method would be used in recurring events (when and if they get supported)
-    if (!xarVarValidate('pre:lower:passthru:enum:start:overlap', $drule, true)) $drule = 'start';
+    if (!xarVarValidate('pre:lower:passthru:enum:start:overlap', $drule, true)) {
+        extract(xarModAPIfunc('ievents', 'user', 'params', array('knames' => 'default_drule')));
+        $drule = $default_drule;
+    }
 
     // Make sure they are both dates integers (unix timestamps).
     // Resolution for fetching is a full day.
