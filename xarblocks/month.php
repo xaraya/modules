@@ -266,7 +266,7 @@ function ievents_monthblock_display($blockinfo)
             // At the moment only a count of the events is shown on the small calendar, but the details
             // are all there if needed.
 
-            // if default_drule == overlap, shoe more days event in all it's days
+            // if default_drule == overlap, show more days (recurring) event in all it's days
             // TODO: allow to config it individually for each event
             $dates = array();
             extract(xarModAPIfunc('ievents', 'user', 'params', array('knames' => 'default_drule')));
@@ -302,7 +302,6 @@ function ievents_monthblock_display($blockinfo)
                         'summary' => $eventvalue['summary'],
                     ))
                 );
-
             }
         }
 
