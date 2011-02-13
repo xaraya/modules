@@ -58,11 +58,11 @@ function content_admin_new()
         // Get the data from the form and see if it is all valid
         // Either way the values are now stored in the object
 	
-        $isvalid = $object->checkInput();
+        $object->checkInput();
+		$invalids = $object->getInvalids();
 
-        if (!$isvalid) {
-            // Bad data: redisplay the form  
-			$data['invalid'] = true;
+        if (!empty($invalids)) {
+			$data['invalid'] = $invalids;
             return xarTplModule('content','admin','new', $data);        
         } elseif (isset($data['preview'])) {
             // Show a preview, same thing as the above essentially

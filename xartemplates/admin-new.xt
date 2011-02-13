@@ -2,6 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- common admin menu for this module - remove link to the current function -->
+    <xar:style scope="module" file="content" />
     <div class="xar-mod-head">
       <span class="xar-mod-title">Content Administration</span>
     </div>
@@ -16,9 +17,13 @@
         </xar:if>
 
 	<xar:if condition="$invalid">
-		<div id="invalid">
-			<span class="xar-error">There was a problem with your submission.  Please correct any invalid fields highlighted in the form below.</span>
-		</div>
+		<fieldset id="invalid">
+			<ul>
+			<xar:foreach in="$invalid" key="$key" value="$value">
+				<li class="xar-error">#$value#</li>
+			</xar:foreach>
+			</ul>
+		</fieldset>
 	</xar:if>
 
         <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">

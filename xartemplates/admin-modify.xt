@@ -19,9 +19,13 @@
 	<p><a href="#xarmodurl('content','admin','view',array('ctype' => $ctype))#">View Items:  #$label#</a></p>
 
 	<xar:if condition="$invalid">
-		<div id="invalid">
-			<span class="xar-error">There was a problem with your submission.  Please correct any invalid fields highlighted in the form below.</span>
-		</div>
+		<fieldset id="invalid">
+			<ul>
+			<xar:foreach in="$invalid" key="$key" value="$value">
+				<li class="xar-error">#$value#</li>
+			</xar:foreach>
+			</ul>
+		</fieldset>
 	</xar:if>
 
 	<!-- <xar:if condition="isset($path_error)"> 

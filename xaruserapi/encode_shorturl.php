@@ -55,7 +55,7 @@ function content_userapi_encode_shorturl($args)
 
     } elseif ($func == 'display') {
   
-		if(isset($args['itemid'])) {
+		if (isset($args['itemid'])) {
 
 			$object = DataObjectMaster::getObject(array('name' => 'content'));
 			$object->getItem(array('itemid' => $itemid));

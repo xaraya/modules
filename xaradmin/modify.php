@@ -70,10 +70,12 @@ function content_admin_modify()
         }        
 
         // Get the data from the form
-        $isvalid = $data['object']->checkInput();
+        $data['object']->checkInput();
 
-        if (!$isvalid) {
-			$data['invalid'] = true;
+		$invalids = $data['object']->getInvalids(); 
+
+        if (!empty($invalids)) {
+			$data['invalid'] = $invalids;
             return xarTplModule('content','admin','modify', $data);        
         } elseif (isset($data['preview'])) {
             // Show a preview, same thing as the above essentially

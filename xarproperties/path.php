@@ -30,12 +30,12 @@ class PathProperty extends TextBoxProperty
 		$this->filepath   = 'modules/content/xarproperties';
     }
 
-	public function setValue($value=null)
+	/*public function setValue($value=null)
 	{  
-
+		
 		$this->value = $value;
 
-    }
+    }*/
 
     public function validateValue($value = null) 
     {
@@ -105,11 +105,12 @@ class PathProperty extends TextBoxProperty
 			$value = preg_replace('~//+~', '/', $value);
 			$value = strtolower($value);
 			$path = str_replace(' ', '_', $value);
+			$this->value = $path;
 			
 			//See if we can register an alias
 			$str = substr($path, 1);
 			$pos = strpos($str, '/');
-			if($pos) {
+			if ($pos) {
 				$pathstart = substr($str, 0, $pos);
 			} else {
 				$pathstart = $str;
