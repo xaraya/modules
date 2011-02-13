@@ -102,7 +102,7 @@
       <id>110</id>
       <label>Start Date</label>
       <type>calendar</type>
-      <default></default>
+      <default>NOW</default>
       <source>xar_ievents_events.start_date</source>
       <status>1</status>
       <order>100</order>
@@ -112,7 +112,7 @@
       <id>111</id>
       <label>End Date</label>
       <type>calendar</type>
-      <default></default>
+      <default>NOW</default>
       <source>xar_ievents_events.end_date</source>
       <status>1</status>
       <order>110</order>
