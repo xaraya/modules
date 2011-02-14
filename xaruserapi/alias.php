@@ -14,11 +14,12 @@
   
 $pathstart = the first part of the path
 
--- If there is no module alias for the pathstart, register one in the modules module and return true.
--- If the pathstart is a registered module alias, check if it's an alias for the same module specified in the action.  If it is not, return the name of the module for which pathstart is already an alias. 
-
  * @param $args['path'] required string the path
- * @param $args['actionmodule'] required string the module specified in the action
+
+ * If the pathstart is a module name, return the the module name.
+ * If the pathstart isn't an alias, register it as an alias for the content module and return true.
+ * If the pathstart is a registered module alias, check if it's an alias for the content module.  If it is, return true.  If it's not, return an array containing the pathstart and the name of the module for which it's an alias.
+
  */
 function content_userapi_alias($args) {
 

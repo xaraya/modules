@@ -30,13 +30,6 @@ class PathProperty extends TextBoxProperty
 		$this->filepath   = 'modules/content/xarproperties';
     }
 
-	/*public function setValue($value=null)
-	{  
-		
-		$this->value = $value;
-
-    }*/
-
     public function validateValue($value = null) 
     {
 		
