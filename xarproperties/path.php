@@ -41,6 +41,11 @@ class PathProperty extends TextBoxProperty
     {
 		
 		if (!parent::validateValue($value)) return false;
+
+		if ($value == '') {
+			$this->value = '';
+			return true;
+		}
 		
 		$itemid = $this->objectref->properties['itemid']->value;
 		$name = $this->name;
