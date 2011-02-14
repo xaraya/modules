@@ -42,27 +42,38 @@ class PathProperty extends TextBoxProperty
 		
 		if (!parent::validateValue($value)) return false;
 
+		// Allow empty path field if that validates in the parent (textbox) 
 		if ($value == '') {
 			$this->value = '';
 			return true;
 		}
+
+		// Standardize the path
+		if ($value[0] != '/') {
+			$value = '/' . $value;
+		}
+		$value = preg_replace('~//+~', '/', $value);
+		$value = strtolower($value);
+		$path = str_replace(' ', '_', $value); 
 		
-		$itemid = $this->objectref->properties['itemid']->value;
 		$name = $this->name;
 		$oldval = $this->objectref->properties[$name]->value;
-	
-		$path = preg_replace('~//+~', '/', $value);
 
-		$alphanum = preg_replace('/[^a-zA-Z0-9]/','',$path);
-		if (empty($alphanum)) {
-			$this->invalid = xarML('Illegal path. Path must contain at least one letter or number.');
+		if ($path == '/') {
+			$this->invalid = xarML('Invalid path.  The path you entered is reserved for your homepage.');
 			$this->value = $oldval;
             return false;
-		}
+		}	
+
+		// Remove a trailing slash
+		$num = strlen($path) - 1;
+		if ($path[$num] == '/') {
+			$path = substr($path,0,-1);
+		} 
 
 		$pattern = '/^[\w\-\/ ]{1,}$/';
 		if (!preg_match($pattern, $path)) {
-			$this->invalid = xarML('Path must be at least one character long and can contain only letters, numbers, forward slashes, underscores and dashes.');
+			$this->invalid = xarML('Invalid path.  Path must be at least one character long and can contain only letters, numbers, forward slashes, underscores and dashes.');
 			$this->value = $oldval;
             return false;
 		}	  
@@ -70,7 +81,8 @@ class PathProperty extends TextBoxProperty
 		$check = explode('/',$path);
 		if (isset($check[2])) {
 			if (is_numeric($check[2])) {
-				$this->invalid = xarML('Numeric values are not permitted in the 2nd part of the path.');
+				// Reserve some formats for short URLs that don't need a path lookup
+				$this->invalid = xarML('Invalid path.  Numeric values are not permitted in the 2nd part of the path.');
 				$this->value = $oldval;
 				return false;
 			}
@@ -80,8 +92,10 @@ class PathProperty extends TextBoxProperty
 				return false;
 			}
 		}
+		
+		$itemid = $this->objectref->properties['itemid']->value;
 		$checkpath = xarMod::apiFunc('content','user','checkpath',array('path' => $path));
-		if (is_numeric($itemid) && is_numeric($checkpath) && $checkpath != $itemid) {
+		if (is_numeric($checkpath) && $itemid != $checkpath) {
 			$this->invalid = xarML("The path you've specified is already in use.  Please try again.");
 			$this->value = $oldval;
             return false;
@@ -90,42 +104,18 @@ class PathProperty extends TextBoxProperty
 		$aliascheck = xarMod::apiFunc('content','user','alias',array('path' => $path));
 
 		if(is_string($aliascheck)) {   
-			$this->invalid = xarML('The pathstart #(1) is the name of an installed module.', $aliascheck);
+			$this->invalid = xarML('Invalid path.  The pathstart ("#(1)") is the name of an installed module.', $aliascheck);
 			$this->value = $oldval;
             return false;
 		}
 
 		if (is_array($aliascheck)) {
-			// aliasmodule for use in custom error messages
-			$this->invalid = xarML('The pathstart #(1) is the alias for an installed module.', $aliascheck);
+			$this->invalid = xarML('Invalid path.  The pathstart ("#(1)") is an alias for the #(2) module.', $aliascheck['pathstart'], $aliascheck['aliasmodule']);
 			$this->value = $oldval;
             return false;
 		}	
-
-		if (!empty($this->value) && $this->value != '/') { 
-			$value = $this->value;
-			if ($value[0] != '/') {
-				$value = '/' . $value;
-			} 
-			$value = preg_replace('~//+~', '/', $value);
-			$value = strtolower($value);
-			$path = str_replace(' ', '_', $value);
-			$this->value = $path;
 			
-			//See if we can register an alias
-			$str = substr($path, 1);
-			$pos = strpos($str, '/');
-			if ($pos) {
-				$pathstart = substr($str, 0, $pos);
-			} else {
-				$pathstart = $str;
-			}
-			$aliases = xarConfigVars::get(null, 'System.ModuleAliases');
-			if (!isset($aliases[$pathstart])) { 
-				// $pathstart is not an alias, so register one...
-				xarModAlias::set($pathstart, 'content');
-			}
-		}
+		$this->value = $path;
 
 		return true;
 

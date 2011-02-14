@@ -44,9 +44,7 @@ function content_userapi_alias($args) {
 
 	$aliases = xarConfigVars::get(null, 'System.ModuleAliases');
 	if (!isset($aliases[$pathstart])) { 
-		// before path integration:
-		// $pathstart is not an alias, so register one...
-		// xarModAlias::set($pathstart, 'content');
+		xarModAlias::set($pathstart, 'content');
 		return true;
 	} else {
 		// $pathstart is already registered as an alias
