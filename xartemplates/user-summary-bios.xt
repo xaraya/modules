@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+<div class="bio bio_display">
+ 
+<xar:if condition="isset($photo) and !empty($photo)">
+	<img src="#sys::varpath()#/uploads/#$photo#" alt="#$name#" class="bio_img"/>
+</xar:if>
+
+#$summary#<!-- for things like name, job title, employer -->
+ 
+#$body#<!-- the bio text -->
+
+<xar:set name="instance">$itemid.':'.$ctype.':'.xarUserGetVar('id')</xar:set>
+<xar:if condition="xarSecurityCheck('EditContent',1,'Item',$instance)">
+	<div class="adminlink">[ <a href="#xarModURL('content','admin','modify',array('itemid' => $itemid))#">Edit this bio: #$name#</a> ]</div>
+</xar:if>
+
+</div> 
+
+</xar:template>

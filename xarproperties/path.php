@@ -75,7 +75,7 @@ class PathProperty extends TextBoxProperty
 		if (isset($check[2])) {
 			if (is_numeric($check[2])) {
 				// Reserve some formats for short URLs that don't need a path lookup
-				$this->invalid = xarML('Invalid path.  Numeric values are not permitted in the 2nd part of the path.');
+				$this->invalid = xarML('Invalid path.  The 2nd part of the path cannot be a number.');
 				$this->value = $oldval;
 				return false;
 			}

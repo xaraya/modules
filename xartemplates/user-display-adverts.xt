@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+<xar:if condition="$image_size eq '300x250'">
+	<div class="sidebarcontainer" id="side-idea">
+	<img src="#xarServer::getBaseURL()#var/uploads/adverts/#$fileupload#" width="300" height="250" alt="#$alt_text#" title="#$alt_text#" />
+	</div>
+<xar:elseif condition="$image_size eq '728x90'"/>
+	<img src="#xarServer::getBaseURL()#var/uploads/adverts/#$fileupload#" width="728" height="90" alt="#$alt_text#" title="#$alt_text#" />
+</xar:if>
+
+<xar:if condition="!empty($editurl)">
+	<div class="adminlink"><a href="#$editurl#">Edit this ad</a></div>
+</xar:if>
+</xar:template>

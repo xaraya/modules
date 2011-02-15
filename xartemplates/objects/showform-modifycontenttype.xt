@@ -28,14 +28,14 @@
 	<xar:else />
 		<br style="clear:both" />
 		<div class="xar-form-input-wrapper">
-
-			<label class="xar-form-label" for="isalias" style="width: 290px;">Use '#$ctype#' as an alias in short URLs</label>
 			 
 			<xar:if condition="$isalias">
-				<xar:data-input type="checkbox" name="isalias" checked="checked" class="xar-form-textxlong" />
+				<xar:data-input type="checkbox" id="isalias" name="isalias" checked="checked" class="xar-form-textxlong" />
 			<xar:else />
-				<xar:data-input type="checkbox" name="isalias" class="xar-form-textxlong" />
+				<xar:data-input type="checkbox" id="isalias" name="isalias" class="xar-form-textxlong" />
 			</xar:if> 
+
+			<label class="xar-form-label" id="isalias" for="isalias" style="width: 290px;">Use '#$ctype#' as an alias in short URLs</label>
 			 
 			
 		</div>
@@ -43,31 +43,31 @@
 	</xar:if>
 
 	<div class="xar-form-input-wrapper">
-
-		<label class="xar-form-label" for="sitemap_exclude">Exclude from <a href="#xarmodurl('content','user','sitemap')#">XML sitemap</a></label>
 		 
 		<xar:if condition="$sitemap_exclude">
-			<xar:data-input type="checkbox" name="sitemap_exclude" checked="checked" class="xar-form-textxlong" />
+			<xar:data-input id="sitemap_exclude" type="checkbox" name="sitemap_exclude" checked="checked" />
 		<xar:else />
-			<xar:data-input type="checkbox" name="sitemap_exclude" class="xar-form-textxlong" />
+			<xar:data-input id="sitemap_exclude" type="checkbox" name="sitemap_exclude" />
 		</xar:if>  
+
+		<label class="xar-form-label" id="sitemap_exclude" for="sitemap_exclude">Exclude from <a href="#xarmodurl('content','user','sitemap')#">XML sitemap</a></label>
  
 	</div>
-	<br style="clear:both" />
+	<br style="clear:both"/>
 
-	<div class="xar-form-input-wrapper">
-		<xar:data-label property="$properties['config']" for="id" class="xar-form-label"/>
+	<div class="xar-form-input-wrapper config">
+		<xar:data-label property="$properties['config']" for="id" class="xar-form-label" label="Object Configuration"/>
 		<div id="config">
 			<xar:data-input property="$properties['config']" class="xar-form-textxlong" fixedkeys="true" /> 
 		</div>
-	</div>
+	</div> 
  
+    <div>
     <xar:foreach in="$properties" key="$name" value="$property">
 
 	<xar:set name="class">'hidden'</xar:set>
 	<xar:set name="labelclass">'hidden'</xar:set>
 	
-
 	<xar:if condition="!in_array($name, array('module_id', 'config', 'label', 'objectid'))">
 
 		<div class="xar-form-input-wrapper">
@@ -78,5 +78,6 @@
         </xar:if>
 
     </xar:foreach>
+    </div>
 
 </xar:template>

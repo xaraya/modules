@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <xar:style scope="module" file="content" />
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">Content Administration</span>
+    </div>
+    <div class="xar-mod-body">
+      <xar:template type="module" file="admin-menu" />
+
+        <h2>Tips &amp;amp; Pitfalls</h2>
+
+<p>You'll notice there are some user templates that seem to correspond to certain models.  For example, user-summary-bios.xt.  Bear in mind, though, that <strong>it's the object name that keys the template, not the model</strong>.  Thus, it's expected you'll need to rename these templates (if you have a use for them) depending on the object names you choose for your content types.</p>
+
+<p>If you need to set the <strong>page template</strong> for a specific content item, one way is to create a display template for the item and put this in the display template...
+<blockquote>&amp;lt;xar:set name="dummy">xarTplSetPageTemplateName('somepagetemplate')&amp;lt;/xar:set>
+</blockquote>
+...where 'somepagetemplate' is the name of the page template.
+</p>
+	
+    </div>
+</xar:template>
