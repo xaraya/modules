@@ -9,7 +9,7 @@
         <xar:template type="module" file="admin-menu" />
         <h2>Overview</h2>
 
-<p style="margin-bottom: 30px;">A content management module for Xaraya 2.1.0.</p>
+<p style="margin-bottom: 30px;">A content management module for Xaraya 2 (Jamaica)</p>
 
 	        <div class="xar-clearboth">
             <ul class="xar-tabs xar-alt xar-norm-outline">
