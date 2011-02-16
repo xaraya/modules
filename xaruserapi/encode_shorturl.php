@@ -55,7 +55,7 @@ function content_userapi_encode_shorturl($args)
 		if (isset($ctype)) {
 			if ($module == 'content') {
 				$path .= '/view/' . $ctype;
-			} elseif (is_array($suppress) && in_array($ctype,$suppress)) { 
+			} elseif (in_array($ctype,$suppress)) { 
 				$path .= '/view';
 			}
 		}
