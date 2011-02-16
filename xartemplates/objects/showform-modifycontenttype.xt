@@ -28,19 +28,33 @@
 	<xar:else />
 		<br style="clear:both" />
 		<div class="xar-form-input-wrapper">
-			 
+			 <xar:set name="showme">'showMe(\'suppress_view_alias\', this)'</xar:set>
 			<xar:if condition="$isalias">
-				<xar:data-input type="checkbox" id="isalias" name="isalias" checked="checked" class="xar-form-textxlong" />
+				<xar:set name="suppstyle">'display:block;'</xar:set>
+				<xar:data-input type="checkbox" id="isalias" name="isalias" checked="checked" class="xar-form-textxlong" onchange="$showme" />
 			<xar:else />
-				<xar:data-input type="checkbox" id="isalias" name="isalias" class="xar-form-textxlong" />
+				<xar:set name="suppstyle">'display:none;'</xar:set>
+				<xar:data-input type="checkbox" id="isalias" name="isalias" class="xar-form-textxlong" onchange="$showme" />
 			</xar:if> 
 
-			<label class="xar-form-label" id="isalias" for="isalias" style="width: 290px;">Use '#$ctype#' as an alias in short URLs</label>
-			 
-			
-		</div>
+			<label class="xar-form-label modctype" id="isalias" for="isalias">Use '#$ctype#' as an alias in short URLs</label>
+		
 		<br style="clear:both" />
+		</div>
 	</xar:if>
+	
+	<div class="xar-form-input-wrapper" id="suppress_view_alias" style="#$suppstyle#">
+		<xar:if condition="$suppress_view_alias">
+			<xar:data-input id="suppress_view_alias" type="checkbox" name="suppress_view_alias" checked="checked"/>
+		<xar:else />
+			<xar:data-input id="suppress_view_alias" type="checkbox" name="suppress_view_alias"/>
+		</xar:if>  
+
+		<label class="xar-form-label modctype" id="suppress_view_alias" for="suppress_view_alias">Suppress the view function for this path: /#$ctype#<br/>Instead, look for an item with the path.</label>
+ 
+	<br style="clear:both"/>
+	</div>
+	
 
 	<div class="xar-form-input-wrapper">
 		 
@@ -50,10 +64,12 @@
 			<xar:data-input id="sitemap_exclude" type="checkbox" name="sitemap_exclude" />
 		</xar:if>  
 
-		<label class="xar-form-label" id="sitemap_exclude" for="sitemap_exclude">Exclude from <a href="#xarmodurl('content','user','sitemap')#">XML sitemap</a></label>
+		<label class="xar-form-label modctype" id="sitemap_exclude" for="sitemap_exclude">Exclude from <a href="#xarmodurl('content','user','sitemap')#">XML sitemap</a></label>
  
 	</div>
 	<br style="clear:both"/>
+
+	
 
 	<div class="xar-form-input-wrapper config">
 		<xar:data-label property="$properties['config']" for="id" class="xar-form-label" label="Object Configuration"/>

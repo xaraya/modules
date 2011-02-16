@@ -3,12 +3,14 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- common admin menu for this module - remove link to the current function -->
     <xar:style scope="module" module="content" file="content" />
+      <xar:style scope="module" file="modifycontenttype" />
+<xar:javascript module="content" filename="showme.js"/>
+
     <div class="xar-mod-head">
       <span class="xar-mod-title">Content Administration</span>
     </div>
     <div class="xar-mod-body">
       <xar:template type="module" file="admin-menu" />
-      <xar:style scope="module" file="modifycontenttype" />
 
       <h2>Configure Content Type</h2>
         <xar:set name="withupload">#$object->upload#</xar:set>
@@ -24,7 +26,7 @@
                     Modify
                 </legend>
  
-                <xar:data-form object="$object" tplmodule="content" template="modifycontenttype" isalias="$isalias" ctype="$ctype" resolvealias="$resolvealias" sitemap_exclude="$sitemap_exclude"/>
+                <xar:data-form object="$object" tplmodule="content" template="modifycontenttype" isalias="$isalias" ctype="$ctype" resolvealias="$resolvealias" sitemap_exclude="$sitemap_exclude" suppress_view_alias="$suppress_view_alias"/>
 		 
              </fieldset>
 	     

@@ -1,4 +1,4 @@
-<object name="content_advertisements">
+<object name="adverts">
   <objectid>81</objectid>
   <label>Ads</label>
   <module_id>182</module_id>
@@ -28,7 +28,7 @@
       <source>dynamic_data</source>
       <status>33</status>
       <seq>2</seq>
-      <configuration></configuration>
+      <configuration>a:6:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"1";s:29:"validation_min_length_invalid";s:21:"Alt Text is required.";}</configuration>
     </property>
     <property name="fileupload">
       <id>587</id>
@@ -49,6 +49,16 @@
       <status>33</status>
       <seq>10</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:15:"300x250;728x90;";}</configuration>
+    </property>
+    <property name="web_link">
+      <id>660</id>
+      <label>Web link</label>
+      <type>url</type>
+      <defaultvalue></defaultvalue>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <seq>10</seq>
+      <configuration></configuration>
     </property>
     <property name="publication_date">
       <id>588</id>

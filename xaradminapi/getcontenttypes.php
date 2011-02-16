@@ -1,7 +1,7 @@
 <?php
 function content_adminapi_getcontenttypes($args){
 
-	extract($args);
+	extract($args); 
 
 	sys::import('modules.dynamicdata.class.objects.master');
 

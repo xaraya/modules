@@ -49,8 +49,14 @@ function content_userapi_encode_shorturl($args)
 
 		$path = '/' . $module;
 
-		if ($module == 'content' && isset($ctype)) {
-			$path .= '/view/' . $ctype;
+		$suppress = xarModVars::get('content','suppress_view_alias');
+
+		if (isset($ctype)) {
+			if ($module == 'content') {
+				$path .= '/view/' . $ctype;
+			} elseif (in_array($suppress,$ctype)) {
+				$path .= '/view';
+			}
 		}
 
     } elseif ($func == 'display') {

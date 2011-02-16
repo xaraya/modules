@@ -1,3 +1,29 @@
+label.modctype {
+width: 25em;
+}
+
+.array_wrapper .xar-form-container-after {
+margin-top: 5px;
+margin-left: 5em;
+}
+.array_wrapper {
+width: 530px;
+}
+.config { 
+margin-bottom: 15px;
+}
+
+.xar-form-input-wrapper {
+clear: both;
+}
+.xar-form-input-wrapper label, .xar-form-input-wrapper input {
+margin: 4px 0 3px 0;
+}
+.xar-form-input-wrapper select {
+margin: 4px 0 4px 0;
+}
+
+
 .hidden {
 display: none; 
 }
@@ -24,3 +50,5 @@ display: inline;
 #config label.configlabel { 
 display: inline;
 }
+
+

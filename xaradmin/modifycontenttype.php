@@ -24,6 +24,7 @@ function content_admin_modifycontenttype()
 	if(!xarVarFetch('ctype', 'str', $ctype, NULL, XARVAR_DONT_SET)) {return;}
 	if(!xarVarFetch('isalias', 'checkbox', $isalias, false, XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('sitemap_exclude', 'checkbox', $sitemap_exclude, false, XARVAR_NOT_REQUIRED)) {return;}
+	if(!xarVarFetch('suppress_view_alias', 'checkbox', $suppress_view_alias, false, XARVAR_NOT_REQUIRED)) {return;}
      
 	// Check if the user can Edit in the content module, and then specifically for this item.
     // We pass the itemid to the SecurityCheck
@@ -35,6 +36,14 @@ function content_admin_modifycontenttype()
 		$data['sitemap_exclude'] = false;
 	} else {
 		$data['sitemap_exclude'] = true;
+	}
+
+	$arr2 = xarModVars::get('content','suppress_view_alias');
+	$arr2 = explode(',',$arr2);
+	if (!in_array($ctype, $arr2)) {  
+		$data['suppress_view_alias'] = false;
+	} else {
+		$data['suppress_view_alias'] = true;
 	}
 
     // Load the DD master object class. This line will likely disappear in future versions
@@ -110,6 +119,22 @@ function content_admin_modifycontenttype()
 			} 
 
 			xarModVars::set('content','sitemap_exclude',implode(',',$arr)); 
+
+			if ($suppress_view_alias) {
+				if (!in_array($ctype, $arr2)) {  
+					$arr2[] = $ctype;
+				}
+				$data['suppress_view_alias'] = true;
+			} else {
+				if (in_array($ctype, $arr2)) {
+					foreach ($arr2 as $key => $val) {
+						if ($val == $ctype) unset($arr2[$key]);
+					}
+				}
+				$data['suppress_view_alias'] = false;
+			} 
+
+			xarModVars::set('content','suppress_view_alias',implode(',',$arr2)); 
 
 			$label = $ctobject->properties['label']->getValue();
             $ctobject->updateItem(array('itemid' => $objectid));

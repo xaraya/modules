@@ -97,6 +97,7 @@ function content_init()
 	xarModVars::set('content','filters_min_ct_count',9);    
 	xarModVars::set('content','filters_min_item_count',1);
 	xarModVars::set('content','sitemap_exclude', serialize(array()));
+	xarModVars::set('content','suppress_view_alias', serialize(array()));
 
 # --------------------------------------------------------
 #
@@ -194,6 +195,9 @@ function content_upgrade($oldversion)
 	}
 	if ($old < 92) {
 		xarMod::apiFunc('content','util','upgradepre092');	
+	}
+	if ($old < 93) {
+		xarMod::apiFunc('content','util','upgradepre093');
 	}
 
     // Update successful

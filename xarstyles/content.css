@@ -1,21 +1,4 @@
-label#isalias, label#sitemap_exclude {
-float: none; 
-}
-input#isalias, input#sitemap_exclude {
-float: left; 
-margin: 3px 5px 0 0;
-}
 
-.array_wrapper .xar-form-container-after {
-margin-top: 5px;
-margin-left: 5em;
-}
-.array_wrapper {
-width: 530px;
-}
-.config { 
-margin-bottom: 15px;
-}
 
 
 .xar-error {
@@ -44,15 +27,7 @@ border: none;
 margin-top: 7px;
  }
 
-.xar-form-input-wrapper {
-clear: both;
-}
-.xar-form-input-wrapper label, .xar-form-input-wrapper input {
-margin: 4px 0 3px 0;
-}
-.xar-form-input-wrapper select {
-margin: 4px 0 4px 0;
-}
+
 
 #extra_fields {
 margin: 0 0 16px 0;
