@@ -78,9 +78,10 @@
 			<xar:data-input property="$properties[$name]" />		
 	     </div>
 
+		
 	     <xar:set name="name">'filters_min_item_count'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
+	    <div class="xar-form-input-wrapper" style="clear:both;"> 
+		<xar:data-label property="$properties[$name]" for="id" />       
 			<xar:data-input property="$properties[$name]" />		
 	     </div>
 
