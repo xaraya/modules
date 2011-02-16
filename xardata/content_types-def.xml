@@ -38,7 +38,7 @@
       <source>xar_content_types.content_type</source>
       <status>33</status>
       <seq>2</seq>
-      <configuration>a:6:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"1";s:29:"validation_min_length_invalid";s:30:"Object Name must not be empty.";}</configuration>
+      <configuration>a:6:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"1";s:29:"validation_min_length_invalid";s:24:"Object Name is required.";}</configuration>
     </property>
     <property name="model">
       <id>299</id>
