@@ -83,8 +83,10 @@ function content_userapi_decode_shorturl($params) {
 		} else {
 			// we have a 1-param URL.  If the param is a ctype, call the view function.
 				$suppress = xarModVars::get('content','suppress_view_alias');
+				$suppress = explode(',',$suppress);
 				$alias = $params[0];
-				if (!isset($suppress[$alias])) {
+				
+				if (!in_array($alias,$suppress)) {
 					$data['content_types'] = xarMod::apiFunc('content','admin','getcontenttypes');
 					if (isset($data['content_types'][$alias])) {
 						$args['ctype'] = $params[0];   

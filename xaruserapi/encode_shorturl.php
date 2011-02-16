@@ -50,11 +50,12 @@ function content_userapi_encode_shorturl($args)
 		$path = '/' . $module;
 
 		$suppress = xarModVars::get('content','suppress_view_alias');
+		$suppress = explode(',',$suppress);
 
 		if (isset($ctype)) {
 			if ($module == 'content') {
 				$path .= '/view/' . $ctype;
-			} elseif (in_array($suppress,$ctype)) {
+			} elseif (is_array($suppress) && in_array($ctype,$suppress)) { 
 				$path .= '/view';
 			}
 		}
