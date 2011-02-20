@@ -5,7 +5,7 @@
 <div class="xar-mod-body">
   <xar:template type="module" file="admin-menu" module="xarcachemanager" />
   <h2><xar:mlstring>Flush Output Cache Files</xar:mlstring></h2>
-    <xar:template type="module" file="stats-menu" module="xarcachemanager" />
+
   <xar:if condition="$message eq false">
 
     <form action="#xarModURL('xarcachemanager', 'admin', 'flushcache')#" method="post" enctype="application/x-www-form-urlencoded">

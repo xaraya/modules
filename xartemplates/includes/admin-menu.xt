@@ -2,88 +2,141 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:comment>Common Administration menu</xar:comment>
-<xar:style scope="module" module="base" file="navtabs" />
+<xar:style scope="module" module="base" file="tabs" />
 <xar:set name="pagevarCacheDir">file_exists(sys::varpath() . '/cache/output/cache.pagelevel');</xar:set>
 <xar:set name="blockvarCacheDir">file_exists(sys::varpath() . '/cache/output/cache.blocklevel');</xar:set>
 <xar:set name="modulevarCacheDir">file_exists(sys::varpath() . '/cache/output/cache.modulelevel');</xar:set>
 <xar:set name="objectvarCacheDir">file_exists(sys::varpath() . '/cache/output/cache.objectlevel');</xar:set>
-<xar:set name="request">xarRequest::getInfo()</xar:set>
-<xar:set name="activetab">#$request.2#</xar:set>
+<xar:set name="info">xarRequest::getInfo()</xar:set>
+<xar:set name="activetab">$info[2]</xar:set>
 <div>
-  <dl class="xar-tabs">
-    <dt class="help" title="Choose an action to perform">
-      <xar:mlstring>Actions:</xar:mlstring>
-    </dt>
+  <ul class="xar-tabs">
+    <!-- <dt class="help" title="Choose an action to perform">
+      Actions:
+    </dt> -->
     <xar:sec mask="AdminXarCache" catch="false">
 
-        <xar:set name="tabclass">$activetab=='flushcache'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-          <a href="&xar-modurl-xarcachemanager-admin-flushcache;">
-            <xar:mlstring>Flush Cache</xar:mlstring>
+        <xar:if condition="$activetab eq 'flushcache'">
+            <xar:set name="tabclass">'xar-tab-active'</xar:set>
+            <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">'xar-tab'</xar:set>
+            <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+        </xar:if>
+
+        <li class="#$tabclass#">
+          <a href="#xarModURL('xarcachemanager','admin','flushcache')#" class="#$linkclass#">
+            Flush Cache
           </a>
-        </dd>
+        </li>
 
         <xar:if condition="$pagevarCacheDir">
-            <xar:set name="tabclass">$activetab=='pages'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-                <a href="&xar-modurl-xarcachemanager-admin-pages;" >
-                    <xar:mlstring>Pages</xar:mlstring>
+		<xar:if condition="$activetab eq 'pages'">
+		    <xar:set name="tabclass">'xar-tab-active'</xar:set>
+		    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+		<xar:else />
+		    <xar:set name="tabclass">'xar-tab'</xar:set>
+		    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+		</xar:if>
+            <li class="#$tabclass#">
+                <a href="#xarModURL('xarcachemanager','admin','pages')#" class="#$linkclass#">
+                    Pages
                 </a>
-            </dd>
+            </li>
         </xar:if>
+
         <xar:if condition="$blockvarCacheDir">
-            <xar:set name="tabclass">$activetab=='blocks'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-                <a href="&xar-modurl-xarcachemanager-admin-blocks;" >
-                    <xar:mlstring>Blocks</xar:mlstring>
+		<xar:if condition="$activetab eq 'blocks'">
+		    <xar:set name="tabclass">'xar-tab-active'</xar:set>
+		    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+		<xar:else />
+		    <xar:set name="tabclass">'xar-tab'</xar:set>
+		    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+		</xar:if>
+            <li class="#$tabclass#">
+                <a href="#xarModURL('xarcachemanager','admin','blocks')#" class="#$linkclass#">
+                    Blocks
                 </a>
-            </dd>
+            </li>
         </xar:if>
+
         <xar:if condition="$modulevarCacheDir">
-            <xar:set name="tabclass">$activetab=='modules'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-                <a href="&xar-modurl-xarcachemanager-admin-modules;" >
-                    <xar:mlstring>Modules</xar:mlstring>
+		<xar:if condition="$activetab eq 'modules'">
+		    <xar:set name="tabclass">'xar-tab-active'</xar:set>
+		    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+		<xar:else />
+		    <xar:set name="tabclass">'xar-tab'</xar:set>
+		    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+		</xar:if>
+            <li class="#$tabclass#">
+                <a href="#xarModURL('xarcachemanager','admin','modules')#" class="#$linkclass#">
+                    Modules
                 </a>
-            </dd>
+            </li>
         </xar:if>
+
         <xar:if condition="$objectvarCacheDir">
-            <xar:set name="tabclass">$activetab=='objects'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-                <a href="&xar-modurl-xarcachemanager-admin-objects;" >
-                    <xar:mlstring>Objects</xar:mlstring>
+		<xar:if condition="$activetab eq 'objects'">
+		    <xar:set name="tabclass">'xar-tab-active'</xar:set>
+		    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+		<xar:else />
+		    <xar:set name="tabclass">'xar-tab'</xar:set>
+		    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+		</xar:if>
+            <li class="#$tabclass#">
+                <a href="#xarModURL('xarcachemanager','admin','objects')#" class="#$linkclass#">
+                    Objects
                 </a>
-            </dd>
+            </li>
         </xar:if>
 <!-- Not supported with Creole
        <xar:set name="tabclass">$activetab=='queries'?'active':''</xar:set>
-        <dd class="#$tabclass#">
+        <li class="#$tabclass#">
           <a href="&xar-modurl-xarcachemanager-admin-queries;">
-            <xar:mlstring>Queries</xar:mlstring>
+            Queries
           </a>
-        </dd>
+        </li>
 -->
-        <xar:set name="tabclass">$activetab=='stats'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-          <a href="&xar-modurl-xarcachemanager-admin-stats;">
-            <xar:mlstring>Statistics</xar:mlstring>
+	<xar:if condition="$activetab eq 'stats'">
+	    <xar:set name="tabclass">'xar-tab-active'</xar:set>
+	    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+	<xar:else />
+	    <xar:set name="tabclass">'xar-tab'</xar:set>
+	    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+	</xar:if>
+        <li class="#$tabclass#">
+          <a href="#xarModURL('xarcachemanager','admin','stats')#" class="#$linkclass#">
+            Statistics
           </a>
-        </dd>
+        </li>
 
-        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-          <a href="&xar-modurl-xarcachemanager-admin-modifyconfig;">
-            <xar:mlstring>Modify Config</xar:mlstring>
+	<xar:if condition="$activetab eq 'modifyconfig'">
+	    <xar:set name="tabclass">'xar-tab-active'</xar:set>
+	    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+	<xar:else />
+	    <xar:set name="tabclass">'xar-tab'</xar:set>
+	    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+	</xar:if>
+        <li class="#$tabclass#">
+          <a href="#xarModURL('xarcachemanager','admin','modifyconfig')#" class="#$linkclass#">
+            Modify Config
           </a>
-        </dd>
+        </li>
 
-       <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
-       <dd class="#$tabclass#">
-       <a href="&xar-modurl-xarcachemanager-admin-overview;">
-            <xar:mlstring>Overview</xar:mlstring>
+	<xar:if condition="$activetab eq 'overview'">
+	    <xar:set name="tabclass">'xar-tab-active'</xar:set>
+	    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+	<xar:else />
+	    <xar:set name="tabclass">'xar-tab'</xar:set>
+	    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+	</xar:if>
+       <li class="#$tabclass#">
+       <a href="#xarModURL('xarcachemanager','admin','overview')#" class="#$linkclass#">
+            Overview
        </a>
-      </dd>
+      </li>
+
   </xar:sec>
-  </dl>
+  </ul>
 </div>
 </xar:template>
