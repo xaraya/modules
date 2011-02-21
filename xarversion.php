@@ -29,5 +29,5 @@ $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
 $modversion['dependencyinfo'] = array(
 		0 => array('name' => 'core', 'version_ge' => '2.1.0', 'version_le' => '2.1.9')
-	);
+	); 
 ?>
