@@ -136,6 +136,8 @@ function content_admin_modify()
         }
     } else {
         $data['object']->getItem(array('itemid' => $itemid));
+		$path = $data['object']->properties['item_path']->value;
+		if ($path == '/_' . $itemid.'_') $data['object']->properties['item_path']->setValue('');
     }
 
     return $data;

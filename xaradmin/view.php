@@ -60,7 +60,8 @@ function content_admin_view() {
 
 	$data['makefilters'] = array();
 
-	if(isset($config['filterfields']) && xarModIsAvailable('filters') && xarModVars::get('content','enable_filters') && $data['total'] >= $filters_min_items) {
+	$exists = file_exists(sys::code().'/modules/filters/xaruserapi/dd_get_results.php');
+	if($exists && isset($config['filterfields']) && xarModIsAvailable('filters') && xarModVars::get('content','enable_filters') && $data['total'] >= $filters_min_items) {
 		$data['showfilters'] = true;
 		$filterfields = $config['filterfields'];
 		$get_results = xarMod::apiFunc('filters','user','dd_get_results', array(

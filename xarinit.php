@@ -42,6 +42,13 @@ function content_init()
         $query = xarDBCreateTable($tables['content'],$fields);
         $dbconn->Execute($query);
 
+		$index = array('name' => $prefix . '_content_item_path',
+                       'fields' => array('item_path'),
+                       'unique' => true
+                       );
+        $query = xarDBCreateIndex($tables['content'], $index);
+        $dbconn->Execute($query);
+
 		$fields = array(
                         'itemid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
                         'content_type' => array('type' => 'varchar','size' => 254,'null' => false, 'charset' => $charset),
@@ -49,13 +56,6 @@ function content_init()
 						'model' => array('type' => 'varchar','size' => 254,'null' => false, 'charset' => $charset)
 			);
         $query = xarDBCreateTable($tables['content_types'],$fields);
-        $dbconn->Execute($query);
-
-		$index = array('name' => $prefix . '_content_content_types',
-                       'fields' => array('content_type'),
-                       'unique' => true
-                       );
-        $query = xarDBCreateIndex($tables['content_types'], $index);
         $dbconn->Execute($query);
 
         // We're done, commit
@@ -198,6 +198,9 @@ function content_upgrade($oldversion)
 	}
 	if ($old < 93) {
 		xarMod::apiFunc('content','util','upgradepre093');
+	}
+	if ($old < 94) {
+		xarMod::apiFunc('content','util','upgradepre094');
 	}
 
     // Update successful

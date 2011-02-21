@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-	  
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"><xar:comment>.</xar:comment></script>
+
 	<xar:data-label property="$properties['module_id']" for="id" class="hidden"/>
 	<xar:set name="onchange">"this.form.action='" . xarServer::getCurrentURL() . "';this.form.submit();"</xar:set>
 	<xar:data-input property="$properties['module_id']" onchange="$onchange" store_prop="regid" class="hidden" />
@@ -28,6 +30,7 @@
 	<xar:else />
 		<br style="clear:both" />
 		<div class="xar-form-input-wrapper">
+
 			 <xar:set name="showme">'showMe(\'suppress_view_alias\', this)'</xar:set>
 			<xar:if condition="$isalias">
 				<xar:set name="suppstyle">'display:block;'</xar:set>

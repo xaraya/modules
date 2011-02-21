@@ -141,6 +141,8 @@ How it worked before path integration:
 
 <blockquote>/<strong>oranges</strong>/is/occupied</blockquote>
 
+<p>The module will display a suitable error message if you attempt to create an alias that is the same as another module's name or alias.</p>
+
 <h4 align="right">Next: <a href="#xarmodurl('content','admin','overview',array('tab' => 'templates'))#">Templates</a></h4>
 
 <xar:elseif condition="$tab eq 'templates'" />

@@ -4,6 +4,10 @@
     <!-- common admin menu for this module - remove link to the current function -->
     <xar:style scope="module" module="content" file="content" />
       <xar:style scope="module" file="modifycontenttype" />
+<!--  when jquery is ready
+<xar:javascript module="base" filename="jquery/jquery-1.4.2.min.js"/>  
+<xar:javascript module="content" filename="suppress_view_alias.js"/>  
+--> 
 <xar:javascript module="content" filename="showme.js"/>
 
     <div class="xar-mod-head">
