@@ -11,6 +11,21 @@
  */ 
 function content_utilapi_upgradepre094() {
 
+	$object = DataObjectMaster::getObjectList(array('name' => 'content'));
+	$items = $object->getItems();
+
+	if (!empty($items)) {
+		foreach ($items as $key => $value) {
+			$object = DataObjectMaster::getObject(array('name' => 'content'));
+			$object->getItem(array('itemid' => $key));
+			$path = $object->properties['item_path']->value;
+			if (empty($path)) {
+				$object->properties['item_path']->setValue('/_'.$key.'_');
+				$object->updateItem();
+			}
+		}
+	}
+
 	$dbconn =& xarDB::getConn();
 	$tables =& xarDB::getTables();
 
@@ -24,7 +39,7 @@ function content_utilapi_upgradepre094() {
 		$dbconn->begin();
 
 		$index = array('name' => $prefix . '_content_item_path',
-                       'fields' => array('item_path'),
+                       'fields' => array('path'),
                        'unique' => true
                        );
         $query = xarDBCreateIndex($tables['content'], $index);
