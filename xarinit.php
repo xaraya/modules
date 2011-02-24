@@ -43,7 +43,7 @@ function content_init()
         $dbconn->Execute($query);
 
 		$index = array('name' => $prefix . '_content_item_path',
-                       'fields' => array('path'),
+                       'fields' => array('item_path'),
                        'unique' => true
                        );
         $query = xarDBCreateIndex($tables['content'], $index);
