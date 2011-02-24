@@ -29,7 +29,7 @@ function html_admin_deletetype()
     if (!xarVarFetch('confirm', 'int:0:1', $confirm, 0)) return;
 
     // Get the current html tag
-    $type = xarModAPIFunc('html',
+    $type = xarMod::apiFunc('html',
                           'user',
                           'gettype',
                           array('id' => $id));
@@ -67,7 +67,7 @@ function html_admin_deletetype()
     }
 
     // Remove the html tag
-    if (!xarModAPIFunc('html',
+    if (!xarMod::apiFunc('html',
                        'admin',
                        'deletetype',
                        array('id' => $id))) {

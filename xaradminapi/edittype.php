@@ -42,7 +42,7 @@ function html_adminapi_edittype($args)
     }
 
     // The user API function is called
-    $type = xarModAPIFunc('html',
+    $type = xarMod::apiFunc('html',
                           'user',
                           'gettype',
                           array('id' => $id));

@@ -28,7 +28,7 @@ function html_admin_new()
     $data['createbutton'] = xarML('Create Tag');
 
     // Get tag types
-    $types = xarModAPIFunc('html',
+    $types = xarMod::apiFunc('html',
                            'user',
                            'getalltypes');
 
@@ -39,7 +39,7 @@ function html_admin_new()
 
     // Include 'formcheck' JavaScript.
     // TODO: move this to a template widget when available.
-    xarModAPIfunc(
+    xarMod::apiFunc(
         'base', 'javascript', 'modulefile',
         array('module'=>'base', 'filename'=>'formcheck.js')
     );

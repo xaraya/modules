@@ -27,7 +27,7 @@ function html_admin_newtype()
 
     // Include 'formcheck' JavaScript.
     // TODO: move this to a template widget when available.
-    xarModAPIfunc(
+    xarMod::apiFunc(
         'base', 'javascript', 'modulefile',
         array('module'=>'base', 'filename'=>'formcheck.js')
     );

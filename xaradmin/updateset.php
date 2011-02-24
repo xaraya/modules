@@ -42,7 +42,7 @@ function html_admin_updateset()
     // Update HTML tags
     foreach ($tags as $cid=>$allowed) {
         // Get the cid of the htmltag
-        $thistag = xarModAPIFunc('html',
+        $thistag = xarMod::apiFunc('html',
                                  'user',
                                  'gettag',
                                  array('cid' => $cid));
@@ -53,7 +53,7 @@ function html_admin_updateset()
             // Check if update is necessary
             if ($thistag['allowed'] != $allowed) {
                 // Update
-                if (!xarModAPIFunc('html',
+                if (!xarMod::apiFunc('html',
                                    'admin',
                                    'update',
                                    array('cid' => $cid,

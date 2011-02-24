@@ -30,7 +30,7 @@ function html_admin_delete()
     if (!xarVarFetch('confirm', 'int:0:1', $confirm, 0)) return;
 
     // Get the current html tag
-    $html = xarModAPIFunc('html',
+    $html = xarMod::apiFunc('html',
                           'user',
                           'gettag',
                           array('cid' => $cid));
@@ -68,7 +68,7 @@ function html_admin_delete()
     }
 
     // Remove the html tag
-    if (!xarModAPIFunc('html',
+    if (!xarMod::apiFunc('html',
                        'admin',
                        'delete',
                        array('cid' => $cid))) {

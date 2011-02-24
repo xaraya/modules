@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License:GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
@@ -48,15 +49,15 @@
           <xar:else />
           <input type="checkbox" name="dobreak" id="dobreak" value="1"/>
         </xar:if>
-        <label for="dobreak" title="#xarML('HTML module will do a simple transform of linebreaks to &lt;br /&gt;')#">
+        <label for="dobreak" title="#xarML('HTML module will do a simple transform of linebreaks to &#60;br /&#62;')#">
             <xar:mlstring>
-              Simple transform of newlines to line breaks &lt;br /&gt;
+              Simple transform of newlines to line breaks &#60;br /&#62;
             </xar:mlstring>
         </label>
       </div>
         <p class="xar-form-input-wrapper-after">
             <xar:mlstring>For these transforms to take effect, you must </xar:mlstring>
-            <a href="&xar-modurl-modules-admin-hooks;&amp;hook=html"><xar:mlstring>hook HTML module</xar:mlstring></a><xar:mlstring> to your article pubtypes or other content items.</xar:mlstring>
+            <a href="&xar-modurl-modules-admin-hooks;&#38;hook=html"><xar:mlstring>hook HTML module</xar:mlstring></a><xar:mlstring> to your article pubtypes or other content items.</xar:mlstring>
         </p>
         <p class="xar-form-input-wrapper-after">
         <xar:mlstring><strong>NOTE: Do not</strong> hook the HTML module if you only want to allow HTML tags on your site. Installing the HTML module and setting the allowed tags is enough.</xar:mlstring>

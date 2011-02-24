@@ -66,7 +66,7 @@ function html_adminapi_create($args)
     $type = strtolower($type);
 
     // Get ID of type
-    $tagtype = xarModAPIFunc('html',
+    $tagtype = xarMod::apiFunc('html',
                              'user',
                              'gettype',
                              array('type' => $type));

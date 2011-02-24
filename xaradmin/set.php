@@ -32,7 +32,7 @@ function html_admin_set()
     if(!xarSecurityCheck('AdminHTML')) return;
 
     // The user API function is called.
-    $allowed = xarModAPIFunc('html',
+    $allowed = xarMod::apiFunc('html',
                              'user',
                              'getalltags');
 

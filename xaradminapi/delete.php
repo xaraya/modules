@@ -35,7 +35,7 @@ function html_adminapi_delete($args)
     }
 
     // The user API function is called
-    $html = xarModAPIFunc('html',
+    $html = xarMod::apiFunc('html',
                           'user',
                           'gettag',
                           array('cid' => $cid));
@@ -60,7 +60,7 @@ function html_adminapi_delete($args)
 
     // If this is an html tag, then
     // also delete the tag from the config vars
-    $tagtype = xarModAPIFunc('html',
+    $tagtype = xarMod::apiFunc('html',
                              'user',
                              'gettype',
                              array('id' => $html['tid']));

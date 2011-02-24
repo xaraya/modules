@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License:GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
@@ -25,7 +26,7 @@
         <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
             <p>
             <xar:mlstring>
-                Two types of Transform hooks are provided. These are for generating linebreaks. Either use the simple, or smart linebreak transform. This will transform text with linebreaks in the text into html text with &lt;br /&gt; tags.
+                Two types of Transform hooks are provided. These are for generating linebreaks. Either use the simple, or smart linebreak transform. This will transform text with linebreaks in the text into html text with &#60;br /&#62; tags.
                 <strong>
                     Please note, if you do not want linebreaks, do not hook this module to another.  The transform hook only affects linebreaks and not the allowed HTML of the module.
                 </strong>

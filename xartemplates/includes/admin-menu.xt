@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License:GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:comment>Common Administration menu</xar:comment>
@@ -24,7 +25,7 @@
         </xar:if>
         <dd class="#$tabclass#">
             <a href="&xar-modurl-html-admin-set;">
-                <xar:mlstring>Set &amp; Manage Tags</xar:mlstring>
+                <xar:mlstring>Set &#38; Manage Tags</xar:mlstring>
             </a>
         </dd>
     </xar:sec>

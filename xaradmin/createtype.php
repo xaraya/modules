@@ -39,7 +39,7 @@ function html_admin_createtype($args)
     }
 
     // The API function is called
-    $id = xarModAPIFunc('html',
+    $id = xarMod::apiFunc('html',
                         'admin',
                         'createtype',
                         array('tagtype' => $tagtype));

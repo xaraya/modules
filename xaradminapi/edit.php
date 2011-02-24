@@ -43,7 +43,7 @@ function html_adminapi_edit($args)
     }
 
     // The user API function is called
-    $html = xarModAPIFunc('html',
+    $html = xarMod::apiFunc('html',
                           'user',
                           'gettag',
                           array('cid' => $cid));
@@ -74,7 +74,7 @@ function html_adminapi_edit($args)
 
     // If this is an html tag, then
     // also edit the item in the config vars
-    $tagtype = xarModAPIFunc('html',
+    $tagtype = xarMod::apiFunc('html',
                              'user',
                              'gettype',
                              array('id' => $html['tid']));

@@ -44,7 +44,7 @@ function html_admin_create($args)
     }
 
     // The API function is called
-    $cid = xarModAPIFunc('html',
+    $cid = xarMod::apiFunc('html',
                          'admin',
                          'create',
                          array('tag' => $tag,

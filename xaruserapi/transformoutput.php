@@ -84,8 +84,8 @@ function html_userapitransformoutput($text)
 
         // Create a few entities where required.
         // TODO: transform < and > where they do not form part of a tag
-        // Convert a free-standing '&' into '&amp;'
-        $text = preg_replace('/&(?!#{0,1}[a-z0-9]+;)/i', "&amp;", $text);
+        // Convert a free-standing '&' into '&#38;'
+        $text = preg_replace('/&(?!#{0,1}[a-z0-9]+;)/i', "&#38;", $text);
 
         // Normalise existing breaks into newlines.
         $text = preg_replace('|<br />\s*<br />|', "\n\n", $text);

@@ -31,7 +31,7 @@ function html_admin_viewtypes()
     if(!xarSecurityCheck('AdminHTML')) return;
 
     // The user API function is called.
-    $tagtypes = xarModAPIFunc('html',
+    $tagtypes = xarMod::apiFunc('html',
                               'user',
                               'getalltypes');
 
