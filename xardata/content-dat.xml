@@ -2,16 +2,13 @@
   <content itemid="1">
     <itemid>1</itemid>
     <content_type>apples</content_type>
-	<item_path>/did_you_forget_to_enable_module_aliases_in_the_content_modifyconfig_settings</item_path>
   </content>
   <content itemid="2">
     <itemid>2</itemid>
     <content_type>apples</content_type>
-	<item_path>/did_you_forget_to_enable_module_aliases_in_the_content_modifyconfig_settings__</item_path>
   </content>
   <content itemid="3">
     <itemid>3</itemid>
     <content_type>apples</content_type>
-	<item_path>/did_you_forget_to_enable_module_aliases_in_the_content_modifyconfig_settings_</item_path>
   </content>
 </items>

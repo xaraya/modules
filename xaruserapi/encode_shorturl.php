@@ -67,7 +67,7 @@ function content_userapi_encode_shorturl($args)
 			$object = DataObjectMaster::getObject(array('name' => 'content'));
 			$object->getItem(array('itemid' => $itemid));
 			$path = $object->properties['item_path']->value;
-			if (!empty($path) && $path != '/_'.$itemid.'_') return $path;
+			if (!empty($path)) return $path;
 			
 			$path = '/' . $module;
 			$path .= '/' . $itemid;

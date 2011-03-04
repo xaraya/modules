@@ -34,15 +34,10 @@ class PathProperty extends TextBoxProperty
     {
 		
 		if (!parent::validateValue($value)) return false;
-		 
-		// Allow empty path field... but since the item_path table field is a unique index, we set it to a value that's sure to be unique.   The encode_shorturl function will treat such values as if no path is set.
+
+		// Allow empty path field if that validates in the parent (textbox) 
 		if ($value == '') {
-			if ($this->objectref->properties['itemid']->value != 0) {
-				$num = $this->objectref->properties['itemid']->value;
-			} else {
-				$num = $this->objectref->maxid + 1;
-			}
-			$this->value = '/_'.$num.'_';
+			$this->value = '';
 			return true;
 		}
 

@@ -57,8 +57,6 @@ function content_admin_modify()
     // Get the object we'll be working with
     $object = DataObjectMaster::getObject(array('name' => $ctype));
 	$data['object'] = $object; // save for later
-
-	$properties = array_keys($data['object']->getProperties());
  
 	$data['label'] = $object->label;
    
@@ -84,6 +82,8 @@ function content_admin_modify()
             return xarTplModule('content','admin','modify', $data);        
         } else {
             // Good data: update the item
+			
+			$properties = array_keys($data['object']->getProperties());
 
 			if (in_array('item_path', $properties)) {
 				$item_path = $data['object']->properties['item_path']->getValue();  
@@ -136,15 +136,6 @@ function content_admin_modify()
         }
     } else {
         $data['object']->getItem(array('itemid' => $itemid));
-
-		if (in_array('item_path', $properties)) {
-			$path = $data['object']->properties['item_path']->value;
-			if ($path == '/_' . $itemid.'_') {
-				// fake the empty field
-				$data['object']->properties['item_path']->setValue('');
-			}
-		}
-
     }
 
     return $data;

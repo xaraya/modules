@@ -18,22 +18,6 @@ function content_utilapi_upgradepre094() {
 	$tables['content'] = $prefix . '_content';
 	$tables['content_types'] = $prefix . '_content_types';
 
-	// Replace empty item_path fields with something using the itemid, since we're going to create a unique index down below
-	$object = DataObjectMaster::getObjectList(array('name' => 'content'));
-	$items = $object->getItems();
-
-	if (!empty($items)) {
-		foreach ($items as $key => $value) {
-			$object = DataObjectMaster::getObject(array('name' => 'content'));
-			$object->getItem(array('itemid' => $key));
-			$path = $object->properties['item_path']->value;
-			if (empty($path)) {
-				$object->properties['item_path']->setValue('/_'.$key.'_');
-				$object->updateItem();
-			}
-		}
-	}
-
 	try {
 
 		// before we create the unique index, standardize the name for this column to 'item_path' (in some installs the column may be named 'path')
@@ -56,14 +40,6 @@ function content_utilapi_upgradepre094() {
 		$object->getItem(array('itemid' => $item['id'])); 
 		$object->properties['source']->setValue('xar_content.item_path');
 		$object->updateItem();
-
-		// create the unique index
-		$index = array('name' => $prefix . '_content_item_path',
-                       'fields' => array('item_path'),
-                       'unique' => true
-                       );
-        $query = xarDBCreateIndex($tables['content'], $index);
-        $dbconn->Execute($query);
 
 		// drop this index
 		$index = array('name' => $prefix . '_content_content_types',
