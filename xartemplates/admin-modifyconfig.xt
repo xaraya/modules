@@ -248,7 +248,7 @@
                     <input type="text" name="usermessage" id="usermessage" value="#$value#" size="40" maxlength="150"/>
                     &#160;(only for Mailer module notifications)
                 </div>
-                <xar:if condition="$checked">
+                <xar:if condition="$checked and xarModIsAvailable('mailer')">
                     <div class="xar-form-input-wrapper-after">
                         <a href="#xarModURL('registration','admin','sendtest',array('for' => 'user'))#">
                             Send me a test message
@@ -271,7 +271,7 @@
                     <input type="text" name="adminmessage" id="adminmessage" value="#$value#" size="40" maxlength="150"/>
                     &#160;(only for Mailer module notifications)
                 </div>
-                <xar:if condition="$checked">
+                <xar:if condition="$checked and xarModIsAvailable('mailer')">
                     <div class="xar-form-input-wrapper-after">
                         <a href="#xarModURL('registration','admin','sendtest',array('for' => 'admin'))#">
                             Send the administrator a test message
