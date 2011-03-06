@@ -217,12 +217,15 @@
                     <label for="notificationmodule" class="xar-form-label" title="#xarML('The module to use for sending notifications')#">
                         Send notifications with
                     </label>
-                    <xar:set name="options">
-                        array(
-                            array('id' => 'mail', 'name' => 'Mail'),
-                            array('id' => 'mailer', 'name' => 'Mailer'),
-                        )
-                    </xar:set>
+		    <xar:set name="options">array()</xar:set>
+                    
+		    <xar:if condition="xarModIsAvailable('mail')">
+			<xar:set name="options[0]">array('id' => 'mail', 'name' => 'Mail')</xar:set>
+		    </xar:if>
+		    <xar:if condition="xarModIsAvailable('mailer')">
+			<xar:set name="options[1]">array('id' => 'mailer', 'name' => 'Mailer')</xar:set>
+		    </xar:if>
+
                     <xar:set name="value">xarModVars::get('registration', 'notificationmodule')</xar:set>
                     <xar:data-input type="dropdown" name="notificationmodule" id="notificationmodule" options="$options" value="$value"/>
                 </div>
