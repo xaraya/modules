@@ -11,7 +11,7 @@ User ID: #$values['id']#
 
 User Display Name: #$values['name']#
 
-Username: #$values['user_name']#
+Username: #$values['uname']#
 
 User email: #$values['email']#
 

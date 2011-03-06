@@ -12,7 +12,7 @@
     Status: #$values['state']#<br />
     User ID: #$values['id']#<br />
     Display Name: #$values['name']#<br />
-    User Name: #$values['user_name']#<br />
+    User Name: #$values['uname']#<br />
     User Email: #$values['email']#<br />
 </p>
 

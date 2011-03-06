@@ -41,7 +41,7 @@
       <seq>3</seq>
       <configuration></configuration>
     </property>
-    <property name="user_name">
+    <property name="uname">
       <id>110</id>
       <label>User Name</label>
       <type>username</type>
