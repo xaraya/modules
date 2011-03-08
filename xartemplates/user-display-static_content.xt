@@ -13,7 +13,10 @@
 	</div>
 
 	<xar:if condition="!empty($editurl)">
-		<div class="adminlink"><a href="#$editurl#">Edit this item</a></div>
+	<xar:if condition="!isset($editurl_text)">
+	 <xar:set name="editurl_text">'Edit this item'</xar:set>
+	</xar:if>
+		<div class="adminlink"><a href="#$editurl#">#$editurl_text#</a></div>
 	</xar:if>
 
 </div>

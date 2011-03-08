@@ -24,6 +24,8 @@ function content_user_display($args)
     if(!xarVarFetch('itemid',   'id', $itemid,   NULL, XARVAR_DONT_SET)) {return;}
 	if(!xarVarFetch('page_template', 'str', $page_template, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
+	if (isset($editurl_text)) $data['editurl_text'] = $editurl_text;
+
     if (!$itemid) {
 		$defaultcheck = true;
 		$itemid = xarModVars::get('content','default_itemid');
