@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+ 
+ <xar:style scope="module" file="contactform" />
+
+        <xar:set name="withupload">#$object->upload#</xar:set>
+        <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
+        <xar:if condition="!empty($withupload)">
+            <xar:set name="enctype">'multipart/form-data'</xar:set>
+        </xar:if> 
+
+	 <xar:if condition="$invalid">
+		<fieldset id="invalid">
+			<ul>
+			<xar:foreach in="$invalid" key="$key" value="$value">
+				<li class="xar-error">#$value#</li>
+			</xar:foreach>
+			</ul>
+		</fieldset>
+	</xar:if>
+
+        <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
+          <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+          <input type="hidden" name="confirm" id="confirm" value="true"/>
+          <fieldset>
+              <legend>
+                  Contact Us
+              </legend>
+
+                <xar:comment>The default template for the xar:data-form tag is
+        contactform/xartemplates/objects/showform.xt</xar:comment>
+                <xar:data-form object="$object" tplmodule="contactform"/>
+
+                <div class="xar-form-input-wrapper-after"> 
+                    <input type="submit" value="#xarML('Submit')#"/>
+                </div>
+          </fieldset>
+        </form>
+ 
+</xar:template>

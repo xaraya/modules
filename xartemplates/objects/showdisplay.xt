@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+        <table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2">
+        <xar:foreach in="$properties" key="$name" value="$property">
+            <tr class="xar-align-center xar-valign-middle">
+                <td class="xar-align-right"><strong><xar:data-label property="$properties[$name]"/> :</strong></td>
+                <td class="xar-align-left"><xar:data-output property="$properties[$name]"/> </td>
+            </tr>
+        </xar:foreach>
+        </table>
+
+</xar:template>

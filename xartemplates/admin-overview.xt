@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">Contact Form Administration</span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admintabs"/>
+        <h2>Contact Form Overview</h2>
+
+<p>A contact module for jamaica.</p>
+
+<p>To create a contact form, you must (1) create a DD object to define the form; or (2) use the  'contactform' object that comes with the module.</p>
+
+<h3>URLs:</h3>
+
+<xar:if condition="!xarModVars::get('contactform','enable_short_urls') || !xarConfigVars::get(null, 'Site.Core.EnableShortURLsSupport')">
+<p class="xar-error">The following sample URLs depend on your enabling short URLs under the <a href="#xarmodurl('contactform','admin','modifyconfig')#">Modify Config tab</a><xar:if condition="!xarConfigVars::get(null, 'Site.Core.EnableShortURLsSupport')"> and enabling short URL support in the <a href="#xarmodurl('base','admin','modifyconfig')#">Base module config settings</a></xar:if>.</p>
+</xar:if>
+
+<ul>
+<li>/contactform -- The form is defined by the 'contactform' object.</li>
+<li>/contactform/new -- The form is defined by the 'contactform' object.</li>
+<li>/contactform/new/myobject -- The form is defined by the 'myobject' object.</li>
+</ul>
+
+<h3>Object properties:</h3>
+
+<p>Your object must have these properties:</p>
+
+<ul>
+<li>message</li>
+</ul>
+
+<p>If you want to show the form to anonymous users, your object must have these properties:</p>
+
+<ul>
+<li>from_email
+</li>
+<li>
+from_name (or first_name and last_name)</li>
+</ul> 
+<p>For an example, refer to the 'contactform' object in the <a href="#xarmodurl('dynamicdata','admin','view')#">Dynamic Data module</a>.</p>
+
+
+    </div>
+</xar:template>
