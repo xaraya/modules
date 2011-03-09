@@ -14,3 +14,15 @@ padding: 0;
 margin-bottom: 6px;
 margin-left: 4px;
 }
+
+.mod_settings fieldset {
+border: none;
+}
+#contact_objects label {
+float:left; 
+width: 160px;
+}
+.xar-form-input-wrapper {
+clear:both; 
+padding-bottom: 8px;
+}

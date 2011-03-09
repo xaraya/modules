@@ -16,48 +16,48 @@
  */
 function contactform_admin_view()
 {	
-	// Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing
+
     if (!xarSecurityCheck('AdminContactForm')) return;
 
 	$data['saveitems'] = xarModVars::get('contactform','save_to_db');
 
-	// Get this value from the URL query string
-    if(!xarVarFetch('startnum', 'isset', $data['startnum'], NULL, XARVAR_DONT_SET)) {return;}
-	if(!xarVarFetch('name', 'str', $name, 'contactform', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('startnum', 'int', $startnum, 1, XARVAR_NOT_REQUIRED)) {return;}
+	if(!xarVarFetch('numitems', 'int', $numitems, NULL, XARVAR_NOT_REQUIRED)) {return;}
+	if(!xarVarFetch('name', 'str', $name, 'contactform_default', XARVAR_NOT_REQUIRED)) {return;}
 
-	// Get the setting for 'items_per_page'
-    $data['items_per_page'] = xarModVars::get('contactform','items_per_page');
-
-    // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
 
-    // Get the object we'll be working with. Note this is a so called object list
-    $mylist = DataObjectMaster::getObjectList(array('name' => $name));
-    
-    // Load the DD master property class. This line will likely disappear in future versions
-    sys::import('modules.dynamicdata.class.properties.master');
+	$object = DataObjectMaster::getObject(array('name' => $name));
+	$config = $object->configuration;
 
 	$data['sort'] = xarMod::ApiFunc('contactform','admin','sort', array(
 		//how to sort if the URL doesn't say otherwise...
 		'sortfield_fallback' => 'id', 
 		'ascdesc_fallback' => 'ASC'
 	));
+	
+	if (!$numitems) {
+		if (!empty($config['numitems'])) {
+			$numitems = $config['numitems'];
+		} else {
+			$numitems = xarModVars::get('contactform', 'items_per_page');
+		}
+    }
+	
+    $data['object'] = DataObjectMaster::getObjectList(array('name' => $name));
 
-    // We have some filters for the items
     $filters = array(
-                     'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
-					'sort' => $data['sort']
-                    );
+                    'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
+					'sort' => $data['sort'],
+					'numitems' => $numitems,
+					'startnum' => $startnum
+                    ); 
+
+	if (isset($config['adminfields'])) $filters['fieldlist'] = $config['adminfields'];
     
     // Count the items first if you want a full pager - otherwise you'll get simple previous/next links
-    $mylist->countItems($filters);
-
-    // Get the items 
-    $items = $mylist->getItems($filters);
-    
-    // pass along the whole object list to the template
-    $data['mylist'] = & $mylist;
+    $data['total'] = $data['object']->countItems(); 
+    $data['object']->getItems($filters);
 
 	$data['name'] = $name;
 

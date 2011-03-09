@@ -2,6 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- common admin menu for this module - remove link to the current function -->
+      <xar:style scope="module" file="contactform" />
     <div class="xar-mod-head">
       <span class="xar-mod-title">Contact Form Administration</span>
     </div>
@@ -10,10 +11,10 @@
         <h2>Modify Default Configuration</h2>
       
         <form method="post" action="#xarServer::getCurrentURL()#">
-            <fieldset>
+            <fieldset class="mod_settings">
                 <legend>Modify Contact Form Configuration</legend>
                 <xar:data-form object="$module_settings"/>
-                <xar:data-form object="$object" itemid="0"/>
+                <xar:data-form object="$object" itemid="0" template="module_settings" tplmodule="contactform" />
             </fieldset>
 
             <div class="xar-form-input-after">

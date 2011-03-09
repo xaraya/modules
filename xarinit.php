@@ -44,7 +44,7 @@ function contactform_init()
 #
     $module = 'contactform';
     $objects = array(
-                'contactform',
+                'contactform_default',
                 'contactform_module_settings',
                 'contactform_user_settings',
                 );
@@ -61,6 +61,7 @@ function contactform_init()
     xarModVars::set('contactform','to_email','');
     xarModVars::set('contactform','default_subject','New Message from My Site');
 	xarModVars::set('contactform','save_to_db',true);
+	xarModVars::set('contactform','contact_objects','contactform_default');
 	xarModVars::set('contactform','enable_short_urls',true);
 
 # --------------------------------------------------------
@@ -88,8 +89,8 @@ function contactform_init()
 #
 # Create privilege instances
 #
-    sys::import('modules.dynamicdata.class.objects.master');
-    $object = DataObjectMaster::getObject(array('name' => 'contactform'));
+    /*sys::import('modules.dynamicdata.class.objects.master');
+    $object = DataObjectMaster::getObject(array('name' => 'contactform_default'));
     $objectid = $object->objectid;
 
     $xartable =& xarDB::getTables();
@@ -108,7 +109,7 @@ function contactform_init()
                                 'limit' => 20
                             )
                     );
-    xarDefineInstance('contactform', 'Item', $instances);
+    xarDefineInstance('contactform', 'Item', $instances);*/
 # --------------------------------------------------------
 #
 # Register masks

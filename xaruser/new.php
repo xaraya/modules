@@ -19,9 +19,17 @@ function contactform_user_new()
     // See if the current user has the privilege to add an item. We cannot pass any extra arguments here
     if (!xarSecurityCheck('ReadContactForm')) return;
 
-	if(!xarVarFetch('name', 'str', $name, 'contactform', XARVAR_NOT_REQUIRED)) {return;}
+	if(!xarVarFetch('name', 'str', $name, 'contactform_default', XARVAR_NOT_REQUIRED)) {return;}
+
+	$allowed = xarModVars::get('contactform','contact_objects');
+	$allowed = explode(',',$allowed);
+	if (!in_array($name, $allowed)) {
+		throw new Exception('The object specified is not among your allowed contact objects'); 
+		return;
+	}
 
 	$template = $name;
+
 	$data['invalid'] = false;
 
     // Load the DD master object class. This line will likely disappear in future versions
@@ -51,9 +59,6 @@ function contactform_user_new()
         //} elseif (isset($data['preview'])) { 
 			//return xarTplModule('contactform','user','new', $data, $template);        
         } else { 
-			$save = xarModVars::get('contactform','save_to_db');
-			$item = true;
-			if ($save) $item = $data['object']->createItem();
 
 			$from_name = '';
 			$ccrecipients = array();
@@ -63,6 +68,15 @@ function contactform_user_new()
 			foreach ($vals as $key=>$val) {
 				${$key} = $val;
 			}
+
+			if (!isset($message)) { 
+				throw new Exception('The object is missing a "message" property.  All contact form objects must have a "message" property.'); 
+				return; 
+			}
+			
+			$save = xarModVars::get('contactform','save_to_db');
+			$item = true;
+			if ($save) $item = $data['object']->createItem();
 
 			if (!$save || $item) {
 

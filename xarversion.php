@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/1049.html
  * @author potion <ryan@webcommunicate.net>
  */
-$modversion['name']         = 'Contact Form';
+$modversion['name']         = 'contactform';
 $modversion['id']           = '1049';
 $modversion['version']      = '2.0.0';
 $modversion['displayname']  = xarML('Contact Form');

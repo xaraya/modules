@@ -24,9 +24,18 @@ function contactform_admin_main()
     $refererinfo = xarRequest::getInfo(xarServer::getVar('HTTP_REFERER'));
     $info = xarRequest::getInfo();
     $samemodule = $info[0] == $refererinfo[0];
-    
+
+    $filters['where'] = 'name eq "contactform"';
+
+	 $object = DataObjectMaster::getObjectList(array(
+									'name' => 'objects',
+								));
+	 $items = $object->getItems($filters);
+	 $item = end($items); 
+	 $data['objectid'] = $item['objectid'];
+
     if (((bool)xarModVars::get('modules', 'disableoverview') == false) || $samemodule){
-        return xarTplModule('contactform','admin','overview');
+        return xarTplModule('contactform','admin','overview', $data);
     } else {
         xarResponse::Redirect(xarModURL('contactform', 'admin', 'view'));
         return true;

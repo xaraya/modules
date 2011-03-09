@@ -11,7 +11,9 @@
 
 <p>A contact module for jamaica.</p>
 
-<p>To create a contact form, you must (1) create a DD object to define the form; or (2) use the  'contactform' object that comes with the module.</p>
+<p>To create a contact form, you must (1) create a Dynamic Data object to define the form; or (2) use the  'contactform_default' object that comes with the module.</p>
+
+<p>Before you can use an object for a contact form, you must add the object name to the Contact Form Objects list in the <a href="#xarmodurl('contactform','admin','modifyconfig')#">config page</a>.</p>
 
 <h3>URLs:</h3>
 
@@ -20,8 +22,8 @@
 </xar:if>
 
 <ul>
-<li>/contactform -- The form is defined by the 'contactform' object.</li>
-<li>/contactform/new -- The form is defined by the 'contactform' object.</li>
+<li>/contactform -- The form is defined by the 'contactform_default' object.</li>
+<li>/contactform/new -- The form is defined by the 'contactform_default' object.</li>
 <li>/contactform/new/myobject -- The form is defined by the 'myobject' object.</li>
 </ul>
 
@@ -41,8 +43,7 @@
 <li>
 from_name (or first_name and last_name)</li>
 </ul> 
-<p>For an example, refer to the 'contactform' object in the <a href="#xarmodurl('dynamicdata','admin','view')#">Dynamic Data module</a>.</p>
-
+<p>For an example, refer to the <a href="#xarmodurl('dynamicdata','admin','modifyprop', array('name' => 'objects','itemid' => $objectid, 'tplmodule' => 'dynamicdata'))#">'contactform' object</a> in the <a href="#xarmodurl('dynamicdata','admin','view')#">Dynamic Data module</a>.</p> 
 
     </div>
 </xar:template>

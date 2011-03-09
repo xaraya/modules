@@ -17,13 +17,15 @@
     <div class="xar-mod-body">
         <xar:template type="module" file="admintabs"/>
 
-        <h2>Admin List of Items</h2>
+        <h2>Saved Form Submissions</h2>
 
 <xar:if condition="!xarModVars::get('contactform','save_to_db')">
 <p class="xar-error">Currently, in the <a href="#xarmodurl('contactform','admin','modifyconfig')#">config settings</a>, the box for "Save form submissions to database" is unchecked.  You'll need to change that setting if you would like new form submissions to be saved here.</p>
 </xar:if>
 
-       <xar:data-view objectname="contactform" numitems="$items_per_page" startnum="$startnum" tplmodule="contactform" template="admin_list" sort="$sort" objname="$name" />
+       <xar:data-view object="$object" tplmodule="contactform" template="admin_list" sort="$sort" objname="$name" />
+
+	<xar:pager startnum="$object->startnum" itemsperpage="$object->numitems" total="$total"/>
 
     </div>
 </xar:template>

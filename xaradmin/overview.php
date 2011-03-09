@@ -27,7 +27,16 @@ function contactform_admin_overview()
      * else just call the main function that usually displays the overview
      */
 
-    return xarTplModule('contactform', 'admin', 'main', $data,'main');
+	 $filters['where'] = 'name eq "contactform"';
+
+	 $object = DataObjectMaster::getObjectList(array(
+									'name' => 'objects',
+								);
+	 $items = $object->getItems($filters);
+	 $item = end($items);
+	 $data['objectid'] = $item['objectid'];
+
+    return xarTplModule('contactform', 'admin', 'overview', $data);
 }
 
 ?>
