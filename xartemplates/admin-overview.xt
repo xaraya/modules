@@ -37,5 +37,20 @@
 
 <p>For an example, refer to the '<a href="#xarmodurl('dynamicdata','admin','modifyprop', array('name' => 'objects','itemid' => $objectid, 'tplmodule' => 'dynamicdata'))#">contactform_default</a>' object in the <a href="#xarmodurl('dynamicdata','admin','view')#">Dynamic Data module</a>.</p> 
 
+<h3>Templates:</h3>
+
+<p>
+user-new.xt<br />
+user-new-myobject.xt<br />
+etc
+</p>
+
+<p>
+objects/showform.xt<br />
+objects/showform-myobject.xt<br />
+objects/showform-sometemplate.xt<br />
+etc
+</p>
+
     </div>
 </xar:template>

@@ -31,7 +31,7 @@
 
                 <xar:comment>The default template for the xar:data-form tag is
         contactform/xartemplates/objects/showform.xt</xar:comment>
-                <xar:data-form object="$object" tplmodule="contactform"/>
+                <xar:data-form object="$object" tplmodule="contactform" />
 
                 <div class="xar-form-input-wrapper-after"> 
                     <input type="submit" value="#xarML('Submit')#"/>
