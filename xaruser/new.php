@@ -61,7 +61,6 @@ function contactform_user_new()
 			//return xarTplModule('contactform','user','new', $data, $template);        
         } else { 
 
-			$from_name = '';
 			$ccrecipients = array();
 			$bccrecipients = array();
 
@@ -71,14 +70,29 @@ function contactform_user_new()
 			}
 
 			if (!isset($message)) { 
-				throw new Exception('The object is missing a "message" property.  All contact form objects must have a "message" property.'); 
+				throw new Exception('The object is missing a required property.  All contact form objects must have a "message" property.'); 
 				return; 
 			}
 			
 			if (isset($config['save_to_db']) && $config['save_to_db'] == 'true') {
 				$save = true;
 			} else {
+				// if there is no object config, fall back on the module config
 				$save = xarModVars::get('contactform','save_to_db');
+			}
+		
+			if (xarUserIsLoggedIn()) {
+				$from_name = xarUserGetVar('uname');
+				$from_email = xarUserGetVar('email');
+			}
+
+			if (isset($first_name) && isset($last_name)) {
+				$from_name = $first_name . ' ' . $last_name;
+			}
+
+			if (!isset($from_name)) { 
+				throw new Exception('The object is missing a required property.  For anonymous users, all contact form objects must have either a "from_name" property or both a "first_name" and "last_name".'); 
+				return; 
 			}
 
 			$item = true;
@@ -87,14 +101,6 @@ function contactform_user_new()
 			}
 
 			if (!$save || $item) {
-
-				if (xarUserIsLoggedIn()) {
-					$from_name = xarUserGetVar('uname');
-					$from_email = xarUserGetVar('email');
-				}
-				if (isset($first_name) && isset($last_name)) {
-					$from_name = $first_name . ' ' . $last_name;
-				}
 
 				if (!isset($to_email)) $to_email = xarModVars::get('contactform', 'to_email');
 				if (!isset($to_name)) $to_name = xarModVars::get('mail','adminname');

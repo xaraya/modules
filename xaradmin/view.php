@@ -24,10 +24,16 @@ function contactform_admin_view()
     if(!xarVarFetch('startnum', 'int', $startnum, 1, XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('numitems', 'int', $numitems, NULL, XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('name', 'str', $name, 'contactform_default', XARVAR_NOT_REQUIRED)) {return;}
+	
+	$data['name'] = $name;
 
     sys::import('modules.dynamicdata.class.objects.master');
 
 	$object = DataObjectMaster::getObject(array('name' => $name));
+	if (!$object) {
+		$data['msg'] = xarML('The object \'' . $name . '\' is listed in your <a href="' . xarmodurl('contactform','admin','modifyconfig') . '">Contact Form Objects</a>, but the object does not exist.');
+		return $data;
+	}
 	$config = $object->configuration;
 
     $data['save'] = 0;
@@ -72,8 +78,6 @@ function contactform_admin_view()
     // Count the items first if you want a full pager - otherwise you'll get simple previous/next links
     $data['total'] = $data['object']->countItems(); 
     $data['object']->getItems($filters);
-
-	$data['name'] = $name;
 
     // Return the template variables defined in this function
     return $data;

@@ -9,11 +9,13 @@
         <xar:template type="module" file="admintabs"/>
         <h2>Contact Form Overview</h2>
 
-<p>A contact module for jamaica.</p>
+<p>A contact module for Jamaica.</p>
 
-<p>To create a contact form, you must (1) create a Dynamic Data object to define the form; or (2) use the  'contactform_default' object that comes with the module.</p>
+<p>To create a contact form, you must either (1) create a Dynamic Data object to define the form; or (2) use the  'contactform_default' object that comes with the module.</p>
 
-<p>Before you can use an object for a contact form, you must add the object name to the Contact Form Objects list in the <a href="#xarmodurl('contactform','admin','modifyconfig')#">config page</a>.</p>
+<p>You can create as many form objects as you like.</p>
+
+<p>Before you can use a form, you must add its object name to the Contact Form Objects list in the <a href="#xarmodurl('contactform','admin','modifyconfig')#">config page</a>.</p>
 
 <h3>URLs:</h3>
 
@@ -27,22 +29,12 @@
 <li>/contactform/new/myobject -- The form is defined by the 'myobject' object.</li>
 </ul>
 
-<h3>Object properties:</h3>
+<h3>Object Properties:</h3>
 
-<p>Your object must have these properties:</p>
+<p>All objects must have a property named 'message'.</p>
 
-<ul>
-<li>message</li>
-</ul>
+<p>If you want to show the form to anonymous users, your object must also have a property named 'from_name' <strong>or</strong> must have both 'first_name' and 'last_name'.</p> 
 
-<p>If you want to show the form to anonymous users, your object must have these properties:</p>
-
-<ul>
-<li>from_email
-</li>
-<li>
-from_name (or first_name and last_name)</li>
-</ul> 
 <p>For an example, refer to the '<a href="#xarmodurl('dynamicdata','admin','modifyprop', array('name' => 'objects','itemid' => $objectid, 'tplmodule' => 'dynamicdata'))#">contactform_default</a>' object in the <a href="#xarmodurl('dynamicdata','admin','view')#">Dynamic Data module</a>.</p> 
 
     </div>
