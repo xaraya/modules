@@ -61,6 +61,7 @@ function contactform_init()
     xarModVars::set('contactform','to_email','');
     xarModVars::set('contactform','default_subject','New Message from My Site');
 	xarModVars::set('contactform','save_to_db',true);
+	xarModVars::set('contactform','save_indicator',true);
 	xarModVars::set('contactform','contact_objects','contactform_default');
 	xarModVars::set('contactform','enable_short_urls',true);
 

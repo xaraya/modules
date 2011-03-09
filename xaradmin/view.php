@@ -30,6 +30,20 @@ function contactform_admin_view()
 	$object = DataObjectMaster::getObject(array('name' => $name));
 	$config = $object->configuration;
 
+    $data['save'] = 0;
+	if (xarModVars::get('contactform','save_indicator')) {
+		$data['save'] = 1;
+		if (isset($config['save_to_db']) && $config['save_to_db'] == 'true') {
+			if (xarModVars::get('contactform','save_to_db')) {
+				$data['save'] = 4;
+			} else {
+				$data['save'] = 2;
+			}
+		} elseif (xarModVars::get('contactform','save_to_db')) {
+			$data['save'] = 3;
+		}
+	}
+
 	$data['sort'] = xarMod::ApiFunc('contactform','admin','sort', array(
 		//how to sort if the URL doesn't say otherwise...
 		'sortfield_fallback' => 'id', 

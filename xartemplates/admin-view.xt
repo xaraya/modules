@@ -3,6 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- common admin menu for this module - remove link to the current function -->
     <xar:style scope="module" module="base" file="tabs"/>
+    <xar:style scope="module" file="contactform" />
 
     <style>
     pre {
@@ -17,15 +18,28 @@
     <div class="xar-mod-body">
         <xar:template type="module" file="admintabs"/>
 
-        <h2>Saved Form Submissions</h2>
+<xar:template type="module" file="cformtype-tabs" />        
 
-<xar:if condition="!xarModVars::get('contactform','save_to_db')">
-<p class="xar-error">Currently, in the <a href="#xarmodurl('contactform','admin','modifyconfig')#">config settings</a>, the box for "Save form submissions to database" is unchecked.  You'll need to change that setting if you would like new form submissions to be saved here.</p>
-</xar:if>
+<xar:set name="label">ucwords(str_replace('_', ' ', $name))</xar:set>
+<h2>View Items:  #$label#</h2>
 
        <xar:data-view object="$object" tplmodule="contactform" template="admin_list" sort="$sort" objname="$name" />
 
 	<xar:pager startnum="$object->startnum" itemsperpage="$object->numitems" total="$total"/>
+
+	<xar:if condition="$save ne 0">
+		<p class="save_indicator">Save items to database: 
+			<xar:if condition="$save eq 1">
+				false
+			<xar:elseif condition="$save eq 2"/>
+				true (object config)
+			<xar:elseif condition="$save eq 3"/>
+				true (module config)
+			<xar:elseif condition="$save eq 4"/>
+				true (object config and module config)
+			</xar:if>
+		</p>
+	</xar:if>
 
     </div>
 </xar:template>

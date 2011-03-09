@@ -36,6 +36,7 @@ function contactform_user_new()
     sys::import('modules.dynamicdata.class.objects.master');
     // Get the object we'll be working with
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+	$config = $data['object']->configuration;
 
     // Check if we are in 'preview' mode from the input here - the rest is handled by checkInput()
     // if(!xarVarFetch('preview', 'str', $data['preview'],  NULL, XARVAR_DONT_SET)) {return;}
@@ -74,9 +75,16 @@ function contactform_user_new()
 				return; 
 			}
 			
-			$save = xarModVars::get('contactform','save_to_db');
+			if (isset($config['save_to_db']) && $config['save_to_db'] == 'true') {
+				$save = true;
+			} else {
+				$save = xarModVars::get('contactform','save_to_db');
+			}
+
 			$item = true;
-			if ($save) $item = $data['object']->createItem();
+			if ($save) {
+				$item = $data['object']->createItem();
+			}
 
 			if (!$save || $item) {
 

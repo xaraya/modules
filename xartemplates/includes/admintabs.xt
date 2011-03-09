@@ -19,7 +19,7 @@
         </xar:if>
         <li class="#$tabclass#">
           <a href="#xarModURL('contactform','admin','view')#" class="#$linkclass#">
-            List all
+            View Items
           </a>
         </li>
     </xar:sec>

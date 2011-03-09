@@ -43,7 +43,7 @@
 <li>
 from_name (or first_name and last_name)</li>
 </ul> 
-<p>For an example, refer to the <a href="#xarmodurl('dynamicdata','admin','modifyprop', array('name' => 'objects','itemid' => $objectid, 'tplmodule' => 'dynamicdata'))#">'contactform' object</a> in the <a href="#xarmodurl('dynamicdata','admin','view')#">Dynamic Data module</a>.</p> 
+<p>For an example, refer to the '<a href="#xarmodurl('dynamicdata','admin','modifyprop', array('name' => 'objects','itemid' => $objectid, 'tplmodule' => 'dynamicdata'))#">contactform_default</a>' object in the <a href="#xarmodurl('dynamicdata','admin','view')#">Dynamic Data module</a>.</p> 
 
     </div>
 </xar:template>
