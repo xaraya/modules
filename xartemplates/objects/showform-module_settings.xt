@@ -30,6 +30,12 @@
 	<xar:data-input property="$properties[$name]"/>
     </div>
 
+        <xar:set name="name">'strip_tags'</xar:set>
+ <div class="xar-form-input-wrapper" id="#$name#">
+	<xar:data-label property="$properties[$name]" for="id"/>
+	<xar:data-input property="$properties[$name]"/>
+    </div>
+
 <!--     <xar:set name="name">'save_indicator'</xar:set>
  <div class="xar-form-input-wrapper" id="#$name#">
 	<xar:data-label property="$properties[$name]" for="id"/>

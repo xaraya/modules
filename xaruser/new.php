@@ -14,12 +14,15 @@
 /**
  * Create a new item of the contactform object
  */
-function contactform_user_new()
+function contactform_user_new($args)
 {
+	extract($args);
+
     // See if the current user has the privilege to add an item. We cannot pass any extra arguments here
     if (!xarSecurityCheck('ReadContactForm')) return;
 
 	if(!xarVarFetch('name', 'str', $name, 'contactform_default', XARVAR_NOT_REQUIRED)) {return;}
+	if(!xarVarFetch('redirect', 'str', $redirect, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
 	$allowed = xarModVars::get('contactform','contact_objects');
 	$allowed = explode(',',$allowed);
@@ -52,26 +55,14 @@ function contactform_user_new()
 			return xarTplModule('contactform','user','new', $data, $template);          
         } else { 
 
-			$ccrecipients = array();
-			$bccrecipients = array();
-
 			$vals = $data['object']->getFieldValues();
 			foreach ($vals as $key=>$val) {
 				${$key} = $val;
-			}
+			}			
 
 			if (!isset($message)) { 
-				throw new Exception('The object is missing a required property.  All contact form objects must have a "message" property.'); 
+				throw new Exception('The object is missing a required property.  All contact form objects must have a \'message\' property.'); 
 				return; 
-			}
-			
-			$save = false;
-			if (isset($config['save_to_db'])) {
-				if ($config['save_to_db'] == 'true') $save = true;
-				if ($config['save_to_db'] == 'false') $save = false;
-			} else {
-				// if there is no object config, fall back on the module config
-				$save = xarModVars::get('contactform','save_to_db');
 			}
 		
 			if (xarUserIsLoggedIn()) {
@@ -84,8 +75,17 @@ function contactform_user_new()
 			}
 
 			if (!isset($from_name)) { 
-				throw new Exception('The object is missing a required property.  For anonymous users, all contact form objects must have either a "from_name" property or both a "first_name" and "last_name".'); 
+				throw new Exception('The object is missing a required property.  For anonymous users, all contact form objects must have either a \'from_name\' property or both a \'first_name\' and \'last_name\'.'); 
 				return; 
+			}
+
+			$save = false;
+			if (isset($config['save_to_db'])) {
+				if ($config['save_to_db'] == 'true') $save = true;
+				if ($config['save_to_db'] == 'false') $save = false;
+			} else {
+				// if there is no object config, fall back on the module config
+				$save = xarModVars::get('contactform','save_to_db');
 			}
 
 			if ($save) { 
@@ -94,6 +94,9 @@ function contactform_user_new()
 				return;
 				}
 			}
+			
+			if (isset($ccrecipients)) $ccrecipients = explode(',', $ccrecipients);
+			if (isset($bccrecipients)) $bccrecipients = explode(',', $bccrecipients);
 
 			if (!isset($to_email)) $to_email = xarModVars::get('contactform', 'to_email');
 			if (!isset($subject)) $subject = xarModVars::get('contactform', 'default_subject');
@@ -102,15 +105,35 @@ function contactform_user_new()
 
 			$mailargs['info'] = $to_email;
 			$mailargs['name'] = $to_name;
-			$mailargs['ccrecipients'] = $ccrecipients;
-			$mailargs['bccrecipients'] = $bccrecipients;
-			$mailargs['subject'] = $subject;
-			$mailargs['message'] = $message;
+			if (isset($ccrecipients)) $mailargs['ccrecipients'] = $ccrecipients;
+			if (isset($bccrecipients)) $mailargs['bccrecipients'] = $bccrecipients;
 			if (isset($from_email)) $mailargs['from'] = $from_email;
 			$mailargs['fromname'] = $from_name; 
+
+			$vals['subject'] = $subject;
+			$subject = xarTplModule('contactform','user','subject', $vals, $template);
+			$message = xarTplModule('contactform','user','message', $vals, $template);
+			if (xarModVars::get('contactform', 'strip_tags')) {
+				$mailargs['subject'] = strip_tags($subject);
+				$mailargs['message'] = strip_tags($message);
+			} else {
+				$mailargs['subject'] = $subject;
+				$mailargs['message'] = $message;			
+			}
+			if (isset($config['usetemplates'])) {
+				$mailargs['usetemplates'] = $usetemplates;
+			} else {
+				$mailargs['usetemplates'] = false;
+			}
+			
 			if (!xarMod::apiFunc('mail','admin','sendmail', $mailargs)) return false;
 
-            xarResponse::Redirect(xarModURL('contactform','user','success')); 
+			if (isset($config['redirect']) && !$redirect) {
+				$redirect = $config['redirect'];
+			} elseif (!$redirect) {
+				$redirect = xarModURL('contactform','user','success');
+			}
+			xarResponse::Redirect($redirect); 
             return true;
         }
     }

@@ -30,11 +30,11 @@ function contactform_userapi_getmenulinks()
 
         $menulinks[] = Array('url'   => xarModURL('contactform',
                                                    'user',
-                                                   'view'),
+                                                   'new'),
                               // In order to display the tool tips and label in any language,
                               // we must encapsulate the calls in the xarML in the API.
-                              'title' => xarML('View all dynamic data example items'),
-                              'label' => xarML('View Items'));
+                              'title' => xarML('Contact Form'),
+                              'label' => xarML('Contact Form'));
     }
     // Return all the links to the menu
     return $menulinks;

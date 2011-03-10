@@ -22,13 +22,9 @@
 function contactform_user_success()
 {
 
-    if(!xarVarFetch('name', 'str', $name, 'contactform', XARVAR_DONT_SET)) {return;} 
+    if(!xarVarFetch('name', 'str', $name, '', XARVAR_NOT_REQUIRED)) {return;}  
 
-    $data = array();
-
-	$template = $name;
-
-    return xarTplModule('contactform','user','success', $data, $template);
+    return xarTplModule('contactform','user','success', array(), $name);
 
 }
 

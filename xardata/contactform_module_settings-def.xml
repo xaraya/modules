@@ -1,5 +1,5 @@
 <object name="contactform_module_settings">
-  <objectid>606</objectid>
+  <objectid>108</objectid>
   <label>Module Settings for Contact Form</label>
   <module_id>1049</module_id>
   <itemtype>2</itemtype>
@@ -11,7 +11,7 @@
   <isalias>false</isalias>
   <properties>
     <property name="contact_objects">
-      <id>4217</id>
+      <id>826</id>
       <label>Contact Form Objects</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration>a:4:{s:12:"display_rows";s:1:"2";s:15:"display_columns";s:2:"30";s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:20:"comma-separated list";}</configuration>
     </property>
     <property name="to_email">
-      <id>4218</id>
+      <id>827</id>
       <label>Default Recipient</label>
       <type>email</type>
       <defaultvalue></defaultvalue>
@@ -31,7 +31,7 @@
       <configuration></configuration>
     </property>
     <property name="default_subject">
-      <id>4219</id>
+      <id>828</id>
       <label>Default Subject</label>
       <type>textbox</type>
       <defaultvalue>New Message from My Site</defaultvalue>
@@ -41,7 +41,7 @@
       <configuration></configuration>
     </property>
     <property name="save_to_db">
-      <id>4220</id>
+      <id>829</id>
       <label>Save form submissions to database</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -50,14 +50,14 @@
       <seq>4</seq>
       <configuration></configuration>
     </property>
-    <property name="save_indicator">
-      <id>4223</id>
-      <label>Show save indicator in view tab</label>
+    <property name="strip_tags">
+      <id>833</id>
+      <label>Strip tags from templated output</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
       <source>module variable: contactform</source>
       <status>33</status>
-      <seq>5</seq>
+      <seq>6</seq>
       <configuration></configuration>
     </property>
   </properties>
