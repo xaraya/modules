@@ -25,8 +25,9 @@
 
 <ul>
 <li>/contactform -- The form is defined by the 'contactform_default' object.</li>
-<li>/contactform/new -- The form is defined by the 'contactform_default' object.</li>
-<li>/contactform/new/myobject -- The form is defined by the 'myobject' object.</li>
+<li>/&amp;lt;myalias> -- The form is defined by the 'contactform_default' object.</li>
+<li>/contactform/new/&amp;lt;myobject> -- The form is defined by the 'myobject' object.</li>
+<li>/&amp;lt;myalias>/new/&amp;lt;myobject> -- The form is defined by the 'myobject' object.</li>
 </ul>
 
 <h3>Object Properties:</h3>
@@ -41,14 +42,14 @@
 
 <p>
 user-new.xt<br />
-user-new-myobject.xt<br />
+user-new-&amp;lt;myobject>.xt<br />
 etc
 </p>
 
 <p>
 objects/showform.xt<br />
-objects/showform-myobject.xt<br />
-objects/showform-sometemplate.xt<br />
+objects/showform-&amp;lt;myobject>.xt<br />
+objects/showform-&amp;lt;sometemplate>.xt<br />
 etc
 </p>
 
