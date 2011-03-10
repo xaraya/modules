@@ -52,5 +52,11 @@ objects/showform-sometemplate.xt<br />
 etc
 </p>
 
+<h3>Object Config:</h3>
+
+<p>
+Control saving of items on a per-object basis by adding a 'save_to_db' config setting to the object and setting it to true or false.
+</p>
+
     </div>
 </xar:template>

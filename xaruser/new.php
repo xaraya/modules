@@ -32,17 +32,10 @@ function contactform_user_new()
 
 	$data['invalid'] = false;
 
-    // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
-    // Get the object we'll be working with
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
 	$config = $data['object']->configuration;
 
-    // Check if we are in 'preview' mode from the input here - the rest is handled by checkInput()
-    // if(!xarVarFetch('preview', 'str', $data['preview'],  NULL, XARVAR_DONT_SET)) {return;}
-
-    // Check if we are submitting the form
-    // Here we are testing for a hidden field we define as true on the template, so we can use a boolean (true/false)
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
 
     if ($data['confirm']) {
@@ -56,9 +49,7 @@ function contactform_user_new()
 
         if (!empty($invalids)) { 
             $data['invalid'] = $invalids;
-			return xarTplModule('contactform','user','new', $data, $template);       
-        //} elseif (isset($data['preview'])) { 
-			//return xarTplModule('contactform','user','new', $data, $template);        
+			return xarTplModule('contactform','user','new', $data, $template);          
         } else { 
 
 			$ccrecipients = array();
@@ -74,8 +65,10 @@ function contactform_user_new()
 				return; 
 			}
 			
-			if (isset($config['save_to_db']) && $config['save_to_db'] == 'true') {
-				$save = true;
+			$save = false;
+			if (isset($config['save_to_db'])) {
+				if ($config['save_to_db'] == 'true') $save = true;
+				if ($config['save_to_db'] == 'false') $save = false;
 			} else {
 				// if there is no object config, fall back on the module config
 				$save = xarModVars::get('contactform','save_to_db');
@@ -95,31 +88,29 @@ function contactform_user_new()
 				return; 
 			}
 
-			$item = true;
-			if ($save) {
-				$item = $data['object']->createItem();
+			if ($save) { 
+				if (!$data['object']->createItem()) { 
+				throw new Exception('The form submission could not be saved.'); 
+				return;
+				}
 			}
 
-			if (!$save || $item) {
+			if (!isset($to_email)) $to_email = xarModVars::get('contactform', 'to_email');
+			if (!isset($subject)) $subject = xarModVars::get('contactform', 'default_subject');
+			if (empty($to_email)) $to_email = xarModVars::get('mail', 'adminmail');
+			if (!isset($to_name)) $to_name = xarModVars::get('mail', 'adminname');
 
-				if (!isset($to_email)) $to_email = xarModVars::get('contactform', 'to_email');
-				if (!isset($to_name)) $to_name = xarModVars::get('mail','adminname');
-				if (!isset($subject)) $subject = xarModVars::get('contactform', 'default_subject');
-	
-				$mailargs['info'] = $to_email;
-				$mailargs['name'] = $to_name;
-				$mailargs['ccrecipients'] = $ccrecipients;
-				$mailargs['bccrecipients'] = $bccrecipients;
-				$mailargs['subject'] = $subject;
-				$mailargs['message'] = $message;
-				if (isset($from_email)) $mailargs['from'] = $from_email;
-				$mailargs['fromname'] = $from_name; 
-				if (!xarMod::apiFunc('mail','admin','sendmail', $mailargs)) return false; 
-			} 
+			$mailargs['info'] = $to_email;
+			$mailargs['name'] = $to_name;
+			$mailargs['ccrecipients'] = $ccrecipients;
+			$mailargs['bccrecipients'] = $bccrecipients;
+			$mailargs['subject'] = $subject;
+			$mailargs['message'] = $message;
+			if (isset($from_email)) $mailargs['from'] = $from_email;
+			$mailargs['fromname'] = $from_name; 
+			if (!xarMod::apiFunc('mail','admin','sendmail', $mailargs)) return false;
 
-            // Jump to the next page
             xarResponse::Redirect(xarModURL('contactform','user','success')); 
-            // Always add the next line even if processing never reaches it
             return true;
         }
     }

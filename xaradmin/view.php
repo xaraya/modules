@@ -19,7 +19,7 @@ function contactform_admin_view()
 
     if (!xarSecurityCheck('AdminContactForm')) return;
 
-	$data['saveitems'] = xarModVars::get('contactform','save_to_db');
+	//$data['saveitems'] = xarModVars::get('contactform','save_to_db');
 
     if(!xarVarFetch('startnum', 'int', $startnum, 1, XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('numitems', 'int', $numitems, NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -36,7 +36,7 @@ function contactform_admin_view()
 	}
 	$config = $object->configuration;
 
-    $data['save'] = 0;
+/* $data['save'] = 0;
 	if (xarModVars::get('contactform','save_indicator')) {
 		$data['save'] = 1;
 		if (isset($config['save_to_db']) && $config['save_to_db'] == 'true') {
@@ -48,7 +48,7 @@ function contactform_admin_view()
 		} elseif (xarModVars::get('contactform','save_to_db')) {
 			$data['save'] = 3;
 		}
-	}
+	}*/
 
 	$data['sort'] = xarMod::ApiFunc('contactform','admin','sort', array(
 		//how to sort if the URL doesn't say otherwise...
@@ -56,6 +56,7 @@ function contactform_admin_view()
 		'ascdesc_fallback' => 'ASC'
 	));
 	
+	// precedence: 1) URL; 2) object config; 3) module setting
 	if (!$numitems) {
 		if (!empty($config['numitems'])) {
 			$numitems = $config['numitems'];
@@ -67,7 +68,7 @@ function contactform_admin_view()
     $data['object'] = DataObjectMaster::getObjectList(array('name' => $name));
 
     $filters = array(
-                    'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
+                    'status' => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
 					'sort' => $data['sort'],
 					'numitems' => $numitems,
 					'startnum' => $startnum

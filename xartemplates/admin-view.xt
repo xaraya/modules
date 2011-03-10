@@ -30,7 +30,7 @@
 	#$msg#
 </xar:if>
 
-	<xar:if condition="isset($save) and $save ne 0">
+	<!-- <xar:if condition="isset($save) and $save ne 0">
 		<p class="save_indicator">Save items to database: 
 			<xar:if condition="$save eq 1">
 				false
@@ -42,7 +42,7 @@
 				true (object config and module config)
 			</xar:if>
 		</p>
-	</xar:if>
+	</xar:if> -->
 
     </div>
 </xar:template>

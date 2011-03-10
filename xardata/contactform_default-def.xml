@@ -1,17 +1,17 @@
 <object name="contactform_default">
-  <objectid>601</objectid>
+  <objectid>608</objectid>
   <label>Default Contact Form</label>
   <module_id>1049</module_id>
   <itemtype>1</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
-  <maxid>1</maxid>
+  <maxid>2</maxid>
   <config>a:1:{s:11:"adminfields";s:33:"first_name,last_name,company_name";}</config>
   <isalias>true</isalias>
   <properties>
     <property name="itemid">
-      <id>4184</id>
+      <id>4224</id>
       <label>itemid</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration></configuration>
     </property>
     <property name="first_name">
-      <id>4185</id>
+      <id>4225</id>
       <label>First Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -31,7 +31,7 @@
       <configuration>a:5:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"1";}</configuration>
     </property>
     <property name="last_name">
-      <id>4186</id>
+      <id>4226</id>
       <label>Last Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -41,7 +41,7 @@
       <configuration>a:5:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"1";}</configuration>
     </property>
     <property name="company_name">
-      <id>4187</id>
+      <id>4227</id>
       <label>Company Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -51,17 +51,17 @@
       <configuration></configuration>
     </property>
     <property name="from_email">
-      <id>4188</id>
+      <id>4228</id>
       <label>Your Email</label>
       <type>email</type>
       <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
       <status>33</status>
       <seq>6</seq>
-      <configuration>a:5:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"1";}</configuration>
+      <configuration>a:6:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"1";s:29:"validation_min_length_invalid";s:18:"Email is required.";}</configuration>
     </property>
     <property name="phone_number">
-      <id>4189</id>
+      <id>4229</id>
       <label>Phone Number</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -71,7 +71,7 @@
       <configuration></configuration>
     </property>
     <property name="message">
-      <id>4190</id>
+      <id>4230</id>
       <label>Message</label>
       <type>textarea_large</type>
       <defaultvalue>Please write us a short note with your questions, comments or concerns.</defaultvalue>
