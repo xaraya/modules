@@ -18,9 +18,10 @@
 
         <form method="post" action="#xarServer::getCurrentURL()#">
               
-                <xar:data-form object="$module_settings" />
-		<xar:data-form object="$object" itemid="0" tplmodule="messages" groups="$groups" template="module_settings" />
-            
+            <xar:data-form object="$object" itemid="0" tplmodule="messages" groups="$groups" template="module_settings" layout="top"/>
+            <xar:data-form object="$module_settings"/>
+	    <xar:data-form object="$object" itemid="0" tplmodule="messages" groups="$groups" template="module_settings" layout="bottom"/>
+		
 
             <div class="xar-form-input-after">
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
