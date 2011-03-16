@@ -17,12 +17,12 @@
  * @author Carl P. Corliss (aka rabbitt)
  * @access  public
  */
- 
+
 sys::import('modules.messages.xarincludes.defines');
 
 function messages_user_markunread()
 {
-    if (!xarSecurityCheck('ManageMessages')) return;
+    if (!xarSecurityCheck('AddMessages')) return;
 
     if (!xarVarFetch('id', 'int:1', $id, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox', XARVAR_NOT_REQUIRED)) return;

@@ -15,7 +15,7 @@
 sys::import('modules.messages.xarincludes.defines');
 
 function messages_user_reply() {
-
+ 
 	if (!xarSecurityCheck('AddMessages')) return;
 
 	if (!xarVarFetch('object', 'str', $object, 'messages_messages', XARVAR_NOT_REQUIRED)) return;

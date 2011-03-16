@@ -21,6 +21,9 @@
 
 function messages_userapi_sendmail($args) {
 
+	$strip_tags = true;
+	$mailusetpls = false;
+
 	extract($args);
 
 	$msgurl = xarModURL('messages','user','display',array('id' => $id)); 
@@ -37,8 +40,13 @@ function messages_userapi_sendmail($args) {
 	$data['to_email'] = $msgdata['info'];
 	$subject = xarTplModule('messages','user','email-subject', $data);
 	$body = xarTplModule('messages','user','email-body', $data);
+	if ($strip_tags) {
+		$subject = strip_tags($subject);
+		$body = strip_tags($body);
+	} 
 	$msgdata['subject'] = $subject;
-	$msgdata['message']  = $body;
+	$msgdata['message'] = $body;
+	$msgdata['usetemplates'] = $mailusetpls;
 
 	$sendmail = xarMod::apiFunc('mail','admin','sendmail', $msgdata);
 	return true;
