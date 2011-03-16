@@ -20,28 +20,7 @@
  */
 function contactform_init()
 {
-# --------------------------------------------------------
-#
-# Create DD objects
-#
-# The object XML files located in the xardata folder of the module.
-# The file names have the form e.g.
-#     contactform-def.xml
-#     contactform-dat.xml
-#
-# The first is a definition file for the object, and needs to be present if you list contactform
-# among the objects to be created in the array below.
-#
-# The second is a defintion file for the object's items, i.e. its data. This file can be omitted.
-#
-# You can create these files manually, for example by cutting and pasting from an existing example.
-# The easier way is to create an object (and perhaps its items) using the user interface of the
-# DynamicData module. Once you have an object (and items), you can export it into an XML file using the
-# DD module's export facility.
-#
-# Note: the object(s) created below are automatically kept track of so that the module knows to remove them when
-# you deinstall it.
-#
+
     $module = 'contactform';
     $objects = array(
                 'contactform_default',
@@ -139,11 +118,12 @@ function contactform_init()
 function contactform_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
-    switch($oldversion) {
-        case '2.0.0':
-            // Code to upgrade from version 2.0 goes here
-            break;
-    }
+	$old = str_replace('.','',$oldversion);
+	$old = (int)$old;
+
+    if ($old < 210) {
+		xarMod::apiFunc('contactform','util','upgradepre210');
+    } 
 
     // Update successful
     return true;

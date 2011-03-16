@@ -13,7 +13,7 @@
  */
 $modversion['name']         = 'contactform';
 $modversion['id']           = '1049';
-$modversion['version']      = '2.0.0';
+$modversion['version']      = '2.1.0';
 $modversion['displayname']  = xarML('Contact Form');
 $modversion['description']  = 'Contact Form for new modules';
 $modversion['credits']      = 'xardocs/credits.txt';
