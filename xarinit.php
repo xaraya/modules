@@ -38,16 +38,21 @@ function publications_init()
             body2 TEXT,
             body3 TEXT,
             notes TEXT,
-            parent_id tinyint NOT NULL DEFAULT '0',
+            seq integer unsigned NOT NULL DEFAULT '0',
+            parent_id integer unsigned NOT NULL DEFAULT '0',
             pubtype_id tinyint NOT NULL DEFAULT '1',
             pages INT UNSIGNED NOT NULL DEFAULT '1',
             locale varchar(20) NOT NULL DEFAULT '',
+            leftpage_id integer unsigned NULL,
+            rightpage_id integer unsigned NULL,
+            parentpage_id integer unsigned NULL,
             start_date integer unsigned NOT NULL,
             end_date integer unsigned NOT NULL,
             owner integer unsigned NULL,
             version integer unsigned NULL,
             create_date integer unsigned NULL,
             modify_date integer unsigned NULL,
+            access varchar(255) NOT NULL DEFAULT 'a:0:{}',
             state tinyint NOT NULL DEFAULT '3',
             process_state tinyint NOT NULL DEFAULT '1',
             PRIMARY KEY(id),
@@ -65,6 +70,7 @@ function publications_init()
             description varchar(255) NOT NULL DEFAULT '',
             template varchar(255) NOT NULL DEFAULT '',
             configuration TEXT,
+            access varchar(255) NOT NULL DEFAULT 'a:0:{}',
             state tinyint unsigned NOT NULL DEFAULT '0',
             PRIMARY KEY(id))";
     if (!$q->run($query)) return;
@@ -168,7 +174,7 @@ function publications_init()
 */
 /*
     // Register blocks
-    if (!xarModAPIFunc('blocks',
+/*    if (!xarModAPIFunc('blocks',
                        'admin',
                        'register_block_type',
                        array('modName'  => 'publications',
@@ -197,7 +203,7 @@ function publications_init()
                        'register_block_type',
                        array('modName'  => 'publications',
                              'blockType'=> 'glossary'))) return;
-
+*/
     if (!xarModRegisterHook('item', 'search', 'GUI',
                            'publications', 'user', 'search')) {
         return false;

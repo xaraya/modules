@@ -1,8 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-norm xar-standard-box-padding">
+        
+        
         <h3>
-            <a href="#$link#">
+        <xar:template file="editicons"/>
+        <a class="xar-title" href="#xarModURL('publications','user','display',array('id' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
                 <xar:data-output property="$properties['title']" />
             </a>
         </h3>
@@ -16,24 +20,26 @@
         </p>
         <h4>
         Download:</h4>
-        <xar:if condition="empty($notes)">
-            <xar:elseif condition="xarModIsHooked('uploads','publications',$pubtype_id) and substr($notes,0,1) eq ';'" />
-            <xar:comment>If you hook the uploads module to publications, then file upload fields will contain a comma-separated list of file ids, and you will need to call an API function to retrieve the file information. For dynamic extra fields, you can use [fieldname]_output directly to access the file information.</xar:comment>
-            <xar:set name="notes_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $notes, 'multiple' => true))</xar:set>
-            <xar:foreach in="$notes_output" key="$fileid" value="$fileinfo">
+        <xar:if condition="empty($properties['fileupload']->value)">
+        <xar:elseif condition="xarModIsHooked('uploads','publications',$properties['itemtype']->value) and substr($properties['fileupload']->value,0,1) eq ';'" />
+            <!-- If you hook the uploads module to publications, then file upload fields will contain a comma-separated list of file ids, and you will need to call an API function to retrieve the file information. For dynamic extra fields, you can use [fieldname]_output directly to access the file information.-->
+            <xar:set name="fileupload_output">
+                xarModAPIFunc('uploads','user','showoutput',array('value' => $properties['fileupload']->value, 'multiple' => true))
+            </xar:set>
+            <xar:foreach in="$fileupload_output" key="$fileid" value="$fileinfo">
                 <p>
                     <a href="#$fileinfo['fileDownload']#">#$fileinfo['fileName']#</a>
                 </p>
             </xar:foreach>
-            <xar:elseif condition="file_exists('var/uploads/'.$properties['notes']->getValue())" />
+        <xar:elseif condition="file_exists('var/uploads/'.$properties['fileupload']->getValue())" />
             <p>
-                <a href="var/uploads/#$properties['notes']->getValue()#" title="#$properties['notes']->getValue()#">
-                    <xar:data-output property="$properties['notes']" />
+                <a href="var/uploads/#$properties['fileupload']->getValue()#" title="#$properties['fileupload']->getValue()#">
+                    <xar:data-output property="$properties['fileupload']" />
                 </a>
             </p>
-            <xar:else />
+        <xar:else />
             <p>
-                <xar:data-output property="$properties['notes']" />
+                <xar:data-output property="$properties['fileupload']" />
             </p>
         </xar:if>
         <div class="xar-publications-keywords">

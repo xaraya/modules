@@ -1,27 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Publications Administration</xar:mlstring>
+        Publications Administration
     </span>
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
     <h2>
-        <xar:mlstring>Publication Types</xar:mlstring>
+        Publication Types
     </h2>
     <h3>
-        <xar:mlstring>Import Definition of Publication Type</xar:mlstring>
+        Import Definition of Publication Type
     </h3>
     <strong>#$warning#</strong>
     <br />
     <form method="post" action="#xarModURL('publications','admin','importpubtype')#">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <xar:mlstring>Filter</xar:mlstring>:
+        Filter:
         <strong>modules/publications/*.xml</strong>
         <br />
         <br />
-        <xar:mlstring>File</xar:mlstring>:
+        File:
         <select name="import" id="import">
             <xar:foreach in="$options" value="$option">
                 <option value="#$option['id']#">#$option['name']#</option>
@@ -32,9 +33,9 @@
         <input type="submit" value="#xarML('Import Definition')#" />
         <br />
         <br />
-        <xar:mlstring>Select a file in the list above, or paste the definition in here</xar:mlstring>:
+        Select a file in the list above, or paste the definition in here:
         <br />
-        <textarea name="xml" id="xml" rows="30" cols="80">&#160;</textarea>
+        <textarea name="xml" id="xml" rows="30" cols="80"></textarea>
     </form>
 </div>
 </xar:template>

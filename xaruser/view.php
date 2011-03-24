@@ -87,7 +87,7 @@ function publications_user_view($args)
     $data['pubtypeobject']->getItem(array('itemid' => $ptid));
 
     // Get the settings of this publication type
-    $data['settings'] = $data['pubtypeobject']->properties['configuration']->getValue();
+    $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $ptid));
 
     // Get the template for this publication type
     if ($ishome) $data['template'] = 'frontpage';
@@ -377,7 +377,7 @@ function publications_user_view($args)
             )
         );
     }
-/*
+/* ------------------------------------------------------------
     // retrieve the categories for each article
     $catinfo = array();
     if ($showcategories) {
@@ -526,15 +526,20 @@ function publications_user_view($args)
     $data['items'] = $object->getItems();
     $data['object'] = DataObjectMaster::getObjectList(array('name' => $data['pubtypeobject']->properties['name']->value));
     
-    // Only show top level documents, not translations
+    sys::import('xaraya.structures.query');
     $q = new Query();
-    $q->eq('parent_id',0);
     $q->eq('state',3);
+    $q->eq('locale',xarUserGetNavigationLocale());
+    $q->eq('pubtype_id',$ptid);
+
+    // Suppress deleted items if not an admin
+    // Remove this once listing property works with dataobject access
+    if (!xarIsParent('Administrators',xarUserGetVar('uname'))) $q->ne('state',0);
     $data['conditions'] = $q;
 
     // Throw all the relevant settings we are using into the cache
-    $data['settings']['pubtypeobject'] = $data['pubtypeobject'];
-    xarCore::setCached('publications', 'context' . $ptid, $data['settings']);
+//    $data['settings']['pubtypeobject'] = $data['pubtypeobject']->properties['configuration']->getValue();
+//    xarCore::setCached('publications', 'context' . $ptid, $data['settings']);
 
     return xarTplModule('publications', 'user', 'view', $data, $data['template']);
 }

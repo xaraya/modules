@@ -24,18 +24,21 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_display($args)
 {
-    extract ($args);
     // Get parameters from user
-    if(!xarVarFetch('ptid',    'id',    $ptid,  xarModVars::get('publications', 'defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('itemid',  'id',    $itemid,   NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('page', 'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 // this is used to determine whether we come from a pubtype-based view or a
 // categories-based navigation
-
+    if(!xarVarFetch('ptid',    'id',    $ptid,  xarModVars::get('publications', 'defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('id',      'id',    $id,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('page', 'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    
+    // Override xarVarFetch
+    extract ($args);
+    
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
-    $data['object']->getItem(array('itemid' => $itemid));
+    $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
+    $data['object']->getItem(array('itemid' => $id));
     $publication = $data['object']->getFieldValues();
 
     return xarTplModule('publications', 'user', 'display', $data);
@@ -477,7 +480,8 @@ function publications_user_display($args)
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
-    $data['object']->getItem(array('itemid' => $itemid));
+    $id = xarMod::apiFunc('publications','user','getranslationid',array('id' => $id));
+    $data['object']->getItem(array('itemid' => $id));
 
     return xarTplModule('publications', 'user', 'display', $data, $template);
 }

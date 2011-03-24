@@ -1,12 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<p><strong><xar:mlstring>In Publications</xar:mlstring>:</strong></p>
-<xar:if condition="empty($loop)">
-    <xar:mlstring>No Waiting Content</xar:mlstring>
-<xar:else />
-    <xar:foreach in="$loop" value="$item">
-    <a href="#$item['publink']#" title="#$item['pubtitle']#">#$item['pubtitle']#</a> : #$item['pubcount']#
-    <br />
-    </xar:foreach>
-</xar:if>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <p><strong>In Publications:</strong></p>
+    <xar:if condition="empty($loop)">
+        No Waiting Content
+    <xar:else />
+        <xar:foreach in="$loop" value="$item">
+        <a href="#$item['publink']#" title="#$item['pubtitle']#">#$item['pubtitle']#</a> : #$item['pubcount']#
+        <br />
+        </xar:foreach>
+    </xar:if>
 </xar:template>

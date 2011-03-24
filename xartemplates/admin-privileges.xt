@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Publications Administration</xar:mlstring>
+        Publications Administration
     </span>
 </div>
 <div class="xar-mod-body">
@@ -22,12 +23,12 @@
             <table border="1" cellpadding="8" cellspacing="0">
                 <tr>
                     <th valign="top" align="right">
-                        <xar:mlstring>Publication Type</xar:mlstring>
+                        Publication Type
                     </th>
                     <td>
                         <select name="ptid" onchange="javascript:this.form.submit();">
                             <option value="0">
-                                <xar:mlstring>All</xar:mlstring>
+                                All
                             </option>
                             <xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
                                 <xar:if condition="!empty($ptid) and $ptid eq $pubid">
@@ -41,7 +42,7 @@
                 </tr>
                 <tr>
                     <th valign="top" align="right">
-                        <xar:mlstring>Category</xar:mlstring>
+                        Category
                     </th>
                     <td>
                         <xar:set name="firstline">array('id' => xarML('All'), 'name' => xarML('All'))</xar:set>
@@ -52,7 +53,7 @@
                 <xar:if condition="!empty($showauthor)">
                     <tr>
                         <th valign="top" align="right">
-                            <xar:mlstring>Author</xar:mlstring>
+                            Author
                         </th>
                         <td>
                             <xar:set name="onchange">javascript:this.form.submit();</xar:set>
@@ -65,19 +66,19 @@
                 </xar:if>
                 <tr>
                     <th valign="top" align="right">
-                        <xar:mlstring>Publication</xar:mlstring>
+                        Publication
                     </th>
                     <td>
-                    <xar:mlstring>Enter article number</xar:mlstring>:
+                    Enter article number:
                     <input type="text" name="id" id="id" value="#$id#" size="10" onchange="javascript:this.form.submit();" />
                     <!-- TODO: show dropdown box for all relevant publications (if not too many) -->
                     <xar:if condition="!empty($title)">
                     <br />
-                    <xar:mlstring>Title</xar:mlstring>: #$title#</xar:if></td>
+                    Title: #$title#</xar:if></td>
                 </tr>
                 <tr>
                     <th valign="top" align="right">
-                        <xar:mlstring>Access Level</xar:mlstring>
+                        Access Level
                     </th>
                     <td>
                         <xar:set name="levels">
@@ -116,7 +117,7 @@
             <input type="submit" name="apply" value="#$applylabel#" /></div>
         </form>
         <br />
-        <xar:mlstring>Some examples : (assuming your users have read access by default)
+        Some examples : (assuming your users have read access by default)
         <br />
         <br />- In order to allow 'Friends' to submit News Publications (and only that), define a privilege 'SubmitNews' (or whatever name you prefer), and choose the publication type "News Publications" (instance 1:All:All:All) and access level "Submit (Comment)" above. Press "Finish and Apply to Privilege", and then assign that privilege to the 'Friends' role.
         <br />
@@ -124,7 +125,7 @@
         <br />
         <br />- ...
         <br />
-        <br /></xar:mlstring>
-        <xar:mlstring>Note: if you want to deny access to all publications in a particular category with ID 123, you can also define a privilege for module 'categories', component 'Category', category name 'All' and category ID '123'. This will remove the category from the publications map and categories navigation as well.</xar:mlstring>
+        <br />
+        Note: if you want to deny access to all publications in a particular category with ID 123, you can also define a privilege for module 'categories', component 'Category', category name 'All' and category ID '123'. This will remove the category from the publications map and categories navigation as well.
 </div>
 </xar:template>

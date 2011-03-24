@@ -1,18 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:javascript module="publications" filename="tabs.js" />
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>
-                Publications Administration
-            </xar:mlstring>
+            Publications Administration            
         </span>
     </div>
     <div class="xar-mod-body">
         <h2>
-            <xar:mlstring>
-                Modify Publication
-            </xar:mlstring>
+            Modify <xar:data-output property="$properties['itemtype']" value="$ptid"/>
         </h2>
         <!--
         <xar:comment>
@@ -65,12 +62,13 @@
         </xar:if>
         <form method="post" name="post" id="post" action="&xar-modurl-publications-user-update;" enctype="#$enctype#" >
             <xar:set name="itemcount">count($items)</xar:set>
+            <xar:set name="tabs">3*$itemcount</xar:set>
             <xar:template file="pagetabs" type="module" />
             
             <xar:set name="index">0</xar:set>
-            <xar:foreach in="$items" key="$key" value="$item">
+            <!--<xar:foreach in="$items" key="$key" value="$item">
                 <xar:set name="dummy">$object->setFieldValues($item)</xar:set>
-                <xar:set name="dummy">$object->setFieldPrefix($key)</xar:set>
+                <xar:set name="dummy">$object->setFieldPrefix($key)</xar:set>-->
                 <xar:if condition="$tab eq 'preview' AND $index eq 0">
                     <xar:set name="visible">array('none','none','block')</xar:set>
                 <xar:elseif condition="$tab ne 'preview' AND $index eq 0" />
@@ -93,26 +91,27 @@
                 <xar:set name="index">$index + 1</xar:set>
                 <div id="page-#$index#" style="display: #$visible[2]#">
                     <fieldset class="xar-standard-box-padding xar-overflow-auto">
-                        <xar:data-display object="$object" tplmodule="publications" fieldprefix="$key" />
+                        <xar:data-display object="$object" tplmodule="publications"  />
                     </fieldset>
                 </div>
-            </xar:foreach>
+            <!--</xar:foreach>-->
 
                 <xar:if condition="!empty($prevart) || !empty($nextart)">
                     <div class="xar-normal xar-overflow-auto">
                         <xar:if condition="!empty($prevart)">
-                        <a class="xar-floatleft" href="#$prevart#">&lt;
-                        <xar:mlstring>prev</xar:mlstring></a>&#160;</xar:if>
+                        <a class="xar-floatleft" href="#$prevart#">
+                            <img src="#xarTplGetImage('icons/go-previous.png','base')#"/>
+                        </a>&#160;</xar:if>
                         <xar:if condition="!empty($nextart)">
                             <a class="xar-floatright" href="#$nextart#">
-                            <xar:mlstring>next</xar:mlstring>&gt;</a>
+                            next&gt;</a>
                         </xar:if>
                     </div>
                 </xar:if>
                 <xar:template file="navtabs-user" type="module" />
 <!--            <div class="xar-form-input-wrapper">
                 <label class="xar-form-label help" title="#xarML('This is the category or categories this website is assigned to.')#">
-                    <xar:mlstring>Categories</xar:mlstring>
+                    Categories
                 </label>
                 <xar:data-input type="categories" name="categories" itemid="$id" itemtype="$ptid" returnitself="true" />
             </div>
@@ -132,14 +131,15 @@
                     <!--
                         <xar:sec mask="ManagePublications" catch="false">
                             <a href="#xarModURL('publications','admin','delete',array('id' => $object.itemid))#">
-                                <xar:mlstring>
-                                    Delete Publication
-                                </xar:mlstring>
+                                <img src="#xarTplGetImage('icons/delete.png','base')#"/>
                             </a>
                         </xar:sec>
                     -->
                 </div>
             </div>
         </form>
+        <script type="text/javascript">
+            showtab(1,#$tabs#)
+        </script>
     </div>
 </xar:template>

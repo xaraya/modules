@@ -1,90 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<xar:template file="publinks" type="module" />
-<xar:if condition="!empty($ptid) or !empty($catid)">
-    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" catid="$catid" showcatcount="$showcatcount" showempty="1" />
-</xar:if>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="publinks" type="module" />
+    <xar:if condition="!empty($ptid) or !empty($catid)">
+        <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" catid="$catid" showcatcount="$showcatcount" showempty="1" />
+    </xar:if>
 
-    <xar:comment>
-        You can use different user-view-[pubtype].xd templates for different pubtypes,
-        and also a separate user-view-frontpage.xd template for the publications frontpage
-    </xar:comment>
+        <xar:comment>
+            You can use different user-view-[pubtype].xd templates for different pubtypes,
+            and also a separate user-view-frontpage.xd template for the publications frontpage
+        </xar:comment>
 
-<xar:if condition="!empty($author)">
-    <h2>
-        <xar:ml>
-            <xar:mlstring>
-                By Author : #(1)
-            </xar:mlstring>
-            <xar:mlvar>
-                #$author#
-            </xar:mlvar>
-        </xar:ml>
-    </h2>
-    <br />
-</xar:if>
-<xar:if condition="!empty($numcols) and $number gt 0">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-        <tr>
-            <xar:foreach in="$columns" key="$col">
-                <td style="vertical-align: top;text-align: center;width: #$colwidth#%;">
-                    <xar:foreach in="$columns[$col]" key="$row">
-                        #$columns[$col][$row]#
-                    </xar:foreach>
-                </td>
-            </xar:foreach>
-        </tr>
-    </table>
-    <xar:elseif condition="!empty($number)" />
-    <xar:foreach in="$columns" key="$col">
-        <xar:foreach in="$columns[$col]" key="$row">
-            #$columns[$col][$row]#
-        </xar:foreach>
-    </xar:foreach>
-</xar:if>
-#$output#
-<xar:if condition="!empty($showcols)">
-    <xar:if condition="$showcols eq 1">
-        <a href="#xarModURL('publications','user','view',array('numcols' => 1))#">
-            <xar:mlstring>
-                single-column display
-            </xar:mlstring>
-        </a>
-        <xar:else />
-        <a href="#xarModURL('publications','user','view')#">
+    <xar:if condition="!empty($author)">
+        <h2>
             <xar:ml>
                 <xar:mlstring>
-                    #(1)-column display
+                    By Author : #(1)
                 </xar:mlstring>
                 <xar:mlvar>
-                    #$showcols#
+                    #$author#
                 </xar:mlvar>
             </xar:ml>
-        </a>
+        </h2>
+        <br />
     </xar:if>
-</xar:if>
-
-<xar:template file="alphapager" type="module" />
-
-<div class="xar-align-center">
-<xar:comment>$pager (combining the pager and the sort links) will be removed in later versions</xar:comment>
-    <p>#$viewpager#</p>
-    <xar:if condition="isset($sortlinks) and count($sortlinks) gt 0">
-        <xar:mlstring>Sort by </xar:mlstring>
-        <xar:foreach in="$sortlinks" value="$sortitem">
-            <xar:if condition="!empty($sortitem['slink'])">
-                <a href="#$sortitem['slink']#">#$sortitem['stitle']#</a>
-            <xar:else/>
-                #$sortitem['stitle']#
-            </xar:if>
+    <xar:if condition="!empty($numcols) and $number gt 0">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <xar:foreach in="$columns" key="$col">
+                    <td style="vertical-align: top;text-align: center;width: #$colwidth#%;">
+                        <xar:foreach in="$columns[$col]" key="$row">
+                            #$columns[$col][$row]#
+                        </xar:foreach>
+                    </td>
+                </xar:foreach>
+            </tr>
+        </table>
+        <xar:elseif condition="!empty($number)" />
+        <xar:foreach in="$columns" key="$col">
+            <xar:foreach in="$columns[$col]" key="$row">
+                #$columns[$col][$row]#
+            </xar:foreach>
         </xar:foreach>
     </xar:if>
-</div>
+    #$output#
+    <xar:if condition="!empty($showcols)">
+        <xar:if condition="$showcols eq 1">
+            <a href="#xarModURL('publications','user','view',array('numcols' => 1))#">
+                single-column display
+            </a>
+            <xar:else />
+            <a href="#xarModURL('publications','user','view')#">
+                <xar:ml>
+                    <xar:mlstring>
+                        #(1)-column display
+                    </xar:mlstring>
+                    <xar:mlvar>
+                        #$showcols#
+                    </xar:mlvar>
+                </xar:ml>
+            </a>
+        </xar:if>
+    </xar:if>
 
-<xar:if condition="!empty($showprevnext)">
-    <xar:data-output type="categorynavigation" layout="prevnext" />
-</xar:if>
+    <xar:template file="alphapager" type="module" />
 
-<xar:template file="navtabs-user" type="module" />
-<xar:style scope="module" module="publications" file="gallery" />
+    <div class="xar-align-center">
+    <xar:comment>$pager (combining the pager and the sort links) will be removed in later versions</xar:comment>
+        <p>#$viewpager#</p>
+        <xar:if condition="isset($sortlinks) and count($sortlinks) gt 0">
+            Sort by 
+            <xar:foreach in="$sortlinks" value="$sortitem">
+                <xar:if condition="!empty($sortitem['slink'])">
+                    <a href="#$sortitem['slink']#">#$sortitem['stitle']#</a>
+                <xar:else/>
+                    #$sortitem['stitle']#
+                </xar:if>
+            </xar:foreach>
+        </xar:if>
+    </div>
+
+    <xar:if condition="!empty($showprevnext)">
+        <xar:data-output type="categorynavigation" layout="prevnext" />
+    </xar:if>
+
+    <xar:template file="navtabs-user" type="module" />
+    <xar:style scope="module" module="publications" file="gallery" />
 </xar:template>

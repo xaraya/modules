@@ -43,7 +43,7 @@ function publications_userapi_getpubcatcount($args)
     // Load API
     if (!xarModAPILoad('categories', 'user')) return;
 
-    $args['modid'] = xarMod::getID('publications');
+    $args['modid'] = xarMod::getRegID('publications');
     if (isset($args['ptid']) && !isset($args['itemtype'])) {
         $args['itemtype'] = $args['ptid'];
     }

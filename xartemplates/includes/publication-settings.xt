@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <fieldset>
         <legend>
@@ -17,7 +18,7 @@
         <div class="xar-form-input-wrapper">
             <xar:var name="label">Language</xar:var>
             <xar:data-label property="$properties['locale']" for="id" label="$label" />
-            <xar:data-input property="$properties['locale']" value="$ptid" />
+            <xar:data-input property="$properties['locale']"/>
         </div>
         <div class="xar-form-input-wrapper">
             <xar:var name="label">Current Version</xar:var>
@@ -91,7 +92,7 @@
         </legend>
         <div class="xar-form-input-wrapper">
             <label class="xar-form-label help" title="#xarML('This is the allowed HTML that this website has configured.')#">
-                <xar:mlstring>Allowed HTML tags</xar:mlstring>
+                Allowed HTML tags
             </label>
             <xar:set name="tags">xarConfigVars::get(null,'Site.Core.AllowableHTML')</xar:set>
             <div class="xar-form-container-after">

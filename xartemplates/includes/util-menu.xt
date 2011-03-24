@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:comment>Common Administration menu</xar:comment>
@@ -9,25 +10,25 @@
 <div>
   <dl class="xar-tabs">
     <dt class="help" title="Choose an action to perform">
-      <xar:mlstring>Utility:</xar:mlstring>
+      Utility:
     </dt>
     <xar:sec mask="AdminPublications" catch="false">
         <xar:set name="tabclass">$activetab=='stats'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-publications-admin-stats;">
-            <xar:mlstring>Statistics</xar:mlstring>
+            Statistics
           </a>
         </dd>
         <xar:set name="tabclass">$activetab=='importpictures'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-publications-admin-importpictures;">
-            <xar:mlstring>Import Pictures</xar:mlstring>
+            Import Pictures
           </a>
         </dd>
         <xar:set name="tabclass">$activetab=='importpages'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-publications-admin-importpages;">
-            <xar:mlstring>Import Pages</xar:mlstring>
+            Import Pages
           </a>
         </dd>
         <xar:set name="tabclass">$activetab=='pubtypes'?'active':''</xar:set>

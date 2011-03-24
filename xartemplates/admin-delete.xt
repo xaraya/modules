@@ -1,32 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Publications Administration</xar:mlstring>
+        Publications Administration
     </span>
 </div>
 <div class="xar-mod-body">
       <xar:template type="module" file="admin-menu" />
     <h2>
-        <xar:mlstring>Delete Publication</xar:mlstring>
+        Delete Publication
     </h2>
     <div class="xar-align-center">
         <xar:comment>You can use different admin-delete-[pubtype].xd templates for different pubtypes</xar:comment>
-        <h3>
-            <xar:mlstring>Delete this article?</xar:mlstring>
-        </h3>
+        <span class="xar-title">Confirm the deletion of publication:</span><br />
+            <xar:if condition="isset($name)">
+                <div style="align: center;">'#$name#'</div>
+            <xar:elseif condition="isset($items)" />
+                <div style="align: center;">
+                    <xar:foreach in="$items" value="$item">
+                        #$item['name']# (ID #$item['id']#)
+                        <br />
+                    </xar:foreach>
+                </div>
+            </xar:if>
         <form method="post" action="&xar-modurl-publications-admin-delete;">
             <div>
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="hidden" name="confirm" id="confirm" value="true" />
-                <input type="hidden" name="id" id="id" value="#$id#" />
-                <input type="hidden" name="return_url" value="#$return_url#" />
-                <input type="submit" value="#$confirmlabel#" />
+                <input type="hidden" name="confirmed" id="confirmed" value="1" />
+                <input type="hidden" name="idlist" id="idlist" value="#$idlist#" />
+                <input type="hidden" name="returnurl" value="#$returnurl#" />
+                <input type="submit" value="Confirm" />
             </div>
         </form>
         <br />
-        <a href="&xar-modurl-publications-admin-view;">
-            <xar:mlstring>Cancel Delete</xar:mlstring>
+        <a href="#xarModUrl('publications', 'admin', $returnurl)#">
+            Cancel Delete
         </a>
         <br />
     </div>

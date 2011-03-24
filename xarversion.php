@@ -30,5 +30,6 @@ $modversion['dependency']   = array(147,30012);
 $modversion['dependencyinfo'] = array(
                                       147 => 'categories',
                                       30012 => 'math',
+                                      30066 => 'ckeditor',
                                       );
 ?>

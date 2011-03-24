@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-norm xar-standard-box-padding">
@@ -8,20 +9,20 @@
             </xar:foreach>
             ]
         </xar:if>
-        <a class="xar-title" href="#$redirect#">
+        
+        <xar:template file="editicons"/>
+        
+        <a class="xar-title" href="#xarModURL('publications','user','display',array('id' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
             <xar:data-output property="$properties['title']" />
         </a>
         <br />        
-            Description        
-        : #$summary#
+            Description: <xar:data-output property="$properties['summary']" />
         <br />
         <xar:if condition="!empty($notes)">            
-            Source            
-        : <xar:data-output property="$properties['notes']" />
+            Source: <xar:data-output property="$properties['notes']" />
             <br />
         </xar:if>        
-            Added on        
-        : #xarLocaleGetFormattedDate('long',$properties['created']->value)# 
+            Added on: #xarLocaleGetFormattedDate('long',$properties['created']->value)# 
           #xarLocaleGetFormattedTime('long',$properties['created']->value)#
         <xar:if condition="!empty($rating)">
             -            
@@ -41,7 +42,7 @@
         </xar:if>
         <xar:if condition="xarModIsHooked('ratings','publications',6)">
             | <a href="#$link#">                
-                    Rate / Comment                
+                    Rate / Comment
             </a>
         </xar:if>
         <div class="xar-publications-keywords">

@@ -1,5 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:data-input property="$properties['id']" hidden="hidden" />
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Name</xar:var>
+        <xar:data-label property="$properties['name']" for="id" label="$label" />
+        <xar:data-input property="$properties['name']" />
+    </div>
     <div class="xar-form-input-wrapper">
         <xar:var name="label">Title</xar:var>
         <xar:data-label property="$properties['title']" for="id" label="$label" />
@@ -14,5 +20,9 @@
         <xar:var name="label">Notes</xar:var>
         <xar:data-label property="$properties['notes']" for="id" label="$label" />
         <xar:data-input property="$properties['notes']" />
+    </div>
+
+    <div class="xar-form-input-wrapper">
+        <xar:data-input property="$properties['position']"/>
     </div>
 </xar:template>

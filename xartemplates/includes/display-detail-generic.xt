@@ -1,46 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:set name="ptid">$object->objectid</xar:set>
-    <xar:set name="cids">$properties['categories']->getValue()</xar:set>
     <xar:template file="publinks" type="module" />
     <!--
+    <xar:set name="cids">$properties['categories']->getValue()</xar:set>
     <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$properties['id']" cids="$cids" showcatcount="$settings['showcatcount']" showempty="0" />
     -->
-
-    <xar:set name="canedit">
-        xarModAPIFunc('publications','user','checksecurity',array('mask' => 'EditPublications', 'publication' => $object->getFieldValues()))
-    </xar:set>
-
-    <xar:if condition="$canedit">
-        <xar:set name="candelete">
-            xarModAPIFunc('publications','user','checksecurity',array('mask' => 'ManagePublications', 'publication' => $object->getFieldValues()))
-        </xar:set>
-    <xar:else />
-        <xar:set name="candelete">0</xar:set>
-    </xar:if>
     
     <xar:set name="publication_state">
         $properties['state']->value
     </xar:set>
 
-    <xar:if condition="!$canedit AND ($publication_state lt 3)">
-        You have no permission to view this item
+    <xar:if condition="$publication_state lt 3">
+        This item cannot be viewed
     <xar:else />
         <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
             <tr>
                 <td align="left" valign="top" class="xar-normal">
+
+                    <xar:template file="editicons"/>
+
                     <br />
                     <xar:data-output property="$properties['name']" />
                     <span class="xar-title">
                         <xar:data-output property="$properties['title']" />
-                        <xar:if condition="$canedit">
-                            &#160;
-                            [<a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#">Edit</a>]
-                        </xar:if>
-                        <xar:if condition="$candelete">
-                            &#160;
-                            [<a href="#xarModURL('publications', 'user', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#">Delete</a>]
-                        </xar:if>
                     </span>
                     <br />
                     <!--
@@ -87,7 +71,7 @@
                     <td align="left">
                         <xar:if condition="!empty($prevart)">
                             <a href="#$prevart#">
-                                &lt; prev
+                                <img src="#xarTplGetImage('icons/go-previous.png','base')#"/>
                             </a>
                         </xar:if>
                         &#160;
@@ -96,7 +80,7 @@
                         &#160;
                         <xar:if condition="!empty($nextart)">
                             <a href="#$nextart#">
-                                next &gt;
+                                <img src="#xarTplGetImage('icons/go-next.png','base')#"/>
                             </a>
                         </xar:if>
                     </td>

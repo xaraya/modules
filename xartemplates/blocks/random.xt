@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:if condition="!empty($altsummary)">
         <p>
@@ -32,7 +33,7 @@
 
     <xar:if condition="!empty($showsubmit)">
         <div>
-            <a href="#xarModURL('publications', 'admin', 'new', array('ptid' => $pubtype_id))#"><xar:mlstring>Submit new</xar:mlstring></a>
+            <a href="#xarModURL('publications', 'admin', 'new', array('ptid' => $pubtype_id))#">Submit new</a>
         </div>
     </xar:if>
 
