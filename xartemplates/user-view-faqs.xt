@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="publinks" type="module" />
@@ -40,9 +41,7 @@
     <xar:if condition="!empty($showcols)">
         <xar:if condition="$showcols eq 1">
             <a href="#xarModURL('publications','user','view',array('numcols' => 1))#">
-                <xar:mlstring>
-                    single-column display
-                </xar:mlstring>
+                single-column display
             </a>
             <xar:else />
             <a href="#xarModURL('publications','user','view')#">
@@ -61,7 +60,7 @@
     <xar:comment>$pager (combining the pager and the sort links) will be removed in later versions</xar:comment>
         <p>#$viewpager#</p>
         <xar:if condition="isset($sortlinks) and count($sortlinks) gt 0">
-            <xar:mlstring>Sort by </xar:mlstring>
+            Sort by 
             <xar:foreach in="$sortlinks" value="$sortitem">
                 <xar:if condition="!empty($sortitem['slink'])">
                     <a href="#$sortitem['slink']#">#$sortitem['stitle']#</a>
@@ -86,9 +85,7 @@
             <xar:if condition="!empty($submitlink)">
                 <li style="display:inline;padding:0 .5em;">
                     <a href="#$submitlink#" title="Submit Publication">
-                        <xar:mlstring>
-                            Contribute
-                        </xar:mlstring>
+                        Contribute
                     </a>
                 </li>
             </xar:if>
@@ -113,7 +110,7 @@
             </xar:if>
             <xar:if condition="!empty($submitlink)">
             <span style="text-align: center; padding: 50px">
-                <a href="#$submitlink#" title="Submit Publication"><xar:mlstring>Contribute</xar:mlstring></a>
+                <a href="#$submitlink#" title="Submit Publication">Contribute</a>
             </span>
             </xar:if>
             <xar:if condition="!empty($archivelink)">

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-body">
@@ -6,9 +7,7 @@
         You can use different user-archive-[pubtype].xd templates for different pubtypes
     </xar:comment>
     <h3>
-        <xar:mlstring>
-            Monthly Archives
-        </xar:mlstring>
+        Monthly Archives
     </h3>
     <ul>
         <xar:foreach in="$months" value="$month">

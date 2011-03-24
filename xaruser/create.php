@@ -36,12 +36,15 @@ function publications_user_create()
     // This has been disabled for now
 //    if (!xarSecConfirmAuthKey()) return;
 
+    $data['items'] = array();
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
     $isvalid = $data['object']->checkInput();
     
-    if ($data['preview'] || !$isvalid) {
+    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
+    
+    if ($data['preview'] || $isvalid) {
         // Preview or bad data: redisplay the form
         $data['properties'] = $data['object']->getProperties();
         if ($data['preview']) $data['tab'] = 'preview';
@@ -65,10 +68,10 @@ function publications_user_create()
 
     // if we can edit publications, go to admin view, otherwise go to user view
     if (xarSecurityCheck('EditPublications',0,'Publication',$data['ptid'].':All:All:All')) {
-        xarController::redirect(xarModURL('publications', 'admin', 'view',
+        xarResponse::redirect(xarModURL('publications', 'admin', 'view',
                                       array('ptid' => $data['ptid'])));
     } else {
-        xarController::redirect(xarModURL('publications', 'user', 'view',
+        xarResponse::redirect(xarModURL('publications', 'user', 'view',
                                       array('ptid' => $data['ptid'])));
     }
 

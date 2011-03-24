@@ -1,14 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <a name="#$id#"></a>
+    <a name="titles"></a>
     <br />
     <xar:if condition="!empty($categories) and count($categories) gt 0">
         [ <xar:foreach in="$categories" value="$cat">
             #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
         </xar:foreach> ]
     </xar:if>
-    <a class="xar-title" href="#$link#">
-        <xar:data-output property="$properties['title']" />
+        
+    <xar:template file="editicons"/>
+        
+    <a class="xar-title" href="#xarModURL('publications','user','display',array('id' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
+        <xar:data-output property="$properties['question']" />
     </a>
     <xar:if condition="!empty($counter)">
         <xar:if condition="$counter eq 1">
@@ -17,17 +21,19 @@
             (#$counter#&#160;reads)
         </xar:if>
     </xar:if>
-    <xar:if condition="!empty($properties['notes']->value)">
+    <xar:if condition="!empty($properties['submitted_by']->value)">
         by 
-        <xar:data-output property="$properties['notes']" />
+        <xar:data-output property="$properties['submitted_by']" />
     </xar:if>
-    <xar:if condition="!empty($properties['summary']->value)">
+    <xar:if condition="!empty($properties['details']->value)">
         <p><em>
             <xar:data-output property="$properties['summary']" />
         </em></p>
     </xar:if>
-    <p>
-    #$body#
-    </p>
+    <xar:if condition="!empty($properties['answer']->value)">
+        <p>
+            <xar:data-output property="$properties['answer']" />
+        </p>
+    </xar:if>
     <p><a href="#xarServer::getCurrentURL()##titles">Back to top</a></p>
 </xar:template>

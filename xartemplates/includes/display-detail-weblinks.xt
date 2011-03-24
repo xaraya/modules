@@ -1,44 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="publinks" type="module" />
     <!--
     <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$id" cids="$cids" showcatcount="$showcatcount" showempty="0" />
     -->
-
-    <xar:set name="canedit">
-        xarModAPIFunc('publications','user','checksecurity',array('mask' => 'EditPublications', 'publication' => $object->getFieldValues()))
-    </xar:set>
-
-    <xar:if condition="$canedit">
-        <xar:set name="candelete">
-            xarModAPIFunc('publications','user','checksecurity',array('mask' => 'ManagePublications', 'publication' => $object->getFieldValues()))
-        </xar:set>
-    <xar:else />
-        <xar:set name="candelete">0</xar:set>
-    </xar:if>
     
     <xar:set name="publication_state">
         $properties['state']->value
     </xar:set>
 
-    <xar:if condition="!$canedit AND ($publication_state lt 3)">
-        You have no permission to view this item
+    <xar:if condition="$publication_state lt 3">
+        This item cannot be viewed
     <xar:else />
         <table border="0" cellpadding="3" cellspacing="0">
             <tr>
                 <td align="left" colspan="2" class="xar-normal">
                     <!-- <a class="xar-title" href="#$redirect#"> -->
+                    
+                    <xar:template file="editicons"/>
+
                     <a class="xar-title" href="#">
                         <xar:data-output property="$properties['title']" />
                     </a>
-                    <xar:if condition="$canedit">
-                        &#160;
-                        [<a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#">Edit</a>]
-                    </xar:if>
-                    <xar:if condition="$candelete">
-                        &#160;
-                        [<a href="#xarModURL('publications', 'user', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#">Delete</a>]
-                    </xar:if>
                 <br />
                 </td>
             </tr>
@@ -106,8 +90,12 @@
             <br />
                 <table border="0" width="95%">
                     <tr>
-                        <td align="left"><xar:if condition="!empty($prevart)"><a href="#$prevart#">&lt; prev </a></xar:if>&#160;</td>
-                        <td align="right">&#160;<xar:if condition="!empty($nextart)"> <a href="#$nextart#">next &gt;</a></xar:if></td>
+                        <td align="left"><xar:if condition="!empty($prevart)"><a href="#$prevart#">
+                            <img src="#xarTplGetImage('icons/go-previous.png','base')#"/>
+                        </a></xar:if>&#160;</td>
+                        <td align="right">&#160;<xar:if condition="!empty($nextart)"> <a href="#$nextart#">
+                            <img src="#xarTplGetImage('icons/go-next.png','base')#"/>
+                        </a></xar:if></td>
                     </tr>
                 </table>
         </xar:if>

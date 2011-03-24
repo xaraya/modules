@@ -1,60 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:style scope="module" module="base" file="navtabs" />
     <xar:set name="tabs">3*$itemcount</xar:set>
     <xar:if condition="!isset($tab)">
         <xar:set name="tab">''</xar:set>
     </xar:if>
-    <dl class="xar-tabs">
-        <dt class="help">
-            View:
-        </dt>
-        <xar:set name="index">0</xar:set>
+    <xar:set name="index">0</xar:set>
+    <xar:if condition="$settings['allowtranslations'] AND !empty($properties['id']->value)">
+        <div style="float:right" id="newtranslaiton">
+            <a href="#xarModURL('publications','admin','modify',array('itemid' => $properties['id']->value, 'name' => $object->name, 'tplmodule' => 'publications','tab' => 'newtranslation'))#">
+                New Translation
+            </a>
+        </div>
+    </xar:if>
+    <ul class="xar-tabs xar-alt xar-norm-outline" style="clear:both">
         <xar:foreach in="$items" value="$item">
-            <xar:if condition="$tab eq 'content'">
+            <!--<xar:if condition="$tab eq 'content'">
                 <xar:set name="class">"active"</xar:set>
             <xar:else/>
                 <xar:set name="class">""</xar:set>
-            </xar:if>
+            </xar:if>-->
             <xar:set name="index">$index + 1</xar:set>
-            <dd class="#$class#" id="tab-#$index#">
-                <a href="javascript:showtab(#$index#,#$tabs#)">
-                    Content&#160;<xar:data-output property="$properties['locale']" />
+            <li id="tab-#$index#">
+                <a id="href-#$index#" href="javascript:showtab(#$index#,#$tabs#)">
+                    <xar:if condition="empty($item['id'])">
+                        New:
+                    <xar:else/>
+                        <xar:data-output property="$properties['id']" value="$item['id']" />:
+                    </xar:if>
+                    &#160;<xar:data-output property="$properties['locale']" value="$item['locale']" />
                 </a>
-            </dd>
-            
-            <xar:if condition="$tab eq 'settings'">
+             </li>
+
+
+            <!--<xar:if condition="$tab eq 'settings'">
                 <xar:set name="class">"active"</xar:set>
             <xar:else/>
                 <xar:set name="class">""</xar:set>
-            </xar:if>
+            </xar:if>-->
             <xar:set name="index">$index + 1</xar:set>
-            <dd class="#$class#" id="tab-#$index#">
-                <a href="javascript:showtab(#$index#,#$tabs#)">
-                    Settings&#160;<xar:data-output property="$properties['locale']" />
+            <li id="tab-#$index#">
+                <a id="href-#$index#" href="javascript:showtab(#$index#,#$tabs#)">
+                    <xar:if condition="empty($item['id'])">
+                        New:
+                    <xar:else/>
+                        <xar:data-output property="$properties['id']" value="$item['id']" />:
+                    </xar:if>
+                    &#160;Settings
                 </a>
-            </dd>
-            
+            </li>
+
             <xar:if condition="$tab eq 'preview'">
                 <xar:set name="visible">'block'</xar:set>
             <xar:else />
                 <xar:set name="visible">'none'</xar:set>
             </xar:if>
             <xar:set name="index">$index + 1</xar:set>
-            <xar:set name="class">"active"</xar:set>
-            <dd class="#$class#" id="tab-#$index#" style="display: #$visible#">
-                <a href="javascript:showtab(#$index#,#$tabs#)">
-                Preview</a>
-            </dd>
-        </xar:foreach>
-        <xar:if condition="$settings['allowtranslations'] AND !empty($properties['id']->value)">
-            <dd style="float:right" id="newtranslaiton">
-                <a href="#xarModURL('publications','user','modify',array('itemid' => $properties['id']->value, 'name' => $object->name, 'tplmodule' => 'publications','tab' => 'newtranslation'))#">
-                    New Translation
+            <!--<xar:set name="class">"active"</xar:set>-->
+            <li id="tab-#$index#" style="display: #$visible#">
+                <a id="href-#$index#" href="javascript:showtab(#$index#,#$tabs#)">
+                    <xar:data-output property="$properties['id']" value="$item['id']" />:
+                    &#160;Preview
                 </a>
-            </dd>
-        </xar:if>
-    </dl>
-    <script>
-            document.getElementById('tab-1').className = "active";
-    </script>
+            </li>
+        </xar:foreach>
+    </ul>    
 </xar:template>

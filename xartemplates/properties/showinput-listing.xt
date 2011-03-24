@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:if condition="empty($layout)">
@@ -28,6 +29,11 @@
             <input type="hidden" name="module" id="module" value="#$module#" />
         </form>
     <xar:elseif condition="$layout eq 'user-view'" />
-        <xar:template file="view-summaries" />
+        <xar:set name="filename">'view-summaries-' . $object->name</xar:set>
+        <xar:if condition="file_exists(xarTplGetThemeDir().'/modules/publications/includes/'.$filename.'.xt') OR file_exists(sys::code().'modules/publications/xartemplates/includes/'.$filename.'.xt')">
+            <xar:template file="$filename" />
+        <xar:else/>
+            <xar:template file="view-summaries" />
+        </xar:if>
     </xar:if>
 </xar:template>

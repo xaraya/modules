@@ -47,7 +47,7 @@ function publications_admin_updateconfig()
         xarModVars::set('publications', 'aliasname', $aliasname);
         xarModVars::set('publications', 'defaultpubtype', $defaultpubtype);
         xarModVars::set('publications', 'sortpubtypes', $sortpubtypes);
-        if (xarDBGetType() == 'mysql') {
+        if (xarDB::getType() == 'mysql') {
             if (!xarVarFetch('fulltext', 'isset', $fulltext, '', XARVAR_NOT_REQUIRED)) {return;}
             $oldval = xarModVars::get('publications', 'fulltextsearch');
             $index = 'i_' . xarDB::getPrefix() . '_publications_fulltext';
@@ -75,6 +75,17 @@ function publications_admin_updateconfig()
                 xarModVars::set('publications', 'fulltextsearch', join(',',$searchfields));
             }
         }
+        
+        // Module settings
+        $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'base'));
+        $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls, user_menu_link');
+        $isvalid = $data['module_settings']->checkInput();
+        if (!$isvalid) {
+            return xarTplModule('base','admin','modifyconfig', $data);
+        } else {
+            $itemid = $data['module_settings']->updateItem();
+        }
+
         // Pull the base category ids from the template and save them
         $picker = DataPropertyMaster::getProperty(array('name' => 'categorypicker'));
         $picker->checkInput('basecid');

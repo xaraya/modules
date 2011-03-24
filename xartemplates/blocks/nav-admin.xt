@@ -1,9 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-form-input-wrapper">
-    <label class="xar-form-label" for="layout#$blockid#">
-        <xar:mlstring>
-            Category layout
-        </xar:mlstring>
+    <label class="xar-form-label" for="layout#$blockid#">        
+        Category layout        
     </label> <select name="layout" id="layout#$blockid#">
         <xar:loop name="$layouts">
             <xar:if condition="$layout eq $loop:item['id']">
@@ -19,10 +18,8 @@
     </select>
 </div>
 <div class="xar-form-input-wrapper">
-    <label class="xar-form-label" for="startmodule#$blockid#">
-        <xar:mlstring>
-            Show categories
-        </xar:mlstring>
+    <label class="xar-form-label" for="startmodule#$blockid#">        
+        Show categories        
     </label>
     <xar:set name="optgroup">
         0
@@ -62,10 +59,8 @@
         <xar:else />
         <input type="checkbox" name="showempty" id="showempty#$blockid#" value="1" />
     </xar:if>
-    <label for="showempty#$blockid#">
-        <xar:mlstring>
-            Show empty categories
-        </xar:mlstring>
+    <label for="showempty#$blockid#">        
+        Show empty categories        
     </label>
 </div>
 <div class="xar-form-input-wrapper-after">
@@ -74,17 +69,13 @@
         <xar:else />
         <input type="checkbox" name="dynamictitle" id="dynamictitle#$blockid#" value="1" />
     </xar:if>
-    <label for="dynamictitle#$blockid#">
-        <xar:mlstring>
-            Dynamic title (linked to content)
-        </xar:mlstring>
+    <label for="dynamictitle#$blockid#">        
+        Dynamic title (linked to content)        
     </label>
 </div>
 <div class="xar-form-input-wrapper">
-    <label class="xar-form-label" for="showcatcount#$blockid#">
-        <xar:mlstring>
-            Show count per category
-        </xar:mlstring>
+    <label class="xar-form-label" for="showcatcount#$blockid#">        
+        Show count per category        
     </label>
     <select name="showcatcount" id="showcatcount#$blockid#">
         <xar:loop name="$catcounts">
@@ -101,10 +92,8 @@
     </select>
 </div>
 <div class="xar-form-input-wrapper">
-    <label class="xar-form-label" for="showchildren#$blockid#">
-        <xar:mlstring>
-            Show children
-        </xar:mlstring>
+    <label class="xar-form-label" for="showchildren#$blockid#">        
+        Show children        
     </label>
     <select name="showchildren" id="showchildren#$blockid#">
         <xar:loop name="$children">

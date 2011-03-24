@@ -29,7 +29,7 @@ function publications_userapi_getmonthcount($args)
     $publicationsdef = xarModAPIFunc('publications','user','leftjoin',$args);
 
     // Bug 1590 - Create custom query supported by each database.
-    $dbtype = xarDBGetType();
+    $dbtype = xarDB::getType();
     switch ($dbtype) {
         case 'mysql':
             $query = "SELECT LEFT(FROM_UNIXTIME(pubdate),7) AS mymonth, COUNT(*) FROM " . $publicationsdef['table'];

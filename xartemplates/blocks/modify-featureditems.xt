@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label help" title="#xarML('Choose the publication type you want to display with top items.')#" for="pubtype_id#$blockid#"> 
@@ -47,9 +48,7 @@
     </div>
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label help" title="#xarML('Choose the state (e.g. Approved, Front Page) for the featured items.')#" for="state#$blockid#"> 
-            <xar:mlstring>
-                Status 
-            </xar:mlstring>
+            Status             
         </label>
         <xar:set name="options">
             array(
@@ -63,19 +62,15 @@
 
 <div class="xar-form-input-wrapper">
     <label for="numitems#$blockid#" class="help xar-form-label" title="#xarML('Enter the number of items to choose featured publications from.')#">
-        <xar:mlstring>
-            Limit
-        </xar:mlstring>
-        :</label> <input type="text" name="numitems" id="numitems#$blockid#" value="#$numitems#" size="3" maxlength="4" />&#160;&#160;
-    <xar:mlstring>
+        Limit       
+   :</label> <input type="text" name="numitems" id="numitems#$blockid#" value="#$numitems#" size="3" maxlength="4" />&#160;&#160;
+    
         (0 for all publications)
-    </xar:mlstring>
+    
 </div>
 <div class="xar-form-input-wrapper">
     <label for="featuredid#$blockid#" class="help xar-form-label" title="#xarML('Choose the article to display as a featured item.')#">
-        <xar:mlstring>
-            Featured Publication
-        </xar:mlstring>
+        Featured Publication        
     </label>
     <xar:var name="firstline">--- choose an article to be featured ---</xar:var>
     <xar:set name="firstline">array('id' => 0, 'name' => $firstline)</xar:set>
@@ -84,40 +79,30 @@
 </div>
 <div class="xar-form-input-wrapper">
     <label for="alttitle#$blockid#" class="help xar-form-label" title="#xarML('If you wish to give the article an alternative title to be displayed as a featured item, enter the name here.')#">
-        <xar:mlstring>
-            Alternate Title
-        </xar:mlstring>
+        Alternate Title        
     </label> <input type="text" name="alttitle" id="alttitle#$blockid#" value="#$alttitle#" size="24" maxlength="62" />
 </div>
     <div class="xar-form-input-wrapper-after">
         <xar:data-input type="checkbox" name="showfeaturedsum" checked="$showfeaturedsum"/>
         <label class="help" title="#xarML('If you wish to show the summary for the article as teaser text select this box.')#" for="showfeaturedsum#$blockid#">
-            <xar:mlstring>
-                Show summary
-            </xar:mlstring>
+            Show summary            
         </label>
     </div>
     <div class="xar-form-input-wrapper-after">
         <xar:data-input type="checkbox" name="showfeaturedbod" checked="$showfeaturedbod"/>
         <label class="help" title="#xarML('If you wish to show the whole of the body of the featured article.')#" for="showfeaturedbod#$blockid#">
-            <xar:mlstring>
-                Show body
-            </xar:mlstring>
+            Show body            
         </label>
     </div>
 <div class="xar-form-input-wrapper">
     <label class="help" title="#xarML('If you wish to give the article an alternative summary to be displayed as a featured item, enter the summary here.')#" for="altsummary#$blockid#">
-        <xar:mlstring>
-            Alternate Summary
-        </xar:mlstring>
+        Alternate Summary        
     </label>
     <textarea name="altsummary" rows="5" cols="50" id="altsummary#$blockid#">#$altsummary#</textarea>
 </div>
 <div class="xar-form-input-wrapper">
     <label class="help xar-form-label" title="#xarML('Choose additional headlines to display.')#" for="moreitems">
-        <xar:mlstring>
-            Additional Headlines
-        </xar:mlstring>
+        Additional Headlines        
     </label> <select name="moreitems[]" id="moreitems" multiple="mulitple" size="10">
         <xar:foreach in="$morepublications" value="$item">
             <xar:if condition="!empty($item['selected'])">
@@ -151,34 +136,26 @@
     <div class="xar-form-input-wrapper-after">
         <xar:data-input type="checkbox" name="showvalue" checked="$showvalue"/>
         <label class="help" title="#xarML('Select this box if you wish to display the sort options.')#" for="showvalue#$blockid#">
-            <xar:mlstring>
-                Show sort value
-            </xar:mlstring>
+            Show sort value            
         </label>
     </div>
     <div class="xar-form-input-wrapper-after">
         <xar:data-input type="checkbox" name="showsummary" checked="$showsummary"/>
         <label class="help" title="#xarML('If you wish to show the summary for the block, select this box.')#" for="showsummary#$blockid#">
-            <xar:mlstring>
-                Show summary
-            </xar:mlstring>
+            Show summary            
         </label>
     </div>
     <div class="xar-form-input-wrapper-after">
         <xar:data-input type="checkbox" name="linkpubtype" checked="$linkpubtype"/>
         <label class="help" title="#xarML('Set to include the publication type in the article link.')#" for="linkpubtype#$blockid#">
-            <xar:mlstring>
-                Link to publication type
-            </xar:mlstring>
+            Link to publication type            
         </label>
     </div>
     <xar:if condition="isset($catfilter)">
         <div class="xar-form-input-wrapper-after">
             <xar:data-input type="checkbox" name="linkcat" checked="$linkcat"/>
             <label class="help" title="#xarML('Set to include the filter category in the article link.')#" for="linkcat#$blockid#">
-                <xar:mlstring>
-                    Link to filter category
-                </xar:mlstring>
+                Link to filter category                
             </label>
         </div>
     </xar:if>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:loop name="$feature">
     <xar:if condition="!empty($loop:item.featuredlabel)">
@@ -26,7 +27,7 @@
 </xar:loop>
 
 <xar:if condition="!empty($items)">
-    <div class="xar-block-title"><xar:mlstring>More Featured Headlines</xar:mlstring>:</div>
+    <div class="xar-block-title">More Featured Headlines:</div>
     <ul>
     <xar:foreach in="$items" value="$item">
       <li>

@@ -2,21 +2,13 @@
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>
-                Publications Administration
-            </xar:mlstring>
+            Publications Administration            
         </span>
     </div>
     <div class="xar-mod-body">
         <h2>
-            <xar:mlstring>
-                Manage Publications
-            </xar:mlstring>
+            Manage Publications            
         </h2>
-
-        <xar:comment>
-            You can use different admin-view-[pubtype].xd templates for different pubtypes
-        </xar:comment>
 
         <div>
             <div>
@@ -31,9 +23,9 @@
                 <h3>
                 <xar:if condition="!empty($pubdate)">
                     <xar:ml>
-                        <xar:mlstring>
+                        
                             Publication Date : #(1)
-                        </xar:mlstring>
+                        
                         <xar:mlvar>
                             #$pubdate#
                         </xar:mlvar>
@@ -41,9 +33,9 @@
                 </xar:if>
                 <xar:if condition="!empty($owner)">
                     <xar:ml>
-                        <xar:mlstring>
+                        
                             By Author : #(1)
-                        </xar:mlstring>
+                        
                         <xar:mlvar>
                             #xarUserGetVar('name',$owner)#
                         </xar:mlvar>
@@ -51,9 +43,9 @@
                 </xar:if>
                 <xar:if condition="!empty($locale)">
                     <xar:ml>
-                        <xar:mlstring>
+                        
                             Language : #(1)
-                        </xar:mlstring>
+                        
                         <xar:mlvar>
                             #$locale#
                         </xar:mlvar>
@@ -70,48 +62,8 @@
                     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
 
                     <div style="width: 100%">
-                    <xar:data-input type="listing" object="$object" conditions="$conditions" tplmodule="publications" layout="publications"/>
+                        <xar:data-input type="listing" object="$object" conditions="$conditions" tplmodule="publications" layout="publications"/>
                     </div>
-                    <xar:if condition="!empty($showstate) and count($items) gt 0">
-                        <p>
-                            <label for="state">
-                                <xar:mlstring>
-                                    Change checked article state to
-                                </xar:mlstring>
-                                :</label>&#160;
-                            <select name="state" id="state">
-                            <xar:if condition="xarSecurityCheck('ManagePublications',0,'Publication',$id.':All:All:All')">
-                                <option value="-1">
-                                    <xar:mlstring>
-                                        [Delete All]
-                                    </xar:mlstring>
-                                </option>
-                            </xar:if>
-                            <xar:foreach in="$states" key="$id" value="$name">
-                                <xar:if condition="$id eq 2">
-                                    <xar:comment>Approved</xar:comment>
-                                    <option value="#$id#" selected="selected">
-                                        #$name#
-                                    </option>
-                                <xar:elseif condition="$id eq 3"/>
-                                    <xar:comment>Frontpage</xar:comment>
-                                    <xar:if condition="xarModVars::get('publications','defaultpubtype') eq $id or xarModVars::get('publications','defaultpubtype') eq ''">
-                                        <option value="#$id#">
-                                            #$name#
-                                        </option>
-                                    </xar:if>
-                                <xar:else/>
-                                    <option value="#$id#">
-                                        #$name#
-                                    </option>
-                                </xar:if>
-                            </xar:foreach>
-                            </select>&#160;
-                            <input type="submit" value="#$changestatelabel#" />&#160;
-                            <a href="javascript:xar_base_checkall(document.getElementById('viewpublications'),true)"><xar:mlstring>Check All</xar:mlstring></a>&#160;|&#160;
-                            <a href="javascript:xar_base_checkall(document.getElementById('viewpublications'),false)"><xar:mlstring>Uncheck All</xar:mlstring></a> ]
-                        </p>
-                    </xar:if>
                 </div>
             </form>
         </div>

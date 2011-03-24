@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <li>
@@ -6,7 +7,10 @@
                 #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
             </xar:foreach> ]
         </xar:if>
-        <a class="xar-title" href="#$link#">
+        
+        <xar:template file="editicons"/>
+        
+        <a class="xar-title" href="#xarModURL('publications','user','display',array('id' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
             <xar:data-output property="$properties['title']" />
         </a>
         <xar:if condition="!empty($rating)">

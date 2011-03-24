@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:javascript module="publications" filename="tabs.js" />
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
@@ -16,9 +17,7 @@
         <br />
         <dl class="xar-tabs">
             <dt class="help">
-                <xar:mlstring>
-                    Applies to:
-                </xar:mlstring>
+                Applies to:                
             </dt>
             <xar:if condition="$tab eq 'global'">
                 <xar:set name="class">"active"</xar:set>
@@ -27,7 +26,7 @@
             </xar:if>
             <dd class="#$class#">
                 <a href="#xarModURL('publications', 'admin', 'modifyconfig', array('tab' => 'global'))#">
-                <xar:mlstring>Global</xar:mlstring></a>
+                Global</a>
             </dd>
             <xar:if condition="$tab eq 'pubtypes'">
                 <xar:set name="class">"active"</xar:set>
@@ -36,13 +35,13 @@
             </xar:if>
             <dd class="#$class#">
                 <a href="#xarModURL('publications', 'admin', 'modifyconfig', array('tab' => 'pubtypes'))#">
-                <xar:mlstring>Punlication Types</xar:mlstring></a>
+                Publication Types</a>
             </dd>
         </dl>
 
        <form class="xar-formwidget" action="&xar-modurl-publications-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
             <xar:if condition="$tab eq 'global'">
-                <xar:template file="display" module="base" subdata="array('modulename' => 'publications')" />
+                <xar:data-form object="$module_settings"/>
                 <fieldset class="xar-norm">
                     <legend>
                         Global Configuration
@@ -67,7 +66,7 @@
                         </xar:set>
                         <xar:data-input name="sortpubtypes" type="dropdown" options="$options" />&#160;
                     </div>
-                    <xar:if condition="xarDBGetType() eq 'mysql'">
+                    <xar:if condition="xarDB::getType() eq 'mysql'">
                     <div class="xar-form-input-wrapper">
                     <xar:comment>
                         You can adapt the field list here if you want e.g. to ignore the notes field for full-text search
@@ -184,10 +183,10 @@
                                     <input type="text" name="settings[items_per_page]" id="settings_items_per_page" size="3" maxlength="3" value="#$settings['items_per_page']#" />
                                 </div>
                                 <div class="xar-form-input-wrapper">
-                                    <label for="adminitemsperpage" class="help xar-form-label" title="#xarML('Number of items to display on admin view.')#">
+                                    <label for="admin_items_per_page" class="help xar-form-label" title="#xarML('Number of items to display on admin view.')#">
                                             Items per page on admin view
                                     </label> 
-                                    <input type="text" name="settings[adminitemsperpage]" id="settings_adminitemsperpage" size="3" maxlength="3" value="#$settings['adminitemsperpage']#" />
+                                    <input type="text" name="settings[admin_items_per_page]" id="settings_admin_items_per_page" size="3" maxlength="3" value="#$settings['admin_items_per_page']#" />
                                 </div>
                             </td>
                         </tr>
@@ -420,7 +419,7 @@
                     <xar:button type="submit" label="$label" />
                     &#160;
                     <xar:set name="label">xarML('Reset')</xar:set>
-                    <xar:button type="reset" label="$label" />
+                    <xar:button type="cancel" label="$label" />
                     <input type="hidden" name="tab" id="tab" value="#$tab#" />
                     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" /> 
                 </div>

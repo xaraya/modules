@@ -1,6 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:set name="context">xarModAPIFunc('publications','user','getsettings',array('ptid' => $properties['itemtype']->value))</xar:set>
+    <xar:set name="ptid">$properties['itemtype']->value</xar:set>
+    <xar:set name="context">xarModAPIFunc('publications','user','getsettings',array('ptid' => $ptid))</xar:set>
 
     <xar:set name="colwidth">
         100
@@ -16,25 +17,20 @@
         1;$context['showcols'] = 1
     </xar:set>
 
-        <xar:comment>
+        <!--
             You can use different user-view-[pubtype].xd templates for different pubtypes,
             and also a separate user-view-frontpage.xd template for the publications frontpage
-        </xar:comment>
+        -->
 
     <xar:template file="navtabs-user" type="module" />
-
-    <xar:template file="alphapager" type="module" />
 
     <h2>
         #$object->label#
     </h2>
-    <xar:set name="instance">$context['pubtypeobject']->properties['id']->value.':All:All:All'</xar:set>
+    <xar:set name="instance">$properties['itemtype']->value.':All:All:All'</xar:set>
     <xar:sec mask="SubmitPublications" instance="$instance" >
-        <a href="#xarModURL('publications','user','new',array('ptid' => $context['pubtypeobject']->properties['id']->value))#">
-            <xar:ml>
-                <xar:mlstring>Submit a #(1)</xar:mlstring>
-                <xar:mlvar>#$context['pubtypeobject']->properties['description']->value#</xar:mlvar>
-            </xar:ml>
+        <a href="#xarModURL('publications','admin','new',array('ptid' => $ptid))#">
+            Submit a <xar:data-output property="$properties['title']"/>
         </a>
         <div style="clear:both">&#160;</div>
     </xar:sec>
@@ -44,13 +40,13 @@
         <h2>
             <xar:if condition="!empty($pubdate)">
                 <xar:ml>
-                    <xar:mlstring>Publication Date : #(1)</xar:mlstring>
+                    Publication Date : #(1)
                     <xar:mlvar>#$pubdate#</xar:mlvar>
                 </xar:ml>
             </xar:if>
             <xar:if condition="!empty($author)">
                 <xar:ml>
-                    <xar:mlstring>By Author : #(1)</xar:mlstring>
+                    By Author : #(1)
                     <xar:mlvar>#$author#</xar:mlvar>
                 </xar:ml>
             </xar:if>
@@ -62,6 +58,7 @@
             There are no publications to display
         </div>
     <xar:else />
+        <xar:template file="listingslist_pagerline" module="$module,listings" />
         <xar:if condition="!empty($context['number_of_columns'])">
             <div id="article-columns" style="width: 98%;">
                 <xar:foreach in="$items" key="$itemid" value="$item">
@@ -82,7 +79,7 @@
         <xar:else />
             <a href="#xarModURL('publications','user','view')#">
                 <xar:ml>
-                    <xar:mlstring>#(1)-column display</xar:mlstring>
+                    #(1)-column display
                     <xar:mlvar>#$context['showcols']#</xar:mlvar>
                 </xar:ml>
             </a>

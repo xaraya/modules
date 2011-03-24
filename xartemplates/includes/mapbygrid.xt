@@ -1,10 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:if condition="empty($descr)">
         <h2>
-            <xar:mlstring>
-                Publication Map by Grid
-            </xar:mlstring>
+            Publication Map by Grid
         </h2>
         <xar:else />
         <h2>

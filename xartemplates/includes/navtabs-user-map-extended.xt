@@ -1,25 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="base" file="navtabs" />
 <dl class="xar-tabs">
-    <dt class="help" title="#xarML('Click on a tab to explore further')#">
-        <xar:mlstring>
-            Options 
-        </xar:mlstring>
-        : 
+    <dt class="help" title="#xarML('Click on a tab to explore further')#">        
+        Options 
     </dt>
     <dd>
-        <a href="#xarModURL('publications','user','viewmap',array('by' => 'pub','ptid' => $ptid))#">
-            <xar:mlstring>
-                Publication Map by Publication Type 
-            </xar:mlstring>
+        <a href="#xarModURL('publications','user','viewmap',array('by' => 'pub','ptid' => $ptid))#">            
+            Publication Map by Publication Type             
         </a>
     </dd>
     <xar:if condition="count($catfilter) eq 2">
         <dd>
-            <a href="#xarModURL('publications','user','viewmap',array('by' => 'grid'))#">
-                <xar:mlstring>
-                    Publication Map by Grid 
-                </xar:mlstring>
+            <a href="#xarModURL('publications','user','viewmap',array('by' => 'grid'))#">                
+                Publication Map by Grid                 
             </a>
         </dd>
     </xar:if>

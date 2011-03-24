@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:if condition="empty($layout)">
         <xar:set name="layout">'publications'</xar:set>
@@ -46,15 +47,9 @@
                 <xar:if condition="$field eq $primaryalias AND !$showprimary">
                     <xar:continue />
                 </xar:if>
-                <xar:if condition="substr($field,0,1) eq 'c'">
-                    <td>
-                        #$value#
-                    </td>
-                <xar:else />
-                    <td>
-                        <xar:data-output property="$properties[$column]" value="$value"/>
-                    </td>
-                </xar:if>
+                <td>
+                    <xar:data-output property="$properties[$column]" value="$value"/>
+                </td>
             </xar:foreach>
 
             <xar:template file="listing_rowsuffix" module="$module" property="listing" />

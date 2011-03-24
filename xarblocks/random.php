@@ -110,14 +110,6 @@
         public function modify(Array $data=array())
         {
             $data = parent::modify($data);
-            if (empty($data['locale'])) {$data['locale'] = $this->locale;}
-            if (empty($data['alttitle'])) {$data['alttitle'] = $this->alttitle;}
-            if (empty($data['altsummary'])) {$data['altsummary'] = $this->altsummary;}
-            if (empty($data['showtitle'])) {$data['showtitle'] = $this->showtitle;}
-            if (empty($data['showsummary'])) {$data['showsummary'] = $this->showsummary;}
-            if (empty($data['showpubdate'])) {$data['showpubdate'] = $this->showpubdate;}
-            if (empty($data['showauthor'])) {$data['showauthor'] = $this->showauthor;}
-            if (empty($data['showsubmit'])) {$data['showsubmit'] = $this->showsubmit;}
             if(!empty($data['catfilter'])) {
                 $cidsarray = array($data['catfilter']);
             } else {

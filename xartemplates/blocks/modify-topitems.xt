@@ -1,9 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label help" title="#xarML('Enter the number of items that you wish to display.')#" for="numitems#$blockid#"> 
-            <xar:mlstring>
-                Number of items 
-            </xar:mlstring>
+            Number of items             
         </label> <input type="text" name="numitems" id="numitems#$blockid#" value="#$numitems#" size="5" maxlength="5" /> 
     </div>
     <xar:if condition="empty($nopublimit)">
@@ -95,10 +94,8 @@
         </label> 
     </div> 
     <div class="xar-form-input-wrapper">
-        <label class="xar-form-label help" title="#xarML('Choose the state (e.g. Approved, Front Page) for the featured items.')#" for="state#$blockid#"> 
-            <xar:mlstring>
-                Status 
-            </xar:mlstring>
+        <label class="xar-form-label help" title="#xarML('Choose the state (e.g. Approved, Front Page) for the featured items.')#" for="state#$blockid#">             
+            Status             
         </label>
         <xar:set name="options">
             array(

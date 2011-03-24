@@ -1,171 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<h2><xar:mlstring>Search in Publications</xar:mlstring></h2>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <h2>Search in Publications</h2>
 
-<xar:set name="fulltext">xarModVars::get('publications', 'fulltextsearch')</xar:set>
-<xar:if condition="!empty($fulltext)">
-    <xar:set name="fulltextfields">explode(',',$fulltext)</xar:set>
-</xar:if>
+    <xar:set name="fulltext">xarModVars::get('publications', 'fulltextsearch')</xar:set>
+    <xar:if condition="!empty($fulltext)">
+        <xar:set name="fulltextfields">explode(',',$fulltext)</xar:set>
+    </xar:if>
 
-<form method="post" action="&xar-modurl-publications-user-search;">
-<table border="0" cellpadding="4" cellspacing="0">
-  <xar:if condition="empty($ishooked)">
-        <tr>
-          <td><label for="q"><xar:mlstring>Search for</xar:mlstring></label></td>
-          <td><input type="text" name="q" id="q" value="#$q#" size="20" />
-            <xar:set name="search"><xar:mlstring>Search</xar:mlstring></xar:set>
-            &#160;&#160;&#160; <input type="submit" name="search" value="#$search#" /></td>
-        </tr>
-        <tr>
-          <td><label for="author"><xar:mlstring>By author</xar:mlstring></label></td>
-          <td><input type="text" name="author" id="author" value="#$author#" size="20" /></td>
-        </tr>
-        <tr>
-          <td><label for="searchtype"><xar:mlstring>Search type</xar:mlstring></label></td>
-          <td>
-            <xar:set name="options">
-                array(
-                    array('id' => 'start', 'name' => xarML('starts with')),
-                    array('id' => 'end', 'name' => xarML('ends with')),
-                    array('id' => 'eq', 'name' => xarML('equal to')),
-                    array('id' => 'fulltext', 'name' => xarML('full-text')),
-                    array('id' => 'fulltext boolean', 'name' => xarML('full-text boolean')),
-                )             
-            </xar:set>
-            <xar:data-input name="searchtype" options="$options" value="$searchtype" />
-          </td>
-        </tr>
-  </xar:if>
-  <tr>
-    <td><xar:mlstring>Publications</xar:mlstring></td>
-    <td>
-      <table border="0" cellpadding="0" cellspacing="3">
-        <xar:set name="i">0</xar:set>
-        <tr>
-        <input type="hidden" name="ptids[]" value="0"/>
-        <xar:while condition="1 eq  1">
-            <td valign="top">
+    <form method="post" action="&xar-modurl-publications-user-search;">
+    <table border="0" cellpadding="4" cellspacing="0">
+      <xar:if condition="empty($ishooked)">
+            <tr>
+              <td><label for="q">Search for</label></td>
+              <td><input type="text" name="q" id="q" value="#$q#" size="20" />
+                <xar:var name="search">Search</xar:var>
+                &#160;&#160;&#160; <input type="submit" name="search" value="#$search#" /></td>
+            </tr>
+            <tr>
+              <td><label for="author">By author</label></td>
+              <td><input type="text" name="author" id="author" value="#$author#" size="20" /></td>
+            </tr>
+            <tr>
+              <td><label for="searchtype">Search type</label></td>
+              <td>
+                <xar:set name="options">
+                    array(
+                        array('id' => 'start', 'name' => xarML('starts with')),
+                        array('id' => 'end', 'name' => xarML('ends with')),
+                        array('id' => 'eq', 'name' => xarML('equal to')),
+                        array('id' => 'fulltext', 'name' => xarML('full-text')),
+                        array('id' => 'fulltext boolean', 'name' => xarML('full-text boolean')),
+                    )             
+                </xar:set>
+                <xar:data-input name="searchtype" options="$options" value="$searchtype" />
+              </td>
+            </tr>
+      </xar:if>
+      <tr>
+        <td>Publications</td>
+        <td>
+          <table border="0" cellpadding="0" cellspacing="3">
+            <xar:set name="i">0</xar:set>
+            <tr>
+            <input type="hidden" name="ptids[]" value="0"/>
             <xar:while condition="1 eq  1">
+                <td valign="top">
+                <xar:while condition="1 eq  1">
+                    <xar:if condition="empty($publications)">
+                        <xar:break />
+                    </xar:if>
+                    <xar:set name="pubtype">array_pop($publications)</xar:set>
+            <!--          <input type="checkbox" name="ptids[]" id="#$pubtype['pubdescr']#" value="#$pubtype['pubid']#"#$pubtype['pubchecked']# /> -->
+                      <input type="checkbox" name="ptids[]" id="#$pubtype['description']#" value="#$pubtype['pubid']#" />
+                      <label for="#$pubtype['pubdescr']#">#$pubtype['pubdescr']#</label> <br />
+                      <xar:if condition="$i++ and $i % 2 eq 0">
+                        <xar:break />
+                      </xar:if>
+                </xar:while>
+                </td>
                 <xar:if condition="empty($publications)">
                     <xar:break />
                 </xar:if>
-                <xar:set name="pubtype">array_pop($publications)</xar:set>
-        <!--          <input type="checkbox" name="ptids[]" id="#$pubtype['pubdescr']#" value="#$pubtype['pubid']#"#$pubtype['pubchecked']# /> -->
-                  <input type="checkbox" name="ptids[]" id="#$pubtype['description']#" value="#$pubtype['pubid']#" />
-                  <label for="#$pubtype['pubdescr']#">#$pubtype['pubdescr']#</label> <br />
-                  <xar:if condition="$i++ and $i % 2 eq 0">
-                    <xar:break />
-                  </xar:if>
             </xar:while>
-            </td>
-            <xar:if condition="empty($publications)">
-                <xar:break />
-            </xar:if>
-        </xar:while>
-      </tr></table>
-    </td>
-  </tr>
-  <tr>
-    <td><xar:mlstring>Published</xar:mlstring></td>
-    <td><label for="publications_startdate"><xar:mlstring>between</xar:mlstring></label> <xar:data-input name="publications_startdate" value="$startdate" type="calendar" /> &#160;<label for="publications_enddate"><xar:mlstring>and</xar:mlstring></label>  <xar:data-input name="publications_enddate" value="$enddate" type="calendar" /></td>
-  </tr>
+          </tr></table>
+        </td>
+      </tr>
+      <tr>
+        <td>Published</td>
+        <td><label for="publications_startdate">between</label> <xar:data-input name="publications_startdate" value="$startdate" type="calendar" /> &#160;<label for="publications_enddate">and</label>  <xar:data-input name="publications_enddate" value="$enddate" type="calendar" /></td>
+      </tr>
 
-  <xar:if condition="!empty($statelist)">
-    <tr>
-      <td><xar:mlstring>Status</xar:mlstring></td>
-      <td><xar:foreach in="$statelist" value="$item">
-          <xar:if condition="$item['checked']">
-            <input type="checkbox" name="state[]" id="state_#$item['id']#" value="#$item['id']#" checked="checked" />
-            <xar:else/>
-            <input type="checkbox" name="state[]" id="state_#$item['id']#" value="#$item['id']#" />
-          </xar:if>
-          <label for="state_#$item['id']#">#$item['name']#</label>
-      </xar:foreach></td>
-    </tr>
-  </xar:if>
+      <xar:if condition="!empty($statelist)">
+        <tr>
+          <td>Status</td>
+          <td><xar:foreach in="$statelist" value="$item">
+              <xar:if condition="$item['checked']">
+                <input type="checkbox" name="state[]" id="state_#$item['id']#" value="#$item['id']#" checked="checked" />
+                <xar:else/>
+                <input type="checkbox" name="state[]" id="state_#$item['id']#" value="#$item['id']#" />
+              </xar:if>
+              <label for="state_#$item['id']#">#$item['name']#</label>
+          </xar:foreach></td>
+        </tr>
+      </xar:if>
 
-  <xar:if condition="!empty($fieldlist)">
-    <tr>
-      <td><xar:mlstring>Fields</xar:mlstring></td>
-      <td><xar:foreach in="$fieldlist" value="$item">
-          <xar:if condition="!empty($fulltextfields) and in_array($item['id'],$fulltextfields)">
-            <input type="checkbox" name="publications_fields[#$item['id']#]" id="publications_fields_#$item['id']#" value="1" checked="checked" disabled="disabled" />
-            <xar:elseif condition="$item['checked']"/>
-            <input type="checkbox" name="publications_fields[#$item['id']#]" id="publications_fields_#$item['id']#" value="1" checked="checked" />
-            <xar:else/>
-            <input type="checkbox" name="publications_fields[#$item['id']#]" id="publications_fields_#$item['id']#" value="1" />
-          </xar:if>
-          <label for="publications_fields_#$item['id']#">#$item['name']#</label>
-      </xar:foreach></td>
-    </tr>
-  </xar:if>
+      <xar:if condition="!empty($fieldlist)">
+        <tr>
+          <td>Fields</td>
+          <td><xar:foreach in="$fieldlist" value="$item">
+              <xar:if condition="!empty($fulltextfields) and in_array($item['id'],$fulltextfields)">
+                <input type="checkbox" name="publications_fields[#$item['id']#]" id="publications_fields_#$item['id']#" value="1" checked="checked" disabled="disabled" />
+                <xar:elseif condition="$item['checked']"/>
+                <input type="checkbox" name="publications_fields[#$item['id']#]" id="publications_fields_#$item['id']#" value="1" checked="checked" />
+                <xar:else/>
+                <input type="checkbox" name="publications_fields[#$item['id']#]" id="publications_fields_#$item['id']#" value="1" />
+              </xar:if>
+              <label for="publications_fields_#$item['id']#">#$item['name']#</label>
+          </xar:foreach></td>
+        </tr>
+      </xar:if>
 
-  <tr>
-    <td><xar:mlstring>Categories</xar:mlstring></td>
-    <xar:if condition="count($categories) eq 0">
-      <td>
-        <input type="checkbox" name="by" id="filterbycat" value="cat" onChange="javascript:this.form.submit();" />
-        <label for="filterbycat"><xar:mlstring>Filter by category</xar:mlstring></label>
-      </td>
-    <xar:else />
-    <td>
-        <input type="checkbox" name="by" id="filterbycat" value="cat" onChange="javascript:this.form.submit();" checked="checked" />
-        <label for="filterbycat"><xar:mlstring>Filter by category</xar:mlstring></label></td>
-    </xar:if>
-    </tr>
-    </table>
+      <tr>
+        <td>Categories</td>
+        <xar:if condition="count($categories) eq 0">
+          <td>
+            <input type="checkbox" name="by" id="filterbycat" value="cat" onChange="javascript:this.form.submit();" />
+            <label for="filterbycat">Filter by category</label>
+          </td>
+        <xar:else />
+        <td>
+            <input type="checkbox" name="by" id="filterbycat" value="cat" onChange="javascript:this.form.submit();" checked="checked" />
+            <label for="filterbycat">Filter by category</label></td>
+        </xar:if>
+        </tr>
+        </table>
 
-    <xar:if condition="count($categories) eq 0">
-        <table border="0" cellpadding="4" cellspacing="0">
-          <xar:set name="i">0</xar:set>
-          <xar:while condition="1 eq  1">
-          <tr>
-            <xar:while condition="1 eq  1">
+        <xar:if condition="count($categories) eq 0">
+            <table border="0" cellpadding="4" cellspacing="0">
+              <xar:set name="i">0</xar:set>
+              <xar:while condition="1 eq  1">
+              <tr>
+                <xar:while condition="1 eq  1">
+                    <xar:if condition="empty($categories)">
+                        <xar:break />
+                    </xar:if>
+                    <xar:set name="cat">array_pop($categories)</xar:set>
+                      <td valign="top" align="right">#$cat['cattitle']# : </td>
+                      <td valign="top">#$cat['catselect']# </td>
+                      <xar:if condition="$i++ and $i % 2 eq 0">
+                        <xar:break />
+                      </xar:if>
+                </xar:while>
+              </tr>
                 <xar:if condition="empty($categories)">
                     <xar:break />
                 </xar:if>
-                <xar:set name="cat">array_pop($categories)</xar:set>
-                  <td valign="top" align="right">#$cat['cattitle']# : </td>
-                  <td valign="top">#$cat['catselect']# </td>
-                  <xar:if condition="$i++ and $i % 2 eq 0">
-                    <xar:break />
-                  </xar:if>
-            </xar:while>
-          </tr>
-            <xar:if condition="empty($categories)">
-                <xar:break />
-            </xar:if>
-          </xar:while>
-        </table>
-    </xar:if>
-    </form>
-
-<xar:foreach in="$results" value="$result">
-  <h3>#$result['description']#:</h3>
-  <ul>
-    <xar:foreach in="$result['items']" value="$item">
-      <li>
-        <xar:if condition="!empty($item['categories']) and count($item['categories']) gt 0">
-          [ <xar:foreach in="$item['categories']" value="$cat">
-            #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
-          </xar:foreach> ]
+              </xar:while>
+            </table>
         </xar:if>
-        <a href="#$item['link']#">#$item['title']#</a> <xar:if condition="!empty($item['pubdate'])">#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $item['pubdate'])#</xar:if>
-        <!-- Show relevance for MySQL full-text search (see $getfields in search.php)
-            <xar:if condition="isset($item['relevance'])">
-              <xar:set name="relevance">sprintf('%.2f',$item['relevance'])</xar:set>
-              [#$relevance#]
+        </form>
+
+    <xar:foreach in="$results" value="$result">
+      <h3>#$result['description']#:</h3>
+      <ul>
+        <xar:foreach in="$result['items']" value="$item">
+          <li>
+            <xar:if condition="!empty($item['categories']) and count($item['categories']) gt 0">
+              [ <xar:foreach in="$item['categories']" value="$cat">
+                #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
+              </xar:foreach> ]
             </xar:if>
-        -->
-      </li>
+            <a href="#$item['link']#">#$item['title']#</a> <xar:if condition="!empty($item['pubdate'])">#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $item['pubdate'])#</xar:if>
+            <!-- Show relevance for MySQL full-text search (see $getfields in search.php)
+                <xar:if condition="isset($item['relevance'])">
+                  <xar:set name="relevance">sprintf('%.2f',$item['relevance'])</xar:set>
+                  [#$relevance#]
+                </xar:if>
+            -->
+          </li>
+        </xar:foreach>
+      </ul>
+      #$result['pager']#
     </xar:foreach>
-  </ul>
-  #$result['pager']#
-</xar:foreach>
 
-<xar:if condition="!empty($state)">
-  <br />#$state#<br />
-</xar:if>
+    <xar:if condition="!empty($state)">
+      <br />#$state#<br />
+    </xar:if>
 
-<br />
+    <br />
 </xar:template>

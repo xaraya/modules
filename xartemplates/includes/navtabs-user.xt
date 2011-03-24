@@ -1,12 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:if condition="!empty($settings['showmap']) or !empty($settings['showarchives']) or !empty($settings['showsubmit'])">
         <xar:style scope="module" module="base" file="navtabs" />
         <dl class="xar-tabs">
             <dt class="help">
-                <xar:mlstring>
-                    Options 
-                </xar:mlstring>
-                : 
+                Options                 : 
             </dt>
             <xar:if condition="!empty($settings['showmap'])">
                 <dd>
@@ -17,10 +15,8 @@
             </xar:if>
             <xar:if condition="!empty($settings['showsubmit'])">
                 <dd>
-                    <a href="#xarModURL('publications', 'user', 'new', array('ptid' => !empty($ptid) ? $ptid : null))#" title="Submit Publication">
-                        <xar:mlstring>
-                            Contribute 
-                        </xar:mlstring>
+                    <a href="#xarModURL('publications', 'admin', 'new', array('ptid' => !empty($ptid) ? $ptid : null))#" title="Submit Publication">
+                        Contribute 
                     </a>
                 </dd>
             </xar:if>

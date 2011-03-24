@@ -85,6 +85,11 @@ function publications_admin_modifyconfig()
         $data['usealias'] = false;
     }
 
+    //The usual bunch of vars
+    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'publications'));
+    $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls, user_menu_link');
+    $data['module_settings']->getItem();
+
     // Get the publication type for this display
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));

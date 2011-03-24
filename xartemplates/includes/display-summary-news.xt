@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-norm xar-standard-box-padding">
@@ -8,7 +9,10 @@
             </xar:foreach>
             ]
         </xar:if>
-        <h1> <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $properties['id']->getValue(),'ptid' => $properties['itemtype']->value))#">
+        
+        <xar:template file="editicons"/>
+        
+        <h1> <a class="xar-title" href="#xarModURL('publications','user','display',array('id' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
                 <xar:data-output property="$properties['title']" />
             </a>
         </h1>
