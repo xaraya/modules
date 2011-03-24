@@ -168,7 +168,7 @@
       <label>Categories</label>
       <type>categories</type>
       <defaultvalue></defaultvalue>
-      <source>dummy</source>
+      <source></source>
       <status>32</status>
       <seq>28</seq>
       <configuration>a:3:{s:14:"display_layout";s:7:"default";s:21:"validation_categories";s:1:"0";s:19:"validation_override";s:1:"1";}</configuration>
@@ -208,7 +208,7 @@
       <label>Position</label>
       <type>celkoposition</type>
       <defaultvalue></defaultvalue>
-      <source>dummy</source>
+      <source></source>
       <status>34</status>
       <seq>32</seq>
       <configuration>a:6:{s:14:"display_layout";s:7:"default";s:25:"initialization_celkotable";s:16:"xar_publications";s:24:"initialization_celkoname";s:4:"name";s:29:"initialization_celkoparent_id";s:13:"parentpage_id";s:28:"initialization_celkoright_id";s:12:"rightpage_id";s:27:"initialization_celkoleft_id";s:11:"leftpage_id";}</configuration>
