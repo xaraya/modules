@@ -203,7 +203,7 @@ function publications_init()
                        'register_block_type',
                        array('modName'  => 'publications',
                              'blockType'=> 'glossary'))) return;
-*/
+
     if (!xarModRegisterHook('item', 'search', 'GUI',
                            'publications', 'user', 'search')) {
         return false;
