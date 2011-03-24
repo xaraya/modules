@@ -168,7 +168,7 @@
     <property name="start_date">
       <id>251</id>
       <label>Start Date</label>
-      <type>formatteddatetime</type>
+      <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>publication.start_date</source>
       <status>34</status>
@@ -178,7 +178,7 @@
     <property name="end_date">
       <id>252</id>
       <label>End Date</label>
-      <type>formatteddatetime</type>
+      <type>datetime</type>
       <defaultvalue>time()+31536000</defaultvalue>
       <source>publication.end_date</source>
       <status>34</status>
@@ -208,7 +208,7 @@
     <property name="created">
       <id>256</id>
       <label>Created</label>
-      <type>formatteddatetime</type>
+      <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>publication.create_date</source>
       <status>66</status>
@@ -218,7 +218,7 @@
     <property name="modified">
       <id>257</id>
       <label>Modified</label>
-      <type>formatteddatetime</type>
+      <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>publication.modify_date</source>
       <status>66</status>

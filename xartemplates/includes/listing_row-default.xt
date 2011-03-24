@@ -8,7 +8,7 @@
             <xar:foreach in="$fields" key="$field">
                 <xar:set name="value">$loopitem[$field]</xar:set>
                 <xar:set name="column">$columns[$field]</xar:set>
-                <xar:if condition="$field eq $primaryalias AND !$showprimary">
+                <xar:if condition="$field eq $primaryalias AND !$show_primary">
                     <xar:continue />
                 </xar:if>
                 <xar:if condition="substr($field,0,1) eq 'c'">
