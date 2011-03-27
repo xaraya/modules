@@ -106,11 +106,11 @@
     <h3>Additional credits</h3>
     <ul>
         <li>
-            Most icons in modules/crispbb/xarimages/tango/ courtesy of the 
+            Most icons in modules/crispbb/xarimages/tango/ courtesy of the
             <a href="http://tango.freedesktop.org/Tango_Desktop_Project" rel="external">Tango Desktop Project</a> and are in the public domain.  The remaining icons created by Xaraya developers, licensed under the GPL.
         </li>
         <li>
-            Icons in modules/crispbb/xarimages/icons/ are courtesy of 
+            Icons in modules/crispbb/xarimages/icons/ are courtesy of
             <a href="http://www.famfamfam.com/lab/icons/silk/" rel="external">FamFamFam Silk Icons</a> by Mark James and are licensed under <a href="http://creativecommons.org/licenses/by/3.0/" rel="external">Creative Commons Attribution 3.0 License</a>.
         </li>
     </ul>

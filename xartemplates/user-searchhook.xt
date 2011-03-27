@@ -3,14 +3,14 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:if condition="!empty($forums)">
     <h2>
-        
+
             Search in Forums
-        
+
     </h2>
     <p>
-        
+
             Search
-        
+
         :
         <xar:if condition="empty($component) || $component eq 'topics'">
         <input type="radio" name="crispbb_component" id="component_topics" value="topics" checked="checked" />
@@ -25,9 +25,9 @@
         </xar:if>
     </p>
     <p>
-        
+
             Search field
-        
+
         :
         <xar:if condition="isset($crispbb_fields['ttitle']) and !empty($crispbb_fields['ttitle'])">
             <input type="checkbox" name="crispbb_fields[ttitle]" id="crispbb_fields_ttitle" value="1" checked="checked" />
@@ -57,9 +57,9 @@
         <label>Text</label>
     </p>
     <p>
-        
+
             Search forum
-        
+
         :
         <xar:foreach in="$forums" key="$fid" value="$forum">
             <xar:if condition="isset($crispbb_fids[$fid]) and !empty($crispbb_fids[$fid])">

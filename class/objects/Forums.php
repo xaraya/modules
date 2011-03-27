@@ -367,7 +367,8 @@ class Forums extends DataObject
 /*  // join on categories, this module, this forum id,
     // adds all categories_linkage fields as properties of the object
     // @TODO: make it just add the category_id as a property
-    public function joinCategories(Array $cids=array()) {
+    public function joinCategories(Array $cids=array()) 
+    {
         $categoriesdef = xarMod::apiFunc(
             'categories','user','leftjoin',
             array(

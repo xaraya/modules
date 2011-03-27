@@ -91,7 +91,7 @@
 // Final code clean up for commit to repository as 0.5.0
 0.5.0 - 21 July 2009
 // bugfix correct links to purge topics
-0.5.1 
+0.5.1
 // add some checks on unserialize operations in getforums api function
 0.5.2 - 22 July 2009
 // updated user main, view and display templates (and includes) to validate xhtml strict
@@ -101,7 +101,7 @@
 // added check for updates to admin modifyconfig
 0.5.6 - 24 July 2009
 // moved timeimages to xarimages/timeimages
-// updated templates using timeimages 
+// updated templates using timeimages
 // removed unnecessary images from xarimages/icons
 // replaced inline styles with module specific classes
 // some updates to fix minor display issues
@@ -116,7 +116,7 @@
 // added userpanel block
 // fixed display when userpanel not selected
 // minor version update to...
-0.6.0 
+0.6.0
 ------- 26 July 2009
 // cleaned up some admin templates
 ------- 27 July 2009
@@ -128,7 +128,7 @@
 ------- 29 July 2009
 // Update to quickreply template to prevent display to users with no privs and make valid xhtml
 ------- 30 July 2009
-// Clean up user-return.xd. 
+// Clean up user-return.xd.
 // Fix showreplies tag so it displays topicicon for first post (no bug filed)
 ------- 01 August 2009
 // fix search showing locked topics
@@ -167,7 +167,7 @@ Updates to include templates user-timestamp and topic-reply-row
 GUIs now show status (online|offline) for each poster
 Update to admin posters function. Now displays poster
 topic and reply counts, as well as current status
-Update fixes several issues discovered which affect sites with 
+Update fixes several issues discovered which affect sites with
 high (1000s) topic reply counts (caused by some ambitious db queries on my part :-P )
 Fixes incorrect ordering of top 10 forums
 Fixes incorrect ordering of top 10 posters
