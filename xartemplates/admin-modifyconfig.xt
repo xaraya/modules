@@ -182,12 +182,14 @@
                                     </label> 
                                     <input type="text" name="settings[items_per_page]" id="settings_items_per_page" size="3" maxlength="3" value="#$settings['items_per_page']#" />
                                 </div>
+                                <!--
                                 <div class="xar-form-input-wrapper">
                                     <label for="admin_items_per_page" class="help xar-form-label" title="#xarML('Number of items to display on admin view.')#">
                                             Items per page on admin view
                                     </label> 
                                     <input type="text" name="settings[admin_items_per_page]" id="settings_admin_items_per_page" size="3" maxlength="3" value="#$settings['admin_items_per_page']#" />
                                 </div>
+                                -->
                             </td>
                         </tr>
                     </table>
