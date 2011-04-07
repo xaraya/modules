@@ -28,7 +28,7 @@ function publications_admin_modify($args)
 
     // Get parameters
     if (!xarVarFetch('itemid',     'isset', $id, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('ptid',       'isset', $ptid, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('ptid',       'isset', $data['ptid'], NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('returnurl',  'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('name',       'str:1', $name, 'publications_types', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
