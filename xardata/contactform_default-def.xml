@@ -1,5 +1,5 @@
 <object name="contactform_default">
-  <objectid>611</objectid>
+  <objectid>14</objectid>
   <label>Default Contact Form</label>
   <module_id>1049</module_id>
   <itemtype>1</itemtype>
@@ -11,7 +11,7 @@
   <isalias>true</isalias>
   <properties>
     <property name="itemid">
-      <id>4238</id>
+      <id>99</id>
       <label>itemid</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +21,7 @@
       <configuration></configuration>
     </property>
     <property name="first_name">
-      <id>4239</id>
+      <id>100</id>
       <label>First Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -31,7 +31,7 @@
       <configuration>a:5:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"1";}</configuration>
     </property>
     <property name="last_name">
-      <id>4240</id>
+      <id>101</id>
       <label>Last Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -41,7 +41,7 @@
       <configuration>a:5:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"1";}</configuration>
     </property>
     <property name="company_name">
-      <id>4241</id>
+      <id>102</id>
       <label>Company Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -51,7 +51,7 @@
       <configuration></configuration>
     </property>
     <property name="from_email">
-      <id>4242</id>
+      <id>103</id>
       <label>Your Email</label>
       <type>email</type>
       <defaultvalue></defaultvalue>
@@ -61,7 +61,7 @@
       <configuration>a:6:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:16:"display_required";s:1:"1";s:21:"validation_min_length";s:1:"1";s:29:"validation_min_length_invalid";s:18:"Email is required.";}</configuration>
     </property>
     <property name="phone_number">
-      <id>4243</id>
+      <id>104</id>
       <label>Phone Number</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -71,14 +71,14 @@
       <configuration></configuration>
     </property>
     <property name="message">
-      <id>4244</id>
+      <id>105</id>
       <label>Message</label>
-      <type>textarea_large</type>
+      <type>textarea_medium</type>
       <defaultvalue>Please write us a short note with your questions, comments or concerns.</defaultvalue>
       <source>dynamic_data</source>
       <status>33</status>
       <seq>8</seq>
-      <configuration></configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"5";s:15:"display_columns";s:2:"40";s:14:"display_layout";s:7:"default";}</configuration>
     </property>
   </properties>
 </object>

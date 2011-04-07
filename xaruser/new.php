@@ -46,6 +46,27 @@ function contactform_user_new($args)
         if (!xarSecConfirmAuthKey()) {
             return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
         }        
+
+		/*
+		To use recaptcha, download the library...
+		http://code.google.com/p/recaptcha/downloads/list?q=label:phplib-Latest
+		...and then place the recaptchalib.php file in your web directory.   You also need to enter your private key below and enter your public key in the user-new.xt template.
+		
+		require_once('recaptchalib.php'); 
+		$privatekey = "your_private_key_goes_here";  // replace with your private key
+		$resp = recaptcha_check_answer ($privatekey,
+									$_SERVER["REMOTE_ADDR"],
+									$_POST["recaptcha_challenge_field"],
+									$_POST["recaptcha_response_field"]);
+
+		if (!$resp->is_valid) {
+		// What happens when the CAPTCHA was entered incorrectly
+		//die ("The reCAPTCHA wasn't entered correctly. Go back and try it again." . "(reCAPTCHA said: " . $resp->error . ")");
+		die ("The reCAPTCHA wasn't entered correctly. Please go back and try it again.");
+		} else {
+		  // Your code here to handle a successful verification
+		}
+		*/
  
         $isvalid = $data['object']->checkInput();
 		$invalids = $data['object']->getInvalids();

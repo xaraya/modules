@@ -5,6 +5,8 @@
  
  <xar:style scope="module" file="contactform" />
 
+<div class="contactform">
+
         <xar:set name="withupload">#$object->upload#</xar:set>
         <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
         <xar:if condition="!empty($withupload)">
@@ -33,10 +35,21 @@
         contactform/xartemplates/objects/showform.xt</xar:comment>
                 <xar:data-form object="$object" tplmodule="contactform" />
 
+<!-- 
+<xar:set name="dummy">require_once('recaptchalib.php')</xar:set>
+<xar:set name="publickey">
+	'your_public_key_goes_here'
+</xar:set>
+<xar:set name="recaptcha">recaptcha_get_html($publickey)</xar:set>
+#$recaptcha# 
+-->
+
                 <div class="xar-form-input-wrapper-after"> 
                     <input type="submit" value="#xarML('Submit')#"/>
                 </div>
           </fieldset>
         </form>
- 
+
+</div>
+
 </xar:template>
