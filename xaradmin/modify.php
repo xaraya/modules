@@ -28,7 +28,7 @@ function publications_admin_modify($args)
 
     // Get parameters
     if (!xarVarFetch('itemid',     'isset', $id, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('ptid',       'isset', $data['ptid'], NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('ptid',       'isset', $ptid, NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('returnurl',  'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('name',       'str:1', $name, 'publications_types', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
@@ -41,22 +41,20 @@ function publications_admin_modify($args)
     }
     // Get our object
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+    $data['ptid'] = $data['object']->properties['itemtype']->value;
+
 
     
 
     //FIXME This should be configuration in the celko property itself
 
     $data['object']->properties['position']->initialization_celkoparent_id = 'parentpage_id';
-
     $data['object']->properties['position']->initialization_celkoright_id = 'rightpage_id';
-
     $data['object']->properties['position']->initialization_celkoleft_id  = 'leftpage_id';
 
     $xartable = xarDB::getTables();
 
     $data['object']->properties['position']->initialization_itemstable = $xartable['publications'];
-
-    $data['object']->properties['itemtype']->value = $data['ptid'];
 
     // Send the publication type and the object properties to the template 
     $data['properties'] = $data['object']->getProperties();
