@@ -8,31 +8,47 @@
 <xar:set name="activetab">#$request.2#</xar:set>
 <xar:set name="activetype">#$request.1#</xar:set>
 <div>
-  <dl class="xar-tabs">
-    <dt class="help" title="Choose an action to perform">
-      Utility:
-    </dt>
-    <xar:sec mask="AdminPublications" catch="false">
-        <xar:set name="tabclass">$activetab=='stats'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-          <a href="&xar-modurl-publications-admin-stats;">
+  <ul class="xar-tabs">
+    <xar:if condition="$activetab eq 'stats'">
+        <xar:set name="tabclass">'xar-tab-active'</xar:set>
+        <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+    <xar:else />
+        <xar:set name="tabclass">'xar-tab'</xar:set>
+        <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+    </xar:if>
+    <li class="#$tabclass#">
+        <a href="#xarModURL('publications','admin','stats')#" class="#$linkclass#">
             Statistics
-          </a>
-        </dd>
-        <xar:set name="tabclass">$activetab=='importpictures'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-          <a href="&xar-modurl-publications-admin-importpictures;">
+        </a>
+    </li>
+
+    <xar:if condition="$activetab eq 'importpictures'">
+        <xar:set name="tabclass">'xar-tab-active'</xar:set>
+        <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+    <xar:else />
+        <xar:set name="tabclass">'xar-tab'</xar:set>
+        <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+    </xar:if>
+    <li class="#$tabclass#">
+        <a href="#xarModURL('publications','admin','importpictures')#" class="#$linkclass#">
             Import Pictures
-          </a>
-        </dd>
-        <xar:set name="tabclass">$activetab=='importpages'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-          <a href="&xar-modurl-publications-admin-importpages;">
+        </a>
+    </li>
+
+    <xar:if condition="$activetab eq 'importpages'">
+        <xar:set name="tabclass">'xar-tab-active'</xar:set>
+        <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+    <xar:else />
+        <xar:set name="tabclass">'xar-tab'</xar:set>
+        <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+    </xar:if>
+    <li class="#$tabclass#">
+        <a href="#xarModURL('publications','admin','importpages')#" class="#$linkclass#">
             Import Pages
-          </a>
-        </dd>
-        <xar:set name="tabclass">$activetab=='pubtypes'?'active':''</xar:set>
-    </xar:sec>
-  </dl>
+        </a>
+    </li>
+
+  </ul>
 </div>
 </xar:template>
+
