@@ -46,7 +46,7 @@
         </xar:comment>
         -->
         <div style="float:right">
-            <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#">
+            <a href="#xarModURL('publications','user','view',array('ptid' => $ptid))#">
                 Publications List
             </a>
         </div>

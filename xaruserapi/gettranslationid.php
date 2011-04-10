@@ -19,10 +19,10 @@ function publications_userapi_gettranslationid($args)
 
     $xartable = xarDB::getTables();
     $q = new Query('SELECT',$xartable['publications']);
+    $q->eq('locale',xarUserGetNavigationLocale());
     $c[] = $q->peq('id',$args['id']);
     $c[] = $q->peq('parent_id',$args['id']);
     $q->qor($c);
-    $q->eq('locale',xarUserGetNavigationLocale());
     if (!$q->run()) return $args['id'];
     $result = $q->row();
     if (empty($result)) return $args['id'];
