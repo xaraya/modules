@@ -13,7 +13,7 @@
  */
 $modversion['name']         = 'HTML';
 $modversion['id']           = '779';
-$modversion['version']      = '1.4.0';
+$modversion['version']      = '2.2.0';
 $modversion['displayname']  = xarML('HTML');
 $modversion['description']  = 'Configure the allowed HTML or your site';
 $modversion['credits']      = 'xardocs/credits.txt';
@@ -28,5 +28,7 @@ $modversion['admin']        = 1;
 $modversion['user']         = 0;
 $modversion['class']        = 'Admin';
 $modversion['category']     = 'Global';
-//$modversion['dependency']  = array(778); BBCode Dependency in transformoutput removed
+$modversion['dependencyinfo'] = array(
+		0 => array('name' => 'core', 'version_ge' => '2.2.0', 'version_le' => '2.2.9')
+	);
 ?>

@@ -60,6 +60,15 @@ function html_adminapi_getmenulinks()
                               'title' => xarML('Modify the configuration of the HTML Module'),
                               'label' => xarML('Modify Config'));
     }
+
+	if (xarSecurityCheck('AdminHTML', 0)) {
+        $menulinks[] = array(
+            'url'      => xarModURL('html', 'admin', 'overview'),
+            'title'    => 'Module Overview',
+            'label'    => 'Overview',
+			'active' => array('main'));
+    } 
+
     return $menulinks;
 }
 ?>
