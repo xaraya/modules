@@ -47,6 +47,14 @@ function contactform_adminapi_getmenulinks()
                               'label' => xarML('Modify Configuration'));
     }
 
+	if (xarSecurityCheck('AdminContactForm', 0)) {
+        $menulinks[] = array(
+            'url'      => xarModURL('contactform', 'admin', 'overview'),
+            'title'    => 'Module Overview',
+            'label'    => 'Overview',
+			'active' => array('main'));
+    } 
+
     return $menulinks;
 }
 ?>

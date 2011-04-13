@@ -16,7 +16,7 @@
     </div>
    
     <div class="xar-mod-body">
-        <xar:template type="module" file="admintabs"/>
+        <xar:template type="module" file="admin-menu"/>
 
 <xar:template type="module" file="cformtype-tabs" />        
 

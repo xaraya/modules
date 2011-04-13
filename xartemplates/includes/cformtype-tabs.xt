@@ -10,7 +10,8 @@
 
 <xar:if condition="count($cformtypes) gt 1">
 
-	<xar:set name="info">xarRequest::getInfo()</xar:set>
+        <xar:set name="request">new xarRequest()</xar:set>
+	<xar:set name="info">xarController::$request->getInfo()</xar:set>
 
 	<h3>Select a form to view:</h3>
 

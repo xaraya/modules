@@ -21,8 +21,10 @@ function contactform_admin_main()
     // Check to see the current user has edit access to the contactform module
     if (!xarSecurityCheck('EditContactForm')) return;
 
-    $refererinfo = xarRequest::getInfo(xarServer::getVar('HTTP_REFERER'));
-    $info = xarRequest::getInfo();
+	$request = new xarRequest();
+    $refererinfo =  xarController::$request->getInfo(xarServer::getVar('HTTP_REFERER'));
+    $request = new xarRequest();
+	$info =  xarController::$request->getInfo();
     $samemodule = $info[0] == $refererinfo[0];
 
 	 $filters['where'] = 'name eq "contactform_default"';
@@ -34,7 +36,7 @@ function contactform_admin_main()
 	 $item = end($items);
 	 $data['objectid'] = $item['objectid'];
 
-    if (((bool)xarModVars::get('modules', 'disableoverview') == false) || $samemodule){
+	if (xarModVars::get('modules', 'disableoverview') == 0 || $samemodule) {
         return xarTplModule('contactform','admin','overview', $data);
     } else {
         xarResponse::Redirect(xarModURL('contactform', 'admin', 'view'));

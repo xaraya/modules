@@ -13,7 +13,7 @@
  */
 $modversion['name']         = 'contactform';
 $modversion['id']           = '1049';
-$modversion['version']      = '2.1.0';
+$modversion['version']      = '2.2.0';
 $modversion['displayname']  = xarML('Contact Form');
 $modversion['description']  = 'Contact Form for new modules';
 $modversion['credits']      = 'xardocs/credits.txt';
@@ -27,7 +27,7 @@ $modversion['admin']        = true;
 $modversion['user']         = true;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Miscellaneous';
-$modversion['dependency'] = array(
-                                  771,
-                                  );
+$modversion['dependencyinfo'] = array(
+		0 => array('name' => 'core', 'version_ge' => '2.2.0', 'version_le' => '2.2.9')
+	);
 ?>
