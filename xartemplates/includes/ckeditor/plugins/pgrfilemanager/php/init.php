@@ -25,6 +25,7 @@ THE SOFTWARE.
 
 include_once dirname(__FILE__) . '/config.php';
 include_once dirname(__FILE__) . '/../myconfig.php';
+
 PGRFileManagerConfig::$rootDir = PGRFileManagerConfig::$rootPath;
 
 //Lang

@@ -11,9 +11,9 @@
  * @author Marc Lutolf <mfl@netspan.ch> and Ryan Walker <ryan@webcommunicate.net>
  */
 
-	$config['PGRFileManager.rootPath'] = 'C:\xampp\htdocs\DEV\var\uploads';
+	$config['PGRFileManager.rootPath'] = 'C:\xampp\htdocs\xarayax\html\var\uploads';
 
-	$config['PGRFileManager.urlPath'] = 'http://localhost/DEV/html/var/uploads';
+	$config['PGRFileManager.urlPath'] = 'http://localhost/xaraya/22x/html/var/uploads';
 
 	$config['PGRFileManager.allowedExtensions'] = 'pdf, txt, rtf, jpg, gif, jpeg, png';  //'' means all files
 
@@ -31,15 +31,15 @@
 	/*if (!empty($prop)) {
 
 		//print $prop;
-		$pluginsConfiguration[$prop]['PGRFileManager.rootPath'] = 'C:\xampp\htdocs\DEV\var\uploads';
+		$pluginsConfiguration[$prop]['PGRFileManager.rootPath'] = 'C:\xampp\htdocs\xarayax\html\var\uploads';
 
-		$pluginsConfiguration[$prop]['PGRFileManager.urlPath'] = 'http://localhost/DEV/html/var/uploads';
+		$pluginsConfiguration[$prop]['PGRFileManager.urlPath'] = 'http://localhost/xaraya/22x/html/var/uploads';
 	
 	} else {
 
-		$pluginsConfiguration['default']['PGRFileManager.rootPath'] = 'C:\xampp\htdocs\DEV\var\uploads';
+		$pluginsConfiguration['default']['PGRFileManager.rootPath'] = 'C:\xampp\htdocs\xarayax\html\var\uploads';
 
-		$pluginsConfiguration['default']['PGRFileManager.urlPath'] = 'http://localhost/DEV/html/var/uploads';
+		$pluginsConfiguration['default']['PGRFileManager.urlPath'] = 'http://localhost/xaraya/22x/html/var/uploads';
 	}*/
 
 

@@ -23,9 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+
     include_once dirname(__FILE__) . '/php/init.php';
+	
     $PGRUploaderExtension = "";
     if (PGRFileManagerConfig::$allowedExtensions == "") $PGRUploaderExtension = "*.*";
+	
     else
     foreach(explode("|", PGRFileManagerConfig::$allowedExtensions) as $key => $extension) { 
         if ($key > 0) $PGRUploaderExtension .= ";";

@@ -30,7 +30,8 @@ function ckeditor_adminapi_getmenulinks() {
                                                    'admin',
                                                    'overview'), 
                               'title' => xarML('Module Overview'),
-                              'label' => xarML('Overview'));
+                              'label' => xarML('Overview'),
+							  'active' => array('main'));
     }
 
     return $menulinks;

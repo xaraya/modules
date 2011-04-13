@@ -15,7 +15,13 @@ function ckeditor_admin_main() {
 
 	if(!xarSecurityCheck('AdminCKEditor')) return;
 
-	if (xarModVars::get('modules', 'disableoverview') == 0) {
+	$request = new xarRequest();
+    $refererinfo =  xarController::$request->getInfo(xarServer::getVar('HTTP_REFERER'));
+    $request = new xarRequest();
+	$info =  xarController::$request->getInfo();
+    $samemodule = $info[0] == $refererinfo[0];
+
+	if (xarModVars::get('modules', 'disableoverview') == 0 || $samemodule) {
 		xarResponse::Redirect(xarModURL('ckeditor', 'admin', 'overview'));
 	} else {
 		xarResponse::Redirect(xarModURL('ckeditor', 'admin', 'modifyconfig'));

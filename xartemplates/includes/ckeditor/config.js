@@ -21,8 +21,7 @@ CKEDITOR.config.toolbar_Full =
 	['NumberedList','BulletedList','-','Outdent','Indent','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Link','Unlink','Anchor','-','Image','-','Bold','Italic','-','Styles'],
    
 ];
- 
 
 /******** Plugins *********/
 
-CKEDITOR.plugins.load('pgrfilemanager');
+//CKEDITOR.plugins.load('pgrfilemanager');
