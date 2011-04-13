@@ -13,7 +13,7 @@
  **/
 $modversion['name']         = 'content';
 $modversion['id']           = '1015';
-$modversion['version']      = '0.9.3';
+$modversion['version']      = '2.2.0';
 $modversion['displayname']  = xarML('Content');
 $modversion['description']  = 'Content';
 $modversion['credits']      = 'xardocs/credits.txt';
@@ -28,6 +28,6 @@ $modversion['user']         = true;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
 $modversion['dependencyinfo'] = array(
-		0 => array('name' => 'core', 'version_ge' => '2.1.0', 'version_le' => '2.1.9')
+		0 => array('name' => 'core', 'version_ge' => '2.2.0', 'version_le' => '2.2.9')
 	);
 ?>

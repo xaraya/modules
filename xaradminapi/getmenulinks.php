@@ -55,7 +55,7 @@ function content_adminapi_getmenulinks()
                               'label' => xarML('Modify Configuration'));
     }
 
-	    if (xarSecurityCheck('AdminContent',0)) {
+	if (xarSecurityCheck('AdminContent',0)) {
         // Add a link to the module's configuration.
         // We place this link last in the list so have a similar menu for all modules
         $menulinks[] = Array('url'   => xarModURL('content',
@@ -64,7 +64,8 @@ function content_adminapi_getmenulinks()
                               // In order to display the tool tips and label in any language,
                               // we must encapsulate the calls in the xarML in the API.
                               'title' => xarML('Module Overview'),
-                              'label' => xarML('Overview'));
+                              'label' => xarML('Overview'),
+							  'active' => array('main'));
     }
 
     return $menulinks;
