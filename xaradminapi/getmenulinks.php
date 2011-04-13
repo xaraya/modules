@@ -28,6 +28,15 @@ function registration_adminapi_getmenulinks()
                              'title' => xarML('Modify the registration module configuration'),
                              'label' => xarML('Modify Config'));
     }
+
+	if (xarSecurityCheck('AdminRegistration', 0)) {
+        $menulinks[] = array(
+            'url'      => xarModURL('registration', 'admin', 'overview'),
+            'title'    => 'Module Overview',
+            'label'    => 'Overview',
+			'active' => array('main'));
+    } 
+
     return $menulinks;
 }
 

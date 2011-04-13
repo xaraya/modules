@@ -20,7 +20,7 @@
  */
 $modversion['name']           = 'registration';
 $modversion['id']             = '30205';
-$modversion['version']        = '2.0.0';
+$modversion['version']        = '2.2.0';
 $modversion['displayname']    = xarML('User Registration');
 $modversion['description']    = 'Standard User Registration';
 $modversion['displaydescription'] = xarML('Standard User Registration');
@@ -37,10 +37,6 @@ $modversion['class']          = 'Registration';
 $modversion['category']       = 'Users & Groups';
 $modversion['dependency']     = array();
 $modversion['dependencyinfo'] = array(
-                                    0 => array(
-                                            'name' => 'Xaraya Core',
-                                            'version_ge' => '2.1.0',
-                                            'version_le' => '2.1.99',
-                                         ),
-                                      );
+		0 => array('name' => 'core', 'version_ge' => '2.2.0', 'version_le' => '2.2.9')
+	);
 ?>

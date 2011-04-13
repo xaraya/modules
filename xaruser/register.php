@@ -142,26 +142,27 @@ function registration_user_register()
             if (empty($object)) return;
             // Check object input
             $isvalid = $object->checkInput();
+			$invalids = $object->getInvalids();
 			$values = $object->getFieldValues();
 
 			if (!xarVarFetch('agreetoterms', 'checkbox', $values['agreetoterms'], false, XARVAR_NOT_REQUIRED)) return;
  
 			if (xarModVars::get('registration', 'showterms')) {
-				$invalid['agreetoterms'] = xarMod::apiFunc('registration','user','checkvar',
+				$invalids['agreetoterms'] = xarMod::apiFunc('registration','user','checkvar',
                     array('type'=>'agreetoterms', 'var'=> $values['agreetoterms']));
 			}
 
-            $invalid['email'] = xarMod::apiFunc('registration','user','checkvar',
+            $invalids['email'] = xarMod::apiFunc('registration','user','checkvar',
                     array('type'=>'email', 'var'=> $values['email']));
 
-			$invalid['uname'] = xarMod::apiFunc('registration','user','checkvar',
+			$invalids['uname'] = xarMod::apiFunc('registration','user','checkvar',
                     array('type'=>'uname', 'var'=> $values['uname']));
 			
 			/*$invalid['password'] = xarMod::apiFunc('registration','user','checkvar',
                     array('type'=>'password', 'var'=> $values['password']));*/
 
-			foreach ($invalid as $key=>$value) {
-				if (empty($invalid[$key])) unset($invalid[$key]);
+			foreach ($invalids as $key=>$value) {
+				if (empty($invalids[$key])) unset($invalids[$key]);
 			}
 
             $item = array();
@@ -174,12 +175,12 @@ function registration_user_register()
             $item['phase']  = $phase;
             $hooks = xarModCallHooks('item', 'new', '', $item);
 
-            if (!$isvalid || !empty($invalid)) {
+            if (!$isvalid || !empty($invalids)) {
                 $data = $values; // ?
                 $data['object'] = $object;
                 $data['hookoutput'] = !empty($hooks) ? $hooks : '';
                 $data['authid'] = xarSecGenAuthKey();
-                $data['invalid'] = $invalid;
+                $data['invalid'] = $invalids;
                 return xarTplModule('registration','user','registerform', $data);
             }
 
