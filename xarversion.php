@@ -14,7 +14,7 @@
  */
 $modversion['name']         = 'messages';
 $modversion['id']           = '6';
-$modversion['version']      = '1.9.1';
+$modversion['version']      = '2.2.0';
 $modversion['displayname']  = xarML('Messages');
 $modversion['description']  = 'Xaraya Messages module';
 $modversion['credits']      = 'docs/credits.txt';
@@ -29,11 +29,7 @@ $modversion['user']         = 1;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Miscellaneous';
 $modversion['dependencyinfo'] = array(
-                                    0 => array(
-                                            'name' => 'Xaraya Core',
-                                            'version_ge' => '2.1.0',
-                                            'version_le' => '2.1.99',
-                                         ),
-                                      );
+		0 => array('name' => 'core', 'version_ge' => '2.2.0', 'version_le' => '2.2.9')
+	);
 
 ?>
