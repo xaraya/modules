@@ -13,7 +13,7 @@
  **/
 $modversion['name']         = 'filters';
 $modversion['id']           = '1039';
-$modversion['version']      = '0.7.1';
+$modversion['version']      = '2.2.0';
 $modversion['displayname']  = xarML('Filters');
 $modversion['description']  = 'Filters';
 $modversion['credits']      = 'xardocs/credits.txt';
@@ -27,4 +27,8 @@ $modversion['admin']        = true;
 $modversion['user']         = true;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Utility';
+$modversion['dependencyinfo'] = array(
+		0 => array('name' => 'core', 'version_ge' => '2.2.0', 'version_le' => '2.2.9')
+	);
+
 ?>
