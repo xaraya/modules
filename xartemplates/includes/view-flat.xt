@@ -12,7 +12,7 @@
 
 		<xar:if condition="empty($item['title'])">
 			<!-- nothing to do -->
-                <xar:elseif condition="isset($package['transformed-title'])" />
+                <xar:elseif condition="isset($notset) and isset($package['transformed-title'])" />
                     <h4>#$package['transformed-title']#</h4>
                 <xar:else />
                     <h4>#$item['title']#</h4>
