@@ -56,7 +56,8 @@ function amazonfps_adminapi_getmenulinks()
                               // In order to display the tool tips and label in any language,
                               // we must encapsulate the calls in the xarML in the API.
                               'title' => xarML('Module Overview'),
-                              'label' => xarML('Overview'));
+                              'label' => xarML('Overview'),
+							  'active' => array('main'));
     }
 
     return $menulinks;

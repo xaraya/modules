@@ -32,7 +32,7 @@ function amazonfps_user_ipn() {
     $params['signatureMethod'] = 'str:1:';
     $params['signatureVersion'] = 'int';
     $params['certificateUrl'] = 'str:1:';
-    $params["signature"] = "str:1:";
+    $params['signature'] = 'str:1:';
 	$params['callerReference'] = 'str:1:';
 
 	// not required?
@@ -71,9 +71,31 @@ function amazonfps_user_ipn() {
 		$callerItemid = str_replace(trim(xarModVars::get('amazonfps','callerreference_prefix')), '', $callerReference);
 		
 		$object->getItem(array('itemid' => $callerItemid));
+		$refitemid = $object->properties['refitemid']->value;
+		$modulename = $object->properties['modulename']->value;
+		$objectname = $object->properties['objectname']->value;
 		$object->properties['transactionstatus']->setValue($statusCode);
 		$object->properties['paymentmethod']->setValue($paymentMethod);
 		$object->updateItem();
+
+		if ($statusCode == 'Success') {
+			
+			/*xarMod::apiFunc('mail', 'admin', 'sendmail', array(
+						'info'         => 'ryandw@gmail.com',
+						'name'         => 'admin',
+						'subject'      => 'Success', 
+						'message'      => 'ipn test'
+						//'from'         => 'ryan@webcommunicate.net',
+						//'fromname'     => 'admin'
+				));*/
+
+			// let another module know that the status == 'Success'
+			$ipn = xarMod::apiFunc('contributions', 'admin', 'ipn', array( 
+							'objectname' => $objectname,
+							'itemid' => $refitemid 
+				));
+
+		}
 
 		return true;
 

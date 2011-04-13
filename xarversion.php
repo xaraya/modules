@@ -13,7 +13,7 @@
  **/
 $modversion['name']         = 'amazonfps';
 $modversion['id']           = '1045';
-$modversion['version']      = '0.5.0';
+$modversion['version']      = '2.2.0';
 $modversion['displayname']  = xarML('Amazon FPS');
 $modversion['description']  = 'Amazon FPS';
 $modversion['credits']      = 'xardocs/credits.txt';
@@ -27,4 +27,7 @@ $modversion['admin']        = true;
 $modversion['user']         = true;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Commerce';
+$modversion['dependencyinfo'] = array(
+		0 => array('name' => 'core', 'version_ge' => '2.2.0', 'version_le' => '2.2.9')
+	);
 ?>

@@ -53,7 +53,7 @@ function amazonfps_userapi_cbui($args) {
 	$object->properties['amount']->setValue($amount);
 	$object->properties['currency']->setValue($currency);
 	$object->properties['description']->setValue($description); 
-	$object->properties['conversion']->setValue(0);
+	//$object->properties['conversion']->setValue(0);
 	$object->properties['success_url']->setValue($success_url); // redirect used by the pay function after payment is finalized
 
 	$itemid = $object->createItem();

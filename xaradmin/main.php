@@ -20,7 +20,18 @@ function amazonfps_admin_main()
 		return;
 	}
      
-	return xarTplModule('amazonfps','admin','overview');
+	$request = new xarRequest();
+    $refererinfo =  xarController::$request->getInfo(xarServer::getVar('HTTP_REFERER'));
+    $request = new xarRequest();
+	$info =  xarController::$request->getInfo();
+    $samemodule = $info[0] == $refererinfo[0];
+    
+	if (xarModVars::get('modules', 'disableoverview') == 0 || $samemodule) {
+        return xarTplModule('amazonfps','admin','overview');
+    } else {
+        xarResponse::redirect(xarModURL('amazonfps', 'admin', 'modifyconfig'));
+        return true;
+    } 
 
 }
 
