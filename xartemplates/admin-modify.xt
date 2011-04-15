@@ -31,7 +31,7 @@
                 'application/x-www-form-urlencoded'
             </xar:set>
         </xar:if>
-        <form method="post" name="post" id="post" action="&xar-modurl-publications-admin-update;" enctype="#$enctype#" >
+        <form method="post" name="post" id="post" action="#xarModURL('publications','admin','update')#" enctype="#$enctype#" >
             <xar:set name="layout">'publications-admin'</xar:set>
             <xar:set name="itemcount">count($items)</xar:set>
             <xar:set name="tabs">3*$itemcount</xar:set>
