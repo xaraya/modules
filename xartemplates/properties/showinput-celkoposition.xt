@@ -16,7 +16,7 @@
     <xar:else />
         <div class="xar-form-input-wrapper">
             <label for="refcid" class="xar-form-label help" title="#xarML('Category relationship hiearchy.')#">
-                <xar:mlstring>In relation to</xar:mlstring>
+                In relation to
             </label>
             <select name="#$name#_refcid" id="#$name#_refcid">
                 <xar:for start="$i = 0" test="$i lt count($categories)" iter="$i++">
@@ -35,7 +35,7 @@
         <!-->The position needs to be set after categories select because There is no position which we can have a selected category that will work in all cases-->
         <div class="xar-form-input-wrapper">
             <label for="#$name#_position" class="xar-form-label help" title="#xarML('Position of this category.')#">
-                <xar:mlstring>Position</xar:mlstring>
+                Position
             </label>
             <xar:set name="options">
                 array(

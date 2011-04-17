@@ -4,17 +4,17 @@
     <xar:style scope="module" file="forms"/>
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>
+            
                 Categories Administration
-            </xar:mlstring>
+            
         </span>
     </div>
     <div class="xar-mod-body">
        <xar:template type="module" file="admin-menu"/>
         <h2>
-            <xar:mlstring>
+            
                 Delete Category
-            </xar:mlstring>
+            
         </h2>
         <form class="xar-formwidget" action="#xarModURL('categories','admin','deletecat')#" method="post"  enctype="application/x-www-form-urlencoded">
             <fieldset>
@@ -35,7 +35,9 @@
                 <input type="hidden" name="authid" id="authid" value="#$authkey#"/>
                 <div>
                     <xar:ml>
-                        <xar:mlstring>This category has #(1) sub-categories and #(2) module items assigned to them.</xar:mlstring>
+                        <xar:mlstring>
+                        This category has #(1) sub-categories and #(2) module items assigned to them.
+                        </xar:mlstring>
                         <xar:mlvar>#$numcats#</xar:mlvar>
                         <xar:mlvar>#$numitems#</xar:mlvar>
                     </xar:ml>
