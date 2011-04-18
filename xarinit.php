@@ -87,14 +87,19 @@ function hitcount_init()
     if (!$result) return;
 
     // Set up module hooks - using hook call handlers now
-
+    // from Jamaica 2.2.0 onwards we use the new hook system
+    // (see observers in hitcount/class/hookobservers/)
+    xarHooks::registerObserver('ItemCreate', 'hitcount');
+    xarHooks::registerObserver('ItemDisplay', 'hitcount');
+    xarHooks::registerObserver('ItemDelete', 'hitcount');
+    // @checkme: there seems to be a 'view' hook implemented in the 2.0.0-b4 revised hook calls
+    // but no such hook exists, the nearest would be the yet to be implemented ItemtypeView hook 
+    //xarHooks::registerObserver('ItemtypeView', 'hitcount');
+    xarHooks::registerObserver('ModuleRemove', 'hitcount');
     // when a module item is displayed, created or deleted
     // (use xarVarSetCached('Hooks.hitcount','save', 1) to tell hitcount *not*
     // to display the hit count, but to save it in 'Hooks.hitcount', 'value')
-    xarHooks::registerHookCallHandler('hitcount', 'HitcountItemHooks', 'modules.hitcount.class.itemhooks');
-
-    // when a whole module is removed, e.g. via the modules admin screen
-    xarHooks::registerHookCallHandler('hitcount', 'HitcountConfigHooks', 'modules.hitcount.class.confighooks');
+    // <chris> - why is this necessary? 
 
     /*********************************************************************
     * Define instances for this module
@@ -154,8 +159,11 @@ function hitcount_upgrade($oldversion)
             // stored in xar_hitcount
 
         case '2.0.1':
-            // this is only supported for versions *after* jamaica 2.0.0-b4 !
-
+            // this is only supported for versions *after* jamaica 2.0.0-b4 ! (deprecated)
+            /*
+                This functionality has been replaced, skip straight to the new hook system
+                when upgrading from this version
+                
             // switch from hook functions to hook class handlers
             $dbconn = xarDB::getConn();
             $xartable = xarDB::getTables();
@@ -178,8 +186,16 @@ function hitcount_upgrade($oldversion)
             // update module hooks
             $bindvars = array('class','HitcountConfigHooks','modules.hitcount.class.confighooks',$tmodId,'module');
             $stmt->executeUpdate($bindvars);
-
+            */
         case '2.1.0':
+            // from Jamaica 2.2.0 onwards we use the new hook system
+            // (see observers in hitcount/class/hookobservers/)
+            xarHooks::registerObserver('ItemCreate', 'hitcount');
+            xarHooks::registerObserver('ItemDisplay', 'hitcount');
+            xarHooks::registerObserver('ItemDelete', 'hitcount');
+            //xarHooks::registerObserver('ItemtypeView', 'hitcount');
+            xarHooks::registerObserver('ModuleRemove', 'hitcount');
+            
             break;
     }
 
@@ -191,12 +207,7 @@ function hitcount_upgrade($oldversion)
  */
 function hitcount_delete()
 {
-    // ...
-    // Unregister all hooks for a hook module (recommend to use the standard deinstall for modules instead)
-    //xarHooks::unregisterHookModule('hitcount');
-    // ...
-
-    // nothing special to do here - rely on standard deinstall
+    // nothing special to do here - rely on standard deinstall to take care of everything 
     $module = 'hitcount';
     return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
 }

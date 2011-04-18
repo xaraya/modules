@@ -55,6 +55,7 @@ function hitcount_user_display($args)
         $hitcount = xarMod::apiFunc('hitcount', 'admin', 'update', $args);
     }
 
+    // @fixme: this function should return output to a template, not directly as a string!
     if (isset($hitcount)) {
         // Display current hitcount or set the cached variable
         if (!xarVarIsCached('Hooks.hitcount','save') ||
