@@ -22,12 +22,21 @@ function hitcount_adminapi_getmenulinks()
     $menulinks = array();
 
     // Security Check
+    if (!xarSecurityCheck('ManageHitcount', 0)) {
+        $menulinks[] = array(
+            'url' => xarModURL('hitcount', 'admin', 'overview'),
+            'label' => xarML('Overview'),
+            'title' => xarML('Hitcount module overview'),
+            'active' => array('main', 'overview'),
+        );
+    }
     if (xarSecurityCheck('AdminHitcount', 0)) {
         $menulinks[] = Array('url'   => xarModURL('hitcount',
                                                   'admin',
                                                   'view'),
                               'title' => xarML('View hitcount statistics per module'),
-                              'label' => xarML('View Statistics'));
+                              'label' => xarML('View Statistics'),
+                              'active' => array('view', 'delete'));
         $menulinks[] = Array('url'   => xarModURL('hitcount',
                                                   'admin',
                                                   'hooks'),

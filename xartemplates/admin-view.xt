@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- @todo: clean up the mixed use of inline styles and classes -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
             Hit Count Administration
@@ -111,7 +112,7 @@
                         <tr>
                             <xar:if condition="!empty($moditem['title']) and !empty($moditem['link'])">
                                     <td class="xar-align-left">
-                                #$itemid# - <a href="#$moditem['link']#">#$moditem['title']# </a>
+                                #$itemid#  <a href="#$moditem['link']#">#$moditem['title']# </a>
                             </td>
                             <xar:else/>
                                     <td class="xar-align-right">
