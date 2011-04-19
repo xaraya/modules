@@ -27,10 +27,10 @@
  */
 
  /*
-	generally speaking...
-	$package = the comment data
-	$header = info describing the item that we're commenting on 
-	$receipt = particulars of the form submission
+    generally speaking...
+    $package = the comment data
+    $header = info describing the item that we're commenting on
+    $receipt = particulars of the form submission
  */
 
 function comments_user_display($args)
@@ -55,9 +55,9 @@ function comments_user_display($args)
         }
     }
 
-    $header   = xarController::getVar('header');
-    $package   = xarController::getVar('package');
-    $receipt   = xarController::getVar('receipt');
+    $header   =  xarController::getVar('header');
+    $package  =  xarController::getVar('package');
+    $receipt  =  xarController::getVar('receipt');
 
     if (isset($args['modid'])) {
         $header['modid'] = $args['modid'];
@@ -171,9 +171,10 @@ function comments_user_display($args)
             $comment['transform'] = array('text');
             // call the item transform hooks
             // Note : we need to tell Xaraya explicitly that we want to invoke the hooks for 'comments' here (last argument)
-            $package['comments'][$key] = xarModCallHooks('item', 'transform', $comment['id'], $comment, 'comments');
+            // Don't call transforms for now, this needs reviewing
+            //$package['comments'][$key] = xarModCallHooks('item', 'transform', $comment['id'], $comment, 'comments');
         }
-    } 
+    }
     $header['input-title']            = xarML('Post a new comment');
 
     $package['settings']['max_depth'] = _COM_MAX_DEPTH;
@@ -187,19 +188,20 @@ function comments_user_display($args)
     $receipt['post_url']              = xarModURL('comments', 'user', 'reply');
     $receipt['action']                = 'display';
 
+    // form hooks are currently not working, we need to find a better way to do this
     $hooks = xarMod::apiFunc('comments','user','formhooks');
 
-	if (!empty($package['comments'])) {
-		$baseurl = xarServer::getCurrentURL();
-		foreach($package['comments'] as $key => $val) {
-			$package['comments'][$key]['objecturl'] = str_replace($baseurl, '',$package['comments'][$key]['objecturl']);
-		}
-	}
+    if (!empty($package['comments'])) {
+        $baseurl = xarServer::getCurrentURL();
+        foreach($package['comments'] as $key => $val) {
+            $package['comments'][$key]['objecturl'] = str_replace($baseurl, '',$package['comments'][$key]['objecturl']);
+        }
+    }
 
     $data['hooks']   = $hooks;
     $data['header']  = $header;
     $data['package'] = $package;
-    $data['receipt'] = $receipt; 
+    $data['receipt'] = $receipt;
 
     return $data;
 }

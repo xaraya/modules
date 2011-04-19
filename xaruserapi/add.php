@@ -53,8 +53,8 @@ function comments_userapi_add($args)
         $pid = 0;
     }
 
-	/*    
-	if (!isset($title) || empty($title)) {
+    /*
+    if (!isset($title) || empty($title)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                                  'title', 'userapi', 'add', 'comments');
         throw new BadParameterException($msg);
@@ -164,40 +164,40 @@ function comments_userapi_add($args)
     }*/
 
 
-	sys::import('modules.dynamicdata.class.objects.master');
-	$object = DataObjectMaster::getObject(array(
-							'name' => 'comments'
-		));
+    sys::import('modules.dynamicdata.class.objects.master');
+    $object = DataObjectMaster::getObject(array(
+                            'name' => 'comments'
+        ));
 
-	if (!is_object($object)) return;   
+    if (!is_object($object)) return;
 
-	$fields = array(
-				 'text',
+    $fields = array(
+                 'text',
                  'modid',
                  'itemtype',
                  'objectid',
                  'author',
-                 'title', 
+                 'title',
                  'hostname',
                  'left_id',
                  'right_id',
-				'objecturl',
+                'objecturl',
                  'pid',
                  'status');
 
-	$text = $comment;
-	$left_id = $left;
-	$right_id = $right;
+    $text = $comment;
+    $left_id = $left;
+    $right_id = $right;
 
-	foreach ($fields as $field) {
-		$object->properties[$field]->setValue($$field);
-	}
-	$bdate = (isset($date)) ? $date : $cdate;
-	$object->properties['date']->setValue($bdate);
-	$bpostanon = isset($postanon) ? 0 : 1;
-	$object->properties['anonpost']->setValue($bpostanon);
+    foreach ($fields as $field) {
+        $object->properties[$field]->setValue($$field);
+    }
+    $bdate = (isset($date)) ? $date : $cdate;
+    $object->properties['date']->setValue($bdate);
+    $bpostanon = isset($postanon) ? 0 : 1;
+    $object->properties['anonpost']->setValue($bpostanon);
 
-	$id = $object->createItem();
+    $id = $object->createItem();
 
     /*$sql = "INSERT INTO $xartable[comments]
                 (id,

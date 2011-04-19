@@ -21,7 +21,7 @@ function comments_admin_modifyconfig()
     if(!xarSecurityCheck('AdminComments')) return;
     //$numstats       = xarModVars::get('comments','numstats');
   //  $rssnumitems    = xarModVars::get('comments','rssnumitems');
-    
+
     if (empty($rssnumitems)) {
         //xarModVars::set('comments', 'rssnumitems', 25);
     }
@@ -68,16 +68,16 @@ function comments_admin_modifyconfig()
             //if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('comments', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
             //if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('comments', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('editstamp','int',$editstamp, xarModVars::get('comments', 'editstamp'),XARVAR_NOT_REQUIRED)) return;
-           
+
             if (!xarVarFetch('wrap','checkbox', $wrap, xarModVars::get('comments', 'wrap'),XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('numstats', 'str', $numstats, 20, XARVAR_NOT_REQUIRED)) return;
-            
+
             if (!xarVarFetch('rssnumitems', 'int', $rssnumitems, xarModVars::get('comments', 'rssnumitems'), XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('showtitle', 'checkbox', $showtitle, xarModVars::get('comments', 'showtitle'), XARVAR_NOT_REQUIRED)) return;
-			if (!xarVarFetch('enable_comments', 'checkbox', $showtitle, xarModVars::get('comments', 'enable_comments'), XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('enable_comments', 'checkbox', $showtitle, xarModVars::get('comments', 'enable_comments'), XARVAR_NOT_REQUIRED)) return;
 
-		if (!xarVarFetch('filters_min_item_count', 'int', $filters_min_item_count, xarModVars::get('comments', 'filters_min_item_count'), XARVAR_NOT_REQUIRED)) return;
-		if (!xarVarFetch('filters_min_item_count', 'int', $filters_min_item_count, xarModVars::get('comments', 'filters_min_item_count'), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('filters_min_item_count', 'int', $filters_min_item_count, xarModVars::get('comments', 'filters_min_item_count'), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('filters_min_item_count', 'int', $filters_min_item_count, xarModVars::get('comments', 'filters_min_item_count'), XARVAR_NOT_REQUIRED)) return;
 
             if (!xarVarFetch('postanon', 'checkbox', $postanon, xarModVars::get('comments', 'postanon'), XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('useblacklist', 'checkbox', $useblacklist, xarModVars::get('comments', 'useblacklist'), XARVAR_NOT_REQUIRED)) return;

@@ -21,10 +21,10 @@
  */
 
  /*
-	generally speaking...
-	$package = the comment data
-	$header = info describing the item that we're commenting on 
-	$receipt = particulars of the form submission
+    generally speaking...
+    $package = the comment data
+    $header = info describing the item that we're commenting on
+    $receipt = particulars of the form submission
  */
 
 function comments_user_reply()
@@ -37,13 +37,13 @@ function comments_user_reply()
     $receipt   = xarController::getVar('receipt');
     $receipt['post_url']          = xarModURL('comments','user','reply');
     $header['input-title']        = xarML('Post a reply');
-	xarVarFetch('objecturl', 'str', $data['objecturl'], '', XARVAR_NOT_REQUIRED); 
+    xarVarFetch('objecturl', 'str', $data['objecturl'], '', XARVAR_NOT_REQUIRED);
 
     if (!isset($package['postanon'])) {
         $package['postanon'] = 0;
     }
     xarVarValidate('checkbox', $package['postanon']);
-    if (!isset($header['itemtype'])) { 
+    if (!isset($header['itemtype'])) {
         $header['itemtype'] = 0;
     }
 
@@ -54,18 +54,18 @@ function comments_user_reply()
     switch (strtolower($receipt['action'])) {
         case 'submit':
 
-			xarVarFetch('id', 'int:1:', $id, 0, XARVAR_NOT_REQUIRED);
-			
-			if (isset($package['title'])) {
-				$package['title'] = trim($package['title']);
-			}
-			$package['text'] = trim($package['text']); 
+            xarVarFetch('id', 'int:1:', $id, 0, XARVAR_NOT_REQUIRED);
+
+            if (isset($package['title'])) {
+                $package['title'] = trim($package['title']);
+            }
+            $package['text'] = trim($package['text']);
 
             if (empty($package['text'])) {
                 /*$msg = xarML('Missing [#(1)] field on new #(2)','body','comment');
                 throw new BadParameterException($msg);*/
-				xarResponse::redirect($data['objecturl'].'#comment');
-				return true;
+                xarResponse::redirect($data['objecturl'].'#comment');
+                return true;
             }
             // call transform input hooks
             // should we look at the title as well?
@@ -73,26 +73,26 @@ function comments_user_reply()
             $package = xarModCallHooks('item', 'transform-input', 0, $package,
                                        'comments', 0);
 
-			if (xarModVars::get('comments','AuthorizeComments') || xarSecurityCheck('AddComments')) {
-				$status = _COM_STATUS_ON;
-			} else {
-				$status = _COM_STATUS_OFF;
-			}
+            if (xarModVars::get('comments','AuthorizeComments') || xarSecurityCheck('AddComments')) {
+                $status = _COM_STATUS_ON;
+            } else {
+                $status = _COM_STATUS_OFF;
+            }
 
-			$args = array();
-			$args['modid'] = $header['modid'];
-			$args['itemtype'] =  $header['itemtype'];
-			$args['objectid'] =  $header['objectid'];
-			$args['pid'] = $header['pid'];
-			$args['comment'] = $package['text'];
-			if (!isset($package['title'])) {
-				$args['title'] = '';
-			}
-			$args['postanon'] =  $package['postanon'];
-			$args['objecturl'] =  $data['objecturl'];
-			$args['status'] = $status;
+            $args = array();
+            $args['modid'] = $header['modid'];
+            $args['itemtype'] =  $header['itemtype'];
+            $args['objectid'] =  $header['objectid'];
+            $args['pid'] = $header['pid'];
+            $args['comment'] = $package['text'];
+            if (!isset($package['title'])) {
+                $args['title'] = '';
+            }
+            $args['postanon'] =  $package['postanon'];
+            $args['objecturl'] =  $data['objecturl'];
+            $args['status'] = $status;
 
-			$newid = xarMod::apiFunc('comments','user','add', $args);  
+            $newid = xarMod::apiFunc('comments','user','add', $args);
 
             xarResponse::redirect($data['objecturl'].'#'.$newid);
             return true;
@@ -102,9 +102,9 @@ function comments_user_reply()
             $comments = xarMod::apiFunc('comments','user','get_one',
                                        array('id' => $header['pid']));
 
-			// replace the deprecated eregi stuff below
-			$comments[0]['title'] = preg_replace('/^re:/i','',$comments[0]['title']);
-			$new_title = 'Re: '.$comments[0]['title'];
+            // replace the deprecated eregi stuff below
+            $comments[0]['title'] = preg_replace('/^re:/i','',$comments[0]['title']);
+            $new_title = 'Re: '.$comments[0]['title'];
 
             /*if (eregi('^(re\:|re\([0-9]+\))',$comments[0]['title'])) {
                 if (eregi('^re\:',$comments[0]['title'])) {

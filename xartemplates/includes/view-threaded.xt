@@ -29,30 +29,30 @@
                       </xar:if>
                     <xar:else />
 
-			<xar:if condition="isset($_GET['header']['id'])">
-				<xar:set name="newurl">
-				str_replace('header[id]='.$_GET['header']['id'], 'header[id]='.$id, xarServer::getCurrentURL())
-				</xar:set>
-			<xar:else />
-				<xar:if condition="strstr(xarServer::getCurrentURL(),'?')">
-					<xar:set name="start">xarServer::getCurrentURL().'&#38;'</xar:set>
-				<xar:else/>
-					<xar:set name="start">xarServer::getCurrentURL().'?'</xar:set>
-				</xar:if>
-				<xar:set name="newurl">$start . 'header[id]='.$id</xar:set>
-			</xar:if>
+            <xar:if condition="isset($_GET['header']['id'])">
+                <xar:set name="newurl">
+                str_replace('header[id]='.$_GET['header']['id'], 'header[id]='.$id, xarServer::getCurrentURL())
+                </xar:set>
+            <xar:else />
+                <xar:if condition="strstr(xarServer::getCurrentURL(),'?')">
+                    <xar:set name="start">xarServer::getCurrentURL().'&#38;'</xar:set>
+                <xar:else/>
+                    <xar:set name="start">xarServer::getCurrentURL().'?'</xar:set>
+                </xar:if>
+                <xar:set name="newurl">$start . 'header[id]='.$id</xar:set>
+            </xar:if>
 
                         <a href="#$newurl#">#$loop:item['title']# #$loop:item['thread_text']#</a>
- 
+
                     </xar:if>
                 </span>
                 <span class="xar-tr-author">
                     <xar:if condition="$loop:item['postanon'] eq 0 and strtolower($loop:item['author']) ne 'anonymous'">
                         #$loop:item['author']#
                     <xar:else />
-                        
+
                             Anonymous
-                        
+
                     </xar:if>
                 </span>
                 <span class="xar-tr-date">
@@ -72,14 +72,14 @@
                         #$package['transformed-text']#
                         <div class="permalink">
                             <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('objecturl')#" rel="bookmark">
-				#
+                #
                             </a>
                         </div>
                         <xar:else />
                         #$loop:item['text']#
                         <div class="permalink">
                             <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('objecturl')#" rel="bookmark">
-				#
+                #
                             </a>
                         </div>
     <!-- FIXME: nested if's don't seem right here  -->
@@ -94,9 +94,9 @@
                        <br />
                         <span class="xar-sub">
                             <a href="#xarModURL('changelog','admin','showlog',array('modid' => 14, 'itemid'=> $loop:item['id']))#" title="#xarML('View Changes')#">
-                                
+
                                     View changes
-                                
+
                             </a>
                         </span>
                     </xar:if>
@@ -125,18 +125,18 @@
                       </xar:if>
                     <xar:else />
 
-		       <xar:if condition="isset($_GET['header']['id'])">
-				<xar:set name="newurl">
-				str_replace('header[id]='.$_GET['header']['id'], 'header[id]='.$id, xarServer::getCurrentURL())
-				</xar:set>
-			<xar:else />
-				<xar:if condition="strstr(xarServer::getCurrentURL(),'?')">
-					<xar:set name="start">xarServer::getCurrentURL().'&#38;'</xar:set>
-				<xar:else/>
-					<xar:set name="start">xarServer::getCurrentURL().'?'</xar:set>
-				</xar:if>
-				<xar:set name="newurl">$start . 'header[id]='.$id</xar:set>
-			</xar:if>
+               <xar:if condition="isset($_GET['header']['id'])">
+                <xar:set name="newurl">
+                str_replace('header[id]='.$_GET['header']['id'], 'header[id]='.$id, xarServer::getCurrentURL())
+                </xar:set>
+            <xar:else />
+                <xar:if condition="strstr(xarServer::getCurrentURL(),'?')">
+                    <xar:set name="start">xarServer::getCurrentURL().'&#38;'</xar:set>
+                <xar:else/>
+                    <xar:set name="start">xarServer::getCurrentURL().'?'</xar:set>
+                </xar:if>
+                <xar:set name="newurl">$start . 'header[id]='.$id</xar:set>
+            </xar:if>
 
                         <a href="#$newurl#">#$loop:item['title']# #$loop:item['thread_text']#</a>
 
@@ -147,9 +147,9 @@
                     <xar:if condition="$loop:item['postanon'] eq 0 and strtolower($loop:item['author']) ne 'anonymous'">
                         #$loop:item['author']#
                     <xar:else />
-                        
+
                             Anonymous
-                        
+
                     </xar:if>
                 </span>
 
@@ -170,14 +170,14 @@
                         #$package['transformed-text']#
                         <div class="permalink">
                             <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('objecturl')#" rel="bookmark">
-				#
+                #
                             </a>
                         </div>
                         <xar:else />
                         #$loop:item['text']#
                         <div class="permalink">
                             <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('objecturl')#" rel="bookmark">
-				#
+                #
                             </a>
                         </div>
     <!-- FIXME: nested if's don't seem right here  -->

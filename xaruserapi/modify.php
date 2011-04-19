@@ -108,19 +108,19 @@ function comments_userapi_modify($args)
         $text .= "\n"; //let's keep the begin and end tags together around the wrapped content
     }
 
-	sys::import('modules.dynamicdata.class.objects.master');
-	$object = DataObjectMaster::getObject(array(
-							'name' => 'comments'
-		));
+    sys::import('modules.dynamicdata.class.objects.master');
+    $object = DataObjectMaster::getObject(array(
+                            'name' => 'comments'
+        ));
 
-	if (!is_object($object)) return; 
-	$object->getItem(array('itemid' => $id)); 
+    if (!is_object($object)) return;
+    $object->getItem(array('itemid' => $id));
 
-	$object->properties['title']->setValue($title);
-	$object->properties['text']->setValue($text);
-	$bpostanon = isset($postanon) ? 0 : 1;
-	$object->properties['anonpost']->setValue($bpostanon);
-	if(isset($itemtype)) {
+    $object->properties['title']->setValue($title);
+    $object->properties['text']->setValue($text);
+    $bpostanon = isset($postanon) ? 0 : 1;
+    $object->properties['anonpost']->setValue($bpostanon);
+    if(isset($itemtype)) {
         $object->properties['itemtype']->setValue($itemtype);
     }
     if(isset($objectid)) {
@@ -133,7 +133,7 @@ function comments_userapi_modify($args)
         $object->properties['status']->setValue($status);
     }
 
-	$object->updateItem();
+    $object->updateItem();
 
     /*$sql =  "UPDATE $xartable[comments]
                 SET title    = ?,

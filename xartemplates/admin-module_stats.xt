@@ -3,30 +3,30 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            
+
                 Comments Administration
-            
+
         </span>
     </div>
     <div class="xar-mod-body">
         <xar:template type="module" file="admin-menu"/>
         <h2>
-            
+
                 Comments Module Statistics
-            
+
         </h2>
 
 
         <div>
         Module: <strong>#$modname#</strong>
         </div>
-	<div>
-	<xar:if condition="isset($itemtype)">
-		Itemtype: <strong>#$itemtype#
-		<xar:if condition="isset($itemtypelabel)"> 
-			- #$itemtypelabel#
-		</xar:if></strong>
-	</xar:if>
+    <div>
+    <xar:if condition="isset($itemtype)">
+        Itemtype: <strong>#$itemtype#
+        <xar:if condition="isset($itemtypelabel)">
+            - #$itemtypelabel#
+        </xar:if></strong>
+    </xar:if>
         </div>
 
         <div class="xar-align-center">
@@ -50,9 +50,9 @@
                     <tr>
                         <td colspan="4" class="xar-align-center">
                             <br />
-                            
+
                                 There are currently no comments attached to this module...
-                            
+
                             <br />
                             <br />
                         </td>
@@ -108,10 +108,10 @@
                 </table>
 
                 <div class="xar-accent xar-norm-outline" style="text-align: justify;padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-                   
+
                         By clicking on <strong>Delete</strong> you can delete all comments associated with a particular
                         module's item.
-                    
+
                 </div>
 
         </div>

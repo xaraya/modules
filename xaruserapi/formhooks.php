@@ -19,6 +19,12 @@ function comments_userapi_formhooks()
 {
 
     $hooks = array();
+    $hooks['formaction']              = '';//xarModCallHooks('item', 'formaction', '', array(), 'comments');
+    $hooks['formdisplay']             = '';//xarModCallHooks('item', 'formdisplay', '', array(), 'comments');
+    return $hooks;
+
+
+    $hooks = array();
     $hooks['formaction']              = xarModCallHooks('item', 'formaction', '', array(), 'comments');
     $hooks['formdisplay']             = xarModCallHooks('item', 'formdisplay', '', array(), 'comments');
 

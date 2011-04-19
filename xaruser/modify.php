@@ -29,9 +29,9 @@ function comments_user_modify()
     $receipt   = xarController::getVar('receipt');
     $receipt['post_url']          = xarModURL('comments','user','modify');
     $header['input-title']        = xarML('Modify Comment');
-	
-	if (!xarVarFetch('objecturl', 'str', $objecturl, 0, XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('adminreturn', 'str', $data['adminreturn'], NULL, XARVAR_NOT_REQUIRED)) return;
+
+    if (!xarVarFetch('objecturl', 'str', $objecturl, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('adminreturn', 'str', $data['adminreturn'], NULL, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('id', 'int:1:', $id, 0, XARVAR_NOT_REQUIRED)) return;
     if (!empty($id)) {
@@ -39,7 +39,7 @@ function comments_user_modify()
     }
 
     $comments = xarMod::apiFunc('comments','user','get_one', array('id' => $header['id']));
- 
+
     $author_id = $comments[0]['role_id'];
 
     if ($author_id != xarUserGetVar('id')) {
@@ -83,7 +83,7 @@ function comments_user_modify()
     }*/
 
     $package['settings'] = xarMod::apiFunc('comments','user','getoptions',$header);
- 
+
     switch (strtolower($receipt['action'])) {
         case 'submit':
             if (empty($package['title'])) {
@@ -98,11 +98,11 @@ function comments_user_modify()
             // call transform input hooks
             // should we look at the title as well?
             $package['transform'] = array('text');
-            
-            if (empty($package['settings']['edittimelimit']) 
+
+            if (empty($package['settings']['edittimelimit'])
                or (time() <= ($package['comments'][0]['xar_date'] + ($package['settings']['edittimelimit'] * 60)))
                or xarSecurityCheck('AdminComments')) {
-       
+
             $package = xarModCallHooks('item', 'transform-input', 0, $package,
                                        'comments', 0);
             xarMod::apiFunc('comments','user','modify',
@@ -111,13 +111,13 @@ function comments_user_modify()
                                               'title'    => $package['title'],
                                               'postanon' => $package['postanon'],
                                               'authorid' => $author_id));
-            } 
-			 
-			if (isset($data['adminreturn']) && $data['adminreturn'] == 'yes') { // if we got here via the admin side  
-				xarResponse::redirect(xarModURL('comments','admin','view'));
-			} else {
-				xarResponse::redirect($comments[0]['objecturl'].'#'.$header['id']);
-			}
+            }
+
+            if (isset($data['adminreturn']) && $data['adminreturn'] == 'yes') { // if we got here via the admin side
+                xarResponse::redirect(xarModURL('comments','admin','view'));
+            } else {
+                xarResponse::redirect($comments[0]['objecturl'].'#'.$header['id']);
+            }
             return true;
         case 'modify':
             list($comments[0]['transformed-text'],

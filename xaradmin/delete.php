@@ -16,141 +16,141 @@
  * This form allows one to delete comments for all hooked modules
  */
 function comments_admin_delete()
-{ 
+{
 
-	if (!xarSecurityCheck('DeleteComments')) return;
+    if (!xarSecurityCheck('DeleteComments')) return;
 
-	if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('deletebranch',    'bool',   $deletebranch, false,       XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('redirect',    'str',   $data['redirect'], '',       XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('itemtype',    'str',   $data['itemtype'], NULL,       XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('dtype', 'str:1:', $dtype)) return;
+    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('deletebranch',    'bool',   $deletebranch, false,       XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('redirect',    'str',   $data['redirect'], '',       XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemtype',    'str',   $data['itemtype'], NULL,       XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dtype', 'str:1:', $dtype)) return;
 
-	$data['dtype'] = $dtype;
+    $data['dtype'] = $dtype;
 
-	sys::import('modules.dynamicdata.class.objects.master');
+    sys::import('modules.dynamicdata.class.objects.master');
 
-	switch (strtolower($dtype)) {
-		case 'item': // delete just one comment
-			if (!xarVarFetch('id', 'int', $id)) return;
+    switch (strtolower($dtype)) {
+        case 'item': // delete just one comment
+            if (!xarVarFetch('id', 'int', $id)) return;
 
-			$object = DataObjectMaster::getObject(array(
-							'name' => 'comments'
-			));
-			if (!is_object($object)) return;
-			$object->getItem(array('itemid' => $id));
-			$values = $object->getFieldValues();
-			foreach ($values as $key => $val) {
-				$data[$key] = $val;
-			}
+            $object = DataObjectMaster::getObject(array(
+                            'name' => 'comments'
+            ));
+            if (!is_object($object)) return;
+            $object->getItem(array('itemid' => $id));
+            $values = $object->getFieldValues();
+            foreach ($values as $key => $val) {
+                $data[$key] = $val;
+            }
 
-			$delete_args['id'] = $id;
+            $delete_args['id'] = $id;
 
-			break;
-		case 'object': // delete all comments for a content item
-			if (!xarVarFetch('itemtype', 'int', $itemtype, 0, XARVAR_NOT_REQUIRED)) return;
-			if (!xarVarFetch('modid','int:1', $modid)) return;
-			if (!xarVarFetch('objectid','int:1', $objectid)) return;
+            break;
+        case 'object': // delete all comments for a content item
+            if (!xarVarFetch('itemtype', 'int', $itemtype, 0, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('modid','int:1', $modid)) return;
+            if (!xarVarFetch('objectid','int:1', $objectid)) return;
 
-			$filters['where'] = 'itemtype eq ' . $itemtype . ' and modid eq ' . $modid . ' and objectid eq ' . $objectid;
+            $filters['where'] = 'itemtype eq ' . $itemtype . ' and modid eq ' . $modid . ' and objectid eq ' . $objectid;
 
-			$delete_args['itemtype'] = $itemtype;
-			$delete_args['modid'] = $modid;
-			$delete_args['objectid'] = $objectid;
+            $delete_args['itemtype'] = $itemtype;
+            $delete_args['modid'] = $modid;
+            $delete_args['objectid'] = $objectid;
 
-			break;
-		case 'itemtype': // delete all comments for an itemtype
-			if (!xarVarFetch('itemtype', 'int', $itemtype)) return;
-			if (!xarVarFetch('modid','int:1',$modid)) return;
+            break;
+        case 'itemtype': // delete all comments for an itemtype
+            if (!xarVarFetch('itemtype', 'int', $itemtype)) return;
+            if (!xarVarFetch('modid','int:1',$modid)) return;
 
-			$filters['where'] = 'itemtype eq ' . $itemtype . ' and modid eq ' . $modid;
+            $filters['where'] = 'itemtype eq ' . $itemtype . ' and modid eq ' . $modid;
 
-			$delete_args['itemtype'] = $itemtype;
-			$delete_args['modid'] = $modid;
+            $delete_args['itemtype'] = $itemtype;
+            $delete_args['modid'] = $modid;
 
-			break;
-		case 'module':  // delete all comments for a module
-			if (!xarVarFetch('modid','int:1',$modid)) return;
+            break;
+        case 'module':  // delete all comments for a module
+            if (!xarVarFetch('modid','int:1',$modid)) return;
 
-			$filters['where'] = 'modid eq ' . $modid;
+            $filters['where'] = 'modid eq ' . $modid;
 
-			$delete_args['modid'] = $modid;
+            $delete_args['modid'] = $modid;
 
-			break;
-		case 'all': // delete all comments
-			$filters = array();
-			$delete_args = array();
-			break; 
-	}
+            break;
+        case 'all': // delete all comments
+            $filters = array();
+            $delete_args = array();
+            break;
+    }
 
-	if ($dtype != 'item') { // multiple items
-		
-		$list = DataObjectMaster::getObjectList(array(
-							'name' => 'comments'
-			));
-		$data['items'] = $list->getItems($filters); 
+    if ($dtype != 'item') { // multiple items
 
-		$countlist = DataObjectMaster::getObjectList(array(
-							'name' => 'comments'
-			));
-		if ($dtype == 'all') {
-			$filters['where'] = 'status ne 3';
-		} else {
-			$filters['where'] .= ' and status ne 3';
-			$modinfo = xarModGetInfo($modid);
-			$data['modname'] = $modinfo['displayname'];
-		}
-		$countitems = $countlist->getItems($filters); 
-		$data['count'] = count($countitems);
+        $list = DataObjectMaster::getObjectList(array(
+                            'name' => 'comments'
+            ));
+        $data['items'] = $list->getItems($filters);
 
-		if ($data['confirm'] && is_array($data['items'])) {
+        $countlist = DataObjectMaster::getObjectList(array(
+                            'name' => 'comments'
+            ));
+        if ($dtype == 'all') {
+            $filters['where'] = 'status ne 3';
+        } else {
+            $filters['where'] .= ' and status ne 3';
+            $modinfo = xarModGetInfo($modid);
+            $data['modname'] = $modinfo['displayname'];
+        }
+        $countitems = $countlist->getItems($filters);
+        $data['count'] = count($countitems);
 
-			if (!xarSecConfirmAuthKey()) return;
+        if ($data['confirm'] && is_array($data['items'])) {
 
-			if (!empty($data['items'])) {
-				foreach($data['items'] as $val) {
-					$object = DataObjectMaster::getObject(array(
-									'name' => 'comments'
-					));
-					if (!is_object($object)) return;
-					$object->deleteItem(array('itemid' => $val['id'])); 
-				}
-			}
+            if (!xarSecConfirmAuthKey()) return;
 
-		}
+            if (!empty($data['items'])) {
+                foreach($data['items'] as $val) {
+                    $object = DataObjectMaster::getObject(array(
+                                    'name' => 'comments'
+                    ));
+                    if (!is_object($object)) return;
+                    $object->deleteItem(array('itemid' => $val['id']));
+                }
+            }
 
-	} else { // $dtype == 'item'
-		if ($data['confirm']) {
-			if (!xarSecConfirmAuthKey()) return;
-			if ($deletebranch) {
-				xarMod::apiFunc('comments','admin','delete_branch',array('node' => $id));				
-			} else { 
-				xarMod::apiFunc('comments','admin','delete_node',array('node' => $id, 'pid' =>$values['pid'])); 
-			}
-		} else {
-			$comments = xarMod::apiFunc('comments','user','get_one',
+        }
+
+    } else { // $dtype == 'item'
+        if ($data['confirm']) {
+            if (!xarSecConfirmAuthKey()) return;
+            if ($deletebranch) {
+                xarMod::apiFunc('comments','admin','delete_branch',array('node' => $id));
+            } else {
+                xarMod::apiFunc('comments','admin','delete_node',array('node' => $id, 'pid' =>$values['pid']));
+            }
+        } else {
+            $comments = xarMod::apiFunc('comments','user','get_one',
                                        array('id' => $id));
-			if ($comments[0]['right_id'] == $comments[0]['left_id'] + 1) {
-				$data['haschildren'] = false;
-			} else {
-				$data['haschildren'] = true;
-			}
-		}
-	}
+            if ($comments[0]['right_id'] == $comments[0]['left_id'] + 1) {
+                $data['haschildren'] = false;
+            } else {
+                $data['haschildren'] = true;
+            }
+        }
+    }
 
     $data['authid'] = xarSecGenAuthKey();
 
-	$data['delete_args'] = $delete_args;
+    $data['delete_args'] = $delete_args;
 
-	if ($data['confirm'] && !empty($data['redirect'])) {
-		if ($data['redirect'] == 'view') {
-			xarResponse::redirect(xarModURL('comments','admin','view'));
-		} elseif ($data['redirect'] == 'stats') {
-			xarResponse::redirect(xarModURL('comments','admin','stats'));
-		} elseif (is_numeric($data['redirect'])) {
-			xarResponse::redirect(xarModURL('comments','admin','module_stats', array('modid' => $data['redirect'])));
-		}
-	}
+    if ($data['confirm'] && !empty($data['redirect'])) {
+        if ($data['redirect'] == 'view') {
+            xarResponse::redirect(xarModURL('comments','admin','view'));
+        } elseif ($data['redirect'] == 'stats') {
+            xarResponse::redirect(xarModURL('comments','admin','stats'));
+        } elseif (is_numeric($data['redirect'])) {
+            xarResponse::redirect(xarModURL('comments','admin','module_stats', array('modid' => $data['redirect'])));
+        }
+    }
 
     return $data;
 

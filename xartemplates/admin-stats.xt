@@ -36,9 +36,9 @@
                     <tr>
                         <td colspan="5" align="center">
                             <br />
-                            
+
                                 There are currently no comments in the database...
-                            
+
                             <br />
                             <br />
                         </td>
@@ -59,7 +59,7 @@
                             <td class="xar-valign-middle xar-align-center">
                                 #$loop:item['inactive']#
                             </td>
-                            <td class="xar-valign-middle xar-align-center"> 
+                            <td class="xar-valign-middle xar-align-center">
                                 <a href="#$loop:item['delete_url']#"><b>Delete</b></a>
                             </td>
                         </tr>
@@ -86,12 +86,12 @@
                 </xar:if>
                </table>
                 <p class="xar-accent xar-norm-outline">
-                            
+
                                 By clicking on <b>Delete</b> you can delete all comments associated with a particular
                                 module. Clicking on a module will take you to that module's statistics page containing
                                 the figures for each of that module's items that have comments associated with them.
                                 From there you can delete all comments associated with a particular item.
-                            
+
                </p>
         </div>
     </div>

@@ -4,9 +4,9 @@
 <br />
 <dl class="xar-tabs">
     <dt class="help">
-        
+
             Applies to:
-        
+
     </dt>
     <xar:if condition="$tab eq 'comments_general'">
         <xar:set name="class">"active"</xar:set>

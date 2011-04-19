@@ -4,14 +4,14 @@
         <div class="xar-accent-outline xar-cm-comment">
 
             <div>
-		<xar:set name="item">#$loop:item#</xar:set>
-		
-		<a name="comment#$item['id']#" class="planchor">&amp;nbsp;</a>
+        <xar:set name="item">#$loop:item#</xar:set>
+
+        <a name="comment#$item['id']#" class="planchor">&amp;nbsp;</a>
 
                 <xar:template file="action_buttons"/>
 
-		<xar:if condition="empty($item['title'])">
-			<!-- nothing to do -->
+        <xar:if condition="empty($item['title'])">
+            <!-- nothing to do -->
                 <xar:elseif condition="isset($notset) and isset($package['transformed-title'])" />
                     <h4>#$package['transformed-title']#</h4>
                 <xar:else />
@@ -23,9 +23,9 @@
                 <xar:if condition="xarModIsHooked('changelog','comments')">
                 <span class="xar-sub" style="float:right;">
                     <a href="#xarModURL('changelog','admin','showlog',array('modid' => 14, 'itemid'=> $item['id']))#" title="#xarML('View Changes')#">
-                        
+
                             View changes
-                        
+
                     </a>
                 </span>
                 </xar:if>
@@ -39,9 +39,9 @@
                         #$item['author']#
                         <xar:else />
                         <xar:sec catch="false" mask="ModerateComments">
-                            
+
                                 Anonymous
-                            
+
                             (#$item['author']#)
                             <xar:else />
                             Anonymous
@@ -62,14 +62,14 @@
                     #$package['transformed-text']#
                 <xar:else />
                     #$item['text']#
-                    <!-- branchout seems unnecessary for the view-flat template... 
-		    <xar:if condition="isset($item['branchout']) and $item['branchout'] eq 1">    
-                        <a href="">#$item['nested_text']#</a>                        
+                    <!-- branchout seems unnecessary for the view-flat template...
+            <xar:if condition="isset($item['branchout']) and $item['branchout'] eq 1">
+                        <a href="">#$item['nested_text']#</a>
                     </xar:if>
-		    -->
+            -->
                 </xar:if>
 
-		<div class="permalink">
+        <div class="permalink">
                     <a href="#xarServer::getCurrentURL()###comment#$item['id']#" title="#xarML('objecturl')#" rel="bookmark">#</a>
                 </div>
             </div>

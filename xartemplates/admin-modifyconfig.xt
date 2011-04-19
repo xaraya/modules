@@ -14,10 +14,10 @@
             <fieldset>
                 <legend>Modify content Configuration</legend>
                 <div id="mod_settings">
-		<h4>General:</h4>
+        <h4>General:</h4>
                 <xar:data-form object="$module_settings" />
                 </div>
-		<xar:data-form object="$object" itemid="0" template="module_settings" />
+        <xar:data-form object="$object" itemid="0" template="module_settings" />
             </fieldset>
 
             <div class="xar-form-input-after">
@@ -30,6 +30,6 @@
                 <xar:button type="submit" label="$label" />
             </div>
         </form>
- 
+
     </div>
 </xar:template>

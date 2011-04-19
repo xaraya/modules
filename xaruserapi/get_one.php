@@ -37,29 +37,29 @@ function comments_userapi_get_one( $args )
     // initialize the commentlist array
     $commentlist = array();
 
-	sys::import('modules.dynamicdata.class.objects.master');
-	$object = DataObjectMaster::getObject(array(
-							'name' => 'comments'
-		));
+    sys::import('modules.dynamicdata.class.objects.master');
+    $object = DataObjectMaster::getObject(array(
+                            'name' => 'comments'
+        ));
 
-	if (!is_object($object)) return; 
+    if (!is_object($object)) return;
 
-	$object->getItem(array('itemid' => $id)); 
+    $object->getItem(array('itemid' => $id));
 
-	if (!is_object($object)) return array();
+    if (!is_object($object)) return array();
 
-	$values = $object->getFieldValues();
+    $values = $object->getFieldValues();
 
-	if ($values['status'] != _COM_STATUS_ON) return array(); 
+    if ($values['status'] != _COM_STATUS_ON) return array();
 
-	$values['postanon'] = $values['anonpost'];
-	$values['datetime'] = $values['date'];
-	$values['role_id'] = $values['author']; 
-	//comments_renderer_wrap_words($values['text'],80);
-	$values['author'] = xarUserGetVar('name',$values['author']); 
+    $values['postanon'] = $values['anonpost'];
+    $values['datetime'] = $values['date'];
+    $values['role_id'] = $values['author'];
+    //comments_renderer_wrap_words($values['text'],80);
+    $values['author'] = xarUserGetVar('name',$values['author']);
 
-	$arr[0] = $values;
-	$values = $arr;
+    $arr[0] = $values;
+    $values = $arr;
 
     // if the depth is zero then we
     // only want one comment
@@ -110,7 +110,7 @@ function comments_userapi_get_one( $args )
     }
 
     $result->Close();
-	*/
+    */
 
     if (!comments_renderer_array_markdepths_bypid($values)) {
         $msg = xarML('Unable to add depth field to comments!');

@@ -68,7 +68,7 @@ function comments_userapi_get_countlist($args)
     if (!empty($startdate) && is_numeric($startdate)) {
         $sql .= " AND date>=$startdate";
     }
- 
+
     $sql .= " GROUP BY  objectid";
 
     $result =& $dbconn->Execute($sql);

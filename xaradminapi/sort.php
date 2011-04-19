@@ -19,28 +19,28 @@
  */
 function comments_adminapi_sort($args)
 {
-	// Default URL strings to look for
-	$url_sortfield = 'sortfield';
-	$url_ascdesc = 'ascdesc';
+    // Default URL strings to look for
+    $url_sortfield = 'sortfield';
+    $url_ascdesc = 'ascdesc';
 
-	extract($args);
+    extract($args);
 
-	if(!xarVarFetch($url_sortfield,     'isset', $sortfield,     NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch($url_sortfield,     'isset', $sortfield,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch($url_ascdesc, 'isset', $ascdesc, NULL, XARVAR_NOT_REQUIRED)) {return;}
-	
-	if (!isset($sort)) {
-		if (!isset($sortfield)) {
-			$sortfield = $sortfield_fallback;
-		}
 
-		if (!isset($ascdesc)) {
-			$ascdesc = $ascdesc_fallback;
-		}
+    if (!isset($sort)) {
+        if (!isset($sortfield)) {
+            $sortfield = $sortfield_fallback;
+        }
 
-		$sort = $sortfield . ' ' . $ascdesc;
-	}
+        if (!isset($ascdesc)) {
+            $ascdesc = $ascdesc_fallback;
+        }
 
-	return $sort;
+        $sort = $sortfield . ' ' . $ascdesc;
+    }
+
+    return $sort;
 }
 
 ?>

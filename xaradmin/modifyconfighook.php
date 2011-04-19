@@ -47,8 +47,8 @@ function comments_admin_modifyconfighook($args)
     }
 
     $data = array();
-    
-    // Have we set any vars for this itemtype yet? 
+
+    // Have we set any vars for this itemtype yet?
     // if not, get them from the default mod vars
     $data['depth'] = xarModVars::get($modname,'depth.' . $itemtype);
     if (!isset($data['depth'])) {
@@ -72,7 +72,7 @@ function comments_admin_modifyconfighook($args)
         $data['wrap'] = xarModVars::get($modname,'wrap.' . $itemtype);
         $data['showoptions'] = xarModVars::get($modname,'showoptions.' . $itemtype);
     }
-    
+
     $data['modname'] = $modname;
 
     return xarTplModule('comments','admin','modifyconfighook', $data);

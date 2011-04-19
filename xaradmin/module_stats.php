@@ -16,7 +16,7 @@ function comments_admin_module_stats( )
 
     // Security Check
     if(!xarSecurityCheck('AdminComments')) return;
-    if (!xarVarFetch('modid','int:1',$modid)) return; 
+    if (!xarVarFetch('modid','int:1',$modid)) return;
     if (!xarVarFetch('itemtype','int:0',$urlitemtype,0,XARVAR_NOT_REQUIRED)) return;
 
     if (!isset($modid) || empty($modid)) {
@@ -25,17 +25,17 @@ function comments_admin_module_stats( )
     }
 
     $modinfo = xarModGetInfo($modid);
-	$data['modname'] = ucwords($modinfo['displayname']);
-    if (empty($urlitemtype)) { 
+    $data['modname'] = ucwords($modinfo['displayname']);
+    if (empty($urlitemtype)) {
         $urlitemtype = -1;
     } else {
-		$data['itemtype'] = $urlitemtype;
+        $data['itemtype'] = $urlitemtype;
         $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes', array(), 0);
         if (isset($mytypes) && !empty($mytypes[$urlitemtype])) {
-			$data['itemtypelabel'] = $mytypes[$urlitemtype]['label'];
-			//$data['modlink'] = $mytypes[$urlitemtype]['url'];
+            $data['itemtypelabel'] = $mytypes[$urlitemtype]['label'];
+            //$data['modlink'] = $mytypes[$urlitemtype]['url'];
         } else {
-			//$data['modlink'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $urlitemtype));
+            //$data['modlink'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $urlitemtype));
         }
     }
 
@@ -48,19 +48,19 @@ function comments_admin_module_stats( )
         $startnum = 1;
     }
 
-	$args = array('modid' => $modid, 'numitems' => $numstats, 'startnum' => $startnum);
-	if (!xarVarFetch('itemtype','int',$itemtypearg,NULL,XARVAR_NOT_REQUIRED)) return;
-	if (isset($itemtypearg)) {
-		$args['itemtype'] = $itemtypearg;
-	}
+    $args = array('modid' => $modid, 'numitems' => $numstats, 'startnum' => $startnum);
+    if (!xarVarFetch('itemtype','int',$itemtypearg,NULL,XARVAR_NOT_REQUIRED)) return;
+    if (isset($itemtypearg)) {
+        $args['itemtype'] = $itemtypearg;
+    }
     // all the items and their number of comments (excluding root nodes) for this module
     $moditems = xarMod::apiFunc('comments','user','moditemcounts',
                               $args);
 
     // inactive
-	$args['status'] = 'inactive';
+    $args['status'] = 'inactive';
     $inactive = xarMod::apiFunc('comments','user','moditemcounts',
-                              $args);   
+                              $args);
 
     // get the title and url for the items
     $showtitle = xarModVars::get('comments','showtitle');
@@ -89,8 +89,8 @@ function comments_admin_module_stats( )
                                                         'modid' => $modid,
                                                         'itemtype' => $info['itemtype'],
                                                         'objectid' => $itemid,
-														'redirect' => $modid
-												  ));
+                                                        'redirect' => $modid
+                                                  ));
         $data['gt_total'] += $info['count'];
         if (isset($inactive[$itemid])) {
             $stats[$itemid]['inactive'] = $inactive[$itemid]['count'];
@@ -104,18 +104,18 @@ function comments_admin_module_stats( )
         }
     }
 
-    $data['data']             = $stats; 
-	if (isset($urlitemtype) && $urlitemtype > 0) {
-		$dalltype = 'itemtype';
-	} else {
-		$dalltype = 'module';
-	}
+    $data['data']             = $stats;
+    if (isset($urlitemtype) && $urlitemtype > 0) {
+        $dalltype = 'itemtype';
+    } else {
+        $dalltype = 'module';
+    }
     $data['delete_all_url']   = xarModURL('comments','admin','delete',
                                             array('dtype' => $dalltype,
                                                   'modid' => $modid,
                                                   'itemtype' => $urlitemtype,
-													'redirect' => 'stats'
-											));
+                                                    'redirect' => 'stats'
+                                            ));
 
     // get statistics for all comments (excluding root nodes)
     $modlist = xarMod::apiFunc('comments','user','modcounts',

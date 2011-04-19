@@ -54,7 +54,7 @@ function comments_admin_module_stats( )
     // get all items and their number of comments (excluding root nodes) for this module
     $moditems = xarMod::apiFunc('comments','user','getitems',
                               array('moditemscommentcount' => true,
-									'modid' => $modid,
+                                    'modid' => $modid,
                                     'itemtype' => $itemtype,
                                     'numitems' => $numstats,
                                     'startnum' => $startnum));

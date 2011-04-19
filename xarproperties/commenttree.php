@@ -40,7 +40,7 @@ class CommentTreeProperty extends DataProperty
         if (!isset($module)) $module = xarMod::getName();
         if (!isset($itemtype)) throw new BadParameterException('itemtype');
         if (!isset($itemid)) throw new BadParameterException('itemid');
-        
+
         $root = xarMod::apiFunc('comments','user','get_node_root',
                         array('modid' => xarMod::getID($module),
                               'objectid' => $itemid,

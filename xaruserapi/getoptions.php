@@ -35,21 +35,21 @@ function comments_userapi_getoptions()
     // dependant on the user being logged in.):
     // Get/Post->[user_defined->]admin_defined
 
-    if (isset($depth)) { 
+    if (isset($depth)) {
         if ($depth == 0) {
             $settings['depth'] = 1;
         } else {
             $settings['depth'] = $depth;
         }
     } else {
-		// Not doing user settings for now
+        // Not doing user settings for now
         /*if (xarUserIsLoggedIn()) {
             // Grab user's depth setting.
             $settings['depth'] = xarModUserVars::get('comments','depth');
         } else {*/
             $settings['depth'] = xarModVars::get('comments','depth');
         /*}*/
-    } 
+    }
 
     if (isset($render) && !empty($render)) {
         $settings['render'] = $render;

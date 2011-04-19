@@ -1,122 +1,122 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    
+
 
 
 <fieldset class="mod_settings">
-	    
-	    <h4>Rendering:</h4>
-			<xar:set name="name">'depth'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
 
-	     		<xar:set name="name">'render'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
+        <h4>Rendering:</h4>
+            <xar:set name="name">'depth'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />
+            <xar:data-input property="$properties[$name]" />
+         </div>
 
-	     	<xar:set name="name">'usersetrendering'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
+                 <xar:set name="name">'render'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />
+            <xar:data-input property="$properties[$name]" />
+         </div>
+
+             <xar:set name="name">'usersetrendering'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />
+            <xar:data-input property="$properties[$name]" />
+         </div>
 </fieldset>
 
 <fieldset class="mod_settings">
-	    
-	    <h4>Sorting:</h4>
 
-	       	<xar:set name="name">'sortby'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
+        <h4>Sorting:</h4>
 
-	       	<xar:set name="name">'order'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
+               <xar:set name="name">'sortby'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />
+            <xar:data-input property="$properties[$name]" />
+         </div>
+
+               <xar:set name="name">'order'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />
+            <xar:data-input property="$properties[$name]" />
+         </div>
 
 </fieldset>
 
 <fieldset class="mod_settings">
-	    
-	    <h4>Miscellaneous:</h4>
-	      	<xar:set name="name">'AllowPostAsAnon'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
 
-	      	<xar:set name="name">'editstamp'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
+        <h4>Miscellaneous:</h4>
+              <xar:set name="name">'AllowPostAsAnon'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />
+            <xar:data-input property="$properties[$name]" />
+         </div>
 
-	      	<xar:set name="name">'wrap'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
+              <xar:set name="name">'editstamp'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />
+            <xar:data-input property="$properties[$name]" />
+         </div>
+
+              <xar:set name="name">'wrap'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />
+            <xar:data-input property="$properties[$name]" />
+         </div>
 </fieldset>
 
 <fieldset class="mod_settings">
-	    
-	    <h4>Stats:</h4>
 
-	      	<xar:set name="name">'numstats'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
+        <h4>Stats:</h4>
 
-	      	<xar:set name="name">'showtitle'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
+              <xar:set name="name">'numstats'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />
+            <xar:data-input property="$properties[$name]" />
+         </div>
+
+              <xar:set name="name">'showtitle'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />
+            <xar:data-input property="$properties[$name]" />
+         </div>
 
 </fieldset>
 
-    
+
     <xar:if condition="xarModIsAvailable('filters')">
 <fieldset class="mod_settings" id="mod_settings_last">
-	    
-	    <h4>Filters Module:</h4>
 
-			<xar:set name="name">'enable_filters'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
+        <h4>Filters Module:</h4>
 
-		<xar:set name="name">'filters_min_ct_count'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
+            <xar:set name="name">'enable_filters'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />
+            <xar:data-input property="$properties[$name]" />
+         </div>
 
-	     <xar:set name="name">'filters_min_item_count'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
+        <xar:set name="name">'filters_min_ct_count'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />
+            <xar:data-input property="$properties[$name]" />
+         </div>
+
+         <xar:set name="name">'filters_min_item_count'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />
+            <xar:data-input property="$properties[$name]" />
+         </div>
 
 </fieldset>
-	<xar:else /> 
-	 <div style="display:none">
-		<xar:set name="ffid">$properties['enable_filters']->id</xar:set>
-		<input type="checkbox" name="dd_#$ffid#" value="false" />
-		<xar:data-input property="$properties['filters_min_ct_count']" />
-		<xar:data-input property="$properties['filters_min_item_count']" />
-	 </div>
-	</xar:if>
-      
+    <xar:else />
+     <div style="display:none">
+        <xar:set name="ffid">$properties['enable_filters']->id</xar:set>
+        <input type="checkbox" name="dd_#$ffid#" value="false" />
+        <xar:data-input property="$properties['filters_min_ct_count']" />
+        <xar:data-input property="$properties['filters_min_item_count']" />
+     </div>
+    </xar:if>
+
 
 </xar:template>
