@@ -133,7 +133,7 @@ function content_user_display($args)
 
 	$data['returnurl'] = xarServer::getCurrentURL(); 
 	$data['module'] = 'content';
-	$data['itemtype'] = $data['ctype'];
+	$data['itemtype'] = $contentobject->itemtype; 
     $data['hooks'] = xarModCallHooks('item', 'display', $itemid, $data);
 
     return xarTplModule('content','user','display', $data, $template);
