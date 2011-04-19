@@ -24,12 +24,9 @@
  */
 function comments_user_modify()
 {
-    $request = new xarRequest();
-    $header   = xarController::$request->getVar('header');
-    $request = new xarRequest();
-    $package   = xarController::$request->getVar('package');
-    $request = new xarRequest();
-    $receipt   = xarController::$request->getVar('receipt');
+    $header   = xarController::getVar('header');
+    $package   = xarController::getVar('package');
+    $receipt   = xarController::getVar('receipt');
     $receipt['post_url']          = xarModURL('comments','user','modify');
     $header['input-title']        = xarML('Modify Comment');
 	

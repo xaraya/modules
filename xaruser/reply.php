@@ -32,12 +32,9 @@ function comments_user_reply()
     if (!xarSecurityCheck('PostComments'))
         return;
 
-    $request = new xarRequest();
-    $header   = xarController::$request->getVar('header');
-    $request = new xarRequest();
-    $package   = xarController::$request->getVar('package');
-    $request = new xarRequest();
-    $receipt   = xarController::$request->getVar('receipt');
+    $header   = xarController::getVar('header');
+    $package   = xarController::getVar('package');
+    $receipt   = xarController::getVar('receipt');
     $receipt['post_url']          = xarModURL('comments','user','reply');
     $header['input-title']        = xarML('Post a reply');
 	xarVarFetch('objecturl', 'str', $data['objecturl'], '', XARVAR_NOT_REQUIRED); 
