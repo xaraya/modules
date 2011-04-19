@@ -55,9 +55,12 @@ function comments_user_display($args)
         }
     }
 
-    $header   = xarRequest::getVar('header');
-    $package  = xarRequest::getVar('package');
-    $receipt  = xarRequest::getVar('receipt');
+	$request = new xarRequest();
+    $header   = xarController::$request->getVar('header');
+	$request = new xarRequest();
+    $package  = xarController::$request->getVar('package');
+	$request = new xarRequest();
+    $receipt  = xarController::$request->getVar('receipt');
 
     if (isset($args['modid'])) {
         $header['modid'] = $args['modid'];

@@ -26,7 +26,8 @@ function comments_user_delete()
 	if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
 	if (!xarVarFetch('deletebranch',    'bool',   $deletebranch, false,       XARVAR_NOT_REQUIRED)) return;
 
-    $header = xarRequest::getVar('header');
+    $request = new xarRequest();
+    $header   = xarController::$request->getVar('header');
     //$receipt = xarRequest::getVar('receipt');
 	
 	xarVarFetch('objecturl', 'str', $data['objecturl'], '', XARVAR_NOT_REQUIRED); 
