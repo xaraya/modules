@@ -118,7 +118,8 @@ function crispbb_userapi_getitemtypes($args)
     // only do this when no args are passed
     $isupdated = false;
     if (empty($args)) {
-        $hooklist = xarMod::apiFunc('crispbb', 'user', 'gethooklist');
+        $hooklist = xarHooks::getObserverModules();
+        //$hooklist = xarMod::apiFunc('crispbb', 'user', 'gethooklist');
         $cachedhooks = xarSessionGetVar('crispbb_cachedhooks');
         $cachedhooks = !empty($cachedhooks) ? unserialize($cachedhooks) : array();
         xarSessionDelVar('crispbb_cachedhooks');
@@ -283,8 +284,8 @@ function crispbb_userapi_getitemtypes($args)
         // we need to check if the hooks are currently being updated by the modules module
         // if any changes were made, the admin hooks display will be out of synch
         // first we check if the current request module, type and func is modules admin hooks
-        list ($modname, $modtype, $modfunc) = xarRequest::getInfo();
-        if (($modname == 'modules' || $modname == 'hitcount') && $modtype == 'admin' && $modfunc == 'hooks') {
+        list ($modname, $modtype, $modfunc) = xarController::$request->getInfo();
+        if ($modtype == 'admin' && $modfunc == 'hooks') {
             // we tag a flag onto the redirected url, so we can keep track on redirects
             if (!xarVarFetch('hookupdate', 'isset', $hookupdate, 0, XARVAR_NOT_REQUIRED)) return;
             // 2 is the maximum redirects it should take to get back in synch
