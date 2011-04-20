@@ -225,7 +225,7 @@ function crispbb_user_modifyreply($args)
                 return xarTPLModule('crispbb', 'user', 'return', $data);
             }
 
-            return xarResponse::Redirect($return_url);
+            return xarController::redirect($return_url);
         }
         $data['preview'] = $transformed;
         $data['pdesc'] = $pdesc;

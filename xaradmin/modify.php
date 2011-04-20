@@ -135,7 +135,7 @@ function crispbb_admin_modify($args)
                             array('fid' => $fid, 'sublink' => 'edit'));
                     }
                     xarMod::apiFunc('crispbb', 'user', 'getitemtypes');
-                    xarResponse::Redirect($return_url);
+                    xarController::redirect($return_url);
                 }
                 $data['values'] = $settings;
             }
@@ -327,7 +327,7 @@ function crispbb_admin_modify($args)
                         $return_url = xarModURL('crispbb', 'admin', 'modify',
                             array('fid' => $fid, 'sublink' => $sublink));
                     }
-                    xarResponse::Redirect($return_url);
+                    xarController::redirect($return_url);
                     return true;
                 }
             }
@@ -387,7 +387,7 @@ function crispbb_admin_modify($args)
                     if (empty($return_url)) {
                         $return_url = xarModURL('crispbb', 'admin', 'modify', array('fid' => $fid, 'sublink' => 'privileges'));
                     }
-                    xarResponse::Redirect($return_url);
+                    xarController::redirect($return_url);
                     return true;
                 }
             }

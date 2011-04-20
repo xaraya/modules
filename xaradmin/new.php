@@ -153,7 +153,11 @@ function crispbb_admin_new($args)
             $extra['fprivileges'] = serialize($fprivileges);
             if (empty($data['forum']->properties['fowner']->value)) {
                 $extra['fowner'] = xarModVars::get('roles', 'admin');
+                $forumfields[] = 'fowner';
             }
+            $forumfields[] = 'fsettings';
+            $forumfields[] = 'fprivileges';
+            $data['forum']->setFieldlist($forumfields);
             $fid = $data['forum']->createItem($extra);
             // no fid, throw back
             if (empty($fid)) return;
@@ -164,7 +168,7 @@ function crispbb_admin_new($args)
                 $returnurl = xarModURL('crispbb', 'admin', 'modify',
                     array('fid' => $fid, 'sublink' => 'edit'));
             }
-            xarResponse::Redirect($returnurl);
+            xarController::redirect($returnurl);
             return true;
         }
     }

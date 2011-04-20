@@ -350,7 +350,7 @@ function crispbb_user_newreply($args)
             if (empty($return_url)) {
                 $return_url = xarModURL('crispbb', 'user', 'display', array('tid' => $tid,  'action' => 'lastreply'));
             }
-            return xarResponse::Redirect($return_url);
+            return xarController::redirect($return_url);
         }
         $data['preview'] = $transformed;
         $data['htmldeny'] = $htmldeny;

@@ -129,7 +129,7 @@ function crispbb_user_display($args)
         } else {
             $return_url = xarModURL('crispbb', 'user', 'display', array('tid' => $tid), NULL, $lastpid);
         }
-        return xarResponse::Redirect($return_url, 301);
+        return xarController::redirect($return_url, 301);
     }
 
     $pageTitle = $data['ttitle'];

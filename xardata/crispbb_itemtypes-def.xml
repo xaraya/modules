@@ -1,21 +1,21 @@
 <object name="crispbb_itemtypes">
-  <objectid>615</objectid>
+  <objectid>24</objectid>
   <label>crispBB Itemtypes</label>
   <module_id>970</module_id>
   <itemtype>2</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
-  <maxid>3</maxid>
+  <maxid>0</maxid>
   <isalias>true</isalias>
   <datastore>relational</datastore>
   <config>a:0:{}</config>
-  <sources>a:1:{s:9:&quot;itemtypes&quot;;a:2:{i:0;s:21:&quot;xar_crispbb_itemtypes&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <sources>a:1:{s:9:&quot;itemtypes&quot;;a:2:{i:0;s:21:&quot;xar_crispbb_itemtypes&quot;;i:1;s:0:&quot;&quot;;}}</sources>
   <relations>a:0:{}</relations>
   <objects>a:0:{}</objects>
   <properties>
     <property name="id">
-      <id>6811</id>
+      <id>222</id>
       <label>id</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -25,7 +25,7 @@
       <configuration></configuration>
     </property>
     <property name="fid">
-      <id>6812</id>
+      <id>223</id>
       <label>fid</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
@@ -35,7 +35,7 @@
       <configuration></configuration>
     </property>
     <property name="component">
-      <id>6813</id>
+      <id>224</id>
       <label>component</label>
       <type>dropdown</type>
       <defaultvalue></defaultvalue>
@@ -46,4 +46,3 @@
     </property>
   </properties>
 </object>
-

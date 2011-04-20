@@ -178,44 +178,7 @@ class Forums extends DataObject
     // update a forum, we don't call parent here, otherwise nohooks will be ignored
     public function updateItem(Array $args = array())
     {
-        // updating anything other than forum counts requires elevated privs
-        // @TODO: wrap this in a sec check
-        if(count($args) > 0) {
-            if(!empty($args['itemid']))
-                $this->itemid = $args['itemid'];
-
-            foreach($args as $name => $value)
-                if(isset($this->properties[$name]))
-                    $this->properties[$name]->setValue($value);
-        }
-        if(empty($this->itemid)) {
-            // Try getting the id value from the item ID property if it exists
-            foreach($this->properties as $property)
-                if ($property->type == 21) $this->itemid = $property->value;
-        }
-        // add in forum specific topic and reply counts
-        $counts = $this->getForumCounts();
-        if (!empty($counts)) {
-            foreach($counts as $name => $value)
-                if(isset($this->properties[$name]))
-                    $this->properties[$name]->setValue($value);
-        }
-        $args = $this->getFieldValues();
-        $args['itemid'] = $this->itemid;
-        foreach(array_keys($this->datastores) as $store)
-        {
-            // Execute any property-specific code first
-            if ($store != '_dummy_') {
-                foreach ($this->datastores[$store]->fields as $property) {
-                    if (method_exists($property,'updatevalue')) {
-                        $property->updateValue($this->itemid);
-                    }
-                }
-            }
-
-            // Now run the update routine of the this datastore
-            $itemid = $this->datastores[$store]->updateItem($args);
-        }
+        $itemid = parent::updateItem($args);
 
         if ($this->updatehooks == true)
             // call update hooks for this item
@@ -250,92 +213,8 @@ class Forums extends DataObject
     }
     public function createItem(Array $args = array())
     {
-        // @TODO: sec check
-        // The id of the item^to be created is
-        //  1. An itemid arg passed
-        //  2. An id arg passed ot the primary index
-        //  3. 0
-
-        $this->properties[$this->primary]->setValue(0);
-        if(count($args) > 0) {
-            foreach($args as $name => $value) {
-                if(isset($this->properties[$name])) {
-                    $this->properties[$name]->setValue($value);
-                }
-            }
-            if(isset($args['itemid'])) {
-                $this->itemid = $args['itemid'];
-            } else {
-                $this->itemid = $this->properties[$this->primary]->getValue();
-            }
-        }
-        // special case when we try to create a new object handled by dynamicdata
-        if(
-            $this->objectid == 1 &&
-            $this->properties['module_id']->value == xarMod::getRegID('dynamicdata')
-            //&& $this->properties['itemtype']->value < 2
-        )
-        {
-            $this->properties['itemtype']->setValue($this->getNextItemtype($args));
-        }
-
-        // check that we have a valid item id, or that we can create one if it's set to 0
-        if(empty($this->itemid)) {
-            // no primary key identified for this object, so we're stuck
-            if(!isset($this->primary)) {
-                $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-                $vars = array('primary key', 'Forum DataObject', 'createItem', 'crispBB');
-                throw new BadParameterException($vars,$msg);
-            }
-            $value = $this->properties[$this->primary]->getValue();
-
-            // we already have an itemid value in the properties
-            if(!empty($value)) {
-                $this->itemid = $value;
-            } elseif(!empty($this->properties[$this->primary]->datastore)) {
-                // we'll let the primary datastore create an itemid for us
-                $primarystore = $this->properties[$this->primary]->datastore;
-                // add the primary to the data store fields if necessary
-                if(!empty($this->fieldlist) && !in_array($this->primary,$this->fieldlist))
-                    $this->datastores[$primarystore]->addField($this->properties[$this->primary]); // use reference to original property
-
-                // Execute any property-specific code first
-                foreach ($this->datastores[$primarystore]->fields as $property) {
-                    if (method_exists($property,'createvalue')) {
-                        $property->createValue($this->itemid);
-                    }
-                }
-
-                $this->itemid = $this->datastores[$primarystore]->createItem($this->toArray());
-            } else {
-                $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-                $vars = array('primary key datastore', 'Forum DataObject', 'createItem', 'crispBB');
-                throw new BadParameterException($vars,$msg);
-            }
-        }
-        if(empty($this->itemid)) return;
-
-        $args = $this->getFieldValues();
-        $args['itemid'] = $this->itemid;
-        foreach(array_keys($this->datastores) as $store) {
-            // skip the primary store
-            if(isset($primarystore) && $store == $primarystore)
-                continue;
-
-            // Execute any property-specific code first
-            if ($store != '_dummy_') {
-                foreach ($this->datastores[$store]->fields as $property) {
-                    if (method_exists($property,'createvalue')) {
-                        $property->createValue($this->itemid);
-                    }
-                }
-            }
-
-            // Now run the create routine of the this datastore
-            $itemid = $this->datastores[$store]->createItem($args);
-            if(empty($itemid))
-                return;
-        }
+        $itemid = parent::createItem($args);
+        
         // set the forum order, can't do this during create
         $extra = array('forder' => $this->itemid);
         // we just want to update the item here, create hooks haven't been called yet
@@ -409,7 +288,6 @@ class ForumsList extends DataObjectList
     {
         if (empty($itemid)) return array();
         $data['itemid'] = $itemid;
-        $data['catid'] = !empty($this->catid) && is_numeric($this->catid) ? $this->catid : null;
         // import our own class to handle link cache (less code required)
         sys::import('modules.crispbb.class.cache.links');
         // insist on using fid in urlargs (for now)

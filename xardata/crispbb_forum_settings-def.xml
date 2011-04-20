@@ -1,5 +1,5 @@
 <object name="crispbb_forum_settings">
-  <objectid>616</objectid>
+  <objectid>18</objectid>
   <label>crispBB Forum Settings</label>
   <module_id>970</module_id>
   <itemtype>3</itemtype>
@@ -7,15 +7,11 @@
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
-  <isalias>true</isalias>
-  <datastore>dynamicdata</datastore>
   <config>a:0:{}</config>
-  <sources>a:0:{}</sources>
-  <relations>a:0:{}</relations>
-  <objects>a:0:{}</objects>
+  <isalias>true</isalias>
   <properties>
     <property name="topicsperpage">
-      <id>6814</id>
+      <id>127</id>
       <label>Topics per page</label>
       <type>integerbox</type>
       <defaultvalue>20</defaultvalue>
@@ -25,7 +21,7 @@
       <configuration>a:5:{s:12:"display_size";s:2:"10";s:17:"display_maxlength";s:2:"30";s:14:"display_layout";s:7:"default";s:20:"validation_min_value";s:1:"1";s:20:"validation_max_value";s:3:"100";}</configuration>
     </property>
     <property name="topicsortorder">
-      <id>6815</id>
+      <id>128</id>
       <label>Topic order</label>
       <type>dropdown</type>
       <defaultvalue>DESC</defaultvalue>
@@ -35,7 +31,7 @@
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:81:"xarMod::apiFunc('crispbb', 'user', 'getoptions', array('options' => 'sortorder'))";}</configuration>
     </property>
     <property name="topicsortfield">
-      <id>6816</id>
+      <id>129</id>
       <label>Topic sort field</label>
       <type>dropdown</type>
       <defaultvalue>ptime</defaultvalue>
@@ -45,7 +41,7 @@
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:81:"xarMod::apiFunc('crispbb', 'user', 'getoptions', array('options' => 'topicsort'))";}</configuration>
     </property>
     <property name="postsperpage">
-      <id>6817</id>
+      <id>130</id>
       <label>Posts per page</label>
       <type>integerbox</type>
       <defaultvalue>20</defaultvalue>
@@ -55,7 +51,7 @@
       <configuration>a:5:{s:12:"display_size";s:2:"10";s:17:"display_maxlength";s:2:"30";s:14:"display_layout";s:7:"default";s:20:"validation_min_value";s:1:"1";s:20:"validation_max_value";s:3:"100";}</configuration>
     </property>
     <property name="postsortorder">
-      <id>6818</id>
+      <id>131</id>
       <label>Post order</label>
       <type>dropdown</type>
       <defaultvalue>ASC</defaultvalue>
@@ -65,7 +61,7 @@
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:81:"xarMod::apiFunc('crispbb', 'user', 'getoptions', array('options' => 'sortorder'))";}</configuration>
     </property>
     <property name="hottopicposts">
-      <id>6819</id>
+      <id>132</id>
       <label>Hot topic replies</label>
       <type>integerbox</type>
       <defaultvalue>20</defaultvalue>
@@ -75,7 +71,7 @@
       <configuration></configuration>
     </property>
     <property name="hottopichits">
-      <id>6820</id>
+      <id>133</id>
       <label>Hot topic hits</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
@@ -85,7 +81,7 @@
       <configuration></configuration>
     </property>
     <property name="hottopicratings">
-      <id>6821</id>
+      <id>134</id>
       <label>hottopicratings</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
@@ -95,7 +91,7 @@
       <configuration></configuration>
     </property>
     <property name="topictitlemin">
-      <id>6822</id>
+      <id>135</id>
       <label>Title min </label>
       <type>integerbox</type>
       <defaultvalue>5</defaultvalue>
@@ -105,7 +101,7 @@
       <configuration>a:5:{s:12:"display_size";s:2:"10";s:17:"display_maxlength";s:2:"30";s:14:"display_layout";s:7:"default";s:20:"validation_min_value";s:1:"1";s:20:"validation_max_value";s:3:"255";}</configuration>
     </property>
     <property name="topictitlemax">
-      <id>6823</id>
+      <id>136</id>
       <label>Title max</label>
       <type>integerbox</type>
       <defaultvalue>100</defaultvalue>
@@ -115,7 +111,7 @@
       <configuration>a:5:{s:12:"display_size";s:2:"10";s:17:"display_maxlength";s:2:"30";s:14:"display_layout";s:7:"default";s:20:"validation_min_value";s:1:"1";s:20:"validation_max_value";s:3:"255";}</configuration>
     </property>
     <property name="topicdescmin">
-      <id>6824</id>
+      <id>137</id>
       <label>Description min</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
@@ -125,7 +121,7 @@
       <configuration>a:5:{s:12:"display_size";s:2:"10";s:17:"display_maxlength";s:2:"30";s:14:"display_layout";s:7:"default";s:20:"validation_min_value";s:1:"0";s:20:"validation_max_value";s:3:"255";}</configuration>
     </property>
     <property name="topicdescmax">
-      <id>6825</id>
+      <id>138</id>
       <label>Description max</label>
       <type>integerbox</type>
       <defaultvalue>255</defaultvalue>
@@ -135,7 +131,7 @@
       <configuration>a:5:{s:12:"display_size";s:2:"10";s:17:"display_maxlength";s:2:"30";s:14:"display_layout";s:7:"default";s:20:"validation_min_value";s:1:"1";s:20:"validation_max_value";s:3:"255";}</configuration>
     </property>
     <property name="topicpostmin">
-      <id>6826</id>
+      <id>139</id>
       <label>Post min</label>
       <type>integerbox</type>
       <defaultvalue>5</defaultvalue>
@@ -145,7 +141,7 @@
       <configuration>a:5:{s:12:"display_size";s:2:"10";s:17:"display_maxlength";s:2:"30";s:14:"display_layout";s:7:"default";s:20:"validation_min_value";s:1:"1";s:20:"validation_max_value";s:5:"65535";}</configuration>
     </property>
     <property name="topicpostmax">
-      <id>6827</id>
+      <id>140</id>
       <label>Post max</label>
       <type>integerbox</type>
       <defaultvalue>65535</defaultvalue>
@@ -155,7 +151,7 @@
       <configuration>a:5:{s:12:"display_size";s:2:"10";s:17:"display_maxlength";s:2:"30";s:14:"display_layout";s:7:"default";s:20:"validation_min_value";s:1:"1";s:20:"validation_max_value";s:5:"65535";}</configuration>
     </property>
     <property name="showstickies">
-      <id>6828</id>
+      <id>141</id>
       <label>Show stickies</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
@@ -165,7 +161,7 @@
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:77:"xarMod::apiFunc('crispbb', 'user', 'getoptions', array('options' => 'pages'))";}</configuration>
     </property>
     <property name="showannouncements">
-      <id>6829</id>
+      <id>142</id>
       <label>Show announcements</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
@@ -175,7 +171,7 @@
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:77:"xarMod::apiFunc('crispbb', 'user', 'getoptions', array('options' => 'pages'))";}</configuration>
     </property>
     <property name="showfaqs">
-      <id>6830</id>
+      <id>143</id>
       <label>Show faqs</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
@@ -185,7 +181,7 @@
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:77:"xarMod::apiFunc('crispbb', 'user', 'getoptions', array('options' => 'pages'))";}</configuration>
     </property>
     <property name="floodcontrol">
-      <id>6831</id>
+      <id>144</id>
       <label>Flood control</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
@@ -195,7 +191,7 @@
       <configuration></configuration>
     </property>
     <property name="postbuffer">
-      <id>6832</id>
+      <id>145</id>
       <label>Post buffer</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
@@ -205,7 +201,7 @@
       <configuration></configuration>
     </property>
     <property name="topicapproval">
-      <id>6833</id>
+      <id>146</id>
       <label>Topics require approval?</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -215,7 +211,7 @@
       <configuration></configuration>
     </property>
     <property name="replyapproval">
-      <id>6834</id>
+      <id>147</id>
       <label>Replies require approval?</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -225,7 +221,7 @@
       <configuration></configuration>
     </property>
     <property name="iconfolder">
-      <id>6835</id>
+      <id>149</id>
       <label>Icon Folder</label>
       <type>textbox</type>
       <defaultvalue>topicicons-crispbb</defaultvalue>
@@ -235,7 +231,7 @@
       <configuration></configuration>
     </property>
     <property name="icondefault">
-      <id>6836</id>
+      <id>150</id>
       <label>icondefault</label>
       <type>dropdown</type>
       <defaultvalue>none</defaultvalue>
@@ -245,7 +241,7 @@
       <configuration></configuration>
     </property>
     <property name="redirected">
-      <id>6837</id>
+      <id>151</id>
       <label>redirected</label>
       <type>url</type>
       <defaultvalue></defaultvalue>

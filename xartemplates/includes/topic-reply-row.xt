@@ -5,7 +5,9 @@
 <xar:if condition="$post['pstatus'] eq 5 and empty($showdeleted)">
 <td class="posterinfo xar-valign-top">
     <xar:comment>Show posters name, linking to their profile</xar:comment>
-    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $post['powner']))#" title="#xarML('View Profile')#">#$posterlist[$post['powner']]['name']#</a>
+    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $post['powner']))#" title="#xarML('View Profile')#">
+        <xar:data-output type="name" value="$posterlist[$post['powner']]['name']"/>
+    </a>
 </td>
 <td class="replyinfo xar-padding-none">
     <xar:comment>First we display the permalink to this post</xar:comment>
@@ -55,7 +57,9 @@
 <td class="posterinfo xar-valign-top">
     <xar:comment>This function returns a list of info for all the users who appear on this page in the $posterlist array. This contains data from roles userapi getall. </xar:comment>
     <xar:comment>Show posters name, linking to their profile</xar:comment>
-    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $post['powner']))#" title="#xarML('View Profile')#">#$posterlist[$post['powner']]['name']#</a>
+    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $post['powner']))#" title="#xarML('View Profile')#">
+        <xar:data-output type="name" value="$posterlist[$post['powner']]['name']"/>
+    </a>
     <br />
     Joined:
     <xar:template type="module" module="crispbb" file="user-timestamp" subdata="array('timestamp' =&gt; $posterlist[$post['powner']]['date_reg'], 'timeorder' =&gt; 'dateonly')" />
