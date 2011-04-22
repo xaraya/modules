@@ -1,6 +1,6 @@
 <object name="crispbb_itemtypes">
   <objectid>24</objectid>
-  <label>crispBB Itemtypes</label>
+  <label>crispBB Itemtypes</label> 
   <module_id>970</module_id>
   <itemtype>2</itemtype>
   <class>DataObject</class>
