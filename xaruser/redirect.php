@@ -79,6 +79,6 @@ function crispbb_user_redirect($args)
 
     $return_url = xarModURL('crispbb', 'user', $return_func, $return_args);
 
-    return xarResponse::Redirect($return_url);
+    return xarController::redirect($return_url);
 }
 ?>

@@ -52,7 +52,7 @@ function crispbb_admin_categories($args)
             sys::import('modules.dynamicdata.class.properties.master');
             $picker = DataPropertyMaster::getProperty(array('name' => 'categorypicker'));
             $isvalid = $picker->checkInput('basecid');
-            xarResponse::Redirect(xarModURL('crispbb', 'admin', 'categories',array('sublink' => 'mastercat')));
+            xarController::redirect(xarModURL('crispbb', 'admin', 'categories',array('sublink' => 'mastercat')));
         }
         $data['authid'] = xarSecGenAuthKey();
     }

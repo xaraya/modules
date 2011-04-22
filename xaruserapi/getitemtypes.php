@@ -295,7 +295,7 @@ function crispbb_userapi_getitemtypes($args)
                 // indicating the hook module to list, so we fetch that for the return url
                 if (!xarVarFetch('hook', 'isset', $hookarg, NULL, XARVAR_NOT_REQUIRED)) return;
                 // and finally we redirect to the function
-                xarResponse::Redirect(xarModURL($modname, 'admin', 'hooks', array('hook' => $hookarg, 'hookupdate' => $hookupdate++)));
+                xarController::redirect(xarModURL($modname, 'admin', 'hooks', array('hook' => $hookarg, 'hookupdate' => $hookupdate++)));
                 return;
             }
         }

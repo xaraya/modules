@@ -164,7 +164,7 @@ function crispbb_admin_new($args)
                 $returnurl = xarModURL('crispbb', 'admin', 'modify',
                     array('fid' => $fid, 'sublink' => 'edit'));
             }
-            xarResponse::Redirect($returnurl);
+            xarController::redirect($returnurl);
             return true;
         }
     }

@@ -92,7 +92,7 @@ function example_user_usermenu($args)
             /* Redirect back to our form. We could also redirect back to the
              * account page by leaving the array.
              */
-            xarResponse::Redirect(xarModURL('roles', 'user', 'account',
+            xarController::redirect(xarModURL('roles', 'user', 'account',
                                           array ('moduleload' => 'example')));
 
             return;

@@ -32,7 +32,7 @@
         </ul>
     </div>
 <xar:else />
-    <xar:set name="request">xarRequest::getInfo()</xar:set>
+    <xar:set name="request">xarController::$request->getInfo()</xar:set>
     <xar:set name="activetab">$request[2]</xar:set>
 </xar:if>
 <xar:if condition="!empty($activetab) and isset($menulinks[$activetab]['sublinks'])">

@@ -57,7 +57,7 @@ function crispbb_admin_newcat($args)
             if (empty($data['return_url'])) {
                 $data['return_url'] = xarModURL('crispbb', 'admin', 'categories');
             }
-            xarResponse::Redirect($data['return_url']);
+            xarController::redirect($data['return_url']);
             return true;
         }
     }
