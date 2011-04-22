@@ -66,7 +66,7 @@ function crispbb_admin_ordercats($args)
             }
             $name[$itemid] = $cat['name'];
             $description[$itemid] = $cat['description'];
-            $image[$itemid] = $cat['image'];
+            $template[$itemid] = $cat['template'];
             break;
         }
     }
@@ -140,7 +140,7 @@ function crispbb_admin_ordercats($args)
                     'cid'         => $cid,
                     'name'        => $name[$cid],
                     'description' => $description[$cid],
-                    'image'       => $image[$cid],
+                    'template'    => $template[$cid],
                     'moving'      => $moving[$cid],
                     'refcid'      => $refcid[$cid],
                     'inorout'     => $inorout,
