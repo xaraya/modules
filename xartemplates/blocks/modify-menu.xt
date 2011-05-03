@@ -65,8 +65,10 @@
         <!-- Existing root pids to removed -->
         <div class="xar-form-input-wrapper">
             <label for="remove_root_pid_#$bid#" title="#xarML('Remove root pages')#" class="xar-form-label">            
-                <xar:set name="dummy">array_shift($root_pids)</xar:set>
                 <xar:loop name="$root_pids">
+                    <xar:if condition="empty($loop->key)">
+                        <xar:continue/>
+                    </xar:if>
                     <div>
                         <input name="remove_root_pid[]" type="checkbox" value="#$loop:key#" id="remove_root_pid_#$bid#_#$loop:key#"/>
                         &#160;
@@ -126,8 +128,10 @@
             <!-- Existing pruning pids to removed -->
         <div class="xar-form-input-wrapper">
             <label for="remove_prune_pid_#$bid#" title="#xarML('Remove pruning pages')#" class="xar-form-label">            
-                <xar:set name="dummy">array_shift($prune_pids)</xar:set>
                 <xar:loop name="$prune_pids">
+                    <xar:if condition="empty($loop->key)">
+                        <xar:continue/>
+                    </xar:if>
                     <div>
                         <input name="remove_prune_pid[]" type="checkbox" value="#$loop:key#" id="remove_prune_pid_#$bid#_#$loop:key#"/>
                         &#160;

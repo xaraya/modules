@@ -98,7 +98,7 @@
             xarVarFetch('new_root_pid', 'int:0', $new_root_pid, 0, XARVAR_NOT_REQUIRED) && !empty($new_root_pid);
             $vars['root_pids'][] = $new_root_pid;
 
-            xarVarFetch('remove_root_pid', 'list:int:1', $remove_root_pid, array(), XARVAR_NOT_REQUIRED) && !empty($remove_root_pid);
+            xarVarFetch('remove_root_pid', 'list:int:1', $remove_root_pid, array(), XARVAR_NOT_REQUIRED);
             // Easier to check with the keys and values flipped.
             $vars['root_pids'] = array_flip($vars['root_pids']);
             foreach($remove_root_pid as $remove) {
@@ -118,7 +118,7 @@
             xarVarFetch('new_prune_pid', 'int:0', $new_prune_pid, 0, XARVAR_NOT_REQUIRED) && !empty($new_prune_pid);
             $vars['prune_pids'][] = $new_prune_pid;
 
-            xarVarFetch('remove_prune_pid', 'list:int:1', $remove_prune_pid, array(), XARVAR_NOT_REQUIRED) && !empty($remove_prune_pid);
+            xarVarFetch('remove_prune_pid', 'list:int:1', $remove_prune_pid, array(), XARVAR_NOT_REQUIRED);
             // Easier to check with the keys and values flipped.
             $vars['prune_pids'] = array_flip($vars['prune_pids']);
             foreach($remove_prune_pid as $remove) {
