@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div>
-        <div>
+        <div class="xar-form-input-wrapper">
+            <label for="multi_homed_#$bid#" title="#xarML('Hide the root page')#" class="xar-form-label">            
+                Hide the root page:            
+            </label>
             <xar:set name="id">'multi_homed_' . $bid</xar:set>
             <xar:data-input type="checkbox" name="multi_homed" id="$id" checked="$multi_homed"/>
-            <label for="multi_homed_#$bid#">Hide the root page</label>
         </div>
-
-        <div>
-            <label for="current_source_#$bid#">Source of the current page</label>
+        <div class="xar-form-input-wrapper">
+            <label for="current_source_#$bid#" title="#xarML('The source of the current page displayed')#" class="xar-form-label">            
+                Source of the current page:            
+            </label>
             <xar:set name="options">
                 array(
                     array('id' => 'AUTO', 'name' => xarML('Automatic - set by the current module')),
@@ -19,9 +22,10 @@
             <xar:set name="id">'current_source_' . $bid</xar:set>
             <xar:data-input type="dropdown" name="current_source" id="$id" value="$current_source" options="$options"/>
         </div>
-
-        <div>
-            <label for="default_pid_#$bid#">Default page</label>
+        <div class="xar-form-input-wrapper">
+            <label for="default_pid_#$bid#" title="#xarML('The default page to be displayed')#" class="xar-form-label">            
+                Default page:            
+            </label>
             <select name="default_pid" id="default_pid_#$bid#">
                 <xar:if condition="$default_pid eq 0">
                     <option value="-1" selected="selected">-- None --</option>
@@ -46,13 +50,17 @@
                     If the current page is not under one of these roots, the block will be hidden.
 
             </p>
-            <label for="new_root_pid_#$bid#">Add Root Page</label>
+        <div class="xar-form-input-wrapper">
+            <label for="new_root_pid_#$bid#" title="#xarML('Add Root Page')#" class="xar-form-label">            
+                Add Root Page:            
+            </label>
             <select name="new_root_pid" id="new_root_pid_#$bid#">
                 <option value="0" selected="selected">-- None --</option>
                 <xar:loop name="$all_pages.pages">
                     <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
                 </xar:loop>
             </select>
+        </div>
 
             <!-- Existing root pids to removed -->
             <xar:loop name="$root_pids">
@@ -68,17 +76,20 @@
             </xar:loop>
         </fieldset>
 
-        <div>
-            <label for="max_level_#$bid#">Maximum levels displayed</label>
+        <div class="xar-form-input-wrapper">
+            <label for="max_level_#$bid#" title="#xarML('Maximum levels displayed')#" class="xar-form-label">            
+                Maximum levels displayed:            
+            </label>
             <xar:if condition="empty($max_level)">
                 <input type="text" name="max_level" id="max_level_#$bid#" size="10" maxlength="3" value=""/>
             <xar:else />
                 <input type="text" name="max_level" id="max_level_#$bid#" size="10" maxlength="3" value="#$max_level#"/>
             </xar:if>
         </div>
-
-        <div>
-            <label for="start_level_#$bid#">Hide menu below this level</label>
+        <div class="xar-form-input-wrapper">
+            <label for="start_level_#$bid#" title="#xarML('Hide menu below this level')#" class="xar-form-label">            
+                Hide menu below this level:            
+            </label>
             <xar:if condition="empty($start_level)">
                 <input type="text" name="start_level" id="start_level_#$bid#" size="10" maxlength="3" value=""/>
             <xar:else />
@@ -94,13 +105,17 @@
                     Any [child] pages above the pruning points will be chopped off the menu.
 
             </p>
-            <label for="new_prune_pid_#$bid#">Add Pruning Page</label>
+        <div class="xar-form-input-wrapper">
+            <label for="new_prune_pid_#$bid#" title="#xarML('Add Pruning Page')#" class="xar-form-label">            
+                Add Pruning Page:            
+            </label>
             <select name="new_prune_pid" id="new_prune_pid_#$bid#">
                 <option value="0" selected="selected">-- None --</option>
                 <xar:loop name="$all_pages.pages">
                     <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
                 </xar:loop>
             </select>
+        </div>
 
             <!-- Existing pruning pids to removed -->
             <xar:loop name="$prune_pids">

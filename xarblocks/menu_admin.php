@@ -81,75 +81,66 @@
         {
             $data = parent::update($data);
 
-            if (xarVarFetch('multi_homed', 'checkbox', $multi_homed, 1, XARVAR_NOT_REQUIRED)) {
-                $data['multi_homed'] = $multi_homed;
-            }
+            xarVarFetch('multi_homed', 'int', $vars['multi_homed'], 0, XARVAR_NOT_REQUIRED);
 
             // AUTO: the block picks up the page from cache Blocks.xarpages/current_pid.
             // DEFAULT: the block always uses the default page.
             // AUTODEFAULT: same as AUTO, but use the default page rather than NULL if outside and root page
-            if (xarVarFetch('current_source', 'pre:upper:passthru:enum:AUTO:DEFAULT:AUTODEFAULT', $current_source, 'AUTO', XARVAR_NOT_REQUIRED)) {
-                $data['current_source'] = $current_source;
-            }
+            xarVarFetch('current_source', 'pre:upper:passthru:enum:AUTO:DEFAULT:AUTODEFAULT', $vars['current_source'], 'AUTO', XARVAR_NOT_REQUIRED);
 
             // The default page if none found by any other method.
-            if (xarVarFetch('default_pid', 'int:0', $default_pid, 0, XARVAR_NOT_REQUIRED)) {
-                $data['default_pid'] = $default_pid;
-            }
+            xarVarFetch('default_pid', 'int:0', $vars['default_pid'], 0, XARVAR_NOT_REQUIRED);
 
             // The root pages define sections of the page landscape that this block applies to.
-            if (!isset($data['root_pids'])) $data['root_pids'] = $this->root_pids;
+            if (!isset($data['root_pids'])) $vars['root_pids'] = $this->root_pids;
+            else $vars['root_pids'] = $data['root_pids'];
 
-            if (xarVarFetch('new_root_pid', 'int:0', $new_root_pid, 0, XARVAR_NOT_REQUIRED) && !empty($new_root_pid)) {
-                $data['root_pids'][] = $new_root_pid;
-            }
-            if (xarVarFetch('remove_root_pid', 'list:int:1', $remove_root_pid, array(), XARVAR_NOT_REQUIRED) && !empty($remove_root_pid)) {
-                // Easier to check with the keys and values flipped.
-                $data['root_pids'] = array_flip($data['root_pids']);
-                foreach($remove_root_pid as $remove) {
-                    if (isset($data['root_pids'][$remove])) {
-                        unset($data['root_pids'][$remove]);
-                    }
+            xarVarFetch('new_root_pid', 'int:0', $new_root_pid, 0, XARVAR_NOT_REQUIRED) && !empty($new_root_pid);
+            $vars['root_pids'][] = $new_root_pid;
+
+            xarVarFetch('remove_root_pid', 'list:int:1', $remove_root_pid, array(), XARVAR_NOT_REQUIRED) && !empty($remove_root_pid);
+            // Easier to check with the keys and values flipped.
+            $vars['root_pids'] = array_flip($vars['root_pids']);
+            foreach($remove_root_pid as $remove) {
+                if (isset($vars['root_pids'][$remove])) {
+                    unset($vars['root_pids'][$remove]);
                 }
-                // Flip keys and values back.
-                $data['root_pids'] = array_flip($data['root_pids']);
-                // Reorder the keys.
-                $data['root_pids'] = array_values($data['root_pids']);
             }
+            // Flip keys and values back.
+            $vars['root_pids'] = array_flip($vars['root_pids']);
+            // Reorder the keys.
+            $vars['root_pids'] = array_values($vars['root_pids']);
 
             // The pruning pages define sections of the page landscape that this block applies to.
-            if (!isset($data['prune_pids'])) $data['prune_pids'] = $this->prune_pids;
+            if (!isset($data['prune_pids'])) $vars['prune_pids'] = $this->prune_pids;
+            else $vars['prune_pids'] = $data['prune_pids'];
 
-            if (xarVarFetch('new_prune_pid', 'int:0', $new_prune_pid, 0, XARVAR_NOT_REQUIRED) && !empty($new_prune_pid)) {
-                $data['prune_pids'][] = $new_prune_pid;
-            }
-            if (xarVarFetch('remove_prune_pid', 'list:int:1', $remove_prune_pid, array(), XARVAR_NOT_REQUIRED) && !empty($remove_prune_pid)) {
-                // Easier to check with the keys and values flipped.
-                $data['prune_pids'] = array_flip($data['prune_pids']);
-                foreach($remove_prune_pid as $remove) {
-                    if (isset($data['prune_pids'][$remove])) {
-                        unset($data['prune_pids'][$remove]);
-                    }
+            xarVarFetch('new_prune_pid', 'int:0', $new_prune_pid, 0, XARVAR_NOT_REQUIRED) && !empty($new_prune_pid);
+            $vars['prune_pids'][] = $new_prune_pid;
+
+            xarVarFetch('remove_prune_pid', 'list:int:1', $remove_prune_pid, array(), XARVAR_NOT_REQUIRED) && !empty($remove_prune_pid);
+            // Easier to check with the keys and values flipped.
+            $vars['prune_pids'] = array_flip($vars['prune_pids']);
+            foreach($remove_prune_pid as $remove) {
+                if (isset($vars['prune_pids'][$remove])) {
+                    unset($vars['prune_pids'][$remove]);
                 }
-                // Flip keys and values back.
-                $data['prune_pids'] = array_flip($data['prune_pids']);
-                // Reorder the keys.
-                $data['prune_pids'] = array_values($data['prune_pids']);
             }
+            // Flip keys and values back.
+            $vars['prune_pids'] = array_flip($vars['prune_pids']);
+            // Reorder the keys.
+            $vars['prune_pids'] = array_values($vars['prune_pids']);
 
             // The maximum number of levels that are displayed.
             // This value does not affect the tree data, but is passed to the menu rendering
             // templates to make its own decision on how to truncate the menu.
-            if (xarVarFetch('max_level', 'int:0:999', $max_lavel, 0, XARVAR_NOT_REQUIRED)) {
-                $data['max_level'] = $max_lavel;
-            }
+            xarVarFetch('max_level', 'int:0:999', $vars['max_level'], 0, XARVAR_NOT_REQUIRED);
 
             // The start level.
             // Hide the menu if the current page is below this level.
-            if (xarVarFetch('start_level', 'int:0:999', $start_lavel, 0, XARVAR_NOT_REQUIRED)) {
-                $data['start_level'] = $start_lavel;
-            }
+            xarVarFetch('start_level', 'int:0:999', $vars['start_level'], 0, XARVAR_NOT_REQUIRED);
 
+            $data['content'] = $vars;
             return $data;
         }
     }
