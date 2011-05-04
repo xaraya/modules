@@ -42,11 +42,10 @@ function publications_admin_delete()
     $publication = DataObjectMaster::getObject(array('name' => 'publications_documents'));
     if (!isset($confirmed)) {
         $data['idlist'] = $idlist;
-        if (is_array($ids)) {
-            $data['lang_title'] = xarML("Delete Publications");
+        if (count($ids) > 1) {
+            $data['title'] = xarML("Delete Publications");
         } else {
-            $ids = array($ids);
-            $data['lang_title'] = xarML("Delete Publication");
+            $data['title'] = xarML("Delete Publication");
         }
         $data['authid'] = xarSecGenAuthKey();
         $items = array();

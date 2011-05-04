@@ -17,45 +17,59 @@
 function publications_user_delete()
 {
     $return = xarModURL('publications', 'user','view',array('ptid' => xarModVars::get('publications', 'defaultpubtype')));
-    if(!xarVarFetch('confirmed',  'int', $confirmed,  0,  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('confirmed',  'int', $confirmed,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('itemid',     'str', $itemid,     NULL,  XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('idlist',     'str', $idlist,     NULL,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('returnurl',  'str', $data['returnurl'],  $return,  XARVAR_NOT_REQUIRED)) {return;}
 
-    if (empty($idlist)) xarController::redirect($data['returnurl']);
-
+    if (!empty($itemid)) $idlist = $itemid;
     $ids = explode(',',trim($idlist,','));
-    $data['idlist'] = $idlist;
-    if (is_array($ids)) {
-        $data['lang_title'] = xarML("Delete Publications");
-    } else {
-        $ids = array($ids);
-        $data['lang_title'] = xarML("Delete Publication");
+    
+    if (empty($idlist)) {
+        if (isset($returnurl)) {
+            xarController::redirect($returnurl);
+        } else {
+            xarController::redirect(xarModURL('publications', 'ser','view'));
+        }
     }
 
-    if (!$confirmed) {
+    $data['message'] = '';
+    $data['itemid']  = $itemid;
+
+/*------------- Ask for Confirmation.  If yes, action ----------------------------*/
+
+    sys::import('modules.dynamicdata.class.objects.master');
+    $publication = DataObjectMaster::getObject(array('name' => 'publications_documents'));
+    if (!isset($confirmed)) {
+        $data['idlist'] = $idlist;
+        if (count($ids) > 1) {
+            $data['title'] = xarML("Delete Publications");
+        } else {
+            $data['title'] = xarML("Delete Publication");
+        }
         $data['authid'] = xarSecGenAuthKey();
-        
-        // TODO: abstract this to run on DD
-        sys::import('xaraya.structures.query');
-        $table = xarDB::getTables();
-        $q = new Query('SELECT', $table['publications']);
-        $q->in('id',$ids);
-        $q->addfield('id');
-        $q->addfield('name');
-        if (!$q->run()) return false;
-        $data['items'] = $q->output();
-        
-        return $data;
+        $items = array();
+        foreach ($ids as $i) {
+            $publication->getItem(array('itemid' => $i));
+            $item = $publication->getFieldValues();
+            $items[] = $item;
+        }
+        $data['items'] = $items;
+        $data['yes_action'] = xarModURL('publications','user','delete',array('idlist' => $idlist));
+        return xarTplModule('publications','user', 'delete',$data);        
     } else {
         if (!xarSecConfirmAuthKey()) return;
-        if (!xarModAPIFunc('publications', 'admin', 'delete',
-                         array('itemid' => $ids,
-                               'deletetype' => 0))) 
-            return;
-        xarController::redirect($data['returnurl']);
+        foreach ($ids as $id) {
+            $itemid = $publication->deleteItem(array('itemid' => $id));
+            $data['message'] = "Publication deleted [ID $id]";
+        }
+        if (isset($returnurl)) {
+            xarController::redirect($returnurl);
+        } else {
+            xarController::redirect(xarModURL('publications', 'user', 'view', $data));
+        }
+        return true;
     }
-
-    return true;
 }
 
 ?>
