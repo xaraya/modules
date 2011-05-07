@@ -18,21 +18,30 @@
  * @author Jonn Beams (based on code from TopItems block)
  *
  */
-    sys::import('modules.publications.xarblocks.topitems');
+    sys::import('xaraya.structures.containers.blocks.basicblock');
 
-    class FeatureditemsBlock extends TopitemsBlock
+    class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
     {
+        public $numitems            = 5;
+        public $pubtype_id          = 0;
+        public $linkpubtype         = true;
+        public $itemlimit           = 0;
         public $featuredid          = 0;
+        public $catfilter           = 0;
+        public $linkcat             = false;
+        public $includechildren     = false;
+        public $nocatlimit          = true;
         public $alttitle            = '';
         public $altsummary          = '';
+        public $showvalue           = true;
         public $moreitems           = array();
         public $showfeaturedsum     = false;
         public $showfeaturedbod     = false;
-        public $numitems            = 5;
+        public $showsummary         = false;
 
-        public function __construct(ObjectDescriptor $descriptor)
+        public function __construct(Array $data=array())
         {
-            parent::__construct($descriptor);
+            parent::__construct($data);
             $this->text_type = 'Featured Items';
             $this->text_type_long = 'Show featured publications';
             $this->allow_multiple = true;
@@ -44,31 +53,24 @@
         public function display(Array $data=array())
         {
             $data = parent::display($data);
-
-    // Defaults
-    if (empty($vars['featuredid'])) {$vars['featuredid'] = 0;}
-    if (empty($vars['alttitle'])) {$vars['alttitle'] = '';}
-    if (empty($vars['altsummary'])) {$vars['altsummary'] = '';}
-    if (empty($vars['toptype'])) {$vars['toptype'] = 'date';}
-    if (empty($vars['moreitems'])) {$vars['moreitems'] = array();}
-    if (empty($vars['linkcat'])) {$vars['linkcat'] = false;}
-    if (!isset($vars['showvalue'])) {
-        if ($vars['toptype'] == 'rating') {
-            $vars['showvalue'] = false;
-        } else {
-            $vars['showvalue'] = true;
-        }
-    }
-
-    $featuredid = $vars['featuredid'];
-
-    $fields = array('id', 'title', 'cids');
-
-    $fields[] = 'dynamicdata';
-
-    // Initialize arrays
-    $data['feature'] = array();
-    $data['items'] = array();
+        
+            if (!isset($data['showvalue'])) {
+                if ($data['toptype'] == 'rating') {
+                    $data['showvalue'] = false;
+                } else {
+                    $data['showvalue'] = true;
+                }
+            }
+        
+            $featuredid = $data['featuredid'];
+        
+            $fields = array('id', 'title', 'cids');
+        
+            $fields[] = 'dynamicdata';
+        
+            // Initialize arrays
+            $data['feature'] = array();
+            $data['items'] = array();
 
     // Setup featured item
     if ($featuredid > 0) {
@@ -227,11 +229,11 @@
         return;
     }
 
-    // Set the data to return.
-    $blockinfo['content'] = $data;
-    return $blockinfo;
-}
-
+            // Set the data to return.
+            $data['content'] = $vars;
+            return $data;
+        }
+/*
         public function modify(Array $data=array())
         {
             $data = parent::modify($data);
@@ -293,6 +295,7 @@
 
             return parent::update($data);
         }
+        */
     }
 
 ?>
