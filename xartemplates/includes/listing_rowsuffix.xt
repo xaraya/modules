@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="empty($layout)">
+        <xar:set name="layout">'publications-user'</xar:set>
+    </xar:if>
+    <xar:if condition="($layout eq 'publications-user') or ($layout eq 'default')">
+        <xar:if condition="xarUserIsLoggedIn()">
+            <td style="text-align: center;" nowrap="nowrap">
+                <xar:access level="500">
+                    <a href="#xarModURL($module, 'user', 'modify', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Modify this item')#" style="margin-right: 5px">
+                        <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
+                    </a>
+                </xar:access>
+                <xar:access level="700">
+                    <a href="#xarModURL($module, 'user', 'delete', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Delete this item')#" style="margin-right: 5px">
+                        <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete')#"/>
+                    </a>
+                </xar:access>
+                <input type="checkbox" name="optionscheckbox" id="#$loopitem[$primaryalias]#"  />
+            </td>
+        </xar:if>
+    <xar:elseif condition="($layout eq 'publications-admin')"/>
+        <xar:if condition="xarUserIsLoggedIn()">
+            <td style="text-align: center;" nowrap="nowrap">
+                <xar:access level="500">
+                    <a href="#xarModURL($module, 'admin', 'modify', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Modify this item')#" style="margin-right: 5px">
+                        <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
+                    </a>
+                </xar:access>
+                <xar:access level="700">
+                    <a href="#xarModURL($module, 'admin', 'delete', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Delete this item')#" style="margin-right: 5px">
+                        <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete')#"/>
+                    </a>
+                </xar:access>
+                <input type="checkbox" name="optionscheckbox" id="#$loopitem[$primaryalias]#"  />
+            </td>
+        </xar:if>
+    <xar:elseif condition="$layout eq 'pubtypes'" />
+        <td class="xar-norm" nowrap="nowrap">
+            <xar:set name="ptid">$loopitem[$primaryalias]</xar:set>
+            <xar:set name="args">DataObjectDescriptor::getObjectID(array('name' => $properties['name']->value))</xar:set>
+            <xar:sec mask="ManagePublications" catch="false">
+                <a href="#xarModURL('dynamicdata','admin','modify',array('itemid' => $args['objectid']))#">                    
+                    <img src="#xarTplGetImage('icons/modify.png','base')#"/>
+                </a>
+            </xar:sec>
+            &#160;|&#160;
+            <xar:sec mask="ManagePublications" catch="false">
+                <a href="#xarModURL('dynamicdata','admin','delete',array('itemid' => $args['objectid'], 'name' => 'objects'))#">                    
+                    <img src="#xarTplGetImage('icons/delete.png','base')#"/>
+                </a>
+            </xar:sec>
+            &#160;|&#160;
+            <xar:sec mask="AdminPublications" catch="false">
+                <a href="#xarModURL('publications','admin','modifyconfig',array('ptid' => $ptid, 'tab' => 'pubtypes'))#">                    
+                    Publication Config                    
+                </a>
+            <xar:else />                
+                Publication Config                
+            </xar:sec>
+            &#160;|&#160;
+            <xar:sec mask="EditPublications" catch="false">
+                <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#">                    
+                    View Publications                    
+                </a>
+            <xar:else />                
+                View Publications                
+            </xar:sec>
+            &#160;|&#160;
+            <xar:sec mask="AddPublications" catch="false">
+                <a href="#xarModURL('publications','admin','new',array('ptid' => $ptid))#">                    
+                    Add Publication                    
+                </a>
+            <xar:else />                
+                Add Publication                
+            </xar:sec>
+        </td>
+    </xar:if>
+</xar:template>

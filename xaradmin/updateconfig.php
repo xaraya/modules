@@ -35,8 +35,16 @@ function publications_admin_updateconfig()
     if (!xarSecurityCheck('AdminPublications',1,'Publication',"$ptid:All:All:All")) return;
 
     if ($data['tab'] == 'global') {
+        if(!xarVarFetch('items_per_page',      'isset', $items_per_page,      20,  XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('shorturls',         'isset', $shorturls,         0,  XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVarFetch('modulealias',  'checkbox', $useModuleAlias,  xarModVars::get('dynamicdata', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('aliasname',    'str',      $aliasname,  xarModVars::get('dynamicdata', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
         if(!xarVarFetch('defaultpubtype',    'isset', $defaultpubtype,    1,  XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('sortpubtypes',      'isset', $sortpubtypes,   'id',  XARVAR_NOT_REQUIRED)) {return;}
+        xarModVars::set('publications', 'items_per_page', $items_per_page);
+        xarModVars::set('publications', 'SupportShortURLs', $shorturls);
+        xarModVars::set('publications', 'useModuleAlias', $useModuleAlias);
+        xarModVars::set('publications', 'aliasname', $aliasname);
         xarModVars::set('publications', 'defaultpubtype', $defaultpubtype);
         xarModVars::set('publications', 'sortpubtypes', $sortpubtypes);
         if (xarDB::getType() == 'mysql') {
@@ -100,7 +108,7 @@ function publications_admin_updateconfig()
         }
 
     }
-    xarResponse::redirect(xarModURL('publications', 'admin', 'modifyconfig',
+    xarController::redirect(xarModURL('publications', 'admin', 'modifyconfig',
                                   array('ptid' => $ptid, 'tab' => $data['tab'])));
     return true;
 }

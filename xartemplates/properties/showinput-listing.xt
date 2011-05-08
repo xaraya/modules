@@ -2,9 +2,9 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:if condition="empty($layout)">
-        <xar:set name="layout">'publications'</xar:set>
+        <xar:set name="layout">'publications-user'</xar:set>
     </xar:if>
-    <xar:if condition="($layout eq 'publications') or ($layout eq 'default')">
+    <xar:if condition="($layout eq 'publications-user') or ($layout eq 'publications-admin') or ($layout eq 'default')">
         <xar:set name="url">xarServer::getCurrentURL($params)</xar:set>
 
         <xar:style scope="module" module="base" file="navtabs" />
@@ -22,13 +22,13 @@
         <xar:if condition="empty($total)">
                   <p class="xar-align-center">There are no items selected</p>
         </xar:if>
-        <form  action="#xarModURL('publications','admin','multiops')#" method="post" onsubmit = "listings_getchecked('idlist');document.getElementById('redirecttarget').value = this.value;" style="clear: both">
+        <form  action="#xarModURL('publications','admin','multiops')#" method="post" onsubmit = "listing_getchecked('idlist');document.getElementById('redirecttarget').value = this.value;" style="clear: both">
             <xar:template file="listing_footerline" module="$module" property="listing" />
             <input type="hidden" name="returnurl" id="returnurl" value="#xarServer::getCurrentURL()#" />
             <input type="hidden" name="object" id="object" value="#$objectname#" />
             <input type="hidden" name="module" id="module" value="#$module#" />
         </form>
-    <xar:elseif condition="$layout eq 'user-view'" />
+    <xar:elseif condition="$layout eq 'publications-user'" />
         <xar:set name="filename">'view-summaries-' . $object->name</xar:set>
         <xar:if condition="file_exists(xarTplGetThemeDir().'/modules/publications/includes/'.$filename.'.xt') OR file_exists(sys::code().'modules/publications/xartemplates/includes/'.$filename.'.xt')">
             <xar:template file="$filename" />
