@@ -28,7 +28,7 @@ function publications_user_display($args)
 // this is used to determine whether we come from a pubtype-based view or a
 // categories-based navigation
     if(!xarVarFetch('ptid',    'id',    $ptid,  xarModVars::get('publications', 'defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('id',      'id',    $id,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('itemid',      'id',    $id,   NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('page', 'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
     
     // Override xarVarFetch

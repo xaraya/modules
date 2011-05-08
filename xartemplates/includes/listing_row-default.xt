@@ -1,49 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <tr class="$item_class">
-        <xar:template file="listing_rowprefix" module="$module" property="listing""/>
-        <xar:foreach in="$fields" key="$field">
-            <xar:set name="value">$loopitem[$field]</xar:set>
-            <xar:set name="column">$columns[$field]</xar:set>
-            <xar:if condition="($field eq $primaryalias AND !$show_primary) OR $column eq 'return_link'">
-                <xar:continue />
-            </xar:if>
-            <td>
-                <!-- TODO: This works within listings module but needs to be adjusted in the
-                DD for modify function to consider the user, or adjust for listings module instance to match.
-                Leaving as display only until this is addressed
-                <xar:if condition="xarUserIsLoggedIn() AND $field eq $keyfieldalias AND (xarSecurityCheck('EditCalendar',0) OR $currentuserid eq $thisuserid)">
-                -->
-                <xar:if condition="xarUserIsLoggedIn() AND $field eq $keyfieldalias AND xarSecurityCheck('EditCalendar',0)">
-                    <a href="#xarModURL('calendar','user','modify',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname,'tplmodule' => $module))#">
-                        <xar:data-output property="$properties[$column]" value="$value"/>
-                    </a>
-                <xar:else />
-                    <xar:if condition="$field eq $keyfieldalias AND xarSecurityCheck('ReadCalendar',0)">
-                        <a href="#xarModURL('calendar','user','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $module))#">
-                            <xar:data-output property="$properties[$column]" value="$value"/>
+    <xar:if condition="empty($layout)">
+        <xar:set name="layout">'publications-user'</xar:set>
+    </xar:if>
+    <xar:if condition="($layout eq 'publications-user') or ($layout eq 'default')">
+        <tr class="#$item_class#">
+            <xar:template file="listing_rowprefix" module="$module" property="listing"/>
+            <xar:foreach in="$fields" key="$field">
+                <xar:set name="value">$loopitem[$field]</xar:set>
+                <xar:set name="column">$columns[$field]</xar:set>
+                <xar:if condition="$field eq $primaryalias AND !$show_primary">
+                    <xar:continue />
+                </xar:if>
+                <td>
+                    <xar:if condition="$field eq $keyfieldalias AND xarSecurityCheck('ReadPublications',0)">
+                        <a href="#xarModURL('publications','user','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $module))#">
+                            <xar:data-output property="$properties[$column]" value="$value" />
                         </a>
                     <xar:else />
                         <xar:data-output property="$properties[$column]" value="$value"/>
                     </xar:if>
-                </xar:if>
-            </td>
-        </xar:foreach>
+                </td>
+            </xar:foreach>
 
-    <!-- To be reviewed - jo
-        <xar:if condition="isset($properties) and count($properties) gt 0">
-            <xar:set name="id">#$loop:item['id']#</xar:set>
-            <xar:foreach in="$properties" key="$key">
+            <xar:template file="listing_rowsuffix" module="$module" property="listing" />
+        </tr>
+    <xar:elseif condition="$layout eq 'publications-admin'"/>
+        <tr class="#$item_class#">
+            <xar:template file="listing_rowprefix" module="$module" property="listing"/>
+            <xar:foreach in="$fields" key="$field">
+                <xar:set name="value">$loopitem[$field]</xar:set>
+                <xar:set name="column">$columns[$field]</xar:set>
+                <xar:if condition="$field eq $primaryalias AND !$show_primary">
+                    <xar:continue />
+                </xar:if>
                 <td>
-                    <xar:if condition="isset($values[$id][$key])">
-                        <xar:data-output property="$properties[$key]" value="$values[$id][$key]"/>
+                    <xar:if condition="xarUserIsLoggedIn() AND $field eq $keyfieldalias AND xarSecurityCheck('EditPublications',0)">
+                        <a href="#xarModURL('publications','admin','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname,'tplmodule' => $module))#">
+                            <xar:data-output property="$properties[$column]" value="$value" />
+                        </a>
                     <xar:else />
-                        &#160;&#160;
+                        <xar:if condition="$field eq $keyfieldalias AND xarSecurityCheck('ReadPublications',0)">
+                            <a href="#xarModURL('publications','admin','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $module))#">
+                                <xar:data-output property="$properties[$column]" value="$value" />
+                            </a>
+                        <xar:else />
+                            <xar:data-output property="$properties[$column]" value="$value"/>
+                        </xar:if>
                     </xar:if>
                 </td>
             </xar:foreach>
-        </xar:if>
-    -->
-        <xar:template file="listing_rowsuffix" module="$module" property="listing"/>
-    </tr>
+
+            <xar:template file="listing_rowsuffix" module="$module" property="listing" />
+        </tr>
+    <xar:elseif condition="$layout eq 'pubtypes'" />
+        <tr class="#$item_class#">
+            <xar:template file="listing_rowprefix" module="$module" property="listing" />
+            <xar:foreach in="$fields" key="$field">
+                <xar:set name="value">$loopitem[$field]</xar:set>
+                <xar:set name="column">$columns[$field]</xar:set>
+                <xar:if condition="$field eq $primaryalias AND !$show_primary">
+                    <xar:continue />
+                </xar:if>
+                <td>
+                    <xar:data-output property="$properties[$column]" value="$value"/>
+                </td>
+            </xar:foreach>
+
+            <xar:template file="listing_rowsuffix" module="$module" property="listing" />
+        </tr>
+    </xar:if>
 </xar:template>

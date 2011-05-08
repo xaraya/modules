@@ -41,6 +41,7 @@
             </xar:set>
         </xar:if>
         <form method="post" id="post" action="&xar-modurl-publications-user-create;" enctype="#$enctype#" >
+            <xar:set name="layout">'publications-user'</xar:set>
             <xar:if condition="isset($tab) AND $tab eq 'preview'">
                 <xar:set name="visible">array('none','none','block')</xar:set>
             <xar:else />

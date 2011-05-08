@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
-<xar:data-display object="$object" tplmodule="publications" />
+<xar:data-display object="$object" tplmodule="publications"/>
 
 <!--
     <xar:template file="publinks" type="module" />
