@@ -26,20 +26,20 @@
             $data = parent::modify($data);
 
             if (!isset($data['pubtype_id']))        $data['pubtype_id'] = $this->pubtype_id;
-            if (!isset($data['catfilter']))        $data['catfilter'] = $this->numitems;
-            if (!isset($data['state']))        $data['state'] = $this->numitems;
-            if (!isset($data['itemlimit']))        $data['itemlimit'] = $this->itemlimit;
+            if (!isset($data['catfilter']))         $data['catfilter'] = $this->numitems;
+            if (!isset($data['state']))             $data['state'] = $this->numitems;
+            if (!isset($data['itemlimit']))         $data['itemlimit'] = $this->itemlimit;
             if (!isset($data['featuredid']))        $data['featuredid'] = $this->featuredid;
-            if (!isset($data['alttitle']))        $data['alttitle'] = $this->alttitle;
+            if (!isset($data['alttitle']))          $data['alttitle'] = $this->alttitle;
             if (!isset($data['altsummary']))        $data['altsummary'] = $this->altsummary;
-            if (!isset($data['showfeaturedsum']))        $data['showfeaturedsum'] = $this->showfeaturedsum;
-            if (!isset($data['showfeaturedbod']))        $data['showfeaturedbod'] = $this->showfeaturedbod;
-            if (!isset($data['moreitems']))        $data['moreitems'] = $this->moreitems;
-            if (!isset($data['toptype']))        $data['toptype'] = $this->toptype;
-            if (!isset($data['showsummary']))        $data['showsummary'] = $this->showsummary;
-            if (!isset($data['linkpubtype']))        $data['linkpubtype'] = $this->linkpubtype;
-            if (!isset($data['linkpubtype']))        $data['linkpubtype'] = $this->linkpubtype;
-            if (!isset($data['linkcat']))        $data['linkcat'] = $this->linkcat;
+            if (!isset($data['showfeaturedsum']))   $data['showfeaturedsum'] = $this->showfeaturedsum;
+            if (!isset($data['showfeaturedbod']))   $data['showfeaturedbod'] = $this->showfeaturedbod;
+            if (!isset($data['moreitems']))         $data['moreitems'] = $this->moreitems;
+            if (!isset($data['toptype']))           $data['toptype'] = $this->toptype;
+            if (!isset($data['showsummary']))       $data['showsummary'] = $this->showsummary;
+            if (!isset($data['linkpubtype']))       $data['linkpubtype'] = $this->linkpubtype;
+            if (!isset($data['linkpubtype']))       $data['linkpubtype'] = $this->linkpubtype;
+            if (!isset($data['linkcat']))           $data['linkcat'] = $this->linkcat;
 
             if (!isset($data['showvalue'])) {
                 if ($data['toptype'] == 'rating') {
@@ -49,7 +49,7 @@
                 }
             }
         
-            $data['fields'] = array('id', 'title');
+            $data['fields'] = array('id', 'name');
 
             if (!is_array($data['state'])) {
                 $statearray = array($data['state']);
@@ -132,22 +132,23 @@
         {
             $data = parent::update($data);
             $args = array();
-            
+//            var_dump($_POST);exit;
             xarVarFetch('pubtype_id',       'id',        $args['pubtype_id'],      $this->pubtype_id, XARVAR_NOT_REQUIRED);
             xarVarFetch('catfilter',        'id',        $args['catfilter'],       $this->catfilter, XARVAR_NOT_REQUIRED);
-            xarVarFetch('state',            'int:0:4',   $args['state'],           $this->state, XARVAR_NOT_REQUIRED);
+            xarVarFetch('nocatlimit',       'checkbox',  $args['nocatlimit'],      $this->nocatlimit, XARVAR_NOT_REQUIRED);
+            xarVarFetch('state',            'str',       $args['state'],           $this->state, XARVAR_NOT_REQUIRED);
             xarVarFetch('itemlimit',        'int:1',     $args['itemlimit'],       $this->itemlimit, XARVAR_NOT_REQUIRED);
             xarVarFetch('toptype',  'enum:author:date:hits:rating:title', $args['toptype'], $this->toptype, XARVAR_NOT_REQUIRED);
             xarVarFetch('featuredid',       'id',        $args['featuredid'],      $this->featuredid, XARVAR_NOT_REQUIRED);
             xarVarFetch('alttitle',         'str',       $args['alttitle'],        $this->alttitle, XARVAR_NOT_REQUIRED);
             xarVarFetch('altsummary',       'str',       $args['altsummary'],      $this->altsummary, XARVAR_NOT_REQUIRED);
             xarVarFetch('moreitems',        'list:id',   $args['moreitems'],       $this->moreitems, XARVAR_NOT_REQUIRED);
-            xarVarFetch('showfeaturedbod',  'checkbox',  $args['showfeaturedbod'], $this->showfeaturedbod, XARVAR_NOT_REQUIRED);
-            xarVarFetch('showfeaturedsum',  'checkbox',  $args['showfeaturedsum'], $this->showfeaturedsum, XARVAR_NOT_REQUIRED);
-            xarVarFetch('showsummary',      'checkbox',  $args['showsummary'],     $this->showsummary, XARVAR_NOT_REQUIRED);
-            xarVarFetch('showvalue',        'checkbox',  $args['showvalue'],       $this->showvalue, XARVAR_NOT_REQUIRED);
-            xarVarFetch('linkpubtype',      'checkbox',  $args['linkpubtype'],     $this->linkpubtype, XARVAR_NOT_REQUIRED);
-            xarVarFetch('linkcat',          'checkbox',  $args['linkcat'],         $this->linkcat, XARVAR_NOT_REQUIRED);
+            xarVarFetch('showfeaturedbod',  'checkbox',  $args['showfeaturedbod'], 0, XARVAR_NOT_REQUIRED);
+            xarVarFetch('showfeaturedsum',  'checkbox',  $args['showfeaturedsum'], 0, XARVAR_NOT_REQUIRED);
+            xarVarFetch('showsummary',      'checkbox',  $args['showsummary'],     0, XARVAR_NOT_REQUIRED);
+            xarVarFetch('showvalue',        'checkbox',  $args['showvalue'],       0, XARVAR_NOT_REQUIRED);
+            xarVarFetch('linkpubtype',      'checkbox',  $args['linkpubtype'],     0, XARVAR_NOT_REQUIRED);
+            xarVarFetch('linkcat',          'checkbox',  $args['linkcat'],         0, XARVAR_NOT_REQUIRED);
         
             $data['content'] = $args;
             return $data;

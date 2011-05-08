@@ -38,6 +38,7 @@
         public $showfeaturedsum     = false;
         public $showfeaturedbod     = false;
         public $showsummary         = false;
+        public $state               = '2,3';
 
         public function __construct(Array $data=array())
         {
@@ -54,6 +55,9 @@
         {
             $data = parent::display($data);
         
+            // Defaults
+            if (empty($data['state'])) {$data['state'] = $this->featuredid;}
+
             if (!isset($data['showvalue'])) {
                 if ($data['toptype'] == 'rating') {
                     $data['showvalue'] = false;
@@ -72,165 +76,167 @@
             $data['feature'] = array();
             $data['items'] = array();
 
-    // Setup featured item
-    if ($featuredid > 0) {
-
-        if (xarModIsHooked('uploads', 'publications', $vars['pubtype_id'])) {
-            xarVarSetCached('Hooks.uploads','ishooked',1);
-        }
-
-          if($featart = xarModAPIFunc(
-            'publications','user','getall',
-            array(
+            // Setup featured item
+            if ($featuredid > 0) {
+        
+                if (xarModIsHooked('uploads', 'publications', $data['pubtype_id'])) {
+                    xarVarSetCached('Hooks.uploads','ishooked',1);
+                }
+        
+              if($featart = xarModAPIFunc(
+                'publications','user','getall',
+                array(
                 'ids' => array($featuredid),
-                'extra' => array('cids','dynamicdata')))) {
+                'extra' => array('cids','dynamicdata')))) 
+              {
 
                 foreach($featart as $featuredart) {
 
-            $fieldlist = array('id', 'title', 'summary', 'owner', 'pubdate',
-                               'pubtype_id', 'notes', 'state', 'body', 'cids');
+                    $fieldlist = array('id', 'title', 'summary', 'owner', 'pubdate',
+                                       'pubtype_id', 'notes', 'state', 'body', 'cids');
+        
+                    $featuredlink = xarModURL(
+                        'publications', 'user', 'display',
+                        array(
+                            'id' => $featuredart['id'],
+                            'itemtype' => (!empty($vars['linkpubtype']) ? $featuredart['pubtype_id'] : NULL),
+                            'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
+                        )
+                    );
+                    if (empty($data['showfeaturedbod'])) {$data['showfeaturedbod'] = false;}
+                    if(!isset($featuredart['cids'])) $featuredart['cids'] = "";
 
-            $featuredlink = xarModURL(
-                'publications', 'user', 'display',
-                array(
-                    'id' => $featuredart['id'],
-                    'itemtype' => (!empty($vars['linkpubtype']) ? $featuredart['pubtype_id'] : NULL),
-                    'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
-                )
-            );
-            if (empty($vars['showfeaturedbod'])) {$vars['showfeaturedbod'] = false;}
-            if(!isset($featuredart['cids'])) $featuredart['cids'] = "";
-
-            $feature= array(
-                'featuredlabel'     => $featuredart['title'],
-                'featuredlink'      => $featuredlink,
-                'alttitle'          => $vars['alttitle'],
-                'altsummary'        => $vars['altsummary'],
-                'showfeaturedsum'   => $vars['showfeaturedsum'],
-                'showfeaturedbod'   => $vars['showfeaturedbod'],
-                'featureddesc'      => $featuredart['summary'],
-                'featuredbody'      => $featuredart['body'],
-                'featuredcids'      => $featuredart['cids'],
-                'pubtype_id'         => $featuredart['pubtype_id'],
-                'featuredid'       => $featuredart['id'],
-                'featureddate'      => $featuredart['pubdate']
-            );
-
-            // Get rid of the default fields so all we have left are the DD ones
-            foreach ($fieldlist as $field) {
-                if (isset($featuredart[$field])) {
-                    unset($featuredart[$field]);
+                    $feature= array(
+                        'featuredname'      => $featuredart['name'],
+                        'featuredlabel'     => $featuredart['title'],
+                        'featuredlink'      => $featuredlink,
+                        'alttitle'          => $data['alttitle'],
+                        'altsummary'        => $data['altsummary'],
+                        'showfeaturedsum'   => $data['showfeaturedsum'],
+                        'showfeaturedbod'   => $data['showfeaturedbod'],
+                        'featureddesc'      => $featuredart['summary'],
+//                        'featuredbody'      => $featuredart['body'],
+                        'featuredcids'      => $featuredart['cids'],
+                        'pubtype_id'        => $featuredart['pubtype_id'],
+                        'featuredid'        => $featuredart['id'],
+                        'featureddate'      => $featuredart['start_date']
+                    );
+        
+                    // Get rid of the default fields so all we have left are the DD ones
+                    foreach ($fieldlist as $field) {
+                        if (isset($featuredart[$field])) {
+                            unset($featuredart[$field]);
+                        }
+                    }
+        
+                    // now add the DD fields to the featuredart
+                    $feature = array_merge($featuredart, $feature);
+                    $data['feature'][] = $feature;
                 }
             }
 
-            // now add the DD fields to the featuredart
-            $feature = array_merge($featuredart, $feature);
-            $data['feature'][] = $feature;
-        }
-    }
-
-    // Setup additional items
-    $fields = array('id', 'title', 'pubtype_id', 'cids');
-
-    // Added the 'summary' field to the field list.
-    if (!empty($vars['showsummary'])) {
-        $fields[] = 'summary';
-    }
-
-    if ($vars['toptype'] == 'rating') {
-        $fields[] = 'rating';
-        $sort = 'rating';
-    } elseif ($vars['toptype'] == 'hits') {
-        $fields[] = 'counter';
-        $sort = 'hits';
-    } elseif ($vars['toptype'] == 'date') {
-        $fields[] = 'pubdate';
-        $sort = 'date';
-    } else {
-       $sort = $vars['toptype'];
-    }
-
-    if (!empty($vars['moreitems'])) {
-        $publications = xarModAPIFunc(
-            'publications', 'user', 'getall',
-            array(
-                'ids' => $vars['moreitems'],
-                'enddate' => time(),
-                'fields' => $fields,
-                'sort' => $sort
-            )
-        );
-
-        // See if we're currently displaying an article
-        if (xarVarIsCached('Blocks.publications', 'id')) {
-            $curid = xarVarGetCached('Blocks.publications', 'id');
-        } else {
-            $curid = -1;
-        }
-
-        foreach ($publications as $article) {
-            if ($article['id'] != $curid) {
-                $link = xarModURL(
-                    'publications', 'user', 'display',
-                    array (
-                        'id' => $article['id'],
-                        'itemtype' => (!empty($vars['linkpubtype']) ? $article['pubtype_id'] : NULL),
-                        'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
-                    )
-                );
+            // Setup additional items
+            $fields = array('id', 'title', 'pubtype_id', 'cids');
+        
+            // Added the 'summary' field to the field list.
+            if (!empty($vars['showsummary'])) {
+                $fields[] = 'summary';
+            }
+        
+            if ($data['toptype'] == 'rating') {
+                $fields[] = 'rating';
+                $sort = 'rating';
+            } elseif ($data['toptype'] == 'hits') {
+                $fields[] = 'counter';
+                $sort = 'hits';
+            } elseif ($data['toptype'] == 'date') {
+                $fields[] = 'pubdate';
+                $sort = 'date';
             } else {
-                $link = '';
+               $sort = $data['toptype'];
             }
 
-            $count = '';
-            // TODO: find a nice clean way to show all sort types
-            if ($vars['showvalue']) {
-                if ($vars['toptype'] == 'rating') {
-                    $count = intval($article['rating']);
-                } elseif ($vars['toptype'] == 'hits') {
-                    $count = $article['counter'];
-                } elseif ($vars['toptype'] == 'date') {
-                    // TODO: make user-dependent
-                    if (!empty($article['pubdate'])) {
-                        $count = strftime("%Y-%m-%d", $article['pubdate']);
+            if (!empty($vars['moreitems'])) {
+                $publications = xarModAPIFunc(
+                    'publications', 'user', 'getall',
+                    array(
+                        'ids' => $vars['moreitems'],
+                        'enddate' => time(),
+                        'fields' => $fields,
+                        'sort' => $sort
+                    )
+                );
+        
+                // See if we're currently displaying an article
+                if (xarVarIsCached('Blocks.publications', 'id')) {
+                    $curid = xarVarGetCached('Blocks.publications', 'id');
+                } else {
+                    $curid = -1;
+                }
+        
+                foreach ($publications as $article) {
+                    if ($article['id'] != $curid) {
+                        $link = xarModURL(
+                            'publications', 'user', 'display',
+                            array (
+                                'id' => $article['id'],
+                                'itemtype' => (!empty($vars['linkpubtype']) ? $article['pubtype_id'] : NULL),
+                                'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
+                            )
+                        );
+                    } else {
+                        $link = '';
+                    }
+        
+                    $count = '';
+                    // TODO: find a nice clean way to show all sort types
+                    if ($vars['showvalue']) {
+                        if ($vars['toptype'] == 'rating') {
+                            $count = intval($article['rating']);
+                        } elseif ($vars['toptype'] == 'hits') {
+                            $count = $article['counter'];
+                        } elseif ($vars['toptype'] == 'date') {
+                            // TODO: make user-dependent
+                            if (!empty($article['pubdate'])) {
+                                $count = strftime("%Y-%m-%d", $article['pubdate']);
+                            } else {
+                                $count = 0;
+                            }
+                        } else {
+                            $count = 0;
+                        }
                     } else {
                         $count = 0;
                     }
-                } else {
-                    $count = 0;
+                    if (isset($article['cids'])) {
+                       $cids=$article['cids'];
+                    }else{
+                       $cids='';
+                    }
+                    if (isset($article['pubdate'])) {
+                       $pubdate=$article['pubdate'];
+                    }else{
+                       $pubdate='';
+                    }
+                    // Pass $desc to items[] array so that the block template can render it
+                    $data['items'][] = array(
+                        'label' => $article['title'],
+                        'link' => $link,
+                        'count' => $count,
+                        'cids' => $cids,
+                        'pubdate' => $pubdate,
+                        'desc' => ((!empty($vars['showsummary']) && !empty($article['summary'])) ? $article['summary'] : ''),
+                        'id' => $article['id']
+                    );
                 }
-            } else {
-                $count = 0;
+            }}
+            if (empty($data['feature']) && empty($data['items'])) {
+                // Nothing to display.
+                return;
             }
-            if (isset($article['cids'])) {
-               $cids=$article['cids'];
-            }else{
-               $cids='';
-            }
-            if (isset($article['pubdate'])) {
-               $pubdate=$article['pubdate'];
-            }else{
-               $pubdate='';
-            }
-            // Pass $desc to items[] array so that the block template can render it
-            $data['items'][] = array(
-                'label' => $article['title'],
-                'link' => $link,
-                'count' => $count,
-                'cids' => $cids,
-                'pubdate' => $pubdate,
-                'desc' => ((!empty($vars['showsummary']) && !empty($article['summary'])) ? $article['summary'] : ''),
-                'id' => $article['id']
-            );
-        }
-    }}
-    if (empty($data['feature']) && empty($data['items'])) {
-        // Nothing to display.
-        return;
-    }
 
             // Set the data to return.
-            $data['content'] = $vars;
+            $data['content'] = $data;
             return $data;
         }
 /*

@@ -20,9 +20,11 @@
             </xar:if>
             </div>
         </xar:if>
+        <!--
         <xar:if condition="$loop:item.showfeaturedbod eq true">
                 <div>#$loop:item.featuredbody#</div>
        </xar:if>
+       -->
     </xar:if>
 </xar:loop>
 
