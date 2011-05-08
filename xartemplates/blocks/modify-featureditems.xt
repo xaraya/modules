@@ -57,16 +57,14 @@
                 array('id' => '2', 'name' => xarML('Approved'))
             )
         </xar:set>        
-        <xar:data-input type="dropdown" name="stateoptions" options="$options" value="$state"/>
+        <xar:data-input type="dropdown" name="state" options="$options" value="$state"/>
     </div>
 
 <div class="xar-form-input-wrapper">
     <label for="numitems#$blockid#" class="help xar-form-label" title="#xarML('Enter the number of items to choose featured publications from.')#">
         Limit       
    :</label> <input type="text" name="numitems" id="numitems#$blockid#" value="#$numitems#" size="3" maxlength="4" />&#160;&#160;
-    
         (0 for all publications)
-    
 </div>
 <div class="xar-form-input-wrapper">
     <label for="featuredid#$blockid#" class="help xar-form-label" title="#xarML('Choose the article to display as a featured item.')#">
@@ -74,8 +72,7 @@
     </label>
     <xar:var name="firstline">--- choose an article to be featured ---</xar:var>
     <xar:set name="firstline">array('id' => 0, 'name' => $firstline)</xar:set>
-    <xar:set name="options">xarModAPIFunc('publications', 'user', 'get_pubtypes')</xar:set>        
-    <xar:data-input type="dropdown" name="pubtype_id" firstline="$firstline" options="$filtereditems" value="$featuredid"/>
+    <xar:data-input type="dropdown" name="featuredid" firstline="$firstline" options="$filtereditems" value="$featuredid"/>
 </div>
 <div class="xar-form-input-wrapper">
     <label for="alttitle#$blockid#" class="help xar-form-label" title="#xarML('If you wish to give the article an alternative title to be displayed as a featured item, enter the name here.')#">
