@@ -46,7 +46,7 @@
         </xar:comment>
         -->
         <div style="float:right">
-            <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#">
+            <a href="#xarModURL('publications','user','view',array('ptid' => $ptid))#">
                 Publications List
             </a>
         </div>
@@ -60,7 +60,8 @@
                 'application/x-www-form-urlencoded'
             </xar:set>
         </xar:if>
-        <form method="post" name="post" id="post" action="&xar-modurl-publications-user-update;" enctype="#$enctype#" >
+        <form method="post" name="post" id="post" action="#xarModURL('publications','user','update')#" enctype="#$enctype#" >
+            <xar:set name="layout">'publications-user'</xar:set>
             <xar:set name="itemcount">count($items)</xar:set>
             <xar:set name="tabs">3*$itemcount</xar:set>
             <xar:template file="pagetabs" type="module" />

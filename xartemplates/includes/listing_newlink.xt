@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="$layout eq 'publications-admin'">
+        <xar:access level="600">
+            <xar:set name="returnurl">xarModURL($module,'admin','view')</xar:set>
+            <a style="font-weight:bold;" href ="#xarModURL('publications','admin','new',array('ptid'=> $object->properties['itemtype']->defaultvalue, 'tplmodule'=> $module))#">Add A New Publication</a>
+        </xar:access>
+    <xar:else/>
+        <xar:access level="600">
+            <xar:set name="returnurl">xarModURL($module,'user','view')</xar:set>
+            <a style="font-weight:bold;" href ="#xarModURL('publications','user','new',array('ptid'=> $object->properties['itemtype']->defaultvalue, 'tplmodule'=> $module))#">Add A New Publication</a>
+        </xar:access>
+    </xar:if>
+</xar:template>

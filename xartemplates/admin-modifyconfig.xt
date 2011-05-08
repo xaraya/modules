@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:javascript module="publications" filename="tabs.js" />
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">        
@@ -13,31 +12,33 @@
             Modify Configuration        
         </h2>
         
-         <xar:style scope="module" module="base" file="navtabs" />
-        <br />
-        <dl class="xar-tabs">
-            <dt class="help">
-                Applies to:                
-            </dt>
+        <ul class="xar-tabs">
             <xar:if condition="$tab eq 'global'">
-                <xar:set name="class">"active"</xar:set>
-            <xar:else/>
-                <xar:set name="class">""</xar:set>
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
             </xar:if>
-            <dd class="#$class#">
+            <li class="#$tabclass#">
                 <a href="#xarModURL('publications', 'admin', 'modifyconfig', array('tab' => 'global'))#">
-                Global</a>
-            </dd>
+                    Global
+                </a>
+            </li>
+
             <xar:if condition="$tab eq 'pubtypes'">
-                <xar:set name="class">"active"</xar:set>
-            <xar:else/>
-                <xar:set name="class">""</xar:set>
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
             </xar:if>
-            <dd class="#$class#">
+            <li class="#$tabclass#">
                 <a href="#xarModURL('publications', 'admin', 'modifyconfig', array('tab' => 'pubtypes'))#">
-                Publication Types</a>
-            </dd>
-        </dl>
+                    Publication Types
+                </a>
+            </li>
+        </ul>
 
        <form class="xar-formwidget" action="&xar-modurl-publications-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
             <xar:if condition="$tab eq 'global'">
@@ -182,12 +183,14 @@
                                     </label> 
                                     <input type="text" name="settings[items_per_page]" id="settings_items_per_page" size="3" maxlength="3" value="#$settings['items_per_page']#" />
                                 </div>
+                                <!--
                                 <div class="xar-form-input-wrapper">
                                     <label for="admin_items_per_page" class="help xar-form-label" title="#xarML('Number of items to display on admin view.')#">
                                             Items per page on admin view
                                     </label> 
                                     <input type="text" name="settings[admin_items_per_page]" id="settings_admin_items_per_page" size="3" maxlength="3" value="#$settings['admin_items_per_page']#" />
                                 </div>
+                                -->
                             </td>
                         </tr>
                     </table>

@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:set name="thispageno">count($items);</xar:set>
     <xar:if condition="empty($layout)">
-        <xar:set name="layout">'publications'</xar:set>
+        <xar:set name="layout">'publications-user'</xar:set>
     </xar:if>
     <div class="xar-clearleft xar-floatleft xar-padding-thick xar-halfwidth xar-align-left" style="padding-top:1em;">
         <xar:if condition="$total gt $items_per_page">
@@ -15,11 +15,9 @@
            Total selected: #$total#
         </xar:if>
     </div>
-    <xar:if condition="($layout eq 'publications') or ($layout eq 'default')">
+    <xar:if condition="($layout eq 'publications-user') or ($layout eq 'publications-admin') or ($layout eq 'default')">
         <div class="xar-floatright xar-padding-thick xar-halfwidth xar-align-right" style="padding-top:1em;">
-            <xar:sec mask="AddListings" catch="false">
-                <a style="font-weight:bold;" href ="#xarModURL('publications','admin','new',array('ptid'=> $object->properties['itemtype']->defaultvalue, 'tplmodule'=> $module))#">Add A New Publication</a>
-            </xar:sec>
+            <xar:template file="listing_newlink" module="$module" property="listing" />
         </div>
     <xar:elseif condition="$layout eq 'pubtypes'" />
         <div class="xar-floatright xar-padding-thick xar-halfwidth xar-align-right" style="padding-top:1em;">
