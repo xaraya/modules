@@ -6,81 +6,40 @@ sys::import('modules.dynamicdata.class.objects.master');
 function publications_admin_multiops()
 {
     // Get parameters
-    if(!xarVarFetch('idlist',      'str',   $idlist,     NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('operation',   'isset', $operation,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('returnurl',   'str',   $returnurl,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('object',      'str',   $object,     'listings_listing', XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('localmodule', 'str',   $module,     'listings', XARVAR_DONT_SET)) {return;}
-
-    if(!xarVarFetch('redirecttarget', 'str',  $redirecttarget, 'list',    XARVAR_NOT_REQUIRED)) {return;}
-
-    $args = array();
-    if (isset($idlist)) $args['idlist'] = $idlist;
-//    if (isset($returnurl)) $args['returnurl'] = $returnurl;
-
-    switch ($operation) {
-        case 0:
-        xarResponse::redirect(xarModURL('publications','user','delete',$args));
-        break;
-
-        case 'delete_customer':
-        xarResponse::redirect(xarModURL('ledgerar','user','delete_customer',array('idlist' => $idlist)));
-        break;
-
-        case 'customerlist':
-        xarResponse::redirect(xarModURL('ledgerar','user','view_customers'));
-        break;
-    }
-    return true;
+    if(!xarVarFetch('idlist',   'isset', $idlist,    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('operation',   'isset', $operation,    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('redirecttarget',   'isset', $redirecttarget,    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('returnurl',   'str', $returnurl,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('objectname',   'str', $objectname,  'listings_listing', XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('localmodule',   'str', $module,  'listings', XARVAR_DONT_SET)) {return;}
 
     // Confirm authorisation code
     //if (!xarSecConfirmAuthKey()) return;
 
-    if (!isset($idlist) || count($idlist) == 0) {
-        $msg = xarML('No items selected');
-        throw new DataNotFoundException(null, $msg);
+    // Catch missing params here, rather than below
+    if (empty($idlist)) {
+        return xarTplModule('publications','user','errors',array('layout' => 'no_items'));
     }
-    if (!isset($operation) || count($operation) == 0) {
-        $msg = xarML('No operation provided');
-         throw new BadParameterException(null,$msg);
+    if ($operation === '') {
+        return xarTplModule('publications','user','errors',array('layout' => 'no_operation'));
     }
+
     $ids = explode(',',$idlist);
-    $totalids = count($ids);
-    if (($totalids <=0) or ($operation == 0)) xarResponse::redirect($returnurl);
-
-
-    // doin stuff with items
-    $listing = DataObjectMaster::getObject(array('name' => $object));
-    if (!empty($listing->filepath) && $listing->filepath != 'auto') include_once($listing->filepath);
 
     switch ($operation) {
-    case 0: /* virtually delete item */
-    case 1: /* reject item */
-    case 2: /* processed */
-    case 3: /* item is active, ready */
+        case 0:
         foreach ($ids as $id => $val) {
-            if (empty($val)) {
-              continue;
-            }
-            //get the listing
-             $item = $listing->getItem(array('itemid' => $val));
-             if (!$listing->updateItem(array('state' => $operation))) return;
+            if (empty($val)) continue;
+
+            // Get the item
+             $item = $object->getItem(array('itemid' => $val));
+            
+            // Update it
+             if (!$object->deleteItem(array('state' => $operation))) return;
         }
         break;
-    case 10: /* physically delete each item */
-        foreach ($ids as $id => $val) {
-            if (empty($val)) {
-              continue;
-            }
-            //get the listing
-             $item = $listing->getItem(array('itemid' => $val));
-            if (!$listing->deleteItem()) return;
-        }
-        break;
-    } // end switch
 
-    xarResponse::redirect($returnurl);
-
+    }
     return true;
 }
 

@@ -8,9 +8,15 @@
     <xar:set name="index">0</xar:set>
     <xar:if condition="$settings['allowtranslations'] AND !empty($properties['id']->value)">
         <div style="float:right" id="newtranslaiton">
-            <a href="#xarModURL('publications','admin','modify',array('itemid' => $properties['id']->value, 'name' => $object->name, 'tplmodule' => 'publications','tab' => 'newtranslation'))#">
-                New Translation
-            </a>
+            <xar:if condition="$layout eq 'publications-admin'">
+                <a href="#xarModURL('publications','admin','modify',array('itemid' => $properties['id']->value, 'name' => $object->name, 'tplmodule' => 'publications','tab' => 'newtranslation'))#">
+                    New Translation
+                </a>
+            <xar:else/>
+                <a href="#xarModURL('publications','user','modify',array('itemid' => $properties['id']->value, 'name' => $object->name, 'tplmodule' => 'publications','tab' => 'newtranslation'))#">
+                    New Translation
+                </a>
+            </xar:if>
         </div>
     </xar:if>
     <ul class="xar-tabs xar-alt xar-norm-outline" style="clear:both">

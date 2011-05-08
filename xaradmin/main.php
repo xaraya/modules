@@ -26,7 +26,7 @@ function publications_admin_main()
 
         // Return the template variables defined in this function
         //return array('welcome' => $welcome);
-        xarResponse::redirect(xarModURL('publications', 'admin', 'view'));
+        xarController::redirect(xarModURL('publications', 'admin', 'view'));
     // success
     return true;
 
