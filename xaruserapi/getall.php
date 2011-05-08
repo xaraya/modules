@@ -42,7 +42,6 @@
  *                       fields you want with 'fields', OR take all the default
  *                       ones and add some optional fields with 'extra'
  * @param $args['where'] additional where clauses (e.g. myfield gt 1234)
- * @param $args['wheredd'] where clauses for hooked dd fields (e.g. myddfield gt 1234) [requires 'ptid' is defined]
  * @param $args['locale'] language/locale (if not using multi-sites, categories etc.)
  * @return array Array of publications, or false on failure
  */
@@ -50,28 +49,6 @@ function publications_userapi_getall($args)
 {
     // Get arguments from argument array
     extract($args);
-
-    // do the wheredd bit first
-    //
-    // A note just so you know what is actually happening here:
-    // All article IDs that match the DD where-clause are fetched and put into an array.
-    // This getall function is then called up again with the array passed in as a parameter.
-    // If the number of matching publications is large (and there really is no limit to this) then
-    // the second call to getall would result in an extremely long query string. It is not really
-    // scaleable and should probably be discouraged.
-    if (isset($wheredd) && !empty($ptid) && xarModIsHooked('dynamicdata','publications',$ptid) ) {
-        // (is it possible to determine ptid(s) from the other args? not easily)
-        $dditems = xarModApiFunc('dynamicdata','user','getitems', array('module'=>'publications', 'itemtype'=>$ptid, 'where'=>$wheredd));
-        if (empty($dditems) || !count($dditems))
-            return array(); // get nothing, return nothing
-        $ddids = array_keys($dditems);
-        if (!empty($ids))
-            $args['ids'] = array_intersect( $ids, $ddids ); // allow filter on passed in ids
-        else
-            $args['ids'] = $ddids;
-        unset($args['wheredd']);
-        return xarModApiFunc( 'publications', 'user', 'getall', $args );
-    }
 
     // Optional argument
     if (!isset($startnum)) {
@@ -86,8 +63,8 @@ function publications_userapi_getall($args)
     if (empty($ptid)) $ptid = null;
 
     // Default fields in publications (for now)
-    $columns = array('id','title','summary','owner','pubtype_id',
-                     'notes','state');
+    $columns = array('id','name','title','summary','owner','pubtype_id',
+                     'notes','state','start_date');
 
     // Optional fields in publications (for now)
     // + 'cids' = list of categories an article belongs to
