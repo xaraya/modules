@@ -70,8 +70,8 @@ function publications_userapi_leftjoin($args)
     $leftjoin = array();
 
     // Add available columns in the publications table (for now)
-    $columns = array('id','title','summary','owner','pubtype_id',
-                     'notes','state','body','locale','create_date');
+    $columns = array('id','name','title','summary','owner','pubtype_id',
+                     'notes','state','body','locale','create_date','start_date');
     foreach ($columns as $column) {
         $leftjoin[$column] = $publicationstable . '.' . $column;
     }
