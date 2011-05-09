@@ -64,7 +64,7 @@
     <label for="numitems#$blockid#" class="help xar-form-label" title="#xarML('Enter the number of items to choose featured publications from.')#">
         Limit       
    :</label> <input type="text" name="numitems" id="numitems#$blockid#" value="#$numitems#" size="3" maxlength="4" />&#160;&#160;
-        (0 for all publications)
+        (0 for all publications)    
 </div>
 <div class="xar-form-input-wrapper">
     <label for="featuredid#$blockid#" class="help xar-form-label" title="#xarML('Choose the article to display as a featured item.')#">
