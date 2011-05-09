@@ -18,7 +18,7 @@
  */
     sys::import('modules.publications.xarblocks.topitems');
 
-    class RandomBlock extends TopitemsBlock
+    class Publications_RandomBlock extends Publications_TopitemsBlock
     {
         public $locale       = '';
         public $alttitle     = '';
