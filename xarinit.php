@@ -198,7 +198,7 @@ function publications_init()
                        array('modName'  => 'publications',
                              'blockType'=> 'random'))) return;
 /*
-
+/*
     if (!xarModAPIFunc('blocks',
                        'admin',
                        'register_block_type',
