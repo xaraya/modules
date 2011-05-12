@@ -92,13 +92,13 @@
                     <xar:set name="itemkeys">implode(',',array_keys($items))</xar:set>
                     <input type="hidden" name="items" id="items" value="#$itemkeys#" />
                     <xar:var name="label">Create Preview</xar:var>
-                    <xar:buttom type="submit" name="preview" label="$label" />
+                    <xar:button type="submit" name="preview" label="$label" />
                     &#160;
                     <xar:var name="label">Update Document</xar:var>
-                    <xar:buttom type="submit" name="save" label="$label" />
+                    <xar:button type="submit" name="save" label="$label" />
                     &#160;
                     <xar:var name="label">Update and Quit</xar:var>
-                    <xar:buttom type="submit" name="quit" label="$label" />
+                    <xar:button type="submit" name="quit" label="$label" />
                     <xar:comment>
                         show a link to delete the article
                     </xar:comment>
