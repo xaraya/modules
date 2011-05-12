@@ -122,16 +122,17 @@ function publications_admin_update()
     // Success
     xarSession::setVar('statusmsg', xarML('Publication Updated'));
 
-    // if we can edit publications, go to admin view, otherwise go to user view
+    // If quitting, go to admin view; otherwise redisplay the page
     if (xarSecurityCheck('EditPublications',0,'Publication',$data['ptid'].':All:All:All')) {
-        xarController::redirect(xarModURL('publications', 'admin', 'view',
-                                      array('ptid' => $data['ptid'])));
-    } else {
-        xarController::redirect(xarModURL('publications', 'user', 'view',
-                                      array('ptid' => $data['ptid'])));
+        if ($data['quit']) {
+            xarController::redirect(xarModURL('publications', 'admin', 'view',
+                                          array('ptid' => $data['ptid'])));
+            return true;
+        } else {
+            return xarTplModule('publications','admin','modify', $data);
+        }
     }
     
-    return true;
 }
 
 ?>
