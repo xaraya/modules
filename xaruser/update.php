@@ -126,7 +126,9 @@ function publications_user_update()
                                           array('ptid' => $data['ptid'])));
             return true;
         } else {
-            return xarTplModule('publications','user','modify', $data);
+            xarController::redirect(xarModURL('publications', 'user', 'modify',
+                                          array('itemid' => $itemid)));
+            return true;
         }
     }
     

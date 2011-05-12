@@ -129,7 +129,9 @@ function publications_admin_update()
                                           array('ptid' => $data['ptid'])));
             return true;
         } else {
-            return xarTplModule('publications','admin','modify', $data);
+            xarController::redirect(xarModURL('publications', 'admin', 'modify',
+                                          array('itemid' => $itemid)));
+            return true;
         }
     }
     
