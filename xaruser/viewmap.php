@@ -331,7 +331,7 @@ function publications_user_viewmap($args)
     if (count($data['catfilter']) == 2) {
     }
 
-    if (!empty($ptid)) {echo $ptid;exit;
+    if (!empty($ptid)) {
         $object = DataObjectMaster::getObject(array('objectid' => $ptid));
         $fields = $object->getFieldValues();//var_dump($fields);exit;
         $pubtype_id = $object->properties['itemtype']->defaultvalue;
