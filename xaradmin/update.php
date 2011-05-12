@@ -130,7 +130,7 @@ function publications_admin_update()
             return true;
         } else {
             xarController::redirect(xarModURL('publications', 'admin', 'modify',
-                                          array('itemid' => $itemid)));
+                                          array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $itemid)));
             return true;
         }
     }
