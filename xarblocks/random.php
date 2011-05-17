@@ -16,24 +16,26 @@
  * initialise block
  * @author Roger Keays
  */
-    sys::import('modules.publications.xarblocks.topitems');
+    sys::import('xaraya.structures.containers.blocks.basicblock');
 
-    class Publications_RandomBlock extends Publications_TopitemsBlock
+    class Publications_RandomBlock extends BasicBlock implements iBlock
     {
-        public $locale       = '';
-        public $alttitle     = '';
-        public $altsummary   = '';
-        public $showtitle    = true;
-        public $showsummary  = true;
-        public $showpubdate  = false;
-        public $showauthor   = false;
-        public $showsubmit   = false;
+        public $locale            = '';
+        public $alttitle          = '';
+        public $altsummary        = '';
+        public $showtitle         = true;
+        public $showsummary       = true;
+        public $showpubdate       = false;
+        public $showauthor        = false;
+        public $showsubmit        = false;
+        public $state             = '2,3';
 
-        public function __construct(ObjectDescriptor $descriptor)
+        public function __construct(Array $data=array())
         {
-            parent::__construct($descriptor);
+            parent::__construct($data);
             $this->text_type = 'Random publication';
             $this->text_type_long = 'Show a single random publication';
+//            $this->module = 'publications';
         }
 
         public function display(Array $data=array())
@@ -41,21 +43,13 @@
             $data = parent::display($data);
 
             // frontpage or approved state
-            if (empty($data['state'])) {
-                    $statearray = array(2,3);
-            } elseif (!is_array($data['state'])) {
-                    $statearray = split(',', $data['state']);
-            } else {
-                    $statearray = $data['state'];
-            }
+            if (empty($data['state']))          $statearray = $this->state;
+            elseif (!is_array($data['state']))  $statearray = split(',', $data['state']);
+            else                                $statearray = $data['state'];
 
-            if (empty($data['locale'])) {
-                $lang = null;
-            } elseif ($data['locale'] == 'current') {
-                $lang = xarMLSGetCurrentLocale();
-            } else {
-                $lang = $data['locale'];
-            }
+            if (empty($data['locale']))             $lang = null;
+            elseif ($data['locale'] == 'current')   $lang = xarMLSGetCurrentLocale();
+            else                                    $lang = $data['locale'];
 
             // get cids for security check in getall
             $fields = array('id', 'title', 'body', 'notes', 'pubtype_id', 'cids', 'owner');
@@ -105,35 +99,6 @@
             }
 
             return;$data;
-        }
-
-        public function modify(Array $data=array())
-        {
-            $data = parent::modify($data);
-            if(!empty($data['catfilter'])) {
-                $cidsarray = array($data['catfilter']);
-            } else {
-                $cidsarray = array();
-            }
-
-            $data['locales'] = xarMLSListSiteLocales();
-            asort($data['locales']);
-
-            return $data;
-        }
-
-        public function update(Array $data=array())
-        {
-            xarVarFetch('locale', 'str', $data['locale'], '', XARVAR_NOT_REQUIRED);
-            xarVarFetch('alttitle', 'str', $data['alttitle'], '', XARVAR_NOT_REQUIRED);
-            xarVarFetch('altsummary', 'str', $data['altsummary'], '', XARVAR_NOT_REQUIRED);
-            xarVarFetch('showtitle', 'checkbox', $data['showtitle'], false, XARVAR_NOT_REQUIRED);
-            xarVarFetch('showsummary', 'checkbox', $data['showsummary'], false, XARVAR_NOT_REQUIRED);
-            xarVarFetch('showpubdate', 'checkbox', $data['showpubdate'], false, XARVAR_NOT_REQUIRED);
-            xarVarFetch('showauthor', 'checkbox', $data['showauthor'], false, XARVAR_NOT_REQUIRED);
-            xarVarFetch('showsubmit', 'checkbox', $data['showsubmit'], false, XARVAR_NOT_REQUIRED);
-
-            return parent::update($data);
         }
     }
 ?>
