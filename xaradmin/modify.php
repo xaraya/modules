@@ -33,11 +33,12 @@ function publications_admin_modify($args)
     if (!xarVarFetch('name',       'str:1', $name, 'publications_types', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
     
-    $publication_type = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
     if(!empty($ptid)) {
+        $publication_type = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
         $where = 'itemtype = ' . $ptid;
-    } else {
-        $where = "name = '" . $name . "'";
+        $items = $publication_type->getItems(array('where' => $where));
+        $item = current($items);
+        $name = $item['name'];
     }
     // Get our object
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
@@ -92,15 +93,13 @@ function publications_admin_modify($args)
         $data['items'][$key] = $data['object']->getFieldValues();
     }
     if (!empty($ptid)) {
-        $template = $publication_type_fields['name'];
+        $template = $item['name'];
     } else {
 // TODO: allow templates per category ?
        $template = null;
     }
 
     return xarTplModule('publications', 'admin', 'modify', $data, $template);
-
-
 
     $ptid = $publication['pubtype_id'];
 

@@ -1,28 +1,22 @@
 <?php
 
 /**
- * File: $Id$
+ * Publications Module
  *
- * Admin view of all pages, in hierarchical format.
- *
- * @package Xaraya
- * @copyright (C) 2004 by Jason Judge
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.academe.co.uk/
- * @author Jason Judge
- * @subpackage publications
- * @todo Support a pager of sorts, or allow display to be limited to specific sub-trees.
+ * @package modules
+ * @subpackage publications module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
+ * @copyright (C) 2011 Netspan AG
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 
 function publications_admin_view_pages($args)
 {
     extract($args);
 
-    // Security check
-//    if (!xarSecurityCheck('ModerateXarpagesPage', 1, 'Page', 'All')) {
-        // No privilege for viewing pages.
-//        return false;
-//    }
+    if (!xarSecurityCheck('ManagePublications')) return;
 
     // Accept a parameter to allow selection of a single tree.
     xarVarFetch('contains', 'id', $contains, 0, XARVAR_NOT_REQUIRED);
@@ -87,11 +81,6 @@ function publications_admin_view_pages($args)
             $data['pages'][$key]['delete_allowed'] = $adminaccess ||  $accessproperty->check($args);
         }
     }
-
-    // Check if the user is allowed to add pages.
-//    if (xarSecurityCheck('AddXarpagesPage', 0, 'Page', 'All')) {
-//        $data['add_allowed'] = true;
-//    }
 
     return $data;
 }

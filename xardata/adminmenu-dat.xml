@@ -1,11 +1,23 @@
 <adminmenu>
     <menuitems>
         <menuitem>
+            <mask>EditPublications</mask>
+            <type>admin</type>
+            <includes>
+                <includeitem>view_pages</includeitem>
+            </includes>
+            <target>view_pages</target>
+            <title>View Pages Tree</title>
+            <label>View Pages Tree</label>
+        </menuitem>
+        <menuitem>
+            <mask>EditPublications</mask>
             <type>admin</type>
             <includes>
                 <includeitem>view</includeitem>
             </includes>
             <target>view</target>
+            <title>Manage Publications</title>
             <label>Manage Publications</label>
         </menuitem>
         <menuitem>
