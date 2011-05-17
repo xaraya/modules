@@ -96,7 +96,7 @@
     </property>
     <property name="notes">
       <id>843</id>
-      <label>Body 3</label>
+      <label>Notes</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>publication.notes</source>

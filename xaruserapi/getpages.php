@@ -37,6 +37,11 @@ function publications_userapi_getpages($args)
         $key = 'index';
     }
 
+    if (isset($baseonly)) {
+        $where[] = 'tpages.parent_id = ?';
+        $bind[] = 0;
+    }
+
     if (isset($name)) {
         $where[] = 'tpages.name = ?';
         $bind[] = (string)$name;

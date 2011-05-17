@@ -26,7 +26,9 @@
         <xar:data-label property="$properties['image']" for="id" label="$label" />
         <xar:data-input property="$properties['image']" />
     </div>
-    <div class="xar-form-input-wrapper">
-        <xar:data-input property="$properties['position']"/>
-    </div>
+    <xar:if condition="!$properties['parent']->value">
+        <div class="xar-form-input-wrapper">
+            <xar:data-input property="$properties['position']"/>
+        </div>
+    </xar:if>
 </xar:template>

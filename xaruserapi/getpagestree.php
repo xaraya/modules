@@ -1,12 +1,24 @@
 <?php
 
-// Get a tree of pages, with various structures to get navigate it.
+/**
+ * Publications Module
+ *
+ * @package modules
+ * @subpackage publications module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
+ * @copyright (C) 2011 Netspan AG
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Marc Lutolf <mfl@netspan.ch>
+ */
 
 function publications_userapi_getpagestree($args)
 {
     // First get the set of pages.
     // Check out 'getpages' for the complete range of parameters that can be
     // passed in to restrict the pages retrieved.
+    // We only want the base pages
+    $args['baseonly'] = 1;
     $pages = xarMod::apiFunc('publications', 'user', 'getpages', $args);
 
     // Return if no pages found.

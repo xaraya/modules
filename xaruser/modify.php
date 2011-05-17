@@ -30,10 +30,16 @@ function publications_user_modify($args)
     if (!xarVarFetch('name',       'str:1', $name, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
 
-    // FIXME: this is too clumsy
-    
+    if(!empty($ptid)) {
+        $publication_type = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
+        $where = 'itemtype = ' . $ptid;
+        $items = $publication_type->getItems(array('where' => $where));
+        $item = current($items);
+        $name = $item['name'];
+    }
     // Get our object
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+    $data['ptid'] = $data['object']->properties['itemtype']->value;
 
     // If creating a new translation get an empty copy
     if ($data['tab'] == 'newtranslation') {
@@ -58,7 +64,7 @@ function publications_user_modify($args)
     }
     
     if (!empty($ptid)) {
-        $template = $pubtypes[$ptid]['name'];
+        $template = $item['name'];
     } else {
 // TODO: allow templates per category ?
        $template = null;

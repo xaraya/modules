@@ -58,6 +58,16 @@ function publications_admin_update()
     $isvalid = true;
     foreach ($items as $prefix) {
         $data['object']->setFieldPrefix($prefix);
+    
+        // Adjust the display of the celkoposition property according to whether this is the base document or not
+        $fieldname = $prefix . '_dd_' . $data['object']->properties['parent']->id;
+        $data['object']->properties['parent']->checkInput($fieldname);
+        if ($data['object']->properties['parent']->value == 0) {
+            $data['object']->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISPLAYONLY);
+        } else {
+            $data['object']->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
+        }
+        
         $thisvalid = $data['object']->checkInput();
         $isvalid = $isvalid && $thisvalid;
     // Store each item for later processing
