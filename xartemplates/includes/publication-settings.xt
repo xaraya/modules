@@ -76,6 +76,46 @@
             <xar:data-input property="$properties['modified']" />
         </div>
     </fieldset>
+    <!--
+    <xar:set name="parent">$properties['parent']->value</xar:set>
+    <xar:if condition="!$parent">
+    -->
+        <fieldset>
+            <legend>
+                Presentation
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <xar:var name="label">Summary Template</xar:var>
+                <xar:data-label property="$properties['summary_template']" for="id" label="$label" />
+                <xar:data-input property="$properties['summary_template']" />
+                &#160;
+                <a href="#xarModURL('publications','admin','templates_page',array('file' => 'summary','ptid' => $properties['itemtype']->value,'itemid' => $properties['id']->value))#">
+                    Edit template
+                </a>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <xar:var name="label">Detail Template</xar:var>
+                <xar:data-label property="$properties['detail_template']" for="id" label="$label" />
+                <xar:data-input property="$properties['detail_template']" />
+                &#160;
+                <a href="#xarModURL('publications','admin','templates_page',array('file' => 'detail','ptid' => $properties['itemtype']->value,'itemid' => $properties['id']->value))#">
+                    Edit template
+                </a>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <xar:var name="label">Page Template</xar:var>
+                <xar:data-label property="$properties['page_template']" for="id" label="$label" />
+                <xar:data-input property="$properties['page_template']" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <xar:var name="label">Theme</xar:var>
+                <xar:data-label property="$properties['theme']" for="id" label="$label" />
+                <xar:data-input property="$properties['theme']" />
+            </div>
+        </fieldset>
+    <!--
+    </xar:if>
+    -->
     <fieldset>
         <legend>
             Categories

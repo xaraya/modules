@@ -53,26 +53,34 @@
             &#160;|&#160;
             <xar:sec mask="AdminPublications" catch="false">
                 <a href="#xarModURL('publications','admin','modifyconfig',array('ptid' => $ptid, 'tab' => 'pubtypes'))#">                    
-                    Publication Config                    
+                    Publication Config
                 </a>
             <xar:else />                
-                Publication Config                
+                Publication Config
             </xar:sec>
             &#160;|&#160;
             <xar:sec mask="EditPublications" catch="false">
                 <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#">                    
-                    View Publications                    
+                    View Publications
                 </a>
             <xar:else />                
-                View Publications                
+                View Publications
             </xar:sec>
             &#160;|&#160;
             <xar:sec mask="AddPublications" catch="false">
                 <a href="#xarModURL('publications','admin','new',array('ptid' => $ptid))#">                    
-                    Add Publication                    
+                    Add Publication
                 </a>
             <xar:else />                
-                Add Publication                
+                Add Publication
+            </xar:sec>
+            &#160;|&#160;
+            <xar:sec mask="AdminPublications" catch="false">
+                <a href="#xarModURL('publications','admin','templates_type',array('ptid' => $ptid, 'tab' => 'pubtypes'))#">                    
+                    Templates
+                </a>
+            <xar:else />                
+                Templates
             </xar:sec>
         </td>
     </xar:if>

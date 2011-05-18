@@ -154,6 +154,46 @@
       <seq>27</seq>
       <configuration>a:0:{}</configuration>
     </property>
+    <property name="summary_template">
+      <id>792</id>
+      <label>Summary Template</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.summary_template</source>
+      <status>34</status>
+      <seq>28</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="detail_template">
+      <id>792</id>
+      <label>Detail Template</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.detail_template</source>
+      <status>34</status>
+      <seq>29</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="page_template">
+      <id>792</id>
+      <label>Page Template</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.page_template</source>
+      <status>34</status>
+      <seq>30</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="theme">
+      <id>792</id>
+      <label>Theme</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.theme</source>
+      <status>34</status>
+      <seq>31</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
     <property name="categories">
       <id>793</id>
       <label>Categories</label>
@@ -161,7 +201,7 @@
       <defaultvalue></defaultvalue>
       <source></source>
       <status>32</status>
-      <seq>28</seq>
+      <seq>32</seq>
       <configuration>a:3:{s:14:"display_layout";s:7:"default";s:21:"validation_categories";s:1:"0";s:19:"validation_override";s:1:"1";}</configuration>
     </property>
     <property name="created">
@@ -171,7 +211,7 @@
       <defaultvalue>time()</defaultvalue>
       <source>publication.create_date</source>
       <status>66</status>
-      <seq>29</seq>
+      <seq>33</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="modified">
@@ -181,7 +221,7 @@
       <defaultvalue>time()</defaultvalue>
       <source>publication.modify_date</source>
       <status>66</status>
-      <seq>30</seq>
+      <seq>34</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="process_state">
@@ -191,7 +231,7 @@
       <defaultvalue>1</defaultvalue>
       <source>publication.process_state</source>
       <status>34</status>
-      <seq>31</seq>
+      <seq>35</seq>
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:58:"0,Rejected;1,Submitted;2,On Hold;3,Approved;4,Checked Out;";}</configuration>
     </property>
     <property name="position">
@@ -201,7 +241,7 @@
       <defaultvalue></defaultvalue>
       <source></source>
       <status>34</status>
-      <seq>32</seq>
+      <seq>36</seq>
       <configuration>a:6:{s:14:"display_layout";s:7:"default";s:25:"initialization_celkotable";s:16:"xar_publications";s:24:"initialization_celkoname";s:4:"name";s:29:"initialization_celkoparent_id";s:13:"parentpage_id";s:28:"initialization_celkoright_id";s:12:"rightpage_id";s:27:"initialization_celkoleft_id";s:11:"leftpage_id";}</configuration>
     </property>
   </properties>
