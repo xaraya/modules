@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:style scope="module" module="xarpages" file="xarpages"/>
+
+    <div class="xar-mod-head"><span class="xar-mod-title">Page Administration</span></div>
+
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admin-menu"/>
+        <h2>View Pages</h2>
+
+        <xar:set name="root_pages">#xarMod::apiFunc('publications', 'user', 'getpages', array('parent'=&gt;0))#</xar:set>
+        <xar:if condition="!empty($root_pages)">
+            <xar:set name="method">'get'</xar:set>
+            <form method="$method" action="#xarModURL('publications','admin','view_pages')#">
+                <div>
+                    <xar:if condition="$method eq 'get'">
+                        <input name="module" type="hidden" value="publications"/>
+                        <input name="type" type="hidden" value="admin"/>
+                        <input name="func" type="hidden" value="view_pages"/>
+                    </xar:if>
+
+                    <label for="contains">Select tree:</label>
+
+                    <select name="contains" id="contains">
+                        <option value="0">-- All --</option>
+                        <xar:loop name="$root_pages">
+                            <xar:if condition="$loop:item.id eq $contains">
+                                <option value="#$loop:item.id#" selected="selected">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.ptid.name)#)</option>
+                            <xar:else />
+                                <option value="#$loop:item.id#">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.ptid.name)#)</option>
+                            </xar:if>
+                        </xar:loop>
+                    </select>
+                    <input type="submit" value="#xarML('Refresh')#"/>
+                </div>
+            </form>
+        </xar:if>
+
+        <xar:if condition="empty($pages)">
+             No pages defined
+        <xar:else />
+            <xar:if condition="!empty($add_allowed)">
+                <div><a href="#xarModURL('publications','admin','new')#">Add Page</a></div>
+            </xar:if>
+
+            <table border="0" width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Options</th>
+                </tr>
+                <xar:loop name="$pages">
+                    <xar:if condition="$loop:index ge 0">
+                        <xar:if condition="(($loop:index + 1) % 2)">
+                            <xar:set name="row_class">''</xar:set>
+                        <xar:else />
+                            <xar:set name="row_class">'xar-accent'</xar:set>
+                        </xar:if>
+
+                        <tr>
+                            <td align="left" class="#$row_class#">
+                                #$loop:item.xar_map#
+                                #xarVarPrepForDisplay($loop:item.name)#
+                            </td>
+                            <td class="#$row_class#" title="#xarML('Status: ')# #$loop:item.status#"><span class="xar-xarpages-status-#$loop:item.status#">#xarVarPrepForDisplay($loop:item.ptid.name)#: #xarVarPrepForDisplay($loop:item.desc)#</span></td>
+                            <td class="#$row_class#" style="text-align: center;">
+                                <xar:if condition="!empty($loop:item.edit_allowed)">
+                                    <xar:set name="link">
+                                        xarModURL('publications', 'admin', 'modify', array('itemid' => $loop->item['id'],'returnurl' => 'view_pages','ptid' => $loop->item['ptid']))
+                                    </xar:set>
+                                    <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
+                                        <xar:set name="icon">
+                                            xarTplGetImage('icons/modify.png', 'base')
+                                        </xar:set>
+                                        <xar:data-output type="urlicon" link="$link" icon="$icon"/>
+                                    <xar:else />
+                                        <a href="#$link#">
+                                            Modify
+                                        </a>
+                                    </xar:if>
+                                    &#160;|&#160;
+                                </xar:if>
+
+                                <xar:if condition="!empty($loop:item.delete_allowed)">
+                                    <xar:set name="link">
+                                        xarModURL('publications', 'admin', 'delete', array('idlist' => $loop->item['id'],'returnurl' => 'view_pages','ptid' => $loop->item['ptid']))
+                                    </xar:set>
+                                    <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
+                                        <xar:set name="icon">
+                                            xarTplGetImage('icons/delete.png', 'base')
+                                        </xar:set>
+                                        <xar:data-output type="urlicon" link="$link" icon="$icon"/>
+                                    <xar:else />
+                                        <a href="#$link#">
+                                            Delete
+                                        </a>
+                                    </xar:if>
+                                    &#160;|&#160;
+                                </xar:if>
+
+                                <xar:set name="link">
+                                    xarModURL('publications', 'user', 'display', array('id' => $loop->item['id'],'returnurl' => 'view_pages','ptid' => $loop->item['ptid']))
+                                </xar:set>
+                                <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
+                                    <xar:set name="icon">
+                                        xarTplGetImage('icons/display.png', 'base')
+                                    </xar:set>
+                                    <xar:data-output type="urlicon" link="$link" icon="$icon"/>
+                                <xar:else />
+                                    <a href="#$link#">
+                                        Display
+                                    </a>
+                                </xar:if>
+                            </td>
+                        </tr>
+                    </xar:if>
+                </xar:loop>
+            </table>
+        </xar:if>
+    </div>
+</xar:template>
