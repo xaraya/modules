@@ -26,19 +26,24 @@ function publications_user_modify($args)
 
     // Get parameters
     if (!xarVarFetch('itemid',     'isset', $id, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('return_url', 'str:1', $data['return_url'], NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('name',       'str:1', $name, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('ptid',       'isset', $ptid, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('returnurl',  'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('name',       'str:1', $name, '', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
+    
+    if (empty($name) && empty($ptid)) return xarResponse::NotFound();
 
     if(!empty($ptid)) {
         $publication_type = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
-        $where = 'itemtype = ' . $ptid;
+        $where = 'id = ' . $ptid;
         $items = $publication_type->getItems(array('where' => $where));
         $item = current($items);
         $name = $item['name'];
     }
+
     // Get our object
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+    $data['object']->getItem(array('itemid' => $id));
     $data['ptid'] = $data['object']->properties['itemtype']->value;
 
     // If creating a new translation get an empty copy

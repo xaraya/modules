@@ -157,7 +157,7 @@
     <property name="summary_template">
       <id>792</id>
       <label>Summary Template</label>
-      <type>textbox</type>
+      <type>radio</type>
       <defaultvalue></defaultvalue>
       <source>publication.summary_template</source>
       <status>34</status>
@@ -167,7 +167,7 @@
     <property name="detail_template">
       <id>792</id>
       <label>Detail Template</label>
-      <type>textbox</type>
+      <type>radio</type>
       <defaultvalue></defaultvalue>
       <source>publication.detail_template</source>
       <status>34</status>

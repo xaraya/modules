@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:javascript module="publications" filename="tabs.js" />
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:if condition="xarModVars::get('publications','use_module_alias')">
+                <xar:var scope="module" module="publications" name="module_alias_name"/>
+            <xar:else />
+                Manage Publication Type Templates
+            </xar:if>
+        </span>
+        <xar:template type="module" file="admin-menu"/>
+    </div>
+    <div class="xar-mod-body">
+        <h2>
+            Manage Publication Type Templates
+        </h2>
+        <form method="post" id="post" action="#xarServer::getCurrentURL()#" enctype="application/x-www-form-urlencoded" >
+            <div>
+                <label title="#xarML('Select the type of publication whose templates you want to manage')#" class="xar-form-label">
+                    Publication Type:
+                </label>
+                <xar:set name="newurl">"document.location.href='" . xarModURL('publications','admin','templates') . "&amp;ptid='+this.value"</xar:set>
+                <xar:data-input name="ptid" type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="this.form.submit();" />
+            </div>
+            <div style="float:left">
+                <label title="#xarML('Select a template to create or modify')#" class="xar-form-label">
+                    Template file:
+                </label>
+                <xar:set name="newurl">"document.location.href='" . xarModURL('publications','admin','templates') . "';submit()"</xar:set>
+                <xar:data-input type="dropdown" name="file" options="$files" value="$file" onchange="this.form.submit();" />
+            </div>
+        </form>
+        <div style="clear:both">&#160;</div>
+        <form method="post" id="post" action="#xarServer::getCurrentURL()#" enctype="application/x-www-form-urlencoded" >
+            <fieldset>
+                <xar:data-input type="codemirror" name="source_data" value="$source_data"/>
+            </fieldset>
+            <fieldset>
+                <div class="xar-form-input-wrapper">
+                    <div class="xar-form-input-wrapper-after">
+                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                        <input type="hidden" name="confirm" id="confirm" value="1" />
+                        <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+                        <input type="hidden" name="file" id="file" value="#$file#" />
+                        <xar:var name="label">Update Template</xar:var>
+                        <xar:button type="submit" label="$label" />
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</xar:template>

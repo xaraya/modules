@@ -30,23 +30,24 @@ function publications_admin_modify($args)
     if (!xarVarFetch('itemid',     'isset', $id, NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('ptid',       'isset', $ptid, NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('returnurl',  'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('name',       'str:1', $name, 'publications_types', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('name',       'str:1', $name, '', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
     
+    if (empty($name) && empty($ptid)) return xarResponse::NotFound();
+
     if(!empty($ptid)) {
         $publication_type = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
-        $where = 'itemtype = ' . $ptid;
+        $where = 'id = ' . $ptid;
         $items = $publication_type->getItems(array('where' => $where));
         $item = current($items);
         $name = $item['name'];
     }
+
     // Get our object
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+    $data['object']->getItem(array('itemid' => $id));
     $data['ptid'] = $data['object']->properties['itemtype']->value;
-
-
     
-
     //FIXME This should be configuration in the celko property itself
 
     $data['object']->properties['position']->initialization_celkoparent_id = 'parentpage_id';
@@ -92,14 +93,8 @@ function publications_admin_modify($args)
         $data['object']->getItem(array('itemid' => $key));
         $data['items'][$key] = $data['object']->getFieldValues();
     }
-    if (!empty($ptid)) {
-        $template = $item['name'];
-    } else {
-// TODO: allow templates per category ?
-       $template = null;
-    }
 
-    return xarTplModule('publications', 'admin', 'modify', $data, $template);
+    return xarTplModule('publications', 'admin', 'modify', $data);
 
     $ptid = $publication['pubtype_id'];
 
