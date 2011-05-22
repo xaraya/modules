@@ -194,14 +194,14 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="theme">
-      <id>792</id>
+      <id>139</id>
       <label>Theme</label>
-      <type>textbox</type>
-      <defaultvalue></defaultvalue>
+      <type>objectref</type>
+      <defaultvalue>0</defaultvalue>
       <source>publication.theme</source>
       <status>34</status>
       <seq>31</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:6:"themes";s:25:"initialization_store_prop";s:4:"name";s:27:"initialization_display_prop";s:4:"name";}</configuration>
     </property>
     <property name="categories">
       <id>793</id>
