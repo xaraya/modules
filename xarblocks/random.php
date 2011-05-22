@@ -35,7 +35,6 @@
             parent::__construct($data);
             $this->text_type = 'Random publication';
             $this->text_type_long = 'Show a single random publication';
-//            $this->module = 'publications';
         }
 
         public function display(Array $data=array())
