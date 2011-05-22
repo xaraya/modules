@@ -63,7 +63,7 @@
             </div>
             <div id="page-3" style="display: #$visible[2]#">
                 <fieldset class="xar-standard-box-padding xar-overflow-auto">
-                    <xar:data-display object="$object" tplmodule="publications"/>
+                    <xar:data-display object="$object" tplmodule="publications" layout="input"/>
                 </fieldset>
             </div>
             <!--
