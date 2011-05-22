@@ -167,21 +167,21 @@
       <id>792</id>
       <label>Summary Template</label>
       <type>radio</type>
-      <defaultvalue></defaultvalue>
+      <defaultvalue>0</defaultvalue>
       <source>publication.summary_template</source>
       <status>34</status>
       <seq>28</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:19:"0,inherit;1,custom;";}</configuration>
     </property>
     <property name="detail_template">
       <id>792</id>
       <label>Detail Template</label>
       <type>radio</type>
-      <defaultvalue></defaultvalue>
+      <defaultvalue>0</defaultvalue>
       <source>publication.detail_template</source>
       <status>34</status>
       <seq>29</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:19:"0,inherit;1,custom;";}</configuration>
     </property>
     <property name="page_template">
       <id>792</id>
