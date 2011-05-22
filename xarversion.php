@@ -26,10 +26,10 @@ $modversion['admin']        = 1;
 $modversion['user']         = 1;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
-$modversion['dependency']   = array(147,30012);
+$modversion['dependency']   = array(147);
 $modversion['dependencyinfo'] = array(
                                       147 => 'categories',
-                                      30012 => 'math',
+//                                      30012 => 'math',
                                       30066 => 'ckeditor',
                                       );
 ?>
