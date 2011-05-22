@@ -9,7 +9,7 @@
   <maxid>0</maxid>
   <datastore>relational</datastore>
   <config>a:1:{s:5:"where";s:12:"itemtype = 3";}</config>
-  <sources>a:1:{s:11:&quot;publication&quot;;s:16:&quot;xar_publications&quot;;}</sources>
+  <sources>a:1:{i:0;a:3:{i:0;s:11:"publication";i:1;s:16:"xar_publications";i:2;s:8:"internal";}}</sources>
   <relations>a:0:{}</relations>
   <objects>a:0:{}</objects>
   <isalias>false</isalias>
@@ -167,7 +167,7 @@
     <property name="summary_template">
       <id>792</id>
       <label>Summary Template</label>
-      <type>textbox</type>
+      <type>radio</type>
       <defaultvalue></defaultvalue>
       <source>publication.summary_template</source>
       <status>34</status>
@@ -177,7 +177,7 @@
     <property name="detail_template">
       <id>792</id>
       <label>Detail Template</label>
-      <type>textbox</type>
+      <type>radio</type>
       <defaultvalue></defaultvalue>
       <source>publication.detail_template</source>
       <status>34</status>
