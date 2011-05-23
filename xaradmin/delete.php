@@ -15,7 +15,62 @@
 
 function xarpages_admin_delete($args)
 {
-    return xarMod::guiFunc('xarpages', 'admin', 'deletepage', $args);
+    if (!xarSecurityCheck('ManageXarpages')) {return;}
+
+    extract($args);
+
+    if (!xarVarFetch('pid', 'id', $pid)) return;
+    if (!xarVarFetch('confirm', 'str:1', $confirm, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('return_url', 'str:0:200', $return_url, '', XARVAR_DONT_SET)) {return;}
+
+    // Get page information
+    $page = xarMod::apiFunc(
+        'xarpages', 'user', 'getpage',
+        array('pid' => $pid)
+    );
+
+    if (empty($page)) {
+        $msg = xarML('The page #(1) to be deleted does not exist', $pid);
+        throw new BadParameterException(null,$msg);
+    }
+
+    // Security check
+    if (!xarSecurityCheck('DeleteXarpagesPage', 1, 'Page', $page['name'] . ':' . $page['pagetype']['name'])) {
+        return false;
+    }
+
+    // Check for confirmation
+    if (empty($confirm)) {
+        $data = array('page' => $page, 'return_url' => $return_url);
+        $data['authkey'] = xarSecGenAuthKey();
+
+        $data['count'] = xarMod::apiFunc(
+            'xarpages', 'user', 'getpages',
+            array('count' => true, 'left_range' => array($page['left']+1, $page['right']-1))
+        );
+
+        // Return output
+        return $data;
+    }
+
+    // Confirm Auth Key
+    if (!xarSecConfirmAuthKey()) {
+        return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+    }        
+
+    // Pass to API
+    if (!xarMod::apiFunc(
+        'xarpages', 'admin', 'deletepage',
+        array('pid' => $pid))
+    ) return;
+
+    if (!empty($return_url)) {
+        xarController::redirect($return_url);
+    } else {
+        xarController::redirect(xarModURL('xarpages', 'admin', 'viewpages'));
+    }
+
+    return true;
 }
 
 ?>

@@ -15,6 +15,8 @@
 
 function xarpages_admin_new($args)
 {
+    if (!xarSecurityCheck('AddXarpages')) {return;}
+
     xarVarFetch('itemtype', 'id', $itemtype, 0, XARVAR_NOT_REQUIRED);
     if (!empty($itemtype)) $args['ptid'] = $itemtype;
 

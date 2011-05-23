@@ -17,6 +17,8 @@
 
 function xarpages_admin_modifytype($args)
 {
+    if (!xarSecurityCheck('AdminXarpages')) {return;}
+
     extract($args);
 
     if (!xarVarFetch('creating', 'bool', $creating, true, XARVAR_NOT_REQUIRED)) {return;}

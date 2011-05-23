@@ -138,12 +138,19 @@ function xarpages_init()
         xarML('Security component for xarpages page')
     );
 
-    // Masks for the component 'Page'.
-    // Each mask defines something the user is able to do.
-    // The masks are linked to the instances at runtime when security checks
-    // are made:
-    // xarSecurityCheck($mask, $showException, $component, $instance, $module, ...)
-    // xarRegisterMask($name, $realm, $module, $component, $instance, $level, $description='')
+# --------------------------------------------------------
+#
+# Set up masks
+#
+    // The standard masks
+    xarRegisterMask('ViewXarpages','All','xarpages','All','All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadXarpages','All','xarpages','All','All','ACCESS_READ');
+    xarRegisterMask('ModerateXarpages','All','xarpages','All','All','ACCESS_MODERATE');
+    xarRegisterMask('EditXarpages','All','xarpages','All','All','ACCESS_EDIT');
+    xarRegisterMask('AddXarpages','All','xarpages','All','All','ACCESS_ADD');
+    xarRegisterMask('ManageXarpages','All','xarpages','All','All','ACCESS_DELETE');
+    xarRegisterMask('AdminXarpages','All','xarpages','All','All','ACCESS_ADMIN');
+
     xarRegisterMask(
         'ViewXarpagesPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_OVERVIEW',
         xarML('See that a page exists')

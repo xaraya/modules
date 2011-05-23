@@ -16,13 +16,9 @@
 
 function xarpages_admin_viewpages($args)
 {
-    extract($args);
+    if (!xarSecurityCheck('ModerateXarpages')) {return;}
 
-    // Security check
-    if (!xarSecurityCheck('ModerateXarpagesPage', 1, 'Page', 'All')) {
-        // No privilege for viewing pages.
-        return false;
-    }
+    extract($args);
 
     // Accept a parameter to allow selection of a single tree.
     xarVarFetch('contains', 'id', $contains, 0, XARVAR_NOT_REQUIRED);

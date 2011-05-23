@@ -19,7 +19,7 @@ function xarpages_admin_modifyconfig($args)
     $data = array();
 
     // Need admin priv to modify config.
-    if (!xarSecurityCheck('AdminXarpagesPage')) return;
+    if (!xarSecurityCheck('AdminXarpages')) return;
 
     // Get the tree of all pages.
     $data['tree'] = xarMod::apiFunc('xarpages', 'user', 'getpagestree', array('dd_flag' => false));

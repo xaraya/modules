@@ -15,6 +15,8 @@
 
 function xarpages_admin_deletetype($args)
 {
+    if (!xarSecurityCheck('AdminXarpages')) {return;}
+
     extract($args);
 
     if (!xarVarFetch('id', 'id', $id)) return;

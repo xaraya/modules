@@ -15,6 +15,8 @@
 
 function xarpages_admin_updatetype($args)
 {
+    if (!xarSecurityCheck('AdminXarpages')) {return;}
+
     extract($args);
 
     if (!xarVarFetch('id', 'id', $id, 0, XARVAR_NOT_REQUIRED)) return;
