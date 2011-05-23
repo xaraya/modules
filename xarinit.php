@@ -201,6 +201,18 @@ function publications_init()
                        'register_block_type',
                        array('modName'  => 'publications',
                              'blockType'=> 'random'))) return;
+
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName'  => 'publications',
+                             'blockType'=> 'related'))) return;
+
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName'  => 'publications',
+                             'blockType'=> 'crumb'))) return;
 /*
 /*
     if (!xarModAPIFunc('blocks',
