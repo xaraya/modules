@@ -25,7 +25,7 @@
 
         </xar:sec>
         <xar:sec mask="AddXarpagesPage" catch="false">
-            <xar:if condition="$activetab eq 'modifypage'">
+            <xar:if condition="$activetab eq 'modify'">
                 <xar:set name="tabclass">'xar-tab-active'</xar:set>
                 <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
             <xar:else />
@@ -33,7 +33,7 @@
                 <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
             </xar:if>
             <li class="#$tabclass#">
-                <a href="&xar-modurl-xarpages-admin-newpage;" title="#xarML('Add a new page')#" class="#$linkclass#">
+                <a href="&xar-modurl-xarpages-admin-new;" title="#xarML('Add a new page')#" class="#$linkclass#">
                     Add Page
                 </a>
             </li>

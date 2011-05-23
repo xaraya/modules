@@ -5,7 +5,7 @@
     <xar:style file="facet" module="xarpages" scope="module"/>
 
     <xar:if condition="xarSecurityCheck('EditXarpagesPage', 0, 'Page', $current_page.name . ':' . $current_page.pagetype.name)">
-        [<a href="#xarModURL('xarpages','admin','modifypage',array('pid'=>$pid,'return_url'=>xarServer::getCurrentURL(array(),false)))#">edit</a>]
+        [<a href="#xarModURL('xarpages','admin','modify',array('pid'=>$pid,'return_url'=>xarServer::getCurrentURL(array(),false)))#">edit</a>]
     </xar:if>
 
     <div class="xarpages-page xarpages-page-facet">

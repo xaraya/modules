@@ -288,7 +288,7 @@ function xarpages_admin_modify($args)
     } else {
         $pagetype = NULL;
     }
-    return xarTplModule('xarpages', 'admin', 'modifypage', $data, $pagetype);
+    return xarTplModule('xarpages', 'admin', 'modify', $data, $pagetype);
 }
 
 ?>

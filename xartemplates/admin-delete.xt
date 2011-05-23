@@ -5,7 +5,7 @@
         <xar:template type="module" file="admin-menu"/>
         <h2>Delete Page</h2><br />
 
-            <form action="#xarModURL('xarpages','admin','deletepage')#" method="post">
+            <form action="#xarModURL('xarpages','admin','delete')#" method="post">
                 <p>
                     <xar:ml>
                         <xar:mlstring>Do you want to delete page '#(1)'?</xar:mlstring>

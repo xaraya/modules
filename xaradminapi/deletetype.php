@@ -39,7 +39,7 @@ function xarpages_adminapi_deletetype($args)
         foreach($pages as $page) {
             // Delete the page.
             if (!xarMod::apiFunc(
-                'xarpages', 'admin', 'deletepage',
+                'xarpages', 'admin', 'delete',
                 array('pid' => $page['pid'])
             )) {return;}
         }

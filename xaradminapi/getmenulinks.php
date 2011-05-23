@@ -23,7 +23,7 @@ function xarpages_adminapi_getmenulinks()
 
     if (xarSecurityCheck('AddXarpagesPage', 0)) {
         $menulinks[] = array(
-            'url'   => xarModURL('xarpages', 'admin', 'newpage'),
+            'url'   => xarModURL('xarpages', 'admin', 'new'),
             'title' => xarML('Add a new page'),
             'label' => xarML('Add a page')
         );

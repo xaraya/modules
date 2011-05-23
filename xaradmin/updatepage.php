@@ -134,7 +134,7 @@ function xarpages_admin_updatepage($args)
             // If there are more to create, then go to the create page.
             xarController::redirect(
                 xarModUrl(
-                    'xarpages', 'admin', 'modifypage',
+                    'xarpages', 'admin', 'modify',
                     array(
                         'batch' => 1,
                         'creating' => 1,
@@ -145,7 +145,7 @@ function xarpages_admin_updatepage($args)
                 )
             );
         } else {
-            xarController::redirect(xarModURL('xarpages', 'admin', 'modifypage', array('pid' => $pid)));
+            xarController::redirect(xarModURL('xarpages', 'admin', 'modify', array('pid' => $pid)));
         }
     } else {
         if (!empty($return_url)) {

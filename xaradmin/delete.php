@@ -60,7 +60,7 @@ function xarpages_admin_delete($args)
 
     // Pass to API
     if (!xarMod::apiFunc(
-        'xarpages', 'admin', 'deletepage',
+        'xarpages', 'admin', 'delete',
         array('pid' => $pid))
     ) return;
 
