@@ -55,19 +55,20 @@ function publications_user_display($args)
     // If the document doesn't exist, bail
     if (empty($itemid)) return xarResponse::NotFound();
     
-    // If htis page is of type PLACEHOLDER, then look in its descendents
+    // Get the complete tree for this section of pages.
+    // We need this for blocks etc.
+    $tree = xarMod::apiFunc(
+        'publications', 'user', 'getpagestree',
+        array(
+            'tree_contains_pid' => $id,
+            'key' => 'id',
+            'status' => 'ACTIVE,FRONTPAGE,PLACEHOLDER'
+        )
+    );
+        
+    // If this page is of type PLACEHOLDER, then look in its descendents
     if ($data['object']->properties['state']->value == 5) {
     
-        // Get the complete tree for this section of pages.
-        $tree = xarMod::apiFunc(
-            'publications', 'user', 'getpagestree',
-            array(
-                'tree_contains_pid' => $id,
-                'key' => 'id',
-                'status' => 'ACTIVE,FRONTPAGE,PLACEHOLDER'
-            )
-        );
-        
         // Scan for a descendent that is ACTIVE or FRONTPAGE
         if (!empty($tree['pages'][$id]['child_keys'])) {
             foreach($tree['pages'][$id]['child_keys'] as $scan_key) {
@@ -95,7 +96,7 @@ function publications_user_display($args)
 
     // Now we can cache all this data away for the blocks.
     // The blocks should have access to most of the same data as the page.
-    xarVarSetCached('Blocks.publications', 'pagedata', $data);
+    xarVarSetCached('Blocks.publications', 'pagedata', $tree);
 
     // The 'serialize' hack ensures we have a proper copy of the
     // paga data, which is a self-referencing array. If we don't
