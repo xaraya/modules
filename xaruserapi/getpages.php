@@ -9,11 +9,11 @@
 // parent: page parent (0=root page)
 // left_range: tree hierarchy, defined by [0]=>lower_bound [1]=>upper_bound
 // left_exclude: prune tree hierarchy, defined by [0]=>lower_bound [1]=>upper_bound
-// key: string indicates the key used for pages ('pid', 'index', 'name')
+// key: string indicates the key used for pages ('id', 'index', 'name')
 // dd_flag: include dynamic data if available (default true)
 // count: boolean return just a count of records if true
 // tree_contains_name: limit the search to the tree of pages containing the page(s) of the given name
-// tree_contains_pid: limit the search to the tree of pages containing the page of the given ID
+// tree_contains_id: limit the search to the tree of pages containing the page of the given ID
 // tree_ancestors: boolean, when fetching trees, will limit to just ancestors (and self) of the page name or ID
 
 function publications_userapi_getpages($args)
@@ -33,9 +33,7 @@ function publications_userapi_getpages($args)
 
     // Possible values for the array key. Defaults to index (count incrementing from zero)
     // Note: 'name' may not be unique, but all the others are.
-    if (!xarVarValidate('enum:pid:index:name:left:right', $key, true)) {
-        $key = 'index';
-    }
+    if (!xarVarValidate('enum:id:index:name:left:right', $key, true)) {$key = 'index';}
 
     if (isset($baseonly)) {
         $where[] = 'tpages.parent_id = ?';
@@ -51,23 +49,26 @@ function publications_userapi_getpages($args)
         // If a list of statuses have been provided, then select for any of them.
         if (strpos($status, ',') === false) {
             $where[] = "tpages.state = ?";
+            $numeric_status = convert_status($status);
             $bind[] = strtoupper($status);
         } else {
             $statuses = explode(',', strtoupper($status));
-            $where[] = "tpages.state IN (?" . str_repeat(",?", count($statuses)-1) . ')';            
-            $bind = array_merge($bind, $statuses);
+            $numeric_statuses = array();
+            foreach ($statuses as $stat) $numeric_statuses[] = convert_status($stat);
+            $where[] = "tpages.state IN (?" . str_repeat(",?", count($numeric_statuses)-1) . ')';            
+            $bind = array_merge($bind, $numeric_statuses);
         }
     }
 
-    if (isset($pid)) {
+    if (isset($id)) {
         $where[] = 'tpages.id = ?';
-        $bind[] = (int)$pid;
-    } elseif (!empty($pids)) {
+        $bind[] = (int)$id;
+    } elseif (!empty($ids)) {
         $addwhere = array();
-        foreach ($pids as $mypid) {
-            if (!empty($mypid) && is_numeric($mypid)) {
+        foreach ($ids as $myid) {
+            if (!empty($myid) && is_numeric($myid)) {
                 $addwhere[] = '?';
-                $bind[] = (int)$mypid;
+                $bind[] = (int)$myid;
             }
         }
         if (!empty($addwhere)) {
@@ -141,13 +142,13 @@ function publications_userapi_getpages($args)
     // If the request is to fetch a tree that *contains* a particular
     // page, then add the extra sub-queries in here.
 
-    if (!empty($tree_contains_pid) || !empty($tree_contains_name)) {
+    if (!empty($tree_contains_id) || !empty($tree_contains_name)) {
         // Join to get the member page.
         $query .= ' INNER JOIN ' . $xartable['publications'] . ' AS tpages_member';
 
-        if (!empty($tree_contains_pid)) {
+        if (!empty($tree_contains_id)) {
             $query .= ' ON tpages_member.id = ?';
-            array_unshift($bind, (int)$tree_contains_pid);
+            array_unshift($bind, (int)$tree_contains_id);
         }
 
         if (!empty($tree_contains_name)) {
@@ -297,11 +298,11 @@ function publications_userapi_getpages($args)
                 $overview_only_left = $rightpage_id;
             }
 
-            // Note: ['parent_pid'] is the parent page ID,
+            // Note: ['parent_id'] is the parent page ID,
             // but ['parent'] is the parent item key in the
             // pages array.
             $id2key[(int)$id] = $$key;
-            if ($key == 'pid') {
+            if ($key == 'id') {
                 $parent_key = (int)$parentpage_id;
             } else {
                 if (isset($id2key[$parentpage_id])) {
@@ -341,6 +342,19 @@ function publications_userapi_getpages($args)
     }
 
     return $pages;
+}
+
+function convert_status($status)
+{
+    switch ($status)
+    {
+        case 'DELETED': return 0;
+        case 'INACTIVE': return 1;
+        case 'DRAFT': return 2;
+        case 'ACTIVE': return 3;
+        case 'FRONTPAGE': return 4;
+        case 'PLACEHOLDER': return 5;
+    }
 }
 
 ?>

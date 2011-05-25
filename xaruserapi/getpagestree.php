@@ -22,23 +22,21 @@ function publications_userapi_getpagestree($args)
     $pages = xarMod::apiFunc('publications', 'user', 'getpages', $args);
 
     // Return if no pages found.
-    if (empty($pages)) {
-        return array('pages' => array(), 'children' => array());
-    }
+    if (empty($pages)) {return array('pages' => array(), 'children' => array());}
 
     // Inititalise the return value.
     $tree = array();
 
     // Create a children list, so the tree can be walked recursively by page key index.
     // Three forms are available, useful in different circumstances:
-    // - children_pids: page IDs only
-    // - children_pids: linked to the page keys (in the pages array)
+    // - children_ids: page IDs only
+    // - children_ids: linked to the page keys (in the pages array)
     // - children_names: children organised by page name
     // - children_pages: children linked to page records (i.e. the array keys)
     // Note the pages version contains linked references to each page, to save memory
     // and allow changes made to the main 'pages' array to be visible in the 'pages'
     // children array.
-    $children_pids = array();
+    $children_ids = array();
     $children_keys = array();
     $children_names = array();
     $children_pages = array();
@@ -97,7 +95,7 @@ function publications_userapi_getpagestree($args)
         // This item is the path for each page, based on page IDs.
         // It is effectively a list of ancestor IDs for a page.
         // FIXME: some paths seem to get a '0' root ID. They should only have real page IDs.
-        $pages[$key]['pidpath'] = array_keys($depthstack);
+        $pages[$key]['idpath'] = array_keys($depthstack);
 
         $pathstack[$key] = $page['name'];
         // This item is the path for each page, based on names.
