@@ -23,7 +23,7 @@ class Publications_CrumbBlock extends BasicBlock implements iBlock
     public $notes               = 'Provides an ancestry trail of the current page in the hierarchy';
 
     public $include_root        = false;
-    public $root_pids           = array();
+    public $root_ids           = array();
 
 /**
  * Display func.
@@ -39,10 +39,10 @@ class Publications_CrumbBlock extends BasicBlock implements iBlock
 
         $vars = $data['content'];
 
-        if (!empty($vars['root_pids']) && is_array($vars['root_pids'])) {
-            $root_pids = $vars['root_pids'];
+        if (!empty($vars['root_ids']) && is_array($vars['root_ids'])) {
+            $root_ids = $vars['root_ids'];
         } else {
-            $root_pids = array();
+            $root_ids = array();
         }
 
         // To start with, we need to know the current page.
@@ -51,58 +51,52 @@ class Publications_CrumbBlock extends BasicBlock implements iBlock
         $pid = 0;
 
         // Automatic: that means look at the page cache.
-        if (xarVarIsCached('Blocks.xarpages', 'current_pid')) {
-            $pid = xarVarGetCached('Blocks.xarpages', 'current_pid');
+        if (xarVarIsCached('Blocks.publications', 'current_id')) {
+            $id = xarVarGetCached('Blocks.publications', 'current_id');
             // Make sure it is numeric.
-            if (!isset($pid) || !is_numeric($pid)) {
-                $pid = 0;
-            }
+            if (!isset($id) || !is_numeric($id)) {$id = 0;}
         }
 
         // If we don't have a current page, then there is no trail to display.
-        if (empty($pid)) {
-            return;
-        }
+        if (empty($id)) {return;}
 
         // The page details may have been cached, if
         // we are in the xarpages module, or have several
         // blocks on the same page showing the same tree.
-        if (xarVarIsCached('Blocks.xarpages', 'pagedata')) {
+        if (xarVarIsCached('Blocks.publications', 'pagedata')) {
             // Pages are cached?
             // The 'serialize' hack ensures we have a proper copy of the
             // paga data, which is a self-referencing array. If we don't
             // do this, then any changes we make will affect the stored version.
-            $pagedata = unserialize(serialize(xarVarGetCached('Blocks.xarpages', 'pagedata')));
+            $pagedata = unserialize(serialize(xarVarGetCached('Blocks.publications', 'pagedata')));
 
             // If the cached tree does not contain the current page,
             // then we cannot use it.
-            if (!isset($pagedata['pages'][$pid])) {
-                $pagedata = array();
-            }
+            if (!isset($pagedata['pages'][$id])) {$pagedata = array();}
         }
 
         // If there is no pid, then we have no page or tree to display.
-        if (empty($pagedata)) {return;}
+//        if (empty($pagedata)) {return;}
 
         // If necessary, check whether the current page is under one of the
         // of the allowed root pids.
-        if (!empty($root_pids)) {
-            if (!xarMod::apiFunc('xarpages', 'user', 'pageintrees', array('pid' => $pid, 'tree_roots' => $root_pids))) {
+        if (!empty($root_ids)) {
+            if (!xarMod::apiFunc('publications', 'user', 'pageintrees', array('pid' => $id, 'tree_roots' => $root_ids))) {
                 return;
             }
         }
 
         // If we don't have any page data, then there is nothing to display.
-        if (empty($pagedata)) {
-            return;
-        }
+        if (empty($pagedata)) { return;}
 
         // Here we add the various flags to the pagedata, based on
         // the current page.
         $pagedata = xarMod::apiFunc(
-            'xarpages', 'user', 'addcurrentpageflags',
-            array('pagedata' => $pagedata, 'pid' => $pid, 'root_pids' => $root_pids)
+            'publications', 'user', 'addcurrentpageflags',
+            array('pagedata' => $pagedata, 'pid' => $id, 'root_ids' => $root_ids)
         );
+//        var_dump($pagedata);
+        exit;
 
         // If we don't want to include the root page in the crumbs, then shift it off now.
         if (empty($vars['include_root'])) {
@@ -110,9 +104,7 @@ class Publications_CrumbBlock extends BasicBlock implements iBlock
         }
 
         // We may not have any ancestors left after shifting off the first one.
-        if (empty($pagedata['ancestors'])) {
-            return;
-        }
+        if (empty($pagedata['ancestors'])) {return;}
 
         // Pass the page data into the block.
         // Merge it in with the existing block details.

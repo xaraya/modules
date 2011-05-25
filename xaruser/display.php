@@ -48,8 +48,40 @@ function publications_user_display($args)
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
+    
     $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
-    $data['object']->getItem(array('itemid' => $id));
+    $itemid = $data['object']->getItem(array('itemid' => $id));
+    
+    // If the document doesn't exist, bail
+    if (empty($itemid)) return xarResponse::NotFound();
+    
+    // If htis page is of type PLACEHOLDER, then look in its descendents
+    if ($data['object']->properties['state']->value == 5) {
+    
+        // Get the complete tree for this section of pages.
+        $tree = xarMod::apiFunc(
+            'publications', 'user', 'getpagestree',
+            array(
+                'tree_contains_pid' => $id,
+                'key' => 'id',
+                'status' => 'ACTIVE,FRONTPAGE,PLACEHOLDER'
+            )
+        );
+        
+        // Scan for a descendent that is ACTIVE or FRONTPAGE
+        if (!empty($tree['pages'][$id]['child_keys'])) {
+            foreach($tree['pages'][$id]['child_keys'] as $scan_key) {
+                // If the page is displayable, then treat it as the new page.
+                if ($tree['pages'][$scan_key]['status'] == 3 || $tree['pages'][$scan_key]['status'] == 4) {
+                    $id = $tree['pages'][$scan_key]['id'];
+                    $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
+                    $itemid = $data['object']->getItem(array('itemid' => $id));
+                    break;
+                }
+            }
+        }
+    }
+    
     $publication = $data['object']->getFieldValues();
 
     // This function displays the detail layout
@@ -60,6 +92,18 @@ function publications_user_display($args)
     
     // Set the page template if needed
     if (!empty($data['object']->properties['page_template']->value)) xarTplSetPageTemplateName($data['object']->properties['page_template']->value);
+
+    // Now we can cache all this data away for the blocks.
+    // The blocks should have access to most of the same data as the page.
+    xarVarSetCached('Blocks.publications', 'pagedata', $data);
+
+    // The 'serialize' hack ensures we have a proper copy of the
+    // paga data, which is a self-referencing array. If we don't
+    // do this, then any changes we make will affect the stored version.
+    $data = unserialize(serialize($data));
+
+    // Save the current page ID. This is used by blocks in 'automatic' mode.
+    xarVarSetCached('Blocks.publications', 'current_id', $id);
 
     return xarTplModule('publications', 'user', 'display', $data);
 }
