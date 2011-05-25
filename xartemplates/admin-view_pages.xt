@@ -64,7 +64,7 @@
                                 #xarVarPrepForDisplay($loop:item.name)#
                             </td>
                             <td class="#$row_class#" title="#xarML('Status: ')# #$loop:item.status#">
-                                <span class="xar-xarpages-status-#$loop:item.status#">#xarVarPrepForDisplay($loop:item.ptid.name)#: #xarVarPrepForDisplay($loop:item.desc)#</span>
+                                <span class="xar-xarpages-status-#$loop:item.status#">#xarVarPrepForDisplay($loop:item.ptid.name)#: #xarVarPrepForDisplay($loop:item.title)#</span>
                             </td>
                             <td class="#$row_class#" style="text-align: right;" nowrap="nowrap">
                                 <xar:if condition="xarUserIsLoggedIn()">
