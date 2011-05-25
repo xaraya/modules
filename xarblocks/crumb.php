@@ -93,10 +93,8 @@ class Publications_CrumbBlock extends BasicBlock implements iBlock
         // the current page.
         $pagedata = xarMod::apiFunc(
             'publications', 'user', 'addcurrentpageflags',
-            array('pagedata' => $pagedata, 'pid' => $id, 'root_ids' => $root_ids)
+            array('pagedata' => $pagedata, 'id' => $id, 'root_ids' => $root_ids)
         );
-//        var_dump($pagedata);
-        exit;
 
         // If we don't want to include the root page in the crumbs, then shift it off now.
         if (empty($vars['include_root'])) {

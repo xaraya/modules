@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label" title="#xarML('Check this if you want the block to display the root page')#" for="include_root"> 
+                Show the root page in the trail
+            </label> 
+            <xar:data-input type="checkbox" name="include_root" checked="$include_root"/>
+        </div>
+
+        <fieldset>
+            <legend>Root Pages</legend>
+            <p>
+
+                    If root pages are set, then the crumbtrails will be limited to those trees alone.
+                    A current page outside any root will suppress the block.
+
+            </p>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" for="new_root_pid">Add Root Page</label>
+                <xar:var name="firstline">-- None --</xar:var>
+                <xar:set name="firstline">array('id'=>'','name'=>$firstline)</xar:set>
+                <xar:data-input name="new_root_pid" type="dropdown" options="$options" value="" firstline="$firstline"/>
+            </div>
+
+            <!-- Existing root pids to removed -->
+            <xar:loop name="$root_ids">
+                <div>
+                    <input name="remove_root_pid[]" type="checkbox" value="#$loop:key#" id="remove_root_pid_#$bid#_#$loop:key#"/>
+                    &#160;
+                    <label for="remove_root_pid_#$bid#_#$loop:key#">
+                        <xar:ml>
+                            <xar:mlstring>Remove #(1)</xar:mlstring>
+                            <xar:mlvar>#xarVarPrepForDisplay($loop:item)#</xar:mlvar>
+                        </xar:ml>
+                    </label>
+                </div>
+            </xar:loop>
+        </fieldset>
+
+    </div>
+</xar:template>

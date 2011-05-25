@@ -315,7 +315,7 @@ function publications_userapi_getpages($args)
                 'id' => $id,
                 'key' => $$key,
                 'name' => $name,
-                'desc' => $title,
+                'title' => $title,
                 'ptid' => (int)$pubtype_id,
                 'parent_key' => $parent_key,
                 'parent_id' => (int)$parentpage_id,
