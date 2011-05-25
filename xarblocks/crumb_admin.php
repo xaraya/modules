@@ -70,7 +70,7 @@ class Publications_CrumbBlockAdmin extends Publications_CrumbBlock implements iB
         // Reference to content array.
         $vars =& $data['content'];
 
-        if (xarVarFetch('include_root', 'bool', $include_root, false, XARVAR_NOT_REQUIRED)) {
+        if (xarVarFetch('include_root', 'checkbox', $include_root, 0, XARVAR_NOT_REQUIRED)) {
             $vars['include_root'] = $include_root;
         }
 
