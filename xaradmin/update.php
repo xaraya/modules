@@ -45,13 +45,6 @@ function publications_admin_update()
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
     
-    //FIXME This should be configuration in the celko property itself
-    $data['object']->properties['position']->initialization_celkoparent_id = 'parentpage_id';
-    $data['object']->properties['position']->initialization_celkoright_id = 'rightpage_id';
-    $data['object']->properties['position']->initialization_celkoleft_id  = 'leftpage_id';
-    $xartable = xarDB::getTables();
-    $data['object']->properties['position']->initialization_itemstable = $xartable['publications'];
-
     // First we need to check all the data on the template
     // If checkInput fails, don't bail
     $itemsdata = array();
