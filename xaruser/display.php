@@ -103,8 +103,10 @@ function publications_user_display($args)
     // do this, then any changes we make will affect the stored version.
     $data = unserialize(serialize($data));
 
-    // Save the current page ID. This is used by blocks in 'automatic' mode.
+    // Save some values. These are used by blocks in 'automatic' mode.
     xarVarSetCached('Blocks.publications', 'current_id', $id);
+    xarVarSetCached('Blocks.publications', 'ptid', $ptid);
+    xarVarSetCached('Blocks.publications', 'author', $data['object']->properties['author']->value);
 
     return xarTplModule('publications', 'user', 'display', $data);
 }

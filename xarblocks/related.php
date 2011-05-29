@@ -36,70 +36,80 @@
             $this->text_type = 'Related publication';
             $this->text_type_long = 'Show related categories and author links';
             $this->allow_multiple = true;
-            $this->form_content = false;
-            $this->form_refresh = false;
-            $this->show_preview = true;
+            $this->form_content   = false;
+            $this->form_refresh   = false;
+            $this->show_preview   = true;
+            
+            $this->show_pubtype  = true;
+            $this->show_category = true;
+            $this->show_author   = true;
         }
 
         public function display(Array $data=array())
         {
             $data = parent::display($data);
-
-            if (empty($data['numitems']))          $data['numitems'] = $this->numitems;
-            if (empty($data['showvalue']))         $data['showvalue'] = $this->showvalue;
+            $vars = $data['content'];
+            
+            if (empty($vars['numitems']))         $vars['numitems'] = $this->numitems;
+            if (empty($vars['showvalue']))        $vars['showvalue'] = $this->showvalue;
+            if (empty($vars['showpubtype']))      $vars['showpubtype'] = $this->show_pubtype;
+            if (empty($vars['showcategory']))     $vars['showcategory'] = $this->show_category;
+            if (empty($vars['showauthor']))       $vars['showauthor'] = $this->show_author;
 
             // Trick : work with cached variables here (set by the module function)        
             // Check if we've been through publications display
-            if (!xarVarIsCached('Blocks.publications','id')) {return;}
-        
-            $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+            if (!xarVarIsCached('Blocks.publications','current_id')) {return;}
 
             $links = 0;
-            // Show publication type (for now)
-            if (xarVarIsCached('Blocks.publications','ptid')) {
-                $ptid = xarVarGetCached('Blocks.publications','ptid');
-                if (!empty($ptid) && isset($pubtypes[$ptid]['description'])) {
-                    $vars['pubtypelink'] = xarModURL('publications','user','view',
-                                                     array('ptid' => $ptid));
-                    $vars['pubtypename'] = $pubtypes[$ptid]['description'];
-                    $links++;
+            
+            if ($vars['showpubtype']) {
+                // Show publication type (for now)
+                $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+                if (xarVarIsCached('Blocks.publications','ptid')) {
+                    $ptid = xarVarGetCached('Blocks.publications','ptid');
+                    if (!empty($ptid) && isset($pubtypes[$ptid]['description'])) {
+                        $vars['pubtypelink'] = xarModURL('publications','user','view',
+                                                         array('ptid' => $ptid));
+                        $vars['pubtypename'] = $pubtypes[$ptid]['description'];
+                        $links++;
+                    }
                 }
             }
             
-            // Show categories (for now)
-            if (xarVarIsCached('Blocks.publications','cids')) {
-                $cids = xarVarGetCached('Blocks.publications','cids');
-                // TODO: add related links
-            }
-            // Show author (for now)
-            if (xarVarIsCached('Blocks.publications','owner') &&
-                xarVarIsCached('Blocks.publications','author')) {
-                $owner = xarVarGetCached('Blocks.publications','owner');
-                $author = xarVarGetCached('Blocks.publications','author');
-                if (!empty($owner) && !empty($author)) {
-                    $vars['authorlink'] = xarModURL('publications','user','view',
-                                                    array('ptid' => (!empty($ptid) ? $ptid : null),
-                                                          'owner' => $owner));
-                    $vars['authorname'] = $author;
-                    $vars['owner'] = $owner;
-                    if (!empty($vars['showvalue'])) {
-                        $vars['authorcount'] = xarModAPIFunc('publications','user','countitems',
-                                                             array('ptid' => (!empty($ptid) ? $ptid : null),
-                                                                   'owner' => $owner,
-                                                                   // limit to approved / frontpage publications
-                                                                   'state' => array(2,3),
-                                                                   'enddate' => time()));
-                    }
-                    $links++;
+            if ($vars['showcategory']) {
+                // Show categories (for now)
+                if (xarVarIsCached('Blocks.publications','cids')) {
+                    $cids = xarVarGetCached('Blocks.publications','cids');
+                    // TODO: add related links
                 }
             }
-
-    $vars['blockid'] = $blockinfo['bid'];
+            
+            if ($vars['showauthor']) {
+                // Show author (for now)
+                if (xarVarIsCached('Blocks.publications','author')) {
+                    $author = xarVarGetCached('Blocks.publications','author');
+                    if (!empty($author)) {
+                        $vars['authorlink'] = xarModURL('publications','user','view',
+                                                        array('ptid' => (!empty($ptid) ? $ptid : null),
+                                                              'owner' => $author));
+                        $vars['authorid'] = $author;
+                        if (!empty($vars['showvalue'])) {
+                            $vars['authorcount'] = xarModAPIFunc('publications','user','countitems',
+                                                                 array('ptid' => (!empty($ptid) ? $ptid : null),
+                                                                       'owner' => $author,
+                                                                       // limit to approved / frontpage publications
+                                                                       'state' => array(2,3),
+                                                                       'enddate' => time()));
+                        }
+                        $links++;
+                    }
+                }
+            }
 
             // Populate block info and pass to theme
             if ($links > 0) {
                 // Set the data to return.
-                $data['content'] = $data;
+                $data['content'] = $vars;
                 return $data;
             }
         
