@@ -2,17 +2,35 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div class="xar-form-input-wrapper">
         <label class="help xar-form-label" title="#xarML('Enter the number of items that you wish to display.')#" for="numitems_#$bid#"> 
-            Number of items 
+            Number of items
         </label><input type="text" name="numitems" id="numitems_#$bid#" value="#$numitems#" size="5" maxlength="5" /> 
     </div>
     <div class="xar-form-input-wrapper-after">
-        <xar:if condition="empty($showvalue)">
-            <input type="checkbox" name="showvalue" id="showvalue#$bid#" value="1" /> 
-            <xar:else />
-            <input type="checkbox" name="showvalue" id="showvalue#$bid#" value="1" checked="checked" /> 
-        </xar:if>
+        <xar:set name="thisid">'showvalue'.$bid</xar:set>
+        <xar:data-input type="checkbox" name="showvalue" id="$thisid" checked="$showvalue"/>
         <label class="help" title="#xarML('Check this box to show the number of publications.')#" for="showvalue#$bid#"> 
             Show number of publications 
+        </label> 
+    </div>
+    <div class="xar-form-input-wrapper-after">
+        <xar:set name="thisid">'showpubtype'.$bid</xar:set>
+        <xar:data-input type="checkbox" name="showpubtype" id="$thisid" checked="$showpubtype"/>
+        <label class="help" title="#xarML('Check this box to show other publications of the same type.')#" for="showpubtype#$bid#"> 
+            Show related by publication type 
+        </label> 
+    </div>
+    <div class="xar-form-input-wrapper-after">
+        <xar:set name="thisid">'showcategory'.$bid</xar:set>
+        <xar:data-input type="checkbox" name="showcategory" id="$thisid" checked="$showcategory"/>
+        <label class="help" title="#xarML('Check this box to show other publications of the same category.')#" for="showcategory#$bid#"> 
+            Show related by category
+        </label> 
+    </div>
+    <div class="xar-form-input-wrapper-after">
+        <xar:set name="thisid">'showauthor'.$bid</xar:set>
+        <xar:data-input type="checkbox" name="showauthor" id="$thisid" checked="$showauthor"/>
+        <label class="help" title="#xarML('Check this box to other publications by the same author.')#" for="showauthor#$bid#"> 
+            Show related by author
         </label> 
     </div>
 </xar:template>
