@@ -3,7 +3,7 @@
 <xar:if condition="!empty($content)">
     <xar:if condition="!empty($content['error'])">
         <p>Problem communicating with Twitter, last response: <span class="xar-error">#$content['error']#</span></p>
-    <xar:else/>    
+    <xar:else/>
     <xar:foreach in="$content" value="$user">
         <div class="twitter">
             <span class="profile-image">

@@ -5,7 +5,7 @@ class TwitterAPI extends TwitterOAuth
     // Overloaded properties from TwitterOAuth
     public $useragent = 'xarTwitter v0.9.0';
     public $format = 'xml';
-    
+
     // Caching properties specific to TwitterAPI
     public $cached = true;
     public $expires = 300;
@@ -14,15 +14,15 @@ class TwitterAPI extends TwitterOAuth
      * GET wrapper for oAuthRequest.
      * Overloaded here to take advantage of Xaraya's filesystem caching
      */
-    function get($url, $parameters = array()) 
+    function get($url, $parameters = array())
     {
         // add caching to GET requests
         if ($this->cached) {
             sys::import('xaraya.caching');
             // init the filesystem cache object
             $fileCache = xarCache::getStorage(array(
-                'storage' => 'filesystem', 
-                'cachedir' => sys::varpath() . '/cache', 
+                'storage' => 'filesystem',
+                'cachedir' => sys::varpath() . '/cache',
                 'type' => 'twitter',
                 'expire' => $this->expires,
                 'code' => $this->format,
@@ -37,7 +37,7 @@ class TwitterAPI extends TwitterOAuth
             $response = $this->oAuthRequest($url, 'GET', $parameters);
 
         if ($this->format === 'json' && $this->decode_json) {
-            // @TODO json2arr function so this can be cached 
+            // @TODO json2arr function so this can be cached
             // $reponse = TwitterUtil::json2arr($response);
             return json_decode($response);
         } elseif ($this->format === 'xml') {
@@ -49,7 +49,7 @@ class TwitterAPI extends TwitterOAuth
         }
         // save processing on future requests by caching the array
         if ($this->cached)
-            $fileCache->setCached($cacheKey, serialize($response));      
+            $fileCache->setCached($cacheKey, serialize($response));
 
         return $response;
     }
@@ -57,7 +57,7 @@ class TwitterAPI extends TwitterOAuth
     /**
      * POST wrapper for oAuthRequest.
      */
-    function post($url, $parameters = array()) 
+    function post($url, $parameters = array())
     {
         $response = $this->oAuthRequest($url, 'POST', $parameters);
         if ($this->format === 'json' && $this->decode_json) {
@@ -75,7 +75,7 @@ class TwitterAPI extends TwitterOAuth
     /**
      * DELETE wrapper for oAuthReqeust.
      */
-    function delete($url, $parameters = array()) 
+    function delete($url, $parameters = array())
     {
         $response = $this->oAuthRequest($url, 'DELETE', $parameters);
         if ($this->format === 'json' && $this->decode_json) {
@@ -89,7 +89,7 @@ class TwitterAPI extends TwitterOAuth
         }
         return $response;
     }
-  
+
     /**
      * Generate cacheKey for a GET request
      * Helper function for filesystem caching
@@ -157,7 +157,7 @@ Class TwitterUtil
         libxml_use_internal_errors(true);
         $xml = simplexml_load_file($filename);
         if (!$xml) return "";
-        return self::__xml2arr($xml);    
+        return self::__xml2arr($xml);
     }
 
     /**
@@ -171,16 +171,16 @@ Class TwitterUtil
         $tab = false;
         $array = array();
         foreach($xml->children() as $key => $value)
-        {   
+        {
             $child = self::__xml2arr($value);
-       
+
             //To deal with the attributes
             foreach($value->attributes() as $ak=>$av)
             {
                 $child[$ak] = (string)$av;
-           
+
             }
-       
+
             //Let see if the new child is not in the array
             if($tab==false && in_array($key,array_keys($array)))
             {
@@ -200,7 +200,7 @@ Class TwitterUtil
             {
                 //Add a simple element
                 if (!empty($child)) {
-                    // add converted times and text                    
+                    // add converted times and text
                     switch ($key) {
                         case 'text';
                             $array['text_transformed'] = self::transform($child);
@@ -221,28 +221,28 @@ Class TwitterUtil
                             $child = false;
                         break;
                     }
-    
+
                 }
                 $array[$key] = $child;
             }
-                   
-            $fils++;       
+
+            $fils++;
         }
-   
-   
+
+
         if($fils==0)
         {
             return (string)$xml;
         }
-   
-        return $array;     
+
+        return $array;
     }
-    
+
     public static function json2arr($response="")
     {
         // @TODO...
-    }  
-    
+    }
+
     /**
      * Util function to transform @replies, #hashtags and urls in Twitter status text
     **/
@@ -251,12 +251,12 @@ Class TwitterUtil
         if (!is_string($text)) return $text;
         $text = trim($text);
         if (empty($text)) return "";
-        
+
         // urls
         $text = preg_replace(
             '@(https?://([-\w\.]+)+(/([\w/_\-\.]*(\?\S+)?(#\S+)?)?)?)@',
             '<a href="$1">$1</a>',
-        $text);        
+        $text);
 
         // @replies
         $text = preg_replace(
@@ -264,14 +264,14 @@ Class TwitterUtil
             '<a href="http://twitter.com/$1">@$1</a>',
         $text);
 
-        // #hashtags 
+        // #hashtags
         $text = preg_replace(
             '/#(\w+)/',
             '<a href="http://search.twitter.com/search?q=%23$1">#$1</a>',
         $text);
 
         return $text;
-    } 
+    }
 
     /**
      * Prep status message for update to Twitter
@@ -284,20 +284,20 @@ Class TwitterUtil
     **/
     public static function prepstatus($text)
     {
-      
+
         if (!is_string($text))
             throw new BadParameterException('text');
 
         $limit = 140;
-        $text = strip_tags($text);  
+        $text = strip_tags($text);
         $text = trim($text);
         if (empty($text)) return "";
 
         // replace &#38;s (from xml urls)
         $text = str_replace('&amp;', '&', $text);
-        if (strlen($text) <= $limit) return $text; // string within limits 
+        if (strlen($text) <= $limit) return $text; // string within limits
 
-        // try reducing length by replacing urls with tinyurls      
+        // try reducing length by replacing urls with tinyurls
         preg_match_all("#(^|[\n ])([\w]+?://[^ \"\n\r\t<]*)#is", $text, $matches);
         // replace with tinyurls
         if (!empty($matches[0])) {
@@ -305,19 +305,19 @@ Class TwitterUtil
                 $tinyurl = self::encodetinyurl($url);
                 if (!$tinyurl) continue;
                 $text = preg_replace("!{$url}!", " {$tinyurl}", $text);
-                // see if replacing this url took us below the limit                
+                // see if replacing this url took us below the limit
                 if (strlen($text) <= $limit) break;
             }
         }
-        if (strlen($text) <= $limit) return $text; // string within limits      
-        
-        // try reducing the length of the text by removing words 
+        if (strlen($text) <= $limit) return $text; // string within limits
+
+        // try reducing the length of the text by removing words
         $words = explode(' ', $text);
         $length = strlen($text);
         // start at the end and work backwards
         $words = array_reverse($words);
         foreach ($words as $key => $word) {
-            // preserve urls, hashtags, and @replies in the text          
+            // preserve urls, hashtags, and @replies in the text
             if (preg_match("#(^|[\n ])([\w]+?://[^ \"\n\r\t<]*)#is", $word) ||
                 preg_match("/(?:^|\W)\#([a-zA-Z0-9\-_\.+:=]+\w)(?:\W|$)/is", $word) ||
                 preg_match("/(?:^|\W|#)@(\w+)/is", $word)) continue;
@@ -328,26 +328,26 @@ Class TwitterUtil
                 $words[$key] = '...';
                 break;
             }
-            // still too long, remove this word         
+            // still too long, remove this word
             unset($words[$key]);
         }
         $words = array_reverse($words);
         $text = join(' ', $words);
-        if (strlen($text) <= $limit) return $text; // string within limits 
-                
+        if (strlen($text) <= $limit) return $text; // string within limits
+
         // if we're still over the limit, the text either has no urls, hashtags or @replies,
         // or contains nothing but, either way no option left but to slice it indiscriminately...
         $text = substr($text, 0, $limit - 3);
         // take off non-word characters + part of word at end
         $text = preg_replace('/[^a-z0-9_\-\?\.]+[a-z0-9_\-\?\.]*\z/i', '', $text);
         // append concatenation indicator
-        $text .= ' ...';        
-          
+        $text .= ' ...';
+
         return $text;
-              
+
     }
     /**
-     * Encode url as tinyurl 
+     * Encode url as tinyurl
      *
      * @param string $url url to make tinyurl
      * @throws none
@@ -368,7 +368,7 @@ Class TwitterUtil
             curl_close($ch);
         }
         if (empty($tinyurl) || strlen($tinyurl) > strlen($url)) return $url;
-        return $tinyurl;    
+        return $tinyurl;
     }
 
 }

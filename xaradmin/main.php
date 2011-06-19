@@ -23,7 +23,7 @@ function twitter_admin_main()
 {
    /* Security Check */
     if (!xarSecurityCheck('AdminTwitter',0)) return;
-   
+
     // get current module version for display
     $modname = 'twitter';
     $modid = xarMod::getRegID($modname);

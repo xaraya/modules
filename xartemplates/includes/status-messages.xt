@@ -19,7 +19,7 @@
                 <a href="http://twitter.com/##!/#$status.user.screen_name#/status/#$status.id#"><xar:base-timesince stamp="$status['created_at_unix']" /></a> ago, via #$status.source#
             </span>
         </div>
-    </xar:foreach>     
+    </xar:foreach>
     </xar:if>
 </xar:if>
 </xar:template>

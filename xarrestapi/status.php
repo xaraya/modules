@@ -2,21 +2,21 @@
 function twitter_restapi_status($args)
 {
     extract($args);
-    
+
     $invalid = array();
-    if (empty($method) || !is_string($method)) 
+    if (empty($method) || !is_string($method))
         $invalid[] = 'method';
 
     if (!empty($invalid)) {
         $response['error'] = xarML('Invalid #(1) for Twitter API #(2) method', join(', ', $invalid), 'status');
         return $response;
     }
-        
+
     $path = array('statuses');
-    $params = array();  
-            
+    $params = array();
+
     switch ($method) {
-        
+
         case 'destroy':
         case 'retweet':
             $http_method = 'post';
@@ -32,9 +32,9 @@ function twitter_restapi_status($args)
             }
             if (isset($include_entities)) {
                 $params['include_entities'] = (bool) $include_entities;
-            }        
+            }
         break;
-        
+
         case 'update':
             if (empty($status) || !is_string($status)) {
                 $invalid[] = 'status';
@@ -77,11 +77,11 @@ function twitter_restapi_status($args)
             }
             if (isset($include_entities)) {
                 $params['include_entities'] = (bool) $include_entities;
-            }               
+            }
             $http_method = 'post';
             $path[] = $method;
         break;
-        
+
         case 'retweets':
             $path[] = $method;
             if (empty($id) || !is_numeric($id)) {
@@ -95,15 +95,15 @@ function twitter_restapi_status($args)
                 } else {
                     $params['count'] = $count;
                 }
-            }         
+            }
         break;
-        
+
         case 'retweeted_by':
             if (empty($id) || !is_numeric($id)) {
                 $invalid[] = 'id';
             } else {
                 $path[] = $id;
-            }        
+            }
             $path[] = $method;
             if (isset($count)) {
                 if (empty($count) || !is_numeric($count) || $count > 100) {
@@ -120,13 +120,13 @@ function twitter_restapi_status($args)
                 }
             }
         break;
-        
+
         case 'retweeted_by_ids':
             if (empty($id) || !is_numeric($id)) {
                 $invalid[] = 'id';
             } else {
                 $path[] = $id;
-            }        
+            }
             $path[] = $method;
             $path[] = 'ids';
             if (isset($count)) {
@@ -144,32 +144,32 @@ function twitter_restapi_status($args)
                 }
             }
         break;
-                            
+
         default:
             $response['error'] = xarML('Unknown Twitter API #(1) method "#(2)"', 'status', $method);
             return $response;
         break;
     }
-    
+
     if (!empty($invalid)) {
         $response['error'] = xarML('Invalid #(1) for Twitter API #(2) method #(3)', join(', ', $invalid), 'status', $method);
         return $response;
     }
-        
+
     if (empty($http_method))
         $http_method = 'get';
 
     if (empty($consumer_key) || empty($consumer_secret)) {
         $consumer_key = xarModVars::get('twitter', 'consumer_key');
-        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');    
+        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');
     }
-    
+
     if (empty($access_token) || empty($access_token_secret)) {
         $access_token = null;
         $access_token_secret = null;
     }
 
-    $response = xarMod::apiFunc('twitter', 'rest', '_process', 
+    $response = xarMod::apiFunc('twitter', 'rest', '_process',
         array(
             'path' => $path,
             'params' => $params,
@@ -183,6 +183,6 @@ function twitter_restapi_status($args)
         ));
 
     return $response;
-    
+
 }
 ?>

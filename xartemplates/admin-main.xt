@@ -21,19 +21,19 @@
     <li>Optionally display your account timeline to your site visitors.</li>
     <li>Optionally display the Twitter public timeline.</li>
   </ol>
-  
+
   <h3>How to use it?</h3>
-    
+
   <p>Before you can use the Twitter module you must first register it as an application.</p>
-  <h4>Register your application</h4>  
+  <h4>Register your application</h4>
   <p>First login to Twitter using the account you wish to manage from your site, then visit <a href="http://twitter.com/apps">http://twitter.com/apps/new</a> and fill in the form. Once complete, you will be given an application Consumer Key and Secret, these are they keys to your application.</p>
   <p>Once you have obtained your Consumer Key, and Consumer Secret, enter those into the fields in Modify Config.</p>
   <p>Having registered your application, you then need to associate it with your account.</p>
-  
+
   <h4>Obtain your account tokens</h4>
   <p>To associate your account, whilst still logged in to Twitter, visit <a href="http://dev.twitter.com/apps">http://dev.twitter.com/apps/</a>. This lists all your registered applications, find the one you registered for your site, and click on its name to view it. In the right hand panel you will see a My Access Token link. Click on that and get the unique Access Token and Access Token Secret for your application and enter those into the fields in Modify Config.</p>
   <p>Once you have entered the tokens, you should be able to visit the Site Account link above and view and manage your Twitter account from your site.</p>
-  
+
   <h3>Included Blocks</h3>
   <ul>
     <li>timeline -- Allows you to display any available timeline within a block.</li>
@@ -48,7 +48,7 @@
             In these cases, the Twitter module provides the hook functionality.
             To activate the hooks go to <a href="#xarModURL('modules','admin','hooks', array('hook' => 'twitter'))#">Modules - Configure Hooks - Twitter Module.</a>.
             From there choose the module(s) and/or itemtype(s) you want to activate create hooks for.
-            You can then configure settings per module/itemtype from <a href="#xarModURL('twitter', 'admin', 'hooks')#">Twitter - Admin - Hooks</a>.    
+            You can then configure settings per module/itemtype from <a href="#xarModURL('twitter', 'admin', 'hooks')#">Twitter - Admin - Hooks</a>.
   </p>
 
   <h3>

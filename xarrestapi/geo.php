@@ -2,21 +2,21 @@
 function twitter_restapi_geo($args)
 {
     extract($args);
-    
+
     $invalid = array();
-    if (empty($method) || !is_string($method)) 
+    if (empty($method) || !is_string($method))
         $invalid[] = 'method';
 
     if (!empty($invalid)) {
         $response['error'] = xarML('Invalid #(1) for Twitter API #(2) method', join(', ', $invalid), 'geo');
         return $response;
     }
-        
+
     $path = array('geo');
-    $params = array();  
-            
+    $params = array();
+
     switch ($method) {
-        
+
         case 'nearby_places':
             if (isset($ip)) {
                 if (empty($ip) || !is_string($ip)) {
@@ -72,32 +72,32 @@ function twitter_restapi_geo($args)
                 $path[] = $id;
             }
         break;
-                    
+
         default:
             $response['error'] = xarML('Unknown Twitter API #(1) method "#(2)"', 'geo', $method);
             return $response;
         break;
     }
-    
+
     if (!empty($invalid)) {
         $response['error'] = xarML('Invalid #(1) for Twitter API #(2) method #(3)', join(', ', $invalid), 'geo', $method);
         return $response;
     }
-        
+
     if (empty($http_method))
         $http_method = 'get';
 
     if (empty($consumer_key) || empty($consumer_secret)) {
         $consumer_key = xarModVars::get('twitter', 'consumer_key');
-        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');    
+        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');
     }
-    
+
     if (empty($access_token) || empty($access_token_secret)) {
         $access_token = null;
         $access_token_secret = null;
     }
 
-    $response = xarMod::apiFunc('twitter', 'rest', '_process', 
+    $response = xarMod::apiFunc('twitter', 'rest', '_process',
         array(
             'path' => $path,
             'params' => $params,
@@ -109,7 +109,7 @@ function twitter_restapi_geo($args)
             'cached' => isset($cached) ? $cached : null,
             'expires' => isset($expires) ? $expires : null,
         ));
-    
+
     return $response;
 }
 ?>

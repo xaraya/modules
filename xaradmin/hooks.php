@@ -14,19 +14,19 @@
 function twitter_admin_hooks($args)
 {
     if (!xarSecurityCheck('AdminTwitter')) return;
-    
+
     if (!xarVarFetch('hookmodule', 'pre:trim:lower:str:1:', $hookmodule, null, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hookitemtype', 'int', $hookitemtype, null, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('phase', 'pre:trim:lower:enum:update', $phase, 'modify', XARVAR_NOT_REQUIRED)) return;
-    
+
     if ($phase == 'update') {
         if (!xarSecConfirmAuthKey())
-            return xarTplModule('privileges', 'user', 'error', array('layout' => 'bad_author')); 
+            return xarTplModule('privileges', 'user', 'error', array('layout' => 'bad_author'));
         if (!xarMod::apiFunc('twitter', 'hooks', 'moduleupdateconfig',
             array('extrainfo' => array('module' => $hookmodule, 'itemtype' => $hookitemtype)))) return;
-        $return_url = xarModURL('twitter', 'admin', 'hooks', 
+        $return_url = xarModURL('twitter', 'admin', 'hooks',
             array('hookmodule' => $hookmodule, 'hookitemtype' => $hookitemtype));
-        return xarResponse::redirect($return_url);  
+        return xarResponse::redirect($return_url);
     }
 
     $subjects = xarMod::apiFunc('modules', 'admin', 'gethookedmodules',
@@ -49,7 +49,7 @@ function twitter_admin_hooks($args)
             $subjects[$modname] += $modinfo;
         }
     }
-        
+
     $data = array();
     $data['subjects'] = $subjects;
     $data['hookmodule'] = $hookmodule;

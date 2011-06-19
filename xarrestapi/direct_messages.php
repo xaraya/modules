@@ -2,11 +2,11 @@
 function twitter_restapi_direct_messages($args)
 {
     extract($args);
-    
+
     $invalid = array();
     if (empty($method)) $method = null;
     /*
-    if (empty($method) || !is_string($method)) 
+    if (empty($method) || !is_string($method))
         $invalid[] = 'method';
 
     if (!empty($invalid)) {
@@ -14,14 +14,14 @@ function twitter_restapi_direct_messages($args)
         return $response;
     }
     */
-        
+
     $path = array('direct_messages');
-    $params = array();  
-            
+    $params = array();
+
     switch ($method) {
 
         case 'sent':
-            $path[] = $method;   
+            $path[] = $method;
         default:
             if (isset($since_id)) {
                 if (empty($since_id) || !is_numeric($since_id)) {
@@ -29,14 +29,14 @@ function twitter_restapi_direct_messages($args)
                 } else {
                     $params['since_id'] = $since_id;
                 }
-            }  
+            }
             if (isset($max_id)) {
                 if (empty($max_id) || !is_numeric($max_id)) {
                     $invalid[] = 'max_id';
                 } else {
                     $params['max_id'] = $max_id;
                 }
-            }        
+            }
             if (isset($count)) {
                 if (empty($count) || !is_numeric($count) || $count > 200) {
                     $invalid[] = 'count';
@@ -52,7 +52,7 @@ function twitter_restapi_direct_messages($args)
                 }
             }
         break;
-        
+
         case 'new':
             $path[] = $method;
             $http_method = 'post';
@@ -60,17 +60,17 @@ function twitter_restapi_direct_messages($args)
                 $invalid[] = 'user';
             } else {
                 $params['user'] = $user;
-            }            
+            }
             if (empty($text) || !is_string($text)) {
                 $invalid[] = 'text';
             } else {
                 $params['text'] = $text;
-            }        
+            }
         break;
-            
+
         case 'destroy':
             $path[] = $method;
-            $http_method = 'delete';        
+            $http_method = 'delete';
             if (!isset($id) || !is_numeric($id)) {
                 $invalid[] = 'id';
             } else {
@@ -78,26 +78,26 @@ function twitter_restapi_direct_messages($args)
             }
         break;
     }
-    
+
     if (!empty($invalid)) {
         $response['error'] = xarML('Invalid #(1) for Twitter API #(2) method #(3)', join(', ', $invalid), 'direct messages', $method);
         return $response;
     }
-        
+
     if (empty($http_method))
         $http_method = 'get';
 
     if (empty($consumer_key) || empty($consumer_secret)) {
         $consumer_key = xarModVars::get('twitter', 'consumer_key');
-        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');    
+        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');
     }
-    
+
     if (empty($access_token) || empty($access_token_secret)) {
         $access_token = null;
         $access_token_secret = null;
     }
 
-    $response = xarMod::apiFunc('twitter', 'rest', '_process', 
+    $response = xarMod::apiFunc('twitter', 'rest', '_process',
         array(
             'path' => $path,
             'params' => $params,
@@ -109,7 +109,7 @@ function twitter_restapi_direct_messages($args)
             'cached' => isset($cached) ? $cached : null,
             'expires' => isset($expires) ? $expires : null,
         ));
-    
+
     return $response;
 }
 ?>

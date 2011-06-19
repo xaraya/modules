@@ -25,9 +25,9 @@ function twitter_admin_modifyconfig()
 {
 
     if (!xarSecurityCheck('AdminTwitter')) return;
-    
+
     if (!xarVarFetch('phase', 'pre:trim:lower:enum:update', $phase, 'modify', XARVAR_NOT_REQUIRED)) return;
-    
+
     if ($phase == 'update') {
         if (!xarSecConfirmAuthKey()) return;
 
@@ -43,19 +43,19 @@ function twitter_admin_modifyconfig()
         $hasalias = (xarModAlias::resolve($oldalias) == 'twitter');
         if ($hasalias)
             xarModAlias::delete($oldalias, 'twitter');
-        if ($usealias) 
+        if ($usealias)
             xarModAlias::set($aliasname, 'twitter');
-            
+
         xarModVars::set('twitter', 'SupportShortURLs', $useshorturls);
-        xarModVars::set('twitter', 'aliasname', $aliasname);        
-        xarModVars::set('twitter', 'useModuleAlias', $usealias);        
-        //xarModVars::set('twitter', 'itemsperpage', $itemsperpage);   
-    
+        xarModVars::set('twitter', 'aliasname', $aliasname);
+        xarModVars::set('twitter', 'useModuleAlias', $usealias);
+        //xarModVars::set('twitter', 'itemsperpage', $itemsperpage);
+
         if (!xarVarFetch('consumer_key', 'pre:trim:str:1:', $consumer_key, '', XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('consumer_secret', 'pre:trim:str:1:', $consumer_secret, '', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('access_token', 'pre:trim:str:1:', $access_token, '', XARVAR_NOT_REQUIRED)) return;  
-        if (!xarVarFetch('access_token_secret', 'pre:trim:str:1:', $access_token_secret, '', XARVAR_NOT_REQUIRED)) return;  
-        
+        if (!xarVarFetch('access_token', 'pre:trim:str:1:', $access_token, '', XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('access_token_secret', 'pre:trim:str:1:', $access_token_secret, '', XARVAR_NOT_REQUIRED)) return;
+
         xarModVars::set('twitter', 'consumer_key', $consumer_key);
         xarModVars::set('twitter', 'consumer_secret', $consumer_secret);
         xarModVars::set('twitter', 'access_token', $access_token);
@@ -63,15 +63,15 @@ function twitter_admin_modifyconfig()
 
         xarModCallHooks('module', 'updateconfig', 'twitter',
             array('module' => 'twitter'));
-        
+
         $return_url = xarModURL('twitter', 'admin', 'modifyconfig');
         xarResponse::redirect($return_url);
     }
-    
-    $data = array();  
+
+    $data = array();
     $data['useshorturls'] = xarModVars::get('twitter', 'SupportShortURLs');
-    $data['aliasname'] = xarModVars::get('twitter', 'aliasname');        
-    $data['usealias'] = xarModVars::get('twitter', 'useModuleAlias');        
+    $data['aliasname'] = xarModVars::get('twitter', 'aliasname');
+    $data['usealias'] = xarModVars::get('twitter', 'useModuleAlias');
     //$data['itemsperpage'] = xarModVars::get('twitter', 'itemsperpage');
 
     $data['consumer_key'] = xarModVars::get('twitter', 'consumer_key');
@@ -83,7 +83,7 @@ function twitter_admin_modifyconfig()
         array('module' => 'twitter'));
 
     return $data;
-    
+
     if (!xarVarFetch('tab', 'enum:module:site:users:hooks', $tab, 'module', XARVAR_NOT_REQUIRED)) return;
 
     $data=xarMod::apiFunc('twitter', 'user', 'menu', array('modtype' => 'admin', 'modfunc' => 'modifyconfig'));

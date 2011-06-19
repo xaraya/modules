@@ -60,35 +60,35 @@ function twitter_hooksapi_itemcreate($args)
              $itemtype = 0;
          }
     }
-    
+
     $settings = xarMod::apiFunc('twitter', 'hooks', 'getsettings',
         array(
             'module' => $modname,
             'itemtype' => $itemtype,
         ));
-    
+
     // Check if we're tweeting new items...
     if (empty($settings['tweetcreated']))
         return $extrainfo;
-        
+
     // Status check if module supplied states...
     if (!empty($settings['itemstates']) && !empty($settings['stateparam'])) {
-        $stateparam = $settings['stateparam'];        
-        if (empty($settings['states']) || 
-            !isset($extrainfo[$stateparam]) || 
-            !in_array($extrainfo[$stateparam], $settings['states'])) 
+        $stateparam = $settings['stateparam'];
+        if (empty($settings['states']) ||
+            !isset($extrainfo[$stateparam]) ||
+            !in_array($extrainfo[$stateparam], $settings['states']))
             return $extrainfo;
     }
-    
+
     $text = !empty($settings['textcreated']) ? $settings['textcreated'] : '';
-    
+
     $field = $settings['field'];
-    if (!empty($field) && 
-        isset($extrainfo[$field]) && 
-        is_string($extrainfo[$field]) && 
+    if (!empty($field) &&
+        isset($extrainfo[$field]) &&
+        is_string($extrainfo[$field]) &&
         !empty($extrainfo[$field]))
         $text .= ' ' . $extrainfo[$field];
-    
+
     if (!empty($settings['includelink'])) {
         try {
             $itemlink = xarMod::apiFunc($modname, 'user', 'getitelinks',
@@ -108,16 +108,16 @@ function twitter_hooksapi_itemcreate($args)
                     $itypeparam => empty($itemtype) ? null : $itemtype,
                     $itemparam => $objectid,
                 ));
-        
+
         }
         if (!empty($linkurl))
             $text .= ' ' . $linkurl;
     }
-    
+
     // Prep the status text
-    sys::import("modules.twitter.class.twitterapi");    
+    sys::import("modules.twitter.class.twitterapi");
     $text = TwitterUtil::prepstatus($text);
-    
+
     if (!empty($text) && strlen($text) <= 140) {
         $extrainfo['twitter_create'] = xarMod::apiFunc('twitter', 'rest', 'status',
             array(
@@ -125,9 +125,9 @@ function twitter_hooksapi_itemcreate($args)
                 'status' => $text,
                 'access_token' => xarModVars::get('twitter', 'access_token'),
                 'access_token_secret' => xarModVars::get('twitter', 'access_token_secret'),
-            ));                
+            ));
     }
-    
+
     return $extrainfo;
 }
 ?>

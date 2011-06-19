@@ -2,21 +2,21 @@
 function twitter_restapi_user($args)
 {
     extract($args);
-    
+
     $invalid = array();
-    if (empty($method) || !is_string($method)) 
+    if (empty($method) || !is_string($method))
         $invalid[] = 'method';
 
     if (!empty($invalid)) {
         $response['error'] = xarML('Invalid #(1) for Twitter API #(2) method', join(', ', $invalid), 'user');
         return $response;
     }
-        
+
     $path = array();
-    $params = array();  
-            
+    $params = array();
+
     switch ($method) {
-        
+
         case 'show':
             $path[] = 'users';
             $path[] = $method;
@@ -42,7 +42,7 @@ function twitter_restapi_user($args)
                 $invalid[] = 'params';
             }
         break;
-        
+
         case 'lookup':
             $path[] = 'users';
             $path[] = $method;
@@ -64,10 +64,10 @@ function twitter_restapi_user($args)
                     $params['screen_name'] = $screen_name;
                 }
             }
-            if (empty($params)) 
+            if (empty($params))
                 $invalid[] = 'params';
         break;
-        
+
         case 'search':
             $path[] = 'users';
             $path[] = $method;
@@ -91,7 +91,7 @@ function twitter_restapi_user($args)
                 }
             }
         break;
-        
+
         case 'suggestions':
             $path[] = 'users';
             $path[] = $method;
@@ -103,7 +103,7 @@ function twitter_restapi_user($args)
                 }
             }
         break;
-                    
+
         case 'friends':
         case 'followers':
             $path[] = 'statuses';
@@ -133,35 +133,35 @@ function twitter_restapi_user($args)
                 } else {
                     $params['cursor'] = $cursor;
                 }
-            }              
-        
-        break;       
-    
+            }
+
+        break;
+
         default:
             $response['error'] = xarML('Unknown Twitter API #(1) method "#(2)"', 'user', $method);
             return $response;
         break;
     }
-    
+
     if (!empty($invalid)) {
         $response['error'] = xarML('Invalid #(1) for Twitter API #(2) method #(3)', join(', ', $invalid), 'user', $method);
         return $response;
     }
-        
+
     if (empty($http_method))
         $http_method = 'get';
 
     if (empty($consumer_key) || empty($consumer_secret)) {
         $consumer_key = xarModVars::get('twitter', 'consumer_key');
-        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');    
+        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');
     }
-    
+
     if (empty($access_token) || empty($access_token_secret)) {
         $access_token = null;
         $access_token_secret = null;
     }
 
-    $response = xarMod::apiFunc('twitter', 'rest', '_process', 
+    $response = xarMod::apiFunc('twitter', 'rest', '_process',
         array(
             'path' => $path,
             'params' => $params,
@@ -173,7 +173,7 @@ function twitter_restapi_user($args)
             'cached' => isset($cached) ? $cached : null,
             'expires' => isset($expires) ? $expires : null,
         ));
-    
+
     return $response;
 }
 ?>

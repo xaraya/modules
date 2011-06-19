@@ -2,11 +2,11 @@
 function twitter_restapi_search($args)
 {
     extract($args);
-    
-    $path[] = 'search';    
+
+    $path[] = 'search';
     $http_method = 'get';
     $invalid = array();
-    
+
     if (isset($callback)) {
         if (empty($callback) || !is_string($callback)) {
             $invalid[] = 'callback';
@@ -30,7 +30,7 @@ function twitter_restapi_search($args)
             $params['locale'] = $locale;
         }
     }
-    
+
     if (isset($max_id)) {
         if (empty($max_id) || !is_numeric($max_id)) {
             $invalid[] = 'max_id';
@@ -38,7 +38,7 @@ function twitter_restapi_search($args)
             $params['max_id'] = $max_id;
         }
     }
-    
+
     if (isset($q)) {
         if (empty($q) || !is_string($q)) {
             $invalid[] = 'q';
@@ -46,7 +46,7 @@ function twitter_restapi_search($args)
             $params['q'] = $q;
         }
     }
-    
+
     if (isset($rpp)) {
         if (empty($rpp) || !is_numeric($rpp) || $rpp > 100) {
             $invalid[] = 'rpp';
@@ -54,7 +54,7 @@ function twitter_restapi_search($args)
             $params['rpp'] = $rpp;
         }
     }
-    
+
     if (isset($page)) {
         if (empty($page) || !is_numeric($page)) {
             $invalid[] = 'page';
@@ -62,9 +62,9 @@ function twitter_restapi_search($args)
             $params['page'] = $page;
         }
     }
-    
+
     if (isset($since)) {
-        if (!empty($since) && is_numeric($since)) 
+        if (!empty($since) && is_numeric($since))
             $since = date("Y-m-d");
         if (empty($since) || !is_string($since)) {
             $invalid[] = 'since';
@@ -72,7 +72,7 @@ function twitter_restapi_search($args)
             $params['since'] = $since;
         }
     }
-    
+
     if (isset($since_id)) {
         if (empty($since_id) || !is_numeric($since_id)) {
             $invalid[] = 'since_id';
@@ -80,7 +80,7 @@ function twitter_restapi_search($args)
             $params['since_id'] = $since_id;
         }
     }
-    
+
     if (isset($geocode)) {
         if (empty($geocode) || !is_string($geocode)) {
             $invalid[] = 'geocode';
@@ -88,24 +88,24 @@ function twitter_restapi_search($args)
             $params['geocode'] = $geocode;
         }
     }
-    
+
     if (isset($show_user)) {
         if ((bool) $show_user) {
             $params['show_user'] = 'true';
         }
     }
-    
+
     if (isset($until)) {
-        if (!empty($until) && is_numeric($until)) 
+        if (!empty($until) && is_numeric($until))
             $until = date("Y-m-d");
         if (empty($until) || !is_string($until)) {
             $invalid[] = 'until';
         } else {
             $params['until'] = $until;
-        }        
+        }
     }
 
-    $result_types = array('mixed', 'recent', 'popular');    
+    $result_types = array('mixed', 'recent', 'popular');
     if (isset($result_type)) {
         if (!is_string($result_type) || !in_array($result_type, $result_types)) {
             $invalid[] = 'result_type';
@@ -113,7 +113,7 @@ function twitter_restapi_search($args)
             $params['result_type'] = $result_type;
         }
     }
-    
+
     if (empty($params)) {
         $invalid[] = 'params';
     }
@@ -125,10 +125,10 @@ function twitter_restapi_search($args)
 
     if (empty($consumer_key) || empty($consumer_secret)) {
         $consumer_key = xarModVars::get('twitter', 'consumer_key');
-        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');    
+        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');
     }
 
-    $response = xarMod::apiFunc('twitter', 'rest', '_process', 
+    $response = xarMod::apiFunc('twitter', 'rest', '_process',
         array(
             'path' => $path,
             'params' => $params,
@@ -138,7 +138,7 @@ function twitter_restapi_search($args)
             'cached' => isset($cached) ? $cached : null,
             'expires' => isset($expires) ? $expires : null,
         ));
-    
+
     return $response;
 }
 ?>

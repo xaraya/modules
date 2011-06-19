@@ -5,29 +5,29 @@
     <div class="xar-form-input-wrapper">
         <label for="twitter_tweetcreated" class="xar-form-label" title="#xarML('Specify if new items should be tweeted')#">Tweet New Items</label>
         <div class="xar-form-container-after">
-            <xar:data-input type="checkbox" name="twitter_tweetcreated" id="twitter_tweetcreated" checked="$tweetcreated" value="1"/>        
-        </div>   
+            <xar:data-input type="checkbox" name="twitter_tweetcreated" id="twitter_tweetcreated" checked="$tweetcreated" value="1"/>
+        </div>
     </div>
     <div class="xar-form-input-wrapper">
         <label for="twitter_textcreated" class="xar-form-label" title="#xarML('Enter text to prepend to new item tweets')#">
-            New Item Text        
+            New Item Text
         </label>
         <div class="xar-form-container-after">
-            <xar:data-input type="textbox" id="twitter_textcreated" name="twitter_textcreated" value="$textcreated"/>        
+            <xar:data-input type="textbox" id="twitter_textcreated" name="twitter_textcreated" value="$textcreated"/>
         </div>
     </div>
     <div class="xar-form-input-wrapper">
         <label for="twitter_tweetupdated" class="xar-form-label" title="#xarML('Specify if updated items should be tweeted')#">Tweet Updated Items</label>
         <div class="xar-form-container-after">
-            <xar:data-input type="checkbox" name="twitter_tweetupdated" id="twitter_tweetupdated" checked="$tweetupdated" value="1"/>        
-        </div>   
+            <xar:data-input type="checkbox" name="twitter_tweetupdated" id="twitter_tweetupdated" checked="$tweetupdated" value="1"/>
+        </div>
     </div>
     <div class="xar-form-input-wrapper">
         <label for="twitter_textupdated" class="xar-form-label" title="#xarML('Enter text to prepend to new item tweets')#">
-            Updated Item Text        
+            Updated Item Text
         </label>
         <div class="xar-form-container-after">
-            <xar:data-input type="textbox" id="twitter_textupdated" name="twitter_textupdated" value="$textupdated"/>        
+            <xar:data-input type="textbox" id="twitter_textupdated" name="twitter_textupdated" value="$textupdated"/>
         </div>
     </div>
 
@@ -51,40 +51,40 @@
     <div class="xar-form-input-wrapper">
         <label for="twitter_includelink" class="xar-form-label" title="#xarML('Optionally include a link to the item in the tweet')#">Include Item Display Link</label>
         <div class="xar-form-container-after">
-            <xar:data-input type="checkbox" name="twitter_includelink" id="twitter_includelink" checked="$includelink" value="1"/>        
-        </div>   
+            <xar:data-input type="checkbox" name="twitter_includelink" id="twitter_includelink" checked="$includelink" value="1"/>
+        </div>
     </div>
     <xar:if condition="empty($hasitemlinks)">
         <div class="xar-form-input-wrapper">
             <label for="twitter_typeparam" class="xar-form-label">
-                Display Function Type            
+                Display Function Type
             </label>
             <div class="xar-form-container-after">
-                 <xar:data-input type="textbox" id="twitter_typeparam" name="twitter_typeparam" value="$typeparam" class="xar-form-textmedium"/>          
+                 <xar:data-input type="textbox" id="twitter_typeparam" name="twitter_typeparam" value="$typeparam" class="xar-form-textmedium"/>
             </div>
         </div>
         <div class="xar-form-input-wrapper">
             <label for="twitter_funcparam" class="xar-form-label">
-                Display Function            
+                Display Function
             </label>
             <div class="xar-form-container-after">
-                 <xar:data-input type="textbox" id="twitter_funcparam" name="twitter_funcparam" value="$funcparam" class="xar-form-textmedium"/>          
+                 <xar:data-input type="textbox" id="twitter_funcparam" name="twitter_funcparam" value="$funcparam" class="xar-form-textmedium"/>
             </div>
         </div>
         <div class="xar-form-input-wrapper">
             <label for="twitter_itemparam" class="xar-form-label">
-                Display Function Item Id Param            
+                Display Function Item Id Param
             </label>
             <div class="xar-form-container-after">
-                 <xar:data-input type="textbox" id="twitter_itemparam" name="twitter_itemparam" value="$itemparam" class="xar-form-textmedium"/>          
+                 <xar:data-input type="textbox" id="twitter_itemparam" name="twitter_itemparam" value="$itemparam" class="xar-form-textmedium"/>
             </div>
         </div>
         <div class="xar-form-input-wrapper">
             <label for="twitter_itypeparam" class="xar-form-label">
-                Display Function Itemtype Param           
+                Display Function Itemtype Param
             </label>
             <div class="xar-form-container-after">
-                 <xar:data-input type="textbox" id="twitter_itypeparam" name="twitter_itypeparam" value="$itypeparam" class="xar-form-textmedium"/>          
+                 <xar:data-input type="textbox" id="twitter_itypeparam" name="twitter_itypeparam" value="$itypeparam" class="xar-form-textmedium"/>
             </div>
         </div>
     </xar:if>

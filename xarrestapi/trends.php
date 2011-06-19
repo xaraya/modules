@@ -2,10 +2,10 @@
 function twitter_restapi_trends($args)
 {
     extract($args);
-    
+
     $invalid = array();
     /*
-    if (empty($method) || !is_string($method)) 
+    if (empty($method) || !is_string($method))
         $invalid[] = 'method';
 
     if (!empty($invalid)) {
@@ -13,16 +13,16 @@ function twitter_restapi_trends($args)
         return $response;
     }
     */
-        
+
     $path = array('trends');
-    $params = array();  
-            
+    $params = array();
+
     switch ($method) {
-        
+
         default:
-        
+
         break;
-        
+
         case 'available':
             $path[] = $method;
             if (isset($lat)) {
@@ -40,7 +40,7 @@ function twitter_restapi_trends($args)
                 }
             }
         break;
-                    
+
         case 'location':
             if (empty($woeid) || !is_numeric($woeid)) {
                 $invalid[] = 'woeid';
@@ -48,17 +48,17 @@ function twitter_restapi_trends($args)
                 $path[] = $woeid;
             }
         break;
-        
+
         case 'current':
             $path[] = $method;
             if (isset($exclude)) {
                 $params['exclude'] = 'hashtags';
             }
         break;
-        
+
         case 'daily':
         case 'weekly':
-            $path[] = $method;                     
+            $path[] = $method;
             if (isset($date)) {
                 if (is_numeric($date))
                     $date = date("Y-m-d", $date);
@@ -74,26 +74,26 @@ function twitter_restapi_trends($args)
         break;
 
     }
-    
+
     if (!empty($invalid)) {
         $response['error'] = xarML('Invalid #(1) for Twitter API #(2) method #(3)', join(', ', $invalid), 'trends', $method);
         return $response;
     }
-        
+
     if (empty($http_method))
         $http_method = 'get';
 
     if (empty($consumer_key) || empty($consumer_secret)) {
         $consumer_key = xarModVars::get('twitter', 'consumer_key');
-        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');    
+        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');
     }
-    
+
     if (empty($access_token) || empty($access_token_secret)) {
         $access_token = null;
         $access_token_secret = null;
     }
 
-    $response = xarMod::apiFunc('twitter', 'rest', '_process', 
+    $response = xarMod::apiFunc('twitter', 'rest', '_process',
         array(
             'path' => $path,
             'params' => $params,
@@ -105,7 +105,7 @@ function twitter_restapi_trends($args)
             'cached' => isset($cached) ? $cached : null,
             'expires' => isset($expires) ? $expires : null,
         ));
-    
+
     return $response;
 }
 ?>

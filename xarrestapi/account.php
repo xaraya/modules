@@ -2,36 +2,36 @@
 function twitter_restapi_account($args)
 {
     extract($args);
-    
+
     $invalid = array();
-    if (empty($method) || !is_string($method)) 
+    if (empty($method) || !is_string($method))
         $invalid[] = 'method';
 
     if (!empty($invalid)) {
         $response['error'] = xarML('Invalid #(1) for Twitter API #(2) method', join(', ', $invalid), 'account');
         return $response;
     }
-        
+
     $path = array('account');
-    $params = array();  
-            
+    $params = array();
+
     switch ($method) {
         case 'verify_credentials':
             $path[] = $method;
         break;
-        
+
         case 'rate_limit_status':
             $path[] = $method;
         break;
-        
+
         case 'end_session':
             $http_method = 'post';
             $path[] = $method;
         break;
-        
+
         case 'update_delivery_device':
-            if (!isset($device) || 
-                !is_string($device) || 
+            if (!isset($device) ||
+                !is_string($device) ||
                 ($device != 'none' && $device != 'sms')) {
                 $invalid[] = 'device';
                 break;
@@ -40,7 +40,7 @@ function twitter_restapi_account($args)
             $path[] = $method;
             $params['device'] = $device;
         break;
-        
+
         case 'update_profile_colors':
             if (isset($profile_background_color)) {
                 if (!is_string($profile_background_color) ||
@@ -82,13 +82,13 @@ function twitter_restapi_account($args)
                     $params['profile_sidebar_border_color'] = $profile_sidebar_border_color;
                 }
             }
-            if (empty($params)) 
-                $invalid[] = 'params';              
+            if (empty($params))
+                $invalid[] = 'params';
             if (!empty($invalid)) break;
             $http_method = 'post';
             $path[] = $method;
         break;
-        
+
         case 'update_profile_image':
             if (!isset($image) ||
                 !is_string($image)) {
@@ -99,7 +99,7 @@ function twitter_restapi_account($args)
             $http_method = 'post';
             $path[] = $method;
         break;
-        
+
         case 'update_profile_background_image':
             if (!isset($image) ||
                 !is_string($image)) {
@@ -113,10 +113,10 @@ function twitter_restapi_account($args)
             $http_method = 'post';
             $path[] = $method;
         break;
-        
+
         case 'update_profile':
             if (isset($name)) {
-                if (empty($name) || 
+                if (empty($name) ||
                     !is_string($name) ||
                     strlen($name) > 20) {
                     $invalid[] = 'name';
@@ -141,7 +141,7 @@ function twitter_restapi_account($args)
                 } else {
                     $params['location'] = $location;
                 }
-            }          
+            }
             if (isset($description)) {
                 if (empty($description) ||
                     !is_string($description) ||
@@ -151,38 +151,38 @@ function twitter_restapi_account($args)
                     $params['description'] = $description;
                 }
             }
-            if (empty($params)) 
-                $invalid[] = 'params';              
+            if (empty($params))
+                $invalid[] = 'params';
             if (!empty($invalid)) break;
             $http_method = 'post';
             $path[] = $method;
         break;
-        
+
         default:
             $response['error'] = xarML('Unknown Twitter API #(1) method "#(2)"', 'account', $method);
             return $response;
         break;
     }
-    
+
     if (!empty($invalid)) {
         $response['error'] = xarML('Invalid #(1) for Twitter API #(2) method #(3)', join(', ', $invalid), 'account', $method);
         return $response;
     }
-        
+
     if (empty($http_method))
         $http_method = 'get';
 
     if (empty($consumer_key) || empty($consumer_secret)) {
         $consumer_key = xarModVars::get('twitter', 'consumer_key');
-        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');    
+        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');
     }
-    
+
     if (empty($access_token) || empty($access_token_secret)) {
         $access_token = null;
         $access_token_secret = null;
     }
 
-    $response = xarMod::apiFunc('twitter', 'rest', '_process', 
+    $response = xarMod::apiFunc('twitter', 'rest', '_process',
         array(
             'path' => $path,
             'params' => $params,
@@ -194,7 +194,7 @@ function twitter_restapi_account($args)
             'cached' => isset($cached) ? $cached : null,
             'expires' => isset($expires) ? $expires : null,
         ));
-    
+
     return $response;
 
 }

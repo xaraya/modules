@@ -20,7 +20,7 @@ class Twitter_TimelineBlock extends BasicBlock implements iBlock
     public $module          = 'twitter';
     public $text_type       = 'Twitter Timeline';
     public $text_type_long      = 'Displays Twitter Timelines';
-    
+
     public $screen_name     = '';
     public $numitems        = 3;
     public $truncate        = 0;
@@ -28,6 +28,7 @@ class Twitter_TimelineBlock extends BasicBlock implements iBlock
     public $showsource      = true;
     public $showmodule      = false;
     public $showfollow      = false;
+    public $dyntitle        = false;
 
 /**
  * Display func.
@@ -38,7 +39,7 @@ class Twitter_TimelineBlock extends BasicBlock implements iBlock
         $data = parent::display($data);
         if (empty($data)) return;
         $vars = $data['content'];
-    
+
         if (empty($vars['screen_name'])) {
             $items = xarMod::apiFunc('twitter', 'rest', 'timeline',
                 array(
@@ -51,9 +52,11 @@ class Twitter_TimelineBlock extends BasicBlock implements iBlock
                     'screen_name' => $vars['screen_name'],
                 ));
         }
-        if (count($items) > $vars['numitems']) 
+        if (count($items) > $vars['numitems'])
             $items = array_slice($items, 0, $vars['numitems']);
         $vars['status_elements'] = !$items ? array() : $items;
+        if (!empty($vars['dyntitle']))
+            $data['title'] = !empty($vars['screen_name']) ? '@'.$vars['screen_name'] : xarML('Public Timeline');
 
         $data['content'] = $vars;
         return $data;
@@ -74,6 +77,7 @@ class Twitter_TimelineBlock extends BasicBlock implements iBlock
         if (!xarVarFetch('showsource', 'checkbox', $vars['showsource'], false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showmodule', 'checkbox', $vars['showmodule'], false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showfollow', 'checkbox', $vars['showfollow'], false, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('dyntitle', 'checkbox', $vars['dyntitle'], false, XARVAR_NOT_REQUIRED)) return;
         $data['content'] = $vars;
         return $data;
     }

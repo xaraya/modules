@@ -2,19 +2,19 @@
 function twitter_restapi_list_subscribers($args)
 {
     extract($args);
-    
+
     $invalid = array();
-    if (empty($method) || !is_string($method)) 
+    if (empty($method) || !is_string($method))
         $invalid[] = 'method';
 
     if (!empty($invalid)) {
         $response['error'] = xarML('Invalid #(1) for Twitter API #(2) method', join(', ', $invalid), 'list subscribers');
         return $response;
     }
-        
+
     $path = array();
-    $params = array();  
-            
+    $params = array();
+
     switch ($method) {
 
         case 'show':
@@ -36,7 +36,7 @@ function twitter_restapi_list_subscribers($args)
                     $params['cursor'] = $cursor;
                 }
             }
-        break;    
+        break;
 
         case 'update':
             $http_method = 'post';
@@ -55,7 +55,7 @@ function twitter_restapi_list_subscribers($args)
                 $invalid[] = 'id';
             } else {
                 $params['id'] = $id;
-            }       
+            }
         break;
 
         case 'destroy':
@@ -75,7 +75,7 @@ function twitter_restapi_list_subscribers($args)
                 $invalid[] = 'id';
             } else {
                 $params['id'] = $id;
-            }          
+            }
         break;
 
         case 'show_id':
@@ -94,7 +94,7 @@ function twitter_restapi_list_subscribers($args)
                 $invalid[] = 'id';
             } else {
                 $path[] = $id;
-            }          
+            }
         break;
 
         default:
@@ -102,26 +102,26 @@ function twitter_restapi_list_subscribers($args)
             return $response;
         break;
     }
-    
+
     if (!empty($invalid)) {
         $response['error'] = xarML('Invalid #(1) for Twitter API #(2) method #(3)', join(', ', $invalid), 'list subscribers', $method);
         return $response;
     }
-        
+
     if (empty($http_method))
         $http_method = 'get';
 
     if (empty($consumer_key) || empty($consumer_secret)) {
         $consumer_key = xarModVars::get('twitter', 'consumer_key');
-        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');    
+        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');
     }
-    
+
     if (empty($access_token) || empty($access_token_secret)) {
         $access_token = null;
         $access_token_secret = null;
     }
 
-    $response = xarMod::apiFunc('twitter', 'rest', '_process', 
+    $response = xarMod::apiFunc('twitter', 'rest', '_process',
         array(
             'path' => $path,
             'params' => $params,
@@ -133,7 +133,7 @@ function twitter_restapi_list_subscribers($args)
             'cached' => isset($cached) ? $cached : null,
             'expires' => isset($expires) ? $expires : null,
         ));
-    
+
     return $response;
 }
 ?>

@@ -31,7 +31,7 @@
                 <a class="#$linkclass#" href="#xarServer::getCurrentURL(array('tab' => null, 'method' => 'retweets', 'rt' => null))#" title="#xarML('Retweets')#" >
                     Retweets
                 </a>
-            </li>    
+            </li>
             <xar:set name="activetab">$method=='searches'?$activeclass:$inactiveclass</xar:set>
             <xar:set name="linkclass">$method=='searches'?$activelink:$inactivelink</xar:set>
             <li class="#$activetab#">
@@ -45,7 +45,7 @@
                 <a class="#$linkclass#" href="#xarServer::getCurrentURL(array('tab' => null, 'method' => 'lists', 'rt' => null))#" title="#xarML('Lists')#" >
                     Lists
                 </a>
-            </li> 
+            </li>
         </ul>
     </div>
 </xar:if>

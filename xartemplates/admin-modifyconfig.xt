@@ -35,26 +35,26 @@
             <legend><xar:mlstring>Application Tokens</xar:mlstring></legend>
             <div class="xar-form-input-wrapper">
                 <label for="consumer_key" class="xar-form-label"><xar:mlstring>Consumer Key</xar:mlstring></label>
-                <input type="textbox" name="consumer_key" id="consumer_key" value="#$consumer_key#" class="xar-form-textxxlong"/>            
-            </div>  
+                <input type="textbox" name="consumer_key" id="consumer_key" value="#$consumer_key#" class="xar-form-textxxlong"/>
+            </div>
             <div class="xar-form-input-wrapper">
                 <label for="consumer_secret" class="xar-form-label"><xar:mlstring>Consumer Secret</xar:mlstring></label>
-                <input type="textbox" name="consumer_secret" id="consumer_secret" value="#$consumer_secret#" class="xar-form-textxxlong"/>            
-            </div>  
+                <input type="textbox" name="consumer_secret" id="consumer_secret" value="#$consumer_secret#" class="xar-form-textxxlong"/>
+            </div>
         </fieldset>
 
         <fieldset>
             <legend><xar:mlstring>Site Account Tokens</xar:mlstring></legend>
             <div class="xar-form-input-wrapper">
                 <label for="access_token" class="xar-form-label"><xar:mlstring>Access Token</xar:mlstring></label>
-                <input type="textbox" name="access_token" id="access_token" value="#$access_token#" class="xar-form-textxxlong"/>            
-            </div>  
+                <input type="textbox" name="access_token" id="access_token" value="#$access_token#" class="xar-form-textxxlong"/>
+            </div>
             <div class="xar-form-input-wrapper">
                 <label for="access_token_secret" class="xar-form-label"><xar:mlstring>Access Token Secret</xar:mlstring></label>
-                <input type="textbox" name="access_token_secret" id="access_token_secret" value="#$access_token_secret#" class="xar-form-textxxlong"/>            
-            </div>  
+                <input type="textbox" name="access_token_secret" id="access_token_secret" value="#$access_token_secret#" class="xar-form-textxxlong"/>
+            </div>
         </fieldset>
-        
+
         <xar:if condition="!empty($hooks)">
             <xar:foreach in="$hooks" key="$hookmod">
                 #$hooks[$hookmod]#
@@ -65,13 +65,13 @@
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="phase" id="phase" value="update"/>
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
-                <input type="submit" value="#xarML('Update Configuration')#"/>            
-            </div>        
+                <input type="submit" value="#xarML('Update Configuration')#"/>
+            </div>
         </fieldset>
 
-    </form> 
+    </form>
 </div>
-<!-- Old Layout 
+<!-- Old Layout
 <div id="twitter-admin-modifyconfig-#$tab#" class="xar-mod-body">
     <xar:template type="module" file="user-menu" />
     <h2><xar:ml><xar:mlstring>Modify #(1) configuration</xar:mlstring><xar:mlvar>#$tab#</xar:mlvar></xar:ml></h2>

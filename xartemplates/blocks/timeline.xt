@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:style scope="module" module="twitter" />
+<xar:style scope="block" module="twitter" />
 <div class="twitter-block">
-    <xar:if condition="!empty($screen_name)">
-        <p><a href="http://twitter.com/#$screen_name#">@#$screen_name#</a></p>
-    <xar:else />
-        <p>Public Timeline</p>
-    </xar:if>
 <xar:if condition="!empty($status_elements) and is_array($status_elements)">
     <ul class="statuses">
     <xar:foreach in="$status_elements" key="$key" value="$item">
         <li class="element xar-padding-thickends">
+            <p class="screen-name">@<a class="url" href="http://twitter.com/#$item.user.screen_name#" title="#$item.user.screen_name#">#$item.user.screen_name#</a></p>
+            <blockquote class="example-twitter">
+                <p>#$item.text_transformed#</p>
+            </blockquote>
+            <p>
+                <xar:base-timesince stamp="$item['created_at_unix']" /> ago
+            </p>
             <xar:comment>
             <xar:if condition="$showimages">
             <span class="profile-image">
@@ -20,7 +22,7 @@
                 </a>
             </span>
             </xar:if>
-            </xar:comment>
+
             <span class="status-body">
                 <strong>
                     <a class="url" href="http://twitter.com/#$item.user.screen_name#" title="#$item.user.screen_name#">#$item.user.screen_name#</a>
@@ -32,6 +34,7 @@
                     <xar:base-timesince stamp="$item['created_at_unix']" /> ago, via #$item.source#
                 </span>
             </span>
+            </xar:comment>
         </li>
     </xar:foreach>
     </ul>

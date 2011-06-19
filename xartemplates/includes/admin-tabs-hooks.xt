@@ -9,7 +9,7 @@
                 <xar:set name="activelink">'xar-accent xar-accent-outline'</xar:set>
                 <xar:set name="inactivetab">'xar-tab'</xar:set>
                 <xar:set name="inactivelink">'xar-norm xar-norm-outline'</xar:set>
-                
+
                 <xar:set name="tabclass">empty($hookmodule)?$activetab:$inactivetab</xar:set>
                 <xar:set name="linkclass">empty($hookmodule)?$activelink:$inactivelink</xar:set>
                 <li class="#$tabclass#">
@@ -19,19 +19,19 @@
                 <xar:if condition="!empty($subjects)">
                     <xar:foreach in="$subjects" key="$modname" value="$modinfo">
                         <xar:set name="tabclass">$hookmodule==$modname?$activetab:$inactivetab</xar:set>
-                        <xar:set name="linkclass">$hookmodule==$modname?$activelink:$inactivelink</xar:set>  
+                        <xar:set name="linkclass">$hookmodule==$modname?$activelink:$inactivelink</xar:set>
                         <li class="#$tabclass#">
                             <a href="#xarServer::getCurrentUrl(array('hookmodule' => $modname))#" title="#xarML('Configure Module Settings')#" class="#$linkclass#">
                             #$modinfo['displayname']#</a>
                         </li>
                     </xar:foreach>
-                </xar:if>                   
+                </xar:if>
             </ul>
         </div>
         <div>
             <ul class="xar-tabs xar-alt xar-norm-outline">
                 <li class="xar-tabs-label help" title="#xarML('Choose a module itemtype to configure Twitter hook for')#">Itemtype:</li>
-                
+
                 <xar:set name="tabclass">empty($hookitemtype)?$activetab:$inactivetab</xar:set>
                 <xar:set name="linkclass">empty($hookitemtype)?$activelink:$inactivelink</xar:set>
                 <li class="#$tabclass#">

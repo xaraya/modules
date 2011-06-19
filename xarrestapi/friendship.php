@@ -2,21 +2,21 @@
 function twitter_restapi_friendship($args)
 {
     extract($args);
-    
+
     $invalid = array();
-    if (empty($method) || !is_string($method)) 
+    if (empty($method) || !is_string($method))
         $invalid[] = 'method';
 
     if (!empty($invalid)) {
         $response['error'] = xarML('Invalid #(1) for Twitter API #(2) method', join(', ', $invalid), 'friendship');
         return $response;
     }
-        
+
     $path = array('friendships');
-    $params = array();  
-            
+    $params = array();
+
     switch ($method) {
-    
+
         case 'create':
             $path[] = $method;
             $http_method = 'post';
@@ -43,9 +43,9 @@ function twitter_restapi_friendship($args)
             }
             if (isset($follow)) {
                 $params['follow'] = (bool) $follow ? 'true' : null;
-            }            
+            }
         break;
-        
+
         case 'destroy':
             $path[] = $method;
             $http_method = 'delete';
@@ -71,21 +71,21 @@ function twitter_restapi_friendship($args)
                 $invalid[] = 'params';
             }
         break;
-        
+
         case 'exists':
             $path[] = $method;
             if (empty($user_a) || (!is_numeric($user_a) && !is_string($user_a))) {
                 $invalid[] = 'user_a';
             } else {
                 $params['user_a'] = $user_a;
-            }            
+            }
             if (empty($user_b) || (!is_numeric($user_b) && !is_string($user_b))) {
                 $invalid[] = 'user_b';
             } else {
                 $params['user_b'] = $user_b;
             }
         break;
-        
+
         case 'show':
             $path[] = $method;
             if (isset($source_id)) {
@@ -119,7 +119,7 @@ function twitter_restapi_friendship($args)
                 $invalid[] = 'target_screen_name';
             }
         break;
-        
+
         case 'incoming':
         case 'outgoing':
             $path[] = $method;
@@ -130,33 +130,33 @@ function twitter_restapi_friendship($args)
                     $params['cursor'] = $cursor;
                 }
             }
-        break;            
+        break;
 
         default:
             $response['error'] = xarML('Unknown Twitter API #(1) method "#(2)"', 'friendship', $method);
             return $response;
         break;
     }
-    
+
     if (!empty($invalid)) {
         $response['error'] = xarML('Invalid #(1) for Twitter API #(2) method #(3)', join(', ', $invalid), 'friendship', $method);
         return $response;
     }
-        
+
     if (empty($http_method))
         $http_method = 'get';
 
     if (empty($consumer_key) || empty($consumer_secret)) {
         $consumer_key = xarModVars::get('twitter', 'consumer_key');
-        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');    
+        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');
     }
-    
+
     if (empty($access_token) || empty($access_token_secret)) {
         $access_token = null;
         $access_token_secret = null;
     }
 
-    $response = xarMod::apiFunc('twitter', 'rest', '_process', 
+    $response = xarMod::apiFunc('twitter', 'rest', '_process',
         array(
             'path' => $path,
             'params' => $params,
@@ -168,7 +168,7 @@ function twitter_restapi_friendship($args)
             'cached' => isset($cached) ? $cached : null,
             'expires' => isset($expires) ? $expires : null,
         ));
-    
+
     return $response;
 }
 ?>

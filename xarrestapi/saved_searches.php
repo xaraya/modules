@@ -2,11 +2,11 @@
 function twitter_restapi_saved_searches($args)
 {
     extract($args);
-    
+
     $invalid = array();
     if (empty($method)) $method = null;
     /*
-    if (empty($method) || !is_string($method)) 
+    if (empty($method) || !is_string($method))
         $invalid[] = 'method';
 
     if (!empty($invalid)) {
@@ -14,14 +14,14 @@ function twitter_restapi_saved_searches($args)
         return $response;
     }
     */
-        
+
     $path = array('saved_searches');
-    $params = array();  
-            
+    $params = array();
+
     switch ($method) {
-        
+
         default:
-        
+
         break;
 
         case 'show':
@@ -32,7 +32,7 @@ function twitter_restapi_saved_searches($args)
                 $path[] = $id;
             }
         break;
-        
+
         case 'create':
             $path[] = $method;
             $http_method = 'post';
@@ -42,7 +42,7 @@ function twitter_restapi_saved_searches($args)
                 $params['query'] = $query;
             }
         break;
-        
+
         case 'destroy':
             $path[] = $method;
             $http_method = 'delete';
@@ -51,29 +51,29 @@ function twitter_restapi_saved_searches($args)
             } else {
                 $path[] = $id;
             }
-        break;                        
-        
+        break;
+
     }
-    
+
     if (!empty($invalid)) {
         $response['error'] = xarML('Invalid #(1) for Twitter API #(2) method #(3)', join(', ', $invalid), 'saved searches', $method);
         return $response;
     }
-        
+
     if (empty($http_method))
         $http_method = 'get';
 
     if (empty($consumer_key) || empty($consumer_secret)) {
         $consumer_key = xarModVars::get('twitter', 'consumer_key');
-        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');    
+        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');
     }
-    
+
     if (empty($access_token) || empty($access_token_secret)) {
         $access_token = null;
         $access_token_secret = null;
     }
 
-    $response = xarMod::apiFunc('twitter', 'rest', '_process', 
+    $response = xarMod::apiFunc('twitter', 'rest', '_process',
         array(
             'path' => $path,
             'params' => $params,
@@ -85,7 +85,7 @@ function twitter_restapi_saved_searches($args)
             'cached' => isset($cached) ? $cached : null,
             'expires' => isset($expires) ? $expires : null,
         ));
-    
+
     return $response;
 }
 ?>

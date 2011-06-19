@@ -13,7 +13,7 @@
             <xar:set name="inactivelink">'xar-norm xar-norm-outline'</xar:set>
 
             <xar:set name="activetab">empty($rt)?$activeclass:$inactiveclass</xar:set>
-            <xar:set name="linkclass">empty($rt)?$activelink:$inactivelink</xar:set>                
+            <xar:set name="linkclass">empty($rt)?$activelink:$inactivelink</xar:set>
             <li class="#$activetab#">
                 <a class="#$linkclass#" href="#xarServer::getCurrentURL(array('tab' => null, 'method' => 'retweets', 'rt' => null))#" title="#xarML('Retweets')#" >
                     By You
@@ -32,7 +32,7 @@
                 <a class="#$linkclass#" href="#xarServer::getCurrentURL(array('tab' => null, 'method' => 'retweets', 'rt' => 'ofyou'))#" title="#xarML('Your tweets, retweeted')#" >
                     Yours, Retweeted
                 </a>
-            </li>    
+            </li>
         </ul>
     </div>
 </xar:if>

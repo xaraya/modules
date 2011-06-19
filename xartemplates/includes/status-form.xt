@@ -50,35 +50,33 @@ cntfield.value = maxlimit - field.value.length;
 ]]>
 </xar:if>
 <form method="post" id="status_update_#$form_index#" name="tweet_#$form_index#" class="twitter-status xar-margin-nonetop" action="#$status_update_url#">
-    <fieldset class="xar-margin-nonetop">
+    <fieldset>
         <legend>
             <xar:mlstring>What's happening</xar:mlstring>?
         </legend>
-        <div class="xar-form-input-wrapper">
+        <div class="xar-row">
+            <div class="xar-col">
             <textarea name="status_update_text" id="status_update_text_#$form_index#" cols="60" rows="2"
 onKeyDown="textCounter(document.tweet_#$form_index#.status_update_text,document.tweet_#$form_index#.status_update_rem,140)"
 onKeyUp="textCounter(document.tweet_#$form_index#.status_update_text,document.tweet_#$form_index#.status_update_rem,140)">#$status_update_text#</textarea>
-            <span class="xar-floatright xar-align-right">
-                <input type="hidden" name="phase" id="phase_#$form_index#" value="update" />
-                <input type="hidden" name="authid" id="authid_#$form_index#" value="#xarSecGenAuthKey()#" />
-                <input type="hidden" name="return_url" id="return_url_#$form_index#" value="#$return_url#" />
-                <input readonly="readonly" type="text" name="status_update_rem" id="status_update_rem_#$form_index#" size="3" maxlength="3" value="140"/>
-                <xar:comment>
-                <xar:mlstring>characters left</xar:mlstring>
-                </xar:comment>
-                <p>
-                <input type="submit" value="#xarML('Tweet')#" />
-                </p>
-            </span>
+            </div>
+            <div class="xar-col">
+            <input type="hidden" name="phase" id="phase_#$form_index#" value="update" />
+            <input type="hidden" name="authid" id="authid_#$form_index#" value="#xarSecGenAuthKey()#" />
+            <input type="hidden" name="return_url" id="return_url_#$form_index#" value="#$return_url#" />
+            <input readonly="readonly" type="text" name="status_update_rem" id="status_update_rem_#$form_index#" size="3" maxlength="3" value="140"/>
+            <br/>
+            <input type="submit" value="#xarML('Tweet')#" />
             <xar:if condition="!empty($status_update_error)">
                 <div>
-                    <span class="xar-error">#$status_update_error#</span>                
+                    <span class="xar-error">#$status_update_error#</span>
                 </div>
             <xar:elseif condition="!empty($status_update_success)"/>
                 <div>
-                    <span class="twitter-success">#$status_update_success#</span>                
+                    <span class="twitter-success">#$status_update_success#</span>
                 </div>
-            </xar:if>   
+            </xar:if>
+            </div>
         </div>
     </fieldset>
 </form>

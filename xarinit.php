@@ -29,17 +29,17 @@ function twitter_init()
             umask($old_umask);
             if (!file_exists($twitterCacheDir.'/index.html')) {
                 @touch($twitterCacheDir.'/index.html');
-            }            
+            }
         }
         if (!is_dir($twitterCacheDir) || !is_writable($twitterCacheDir)) {
             // tell them that cache needs to be writable or manually create output dir
-            $msg=xarML('The #(1) directory must be writable by the web server 
-                       for the Twitter module to set up caching. 
-                       The Twitter module cache is not configured, 
+            $msg=xarML('The #(1) directory must be writable by the web server
+                       for the Twitter module to set up caching.
+                       The Twitter module cache is not configured,
                        please make the #(1) directory writable by the web server
-                       if you want to take advantage of caching.  
+                       if you want to take advantage of caching.
                        Alternatively, you can manually create the #(2) directory
-                        - the #(2) directory must be writable by the web server for 
+                        - the #(2) directory must be writable by the web server for
                        caching to work.',
                        $varCacheDir,
                        $twitterCacheDir);
@@ -82,7 +82,7 @@ function twitter_init()
     /* Then for all operations */
     xarRegisterMask('AddTwitter',    'All', 'twitter', 'All', 'All', 'ACCESS_ADD');
     xarRegisterMask('AdminTwitter',  'All', 'twitter', 'All', 'All', 'ACCESS_ADMIN');
-    
+
     return true;
 }
 
@@ -204,17 +204,17 @@ function twitter_upgrade($oldversion)
             umask($old_umask);
             if (!file_exists($twitterCacheDir.'/index.html')) {
                 @touch($twitterCacheDir.'/index.html');
-            }            
+            }
         }
         if (!is_dir($twitterCacheDir) || !is_writable($twitterCacheDir)) {
             // tell them that cache needs to be writable or manually create output dir
-            $msg=xarML('The #(1) directory must be writable by the web server 
-                       for the Twitter module to set up caching. 
-                       The Twitter module cache is not configured, 
+            $msg=xarML('The #(1) directory must be writable by the web server
+                       for the Twitter module to set up caching.
+                       The Twitter module cache is not configured,
                        please make the #(1) directory writable by the web server
-                       if you want to take advantage of caching.  
+                       if you want to take advantage of caching.
                        Alternatively, you can manually create the #(2) directory
-                        - the #(2) directory must be writable by the web server for 
+                        - the #(2) directory must be writable by the web server for
                        caching to work.',
                        $varCacheDir,
                        $twitterCacheDir);
@@ -222,7 +222,7 @@ function twitter_upgrade($oldversion)
                             new SystemException($msg));
             return false;
         }
-      case '0.9.0': //current version         
+      case '0.9.0': //current version
       break;
     }
     /* Update successful */

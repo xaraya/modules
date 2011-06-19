@@ -17,14 +17,14 @@
                 <a class="#$linkclass#" href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => 'settings', 'rt' => null))#" title="#xarML('Profile')#" >
                     Profile
                 </a>
-            </li> 
+            </li>
             <xar:set name="activetab">$rt=='design'?$activeclass:$inactiveclass</xar:set>
             <xar:set name="linkclass">$rt=='design'?$activelink:$inactivelink</xar:set>
             <li class="#$activetab#">
                 <a class="#$linkclass#" href="#xarServer::getCurrentURL(array('tab' => 'profile', 'method' => 'settings', 'rt' => 'design'))#" title="#xarML('Design')#" >
                     Design
                 </a>
-            </li>    
+            </li>
         </ul>
     </div>
 </xar:if>

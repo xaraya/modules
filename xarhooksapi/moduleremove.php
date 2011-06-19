@@ -5,8 +5,8 @@ function twitter_hooksapi_moduleremove($args)
 
     if (empty($extrainfo)) $extrainfo = array();
     if (!is_array($extrainfo))
-        $invalid[] = 'extrainfo';    
-    
+        $invalid[] = 'extrainfo';
+
     if (empty($module)) {
         if (isset($extrainfo['module'])) {
             $module = $extrainfo['module'];
@@ -17,7 +17,7 @@ function twitter_hooksapi_moduleremove($args)
         }
     }
     $module_id = xarMod::getRegID($module);
-    if (!$module_id) 
+    if (!$module_id)
         $invalid[] = 'module';
     /*
     if (empty($itemtype)) {
@@ -29,7 +29,7 @@ function twitter_hooksapi_moduleremove($args)
     }
     if (!empty($itemtype) && !is_numeric($itemtype))
         $invalid[] = 'itemtype';
-    */  
+    */
     if (!empty($invalid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             join(', ', $invalid), 'hooksapi', 'moduleupdateconfig', 'Twitter');
@@ -37,11 +37,11 @@ function twitter_hooksapi_moduleremove($args)
             new SystemException($msg));
         return $extrainfo;
     }
-    $modvar = "hooks_{$module}";    
+    $modvar = "hooks_{$module}";
     xarModVars::delete('twitter', $modvar);
     $extrainfo['twitter_moduleremove'] = $module;
-    
-    return $extrainfo;    
-    
+
+    return $extrainfo;
+
 }
 ?>

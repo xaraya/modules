@@ -2,22 +2,22 @@
 function twitter_restapi_timeline($args)
 {
     extract($args);
-    
+
     $invalid = array();
-    if (empty($method) || !is_string($method)) 
+    if (empty($method) || !is_string($method))
         $invalid[] = 'method';
 
     if (!empty($invalid)) {
         $response['error'] = xarML('Invalid #(1) for Twitter API #(2) method', join(', ', $invalid), 'timeline');
         return $response;
-    }  
+    }
 
     $path = array('statuses');
     $http_method = 'get';
-    $params = array();  
-            
-    switch ($method) {  
-        
+    $params = array();
+
+    switch ($method) {
+
         case 'user_timeline':
             if (isset($user_id)) {
                 if (empty($user_id) || !is_numeric($user_id)) {
@@ -33,7 +33,7 @@ function twitter_restapi_timeline($args)
                     $params['screen_name'] = $screen_name;
                 }
             }
-            // fall through...        
+            // fall through...
         case 'friends_timeline':
         case 'mentions':
             if (isset($include_rts)) {
@@ -50,14 +50,14 @@ function twitter_restapi_timeline($args)
                 } else {
                     $params['since_id'] = $since_id;
                 }
-            }            
+            }
             if (isset($max_id)) {
                 if (empty($max_id) || !is_numeric($max_id)) {
                     $invalid[] = 'max_id';
                 } else {
                     $params['max_id'] = $max_id;
                 }
-            }        
+            }
             if (isset($count)) {
                 if (empty($count) || !is_numeric($count) || $count > 200) {
                     $invalid[] = 'count';
@@ -72,22 +72,22 @@ function twitter_restapi_timeline($args)
                     $params['page'] = $page;
                 }
             }
-            // fall through...   
-        case 'public_timeline':         
+            // fall through...
+        case 'public_timeline':
             if (isset($trim_user)) {
                 $params['trim_user'] = (bool) $trim_user;
             }
             if (isset($include_entities)) {
                 $params['include_entities'] = (bool) $include_entities;
             }
-            $path[] = $method;        
+            $path[] = $method;
         break;
 
         default:
             $response['error'] = xarML('Unknown Twitter API #(1) method "#(2)"', 'timeline', $method);
             return $response;
-        break;            
-                               
+        break;
+
     }
 
     if (!empty($invalid)) {
@@ -97,15 +97,15 @@ function twitter_restapi_timeline($args)
 
     if (empty($consumer_key) || empty($consumer_secret)) {
         $consumer_key = xarModVars::get('twitter', 'consumer_key');
-        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');    
+        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');
     }
-    
+
     if (empty($access_token) || empty($access_token_secret)) {
         $access_token = null;
         $access_token_secret = null;
     }
 
-    $response = xarMod::apiFunc('twitter', 'rest', '_process', 
+    $response = xarMod::apiFunc('twitter', 'rest', '_process',
         array(
             'path' => $path,
             'params' => $params,
@@ -117,7 +117,7 @@ function twitter_restapi_timeline($args)
             'cached' => isset($cached) ? $cached : null,
             'expires' => isset($expires) ? $expires : null,
         ));
-    
+
     return $response;
 }
 ?>

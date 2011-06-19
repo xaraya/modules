@@ -21,8 +21,8 @@
                     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
                     <input type="hidden" name="hookmodule" id="hookmodule" value="#$hookmodule#"/>
                     <input type="hidden" name="hookitemtype" id="hookitemtype" value="#$hookitemtype#"/>
-                    <input type="submit" value="#xarML('Update Configuration')#"/>                
-                </div>            
+                    <input type="submit" value="#xarML('Update Configuration')#"/>
+                </div>
             </fieldset>
         </form>
 </div>

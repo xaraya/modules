@@ -8,6 +8,12 @@
     <input type="text" size="20" maxlength="64" value="#$screen_name#" id="screen_name#$blockid#" name="screen_name" autocomplete="off" /> <xar:mlstring>(leave empty to display Public Timline)</xar:mlstring>
 </div>
 <div class="xar-form-input-wrapper">
+    <label for="dyntitle#$blockid#" title="#xarML('Use screen name as block title')#" class="xar-form-label help">
+        <xar:mlstring>Use Dynamic Title:</xar:mlstring>
+    </label>
+    <xar:data-input type="checkbox" name="dyntitle" checked="$dyntitle" />
+</div>
+<div class="xar-form-input-wrapper">
     <label for="numitems#$blockid#" title="#xarML('Number of tweets to display')#" class="xar-form-label help">
         <xar:mlstring>Number of tweets:</xar:mlstring>
     </label>

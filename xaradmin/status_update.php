@@ -6,12 +6,12 @@ function twitter_admin_status_update($args)
     // if (!xarSecurityCheck('AddTwitter', 1)) { // Check whitelist (cfr. site lock)... }
     if (!xarSecurityCheck('AdminTwitter')) return;
     extract($args);
-    
-    if (!xarVarFetch('phase', 'pre:trim:lower:enum:update', 
+
+    if (!xarVarFetch('phase', 'pre:trim:lower:enum:update',
         $phase, 'form', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('status_update_text', 'pre:trim:str:1:', 
+    if (!xarVarFetch('status_update_text', 'pre:trim:str:1:',
         $status_update_text, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('return_url', 'pre:trim:str:1:', 
+    if (!xarVarFetch('return_url', 'pre:trim:str:1:',
         $return_url, '', XARVAR_NOT_REQUIRED)) return;
 
     $data = array();
@@ -24,19 +24,19 @@ function twitter_admin_status_update($args)
         return $data;
     }
 
-    $data['account'] = xarMod::apiFunc('twitter', 'rest', 'account', 
+    $data['account'] = xarMod::apiFunc('twitter', 'rest', 'account',
         array(
             'method' => 'verify_credentials',
             'access_token' => $access_token,
             'access_token_secret' => $access_token_secret,
-        ));   
-    
+        ));
+
     if (!empty($data['account']['error'])) {
         $data['invalid'] = $data['account']['error'];
         xarTPLSetPageTitle(xarML('Site Account Error'));
         return $data;
     }
-    
+
     if ($phase == 'update') {
         if (!xarSecConfirmAuthKey()) return;
         if (empty($status_update_text))
@@ -56,7 +56,7 @@ function twitter_admin_status_update($args)
                     'access_token_secret' => $access_token_secret,
                     ));
             if (!is_array($response)) {
-                $status_update_error = xarML('Error: Invalid response communicating with Twitter');            
+                $status_update_error = xarML('Error: Invalid response communicating with Twitter');
             } elseif (!empty($response['error'])) {
                 $status_update_error = $response['error'];
             }
@@ -68,24 +68,24 @@ function twitter_admin_status_update($args)
             $status_update_success = xarML('Success: Tweet Sent');
             xarSession::setVar('twitter.status_update_success', $status_update_success);
         }
-                  
-        if (!empty($return_url)) 
+
+        if (!empty($return_url))
             xarResponse::redirect($return_url);
-                    
+
     }
 
     $data['status_update_text'] = $status_update_text;
     $data['status_update_error'] = !empty($status_update_error) ? $status_update_error : '';
     $data['status_update_success'] = !empty($status_update_success) ? $status_update_success : '';
-    $data['status_update_url'] = !empty($status_update_url) ? $status_update_url : xarModURL('twitter', 'admin', 'status_update');    
+    $data['status_update_url'] = !empty($status_update_url) ? $status_update_url : xarModURL('twitter', 'admin', 'status_update');
     $data['compare'] = xarModURL('twitter', 'admin', 'status_update');
     $data['return_url'] = empty($return_url) ? xarServer::getCurrentURL() : $return_url;
 
-    if (!xarVarFetch('tplmodule', 'pre:trim:lower:str:1:', 
+    if (!xarVarFetch('tplmodule', 'pre:trim:lower:str:1:',
         $tplmodule, 'twitter', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('template', 'pre:trim:lower:str:1:',
         $template, null, XARVAR_NOT_REQUIRED)) return;
 
-    return xarTplModule($tplmodule, 'admin', 'status_update', $data, $template);    
+    return xarTplModule($tplmodule, 'admin', 'status_update', $data, $template);
 }
 ?>

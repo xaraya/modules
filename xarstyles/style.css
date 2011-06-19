@@ -1,19 +1,19 @@
-.twitter {
+div.twitter {
     position: relative;
     min-height:50px;
     padding: 5px 0;
     border-bottom: 1px dotted #ccc;
 }
 
-.twitter a {
+div.twitter a {
   color:#2FC2EF;
   text-decoration: none;
 }
-.twitter a:hover {
+div.twitter a:hover {
   text-decoration: underline;
 }
 
-.twitter span.profile-image {
+div.twitter span.profile-image {
   display:block;
   height:50px;
   left:0;
@@ -23,26 +23,38 @@
   width:50px;
 }
 
-.twitter span.profile-image-after {
+div.twitter span.profile-image-after {
   display:block;
   margin-left:65px;
   overflow:hidden;
 }
 
-.twitter span#status-user {
+div.twitter span#status-user {
   color:#999999;
 }
 
-.twitter span#status-text {
+div.twitter span#status-text {
     padding: 3px 0;
 }
 
-.twitter span#status-info {
+div.twitter span#status-info {
   color:#999999;
   font-family:georgia;
   font-size:0.8em;
   font-style:italic;
 }
+
+.twitter-status textarea
+{
+    height: 40px;
+}
+.twitter-status .xar-row .xar-col:first-child {
+    width: 65%;
+    }
+.twitter-status .xar-row .xar-col:last-child {
+    width: 35%;
+    vertical-align: middle;
+    }
 
 div.status-form-wrapper {
     position: relative;
@@ -70,3 +82,51 @@ div.status-form-wrapper span.status-form-input {
     line-height: 50px;
     vertical-align: middle;
 }
+
+/* ============================================================================================================================
+
+== TWITTER
+
+** ============================================================================================================================ */
+.twitter-block p.screen-name {
+    margin: 0 0 5px 0;
+    padding: 0 0 0 5px;
+}
+
+.twitter-block p.screen-name a {
+  color:#2FC2EF;
+}
+.twitter-block .example-twitter {
+    position:relative;
+    padding:5px;
+    margin:10px 0 0px 5px;
+    color:#333;
+    background:#fff;
+    /* css3 */
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border-radius:10px;
+}
+
+.twitter-block .example-twitter p { margin: 10px 0; }
+
+
+/* creates the triangle */
+
+.twitter-block .example-twitter:after {
+    content:"";
+    position:absolute;
+    top:-20px;
+    left:15px;
+    border:10px solid transparent;
+    border-bottom-color:#fff;
+    /* reduce the damage in FF3.0 */
+    display:block;
+    width:0;
+}
+
+
+
+/* display of quote author (alternatively use a class on the element following the blockquote) */
+
+.twitter-block .example-twitter + p {text-align: right; font-style: italic; padding: 0 5px 0 0; margin: 0; color: #555753; font-size: 10px;}

@@ -46,7 +46,7 @@ function twitter_adminapi_menu()
             'password' => $password,
             'cache' => false,
             'refresh' => 1
-          ));  
+          ));
       }
     }
 
@@ -66,7 +66,7 @@ function twitter_adminapi_menu()
         'label' => $userinfo['screen_name'],
         'title' => xarML('View and configure site account'),
         'active' => $modfunc == 'tweet' ? true : false
-        );  
+        );
     }
     if (xarSecurityCheck('AddTwitter', 0)) {
       $menu[] = array(
@@ -79,7 +79,7 @@ function twitter_adminapi_menu()
     $data['userinfo'] = empty($userinfo) ? xarML('No Site Account Specified') : $userinfo;
     $data['statuslimit'] = empty($statuslimit) ? '' : $statuslimit;
     $data['adminmenu'] = $menu;
-   
+
 
     return $data;
 }

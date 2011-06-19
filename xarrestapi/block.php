@@ -2,21 +2,21 @@
 function twitter_restapi_block($args)
 {
     extract($args);
-    
+
     $invalid = array();
-    if (empty($method) || !is_string($method)) 
+    if (empty($method) || !is_string($method))
         $invalid[] = 'method';
 
     if (!empty($invalid)) {
         $response['error'] = xarML('Invalid #(1) for Twitter API #(2) method', join(', ', $invalid), 'block');
         return $response;
     }
-        
+
     $path = array('blocks');
-    $params = array();  
-            
+    $params = array();
+
     switch ($method) {
-    
+
         case 'create':
             $path[] = $method;
             $http_method = 'post';
@@ -40,9 +40,9 @@ function twitter_restapi_block($args)
                 }
             } else {
                 $invalid[] = 'params';
-            }        
+            }
         break;
-        
+
         case 'destroy':
             $path[] = $method;
             $http_method = 'delete';
@@ -68,7 +68,7 @@ function twitter_restapi_block($args)
                 $invalid[] = 'params';
             }
         break;
-        
+
         case 'exists':
             $path[] = $method;
             if (isset($id)) {
@@ -92,8 +92,8 @@ function twitter_restapi_block($args)
             } else {
                 $invalid[] = 'params';
             }
-        break; 
-        
+        break;
+
         case 'blocking':
             $path[] = $method;
             if (isset($page)) {
@@ -104,38 +104,38 @@ function twitter_restapi_block($args)
                 }
             }
         break;
-        
+
         case 'blocking_ids':
             $path[] = $method;
             $path[] = 'ids';
-        break;                                       
-                
+        break;
+
         default:
             $response['error'] = xarML('Unknown Twitter API #(1) method "#(2)"', 'block', $method);
             return $response;
         break;
-                
+
     }
-    
+
     if (!empty($invalid)) {
         $response['error'] = xarML('Invalid #(1) for Twitter API #(2) method #(3)', join(', ', $invalid), 'block', $method);
         return $response;
     }
-        
+
     if (empty($http_method))
         $http_method = 'get';
 
     if (empty($consumer_key) || empty($consumer_secret)) {
         $consumer_key = xarModVars::get('twitter', 'consumer_key');
-        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');    
+        $consumer_secret = xarModVars::get('twitter', 'consumer_secret');
     }
-    
+
     if (empty($access_token) || empty($access_token_secret)) {
         $access_token = null;
         $access_token_secret = null;
     }
 
-    $response = xarMod::apiFunc('twitter', 'rest', '_process', 
+    $response = xarMod::apiFunc('twitter', 'rest', '_process',
         array(
             'path' => $path,
             'params' => $params,
@@ -147,7 +147,7 @@ function twitter_restapi_block($args)
             'cached' => isset($cached) ? $cached : null,
             'expires' => isset($expires) ? $expires : null,
         ));
-    
+
     return $response;
 }
 ?>
