@@ -21,7 +21,7 @@
                 <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
             </xar:if>
             <li class="#$tabclass#">
-                <a href="#xarModURL('publications', 'admin', 'modifyconfig', array('tab' => 'global'))#">
+                <a class="#$linkclass#" href="#xarModURL('publications', 'admin', 'modifyconfig', array('tab' => 'global'))#">
                     Global
                 </a>
             </li>
@@ -34,7 +34,7 @@
                 <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
             </xar:if>
             <li class="#$tabclass#">
-                <a href="#xarModURL('publications', 'admin', 'modifyconfig', array('tab' => 'pubtypes'))#">
+                <a class="#$linkclass#" href="#xarModURL('publications', 'admin', 'modifyconfig', array('tab' => 'pubtypes'))#">
                     Publication Types
                 </a>
             </li>
