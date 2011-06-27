@@ -28,5 +28,11 @@ $modversion['class']        = 'Utility';
 $modversion['category']     = 'Global';
 // this module requires the gd extension (for now)
 $modversion['extensions']   = array('gd');
+$modversion['dependencyinfo'] = array(
+                                    0 => array(
+                                            'name' => 'Xaraya Core',
+                                            'version_ge' => '2.2.0',
+                                         ),
+                                      );
 
 ?>

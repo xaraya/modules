@@ -66,8 +66,8 @@ function images_userapi_getimageinfo( $args )
     } elseif (!empty($fileLocation)) {
         // Check if the file exists
         $fileName = $fileLocation;
-        if (!empty($basedir) && file_exists($basedir . '/' . $fileName)) {
-            $fileLocation = $basedir . '/' . $fileName;
+        if (!empty($basedir) && file_exists($fileName)) {
+            $fileLocation = $fileName;
         } elseif (file_exists($fileName)) {
             $fileLocation = $fileName;
         } else {

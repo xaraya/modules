@@ -44,7 +44,7 @@ function images_adminapi_getimages($args)
         }
         foreach ($fileId as $id) {
             $file = base64_decode($id);
-            if (file_exists($basedir . '/' . $file)) {
+            if (file_exists(sys::root() . $basedir . '/' . $file)) {
                 $files[] = $file;
             }
         }
@@ -67,7 +67,7 @@ function images_adminapi_getimages($args)
             $recursive = true;
         }
 
-        $params = array('basedir'   => $basedir,
+        $params = array('basedir'   => sys::root() . $basedir,
                         'filematch' => $filematch,
                         'filetype'  => $filetype,
                         'recursive' => $recursive);
@@ -94,19 +94,19 @@ function images_adminapi_getimages($args)
     if (!isset($imagelist)) {
         $imagelist = array();
         foreach ($files as $file) {
-            $statinfo = @stat($basedir . '/' . $file);
-            $sizeinfo = @getimagesize($basedir . '/' . $file);
+            $statinfo = @stat(sys::root() . $basedir . '/' . $file);
+            $sizeinfo = @getimagesize(sys::root() . $basedir . '/' . $file);
             if (empty($statinfo) || empty($sizeinfo)) continue;
             // Note: we're using base 64 encoded fileId's here
             $id = base64_encode($file);
-            $imagelist[$id] = array('fileLocation' => $basedir . '/' . $file,
-                                    'fileDownload' => $baseurl . '/' . $file,
+            $imagelist[$id] = array('fileLocation' => sys::root() . $basedir . '/' . $file,
+                                    'fileDownload' => sys::root() . $baseurl . '/' . $file,
                                     'fileName'     => $file,
                                     'fileType'     => $sizeinfo['mime'],
                                     'fileSize'     => $statinfo['size'],
                                     'fileId'       => $id,
                                     'fileModified' => $statinfo['mtime'],
-                                    'isWritable'   => @is_writable($basedir . '/' . $file),
+                                    'isWritable'   => @is_writable(sys::root() . $basedir . '/' . $file),
                                     'width'        => $sizeinfo[0],
                                     'height'       => $sizeinfo[1]);
         }

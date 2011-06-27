@@ -24,7 +24,7 @@ function images_userapi_getbasedirs()
     }
     if (empty($basedirs)) {
         $basedirs = array();
-        $basedirs[0] = array('basedir'   => 'themes',
+        $basedirs[0] = array('basedir'   => 'html/themes',
                              'baseurl'   => 'themes',
                              'filetypes' => 'gif|jpg|png',
                              'recursive' => true);

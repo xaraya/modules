@@ -46,7 +46,7 @@ function images_adminapi_getmenulinks()
                                                   'admin',
                                                   'modifyconfig'),
                              'title' => xarML('Edit the Images Configuration'),
-                             'label' => xarML('Modify Config'));
+                             'label' => xarML('Modify Configuration'));
     }
     return $menulinks;
 }

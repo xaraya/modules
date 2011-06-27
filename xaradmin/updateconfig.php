@@ -97,7 +97,7 @@ function images_admin_updateconfig()
     }
 
     xarModCallHooks('module', 'updateconfig', 'images', array('module' => 'images'));
-    xarResponse::redirect(xarModURL('images', 'admin', 'modifyconfig'));
+    xarController::redirect(xarModURL('images', 'admin', 'modifyconfig'));
 
     // Return
     return TRUE;

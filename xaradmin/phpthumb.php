@@ -21,6 +21,9 @@ function images_admin_phpthumb($args)
         $fileId = array_keys($fileId);
     }
 
+    //Psspl:Added the code for getting selected graphics liabary. 
+    $graphics_library = xarModVars::get('images', 'type.graphics-library');
+    
     // Get the base directories configured for server images
     $basedirs = xarModAPIFunc('images','user','getbasedirs');
 
@@ -47,7 +50,7 @@ function images_admin_phpthumb($args)
         }
 
     // we're dealing with a derivative image here
-    } elseif (preg_match('/^[0-9a-f]{32}$/',$fileId)) {
+    } elseif (preg_match('/^[0-9a-f]{32}$/i',$fileId)) {
         $data['thumbsdir'] = xarModVars::get('images', 'path.derivative-store');
         $data['images'] = xarModAPIFunc('images','admin','getderivatives',
                                         array('thumbsdir' => $data['thumbsdir'],
@@ -68,6 +71,21 @@ function images_admin_phpthumb($args)
         }
     }
 
+    //Psspl:Implemented the code for preview the browser non supported original images.
+    $supported_type = array('image/jpeg','image/png','image/bmp','image/gif','image/jpg');
+    if(isset($data['selimage']['fileType']))
+    {
+        if(!in_array($data['selimage']['fileType'],$supported_type))
+        { 
+            $fileDownload_temp__args = array();
+            $fileDownload_temp__args['fid'] = $data['selimage']['fileId'];
+            $fileDownload_temp__args['f'] = 'jpeg'; 
+            $fileDownload_temp__args['preview'] = 1;
+         
+            $fileDownload_temp =  xarModURL('images','admin','phpthumb',$fileDownload_temp__args);
+            $data['fileDownload_temp'] = $fileDownload_temp;
+        }
+    }   
     // Get the pre-defined settings for phpThumb
     $data['settings'] = xarModAPIFunc('images','user','getsettings');
 
@@ -87,7 +105,7 @@ function images_admin_phpthumb($args)
         // URL parameters for phpThumb() - cfr. xardocs/phpthumb.readme.txt
         if (!xarVarFetch('w',    'int:1:',     $w,         NULL, XARVAR_DONT_SET)) return;
         if (!xarVarFetch('h',    'int:1:',     $h,         NULL, XARVAR_DONT_SET)) return;
-        if (!xarVarFetch('f',    'enum:jpeg:png:gif', $f,  NULL, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('f',    'enum:jpeg:png:gif:tif:tiff:vnd.wap.wbmp:wbmp:bmp', $f,  NULL, XARVAR_DONT_SET)) return;
         if (!xarVarFetch('q',    'int:1:',     $q,         NULL, XARVAR_DONT_SET)) return;
         if (!xarVarFetch('sx',   'float:0:',   $sx,        NULL, XARVAR_DONT_SET)) return;
         if (!xarVarFetch('sy',   'float:0:',   $sy,        NULL, XARVAR_DONT_SET)) return;
@@ -173,9 +191,23 @@ function images_admin_phpthumb($args)
         include_once(sys::code() . 'modules/images/xarclass/phpthumb.class.php');
         $phpThumb = new phpThumb();
 
+        //Psspl:Added the code for configuration cache directory path.
+         $path = sys::root() . "html/var/uploads";
+        //$path = str_replace("/","\\",$path);
+        if(is_dir($path)) {
+            
+            $phpThumb->config_cache_directory = $path;
+            $phpThumb->config_temp_directory = $path;
+        }           
+        //Psspl:Added the code for setting graphics_liabary option
+        $phpThumb->graphics_library = $graphics_library;
+
         $imagemagick = xarModVars::get('images', 'file.imagemagick');
         if (!empty($imagemagick) && file_exists($imagemagick)) {
-            $phpThumb->config_imagemagick_path = realpath($imagemagick);
+            if($graphics_library == 2){ 
+               //If Image Magick set then only set Image magick path.
+               $phpThumb->config_imagemagick_path = realpath($imagemagick);
+            }
         }
 
 // CHECKME: document root may be incorrect in some cases
@@ -246,21 +278,21 @@ function images_admin_phpthumb($args)
                                 }
                             }
                             // Redirect to viewing the updated image here (for now)
-                            xarResponse::redirect(xarModURL('images', 'admin', 'uploads',
+                            xarController::redirect(xarModURL('images', 'admin', 'uploads',
                                                           array('action' => 'view',
                                                                 'fileId' => $fileId)));
                             return true;
 
                         } elseif (preg_match('/^[0-9a-f]{32}$/i',$fileId)) {
                             // Redirect to viewing the updated image here (for now)
-                            xarResponse::redirect(xarModURL('images', 'admin', 'derivatives',
+                            xarController::redirect(xarModURL('images', 'admin', 'derivatives',
                                                           array('action' => 'view',
                                                                 'fileId' => $fileId)));
                             return true;
 
                         } else {
                             // Redirect to viewing the updated image here (for now)
-                            xarResponse::redirect(xarModURL('images', 'admin', 'browse',
+                            xarController::redirect(xarModURL('images', 'admin', 'browse',
                                                           array('action' => 'view',
                                                                 'bid'    => $baseId,
                                                                 'fid'    => $fileId)));
@@ -360,6 +392,22 @@ function images_admin_phpthumb($args)
         $data['params'] = preg_replace('/&amp;preview=1.*$/','',$data['params']);
         if (!empty($data['selimage'])) {
             $data['selimage']['filePreview'] = $previewurl;
+            
+            //Psspl:Implemented the code for preview the non supported images.
+            $patterns[0] = '/f=tiff/';
+            $patterns[1] = '/f=wbmp/';
+            $patterns[2] = '/f=tif/';
+            
+            $replacements[0] = 'f=jpeg';
+            $replacements[1] = 'f=jpeg';
+            $replacements[2] = 'f=jpeg';
+            
+            $count = 0;
+            $previewurl_temp = mb_ereg_replace($patterns , $replacements, $previewurl,-1,$count);
+            
+            if($count){
+                $data['selimage']['filePreview_temp'] = $previewurl_temp;            
+            }
         }
     }
 
@@ -368,12 +416,25 @@ function images_admin_phpthumb($args)
         if (empty($data['selimage'])) {
             $data['f'] = 'jpeg';
         } else {
+            //Psspl:Added the code for bmp,wbmp,tiff,tif file types.
             switch ($data['selimage']['fileType']) {
                 case 'image/png':
                     $data['f'] = 'png';
                     break;
                 case 'image/gif':
                     $data['f'] = 'gif';
+                    break;
+                case 'image/tif':
+                    $data['f'] = 'tif';
+                    break;
+                case 'image/tiff':
+                    $data['f'] = 'tiff';
+                    break;
+                case 'image/bmp':
+                    $data['f'] = 'bmp';
+                    break;
+                case 'image/vnd.wap.wbmp':
+                    $data['f'] = 'wbmp';
                     break;
                 case 'image/jpeg':
                 default:

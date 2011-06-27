@@ -39,7 +39,7 @@ function images_userapi_getimagesize( $args )
         throw new Exception($mesg);
     }
 
-    if (!empty($fileLocation) && file_exists($fileLocation)) {
+    if (!empty($fileLocation) && file_exists(sys::root() . $fileLocation)) {
         return @getimagesize($fileLocation);
 
     } elseif (!empty($extrainfo['width']) && !empty($extrainfo['height'])) {

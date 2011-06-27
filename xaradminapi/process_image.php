@@ -94,7 +94,7 @@ function images_adminapi_process_image($args)
             default:
                 $thumbsdir = xarModVars::get('images', 'path.derivative-store');
                 // Use MD5 hash of file location here
-                $save = realpath($thumbsdir) . '/' . md5($image['fileLocation']);
+                $save = realpath(sys::root() .  $thumbsdir) . '/' . md5($image['fileLocation']);
                 // Add the setting to the filename
                 $add = xarVarPrepForOs($setting);
                 $add = strtr($add, array(' ' => ''));
@@ -140,7 +140,7 @@ function images_adminapi_process_image($args)
             default:
                 $thumbsdir = xarModVars::get('images', 'path.derivative-store');
                 // Use file id here
-                $save = realpath($thumbsdir) . '/' . $image['fileId'];
+                $save = realpath(sys::root() .  $thumbsdir) . '/' . $image['fileId'];
                 // Add the setting to the filename
                 $add = xarVarPrepForOs($setting);
                 $add = strtr($add, array(' ' => ''));

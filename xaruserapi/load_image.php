@@ -55,7 +55,7 @@ function & images_userapi_load_image( $args )
             }
 
         // if we get the whole file info
-        } elseif (file_exists($fileLocation)) {
+        } elseif (file_exists(sys::root() . $fileLocation)) {
             $location = $fileLocation;
 
         } elseif (defined('_UPLOADS_STORE_DB_DATA') && ($storeType & _UPLOADS_STORE_DB_DATA)) {

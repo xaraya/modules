@@ -111,7 +111,7 @@ function images_adminapi_getderivatives($args)
                     if (!in_array($id,$fileId)) continue;
                 }
                 $statinfo = stat($thumbsdir . '/' . $file);
-                $sizeinfo = getimagesize($thumbsdir . '/' . $file);
+                $sizeinfo = getimagesize(sys::root() . $thumbsdir . '/' . $file);
                 $imagelist[] = array('fileLocation' => $thumbsdir . '/' . $file,
                                      'fileDownload' => xarModURL('images','user','display',
                                                                  array('fileId' => base64_encode($thumbsdir . '/' . $file))),

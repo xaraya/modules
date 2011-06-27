@@ -42,13 +42,12 @@ function images_user_display( $args )
     $image = xarModAPIFunc('images', 'user', 'load_image', $data);
 
     if (!is_object($image)) {
-        xarResponse::redirect('modules/images/xarimages/admin.gif');
+        xarController::redirect('modules/images/xarimages/admin.gif');
         return TRUE;
     //    $msg = xarML('Unable to find file: [#(1)]', $fileId);
     //    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_MISSING', new SystemException($msg));
     //    return FALSE;
     }
-
     $fileType =& $image->mime;
     $fileName =& $image->fileName;
 
@@ -93,8 +92,7 @@ function images_user_display( $args )
     $fileLocation = $image->getDerivative();
 
     if (is_null($fileLocation)) {
-        $msg = xarML('Unable to find file: [#(1)]', $fileId);
-        throw new Exception($msg);
+        return xarTplModule('images','user','errors',array('layout' => 'not_accessible'));
     }
 
     // Close the buffer, saving it's current contents for possible future use
@@ -139,7 +137,7 @@ function images_user_display( $args )
         }
 
     } else {
-        xarResponse::redirect('modules/images/xarimages/admin.gif');
+        xarController::redirect('modules/images/xarimages/admin.gif');
         return TRUE;
     }
 

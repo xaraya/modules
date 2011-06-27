@@ -2,14 +2,14 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>Images Administration</xar:mlstring>
+            Images Administration
         </span>
     </div>
 
     <div class="xar-mod-body">
       <xar:template type="module" file="admin-menu" module="images"/>
         <h2>
-            <xar:mlstring>Image Processing with phpThumb()</xar:mlstring>
+            Image Processing with phpThumb()
         </h2>
 
 
@@ -20,18 +20,18 @@
         <a name="config"></a>
         <fieldset>
             <legend>
-                <xar:mlstring>Settings</xar:mlstring>
+                Settings
             </legend>
             <div class="xar-form-input-wrapper">
 
-            <strong><xar:mlstring>Configure</xar:mlstring></strong>
+            <strong>Configure</strong>
             <xar:if condition="!empty($selimage['filePreview'])">
             |
-            <a href="#xarServer::getCurrentURL()##preview"><xar:mlstring>Preview Image</xar:mlstring></a>
+            <a href="#xarServer::getCurrentURL()##preview">Preview Image</a>
             </xar:if>
             <xar:if condition="!empty($selimage['fileDownload'])">
             |
-            <a href="#xarServer::getCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
+            <a href="#xarServer::getCurrentURL()##original">Original Image</a>
             </xar:if>
             </div>
         </fieldset>
@@ -40,18 +40,18 @@
         <xar:if condition="!empty($selimage)">
             <tr>
                 <th colspan="4" class="xar-accent" align="center">
-                    <xar:mlstring>Image</xar:mlstring>
+                    Image
                 </th>
             </tr>
             <tr>
                 <td class="xar-accent">
-                    <xar:mlstring>Filename</xar:mlstring>
+                    Filename
                 </td>
                 <td>
                     #$selimage['fileName']#
                 </td>
                 <td class="xar-accent">
-                    <xar:mlstring>Modified</xar:mlstring>
+                    Modified
                 </td>
                 <td>
                     #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#
@@ -59,13 +59,13 @@
             </tr>
             <tr>
                 <td class="xar-accent">
-                    <xar:mlstring>Filetype</xar:mlstring>
+                    Filetype
                 </td>
                 <td>
                     #$selimage['fileType']#
                 </td>
                 <td class="xar-accent">
-                    <xar:mlstring>Size</xar:mlstring>
+                    Size
                 </td>
                 <td>
                     #$selimage['fileSize']#
@@ -73,13 +73,13 @@
             </tr>
             <tr>
                 <td class="xar-accent">
-                    <xar:mlstring>Width</xar:mlstring>
+                    Width
                 </td>
                 <td>
                     #$selimage['width']#
                 </td>
                 <td class="xar-accent">
-                    <xar:mlstring>Height</xar:mlstring>
+                    Height
                 </td>
                 <td>
                     #$selimage['height']#
@@ -88,14 +88,14 @@
         </xar:if>
             <tr>
                 <th colspan="4" class="xar-accent" align="center">
-                    <xar:mlstring>Settings</xar:mlstring>
+                    Settings
                 </th>
             </tr>
             <tr>
                 <td colspan="4">
-                    <input type="submit" name="load" value="#xarML('Load')#"/>
+                    <input type="submit" name="load" value="#xarML('Load')#" />&#160;
                     <select name="setting" id="setting">
-                        <option value=""><xar:mlstring>[ New Settings --&gt; ]</xar:mlstring></option>
+                        <option value="">[ New Settings --&gt; ]</option>
                         <xar:foreach in="$settings" key="$name">
                             <xar:if condition="!empty($setting) and $name eq $setting">
                                 <option value="#xarVarPrepForDisplay($name)#" selected="selected">#$name#</option>
@@ -103,20 +103,20 @@
                                 <option value="#xarVarPrepForDisplay($name)#">#$name#</option>
                             </xar:if>
                         </xar:foreach>
-                    </select>
-                    <input type="text" name="newset" id="newset" value=""/>
+                    </select>&#160;
+                    <input type="text" name="newset" id="newset" value="" />&#160;
                     <input type="submit" name="store" value="#xarML('Store')#"/>
                 </td>
             </tr>
             <tr>
                 <th colspan="4" class="xar-accent" align="center">
-                    <xar:mlstring>Resize</xar:mlstring>
+                    Resize
                 </th>
             </tr>
             <tr>
                 <td class="xar-accent">
                     <label for="w">
-                    <xar:mlstring>Width</xar:mlstring>
+                    Width
                     </label>
                 </td>
                 <td>
@@ -124,7 +124,7 @@
                 </td>
                 <td class="xar-accent">
                     <label for="h">
-                    <xar:mlstring>Height</xar:mlstring>
+                    Height
                     </label>
                 </td>
                 <td>
@@ -133,13 +133,13 @@
             </tr>
             <tr>
                 <th colspan="4" class="xar-accent" align="center">
-                    <xar:mlstring>Crop</xar:mlstring>
+                    Crop
                 </th>
             </tr>
             <tr>
                 <td class="xar-accent">
                     <label for="sx">
-                    <xar:mlstring>Crop Left</xar:mlstring>
+                    Crop Left
                     </label>
                 </td>
                 <td>
@@ -147,7 +147,7 @@
                 </td>
                 <td class="xar-accent">
                     <label for="sy">
-                    <xar:mlstring>Crop Top</xar:mlstring>
+                    Crop Top
                     </label>
                 </td>
                 <td>
@@ -157,7 +157,7 @@
             <tr>
                 <td class="xar-accent">
                     <label for="sw">
-                    <xar:mlstring>Crop Width</xar:mlstring>
+                    Crop Width
                     </label>
                 </td>
                 <td>
@@ -165,7 +165,7 @@
                 </td>
                 <td class="xar-accent">
                     <label for="sh">
-                    <xar:mlstring>Crop Height</xar:mlstring>
+                    Crop Height
                     </label>
                 </td>
                 <td>
@@ -174,13 +174,13 @@
             </tr>
             <tr>
                 <th colspan="4" class="xar-accent" align="center">
-                    <xar:mlstring>Rotate</xar:mlstring>
+                    Rotate
                 </th>
             </tr>
             <tr>
                 <td class="xar-accent">
                     <label for="ra">
-                    <xar:mlstring>Angle</xar:mlstring>
+                    Angle
                     </label>
                 </td>
                 <td>
@@ -189,7 +189,7 @@
                 </td>
                 <td class="xar-accent">
                     <label for="ar">
-                    <xar:mlstring>Auto</xar:mlstring>
+                    Auto
                     </label>
                 </td>
                 <td>
@@ -215,13 +215,13 @@
             </tr>
             <tr>
                 <th colspan="4" class="xar-accent" align="center">
-                    <xar:mlstring>Flip</xar:mlstring>
+                    Flip
                 </th>
             </tr>
             <tr>
                 <td class="xar-accent">
                     <label for="filter_flip_x">
-                    <xar:mlstring>Horizontal</xar:mlstring>
+                    Horizontal
                     </label>
                 </td>
                 <td>
@@ -233,7 +233,7 @@
                 </td>
                 <td class="xar-accent">
                     <label for="filter_flip_y">
-                    <xar:mlstring>Vertical</xar:mlstring>
+                    Vertical
                     </label>
                 </td>
                 <td>
@@ -246,13 +246,13 @@
             </tr>
             <tr>
                 <th colspan="4" class="xar-accent" align="center">
-                    <xar:mlstring>Color Correction</xar:mlstring>
+                    Color Correction
                 </th>
             </tr>
             <tr>
                 <td class="xar-accent">
                     <label for="filter_gam_0">
-                    <xar:mlstring>Gamma</xar:mlstring>
+                    Gamma
                     </label>
                 </td>
                 <td>
@@ -261,7 +261,7 @@
                 </td>
                 <td class="xar-accent">
                     <label for="filter_ds_0">
-                    <xar:mlstring>De-saturate</xar:mlstring>
+                    De-saturate
                     </label>
                 </td>
                 <td>
@@ -271,13 +271,13 @@
             </tr>
             <tr>
                 <th colspan="4" class="xar-accent" align="center">
-                    <xar:mlstring>Watermark Image</xar:mlstring>
+                    Watermark Image
                 </th>
             </tr>
             <tr>
                 <td class="xar-accent">
                     <label for="filter_wmi_0">
-                    <xar:mlstring>Filename</xar:mlstring>
+                    Filename
                     </label>
                 </td>
                 <td>
@@ -285,7 +285,7 @@
                 </td>
                 <td class="xar-accent">
                     <label for="filter_wmi_2">
-                    <xar:mlstring>Opacity</xar:mlstring>
+                    Opacity
                     </label>
                 </td>
                 <td>
@@ -296,7 +296,7 @@
             <tr>
                 <td class="xar-accent">
                     <label for="filter_wmi_1">
-                    <xar:mlstring>Alignment</xar:mlstring>
+                    Alignment
                     </label>
                 </td>
                 <td>
@@ -326,7 +326,7 @@
                 </td>
                 <td class="xar-accent">
                     <label for="filter_wmi_3">
-                    <xar:mlstring>Margin</xar:mlstring>
+                    Margin
                     </label>
                 </td>
                 <td>
@@ -336,13 +336,13 @@
             </tr>
             <tr>
                 <th colspan="4" class="xar-accent" align="center">
-                    <xar:mlstring>Watermark Text</xar:mlstring>
+                    Watermark Text
                 </th>
             </tr>
             <tr>
                 <td class="xar-accent">
                     <label for="filter_wmt_0">
-                    <xar:mlstring>Text</xar:mlstring>
+                    Text
                     </label>
                 </td>
                 <td>
@@ -350,7 +350,7 @@
                 </td>
                 <td class="xar-accent">
                     <label for="filter_wmt_5">
-                    <xar:mlstring>Opacity</xar:mlstring>
+                    Opacity
                     </label>
                 </td>
                 <td>
@@ -361,7 +361,7 @@
             <tr>
                 <td class="xar-accent">
                     <label for="filter_wmt_2">
-                    <xar:mlstring>Alignment</xar:mlstring>
+                    Alignment
                     </label>
                 </td>
                 <td>
@@ -391,7 +391,7 @@
                 </td>
                 <td class="xar-accent">
                     <label for="filter_wmt_6">
-                    <xar:mlstring>Margin</xar:mlstring>
+                    Margin
                     </label>
                 </td>
                 <td>
@@ -402,7 +402,7 @@
             <tr>
                 <td class="xar-accent">
                     <label for="filter_wmt_1">
-                    <xar:mlstring>Font Size</xar:mlstring>
+                    Font Size
                     </label>
                 </td>
                 <td>
@@ -411,7 +411,7 @@
                 </td>
                 <td class="xar-accent">
                     <label for="filter_wmt_4">
-                    <xar:mlstring>TTF File</xar:mlstring>
+                    TTF File
                     </label>
                 </td>
                 <td>
@@ -421,7 +421,7 @@
             <tr>
                 <td class="xar-accent">
                     <label for="filter_wmt_3">
-                    <xar:mlstring>Hex Color</xar:mlstring>
+                    Hex Color
                     </label>
                 </td>
                 <td>
@@ -429,7 +429,7 @@
                 </td>
                 <td class="xar-accent">
                     <label for="filter_wmt_7">
-                    <xar:mlstring>Angle</xar:mlstring>
+                    Angle
                     </label>
                 </td>
                 <td>
@@ -443,15 +443,15 @@
     </xar:comment>
             <tr>
                 <th colspan="4" class="xar-accent" align="center">
-                    <xar:mlstring>Other Filters</xar:mlstring>
+                    Other Filters
                     <br/>
-                    [<a href="modules/images/xardocs/phpthumb.readme.txt" target="readme"><xar:mlstring>see description of 'fltr' parameter in readme.txt</xar:mlstring></a>]
+                    [<a href="modules/images/xardocs/phpthumb.readme.txt" target="readme">see description of 'fltr' parameter in readme.txt</a>]
                 </th>
             </tr>
             <tr>
                 <td class="xar-accent">
                     <label for="fltr_0">
-                    <xar:mlstring>Filter</xar:mlstring>
+                    Filter
                     </label>
                 </td>
                 <td>
@@ -459,7 +459,7 @@
                 </td>
                 <td class="xar-accent">
                     <label for="fltr_1">
-                    <xar:mlstring>Filter</xar:mlstring>
+                    Filter
                     </label>
                 </td>
                 <td>
@@ -469,7 +469,7 @@
             <tr>
                 <td class="xar-accent">
                     <label for="fltr_2">
-                    <xar:mlstring>Filter</xar:mlstring>
+                    Filter
                     </label>
                 </td>
                 <td>
@@ -477,7 +477,7 @@
                 </td>
                 <td class="xar-accent">
                     <label for="fltr_3">
-                    <xar:mlstring>Filter</xar:mlstring>
+                    Filter
                     </label>
                 </td>
                 <td>
@@ -486,13 +486,13 @@
             </tr>
             <tr>
                 <th colspan="4" class="xar-accent" align="center">
-                    <xar:mlstring>Output</xar:mlstring>
+                    Output
                 </th>
             </tr>
             <tr>
                 <td class="xar-accent">
                     <label for="f">
-                    <xar:mlstring>Format</xar:mlstring>
+                    Format
                     </label>
                 </td>
                 <td>
@@ -500,6 +500,10 @@
                     array('jpeg' => 'JPEG',
                           'png'  => 'PNG',
                           'gif'  => 'GIF',
+                          'wbmp' => 'wbmp',
+                          'tif'  => 'TIF',
+                          'tiff' => 'TIFF',
+                          'bmp'	=>	'BMP',	
                     )
                     </xar:set>
                     <select name="f" id="f">
@@ -514,7 +518,7 @@
                 </td>
                 <td class="xar-accent">
                     <label for="q">
-                    <xar:mlstring>Quality</xar:mlstring>
+                    Quality
                     </label>
                 </td>
                 <td>
@@ -534,7 +538,7 @@
             <tr>
                 <td class="xar-accent">
                     <label for="save">
-                    <xar:mlstring>Save As</xar:mlstring>
+                    Save As
                     </label>
                 </td>
                 <td colspan="3">
@@ -558,36 +562,65 @@
         <p><xar:ml><xar:mlstring><strong>Parameters :</strong> #(1)</xar:mlstring><xar:mlvar>#$params#</xar:mlvar></xar:ml></p>
     </xar:if>
 
+	<!--Psspl:Implemented the code for preview the browser non supported images. -->
     <xar:if condition="!empty($selimage['filePreview'])">
+    	<xar:if condition="!empty($selimage['filePreview_temp'])">
+
+    		<a name="preview"></a>
+        	
+    		<hr/>
+    		<p>
+            	<strong>Preview Image Temp</strong>
+        	</p>
+        	
+        	<p><img src="#$selimage['filePreview_temp']#" border="0" /></p>
+    	
+        <xar:else/>
+        
         <a name="preview"></a>
 
         <hr/>
         <p>
-            <a href="#xarServer::getCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
-            |
-            <strong><xar:mlstring>Preview Image</xar:mlstring></strong>
-            <xar:if condition="!empty($selimage['fileDownload'])">
-            |
-            <a href="#xarServer::getCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
-            </xar:if>
-        </p>
-        <p><img src="#$selimage['filePreview']#" border="0"/></p>
+            <a href="#xarServer::getCurrentURL()##config">Configure</a>
+            	|
+            	<strong>Preview Image</strong>
+            	<xar:if condition="!empty($selimage['fileDownload'])">
+            		|
+            <a href="#xarServer::getCurrentURL()##original">Original Image</a>
+            	</xar:if>
+        	</p>
+        	<p><img src="#$selimage['filePreview']#" border="0" /></p>
+        </xar:if>
     </xar:if>
 
+	<!--Psspl:Implemented the code for display the original image which are are not supported by browser.-->
     <xar:if condition="!empty($selimage['fileDownload'])">
+        <xar:if condition="!empty($fileDownload_temp)">
+        	
+        	<a name="original File Temp"></a>
+        	
+        	<hr/>
+            
+        	<strong>Original Image</strong>
+        	
+        	<p><img src="#$fileDownload_temp#" border="0" /></p>
+    	
+        <xar:else/>
+
         <a name="original"></a>
 
         <hr/>
         <p>
-            <a href="#xarServer::getCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
+            <a href="#xarServer::getCurrentURL()##config">Configure</a>
             <xar:if condition="!empty($selimage['filePreview'])">
             |
-            <a href="#xarServer::getCurrentURL()##preview"><xar:mlstring>Preview Image</xar:mlstring></a>
+            <a href="#xarServer::getCurrentURL()##preview">Preview Image</a>
             </xar:if>
             |
-            <strong><xar:mlstring>Original Image</xar:mlstring></strong>
+            <strong>Original Image</strong>
         </p>
         <p><img src="#$selimage['fileDownload']#" border="0"/></p>
+        </xar:if>
     </xar:if>
 
     </div>
