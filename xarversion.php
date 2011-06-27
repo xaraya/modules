@@ -29,4 +29,11 @@ $modversion['admin'] = true;
 $modversion['user'] = true;
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Utility';
+$modversion['dependencyinfo'] = array(
+                                    0 => array(
+                                            'name' => 'Xaraya Core',
+                                            'version_ge' => '2.1.0'
+                                            'version_le' => '2.1.99'
+                                         ),
+                                      );
 ?>
