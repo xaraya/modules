@@ -70,7 +70,7 @@ function hitcount_admin_delete()
                              'confirm' => $confirm))) {
         return;
     }
-    xarResponse::redirect(xarModURL('hitcount', 'admin', 'view'));
+    xarController::redirect(xarModURL('hitcount', 'admin', 'view'));
     return true;
 }
 
