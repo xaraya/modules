@@ -134,7 +134,7 @@ function images_adminapi_getimages($args)
     switch ($sort) {
         case 'name':
             // handled by browse above
-            //$strsort = 'fileName';
+            $strsort = 'fileName'; // obviously not handled by browse
             break;
         case 'type':
             $strsort = 'fileType';
