@@ -30,7 +30,7 @@ class CBUIEditTokenPipelineSample {
         $pipeline = new Amazon_FPS_CBUIEditTokenPipeline(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
 
         $pipeline->setMandatoryParameters("callerReferenceEditToken", 
-				"http://www.mysite.com/call_back.jsp", 
+                "http://www.mysite.com/call_back.jsp", 
                 "H6VWDM8TPZYCGBJY5W3P3QYK7HZNYQ7NPHVV2SYKW19MIY2G4BG4YQTVDYW3I1SM");
         
         //EditToken url

@@ -15,12 +15,12 @@
 function amazonfps_admin_main()
 {
 
-	// no reason to share this overview with the viewing public
-	if (!xarSecurityCheck('DeleteAmazonFPS',0)) {
-		return;
-	}
+    // no reason to share this overview with the viewing public
+    if (!xarSecurityCheck('DeleteAmazonFPS',0)) {
+        return;
+    }
      
-	return xarTplModule('amazonfps','admin','overview');
+    return xarTplModule('amazonfps','admin','overview');
 
 }
 

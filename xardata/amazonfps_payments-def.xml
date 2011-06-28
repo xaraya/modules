@@ -6,7 +6,7 @@
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
-  <maxid>35</maxid>
+  <maxid>0</maxid>
   <config>a:2:{s:11:"adminfields";s:74:"itemid, refitemid, modulename, objectname, description, amount, conversion";s:12:"filterfields";s:37:"description,Description;amount,Amount";}</config>
   <isalias>true</isalias>
   <properties>

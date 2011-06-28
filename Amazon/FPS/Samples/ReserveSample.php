@@ -60,7 +60,7 @@ include_once ('.config.inc.php');
 /**
   * Reserve Action Sample
   * 
-  * Reserve API is part of the Reserve and Settle API conjunction that serve the purpose of a pay where the authorization and settlement have a timing 				difference.
+  * Reserve API is part of the Reserve and Settle API conjunction that serve the purpose of a pay where the authorization and settlement have a timing                 difference.
   *   
   * @param Amazon_FPS_Interface $service instance of Amazon_FPS_Interface
   * @param mixed $request Amazon_FPS_Model_Reserve or array of parameters

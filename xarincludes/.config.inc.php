@@ -38,7 +38,7 @@
     * If library is installed in PHP include path, this is not needed
     ***********************************************************************/   
 
-	$modpath = sys::root() . sys::code() . 'modules/amazonfps';
+    $modpath = sys::root() . sys::code() . 'modules/amazonfps';
     set_include_path(get_include_path() . PATH_SEPARATOR . $modpath);    
     
    /************************************************************************ 

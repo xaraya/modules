@@ -25,8 +25,8 @@ require_once 'Amazon/IpnReturnUrlValidation/SignatureUtilsForOutbound.php';
   
 class Amazon_FPS_IPNVerificationSampleCode {
 
-	public static function test() {
-		
+    public static function test() {
+        
         $utils = new Amazon_FPS_SignatureUtilsForOutbound();
         
         //Parameters present in ipn.
@@ -56,7 +56,7 @@ class Amazon_FPS_IPNVerificationSampleCode {
         //IPN is sent as a http POST request and hence we specify POST as the http method.
         //Signature verification does not require your secret key
         print "Is signature correct: " . $utils->validateRequest($params, $urlEndPoint, "POST") . "\n";
-	}
+    }
 }
 
 Amazon_FPS_IPNVerificationSampleCode::test(); 

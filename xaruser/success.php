@@ -15,11 +15,11 @@
 function amazonfps_user_success()
 {
  
-	if (!xarSecurityCheck('AddAmazonFPS',0)) {
-		return;
-	}
+    if (!xarSecurityCheck('AddAmazonFPS',0)) {
+        return;
+    }
      
-	return xarTplModule('amazonfps','user','success');
+    return xarTplModule('amazonfps','user','success');
 
 }
 

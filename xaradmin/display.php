@@ -26,26 +26,26 @@ function amazonfps_admin_display()
         throw new Exception($msg);
     }
 
-	$data['itemid'] = $itemid;
+    $data['itemid'] = $itemid;
 
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
  
-	if (!xarSecurityCheck('DeleteAmazonFPS',0)) {
-		return;
-	}
-	
-	$data['name'] = 'amazonfps_payments'; 
+    if (!xarSecurityCheck('DeleteAmazonFPS',0)) {
+        return;
+    }
+    
+    $data['name'] = 'amazonfps_payments'; 
 
     // Get the object we'll be working with
     $data['object'] = DataObjectMaster::getObject(array('name' => 'amazonfps_payments')); 
-	$data['label'] = $data['object']->label;
+    $data['label'] = $data['object']->label;
    
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
  
     $data['object']->getItem(array('itemid' => $itemid));
 
-	$data['itemid'] = $itemid;
+    $data['itemid'] = $itemid;
 
     return $data;
 

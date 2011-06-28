@@ -8,7 +8,7 @@
 <xar:set name="activetab">$info[2]</xar:set>
 <div>
   <ul class="xar-tabs">
-    <xar:sec mask="AdminAmazonFPS" catch="false">
+    <xar:sec mask="DeleteAmazonFPS" catch="false">
         <xar:if condition="$activetab eq 'view' or $activetab eq 'display'">
             <xar:set name="tabclass">'xar-tab-active'</xar:set>
             <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
@@ -22,7 +22,7 @@
           </a>
         </li>
     </xar:sec>
-    <xar:sec mask="Adminamazonfps" catch="false">
+    <xar:sec mask="AdminAmazonFPS" catch="false">
         <xar:if condition="$activetab eq 'modifyconfig'">
             <xar:set name="tabclass">'xar-tab-active'</xar:set>
             <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
@@ -36,7 +36,7 @@
           </a>
         </li>
     </xar:sec>
-    <xar:sec mask="Editamazonfps" catch="false">
+    <xar:sec mask="EditAmazonFPS" catch="false">
         <xar:if condition="$activetab eq 'main' or $activetab eq 'overview' or $activetab eq 'docs'">
             <xar:set name="tabclass">'xar-tab-active'</xar:set>
             <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>

@@ -24,56 +24,56 @@ sys::import('modules.amazonfps.Amazon.FPS.Model.PayRequest');
 
 function amazonfps_userapi_pay($args) {
 
-	if (!xarSecurityCheck('AddAmazonFPS')) return;
+    if (!xarSecurityCheck('AddAmazonFPS')) return;
 
-	$currency = 'USD';
+    $currency = 'USD';
 
-	extract($args);
+    extract($args);
 
-	$service = new Amazon_FPS_Client(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
+    $service = new Amazon_FPS_Client(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
 
-	$request = new Amazon_FPS_Model_PayRequest();
-	$request->setSenderTokenId($tokenID); //set the proper senderToken here.
-	$amount = new Amazon_FPS_Model_Amount();
-	$amount->setCurrencyCode($currency);
-	$amount->setValue($paymentamount); //set the transaction amount here;
-	$request->setTransactionAmount($amount);
-	$request->setCallerReference($callerReference); //set the unique caller reference here.
+    $request = new Amazon_FPS_Model_PayRequest();
+    $request->setSenderTokenId($tokenID); //set the proper senderToken here.
+    $amount = new Amazon_FPS_Model_Amount();
+    $amount->setCurrencyCode($currency);
+    $amount->setValue($paymentamount); //set the transaction amount here;
+    $request->setTransactionAmount($amount);
+    $request->setCallerReference($callerReference); //set the unique caller reference here.
 
-	$result['error'] = '';
+    $result['error'] = '';
 
-	try {
-		$response = $service->pay($request);
+    try {
+        $response = $service->pay($request);
               
-		if ($response->isSetPayResult()) {
-			$payResult = $response->getPayResult();
-			if ($payResult->isSetTransactionId()) {
-				$result['TransactionId'] = $payResult->getTransactionId();
-			}
-			if ($payResult->isSetTransactionStatus()) {
-				$result['TransactionStatus'] = $payResult->getTransactionStatus();
-			}
-		} 
+        if ($response->isSetPayResult()) {
+            $payResult = $response->getPayResult();
+            if ($payResult->isSetTransactionId()) {
+                $result['TransactionId'] = $payResult->getTransactionId();
+            }
+            if ($payResult->isSetTransactionStatus()) {
+                $result['TransactionStatus'] = $payResult->getTransactionStatus();
+            }
+        } 
 
-		if ($response->isSetResponseMetadata()) {  
-			$responseMetadata = $response->getResponseMetadata();
-			if ($responseMetadata->isSetRequestId()) { 
-				$result['RequestId'] = $responseMetadata->getRequestId();
-			}
-		} 
+        if ($response->isSetResponseMetadata()) {  
+            $responseMetadata = $response->getResponseMetadata();
+            if ($responseMetadata->isSetRequestId()) { 
+                $result['RequestId'] = $responseMetadata->getRequestId();
+            }
+        } 
 
-	} catch (Amazon_FPS_Exception $ex) {
-			$result['error'] .= "Caught Exception: " . $ex->getMessage() . "<br />";
-			$result['error'] .= "Response Status Code: " . $ex->getStatusCode() . "<br />";
-			$result['error'] .= "Error Code: " . $ex->getErrorCode() . "<br />";
-			$result['error'] .= "Error Type: " . $ex->getErrorType() . "<br />";
-			$result['error'] .= "Request ID: " . $ex->getRequestId() . "<br />";
-			$result['error'] .= "XML: " . $ex->getXML();
-			print $result['error'];
-			return;
-	}
+    } catch (Amazon_FPS_Exception $ex) {
+            $result['error'] .= "Caught Exception: " . $ex->getMessage() . "<br />";
+            $result['error'] .= "Response Status Code: " . $ex->getStatusCode() . "<br />";
+            $result['error'] .= "Error Code: " . $ex->getErrorCode() . "<br />";
+            $result['error'] .= "Error Type: " . $ex->getErrorType() . "<br />";
+            $result['error'] .= "Request ID: " . $ex->getRequestId() . "<br />";
+            $result['error'] .= "XML: " . $ex->getXML();
+            print $result['error'];
+            return;
+    }
 
-	return $result;
-	
+    return $result;
+    
 }
 ?>

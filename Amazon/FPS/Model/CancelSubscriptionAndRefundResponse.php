@@ -76,7 +76,7 @@ class Amazon_FPS_Model_CancelSubscriptionAndRefundResponse extends Amazon_FPS_Mo
         $dom = new DOMDocument();
         $dom->loadXML($xml);
         $xpath = new DOMXPath($dom);
-    	$xpath->registerNamespace('a', 'http://fps.amazonaws.com/doc/2008-09-17/');
+        $xpath->registerNamespace('a', 'http://fps.amazonaws.com/doc/2008-09-17/');
         $response = $xpath->query('//a:CancelSubscriptionAndRefundResponse');
         if ($response->length == 1) {
             return new Amazon_FPS_Model_CancelSubscriptionAndRefundResponse(($response->item(0))); 

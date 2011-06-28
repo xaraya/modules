@@ -16,9 +16,9 @@ function amazonfps_admin_overview()
 {
  
     // no reason to share this overview with the viewing public
-	if (!xarSecurityCheck('DeleteAmazonFPS',0)) {
-		return;
-	}
+    if (!xarSecurityCheck('DeleteAmazonFPS',0)) {
+        return;
+    }
 
     return xarTplModule('amazonfps','admin','overview');
 

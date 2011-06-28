@@ -60,7 +60,7 @@ include_once ('.config.inc.php');
 /**
   * Settle Debt Action Sample
   * 
-  * Allows a caller to initiate a transaction that atomically transfers money from a sender’s payment instrument to the recipient, while decreasing corresponding 				debt balance.
+  * Allows a caller to initiate a transaction that atomically transfers money from a sender’s payment instrument to the recipient, while decreasing corresponding                 debt balance.
   *   
   * @param Amazon_FPS_Interface $service instance of Amazon_FPS_Interface
   * @param mixed $request Amazon_FPS_Model_SettleDebt or array of parameters

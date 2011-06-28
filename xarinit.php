@@ -22,7 +22,7 @@ sys::import('xaraya.tableddl');
 function amazonfps_init()
 {
 
-	$dbconn =& xarDB::getConn();
+    $dbconn =& xarDB::getConn();
     $tables =& xarDB::getTables();
 
     $prefix = xarDB::getPrefix();
@@ -33,27 +33,27 @@ function amazonfps_init()
         $charset = xarSystemVars::get(sys::CONFIG, 'DB.Charset');
         $dbconn->begin();
 
-		$fields = array(
-                        'itemid' => array('type' => 'integer', 'unsigned' => true, 'null' =>		false, 'increment' => true, 'primary_key' => true),
+        $fields = array(
+                        'itemid' => array('type' => 'integer', 'unsigned' => true, 'null' =>        false, 'increment' => true, 'primary_key' => true),
                         'refitemid' => array('type' => 'integer', 'unsigned' => true, 'null' => false),
-						'modulename' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset),
-						'objectname' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset),
-						'amount' =>  array('type' => 'integer', 'unsigned' => true, 'null' =>		false),
-						'currency' => array('type' => 'varchar','size' => 254,'null' => false,		'charset' => $charset),
-						'description' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset),
-						'conversion' => 	 array('type'        => 'boolean', 'default'     => false),
-						'success_url' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset),
-						'transactionid' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset),
-						'transactionstatus' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset),
-						'requestid' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset),
-						'paymentmethod' => array('type' => 'varchar','size' => 254,'null' =>		false, 'charset' => $charset)
-			);
+                        'modulename' => array('type' => 'varchar','size' => 254,'null' =>        false, 'charset' => $charset),
+                        'objectname' => array('type' => 'varchar','size' => 254,'null' =>        false, 'charset' => $charset),
+                        'amount' =>  array('type' => 'integer', 'unsigned' => true, 'null' =>        false),
+                        'currency' => array('type' => 'varchar','size' => 254,'null' => false,        'charset' => $charset),
+                        'description' => array('type' => 'varchar','size' => 254,'null' =>        false, 'charset' => $charset),
+                        'conversion' =>      array('type'        => 'boolean', 'default'     => false),
+                        'success_url' => array('type' => 'varchar','size' => 254,'null' =>        false, 'charset' => $charset),
+                        'transactionid' => array('type' => 'varchar','size' => 254,'null' =>        false, 'charset' => $charset),
+                        'transactionstatus' => array('type' => 'varchar','size' => 254,'null' =>        false, 'charset' => $charset),
+                        'requestid' => array('type' => 'varchar','size' => 254,'null' =>        false, 'charset' => $charset),
+                        'paymentmethod' => array('type' => 'varchar','size' => 254,'null' =>        false, 'charset' => $charset)
+            );
         $query = xarDBCreateTable($tables['payments'],$fields);
         $dbconn->Execute($query);
 
         $dbconn->commit();
 
-	} catch (Exception $e) {
+    } catch (Exception $e) {
         $dbconn->rollback();
         throw $e;
     }
@@ -61,20 +61,20 @@ function amazonfps_init()
     $module = 'amazonfps';
     $objects = array(
                 'amazonfps_payments',
-				'amazonfps_module_settings' 
+                'amazonfps_module_settings' 
                 );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;    
 
-	xarModVars::set('amazonfps','public_key',''); 
-	xarModVars::set('amazonfps','secret_key',''); 
-	
-	xarModVars::set('amazonfps','enable_filters',1);  
-	xarModVars::set('amazonfps','filters_min_items',9);   
-	xarModVars::set('amazonfps','callerreference_prefix','');  
+    xarModVars::set('amazonfps','public_key',''); 
+    xarModVars::set('amazonfps','secret_key',''); 
+    
+    xarModVars::set('amazonfps','enable_filters',1);  
+    xarModVars::set('amazonfps','filters_min_items',9);   
+    xarModVars::set('amazonfps','callerreference_prefix','');  
 
-	$module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'amazonfps'));
-	$module_settings->initialize();
+    $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'amazonfps'));
+    $module_settings->initialize();
 
 # --------------------------------------------------------
 # Create privilege instances

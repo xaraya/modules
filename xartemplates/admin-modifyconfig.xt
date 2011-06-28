@@ -11,10 +11,10 @@
  
 <style>
 .mod_settings fieldset {
-	border: none;
+    border: none;
  } 
  .mod_settings h4 {
-	margin-top: 7px;
+    margin-top: 7px;
  }
 </style>
 
@@ -24,10 +24,10 @@
         <form method="post" action="#xarServer::getCurrentURL()#">
            <fieldset class="mod_settings">
                 <legend>Modify Amazon FPS Configuration</legend>
-		<h4>General Settings:</h4>
+        <h4>General Settings:</h4>
                 <xar:data-form object="$module_settings" />
                 <xar:data-form object="$object" itemid="0" template="module_settings" />
-	  </fieldset>
+      </fieldset>
 
             <div class="xar-form-input-after">
                 <input type="hidden" name="authid" value="#xarSecGenAuthKey('amazonfps')#" />

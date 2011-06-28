@@ -53,13 +53,13 @@ include_once ('.config.inc.php');
  * sample for Pay Action
  ***********************************************************************/
  // @TODO: set request. Action can be passed as Amazon_FPS_Model_PayRequest
-	$request =  new Amazon_FPS_Model_PayRequest();
-	$request->setSenderTokenId('A12345666666BCDEFFF');//set the proper senderToken here.
-	$amount = new Amazon_FPS_Model_Amount();
-	$amount->setCurrencyCode("USD");
-	$amount->setValue('1'); //set the transaction amount here;
-	$request->setTransactionAmount($amount);
-	$request->setCallerReference('CallerReference123456789'); //set the unique caller reference here.
+    $request =  new Amazon_FPS_Model_PayRequest();
+    $request->setSenderTokenId('A12345666666BCDEFFF');//set the proper senderToken here.
+    $amount = new Amazon_FPS_Model_Amount();
+    $amount->setCurrencyCode("USD");
+    $amount->setValue('1'); //set the transaction amount here;
+    $request->setTransactionAmount($amount);
+    $request->setCallerReference('CallerReference123456789'); //set the unique caller reference here.
 
  // object or array of parameters
  // invokePay($service, $request);

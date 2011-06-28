@@ -20,7 +20,7 @@ function amazonfps_admin_modifyconfig() {
 
     sys::import('modules.dynamicdata.class.objects.master');
    
-	$data['object'] = DataObjectMaster::getObject(array('name' => 'amazonfps_module_settings'));
+    $data['object'] = DataObjectMaster::getObject(array('name' => 'amazonfps_module_settings'));
     $data['object']->getItem(array('itemid' => 0));
 
     // Get the object we'll be working with for common configuration settings

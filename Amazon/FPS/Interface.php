@@ -355,7 +355,7 @@ interface  Amazon_FPS_Interface
     /**
      * Reserve 
      * 
-     * Reserve API is part of the Reserve and Settle API conjunction that serve the purpose of a pay where the authorization and settlement have a timing 				difference.
+     * Reserve API is part of the Reserve and Settle API conjunction that serve the purpose of a pay where the authorization and settlement have a timing                 difference.
      *   
      * @see http://docs.amazonwebservices.com/${docPath}Reserve.html      
      * @param mixed $request array of parameters for Amazon_FPS_Model_ReserveRequest request
@@ -389,7 +389,7 @@ interface  Amazon_FPS_Interface
     /**
      * Settle Debt 
      * 
-     * Allows a caller to initiate a transaction that atomically transfers money from a sender’s payment instrument to the recipient, while decreasing corresponding 				debt balance.
+     * Allows a caller to initiate a transaction that atomically transfers money from a sender’s payment instrument to the recipient, while decreasing corresponding                 debt balance.
      *   
      * @see http://docs.amazonwebservices.com/${docPath}SettleDebt.html      
      * @param mixed $request array of parameters for Amazon_FPS_Model_SettleDebtRequest request

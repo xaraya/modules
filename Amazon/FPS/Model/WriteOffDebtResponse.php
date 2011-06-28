@@ -76,7 +76,7 @@ class Amazon_FPS_Model_WriteOffDebtResponse extends Amazon_FPS_Model
         $dom = new DOMDocument();
         $dom->loadXML($xml);
         $xpath = new DOMXPath($dom);
-    	$xpath->registerNamespace('a', 'http://fps.amazonaws.com/doc/2008-09-17/');
+        $xpath->registerNamespace('a', 'http://fps.amazonaws.com/doc/2008-09-17/');
         $response = $xpath->query('//a:WriteOffDebtResponse');
         if ($response->length == 1) {
             return new Amazon_FPS_Model_WriteOffDebtResponse(($response->item(0))); 

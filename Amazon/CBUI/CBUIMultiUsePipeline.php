@@ -69,7 +69,7 @@ class Amazon_FPS_CBUIMultiUsePipeline extends Amazon_FPS_CBUIPipeline {
     function setRecipientTokenList($isRecipientCobranding, $tokens) {
         $this->addParameter("isRecipientCobranding", ($isRecipientCobranding ? "True" : "False"));
         if (!isset($tokens)) return;
-		$tokenList = implode(",", $tokens);         
+        $tokenList = implode(",", $tokens);         
         $this->addParameter("recipientTokenList", $tokenList);
     }
 

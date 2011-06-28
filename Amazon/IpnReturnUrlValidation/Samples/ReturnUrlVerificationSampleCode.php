@@ -25,7 +25,7 @@ require_once 'Amazon/IpnReturnUrlValidation/SignatureUtilsForOutbound.php';
   
 class Amazon_FPS_ReturnUrlVerificationSampleCode {
 
-	public static function test() {
+    public static function test() {
         $utils = new Amazon_FPS_SignatureUtilsForOutbound();
         
         //Parameters present in return url.
@@ -47,7 +47,7 @@ class Amazon_FPS_ReturnUrlVerificationSampleCode {
         //return url is sent as a http GET request and hence we specify GET as the http method.
         //Signature verification does not require your secret key
         print "Is signature correct: " . $utils->validateRequest($params, $urlEndPoint, "GET") . "\n";
-	}
+    }
 }
 
 Amazon_FPS_ReturnUrlVerificationSampleCode::test(); 

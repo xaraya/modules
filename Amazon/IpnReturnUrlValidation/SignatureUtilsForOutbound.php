@@ -1,13 +1,13 @@
 <?php
 /*******************************************************************************
- *	Copyright 2008-2010 Amazon Technologies, Inc.
- *	Licensed under the Apache License, Version 2.0 (the 'License');
+ *    Copyright 2008-2010 Amazon Technologies, Inc.
+ *    Licensed under the Apache License, Version 2.0 (the 'License');
  *
- *	You may not use this file except in compliance with the License.
- *	You may obtain a copy of the License at: http://aws.amazon.com/apache2.0
- *	This file is distributed on an 'AS IS' BASIS, WITHOUT WARRANTIES OR
- *	CONDITIONS OF ANY KIND, either express or implied. See the License for the
- *	specific language governing permissions and limitations under the License.
+ *    You may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at: http://aws.amazon.com/apache2.0
+ *    This file is distributed on an 'AS IS' BASIS, WITHOUT WARRANTIES OR
+ *    CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ *    specific language governing permissions and limitations under the License.
  ******************************************************************************/
 
 
@@ -15,7 +15,7 @@ class Amazon_FPS_SignatureException extends Exception {}
 
 
 class Amazon_FPS_SignatureUtilsForOutbound {
-	 
+     
     const SIGNATURE_KEYNAME = "signature";
     const SIGNATURE_METHOD_KEYNAME = "signatureMethod";
     const SIGNATURE_VERSION_KEYNAME = "signatureVersion";
@@ -28,17 +28,17 @@ class Amazon_FPS_SignatureUtilsForOutbound {
     const USER_AGENT_IDENTIFIER = 'amazon-fps-2008-09-17-php5-library-2010-09-13';
 
 
-	//Your AWS access key	
-	private $aws_access_key;
+    //Your AWS access key    
+    private $aws_access_key;
 
-	//Your AWS secret key. Required only for ipn or return url verification signed using signature version1.	
-	private $aws_secret_key;
+    //Your AWS secret key. Required only for ipn or return url verification signed using signature version1.    
+    private $aws_secret_key;
 
     public function __construct($aws_access_key = null, $aws_secret_key = null) {
         $this->aws_access_key = $aws_access_key;
         $this->aws_secret_key = $aws_secret_key;
     }
-	
+    
     /**
      * Validates the request by checking the integrity of its parameters.
      * @param parameters - all the http parameters sent in IPNs or return urls. 
@@ -58,111 +58,111 @@ class Amazon_FPS_SignatureUtilsForOutbound {
      * Verifies the signature using HMAC and your secret key. 
      */
     private function validateSignatureV1(array $parameters) {
-	
-	    //We should not include signature while calculating string to sign.
-    	$signature = $parameters[self::SIGNATURE_KEYNAME];
-	    unset($parameters[self::SIGNATURE_KEYNAME]);
+    
+        //We should not include signature while calculating string to sign.
+        $signature = $parameters[self::SIGNATURE_KEYNAME];
+        unset($parameters[self::SIGNATURE_KEYNAME]);
  
         $stringToSign = self::_calculateStringToSignV1($parameters);
-	    //We should include signature back to array after calculating string to sign.
-    	$parameters[self::SIGNATURE_KEYNAME] = $signature;
-	        
+        //We should include signature back to array after calculating string to sign.
+        $parameters[self::SIGNATURE_KEYNAME] = $signature;
+            
         return $signature == base64_encode(hash_hmac('sha1', $stringToSign, $this->aws_secret_key, true));
     }
-	
+    
     /**
      * Verifies the signature. 
      * Only default algorithm OPENSSL_ALGO_SHA1 is supported.
      */
     private function validateSignatureV2(array $parameters, $urlEndPoint, $httpMethod) {
-	//1. Input validation
-	    $signature = $parameters[self::SIGNATURE_KEYNAME];
-	    if (!isset($signature)) {
-	    	throw new Amazon_FPS_SignatureException("'signature' is missing from the parameters.");
-	    }
-	    $signatureMethod = $parameters[self::SIGNATURE_METHOD_KEYNAME];
-	    if (!isset($signatureMethod)) {
-	    	throw new Amazon_FPS_SignatureException("'signatureMethod' is missing from the parameters.");
-	    }
-	    $signatureAlgorithm = self::getSignatureAlgorithm($signatureMethod);
-	    if (!isset($signatureAlgorithm)) {
-	    	throw new Amazon_FPS_SignatureException("'signatureMethod' present in parameters is invalid. Valid values are: RSA-SHA1");
-	    }
-	    $certificateUrl = $parameters[self::CERTIFICATE_URL_KEYNAME];
-	    if (!isset($certificateUrl)) {
-	    	throw new Amazon_FPS_SignatureException("'certificateUrl' is missing from the parameters.");
-	    }
-	    elseif((stripos($parameters[self::CERTIFICATE_URL_KEYNAME], self::FPS_PROD_ENDPOINT) !== 0) 
-	        && (stripos($parameters[self::CERTIFICATE_URL_KEYNAME], self::FPS_SANDBOX_ENDPOINT) !== 0)){
-			throw new Amazon_FPS_SignatureException('The `certificateUrl` value must begin with ' . self::FPS_PROD_ENDPOINT . ' or ' . self::FPS_SANDBOX_ENDPOINT . '.');
-		}
-	     $verified = $this->verifySignature($parameters, $urlEndPoint);
-	    if (!$verified){
-		throw new Amazon_FPS_SignatureException('Certificate could not be verified by the FPS service');
-	    }
+    //1. Input validation
+        $signature = $parameters[self::SIGNATURE_KEYNAME];
+        if (!isset($signature)) {
+            throw new Amazon_FPS_SignatureException("'signature' is missing from the parameters.");
+        }
+        $signatureMethod = $parameters[self::SIGNATURE_METHOD_KEYNAME];
+        if (!isset($signatureMethod)) {
+            throw new Amazon_FPS_SignatureException("'signatureMethod' is missing from the parameters.");
+        }
+        $signatureAlgorithm = self::getSignatureAlgorithm($signatureMethod);
+        if (!isset($signatureAlgorithm)) {
+            throw new Amazon_FPS_SignatureException("'signatureMethod' present in parameters is invalid. Valid values are: RSA-SHA1");
+        }
+        $certificateUrl = $parameters[self::CERTIFICATE_URL_KEYNAME];
+        if (!isset($certificateUrl)) {
+            throw new Amazon_FPS_SignatureException("'certificateUrl' is missing from the parameters.");
+        }
+        elseif((stripos($parameters[self::CERTIFICATE_URL_KEYNAME], self::FPS_PROD_ENDPOINT) !== 0) 
+            && (stripos($parameters[self::CERTIFICATE_URL_KEYNAME], self::FPS_SANDBOX_ENDPOINT) !== 0)){
+            throw new Amazon_FPS_SignatureException('The `certificateUrl` value must begin with ' . self::FPS_PROD_ENDPOINT . ' or ' . self::FPS_SANDBOX_ENDPOINT . '.');
+        }
+         $verified = $this->verifySignature($parameters, $urlEndPoint);
+        if (!$verified){
+        throw new Amazon_FPS_SignatureException('Certificate could not be verified by the FPS service');
+        }
 
-	     return $verified;
+         return $verified;
     
 }
 private function httpsRequest($url){
-		// Compose the cURL request
-   	   $curlHandle = curl_init();
-   	   curl_setopt($curlHandle, CURLOPT_URL, $url);
-   	   curl_setopt($curlHandle, CURLOPT_FILETIME, false);
-   	   curl_setopt($curlHandle, CURLOPT_FRESH_CONNECT, true);
-   	   curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, false);
-   	   curl_setopt($curlHandle, CURLOPT_SSL_VERIFYHOST, 0);
-   	   curl_setopt($curlHandle, CURLOPT_CAINFO, '../ca-bundle.crt');
-   	   curl_setopt($curlHandle, CURLOPT_FOLLOWLOCATION, false);
-   	   curl_setopt($curlHandle, CURLOPT_MAXREDIRS, 0);
-   	   curl_setopt($curlHandle, CURLOPT_HEADER, true);
-   	   curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
-   	   curl_setopt($curlHandle, CURLOPT_NOSIGNAL, true);
-   	   curl_setopt($curlHandle, CURLOPT_USERAGENT, self::USER_AGENT_IDENTIFIER);
-   		// Handle the encoding if we can.
-   	   if (extension_loaded('zlib')){
-   	   	curl_setopt($curlHandle, CURLOPT_ENCODING, '');
-   	   }
-   	
-   	    // Execute the request
-   	   $response = curl_exec($curlHandle);
-   		
-	    // Grab only the body
-   	   $headerSize = curl_getinfo($curlHandle, CURLINFO_HEADER_SIZE);
-   	   $responseBody = substr($response, $headerSize);
-   	
-   		// Close the cURL connection
-   	   curl_close($curlHandle);
-   	
-   		// Return the public key
-   	   return $responseBody;
-	}
+        // Compose the cURL request
+          $curlHandle = curl_init();
+          curl_setopt($curlHandle, CURLOPT_URL, $url);
+          curl_setopt($curlHandle, CURLOPT_FILETIME, false);
+          curl_setopt($curlHandle, CURLOPT_FRESH_CONNECT, true);
+          curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, false);
+          curl_setopt($curlHandle, CURLOPT_SSL_VERIFYHOST, 0);
+          curl_setopt($curlHandle, CURLOPT_CAINFO, '../ca-bundle.crt');
+          curl_setopt($curlHandle, CURLOPT_FOLLOWLOCATION, false);
+          curl_setopt($curlHandle, CURLOPT_MAXREDIRS, 0);
+          curl_setopt($curlHandle, CURLOPT_HEADER, true);
+          curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($curlHandle, CURLOPT_NOSIGNAL, true);
+          curl_setopt($curlHandle, CURLOPT_USERAGENT, self::USER_AGENT_IDENTIFIER);
+           // Handle the encoding if we can.
+          if (extension_loaded('zlib')){
+              curl_setopt($curlHandle, CURLOPT_ENCODING, '');
+          }
+       
+           // Execute the request
+          $response = curl_exec($curlHandle);
+           
+        // Grab only the body
+          $headerSize = curl_getinfo($curlHandle, CURLINFO_HEADER_SIZE);
+          $responseBody = substr($response, $headerSize);
+       
+           // Close the cURL connection
+          curl_close($curlHandle);
+       
+           // Return the public key
+          return $responseBody;
+    }
 
-	/**
-	 * Method: verify_signature
-	 */
-	private function verifySignature($parameters, $urlEndPoint){
-		// Switch hostnames
-		if (stripos($parameters[self::CERTIFICATE_URL_KEYNAME], self::FPS_SANDBOX_ENDPOINT) === 0){
-			$fpsServiceEndPoint = self::FPS_SANDBOX_ENDPOINT;
-		}
-		elseif (stripos($parameters[self::CERTIFICATE_URL_KEYNAME], self::FPS_PROD_ENDPOINT) === 0){
-			$fpsServiceEndPoint = self::FPS_PROD_ENDPOINT;
-		}
+    /**
+     * Method: verify_signature
+     */
+    private function verifySignature($parameters, $urlEndPoint){
+        // Switch hostnames
+        if (stripos($parameters[self::CERTIFICATE_URL_KEYNAME], self::FPS_SANDBOX_ENDPOINT) === 0){
+            $fpsServiceEndPoint = self::FPS_SANDBOX_ENDPOINT;
+        }
+        elseif (stripos($parameters[self::CERTIFICATE_URL_KEYNAME], self::FPS_PROD_ENDPOINT) === 0){
+            $fpsServiceEndPoint = self::FPS_PROD_ENDPOINT;
+        }
 
-		$url = $fpsServiceEndPoint . '?Action=VerifySignature&UrlEndPoint=' . rawurlencode($urlEndPoint);
+        $url = $fpsServiceEndPoint . '?Action=VerifySignature&UrlEndPoint=' . rawurlencode($urlEndPoint);
 
-		$queryString = rawurlencode(http_build_query($parameters, '', '&'));
-		//$queryString = str_replace(array('%2F', '%2B'), array('%252F', '%252B'), $queryString);
+        $queryString = rawurlencode(http_build_query($parameters, '', '&'));
+        //$queryString = str_replace(array('%2F', '%2B'), array('%252F', '%252B'), $queryString);
 
-		$url .= '&HttpParameters=' . $queryString . '&Version=2008-09-17';
+        $url .= '&HttpParameters=' . $queryString . '&Version=2008-09-17';
 
-		$response = $this->httpsRequest($url);
-		$xml = new SimpleXMLElement($response);
-		$result = (string) $xml->VerifySignatureResult->VerificationStatus;
+        $response = $this->httpsRequest($url);
+        $xml = new SimpleXMLElement($response);
+        $result = (string) $xml->VerifySignatureResult->VerificationStatus;
 
-		return ($result === 'Success');
-	}
+        return ($result === 'Success');
+    }
 
     /**
      * Calculate String to Sign for SignatureVersion 1
@@ -179,7 +179,7 @@ private function httpsRequest($url){
     }
 
     
-	
+    
     
     private static function getSignatureAlgorithm($signatureMethod) {
         if ("RSA-SHA1" == $signatureMethod) {

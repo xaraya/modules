@@ -36,7 +36,7 @@ class Amazon_FPS_CBUIRecipientTokenPipeline extends Amazon_FPS_CBUIPipeline {
      * Set mandatory parameters required for recipient token pipeline.
      */
     function setMandatoryParameters($callerReference, $returnUrl, 
-    		$maxFixedFee, $maxVariableFee, $recipientPaysFee) {
+            $maxFixedFee, $maxVariableFee, $recipientPaysFee) {
         $this->addParameter("callerReference", $callerReference);
         $this->addParameter("returnURL", $returnUrl);
         $this->addParameter("maxFixedFee", $maxFixedFee);

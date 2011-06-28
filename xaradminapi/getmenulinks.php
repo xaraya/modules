@@ -47,7 +47,7 @@ function amazonfps_adminapi_getmenulinks()
                               'label' => xarML('Modify Configuration'));
     }
 
-	    if (xarSecurityCheck('Adminamazonfps',0)) {
+        if (xarSecurityCheck('Adminamazonfps',0)) {
         // Add a link to the module's configuration.
         // We place this link last in the list so have a similar menu for all modules
         $menulinks[] = Array('url'   => xarModURL('amazonfps',

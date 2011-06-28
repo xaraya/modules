@@ -18,10 +18,10 @@
  */
 function amazonfps_admin_delete()
 {    
-	
-	if (!xarSecurityCheck('DeleteAmazonFPS',1)) {
-		return;
-	}
+    
+    if (!xarSecurityCheck('DeleteAmazonFPS',1)) {
+        return;
+    }
 
     if (!xarVarFetch('itemid' ,     'int',    $itemid, '' ,          XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
@@ -33,18 +33,18 @@ function amazonfps_admin_delete()
         throw new Exception($msg);
     }
 
-	$data['itemid'] = $itemid;
+    $data['itemid'] = $itemid;
 
     sys::import('modules.dynamicdata.class.objects.master');
 
-	$name = 'amazonfps_payments';
-	$data['name'] = $name;
+    $name = 'amazonfps_payments';
+    $data['name'] = $name;
 
-	// Get the object name
-	$object = DataObjectMaster::getObject(array('name' => $name));
-	$object->getItem(array('itemid' => $itemid));
+    // Get the object name
+    $object = DataObjectMaster::getObject(array('name' => $name));
+    $object->getItem(array('itemid' => $itemid));
 
-	$data['object'] = $object;
+    $data['object'] = $object;
     
     if ($data['confirm']) {
 
@@ -53,7 +53,7 @@ function amazonfps_admin_delete()
             return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
         }        
 
-		$object->deleteItem(array('itemid' => $itemid));
+        $object->deleteItem(array('itemid' => $itemid));
         
         // Jump to the next page
         xarResponse::redirect(xarModURL('amazonfps','admin','view'));

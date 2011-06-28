@@ -11,44 +11,44 @@
     <div class="xar-mod-body">
         <xar:template type="module" file="admintabs" />
 
-	<img src="#sys::code()#modules/amazonfps/xarimages/PBAWS_LOGO_152_60.jpg" alt="powered by Amazon Web Services" width="152" height="60" class="xar-module-icon" style="margin-bottom: 8px;" />
+    <img src="#sys::code()#modules/amazonfps/xarimages/PBAWS_LOGO_152_60.jpg" alt="powered by Amazon Web Services" width="152" height="60" class="xar-module-icon" style="margin-bottom: 8px;" />
 
         <h2>View Payments</h2>
 
 
 <xar:if condition="$showfilters">
 
-	<xar:foreach in="$makefilters" key="$thisfield" value="$startval">
+    <xar:foreach in="$makefilters" key="$thisfield" value="$startval">
 
-	#xarMod::apiFunc('filters','user','makefilter',array(
-		'thisfield' => $thisfield,
-		'func' => 'view',
-		'module' => 'amazonfps',
-		'startval' => $startval,
-		'filterlabel' => 'Filter:',
-		'extra' => array('name' => $name)
-		))#
-	
-	</xar:foreach>
+    #xarMod::apiFunc('filters','user','makefilter',array(
+        'thisfield' => $thisfield,
+        'func' => 'view',
+        'module' => 'amazonfps',
+        'startval' => $startval,
+        'filterlabel' => 'Filter:',
+        'extra' => array('name' => $name)
+        ))#
+    
+    </xar:foreach>
 
 </xar:if>
 
 
 <xar:if condition="$total eq 0">
 
-	<p>There are no payments yet.</p>
+    <p>There are no payments yet.</p>
 
 <xar:elseif condition="isset($results) and $results eq 0" /> 
 
-	<p>No payments match your criteria.</p>
+    <p>No payments match your criteria.</p>
 
 <xar:else />
-	<xar:data-view object="$list" tplmodule="amazonfps" template="admin_items" name="$name" sort="$sort" />  
-	<xar:if condition="isset($results)">
-		<xar:set name="total">$results</xar:set>
-	</xar:if>
-	<xar:pager startnum="$list->startnum" itemsperpage="$list->numitems" total="$total"/>
+    <xar:data-view object="$list" tplmodule="amazonfps" template="admin_items" name="$name" sort="$sort" />  
+    <xar:if condition="isset($results)">
+        <xar:set name="total">$results</xar:set>
+    </xar:if>
+    <xar:pager startnum="$list->startnum" itemsperpage="$list->numitems" total="$total"/>
 </xar:if>
-	
+    
    </div> 
 </xar:template>
