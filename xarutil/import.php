@@ -16,7 +16,7 @@ function content_util_import($args) {
 
     if(!xarSecurityCheck('AdminContentTypes')) return;
 
-	xarTplSetPageTemplateName('admin');
+    xarTplSetPageTemplateName('admin');
 
     if(!xarVarFetch('xml',        'isset', $xml,         NULL,  XARVAR_DONT_SET)) {return;} 
 
@@ -29,11 +29,11 @@ function content_util_import($args) {
             return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
         }        
       
-		$import = xarMod::apiFunc('content','util','import', array('xml' => $xml));
-		
-		if ($import) {
-			xarResponse::redirect(xarModURL('content', 'admin', 'modifycontenttype', array('itemid' => $import['objectid'], 'ctype' => $import['name'])));
-		}
+        $import = xarMod::apiFunc('content','util','import', array('xml' => $xml));
+        
+        if ($import) {
+            xarResponse::redirect(xarModURL('content', 'admin', 'modifycontenttype', array('itemid' => $import['objectid'], 'ctype' => $import['name'])));
+        }
     }
 
     return $data;

@@ -14,38 +14,38 @@
  */
 function content_adminapi_addpath($args) {
 
-	extract($args);
+    extract($args);
 
-	sys::import('modules.dynamicdata.class.objects.master');
+    sys::import('modules.dynamicdata.class.objects.master');
 
-	// First check to see if the object already has a property named publication_date
-	$pobject = DataObjectMaster::getObjectList(array('name' => 'properties'));
+    // First check to see if the object already has a property named publication_date
+    $pobject = DataObjectMaster::getObjectList(array('name' => 'properties'));
 
-	$filters = array(
-		'where' => 'objectid eq ' . $objectid . ' and name eq \'item_path\''
-	);
+    $filters = array(
+        'where' => 'objectid eq ' . $objectid . ' and name eq \'item_path\''
+    );
 
-	$items = $pobject->getItems($filters);
+    $items = $pobject->getItems($filters);
 
-	if (count($items) == 1) {
-		return false;
-	}
+    if (count($items) == 1) {
+        return false;
+    }
 
-	// Add a path field to all content types
-	$values = array(
-		'name' => 'item_path',
-		'label' => 'Path',
-		'objectid' => $objectid,
-		'type' => 1038,
-		'source' => 'dynamic_data',
-		'status' => 33,
-		'seq' => 255 // make it the last field
-	);
-	$pobject = DataObjectMaster::getObject(array('name' => 'properties'));
-	$pobject->setFieldValues($values);
-	$itemid = $pobject->createItem();
+    // Add a path field to all content types
+    $values = array(
+        'name' => 'item_path',
+        'label' => 'Path',
+        'objectid' => $objectid,
+        'type' => 1038,
+        'source' => 'dynamic_data',
+        'status' => 33,
+        'seq' => 255 // make it the last field
+    );
+    $pobject = DataObjectMaster::getObject(array('name' => 'properties'));
+    $pobject->setFieldValues($values);
+    $itemid = $pobject->createItem();
 
-	return $itemid;
+    return $itemid;
 
 } 
 ?>

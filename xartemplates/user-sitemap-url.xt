@@ -5,9 +5,9 @@
  <url>
 
 <xar:if condition="isset($content_type)">
-	<xar:set name="url">xarModURL('content','user','display',array('itemid' => $itemid, 'ctype' => $content_type))</xar:set>
+    <xar:set name="url">xarModURL('content','user','display',array('itemid' => $itemid, 'ctype' => $content_type))</xar:set>
 <xar:else/>
-	<xar:set name="url">xarModURL('content','user','display',array('itemid' => $itemid))</xar:set>
+    <xar:set name="url">xarModURL('content','user','display',array('itemid' => $itemid))</xar:set>
 </xar:if>
 <!-- not sure this str_replace is necessary -->
 <xar:set name="loc">str_replace('&amp;', '&#38;', $url)</xar:set>
@@ -15,29 +15,29 @@
 <loc>#$loc#</loc>
       
 <xar:if condition="isset($date_modified)">
-	<lastmod>#xarLocaleFormatUTCDate("%Y-%m-%d", $date_modified)#</lastmod>
+    <lastmod>#xarLocaleFormatUTCDate("%Y-%m-%d", $date_modified)#</lastmod>
 <xar:elseif condition="isset($publication_date)"/>
-	<lastmod>#xarLocaleFormatUTCDate("%Y-%m-%d", $publication_date)#</lastmod>
+    <lastmod>#xarLocaleFormatUTCDate("%Y-%m-%d", $publication_date)#</lastmod>
 <xar:elseif condition="isset($date_created)"/>
-	<lastmod>#xarLocaleFormatUTCDate("%Y-%m-%d", $date_created)#</lastmod>
+    <lastmod>#xarLocaleFormatUTCDate("%Y-%m-%d", $date_created)#</lastmod>
 </xar:if>
-	
+    
 <xar:if condition="isset($changefreq)">
-	<changefreq>#$changefreq#</changefreq>
+    <changefreq>#$changefreq#</changefreq>
 <xar:elseif condition="$itemid eq xarModVars::get('content','default_itemid')"/>
-	<changefreq>weekly</changefreq>
+    <changefreq>weekly</changefreq>
 <xar:else/>
-	<changefreq>monthly</changefreq>
+    <changefreq>monthly</changefreq>
 </xar:if>
       
 <xar:if condition="isset($priority)">
-	<priority>#$priority#</priority>
+    <priority>#$priority#</priority>
 <xar:elseif condition="$itemid eq xarModVars::get('content','default_itemid')"/>
-	<priority>1.0</priority>
+    <priority>1.0</priority>
 <xar:else/>
-	<priority>0.5</priority>
+    <priority>0.5</priority>
 </xar:if>
-	
+    
 
    </url>
 

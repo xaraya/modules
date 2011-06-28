@@ -17,13 +17,13 @@
  */
 function content_userapi_getcontenttypelabel($args) {
 
-	extract($args);
+    extract($args);
 
-	sys::import('modules.dynamicdata.class.objects.master');
+    sys::import('modules.dynamicdata.class.objects.master');
 
-	$object = DataObjectMaster::getObject(array('name' => $ctype));
-	
-	return $object->label;
+    $object = DataObjectMaster::getObject(array('name' => $ctype));
+    
+    return $object->label;
     
 }
 

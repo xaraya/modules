@@ -14,23 +14,23 @@
  */
 function content_adminapi_getmodels()
 {
-	
-	$paths = xarMod::apiFunc('dynamicdata','admin','browse', array(
-		'basedir' =>  sys::code() . 'modules/content/', 
-		'filetype' => 'xml'
-	));
+    
+    $paths = xarMod::apiFunc('dynamicdata','admin','browse', array(
+        'basedir' =>  sys::code() . 'modules/content/', 
+        'filetype' => 'xml'
+    ));
 
-	foreach ($paths as $path) {
-		if (!strstr($path, '-def.xml') && !strstr($path, '-dat.xml')) {
-		$name = str_replace('xardata/', '', $path);
-		$name = str_replace('.xml', '', $name);
-		$val = $name;
-		$name = str_replace('_', ' ', $name);
-		$name = ucwords($name);
-		$names[$val] = $name;
-		}
-	}
+    foreach ($paths as $path) {
+        if (!strstr($path, '-def.xml') && !strstr($path, '-dat.xml')) {
+        $name = str_replace('xardata/', '', $path);
+        $name = str_replace('.xml', '', $name);
+        $val = $name;
+        $name = str_replace('_', ' ', $name);
+        $name = ucwords($name);
+        $names[$val] = $name;
+        }
+    }
 
-	return $names;
+    return $names;
 
 }

@@ -22,7 +22,7 @@ function content_admin_modify()
 {
     if(!xarVarFetch('itemid',       'id',    $itemid,   NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('view',    'str',   $data['view'], '',       XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('view',    'str',   $data['view'], '',       XARVAR_NOT_REQUIRED)) return;
 
     // Check if we still have no id of the item to modify.
     if (empty($itemid)) {
@@ -31,34 +31,34 @@ function content_admin_modify()
         throw new Exception($msg);
     }
 
-	$data['itemid'] = $itemid;
-	$data['invalid'] = false;
+    $data['itemid'] = $itemid;
+    $data['invalid'] = false;
 
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
 
-	// Get the object name
-	$contentobject = DataObjectMaster::getObject(array('name' => 'content'));
-	$check = $contentobject->getItem(array('itemid' => $itemid));
-	$ctype = $contentobject->properties['content_type']->getValue();
-	if (empty($check)) { 
-		$msg = 'There is no content item with an itemid of ' . $itemid;
-		return xarTplModule('base','message','notfound',array('msg' => $msg));
-	}
+    // Get the object name
+    $contentobject = DataObjectMaster::getObject(array('name' => 'content'));
+    $check = $contentobject->getItem(array('itemid' => $itemid));
+    $ctype = $contentobject->properties['content_type']->getValue();
+    if (empty($check)) { 
+        $msg = 'There is no content item with an itemid of ' . $itemid;
+        return xarTplModule('base','message','notfound',array('msg' => $msg));
+    }
 
-	$instance = $itemid.':'.$ctype.':'.xarUserGetVar('id');
-	if (!xarSecurityCheck('EditContent',0,'Item',$instance)) {
-		return;
-	}
-	
-	$data['ctype'] = $ctype;
-	//$data['pathval'] = ''; 
+    $instance = $itemid.':'.$ctype.':'.xarUserGetVar('id');
+    if (!xarSecurityCheck('EditContent',0,'Item',$instance)) {
+        return;
+    }
+    
+    $data['ctype'] = $ctype;
+    //$data['pathval'] = ''; 
 
     // Get the object we'll be working with
     $object = DataObjectMaster::getObject(array('name' => $ctype));
-	$data['object'] = $object; // save for later
+    $data['object'] = $object; // save for later
  
-	$data['label'] = $object->label;
+    $data['label'] = $object->label;
    
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
 
@@ -72,66 +72,66 @@ function content_admin_modify()
         // Get the data from the form
         $data['object']->checkInput();
 
-		$invalids = $data['object']->getInvalids(); 
+        $invalids = $data['object']->getInvalids(); 
 
         if (!empty($invalids)) {
-			$data['invalid'] = $invalids;
+            $data['invalid'] = $invalids;
             return xarTplModule('content','admin','modify', $data);        
         } elseif (isset($data['preview'])) {
             // Show a preview, same thing as the above essentially
             return xarTplModule('content','admin','modify', $data);        
         } else {
             // Good data: update the item
-			
-			$properties = array_keys($data['object']->getProperties());
+            
+            $properties = array_keys($data['object']->getProperties());
 
-			if (in_array('item_path', $properties)) {
-				$item_path = $data['object']->properties['item_path']->getValue();  
-				$contentobject = DataObjectMaster::getObject(array('name' => 'content'));
-				$contentobject->getItem(array('itemid' => $itemid));
-				$contentobject->properties['item_path']->setValue($item_path);
-				$contentobject->updateItem(array('itemid' => $itemid));
-			}
+            if (in_array('item_path', $properties)) {
+                $item_path = $data['object']->properties['item_path']->getValue();  
+                $contentobject = DataObjectMaster::getObject(array('name' => 'content'));
+                $contentobject->getItem(array('itemid' => $itemid));
+                $contentobject->properties['item_path']->setValue($item_path);
+                $contentobject->updateItem(array('itemid' => $itemid));
+            }
 
-			// never an empty publication_date
-			
-			if (in_array('publication_date', $properties)) {
-				$pubdate = $data['object']->properties['publication_date']->getValue();
-				if ($pubdate == -1) { 
-					$previous = $data['object'];
-					$previous->getItem(array('itemid' => $itemid));
-					$pubdate = $previous->properties['publication_date']->value;
-					$data['object']->properties['publication_date']->setValue($pubdate);
-				}
-			}
-			if (in_array('expiration_date', $properties)) {
-				$expdate = $object->properties['expiration_date']->getValue();
-				if ($expdate == -1) {
-					$data['object']->properties['expiration_date']->setValue(2145938400);
-				}
-			}
-			if (in_array('date_modified', $properties)) {
-				$data['object']->properties['date_modified']->setValue(time());
-			}
+            // never an empty publication_date
+            
+            if (in_array('publication_date', $properties)) {
+                $pubdate = $data['object']->properties['publication_date']->getValue();
+                if ($pubdate == -1) { 
+                    $previous = $data['object'];
+                    $previous->getItem(array('itemid' => $itemid));
+                    $pubdate = $previous->properties['publication_date']->value;
+                    $data['object']->properties['publication_date']->setValue($pubdate);
+                }
+            }
+            if (in_array('expiration_date', $properties)) {
+                $expdate = $object->properties['expiration_date']->getValue();
+                if ($expdate == -1) {
+                    $data['object']->properties['expiration_date']->setValue(2145938400);
+                }
+            }
+            if (in_array('date_modified', $properties)) {
+                $data['object']->properties['date_modified']->setValue(time());
+            }
 
             $data['object']->updateItem(array('itemid' => $itemid));
 
-			/*if (isset($path_error)) {
-				$args['itemid'] = $itemid;
-				$args['path_error'] = $path_error;
-				xarResponse::redirect(xarModURL('content','admin','modify', $args));
-				return true;
-			}*/
+            /*if (isset($path_error)) {
+                $args['itemid'] = $itemid;
+                $args['path_error'] = $path_error;
+                xarResponse::redirect(xarModURL('content','admin','modify', $args));
+                return true;
+            }*/
 
-			if (!empty($data['view'])) {
-				if (xarModAlias::resolve($ctype) == 'content') {
-					xarResponse::redirect(xarModURL('content','user','display', array('itemid'=>$itemid, 'ctype' => $ctype)));
-				} else { 
-					xarResponse::redirect(xarModURL('content','user','display', array('itemid'=>$itemid)));
-				}
-			} else {
-				xarResponse::redirect(xarModURL('content','admin','modify', array('itemid'=>$itemid)));
-			}
+            if (!empty($data['view'])) {
+                if (xarModAlias::resolve($ctype) == 'content') {
+                    xarResponse::redirect(xarModURL('content','user','display', array('itemid'=>$itemid, 'ctype' => $ctype)));
+                } else { 
+                    xarResponse::redirect(xarModURL('content','user','display', array('itemid'=>$itemid)));
+                }
+            } else {
+                xarResponse::redirect(xarModURL('content','admin','modify', array('itemid'=>$itemid)));
+            }
             return true;
         }
     } else {

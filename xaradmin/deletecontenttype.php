@@ -23,7 +23,7 @@ function content_admin_deletecontenttype()
     if (!xarVarFetch('itemid' ,     'int',    $itemid , '' ,          XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',    'bool',   $confirm, false,       XARVAR_NOT_REQUIRED)) return;
 
-	$data['content_type'] = $ctype;
+    $data['content_type'] = $ctype;
 
     // Show an error when the itemid is still not set
     if (empty($itemid)) {
@@ -32,27 +32,27 @@ function content_admin_deletecontenttype()
         throw new Exception($msg);
     }
 
-	$data['itemid'] = $itemid;
+    $data['itemid'] = $itemid;
 
     if (!xarSecurityCheck('DeleteContentTypes',1,'ContentType',$ctype)) return;
 
     sys::import('modules.dynamicdata.class.objects.master');
-	sys::import('modules.dynamicdata.class.properties.master');
+    sys::import('modules.dynamicdata.class.properties.master');
 
-	// Get the object label for the template
-	$object = DataObjectMaster::getObject(array('name' => $ctype));
-	if($object) {
-		$data['label'] = $object->label;
-	} else {
-		$data['label'] = '';
-	}
-	
+    // Get the object label for the template
+    $object = DataObjectMaster::getObject(array('name' => $ctype));
+    if($object) {
+        $data['label'] = $object->label;
+    } else {
+        $data['label'] = '';
+    }
+    
     $ctobject = DataObjectMaster::getObject(array('name' => 'content_types'));
-	$ctobject->getItem(array('itemid' => $itemid));  
-	
-	// Warn the user about how many content items we are deleting
-	$items = DataObjectMaster::getObjectList(array('objectid' => $itemid));
-	$data['count'] = $items->countItems();
+    $ctobject->getItem(array('itemid' => $itemid));  
+    
+    // Warn the user about how many content items we are deleting
+    $items = DataObjectMaster::getObjectList(array('objectid' => $itemid));
+    $data['count'] = $items->countItems();
     
     if ($confirm) {
 
@@ -61,24 +61,24 @@ function content_admin_deletecontenttype()
             return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
         }        
 
-		// Let's delete the object for this content type
-		$object = DataObjectMaster::getObject(array('name' => 'objects'));
-		$object->deleteItem(array('itemid' => $itemid));
+        // Let's delete the object for this content type
+        $object = DataObjectMaster::getObject(array('name' => 'objects'));
+        $object->deleteItem(array('itemid' => $itemid));
 
-		// Now delete the content type (e.g. the item in the 'content_types' DataObject)
-		$ctobject->deleteItem(array('itemid' => $itemid));
+        // Now delete the content type (e.g. the item in the 'content_types' DataObject)
+        $ctobject->deleteItem(array('itemid' => $itemid));
 
-		// Delete all content items for this content type
-		$contentobject = DataObjectMaster::getObject(array('name' => 'content'));
-		$list = DataObjectMaster::getObjectList(array('name' => 'content'));
-		$filters = array(
-			'where' => 'content_type eq \'' . $ctype .'\''
-		);
-		$items = $list->getItems($filters);
-		foreach ($items as $item) {
-			$itemid = $item['itemid'];
-			$contentobject->deleteItem(array('itemid' => $itemid));
-		}
+        // Delete all content items for this content type
+        $contentobject = DataObjectMaster::getObject(array('name' => 'content'));
+        $list = DataObjectMaster::getObjectList(array('name' => 'content'));
+        $filters = array(
+            'where' => 'content_type eq \'' . $ctype .'\''
+        );
+        $items = $list->getItems($filters);
+        foreach ($items as $item) {
+            $itemid = $item['itemid'];
+            $contentobject->deleteItem(array('itemid' => $itemid));
+        }
         
         // Jump to the next page
         xarResponse::redirect(xarModURL('content','admin','viewcontenttypes'));

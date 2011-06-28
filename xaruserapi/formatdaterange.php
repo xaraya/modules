@@ -15,9 +15,9 @@
  */
 function content_userapi_formatdaterange($args) {
 
-	extract($args);
+    extract($args);
 
-	// nothing here yet
+    // nothing here yet
 
 }
 

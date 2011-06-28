@@ -32,14 +32,14 @@ function content_user_main()
         $data['seccheck'] = TRUE;
     }
 
-	// first see if the $pagetpl is set explicitly for this call
-	if (isset($page_template) && !empty($page_template)) {   
-		xarTplSetPageTemplateName($page_template);
-	} else { 
-		$pagetpl = xarModVars::get('content','default_main_page_tpl');  
-		if (empty($pagetpl)) $pagetpl = 'default';
-		xarTplSetPageTemplateName($pagetpl);
-	}
+    // first see if the $pagetpl is set explicitly for this call
+    if (isset($page_template) && !empty($page_template)) {   
+        xarTplSetPageTemplateName($page_template);
+    } else { 
+        $pagetpl = xarModVars::get('content','default_main_page_tpl');  
+        if (empty($pagetpl)) $pagetpl = 'default';
+        xarTplSetPageTemplateName($pagetpl);
+    }
 
     // Return the template variables defined in this function
     return $data;

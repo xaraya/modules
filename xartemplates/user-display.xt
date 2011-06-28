@@ -5,25 +5,25 @@
 <xar:comment>Since a content type might not have a $title or $body, I'm not yet sure what a generic user-display.xt template should contain, but for now...</xar:comment>
 
 <xar:if condition="isset($title) and !empty($title)">
-	<h3>#$title#</h3>
+    <h3>#$title#</h3>
 </xar:if>
 
 <xar:if condition="isset($body) and !empty($body)">
-	#$body#
+    #$body#
 </xar:if>
 
 <xar:if condition="isset($file_upload) and !empty($file_upload)">
-	<a href="#xarmodurl('content','user','getfile',array('fname' => $file_upload))#">#$file_upload#</a>
+    <a href="#xarmodurl('content','user','getfile',array('fname' => $file_upload))#">#$file_upload#</a>
 </xar:if>
 
 <xar:if condition="!empty($hooks)">
-	<xar:foreach in="$hooks" key="$hookmodule">
-		<p>#$hooks[$hookmodule]#</p>
-	</xar:foreach>
+    <xar:foreach in="$hooks" key="$hookmodule">
+        <p>#$hooks[$hookmodule]#</p>
+    </xar:foreach>
 </xar:if>
 
 <xar:if condition="!empty($editurl)">
-	<div class="adminlink"><a href="#$editurl#">Edit this item</a></div>
+    <div class="adminlink"><a href="#$editurl#">Edit this item</a></div>
 </xar:if>
 
 </xar:template>

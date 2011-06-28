@@ -19,26 +19,26 @@ function content_admin_new()
     // See if the current user has the privilege to add an item. We cannot pass any extra arguments here
     if (!xarSecurityCheck('AddContent')) return;
 
-	if(!xarVarFetch('objectid',       'id',    $objectid,   NULL, XARVAR_DONT_SET)) {return;}
-	if(!xarVarFetch('ctype',    'str', $ctype,     NULL,  XARVAR_GET_ONLY)) {return;}
-	
-	$data['content_type'] = $ctype;
-	$data['invalid'] = false;
+    if(!xarVarFetch('objectid',       'id',    $objectid,   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('ctype',    'str', $ctype,     NULL,  XARVAR_GET_ONLY)) {return;}
+    
+    $data['content_type'] = $ctype;
+    $data['invalid'] = false;
 
-	$instance = 'All:'.$ctype.':'.xarUserGetVar('id');
-	if (!xarSecurityCheck('AddContent',0,'Item',$instance)) {
-		return;
-	}
+    $instance = 'All:'.$ctype.':'.xarUserGetVar('id');
+    if (!xarSecurityCheck('AddContent',0,'Item',$instance)) {
+        return;
+    }
 
-	//$data['pathval'] = '';
+    //$data['pathval'] = '';
 
-	// Load the DD master object class. This line will likely disappear in future versions
+    // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
 
-	$object = DataObjectMaster::getObject(array('name' => $ctype));
-	$objectid = $object->objectid;
-	$data['label'] = $object->label;
-	$data['object'] = $object;
+    $object = DataObjectMaster::getObject(array('name' => $ctype));
+    $objectid = $object->objectid;
+    $data['label'] = $object->label;
+    $data['object'] = $object;
 
     // Check if we are in 'preview' mode from the input here - the rest is handled by checkInput()
     // Here we are testing for a button clicked, so we test for a string
@@ -57,51 +57,51 @@ function content_admin_new()
 
         // Get the data from the form and see if it is all valid
         // Either way the values are now stored in the object
-	
+    
         $object->checkInput();
-		$invalids = $object->getInvalids();
+        $invalids = $object->getInvalids();
 
         if (!empty($invalids)) {
-			$data['invalid'] = $invalids;
+            $data['invalid'] = $invalids;
             return xarTplModule('content','admin','new', $data);        
         } elseif (isset($data['preview'])) {
             // Show a preview, same thing as the above essentially
             return xarTplModule('content','admin','new', $data);        
         } else {
 
-			// Create the item for the content object
-			$values = $object->getFieldValues(); 
-			$contentobject = DataObjectMaster::getObject(array('name' => 'content'));
-			$contentobject->properties['content_type']->setValue($ctype);
-			if (isset($values['item_path'])) {
-				$item_path = $values['item_path'];
-			} else {
-				$item_path = '';
-			}
-			$contentobject->properties['item_path']->setValue($item_path);
-			$itemid = $contentobject->createItem();
+            // Create the item for the content object
+            $values = $object->getFieldValues(); 
+            $contentobject = DataObjectMaster::getObject(array('name' => 'content'));
+            $contentobject->properties['content_type']->setValue($ctype);
+            if (isset($values['item_path'])) {
+                $item_path = $values['item_path'];
+            } else {
+                $item_path = '';
+            }
+            $contentobject->properties['item_path']->setValue($item_path);
+            $itemid = $contentobject->createItem();
 
-			if (isset($object->properties['publication_date'])) {
-				$pubdate = $object->properties['publication_date']->getValue();
-				if ($pubdate == -1) {
-					$object->properties['publication_date']->setValue(time());
-				}
-			}
-			if (isset($object->properties['expiration_date'])) {
-				$expdate = $object->properties['expiration_date']->getValue();
-				if ($expdate == -1) {
-					$object->properties['expiration_date']->setValue(2145938400);
-				}
-			}
-			if (isset($object->properties['date_created'])) {
-				$data['object']->properties['date_created']->setValue(time());
-			}
-			if (isset($object->properties['date_modified'])) {
-				$data['object']->properties['date_modified']->setValue(time());
-			}
+            if (isset($object->properties['publication_date'])) {
+                $pubdate = $object->properties['publication_date']->getValue();
+                if ($pubdate == -1) {
+                    $object->properties['publication_date']->setValue(time());
+                }
+            }
+            if (isset($object->properties['expiration_date'])) {
+                $expdate = $object->properties['expiration_date']->getValue();
+                if ($expdate == -1) {
+                    $object->properties['expiration_date']->setValue(2145938400);
+                }
+            }
+            if (isset($object->properties['date_created'])) {
+                $data['object']->properties['date_created']->setValue(time());
+            }
+            if (isset($object->properties['date_modified'])) {
+                $data['object']->properties['date_modified']->setValue(time());
+            }
 
-			// Same itemid for this
-			$itemid = $object->createItem(array('itemid' => $itemid));
+            // Same itemid for this
+            $itemid = $object->createItem(array('itemid' => $itemid));
  
             // Jump to the next page
             xarResponse::redirect(xarModURL('content','admin','view', array('ctype' => $ctype)));

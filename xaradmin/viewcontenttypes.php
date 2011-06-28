@@ -17,47 +17,47 @@
 function content_admin_viewcontenttypes()
 {
 
-	if (!xarSecurityCheck('EditContentTypes',1)) {
-		return;
-	}
+    if (!xarSecurityCheck('EditContentTypes',1)) {
+        return;
+    }
 
     sys::import('modules.dynamicdata.class.objects.master');
-	
-	$data['sort'] = xarMod::apiFunc('content','admin','sort', array(
-		//how to sort if the URL doesn't say otherwise...
-		'sortfield_fallback' => 'itemid', 
-		'ascdesc_fallback' => 'ASC'
-	));
+    
+    $data['sort'] = xarMod::apiFunc('content','admin','sort', array(
+        //how to sort if the URL doesn't say otherwise...
+        'sortfield_fallback' => 'itemid', 
+        'ascdesc_fallback' => 'ASC'
+    ));
 
-	$object = DataObjectMaster::getObject(array(
-						'name' => 'content_types'
-					));
-	$config = $object->configuration;
+    $object = DataObjectMaster::getObject(array(
+                        'name' => 'content_types'
+                    ));
+    $config = $object->configuration;
 
     $list = DataObjectMaster::getObjectList(array(
-						'name' => 'content_types',
-						'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
-						'sort' => $data['sort']
-						));
+                        'name' => 'content_types',
+                        'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
+                        'sort' => $data['sort']
+                        ));
 
-	$data['total'] = $list->countItems();
+    $data['total'] = $list->countItems();
 
-	$filters = array();
+    $filters = array();
 
-	$filters_min_items = xarModVars::get('content','filters_min_ct_count');
+    $filters_min_items = xarModVars::get('content','filters_min_ct_count');
 
-	$data['showfilters'] = false;
+    $data['showfilters'] = false;
 
-	if (xarModIsAvailable('filters') && xarModVars::get('content','enable_filters') && $data['total'] >= $filters_min_items) {
-		$data['showfilters'] = true;
-		$filterfields = $config['filterfields'];
-		$get_results = xarMod::apiFunc('filters','user','dd_get_results', array(
-							'filterfields' => $filterfields,
-							'object' => 'content_types'
-							)); 
-		$data = array_merge($data, $get_results);
-		if (isset($data['filters'])) $filters = $data['filters'];	 
-	}
+    if (xarModIsAvailable('filters') && xarModVars::get('content','enable_filters') && $data['total'] >= $filters_min_items) {
+        $data['showfilters'] = true;
+        $filterfields = $config['filterfields'];
+        $get_results = xarMod::apiFunc('filters','user','dd_get_results', array(
+                            'filterfields' => $filterfields,
+                            'object' => 'content_types'
+                            )); 
+        $data = array_merge($data, $get_results);
+        if (isset($data['filters'])) $filters = $data['filters'];     
+    }
 
     $list->getItems($filters);
     

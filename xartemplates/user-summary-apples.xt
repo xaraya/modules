@@ -5,11 +5,11 @@
 <div class="summary">
 
 <xar:if condition="isset($title) and !empty($title)">
-	<h3><a href="#xarmodurl('content','user','display',array('itemid' => $itemid, 'ctype' => $ctype))#">#$title#</a></h3>
+    <h3><a href="#xarmodurl('content','user','display',array('itemid' => $itemid, 'ctype' => $ctype))#">#$title#</a></h3>
 </xar:if>
 
 <xar:if condition="isset($summary) and !empty($summary)">
-	#$summary#
+    #$summary#
 </xar:if>
  
 </div>

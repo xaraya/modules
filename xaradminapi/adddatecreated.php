@@ -14,38 +14,38 @@
  */
 function content_adminapi_adddatecreated($args) {
 
-	extract($args);
+    extract($args);
 
-	sys::import('modules.dynamicdata.class.objects.master');
+    sys::import('modules.dynamicdata.class.objects.master');
 
-	// First check to see if the object already has a property named publication_date
-	$pobject = DataObjectMaster::getObjectList(array('name' => 'properties'));
+    // First check to see if the object already has a property named publication_date
+    $pobject = DataObjectMaster::getObjectList(array('name' => 'properties'));
 
-	$filters = array(
-		'where' => 'objectid eq ' . $objectid . ' and name eq \'date_created\''
-	);
+    $filters = array(
+        'where' => 'objectid eq ' . $objectid . ' and name eq \'date_created\''
+    );
 
-	$items = $pobject->getItems($filters);
+    $items = $pobject->getItems($filters);
 
-	if (count($items) == 1) {
-		return false;
-	}
+    if (count($items) == 1) {
+        return false;
+    }
 
-	// Add a date_created field to all content types
-	$values = array(
-		'name' => 'date_created',
-		'label' => 'Date created',
-		'objectid' => $objectid,
-		'type' => 8,
-		'source' => 'dynamic_data',
-		'status' => 66,
-		'seq' => 255
-	);
-	$pobject = DataObjectMaster::getObject(array('name' => 'properties'));
-	$pobject->setFieldValues($values);
-	$pobject->createItem();
+    // Add a date_created field to all content types
+    $values = array(
+        'name' => 'date_created',
+        'label' => 'Date created',
+        'objectid' => $objectid,
+        'type' => 8,
+        'source' => 'dynamic_data',
+        'status' => 66,
+        'seq' => 255
+    );
+    $pobject = DataObjectMaster::getObject(array('name' => 'properties'));
+    $pobject->setFieldValues($values);
+    $pobject->createItem();
 
-	return true;
+    return true;
 
 } 
 ?>

@@ -14,24 +14,24 @@
  */
 function content_adminapi_ctname2objectid($args) {
 
-	$object = 'content_types';
-	$id = 'itemid';
+    $object = 'content_types';
+    $id = 'itemid';
 
-	extract($args);
+    extract($args);
 
-	sys::import('modules.dynamicdata.class.objects.master');
+    sys::import('modules.dynamicdata.class.objects.master');
 
-	$list = DataObjectMaster::getObjectList(array('name' => $object));
-	$filters = array(
-		'where' => 'content_type eq \'' . $content_type . '\''
-	);
-	$items = $list->getItems($filters);
-	if (empty($items)) {
-		return false;
-	} else {
-		$item = end($items);
-		return $item[$id];
-	}
+    $list = DataObjectMaster::getObjectList(array('name' => $object));
+    $filters = array(
+        'where' => 'content_type eq \'' . $content_type . '\''
+    );
+    $items = $list->getItems($filters);
+    if (empty($items)) {
+        return false;
+    } else {
+        $item = end($items);
+        return $item[$id];
+    }
 
 } 
 ?>

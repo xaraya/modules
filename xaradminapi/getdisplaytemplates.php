@@ -14,42 +14,42 @@
  */
 function content_adminapi_getdisplaytemplates($args)
 {
-	$ctype = '';
+    $ctype = '';
 
-	extract($args);
+    extract($args);
 
-	if(!empty($ctype)) $ctype = '-' . $ctype;
-	
-	$paths1 = xarMod::apiFunc('dynamicdata','admin','browse', array(
-		'basedir' =>  xarTplGetThemeDir() . '/modules/content/', 
-		'filetype' => 'xt'
-	)); 
+    if(!empty($ctype)) $ctype = '-' . $ctype;
+    
+    $paths1 = xarMod::apiFunc('dynamicdata','admin','browse', array(
+        'basedir' =>  xarTplGetThemeDir() . '/modules/content/', 
+        'filetype' => 'xt'
+    )); 
  
-	$paths2 = xarMod::apiFunc('dynamicdata','admin','browse', array(
-		'basedir' =>  sys::code() . 'modules/content/xartemplates/', 
-		'filetype' => 'xt'
-	));
+    $paths2 = xarMod::apiFunc('dynamicdata','admin','browse', array(
+        'basedir' =>  sys::code() . 'modules/content/xartemplates/', 
+        'filetype' => 'xt'
+    ));
  
-	$paths = array_merge($paths1,$paths2);
+    $paths = array_merge($paths1,$paths2);
 
-	$arr = array();
+    $arr = array();
 
-	if (!empty($paths)) {
-		foreach ($paths as $path) {
-			if (strstr($path, 'user-display'.$ctype)) {
-				$p = str_replace('.xt','',$path);
-				$p = str_replace('user-display-','',$p);
-				$arr[$p] = $p;
-			}
-		}
-	}
+    if (!empty($paths)) {
+        foreach ($paths as $path) {
+            if (strstr($path, 'user-display'.$ctype)) {
+                $p = str_replace('.xt','',$path);
+                $p = str_replace('user-display-','',$p);
+                $arr[$p] = $p;
+            }
+        }
+    }
 
-	ksort($arr);
+    ksort($arr);
 
-	$first = array('-inherit-' => '-inherit-', 'user-display' => 'user-display');
+    $first = array('-inherit-' => '-inherit-', 'user-display' => 'user-display');
 
-	$arr = array_merge($first, $arr);
+    $arr = array_merge($first, $arr);
  
-	return $arr;
+    return $arr;
 
 }

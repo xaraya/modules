@@ -20,14 +20,14 @@ function content_admin_main() {
     // Check to see the current user has edit access to the content module
     if (!xarSecurityCheck('EditContent')) return;
 
-	$request = new xarRequest();
+    $request = new xarRequest();
     $refererinfo =  xarController::$request->getInfo(xarServer::getVar('HTTP_REFERER'));
     $request = new xarRequest();
-	$info =  xarController::$request->getInfo();
+    $info =  xarController::$request->getInfo();
     $samemodule = $info[0] == $refererinfo[0];
     
-	if (xarModVars::get('modules', 'disableoverview') == 0 || $samemodule) {
-		 if(!xarVarFetch('tab',   'str', $data['tab'],   '', XARVAR_NOT_REQUIRED)) {return;}
+    if (xarModVars::get('modules', 'disableoverview') == 0 || $samemodule) {
+         if(!xarVarFetch('tab',   'str', $data['tab'],   '', XARVAR_NOT_REQUIRED)) {return;}
         return xarTplModule('content','admin','overview',$data);
     } else {
         xarResponse::redirect(xarModURL('content', 'admin', 'view'));

@@ -12,7 +12,7 @@
 
     <xar:template type="module" file="user-menu" />
 
-	#$output#
+    #$output#
 
     </div>
 </xar:template>

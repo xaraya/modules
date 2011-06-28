@@ -17,7 +17,7 @@
  */
 function content_admin_modifyconfig()
 {
-	xarModVars::set('content', 'enable_short_urls', true); 
+    xarModVars::set('content', 'enable_short_urls', true); 
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
@@ -26,7 +26,7 @@ function content_admin_modifyconfig()
     // Check if this template has been submitted, or if we just got here
     if (!xarVarFetch('phase',        'str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return; 
 
-	$data['content_types'] = xarMod::apiFunc('content','admin','getcontenttypes');
+    $data['content_types'] = xarMod::apiFunc('content','admin','getcontenttypes');
 
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
@@ -34,10 +34,10 @@ function content_admin_modifyconfig()
     $object = DataObjectMaster::getObject(array('name' => 'content_module_settings'));
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
     $object->getItem(array('itemid' => 0));
-	$data['object'] = $object;
+    $data['object'] = $object;
  
-	/*$sitemap_exclude_id = $object->properties['sitemap_exclude']->id; 
-	if (!xarVarFetch('dd_'.$sitemap_exclude_id, 'array', $sitemap_exclude, array(), XARVAR_NOT_REQUIRED)) return;*/
+    /*$sitemap_exclude_id = $object->properties['sitemap_exclude']->id; 
+    if (!xarVarFetch('dd_'.$sitemap_exclude_id, 'array', $sitemap_exclude, array(), XARVAR_NOT_REQUIRED)) return;*/
 
     // Get the object we'll be working with for common configuration settings
     $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'content'));
@@ -82,8 +82,8 @@ function content_admin_modifyconfig()
             } else {
                 $itemid = $data['module_settings']->updateItem();
 
-				/*var_dump($sitemap_exclude);
-				xarModVars::set('content','sitemap_exclude',serialize($sitemap_exclude));*/
+                /*var_dump($sitemap_exclude);
+                xarModVars::set('content','sitemap_exclude',serialize($sitemap_exclude));*/
             }
 
             # --------------------------------------------------------
@@ -129,10 +129,10 @@ function content_admin_modifyconfig()
                 // Get the data from the form
                 $isvalid = $object->checkInput();
                 // Update the item with itemid = 0
-				
+                
                 $item = $object->updateItem(array('itemid' => 0));
 
-				xarResponse::redirect(xarModURL('content','admin','modifyconfig'));
+                xarResponse::redirect(xarModURL('content','admin','modifyconfig'));
 
             # --------------------------------------------------------
             #

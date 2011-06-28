@@ -23,39 +23,39 @@ $pathstart = the first part of the path
  */
 function content_userapi_alias($args) {
 
-	extract($args);
+    extract($args);
 
-	$path = substr($path, 1);
-	$pos = strpos($path, '/');
-	if($pos) {
-		$pathstart = substr($path, 0, $pos);
-	} else {
-		$pathstart = $path;
-	}
+    $path = substr($path, 1);
+    $pos = strpos($path, '/');
+    if($pos) {
+        $pathstart = substr($path, 0, $pos);
+    } else {
+        $pathstart = $path;
+    }
 
-	// check if the pathstart is a module name
-	$modulesobject = DataObjectMaster::getObjectList(array('name' => 'modules'));
-	$filters['where'] = 'name eq \'' . $pathstart . '\'';
-	$modules = $modulesobject->getItems($filters);
+    // check if the pathstart is a module name
+    $modulesobject = DataObjectMaster::getObjectList(array('name' => 'modules'));
+    $filters['where'] = 'name eq \'' . $pathstart . '\'';
+    $modules = $modulesobject->getItems($filters);
 
-	if (!empty($modules)) {
-		$modulename = $pathstart;
-		return $modulename; // pathstart is a module name
-	}
+    if (!empty($modules)) {
+        $modulename = $pathstart;
+        return $modulename; // pathstart is a module name
+    }
 
-	$aliases = xarConfigVars::get(null, 'System.ModuleAliases');
-	if (!isset($aliases[$pathstart])) { 
-		xarModAlias::set($pathstart, 'content');
-		return true;
-	} else {
-		// $pathstart is already registered as an alias
-		$aliasmodule = $aliases[$pathstart];
-		if ($aliasmodule == 'content') {
-			return true;
-		} else {
-			// $pathstart is already an alias for a module other than the module in the action
-			return array('pathstart' => $pathstart, 'aliasmodule' => $aliasmodule);
-		}
-	}
+    $aliases = xarConfigVars::get(null, 'System.ModuleAliases');
+    if (!isset($aliases[$pathstart])) { 
+        xarModAlias::set($pathstart, 'content');
+        return true;
+    } else {
+        // $pathstart is already registered as an alias
+        $aliasmodule = $aliases[$pathstart];
+        if ($aliasmodule == 'content') {
+            return true;
+        } else {
+            // $pathstart is already an alias for a module other than the module in the action
+            return array('pathstart' => $pathstart, 'aliasmodule' => $aliasmodule);
+        }
+    }
 }
 ?>

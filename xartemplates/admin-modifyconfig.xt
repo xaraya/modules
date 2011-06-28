@@ -15,11 +15,11 @@
             <fieldset class="mod_settings">
                 <legend>Modify content Configuration</legend>
 
-		<p style="margin: 10px 0 15px 0;">Note: The "items per page" and "page template" settings below can be overridden by <a href="#xarModURL('content','admin','overview',array('tab'=>'ctconfig'))#">settings for specific content types</a>.</p>
+        <p style="margin: 10px 0 15px 0;">Note: The "items per page" and "page template" settings below can be overridden by <a href="#xarModURL('content','admin','overview',array('tab'=>'ctconfig'))#">settings for specific content types</a>.</p>
 
-		<h4>Module Settings:</h4>
+        <h4>Module Settings:</h4>
                 <xar:data-form object="$module_settings" />
-		<xar:data-form object="$object" itemid="0" template="module_settings" content_types="$content_types" />
+        <xar:data-form object="$object" itemid="0" template="module_settings" content_types="$content_types" />
             </fieldset>
 
             <div class="xar-form-input-after">

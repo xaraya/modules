@@ -13,104 +13,104 @@ sys::import('modules.base.xarproperties.textbox');
 
 class PathProperty extends TextBoxProperty
 {
-	public $id = 1038;
-	public $name	 = 'path';
-    public $desc	= 'Path'; 
+    public $id = 1038;
+    public $name     = 'path';
+    public $desc    = 'Path'; 
     public $reqmodules = array('content');
 
-	function __construct(ObjectDescriptor $descriptor)
+    function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
 
-		$this->include_reference = 1;
+        $this->include_reference = 1;
 
         // Set for runtime
         $this->tplmodule = 'content';
         $this->template = 'path';
-		$this->filepath   = 'modules/content/xarproperties';
+        $this->filepath   = 'modules/content/xarproperties';
     }
 
     public function validateValue($value = null) 
     {
-		
-		if (!parent::validateValue($value)) return false;
+        
+        if (!parent::validateValue($value)) return false;
 
-		// Allow empty path field if that validates in the parent (textbox) 
-		if ($value == '') {
-			$this->value = '';
-			return true;
-		}
+        // Allow empty path field if that validates in the parent (textbox) 
+        if ($value == '') {
+            $this->value = '';
+            return true;
+        }
 
-		// Standardize the path
-		if ($value[0] != '/') {
-			$value = '/' . $value;
-		}
-		$value = preg_replace('~//+~', '/', $value);
-		$value = strtolower($value);
-		$path = str_replace(' ', '_', $value); 
-		
-		$name = $this->name;
-		$oldval = $this->objectref->properties[$name]->value;
+        // Standardize the path
+        if ($value[0] != '/') {
+            $value = '/' . $value;
+        }
+        $value = preg_replace('~//+~', '/', $value);
+        $value = strtolower($value);
+        $path = str_replace(' ', '_', $value); 
+        
+        $name = $this->name;
+        $oldval = $this->objectref->properties[$name]->value;
 
-		if ($path == '/') {
-			$this->invalid = xarML('Invalid path.  The path you entered is reserved for your homepage.');
-			$this->value = $oldval;
+        if ($path == '/') {
+            $this->invalid = xarML('Invalid path.  The path you entered is reserved for your homepage.');
+            $this->value = $oldval;
             return false;
-		}	
+        }    
 
-		// Remove a trailing slash
-		$num = strlen($path) - 1;
-		if ($path[$num] == '/') {
-			$path = substr($path,0,-1);
-		} 
+        // Remove a trailing slash
+        $num = strlen($path) - 1;
+        if ($path[$num] == '/') {
+            $path = substr($path,0,-1);
+        } 
 
-		$pattern = '/^[\w\-\/ ]{1,}$/';
-		if (!preg_match($pattern, $path)) {
-			$this->invalid = xarML('Invalid path.  Path must be at least one character long and can contain only letters, numbers, forward slashes, underscores and dashes.');
-			$this->value = $oldval;
+        $pattern = '/^[\w\-\/ ]{1,}$/';
+        if (!preg_match($pattern, $path)) {
+            $this->invalid = xarML('Invalid path.  Path must be at least one character long and can contain only letters, numbers, forward slashes, underscores and dashes.');
+            $this->value = $oldval;
             return false;
-		}	  
+        }      
  
-		$check = explode('/',$path);
-		if (isset($check[2])) {
-			if (is_numeric($check[2])) {
-				// Reserve some formats for short URLs that don't need a path lookup
-				$this->invalid = xarML('Invalid path.  The 2nd part of the path cannot be a number.');
-				$this->value = $oldval;
-				return false;
-			}
-			if ($check[2] == 'view') { 
-				$this->invalid = xarML('Invalid path. The second part of the path must not be \'view\'.');
-				$this->value = $oldval;
-				return false;
-			}
-		}
-		
-		$itemid = $this->objectref->properties['itemid']->value;
-		$checkpath = xarMod::apiFunc('content','user','checkpath',array('path' => $path));
-		if (is_numeric($checkpath) && $itemid != $checkpath) {
-			$this->invalid = xarML("The path you've specified is already in use.  Please try again.");
-			$this->value = $oldval;
+        $check = explode('/',$path);
+        if (isset($check[2])) {
+            if (is_numeric($check[2])) {
+                // Reserve some formats for short URLs that don't need a path lookup
+                $this->invalid = xarML('Invalid path.  The 2nd part of the path cannot be a number.');
+                $this->value = $oldval;
+                return false;
+            }
+            if ($check[2] == 'view') { 
+                $this->invalid = xarML('Invalid path. The second part of the path must not be \'view\'.');
+                $this->value = $oldval;
+                return false;
+            }
+        }
+        
+        $itemid = $this->objectref->properties['itemid']->value;
+        $checkpath = xarMod::apiFunc('content','user','checkpath',array('path' => $path));
+        if (is_numeric($checkpath) && $itemid != $checkpath) {
+            $this->invalid = xarML("The path you've specified is already in use.  Please try again.");
+            $this->value = $oldval;
             return false;
-		} 
+        } 
 
-		$aliascheck = xarMod::apiFunc('content','user','alias',array('path' => $path));
+        $aliascheck = xarMod::apiFunc('content','user','alias',array('path' => $path));
 
-		if(is_string($aliascheck)) {   
-			$this->invalid = xarML('Invalid path.  The pathstart ("#(1)") is the name of an installed module.', $aliascheck);
-			$this->value = $oldval;
+        if(is_string($aliascheck)) {   
+            $this->invalid = xarML('Invalid path.  The pathstart ("#(1)") is the name of an installed module.', $aliascheck);
+            $this->value = $oldval;
             return false;
-		}
+        }
 
-		if (is_array($aliascheck)) {
-			$this->invalid = xarML('Invalid path.  The pathstart ("#(1)") is an alias for the #(2) module.', $aliascheck['pathstart'], $aliascheck['aliasmodule']);
-			$this->value = $oldval;
+        if (is_array($aliascheck)) {
+            $this->invalid = xarML('Invalid path.  The pathstart ("#(1)") is an alias for the #(2) module.', $aliascheck['pathstart'], $aliascheck['aliasmodule']);
+            $this->value = $oldval;
             return false;
-		}	
-			
-		$this->value = $path;
+        }    
+            
+        $this->value = $path;
 
-		return true;
+        return true;
 
     }
 }
