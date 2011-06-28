@@ -23,7 +23,7 @@ function messages_admin_modifyconfig()
     // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('AdminMessages')) return;
 
-	$data['groups'] = xarMod::apiFunc('roles', 'user', 'getallgroups');
+    $data['groups'] = xarMod::apiFunc('roles', 'user', 'getallgroups');
 
     // Check if this template has been submitted, or if we just got here
     if (!xarVarFetch('phase',        'str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return; 
@@ -34,7 +34,7 @@ function messages_admin_modifyconfig()
     $object = DataObjectMaster::getObject(array('name' => 'messages_module_settings'));
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
     $object->getItem(array('itemid' => 0));
-	$data['object'] = $object;
+    $data['object'] = $object;
 
     // Get the object we'll be working with for common configuration settings
     $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'messages'));
@@ -80,16 +80,16 @@ function messages_admin_modifyconfig()
                 $itemid = $data['module_settings']->updateItem();
             }
 
-			//sys::import('modules.dynamicdata.class.properties.master');
-						
+            //sys::import('modules.dynamicdata.class.properties.master');
+                        
 
-			foreach ($data['groups'] as $key => $value) {
-				//$property = DataPropertyMaster::getProperty(array('name' => 'roleid_'.$key)); 
-				//$property->checkInput('roleid_'.$key); 
-				$the_key = $value['id'];
-				if (!xarVarFetch('roleid_'.$the_key,  'array',    $roleid_{$the_key}, 0, XARVAR_NOT_REQUIRED)) return; 
-				xarModItemVars::set('messages', "allowedsendmessages", serialize($roleid_{$the_key}),$the_key);
-			}
+            foreach ($data['groups'] as $key => $value) {
+                //$property = DataPropertyMaster::getProperty(array('name' => 'roleid_'.$key)); 
+                //$property->checkInput('roleid_'.$key); 
+                $the_key = $value['id'];
+                if (!xarVarFetch('roleid_'.$the_key,  'array',    $roleid_{$the_key}, 0, XARVAR_NOT_REQUIRED)) return; 
+                xarModItemVars::set('messages', "allowedsendmessages", serialize($roleid_{$the_key}),$the_key);
+            }
 
             # --------------------------------------------------------
             #
@@ -134,11 +134,11 @@ function messages_admin_modifyconfig()
                 // Get the data from the form
                 $isvalid = $object->checkInput();
                 // Update the item with itemid = 0
-				 
-				
+                 
+                
                 $item = $object->updateItem(array('itemid' => 0));
 
-				xarResponse::redirect(xarModURL('messages','admin','modifyconfig'));
+                xarResponse::redirect(xarModURL('messages','admin','modifyconfig'));
 
             # --------------------------------------------------------
             #

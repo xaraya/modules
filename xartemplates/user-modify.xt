@@ -16,24 +16,24 @@
         <xar:if condition="!empty($withupload)">
            <xar:set name="enctype">'multipart/form-data'</xar:set>
         </xar:if>
-	 
+     
         <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
            
-	   	<xar:if condition="$reply">
-			<div id="message_display">
-			<xar:data-display object="$display" tplmodule="messages" />
-			</div>
-		</xar:if>
+           <xar:if condition="$reply">
+            <div id="message_display">
+            <xar:data-display object="$display" tplmodule="messages" />
+            </div>
+        </xar:if>
 
 
                 <xar:data-form object="$object" tplmodule="messages" template="modify" reply="$reply" replyto="$replyto" to="$to" />
-		
+        
            <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
                 <!-- <input type="hidden" name="id" id="id" value="#$id#" /> -->
               
-		<input type="submit" name="draft" id="draft" value="#xarML('Save draft')#" class="xar-margin-thickright" />
-		<input type="submit" name="saveandedit" id="saveandedit" value="#xarML('Save draft and edit')#" class="xar-margin-thickright"/>
+        <input type="submit" name="draft" id="draft" value="#xarML('Save draft')#" class="xar-margin-thickright" />
+        <input type="submit" name="saveandedit" id="saveandedit" value="#xarML('Save draft and edit')#" class="xar-margin-thickright"/>
                 <input type="submit" name ="send" id="send" value="#xarML('Send')#" class="xar-margin-thickright" />
             </div>  
         </form>

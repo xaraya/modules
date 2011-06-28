@@ -14,7 +14,7 @@
 /**
  * Get the list of users this user can send to
  * Pretty sure this function takes no args
- * @return array		$users the IDs of users this user can send to
+ * @return array        $users the IDs of users this user can send to
  */
  
 sys::import('modules.messages.xarincludes.defines');
@@ -23,7 +23,7 @@ sys::import('modules.messages.xarincludes.defines');
     { 
         $sendtogroups = xarMod::apiFunc('messages','user','get_sendtogroups',$args); 
          
-		if (empty($sendtogroups)) return array();
+        if (empty($sendtogroups)) return array();
 
         // Get the users these allowed groups contain
         sys::import('xaraya.structures.query');

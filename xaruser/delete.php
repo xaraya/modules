@@ -26,14 +26,14 @@ function messages_user_delete()
 
     if (!xarVarFetch('action', 'enum:confirmed:check', $data['action'], 'check', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('object', 'str', $object, 'messages_messages', XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('replyto', 'int', $data['replyto'], 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('replyto', 'int', $data['replyto'], 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('id', 'int:1', $id, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox', XARVAR_NOT_REQUIRED)) return;
 
     $data['object'] = DataObjectMaster::getObject(array('name' => $object));
     $data['object']->getItem(array('itemid' => $id));
 
-	$folder = xarSession::getVar('messages_currentfolder');
+    $folder = xarSession::getVar('messages_currentfolder');
 
     // Check the folder, and that the current user is either author or recipient
     switch ($folder) {
@@ -43,10 +43,10 @@ function messages_user_delete()
             }
             break;
         case 'drafts':
-			if ($data['object']->properties['from']->value != xarSession::getVar('role_id')) {
+            if ($data['object']->properties['from']->value != xarSession::getVar('role_id')) {
                 return xarTplModule('messages','user','message_errors',array('layout' => 'bad_id'));
             }
-			break;
+            break;
         case 'sent':
             if ($data['object']->properties['from']->value != xarSession::getVar('role_id')) {
                 return xarTplModule('messages','user','message_errors',array('layout' => 'bad_id'));

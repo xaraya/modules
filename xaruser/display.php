@@ -16,7 +16,7 @@ sys::import('modules.messages.xarincludes.defines');
 
 function messages_user_display($args) {
 
-	extract($args);
+    extract($args);
 
     if (!xarSecurityCheck('ReadMessages')) return;
    
@@ -24,10 +24,10 @@ function messages_user_display($args) {
     if (!xarVarFetch('id', 'int', $id, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $data['folder'], 'inbox', XARVAR_NOT_REQUIRED)) return;
 
-	$data['id'] = $id;
+    $data['id'] = $id;
 
-	xarTplSetPageTitle(xarML('Read Message'));
-	$data['input_title']    = xarML('Read Message');
+    xarTplSetPageTitle(xarML('Read Message'));
+    $data['input_title']    = xarML('Read Message');
     
     //Psspl:Added the code for configuring the user-menu
     //$data['allow_newpm'] = xarMod::apiFunc('messages' , 'user' , 'isset_grouplist');
@@ -35,7 +35,7 @@ function messages_user_display($args) {
     $object = DataObjectMaster::getObject(array('name' => 'messages_messages'));
     $object->getItem(array('itemid' => $id));
 
-	$data['replyto'] = $object->properties['replyto']->value;
+    $data['replyto'] = $object->properties['replyto']->value;
 
     $current_user = xarSession::getVar('role_id');
 
@@ -72,7 +72,7 @@ function messages_user_display($args) {
         $object->updateItem();
     }
 
-	$data['object'] = $object;
+    $data['object'] = $object;
 
     return $data;
 }

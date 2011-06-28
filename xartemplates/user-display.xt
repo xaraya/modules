@@ -16,33 +16,33 @@
         <xar:data-display object="$object" tplmodule="messages" action="$action" folder="$folder" replyto="$replyto" />
  
 
-	<xar:set name="folder">xarSession::getVar('messages_currentfolder')</xar:set>
-	
-	<div class="user-display-buttons">
-	
-	<form class="button" action="#xarModURL('messages','user','view',array('folder' => $folder))#">
-	 <input type="submit" value="Close" title="#xarML('Close')#" />
-	</form>
+    <xar:set name="folder">xarSession::getVar('messages_currentfolder')</xar:set>
+    
+    <div class="user-display-buttons">
+    
+    <form class="button" action="#xarModURL('messages','user','view',array('folder' => $folder))#">
+     <input type="submit" value="Close" title="#xarML('Close')#" />
+    </form>
 
             
             <xar:if condition="$folder ne 'sent' and xarSecurityCheck('AddMessages', 0)">
                 <form class="button" action="#xarModURL('messages','user','reply',array('folder' => $folder, 'replyto' => $id))#">
-		 <input type="submit" value="Reply" title="#xarML('Reply')#" />
-		</form>
+         <input type="submit" value="Reply" title="#xarML('Reply')#" />
+        </form>
             </xar:if> 
 
-	<form class="button" action="#xarModURL('messages','user','markunread',array('id' => $id, 'folder' => $folder))#">
-	 <input type="submit" value="Mark as Unread" title="#xarML('Mark as Unread')#" id="markunread" />
-	</form>
+    <form class="button" action="#xarModURL('messages','user','markunread',array('id' => $id, 'folder' => $folder))#">
+     <input type="submit" value="Mark as Unread" title="#xarML('Mark as Unread')#" id="markunread" />
+    </form>
             
-	     
+         
             <xar:if condition="xarSecurityCheck('ManageMessages', 0)">
-		<form class="button" action="#xarModURL('messages','user','delete',array('id' => $id, 'folder' => $folder))#">
-		 <input type="submit" value="Delete" title="#xarML('Delete Message')#" />
-		</form>
+        <form class="button" action="#xarModURL('messages','user','delete',array('id' => $id, 'folder' => $folder))#">
+         <input type="submit" value="Delete" title="#xarML('Delete Message')#" />
+        </form>
             </xar:if>
             </div>
  
-	</div>
+    </div>
     </div>
 </xar:template>

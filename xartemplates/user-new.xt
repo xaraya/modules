@@ -15,12 +15,12 @@
     <h2>#$input_title#</h2>
 
     <form id="inputbox" action="#$post_url#" method="post" enctype="multipart/form-data">
-	 
-	<xar:if condition="$reply">
-	<div id="message_display" class="reply_display">
-		<xar:data-display object="$display" tplmodule="messages" replyto="$replyto" />
-	</div>
-	</xar:if>
+     
+    <xar:if condition="$reply">
+    <div id="message_display" class="reply_display">
+        <xar:data-display object="$display" tplmodule="messages" replyto="$replyto" />
+    </div>
+    </xar:if>
 
             <xar:data-form object="$object" tplmodule="messages" template="new" reply="$reply" replyto="$replyto" to="$to" opt="$opt" /> 
 
@@ -28,18 +28,18 @@
             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
             <input type="hidden" name="reply" id="reply" value="#$reply#"/> 
             <input type="submit" name="draft" id="draft" value="#xarML('Save draft')#" class="xar-margin-thickright"/>
-	    <input type="submit" name="saveandedit" id="saveandedit" value="#xarML('Save draft and edit')#" class="xar-margin-thickright"/>
+        <input type="submit" name="saveandedit" id="saveandedit" value="#xarML('Save draft and edit')#" class="xar-margin-thickright"/>
             <input type="submit" name="send" id="send" value="#xarML('Send')#" class="xar-margin-thickright"/>
         </div>
     </form>
 
     <xar:else />
 
-		No recipients are configured for your group.
+        No recipients are configured for your group.
 
-		<xar:sec mask="AdminMessages" catch="false">
-			<a href="#xarmodurl('messages','admin','modifyconfig')#">Modify the allowed recipients in the Role Groups settings</a>.			
-		</xar:sec>
+        <xar:sec mask="AdminMessages" catch="false">
+            <a href="#xarmodurl('messages','admin','modifyconfig')#">Modify the allowed recipients in the Role Groups settings</a>.            
+        </xar:sec>
 
     </xar:if>
 </div>

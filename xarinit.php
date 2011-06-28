@@ -48,7 +48,7 @@ function messages_init()
         'author_delete'          => array('type'=>'integer', 'null'=>FALSE, 'size'=>'tiny', 'default'=>'0'),
         'recipient_delete'       => array('type'=>'integer', 'null'=>FALSE, 'size'=>'tiny', 'default'=>'0'),
         'anonpost'               => array('type'=>'integer', 'unsigned'=>true, 'null'=>TRUE, 'size'=>'tiny', 'default'=>'0'),
-		'replyto'                   => array('type'=>'integer', 'unsigned'=>true, 'null'=>FALSE, 'default' => '0'),
+        'replyto'                   => array('type'=>'integer', 'unsigned'=>true, 'null'=>FALSE, 'default' => '0'),
         'title'                  => array('type'=>'varchar', 'null'=>FALSE, 'size'=>'100'),
         'text'                   => array('type'=>'text', 'null'=>TRUE, 'size'=>'medium')
     );
@@ -69,34 +69,34 @@ function messages_init()
     if (!$result) return;*/
 
 
-	# --------------------------------------------------------
-	#
-	# Create DD objects
-	#
+    # --------------------------------------------------------
+    #
+    # Create DD objects
+    #
     $module = 'messages';
     $objects = array(
-					'messages_user_settings',
-					'messages_module_settings',
-					'messages_messages'
+                    'messages_user_settings',
+                    'messages_module_settings',
+                    'messages_messages'
                      );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
-	xarModVars::set('messages', 'sendemail', false); // Note the 'e' in 'sendemail'
+    xarModVars::set('messages', 'sendemail', false); // Note the 'e' in 'sendemail'
     xarModVars::set('messages', 'allowautoreply', true );
-	xarModVars::set('messages', 'allowanonymous', false);
-	xarModVars::set('messages', 'allowedsendmessages', serialize(array()));
-	xarModVars::set('messages', 'strip_tags', true);
-	xarModVars::set('messages', 'send_redirect', 1);
-	xarModVars::set('messages', 'allowusersendredirect', false);
+    xarModVars::set('messages', 'allowanonymous', false);
+    xarModVars::set('messages', 'allowedsendmessages', serialize(array()));
+    xarModVars::set('messages', 'strip_tags', true);
+    xarModVars::set('messages', 'send_redirect', 1);
+    xarModVars::set('messages', 'allowusersendredirect', false);
 
-	// not sure if the following are needed?
-	xarModVars::set('messages', 'user_sendemail', true); // Note the 'e' in 'user_sendemail'
-	xarModVars::set('messages', 'enable_autoreply', false);
-	xarModVars::set('messages', 'autoreply', '');
-	xarModVars::set('messages', 'user_send_redirect', 1);
+    // not sure if the following are needed?
+    xarModVars::set('messages', 'user_sendemail', true); // Note the 'e' in 'user_sendemail'
+    xarModVars::set('messages', 'enable_autoreply', false);
+    xarModVars::set('messages', 'autoreply', '');
+    xarModVars::set('messages', 'user_send_redirect', 1);
 
-	//xarModVars::set('messages', 'buddylist', 0);
+    //xarModVars::set('messages', 'buddylist', 0);
     //xarModVars::set('messages', 'limitsaved', 12);
     //xarModVars::set('messages', 'limitout', 10);
     //xarModVars::set('messages', 'limitinbox', 10);
@@ -110,13 +110,13 @@ function messages_init()
     //xarModVars::set('messages', 'serverpath', '/home/yourdir/public_html/modules/messages');
     //xarModVars::set('messages', 'away_message', '');
 
-	# --------------------------------------------------------
-	#
-	# Set up configuration modvars (general)
-	#
+    # --------------------------------------------------------
+    #
+    # Set up configuration modvars (general)
+    #
 
-	$module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'messages'));
-	$module_settings->initialize();
+    $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'messages'));
+    $module_settings->initialize();
 
 
     /*
@@ -163,8 +163,8 @@ function messages_init()
 # Create privilege instances
 #
 
-	xarDefineInstance('messages', 'Block', array());
-	xarDefineInstance('messages', 'Item', array());
+    xarDefineInstance('messages', 'Block', array());
+    xarDefineInstance('messages', 'Item', array());
 
     /*
      * REGISTER MASKS
@@ -223,23 +223,23 @@ function messages_upgrade($oldversion)
         case '1.9':
         case '1.9.0':
 
-			xarMod::apiFunc('dynamicdata','util','import', array(
-						'file' => sys::code() . 'modules/messages/xardata/messages_module_settings-def.xml',
-						'overwrite' => true
-						));
-			 
-			// new module vars
-			xarModVars::set('messages', 'allowautoreply', true);
-			xarModVars::set('messages', 'send_redirect', true);
-			xarModVars::set('messages', 'allowusersendredirect', false);
+            xarMod::apiFunc('dynamicdata','util','import', array(
+                        'file' => sys::code() . 'modules/messages/xardata/messages_module_settings-def.xml',
+                        'overwrite' => true
+                        ));
+             
+            // new module vars
+            xarModVars::set('messages', 'allowautoreply', true);
+            xarModVars::set('messages', 'send_redirect', true);
+            xarModVars::set('messages', 'allowusersendredirect', false);
 
-			xarMod::apiFunc('dynamicdata','util','import', array(
-						'file' => sys::code() . 'modules/messages/xardata/messages_user_settings-def.xml',
-						'overwrite' => true
-						));
-			
-			// new user vars
-			xarModVars::set('messages', 'user_send_redirect', 1);
+            xarMod::apiFunc('dynamicdata','util','import', array(
+                        'file' => sys::code() . 'modules/messages/xardata/messages_user_settings-def.xml',
+                        'overwrite' => true
+                        ));
+            
+            // new user vars
+            xarModVars::set('messages', 'user_send_redirect', 1);
 
             break;
         case '2.0.0':

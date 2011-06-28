@@ -27,21 +27,21 @@
 
          
         <xar:if condition="xarModVars::get('messages', 'allowanonymous')">
-		<div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties['postanon']" for="id" label="Post Anonymously"/>
-			<xar:data-input property="$properties['postanon']"/>
-		</div>
-	</xar:if>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['postanon']" for="id" label="Post Anonymously"/>
+            <xar:data-input property="$properties['postanon']"/>
+        </div>
+    </xar:if>
 
     </div> -->
 
      <div class="xar-form-input-wrapper">
         <xar:if condition="$reply">
-	<h3>Your reply:</h3> 
+    <h3>Your reply:</h3> 
             <xar:data-input property="$properties['to']" hidden="hidden" value="$to" />   
         <xar:else/>
-		<xar:var name="title">To whom the message will be sent</xar:var>
-		<xar:data-label property="$properties['to']" title="$title" for="id"/>
+        <xar:var name="title">To whom the message will be sent</xar:var>
+        <xar:data-label property="$properties['to']" title="$title" for="id"/>
             <xar:set name="users">$properties['to']->getOptions()</xar:set>
             <xar:if condition="empty($users)">
                 No recipients available
@@ -50,7 +50,7 @@
                 <xar:data-input property="$properties['to']"/>
             </xar:if>
         </xar:if>
-	<input type="hidden" name="replyto" value="#$replyto#" />
+    <input type="hidden" name="replyto" value="#$replyto#" />
     </div>
 
     <div class="xar-form-input-wrapper">

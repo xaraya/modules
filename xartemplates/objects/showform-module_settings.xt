@@ -4,30 +4,30 @@
 
 <xar:if condition="$layout eq 'top'">
      <fieldset>
-	<legend>Role Groups</legend>
+    <legend>Role Groups</legend>
 
 <xar:var name="label">Update</xar:var>
                 <xar:button type="submit" label="$label" style="float:right; margin-bottom: -30px;"/>
 
-		<div class="xar-form-input-wrapper">
-		<xar:foreach in="$groups" value="$val">
+        <div class="xar-form-input-wrapper">
+        <xar:foreach in="$groups" value="$val">
 
-			<xar:set name="key">$val['id']</xar:set>
-			<xar:set name="input_name">'roleid_'.$key</xar:set>
+            <xar:set name="key">$val['id']</xar:set>
+            <xar:set name="input_name">'roleid_'.$key</xar:set>
 
-			<div>
-			<label for="$input_name" class="xar-form-label" title="#$val['name']# can send to...">#$val['name']# can send to...</label> <a href="#xarServer::getCurrentURL()###" onClick="document.getElementById('collapse#$key#').style.display='';document.getElementById('expand#$key#').style.display='none';document.getElementById('roleid_#$key#_div').style.display='';return true;" id="expand#$key#">Show recipient groups</a>  <a href="#xarServer::getCurrentURL()###" onClick="document.getElementById('expand#$key#').style.display='';document.getElementById('collapse#$key#').style.display='none';document.getElementById('roleid_#$key#_div').style.display='none';return true;" id="collapse#$key#" style="display:none">Hide recipient groups</a>
+            <div>
+            <label for="$input_name" class="xar-form-label" title="#$val['name']# can send to...">#$val['name']# can send to...</label> <a href="#xarServer::getCurrentURL()###" onClick="document.getElementById('collapse#$key#').style.display='';document.getElementById('expand#$key#').style.display='none';document.getElementById('roleid_#$key#_div').style.display='';return true;" id="expand#$key#">Show recipient groups</a>  <a href="#xarServer::getCurrentURL()###" onClick="document.getElementById('expand#$key#').style.display='';document.getElementById('collapse#$key#').style.display='none';document.getElementById('roleid_#$key#_div').style.display='none';return true;" id="collapse#$key#" style="display:none">Hide recipient groups</a>
 
-				<xar:set name="selected">unserialize(xarModItemVars::get('messages', "allowedsendmessages", $key))</xar:set>
+                <xar:set name="selected">unserialize(xarModItemVars::get('messages', "allowedsendmessages", $key))</xar:set>
 
-				<div id="roleid_#$key#_div" style="display:none" class="role_list">
-				<xar:data-input type="checkboxlist" name="$input_name" id="$input_name" options="$groups" value="$selected" layout="vertical" />
-				</div>
-			</div>	 
+                <div id="roleid_#$key#_div" style="display:none" class="role_list">
+                <xar:data-input type="checkboxlist" name="$input_name" id="$input_name" options="$groups" value="$selected" layout="vertical" />
+                </div>
+            </div>     
 
-		</xar:foreach>
-		</div>        
-	</fieldset> 
+        </xar:foreach>
+        </div>        
+    </fieldset> 
 
 </xar:if>
 
@@ -39,25 +39,25 @@
 
     <div style="margin-bottom: 12px">Which settings should be available to users in their Roles account?</div>
 
-	<div style="margin-left: 10px">
-	     <xar:set name="name">'allowusersendredirect'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
+    <div style="margin-left: 10px">
+         <xar:set name="name">'allowusersendredirect'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />       
+            <xar:data-input property="$properties[$name]" />        
+         </div>
 
-	     	     <xar:set name="name">'sendemail'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
+                  <xar:set name="name">'sendemail'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />       
+            <xar:data-input property="$properties[$name]" />        
+         </div>
 
-	     <xar:set name="name">'allowautoreply'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
-	  </div> 
+         <xar:set name="name">'allowautoreply'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />       
+            <xar:data-input property="$properties[$name]" />        
+         </div>
+      </div> 
 
     </fieldset>
 
@@ -66,26 +66,26 @@
     
     <legend>Admin Settings</legend>
  
-	     <xar:set name="name">'allowanonymous'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
+         <xar:set name="name">'allowanonymous'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />       
+            <xar:data-input property="$properties[$name]" />        
+         </div>
 
-	     <xar:set name="name">'strip_tags'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
+         <xar:set name="name">'strip_tags'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />       
+            <xar:data-input property="$properties[$name]" />        
+         </div>
 
-	     <xar:set name="name">'send_redirect'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
+         <xar:set name="name">'send_redirect'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />       
+            <xar:data-input property="$properties[$name]" />        
+         </div>
 
-	    
-	</fieldset>
+        
+    </fieldset>
       
 </xar:if>
 
