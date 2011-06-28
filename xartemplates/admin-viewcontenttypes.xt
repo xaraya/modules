@@ -16,31 +16,31 @@
 
 <xar:if condition="$showfilters">
 
-	<xar:foreach in="$makefilters" key="$thisfield" value="$startval">
+    <xar:foreach in="$makefilters" key="$thisfield" value="$startval">
 
-	#xarMod::apiFunc('filters','user','makefilter',array(
-		'thisfield' => $thisfield,
-		'func' => 'viewcontenttypes',
-		'module' => 'content',
-		'startval' => $startval,
-		'filterlabel' => 'Filter:' 
-		))#
-	
-	</xar:foreach>
+    #xarMod::apiFunc('filters','user','makefilter',array(
+        'thisfield' => $thisfield,
+        'func' => 'viewcontenttypes',
+        'module' => 'content',
+        'startval' => $startval,
+        'filterlabel' => 'Filter:' 
+        ))#
+    
+    </xar:foreach>
 
 </xar:if>
 
-	<xar:if condition="$total eq 0">
-	
-		<p>There are no content types.  <a href="#xarmodurl('content','admin','newcontenttype')#">Create one</a>.</p>
+    <xar:if condition="$total eq 0">
+    
+        <p>There are no content types.  <a href="#xarmodurl('content','admin','newcontenttype')#">Create one</a>.</p>
 
-	<xar:elseif condition="isset($results) and $results eq 0" />
+    <xar:elseif condition="isset($results) and $results eq 0" />
 
-		<p>No content types match your criteria.</p>
-	
-	<xar:else />
+        <p>No content types match your criteria.</p>
+    
+    <xar:else />
 
-		<xar:data-view object="$list" tplmodule="content" template="admin_content_types" sort="$sort" fieldlist="label,content_type,model" /> 
+        <xar:data-view object="$list" tplmodule="content" template="admin_content_types" sort="$sort" fieldlist="label,content_type,model" /> 
 
        </xar:if>
 

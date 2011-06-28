@@ -27,9 +27,9 @@
                 </legend>
  
                 <xar:data-form object="$object" tplmodule="content" template="modifycontenttype" isalias="$isalias" ctype="$ctype" resolvealias="$resolvealias" sitemap_exclude="$sitemap_exclude" suppress_view_alias="$suppress_view_alias"/>
-		 
+         
              </fieldset>
-	     
+         
            <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                 <input type="hidden" name="objectid" id="itemid" value="#$objectid#" />
@@ -39,8 +39,8 @@
             </div>  
         </form>
 
-<xar:if condition="xarSecurityCheck('AdminDynamicData',0)">	
-	<p align="right" style="margin-right: 20px; font-weight: bold;"><a href="#xarModURL('dynamicdata','admin','modifyprop', array('itemid' => $objectid))#">Modify properties</a> in the dynamicdata module.</p>  
+<xar:if condition="xarSecurityCheck('AdminDynamicData',0)">    
+    <p align="right" style="margin-right: 20px; font-weight: bold;"><a href="#xarModURL('dynamicdata','admin','modifyprop', array('itemid' => $objectid))#">Modify properties</a> in the dynamicdata module.</p>  
 </xar:if>
 
     </div>

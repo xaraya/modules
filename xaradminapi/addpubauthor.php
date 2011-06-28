@@ -14,38 +14,38 @@
  */
 function content_adminapi_addpubauthor($args) {
 
-	extract($args);
+    extract($args);
 
-	sys::import('modules.dynamicdata.class.objects.master');
+    sys::import('modules.dynamicdata.class.objects.master');
 
-	// First check to see if the object already has a property named publication_author
-	$pobject = DataObjectMaster::getObjectList(array('name' => 'properties'));
+    // First check to see if the object already has a property named publication_author
+    $pobject = DataObjectMaster::getObjectList(array('name' => 'properties'));
 
-	$filters = array(
-		'where' => 'objectid eq ' . $objectid . ' and name eq \'publication_author\''
-	);
+    $filters = array(
+        'where' => 'objectid eq ' . $objectid . ' and name eq \'publication_author\''
+    );
 
-	$items = $pobject->getItems($filters);
+    $items = $pobject->getItems($filters);
 
-	if (count($items) == 1) {
-		return false;
-	}
+    if (count($items) == 1) {
+        return false;
+    }
 
-	// Add a publication_author field to all content types
-	$values = array(
-		'name' => 'publication_author',
-		'label' => 'Author',
-		'objectid' => $objectid,
-		'type' => 37,
-		'source' => 'dynamic_data',
-		'status' => 33,
-		'seq' => 244 // make it the last field
-	);
-	$pobject = DataObjectMaster::getObject(array('name' => 'properties'));
-	$pobject->setFieldValues($values);
-	$pobject->createItem();
+    // Add a publication_author field to all content types
+    $values = array(
+        'name' => 'publication_author',
+        'label' => 'Author',
+        'objectid' => $objectid,
+        'type' => 37,
+        'source' => 'dynamic_data',
+        'status' => 33,
+        'seq' => 244 // make it the last field
+    );
+    $pobject = DataObjectMaster::getObject(array('name' => 'properties'));
+    $pobject->setFieldValues($values);
+    $pobject->createItem();
 
-	return true;
+    return true;
 
 } 
 ?>

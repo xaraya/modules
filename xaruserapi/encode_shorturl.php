@@ -33,13 +33,13 @@ function content_userapi_encode_shorturl($args)
     $join = '?'; 
     $module = 'content';
 
-	if (isset($args['ctype'])) {
-		$ctype = $args['ctype'];
-		$aliases = xarConfigVars::get(null, 'System.ModuleAliases');
-		if(isset($aliases[$ctype]) && $aliases[$ctype] == 'content') {
-			$module = $ctype;
-		}
-	}
+    if (isset($args['ctype'])) {
+        $ctype = $args['ctype'];
+        $aliases = xarConfigVars::get(null, 'System.ModuleAliases');
+        if(isset($aliases[$ctype]) && $aliases[$ctype] == 'content') {
+            $module = $ctype;
+        }
+    }
 
     if ($func == 'main') {
 
@@ -47,39 +47,39 @@ function content_userapi_encode_shorturl($args)
 
     } elseif ($func == 'view') {
 
-		$path = '/' . $module;
+        $path = '/' . $module;
 
-		$suppress = xarModVars::get('content','suppress_view_alias');
-		$suppress = explode(',',$suppress);
+        $suppress = xarModVars::get('content','suppress_view_alias');
+        $suppress = explode(',',$suppress);
 
-		if (isset($ctype)) {
-			if ($module == 'content') {
-				$path .= '/view/' . $ctype;
-			} elseif (in_array($ctype,$suppress)) { 
-				$path .= '/view';
-			}
-		}
+        if (isset($ctype)) {
+            if ($module == 'content') {
+                $path .= '/view/' . $ctype;
+            } elseif (in_array($ctype,$suppress)) { 
+                $path .= '/view';
+            }
+        }
 
     } elseif ($func == 'display') {
   
-		if (isset($args['itemid'])) {
+        if (isset($args['itemid'])) {
 
-			$object = DataObjectMaster::getObject(array('name' => 'content'));
-			$object->getItem(array('itemid' => $itemid));
-			$path = $object->properties['item_path']->value;
-			if (!empty($path)) return $path;
-			
-			$path = '/' . $module;
-			$path .= '/' . $itemid;
+            $object = DataObjectMaster::getObject(array('name' => 'content'));
+            $object->getItem(array('itemid' => $itemid));
+            $path = $object->properties['item_path']->value;
+            if (!empty($path)) return $path;
+            
+            $path = '/' . $module;
+            $path .= '/' . $itemid;
 
-		} else { // no itemid
-			return;
-		}
+        } else { // no itemid
+            return;
+        }
 
     } else {
-		// no main, view or display func
-		return;
-	}
+        // no main, view or display func
+        return;
+    }
 
     return $path;
 }

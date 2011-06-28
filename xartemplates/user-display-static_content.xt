@@ -4,20 +4,20 @@
 
 <div class="static_content">
 
-	<xar:if condition="$display_title">
-		<h3>#$title#</h3>
-	</xar:if>
+    <xar:if condition="$display_title">
+        <h3>#$title#</h3>
+    </xar:if>
 
-	<div class="body">
-	#$body#
-	</div>
+    <div class="body">
+    #$body#
+    </div>
 
-	<xar:if condition="!empty($editurl)">
-	<xar:if condition="!isset($editurl_text)">
-	 <xar:set name="editurl_text">'Edit this item'</xar:set>
-	</xar:if>
-		<div class="adminlink"><a href="#$editurl#">#$editurl_text#</a></div>
-	</xar:if>
+    <xar:if condition="!empty($editurl)">
+    <xar:if condition="!isset($editurl_text)">
+     <xar:set name="editurl_text">'Edit this item'</xar:set>
+    </xar:if>
+        <div class="adminlink"><a href="#$editurl#">#$editurl_text#</a></div>
+    </xar:if>
 
 </div>
 

@@ -16,82 +16,82 @@
  */
 function content_user_sitemap() {
 
-	if (!xarSecurityCheck('ViewContent',1)) return;
+    if (!xarSecurityCheck('ViewContent',1)) return;
 
-	$ctypes = xarMod::apiFunc('content','admin','getcontenttypes');
-	$exclude = explode(',',xarModVars::get('content','sitemap_exclude'));
+    $ctypes = xarMod::apiFunc('content','admin','getcontenttypes');
+    $exclude = explode(',',xarModVars::get('content','sitemap_exclude'));
 
-	if (!empty($exclude)) {
-		foreach ($exclude as $key => $value) {
-			unset($ctypes[$value]);
-		}
-	}
+    if (!empty($exclude)) {
+        foreach ($exclude as $key => $value) {
+            unset($ctypes[$value]);
+        }
+    }
 
-	sys::import('modules.dynamicdata.class.objects.master');
+    sys::import('modules.dynamicdata.class.objects.master');
 
-	$items = array();
+    $items = array();
  
-	foreach ($ctypes as $name => $value) {
+    foreach ($ctypes as $name => $value) {
 
-		$object = DataObjectMaster::getObject(array(
-						'name' => $name
-						)); 
- 	  
-		$properties = array_keys($object->getProperties());
+        $object = DataObjectMaster::getObject(array(
+                        'name' => $name
+                        )); 
+       
+        $properties = array_keys($object->getProperties());
 
-		$filters = array();
-		$where = '';
-		$join = '';
+        $filters = array();
+        $where = '';
+        $join = '';
 
-		if (in_array('publication_date', $properties)) {
-			$where .= 'publication_date lt ' . time();
-			$join = ' and ';
-		}
-		if (in_array('expiration_date', $properties)) {
-			$where .=  $join . 'expiration_date gt ' . time();
-			$join = ' and ';
-		}
-		if (in_array('publication_status', $properties)) {
-			$where .= $join . 'publication_status gt 1';
-		}
-		if (isset($where)) $filters['where'] = $where;
+        if (in_array('publication_date', $properties)) {
+            $where .= 'publication_date lt ' . time();
+            $join = ' and ';
+        }
+        if (in_array('expiration_date', $properties)) {
+            $where .=  $join . 'expiration_date gt ' . time();
+            $join = ' and ';
+        }
+        if (in_array('publication_status', $properties)) {
+            $where .= $join . 'publication_status gt 1';
+        }
+        if (isset($where)) $filters['where'] = $where;
 
-		$list = DataObjectMaster::getObjectList(array(
-						'name' => $name
-						)); 
+        $list = DataObjectMaster::getObjectList(array(
+                        'name' => $name
+                        )); 
 
-		$items = $list->getItems($filters); 
+        $items = $list->getItems($filters); 
 
-		foreach ($items as $key => $item) { 
-			$item['content_type'] = $name; 
-			$all_items[$key.'-'.$name] = $item;
-		} 
-		
-	} 
-	 
-	$output = '';
-	
-	if (!empty($all_items)) {
-		ksort($all_items);
+        foreach ($items as $key => $item) { 
+            $item['content_type'] = $name; 
+            $all_items[$key.'-'.$name] = $item;
+        } 
+        
+    } 
+     
+    $output = '';
+    
+    if (!empty($all_items)) {
+        ksort($all_items);
 
-		foreach ($all_items as $item) { 
-			$output .= xarTplModule('content','user','sitemap', $item, 'url');
-		}
-	}
+        foreach ($all_items as $item) { 
+            $output .= xarTplModule('content','user','sitemap', $item, 'url');
+        }
+    }
 
-	try {
-		xarTplSetPageTemplateName('xmlsitemap');
-	} catch (Exception $e) {
-		try {
-			xarTplSetPageTemplateName('xml');
-		} catch (Exception $e) {
-			xarTplSetPageTemplateName('default');
-		}
-	}
+    try {
+        xarTplSetPageTemplateName('xmlsitemap');
+    } catch (Exception $e) {
+        try {
+            xarTplSetPageTemplateName('xml');
+        } catch (Exception $e) {
+            xarTplSetPageTemplateName('default');
+        }
+    }
 
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('XML Sitemap')));
 
-	$data['output'] = $output;
+    $data['output'] = $output;
 
     return xarTplModule('content','user','sitemap', $data);
 }

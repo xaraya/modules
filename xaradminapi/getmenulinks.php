@@ -34,7 +34,7 @@ function content_adminapi_getmenulinks()
                               'title' => xarML('View a list of Content Types'),
                               'label' => xarML('Content Types'));
 
-	   $menulinks[] = Array('url'   => xarModURL('content',
+       $menulinks[] = Array('url'   => xarModURL('content',
                                                    'admin',
                                                    'view'),
                               // In order to display the tool tips and label in any language,
@@ -55,7 +55,7 @@ function content_adminapi_getmenulinks()
                               'label' => xarML('Modify Configuration'));
     }
 
-	    if (xarSecurityCheck('AdminContent',0)) {
+        if (xarSecurityCheck('AdminContent',0)) {
         // Add a link to the module's configuration.
         // We place this link last in the list so have a similar menu for all modules
         $menulinks[] = Array('url'   => xarModURL('content',

@@ -29,27 +29,27 @@ function content_admin_delete()
         throw new Exception($msg);
     }
 
-	$data['itemid'] = $itemid;
+    $data['itemid'] = $itemid;
 
     sys::import('modules.dynamicdata.class.objects.master');
 
-	// Get the object name
-	$object = DataObjectMaster::getObject(array('name' => 'content'));
-	$object->getItem(array('itemid' => $itemid));
-	$ctype = $object->properties['content_type']->getValue();
-	
-	$instance = $itemid.':'.$ctype.':'.xarUserGetVar('id');
+    // Get the object name
+    $object = DataObjectMaster::getObject(array('name' => 'content'));
+    $object->getItem(array('itemid' => $itemid));
+    $ctype = $object->properties['content_type']->getValue();
+    
+    $instance = $itemid.':'.$ctype.':'.xarUserGetVar('id');
     if (!xarSecurityCheck('DeleteContent',1,'Item',$instance)) {
-		return;
-	}
+        return;
+    }
 
-	$data['ctype'] = $ctype;
+    $data['ctype'] = $ctype;
 
     // Get the object we'll be working with
     $object = DataObjectMaster::getObject(array('name' => $ctype));
     $object->getItem(array('itemid' => $itemid));
 
-	$data['object'] = $object;
+    $data['object'] = $object;
     
     if ($data['confirm']) {
 
@@ -58,12 +58,12 @@ function content_admin_delete()
             return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
         }        
 
-		// delete the item in the object for this content type
-		$object->deleteItem(array('itemid' => $itemid));
+        // delete the item in the object for this content type
+        $object->deleteItem(array('itemid' => $itemid));
 
-		// delete the item in the content object
-		$object = $object = DataObjectMaster::getObject(array('name' => 'content'));
-		$object->deleteItem(array('itemid' => $itemid));
+        // delete the item in the content object
+        $object = $object = DataObjectMaster::getObject(array('name' => 'content'));
+        $object->deleteItem(array('itemid' => $itemid));
         
         // Jump to the next page
         xarResponse::redirect(xarModURL('content','admin','view',array('ctype'=>$ctype)));

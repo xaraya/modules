@@ -20,61 +20,61 @@
  */
 function content_admin_modifycontenttype()
 {
-	//xarModVars::set('content','sitemap_exclude',serialize(array()));
-	if(!xarVarFetch('ctype', 'str', $ctype, NULL, XARVAR_DONT_SET)) {return;}
-	if(!xarVarFetch('isalias', 'checkbox', $isalias, false, XARVAR_NOT_REQUIRED)) {return;}
-	if(!xarVarFetch('sitemap_exclude', 'checkbox', $sitemap_exclude, false, XARVAR_NOT_REQUIRED)) {return;}
-	if(!xarVarFetch('suppress_view_alias', 'checkbox', $suppress_view_alias, false, XARVAR_NOT_REQUIRED)) {return;}
+    //xarModVars::set('content','sitemap_exclude',serialize(array()));
+    if(!xarVarFetch('ctype', 'str', $ctype, NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('isalias', 'checkbox', $isalias, false, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('sitemap_exclude', 'checkbox', $sitemap_exclude, false, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('suppress_view_alias', 'checkbox', $suppress_view_alias, false, XARVAR_NOT_REQUIRED)) {return;}
      
-	// Check if the user can Edit in the content module, and then specifically for this item.
+    // Check if the user can Edit in the content module, and then specifically for this item.
     // We pass the itemid to the SecurityCheck
     if (!xarSecurityCheck('AdminContent',1)) return;
 
-	$arr = xarModVars::get('content','sitemap_exclude');
-	$arr = explode(',',$arr);
-	if (!in_array($ctype, $arr)) {  
-		$data['sitemap_exclude'] = false;
-	} else {
-		$data['sitemap_exclude'] = true;
-	}
+    $arr = xarModVars::get('content','sitemap_exclude');
+    $arr = explode(',',$arr);
+    if (!in_array($ctype, $arr)) {  
+        $data['sitemap_exclude'] = false;
+    } else {
+        $data['sitemap_exclude'] = true;
+    }
 
-	$arr2 = xarModVars::get('content','suppress_view_alias');
-	$arr2 = explode(',',$arr2);
-	if (!in_array($ctype, $arr2)) {  
-		$data['suppress_view_alias'] = false;
-	} else {
-		$data['suppress_view_alias'] = true;
-	}
+    $arr2 = xarModVars::get('content','suppress_view_alias');
+    $arr2 = explode(',',$arr2);
+    if (!in_array($ctype, $arr2)) {  
+        $data['suppress_view_alias'] = false;
+    } else {
+        $data['suppress_view_alias'] = true;
+    }
 
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
-	//sys::import('modules.dynamicdata.class.properties.master');
+    //sys::import('modules.dynamicdata.class.properties.master');
 
-	// Get the objectid
-	$list = DataObjectMaster::getObjectList(array('name' => 'objects'));
+    // Get the objectid
+    $list = DataObjectMaster::getObjectList(array('name' => 'objects'));
 
-	$filters = array(
-		'where' => 'name eq \'' . $ctype . '\''
-	);
-	$items = $list->getItems($filters);
-	$item = end($items);
-	$objectid = $item['objectid'];
+    $filters = array(
+        'where' => 'name eq \'' . $ctype . '\''
+    );
+    $items = $list->getItems($filters);
+    $item = end($items);
+    $objectid = $item['objectid'];
 
-	$object = DataObjectMaster::getObject(array('name' => 'content_types'));
-	$object->getItem(array('itemid'=>$objectid));
+    $object = DataObjectMaster::getObject(array('name' => 'content_types'));
+    $object->getItem(array('itemid'=>$objectid));
 
-	$ctobject = DataObjectMaster::getObject(array('name' => 'objects'));
-	$ctobject->getItem(array('itemid' => $objectid));
-	
-	$data['object'] = $ctobject;
-	$data['ctype'] = $ctype;
-	$data['objectid'] = $objectid;
-	$data['resolvealias'] = xarModAlias::resolve($ctype);
-	$data['isalias'] = (xarModAlias::resolve($ctype) == 'content'); 
+    $ctobject = DataObjectMaster::getObject(array('name' => 'objects'));
+    $ctobject->getItem(array('itemid' => $objectid));
+    
+    $data['object'] = $ctobject;
+    $data['ctype'] = $ctype;
+    $data['objectid'] = $objectid;
+    $data['resolvealias'] = xarModAlias::resolve($ctype);
+    $data['isalias'] = (xarModAlias::resolve($ctype) == 'content'); 
 
     // Get the object we'll be working with
     // $object = DataObjectMaster::getObject(array('name' => $name));
-	// $data['object'] = $object;
+    // $data['object'] = $object;
    
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
 
@@ -96,52 +96,52 @@ function content_admin_modifycontenttype()
         } else {
             // Good data: update the item
  
-			if ($isalias) {
-				if ($data['resolvealias'] == $ctype) {
-					xarModAlias::set($ctype, 'content');
-				}  
-			} else {
-				xarModAlias::delete($ctype, 'content');
-			}
+            if ($isalias) {
+                if ($data['resolvealias'] == $ctype) {
+                    xarModAlias::set($ctype, 'content');
+                }  
+            } else {
+                xarModAlias::delete($ctype, 'content');
+            }
 
-			if ($sitemap_exclude) {
-				if (!in_array($ctype, $arr)) {  
-					$arr[] = $ctype;
-				}
-				$data['sitemap_exclude'] = true;
-			} else {
-				if (in_array($ctype, $arr)) {
-					foreach ($arr as $key => $val) {
-						if ($val == $ctype) unset($arr[$key]);
-					}
-				}
-				$data['sitemap_exclude'] = false;
-			} 
+            if ($sitemap_exclude) {
+                if (!in_array($ctype, $arr)) {  
+                    $arr[] = $ctype;
+                }
+                $data['sitemap_exclude'] = true;
+            } else {
+                if (in_array($ctype, $arr)) {
+                    foreach ($arr as $key => $val) {
+                        if ($val == $ctype) unset($arr[$key]);
+                    }
+                }
+                $data['sitemap_exclude'] = false;
+            } 
 
-			xarModVars::set('content','sitemap_exclude',implode(',',$arr)); 
+            xarModVars::set('content','sitemap_exclude',implode(',',$arr)); 
 
-			if ($suppress_view_alias) {
-				if (!in_array($ctype, $arr2)) {  
-					$arr2[] = $ctype;
-				}
-				$data['suppress_view_alias'] = true;
-			} else {
-				if (in_array($ctype, $arr2)) {
-					foreach ($arr2 as $key => $val) {
-						if ($val == $ctype) unset($arr2[$key]);
-					}
-				}
-				$data['suppress_view_alias'] = false;
-			} 
+            if ($suppress_view_alias) {
+                if (!in_array($ctype, $arr2)) {  
+                    $arr2[] = $ctype;
+                }
+                $data['suppress_view_alias'] = true;
+            } else {
+                if (in_array($ctype, $arr2)) {
+                    foreach ($arr2 as $key => $val) {
+                        if ($val == $ctype) unset($arr2[$key]);
+                    }
+                }
+                $data['suppress_view_alias'] = false;
+            } 
 
-			xarModVars::set('content','suppress_view_alias',implode(',',$arr2)); 
+            xarModVars::set('content','suppress_view_alias',implode(',',$arr2)); 
 
-			$label = $ctobject->properties['label']->getValue();
+            $label = $ctobject->properties['label']->getValue();
             $ctobject->updateItem(array('itemid' => $objectid));
 
-			$object->properties['label']->setValue($label);
-			$object->updateItem(array('itemid' => $objectid));
-			xarResponse::redirect(xarModURL('content','admin','modifycontenttype',array('ctype'=>$ctype, 'confirm' => true)));
+            $object->properties['label']->setValue($label);
+            $object->updateItem(array('itemid' => $objectid));
+            xarResponse::redirect(xarModURL('content','admin','modifycontenttype',array('ctype'=>$ctype, 'confirm' => true)));
             return true;
         }
     } else { 

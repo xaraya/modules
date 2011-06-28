@@ -15,33 +15,33 @@
         <xar:if condition="!empty($withupload)">
            <xar:set name="enctype">'multipart/form-data'</xar:set>
         </xar:if>
-	
-	<p><a href="#xarmodurl('content','admin','view',array('ctype' => $ctype))#">View Items:  #$label#</a></p>
+    
+    <p><a href="#xarmodurl('content','admin','view',array('ctype' => $ctype))#">View Items:  #$label#</a></p>
 
-	<xar:if condition="$invalid">
-		<fieldset id="invalid">
-			<ul>
-			<xar:foreach in="$invalid" key="$key" value="$value">
-				<li class="xar-error">#$value#</li>
-			</xar:foreach>
-			</ul>
-		</fieldset>
-	</xar:if>
+    <xar:if condition="$invalid">
+        <fieldset id="invalid">
+            <ul>
+            <xar:foreach in="$invalid" key="$key" value="$value">
+                <li class="xar-error">#$value#</li>
+            </xar:foreach>
+            </ul>
+        </fieldset>
+    </xar:if>
 
-	<!-- <xar:if condition="isset($path_error)"> 
-		<div id="path_errors">
-			Path error:
-			<xar:if condition="$path_error eq 1">
-				Path must be at least one character long and can contain only letters, numbers, slashes, underscores and dashes.
-			<xar:elseif condition="$path_error eq 3" />
-				The path you've specified is already in use.  Please try another path.
-			<xar:elseif condition="$path_error eq 5" />
-				The first part of the path you entered ("#$pathstart#") is the name of an installed module.  Please try another path.
-			<xar:elseif condition="$path_error eq 6" />
-				The first part of the path you entered ("#$pathstart#") is already an alias for the #$pathaliasmodule# module.  Please try another path.
-			</xar:if> 
-		</div>
-	</xar:if> -->
+    <!-- <xar:if condition="isset($path_error)"> 
+        <div id="path_errors">
+            Path error:
+            <xar:if condition="$path_error eq 1">
+                Path must be at least one character long and can contain only letters, numbers, slashes, underscores and dashes.
+            <xar:elseif condition="$path_error eq 3" />
+                The path you've specified is already in use.  Please try another path.
+            <xar:elseif condition="$path_error eq 5" />
+                The first part of the path you entered ("#$pathstart#") is the name of an installed module.  Please try another path.
+            <xar:elseif condition="$path_error eq 6" />
+                The first part of the path you entered ("#$pathstart#") is already an alias for the #$pathaliasmodule# module.  Please try another path.
+            </xar:if> 
+        </div>
+    </xar:if> -->
                
         <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
            
@@ -51,16 +51,16 @@
                 </legend>
  
                 <xar:data-form object="$object" tplmodule="content" template="content" />
-		 
+         
              </fieldset>
-	     
+         
            <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                 <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
                 <input type="hidden" name="confirm" id="confirm" value="true" /> 
                 &#160;&#160;&#160;
                 <input type="submit" value="#xarML('Save and Edit')#" />&#160;
-		<input type="submit" value="#xarML('Save and Display')#" name="view" />
+        <input type="submit" value="#xarML('Save and Display')#" name="view" />
             </div>  
         </form>
     </div>

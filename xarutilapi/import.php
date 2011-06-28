@@ -19,12 +19,12 @@
 
 function content_utilapi_import($args) {
 
-	$data = $args;
+    $data = $args;
 
-	extract($args);
+    extract($args);
 
-	// for now, prohibit importation of items
-	if (!empty($file)) {
+    // for now, prohibit importation of items
+    if (!empty($file)) {
         $xmlobject = simplexml_load_file($file);
         xarLogMessage('DD: import file ' . $file); 
     } elseif (!empty($xml)) { 
@@ -33,27 +33,27 @@ function content_utilapi_import($args) {
     } 
     $dom = dom_import_simplexml ($xmlobject);
     $roottag = $dom->tagName;
-	if ($roottag == 'items') die("We don't want to import items here");
+    if ($roottag == 'items') die("We don't want to import items here");
   
-	$objectid = xarMod::apiFunc('dynamicdata','util','import',$data);
+    $objectid = xarMod::apiFunc('dynamicdata','util','import',$data);
   
-	if (empty($objectid)) return false;
+    if (empty($objectid)) return false;
 
-	sys::import('modules.dynamicdata.class.objects.master');
+    sys::import('modules.dynamicdata.class.objects.master');
 
-	$object = DataObjectMaster::getObject(array('name' => 'objects'));
+    $object = DataObjectMaster::getObject(array('name' => 'objects'));
 
-	$object->getItem(array('itemid' => $objectid));
-	$name = $object->properties['name']->value;
-	$label = $object->properties['label']->value;
+    $object->getItem(array('itemid' => $objectid));
+    $name = $object->properties['name']->value;
+    $label = $object->properties['label']->value;
 
-	$ctobject = DataObjectMaster::getObject(array('name' => 'content_types'));
-	$ctobject->properties['label']->setValue($label);
-	$ctobject->properties['content_type']->setValue($name);
-	$ctobject->properties['model']->setValue('imported');
-	$itemid = $ctobject->createItem(array('itemid' => $objectid));
+    $ctobject = DataObjectMaster::getObject(array('name' => 'content_types'));
+    $ctobject->properties['label']->setValue($label);
+    $ctobject->properties['content_type']->setValue($name);
+    $ctobject->properties['model']->setValue('imported');
+    $itemid = $ctobject->createItem(array('itemid' => $objectid));
 
-	return array('objectid' => $objectid, 'name' => $name);    
-	
+    return array('objectid' => $objectid, 'name' => $name);    
+    
 }
 ?>

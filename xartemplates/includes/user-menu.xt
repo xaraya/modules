@@ -3,44 +3,44 @@
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
  
 <xar:if condition="!isset($content_types)">
-	<xar:set name="content_types">
-	xarMod::apiFunc('content','admin','getcontenttypes')
-	</xar:set>
+    <xar:set name="content_types">
+    xarMod::apiFunc('content','admin','getcontenttypes')
+    </xar:set>
 </xar:if>
 
 <xar:if condition="count($content_types) gt 1">
 
-	<xar:set name="info">xarRequest::getInfo()</xar:set>
+    <xar:set name="info">xarRequest::getInfo()</xar:set>
 
-	<div id="user-menu">
+    <div id="user-menu">
 
-	<xar:set name="activetab">''</xar:set>
+    <xar:set name="activetab">''</xar:set>
 
-	<xar:if condition="$activetab eq 'view' or $activetab eq 'delete' or $activetab eq 'modify'">
-		<xar:set name="tabclass">'xar-tab-active'</xar:set>
-		<xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
-	<xar:else />
-		<xar:set name="tabclass">'xar-tab'</xar:set>
-		<xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
-	</xar:if>
+    <xar:if condition="$activetab eq 'view' or $activetab eq 'delete' or $activetab eq 'modify'">
+        <xar:set name="tabclass">'xar-tab-active'</xar:set>
+        <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+    <xar:else />
+        <xar:set name="tabclass">'xar-tab'</xar:set>
+        <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+    </xar:if>
 
-	<ul class="xar-tabs">
-	<xar:foreach in="$content_types" key="$key" value="$val">
+    <ul class="xar-tabs">
+    <xar:foreach in="$content_types" key="$key" value="$val">
 
-		<xar:if condition="isset($ctype) and $ctype eq $key">
-			<xar:set name="tabclass">'xar-tab-active'</xar:set>
-			<xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
-		<xar:else />
-			<xar:set name="tabclass">'xar-tab'</xar:set>
-			<xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
-		</xar:if>
+        <xar:if condition="isset($ctype) and $ctype eq $key">
+            <xar:set name="tabclass">'xar-tab-active'</xar:set>
+            <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">'xar-tab'</xar:set>
+            <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+        </xar:if>
 
-		 <li class="#$tabclass#"><a href="#xarModURL('content',$info[1],'view', array('ctype' => $key))#" class="#$linkclass#">#$val#</a></li>
+         <li class="#$tabclass#"><a href="#xarModURL('content',$info[1],'view', array('ctype' => $key))#" class="#$linkclass#">#$val#</a></li>
 
-	</xar:foreach>
-	</ul>
+    </xar:foreach>
+    </ul>
 
-	</div>
+    </div>
 
 </xar:if>
 

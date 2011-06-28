@@ -14,8 +14,8 @@
  
 function content_user_notfound()
 {
-	if (!xarVarFetch('msg', 'str', $msg, NULL, XARVAR_NOT_REQUIRED)) return;
-	return xarTplModule('base','message','notfound',array('msg' => $msg));
+    if (!xarVarFetch('msg', 'str', $msg, NULL, XARVAR_NOT_REQUIRED)) return;
+    return xarTplModule('base','message','notfound',array('msg' => $msg));
 }
 
 ?>

@@ -9,7 +9,7 @@
 #$body#
 
 <xar:if condition="!empty($editurl)">
-	<div class="adminlink"><a href="#$editurl#">Edit this item</a></div>
+    <div class="adminlink"><a href="#$editurl#">Edit this item</a></div>
 </xar:if>
 
 </xar:template>

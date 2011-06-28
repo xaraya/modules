@@ -16,29 +16,29 @@
  */
 function content_userapi_checkpath($args) {
 
-	$failsilently = false;
+    $failsilently = false;
 
-	extract($args);
+    extract($args);
 
-	sys::import('modules.dynamicdata.class.objects.master');
-	$list = DataObjectMaster::getObjectList(array('name' =>  'content'));
-	$filters = array(
-						'where' => 'item_path eq \'' . $path . '\''
-					);
-	$items = $list->getItems($filters);
-	if(count($items) == 0) {
-		return false;
-	} elseif (count($items) == 1) { 
-		$item = end($items);
-		$itemid = $item['itemid'];
-		return $itemid;
-	} elseif ($failsilently) {
-		return false;
-	} else {
+    sys::import('modules.dynamicdata.class.objects.master');
+    $list = DataObjectMaster::getObjectList(array('name' =>  'content'));
+    $filters = array(
+                        'where' => 'item_path eq \'' . $path . '\''
+                    );
+    $items = $list->getItems($filters);
+    if(count($items) == 0) {
+        return false;
+    } elseif (count($items) == 1) { 
+        $item = end($items);
+        $itemid = $item['itemid'];
+        return $itemid;
+    } elseif ($failsilently) {
+        return false;
+    } else {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'item count', 'userapi', 'checkpath', 'content');
         throw new Exception($msg);
-		return;
-	}
+        return;
+    }
 }
 ?>

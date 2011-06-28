@@ -6,14 +6,14 @@
 <div class="bio bio_summary">
  
 <xar:if condition="isset($photo) and !empty($photo)">
-	<img src="#sys::varpath()#/uploads/#$photo#" alt="#$name#" class="bio_img"/>
+    <img src="#sys::varpath()#/uploads/#$photo#" alt="#$name#" class="bio_img"/>
 </xar:if>
 #$summary#
  
 #$body#
 
-	<xar:if condition="!empty($editurl)">
-		<div class="adminlink">[ <a href="#$editurl#">Edit this bio</a> ]</div>
-	</xar:if>
+    <xar:if condition="!empty($editurl)">
+        <div class="adminlink">[ <a href="#$editurl#">Edit this bio</a> ]</div>
+    </xar:if>
 
 </xar:template>

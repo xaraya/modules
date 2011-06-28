@@ -21,11 +21,11 @@
 function content_admin_overview()
 {
    /* Security Check */
-   	if (!xarSecurityCheck('EditContent',1)) {
-		return;
-	}
-	 
-	if(!xarVarFetch('tab',   'str', $data['tab'],   '', XARVAR_NOT_REQUIRED)) {return;}
+       if (!xarSecurityCheck('EditContent',1)) {
+        return;
+    }
+     
+    if(!xarVarFetch('tab',   'str', $data['tab'],   '', XARVAR_NOT_REQUIRED)) {return;}
 
     /* if there is a separate overview function return data to it
      * else just call the main function that usually displays the overview

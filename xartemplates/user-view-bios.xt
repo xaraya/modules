@@ -3,11 +3,11 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
  
 <xar:if condition="isset($output)">
-	#$output#
+    #$output#
 </xar:if>
 
 <xar:if condition="isset($object)"><!-- not sure this pager tag is right -->
-	<xar:pager startnum="$object->startnum" itemsperpage="$object->numitems" total="$total" />
+    <xar:pager startnum="$object->startnum" itemsperpage="$object->numitems" total="$total" />
 </xar:if>
  
 </xar:template>
