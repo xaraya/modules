@@ -13,19 +13,7 @@
 /**
  * Supported URLs :
  *
- * /roles/
- * /roles/123
- * /roles/account
- * /roles/account/[module]
- *
- * /roles/list
- * /roles/list/viewall
- * /roles/list/X
- * /roles/list/viewall/X
- *
- * /roles/password
- * /roles/settings
- * /roles/settings/form (deprecated)
+ * /xarpages/page1/page2...
 **/
 
 sys::import('xaraya.mapper.controllers.short');
