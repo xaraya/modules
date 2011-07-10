@@ -27,19 +27,37 @@ function publications_admin_display($args)
     // Get parameters from user
 // this is used to determine whether we come from a pubtype-based view or a
 // categories-based navigation
-    if(!xarVarFetch('ptid',    'id',    $ptid,  xarModVars::get('publications', 'defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('name',    'str',   $name,  '', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('ptid',    'id',    $ptid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('itemid',      'id',    $id,   NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('page', 'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
     
     // Override xarVarFetch
     extract ($args);
     
+    if (empty($name) && empty($ptid)) return xarResponse::NotFound();
+
+    if(empty($ptid)) {
+        $publication_type = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
+        $where = 'name = ' . $name;
+        $items = $publication_type->getItems(array('where' => $where));
+        $item = current($items);
+        $ptid = $item['id'];
+    }
+
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
     $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
     $data['object']->getItem(array('itemid' => $id));
     $publication = $data['object']->getFieldValues();
+
+    // Specific layout within a template (optional)
+    if (isset($layout)) {
+        $data['layout'] = $layout;
+    } else {
+        $data['layout'] = 'detail';
+    }
 
     return $data;
 

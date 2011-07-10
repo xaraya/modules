@@ -85,8 +85,12 @@ function publications_user_display($args)
     
     $publication = $data['object']->getFieldValues();
 
-    // This function displays the detail layout
-    $data['layout'] = 'detail';
+    // Specific layout within a template (optional)
+    if (isset($layout)) {
+        $data['layout'] = $layout;
+    } else {
+        $data['layout'] = 'detail';
+    }
     
     // Set the theme if needed
     if (!empty($data['object']->properties['theme']->value)) xarTplSetThemeName($data['object']->properties['theme']->value);
@@ -108,7 +112,7 @@ function publications_user_display($args)
     xarVarSetCached('Blocks.publications', 'ptid', $ptid);
     xarVarSetCached('Blocks.publications', 'author', $data['object']->properties['author']->value);
 
-    return xarTplModule('publications', 'user', 'display', $data);
+    return $data;
 }
 
 ?>
