@@ -12,6 +12,6 @@
         <xar:template type="module" file="admin-menu"/>
     </div>
     <div class="xar-mod-body">    
-        <xar:data-display object="$object" tplmodule="publications"/>
+        <xar:data-display object="$object" tplmodule="publications" layout="$layout"/>
     </div>
 </xar:template>
