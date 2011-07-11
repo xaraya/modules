@@ -131,6 +131,7 @@ function publications_init()
     xarModVars::set('publications', 'SupportShortURLs', 1);
     xarModVars::set('publications', 'fulltextsearch', '');
     xarModVars::set('publications', 'defaultpubtype', 10);
+    xarModVars::set('publications', 'defaultlanguage', 'en_US.utf-8');
 
     // Save publications settings for each publication type
     /*

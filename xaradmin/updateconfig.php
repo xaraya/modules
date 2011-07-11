@@ -36,17 +36,15 @@ function publications_admin_updateconfig()
 
     if ($data['tab'] == 'global') {
         if(!xarVarFetch('items_per_page',      'isset', $items_per_page,      20,  XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('shorturls',         'isset', $shorturls,         0,  XARVAR_NOT_REQUIRED)) {return;}
-        if (!xarVarFetch('modulealias',  'checkbox', $useModuleAlias,  xarModVars::get('dynamicdata', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('aliasname',    'str',      $aliasname,  xarModVars::get('dynamicdata', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
         if(!xarVarFetch('defaultpubtype',    'isset', $defaultpubtype,    1,  XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('sortpubtypes',      'isset', $sortpubtypes,   'id',  XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVarFetch('defaultlanguage', 'str:1:100', $defaultlanguage, xarModVars::get('publications', 'defaultlanguage'), XARVAR_NOT_REQUIRED)) return;
+
         xarModVars::set('publications', 'items_per_page', $items_per_page);
-        xarModVars::set('publications', 'SupportShortURLs', $shorturls);
-        xarModVars::set('publications', 'useModuleAlias', $useModuleAlias);
-        xarModVars::set('publications', 'aliasname', $aliasname);
         xarModVars::set('publications', 'defaultpubtype', $defaultpubtype);
         xarModVars::set('publications', 'sortpubtypes', $sortpubtypes);
+        xarModVars::set('publications', 'defaultlanguage', $defaultlanguage);
+
         if (xarDB::getType() == 'mysql') {
             if (!xarVarFetch('fulltext', 'isset', $fulltext, '', XARVAR_NOT_REQUIRED)) {return;}
             $oldval = xarModVars::get('publications', 'fulltextsearch');
@@ -77,7 +75,7 @@ function publications_admin_updateconfig()
         }
         
         // Module settings
-        $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'base'));
+        $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'publications'));
         $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls, user_menu_link');
         $isvalid = $data['module_settings']->checkInput();
         if (!$isvalid) {
