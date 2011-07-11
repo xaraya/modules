@@ -45,6 +45,18 @@
                 <xar:data-form object="$module_settings"/>
                 <fieldset class="xar-norm">
                     <legend>
+                        Language Configuration
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label class="help xar-form-label" for="defaultlanguage" title="#xarML('The languae we fall back on if no translation is available')#">
+                            Default Language
+                        </label> 
+                        <xar:set name="value">xarModVars::get('publications', 'defaultlanguage')</xar:set>
+                        <xar:data-input type="languages" name="defaultlanguage" value="$value" />
+                    </div>
+                </fieldset>
+                <fieldset class="xar-norm">
+                    <legend>
                         Global Configuration
                     </legend>
                     <div class="xar-form-input-wrapper">

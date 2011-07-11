@@ -117,7 +117,7 @@
       <id>942</id>
       <label>Language</label>
       <type>language</type>
-      <defaultvalue>xarConfigVars::get(null, 'Site.MLS.DefaultLocale')</defaultvalue>
+      <defaultvalue>xarModVars::get('publications', 'defaultlanguage')</defaultvalue>
       <source>publication.locale</source>
       <status>33</status>
       <seq>23</seq>
