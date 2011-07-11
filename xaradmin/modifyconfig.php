@@ -85,6 +85,16 @@ function publications_admin_modifyconfig()
         $data['usealias'] = false;
     }
 
+    // Get the tree of all pages.
+    $data['tree'] = xarMod::apiFunc('publications', 'user', 'getpagestree', array('dd_flag' => false));    if (!xarVarFetch('phase',        'str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+
+    // Implode the names for each page into a path for display.
+    $data['treeoptions'] = array();
+    foreach ($data['tree']['pages'] as $key => $page) {
+//        $data['tree']['pages'][$key]['slash_separated'] =  '/' . implode('/', $page['namepath']);
+        $data['treeoptions'][] = array('id' => $key, 'name' => '/' . implode('/', $page['namepath']));
+    }
+
     //The usual bunch of vars
     $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'publications'));
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls, user_menu_link');

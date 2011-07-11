@@ -43,18 +43,55 @@
        <form class="xar-formwidget" action="&xar-modurl-publications-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
             <xar:if condition="$tab eq 'global'">
                 <xar:data-form object="$module_settings"/>
-                <fieldset class="xar-norm">
+                <fieldset>
                     <legend>
                         Language Configuration
                     </legend>
                     <div class="xar-form-input-wrapper">
-                        <label class="help xar-form-label" for="defaultlanguage" title="#xarML('The languae we fall back on if no translation is available')#">
+                        <label class="xar-form-label" for="defaultlanguage" title="#xarML('The languae we fall back on if no translation is available')#">
                             Default Language
                         </label> 
                         <xar:set name="value">xarModVars::get('publications', 'defaultlanguage')</xar:set>
                         <xar:data-input type="languages" name="defaultlanguage" value="$value" />
                     </div>
                 </fieldset>
+                <fieldset>
+                    <legend>
+                        Special Pages
+                    </legend>
+                    <xar:var name="firstline">-- None --</xar:var>
+                    <xar:set name="firstline">"0,$firstline"</xar:set>
+                    <xar:set name="options">$treeoptions</xar:set>
+                    <div class="xar-form-input-wrapper">
+                        <label class="xar-form-label" for="defaultpage">
+                            Default page
+                        </label>
+                        <xar:set name="value">xarModVars::get('publications', 'defaultpage')</xar:set>
+                        <xar:data-input type="dropdown" name="defaultpage" value="$value" options="$options" firstline="$firstline"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label class="xar-form-label" for="errorpage">
+                            Error page
+                        </label>
+                        <xar:set name="value">xarModVars::get('publications', 'errorpage')</xar:set>
+                        <xar:data-input type="dropdown" name="errorpage" value="$value" options="$options" firstline="$firstline"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label class="xar-form-label" for="notfoundpage">
+                            Not found page
+                        </label>
+                        <xar:set name="value">xarModVars::get('publications', 'notfoundpage')</xar:set>
+                        <xar:data-input type="dropdown" name="notfoundpage" value="$value" options="$options" firstline="$firstline"/>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label class="xar-form-label" for="noprivspage">
+                            No privileges page
+                        </label>
+                        <xar:set name="value">xarModVars::get('publications', 'noprivspage')</xar:set>
+                        <xar:data-input type="dropdown" name="noprivspage" value="$value" options="$options" firstline="$firstline"/>
+                    </div>
+                </fieldset>
+
                 <fieldset class="xar-norm">
                     <legend>
                         Global Configuration

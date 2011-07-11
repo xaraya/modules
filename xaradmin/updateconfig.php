@@ -45,6 +45,13 @@ function publications_admin_updateconfig()
         xarModVars::set('publications', 'sortpubtypes', $sortpubtypes);
         xarModVars::set('publications', 'defaultlanguage', $defaultlanguage);
 
+        // Get the special pages.
+        foreach(array('defaultpage', 'errorpage', 'notfoundpage', 'noprivspage') as $special_name) {
+            unset($special_id);
+            if (!xarVarFetch($special_name, 'id', $special_id, 0, XARVAR_NOT_REQUIRED)) {return;}
+            xarModVars::set('publications', $special_name, $special_id);
+        }
+
         if (xarDB::getType() == 'mysql') {
             if (!xarVarFetch('fulltext', 'isset', $fulltext, '', XARVAR_NOT_REQUIRED)) {return;}
             $oldval = xarModVars::get('publications', 'fulltextsearch');

@@ -14,7 +14,8 @@
  */
 function publications_user_main($args)
 {
-    return xarModFunc('publications','user','view',$args);
+    return xarMod::guiFunc('publications', 'user', 'display');
+//    return xarModFunc('publications','user','view',$args);
 }
 
 ?>

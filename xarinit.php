@@ -132,6 +132,10 @@ function publications_init()
     xarModVars::set('publications', 'fulltextsearch', '');
     xarModVars::set('publications', 'defaultpubtype', 10);
     xarModVars::set('publications', 'defaultlanguage', 'en_US.utf-8');
+    xarModVars::set('publications', 'defaultpage', 0);
+    xarModVars::set('publications', 'errorpage', 0);
+    xarModVars::set('publications', 'notfoundpage', 0);
+    xarModVars::set('publications', 'noprivspage', 0);
 
     // Save publications settings for each publication type
     /*

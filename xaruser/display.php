@@ -35,25 +35,36 @@ function publications_user_display($args)
     // Override xarVarFetch
     extract ($args);
     
-    if (empty($name) && empty($ptid)) return xarResponse::NotFound();
-
-    if(empty($ptid)) {
+    // If no id supplied, get the default id.
+    if (empty($id)) $id = xarModVars::get('publications', 'defaultpage');
+    $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
+    
+    // If the document doesn't exist, we might be viewing a pubtype
+    if (empty($name) && empty($ptid) && empty($id)) {
+        // Nothing to be done
+        $id = xarModVars::get('publications', 'notfoundpage');
+    } elseif (empty($id)) {
+        // We're missing an id but can get a pubtype: jump to the pubtype view
+        xarController::redirect(xarModURL('publications','user','view'));
+    }
+    
+    // We have come to the end of the line
+    if (empty($id)) return xarResponse::NotFound();
+    
+    $ptid = xarMod::apiFunc('publications','user','getitempubtype',array('itemid' => $id));
+    
+/*    if(empty($ptid)) {
         $publication_type = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
         $where = 'name = ' . $name;
         $items = $publication_type->getItems(array('where' => $where));
         $item = current($items);
         $ptid = $item['id'];
     }
-    
+*/
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
-    
-    $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
     $itemid = $data['object']->getItem(array('itemid' => $id));
-    
-    // If the document doesn't exist, bail
-    if (empty($itemid)) return xarResponse::NotFound();
     
     // Get the complete tree for this section of pages.
     // We need this for blocks etc.
