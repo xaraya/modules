@@ -254,5 +254,15 @@
       <seq>36</seq>
       <configuration>a:6:{s:14:"display_layout";s:7:"default";s:25:"initialization_celkotable";s:16:"xar_publications";s:24:"initialization_celkoname";s:4:"name";s:29:"initialization_celkoparent_id";s:13:"parentpage_id";s:28:"initialization_celkoright_id";s:12:"rightpage_id";s:27:"initialization_celkoleft_id";s:11:"leftpage_id";}</configuration>
     </property>
+    <property name="access">
+      <id>978</id>
+      <label>Access</label>
+      <type>access</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.access</source>
+      <status>34</status>
+      <seq>37</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
   </properties>
 </object>

@@ -290,7 +290,7 @@
       <type>access</type>
       <defaultvalue></defaultvalue>
       <source>publication.access</source>
-      <status>33</status>
+      <status>34</status>
       <seq>37</seq>
       <configuration>a:0:{}</configuration>
     </property>
