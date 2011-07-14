@@ -14,6 +14,7 @@
 function publications_userapi_gettranslationid($args)
 {
     if (!isset($args['id'])) throw new BadParameterException('id');
+    if (empty($args['id'])) return 0;
     
     sys::import('xaraya.structures.query');
 

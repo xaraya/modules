@@ -464,6 +464,30 @@
                         </tr>
                     </table>
                 </fieldset>
+                <fieldset>
+                    <legend>
+                        Add Access
+                    </legend>
+                    <xar:data-input type="access" name="access[add]"/>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        Display Access
+                    </legend>
+                    <xar:data-input type="access" name="access[display]"/>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        Modify Access
+                    </legend>
+                    <xar:data-input type="access" name="access[modify]"/>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        Delete Access
+                    </legend>
+                    <xar:data-input type="access" name="access[delete]"/>
+                </fieldset>
             </xar:if>
             <div class="xar-form-input-wrapper">
                 <div class="xar-form-container-after">

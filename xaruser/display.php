@@ -12,14 +12,22 @@
  * @author mikespub
  */
 /**
- * Display publication
+ * Display a page or a series of pages
  *
- * @param int id
- * @param int page
+ * @param int itemid
+ * @param str name
  * @param int ptid The publication Type ID
  * @return array with template information
  */
 
+/**
+ * Notes
+ * If passed an itemid this function will return the page with that ID
+ * If instead passed a name or ID of a publication type it will show the view of that publication type
+ * If nothing is passed it will show the default page of this module
+ * If no default page is defined it will show the custom 404 page of this module
+ * If no 404 page is defined it will show the standard Xaraya 404 page
+ */
 sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_display($args)

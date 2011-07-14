@@ -100,6 +100,7 @@ function publications_admin_updateconfig()
         $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
         $pubtypeobject->getItem(array('itemid' => $ptid));
         $configsettings = $pubtypeobject->properties['configuration']->getValue();
+        var_dump($configsettings);exit;
         foreach ($configsettings as $key => $value)
             if (!isset($settings[$key])) $settings[$key] = 0;
         $pubtypeobject->properties['configuration']->setValue($settings);
