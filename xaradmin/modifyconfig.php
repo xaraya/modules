@@ -92,7 +92,7 @@ function publications_admin_modifyconfig()
     $data['treeoptions'] = array();
     foreach ($data['tree']['pages'] as $key => $page) {
 //        $data['tree']['pages'][$key]['slash_separated'] =  '/' . implode('/', $page['namepath']);
-        $data['treeoptions'][] = array('id' => $key, 'name' => '/' . implode('/', $page['namepath']));
+        $data['treeoptions'][] = array('id' => $page['id'], 'name' => '/' . implode('/', $page['namepath']));
     }
 
     //The usual bunch of vars

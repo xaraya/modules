@@ -118,6 +118,24 @@
     -->
     <fieldset>
         <legend>
+            Display Access
+        </legend>
+        <xar:data-input property="$properties['access']" />
+    </fieldset>
+    <fieldset>
+        <legend>
+            Modify Access
+        </legend>
+        <xar:data-input property="$properties['access']" />
+    </fieldset>
+    <fieldset>
+        <legend>
+            Delete Access
+        </legend>
+        <xar:data-input property="$properties['access']" />
+    </fieldset>
+    <fieldset>
+        <legend>
             Categories
         </legend>
         <div class="xar-form-input-wrapper">
