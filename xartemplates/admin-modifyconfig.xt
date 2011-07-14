@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head">
-  <span class="xar-mod-title"><xar:mlstring>Twitter Administration</xar:mlstring></span>
-</div>
+<xar:template type="module" module="twitter" file="admin-xar-mod-head"/>
 <div class="xar-mod-body">
-    <xar:template type="module" file="admin-tabs"/>
     <h2><xar:mlstring>Modify Twitter Configuration</xar:mlstring></h2>
     <form method="post" action="#xarModURL('twitter', 'admin', 'modifyconfig')#">
         <xar:comment>

@@ -1,30 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:set name="menulinks">xarMod::apiFunc('twitter', 'admin', 'getmenulinks')</xar:set>
-<xar:if condition="!empty($menulinks)">
-    <xar:set name="request">xarController::$request->getInfo()</xar:set>
-    <xar:set name="activefunc">$request[2]</xar:set>
-    <xar:style scope="module" module="base" file="navtabs" />
-    <div>
-        <ul class="xar-tabs xar-alt xar-norm-outline">
-            <li class="xar-tabs-label help">
-                Twitter:
-            </li>
-            <xar:set name="activeclass">'xar-tab-active'</xar:set>
-            <xar:set name="activelink">'xar-accent xar-accent-outline'</xar:set>
-            <xar:set name="inactiveclass">'xar-tab'</xar:set>
-            <xar:set name="inactivelink">'xar-norm xar-norm-outline'</xar:set>
-            <xar:foreach in="$menulinks" value="$menulink">
-                <xar:set name="activetab">(!empty($menulink['active']) and is_array($menulink['active']) and in_array($activefunc, $menulink['active'])) ? $activeclass : $inactiveclass</xar:set>
-                <xar:set name="linkclass">(!empty($menulink['active']) and is_array($menulink['active']) and in_array($activefunc, $menulink['active'])) ? $activelink : $inactivelink</xar:set>
-                <li class="#$activetab#">
-                    <a class="#$linkclass#" href="#$menulink.url#" title="#$menulink.title#">
-                        #$menulink.label#
-                    </a>
-                </li>
-            </xar:foreach>
-        </ul>
-    </div>
-</xar:if>
-</xar:template>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout" type="module" module="base"
+file="admin-menu-skel"/>

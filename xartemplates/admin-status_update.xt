@@ -2,13 +2,8 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="empty($return_url) || $return_url == $compare">
     <xar:style scope="module" module="twitter" file="style"/>
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">
-            <xar:mlstring>Twitter Administration</xar:mlstring>
-        </span>
-    </div>
+<xar:template type="module" module="twitter" file="admin-xar-mod-head"/>
     <div class="xar-mod-body">
-        <xar:template type="module" file="admin-tabs"/>
         <xar:template file="account-profile"/>
         <xar:template file="status-form"/>
     </div>
