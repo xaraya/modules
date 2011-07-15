@@ -17,41 +17,41 @@
 function downloads_adminapi_getfileitems($args)
 {
 
-	$linkslist = false;
+    $linkslist = false;
 
-	extract($args);
+    extract($args);
 
-	$directories = xarMod::apiFunc('downloads','user','getdirectories');
+    $directories = xarMod::apiFunc('downloads','user','getdirectories');
 
-	$key = array_search($directory, $directories);
+    $key = array_search($directory, $directories);
 
-	$list = DataObjectMaster::getObjectList(array(
-							'name' => 'downloads',
-							'where' => 'directory eq \'' . $key . '\' and filename eq \'' . $file
-							. '\''));
-	$items = $list->getItems();
-	$count = count($items);
+    $list = DataObjectMaster::getObjectList(array(
+                            'name' => 'downloads',
+                            'where' => 'directory eq \'' . $key . '\' and filename eq \'' . $file
+                            . '\''));
+    $items = $list->getItems();
+    $count = count($items);
 
-	$itemids = array();
-	$links = array();
+    $itemids = array();
+    $links = array();
 
-	foreach ($items as $item) {
-		$itemids[] = $item['itemid'];
-		$links[] = '<a href="' . xarModURL('downloads', 'admin', 'modify',
-			array('itemid' => $item['itemid'])) . '" class="fileitem"><span>' . $item['itemid'] . '</span></a>';
-	}
+    foreach ($items as $item) {
+        $itemids[] = $item['itemid'];
+        $links[] = '<a href="' . xarModURL('downloads', 'admin', 'modify',
+            array('itemid' => $item['itemid'])) . '" class="fileitem"><span>' . $item['itemid'] . '</span></a>';
+    }
     
-	if (empty($itemids)) {
-		return false;
-	} elseif (!$linkslist) {
-		return $itemids;
-	} else {
-		if (!empty($links)) {
-			return implode(' ',$links);
-		} else {
-			return false;
-		}
-	}
+    if (empty($itemids)) {
+        return false;
+    } elseif (!$linkslist) {
+        return $itemids;
+    } else {
+        if (!empty($links)) {
+            return implode(' ',$links);
+        } else {
+            return false;
+        }
+    }
 
 }
 

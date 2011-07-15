@@ -16,15 +16,15 @@
  */
 function downloads_adminapi_getbasepath() {
 
-	include(sys::varpath(). '/config.system.php');
+    include(sys::varpath(). '/config.system.php');
 
-	if (!empty($systemConfiguration['downloads.basepath'])) {
-		$basepath = $systemConfiguration['downloads.basepath'];
-	} else {
-		$basepath = '../';
-	}
+    if (!empty($systemConfiguration['downloads.basepath'])) {
+        $basepath = $systemConfiguration['downloads.basepath'];
+    } else {
+        $basepath = '../';
+    }
 
-	return $basepath;
+    return $basepath;
 
 }
 

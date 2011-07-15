@@ -23,11 +23,11 @@ function downloads_userapi_encode_shorturl($args)
 {
     // Get arguments from argument array
     extract($args);
-	/*
-	xarModURL('downloads','user','display',array('itemid'=>1))
-	xarModURL('downloads','user','view',array('name'=>'apples'))
-	array(2) { ["name"]=> string(6) "apples" ["func"]=> string(4) "view" }
-	*/
+    /*
+    xarModURL('downloads','user','display',array('itemid'=>1))
+    xarModURL('downloads','user','view',array('name'=>'apples'))
+    array(2) { ["name"]=> string(6) "apples" ["func"]=> string(4) "view" }
+    */
 
     // Check if we have something to work with
     if (!isset($func)) {
@@ -50,37 +50,37 @@ function downloads_userapi_encode_shorturl($args)
 
     } elseif ($func == 'view') {
 
-		$path = '/' . $module . '/view';
+        $path = '/' . $module . '/view';
 
-		// If we're not using an alias, we'll need the name after the func
-		if ($module == 'downloads' && isset($ctype)) {
-			$path .= '/' . $ctype;
-		}
+        // If we're not using an alias, we'll need the name after the func
+        if ($module == 'downloads' && isset($ctype)) {
+            $path .= '/' . $ctype;
+        }
 
     } elseif ($func == 'display') {
  
-		$path = '/' . $module . '/display';
+        $path = '/' . $module . '/display';
 
-		if(isset($args['itemid'])) {
-			$path .= '/' . $itemid;
-		} else { // no itemid
-			return;
-		}
+        if(isset($args['itemid'])) {
+            $path .= '/' . $itemid;
+        } else { // no itemid
+            return;
+        }
 
-	 } elseif ($func == 'getfile') {
+     } elseif ($func == 'getfile') {
  
-		$path = '/' . $module;
+        $path = '/' . $module;
 
-		if(isset($args['itemid'])) {
-			$path .= '/' . $itemid;
-		} else { // no itemid
-			return;
-		}
+        if(isset($args['itemid'])) {
+            $path .= '/' . $itemid;
+        } else { // no itemid
+            return;
+        }
 
     } else {
-		// no main, view or display func
-		return;
-	}
+        // no main, view or display func
+        return;
+    }
 
     return $path;
 }

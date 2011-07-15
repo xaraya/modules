@@ -25,7 +25,7 @@ function downloads_admin_main()
     $info =  xarRequest::getInfo();
     $samemodule = $info[0] == $refererinfo[0];
 
-	if(!xarVarFetch('tab',   'str', $data['tab'],   '', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('tab',   'str', $data['tab'],   '', XARVAR_NOT_REQUIRED)) {return;}
     
     if (((bool)xarModVars::get('modules', 'disableoverview') == false) || $samemodule){
         return xarTplModule('downloads','admin','overview',$data);

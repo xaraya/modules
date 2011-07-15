@@ -26,7 +26,7 @@
         <div class="xar-form-input-wrapper-after">
             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
             <input type="hidden" name="directory" id="directory" value="#$directory#" />
-	    <input type="hidden" name="file" id="file" value="#$file#" />
+        <input type="hidden" name="file" id="file" value="#$file#" />
             <input type="hidden" name="confirm" id="confirm" value="true" />
             <xar:var name="label">Yes</xar:var>
             <xar:button type="submit" label="$label" />

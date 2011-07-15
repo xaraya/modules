@@ -3,68 +3,68 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
 
-	<xar:if condition="$_GET['func'] eq 'modify'">
+    <xar:if condition="$_GET['func'] eq 'modify'">
      <div class="xar-form-input-wrapper">
-	<xar:set name="field">'itemid'</xar:set>
-	<xar:data-label property="$properties[$field]" for="id" />
-	<xar:data-input property="$properties[$field]" />
+    <xar:set name="field">'itemid'</xar:set>
+    <xar:data-label property="$properties[$field]" for="id" />
+    <xar:data-input property="$properties[$field]" />
      </div>
      <xar:else />
-	<xar:data-input property="$properties['itemid']" type="hidden" />
+    <xar:data-input property="$properties['itemid']" type="hidden" />
      </xar:if>
-	
+    
 
      <div class="xar-form-input-wrapper">
-	<xar:set name="field">'title'</xar:set>
-	<xar:data-label property="$properties[$field]" for="id" />
-	<xar:data-input property="$properties[$field]" />
+    <xar:set name="field">'title'</xar:set>
+    <xar:data-label property="$properties[$field]" for="id" />
+    <xar:data-input property="$properties[$field]" />
      </div>
 
      <div class="xar-form-input-wrapper">
-	<xar:set name="field">'description'</xar:set>
-	<xar:data-label property="$properties[$field]" for="id" />
-	<xar:data-input property="$properties[$field]" />
+    <xar:set name="field">'description'</xar:set>
+    <xar:data-label property="$properties[$field]" for="id" />
+    <xar:data-input property="$properties[$field]" />
      </div>
 
       <xar:if condition="$_GET['func'] eq 'modify'">
-	      <div class="xar-form-input-wrapper">
-		<xar:set name="field">'status'</xar:set>
-		<xar:data-label property="$properties[$field]" for="id" />
-		<xar:data-input property="$properties[$field]" />
-	     </div>
+          <div class="xar-form-input-wrapper">
+        <xar:set name="field">'status'</xar:set>
+        <xar:data-label property="$properties[$field]" for="id" />
+        <xar:data-input property="$properties[$field]" />
+         </div>
      <xar:else />
-	<input name="status" type="hidden" value="0" />
+    <input name="status" type="hidden" value="0" />
      </xar:if>
 
      <div class="xar-form-input-wrapper">
-	<xar:set name="field">'directory'</xar:set>
-	<xar:data-label property="$properties[$field]" for="id" />
-	<xar:if condition="$_GET['func'] eq 'modify'">	
-		<xar:data-output property="$properties[$field]" />
-		<xar:data-input property="$properties[$field]" style="display:none" />
-	<xar:else />
-		<xar:data-input property="$properties[$field]" />
-	</xar:if>
+    <xar:set name="field">'directory'</xar:set>
+    <xar:data-label property="$properties[$field]" for="id" />
+    <xar:if condition="$_GET['func'] eq 'modify'">    
+        <xar:data-output property="$properties[$field]" />
+        <xar:data-input property="$properties[$field]" style="display:none" />
+    <xar:else />
+        <xar:data-input property="$properties[$field]" />
+    </xar:if>
      </div>
 
       <div class="xar-form-input-wrapper">
-	<xar:set name="field">'filename'</xar:set>
-	<xar:data-label property="$properties[$field]" for="id" />
-	<xar:data-input property="$properties[$field]" clear="$clear" />
+    <xar:set name="field">'filename'</xar:set>
+    <xar:data-label property="$properties[$field]" for="id" />
+    <xar:data-input property="$properties[$field]" clear="$clear" />
      </div>
 
       <xar:if condition="$_GET['func'] eq 'modify'">
-	<xar:set name="filepath">$basepath . $properties['directory']->value . '/' . $properties['filename']->value</xar:set>
-	<xar:if condition="file_exists($filepath)">
-		<div class="xar-form-input-wrapper">
-		<xar:set name="bytes">filesize($filepath)</xar:set>
-		<xar:set name="mb">round($bytes/1048576, 2)</xar:set>
-		    <label class="xar-form-label" for="filesize"> 
-			Filesize
-		    </label> 
-		    #$mb# megabytes<br />
-		</div>
-	</xar:if>
+    <xar:set name="filepath">$basepath . $properties['directory']->value . '/' . $properties['filename']->value</xar:set>
+    <xar:if condition="file_exists($filepath)">
+        <div class="xar-form-input-wrapper">
+        <xar:set name="bytes">filesize($filepath)</xar:set>
+        <xar:set name="mb">round($bytes/1048576, 2)</xar:set>
+            <label class="xar-form-label" for="filesize"> 
+            Filesize
+            </label> 
+            #$mb# megabytes<br />
+        </div>
+    </xar:if>
      </xar:if>
 
 <xar:data-input property="$properties['filetype']" />

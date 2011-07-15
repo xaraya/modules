@@ -23,23 +23,23 @@
 function downloads_userapi_decode_shorturl($params)
 {
 
-	$func = 'main';
+    $func = 'main';
 
     // Initialise the argument list we will return
     $args = array();
 
-	if ($params[0] != 'downloads') {
-		$alias = true;
-	} else {
-		$alias = false;
-	}
+    if ($params[0] != 'downloads') {
+        $alias = true;
+    } else {
+        $alias = false;
+    }
 
-	if (is_numeric($params[1])) {
-		$func = 'getfile';
-		$args['itemid'] = $params[1];
-	}
+    if (is_numeric($params[1])) {
+        $func = 'getfile';
+        $args['itemid'] = $params[1];
+    }
 
-	return array($func, $args);  
+    return array($func, $args);  
 
 }
 

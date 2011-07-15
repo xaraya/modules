@@ -22,7 +22,7 @@ function downloads_admin_modify()
 {
     if(!xarVarFetch('itemid',       'id',    $itemid,   NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
-	if(!xarVarFetch('saveedit',     'isset', $saveedit,   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('saveedit',     'isset', $saveedit,   NULL, XARVAR_DONT_SET)) {return;}
 
     // Check if we still have no id of the item to modify.
     if (empty($itemid)) {
@@ -31,37 +31,37 @@ function downloads_admin_modify()
         throw new Exception($msg);
     }
 
-	$data['itemid'] = $itemid;
+    $data['itemid'] = $itemid;
 
-	sys::import('modules.dynamicdata.class.properties.master');    sys::import('modules.dynamicdata.class.objects.master');
+    sys::import('modules.dynamicdata.class.properties.master');    sys::import('modules.dynamicdata.class.objects.master');
 
     // Get the object we'll be working with
     $object = DataObjectMaster::getObject(array('name' => 'downloads'));
-	$data['object'] = $object; // save for later
+    $data['object'] = $object; // save for later
 
-	$properties = $object->getProperties();
-	$data['locpropid'] = $properties['directory']->id;
-	
-	$object->getItem(array('itemid' => $itemid));
-	$data['filename'] = $object->properties['filename']->value;
-	$data['basepath'] = xarMod::apiFunc('downloads','admin','getbasepath');
-	if (strstr($data['filename'],'.')) {
-		$parts = explode('.',$data['filename']);
-		$ext = strtolower(end($parts));
-	} else {
-		$ext = '';
-	}
-	$instance = $itemid.':'.$ext.':'.xarUserGetVar('id');
-	if (!xarSecurityCheck('EditDownloads',0,'Record',$instance)) {
-		return;
-	}
-	$data['directory'] = $object->properties['directory']->value;
+    $properties = $object->getProperties();
+    $data['locpropid'] = $properties['directory']->id;
+    
+    $object->getItem(array('itemid' => $itemid));
+    $data['filename'] = $object->properties['filename']->value;
+    $data['basepath'] = xarMod::apiFunc('downloads','admin','getbasepath');
+    if (strstr($data['filename'],'.')) {
+        $parts = explode('.',$data['filename']);
+        $ext = strtolower(end($parts));
+    } else {
+        $ext = '';
+    }
+    $instance = $itemid.':'.$ext.':'.xarUserGetVar('id');
+    if (!xarSecurityCheck('EditDownloads',0,'Record',$instance)) {
+        return;
+    }
+    $data['directory'] = $object->properties['directory']->value;
 
-	$object->properties['filename']->initialization_basedirectory = $data['directory'];
-	$object->properties['filename']->initialization_basepath = $data['basepath'];
+    $object->properties['filename']->initialization_basedirectory = $data['directory'];
+    $object->properties['filename']->initialization_basepath = $data['basepath'];
 
-	$data['roleid'] = $object->properties['roleid']->value;
-	$data['label'] = $object->label;
+    $data['roleid'] = $object->properties['roleid']->value;
+    $data['label'] = $object->label;
 
     if ($data['confirm']) {
 
@@ -76,29 +76,29 @@ function downloads_admin_modify()
         if (!$isvalid) {
             return xarTplModule('downloads','admin','modify', $data);              
         } else {
-			$filename = $object->properties['filename']->getValue();
-			if (strstr($filename,'.')) {
-				$parts = explode('.',$filename);
-				$ext = strtolower(end($parts));
-			} else {
-				$ext = '';
-			}
+            $filename = $object->properties['filename']->getValue();
+            if (strstr($filename,'.')) {
+                $parts = explode('.',$filename);
+                $ext = strtolower(end($parts));
+            } else {
+                $ext = '';
+            }
 
-			$instance = $itemid.':'.$ext.':'.xarUserGetVar('id');
-			if (!xarSecurityCheck('EditDownloads',0,'Record',$instance)) {
-				return;
-			}
+            $instance = $itemid.':'.$ext.':'.xarUserGetVar('id');
+            if (!xarSecurityCheck('EditDownloads',0,'Record',$instance)) {
+                return;
+            }
 
-			$object->properties['filetype']->setValue($ext);
+            $object->properties['filetype']->setValue($ext);
             $object->updateItem(array('itemid' => $itemid));
 
-			if (isset($saveedit)) {
-				xarResponse::redirect(xarModURL('downloads', 'admin', 'modify',
-									  array('itemid' => $itemid)));
-				return true;
-			}
+            if (isset($saveedit)) {
+                xarResponse::redirect(xarModURL('downloads', 'admin', 'modify',
+                                      array('itemid' => $itemid)));
+                return true;
+            }
 
-			xarResponse::redirect(xarModURL('downloads','admin','view'));
+            xarResponse::redirect(xarModURL('downloads','admin','view'));
             return true;
         }
     } else { 

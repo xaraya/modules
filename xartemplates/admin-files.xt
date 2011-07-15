@@ -14,129 +14,129 @@
 
         <h2>View Files</h2>
 
-	<xar:if condition="isset($msg)">
-		<p>
-		<span class="xar-error">This file type is not allowed: #$msg#</span>
-		</p>
-	</xar:if>
+    <xar:if condition="isset($msg)">
+        <p>
+        <span class="xar-error">This file type is not allowed: #$msg#</span>
+        </p>
+    </xar:if>
 
-	<xar:if condition="$showfilters">
-		#xarMod::apiFunc('filters','user','makefilter',array(
-			'thisfield' => 'locfilter',
-			'func' => 'files',
-			'module' => 'downloads',
-			'startval' => $locstartval,
-			'filterlabel' => 'Filter:'
-			))#
+    <xar:if condition="$showfilters">
+        #xarMod::apiFunc('filters','user','makefilter',array(
+            'thisfield' => 'locfilter',
+            'func' => 'files',
+            'module' => 'downloads',
+            'startval' => $locstartval,
+            'filterlabel' => 'Filter:'
+            ))#
 
-		#xarMod::apiFunc('filters','user','makefilter',array(
-			'thisfield' => 'filefilter',
-			'func' => 'files',
-			'module' => 'downloads',
-			'startval' => $filestartval,
-			'filterlabel' => 'Filter:'
-			))#
-	</xar:if>
+        #xarMod::apiFunc('filters','user','makefilter',array(
+            'thisfield' => 'filefilter',
+            'func' => 'files',
+            'module' => 'downloads',
+            'startval' => $filestartval,
+            'filterlabel' => 'Filter:'
+            ))#
+    </xar:if>
 
-	<xar:set name="basepath">
-		xarMod::apiFunc('downloads','admin','getbasepath')
-	</xar:set>
-	<xar:set name="units">
-		xarModVars::get('downloads','filesize_units')
-	</xar:set>
+    <xar:set name="basepath">
+        xarMod::apiFunc('downloads','admin','getbasepath')
+    </xar:set>
+    <xar:set name="units">
+        xarModVars::get('downloads','filesize_units')
+    </xar:set>
 
-		<xar:if condition="isset($files) and !empty($files)">
-			<div id="viewfiles">
-			<table>
-				<tr>
-				<th>Directory</th>
-				<th>Filename</th>
-				<xar:set name="thunit">ucfirst($units)</xar:set>
-				<th>#$thunit#</th>
-				<th>Records</th>
-				<th>Delete File</th>
-				</tr>
-				<xar:foreach in="$files" key="$key" value="$val">
-					 
-					<tr>
-					<td>
-					<xar:set name="pos">strpos($key,';')</xar:set>
-					<xar:set name="key">substr($key,0,$pos)</xar:set>
-					<xar:set name="key">substr($key,0,$pos)</xar:set>
-					#$key#
-					
-					</td>
-					<td>	
-						
-						#$val#
-					</td>
+        <xar:if condition="isset($files) and !empty($files)">
+            <div id="viewfiles">
+            <table>
+                <tr>
+                <th>Directory</th>
+                <th>Filename</th>
+                <xar:set name="thunit">ucfirst($units)</xar:set>
+                <th>#$thunit#</th>
+                <th>Records</th>
+                <th>Delete File</th>
+                </tr>
+                <xar:foreach in="$files" key="$key" value="$val">
+                     
+                    <tr>
+                    <td>
+                    <xar:set name="pos">strpos($key,';')</xar:set>
+                    <xar:set name="key">substr($key,0,$pos)</xar:set>
+                    <xar:set name="key">substr($key,0,$pos)</xar:set>
+                    #$key#
+                    
+                    </td>
+                    <td>    
+                        
+                        #$val#
+                    </td>
 
-					<td>
-	<xar:set name="filepath">$basepath . $key . '/' . $val</xar:set>
+                    <td>
+    <xar:set name="filepath">$basepath . $key . '/' . $val</xar:set>
  
 <xar:if condition="$units eq 'kilobytes'">
-	<xar:set name="div">'1024'</xar:set>
+    <xar:set name="div">'1024'</xar:set>
 <xar:elseif condition="$units eq 'megabytes'" />
-	<xar:set name="div">'1048576'</xar:set>
+    <xar:set name="div">'1048576'</xar:set>
 <xar:elseif condition="$units eq 'gigabytes'" />
-	<xar:set name="div">'1073741824'</xar:set>
+    <xar:set name="div">'1073741824'</xar:set>
 </xar:if>
 
-	<xar:set name="bytes">filesize($filepath)</xar:set>
-	<xar:set name="mb">round($bytes/$div, 2)</xar:set>
-	    #$mb#  
-					</td>
+    <xar:set name="bytes">filesize($filepath)</xar:set>
+    <xar:set name="mb">round($bytes/$div, 2)</xar:set>
+        #$mb#  
+                    </td>
 
-					<td>
+                    <td>
 
-	<xar:if condition="strstr($val,'.')">
-		<xar:set name="parts">explode('.',$val)</xar:set>
-		<xar:set name="ext">strtolower(end($parts))</xar:set>
-	<xar:else />
-		<xar:set name="ext">''</xar:set>
-	</xar:if>
-	
-	<xar:set name="instance">'All:'.$ext.':All'</xar:set>
-					
-	<xar:if condition="xarSecurityCheck('EditDownloads',0,'Record',$instance)">
-		
-		<xar:set name="fileitems">
-			xarMod::apiFunc('downloads','admin','getfilerecords',
-			array('basepath' => $basepath, 'directory' => $key, 'file' => $val, 'linkslist' => true))
-		</xar:set>
-		
-		<xar:if condition="$fileitems">
-			#$fileitems#
-		<xar:elseif condition="xarSecurityCheck('AddDownloads',0,'Record',$instance)" />
-			<a href="#xarModURL('downloads','admin','add',array('directory' => $key, 'filename' => $val))#">
-			<img src="#sys::code()#/modules/base/xarimages/icons/add.png" height="16" width="16" /></a>
-		</xar:if>
-	</xar:if>
-					
-					</td>
+    <xar:if condition="strstr($val,'.')">
+        <xar:set name="parts">explode('.',$val)</xar:set>
+        <xar:set name="ext">strtolower(end($parts))</xar:set>
+    <xar:else />
+        <xar:set name="ext">''</xar:set>
+    </xar:if>
+    
+    <xar:set name="instance">'All:'.$ext.':All'</xar:set>
+                    
+    <xar:if condition="xarSecurityCheck('EditDownloads',0,'Record',$instance)">
+        
+        <xar:set name="fileitems">
+            xarMod::apiFunc('downloads','admin','getfilerecords',
+            array('basepath' => $basepath, 'directory' => $key, 'file' => $val, 'linkslist' => true))
+        </xar:set>
+        
+        <xar:if condition="$fileitems">
+            #$fileitems#
+        <xar:elseif condition="xarSecurityCheck('AddDownloads',0,'Record',$instance)" />
+            <a href="#xarModURL('downloads','admin','add',array('directory' => $key, 'filename' => $val))#">
+            <img src="#sys::code()#/modules/base/xarimages/icons/add.png" height="16" width="16" /></a>
+        </xar:if>
+    </xar:if>
+                    
+                    </td>
 
-					<td>	
-	
-	<xar:if condition="xarSecurityCheck('DeleteDownloads',0)"> 
-	&amp;nbsp; <a href="#xarModURL('downloads','admin','deletefile', array('directory' => $key, 'file' => $val))#"><img src="#sys::code()#modules/base/xarimages/icons/delete.png" width="16" height="16" alt="Delete" /></a>
-	</xar:if>
+                    <td>    
+    
+    <xar:if condition="xarSecurityCheck('DeleteDownloads',0)"> 
+    &amp;nbsp; <a href="#xarModURL('downloads','admin','deletefile', array('directory' => $key, 'file' => $val))#"><img src="#sys::code()#modules/base/xarimages/icons/delete.png" width="16" height="16" alt="Delete" /></a>
+    </xar:if>
 
-					</td>
-					</tr> 
-					
-				</xar:foreach>
-			</table>
-			</div>
+                    </td>
+                    </tr> 
+                    
+                </xar:foreach>
+            </table>
+            </div>
 
-		<xar:else />
+        <xar:else />
 
-		<xar:if condition="isset($filtered) and $filtered eq 1">
-			<p>No files match your criteria.</p>
-		<xar:else />
-			<p>There are no files.   <a href="#xarModURL('downloads','admin','new')#">Upload one</a>.</p>
-		</xar:if>
+        <xar:if condition="isset($filtered) and $filtered eq 1">
+            <p>No files match your criteria.</p>
+        <xar:else />
+            <p>There are no files.   <a href="#xarModURL('downloads','admin','new')#">Upload one</a>.</p>
+        </xar:if>
 
-		</xar:if>
+        </xar:if>
 
 
    </div> 

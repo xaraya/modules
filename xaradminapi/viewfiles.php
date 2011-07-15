@@ -19,44 +19,44 @@
 function downloads_adminapi_viewfiles($args)
 {
 
-	$locfilter = '';
-	$filefilter = '';
-	$sort = 'dir';
+    $locfilter = '';
+    $filefilter = '';
+    $sort = 'dir';
 
-	extract($args); 
+    extract($args); 
 
-	asort($directories);
+    asort($directories);
  
-	foreach ($directories as $dir) {
+    foreach ($directories as $dir) {
 
-		$loc = $basepath . $dir;
+        $loc = $basepath . $dir;
 
-		if (empty($locfilter) || stristr($dir, $locfilter)) {
+        if (empty($locfilter) || stristr($dir, $locfilter)) {
 
-			if (is_dir($loc) && $handle = opendir($loc)) {
-				$num = 1;
-				while (false !== ($file = readdir($handle))) {
-					if (empty($filefilter) || stristr($file, $filefilter)) {
-						if ($file != '.' && $file != '..') {
-							$key = $dir . ';' . $num++;
-							$files[$key] = $file; 
-						}
-					}
-				}
-			}
+            if (is_dir($loc) && $handle = opendir($loc)) {
+                $num = 1;
+                while (false !== ($file = readdir($handle))) {
+                    if (empty($filefilter) || stristr($file, $filefilter)) {
+                        if ($file != '.' && $file != '..') {
+                            $key = $dir . ';' . $num++;
+                            $files[$key] = $file; 
+                        }
+                    }
+                }
+            }
 
-		}
-	}
+        }
+    }
 
-	if (isset($files) && $sort == 'dir') {
-		xarMod::apiFunc('downloads','admin','natksort',array('arr2sort' => $files));
-		return $files;
-	} elseif (isset($files)) { 
-		natcasesort($files);
-		return $files;
-	} else {
-		return false;
-	}
+    if (isset($files) && $sort == 'dir') {
+        xarMod::apiFunc('downloads','admin','natksort',array('arr2sort' => $files));
+        return $files;
+    } elseif (isset($files)) { 
+        natcasesort($files);
+        return $files;
+    } else {
+        return false;
+    }
 
 }
 

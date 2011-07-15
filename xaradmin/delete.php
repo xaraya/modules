@@ -29,33 +29,33 @@ function downloads_admin_delete()
         throw new Exception($msg);
     }
 
-	$data['itemid'] = $itemid;
+    $data['itemid'] = $itemid;
 
     sys::import('modules.dynamicdata.class.objects.master');
 
-	// Get the object name
-	$object = DataObjectMaster::getObject(array('name' => 'downloads'));
-	$object->getItem(array('itemid' => $itemid));
+    // Get the object name
+    $object = DataObjectMaster::getObject(array('name' => 'downloads'));
+    $object->getItem(array('itemid' => $itemid));
 
-	$filename = $object->properties['filename']->value;
+    $filename = $object->properties['filename']->value;
 
-	if (strstr($filename,'.')) {
-		$parts = explode('.',$filename);
-		$ext = end($parts);
-	} else {
-		$ext = '';
-	}
-	
-	$instance = $itemid.':'.$ext.':'.xarUserGetVar('id');
+    if (strstr($filename,'.')) {
+        $parts = explode('.',$filename);
+        $ext = end($parts);
+    } else {
+        $ext = '';
+    }
+    
+    $instance = $itemid.':'.$ext.':'.xarUserGetVar('id');
     if (!xarSecurityCheck('DeleteDownloads',1,'Record',$instance)) {
-		return;
-	}
+        return;
+    }
 
     // Get the object we'll be working with
     $object = DataObjectMaster::getObject(array('name' => 'downloads'));
     $object->getItem(array('itemid' => $itemid));
 
-	$data['object'] = $object;
+    $data['object'] = $object;
     
     if ($data['confirm']) {
 
@@ -64,8 +64,8 @@ function downloads_admin_delete()
             return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
         }        
 
-		// delete the item in the object for this downloads type
-		$object->deleteItem(array('itemid' => $itemid));
+        // delete the item in the object for this downloads type
+        $object->deleteItem(array('itemid' => $itemid));
         
         // Jump to the next page
         xarResponse::redirect(xarModURL('downloads','admin','view'));

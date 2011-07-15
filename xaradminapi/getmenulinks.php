@@ -35,7 +35,7 @@ function downloads_adminapi_getmenulinks()
                               'label' => xarML('Records'));
     }
 
-		    if (xarSecurityCheck('ViewDownloads',0)) {
+            if (xarSecurityCheck('ViewDownloads',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('downloads',
                                                    'admin',
@@ -46,7 +46,7 @@ function downloads_adminapi_getmenulinks()
                               'label' => xarML('Files'));
     }
 
-		    if (xarSecurityCheck('AddDownloads',0)) {
+            if (xarSecurityCheck('AddDownloads',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('downloads',
                                                    'admin',
@@ -69,7 +69,7 @@ function downloads_adminapi_getmenulinks()
                               'label' => xarML('Modify Configuration'));
     }
 
-	    if (xarSecurityCheck('ViewDownloads',0)) {
+        if (xarSecurityCheck('ViewDownloads',0)) {
         // Add a link to the module's configuration.
         // We place this link last in the list so have a similar menu for all modules
         $menulinks[] = Array('url'   => xarModURL('downloads',

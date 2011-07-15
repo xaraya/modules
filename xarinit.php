@@ -27,7 +27,7 @@ function downloads_init()
 
     $prefix = xarDB::getPrefix();
     $tables['downloads'] = $prefix . '_downloads';
-	$tables['downloads_ft_instances'] = $prefix . '_downloads_ft_instances';
+    $tables['downloads_ft_instances'] = $prefix . '_downloads_ft_instances';
 
     // Create tables inside a transaction
     try {
@@ -37,21 +37,21 @@ function downloads_init()
         $fields = array(
                         'itemid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
                         'title' => array('type' => 'varchar','size' => 254,'null' => false, 'charset' => $charset),
-						'ext' => array('type' => 'varchar','size' => 10,'null' => false, 'charset' => $charset),
-						'description' => array('type' => 'text', 'null' => false, 'charset' => $charset),
-			'status' => array('type' => 'varchar', 'size' => 1, 'null' => false, 'charset' => $charset),
-						'filename' => array('type' => 'varchar','size' => 254,'null' => false, 'charset' => $charset),
-						'directory' => array('type' => 'varchar','size' => 254, 'null' => false, 'charset' => $charset),
-						'roleid' =>  array('type' => 'integer', 'unsigned' => true, 'null' => false),
-						//'basepath' => array('type' => 'varchar','size' => 254, 'null' => false, 'charset' => $charset)
-			);
+                        'ext' => array('type' => 'varchar','size' => 10,'null' => false, 'charset' => $charset),
+                        'description' => array('type' => 'text', 'null' => false, 'charset' => $charset),
+            'status' => array('type' => 'varchar', 'size' => 1, 'null' => false, 'charset' => $charset),
+                        'filename' => array('type' => 'varchar','size' => 254,'null' => false, 'charset' => $charset),
+                        'directory' => array('type' => 'varchar','size' => 254, 'null' => false, 'charset' => $charset),
+                        'roleid' =>  array('type' => 'integer', 'unsigned' => true, 'null' => false),
+                        //'basepath' => array('type' => 'varchar','size' => 254, 'null' => false, 'charset' => $charset)
+            );
         $query = xarDBCreateTable($tables['downloads'],$fields);
         $dbconn->Execute($query);
 
-		$fields = array(
+        $fields = array(
                         'itemid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-						'ext' => array('type' => 'varchar','size' => 10,'null' => false, 'charset' => $charset) 
-			);
+                        'ext' => array('type' => 'varchar','size' => 10,'null' => false, 'charset' => $charset) 
+            );
         $query = xarDBCreateTable($tables['downloads_ft_instances'],$fields);
         $dbconn->Execute($query);
 
@@ -62,14 +62,14 @@ function downloads_init()
         throw $e;
     }
 
-	PropertyRegistration::importPropertyTypes(false,array('modules/downloads/xarproperties'));
+    PropertyRegistration::importPropertyTypes(false,array('modules/downloads/xarproperties'));
 
     $module = 'downloads';
     $objects = array(
                 'downloads',
-				'downloads_module_settings',
-				'downloads_user_settings',
-				'downloads_ft_instances'
+                'downloads_module_settings',
+                'downloads_user_settings',
+                'downloads_ft_instances'
                 );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;    
@@ -78,17 +78,17 @@ function downloads_init()
 #
 # Set up configuration modvars (module specific)
 #
-	xarModVars::set('downloads','file_directories','downloads_module_files');
-	xarModVars::set('downloads','file_extensions','gif, jpg, jpeg, png, pdf, doc, txt');
-	xarModVars::set('downloads','maximum_filesize','1000000');
-	xarModVars::set('downloads','auto_approve_privilege','Administration');
-	xarModVars::set('downloads','admin_list_directories','0');
-	xarModVars::set('downloads','admin_list_fncharlimit','30');
-	xarModVars::set('downloads','enable_filters',true);
-	xarModVars::set('downloads','show_xarmodurl','1');
-	xarModVars::set('downloads','filters_records_min_item_count','1');
-	xarModVars::set('downloads','filters_files_min_item_count','1');	
-	xarModVars::set('downloads','filesize_units','kilobytes');
+    xarModVars::set('downloads','file_directories','downloads_module_files');
+    xarModVars::set('downloads','file_extensions','gif, jpg, jpeg, png, pdf, doc, txt');
+    xarModVars::set('downloads','maximum_filesize','1000000');
+    xarModVars::set('downloads','auto_approve_privilege','Administration');
+    xarModVars::set('downloads','admin_list_directories','0');
+    xarModVars::set('downloads','admin_list_fncharlimit','30');
+    xarModVars::set('downloads','enable_filters',true);
+    xarModVars::set('downloads','show_xarmodurl','1');
+    xarModVars::set('downloads','filters_records_min_item_count','1');
+    xarModVars::set('downloads','filters_files_min_item_count','1');    
+    xarModVars::set('downloads','filesize_units','kilobytes');
 
 # --------------------------------------------------------
 #
@@ -116,30 +116,30 @@ function downloads_init()
 
     // Note : we could add some other fields in here too, based on the properties we imported above
     $instances = array(
-						array(
-							'header' => 'Itemid:',
-							'query' => "SELECT itemid FROM " . $prefix . "_downloads",
-							'limit' => 20
-						),
-						array(
-							'header' => 'File Type:',
-							'query' => "SELECT DISTINCT ext FROM " . $prefix . "_downloads_ft_instances ORDER BY ext ASC",
-							'limit' => 20
-						),
-						array(
-							'header' => 'Contributor:',
-							'query' => "SELECT DISTINCT id FROM " . $prefix . "_roles",
-							'limit' => 20
-						)
+                        array(
+                            'header' => 'Itemid:',
+                            'query' => "SELECT itemid FROM " . $prefix . "_downloads",
+                            'limit' => 20
+                        ),
+                        array(
+                            'header' => 'File Type:',
+                            'query' => "SELECT DISTINCT ext FROM " . $prefix . "_downloads_ft_instances ORDER BY ext ASC",
+                            'limit' => 20
+                        ),
+                        array(
+                            'header' => 'Contributor:',
+                            'query' => "SELECT DISTINCT id FROM " . $prefix . "_roles",
+                            'limit' => 20
+                        )
                     );
     xarDefineInstance('downloads', 'Record', $instances);
 
     $instances = array(
-						array(
-							'header' => 'File Type:',
-							'query' => "SELECT DISTINCT ext FROM " . $prefix . "_downloads_ft_instances ORDER BY ext ASC",
-							'limit' => 20
-						)
+                        array(
+                            'header' => 'File Type:',
+                            'query' => "SELECT DISTINCT ext FROM " . $prefix . "_downloads_ft_instances ORDER BY ext ASC",
+                            'limit' => 20
+                        )
                     );
     xarDefineInstance('downloads', 'File', $instances);
 
@@ -150,13 +150,13 @@ function downloads_init()
     //And standard masks for the rest - keep names the same as any prior so minimal sec checks in templates still work
     xarRegisterMask('ViewDownloads',    'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadDownloads',    'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_READ');
-	xarRegisterMask('SubmitDownloads',    'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_COMMENT');
+    xarRegisterMask('SubmitDownloads',    'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_COMMENT');
     xarRegisterMask('EditDownloads',    'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_EDIT');
     xarRegisterMask('AddDownloads',     'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_ADD');
     xarRegisterMask('DeleteDownloads',  'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdminDownloads',   'All', 'downloads', 'Record', 'All:All:All', 'ACCESS_ADMIN');
 
-	xarRegisterMask('DeleteDownloadsFiles',  'All', 'downloads', 'File', 'All', 'ACCESS_DELETE');
+    xarRegisterMask('DeleteDownloadsFiles',  'All', 'downloads', 'File', 'All', 'ACCESS_DELETE');
 
 # --------------------------------------------------------
 #
@@ -174,54 +174,54 @@ function downloads_init()
  */
 function downloads_upgrade($oldversion)
 {
-	$old = str_replace('.','',$oldversion);
-	$old = (int)$old;
+    $old = str_replace('.','',$oldversion);
+    $old = (int)$old;
     if($old < 62) {
-		try {
-			$dbconn =& xarDB::getConn();
-			$tables =& xarDB::getTables();
+        try {
+            $dbconn =& xarDB::getConn();
+            $tables =& xarDB::getTables();
 
-			$prefix = xarDB::getPrefix();
-			$tables['downloads'] = $prefix . '_downloads';
-			$query = xarDBAlterTable($tables['downloads'], array(
-				 'command' => 'add',
-				 'field' => 'roleid',
-				 'type' => 'integer',
-				'unsigned' => true, 
-				'null' => false,
-			 )); 
+            $prefix = xarDB::getPrefix();
+            $tables['downloads'] = $prefix . '_downloads';
+            $query = xarDBAlterTable($tables['downloads'], array(
+                 'command' => 'add',
+                 'field' => 'roleid',
+                 'type' => 'integer',
+                'unsigned' => true, 
+                'null' => false,
+             )); 
 
-			sys::import('modules.dynamicdata.class.objects.master');
-			$object = DataObjectMaster::getObject(array(
-				'name' => 'downloads'
-			));
-			$objectid = $object->objectid;
-			xarMod::apiFunc('downloads','util','upgradepre062',array(
-				'objectid' => $objectid,
-				'prefix' => $prefix
-				));
+            sys::import('modules.dynamicdata.class.objects.master');
+            $object = DataObjectMaster::getObject(array(
+                'name' => 'downloads'
+            ));
+            $objectid = $object->objectid;
+            xarMod::apiFunc('downloads','util','upgradepre062',array(
+                'objectid' => $objectid,
+                'prefix' => $prefix
+                ));
 
-			if($objectid) {
-				$dbconn->Execute($query);
-				$dbconn->commit();
-			}
+            if($objectid) {
+                $dbconn->Execute($query);
+                $dbconn->commit();
+            }
 
-			$object = DataObjectMaster::getObjectList(array('name' => 'downloads'));
+            $object = DataObjectMaster::getObjectList(array('name' => 'downloads'));
 
-			$items = $object->getItems();
-			if (!empty($items)) {
-				foreach ($items as $key => $value) {
-					$object = DataObjectMaster::getObject(array('name' => 'downloads'));
-					$object->getItem(array('itemid' => $key));
-					$object->properties['roleid']->setValue(6);
-					$object->updateItem();
-				}
-			}
+            $items = $object->getItems();
+            if (!empty($items)) {
+                foreach ($items as $key => $value) {
+                    $object = DataObjectMaster::getObject(array('name' => 'downloads'));
+                    $object->getItem(array('itemid' => $key));
+                    $object->properties['roleid']->setValue(6);
+                    $object->updateItem();
+                }
+            }
 
-		} catch (Exception $e) {
-			$dbconn->rollback();
-			throw $e;
-		}
+        } catch (Exception $e) {
+            $dbconn->rollback();
+            throw $e;
+        }
        
     }
 

@@ -17,38 +17,38 @@
 
 function downloads_userapi_getrecordfileinfo($args) {
 
-	$decimals = 2;
+    $decimals = 2;
 
-	extract($args);
+    extract($args);
 
-	sys::import('modules.dynamicdata.class.objects.master');
+    sys::import('modules.dynamicdata.class.objects.master');
 
-	$object = DataObjectMaster::getObject(array('name' => 'downloads'));
-	$object->getItem(array('itemid' => $itemid));
-	$title = $object->properties['title']->getValue();
-	$description = $object->properties['description']->getValue();
-	$filename = $object->properties['filename']->getValue();
-	$directory = $object->properties['directory']->getValue();
-	$status = $object->properties['status']->getValue();
-	$basepath = xarMod::apiFunc('downloads','admin','getbasepath');
+    $object = DataObjectMaster::getObject(array('name' => 'downloads'));
+    $object->getItem(array('itemid' => $itemid));
+    $title = $object->properties['title']->getValue();
+    $description = $object->properties['description']->getValue();
+    $filename = $object->properties['filename']->getValue();
+    $directory = $object->properties['directory']->getValue();
+    $status = $object->properties['status']->getValue();
+    $basepath = xarMod::apiFunc('downloads','admin','getbasepath');
 
-	$filepath = $basepath . $directory . '/' . $filename;
-	
-	if (file_exists($filepath)) {
-		$bytes = filesize($filepath);
-		$size = round($bytes/1048576, $decimals); // megabytes
-	} else {
-		$size = false;
-	}
+    $filepath = $basepath . $directory . '/' . $filename;
+    
+    if (file_exists($filepath)) {
+        $bytes = filesize($filepath);
+        $size = round($bytes/1048576, $decimals); // megabytes
+    } else {
+        $size = false;
+    }
 
-	return array(
-		'filename' => $filename, 
-		'title' => $title, 
-		'description' => $description, 
-		'directory' => $directory, 
-		'filesize' => $size,  // megabytes
-		'status' => $status
-		);
+    return array(
+        'filename' => $filename, 
+        'title' => $title, 
+        'description' => $description, 
+        'directory' => $directory, 
+        'filesize' => $size,  // megabytes
+        'status' => $status
+        );
 
 }
 

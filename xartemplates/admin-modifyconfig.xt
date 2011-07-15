@@ -15,7 +15,7 @@
             <fieldset>
                 <legend>Modify downloads Configuration</legend>
                 <xar:data-form object="$module_settings" />
-		<xar:data-form object="$object" itemid="0" template="module_settings" />
+        <xar:data-form object="$object" itemid="0" template="module_settings" />
             </fieldset>
 
             <div class="xar-form-input-after">

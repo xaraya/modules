@@ -12,7 +12,7 @@
                         <xar:if condition="empty($fields[$name])">
                             <td>&#160;</td>
                         
-			<xar:else />
+            <xar:else />
 
                                 <td>
                                     <xar:data-output property="$properties[$name]" value="$fields[$name]" />
@@ -21,7 +21,7 @@
                     </tr>
                 </xar:foreach>
                
-	       <tr><td></td><td><a href="#$links[$itemid]['modify']['olink']#">modify</a></td></tr>
+           <tr><td></td><td><a href="#$links[$itemid]['modify']['olink']#">modify</a></td></tr>
 
             </table>
         </xar:foreach>
@@ -42,6 +42,6 @@
             </div>
         </xar:if>
 
-	
+    
 
 </xar:template>

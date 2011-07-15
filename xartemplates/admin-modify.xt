@@ -17,20 +17,20 @@
            <xar:set name="enctype">'multipart/form-data'</xar:set>
         </xar:if>
 
-	<p align="right" style="margin-top: -30px"><a href="#xarModURL('downloads','admin','delete', array('itemid' => $itemid))#" style="color:red">Delete Record</a></p>
+    <p align="right" style="margin-top: -30px"><a href="#xarModURL('downloads','admin','delete', array('itemid' => $itemid))#" style="color:red">Delete Record</a></p>
 
-	<xar:set name="bp">'&amp;#60;yourbasepath>'</xar:set>
-	<xar:if condition="!file_exists($basepath . $directory . '/' . $filename)">
-		<div class="missing">No file exists at <span>#$bp##$directory#/#$filename#</span></div>
-		<xar:set name="clear">true</xar:set>
-	<xar:else />
-		<xar:set name="clear">false</xar:set>
-	</xar:if>
+    <xar:set name="bp">'&amp;#60;yourbasepath>'</xar:set>
+    <xar:if condition="!file_exists($basepath . $directory . '/' . $filename)">
+        <div class="missing">No file exists at <span>#$bp##$directory#/#$filename#</span></div>
+        <xar:set name="clear">true</xar:set>
+    <xar:else />
+        <xar:set name="clear">false</xar:set>
+    </xar:if>
 
-	<xar:if condition="$_GET['func'] eq 'modify' and file_exists($basepath . $directory . '/' . $filename)">
-	<form>
-		<fieldset>
-		<legend>URL reference:</legend>
+    <xar:if condition="$_GET['func'] eq 'modify' and file_exists($basepath . $directory . '/' . $filename)">
+    <form>
+        <fieldset>
+        <legend>URL reference:</legend>
 
 <xar:set name="full">xarModURL('downloads','user','getfile',array('itemid' => $itemid))</xar:set>
 <xar:set name="base">xarServer::GetBaseURL()</xar:set>
@@ -38,18 +38,18 @@
 
 
      <div class="xar-form-input-wrapper"> 
-	<label class="xar-form-label">Path</label>
-	<span class="formurl"><a href="#xarModURL('downloads','user','getfile',array('itemid' => $itemid))#">#$displayurl#</a></span>
+    <label class="xar-form-label">Path</label>
+    <span class="formurl"><a href="#xarModURL('downloads','user','getfile',array('itemid' => $itemid))#">#$displayurl#</a></span>
      </div>
 
-	<xar:if condition="xarModVars::get('downloads','show_xarmodurl')">
-		<div class="xar-form-input-wrapper"> 
-			<label class="xar-form-label">xarModURL</label>
-			<input type="text" class="formurl"  onClick="javascript:this.focus();this.select();" value="##xarModURL('downloads','user','getfile',array('itemid' => #$itemid#))##" size="56" style="text-align:center" />
-		</div>
-	</xar:if>
+    <xar:if condition="xarModVars::get('downloads','show_xarmodurl')">
+        <div class="xar-form-input-wrapper"> 
+            <label class="xar-form-label">xarModURL</label>
+            <input type="text" class="formurl"  onClick="javascript:this.focus();this.select();" value="##xarModURL('downloads','user','getfile',array('itemid' => #$itemid#))##" size="56" style="text-align:center" />
+        </div>
+    </xar:if>
 
-		</fieldset>
+        </fieldset>
      </form>
      
 </xar:if>
@@ -62,18 +62,18 @@
                 </legend>
  
                 <xar:data-form object="$object" tplmodule="downloads" filename="$filename" directory="$directory" locpropid="$locpropid" clear="$clear" basepath="$basepath" />
-		 
+         
              </fieldset>
-	     
+         
            <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                 <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
                 <input type="hidden" name="roleid" id="roleid" value="#$roleid#" />
-		<input type="hidden" name="confirm" id="confirm" value="true" /> 
+        <input type="hidden" name="confirm" id="confirm" value="true" /> 
                 &#160;&#160;&#160;
                 <input type="submit" name="saveedit" id="saveedit" value="#xarML('Save and Edit')#" />
-			&#160; 
-		<input type="submit" value="#xarML('Save and Close')#" />
+            &#160; 
+        <input type="submit" value="#xarML('Save and Close')#" />
             </div>  
         </form>
 

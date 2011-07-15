@@ -21,11 +21,11 @@
 function downloads_admin_overview()
 {
    /* Security Check */
-   	if (!xarSecurityCheck('ViewDownloads',1,'Record')) {
-		return;
-	}
+       if (!xarSecurityCheck('ViewDownloads',1,'Record')) {
+        return;
+    }
 
-	if(!xarVarFetch('tab',   'str', $data['tab'],   '', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('tab',   'str', $data['tab'],   '', XARVAR_NOT_REQUIRED)) {return;}
 
     /* if there is a separate overview function return data to it
      * else just call the main function that usually displays the overview

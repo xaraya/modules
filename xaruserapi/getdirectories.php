@@ -17,30 +17,30 @@
 
 function downloads_userapi_getdirectories($args) {
 
-	$dirs = xarModVars::get('downloads', 'file_directories');
+    $dirs = xarModVars::get('downloads', 'file_directories');
 
-	extract($args);
+    extract($args);
 
-	$dirs = str_replace(' ',"\r",$dirs);
-	$dirs = str_replace(',',"\r",$dirs);
-	$dirs = str_replace('\n',"\r",$dirs);
+    $dirs = str_replace(' ',"\r",$dirs);
+    $dirs = str_replace(',',"\r",$dirs);
+    $dirs = str_replace('\n',"\r",$dirs);
 
-	// Make it harder to traverse directories
-	$dirs = str_replace('/','',$dirs);
-	$dirs = str_replace('.','',$dirs);
-	$dirs = str_replace('\\','',$dirs);
-	
-	$dirs = explode("\r",$dirs);
-	
-	foreach ($dirs as $key=>$value) {
-		
-		$value = trim($value);
-		if (strlen($value) > 0) {
-			$directories[$value] = $value;
-		}
-	} 
+    // Make it harder to traverse directories
+    $dirs = str_replace('/','',$dirs);
+    $dirs = str_replace('.','',$dirs);
+    $dirs = str_replace('\\','',$dirs);
+    
+    $dirs = explode("\r",$dirs);
+    
+    foreach ($dirs as $key=>$value) {
+        
+        $value = trim($value);
+        if (strlen($value) > 0) {
+            $directories[$value] = $value;
+        }
+    } 
 
-	return $directories;
+    return $directories;
 
 }
 

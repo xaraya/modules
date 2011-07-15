@@ -17,28 +17,28 @@
 function downloads_adminapi_addrecord($args)
 {
 
-	extract($args);
+    extract($args);
 
     sys::import('modules.dynamicdata.class.objects.master');
-	sys::import('modules.downloads.xarproperties.upload');
+    sys::import('modules.downloads.xarproperties.upload');
 
-	$object = DataObjectMaster::getObject(array('name' => 'downloads'));
+    $object = DataObjectMaster::getObject(array('name' => 'downloads'));
 
-	$object->properties['filename']->initialization_basepath = $basepath;
-	$object->properties['filename']->initialization_basedirectory = $directory;
-	$object->properties['filename']->setValue($filename);
-	$object->properties['directory']->setValue($directory);
-	// We want some spaces in titles so the admin view doesn't get distorted
-	$filename = str_replace('_',' ',$filename);
-	$filename = str_replace('-',' ',$filename);
-	$filename = str_replace('.',' ',$filename);
-	$object->properties['roleid']->setValue(xarUserGetVar('id'));
-	$object->properties['title']->setValue($filename);
-	$object->properties['status']->setValue($status);
+    $object->properties['filename']->initialization_basepath = $basepath;
+    $object->properties['filename']->initialization_basedirectory = $directory;
+    $object->properties['filename']->setValue($filename);
+    $object->properties['directory']->setValue($directory);
+    // We want some spaces in titles so the admin view doesn't get distorted
+    $filename = str_replace('_',' ',$filename);
+    $filename = str_replace('-',' ',$filename);
+    $filename = str_replace('.',' ',$filename);
+    $object->properties['roleid']->setValue(xarUserGetVar('id'));
+    $object->properties['title']->setValue($filename);
+    $object->properties['status']->setValue($status);
 
-	$itemid = $object->createItem();
+    $itemid = $object->createItem();
 
-	return true;
+    return true;
 
 }
 

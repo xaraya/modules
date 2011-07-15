@@ -16,34 +16,34 @@
  */
 function downloads_user_getfile($args) {
 
-		if (!xarVarFetch('itemid', 'id', $itemid, NULL, XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVarFetch('itemid', 'id', $itemid, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
-		sys::import('modules.dynamicdata.class.objects.master');
+        sys::import('modules.dynamicdata.class.objects.master');
 
-		$object = DataObjectMaster::getObject(array('name' => 'downloads'));
-		$object->getItem(array('itemid' => $itemid));
-		$filename = $object->properties['filename']->getValue();
-		$directory = $object->properties['directory']->getValue();
-		$status = $object->properties['status']->getValue();
+        $object = DataObjectMaster::getObject(array('name' => 'downloads'));
+        $object->getItem(array('itemid' => $itemid));
+        $filename = $object->properties['filename']->getValue();
+        $directory = $object->properties['directory']->getValue();
+        $status = $object->properties['status']->getValue();
 
-		if (strstr($filename,'.')) {
-			$parts = explode('.',$filename);
-			$ext = strtolower(end($parts));
-		} else {
-			$ext = '';
-		}
+        if (strstr($filename,'.')) {
+            $parts = explode('.',$filename);
+            $ext = strtolower(end($parts));
+        } else {
+            $ext = '';
+        }
 
-		$instance = $itemid.':'.$ext.':'.xarUserGetVar('id');
-		if (!xarSecurityCheck('ReadDownloads',1,'Record',$instance)) return;
+        $instance = $itemid.':'.$ext.':'.xarUserGetVar('id');
+        if (!xarSecurityCheck('ReadDownloads',1,'Record',$instance)) return;
 
-		$basepath = xarMod::apiFunc('downloads','admin','getbasepath');
-		xarMod::apiFunc('downloads','user','getfile',array(
-			'basepath' => $basepath,
-			'directory' => $directory,
-			'filename' => $filename
-			));
+        $basepath = xarMod::apiFunc('downloads','admin','getbasepath');
+        xarMod::apiFunc('downloads','user','getfile',array(
+            'basepath' => $basepath,
+            'directory' => $directory,
+            'filename' => $filename
+            ));
 
-		return;
+        return;
 
 }
 

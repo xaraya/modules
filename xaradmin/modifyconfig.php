@@ -17,7 +17,7 @@
  */
 function downloads_admin_modifyconfig()
 {
-	xarModVars::set('downloads', 'enable_short_urls', true);
+    xarModVars::set('downloads', 'enable_short_urls', true);
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
@@ -77,25 +77,25 @@ function downloads_admin_modifyconfig()
                 $itemid = $data['module_settings']->updateItem();
             }
 
-			$isvalid = $data['object']->checkInput();
-			$data['file_extensions'] = $data['object']->properties['file_extensions']->getValue();
-			$data['maximum_filesize'] = $data['object']->properties['maximum_filesize']->getValue();
+            $isvalid = $data['object']->checkInput();
+            $data['file_extensions'] = $data['object']->properties['file_extensions']->getValue();
+            $data['maximum_filesize'] = $data['object']->properties['maximum_filesize']->getValue();
 
-			$object = DataObjectMaster::getObject(array('name' => 'downloads'));
-			$properties = $object->getProperties();
-			$propid = $properties['filename']->id;
+            $object = DataObjectMaster::getObject(array('name' => 'downloads'));
+            $properties = $object->getProperties();
+            $propid = $properties['filename']->id;
 
-			$object = DataObjectMaster::getObject(array('name'   => 'properties',
-															'itemid' => $propid));
+            $object = DataObjectMaster::getObject(array('name'   => 'properties',
+                                                            'itemid' => $propid));
 
-			$object->getItem();
-			$config = $object->properties['configuration']->value; 
-			$config = unserialize($config);
-			$config['validation_max_file_size'] = (string)$data['maximum_filesize'];
-			$config['validation_file_extensions'] = $data['file_extensions'];
-			$config = serialize($config);
-			$object->properties['configuration']->setValue($config);
-			$object->updateItem();
+            $object->getItem();
+            $config = $object->properties['configuration']->value; 
+            $config = unserialize($config);
+            $config['validation_max_file_size'] = (string)$data['maximum_filesize'];
+            $config['validation_file_extensions'] = $data['file_extensions'];
+            $config = serialize($config);
+            $object->properties['configuration']->setValue($config);
+            $object->updateItem();
 
 
 

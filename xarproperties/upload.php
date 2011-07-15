@@ -21,11 +21,11 @@ class UploadProperty extends DataProperty
 
     public $display_size                    = 40;
     public $validation_max_file_size          = 1000000;
-	public $validation_max_file_size_invalid;
-	public $validation_min_length          = null;
-	public $validation_min_length_invalid;
-	public $validation_max_length          = null;
-	public $validation_max_length_invalid;
+    public $validation_max_file_size_invalid;
+    public $validation_min_length          = null;
+    public $validation_min_length_invalid;
+    public $validation_max_length          = null;
+    public $validation_max_length_invalid;
     public $initialization_basedirectory    = 'uploads';
     public $initialization_importdirectory  = null;
     public $validation_file_extensions      = 'gif, jpg, jpeg, png, bmp, pdf, doc, txt';
@@ -54,7 +54,7 @@ class UploadProperty extends DataProperty
             $base_directory = './';
         }*/
 
-		if (empty($this->initialization_basepath)) {
+        if (empty($this->initialization_basepath)) {
             $this->initialization_basepath = sys::varpath() . '/';
         }
 
@@ -62,11 +62,11 @@ class UploadProperty extends DataProperty
             $this->initialization_basedirectory = 'uploads';
         }
 
-        if (empty($this->validation_file_extensions)) {	
-			$this->validation_file_extensions = '';
-		} 
+        if (empty($this->validation_file_extensions)) {    
+            $this->validation_file_extensions = '';
+        } 
 
-		if (empty($this->validation_min_length)) $this->validation_min_length = '';
+        if (empty($this->validation_min_length)) $this->validation_min_length = '';
 
     }
 
@@ -101,48 +101,48 @@ class UploadProperty extends DataProperty
             $file = array();
         }
 
-		$minlen = $this->validation_min_length;
+        $minlen = $this->validation_min_length;
 
-		if (isset($minlen) && strlen($value) < $minlen && strlen($file['name']) < $minlen) { 
-			if (!empty($this->validation_min_length_invalid)) {
-				$this->invalid = xarML($this->validation_min_length_invalid);
-			} else {
-				$this->invalid = xarML('#(1) #(3): must be at least #(2) characters long', $this->name,$this->validation_min_length, $this->desc);
-			}
-			$this->value = null;
-			return false;
-		}
+        if (isset($minlen) && strlen($value) < $minlen && strlen($file['name']) < $minlen) { 
+            if (!empty($this->validation_min_length_invalid)) {
+                $this->invalid = xarML($this->validation_min_length_invalid);
+            } else {
+                $this->invalid = xarML('#(1) #(3): must be at least #(2) characters long', $this->name,$this->validation_min_length, $this->desc);
+            }
+            $this->value = null;
+            return false;
+        }
 
-		$maxlen = $this->validation_max_length;
+        $maxlen = $this->validation_max_length;
 
-		if (isset($maxlen) && strlen($value) > $maxlen) { 
-			if (!empty($validation_max_length_invalid)) {
-				$this->invalid = xarML($validation_max_length_invalid);
-			} else {
-				$this->invalid = xarML('#(1) #(3): must be no more than #(2) characters long', $this->name,$maxlen, $this->desc);
-			}
-			$this->value = null;
-			return false;
-		}
+        if (isset($maxlen) && strlen($value) > $maxlen) { 
+            if (!empty($validation_max_length_invalid)) {
+                $this->invalid = xarML($validation_max_length_invalid);
+            } else {
+                $this->invalid = xarML('#(1) #(3): must be no more than #(2) characters long', $this->name,$maxlen, $this->desc);
+            }
+            $this->value = null;
+            return false;
+        }
 
-		$maxsize = $this->validation_max_file_size;
-		$maxmb = $maxsize/1000000;
+        $maxsize = $this->validation_max_file_size;
+        $maxmb = $maxsize/1000000;
 
-		if (isset($file['error']) && $file['error'] == 2) { 
-			if (!empty($validation_max_file_size_invalid)) {
-				$this->invalid = xarML($validation_max_length_invalid);
-			} else {
-				$this->invalid = xarML('File must be no more than #(2) MB in size', $this->name,$maxmb, $this->desc);
-				$this->value = null;
-				return false;
-			}
-		}
+        if (isset($file['error']) && $file['error'] == 2) { 
+            if (!empty($validation_max_file_size_invalid)) {
+                $this->invalid = xarML($validation_max_length_invalid);
+            } else {
+                $this->invalid = xarML('File must be no more than #(2) MB in size', $this->name,$maxmb, $this->desc);
+                $this->value = null;
+                return false;
+            }
+        }
 
-		if (isset($file['error']) && $file['error'] == 1) { 
-			$this->invalid = xarML('The uploaded file exceeds the maximum size allowed in the php.ini or htaccess file.');
-			$this->value = null;
-			return false;		
-		}
+        if (isset($file['error']) && $file['error'] == 1) { 
+            $this->invalid = xarML('The uploaded file exceeds the maximum size allowed in the php.ini or htaccess file.');
+            $this->value = null;
+            return false;        
+        }
 
         if (isset($file['tmp_name']) && is_uploaded_file($file['tmp_name']) && $file['size'] > 0) {
             if (!empty($_FILES[$name]['name'])) {
@@ -243,7 +243,7 @@ class UploadProperty extends DataProperty
             $this->value = '';
             return true;
         }
-		
+        
         return true;
     }
 
@@ -253,8 +253,8 @@ class UploadProperty extends DataProperty
         $data['upname'] = $data['name'] .'_upload';
         
         // Allow overriding by specific parameters 
-		if (isset($data['size']))   $this->display_size = $data['size'];
-		if (isset($data['maxsize']))   $this->validation_max_file_size = $data['maxsize'];
+        if (isset($data['size']))   $this->display_size = $data['size'];
+        if (isset($data['maxsize']))   $this->validation_max_file_size = $data['maxsize'];
 
         return parent::showInput($data);
     }
@@ -273,14 +273,14 @@ class UploadProperty extends DataProperty
     }
 
     public function getExtensions()
-    {	
-		$extensions = $this->validation_file_extensions;
-		$extensions = str_replace(' ', '', $extensions);
-		$pattern = '/^[A-Za-z,]+$/';
-		if (!preg_match($pattern, $extensions)) {
-			throw new Exception('Invalid extension list format in upload.php');
-		}
-		$extensions = explode(',',$extensions);
+    {    
+        $extensions = $this->validation_file_extensions;
+        $extensions = str_replace(' ', '', $extensions);
+        $pattern = '/^[A-Za-z,]+$/';
+        if (!preg_match($pattern, $extensions)) {
+            throw new Exception('Invalid extension list format in upload.php');
+        }
+        $extensions = explode(',',$extensions);
         return $extensions;
     }
 
@@ -289,7 +289,7 @@ class UploadProperty extends DataProperty
      */
     public function validateExtension($filename = '')
     {
-		$filename = strtolower($filename);
+        $filename = strtolower($filename);
 
         if (strstr($filename,'.')) {
             $extension = substr(strrchr($filename,'.'),1);
@@ -297,7 +297,7 @@ class UploadProperty extends DataProperty
             return false;
         }
 
-		$extensions = $this->getExtensions();
+        $extensions = $this->getExtensions();
 
         if (!empty($extensions) &&
             !in_array($extension, $extensions)) {
