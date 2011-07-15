@@ -56,7 +56,7 @@ function publications_init()
             detail_template     varchar(255) NOT NULL DEFAULT '',
             page_template       varchar(255) NOT NULL DEFAULT '',
             theme               integer unsigned NOT NULL DEFAULT '0',
-            access              varchar(255) NOT NULL DEFAULT 'a:0:{}',
+            access              text,
             state               tinyint NOT NULL DEFAULT '3',
             process_state       tinyint NOT NULL DEFAULT '1',
             PRIMARY KEY(id),
@@ -69,13 +69,13 @@ function publications_init()
     $query = "DROP TABLE IF EXISTS " . $prefix . "_publications_types";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_publications_types (
-            id integer unsigned NOT NULL auto_increment,
-            name varchar(64) NOT NULL DEFAULT '',
-            description varchar(255) NOT NULL DEFAULT '',
-            template varchar(255) NOT NULL DEFAULT '',
-            configuration TEXT,
-            access varchar(255) NOT NULL DEFAULT 'a:0:{}',
-            state tinyint unsigned NOT NULL DEFAULT '0',
+            id                  integer unsigned NOT NULL auto_increment,
+            name                varchar(64) NOT NULL DEFAULT '',
+            description         varchar(255) NOT NULL DEFAULT '',
+            template            varchar(255) NOT NULL DEFAULT '',
+            configuration       text,
+            access              text,
+            state               tinyint unsigned NOT NULL DEFAULT '0',
             PRIMARY KEY(id))";
     if (!$q->run($query)) return;
 

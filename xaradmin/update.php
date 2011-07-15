@@ -66,7 +66,7 @@ function publications_admin_update()
     // Store each item for later processing
         $itemsdata[$prefix] = $data['object']->getFieldValues();
     }
-    
+
     if ($data['preview'] || !$isvalid) {
         // Preview or bad data: redisplay the form
         $data['properties'] = $data['object']->getProperties();
