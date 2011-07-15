@@ -35,17 +35,17 @@ function contactform_userapi_decode_shorturl($params)
 
     } elseif ($params[1] == 'new') {
 
-		if(isset($params[2])) {
-			$args['name'] = $params[2];
-		}
+        if(isset($params[2])) {
+            $args['name'] = $params[2];
+        }
 
         return array('new', $args);
 
     } elseif ($params[1] == 'success') {
 
-		if(isset($params[2])) {
-			$args['name'] = $params[2];
-		}
+        if(isset($params[2])) {
+            $args['name'] = $params[2];
+        }
 
         return array('success', $args);
 

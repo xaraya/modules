@@ -22,7 +22,7 @@
 function contactform_user_main()
 {
 
-	xarResponse::Redirect(xarModURL('contactform', 'user', 'new'));
+    xarResponse::Redirect(xarModURL('contactform', 'user', 'new'));
 
     // Return the template variables defined in this function
     return true;

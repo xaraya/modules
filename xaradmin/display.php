@@ -25,7 +25,7 @@ function contactform_admin_display()
 
     // TODO: add reason for XARVAR_DONT_SET
     if(!xarVarFetch('itemid',   'id', $itemid,   NULL, XARVAR_DONT_SET)) {return;}
-	if(!xarVarFetch('name',   'str', $name,   'contactform', XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('name',   'str', $name,   'contactform', XARVAR_DONT_SET)) {return;}
 
     if (empty($itemid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',

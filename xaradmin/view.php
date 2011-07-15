@@ -15,66 +15,66 @@
  * view items
  */
 function contactform_admin_view()
-{	
+{    
 
     if (!xarSecurityCheck('AdminContactForm')) return;
 
-	//$data['saveitems'] = xarModVars::get('contactform','save_to_db');
+    //$data['saveitems'] = xarModVars::get('contactform','save_to_db');
 
     if(!xarVarFetch('startnum', 'int', $startnum, 1, XARVAR_NOT_REQUIRED)) {return;}
-	if(!xarVarFetch('numitems', 'int', $numitems, NULL, XARVAR_NOT_REQUIRED)) {return;}
-	if(!xarVarFetch('name', 'str', $name, 'contactform_default', XARVAR_NOT_REQUIRED)) {return;}
-	
-	$data['name'] = $name;
+    if(!xarVarFetch('numitems', 'int', $numitems, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('name', 'str', $name, 'contactform_default', XARVAR_NOT_REQUIRED)) {return;}
+    
+    $data['name'] = $name;
 
     sys::import('modules.dynamicdata.class.objects.master');
 
-	$object = DataObjectMaster::getObject(array('name' => $name));
-	if (!$object) {
-		$data['msg'] = xarML('The object \'' . $name . '\' is listed in your <a href="' . xarmodurl('contactform','admin','modifyconfig') . '">Contact Form Objects</a>, but the object does not exist.');
-		return $data;
-	}
-	$config = $object->configuration;
+    $object = DataObjectMaster::getObject(array('name' => $name));
+    if (!$object) {
+        $data['msg'] = xarML('The object \'' . $name . '\' is listed in your <a href="' . xarmodurl('contactform','admin','modifyconfig') . '">Contact Form Objects</a>, but the object does not exist.');
+        return $data;
+    }
+    $config = $object->configuration;
 
 /* $data['save'] = 0;
-	if (xarModVars::get('contactform','save_indicator')) {
-		$data['save'] = 1;
-		if (isset($config['save_to_db']) && $config['save_to_db'] == 'true') {
-			if (xarModVars::get('contactform','save_to_db')) {
-				$data['save'] = 4;
-			} else {
-				$data['save'] = 2;
-			}
-		} elseif (xarModVars::get('contactform','save_to_db')) {
-			$data['save'] = 3;
-		}
-	}*/
+    if (xarModVars::get('contactform','save_indicator')) {
+        $data['save'] = 1;
+        if (isset($config['save_to_db']) && $config['save_to_db'] == 'true') {
+            if (xarModVars::get('contactform','save_to_db')) {
+                $data['save'] = 4;
+            } else {
+                $data['save'] = 2;
+            }
+        } elseif (xarModVars::get('contactform','save_to_db')) {
+            $data['save'] = 3;
+        }
+    }*/
 
-	$data['sort'] = xarMod::ApiFunc('contactform','admin','sort', array(
-		//how to sort if the URL doesn't say otherwise...
-		'sortfield_fallback' => 'id', 
-		'ascdesc_fallback' => 'ASC'
-	));
-	
-	// precedence: 1) URL; 2) object config; 3) module setting
-	if (!$numitems) {
-		if (!empty($config['numitems'])) {
-			$numitems = $config['numitems'];
-		} else {
-			$numitems = xarModVars::get('contactform', 'items_per_page');
-		}
+    $data['sort'] = xarMod::ApiFunc('contactform','admin','sort', array(
+        //how to sort if the URL doesn't say otherwise...
+        'sortfield_fallback' => 'id', 
+        'ascdesc_fallback' => 'ASC'
+    ));
+    
+    // precedence: 1) URL; 2) object config; 3) module setting
+    if (!$numitems) {
+        if (!empty($config['numitems'])) {
+            $numitems = $config['numitems'];
+        } else {
+            $numitems = xarModVars::get('contactform', 'items_per_page');
+        }
     }
-	
+    
     $data['object'] = DataObjectMaster::getObjectList(array('name' => $name));
 
     $filters = array(
                     'status' => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
-					'sort' => $data['sort'],
-					'numitems' => $numitems,
-					'startnum' => $startnum
+                    'sort' => $data['sort'],
+                    'numitems' => $numitems,
+                    'startnum' => $startnum
                     ); 
 
-	if (isset($config['adminfields'])) $filters['fieldlist'] = $config['adminfields'];
+    if (isset($config['adminfields'])) $filters['fieldlist'] = $config['adminfields'];
     
     // Count the items first if you want a full pager - otherwise you'll get simple previous/next links
     $data['total'] = $data['object']->countItems(); 

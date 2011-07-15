@@ -19,16 +19,16 @@
  */
 function contactform_adminapi_sort($args)
 {
-	// Default URL strings to look for
-	$url_sortfield = 'sortfield';
-	$url_ascdesc = 'ascdesc';
+    // Default URL strings to look for
+    $url_sortfield = 'sortfield';
+    $url_ascdesc = 'ascdesc';
 
-	extract($args);
+    extract($args);
 
-	if(!xarVarFetch($url_sortfield,     'isset', $sortfield,     NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch($url_sortfield,     'isset', $sortfield,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch($url_ascdesc, 'isset', $ascdesc, NULL, XARVAR_NOT_REQUIRED)) {return;}
-	
-	if (!isset($sortfield)) {
+    
+    if (!isset($sortfield)) {
         $sortfield = $sortfield_fallback;
     }
 
@@ -36,9 +36,9 @@ function contactform_adminapi_sort($args)
         $ascdesc = $ascdesc_fallback;
     }
 
-	$sort = $sortfield . ' ' . $ascdesc;
+    $sort = $sortfield . ' ' . $ascdesc;
 
-	return $sort;
+    return $sort;
 }
 
 ?>

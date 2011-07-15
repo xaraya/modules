@@ -25,24 +25,24 @@
 
 <xar:if condition="isset($object)">
        <xar:data-view object="$object" tplmodule="contactform" template="admin_list" sort="$sort" objname="$name" />
-	<xar:pager startnum="$object->startnum" itemsperpage="$object->numitems" total="$total"/>
+    <xar:pager startnum="$object->startnum" itemsperpage="$object->numitems" total="$total"/>
 <xar:else/>
-	#$msg#
+    #$msg#
 </xar:if>
 
-	<!-- <xar:if condition="isset($save) and $save ne 0">
-		<p class="save_indicator">Save items to database: 
-			<xar:if condition="$save eq 1">
-				false
-			<xar:elseif condition="$save eq 2"/>
-				true (object config)
-			<xar:elseif condition="$save eq 3"/>
-				true (module config)
-			<xar:elseif condition="$save eq 4"/>
-				true (object config and module config)
-			</xar:if>
-		</p>
-	</xar:if> -->
+    <!-- <xar:if condition="isset($save) and $save ne 0">
+        <p class="save_indicator">Save items to database: 
+            <xar:if condition="$save eq 1">
+                false
+            <xar:elseif condition="$save eq 2"/>
+                true (object config)
+            <xar:elseif condition="$save eq 3"/>
+                true (module config)
+            <xar:elseif condition="$save eq 4"/>
+                true (object config and module config)
+            </xar:if>
+        </p>
+    </xar:if> -->
 
     </div>
 </xar:template>

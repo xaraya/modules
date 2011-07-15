@@ -13,15 +13,15 @@
             <xar:set name="enctype">'multipart/form-data'</xar:set>
         </xar:if> 
  
-	 <xar:if condition="$invalid">
-		<fieldset id="invalid">
-			<ul>
-			<xar:foreach in="$invalid" key="$key" value="$value">
-				<li class="xar-error">#$value#</li>
-			</xar:foreach>
-			</ul>
-		</fieldset>
-	</xar:if>
+     <xar:if condition="$invalid">
+        <fieldset id="invalid">
+            <ul>
+            <xar:foreach in="$invalid" key="$key" value="$value">
+                <li class="xar-error">#$value#</li>
+            </xar:foreach>
+            </ul>
+        </fieldset>
+    </xar:if>
 
         <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
           <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
@@ -38,7 +38,7 @@
 <!-- 
 <xar:set name="dummy">require_once('recaptchalib.php')</xar:set>
 <xar:set name="publickey">
-	'your_public_key_goes_here'
+    'your_public_key_goes_here'
 </xar:set>
 <xar:set name="recaptcha">recaptcha_get_html($publickey)</xar:set>
 #$recaptcha# 

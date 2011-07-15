@@ -5,41 +5,41 @@
 <xar:set name="name">'contact_objects'</xar:set>
  <div class="xar-form-input-wrapper" id="#$name#">
  <xar:set name="config">unserialize($properties[$name]->configuration)</xar:set>
-	<label for="#$properties[$name]->id#">
-	#$properties[$name]->label# 
-	(#$config['display_tooltip']#)
-	</label>
-	<xar:data-input property="$properties[$name]"/> 
+    <label for="#$properties[$name]->id#">
+    #$properties[$name]->label# 
+    (#$config['display_tooltip']#)
+    </label>
+    <xar:data-input property="$properties[$name]"/> 
     </div> 
 
     <xar:set name="name">'to_email'</xar:set>
  <div class="xar-form-input-wrapper" id="#$name#">
-	<xar:data-label property="$properties[$name]" for="id"/>
-	<xar:data-input property="$properties[$name]"/>
+    <xar:data-label property="$properties[$name]" for="id"/>
+    <xar:data-input property="$properties[$name]"/>
     </div>
 
     <xar:set name="name">'default_subject'</xar:set>
  <div class="xar-form-input-wrapper" id="#$name#">
-	<xar:data-label property="$properties[$name]" for="id"/>
-	<xar:data-input property="$properties[$name]"/>
+    <xar:data-label property="$properties[$name]" for="id"/>
+    <xar:data-input property="$properties[$name]"/>
     </div>
 
     <xar:set name="name">'save_to_db'</xar:set>
  <div class="xar-form-input-wrapper" id="#$name#">
-	<xar:data-label property="$properties[$name]" for="id"/>
-	<xar:data-input property="$properties[$name]"/>
+    <xar:data-label property="$properties[$name]" for="id"/>
+    <xar:data-input property="$properties[$name]"/>
     </div>
 
         <xar:set name="name">'strip_tags'</xar:set>
  <div class="xar-form-input-wrapper" id="#$name#">
-	<xar:data-label property="$properties[$name]" for="id"/>
-	<xar:data-input property="$properties[$name]"/>
+    <xar:data-label property="$properties[$name]" for="id"/>
+    <xar:data-input property="$properties[$name]"/>
     </div>
 
 <!--     <xar:set name="name">'save_indicator'</xar:set>
  <div class="xar-form-input-wrapper" id="#$name#">
-	<xar:data-label property="$properties[$name]" for="id"/>
-	<xar:data-input property="$properties[$name]"/>
+    <xar:data-label property="$properties[$name]" for="id"/>
+    <xar:data-input property="$properties[$name]"/>
     </div> -->
 
 </xar:template>

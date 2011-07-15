@@ -39,11 +39,11 @@ function contactform_init()
 #
     xarModVars::set('contactform','to_email','');
     xarModVars::set('contactform','default_subject','New Message from My Site');
-	xarModVars::set('contactform','save_to_db',true);
-	//xarModVars::set('contactform','save_indicator',true);
-	xarModVars::set('contactform','contact_objects','contactform_default');
-	xarModVars::set('contactform','enable_short_urls',true);
-	xarModVars::set('contactform', 'strip_tags',true);
+    xarModVars::set('contactform','save_to_db',true);
+    //xarModVars::set('contactform','save_indicator',true);
+    xarModVars::set('contactform','contact_objects','contactform_default');
+    xarModVars::set('contactform','enable_short_urls',true);
+    xarModVars::set('contactform', 'strip_tags',true);
 
 # --------------------------------------------------------
 #
@@ -78,8 +78,8 @@ function contactform_init()
     $dynproptable = $xartable['dynamic_properties'];
     $dyndatatable = $xartable['dynamic_data'];
     $query = "SELECT DISTINCT $dynproptable.id
-	FROM $dynproptable
-	LEFT JOIN $dyndatatable
+    FROM $dynproptable
+    LEFT JOIN $dyndatatable
                   ON $dyndatatable.id=property_id
                WHERE object_id= $objectid";
 
@@ -118,11 +118,11 @@ function contactform_init()
 function contactform_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
-	$old = str_replace('.','',$oldversion);
-	$old = (int)$old;
+    $old = str_replace('.','',$oldversion);
+    $old = (int)$old;
 
     if ($old < 210) {
-		xarMod::apiFunc('contactform','util','upgradepre210');
+        xarMod::apiFunc('contactform','util','upgradepre210');
     } 
 
     // Update successful

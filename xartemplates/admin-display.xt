@@ -13,7 +13,7 @@
 
         <h2>Display an Item</h2>
  
-		<xar:data-display object="$object" itemid="$itemid" tplmodule="contactform"/>
+        <xar:data-display object="$object" itemid="$itemid" tplmodule="contactform"/>
  
  </div>
 </xar:template>

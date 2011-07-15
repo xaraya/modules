@@ -5,8 +5,8 @@
 <xar:set name="li_class">'xar-tab'</xar:set>
 <xar:set name="a_class">'xar-norm xar-norm-outline'</xar:set>
 <xar:if condition="$tab eq 1">
-	<xar:set name="li_class">'xar-tab-active'</xar:set>
-	<xar:set name="a_class">'xar-accent xar-accent-outline'</xar:set>
+    <xar:set name="li_class">'xar-tab-active'</xar:set>
+    <xar:set name="a_class">'xar-accent xar-accent-outline'</xar:set>
 </xar:if>
 
         <ul class="xar-tabs xar-alt xar-norm-outline" style="clear:both">
@@ -19,13 +19,13 @@
 <xar:set name="li_class">'xar-tab'</xar:set>
 <xar:set name="a_class">'xar-norm xar-norm-outline'</xar:set>
 <xar:if condition="$tab eq 2">
-	<xar:set name="li_class">'xar-tab-active'</xar:set>
-	<xar:set name="a_class">'xar-accent xar-accent-outline'</xar:set>
+    <xar:set name="li_class">'xar-tab-active'</xar:set>
+    <xar:set name="a_class">'xar-accent xar-accent-outline'</xar:set>
 </xar:if>
 
-	   <li id="tab-2" class="#$li_class#"> 
+       <li id="tab-2" class="#$li_class#"> 
                 <a id="href-2" class="#$a_class#"
-		href="#xarModURL('contactform','user','view',array('tab' => 2))#">
+        href="#xarModURL('contactform','user','view',array('tab' => 2))#">
                     Approach 2
                 </a>
             </li>
@@ -33,8 +33,8 @@
 <xar:set name="li_class">'xar-tab'</xar:set>
 <xar:set name="a_class">'xar-norm xar-norm-outline'</xar:set>
 <xar:if condition="$tab eq 3">
-	<xar:set name="li_class">'xar-tab-active'</xar:set>
-	<xar:set name="a_class">'xar-accent xar-accent-outline'</xar:set>
+    <xar:set name="li_class">'xar-tab-active'</xar:set>
+    <xar:set name="a_class">'xar-accent xar-accent-outline'</xar:set>
 </xar:if>
 
             <li id="tab-3" class="#$li_class#">
@@ -46,8 +46,8 @@
 <xar:set name="li_class">'xar-tab'</xar:set>
 <xar:set name="a_class">'xar-norm xar-norm-outline'</xar:set>
 <xar:if condition="$tab eq 4">
-	<xar:set name="li_class">'xar-tab-active'</xar:set>
-	<xar:set name="a_class">'xar-accent xar-accent-outline'</xar:set>
+    <xar:set name="li_class">'xar-tab-active'</xar:set>
+    <xar:set name="a_class">'xar-accent xar-accent-outline'</xar:set>
 </xar:if>
 
             <li id="tab-4" class="#$li_class#">

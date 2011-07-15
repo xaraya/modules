@@ -46,20 +46,20 @@ function contactform_userapi_encode_shorturl($args)
         // Note : if your main function calls some other function by default,
         // you should set the path to directly to that other function
 
-	} elseif ($func == 'new') {
+    } elseif ($func == 'new') {
 
-		$path = '/' . $module . '/new';
+        $path = '/' . $module . '/new';
 
-		if (isset($name)) {
-			$path .= $path . '/' . $name;
-		}
-	} elseif ($func == 'success') {
+        if (isset($name)) {
+            $path .= $path . '/' . $name;
+        }
+    } elseif ($func == 'success') {
 
-		$path = '/' . $module . '/success';
+        $path = '/' . $module . '/success';
 
-		if (isset($name)) {
-			$path .= $path . '/' . $name;
-		}
+        if (isset($name)) {
+            $path .= $path . '/' . $name;
+        }
 
     } else {
         // anything else that you haven't defined a short URL equivalent for

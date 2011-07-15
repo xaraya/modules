@@ -2,6 +2,6 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
    
-	<p>Thanks for contacting us!</p>
+    <p>Thanks for contacting us!</p>
 
 </xar:template>
