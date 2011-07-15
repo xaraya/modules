@@ -120,19 +120,23 @@
         <legend>
             Display Access
         </legend>
-        <xar:data-input property="$properties['access']" />
+        <xar:set name="propname">"dd_" . $properties['access']->id . '_display'</xar:set>
+        <xar:set name="propvalue">$properties['access']->getValue()</xar:set>
+        <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['display']"/>
     </fieldset>
     <fieldset>
         <legend>
             Modify Access
         </legend>
-        <xar:data-input property="$properties['access']" />
+        <xar:set name="propname">"dd_" . $properties['access']->id . '_modify'</xar:set>
+        <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['modify']"/>
     </fieldset>
     <fieldset>
         <legend>
             Delete Access
         </legend>
-        <xar:data-input property="$properties['access']" />
+        <xar:set name="propname">"dd_" . $properties['access']->id . '_delete'</xar:set>
+        <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['delete']"/>
     </fieldset>
     <fieldset>
         <legend>

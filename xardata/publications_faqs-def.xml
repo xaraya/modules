@@ -3,8 +3,8 @@
   <label>FAQs</label>
   <module_id>182</module_id>
   <itemtype>29</itemtype>
-  <class>DataObject</class>
-  <filepath>auto</filepath>
+  <class>Publication</class>
+  <filepath>modules/publications/class/publication.php</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <datastore>relational</datastore>
@@ -260,7 +260,7 @@
       <type>access</type>
       <defaultvalue></defaultvalue>
       <source>publication.access</source>
-      <status>34</status>
+      <status>162</status>
       <seq>37</seq>
       <configuration>a:0:{}</configuration>
     </property>
