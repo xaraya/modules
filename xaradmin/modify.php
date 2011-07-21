@@ -66,6 +66,7 @@ function publications_admin_modify($args)
     
     // If creating a new translation get an empty copy
     if ($data['tab'] == 'newtranslation') {
+        $data['object']->properties['id']->setValue(0);
         $data['object']->properties['parent']->setValue($id);
         $data['items'][0] = $data['object']->getFieldValues();
         $data['tab'] = '';
@@ -96,6 +97,7 @@ function publications_admin_modify($args)
 
     return xarTplModule('publications', 'admin', 'modify', $data);
 
+// ----------------------------------------------------------------------------
     $ptid = $publication['pubtype_id'];
 
     $data = array();
