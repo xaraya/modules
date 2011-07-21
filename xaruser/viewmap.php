@@ -333,7 +333,7 @@ function publications_user_viewmap($args)
 
     if (!empty($ptid)) {
         $object = DataObjectMaster::getObject(array('objectid' => $ptid));
-        $fields = $object->getFieldValues();//var_dump($fields);exit;
+        $fields = $object->getFieldValues();
         $pubtype_id = $object->properties['itemtype']->defaultvalue;
         $template = $data['pubtypes'][$pubtype_id]['template'];
     } else {

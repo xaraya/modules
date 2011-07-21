@@ -213,7 +213,6 @@ function publications_userapi_getall($args)
         $query = 'SELECT ' . join(', ', $select);
     }
 
-//    var_dump($required);exit;
     // Create the FROM ... [LEFT JOIN ... ON ...] part
     $from = $publicationsdef['table'];
     $addme = 0;
