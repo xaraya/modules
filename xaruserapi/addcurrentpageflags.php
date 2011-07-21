@@ -141,7 +141,6 @@ function publications_userapi_addcurrentpageflags($args)
     // root ancestor does not have any siblings.
     foreach($pagedata['ancestors'] as $key => $value) {
         if (isset($value['child_keys']) && is_array($value['child_keys'])) {
-            //var_dump($value['child_keys']);
             foreach($value['child_keys'] as $value2) {
                 $pagedata['pages'][$value2]['is_ancestor_sibling'] = true;
             }
