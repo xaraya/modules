@@ -22,6 +22,9 @@ class Publication extends DataObject
         if ($isvalid) {
             $access = DataPropertyMaster::getProperty(array('name' => 'access'));
             $prefix = $this->getFieldPrefix();
+            
+            // Only ignore the prefix if we are creating the base document
+            // A translation would have a prefix of 0, which is valid
             if (empty($prefix)) {
                 $name = "dd_" . $this->properties['access']->id;
             } else {
