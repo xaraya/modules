@@ -25,7 +25,7 @@ class Publication extends DataObject
             
             // Only ignore the prefix if we are creating the base document
             // A translation would have a prefix of 0, which is valid
-            if (empty($prefix)) {
+            if (empty($prefix) && $prefix !== 0) {
                 $name = "dd_" . $this->properties['access']->id;
             } else {
                 $name = $this->getFieldPrefix() . "_dd_" . $this->properties['access']->id;
