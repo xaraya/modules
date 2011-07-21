@@ -52,15 +52,16 @@ function publications_admin_update()
     foreach ($items as $prefix) {
         $data['object']->setFieldPrefix($prefix);
     
-        // Adjust the display of the celkoposition property according to whether this is the base document or not
+        // Disable the celkoposition property according if this is not the base document
         $fieldname = $prefix . '_dd_' . $data['object']->properties['parent']->id;
         $data['object']->properties['parent']->checkInput($fieldname);
-        if ($data['object']->properties['parent']->value == 0) {
+        if (empty($data['object']->properties['parent']->value)) {
             $data['object']->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISPLAYONLY);
         } else {
             $data['object']->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
         }
         
+        // Now get the input from the form
         $thisvalid = $data['object']->checkInput();
         $isvalid = $isvalid && $thisvalid;
     // Store each item for later processing
@@ -116,9 +117,19 @@ function publications_admin_update()
     // Now talk to the database
     foreach ($itemsdata as $itemid => $itemdata) {
         $data['object']->setFieldValues($itemdata);
+
+        // Ignore the position if this isn't the base document
+        if (empty($data['object']->properties['parent']->value)) {
+            $data['object']->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISPLAYONLY);
+        } else {
+            $data['object']->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
+        }
+        unset($data['object']->fieldlist);
+
         if (empty($itemid)) $item = $data['object']->createItem();
         else $item = $data['object']->updateItem();
-    // Clear the itemid property in preparation for the next round
+
+        // Clear the itemid property in preparation for the next round
         unset($data['object']->itemid);
     }
     
