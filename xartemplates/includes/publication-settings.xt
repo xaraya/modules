@@ -116,13 +116,21 @@
     <!--
     </xar:if>
     -->
-    <!--
     <fieldset>
+        <xar:set name="propvalue">$properties['access']->getValue()</xar:set>
+        <xar:if condition="empty($propvalue['display'])">
+            <xar:set name="propvalue">
+                array(
+                    'display' => $propvalue,
+                    'modify' => $propvalue,
+                    'delete' => $propvalue,
+                )
+            </xar:set>
+        </xar:if>
         <legend>
             Display Access
         </legend>
         <xar:set name="propname">"dd_" . $properties['access']->id . '_display'</xar:set>
-        <xar:set name="propvalue">$properties['access']->getValue()</xar:set>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['display']"/>
     </fieldset>
     <fieldset>
@@ -139,7 +147,6 @@
         <xar:set name="propname">"dd_" . $properties['access']->id . '_delete'</xar:set>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['delete']"/>
     </fieldset>
-    -->
     <fieldset>
         <legend>
             Categories

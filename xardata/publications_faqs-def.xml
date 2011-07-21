@@ -116,8 +116,8 @@
     </property>
     <property name="locale">
       <id>826</id>
-      <label>Languages</label>
-      <type>language</type>
+      <label>Language</label>
+      <type>languages</type>
       <defaultvalue>xarModVars::get('publications', 'defaultlanguage')</defaultvalue>
       <source>publication.locale</source>
       <status>33</status>

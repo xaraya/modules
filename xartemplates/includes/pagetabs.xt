@@ -34,7 +34,7 @@
                     <xar:else/>
                         <xar:data-output property="$properties['id']" value="$item['id']" />:
                     </xar:if>
-                    &#160;<xar:data-output property="$properties['locale']" value="$item['locale']" />
+                    &#160;<xar:data-output property="$properties['locale']" value="$item['locale']" link=""/>
                 </a>
              </li>
 
