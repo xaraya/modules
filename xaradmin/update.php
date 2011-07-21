@@ -115,24 +115,16 @@ function publications_admin_update()
                                'publications', $data['ptid']);
 
     // Now talk to the database
-    foreach ($itemsdata as $itemid => $itemdata) {
+    foreach ($itemsdata as $id => $itemdata) {
         $data['object']->setFieldValues($itemdata);
 
-        // Ignore the position if this isn't the base document
-        if (empty($data['object']->properties['parent']->value)) {
-            $data['object']->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISPLAYONLY);
-        } else {
-            $data['object']->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
-        }
-        unset($data['object']->fieldlist);
-
-        if (empty($itemid)) $item = $data['object']->createItem();
-        else $item = $data['object']->updateItem();
+        if (empty($id)) {$item = $data['object']->createItem();}
+        else {$item = $data['object']->updateItem();}
 
         // Clear the itemid property in preparation for the next round
         unset($data['object']->itemid);
     }
-    
+
     // Success
     xarSession::setVar('statusmsg', xarML('Publication Updated'));
 
