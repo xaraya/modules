@@ -36,6 +36,7 @@ Like the xarpages module, the publications module can be configured to define th
 A publication has 2 template views:
 - summary view: shows the most important of the document's fields
 - detail view: shows all the document's visible fields
+- input form allows you to enter content 
 
 A custom template for any document can be created for each of these.
 A document can also be assinged a custom page template (i.e. other than default.xt).
