@@ -100,10 +100,34 @@ function publications_admin_updateconfig()
         $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
         $pubtypeobject->getItem(array('itemid' => $ptid));
         $configsettings = $pubtypeobject->properties['configuration']->getValue();
-        var_dump($configsettings);exit;
-        foreach ($configsettings as $key => $value)
-            if (!isset($settings[$key])) $settings[$key] = 0;
-        $pubtypeobject->properties['configuration']->setValue($settings);
+
+//        foreach ($configsettings as $key => $value)
+//            if (!isset($settings[$key])) $settings[$key] = 0;
+
+        $isvalid = true;
+        
+        // Get the default access rules
+        $access = DataPropertyMaster::getProperty(array('name' => 'access'));
+        $validprop = $access->checkInput("access_add");
+        $addaccess = $access->value;
+        $isvalid = $isvalid && $validprop;
+        $validprop = $access->checkInput("access_display");
+        $displayaccess = $access->value;
+        $isvalid = $isvalid && $validprop;
+        $validprop = $access->checkInput("access_modify");
+        $modifyaccess = $access->value;
+        $isvalid = $isvalid && $validprop;
+        $validprop = $access->checkInput("access_delete");
+        $deleteaccess = $access->value;
+        $isvalid = $isvalid && $validprop;
+        $allaccess = array(
+            'add' => $addaccess,
+            'display' => $displayaccess,
+            'modify' => $modifyaccess,
+            'delete' => $deleteaccess,
+        );
+        $pubtypeobject->properties['configuration']->setValue($allaccess);
+//        $pubtypeobject->properties['configuration']->setValue($settings);
         $pubtypeobject->updateItem(array('itemid' => $ptid));
 
         $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');

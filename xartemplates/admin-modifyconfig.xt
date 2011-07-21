@@ -147,12 +147,14 @@
                             </xar:mlvar>
                         </xar:ml>
                     </div>
+                    <!--
                     <div class="xar-form-input-wrapper">
                         <label class="help xar-form-label" for="page_template" title="#xarML('Change the theme/themename/pages/ template that you use with this publication type.')#">                    
                             Use different page template                    
                         </label> 
                         <input type="text" name="settings[page_template]" id="page_template" size="20" maxlength="60" value="#$settings['page_template']#" />
                     </div>
+                    -->
                     <div class="xar-form-input-wrapper">
                         <label class="help xar-form-label" for="usetitleforurl" title="#xarML('Note: if a title contains characters that are illegal in a URL, the title will not be used..')#">                    
                             Use title in short URLs                    
@@ -468,25 +470,25 @@
                     <legend>
                         Add Access
                     </legend>
-                    <xar:data-input type="access" name="access[add]"/>
+                    <xar:data-input type="access" name="access_add"/>
                 </fieldset>
                 <fieldset>
                     <legend>
                         Display Access
                     </legend>
-                    <xar:data-input type="access" name="access[display]"/>
+                    <xar:data-input type="access" name="access_display"/>
                 </fieldset>
                 <fieldset>
                     <legend>
                         Modify Access
                     </legend>
-                    <xar:data-input type="access" name="access[modify]"/>
+                    <xar:data-input type="access" name="access_modify"/>
                 </fieldset>
                 <fieldset>
                     <legend>
                         Delete Access
                     </legend>
-                    <xar:data-input type="access" name="access[delete]"/>
+                    <xar:data-input type="access" name="access_delete"/>
                 </fieldset>
             </xar:if>
             <div class="xar-form-input-wrapper">

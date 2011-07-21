@@ -116,6 +116,7 @@
     <!--
     </xar:if>
     -->
+    <!--
     <fieldset>
         <legend>
             Display Access
@@ -138,6 +139,7 @@
         <xar:set name="propname">"dd_" . $properties['access']->id . '_delete'</xar:set>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['delete']"/>
     </fieldset>
+    -->
     <fieldset>
         <legend>
             Categories
