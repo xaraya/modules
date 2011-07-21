@@ -23,7 +23,8 @@
     </div>
     <xar:if condition="!$properties['parent']->value">
         <div class="xar-form-input-wrapper">
-            <xar:data-input property="$properties['position']"/>
+            <xar:set name="itemid">$object->properties['id']->value</xar:set>
+            <xar:data-input property="$properties['position']" itemid="$itemid"/>
         </div>
     </xar:if>
 </xar:template>
