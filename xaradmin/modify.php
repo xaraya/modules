@@ -94,7 +94,7 @@ function publications_admin_modify($args)
         $data['object']->getItem(array('itemid' => $key));
         $data['items'][$key] = $data['object']->getFieldValues();
     }
-var_dump($data['items']);
+
     return xarTplModule('publications', 'admin', 'modify', $data);
 
 // ----------------------------------------------------------------------------
