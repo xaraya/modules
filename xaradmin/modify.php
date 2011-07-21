@@ -27,7 +27,7 @@ function publications_admin_modify($args)
     extract($args);
 
     // Get parameters
-    if (!xarVarFetch('itemid',     'isset', $id, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('itemid',     'isset', $data['itemid'], NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('ptid',       'isset', $ptid, NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('returnurl',  'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('name',       'str:1', $name, '', XARVAR_NOT_REQUIRED)) {return;}
@@ -45,7 +45,7 @@ function publications_admin_modify($args)
 
     // Get our object
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
-    $data['object']->getItem(array('itemid' => $id));
+    $data['object']->getItem(array('itemid' => $data['itemid']));
     $data['ptid'] = $data['object']->properties['itemtype']->value;
     
     //FIXME This should be configuration in the celko property itself
@@ -67,7 +67,7 @@ function publications_admin_modify($args)
     // If creating a new translation get an empty copy
     if ($data['tab'] == 'newtranslation') {
         $data['object']->properties['id']->setValue(0);
-        $data['object']->properties['parent']->setValue($id);
+        $data['object']->properties['parent']->setValue($data['itemid']);
         $data['items'][0] = $data['object']->getFieldValues();
         $data['tab'] = '';
     } else {
@@ -75,18 +75,18 @@ function publications_admin_modify($args)
     }
 
     // Get the base document
-    $data['object']->getItem(array('itemid' => $id));
+    $data['object']->getItem(array('itemid' => $data['itemid']));
     $fieldvalues = $data['object']->getFieldValues();
     if (!empty($fieldvalues['parent'])) {
         $id = $fieldvalues['parent'];
         $data['object']->getItem(array('itemid' => $id));
         $fieldvalues = $data['object']->getFieldValues();
     }
-    $data['items'][$id] = $fieldvalues;
+    $data['items'][$data['itemid']] = $fieldvalues;
 
     // Get any translations of the base document
     $data['objectlist'] = DataObjectMaster::getObjectList(array('name' => $name));
-    $where = "parent = " . $id;
+    $where = "parent = " . $data['itemid'];
     $items = $data['objectlist']->getItems(array('where' => $where));
     foreach ($items as $key => $value) {
         // Clear the previous values before starting the next round

@@ -25,7 +25,7 @@ class Publication extends DataObject
             
             // Only ignore the prefix if we are creating the base document
             // A translation would have a prefix of 0, which is valid
-            if (empty($prefix) && $prefix !== 0) {
+            if (empty($prefix) && $prefix !== '0') {
                 $name = "dd_" . $this->properties['access']->id;
             } else {
                 $name = $this->getFieldPrefix() . "_dd_" . $this->properties['access']->id;
@@ -51,13 +51,33 @@ class Publication extends DataObject
 
     function createItem(Array $args = array())
     {
+        // Save the access property
         $this->properties['access']->setInputStatus(DataPropertyMaster::DD_INPUTSTATE_ADDMODIFY);
+
+        // Ignore the position if this isn't the base document
+        if (empty($this->properties['parent']->value)) {
+            $this->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISPLAYONLY);
+        } else {
+            $this->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
+        }
+        unset($this->fieldlist);
+
         return parent::createItem($args);
     }
 
     function updateItem(Array $args = array())
     {
+        // Save the access property
         $this->properties['access']->setInputStatus(DataPropertyMaster::DD_INPUTSTATE_ADDMODIFY);
+        
+        // Ignore the position if this isn't the base document
+        if (empty($this->properties['parent']->value)) {
+            $this->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISPLAYONLY);
+        } else {
+            $this->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
+        }
+        unset($this->fieldlist);
+        
         return parent::updateItem($args);
     }
 }
