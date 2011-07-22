@@ -28,14 +28,37 @@ function publications_admin_display($args)
 // this is used to determine whether we come from a pubtype-based view or a
 // categories-based navigation
     if(!xarVarFetch('name',    'str',   $name,  '', XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('ptid',    'id',    $ptid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('itemid',      'id',    $id,   NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('page', 'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('ptid',   'id',    $ptid,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('itemid',  'id',    $id,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('page',    'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
     
     // Override xarVarFetch
     extract ($args);
     
-    if (empty($name) && empty($ptid)) return xarResponse::NotFound();
+    // If no id supplied, get the default id.
+    if (empty($id)) $id = xarModVars::get('publications', 'defaultpage');
+    $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
+    
+    // If the document doesn't exist, we might be viewing a pubtype
+    if (empty($name) && empty($ptid) && empty($id)) {
+        // Nothing to be done
+        $id = xarModVars::get('publications', 'notfoundpage');
+    } elseif (empty($id)) {
+        // We're missing an id but can get a pubtype: jump to the pubtype view
+        xarController::redirect(xarModURL('publications','user','view'));
+    }
+    
+    // We have come to the end of the line
+    if (empty($id)) return xarResponse::NotFound();
+
+    // Here we get the publication type first, and then from that the page
+    // Perhaps more efficient to get the page directly?
+    $ptid = xarMod::apiFunc('publications','user','getitempubtype',array('itemid' => $id));
+
+    // An empty publication type means the page does not exist
+    if (empty($ptid)) return xarResponse::NotFound();
+
+/*    if (empty($name) && empty($ptid)) return xarResponse::NotFound();
 
     if(empty($ptid)) {
         $publication_type = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
@@ -44,7 +67,7 @@ function publications_admin_display($args)
         $item = current($items);
         $ptid = $item['id'];
     }
-
+*/
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));

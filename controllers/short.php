@@ -38,7 +38,7 @@ class PublicationsShortController extends ShortActionController
                 
                 // Look for a root page with the name as the first part of the path.
                 $rootpage = xarMod::apiFunc(
-                    'publications', 'user', 'getpage',
+                    'publications', 'user', 'getpages',
                     array('name' => strtolower($roottoken), 'parent' => 0, 'status' => 'ACTIVE,EMPTY', 'key' => 'pid')
                 );
                             
@@ -46,7 +46,7 @@ class PublicationsShortController extends ShortActionController
                 // These are used as short-cuts.
                 if (empty($rootpage) && $module != 'publications') {
                     $rootpage = xarMod::apiFunc(
-                        'publications', 'user', 'getpage',
+                        'publications', 'user', 'getpages',
                         array('name' => strtolower($roottoken), 'status' => 'ACTIVE,EMPTY', 'key' => 'pid')
                     );
                 }
