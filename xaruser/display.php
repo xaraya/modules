@@ -36,9 +36,9 @@ function publications_user_display($args)
 // this is used to determine whether we come from a pubtype-based view or a
 // categories-based navigation
     if(!xarVarFetch('name',    'str',   $name,  '', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('ptid',   'isset', $ptid, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemid',      'id',    $id,   NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('page', 'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('ptid',   'id',    $ptid,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('itemid',  'id',    $id,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('page',    'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
     
     // Override xarVarFetch
     extract ($args);
@@ -59,7 +59,12 @@ function publications_user_display($args)
     // We have come to the end of the line
     if (empty($id)) return xarResponse::NotFound();
     
+    // Here we get the publication type first, and then from that the page
+    // Perhaps more efficient to get the page directly?
     $ptid = xarMod::apiFunc('publications','user','getitempubtype',array('itemid' => $id));
+
+    // An empty publication type means the page does not exist
+    if (empty($ptid)) return xarResponse::NotFound();
     
 /*    if(empty($ptid)) {
         $publication_type = DataObjectMaster::getObjectList(array('name' => 'publications_types'));

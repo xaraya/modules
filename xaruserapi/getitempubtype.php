@@ -25,6 +25,7 @@ function publications_userapi_getitempubtype($args)
     $q->eq('id',$args['itemid']);
     if (!$q->run()) return;
     $result = $q->row();
+    if (empty($result)) return 0;
     return $result['pubtype_id'];
 }
 
