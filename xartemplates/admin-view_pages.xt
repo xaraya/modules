@@ -40,6 +40,22 @@
         <xar:if condition="empty($pages)">
              No pages defined
         <xar:else />
+            <xar:access level="600">
+                <div style="text-align: right">
+                    <xar:set name="link">
+                        xarModURL('publications','admin','new')
+                    </xar:set>
+                    <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
+                        <a href="#$link#" title="#xarML('Add A New Publication')#" style="margin-right: 5px">
+                            <img src="#xarTplGetImage('icons/'.'add.png', 'base')#" width="16" height="16" alt="#xarML('Add')#"/>
+                        </a>
+                    <xar:else />
+                        <a href="#$link#">
+                            Add A New Publication
+                        </a>
+                    </xar:if>
+                </div>
+            </xar:access>
             <xar:if condition="!empty($add_allowed)">
                 <div><a href="#xarModURL('publications','admin','new')#">Add Page</a></div>
             </xar:if>
