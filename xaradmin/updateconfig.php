@@ -83,7 +83,7 @@ function publications_admin_updateconfig()
         
         // Module settings
         $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'publications'));
-        $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls, user_menu_link');
+        $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls, user_menu_link', 'use_module_icons');
         $isvalid = $data['module_settings']->checkInput();
         if (!$isvalid) {
             return xarTplModule('base','admin','modifyconfig', $data);
