@@ -165,10 +165,10 @@ function twitter_admin_account($args)
                                 if (!xarVarFetch('twitter_description', 'pre:trim:str:0:',
                                     $twitter_description, '', XARVAR_NOT_REQUIRED)) return;
                                 $changed = false;
-                                if ($account['name'] != $twitter_name ||
-                                    $account['location'] != $twitter_location ||
-                                    $account['url'] != $twitter_url ||
-                                    $account['description'] != $twitter_description) {
+                                if ($data['account']['name'] != $twitter_name ||
+                                    $data['account']['location'] != $twitter_location ||
+                                    $data['account']['url'] != $twitter_url ||
+                                    $data['account']['description'] != $twitter_description) {
                                     $changed = true;
                                 }
                                 if ($changed) {
@@ -197,7 +197,7 @@ function twitter_admin_account($args)
                         if (empty($return_url))
                             $return_url = xarModURL('twitter', 'admin', 'account');
 
-                        xarResponse::redirect($return_url);
+                        xarController::redirect($return_url);
                     }
 
                 break;
