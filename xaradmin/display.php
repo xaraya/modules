@@ -73,7 +73,50 @@ function publications_admin_display($args)
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
     $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
     $data['object']->getItem(array('itemid' => $id));
-    $publication = $data['object']->getFieldValues();
+    
+    // If this is a redirect page, then send it on its way now
+    if ($data['object']->properties['redirect_flag']->value) {
+    
+        // If this is from a link of a redirect child page, use the child param as new URL
+        if(!xarVarFetch('child',    'str', $child,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+        if (!empty($child)) {
+            $url = urldecode($child);
+            // Turn entities into amps
+        } else {
+            $url = $data['object']->properties['redirect_url']->value;
+        }
+        $params = parse_url($url);
+        $params['query'] = preg_replace('/&amp;/','&',$params['query']);
+        
+        // If this is an external link, show it without further processing
+        if (!empty($params['host']) && $params['host'] != xarServer::getHost()) {
+            xarController::redirect($url);
+        } else{
+            parse_str($params['query'], $info);
+            $other_params = $info;
+            unset($other_params['module']);
+            unset($other_params['type']);
+            unset($other_params['func']);
+            unset($other_params['child']);
+            $page = xarMod::guiFunc($info['module'],'user',$info['func'],$other_params);
+            
+            // Debug
+            echo xarModURL($info['module'],'user',$info['func'],$other_params);
+            
+            // Find the URLs in links or submits
+            $pattern='/(href|action)="([^"\r\n]*)"/';
+            $page = preg_replace_callback($pattern,
+                create_function(
+                    '$matches',
+                    'return $matches[1]."=\"".xarServer::getCurrentURL(array("child" => urlencode($matches[2])))."\"";'
+                ),
+                $page
+            );
+            return $page;
+        }
+    }
+
+//    $publication = $data['object']->getFieldValues();
 
     // Specific layout within a template (optional)
     if (isset($layout)) {
@@ -82,6 +125,13 @@ function publications_admin_display($args)
         $data['layout'] = 'detail';
     }
 
+    $string = base64_encode('http://localhost:8888/index?module=base&func=test&dork=dork');
+    echo $string ."<br/>";
+    $array = xarController::$request->getInfo($string);
+    var_dump($array);
+    $string = base64_decode($string);
+    echo $string ."<br/>";
+    
     return $data;
 
 

@@ -59,6 +59,8 @@ function publications_init()
             access              text,
             state               tinyint NOT NULL DEFAULT '3',
             process_state       tinyint NOT NULL DEFAULT '1',
+            redirect_flag       tinyint NOT NULL DEFAULT '1',
+            redirect_url        varchar(20) NOT NULL DEFAULT '',
             PRIMARY KEY(id),
             KEY owner (owner),
             KEY pubtype_id (pubtype_id),

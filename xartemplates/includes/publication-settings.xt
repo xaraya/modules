@@ -113,6 +113,21 @@
                 <xar:data-input property="$properties['theme']" />
             </div>
         </fieldset>
+        <fieldset>
+            <legend>
+                Redirect
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <xar:var name="label">Redirect this page</xar:var>
+                <xar:data-label property="$properties['redirect_flag']" for="id" label="$label" />
+                <xar:data-input property="$properties['redirect_flag']" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <xar:var name="label">Redirect Address</xar:var>
+                <xar:data-label property="$properties['redirect_url']" for="id" label="$label" />
+                <xar:data-input property="$properties['redirect_url']" />
+            </div>
+        </fieldset>
     <!--
     </xar:if>
     -->
