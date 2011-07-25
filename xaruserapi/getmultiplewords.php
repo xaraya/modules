@@ -43,14 +43,14 @@ function keywords_userapi_getmultiplewords($args)
     $keywordstable = $xartable['keywords'];
 
     foreach ($objectids as $item) {
-        $query = "SELECT xar_id,
-                         xar_keyword
+        $query = "SELECT id,
+                         keyword
                   FROM $keywordstable
-                  WHERE xar_moduleid = ?
-                  AND xar_itemid = ?";
+                  WHERE module_id = ?
+                  AND itemid = ?";
 
         if (isset($itemtype) && is_numeric($itemtype)) {
-            $query .= " AND xar_itemtype = $itemtype";
+            $query .= " AND itemtype = $itemtype";
         }
         $bindvars = array($modid, $item);
         $result =& $dbconn->Execute($query,$bindvars);

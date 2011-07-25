@@ -35,18 +35,18 @@ function keywords_adminapi_getwordslimited($args)
     $bindvars = array();
 
     // Get restricted keywords for this module item
-    $query = "SELECT xar_id,
-                     xar_keyword
+    $query = "SELECT id,
+                     keyword
               FROM $keywordstable
-              WHERE xar_moduleid = ?";
+              WHERE module_id = ?";
 
               $bindvars[] = $moduleid;
 
     if (isset($itemtype)) {
-          $query .= " AND xar_itemtype = ?";
+          $query .= " AND itemtype = ?";
           $bindvars[] = $itemtype;
     }
-    $query .= " ORDER BY xar_keyword ASC";
+    $query .= " ORDER BY keyword ASC";
     $result =& $dbconn->Execute($query,$bindvars);
 
     if (!$result) return;

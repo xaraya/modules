@@ -58,7 +58,7 @@ function keywords_adminapi_removehook($args)
 
     // Delete the entries
     $query = "DELETE FROM $keywords
-               WHERE xar_moduleid = ?";
+               WHERE module_id = ?";
 
     $result =& $dbconn->Execute($query,array($modid));
     if (!$result) {

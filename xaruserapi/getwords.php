@@ -47,23 +47,23 @@ function keywords_userapi_getwords($args)
     $bindvars[] = $modid;
 
     // Get words for this module item
-    $query = "SELECT xar_id, xar_keyword
+    $query = "SELECT id, keyword
               FROM $keywordstable
-              WHERE xar_moduleid = ?";
+              WHERE module_id = ?";
 
     if (!empty($itemtype)) {
         if (is_array($itemtype)) {
-            $query .= ' AND xar_itemtype IN (?' . str_repeat(',?', count($itemtype)-1) . ')';
+            $query .= ' AND itemtype IN (?' . str_repeat(',?', count($itemtype)-1) . ')';
             $bindvars = array_merge($bindvars, $itemtype);
         } else {
-            $query .= ' AND xar_itemtype = ?';
+            $query .= ' AND itemtype = ?';
             $bindvars[] = (int)$itemtype;
         }
     }
-    $query .= " AND xar_itemid = ?";
+    $query .= " AND itemid = ?";
     $bindvars[] = $itemid;
 
-    $query .= " ORDER BY xar_keyword ASC";
+    $query .= " ORDER BY keyword ASC";
 
     if (isset($numitems) && is_numeric($numitems)) {
         if (empty($startnum)) {

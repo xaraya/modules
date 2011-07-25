@@ -202,7 +202,7 @@ function keywords_adminapi_updatehook($args)
         // Delete old words for this module item
         $idlist = array_keys($delete);
         $query = "DELETE FROM $keywordstable
-                  WHERE xar_id IN (" . join(', ',$idlist) . ")";
+                  WHERE id IN (" . join(', ',$idlist) . ")";
 
         $result =& $dbconn->Execute($query);
         if (!$result) {
@@ -215,11 +215,11 @@ function keywords_adminapi_updatehook($args)
             // Get a new keywords ID
             $nextId = $dbconn->GenId($keywordstable);
             // Create new keywords
-            $query = "INSERT INTO $keywordstable (xar_id,
-                                               xar_keyword,
-                                               xar_moduleid,
-                                               xar_itemtype,
-                                               xar_itemid)
+            $query = "INSERT INTO $keywordstable (id,
+                                               keyword,
+                                               moduleid,
+                                               itemtype,
+                                               itemid)
                     VALUES (?,
                             ?,
                             ?,
@@ -230,7 +230,7 @@ function keywords_adminapi_updatehook($args)
             if (!$result) {
                 return $extrainfo;
             }
-            //$keywordsid = $dbconn->PO_Insert_ID($keywordstable, 'xar_id');
+            //$keywordsid = $dbconn->PO_Insert_ID($keywordstable, 'id');
         }
     }
     $extrainfo['keywords'] = join(' ',$cleanwords);

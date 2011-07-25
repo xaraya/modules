@@ -37,33 +37,33 @@ function keywords_userapi_getlist($args)
         $where = null;
     } elseif ($tab == '1'){
         $where = " WHERE ("
-        ."'A' <= ".$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) AND "
-        .$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) <= 'F')";
+        ."'A' <= ".$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) AND "
+        .$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) <= 'F')";
     } elseif ($tab == '2'){
            $where = " WHERE ("
-        ."'G' <= ".$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) AND "
-        .$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) <= 'L')";
+        ."'G' <= ".$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) AND "
+        .$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) <= 'L')";
     } elseif ($tab == '3'){
            $where = " WHERE ("
-        ."'M' <= ".$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) AND "
-        .$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) <= 'R')";
+        ."'M' <= ".$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) AND "
+        .$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) <= 'R')";
     } elseif ($tab == '4'){
            $where = " WHERE ("
-        ."'S' <= ".$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) AND "
-        .$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) <= 'Z')";
+        ."'S' <= ".$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) AND "
+        .$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) <= 'Z')";
     } elseif ($tab == '5'){
           $where = " WHERE ("
-        .$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) < 'A' OR "
-        .$dbconn->substr."(".$dbconn->upperCase."(xar_keyword),1,1) > 'Z')";
+        .$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) < 'A' OR "
+        .$dbconn->substr."(".$dbconn->upperCase."(keyword),1,1) > 'Z')";
     }
 
 
     // Get count per keyword from the database
     if (!empty($args['count'])) {
-        $query = "SELECT xar_keyword, COUNT(xar_id)
+        $query = "SELECT keyword, COUNT(id)
                   FROM $keywordstable $where
-                  GROUP BY xar_keyword
-                  ORDER BY xar_keyword ASC";
+                  GROUP BY keyword
+                  ORDER BY keyword ASC";
         $result =& $dbconn->Execute($query);
         if (!$result) return;
 
@@ -82,9 +82,9 @@ function keywords_userapi_getlist($args)
     }
 
     // Get distinct keywords from the database
-    $query = "SELECT DISTINCT xar_keyword
+    $query = "SELECT DISTINCT keyword
               FROM $keywordstable  $where
-              ORDER BY xar_keyword ASC";
+              ORDER BY keyword ASC";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 

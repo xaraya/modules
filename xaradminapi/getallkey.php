@@ -35,12 +35,12 @@ function keywords_adminapi_getallkey($args)
     $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords_restr'];
     // Get restricted keywords for this module item
-    $query = "SELECT xar_id,
-                     xar_keyword
+    $query = "SELECT id,
+                     keyword
               FROM $keywordstable
-              WHERE xar_moduleid = ?
-              OR xar_moduleid = '0'
-              ORDER BY xar_keyword ASC";
+              WHERE module_id = ?
+              OR module_id = '0'
+              ORDER BY keyword ASC";
     $result =& $dbconn->Execute($query,array($moduleid));
     if (!$result) return;
 

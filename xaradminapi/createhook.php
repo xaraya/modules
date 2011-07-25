@@ -150,11 +150,11 @@ function keywords_adminapi_createhook($args)
         // Get a new keywords ID
         $nextId = $dbconn->GenId($keywordstable);
         // Create new keyword
-        $query = "INSERT INTO $keywordstable (xar_id,
-                                           xar_keyword,
-                                           xar_moduleid,
-                                           xar_itemtype,
-                                           xar_itemid)
+        $query = "INSERT INTO $keywordstable (id,
+                                           keyword,
+                                           moduleid,
+                                           itemtype,
+                                           itemid)
                                     VALUES (?,
                                             ?,
                                             ?,
@@ -168,7 +168,7 @@ function keywords_adminapi_createhook($args)
             return $extrainfo;
         }
 
-        //$keywordsid = $dbconn->PO_Insert_ID($keywordstable, 'xar_id');
+        //$keywordsid = $dbconn->PO_Insert_ID($keywordstable, 'id');
     }
     $extrainfo['keywords'] = join(' ',$cleanwords);
     return $extrainfo;

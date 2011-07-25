@@ -80,9 +80,9 @@ function keywords_adminapi_deletehook($args)
     $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords'];
     $query = "DELETE FROM $keywordstable
-              WHERE xar_moduleid = ?
-                AND xar_itemtype = ?
-                AND xar_itemid   = ?";
+              WHERE module_id = ?
+                AND itemtype = ?
+                AND itemid   = ?";
 
     $result =& $dbconn->Execute($query,array($modid, $itemtype, $itemid));
     if (!$result) {

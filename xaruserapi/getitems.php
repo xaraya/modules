@@ -49,41 +49,41 @@ function keywords_userapi_getitems($args)
     $bindvars = array();
 
     // Get module item for this id
-    $query = "SELECT xar_id,
-                     xar_itemid,
-                     xar_keyword,
-                     xar_moduleid,
-                     xar_itemtype
+    $query = "SELECT id,
+                     itemid,
+                     keyword,
+                     moduleid,
+                     itemtype
               FROM $keywordstable";
     if (!empty($id)) {
         if (is_array($id)) {
-            $query .= " WHERE xar_id IN (" . join(', ', $id) . ")";
+            $query .= " WHERE id IN (" . join(', ', $id) . ")";
         } else {
-            $query .= " WHERE xar_id = ?";
+            $query .= " WHERE id = ?";
             $bindvars[] = $id;
         }
     } else {
-        $query .= " WHERE xar_keyword = ?";
+        $query .= " WHERE keyword = ?";
         $bindvars[] = $keyword;
     }
     if (!empty($itemid) && is_numeric($itemid) ) {
-        $query .= " AND xar_itemid = ?";
+        $query .= " AND itemid = ?";
         $bindvars[] = $itemid;
     }
     if (!empty($itemtype)) {
         if (is_array($itemtype)) {
-            $query .= ' AND xar_itemtype IN (?' . str_repeat(',?', count($itemtype)-1) . ')';
+            $query .= ' AND itemtype IN (?' . str_repeat(',?', count($itemtype)-1) . ')';
             $bindvars = array_merge($bindvars, $itemtype);
         } else {
-            $query .= ' AND xar_itemtype = ?';
+            $query .= ' AND itemtype = ?';
             $bindvars[] = (int)$itemtype;
         }
     }
     if (!empty($modid) && is_numeric($modid) ) {
-        $query .= " AND xar_moduleid = ?";
+        $query .= " AND module_id = ?";
         $bindvars[] = $modid;
     }
-    $query .= " ORDER BY xar_moduleid ASC, xar_itemtype ASC, xar_itemid DESC";
+    $query .= " ORDER BY module_id ASC, itemtype ASC, itemid DESC";
 
     if (isset($numitems) && is_numeric($numitems)) {
         if (empty($startnum)) {

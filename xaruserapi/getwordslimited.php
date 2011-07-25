@@ -45,15 +45,15 @@ function keywords_userapi_getwordslimited($args)
 
     $useitemtype = xarModVars::get('keywords','useitemtype');
 
-    $query = "SELECT xar_id,
-                     xar_keyword
+    $query = "SELECT id,
+                     keyword
              FROM $keywordstable ";
     if (!empty($useitemtype) && isset($itemtype)) {
-          $query .= " WHERE xar_moduleid = '0' OR ( xar_moduleid= ? AND  xar_itemtype = ? ) ORDER BY xar_keyword ASC";
+          $query .= " WHERE module_id = '0' OR ( module_id= ? AND  itemtype = ? ) ORDER BY keyword ASC";
           $bindvars[] = $moduleid;
           $bindvars[] = $itemtype;
        } else {
-          $query .= " WHERE xar_moduleid = '0' OR  xar_moduleid= ? ORDER BY xar_keyword ASC";
+          $query .= " WHERE module_id = '0' OR  module_id= ? ORDER BY keyword ASC";
           $bindvars[] = $moduleid;
     }
 

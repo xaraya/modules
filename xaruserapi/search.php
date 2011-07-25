@@ -33,14 +33,14 @@ function keywords_userapi_search($args)
     $keywordstable = $xartable['keywords'];
 
     // Get item
-    $query = "SELECT DISTINCT xar_id,
-                   xar_keyword,
-                   xar_moduleid,
-                   xar_itemtype,
-                   xar_itemid
+    $query = "SELECT DISTINCT id,
+                   keyword,
+                   moduleid,
+                   itemtype,
+                   itemid
                    FROM $keywordstable
-                   WHERE xar_keyword LIKE '%$q%'
-                   GROUP BY xar_keyword";
+                   WHERE keyword LIKE '%$q%'
+                   GROUP BY keyword";
 
     $result =& $dbconn->Execute($query);
         if (!$result) return;

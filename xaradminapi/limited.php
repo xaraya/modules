@@ -51,10 +51,10 @@ function keywords_adminapi_limited($args)
     $keywordstable = $xartable['keywords_restr'];
     $nextId = $dbconn->GenId($keywordstable);
     $query = "INSERT INTO $keywordstable (
-              xar_id,
-              xar_keyword,
-              xar_moduleid,
-              xar_itemtype)
+              id,
+              keyword,
+              moduleid,
+              itemtype)
               VALUES (
               ?,
               ?,
