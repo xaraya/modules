@@ -22,6 +22,10 @@
 
 function keywords_init()
 {
+# --------------------------------------------------------
+#
+# Table structure for tables
+#
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
 
@@ -29,24 +33,24 @@ function keywords_init()
     $restrkeywordstable = $xartable['keywords_restr'];
 
     $query = xarDBCreateTable($xartable['keywords'],
-                             array('xar_id'         => array('type'        => 'integer',
+                             array('id'         => array('type'        => 'integer',
                                                             'null'       => false,
                                                             'increment'  => true,
                                                             'primary_key' => true),
-                                   'xar_keyword'    => array('type'        => 'varchar',
+                                   'keyword'    => array('type'        => 'varchar',
                                                             'size'        => 254,
                                                             'null'        => false,
                                                             'default'     => ''),
 // TODO: replace with unique id
-                                   'xar_moduleid'   => array('type'        => 'integer',
+                                   'module_id'  => array('type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
                                                             'default'     => '0'),
-                                   'xar_itemtype'   => array('type'        => 'integer',
+                                   'itemtype'   => array('type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
                                                             'default'     => '0'),
-                                   'xar_itemid'     => array('type'        => 'integer',
+                                   'itemid'     => array('type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
                                                             'default'     => '0'),
@@ -61,7 +65,7 @@ function keywords_init()
     // allow several entries for the same keyword here
     $index = array(
         'name'      => 'i_' . xarDB::getPrefix() . '_keywords_key',
-        'fields'    => array('xar_keyword'),
+        'fields'    => array('keyword'),
         'unique'    => false
     );
     $query = xarDBCreateIndex($keywordstable,$index);
@@ -71,7 +75,7 @@ function keywords_init()
     // allow several keywords for the same module item
     $index = array(
         'name'      => 'i_' . xarDB::getPrefix() . '_keywords_combo',
-        'fields'    => array('xar_moduleid','xar_itemtype','xar_itemid'),
+        'fields'    => array('module_id','itemtype','itemid'),
         'unique'    => false
     );
     $query = xarDBCreateIndex($keywordstable,$index);
@@ -79,20 +83,20 @@ function keywords_init()
     if (!$result) return;
 
     $query = xarDBCreateTable($xartable['keywords_restr'],
-                             array('xar_id'         => array('type'        => 'integer',
+                             array('id'         => array('type'        => 'integer',
                                                             'null'       => false,
                                                             'increment'  => true,
                                                             'primary_key' => true),
-                                   'xar_keyword'    => array('type'        => 'varchar',
+                                   'keyword'    => array('type'        => 'varchar',
                                                             'size'        => 254,
                                                             'null'        => false,
                                                             'default'     => ''),
 // TODO: replace with unique id
-                                   'xar_moduleid'   => array('type'        => 'integer',
+                                   'module_id'  => array('type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
                                                             'default'     => '0'),
-                                  'xar_itemtype'   => array('type'        => 'integer',
+                                  'itemtype'   => array('type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
                                                             'default'     => '0')
@@ -107,7 +111,7 @@ function keywords_init()
      // avoid duplicate keywords for the same module item
     $index = array(
         'name'      => 'i_' . xarDB::getPrefix() . '_keywords',
-        'fields'    => array('xar_keyword','xar_moduleid'),
+        'fields'    => array('keyword','module_id'),
         'unique'    => false
     );
     $query = xarDBCreateIndex($restrkeywordstable,$index);
@@ -176,18 +180,26 @@ function keywords_init()
                     );
     xarDefineInstance('keywords', 'Item', $instances);
 
+# --------------------------------------------------------
+#
+# Register masks
+#
 // TODO: tweak this - allow viewing keywords of "your own items" someday ?
 // MichelV: Why not have an add privilege in here? Admin to add keywords seems way overdone
     xarRegisterMask('ReadKeywords', 'All', 'keywords', 'Item', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('AddKeywords', 'All', 'keywords', 'Item', 'All:All:All', 'ACCESS_COMMENT');
     xarRegisterMask('AdminKeywords', 'All', 'keywords', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
-    // create the dynamic object that will represent our items
-//    $objectid = xarModAPIFunc('dynamicdata','util','import',
-//                              array('file' => 'modules/keywords/keywords.xml'));
-//    if (empty($objectid)) return;
-    // save the object id for later
-//    xarModVars::set('keywords','objectid',$objectid);
+# --------------------------------------------------------
+#
+# Create DD objects
+#
+    $module = 'keywords';
+    $objects = array(
+                   'keywords',
+                     );
+
+    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
     // Initialisation successful
     return true;
@@ -215,15 +227,15 @@ function keywords_upgrade($oldversion)
                 $xartable =& xarDB::getTables();
                 xarDBLoadTableMaintenanceAPI();
                 $query = xarDBCreateTable($xartable['keywords_restr'],
-                             array('xar_id'         => array('type'        => 'integer',
+                             array('id'         => array('type'        => 'integer',
                                                             'null'       => false,
                                                             'increment'  => true,
                                                             'primary_key' => true),
-                                   'xar_keyword'    => array('type'        => 'varchar',
+                                   'keyword'    => array('type'        => 'varchar',
                                                             'size'        => 254,
                                                             'null'        => false,
                                                             'default'     => ''),
-                                   'xar_moduleid'   => array('type'        => 'integer',
+                                   'module_id'   => array('type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
                                                             'default'     => '0')
@@ -246,10 +258,10 @@ function keywords_upgrade($oldversion)
             $dbconn =& xarDB::getConn();
             $xartable =& xarDB::getTables();
 
-            // Add column 'xar_itemtype' to table
+            // Add column 'itemtype' to table
              $query = xarDBAlterTable($xartable['keywords_restr'],
                                      array('command' => 'add',
-                                           'field' => 'xar_itemtype',
+                                           'field' => 'itemtype',
                                            'type' => 'integer',
                                            'null' => false,
                                            'default' => '0'));
@@ -290,31 +302,7 @@ function keywords_upgrade($oldversion)
  */
 function keywords_delete()
 {
-    // delete the dynamic object and its properties
-    $objectid = xarModVars::get('keywords','objectid');
-    if (!empty($objectid)) {
-        xarModAPIFunc('dynamicdata','admin','deleteobject',
-                      array('objectid' => $objectid));
-        xarModDelVar('keywords','objectid');
-    }
-
-    $dbconn =& xarDB::getConn();
-    $xartable =& xarDB::getTables();
-
-    xarDBLoadTableMaintenanceAPI();
-
-    // Generate the SQL to drop the table using the API
-    $query = xarDBDropTable($xartable['keywords']);
-    if (empty($query)) return; // throw back
-
-    // Drop the table and send exception if returns false.
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-
-    $query = xarDBDropTable($xartable['keywords_restr']);
-    if (empty($query)) return; // throw back
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
+    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'keywords'));
 
     // Remove module hooks
     if (!xarModUnregisterHook('item', 'new', 'GUI',
