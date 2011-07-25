@@ -8,7 +8,7 @@
   <xar:set name="totitems">count($items)</xar:set>
   <xar:if condition="empty($status)">
     <xar:comment>Nav Tabs moved to the includes folder</xar:comment>
-    <xar:if condition="xarModGetVar('keywords', 'showsort')">
+    <xar:if condition="xarModVars::get('keywords', 'showsort')">
       <xar:template file="navtabs" type="module" />
     </xar:if>
     <xar:if condition="empty($items)">

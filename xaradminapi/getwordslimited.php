@@ -29,8 +29,8 @@ function keywords_adminapi_getwordslimited($args)
         return;
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords_restr'];
     $bindvars = array();
 
@@ -64,7 +64,7 @@ function keywords_adminapi_getwordslimited($args)
     }
     $result->Close();
 
-    $delimiters = xarModGetVar('keywords','delimiters');
+    $delimiters = xarModVars::get('keywords','delimiters');
     $delimiter = substr($delimiters,0,1)." ";
     $keywords = implode($delimiter, $keywords);
 

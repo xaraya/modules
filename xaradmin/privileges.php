@@ -83,7 +83,7 @@ function keywords_admin_privileges($args)
         }
 
         // redirect to the privilege
-        xarResponseRedirect(xarModURL('privileges', 'admin', 'modifyprivilege',
+        xarController::redirect(xarModURL('privileges', 'admin', 'modifyprivilege',
                                       array('pid' => $pid)));
         return true;
     }

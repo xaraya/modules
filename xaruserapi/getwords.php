@@ -40,8 +40,8 @@ function keywords_userapi_getwords($args)
         return;
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords'];
     $bindvars = array();
     $bindvars[] = $modid;

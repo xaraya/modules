@@ -51,8 +51,8 @@ function keywords_adminapi_removehook($args)
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $keywords = $xartable['keywords'];
 

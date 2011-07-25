@@ -39,7 +39,7 @@ function keywords_admin_new($args)
             if (empty($itemid)) return; // throw back
 
             // let's go back to the admin view
-            xarResponseRedirect(xarModURL('keywords', 'admin', 'view'));
+            xarController::redirect(xarModURL('keywords', 'admin', 'view'));
             return true;
         }
     }

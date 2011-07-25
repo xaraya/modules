@@ -81,7 +81,7 @@ function keywords_admin_newhook($args)
     if (!xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:All")) return '';
 
     //retrieve the list of allowed delimiters
-    $delimiters = xarModGetVar('keywords','delimiters');
+    $delimiters = xarModVars::get('keywords','delimiters');
 
     //retrieve the list of allowed delimiters.  use the first one as the default.
     $delimiter = substr($delimiters,0,1);
@@ -106,15 +106,15 @@ function keywords_admin_newhook($args)
    // $wordlist = array();
 
 /* TODO: restrict to predefined keyword list
-    $restricted = xarModGetVar('keywords','restricted');
+    $restricted = xarModVars::get('keywords','restricted');
     if (!empty($restricted)) {
         if (!empty($itemtype)) {
-            $getlist = xarModGetVar('keywords',$modname.'.'.$itemtype);
+            $getlist = xarModVars::get('keywords',$modname.'.'.$itemtype);
         } else {
-            $getlist = xarModGetVar('keywords',$modname);
+            $getlist = xarModVars::get('keywords',$modname);
         }
         if (!isset($getlist)) {
-            $getlist = xarModGetVar('keywords','default');
+            $getlist = xarModVars::get('keywords','default');
         }
         if (!empty($getlist)) {
             $wordlist = split(',',$getlist);
@@ -133,7 +133,7 @@ function keywords_admin_newhook($args)
     }
 */
 
-    $restricted = xarModGetVar('keywords','restricted');
+    $restricted = xarModVars::get('keywords','restricted');
 
      if ($restricted == '1') {
       $keywords = xarModAPIFunc('keywords',

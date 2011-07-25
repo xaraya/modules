@@ -46,8 +46,8 @@ function keywords_adminapi_limited($args)
     foreach ($key as $keyres) {
     $keyres = trim($keyres);
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords_restr'];
     $nextId = $dbconn->GenId($keywordstable);
     $query = "INSERT INTO $keywordstable (

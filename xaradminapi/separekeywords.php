@@ -22,7 +22,7 @@ function keywords_adminapi_separekeywords($args)
     //if (!xarSecurityCheck('AdminKeywords')) return;
     if (!xarSecurityCheck('AddKeywords')) return;
 
-    $delimiters = xarModGetVar('keywords', 'delimiters');
+    $delimiters = xarModVars::get('keywords', 'delimiters');
 
     // Colons are the only character we can't use (ATM).
     // TODO: remove this then xarVarValidate() is able to handle escape

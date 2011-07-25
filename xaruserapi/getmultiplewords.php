@@ -38,8 +38,8 @@ function keywords_userapi_getmultiplewords($args)
         return;
     }
     $keywords = array();
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords'];
 
     foreach ($objectids as $item) {

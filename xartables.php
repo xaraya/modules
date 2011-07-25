@@ -27,11 +27,11 @@ function keywords_xartables()
     // Get the name for the keywords item table.  This is not necessary
     // but helps in the following statements and keeps them readable
 
-    $keywordsTable = xarDBGetSiteTablePrefix() . '_keywords';
+    $keywordsTable = xarDB::getPrefix() . '_keywords';
     // Set the table name
     $xarTables['keywords'] = $keywordsTable;
 
-    $keywordsTable_restr = xarDBGetSiteTablePrefix() . '_keywords_restr';
+    $keywordsTable_restr = xarDB::getPrefix() . '_keywords_restr';
     // Set the table name
     $xarTables['keywords_restr'] = $keywordsTable_restr;
 

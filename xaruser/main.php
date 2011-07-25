@@ -25,7 +25,7 @@ if (!xarSecurityCheck('ReadKeywords')) return;
     xarVarFetch('tab','int:0:5',$tab,'0', XARVAR_DONT_SET);
 
     //extract($args);
-    $displaycolumns= xarModGetVar('keywords','displaycolumns');
+    $displaycolumns= xarModVars::get('keywords','displaycolumns');
     if (!isset($displaycolumns) or (empty($displaycolumns))){
         $displaycolumns=1;
     }
@@ -156,7 +156,7 @@ if (!xarSecurityCheck('ReadKeywords')) return;
                                'itemid' => $item['itemid']));
     }
 
-    xarResponseRedirect($url);
+    xarController::redirect($url);
 
     return true;
 }

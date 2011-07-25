@@ -103,7 +103,7 @@ function keywords_adminapi_updatehook($args)
 
 /*
     // get the list of delimiters to work with
-    $delimiters = xarModGetVar('keywords','delimiters');
+    $delimiters = xarModVars::get('keywords','delimiters');
     $dellength = strlen($delimiters);
 
     // extract individual keywords from the input string (comma, semi-column or space separated)
@@ -137,16 +137,16 @@ function keywords_adminapi_updatehook($args)
     }
 
 /* TODO: restrict to predefined keyword list
-    $restricted = xarModGetVar('keywords','restricted');
+    $restricted = xarModVars::get('keywords','restricted');
     if (!empty($restricted)) {
         $wordlist = array();
         if (!empty($itemtype)) {
-            $getlist = xarModGetVar('keywords',$modname.'.'.$itemtype);
+            $getlist = xarModVars::get('keywords',$modname.'.'.$itemtype);
         } else {
-            $getlist = xarModGetVar('keywords',$modname);
+            $getlist = xarModVars::get('keywords',$modname);
         }
         if (!isset($getlist)) {
-            $getlist = xarModGetVar('keywords','default');
+            $getlist = xarModVars::get('keywords','default');
         }
         if (!empty($getlist)) {
             $wordlist = split(',',$getlist);
@@ -194,8 +194,8 @@ function keywords_adminapi_updatehook($args)
         $new = $cleanwords;
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords'];
 
     if (count($delete) > 0) {

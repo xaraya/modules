@@ -36,14 +36,14 @@ function keywords_userapi_getwordslimited($args)
     }
 
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords_restr'];
     $bindvars = array();
 
     // Get restricted keywords for this module item
 
-    $useitemtype = xarModGetVar('keywords','useitemtype');
+    $useitemtype = xarModVars::get('keywords','useitemtype');
 
     $query = "SELECT xar_id,
                      xar_keyword

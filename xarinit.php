@@ -17,15 +17,17 @@
  * module instance
  * @return bool true on success
  */
+
+    sys::import('xaraya.tableddl');
+
 function keywords_init()
 {
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     $keywordstable = $xartable['keywords'];
     $restrkeywordstable = $xartable['keywords_restr'];
 
-    xarDBLoadTableMaintenanceAPI();
     $query = xarDBCreateTable($xartable['keywords'],
                              array('xar_id'         => array('type'        => 'integer',
                                                             'null'       => false,
@@ -58,7 +60,7 @@ function keywords_init()
 
     // allow several entries for the same keyword here
     $index = array(
-        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_keywords_key',
+        'name'      => 'i_' . xarDB::getPrefix() . '_keywords_key',
         'fields'    => array('xar_keyword'),
         'unique'    => false
     );
@@ -68,7 +70,7 @@ function keywords_init()
 
     // allow several keywords for the same module item
     $index = array(
-        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_keywords_combo',
+        'name'      => 'i_' . xarDB::getPrefix() . '_keywords_combo',
         'fields'    => array('xar_moduleid','xar_itemtype','xar_itemid'),
         'unique'    => false
     );
@@ -104,7 +106,7 @@ function keywords_init()
 
      // avoid duplicate keywords for the same module item
     $index = array(
-        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_keywords',
+        'name'      => 'i_' . xarDB::getPrefix() . '_keywords',
         'fields'    => array('xar_keyword','xar_moduleid'),
         'unique'    => false
     );
@@ -112,12 +114,12 @@ function keywords_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    xarModSetVar('keywords', 'SupportShortURLs', 1);
-    xarModSetVar('keywords', 'displaycolumns', 2);
-    xarModSetVar('keywords', 'delimiters', ';,');
-    xarModSetVar('keywords', 'restricted', 0);
-    xarModSetVar('keywords', 'useitemtype', 0);
-    xarModSetVar('keywords', 'default', 'xaraya');
+    xarModVars::set('keywords', 'SupportShortURLs', 1);
+    xarModVars::set('keywords', 'displaycolumns', 2);
+    xarModVars::set('keywords', 'delimiters', ';,');
+    xarModVars::set('keywords', 'restricted', 0);
+    xarModVars::set('keywords', 'useitemtype', 0);
+    xarModVars::set('keywords', 'default', 'xaraya');
 
     if (!xarModRegisterHook('item', 'new', 'GUI',
                            'keywords', 'admin', 'newhook')) {
@@ -152,7 +154,7 @@ function keywords_init()
                            'keywords', 'user', 'search')) {
         return;
     }
-
+/*
     // Register blocks
     if (!xarModAPIFunc('blocks',
                        'admin',
@@ -164,7 +166,7 @@ function keywords_init()
                        'register_block_type',
                        array('modName'  => 'keywords',
                              'blockType'=> 'keywordscategories'))) return;
-
+*/
     // Defined Instances are: moduleid, itemtyp and itemid
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
@@ -181,11 +183,11 @@ function keywords_init()
     xarRegisterMask('AdminKeywords', 'All', 'keywords', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
     // create the dynamic object that will represent our items
-    $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => 'modules/keywords/keywords.xml'));
-    if (empty($objectid)) return;
+//    $objectid = xarModAPIFunc('dynamicdata','util','import',
+//                              array('file' => 'modules/keywords/keywords.xml'));
+//    if (empty($objectid)) return;
     // save the object id for later
-    xarModSetVar('keywords','objectid',$objectid);
+//    xarModVars::set('keywords','objectid',$objectid);
 
     // Initialisation successful
     return true;
@@ -206,11 +208,11 @@ function keywords_upgrade($oldversion)
         case '1.0':
         case '1.0.0':
 
-                xarModSetVar('keywords', 'restricted', 0);
-                xarModSetVar('keywords', 'default', 'xaraya');
+                xarModVars::set('keywords', 'restricted', 0);
+                xarModVars::set('keywords', 'default', 'xaraya');
 
-                $dbconn =& xarDBGetConn();
-                $xartable =& xarDBGetTables();
+                $dbconn =& xarDB::getConn();
+                $xartable =& xarDB::getTables();
                 xarDBLoadTableMaintenanceAPI();
                 $query = xarDBCreateTable($xartable['keywords_restr'],
                              array('xar_id'         => array('type'        => 'integer',
@@ -241,8 +243,8 @@ function keywords_upgrade($oldversion)
         case '1.0.2':
             //Alter table restr to add itemtype
             // Get database information
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn =& xarDB::getConn();
+            $xartable =& xarDB::getTables();
 
             // Add column 'xar_itemtype' to table
              $query = xarDBAlterTable($xartable['keywords_restr'],
@@ -267,7 +269,7 @@ function keywords_upgrade($oldversion)
                             'blockType'=> 'keywordscategories'))) return;
 
         case '1.0.3':
-            xarModSetVar('keywords', 'useitemtype', 0);
+            xarModVars::set('keywords', 'useitemtype', 0);
         
         case '1.0.4':
             xarRegisterMask('AddKeywords', 'All', 'keywords', 'Item', 'All:All:All', 'ACCESS_COMMENT');
@@ -289,15 +291,15 @@ function keywords_upgrade($oldversion)
 function keywords_delete()
 {
     // delete the dynamic object and its properties
-    $objectid = xarModGetVar('keywords','objectid');
+    $objectid = xarModVars::get('keywords','objectid');
     if (!empty($objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',
                       array('objectid' => $objectid));
         xarModDelVar('keywords','objectid');
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     xarDBLoadTableMaintenanceAPI();
 

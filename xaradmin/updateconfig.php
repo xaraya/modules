@@ -32,8 +32,8 @@ function keywords_admin_updateconfig()
     xarVarFetch('displaycolumns','isset',$displaycolumns,'', XARVAR_DONT_SET);
     xarVarFetch('delimiters','isset',$delimiters,'', XARVAR_DONT_SET);
 
-    xarModSetVar('keywords','restricted',$restricted);
-    xarModSetVar('keywords','useitemtype',$useitemtype);
+    xarModVars::set('keywords','restricted',$restricted);
+    xarModVars::set('keywords','useitemtype',$useitemtype);
 
     if (isset($keywords) && is_array($keywords)) {
         xarModAPIFunc('keywords',
@@ -63,24 +63,24 @@ function keywords_admin_updateconfig()
         }
     }
     if (empty($isalias)) {
-        xarModSetVar('keywords','SupportShortURLs',0);
+        xarModVars::set('keywords','SupportShortURLs',0);
     } else {
-        xarModSetVar('keywords','SupportShortURLs',1);
+        xarModVars::set('keywords','SupportShortURLs',1);
     }
     if (empty($showsort)) {
-        xarModSetVar('keywords','showsort',0);
+        xarModVars::set('keywords','showsort',0);
     } else {
-        xarModSetVar('keywords','showsort',1);
+        xarModVars::set('keywords','showsort',1);
     }
     if (empty($displaycolumns)) {
-        xarModSetVar('keywords','displaycolumns',2);
+        xarModVars::set('keywords','displaycolumns',2);
     } else {
-        xarModSetVar('keywords','displaycolumns',$displaycolumns);
+        xarModVars::set('keywords','displaycolumns',$displaycolumns);
     }
     if (isset($delimiters)) {
-        xarModSetVar('keywords','delimiters',trim($delimiters));
+        xarModVars::set('keywords','delimiters',trim($delimiters));
     }
-    xarResponseRedirect(xarModURL('keywords', 'admin', 'modifyconfig'));
+    xarController::redirect(xarModURL('keywords', 'admin', 'modifyconfig'));
     return true;
 }
 ?>

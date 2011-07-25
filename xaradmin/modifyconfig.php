@@ -36,13 +36,13 @@ function keywords_admin_modifyconfig()
     if (isset($restricted)) {
         $data['restricted'] = $restricted;
     } else {
-        $data['restricted'] = xarModGetVar('keywords','restricted');
+        $data['restricted'] = xarModVars::get('keywords','restricted');
     }
 
     if (isset($useitemtype)) {
         $data['useitemtype'] = $useitemtype;
     } else {
-        $data['useitemtype'] = xarModGetVar('keywords','useitemtype');
+        $data['useitemtype'] = xarModVars::get('keywords','useitemtype');
     }
 
     $data['settings'] = array();
@@ -52,7 +52,7 @@ function keywords_admin_modifyconfig()
                               array('moduleid' => '0'));
 
 
-    // $keywords = xarModGetVar('keywords','default');
+    // $keywords = xarModVars::get('keywords','default');
     if ($data['useitemtype']== 0) {
     $data['settings']['default'] = array('label' => xarML('Default configuration'),
                                          'keywords' => $keywords);
@@ -106,10 +106,10 @@ function keywords_admin_modifyconfig()
         }
     }
 
-    $data['isalias'] = xarModGetVar('keywords','SupportShortURLs');
-    $data['showsort'] = xarModGetVar('keywords','showsort');
-    $data['displaycolumns'] = xarModGetVar('keywords','displaycolumns');
-    $data['delimiters'] = xarModGetVar('keywords','delimiters');
+    $data['isalias'] = xarModVars::get('keywords','SupportShortURLs');
+    $data['showsort'] = xarModVars::get('keywords','showsort');
+    $data['displaycolumns'] = xarModVars::get('keywords','displaycolumns');
+    $data['delimiters'] = xarModVars::get('keywords','delimiters');
     $data['authid'] = xarSecGenAuthKey();
     return $data;
 }

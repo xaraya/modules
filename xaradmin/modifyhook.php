@@ -72,7 +72,7 @@ function keywords_admin_modifyhook($args)
     if (!xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:$itemid")) return '';
 
     // Retrieve the list of allowed delimiters.  Use the first one as the default.
-    $delimiters = xarModGetVar('keywords','delimiters');
+    $delimiters = xarModVars::get('keywords','delimiters');
     $delimiter = substr($delimiters,0,1);
 
     // Provide a $delimiter separated string of keywords for the form
@@ -99,7 +99,7 @@ function keywords_admin_modifyhook($args)
         $keywords = '';
     }
 
-    $restricted = xarModGetVar('keywords','restricted');
+    $restricted = xarModVars::get('keywords','restricted');
     if ($restricted == '0') {
         // $keywords is delivered as string
         $wordlist = array();
