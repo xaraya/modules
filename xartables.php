@@ -1,14 +1,15 @@
 <?php
 /**
- * File: $Id
+ * Mime Module
  *
- * MIME table definitions function
- *
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.com
- * @subpackage mime
- * @author Carl P. Corliss <carl.corliss.com>
+ * @package modules
+ * @subpackage mime module
+ * @category Third Party Xaraya Module
+ * @version 1.1.0
+ * @copyright see the html/credits.html file in this Xaraya release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com/index.php/release/eid/999
+ * @author Carl Corliss <rabbitt@xaraya.com>
  */
 
 /**
