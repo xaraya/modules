@@ -1,52 +1,55 @@
 <object name="mime_subtypes">
-  <objectid>18</objectid>
+  <objectid>929</objectid>
   <label>Mime Subtypes</label>
   <module_id>182</module_id>
-  <itemtype>13</itemtype>
+  <itemtype>289</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
-  <maxid>0</maxid>
-  <access></access>
-  <config>a:0:{}</config>
+  <maxid>215</maxid>
   <isalias>true</isalias>
+  <datastore>relational</datastore>
+  <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>
+  <sources>a:1:{s:8:&quot;subtypes&quot;;a:2:{i:0;s:16:&quot;xar_mime_subtype&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:0:{}</relations>
+  <objects>a:0:{}</objects>
   <properties>
     <property name="id">
-      <id>124</id>
+      <id>12477</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
-      <source>xar_mime_subtype.id</source>
+      <source>subtypes.id</source>
       <status>65</status>
       <seq>1</seq>
       <configuration></configuration>
     </property>
     <property name="name">
-      <id>125</id>
+      <id>12478</id>
       <label>Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>xar_mime_subtype.name</source>
+      <source>subtypes.name</source>
       <status>33</status>
       <seq>2</seq>
       <configuration></configuration>
     </property>
     <property name="type">
-      <id>126</id>
+      <id>12479</id>
       <label>Type</label>
       <type>objectref</type>
       <defaultvalue></defaultvalue>
-      <source>xar_mime_subtype.type_id</source>
+      <source>subtypes.type_id</source>
       <status>33</status>
       <seq>3</seq>
       <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:10:"mime_types";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";}</configuration>
     </property>
     <property name="description">
-      <id>127</id>
+      <id>12480</id>
       <label>Description</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
-      <source>xar_mime_subtype.description</source>
+      <source>subtypes.description</source>
       <status>34</status>
       <seq>4</seq>
       <configuration></configuration>

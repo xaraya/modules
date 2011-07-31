@@ -1,32 +1,35 @@
 <object name="mime_types">
-  <objectid>17</objectid>
+  <objectid>928</objectid>
   <label>Mime Types</label>
   <module_id>182</module_id>
-  <itemtype>12</itemtype>
+  <itemtype>288</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
-  <maxid>0</maxid>
-  <access></access>
-  <config>a:0:{}</config>
+  <maxid>11</maxid>
   <isalias>true</isalias>
+  <datastore>relational</datastore>
+  <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>
+  <sources>a:1:{s:5:&quot;types&quot;;a:2:{i:0;s:13:&quot;xar_mime_type&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:0:{}</relations>
+  <objects>a:0:{}</objects>
   <properties>
     <property name="id">
-      <id>122</id>
+      <id>12475</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
-      <source>xar_mime_type.id</source>
+      <source>types.id</source>
       <status>65</status>
       <seq>1</seq>
       <configuration></configuration>
     </property>
     <property name="name">
-      <id>123</id>
+      <id>12476</id>
       <label>Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>xar_mime_type.name</source>
+      <source>types.name</source>
       <status>33</status>
       <seq>2</seq>
       <configuration></configuration>

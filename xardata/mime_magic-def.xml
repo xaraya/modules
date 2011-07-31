@@ -1,62 +1,65 @@
 <object name="mime_magic">
-  <objectid>19</objectid>
+  <objectid>930</objectid>
   <label>Mime Magic</label>
   <module_id>182</module_id>
-  <itemtype>14</itemtype>
+  <itemtype>290</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
-  <maxid>0</maxid>
-  <access></access>
-  <config>a:0:{}</config>
+  <maxid>392</maxid>
   <isalias>true</isalias>
+  <datastore>relational</datastore>
+  <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>
+  <sources>a:1:{s:5:&quot;magic&quot;;a:2:{i:0;s:14:&quot;xar_mime_magic&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:0:{}</relations>
+  <objects>a:0:{}</objects>
   <properties>
     <property name="id">
-      <id>128</id>
+      <id>12481</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
-      <source>xar_mime_magic.id</source>
+      <source>magic.id</source>
       <status>65</status>
       <seq>1</seq>
       <configuration></configuration>
     </property>
     <property name="suntype">
-      <id>129</id>
+      <id>12482</id>
       <label>Suntype</label>
       <type>objectref</type>
       <defaultvalue></defaultvalue>
-      <source>xar_mime_magic.subtype_id</source>
+      <source>magic.subtype_id</source>
       <status>33</status>
       <seq>2</seq>
       <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:13:"mime_subtypes";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";}</configuration>
     </property>
     <property name="value">
-      <id>130</id>
+      <id>12483</id>
       <label>Value</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>xar_mime_magic.value</source>
+      <source>magic.value</source>
       <status>33</status>
       <seq>3</seq>
       <configuration></configuration>
     </property>
     <property name="length">
-      <id>131</id>
+      <id>12484</id>
       <label>Length</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
-      <source>xar_mime_magic.length</source>
+      <source>magic.length</source>
       <status>33</status>
       <seq>4</seq>
       <configuration></configuration>
     </property>
     <property name="offset">
-      <id>132</id>
+      <id>12485</id>
       <label>Offset</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
-      <source>xar_mime_magic.offset</source>
+      <source>magic.offset</source>
       <status>33</status>
       <seq>5</seq>
       <configuration></configuration>
