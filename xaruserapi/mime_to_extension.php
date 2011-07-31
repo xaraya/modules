@@ -45,14 +45,14 @@ function mime_userapi_mime_to_extension( $args )
     $q->addtable($xartable['mime_type'], 'mt');
     $q->addtable($xartable['mime_subtype'], 'mst');
     $q->addtable($xartable['mime_extension'], 'me');
-    $q->join('mt.xar_mime_type_id','mst.xar_mime_type_id');
-    $q->join('mst.xar_mime_subtype_id','me.xar_mime_subtype_id');
-    $q->eq('mt.xar_mime_type_name',$typeparts[0]);
-    $q->eq('mst.xar_mime_subtype_name',$typeparts[1]);
+    $q->join('mt.id','mst.type_id');
+    $q->join('mst.id','me.subtype_id');
+    $q->eq('mt.name',$typeparts[0]);
+    $q->eq('mst.name',$typeparts[1]);
     
-    $q->addfield('xar_mime_type_name AS type_name');
-    $q->addfield('xar_mime_subtype_name AS subtype_name');
-    $q->addfield('xar_mime_extension_name AS extension');
+    $q->addfield('mt.name AS type_name');
+    $q->addfield('mst.name AS subtype_name');
+    $q->addfield('me.name AS extension');
     if (!$q->run()) return;
 
     return $q->output();

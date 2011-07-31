@@ -39,16 +39,16 @@ function mime_userapi_get_type( $args )
     $where = ' WHERE ';
 
     if (isset($typeId)) {
-        $where .= ' xar_mime_type_id = ' . $typeId;
+        $where .= ' id = ' . $typeId;
     } else {
-        $where .= " xar_mime_type_name = '".strtolower($typeName)."'";
+        $where .= " name = '".strtolower($typeName)."'";
     }
 
     // table and column definitions
     $type_table =& $xartable['mime_type'];
 
-    $sql = "SELECT xar_mime_type_id,
-                   xar_mime_type_name
+    $sql = "SELECT id,
+                   name
               FROM $type_table
             $where";
 
@@ -60,8 +60,8 @@ function mime_userapi_get_type( $args )
 
     $row = $result->GetRowAssoc(false);
 
-    return array('typeId'   => $row['xar_mime_type_id'],
-                 'typeName' => $row['xar_mime_type_name']);
+    return array('typeId'   => $row['id'],
+                 'typeName' => $row['name']);
 }
 
 ?>

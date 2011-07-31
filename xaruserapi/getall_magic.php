@@ -28,7 +28,7 @@ function mime_userapi_getall_magic( $args )
 
     if (isset($subtypeId)) {
         if (is_int($subtypeId)) {
-            $where = " WHERE xar_mime_subtype_id = $subtypeId";
+            $where = " WHERE subtype_id = $subtypeId";
         } else {
             $msg = xarML('Supplied parameter [#(1)] for function [#(2)], is not an integer!',
                          'subtypeId','mime_userapi_getall_magic');
@@ -45,15 +45,15 @@ function mime_userapi_getall_magic( $args )
     // table and column definitions
     $magic_table =& $xartable['mime_magic'];
 
-    $sql = "SELECT xar_mime_subtype_id,
-                   xar_mime_magic_id,
-                   xar_mime_magic_value,
-                   xar_mime_magic_offset,
-                   xar_mime_magic_length
+    $sql = "SELECT subtype_id,
+                   id,
+                   value,
+                   offset,
+                   length
               FROM $magic_table
             $where
-          ORDER BY xar_mime_subtype_id,
-                   xar_mime_magic_offset";
+          ORDER BY subtype_id,
+                   offset";
 
     $result = $dbconn->Execute($sql);
 
@@ -64,11 +64,11 @@ function mime_userapi_getall_magic( $args )
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
 
-        $subtypeInfo[$row['xar_mime_magic_id']]['magicId']     = $row['xar_mime_magic_id'];
-        $subtypeInfo[$row['xar_mime_magic_id']]['subtypeId']   = $row['xar_mime_subtype_id'];
-        $subtypeInfo[$row['xar_mime_magic_id']]['magicValue']  = $row['xar_mime_magic_value'];
-        $subtypeInfo[$row['xar_mime_magic_id']]['magicOffset'] = $row['xar_mime_magic_offset'];
-        $subtypeInfo[$row['xar_mime_magic_id']]['magicLength'] = $row['xar_mime_magic_length'];
+        $subtypeInfo[$row['id']]['magicId']     = $row['id'];
+        $subtypeInfo[$row['id']]['subtypeId']   = $row['subtype_id'];
+        $subtypeInfo[$row['id']]['magicValue']  = $row['value'];
+        $subtypeInfo[$row['id']]['magicOffset'] = $row['offset'];
+        $subtypeInfo[$row['id']]['magicLength'] = $row['length'];
 
         $result->MoveNext();
     }

@@ -55,21 +55,21 @@ function mime_userapi_add_subtype( $args )
     $sql = "INSERT
               INTO $subtype_table
                  (
-                   xar_mime_type_id,
-                   xar_mime_subtype_id,
-                   xar_mime_subtype_name,
-                   xar_mime_subtype_desc
+                   id,
+                   name,
+                   type_id,
+                   description
                  )
             VALUES (?, ?, ?, ?)";
 
-    $bindvars = array((int)$typeId, $subtypeId, (string)$subtypeName, (string)$subtypeDesc);
+    $bindvars = array($subtypeId, (string)$subtypeName, (int)$typeId, (string)$subtypeDesc);
 
     $result = $dbconn->Execute($sql, $bindvars);
 
     if (!$result) {
         return FALSE;
     } else {
-        return $dbconn->PO_Insert_ID($subtype_table, 'xar_mime_subtype_id');
+        return $dbconn->PO_Insert_ID($subtype_table, 'id');
     }
 }
 

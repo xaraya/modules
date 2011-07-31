@@ -32,10 +32,10 @@ function mime_userapi_getall_types( /* VOID */ )
     // table and column definitions
     $type_table =& $xartable['mime_type'];
 
-    $sql = "SELECT xar_mime_type_id,
-                   xar_mime_type_name
+    $sql = "SELECT id,
+                   name
               FROM $type_table
-          ORDER BY xar_mime_type_name";
+          ORDER BY name";
 
     $result = $dbconn->Execute($sql);
 
@@ -51,8 +51,8 @@ function mime_userapi_getall_types( /* VOID */ )
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
 
-        $typeInfo[$row['xar_mime_type_id']]['typeId'] = $row['xar_mime_type_id'];
-        $typeInfo[$row['xar_mime_type_id']]['typeName'] = $row['xar_mime_type_name'];
+        $typeInfo[$row['id']]['typeId'] = $row['id'];
+        $typeInfo[$row['id']]['typeName'] = $row['name'];
 
         $result->MoveNext();
     }

@@ -49,9 +49,9 @@ function mime_userapi_add_extension( $args )
 
     $sql = "INSERT
               INTO $extension_table
-                 ( xar_mime_subtype_id,
-                   xar_mime_extension_id,
-                   xar_mime_extension_name
+                 ( subtype_id,
+                   id,
+                   name
                  )
             VALUES (?, ?, ?)";
     $bindvars = array((int) $subtypeId, $extensionId, (string) strtolower($extensionName));
@@ -61,7 +61,7 @@ function mime_userapi_add_extension( $args )
     if (!$result) {
         return FALSE;
     } else {
-        return $dbconn->PO_Insert_ID($extension_table, 'xar_mime_extension_id');
+        return $dbconn->PO_Insert_ID($extension_table, 'id');
     }
 }
 

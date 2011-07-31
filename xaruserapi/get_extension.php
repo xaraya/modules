@@ -39,17 +39,17 @@ function mime_userapi_get_extension( $args )
     $where = ' WHERE ';
 
     if (isset($extensionId)) {
-        $where .= ' xar_mime_extension_id = ' . $extensionId;
+        $where .= ' id = ' . $extensionId;
     } else {
-        $where .= " xar_mime_extension_name = '".strtolower($extensionName)."'";
+        $where .= " name = '".strtolower($extensionName)."'";
     }
 
     // table and column definitions
     $extension_table =& $xartable['mime_extension'];
 
-    $sql = "SELECT xar_mime_subtype_id,
-                   xar_mime_extension_id,
-                   xar_mime_extension_name
+    $sql = "SELECT subtype_id,
+                   id,
+                   name
               FROM $extension_table
             $where";
 
@@ -61,9 +61,9 @@ function mime_userapi_get_extension( $args )
 
     $row = $result->GetRowAssoc(false);
 
-    return array('subtypeId'     => $row['xar_mime_subtype_id'],
-                 'extensionId'   => $row['xar_mime_extension_id'],
-                 'extensionName' => $row['xar_mime_extension_name']);
+    return array('subtypeId'     => $row['subtype_id'],
+                 'extensionId'   => $row['id'],
+                 'extensionName' => $row['name']);
 }
 
 ?>

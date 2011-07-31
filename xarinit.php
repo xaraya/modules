@@ -28,29 +28,29 @@ function mime_init()
     $xartable = xarDB::getTables();
 
     $fields['mime_type'] = array(
-        'xar_mime_type_id'          => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-        'xar_mime_type_name'        => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
+        'id'          => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+        'name'        => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
     );
 
     $fields['mime_subtype'] = array(
-        'xar_mime_type_id'          => array('type'=>'integer',  'null'=>FALSE),
-        'xar_mime_subtype_id'       => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-        'xar_mime_subtype_name'     => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
-        'xar_mime_subtype_desc'     => array('type'=>'varchar',  'null'=>TRUE,  'size'=>255),
+        'id'            => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+        'name'          => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
+        'type_id'       => array('type'=>'integer',  'null'=>FALSE),
+        'description'   => array('type'=>'varchar',  'null'=>TRUE,  'size'=>255),
     );
 
     $fields['mime_extension'] = array(
-        'xar_mime_subtype_id'       => array('type'=>'integer',  'null'=>FALSE),
-        'xar_mime_extension_id'     => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-        'xar_mime_extension_name'   => array('type'=>'varchar',  'null'=>FALSE,  'size'=>10)
+        'id'            => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+        'subtype_id'    => array('type'=>'integer',  'null'=>FALSE),
+        'name'          => array('type'=>'varchar',  'null'=>FALSE,  'size'=>10)
     );
 
     $fields['mime_magic'] = array(
-        'xar_mime_subtype_id'       => array('type'=>'integer',  'null'=>FALSE),
-        'xar_mime_magic_id'         => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-        'xar_mime_magic_value'      => array('type'=>'varchar',  'null'=>FALSE, 'size'=>255),
-        'xar_mime_magic_length'     => array('type'=>'integer',  'null'=>FALSE),
-        'xar_mime_magic_offset'     => array('type'=>'integer',  'null'=>FALSE)
+        'id'         => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+        'subtype_id' => array('type'=>'integer',  'null'=>FALSE),
+        'value'      => array('type'=>'varchar',  'null'=>FALSE, 'size'=>255),
+        'length'     => array('type'=>'integer',  'null'=>FALSE),
+        'offset'     => array('type'=>'integer',  'null'=>FALSE)
     );
 
     // Create all the tables and, if there are errors
@@ -106,8 +106,18 @@ function mime_init()
     }
 
 
+    # --------------------------------------------------------
+    #
+    # Create DD objects
+    #
+        $module = 'mime';
+        $objects = array(
+                         );
+
+        if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+
     // Initialisation successful
-    return TRUE;
+    return true;
 }
 
 /**
@@ -140,7 +150,7 @@ function mime_upgrade($oldversion)
             // Upgrade from version 1.0.0 to 1.1.0
 
             // Add a description column to the mime_subtype table
-            $result = $datadict->changeTable($xartable['mime_subtype'], 'xar_mime_subtype_desc C(255) DEFAULT NULL');
+            $result = $datadict->changeTable($xartable['mime_subtype'], 'description C(255) DEFAULT NULL');
             if (!$result) {xarErrorHandled();}
     }
 

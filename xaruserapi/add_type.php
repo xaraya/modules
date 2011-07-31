@@ -43,8 +43,8 @@ function mime_userapi_add_type( $args )
     $sql = "INSERT
               INTO $type_table
                  (
-                   xar_mime_type_id,
-                   xar_mime_type_name
+                   id,
+                   name
                  )
             VALUES (?, ?)";
 
@@ -55,7 +55,7 @@ function mime_userapi_add_type( $args )
     if (!$result) {
         return FALSE;
     } else {
-        return $dbconn->PO_Insert_ID($type_table, 'xar_mime_type_id');
+        return $dbconn->PO_Insert_ID($type_table, 'id');
     }
 }
 

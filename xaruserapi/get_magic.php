@@ -39,19 +39,19 @@ function mime_userapi_get_magic( $args )
     $where = ' WHERE ';
 
     if (isset($magicId)) {
-        $where .= ' xar_mime_magic_id = ' . $magicId;
+        $where .= ' id = ' . $magicId;
     } else {
-        $where .= " xar_mime_magic_value = '".strtolower($magicValue)."'";
+        $where .= " value = '".strtolower($magicValue)."'";
     }
 
     // table and column definitions
     $magic_table =& $xartable['mime_magic'];
 
-    $sql = "SELECT xar_mime_subtype_id,
-                   xar_mime_magic_id,
-                   xar_mime_magic_value,
-                   xar_mime_magic_offset,
-                   xar_mime_magic_length
+    $sql = "SELECT subtype_id,
+                   id,
+                   value,
+                   offset,
+                   length
               FROM $magic_table
             $where";
 
@@ -63,11 +63,11 @@ function mime_userapi_get_magic( $args )
 
     $row = $result->GetRowAssoc(false);
 
-    return array('subtypeId'   => $row['xar_mime_subtype_id'],
-                 'magicId'     => $row['xar_mime_magic_id'],
-                 'magicValue'  => $row['xar_mime_magic_value'],
-                 'magicOffset' => $row['xar_mime_magic_offset'],
-                 'magicLength' => $row['xar_mime_magic_length']);
+    return array('subtypeId'   => $row['subtype_id'],
+                 'magicId'     => $row['id'],
+                 'magicValue'  => $row['value'],
+                 'magicOffset' => $row['offset'],
+                 'magicLength' => $row['length']);
 }
 
 ?>

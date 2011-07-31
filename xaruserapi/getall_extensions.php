@@ -28,7 +28,7 @@ function mime_userapi_getall_extensions( $args )
 
     if (isset($subtypeId)) {
         if (is_int($subtypeId)) {
-            $where = " WHERE xar_mime_subtype_id = $subtypeId";
+            $where = " WHERE subtype_id = $subtypeId";
         } else {
             $msg = xarML('Supplied parameter [#(1)] for function [#(2)], is not an integer!',
                          'subtypeId','mime_userapi_getall_extensions');
@@ -45,13 +45,13 @@ function mime_userapi_getall_extensions( $args )
     // table and column definitions
     $extension_table =& $xartable['mime_extension'];
 
-    $sql = "SELECT xar_mime_subtype_id,
-                   xar_mime_extension_id,
-                   xar_mime_extension_name
+    $sql = "SELECT subtype_id,
+                   id,
+                   name
               FROM $extension_table
             $where
-          ORDER BY xar_mime_subtype_id,
-                   xar_mime_extension_name";
+          ORDER BY subtype_id,
+                   name";
 
     $result = $dbconn->Execute($sql);
 
@@ -62,8 +62,8 @@ function mime_userapi_getall_extensions( $args )
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
 
-        $subtypeInfo[$row['xar_mime_extension_id']]['extensionId']   = $row['xar_mime_extension_id'];
-        $subtypeInfo[$row['xar_mime_extension_id']]['extensionName'] = $row['xar_mime_extension_name'];
+        $subtypeInfo[$row['id']]['extensionId']   = $row['id'];
+        $subtypeInfo[$row['id']]['extensionName'] = $row['name'];
 
         $result->MoveNext();
     }

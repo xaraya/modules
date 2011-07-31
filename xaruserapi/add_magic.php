@@ -61,22 +61,22 @@ function mime_userapi_add_magic( $args )
     $sql = "INSERT
               INTO $magic_table
                  (
-                   xar_mime_subtype_id,
-                   xar_mime_magic_id,
-                   xar_mime_magic_value,
-                   xar_mime_magic_offset,
-                   xar_mime_magic_length
+                   id,
+                   subtype_id,
+                   value,
+                   offset,
+                   length
                  )
             VALUES (?, ?, ?, ?, ?)";
 
-    $bindvars = array((int) $subtypeId, $magicId, (string) $magicValue, (int) $magicOffset, (int) $magicLength);
+    $bindvars = array((int) $magicId, $subtypeId, (string) $magicValue, (int) $magicOffset, (int) $magicLength);
 
     $result = $dbconn->Execute($sql, $bindvars);
 
     if (!$result) {
         return FALSE;
     } else {
-        return $dbconn->PO_Insert_ID($magic_table, 'xar_mime_magic_id');
+        return $dbconn->PO_Insert_ID($magic_table, 'id');
     }
 }
 

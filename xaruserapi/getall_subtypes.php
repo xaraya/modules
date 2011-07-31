@@ -43,22 +43,22 @@ function mime_userapi_getall_subtypes($args)
     }
 
     if (isset($typeId) && is_int($typeId)) {
-        $where[] = 'subtype_tab.xar_mime_type_id = ?';
+        $where[] = 'subtype_tab.type_id = ?';
         $bind[] = (int)$typeId;
     }
 
     if (isset($subtypeId) && is_int($subtypeId)) {
-        $where[] = 'subtype_tab.xar_mime_subtype_id = ?';
+        $where[] = 'subtype_tab.id = ?';
         $bind[] = (int)$subtypeId;
     }
 
     if (isset($subtypeName) && is_string($subtypeName)) {
-        $where[] = 'subtype_tab.xar_mime_subtype_name = ?';
+        $where[] = 'subtype_tab.name = ?';
         $bind[] = strtolower($subtypeName);
     }
 
     if (isset($typeName) && is_string($typeName)) {
-        $where[] = 'type_tab.xar_mime_type_name = ?';
+        $where[] = 'type_tab.name = ?';
         $bind[] = strtolower($typeName);
     }
 
@@ -70,13 +70,13 @@ function mime_userapi_getall_subtypes($args)
     $subtype_table =& $xartable['mime_subtype'];
     $type_table =& $xartable['mime_type'];
 
-    $sql = 'SELECT subtype_tab.xar_mime_type_id, subtype_tab.xar_mime_subtype_id,'
-        . ' subtype_tab.xar_mime_subtype_name, subtype_tab.xar_mime_subtype_desc,'
-        . ' type_tab.xar_mime_type_name'
+    $sql = 'SELECT subtype_tab.type_id AS type_id, subtype_tab.id AS id,'
+        . ' subtype_tab.name AS name, subtype_tab.description,'
+        . ' type_tab.name AS type_name'
         . ' FROM ' . $subtype_table . ' subtype_tab'
-        . ' INNER JOIN ' . $type_table . ' type_tab ON type_tab.xar_mime_type_id = subtype_tab.xar_mime_type_id'
+        . ' INNER JOIN ' . $type_table . ' type_tab ON type_tab.id = subtype_tab.type_id'
         . (!empty($where) ? ' WHERE ' . implode(' AND ', $where) : '')
-        . ' ORDER BY subtype_tab.xar_mime_type_id, subtype_tab.xar_mime_subtype_name ASC';
+        . ' ORDER BY subtype_tab.type_id, subtype_tab.name ASC';
 
     $result = $dbconn->Execute($sql, $bind);
 
@@ -87,11 +87,11 @@ function mime_userapi_getall_subtypes($args)
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
 
-        $subtypeInfo[$row['xar_mime_subtype_id']]['typeId']         = $row['xar_mime_type_id'];
-        $subtypeInfo[$row['xar_mime_subtype_id']]['typeName']       = $row['xar_mime_type_name'];
-        $subtypeInfo[$row['xar_mime_subtype_id']]['subtypeId']      = $row['xar_mime_subtype_id'];
-        $subtypeInfo[$row['xar_mime_subtype_id']]['subtypeName']    = $row['xar_mime_subtype_name'];
-        $subtypeInfo[$row['xar_mime_subtype_id']]['subtypeDesc']    = $row['xar_mime_subtype_desc'];
+        $subtypeInfo[$row['id']]['subtypeId']      = $row['id'];
+        $subtypeInfo[$row['id']]['subtypeName']    = $row['name'];
+        $subtypeInfo[$row['id']]['subtypeDesc']    = $row['description'];
+        $subtypeInfo[$row['id']]['typeId']         = $row['type_id'];
+        $subtypeInfo[$row['id']]['typeName']       = $row['type_name'];
 
         $result->MoveNext();
     }

@@ -39,20 +39,20 @@ function mime_userapi_get_mimetype( $args )
     $where = ' WHERE ';
 
     if (isset($subtypeId)) {
-        $where .= ' xmstype.xar_mime_subtype_id = ' . $subtypeId;
+        $where .= ' xmstype.id = ' . $subtypeId;
     } else {
-        $where .= " xmstype.xar_mime_subtype_name = '".strtolower($subtypeName)."'";
+        $where .= " xmstype.name = '".strtolower($subtypeName)."'";
     }
 
     // table and column definitions
     $subtype_table =& $xartable['mime_subtype'];
     $type_table    =& $xartable['mime_type'];
 
-    $sql = "SELECT xar_mime_type_name AS mimetype,
-                   xar_mime_subtype_name AS mimesubtype
+    $sql = "SELECT xmtype.sname AS mimetype,
+                   xmstype.name AS mimesubtype
               FROM $type_table AS xmtype, $subtype_table AS xmstype
             $where
-               AND xmtype.xar_mime_type_id = xmstype.xar_mime_type_id";
+               AND xmtype.id = xmstype.type_id";
 
     $result = $dbconn->Execute($sql);
 
