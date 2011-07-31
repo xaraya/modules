@@ -1,0 +1,882 @@
+<items>
+  <mime_extensions itemid="1">
+    <id>1</id>
+    <name>ez</name>
+    <subtype>1</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="2">
+    <id>2</id>
+    <name>hqx</name>
+    <subtype>5</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="3">
+    <id>3</id>
+    <name>cpt</name>
+    <subtype>6</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="4">
+    <id>4</id>
+    <name>doc</name>
+    <subtype>7</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="5">
+    <id>5</id>
+    <name>bin</name>
+    <subtype>8</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="6">
+    <id>6</id>
+    <name>class</name>
+    <subtype>8</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="7">
+    <id>7</id>
+    <name>dll</name>
+    <subtype>8</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="8">
+    <id>8</id>
+    <name>dms</name>
+    <subtype>8</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="9">
+    <id>9</id>
+    <name>exe</name>
+    <subtype>8</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="10">
+    <id>10</id>
+    <name>lha</name>
+    <subtype>8</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="11">
+    <id>11</id>
+    <name>lzh</name>
+    <subtype>8</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="12">
+    <id>12</id>
+    <name>so</name>
+    <subtype>8</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="13">
+    <id>13</id>
+    <name>oda</name>
+    <subtype>9</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="14">
+    <id>14</id>
+    <name>ogg</name>
+    <subtype>10</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="15">
+    <id>15</id>
+    <name>pdf</name>
+    <subtype>11</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="16">
+    <id>16</id>
+    <name>ai</name>
+    <subtype>12</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="17">
+    <id>17</id>
+    <name>eps</name>
+    <subtype>12</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="18">
+    <id>18</id>
+    <name>ps</name>
+    <subtype>12</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="19">
+    <id>19</id>
+    <name>smi</name>
+    <subtype>13</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="20">
+    <id>20</id>
+    <name>smil</name>
+    <subtype>13</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="21">
+    <id>21</id>
+    <name>mif</name>
+    <subtype>14</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="22">
+    <id>22</id>
+    <name>xls</name>
+    <subtype>15</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="23">
+    <id>23</id>
+    <name>ppt</name>
+    <subtype>16</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="24">
+    <id>24</id>
+    <name>sxc</name>
+    <subtype>17</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="25">
+    <id>25</id>
+    <name>stc</name>
+    <subtype>18</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="26">
+    <id>26</id>
+    <name>sxd</name>
+    <subtype>19</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="27">
+    <id>27</id>
+    <name>std</name>
+    <subtype>20</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="28">
+    <id>28</id>
+    <name>sxi</name>
+    <subtype>21</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="29">
+    <id>29</id>
+    <name>sti</name>
+    <subtype>22</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="30">
+    <id>30</id>
+    <name>sxm</name>
+    <subtype>23</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="31">
+    <id>31</id>
+    <name>sxw</name>
+    <subtype>24</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="32">
+    <id>32</id>
+    <name>sxg</name>
+    <subtype>25</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="33">
+    <id>33</id>
+    <name>stw</name>
+    <subtype>26</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="34">
+    <id>34</id>
+    <name>vsd</name>
+    <subtype>27</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="35">
+    <id>35</id>
+    <name>wbxml</name>
+    <subtype>28</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="36">
+    <id>36</id>
+    <name>wmlc</name>
+    <subtype>29</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="37">
+    <id>37</id>
+    <name>wmlsc</name>
+    <subtype>30</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="38">
+    <id>38</id>
+    <name>bcpio</name>
+    <subtype>37</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="39">
+    <id>39</id>
+    <name>vcd</name>
+    <subtype>41</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="40">
+    <id>40</id>
+    <name>pgn</name>
+    <subtype>42</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="41">
+    <id>41</id>
+    <name>z</name>
+    <subtype>43</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="42">
+    <id>42</id>
+    <name>cpio</name>
+    <subtype>44</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="43">
+    <id>43</id>
+    <name>csh</name>
+    <subtype>45</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="44">
+    <id>44</id>
+    <name>dcr</name>
+    <subtype>47</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="45">
+    <id>45</id>
+    <name>dir</name>
+    <subtype>47</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="46">
+    <id>46</id>
+    <name>dxr</name>
+    <subtype>47</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="47">
+    <id>47</id>
+    <name>dvi</name>
+    <subtype>50</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="48">
+    <id>48</id>
+    <name>spl</name>
+    <subtype>55</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="49">
+    <id>49</id>
+    <name>gtar</name>
+    <subtype>61</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="50">
+    <id>50</id>
+    <name>tgz</name>
+    <subtype>61</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="51">
+    <id>51</id>
+    <name>gz</name>
+    <subtype>62</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="52">
+    <id>52</id>
+    <name>hdf</name>
+    <subtype>63</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="53">
+    <id>53</id>
+    <name>xht</name>
+    <subtype>64</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="54">
+    <id>54</id>
+    <name>xhtml</name>
+    <subtype>64</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="55">
+    <id>55</id>
+    <name>php3</name>
+    <subtype>65</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="56">
+    <id>56</id>
+    <name>php</name>
+    <subtype>66</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="57">
+    <id>57</id>
+    <name>js</name>
+    <subtype>67</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="58">
+    <id>58</id>
+    <name>skd</name>
+    <subtype>68</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="59">
+    <id>59</id>
+    <name>skm</name>
+    <subtype>68</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="60">
+    <id>60</id>
+    <name>skp</name>
+    <subtype>68</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="61">
+    <id>61</id>
+    <name>skt</name>
+    <subtype>68</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="62">
+    <id>62</id>
+    <name>latex</name>
+    <subtype>70</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="63">
+    <id>63</id>
+    <name>xml</name>
+    <subtype>77</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="64">
+    <id>64</id>
+    <name>wmd</name>
+    <subtype>79</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="65">
+    <id>65</id>
+    <name>wmz</name>
+    <subtype>80</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="66">
+    <id>66</id>
+    <name>cdf</name>
+    <subtype>81</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="67">
+    <id>67</id>
+    <name>nc</name>
+    <subtype>81</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="68">
+    <id>68</id>
+    <name>pl</name>
+    <subtype>84</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="69">
+    <id>69</id>
+    <name>pm</name>
+    <subtype>84</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="70">
+    <id>70</id>
+    <name>rar</name>
+    <subtype>86</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="71">
+    <id>71</id>
+    <name>shar</name>
+    <subtype>87</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="72">
+    <id>72</id>
+    <name>sh</name>
+    <subtype>88</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="73">
+    <id>73</id>
+    <name>swf</name>
+    <subtype>89</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="74">
+    <id>74</id>
+    <name>sit</name>
+    <subtype>90</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="75">
+    <id>75</id>
+    <name>sv4cpio</name>
+    <subtype>91</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="76">
+    <id>76</id>
+    <name>sv4crc</name>
+    <subtype>92</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="77">
+    <id>77</id>
+    <name>tar</name>
+    <subtype>94</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="78">
+    <id>78</id>
+    <name>tcl</name>
+    <subtype>95</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="79">
+    <id>79</id>
+    <name>tex</name>
+    <subtype>96</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="80">
+    <id>80</id>
+    <name>texi</name>
+    <subtype>97</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="81">
+    <id>81</id>
+    <name>texinfo</name>
+    <subtype>97</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="82">
+    <id>82</id>
+    <name>roff</name>
+    <subtype>98</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="83">
+    <id>83</id>
+    <name>t</name>
+    <subtype>98</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="84">
+    <id>84</id>
+    <name>tr</name>
+    <subtype>98</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="85">
+    <id>85</id>
+    <name>man</name>
+    <subtype>99</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="86">
+    <id>86</id>
+    <name>me</name>
+    <subtype>100</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="87">
+    <id>87</id>
+    <name>ms</name>
+    <subtype>101</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="88">
+    <id>88</id>
+    <name>ustar</name>
+    <subtype>102</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="89">
+    <id>89</id>
+    <name>src</name>
+    <subtype>103</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="90">
+    <id>90</id>
+    <name>zip</name>
+    <subtype>106</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="91">
+    <id>91</id>
+    <name>au</name>
+    <subtype>107</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="92">
+    <id>92</id>
+    <name>snd</name>
+    <subtype>107</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="93">
+    <id>93</id>
+    <name>kar</name>
+    <subtype>108</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="94">
+    <id>94</id>
+    <name>mid</name>
+    <subtype>108</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="95">
+    <id>95</id>
+    <name>midi</name>
+    <subtype>108</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="96">
+    <id>96</id>
+    <name>mp2</name>
+    <subtype>110</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="97">
+    <id>97</id>
+    <name>mp3</name>
+    <subtype>110</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="98">
+    <id>98</id>
+    <name>mpga</name>
+    <subtype>110</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="99">
+    <id>99</id>
+    <name>aif</name>
+    <subtype>112</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="100">
+    <id>100</id>
+    <name>aifc</name>
+    <subtype>112</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="101">
+    <id>101</id>
+    <name>aiff</name>
+    <subtype>112</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="102">
+    <id>102</id>
+    <name>m3u</name>
+    <subtype>119</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="103">
+    <id>103</id>
+    <name>wax</name>
+    <subtype>120</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="104">
+    <id>104</id>
+    <name>wma</name>
+    <subtype>121</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="105">
+    <id>105</id>
+    <name>ram</name>
+    <subtype>125</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="106">
+    <id>106</id>
+    <name>rm</name>
+    <subtype>125</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="107">
+    <id>107</id>
+    <name>rpm</name>
+    <subtype>126</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="108">
+    <id>108</id>
+    <name>ra</name>
+    <subtype>128</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="109">
+    <id>109</id>
+    <name>wav</name>
+    <subtype>135</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="110">
+    <id>110</id>
+    <name>pdb</name>
+    <subtype>136</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="111">
+    <id>111</id>
+    <name>xyz</name>
+    <subtype>137</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="112">
+    <id>112</id>
+    <name>bmp</name>
+    <subtype>152</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="113">
+    <id>113</id>
+    <name>gif</name>
+    <subtype>153</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="114">
+    <id>114</id>
+    <name>ief</name>
+    <subtype>154</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="115">
+    <id>115</id>
+    <name>jpe</name>
+    <subtype>155</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="116">
+    <id>116</id>
+    <name>jpeg</name>
+    <subtype>155</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="117">
+    <id>117</id>
+    <name>jpg</name>
+    <subtype>155</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="118">
+    <id>118</id>
+    <name>png</name>
+    <subtype>156</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="119">
+    <id>119</id>
+    <name>tif</name>
+    <subtype>157</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="120">
+    <id>120</id>
+    <name>tiff</name>
+    <subtype>157</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="121">
+    <id>121</id>
+    <name>wbmp</name>
+    <subtype>159</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="122">
+    <id>122</id>
+    <name>ras</name>
+    <subtype>162</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="123">
+    <id>123</id>
+    <name>pnm</name>
+    <subtype>167</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="124">
+    <id>124</id>
+    <name>pbm</name>
+    <subtype>168</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="125">
+    <id>125</id>
+    <name>pgm</name>
+    <subtype>169</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="126">
+    <id>126</id>
+    <name>ppm</name>
+    <subtype>170</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="127">
+    <id>127</id>
+    <name>rgb</name>
+    <subtype>171</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="128">
+    <id>128</id>
+    <name>xbm</name>
+    <subtype>172</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="129">
+    <id>129</id>
+    <name>xpm</name>
+    <subtype>173</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="130">
+    <id>130</id>
+    <name>xwd</name>
+    <subtype>174</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="131">
+    <id>131</id>
+    <name>iges</name>
+    <subtype>178</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="132">
+    <id>132</id>
+    <name>igs</name>
+    <subtype>178</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="133">
+    <id>133</id>
+    <name>mesh</name>
+    <subtype>179</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="134">
+    <id>134</id>
+    <name>msh</name>
+    <subtype>179</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="135">
+    <id>135</id>
+    <name>silo</name>
+    <subtype>179</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="136">
+    <id>136</id>
+    <name>vrml</name>
+    <subtype>180</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="137">
+    <id>137</id>
+    <name>wrl</name>
+    <subtype>180</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="138">
+    <id>138</id>
+    <name>ics</name>
+    <subtype>181</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="139">
+    <id>139</id>
+    <name>ifb</name>
+    <subtype>181</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="140">
+    <id>140</id>
+    <name>vcs</name>
+    <subtype>181</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="141">
+    <id>141</id>
+    <name>vfb</name>
+    <subtype>181</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="142">
+    <id>142</id>
+    <name>css</name>
+    <subtype>183</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="143">
+    <id>143</id>
+    <name>diff</name>
+    <subtype>184</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="144">
+    <id>144</id>
+    <name>patch</name>
+    <subtype>184</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="145">
+    <id>145</id>
+    <name>htm</name>
+    <subtype>185</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="146">
+    <id>146</id>
+    <name>html</name>
+    <subtype>185</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="147">
+    <id>147</id>
+    <name>shtml</name>
+    <subtype>185</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="148">
+    <id>148</id>
+    <name>asc</name>
+    <subtype>186</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="149">
+    <id>149</id>
+    <name>log</name>
+    <subtype>186</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="150">
+    <id>150</id>
+    <name>po</name>
+    <subtype>186</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="151">
+    <id>151</id>
+    <name>txt</name>
+    <subtype>186</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="152">
+    <id>152</id>
+    <name>rtx</name>
+    <subtype>187</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="153">
+    <id>153</id>
+    <name>rtf</name>
+    <subtype>188</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="154">
+    <id>154</id>
+    <name>sgm</name>
+    <subtype>190</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="155">
+    <id>155</id>
+    <name>sgml</name>
+    <subtype>190</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="156">
+    <id>156</id>
+    <name>tsv</name>
+    <subtype>191</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="157">
+    <id>157</id>
+    <name>wml</name>
+    <subtype>193</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="158">
+    <id>158</id>
+    <name>wmls</name>
+    <subtype>194</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="159">
+    <id>159</id>
+    <name>xsl</name>
+    <subtype>77</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="160">
+    <id>160</id>
+    <name>etx</name>
+    <subtype>198</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="161">
+    <id>161</id>
+    <name>vcf</name>
+    <subtype>199</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="162">
+    <id>162</id>
+    <name>mpe</name>
+    <subtype>110</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="163">
+    <id>163</id>
+    <name>mpeg</name>
+    <subtype>110</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="164">
+    <id>164</id>
+    <name>mpg</name>
+    <subtype>110</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="165">
+    <id>165</id>
+    <name>mov</name>
+    <subtype>202</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="166">
+    <id>166</id>
+    <name>qt</name>
+    <subtype>202</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="167">
+    <id>167</id>
+    <name>mxu</name>
+    <subtype>203</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="168">
+    <id>168</id>
+    <name>asf</name>
+    <subtype>204</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="169">
+    <id>169</id>
+    <name>asx</name>
+    <subtype>204</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="170">
+    <id>170</id>
+    <name>avi</name>
+    <subtype>205</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="171">
+    <id>171</id>
+    <name>wm</name>
+    <subtype>206</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="172">
+    <id>172</id>
+    <name>wmv</name>
+    <subtype>207</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="173">
+    <id>173</id>
+    <name>wmx</name>
+    <subtype>208</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="174">
+    <id>174</id>
+    <name>wvx</name>
+    <subtype>209</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="175">
+    <id>175</id>
+    <name>movie</name>
+    <subtype>210</subtype>
+  </mime_extensions>
+  <mime_extensions itemid="176">
+    <id>176</id>
+    <name>ice</name>
+    <subtype>211</subtype>
+  </mime_extensions>
+</items>

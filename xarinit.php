@@ -84,27 +84,24 @@ function mime_init()
         return FALSE;
     }
 
-    if (!file_exists('code/modules/mime/xarincludes/mime.magic.php')) {
 
-        $msg = xarML('Could not open #(1) for inclusion', 'code/modules/mime/xarincludes/mime.magic.php');
-        throw new Exception($msg);
+    # --------------------------------------------------------
+    #
+    # Set up masks
+    #
+        xarRegisterMask('EditMime','All','mime','All','All','ACCESS_EDIT');
+        xarRegisterMask('AddMime','All','mime','All','All','ACCESS_ADD');
+        xarRegisterMask('ManageMime','All','mime','All','All','ACCESS_DELETE');
+        xarRegisterMask('AdminMime','All','mime','All','All','ACCESS_ADMIN');
 
-        mime_delete();
-        return FALSE;
-    } else {
-        include('code/modules/mime/xarincludes/mime.magic.php');
-
-        if (!isset($mime_list) || empty($mime_list)) {
-            $msg = xarML('Missing mime magic list! Please report this as a bug.');
-        throw new Exception($msg);
-
-            mime_delete();
-            return FALSE;
-        }
-
-        xarModAPIFunc('mime','user','import_mimelist', array('mimeList' => $mime_list));
-    }
-
+    # --------------------------------------------------------
+    #
+    # Set up privileges
+    #
+        xarRegisterPrivilege('EditMime','All','mime','All','All','ACCESS_EDIT');
+        xarRegisterPrivilege('AddMime','All','mime','All','All','ACCESS_ADD');
+        xarRegisterPrivilege('ManageMime','All','mime','All','All','ACCESS_DELETE');
+        xarRegisterPrivilege('AdminMime','All','mime','All','All','ACCESS_ADMIN');
 
     # --------------------------------------------------------
     #
@@ -112,6 +109,10 @@ function mime_init()
     #
         $module = 'mime';
         $objects = array(
+                        'mime_types',
+                        'mime_subtypes',
+                        'mime_magic',
+                        'mime_extensions',
                          );
 
         if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
@@ -132,26 +133,8 @@ function mime_upgrade($oldversion)
 
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case '0.0.0':
-            // fall through to the next upgrade
-        case '0.1.0':
-            mime_init();
-            include_once "code/modules/mime/xarincludes/mime.magic.php";
-            xarModAPIFunc('mime','user','import_mimelist', array('mimeList' => $mime_list));
-            // fall through to the next upgrade
-        case '0.1.1':
-            // fall through to the next upgrade
-        case '0.2.0':
-            // Code to upgrade from version 2.0 goes here
-            // fall through to the next upgrade
-        case '0.2.5':
-            // Code to upgrade from version 2.5 goes here
-        case '1.0.0':
-            // Upgrade from version 1.0.0 to 1.1.0
-
-            // Add a description column to the mime_subtype table
-            $result = $datadict->changeTable($xartable['mime_subtype'], 'description C(255) DEFAULT NULL');
-            if (!$result) {xarErrorHandled();}
+        case '1.1.0':
+            // Upgrade from version 1.1.0
     }
 
     return true;

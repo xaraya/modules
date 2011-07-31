@@ -1,0 +1,13 @@
+<adminmenu>
+    <menuitems>
+        <menuitem>
+            <mask>AdminMailer</mask>
+            <includes>
+            <includeitem>view</includeitem>
+            </includes>
+            <target>view</target>
+            <title>Manage the master tables of this module</title>
+            <label>Master Tables</label>
+        </menuitem>
+  </menuitems>
+</adminmenu>

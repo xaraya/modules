@@ -1,0 +1,45 @@
+<object name="mime_extensions">
+  <objectid>20</objectid>
+  <label>Mime Extensions</label>
+  <module_id>182</module_id>
+  <itemtype>15</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <access></access>
+  <config>a:0:{}</config>
+  <isalias>true</isalias>
+  <properties>
+    <property name="id">
+      <id>133</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mime_extension.id</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="name">
+      <id>134</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mime_extension.name</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="subtype">
+      <id>135</id>
+      <label>Subtype</label>
+      <type>objectref</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mime_extension.subtype_id</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:13:"mime_subtypes";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";}</configuration>
+    </property>
+  </properties>
+</object>
