@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">
-            <xar:if condition="xarModVars::get('foo','use_module_alias')">
-                <xar:var scope="module" module="foo" name="module_alias_name"/>
-            <xar:else />
-                Foo Administration
-            </xar:if>
-        </span>
-    </div>
+    <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
         <img src="#xarTplGetImage('admin.gif', 'foo')#" alt="official icon" width="96" height="96" class="xar-module-icon"/>
 
@@ -18,7 +10,7 @@
         </h2>
 
         <p>
-            Dummy foo text
+            Dummy mime text
         </p>
         <div style="clear:both">&#160;</div>
     </div>

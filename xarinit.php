@@ -117,6 +117,15 @@ function mime_init()
 
         if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
+    # --------------------------------------------------------
+    #
+    # Set up modvars
+    #
+//        $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'mime'));
+//        $module_settings->initialize();
+
+        xarModVars::set('mime', 'defaultmastertable','mime_types');
+
     // Initialisation successful
     return true;
 }

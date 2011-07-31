@@ -1,7 +1,17 @@
 <adminmenu>
     <menuitems>
+    <!--
         <menuitem>
-            <mask>AdminMailer</mask>
+            <includes>
+                <includeitem>main</includeitem>
+                <includeitem>overview</includeitem>
+            </includes>
+            <target>main</target>
+            <label>Overview</label>
+        </menuitem>
+    -->
+        <menuitem>
+            <mask>AdminMime</mask>
             <includes>
             <includeitem>view</includeitem>
             </includes>
