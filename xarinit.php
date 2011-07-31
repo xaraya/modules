@@ -111,39 +111,6 @@ function mime_init()
 }
 
 /**
- *  Delete all tables, unregister hooks, remove
- *  priviledge instances, and anything else related to
- *  this module
- */
-
-
-
-
-function mime_delete()
-{
-    //Load Table Maintenance API
-    sys::import('xaraya.tableddl');
-
-    // Get database information
-    $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
-
-    // Delete tables
-    $queries[0] = xarDBDropTable($xartable['mime_type']);
-    $queries[1] = xarDBDropTable($xartable['mime_subtype']);
-    $queries[2] = xarDBDropTable($xartable['mime_extension']);
-    $queries[3] = xarDBDropTable($xartable['mime_magic']);
-
-    foreach( $queries as $query) {
-        $result =& $dbconn->Execute($query);
-    }
-
-    // Deletion successful
-    return TRUE;
-
-}
-
-/**
 * upgrade the mime module from an old version
 */
 function mime_upgrade($oldversion)
@@ -178,6 +145,16 @@ function mime_upgrade($oldversion)
     }
 
     return true;
+}
+
+/**
+ *  Uninstall this module
+ */
+
+function mime_delete()
+{
+    $module = 'mime';
+    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
 }
 
 ?>
