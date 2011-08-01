@@ -73,24 +73,25 @@
                             </label>
                         </div>
                         <div class="xar-col">
-                            <xar:if condition="$file['auto-approve'] eq $approveList['noone']">
-                                <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#" checked="true"/> No one     
-                                <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#"/> Admin      
-                                <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#"/> Everyone   
-                            <xar:elseif condition="$file['auto-approve'] eq $approveList['admin']"/>
-                                <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#"/>No one     
-                                <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#" checked="true"/> Admin      
-                                <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#"/> Everyone   
-                            <xar:else />
-                                <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#"/> No one     
-                                <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#"/> Admin      
-                                <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#" checked="true"/> Everyone   
-                            </xar:if>
+                            <xar:set name="options">
+                                array(
+                                      array('id' => _UPLOADS_APPROVE_NOONE, 'name' => xarML('No one')),
+                                      array('id' => _UPLOADS_APPROVE_ADMIN, 'name' => xarML('Admin')),
+                                      array('id' => _UPLOADS_APPROVE_EVERYONE, 'name' => xarML('Everyone')),
+                                     )
+                            </xar:set>
+                            <xar:data-input type="radio" name="file[auto-approve]" id="auto-approve" value="$file['auto-approve']" options="$options"/>
                             <div class="xar-form-input-wrapper-after">
                                 This option allows you to make all newly added files' status set to approved for Everyone (not recommended), Admins only, or No One.
                             </div>
                         </div>
                     </div>
+                    <xar:set name="options">
+                        array(
+                              array('id' => 0, 'name' => xarML('No')),
+                              array('id' => 1, 'name' => xarML('Yes')),
+                             )
+                    </xar:set>
                     <div class="xar-row">
                         <div class="xar-col">
                             <label for="file[delete-confirmation]" class="xar-form-label" title="#xarML('Confirm deletion of files')#">
@@ -98,13 +99,7 @@
                             </label>
                         </div>
                         <div class="xar-col">
-                            <xar:if condition="$file['delete-confirmation'] eq FALSE">
-                                <input type="radio" name="file[delete-confirmation]" value="1"/> Yes
-                                <input type="radio" name="file[delete-confirmation]" value="0" checked="true"/> No
-                            <xar:else />
-                                <input type="radio" name="file[delete-confirmation]" value="1" checked="true"/> Yes
-                                <input type="radio" name="file[delete-confirmation]" value="0"/> No
-                            </xar:if>
+                            <xar:data-input type="radio" name="file[delete-confirmation]" id="delete-confirmation" value="$file['delete-confirmation']" options="$options"/>
                             <div class="xar-form-input-wrapper-after">
                                 Confirmation must be provided before files are deleted.
                             </div>
@@ -117,13 +112,7 @@
                             </label>
                         </div>
                         <div class="xar-col">
-                            <xar:if condition="$file['auto-purge'] eq FALSE">
-                                <input type="radio" name="file[auto-purge]" value="1"/> Yes
-                                <input type="radio" name="file[auto-purge]" value="0" checked="true"/> No
-                            <xar:else />
-                                <input type="radio" name="file[auto-purge]" value="1" checked="true"/> Yes
-                                <input type="radio" name="file[auto-purge]" value="0"/> No
-                            </xar:if>
+                            <xar:data-input type="radio" name="file[auto-purge]" id="auto-purge" value="$file['auto-purge']" options="$options"/>
                             <div class="xar-form-input-wrapper-after">
                                 Normally, when you reject files, you have to manually purge them by clicking on
                                 the 'Purge Rejected' button located on the <em>Admin->Uploads->View page</em>. This
@@ -138,13 +127,7 @@
                             </label>
                         </div>
                         <div class="xar-col">
-                            <xar:if condition="$file['obfuscate-on-import'] eq FALSE">
-                                <input type="radio" name="file[obfuscate-on-import]" value="1"/> Yes
-                                <input type="radio" name="file[obfuscate-on-import]" value="0" checked="true"/> No
-                            <xar:else />
-                                <input type="radio" name="file[obfuscate-on-import]" value="1" checked="true"/> Yes
-                                <input type="radio" name="file[obfuscate-on-import]" value="0"/> No
-                            </xar:if>
+                            <xar:data-input type="radio" name="file[obfuscate-on-import]" id="obfuscate-on-import" value="$file['obfuscate-on-import']" options="$options"/>
                             <div class="xar-form-input-wrapper-after">
                                 If Yes, imported files will be stored with their original names obfuscated for added security.
                             </div>
@@ -157,13 +140,7 @@
                             </label>
                         </div>
                         <div class="xar-col">
-                            <xar:if condition="$file['obfuscate-on-upload'] eq FALSE">
-                                <input type="radio" name="file[obfuscate-on-upload]" value="1"/> Yes
-                                <input type="radio" name="file[obfuscate-on-upload]" value="0" checked="true"/> No
-                            <xar:else />
-                                <input type="radio" name="file[obfuscate-on-upload]" value="1" checked="true"/> Yes
-                                <input type="radio" name="file[obfuscate-on-upload]" value="0"/> No
-                            </xar:if>
+                            <xar:data-input type="radio" name="file[obfuscate-on-upload]" id="obfuscate-on-upload" value="$file['obfuscate-on-upload']" options="$options"/>
                             <div class="xar-form-input-wrapper-after">
                                 If Yes, uploaded files will be stored with their original names obfuscated for added security.
                                 <br />
