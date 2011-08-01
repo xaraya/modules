@@ -60,10 +60,8 @@
                 <xar:if condition="empty($moditems) or count($moditems) eq '0'">
                     <tr>
                         <td colspan="5" align="center">
-                            <p>
-                            
-                                There are currently no file associations in the database...
-                            
+                            <p>                            
+                                There are currently no file associations in the database...                            
                             </p>
 
                         </td>
@@ -71,7 +69,7 @@
                 <xar:else />
                     <tr>
                         <td colspan="5">
-                            <div class="xar-norm-outline" style=" margin-left: 1em; margin-right: 1em; width: auto;border-style: dotted none none none;"></div>
+                            <div class="xar-norm-outline" style="margin-left: 1em; margin-right: 1em; width: auto;border-style: dotted none none none;"></div>
                         </td>
                     </tr>
                     <xar:foreach in="$moditems" value="$moditem">
@@ -196,14 +194,14 @@
                     </tr>
                     <xar:foreach in="$moditems" key="$itemid" value="$moditem">
                         <tr>
-                            <xar:if condition="!empty($moditem['title']) and !empty($moditem['link'])">
-                            <td valign="center" width="50%">
-                                #$itemid# - <a href="#$moditem['link']#">#$moditem['title']# </a>
-                            </td>
+                            <xar:if condition="!empty($moditem['title']) AND !empty($moditem['link'])">
+                                <td valign="center" width="50%">
+                                    #$itemid#&#160;<a href="#$moditem['link']#">#$moditem['title']# </a>
+                                </td>
                             <xar:else/>
-                            <td align="center" valign="center" width="50%">
-                                #$itemid#
-                            </td>
+                                <td align="center" valign="center" width="50%">
+                                    #$itemid#
+                                </td>
                             </xar:if>
                             <td align="center" valign="center" width="25%">
                             <xar:foreach in="$moditem['filelist']" value="$fileId">
