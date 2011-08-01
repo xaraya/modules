@@ -20,31 +20,6 @@
  */
 function uploads_adminapi_getmenulinks()
 {
-    $menulinks = array();
-    if (xarSecurityCheck('EditUploads')) {
-     $menulinks[] = Array('url'   => xarModURL('uploads',
-                                                  'admin',
-                                                  "view"),
-                             'title' => xarML('View All Files'),
-                             'label' => xarML('View Files'));
-        $menulinks[] = Array('url'   => xarModURL('uploads',
-                                                  'admin',
-                                                  'get_files'),
-                             'title' => xarML('Add a File'),
-                             'label' => xarML('Add File'));
-        $menulinks[] = Array('url'   => xarModURL('uploads',
-                                                  'admin',
-                                                  'assoc'),
-                             'title' => xarML('View All Known File Associations'),
-                             'label' => xarML('View Associations'));
-    }
-    if (xarSecurityCheck('AdminUploads')) {
-        $menulinks[] = Array('url'   => xarModURL('uploads',
-                                                  'admin',
-                                                  'modifyconfig'),
-                             'title' => xarML('Edit the Uploads Configuration'),
-                             'label' => xarML('Modify Config'));
-    }
-    return $menulinks;
+    return xarMod::apiFunc('base','admin','loadmenuarray',array('modname' => 'uploads', 'modtype' => 'admin'));
 }
 ?>
