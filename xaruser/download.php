@@ -21,7 +21,7 @@ function uploads_user_download()
     $fileInfo = xarModAPIFunc('uploads','user','db_get_file', array('fileId' => $fileId));
 
     if (empty($fileName) && (empty($fileInfo) || !count($fileInfo))) {
-        xarResponse::redirect(sys::code() . 'modules/uploads/xarimages/notapproved.gif');
+        xarController::redirect(sys::code() . 'modules/uploads/xarimages/notapproved.gif');
         return true;
     }
     

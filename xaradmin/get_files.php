@@ -110,7 +110,7 @@ function uploads_admin_get_files()
     if (is_array($list) && count($list)) {
         return xarTplModule('uploads','admin', 'addfile-status', array('fileList' => $list), NULL);
     } else {
-        xarResponse::redirect(xarModURL('uploads', 'admin', 'get_files'));                return;
+        xarController::redirect(xarModURL('uploads', 'admin', 'get_files'));                return;
     }
 
     return $data;
