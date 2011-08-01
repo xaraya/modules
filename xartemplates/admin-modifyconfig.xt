@@ -12,14 +12,18 @@
                 </legend>
                     <div class="xar-row">
                         <div class="xar-col">
-                            <label for="path[uploads-directory]" class="xar-form-label" title="#xarML('Full path to your upload directory')#">
+                            <label for="uploads_directory" class="xar-form-label" title="#xarML('Full path to your upload directory')#">
                                 Uploads Directory:
                             </label>
                         </div>
                         <div class="xar-col">
-                            <input type="text" name="path[uploads-directory]" value="#$path['uploads-directory']#" size="60"/>
+                            <xar:set name="value">xarModVars::get('uploads','uploads_directory')</xar:set>
+                            <input type="text" name="uploads_directory" value="#$value#" size="60"/>
+                            <xar:if condition="!empty($uploads_directory_message)">
+                                &#160;<span class="xar-alert">#$uploads_directory_message#</span>
+                            </xar:if>
                             <div class="xar-form-input-wrapper-after">
-                                This is the full path to the directory where uploaded and external import files will be placed.
+                                This is the path, relative to the root directory, to the directory where uploaded and external import files will be placed.
                                 It is stronly recommended that this directory be located outside of your web directory.
                                 <br />NOTE: This directory MUST be writable by the webserver.
                             </div>
@@ -27,14 +31,18 @@
                     </div>
                     <div class="xar-row">
                         <div class="xar-col">
-                            <label for="path[imports-directory]" class="xar-form-label" title="#xarML('Full path to the local trusted directory')#">                            
+                            <label for="imports_directory" class="xar-form-label" title="#xarML('Full path to the local trusted directory')#">                            
                                 Trusted Directory:                            
                             </label>
                         </div>
                         <div class="xar-col">
-                            <input type="text" name="path[imports-directory]" value="#$path['imports-directory']#" size="60" max="70"/>
+                            <xar:set name="value">xarModVars::get('uploads','imports_directory')</xar:set>
+                            <input type="text" name="imports_directory" value="#$value#" size="60"/>
+                            <xar:if condition="!empty($imports_directory_message)">
+                                &#160;<span class="xar-alert">#$imports_directory_message#</span>
+                            </xar:if>
                             <div class="xar-form-input-wrapper-after">
-                                This is the full path to the local trusted directory. Files located in this directory will
+                                This is the path, relative to the root directory, to the local trusted directory. Files located in this directory will
                                 be immediately available for users to attach to other objects (ie: articles). Files in this directory
                                 are <strong>not</strong> counted in the disk usage summary totals. It is strongly recommended
                                 that this directory be located outside of your web directory.

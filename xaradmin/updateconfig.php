@@ -20,7 +20,8 @@ function uploads_admin_updateconfig()
 {
     // Get parameters
     if (!xarVarFetch('file',   'list:str:1:', $file,   '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('path',   'list:str:1:', $path,   '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('imports_directory',   'str:1:', $imports_directory,   '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('uploads_directory',   'str:1:', $uploads_directory,   '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('view',   'list:str:1:', $view,   '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ddprop', 'array:1:',    $ddprop, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('permit_download', 'int',    $permit_download, 0, XARVAR_NOT_REQUIRED)) return;
@@ -28,6 +29,9 @@ function uploads_admin_updateconfig()
 
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
+
+    xarModVars::set('uploads', 'uploads_directory',  $uploads_directory);
+    xarModVars::set('uploads', 'imports_directory',  $imports_directory);
 
     xarModVars::set('uploads', 'permit_download',  $permit_download);
     xarModVars::set('uploads', 'permit_download_function',  $permit_download_function);
@@ -45,23 +49,7 @@ function uploads_admin_updateconfig()
             }
         }
     }
-    if (isset($path) && is_array($path)) {
-        foreach ($path as $varname => $value) {
-            // check to make sure that the value passed in is
-            // a real uploads module variable
-            $value = trim(str_replace('\/$', '', $value));
-            $location = sys::root() . "/" . $value;
-            if (NULL !== xarModVars::get('uploads', 'path.' . $varname)) {
-                if (!file_exists($location) || !is_dir($location)) {
-                    return xarTplModule('uploads','user','errors',array('layout' => 'dir_not_found', 'location' => $value));
-                } elseif (!is_writable($location)) {
-                    return xarTplModule('uploads','user','errors',array('layout' => 'dir_not_writable', 'location' => $value));
-                } else {
-                    xarModVars::set('uploads', 'path.' . $varname, $value);
-                }
-            }
-        }
-    }
+
     if (isset($view) && is_array($view)) {
         foreach ($view as $varname => $value) {
             // check to make sure that the value passed in is

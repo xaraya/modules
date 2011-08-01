@@ -27,8 +27,6 @@ function uploads_admin_modifyconfig()
     // get the current module variables for display
     // *********************************************
     // Global
-    $data['path']['uploads-directory']      = xarModVars::get('uploads', 'path.uploads-directory');
-    $data['path']['imports-directory']      = xarModVars::get('uploads', 'path.imports-directory');
     $data['file']['maxsize']                = number_format(xarModVars::get('uploads', 'file.maxsize'));
     $data['file']['delete-confirmation']    = xarModVars::get('uploads', 'file.delete-confirmation');
     $data['file']['auto-purge']             = xarModVars::get('uploads', 'file.auto-purge');
@@ -69,6 +67,25 @@ function uploads_admin_modifyconfig()
     } else {
         $data['hooks'] = $hooks;
     }
+    
+    // Check the validaty of directories
+    $root = sys::root();
+    $location = empty($root) ? xarModVars::get('uploads','uploads_directory') : $root . "/" . xarModVars::get('uploads','uploads_directory');
+    $data['uploads_directory_message'] = "";
+    if (!file_exists($location) || !is_dir($location)) {
+        $data['uploads_directory_message'] = xarML('Not a valid directory');
+    } elseif (!is_writable($location)) {
+        $data['uploads_directory_message'] = xarML('Not a writeable directory');
+    }
+
+    $location = empty($root) ? xarModVars::get('uploads','imports_directory') : $root . "/" . xarModVars::get('uploads','imports_directory');
+    $data['imports_directory_message'] = "";
+    if (!file_exists($location) || !is_dir($location)) {
+        $data['imports_directory_message'] = xarML('Not a valid directory');
+    } elseif (!is_writable($location)) {
+        $data['imports_directory_message'] = xarML('Not a writeable directory');
+    }
+
     // Return the template variables defined in this function
     return $data;
 }

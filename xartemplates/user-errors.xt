@@ -11,6 +11,10 @@
             <xar:if condition="!isset($layout)">
                 <div style="margin-top: 20px">No error message is available. 
                 <br />Please contact the system administrator.</div>
+            <xar:elseif condition="$layout eq 'dir_not_set'"/>
+                <div style="margin-top: 20px">
+                    The directory is not set.
+                </div>
             <xar:elseif condition="$layout eq 'dir_not_found'"/>
                 <div style="margin-top: 20px">
                     The location [#$location#] either does not exist or is not a valid directory.

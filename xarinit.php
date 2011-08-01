@@ -42,8 +42,8 @@ function uploads_init()
     } else {
         $base_directory = './';
     }
-    xarModVars::set('uploads', 'path.uploads-directory',   'Change me to something outside the webroot');
-    xarModVars::set('uploads', 'path.imports-directory',   'Change me to something outside the webroot');
+    xarModVars::set('uploads', 'uploads_directory',   'Change me to something outside the webroot');
+    xarModVars::set('uploads', 'imports_directory',   'Change me to something outside the webroot');
     xarModVars::set('uploads', 'file.maxsize',            '10000000');
     xarModVars::set('uploads', 'file.delete-confirmation', TRUE);
     xarModVars::set('uploads', 'file.auto-purge',          FALSE);

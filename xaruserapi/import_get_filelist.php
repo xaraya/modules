@@ -79,14 +79,11 @@ function uploads_userapi_import_get_filelist( $args )
     $fileList = array();
 
     if (!isset($fileLocation)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
-                     'fileLocation', 'import_get_filelist', 'uploads');
-        throw new Exception($msg);             
+        return xarController::redirect(xarModUrl('uploads','user','errors', array('layout' => 'dir_not_set')));
     }
 
     if (!file_exists($fileLocation)) {
-        $msg = xarML("Unable to acquire list of files to import - Location '#(1)' does not exist!",$fileLocation);
-        throw new Exception($msg);             
+        return xarController::redirect(xarModUrl('uploads','user','errors', array('layout' => 'dir_not_found','location' => $fileLocation)));
     }
 
     if (is_file($fileLocation)) {

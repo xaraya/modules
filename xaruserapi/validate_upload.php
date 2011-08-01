@@ -78,7 +78,7 @@ function uploads_userapi_validate_upload( $args )
     // if (!xarModCallHooks('item', 'validation', array('type' => 'file', 'fileInfo' => $fileInfo))) {
     //     return FALSE;
     // }
-    return TRUE;
+    return true;
 }
 
 ?>
