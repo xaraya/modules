@@ -1,7 +1,8 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-       <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96"/>
+        <xar:var name="label">Uploads Module</xar:var>
+        <xar:img scope="theme" file="module-generic.png" alt="$label" width="96" height="96" class="xar-module-icon"/>
        <h2>Overview</h2>
 
        <h3>What is it?</h3>

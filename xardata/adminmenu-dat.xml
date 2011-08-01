@@ -3,7 +3,7 @@
         <menuitem>
             <mask>EditUploads</mask>
             <includes>
-            <includeitem>view</includeitem>
+                <includeitem>view</includeitem>
             </includes>
             <target>view</target>
             <title>View the uploaded files on this site</title>
@@ -12,7 +12,7 @@
         <menuitem>
             <mask>AddUploads</mask>
             <includes>
-            <includeitem>get_files</includeitem>
+                <includeitem>get_files</includeitem>
             </includes>
             <target>get_files</target>
             <title>Upload a new file</title>
@@ -21,7 +21,7 @@
         <menuitem>
             <mask>EditUploads</mask>
             <includes>
-            <includeitem>assoc</includeitem>
+                <includeitem>assoc</includeitem>
             </includes>
             <target>assoc</target>
             <title>View the known file associations</title>
@@ -30,7 +30,7 @@
         <menuitem>
             <mask>AdminUploads</mask>
             <includes>
-            <includeitem>modifyconfig</includeitem>
+                <includeitem>modifyconfig</includeitem>
             </includes>
             <target>modifyconfig</target>
             <title>Modify configuration settings of this module</title>
