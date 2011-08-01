@@ -577,7 +577,7 @@ function uploads_delete()
     xarModUnregisterHook('module', 'remove', 'API', 'uploads', 'admin', 'removehook');
 */
 
-    $module = 'mime';
+    $module = 'uploads';
     return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
 }
 
