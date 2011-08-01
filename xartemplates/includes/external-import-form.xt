@@ -16,7 +16,8 @@
                         <input type="radio" name="storeType" id="storeType" value="#$storeType['FSDB']#" checked="checked"  />
                     </td>
                     <td class="xar-norm" align="center" width="27%">
-                        <input type="submit" name="button" id="button" value="#xarML('Import')#"/>
+                        <xar:var name="label">Import</xar:var>
+                        <xar:button type="submit" name="button" id="button" label="$label"/>
                         <input type="hidden" name="action" id="action" value="2"/>
                         <input type="hidden" name="authid" value="#$authid#"/>
                     </td>

@@ -25,7 +25,8 @@
             </tr>
             <tr>
                 <td class="xar-norm xar-align-center" width="27%">
-                    <input type="submit" name="button" id="button" value="#xarML('Upload')#"/>
+                    <xar:var name="label">Upload</xar:var>
+                    <xar:button type="submit" name="button" id="button" label="$label"/>
                     <input type="hidden" name="action" id="action" value="1"/>
                     <input type="hidden" name="authid" id="authid" value="#$authid#"/>
                     <input type="hidden" name="MAX_FILE_SIZE" value="#$file_maxsize#"/>
@@ -46,7 +47,8 @@
                     <input type="radio" name="storeType" id="storeType" value="#$storeType['FSDB']#" checked="checked"  />
                 </td>
                 <td class="xar-norm xar-align-center" width="27%">
-                    <input type="submit" name="button" id="button" value="#xarML('Upload')#"/>
+                    <xar:var name="label">Upload</xar:var>
+                    <xar:button type="submit" name="button" id="button" label="$label"/>
                     <input type="hidden" name="action" id="action" value="1"/>
                     <input type="hidden" name="authid" id="authid" value="#$authid#"/>
                     <input type="hidden" name="MAX_FILE_SIZE" value="#$file_maxsize#"/>

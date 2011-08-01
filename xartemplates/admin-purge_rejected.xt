@@ -21,7 +21,8 @@
                                     &#160;
                                 </label>
 
-                                <input type="submit" name="submit" value="#xarML('Delete')#"/>
+                                <xar:var name="label">Delete</xar:var>
+                                <xar:button type="submit" name="submit" label="$label"/>
                             </div>
                             <div class="xar-form-input-wrapper-before">
                                 <ul>
@@ -43,7 +44,8 @@
                                 <input type="hidden" name="authid" value="#$authid#"/>
                                 <input type="hidden" name="confirmation" value="1"/>
 
-                                <input type="submit" name="submit" value="#xarML('Cancel')#" onclick="javascript:window.location='#xarModURL('uploads', 'admin', 'view')#'; return false;"/>
+                                <xar:var name="label">Cancel</xar:var>
+                                <xar:button type="cancel" label="$label"/>
                             </div>
                             </form>
                 </xar:if>

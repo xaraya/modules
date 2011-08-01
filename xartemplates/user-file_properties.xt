@@ -34,7 +34,8 @@
                                 <td width="80%">
                                     <input type="textbox" name="fileName" maxlength="128" size="30" value="#$fileInfo['fileName']#"/>
                                     <input type="hidden"  name="fileId"   value="#$fileInfo['fileId']#"/>
-                                    <input type="submit"  value="#xarML('Update')#"/>
+                                    <xar:var name="label">Update</xar:var>
+                                    <xar:button type="submit" label="$label"/>
                                 </td>
                             </tr>
                             <xar:if condition="!empty($hooks)">

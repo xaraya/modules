@@ -19,11 +19,9 @@
                         <div class="xar-col">
                             <input type="text" name="path[uploads-directory]" value="#$path['uploads-directory']#" size="60"/>
                             <div class="xar-form-input-wrapper-after">
-                                
                                 This is the full path to the directory where uploaded and external import files will be placed.
                                 It is stronly recommended that this directory be located outside of your web directory.
                                 <br />NOTE: This directory MUST be writable by the webserver.
-                               
                             </div>
                         </div>
                     </div>
@@ -54,11 +52,9 @@
                             <input type="text" name="file[maxsize]" value="#$file['maxsize']#"/> 
                             in bytes (commas are fine)
                             <div class="xar-form-input-wrapper-after">
-                                
                                 This is the maximum size an uploaded file may be.<br />
                                 NOTE: The server wide PHP setting, if set to a lower value, <em>will</em> override this setting.
                                 Please ask your web host provider for details on the settings that they use for uploaded files.
-                                
                             </div>
                         </div>
                      </div>
@@ -351,10 +347,10 @@
                 </fieldset>
                 <fieldset>
                     <div class="xar-form-input-wrapper-after">
-                        <input type="submit" name="update" value="#xarMl('Update Configuration')#"/>
+                        <xar:var name="label">Update Configuration</xar:var>
+                        <xar:button type="submit" name="update" label="$label"/>
                     </div>
                 </fieldset>
             </form>
-
     </div>
 </xar:template >

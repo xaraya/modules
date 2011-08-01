@@ -86,8 +86,6 @@ function uploads_admin_get_files()
             $data['getAction']['EXTERNAL']    = _UPLOADS_GET_EXTERNAL;
             $data['getAction']['UPLOAD']      = _UPLOADS_GET_UPLOAD;
             $data['getAction']['REFRESH']     = _UPLOADS_GET_REFRESH_LOCAL;
-            $data['local_add_button']         = xarML('Add Files');
-            $data['local_del_button']         = xarML('Delete Files');
             $data['local_import_post_url']    = xarModURL('uploads', 'admin', 'get_files');
             $data['external_import_post_url'] = xarModURL('uploads', 'admin', 'get_files');
             $data['upload_post_url'] = xarModURL('uploads', 'admin', 'get_files');

@@ -12,7 +12,6 @@
                         <label for="approval" class="xar-form-label">
                             Are you sure?
                         </label>
-                        <xar:set name="MLApprove">Approve</xar:set> 
                     </div>
             </fieldset>
 
@@ -21,8 +20,8 @@
                 <input type="hidden" name="ulid" value="#$ulid#"/>
                 <input type="hidden" name="ulhash" value="#$ulhash#"/>
 
-
-            <input type="submit" value="#$MLApprove#"/>
+                <xar:var name="label">Approve</xar:var>
+                <xar:button type="submit" label="$label"/>
             </div>
             </form>
     </div>

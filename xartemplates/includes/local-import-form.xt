@@ -93,10 +93,12 @@
           <tr>
             <td colspan="3" class="xar-accent xar-accent-outline">
               <div class="xar-norm">
-                <input type="submit" name="addbutton" id="addbutton" value="#$local_add_button#"/>
-                <xar:comment>
-                  <input type="submit" name="delbutton" id="delbutton" value="#$local_del_button#"/>
-                </xar:comment>
+                <xar:var name="label">Add Files</xar:var>
+                <xar:button type="submit" name="addbutton" id="addbutton" label="$label"/>
+                <!--
+                <xar:var name="label">Delete Files</xar:var>
+                <xar:button type="submit" name="delbutton" id="delbutton" label="$label"/>
+                -->
                 <input type="hidden" name="action" id="action" value="#$getAction['LOCAL']#"/>
                 <input type="hidden" name="authid" value="#$authid#"/>
               </div>

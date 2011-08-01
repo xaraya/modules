@@ -225,7 +225,6 @@ function uploads_admin_privileges($args)
     $data['extcomponent']   = $extcomponent;
     $data['extlevel']       = $extlevel;
     $data['extinstance']    = xarVarPrepForDisplay(join(':',$newinstance));
-    $data['refreshlabel']   = xarML('Refresh');
     $data['applylabel']     = xarML('Finish and Apply to Privilege');
 
     return $data;

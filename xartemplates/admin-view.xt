@@ -103,7 +103,8 @@
                                             </xar:if>
                                         </xar:foreach>
                                     </select>
-                                    <input type="submit" name="fileDo" id="file_change" value="#xarML('Change')#"/>
+                                    <xar:var name="label">Change</xar:var>
+                                    <xar:button type="submit" name="fileDo" id="file_change" label="$label"/>
                                 </td>
                             </tr>
                             </table>
@@ -115,7 +116,8 @@
                         <xar:if condition="!xarModVars::get('uploads','file.auto-purge')">
                         <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
                             <input type="hidden" name="authid" value="#xarSecGenAuthKey()#"/>
-                            <input type="submit" name="fileDo" id="fileDo_purge"  value="#xarML('Purge Rejected Files')#"/>
+                            <xar:var name="label">Purge Rejected Files</xar:var>
+                            <xar:button type="submit" name="fileDo" id="fileDo_purge" label="$label"/>
                         </form>
                         <xar:else />
                             &#160;

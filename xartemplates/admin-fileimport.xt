@@ -29,7 +29,10 @@
             </tr>
         </xar:loop>
         <tr>
-            <td colspan="3" align="center"><input type="submit" name="submit" value="Import"/></td>
+            <td colspan="3" align="center">
+            <xar:var name="label">Import</xar:var>
+            <xar:button type="submit" label="$label"/>
+            </td>
         </tr>
         </table>
     </form>

@@ -147,8 +147,10 @@
                     <input type="hidden" name="fileId" value="#$fileId#"/>
                     <input type="hidden" name="action" value="delete"/>
                     <input type="hidden" name="authid" value="#$authid#"/>
-                    <input type="submit" name="confirm" value="#xarML('Confirm')#"/>
-                    <input type="submit" value="#xarML('Cancel')#"/>
+                    <xar:var name="label">Confirm</xar:var>
+                    <xar:button type="submit" name="confirm" label="$label"/>
+                    <xar:var name="label">Cancel</xar:var>
+                    <xar:button type="cancel" label="$label"/>
                 </form>
             </xar:if>
 

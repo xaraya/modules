@@ -109,7 +109,8 @@
                 <xar:if condition="!empty($catid)">
                     <input type="hidden" name="catid" value="#$catid#"/>
                 </xar:if>
-                <input type="submit" name="do_it" value="#xarML('Refresh')#"/>
+                <xar:var name="label">Refresh</xar:var>
+                <xar:button type="submit" name="do_it" label="$label"/>
             </td>
             </form>
         </tr>
