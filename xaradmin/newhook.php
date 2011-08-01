@@ -1,16 +1,18 @@
 <?php
 /**
- * Purpose of File
+ * Uploads Module
  *
  * @package modules
- * @copyright (C) copyright-placeholder
+ * @subpackage uploads module
+ * @category Third Party Xaraya Module
+ * @version 1.1.0
+ * @copyright see the html/credits.html file in this Xaraya release
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Uploads Module
- * @link http://xaraya.com/index.php/release/666.html
+ * @link http://www.xaraya.com/index.php/release/eid/666
  * @author Uploads Module Development Team
- */function uploads_admin_newhook( $args )
+ */
+ 
+function uploads_admin_newhook( $args )
 {
     // TODO: do you really want to generate some input field here or not ?
 

@@ -1,15 +1,15 @@
 <?php
 /**
- * Table information for uploads module
+ * Uploads Module
  *
  * @package modules
- * @copyright (c) 2002-2005 the digital development foundation
- * @license gpl {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
  * @subpackage uploads module
- * @link http://xaraya.com/index.php/release/666.html
- * @author uploads module development team
+ * @category Third Party Xaraya Module
+ * @version 1.1.0
+ * @copyright see the html/credits.html file in this Xaraya release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com/index.php/release/eid/666
+ * @author Uploads Module Development Team
  */
 
 /**
