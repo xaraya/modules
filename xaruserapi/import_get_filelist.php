@@ -135,7 +135,7 @@ function uploads_userapi_import_get_filelist( $args )
             if ($fp = opendir($fileLocation)) {
 
                 while (FALSE !== ($inode = readdir($fp))) {
-                    if (is_dir($fileLocation . '/'. $inode) && !eregi('^([.]{1,2})$', $inode)) {
+                    if (is_dir($fileLocation . '/'. $inode) && !preg_match('/^([.]{1,2})$/i', $inode)) {
                         $type = _INODE_TYPE_DIRECTORY;
                     } elseif (is_file($fileLocation. '/' . $inode)) {
                         $type = _INODE_TYPE_FILE;
@@ -146,7 +146,7 @@ function uploads_userapi_import_get_filelist( $args )
                             $linkLocation = readlink($linkLocation);
                         }
 
-                        if (is_dir($linkLocation) && !eregi('([.]{1,2}$', $linkLocation)) {
+                        if (is_dir($linkLocation) && !preg_match('/([.]{1,2}$/i', $linkLocation)) {
                             $type = _INODE_TYPE_DIRECTORY;
                         } elseif (is_file($linkLocation)) {
                             $type = _INODE_TYPE_FILE;
@@ -203,7 +203,7 @@ function uploads_userapi_import_get_filelist( $args )
                             break;
                     }
 
-                    if (is_dir($fileLocation. '/' . $inode) && !eregi('^([.]{1,2})$', $inode)) {
+                    if (is_dir($fileLocation. '/' . $inode) && !preg_match('/^([.]{1,2})$/i', $inode)) {
                     }
                     if (is_file($fileLocation. '/' . $inode)) {
                     }

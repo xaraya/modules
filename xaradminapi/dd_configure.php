@@ -51,7 +51,7 @@ function uploads_adminapi_dd_configure($confString = NULL)
             $item = strtolower($item);
             if (stristr($item, 'methods')) {
                 // if it's the methods, then let's set them up
-                eregi('^methods\(([^)]*)\)$', $item, $parts);
+                preg_match('/^methods\(([^)]*)\)$/i', $item, $parts);
 
                 // if any methods were specified, then we should have at -least-
                 // two parts here - otherwise, there will be just the whole item
@@ -66,7 +66,7 @@ function uploads_adminapi_dd_configure($confString = NULL)
                         $method = trim(strtolower($method));
 
                         // grab the modifier if there was one
-                        eregi('^(\-|\+)?([a-z0-9_-]*)', $method, $matches);
+                        preg_match('/^(\-|\+)?([a-z0-9_-]*)/i', $method, $matches);
                         list($full, $modifier, $method) = $matches;
                         // If modifier == '-' then we are specifically
                         // turning off this file import method,

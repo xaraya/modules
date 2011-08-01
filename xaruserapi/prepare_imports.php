@@ -36,7 +36,7 @@ function uploads_userapi_prepare_imports( $args )
     * we can't descend (obviously) so set it to FALSE
     */
     if (!isset($descend)) {
-        if (eregi('^(http[s]?|ftp)?\:\/\/', $importFrom)) {
+        if (preg_match('%^(http[s]?|ftp)?\:\/\/%i', $importFrom)) {
             $descend = FALSE;
         } else {
             $descend = TRUE;
