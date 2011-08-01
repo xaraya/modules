@@ -1,62 +1,61 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div>
-    <form id="upload_form" action="#$upload_post_url#" method="post" enctype="multipart/form-data">
-        <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
-            <xar:if condition="isset($orientation) and $orientation eq 'vertical'">
-            <tr>
-                <th class="xar-align-center">Browse for File:</th>
-            </tr>
-            <tr>
-                <td class="xar-norm xar-align-left" width="45%">
-                    <xar:data-input type="uploads" name="upload" multiple="5" methods="1"/>
-                </td>
-            </tr>
-            <tr>
-                <th class="xar-align-center">Save Location<br />DB / FS</th>
-            </tr>
-            <tr>
-                <td class="xar-norm xar-align-center" width="28%">
-                    <input type="radio" name="storeType" id="storeType" value="#$storeType['DB_FULL']#"  /> 
-                    <input type="radio" name="storeType" id="storeType" value="#$storeType['FSDB']#" checked="checked"  />
-                </td>
-            </tr>
-            <tr>
-                <th align="center">Action</th>
-            </tr>
-            <tr>
-                <td class="xar-norm xar-align-center" width="27%">
-                    <xar:var name="label">Upload</xar:var>
-                    <xar:button type="submit" name="button" id="button" label="$label"/>
-                    <input type="hidden" name="action" id="action" value="1"/>
-                    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
-                    <input type="hidden" name="MAX_FILE_SIZE" value="#$file_maxsize#"/>
-                </td>
-            </tr>
-            <xar:else />
-            <tr>
-                <th class="xar-align-center">Browse for File:</th>
-                <th class="xar-align-center">Save Location<br />DB / FS</th>
-                <th class="xar-align-center">Action</th>
-            </tr>
-            <tr>
-                <td class="xar-norm xar-align-left" width="45%">
-                    <xar:data-input type="uploads" name="upload" multiple="5" methods="1" size="28"/>
-                </td>
-                <td class="xar-norm xar-align-center" width="28%">
-                    <input type="radio" name="storeType" id="storeType" value="#$storeType['DB_FULL']#"  /> 
-                    <input type="radio" name="storeType" id="storeType" value="#$storeType['FSDB']#" checked="checked"  />
-                </td>
-                <td class="xar-norm xar-align-center" width="27%">
-                    <xar:var name="label">Upload</xar:var>
-                    <xar:button type="submit" name="button" id="button" label="$label"/>
-                    <input type="hidden" name="action" id="action" value="1"/>
-                    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
-                    <input type="hidden" name="MAX_FILE_SIZE" value="#$file_maxsize#"/>
-                </td>
-            </tr>
-            </xar:if>
-        </table>
-        <br />                    
-    </form>
+        <form id="upload_form" action="#$upload_post_url#" method="post" enctype="multipart/form-data">
+            <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
+                <xar:if condition="isset($orientation) and $orientation eq 'vertical'">
+                    <tr>
+                        <th class="xar-align-center">Browse for File:</th>
+                    </tr>
+                    <tr>
+                        <td class="xar-norm xar-align-left" width="45%">
+                            <xar:data-input type="uploads" name="upload" multiple="5" methods="1"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="xar-align-center">Save Location<br />DB / FS</th>
+                    </tr>
+                    <tr>
+                        <td class="xar-norm xar-align-center" width="28%">
+                            <input type="radio" name="storeType" id="storeType" value="#$storeType['DB_FULL']#" />&#160;
+                            <input type="radio" name="storeType" id="storeType" value="#$storeType['FSDB']#" checked="checked"  />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th align="center">Action</th>
+                    </tr>
+                    <tr>
+                        <td class="xar-norm xar-align-center" width="27%">
+                            <xar:var name="label">Upload</xar:var>
+                            <xar:button type="submit" name="button" id="button" label="$label"/>
+                            <input type="hidden" name="action" id="action" value="1"/>
+                            <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                            <input type="hidden" name="MAX_FILE_SIZE" value="#$file_maxsize#"/>
+                        </td>
+                    </tr>
+                <xar:else />
+                    <tr>
+                        <th class="xar-align-center">Browse for File:</th>
+                        <th class="xar-align-center">Save Location<br />DB / FS</th>
+                        <th class="xar-align-center">Action</th>
+                    </tr>
+                    <tr>
+                        <td class="xar-norm xar-align-left" width="45%">
+                            <xar:data-input type="uploads" name="upload" multiple="5" methods="1" size="28"/>
+                        </td>
+                        <td class="xar-norm xar-align-center" width="28%">
+                            <input type="radio" name="storeType" id="storeType" value="#$storeType['DB_FULL']#" />&#160;
+                            <input type="radio" name="storeType" id="storeType" value="#$storeType['FSDB']#" checked="checked" />
+                        </td>
+                        <td class="xar-norm xar-align-center" width="27%">
+                            <xar:var name="label">Upload</xar:var>
+                            <xar:button type="submit" name="button" id="button" label="$label"/>
+                            <input type="hidden" name="action" id="action" value="1"/>
+                            <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                            <input type="hidden" name="MAX_FILE_SIZE" value="#$file_maxsize#"/>
+                        </td>
+                    </tr>
+                </xar:if>
+            </table>
+        </form>
     </div>
 </xar:template>

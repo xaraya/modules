@@ -19,36 +19,28 @@
                 External Imports and Uploads
             </h3>
             <p>
-                
-                    Files that are uploaded or imported from external locations can be saved in the database (DB)
-                    or stored in the filesystem (FS). Use the options (FS/DB) under each form to select the
-                    storage location for your file.
-                
+                Files that are uploaded or imported from external locations can be saved in the database (DB)
+                or stored in the filesystem (FS). Use the options (FS/DB) under each form to select the
+                storage location for your file.
             </p>
             <p>
-                
-                    The import engine will try to make a best guess for the name of the file you are trying to import.
-                    In the event that it cannot figure out what the file name is it will use the following methods:
-                
+                The import engine will try to make a best guess for the name of the file you are trying to import.
+                In the event that it cannot figure out what the file name is it will use the following methods:
                 <ul>
                     <li>
                         <strong>HTTP and HTTPS</strong>
                         <p>
-                            
-                                In the event that the filename for an HTTP import can not be determined, the file will be
-                                named based on the host name of the server the file was imported from. For example, importing
-                                http://www.xaraya.com/ would return a file with the name of www_xaraya_com.html
-                            
+                            In the event that the filename for an HTTP import can not be determined, the file will be
+                            named based on the host name of the server the file was imported from. For example, importing
+                            http://www.xaraya.com/ would return a file with the name of www_xaraya_com.html                            
                         </p>
                     </li>
                     <li>
                         <strong>FTP</strong>
                         <p>
-                            
-                                Due to the underlying nature of the FTP protocol, it is impossible to successfully access a file
-                                on a system without providing a viable file name. In this case, no file name 'guessing' will be
-                                attempted and the import will fail.
-                            
+                            Due to the underlying nature of the FTP protocol, it is impossible to successfully access a file
+                            on a system without providing a viable file name. In this case, no file name 'guessing' will be
+                            attempted and the import will fail.
                         </p>
                     </li>
                 </ul>
@@ -58,31 +50,25 @@
                 Local Imports Sandbox
             </h3>
             <p>
-                
-                    Files can be inserted into your local import sandbox and used immediately by users with sufficient access to
-                    add files and attach them to hooked objects (articles, comments, etc). Files you place in your local import
-                    sandbox can be seen in the 'Import Local Files' form immediately upon adding them.
-                
+                Files can be inserted into your local import sandbox and used immediately by users with sufficient access to
+                add files and attach them to hooked objects (articles, comments, etc). Files you place in your local import
+                sandbox can be seen in the 'Import Local Files' form immediately upon adding them.
             </p>
             <h3>
                 Privileges
             </h3>
             <p>
-                
-                    Uploads has the following privilege levels:
-                
+                Uploads has the following privilege levels:
                 <ul>
                     <li>ViewUploads with the READ level of access to a file</li>
                     <li>AddUploads with the ADD level of access to add files to the uploads system</li>
                     <li>EditUploads with the EDIT level to edit files that have been added to the uploads system</li>
                     <li>ManageUploads with the Delete level to remove files from the uploads system.</li>
                     <li>AdminUploads for the admin access. Only site administrators need this level</li>
-                </ul>
-                
+                </ul>                
                 A role needs the ViewUploads privilege to view a file that has been uploaded and approved by the admin/editor.
                 If the file has not been approved, but submitted, the Edit privilege is needed to access the file.
-                You can use the autoapprove option to automatically approve all files uploaded by a certain user.
-                
+                You can use the autoapprove option to automatically approve all files uploaded by a certain user.                
             </p>
             <h3>Included Blocks</h3>
             <p>There are no included blocks.</p>
@@ -96,14 +82,12 @@
                  If you combine the hook with the upload property, then you can add parameters to the dynamic property. Set the options with:
                  <em>single;methods(-trusted,+external,+upload,+stored);basedir(/tothedir/uploads/{user});importdir(/tothedir/uploads/{user})</em><br />
                  This option will allow for a single upload, with external, uploaded and stored files, but not trusted ones. The basedir to look for stored files is the user dir, and new files will be placed there as well.
-
             </p>
             <p>
                 The Uploads module does also provide a display hook with waiting content waiting content hook by going to 
                      <a href="&xar-modurl-modules-admin-hooks;&amp;hook=uploads">Modules - Configure Hooks - Uploads Module</a>.
                  From there check the radio buttons next to the base module.<br />
                  Then make sure you have the waiting content block available on your site. When a file is in submitted status, it will be shown in the block.
-
             </p>
         <h3>DD Uploads Methods</h3>
         <dl>
