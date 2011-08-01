@@ -34,7 +34,7 @@
             </includes>
             <target>modifyconfig</target>
             <title>Modify configuration settings of this module</title>
-            <label>Modify Configurations</label>
+            <label>Modify Configuration</label>
         </menuitem>
         <menuitem>
             <includes>

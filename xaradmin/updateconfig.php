@@ -50,14 +50,14 @@ function uploads_admin_updateconfig()
         }
     }
 
-    if (isset($view) && is_array($view)) {
-        foreach ($view as $varname => $value) {
-            // check to make sure that the value passed in is
-            // a real uploads module variable
-// TODO: add other view.* variables later ?
-            if ($varname != 'itemsperpage') continue;
-            xarModVars::set('uploads', 'view.' . $varname, $value);
-        }
+    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'uploads'));
+    $data['module_settings']->setFieldList('items_per_page, use_module_alias, use_module_icons');
+    $data['module_settings']->getItem();
+    $isvalid = $data['module_settings']->checkInput();
+    if (!$isvalid) {
+        return xarTpl::module('dynamicdata','admin','modifyconfig', $data);
+    } else {
+        $itemid = $data['module_settings']->updateItem();
     }
 
     if (isset($ddprop['trusted'])) {

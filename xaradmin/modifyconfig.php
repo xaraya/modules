@@ -74,7 +74,7 @@ function uploads_admin_modifyconfig()
     if (!file_exists($location) || !is_dir($location)) {
         $data['uploads_directory_message'] = xarML('Not a valid directory');
     } elseif (!is_writable($location)) {
-        $data['uploads_directory_message'] = xarML('Not a writeable directory');
+        $data['uploads_directory_message'] = xarML('Not a writable directory');
     }
 
     $location = xarMod::apiFunc('uploads','user','db_get_dir',array('directory' => 'imports_directory'));
@@ -82,8 +82,13 @@ function uploads_admin_modifyconfig()
     if (!file_exists($location) || !is_dir($location)) {
         $data['imports_directory_message'] = xarML('Not a valid directory');
     } elseif (!is_writable($location)) {
-        $data['imports_directory_message'] = xarML('Not a writeable directory');
+        $data['imports_directory_message'] = xarML('Not a writable directory');
     }
+
+    // Define the module settings
+    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'uploads'));
+    $data['module_settings']->setFieldList('items_per_page, use_module_alias, use_module_icons');
+    $data['module_settings']->getItem();
 
     // Return the template variables defined in this function
     return $data;
