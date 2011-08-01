@@ -93,8 +93,8 @@ function uploads_admin_get_files()
             $data['fileList'] = xarModAPIFunc('uploads', 'user', 'import_get_filelist',
                                                array('fileLocation' => $cwd, 'onlyNew' => TRUE));
 
-            $data['curDir'] = str_replace(xarModVars::get('uploads', 'path.imports-directory'), '', $cwd);
-            $data['noPrevDir'] = (xarModVars::get('uploads', 'path.imports-directory') == $cwd) ? TRUE : FALSE;
+            $data['curDir'] = str_replace(xarModVars::get('uploads', 'imports_directory'), '', $cwd);
+            $data['noPrevDir'] = (xarModVars::get('uploads', 'imports_directory') == $cwd) ? TRUE : FALSE;
             // reset the CWD for the local import
             // then only display the: 'check for new imports' button
             $data['authid'] = xarSecGenAuthKey();

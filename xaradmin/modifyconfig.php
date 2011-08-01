@@ -69,8 +69,7 @@ function uploads_admin_modifyconfig()
     }
     
     // Check the validaty of directories
-    $root = sys::root();
-    $location = empty($root) ? xarModVars::get('uploads','uploads_directory') : $root . "/" . xarModVars::get('uploads','uploads_directory');
+    $location = xarMod::apiFunc('uploads','user','db_get_dir',array('directory' => 'uploads_directory'));
     $data['uploads_directory_message'] = "";
     if (!file_exists($location) || !is_dir($location)) {
         $data['uploads_directory_message'] = xarML('Not a valid directory');
@@ -78,7 +77,7 @@ function uploads_admin_modifyconfig()
         $data['uploads_directory_message'] = xarML('Not a writeable directory');
     }
 
-    $location = empty($root) ? xarModVars::get('uploads','imports_directory') : $root . "/" . xarModVars::get('uploads','imports_directory');
+    $location = xarMod::apiFunc('uploads','user','db_get_dir',array('directory' => 'imports_directory'));
     $data['imports_directory_message'] = "";
     if (!file_exists($location) || !is_dir($location)) {
         $data['imports_directory_message'] = xarML('Not a valid directory');

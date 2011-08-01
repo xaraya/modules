@@ -97,11 +97,11 @@ function uploads_adminapi_showinput($args)
             $trusted_dir = $override['import']['path'];
             if (!file_exists($trusted_dir)) {
             // CHECKME: fall back to common trusted directory, or fail here ?
-                $trusted_dir = sys::root() . "/" . xarModVars::get('uploads', 'path.imports-directory');
+                $trusted_dir = sys::root() . "/" . xarModVars::get('uploads', 'imports_directory');
             //  return xarML('Unable to find trusted directory #(1)', $trusted_dir);
             }
         } else {
-            $trusted_dir = sys::root() . "/" . xarModVars::get('uploads', 'path.imports-directory');
+            $trusted_dir = sys::root() . "/" . xarModVars::get('uploads', 'imports_directory');
         }
         $cacheExpire = xarModVars::get('uploads','file.cache-expire');
 

@@ -49,7 +49,7 @@ function uploads_init()
     xarModVars::set('uploads', 'file.auto-purge',          FALSE);
     xarModVars::set('uploads', 'file.obfuscate-on-import', FALSE);
     xarModVars::set('uploads', 'file.obfuscate-on-upload', TRUE);
-    xarModVars::set('uploads', 'path.imports-cwd', xarModVars::get('uploads', 'path.imports-directory'));
+    xarModVars::set('uploads', 'path.imports-cwd', xarModVars::get('uploads', 'imports_directory'));
     xarModVars::set('uploads', 'dd.fileupload.stored',   TRUE);
     xarModVars::set('uploads', 'dd.fileupload.external', TRUE);
     xarModVars::set('uploads', 'dd.fileupload.upload',   TRUE);
@@ -323,14 +323,14 @@ function uploads_upgrade($oldversion)
             xarModVars::delete('uploads','obfuscate_imports');
 
             // Now set up the new ones :)
-            xarModVars::set('uploads','path.uploads-directory', $path_uploads_directory);
-            xarModVars::set('uploads','path.imports-directory', $path_imports_directory);
+            xarModVars::set('uploads','uploads_directory', $path_uploads_directory);
+            xarModVars::set('uploads','imports_directory', $path_imports_directory);
             xarModVars::set('uploads','file.maxsize', ($file_maxsize >= 0) ? $file_maxsize : 1000000);
             xarModVars::set('uploads','file.obfuscate-on-import', ($file_obfuscate_on_import) ? $file_obfuscate_on_import : FALSE);
             xarModVars::set('uploads','file.obfuscate-on-upload', ($file_obfuscate_on_upload) ? $file_obfuscate_on_upload : FALSE);
             xarModVars::set('uploads','file.delete-confirmation', ($file_delete_confirmation) ? $file_delete_confirmation : FALSE);
             xarModVars::set('uploads','file.auto-purge',          FALSE);
-            xarModVars::set('uploads','path.imports-cwd', xarModVars::get('uploads', 'path.imports-directory'));
+            xarModVars::set('uploads','path.imports-cwd', xarModVars::get('uploads', 'imports_directory'));
             xarModVars::set('uploads', 'dd.fileupload.stored',   TRUE);
             xarModVars::set('uploads', 'dd.fileupload.external', TRUE);
             xarModVars::set('uploads', 'dd.fileupload.upload',   TRUE);
@@ -569,30 +569,6 @@ function uploads_upgrade($oldversion)
  */
 function uploads_delete()
 {
-    xarModVars::delete('uploads', 'path.uploads-directory');
-    xarModVars::delete('uploads', 'path.imports-directory');
-    xarModVars::delete('uploads', 'file.maxsize');
-    xarModVars::delete('uploads', 'file.delete-confirmation');
-    xarModVars::delete('uploads', 'file.auto-purge');
-    xarModVars::delete('uploads', 'file.obfuscate-on-import');
-    xarModVars::delete('uploads', 'file.obfuscate-on-upload');
-    xarModVars::delete('uploads', 'path.imports-cwd');
-    xarModVars::delete('uploads', 'dd.fileupload.stored');
-    xarModVars::delete('uploads', 'dd.fileupload.external');
-    xarModVars::delete('uploads', 'dd.fileupload.upload');
-    xarModVars::delete('uploads', 'dd.fileupload.trusted');
-    xarModVars::delete('uploads', 'file.auto-approve');
-    xarModVars::delete('uploads', 'view.filter');
-    xarModVars::delete('uploads', 'view.itemsperpage');
-    xarModVars::delete('uploads', 'file.cache-expire');
-    xarModVars::delete('uploads', 'file.allow-duplicate-upload');
-
-    xarUnregisterMask('ViewUploads');
-    xarUnregisterMask('AddUploads');
-    xarUnregisterMask('EditUploads');
-    xarUnregisterMask('DeleteUploads');
-    xarUnregisterMask('AdminUploads');
-
     xarModUnregisterHook('item', 'transform', 'API', 'uploads', 'user', 'transformhook');
 /*
     xarModUnregisterHook('item', 'create', 'API', 'uploads', 'admin', 'createhook');
@@ -601,43 +577,8 @@ function uploads_delete()
     xarModUnregisterHook('module', 'remove', 'API', 'uploads', 'admin', 'removehook');
 */
 
-    // Get database information
-
-    $dbconn = xarDB::getConn();
-    $xartables      = xarDB::getTables();
-
-    //Load Table Maintainance API
-    sys::import('xaraya.tableddl');
-
-    // Generate the SQL to drop the table using the API
-    $query = xarDBDropTable($xartables['file_entry']);
-    if (empty($query))
-        return; // throw back
-
-    // Drop the table and send exception if returns false.
-    $result =& $dbconn->Execute($query);
-    // handle any exception
-    xarErrorHandled();
-
-    // Generate the SQL to drop the table using the API
-    $query = xarDBDropTable($xartables['file_data']);
-    if (empty($query))
-        return; // throw back
-
-    // Drop the table and send exception if returns false.
-    $result =& $dbconn->Execute($query);
-    xarErrorHandled();
-
-    // Generate the SQL to drop the table using the API
-    $query = xarDBDropTable($xartables['file_associations']);
-    if (empty($query))
-        return; // throw back
-
-    // Drop the table and send exception if returns false.
-    $result =& $dbconn->Execute($query);
-    xarErrorHandled();
-
-    return true;
+    $module = 'mime';
+    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
 }
 
 ?>

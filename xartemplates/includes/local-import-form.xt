@@ -6,7 +6,7 @@
             <span>
               <strong>
                 Current Directory:
-                &#160;<xar:var scope="module" module="uploads" name="path.imports-directory"/>#$curDir#
+                &#160;<xar:var scope="module" module="uploads" name="imports_directory"/>#$curDir#
               </strong>
             </span>
           </p>

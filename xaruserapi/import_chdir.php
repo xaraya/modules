@@ -32,11 +32,10 @@ function uploads_userapi_import_chdir( $args )
     $root = sys::root();
     if (empty($root)) {
         $cwd = xarModUserVars::get('uploads', 'path.imports-cwd');
-        $importDir = xarModVars::get('uploads', 'path.imports-directory');
     } else {
         $cwd = sys::root() . "/" . xarModUserVars::get('uploads', 'path.imports-cwd');
-        $importDir = sys::root() . "/" . xarModVars::get('uploads', 'path.imports-directory');
     }
+    $importDir = xarMod::apiFunc('uploads','user','db_get_dir',array('directory' => 'imports_directory'));
 
     if (!empty($dirName)) {
         if ($dirName == '...') {
@@ -52,7 +51,7 @@ function uploads_userapi_import_chdir( $args )
         }
     } else {
         // if dirName is empty, then reset the cwd to the top level directory
-        $cwd = xarModVars::get('uploads', 'path.imports-directory');
+        $cwd = xarModVars::get('uploads', 'imports_directory');
         xarModUserVars::set('uploads', 'path.imports-cwd', $cwd);
     }
 

@@ -84,12 +84,12 @@ function uploads_admin_updateconfig()
         xarModVars::set('uploads', 'dd.fileupload.upload', 0);
     }
 
-    // FIXME: change only if the imports-directory was changed? <rabbitt>
+    // FIXME: change only if the imports_directory was changed? <rabbitt>
     // Now update the 'current working imports directory' in case the
     // imports directory was changed. We do this by first deleting the modvar
     // and then recreating it to ensure that the user's version is cleared
     // xarModVars::delete('uploads', 'path.imports-cwd');
-    xarModVars::set('uploads', 'path.imports-cwd', xarModVars::get('uploads', 'path.imports-directory'));
+    xarModVars::set('uploads', 'path.imports-cwd', xarModVars::get('uploads', 'imports_directory'));
 
     xarModCallHooks('module', 'updateconfig', 'uploads',
                     array('module'   => 'uploads',

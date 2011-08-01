@@ -24,7 +24,7 @@ function uploads_userapi_prepare_imports( $args )
     }
 
     if (!isset($import_directory)) {
-        $import_directory = sys::root() . "/" . xarModVars::get('uploads', 'path.imports-directory');
+        $import = xarMod::apiFunc('uploads','user','db_get_dir',array('directory' => 'imports_directory'));
     }
 
     if (!isset($import_obfuscate)) {
