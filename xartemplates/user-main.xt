@@ -23,7 +23,7 @@
         <div id="currentweather">
             <h2 id="weatherCurrentHeader">
                 <xar:ml>
-                    Currently in #(1)
+                    <xar:mlstring>Currently in #(1)</xar:mlstring>
                     <xar:mlvar>#$wData.observStation#</xar:mlvar>
                 </xar:ml>
             </h2>
@@ -110,7 +110,7 @@
                     <td class="xar-align-right"><strong>Pressure : </strong></td>
                     <td class="xar-align-left">
                         <xar:ml>
-                            #(1) #(2) and #(3)
+                            <xar:mlstring>#(1) #(2) and #(3)</xar:mlstring>
                             <xar:mlvar>#$wData.barometer#</xar:mlvar>
                             <xar:mlvar>#$wData.tempPressure#</xar:mlvar>
                             <xar:mlvar>#$wData.barometerDesc#</xar:mlvar>
@@ -121,7 +121,7 @@
                     <td class="xar-align-right"><strong>Wind : </strong></td>
                     <td class="xar-align-left">
                         <xar:ml>
-                            #(1) at #(2) #(3)
+                            <xar:mlstring>#(1) at #(2) #(3)</xar:mlstring>
                             <xar:mlvar>#$wData.windDirname#</xar:mlvar>
                             <xar:mlvar>#$wData.wind#</xar:mlvar>
                             <xar:mlvar>#$wData.unitsSpeed#</xar:mlvar>
@@ -136,7 +136,7 @@
                     <td colspan="2" align="center">
                         <p style="font-size:90%;">
                         <xar:ml>
-                            As reported at #(1). Last Updated #(2)
+                            <xar:mlstring>As reported at #(1). Last Updated #(2)</xar:mlstring>
                             <xar:mlvar>#$wData.observStation#</xar:mlvar>
                             <xar:mlvar>#$wData.lastUpdate#</xar:mlvar>
                         </xar:ml>
@@ -151,7 +151,7 @@
         <div id="extendedforecast">
             <h2>
                 <xar:ml>
-                #(1)-Day Forecast
+                <xar:mlstring>#(1)-Day Forecast</xar:mlstring>
                 <xar:mlvar>#$maxdays#</xar:mlvar>    
                 </xar:ml>
             </h2>

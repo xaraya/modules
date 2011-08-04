@@ -25,7 +25,7 @@
             <h2>
                 #$pagename#<br />
                 <xar:ml>
-                    Forecast for #(1), #(2)
+                    <xar:mlstring>Forecast for #(1), #(2)</xar:mlstring>
                     <xar:mlvar>#$eData[$day]['wkday']#</xar:mlvar>
                     <xar:mlvar>#$eData[$day]['date']#</xar:mlvar>
                 </xar:ml>
