@@ -5,7 +5,7 @@
         </xar:if>
         <form method="post" action="index.php">
             <div>        
-                <label for="loc"><xar:mlstring>Enter in a City or US Zip:</xar:mlstring></label>
+                <label for="loc">Enter in a City or US Zip:</label>
                 <xar:data-input type="citylocation" name="default_location" value="$default_location"/>
                 <input type="hidden" name="module" value="weather"/>
                 <input type="hidden" name="func" value="search"/>

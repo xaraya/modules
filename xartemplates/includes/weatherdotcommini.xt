@@ -4,7 +4,7 @@
     <div class="weatherdotcomfooter" style="text-align: center; font-size:85%;">
         <div class="weatherdotcomnotice">
             <xar:ml>
-                <xar:mlstring>Weather data provided by #(1)</xar:mlstring>
+                Weather data provided by #(1)
                 <xar:mlvar>#$weatherdotcomurl#</xar:mlvar>
             </xar:ml>
         </div>

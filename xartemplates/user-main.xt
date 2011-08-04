@@ -6,7 +6,7 @@
 
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>Weather Forecast</xar:mlstring>
+            Weather Forecast
         </span>
     </div>
 
@@ -23,7 +23,7 @@
         <div id="currentweather">
             <h2 id="weatherCurrentHeader">
                 <xar:ml>
-                    <xar:mlstring>Currently in #(1)</xar:mlstring>
+                    Currently in #(1)
                     <xar:mlvar>#$wData.observStation#</xar:mlvar>
                 </xar:ml>
             </h2>
@@ -35,7 +35,7 @@
                 <tr>
                     <td class="xar-align-center xar-valign-middle"><strong>#$wData.conditions#</strong></td>
                     <td class="xar-align-center xar-valign-middle">
-                        <strong><xar:mlstring>Feels Like</xar:mlstring><br />
+                        <strong>Feels Like<br />
                         #$wData.feelsLike#&#176;#$wData.unitsTemp#</strong>
                     </td>
                 </tr>
@@ -47,8 +47,8 @@
         <div id="currentdetail">
             <table>
                 <tr>
-                    <th><xar:mlstring>Today</xar:mlstring></th>
-                    <th><xar:mlstring>Tonight</xar:mlstring></th>
+                    <th>Today</th>
+                    <th>Tonight</th>
                 </tr>
                 <tr>
                     <td class="xar-align-center xar-valign-middle">
@@ -63,8 +63,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <th><xar:mlstring>Daytime High</xar:mlstring>  (&#176;#$eData[0]['unitsTemp']#)</th>
-                    <th><xar:mlstring>Overnight Low</xar:mlstring>  (&#176;#$eData[0]['unitsTemp']#)</th>
+                    <th>Daytime High  (&#176;#$eData[0]['unitsTemp']#)</th>
+                    <th>Overnight Low  (&#176;#$eData[0]['unitsTemp']#)</th>
                 </tr>
                 <tr>
                     <td valign="top" align="center">
@@ -75,8 +75,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <th><xar:mlstring>Sunrise</xar:mlstring></th>
-                    <th><xar:mlstring>Sunset</xar:mlstring></th>
+                    <th>Sunrise</th>
+                    <th>Sunset</th>
                 </tr>
                 <tr>
                     <td valign="top" align="center">
@@ -91,26 +91,26 @@
                     <th>&#160;</th>
                 </tr>
                 <tr>
-                    <td class="xar-align-right"><strong><xar:mlstring>UV Index</xar:mlstring> : </strong></td>
+                    <td class="xar-align-right"><strong>UV Index : </strong></td>
                     <td class="xar-align-left">#$wData.uv#&#160;#$wData.uvDesc#</td>
                 </tr>
                 <tr>
-                    <td class="xar-align-right"><strong><xar:mlstring>Visibility</xar:mlstring> : </strong></td>
+                    <td class="xar-align-right"><strong>Visibility : </strong></td>
                     <td class="xar-align-left">#$wData.visibility#</td>
                 </tr>
                 <tr>
-                    <td class="xar-align-right"><strong><xar:mlstring>Dew Point</xar:mlstring> : </strong></td>
+                    <td class="xar-align-right"><strong>Dew Point : </strong></td>
                     <td class="xar-align-left">#$wData.dewPoint#&#176;#$wData.unitsTemp#</td>
                 </tr>
                 <tr>
-                    <td class="xar-align-right"><strong><xar:mlstring>Humidity</xar:mlstring> : </strong></td>
+                    <td class="xar-align-right"><strong>Humidity : </strong></td>
                     <td class="xar-align-left">#$wData.humidity#%</td>
                 </tr>
                 <tr>
-                    <td class="xar-align-right"><strong><xar:mlstring>Pressure</xar:mlstring> : </strong></td>
+                    <td class="xar-align-right"><strong>Pressure : </strong></td>
                     <td class="xar-align-left">
                         <xar:ml>
-                            <xar:mlstring>#(1) #(2) and #(3)</xar:mlstring>
+                            #(1) #(2) and #(3)
                             <xar:mlvar>#$wData.barometer#</xar:mlvar>
                             <xar:mlvar>#$wData.tempPressure#</xar:mlvar>
                             <xar:mlvar>#$wData.barometerDesc#</xar:mlvar>
@@ -118,10 +118,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="xar-align-right"><strong><xar:mlstring>Wind</xar:mlstring> : </strong></td>
+                    <td class="xar-align-right"><strong>Wind : </strong></td>
                     <td class="xar-align-left">
                         <xar:ml>
-                            <xar:mlstring>#(1) at #(2) #(3)</xar:mlstring>
+                            #(1) at #(2) #(3)
                             <xar:mlvar>#$wData.windDirname#</xar:mlvar>
                             <xar:mlvar>#$wData.wind#</xar:mlvar>
                             <xar:mlvar>#$wData.unitsSpeed#</xar:mlvar>
@@ -129,14 +129,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="xar-align-right"><strong><xar:mlstring>Wind Gusts</xar:mlstring> : </strong></td>
+                    <td class="xar-align-right"><strong>Wind Gusts : </strong></td>
                     <td class="xar-align-left">#$wData.windGust#&#160;#$wData.unitsSpeed#</td>
                 </tr>
                 <tr>
                     <td colspan="2" align="center">
                         <p style="font-size:90%;">
                         <xar:ml>
-                            <xar:mlstring>As reported at #(1). Last Updated #(2)</xar:mlstring>
+                            As reported at #(1). Last Updated #(2)
                             <xar:mlvar>#$wData.observStation#</xar:mlvar>
                             <xar:mlvar>#$wData.lastUpdate#</xar:mlvar>
                         </xar:ml>
@@ -151,7 +151,7 @@
         <div id="extendedforecast">
             <h2>
                 <xar:ml>
-                <xar:mlstring>#(1)-Day Forecast</xar:mlstring>
+                #(1)-Day Forecast
                 <xar:mlvar>#$maxdays#</xar:mlvar>    
                 </xar:ml>
             </h2>
@@ -159,11 +159,11 @@
                 <tr>
                     <th colspan="3">&#160;</th>
                     <th>
-                        <xar:mlstring>Daytime High</xar:mlstring> / <br />
-                        <xar:mlstring>Overnight Low</xar:mlstring><br />
+                        Daytime High / <br />
+                        Overnight Low<br />
                         (&#176;#$eData[0]['unitsTemp']#)
                     </th>
-                    <th><xar:mlstring>Precip. %</xar:mlstring></th>
+                    <th>Precip. %</th>
                 </tr>
                 <!-- today's details -->
                 <tr>

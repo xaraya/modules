@@ -8,25 +8,25 @@
     <div>
         <dl class="xar-tabs">
             <dt class="help" title="Choose an action to perform">
-                <xar:mlstring>Actions:</xar:mlstring>
+                Actions:
             </dt>
             <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-weather-user-main;">
-                    <xar:mlstring>Forecast</xar:mlstring>
+                    Forecast
                 </a>
             </dd>
             <xar:set name="tabclass">$activetab=='search'?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-weather-user-search;">
-                    <xar:mlstring>Location Search</xar:mlstring>
+                    Location Search
                 </a>
             </dd>
             <xar:if condition="xarUserIsLoggedIn()">
                 <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
                 <dd class="#$tabclass#">
                     <a href="&xar-modurl-weather-user-modifyconfig;">
-                        <xar:mlstring>Modify Configuration</xar:mlstring>
+                        Modify Configuration
                     </a>
                 </dd>
             </xar:if>

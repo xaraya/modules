@@ -3,49 +3,49 @@
     <div class="xar-mod-body">
         <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" border="0"  class="xar-module-icon" alt="weather.com&#174;" width="86" height="64"/></a>
 
-        <h2><xar:mlstring>Overview</xar:mlstring></h2>
+        <h2>Overview</h2>
 
-        <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+        <h3>What is it?</h3>
 
-        <p><em><xar:mlstring><strong>weather.com&#174;</strong> XML Data Feed</xar:mlstring></em>
+        <p><em><strong>weather.com&#174;</strong> XML Data Feed</em>
             <ul>
-                <li><xar:mlstring>Downloads the <strong>weather.com&#174;</strong> xml data feeds and presents your forecast.</xar:mlstring></li>
-                <li><xar:mlstring>Implements the guidelines defined in the <strong>weather.com&#174;</strong> SDK.</xar:mlstring></li>
+                <li>Downloads the <strong>weather.com&#174;</strong> xml data feeds and presents your forecast.</li>
+                <li>Implements the guidelines defined in the <strong>weather.com&#174;</strong> SDK.</li>
             </ul>
         </p>
-        <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
-        <p><xar:mlstring>
+        <h3>How to use it?</h3>
+        <p>
             You need to register at <strong>weather.com&#174;</strong> in order to use this module.  This seems like
             a fair trade since you will be using their feeds and they do cover the entire planet.  Just follow the
             steps below and you should be up and running in no time.
-            </xar:mlstring>
+            
             <ul>
-                <li><xar:mlstring>Register for a <strong>Partner ID</strong> and <strong>License Key</strong> at </xar:mlstring><a href="http://www.weather.com/services/xmloap.html">http://www.weather.com/services/xmloap.html</a>.</li>
-                <li><xar:mlstring>You'll receive an email with your <strong>Partner ID</strong> and <strong>License Key</strong>, along with some other information.</xar:mlstring></li>
-                <li><xar:mlstring>Enter you <strong>Partner ID</strong> and <strong>License Key</strong> into the XoapWeather Config.</xar:mlstring></li>
+                <li>Register for a <strong>Partner ID</strong> and <strong>License Key</strong> at <a href="http://www.weather.com/services/xmloap.html">http://www.weather.com/services/xmloap.html</a>.</li>
+                <li>You'll receive an email with your <strong>Partner ID</strong> and <strong>License Key</strong>, along with some other information.</li>
+                <li>Enter you <strong>Partner ID</strong> and <strong>License Key</strong> into the XoapWeather Config.</li>
             </ul>
         </p>
-        <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+        <h3>Included Blocks</h3>
         <p>
             <ul>
-                <li><xar:mlstring>current (Current Conditions)</xar:mlstring></li>
+                <li>current (Current Conditions)</li>
             </ul>
         </p>
         <h3>
-            <xar:mlstring>Further Information</xar:mlstring>
+            Further Information
         </h3>
         <p>
-            <xar:mlstring>Further information on the Weather module can be found at</xar:mlstring>
+            Further information on the Weather module can be found at
         </p>
         <ul>
-            <li><xar:mlstring>Weather Extension page at</xar:mlstring> <a title="#xarML('Weather Module - Xaraya Extension 36')#" href="http://www.xaraya.com/index.php/release/662.html">Xaraya Extension and Releases</a>.
-                <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+            <li>Weather Extension page at <a title="#xarML('Weather Module - Xaraya Extension 36')#" href="http://www.xaraya.com/index.php/release/662.html">Xaraya Extension and Releases</a>.
+                 Click on Version History tab at the bottom to get the latest release information.
             </li>
-            <li><xar:mlstring>Related tutorials and documentation on Weather found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/weather/" title="#xarML('Related documentation on Weather')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+            <li>Related tutorials and documentation on Weather found at <a href="http://www.xaraya.com/index.php/keywords/weather/" title="#xarML('Related documentation on Weather')#">Xaraya Documentation.</a>
             </li>
         </ul>
         <p class="xar-sub">
-            <strong>&#160;<xar:mlstring>Weather Module Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 1.1.1&#160; 2007-12-01
+            <strong>&#160;Weather Module Overview</strong><br />&#160;Version 1.1.1&#160; 2007-12-01
         </p>
     </div>
 </xar:template>

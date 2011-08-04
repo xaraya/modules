@@ -1,12 +1,12 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
-    <xar:set name="pagename"><xar:mlstring>Weather Location Search</xar:mlstring></xar:set>
+    <xar:set name="pagename">Weather Location Search</xar:set>
     <xar:set name="dummy">#xarTplSetPageTitle($pagename)#</xar:set>
 
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>Weather Forecast</xar:mlstring>
+            Weather Forecast
         </span>
     </div>
 
@@ -21,7 +21,7 @@
         <xar:template file="weatherdotcomsearch"/>
 
         <xar:if condition="count($matches)">
-            <p><xar:mlstring>Below are the matches that found:</xar:mlstring></p>
+            <p>Below are the matches that found:</p>
             <form method="get" action="index.php">
                 <input type="hidden" name="module" value="weather"/>
                 <input type="hidden" name="func" value="main"/>
@@ -34,7 +34,7 @@
                 <input type="submit" name="submit" value="Get Forecast"/>
             </form>
         <xar:elseif condition="$error eq true"/>
-            <p class="xar-error"><xar:mlstring>No Matches were found</xar:mlstring></p>
+            <p class="xar-error">No Matches were found</p>
         </xar:if>
 
     </div>

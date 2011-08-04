@@ -2,9 +2,9 @@
     <div class="xar-row">
         <div class="xar-col">
             <label for="itemsperpage" title="#xarML('Partner ID from www.weather.com')#" class="xar-form-label">
-                <xar:mlstring>
+                
                     Partner ID:
-                </xar:mlstring>
+                
             </label>
         </div>
         <div class="xar-col">
@@ -15,9 +15,9 @@
     <div class="xar-row">
         <div class="xar-col">
             <label for="itemsperpage" title="#xarML('License key from www.weather.com')#" class="xar-form-label">
-                <xar:mlstring>
+                
                     License Key:
-                </xar:mlstring>
+                
             </label>
         </div>
         <div class="xar-col">
@@ -28,9 +28,9 @@
     <div class="xar-row">
         <div class="xar-col">
             <label for="itemsperpage" title="#xarML('Default location to show weather information for')#" class="xar-form-label">
-                <xar:mlstring>
+                
                     Default Location:
-                </xar:mlstring>
+                
             </label>
         </div>
         <div class="xar-col">
@@ -41,9 +41,9 @@
     <div class="xar-row">
         <div class="xar-col">
             <label for="itemsperpage" title="#xarML('Units of measurtement in metric or US systems')#" class="xar-form-label">
-                <xar:mlstring>
+                
                     Measurement Units:
-                </xar:mlstring>
+                
             </label>
         </div>
         <div class="xar-col">
@@ -60,9 +60,9 @@
     <div class="xar-row">
         <div class="xar-col">
             <label for="itemsperpage" title="#xarML('Number of Days for Extended Forecasts')#" class="xar-form-label">
-                <xar:mlstring>
+                
                     Forecast Days:
-                </xar:mlstring>
+                
             </label>
         </div>
         <div class="xar-col">
@@ -73,9 +73,9 @@
     <div class="xar-row">
         <div class="xar-col">
             <label for="itemsperpage" title="#xarML('Time the current conditions information is cached')#" class="xar-form-label">
-                <xar:mlstring>
+                
                     Current Cache Time:
-                </xar:mlstring>
+                
             </label>
         </div>
         <div class="xar-col">
@@ -86,9 +86,9 @@
     <div class="xar-row">
         <div class="xar-col">
             <label for="itemsperpage" title="#xarML('Time the extended forecast information is cached')#" class="xar-form-label">
-                <xar:mlstring>
+                
                     Forecast Cache Time:
-                </xar:mlstring>
+                
             </label>
         </div>
         <div class="xar-col">

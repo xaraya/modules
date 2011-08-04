@@ -1,12 +1,12 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
-    <xar:set name="pagename"><xar:mlstring>Modify Weather Config</xar:mlstring></xar:set>
+    <xar:set name="pagename">Modify Weather Config</xar:set>
     <xar:set name="dummy">#xarTplSetPageTitle($pagename)#</xar:set>
 
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>Weather Forecast</xar:mlstring>
+            Weather Forecast
         </span>
     </div>
 
@@ -22,14 +22,14 @@
             <form action="#xarModURL('weather','user','updateconfig')#" method="post">
                 <table>
                     <tr>
-                        <td><xar:mlstring>Default Location</xar:mlstring> : </td>
+                        <td>Default Location : </td>
                         <td>
                             <xar:set name="value"><xar:var scope="module" type="user" module="weather" name="default_location"/></xar:set>
                             <xar:data-input type="citylocation" name="default_location" value="$default_location"/>
                         </td>
                     </tr>
                     <tr>
-                        <td><xar:mlstring>Number of Days for Extended Forecasts</xar:mlstring> : </td>
+                        <td>Number of Days for Extended Forecasts : </td>
                         <td>
                             <select name="extdays">
                                 <xar:for start="$i = 1" test="$i le 10" iter="$i++">
@@ -43,11 +43,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><xar:mlstring>Measurement Units</xar:mlstring> : </td>
+                        <td>Measurement Units : </td>
                         <td>
                             <select name="units">
-                                <xar:set name="StandardUnits"><xar:mlstring>Standard</xar:mlstring></xar:set>
-                                <xar:set name="MetricUnits"><xar:mlstring>Metric</xar:mlstring></xar:set>
+                                <xar:set name="StandardUnits">Standard</xar:set>
+                                <xar:set name="MetricUnits">Metric</xar:set>
                                 <xar:if condition="$units eq 's'">
                                     <option value="s" selected="selected">#$StandardUnits#</option>
                                 <xar:else />
