@@ -6,30 +6,50 @@
     <xar:set name="request">xarController::$request->getInfo()</xar:set>
     <xar:set name="activetab">#$request.2#</xar:set>
     <div>
-        <dl class="xar-tabs">
-            <dt class="help" title="Choose an action to perform">
+        <ul class="xar-tabs xar-alt xar-norm-outline">
+            <li class="help" title="Choose an action to perform">
                 Actions:
-            </dt>
-            <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-                <a href="&xar-modurl-weather-user-main;">
+            </li>
+            <xar:if condition="$activetab eq 'main'">
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+            </xar:if>
+            <li class="#$tabclass#">
+                <a href="&xar-modurl-weather-user-main;" class="#$linkclass#">
                     Forecast
                 </a>
-            </dd>
-            <xar:set name="tabclass">$activetab=='search'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-                <a href="&xar-modurl-weather-user-search;">
+            </li>
+            
+            <xar:if condition="$activetab eq 'search'">
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+            </xar:if>
+            <li class="#$tabclass#">
+                <a href="&xar-modurl-weather-user-search;" class="#$linkclass#">
                     Location Search
                 </a>
-            </dd>
+            </li>
+            
             <xar:if condition="xarUserIsLoggedIn()">
-                <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
-                <dd class="#$tabclass#">
-                    <a href="&xar-modurl-weather-user-modifyconfig;">
+                <xar:if condition="$activetab eq 'modifyconfig'">
+                    <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                    <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+                <xar:else />
+                    <xar:set name="tabclass">'xar-tab'</xar:set>
+                    <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+                </xar:if>
+                <li class="#$tabclass#">
+                    <a href="&xar-modurl-weather-user-modifyconfig;" class="#$linkclass#">
                         Modify Configuration
                     </a>
-                </dd>
+                </li>
             </xar:if>
-        </dl>
+        </ul>
     </div>
 </xar:template>

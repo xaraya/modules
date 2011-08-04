@@ -1,8 +1,8 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
-    <xar:set name="pagename">Weather Location Search</xar:set>
-    <xar:set name="dummy">#xarTplSetPageTitle($pagename)#</xar:set>
+    <xar:var name="pagename">Weather Location Search</xar:var>
+    <xar:set name="dummy">xarTplSetPageTitle($pagename)</xar:set>
 
     <div class="xar-mod-head">
         <span class="xar-mod-title">
