@@ -364,22 +364,22 @@ class xarXmlParser
 class xarAbstractXmlHandler
 {
     // Abstract functions
-    function default_handler()
+    function default_handler($parser, $data)
     {}
 
-    function character_data()
+    function character_data($parser, $data)
     {}
 
-    function open_tag()
+    function open_tag($parser, $tagname, $attribs, $type=XML_ELEMENT_NODE)
     {}
 
-    function close_tag()
+    function close_tag($parser, $tagname)
     {}
 
-    function process_instruction()
+    function process_instruction($parser, $target , $data)
     {}
 
-    function unparsed_entity()
+    function unparsed_entity($parser, $entity_name, $resolve_base, $system_id, $public_id, $notation_name)
     {}
 
     function notation_declaraion()
@@ -388,10 +388,10 @@ class xarAbstractXmlHandler
     function external_entity_declaraion()
     {}
 
-    function start_namespace()
+    function start_namespace($parser, $prefix, $uri)
     {}
 
-    function end_namespace()
+    function end_namespace($parser, $prefix)
     {}
 
     function _reset()
