@@ -17,6 +17,6 @@
  */
 function weather_admin_main()
 {
-   return xarResponse::Redirect(xarModURL('weather', 'admin', 'modifyconfig'));
+   return xarController::redirect(xarModURL('weather', 'admin', 'modifyconfig'));
 }
 ?>

@@ -12,13 +12,13 @@
 
     <div class="xar-mod-body">
 
-        <xar:template type="module" module="weather" file="user-menu" />
+        <xar:template type="module" module="weather" file="user-menu"/>
 
         <!-- Uncomment next line if you want a search form in the main page -->
-        <!--<xar:template file="weatherdotcomsearch" /> -->
+        <!--<xar:template file="weatherdotcomsearch"/> -->
 
         <!-- the weather.com links are required -->
-        <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" class="xar-module-icon" alt="weather.com&#174;" /></a>
+        <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" class="xar-module-icon" alt="weather.com&#174;"/></a>
 
         <div id="currentweather">
             <h2 id="weatherCurrentHeader">
@@ -29,7 +29,7 @@
             </h2>
             <table>
                 <tr>
-                    <td class="xar-align-center xar-valign-middle"><img src="#xarTplGetImage('icons/default/128/'.$wData.icon.'.png','weather')#" alt="#$wData.icon#" /></td>
+                    <td class="xar-align-center xar-valign-middle"><img src="#xarTplGetImage('icons/default/128/'.$wData.icon.'.png','weather')#" alt="#$wData.icon#"/></td>
                     <td class="xar-align-center xar-valign-middle"><h1>#$wData.temp#&#176;#$wData.unitsTemp#</h1></td>
                 </tr>
                 <tr>
@@ -52,12 +52,12 @@
                 </tr>
                 <tr>
                     <td class="xar-align-center xar-valign-middle">
-                        <img src="#xarTplGetImage('icons/default/32/'.$eData.0.part.d.icon.'.png','weather')#" alt="#$eData.0.part.d.icon#" />
+                        <img src="#xarTplGetImage('icons/default/32/'.$eData.0.part.d.icon.'.png','weather')#" alt="#$eData.0.part.d.icon#"/>
                         <br />
                         <strong>#$eData[0]['part']['d']['cond']#</strong><br />
                     </td>
                     <td class="xar-align-center xar-valign-middle">
-                        <img src="#xarTplGetImage('icons/default/32/'.$eData.0.part.n.icon.'.png','weather')#" alt="#$eData.0.part.n.icon#" />
+                        <img src="#xarTplGetImage('icons/default/32/'.$eData.0.part.n.icon.'.png','weather')#" alt="#$eData.0.part.n.icon#"/>
                         <br />
                         <strong>#$eData[0]['part']['n']['cond']#</strong><br />
                     </td>
@@ -171,7 +171,7 @@
                         <strong>
                         <a href="#xarModURL('weather','user','details',array('xwday'=>0,'location'=>$wData['location']))#">#$eData[0]['wkday']#</a>
                         </strong><br />#$eData[0]['date']#</td>
-                    <td valign="middle" align="center"><img src="#xarTplGetImage('icons/default/32/'.$eData.0.part.d.icon.'.png','weather')#" alt="#$eData.0.part.d.icon#" /></td>
+                    <td valign="middle" align="center"><img src="#xarTplGetImage('icons/default/32/'.$eData.0.part.d.icon.'.png','weather')#" alt="#$eData.0.part.d.icon#"/></td>
                     <td valign="middle" align="center">#$eData[0]['part']['d']['cond']#</td>
                     <td valign="middle" align="center"><strong>#$eData[0]['hi']#&#176;/#$eData[0]['lo']#&#176;</strong></td>
                     <td valign="middle" align="center">#$eData[0]['part']['d']['ppcp']#%</td>
@@ -188,7 +188,7 @@
                             <strong>
                             <a href="#xarModURL('weather','user','details',array('xwday'=>$i,'location'=>$wData['location']))#">#$eData[$i]['wkday']#</a>
                             </strong><br />#$eData[$i]['date']#</td>
-                        <td valign="middle" align="center"><img src="#xarTplGetImage('icons/default/32/'.$eData.$i.part.d.icon.'.png','weather')#" alt="#$eData.$i.part.d.icon#" /></td>
+                        <td valign="middle" align="center"><img src="#xarTplGetImage('icons/default/32/'.$eData.$i.part.d.icon.'.png','weather')#" alt="#$eData.$i.part.d.icon#"/></td>
                         <td valign="middle" align="center">#$eData[$i]['part']['d']['cond']#</td>
                         <td valign="middle" align="center"><strong>#$eData[$i]['hi']#&#176;/#$eData[$i]['lo']#&#176;</strong></td>
                         <td valign="middle" align="center">#$eData[$i]['part']['d']['ppcp']#%</td>
@@ -201,6 +201,6 @@
 
     <div class="xar-mod-foot">
         <!-- the weather.com links are required -->
-        <xar:template file="weatherdotcomfooter" />
+        <xar:template file="weatherdotcomfooter"/>
     </div>
 </xar:template>

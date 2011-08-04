@@ -1,7 +1,7 @@
 <?php
     sys::import('xaraya.structures.containers.blocks.basicblock');
 
-    class WeatherBlock extends BasicBlock
+    class Weather_WeatherBlock extends BasicBlock
     {
         public $no_cache            = 1;
 

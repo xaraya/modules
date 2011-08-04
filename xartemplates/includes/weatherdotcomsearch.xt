@@ -6,10 +6,10 @@
         <form method="post" action="index.php">
             <div>        
                 <label for="loc"><xar:mlstring>Enter in a City or US Zip:</xar:mlstring></label>
-                <xar:data-input type="citylocation" name="default_location" value="$default_location" />
-                <input type="hidden" name="module" value="weather" />
-                <input type="hidden" name="func" value="search" />
-                <input type="hidden" name="type" value="user" />
+                <xar:data-input type="citylocation" name="default_location" value="$default_location"/>
+                <input type="hidden" name="module" value="weather"/>
+                <input type="hidden" name="func" value="search"/>
+                <input type="hidden" name="type" value="user"/>
                 <input type="submit" name="Submit" value="Search"/>
             </div>
         </form>

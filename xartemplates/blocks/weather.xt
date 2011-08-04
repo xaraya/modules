@@ -13,9 +13,9 @@
             <table class="xar-fullwidth" style="border : 0;">
                 <tr>
                     <td class="xar-align-center xar-valign-middle">
-                        <img src="#xarTplGetImage('icons/default/64/'.$wData.icon.'.png','weather')#" alt="#$wData.icon#" />
+                        <img src="#xarTplGetImage('icons/default/64/'.$wData.icon.'.png','weather')#" alt="#$wData.icon#"/>
                         <!--Change above image to /32/ if column is too narrow-->
-                        <!--<img src="modules/weather/xarimages/icons/default/64/#$wData.icon#.png" />-->
+                        <!--<img src="modules/weather/xarimages/icons/default/64/#$wData.icon#.png"/>-->
                         <br />
                         <strong>#$wData.conditions#</strong>
                     </td>
@@ -66,7 +66,7 @@
             </table> 
 
             <!-- the weather.com links are required -->
-            <xar:template file="weatherdotcommini" />
+            <xar:template file="weatherdotcommini"/>
         </div>
     </xar:foreach>
         <xar:if condition="isset($blockstoshow) AND $i gt $blockstoshow">

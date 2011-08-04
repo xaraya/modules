@@ -60,7 +60,7 @@ function weather_admin_updateconfig()
             break;
     }
 
-    xarResponse::Redirect(xarModURL('weather', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+    xarController::redirect(xarModURL('weather', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
     // Return
     return true;
 }

@@ -44,7 +44,7 @@ function weather_init()
     #
     # Set up privilege instances
     #
-        $xartable =& xarDBGetTables();
+        $xartable =& xarDB::getTables();
         $query = "SELECT DISTINCT i.xar_title 
                   FROM $xartable[block_instances] i, $xartable[block_types] t 
                   WHERE t.xar_id = i.xar_type_id AND t.xar_module = 'weather'";
@@ -112,42 +112,11 @@ function weather_upgrade($oldversion)
  */
 function weather_delete()
 {
-        // Only change the next line. No need for anything else
-        $this_module = 'weather';
-
-    # --------------------------------------------------------
-    #
-    # Remove database tables
-    #
-        // Load table maintenance API
-        sys::import('xaraya.tableddl');
-
-        // Generate the SQL to drop the table using the API
-        $prefix = xarDB::getPrefix();
-        $table = $prefix . "_" . $this_module;
-        $query = xarDBDropTable($table);
-        if (empty($query)) return; // throw back
-
     # --------------------------------------------------------
     #
     # Remove block types
     #
         if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type', array('modName'  => 'weather', 'blockType'=> 'weather'))) return;
-
-    # --------------------------------------------------------
-    #
-    # Remove block groups
-    #
-
-    # --------------------------------------------------------
-    #
-    # Delete all DD objects created by this module
-    #
-        try {
-            $dd_objects = unserialize(xarModVars::get($this_module,$this_module . '_objects'));
-            foreach ($dd_objects as $key => $value)
-                $result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $value));
-        } catch (Exception $e) {}
 
     # --------------------------------------------------------
     #
@@ -159,14 +128,6 @@ function weather_delete()
                                 );
         } catch (Exception $e) {}
 
-    # --------------------------------------------------------
-    #
-    # Remove modvars, masks and privilege instances
-    #
-        xarRemoveMasks($this_module);
-        xarRemoveInstances($this_module);
-        xarModVars::delete_all($this_module);
-
-        return true;
+    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'weather'));
 }
 ?>

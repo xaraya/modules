@@ -12,13 +12,13 @@
 
     <div class="xar-mod-body">
 
-        <xar:template type="module" module="weather" file="user-menu" />
+        <xar:template type="module" module="weather" file="user-menu"/>
 
         <!-- Uncomment next line if you want a search form in the main page -->
-        <!--<xar:template file="weatherdotcomsearch" /> -->
+        <!--<xar:template file="weatherdotcomsearch"/> -->
 
         <!-- the weather.com links are required -->
-        <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" class="xar-module-icon" alt="weather.com&#174;" /></a>
+        <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" class="xar-module-icon" alt="weather.com&#174;"/></a>
 
         <div id="currentweather">
 
@@ -38,11 +38,11 @@
                 </tr>
                 <tr>
                     <td valign="top" align="center">
-                        <img src="#xarTplGetImage('icons/default/32/'.$eData.$day.part.d.icon.'.png','weather')#" alt="#$eData.$day.part.d.icon#" /><br />
+                        <img src="#xarTplGetImage('icons/default/32/'.$eData.$day.part.d.icon.'.png','weather')#" alt="#$eData.$day.part.d.icon#"/><br />
                         <strong>#$eData[$day]['part']['d']['cond']#</strong><br />
                     </td>
                     <td valign="top" align="center">
-                        <img src="#xarTplGetImage('icons/default/32/'.$eData.$day.part.n.icon.'.png','weather')#" alt="#$eData.$day.part.d.icon#" /><br />
+                        <img src="#xarTplGetImage('icons/default/32/'.$eData.$day.part.n.icon.'.png','weather')#" alt="#$eData.$day.part.d.icon#"/><br />
                         <strong>#$eData[$day]['part']['n']['cond']#</strong><br />
                     </td>
                 </tr>
@@ -127,6 +127,6 @@
 
     <div class="xar-mod-foot">
         <!-- the weather.com links are required -->
-        <xar:template file="weatherdotcomfooter" />
+        <xar:template file="weatherdotcomfooter"/>
     </div>
 </xar:template>
