@@ -17,6 +17,12 @@
  */
 function weather_admin_main()
 {
-   return xarController::redirect(xarModURL('weather', 'admin', 'modifyconfig'));
+    if(!xarSecurityCheck('EditWeather')) return;
+
+    if (xarModVars::get('modules', 'disableoverview') == 0) {
+        return array();
+    } else {
+        return xarController::redirect(xarModURL('weather', 'admin', 'modifyconfig'));
+    }
 }
 ?>

@@ -69,6 +69,7 @@
                     $itemid = $data['module_settings']->updateItem();
                 }
 
+                xarController::redirect(xarModURL('weather', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
                 break;
 
         }

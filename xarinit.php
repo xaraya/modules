@@ -28,6 +28,7 @@ function weather_init()
     #
         xarRegisterMask('ViewWeather','All','weather','All','All','ACCESS_OVERVIEW');
         xarRegisterMask('ReadWeather','All','weather','All','All','ACCESS_READ');
+        xarRegisterMask('EditWeather','All','weather','All','All','ACCESS_EDIT');
         xarRegisterMask('ManageWeather','All','weather','All','All','ACCESS_DELETE');
         xarRegisterMask('AdminWeather','All','weather','All','All','ACCESS_ADMIN');
 
@@ -36,6 +37,7 @@ function weather_init()
     # Set up privileges
     #
         xarRegisterPrivilege('ReadWeather','All','weather','All','All','ACCESS_READ');
+        xarRegisterPrivilege('EditWeather','All','weather','All','All','ACCESS_EDIT');
         xarRegisterPrivilege('ManageWeather','All','weather','All','All','ACCESS_DELETE');
         xarRegisterPrivilege('AdminWeather','All','weather','All','All','ACCESS_ADMIN');
         xarRegisterMask('ReadWeatherBlock', 'All', 'weather', 'Block', 'All', 'ACCESS_OVERVIEW');
