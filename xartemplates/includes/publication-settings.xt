@@ -112,6 +112,16 @@
                 <xar:data-label property="$properties['theme']" for="id" label="$label" />
                 <xar:data-input property="$properties['theme']" />
             </div>
+            <div class="xar-form-input-wrapper">
+                <xar:var name="label">HTML Page Title</xar:var>
+                <xar:data-label property="$properties['page_title']" for="id" label="$label" />
+                <xar:data-input property="$properties['page_title']" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <xar:var name="label">HTML Keywords</xar:var>
+                <xar:data-label property="$properties['keywords']" for="id" label="$label" />
+                <xar:data-input property="$properties['keywords']" />
+            </div>
         </fieldset>
         <fieldset>
             <legend>
