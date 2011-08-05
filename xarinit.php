@@ -43,6 +43,7 @@ function publications_init()
             pubtype_id          tinyint NOT NULL DEFAULT '1',
             pages               integer unsigned NOT NULL DEFAULT '1',
             locale              varchar(20) NOT NULL DEFAULT '',
+            page_title          varchar(255) NOT NULL DEFAULT '',
             leftpage_id         integer unsigned NULL,
             rightpage_id        integer unsigned NULL,
             parentpage_id       integer unsigned NULL,
