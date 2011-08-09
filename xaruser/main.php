@@ -23,7 +23,7 @@ function weather_user_main()
 
     /* Default view */
     $w = xarModAPIFunc('weather','user','factory');
-//    var_dump($w->forecastData());exit;
+
     return array(
         'wData'=>$w->ccData(),
         'eData'=>$w->forecastData()

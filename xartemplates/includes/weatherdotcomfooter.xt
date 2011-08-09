@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:set name="weatherdotcomurl">'<a href="http://www.weather.com?prod=xoap&#38;par='.xarModVars::get('weather','partner_id').'"><strong>weather.com&#174;</strong></a>'</xar:set>
     <xar:set name="linkOne">$wData['linkOne']</xar:set>
