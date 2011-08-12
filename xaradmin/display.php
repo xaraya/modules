@@ -80,8 +80,8 @@ function publications_admin_display($args)
         // If this is from a link of a redirect child page, use the child param as new URL
         if(!xarVarFetch('child',    'str', $child,  NULL, XARVAR_NOT_REQUIRED)) {return;}
         if (!empty($child)) {
-            $url = urldecode($child);
             // Turn entities into amps
+            $url = urldecode($child);
         } else {
             $url = $data['object']->properties['redirect_url']->value;
         }
@@ -89,7 +89,7 @@ function publications_admin_display($args)
         $params['query'] = preg_replace('/&amp;/','&',$params['query']);
         
         // If this is an external link, show it without further processing
-        if (!empty($params['host']) && $params['host'] != xarServer::getHost()) {
+        if (!empty($params['host']) && $params['host'] != xarServer::getHost() && $params['host'].":".$params['port'] != xarServer::getHost()) {
             xarController::redirect($url);
         } else{
             parse_str($params['query'], $info);
@@ -101,10 +101,33 @@ function publications_admin_display($args)
             $page = xarMod::guiFunc($info['module'],'user',$info['func'],$other_params);
             
             // Debug
-            echo xarModURL($info['module'],'user',$info['func'],$other_params);
-            
-            // Find the URLs in links or submits
-            $pattern='/(href|action)="([^"\r\n]*)"/';
+            // echo xarModURL($info['module'],'user',$info['func'],$other_params);
+# --------------------------------------------------------
+#
+# The transform of the subordinate function's template
+#
+            // Find the URLs in submits
+            $pattern='/(action)="([^"\r\n]*)"/';
+            preg_match_all($pattern,$page,$matches);
+            $pattern = array();
+            $replace = array();
+            foreach ($matches[2] as $match) {
+                $pattern[] = '%</form%';
+                $replace[] = '<input type="hidden" name="return_url" id="return_url" value="' . urlencode(xarServer::getCurrentURL()) . '"/><input type="hidden" name="child" value="' . urlencode($match) . '"/></form';
+            }
+            $page = preg_replace($pattern,$replace,$page);
+
+            $pattern='/(action)="([^"\r\n]*)"/';
+            $page = preg_replace_callback($pattern,
+                create_function(
+                    '$matches',
+                    'return $matches[1]."=\"".xarServer::getCurrentURL()."\"";'
+                ),
+                $page
+            );
+
+            // Find the URLs in links
+            $pattern='/(href)="([^"\r\n]*)"/';
             $page = preg_replace_callback($pattern,
                 create_function(
                     '$matches',
@@ -112,6 +135,9 @@ function publications_admin_display($args)
                 ),
                 $page
             );
+
+# --------------------------------------------------------
+            
             return $page;
         }
     }
