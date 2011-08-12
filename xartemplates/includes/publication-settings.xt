@@ -153,19 +153,18 @@
             </xar:set>
         </xar:if>
         <legend>
+            Access
+        </legend>
+        <legend>
             Display Access
         </legend>
         <xar:set name="propname">"dd_" . $properties['access']->id . '_display'</xar:set>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['display']"/>
-    </fieldset>
-    <fieldset>
         <legend>
             Modify Access
         </legend>
         <xar:set name="propname">"dd_" . $properties['access']->id . '_modify'</xar:set>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['modify']"/>
-    </fieldset>
-    <fieldset>
         <legend>
             Delete Access
         </legend>
