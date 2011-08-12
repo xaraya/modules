@@ -125,15 +125,15 @@
         </fieldset>
         <fieldset>
             <legend>
-                Redirect
+                Proxy page
             </legend>
             <div class="xar-form-input-wrapper">
-                <xar:var name="label">Redirect this page</xar:var>
+                <xar:var name="label">Set this page to proxy</xar:var>
                 <xar:data-label property="$properties['redirect_flag']" for="id" label="$label" />
                 <xar:data-input property="$properties['redirect_flag']" />
             </div>
             <div class="xar-form-input-wrapper">
-                <xar:var name="label">Redirect Address</xar:var>
+                <xar:var name="label">URL to proxy</xar:var>
                 <xar:data-label property="$properties['redirect_url']" for="id" label="$label" />
                 <xar:data-input property="$properties['redirect_url']" />
             </div>
