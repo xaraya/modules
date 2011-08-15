@@ -16,7 +16,7 @@
  */
 sys::import('xaraya.structures.query');
 
-function publications_admin_viewpubtypes()
+function publications_admin_view_pubtypes()
 {
     if (!xarSecurityCheck('AdminPublications')) return;
 

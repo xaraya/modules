@@ -86,7 +86,7 @@ function publications_admin_showpropval($args)
                 if (!xarVarFetch('return_url', 'isset', $return_url,  NULL, XARVAR_DONT_SET)) {return;}
                 if (empty($return_url)) {
                     // return to modifyprop
-                    $return_url = xarModURL('publications', 'admin', 'viewpubtypes',
+                    $return_url = xarModURL('publications', 'admin', 'view_pubtypes',
                                             array('ptid' => $ptid,
                                                   'action' => 'modify'));
                 }
