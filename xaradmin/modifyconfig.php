@@ -65,12 +65,6 @@ function publications_admin_modifyconfig()
         }
     }
 
-    $data['stateoptions'] = array();
-    $states = xarModAPIFunc('publications','user','getstates');
-    foreach ($states as $id => $name) {
-        $data['stateoptions'][] = array('value' => $id, 'label' => $name);
-    }
-
     // Module alias for short URLs
     $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
     if (!empty($id)) {
@@ -86,7 +80,7 @@ function publications_admin_modifyconfig()
     }
 
     // Get the tree of all pages.
-    $data['tree'] = xarMod::apiFunc('publications', 'user', 'getpagestree', array('dd_flag' => false));    if (!xarVarFetch('phase',        'str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    $data['tree'] = xarMod::apiFunc('publications', 'user', 'getpagestree', array('dd_flag' => false));    
 
     // Implode the names for each page into a path for display.
     $data['treeoptions'] = array();
