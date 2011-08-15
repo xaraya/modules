@@ -339,7 +339,10 @@ function publications_user_viewmap($args)
 // TODO: allow templates per category ?
        $template = null;
     }
-
+    
+    // Pass the type of map to the template, so we can decide what links to show
+    $data['by'] = $by;
+    
     return xarTplModule('publications', 'user', 'viewmap', $data, $template);
 }
 

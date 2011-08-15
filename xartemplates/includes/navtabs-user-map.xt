@@ -5,16 +5,20 @@
     <dt class="help" title="#xarML('Click on a tab to explore further')#">
         Options 
     </dt>
-    <dd>
-        <a href="#xarModURL('publications','user','viewmap',array('by' => 'cat'))#">
-            Publication Map by Category 
-        </a>
-    </dd>
+    <xar:if condition="$by ne 'cat'">
+        <dd>
+            <a href="#xarModURL('publications','user','viewmap',array('by' => 'cat'))#">
+                Publication Map by Category 
+            </a>
+        </dd>
+    </xar:if>
+    <xar:if condition="$by ne 'pub'">
     <dd>
         <a href="#xarModURL('publications','user','viewmap',array('by' => 'pub','ptid' => $ptid))#">
             Publication Map by Publication Type 
         </a>
     </dd>
+    </xar:if>
     <xar:if condition="!empty($viewlink)">
         <dd>
             <a href="#$viewlink#">
