@@ -11,8 +11,10 @@
                 <label title="#xarML('Select a type of publication to add')#" class="xar-form-label">
                     Publication Type:
                 </label>
-                <xar:set name="newurl">"document.location.href='" . xarModURL('publications','admin','view') . "&amp;ptid='+this.value"</xar:set>
-                <xar:data-input type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$newurl" />
+                <form method="post" action="#xarModURL('publications','admin','view')#">
+                    <xar:set name="onchange">"javascript:this.form.submit();"</xar:set>
+                    <xar:data-input name="ptid" type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$onchange" />
+                </form>
             </div>
             <xar:template file="navtabs-status" type="module" />
             <xar:if condition="!empty($owner) or !empty($locale) or !empty($pubdate)">
