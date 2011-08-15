@@ -9,8 +9,10 @@
         <dt class="help">
             Select Publication Type             : 
         </dt>
-        <xar:set name="newurl">"document.location.href='" . xarModURL('publications','admin','modifyconfig') . "&amp;ptid='+this.value"</xar:set>
-        <xar:data-input type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$newurl" />
+        <form method="post" action="#xarModURL('publications','admin','modifyconfig')#">
+            <xar:set name="onchange">"javascript:this.form.submit();"</xar:set>
+            <xar:data-input name="ptid" type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$onchange" />
+        </form>
         <dd style="float:right">
             <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#">
                 Publications List

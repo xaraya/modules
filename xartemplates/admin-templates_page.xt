@@ -8,12 +8,16 @@
             Manage Page Templates
         </h2>
         <form method="post" id="post" action="#xarServer::getCurrentURL()#" enctype="application/x-www-form-urlencoded" >
-            <div style="float:left">
-                <label title="#xarML('Select a template to create or modify')#" class="xar-form-label">
-                    Template file:
-                </label>
-                <xar:set name="newurl">"document.location.href='" . xarModURL('publications','admin','templates') . "';submit()"</xar:set>
-                <xar:data-input type="dropdown" name="file" options="$files" value="$file" onchange="this.form.submit();" />
+            <div class="xar-row">
+                <div class="xar-col">
+                    <label title="#xarML('Select a template to create or modify')#" class="xar-form-label">
+                        Template file:
+                    </label>
+                    <form method="post" action="#xarModURL('publications','admin','templates_page')#">
+                        <xar:set name="onchange">"javascript:this.form.submit();"</xar:set>
+                        <xar:data-input type="dropdown" name="file" options="$files" value="$file" onchange="$onchange" />
+                    </form>
+                </div>
             </div>
         </form>
         <div style="clear:both">&#160;</div>

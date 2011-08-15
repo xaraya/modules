@@ -35,8 +35,8 @@
             </li>
         </ul>
 
-       <form class="xar-formwidget" action="&xar-modurl-publications-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
-            <xar:if condition="$tab eq 'global'">
+        <xar:if condition="$tab eq 'global'">
+           <form class="xar-formwidget" action="&xar-modurl-publications-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
                 <xar:data-form object="$module_settings"/>
                 <fieldset>
                     <legend>
@@ -175,14 +175,30 @@
                     </legend>
                     <xar:data-input type="categorypicker" name="basecid" module="publications" itemtype="$ptid" />
                 </fieldset>
-            <xar:else />
                 <div class="xar-form-input-wrapper">
-                    <label class="help xar-form-label" title="#xarML('Select the type of publication whose settings you want to configure')#">                    
-                        Publication Type                    
-                    </label>
-                    <xar:set name="newurl">"document.location.href='" . xarModURL('publications','admin','modifyconfig',array('tab' => 'pubtypes')) . "&amp;ptid='+this.value"</xar:set>
-                    <xar:data-input type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$newurl" />
+                    <div class="xar-form-container-after">
+                        <xar:set name="label">xarML('Update Configuration')</xar:set>
+                        <xar:button type="submit" label="$label" />
+                        &#160;
+                        <xar:set name="label">xarML('Reset')</xar:set>
+                        <xar:button type="cancel" label="$label" />
+                        <input type="hidden" name="tab" id="tab" value="#$tab#" />
+                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" /> 
+                    </div>
                 </div>
+            </form>
+        <xar:else />
+            <div class="xar-form-input-wrapper">
+                <label class="help xar-form-label" title="#xarML('Select the type of publication whose settings you want to configure')#">                    
+                    Publication Type                    
+                </label>
+                <form method="post" action="#xarModURL('publications','admin','modifyconfig',array('tab' => 'pubtypes'))#">
+                    <xar:set name="onchange">"javascript:this.form.submit();"</xar:set>
+                    <xar:data-input name="ptid" type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$onchange" />
+                </form>
+            </div>
+           <form class="xar-formwidget" action="&xar-modurl-publications-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
+                <input type="hidden" name="ptid" value="#$ptid#" />
                 <fieldset class="xar-norm">
                     <legend>
                         View Settings
@@ -482,18 +498,18 @@
                     </legend>
                     <xar:data-input type="access" name="access_delete"/>
                 </fieldset>
-            </xar:if>
-            <div class="xar-form-input-wrapper">
-                <div class="xar-form-container-after">
-                    <xar:set name="label">xarML('Update Configuration')</xar:set>
-                    <xar:button type="submit" label="$label" />
-                    &#160;
-                    <xar:set name="label">xarML('Reset')</xar:set>
-                    <xar:button type="cancel" label="$label" />
-                    <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" /> 
+                <div class="xar-form-input-wrapper">
+                    <div class="xar-form-container-after">
+                        <xar:set name="label">xarML('Update Configuration')</xar:set>
+                        <xar:button type="submit" label="$label" />
+                        &#160;
+                        <xar:set name="label">xarML('Reset')</xar:set>
+                        <xar:button type="cancel" label="$label" />
+                        <input type="hidden" name="tab" id="tab" value="#$tab#" />
+                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" /> 
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </xar:if>
     </div>
 </xar:template>

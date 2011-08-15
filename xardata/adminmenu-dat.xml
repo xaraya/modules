@@ -44,6 +44,16 @@
             <mask>AdminPublications</mask>
             <type>admin</type>
             <includes>
+                <includeitem>templates_type</includeitem>
+            </includes>
+            <target>templates_type</target>
+            <title>Manage templates</title>
+            <label>Templates</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminPublications</mask>
+            <type>admin</type>
+            <includes>
                 <includeitem>stats</includeitem>
             </includes>
             <target>stats</target>
@@ -51,7 +61,7 @@
             <label>Utilities</label>
         </menuitem>
         <menuitem>
-            <mask>AdminDynamicData</mask>
+            <mask>AdminPublications</mask>
             <type>admin</type>
             <includes>
                 <includeitem>modifyconfig</includeitem>
