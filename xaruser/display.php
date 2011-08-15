@@ -8,15 +8,16 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Publications Module
- 
- * @author mikespub
+ * 
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
- * Display a page or a series of pages
+ * Display publication
  *
  * @param int itemid
  * @param str name
- * @param int ptid The publication Type ID
+ * @param int page
+ * @param int ptid The publication type ID
  * @return array with template information
  */
 
@@ -28,6 +29,7 @@
  * If no default page is defined it will show the custom 404 page of this module
  * If no 404 page is defined it will show the standard Xaraya 404 page
  */
+
 sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_display($args)
@@ -77,8 +79,77 @@ function publications_user_display($args)
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
+    $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
     $itemid = $data['object']->getItem(array('itemid' => $id));
     
+    // If this is a redirect page, then send it on its way now
+    if ($data['object']->properties['redirect_flag']->value) {
+    
+        // If this is from a link of a redirect child page, use the child param as new URL
+        if(!xarVarFetch('child',    'str', $child,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+        if (!empty($child)) {
+            // Turn entities into amps
+            $url = urldecode($child);
+        } else {
+            $url = $data['object']->properties['redirect_url']->value;
+        }
+        $params = parse_url($url);
+        $params['query'] = preg_replace('/&amp;/','&',$params['query']);
+        
+        // If this is an external link, show it without further processing
+        if (!empty($params['host']) && $params['host'] != xarServer::getHost() && $params['host'].":".$params['port'] != xarServer::getHost()) {
+            xarController::redirect($url);
+        } else{
+            parse_str($params['query'], $info);
+            $other_params = $info;
+            unset($other_params['module']);
+            unset($other_params['type']);
+            unset($other_params['func']);
+            unset($other_params['child']);
+            $page = xarMod::guiFunc($info['module'],'user',$info['func'],$other_params);
+            
+            // Debug
+            // echo xarModURL($info['module'],'user',$info['func'],$other_params);
+# --------------------------------------------------------
+#
+# The transform of the subordinate function's template
+#
+            // Find the URLs in submits
+            $pattern='/(action)="([^"\r\n]*)"/';
+            preg_match_all($pattern,$page,$matches);
+            $pattern = array();
+            $replace = array();
+            foreach ($matches[2] as $match) {
+                $pattern[] = '%</form%';
+                $replace[] = '<input type="hidden" name="return_url" id="return_url" value="' . urlencode(xarServer::getCurrentURL()) . '"/><input type="hidden" name="child" value="' . urlencode($match) . '"/></form';
+            }
+            $page = preg_replace($pattern,$replace,$page);
+
+            $pattern='/(action)="([^"\r\n]*)"/';
+            $page = preg_replace_callback($pattern,
+                create_function(
+                    '$matches',
+                    'return $matches[1]."=\"".xarServer::getCurrentURL()."\"";'
+                ),
+                $page
+            );
+
+            // Find the URLs in links
+            $pattern='/(href)="([^"\r\n]*)"/';
+            $page = preg_replace_callback($pattern,
+                create_function(
+                    '$matches',
+                    'return $matches[1]."=\"".xarServer::getCurrentURL(array("child" => urlencode($matches[2])))."\"";'
+                ),
+                $page
+            );
+
+# --------------------------------------------------------
+            
+            return $page;
+        }
+    }
+
     // Get the complete tree for this section of pages.
     // We need this for blocks etc.
     $tree = xarMod::apiFunc(

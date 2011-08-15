@@ -8,16 +8,26 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Publications Module
- 
- * @author mikespub
+ * 
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * Display publication
  *
- * @param int id
+ * @param int itemid
+ * @param str name
  * @param int page
- * @param int ptid The publication Type ID
+ * @param int ptid The publication type ID
  * @return array with template information
+ */
+
+/**
+ * Notes
+ * If passed an itemid this function will return the page with that ID
+ * If instead passed a name or ID of a publication type it will show the view of that publication type
+ * If nothing is passed it will show the default page of this module
+ * If no default page is defined it will show the custom 404 page of this module
+ * If no 404 page is defined it will show the standard Xaraya 404 page
  */
 
 sys::import('modules.dynamicdata.class.objects.master');
@@ -72,7 +82,7 @@ function publications_admin_display($args)
     $pubtypeobject->getItem(array('itemid' => $ptid));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
     $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
-    $data['object']->getItem(array('itemid' => $id));
+    $itemid = $data['object']->getItem(array('itemid' => $id));
     
     // If this is a redirect page, then send it on its way now
     if ($data['object']->properties['redirect_flag']->value) {
@@ -142,8 +152,34 @@ function publications_admin_display($args)
         }
     }
 
-//    $publication = $data['object']->getFieldValues();
-
+    // Get the complete tree for this section of pages.
+    // We need this for blocks etc.
+    $tree = xarMod::apiFunc(
+        'publications', 'user', 'getpagestree',
+        array(
+            'tree_contains_pid' => $id,
+            'key' => 'id',
+            'status' => 'ACTIVE,FRONTPAGE,PLACEHOLDER'
+        )
+    );
+        
+    // If this page is of type PLACEHOLDER, then look in its descendents
+    if ($data['object']->properties['state']->value == 5) {
+    
+        // Scan for a descendent that is ACTIVE or FRONTPAGE
+        if (!empty($tree['pages'][$id]['child_keys'])) {
+            foreach($tree['pages'][$id]['child_keys'] as $scan_key) {
+                // If the page is displayable, then treat it as the new page.
+                if ($tree['pages'][$scan_key]['status'] == 3 || $tree['pages'][$scan_key]['status'] == 4) {
+                    $id = $tree['pages'][$scan_key]['id'];
+                    $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
+                    $itemid = $data['object']->getItem(array('itemid' => $id));
+                    break;
+                }
+            }
+        }
+    }
+    
     // Specific layout within a template (optional)
     if (isset($layout)) {
         $data['layout'] = $layout;
@@ -151,13 +187,26 @@ function publications_admin_display($args)
         $data['layout'] = 'detail';
     }
 
-    $string = base64_encode('http://localhost:8888/index?module=base&func=test&dork=dork');
-    echo $string ."<br/>";
-    $array = xarController::$request->getInfo($string);
-    var_dump($array);
-    $string = base64_decode($string);
-    echo $string ."<br/>";
+    // Set the theme if needed
+    if (!empty($data['object']->properties['theme']->value)) xarTplSetThemeName($data['object']->properties['theme']->value);
     
+    // Set the page template if needed
+    if (!empty($data['object']->properties['page_template']->value)) xarTplSetPageTemplateName($data['object']->properties['page_template']->value);
+
+    // Now we can cache all this data away for the blocks.
+    // The blocks should have access to most of the same data as the page.
+    xarVarSetCached('Blocks.publications', 'pagedata', $tree);
+
+    // The 'serialize' hack ensures we have a proper copy of the
+    // paga data, which is a self-referencing array. If we don't
+    // do this, then any changes we make will affect the stored version.
+    $data = unserialize(serialize($data));
+
+    // Save some values. These are used by blocks in 'automatic' mode.
+    xarVarSetCached('Blocks.publications', 'current_id', $id);
+    xarVarSetCached('Blocks.publications', 'ptid', $ptid);
+    xarVarSetCached('Blocks.publications', 'author', $data['object']->properties['author']->value);
+
     return $data;
 
 

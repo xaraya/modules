@@ -1,131 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        Publications Administration
-    </span>
-</div>
-<div class="xar-mod-body">
-    <h2>
-        <xar:ml>
-            <xar:mlstring>Select Publications for Privilege '#(1)'</xar:mlstring>
-            <xar:mlvar>#$extname#</xar:mlvar>
-        </xar:ml>
-    </h2>
-        <form method="post" action="&xar-modurl-publications-admin-privileges;">
-            <div>
-            <input type="hidden" name="extpid" id="extpid" value="#$extpid#" />
-            <input type="hidden" name="extname" id="extname" value="#$extname#" />
-            <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#" />
-            <input type="hidden" name="extmodule" id="extmodule" value="#$extmodule#" />
-            <input type="hidden" name="extcomponent" id="extcomponent" value="#$extcomponent#" />
-            <table border="1" cellpadding="8" cellspacing="0">
-                <tr>
-                    <th valign="top" align="right">
-                        Publication Type
-                    </th>
-                    <td>
-                        <select name="ptid" onchange="javascript:this.form.submit();">
-                            <option value="0">
-                                All
-                            </option>
-                            <xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
-                                <xar:if condition="!empty($ptid) and $ptid eq $pubid">
-                                    <option value="#$pubid#" selected="selected">#$pubtype['description']#</option>
-                                    <xar:else />
-                                    <option value="#$pubid#">#$pubtype['description']#</option>
-                                </xar:if>
-                            </xar:foreach>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th valign="top" align="right">
-                        Category
-                    </th>
-                    <td>
-                        <xar:set name="firstline">array('id' => xarML('All'), 'name' => xarML('All'))</xar:set>
-                        <xar:set name="onchange">"this.form.action='" . xarServer::getCurrentURL() . "';this.form.submit();"</xar:set>
-                        <xar:data-input type="categories" name="privcategories" itemtype="$ptid" value="$cids" firstline="All" layout="vertical" returnitself="true" onchange="$onchange" />
-                    </td>
-                </tr>
-                <xar:if condition="!empty($showauthor)">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>
+            <xar:ml>
+                <xar:mlstring>Select Publications for Privilege '#(1)'</xar:mlstring>
+                <xar:mlvar>#$extname#</xar:mlvar>
+            </xar:ml>
+        </h2>
+            <form method="post" action="&xar-modurl-publications-admin-privileges;">
+                <div>
+                <input type="hidden" name="extpid" id="extpid" value="#$extpid#" />
+                <input type="hidden" name="extname" id="extname" value="#$extname#" />
+                <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#" />
+                <input type="hidden" name="extmodule" id="extmodule" value="#$extmodule#" />
+                <input type="hidden" name="extcomponent" id="extcomponent" value="#$extcomponent#" />
+                <table border="1" cellpadding="8" cellspacing="0">
                     <tr>
                         <th valign="top" align="right">
-                            Author
+                            Publication Type
                         </th>
                         <td>
-                            <xar:set name="onchange">javascript:this.form.submit();</xar:set>
-                            <xar:data-input type="dropdown" name="uid" options="$authorlist" value="$uid" firstline="All / Other -->" onchange="$onchange" />
-                            <input type="text" name="author" id="author" value="#$author#" size="15" onchange="javascript:this.form.submit();" />
+                            <select name="ptid" onchange="javascript:this.form.submit();">
+                                <option value="0">
+                                    All
+                                </option>
+                                <xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
+                                    <xar:if condition="!empty($ptid) and $ptid eq $pubid">
+                                        <option value="#$pubid#" selected="selected">#$pubtype['description']#</option>
+                                        <xar:else />
+                                        <option value="#$pubid#">#$pubtype['description']#</option>
+                                    </xar:if>
+                                </xar:foreach>
+                            </select>
                         </td>
                     </tr>
-                    <xar:else />
-                    <input type="hidden" name="uid" id="uid" value="0" />
-                </xar:if>
-                <tr>
-                    <th valign="top" align="right">
-                        Publication
-                    </th>
-                    <td>
-                    Enter article number:
-                    <input type="text" name="id" id="id" value="#$id#" size="10" onchange="javascript:this.form.submit();" />
-                    <!-- TODO: show dropdown box for all relevant publications (if not too many) -->
-                    <xar:if condition="!empty($title)">
-                    <br />
-                    Title: #$title#</xar:if></td>
-                </tr>
-                <tr>
-                    <th valign="top" align="right">
-                        Access Level
-                    </th>
-                    <td>
-                        <xar:set name="levels">
-                            SecurityLevel::$displayMap
-                        </xar:set>
-                        <xar:set name="foo">
-                            1; unset($levels[-1]);unset($levels[400]);unset($levels[600]);
-                        </xar:set>
-                        <xar:set name="options">
-                            array()
-                        </xar:set>
-                        <xar:foreach in="$levels" key="$key" value="$value" >
-                            <xar:set name="foo">1;
-                                $options[] = array('id' => $key * 100, 'name' => $value)
+                    <tr>
+                        <th valign="top" align="right">
+                            Category
+                        </th>
+                        <td>
+                            <xar:set name="firstline">array('id' => xarML('All'), 'name' => xarML('All'))</xar:set>
+                            <xar:set name="onchange">"this.form.action='" . xarServer::getCurrentURL() . "';this.form.submit();"</xar:set>
+                            <xar:data-input type="categories" name="privcategories" itemtype="$ptid" value="$cids" firstline="All" layout="vertical" returnitself="true" onchange="$onchange" />
+                        </td>
+                    </tr>
+                    <xar:if condition="!empty($showauthor)">
+                        <tr>
+                            <th valign="top" align="right">
+                                Author
+                            </th>
+                            <td>
+                                <xar:set name="onchange">javascript:this.form.submit();</xar:set>
+                                <xar:data-input type="dropdown" name="uid" options="$authorlist" value="$uid" firstline="All / Other -->" onchange="$onchange" />
+                                <input type="text" name="author" id="author" value="#$author#" size="15" onchange="javascript:this.form.submit();" />
+                            </td>
+                        </tr>
+                        <xar:else />
+                        <input type="hidden" name="uid" id="uid" value="0" />
+                    </xar:if>
+                    <tr>
+                        <th valign="top" align="right">
+                            Publication
+                        </th>
+                        <td>
+                        Enter article number:
+                        <input type="text" name="id" id="id" value="#$id#" size="10" onchange="javascript:this.form.submit();" />
+                        <!-- TODO: show dropdown box for all relevant publications (if not too many) -->
+                        <xar:if condition="!empty($title)">
+                        <br />
+                        Title: #$title#</xar:if></td>
+                    </tr>
+                    <tr>
+                        <th valign="top" align="right">
+                            Access Level
+                        </th>
+                        <td>
+                            <xar:set name="levels">
+                                SecurityLevel::$displayMap
                             </xar:set>
-                        </xar:foreach>
-                        <xar:data-input type="dropdown" name="extlevel" value="$extlevel" options="$options" />
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <input type="submit" value="#$refreshlabel#" />
-                    </td>
-                </tr>
-            </table>
+                            <xar:set name="foo">
+                                1; unset($levels[-1]);unset($levels[400]);unset($levels[600]);
+                            </xar:set>
+                            <xar:set name="options">
+                                array()
+                            </xar:set>
+                            <xar:foreach in="$levels" key="$key" value="$value" >
+                                <xar:set name="foo">1;
+                                    $options[] = array('id' => $key * 100, 'name' => $value)
+                                </xar:set>
+                            </xar:foreach>
+                            <xar:data-input type="dropdown" name="extlevel" value="$extlevel" options="$options" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <input type="submit" value="#$refreshlabel#" />
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <xar:ml>
+                    <xar:mlstring>There are #(1) publications matching these selection criteria at the moment</xar:mlstring>
+                    <xar:mlvar>#$numitems#</xar:mlvar>
+                </xar:ml>
+                <br />
+                <hr />
+                <br />(Instance Definition #$extinstance#)
+                <br />
+                <br />
+                <input type="submit" name="apply" value="#$applylabel#" /></div>
+            </form>
             <br />
-            <xar:ml>
-                <xar:mlstring>There are #(1) publications matching these selection criteria at the moment</xar:mlstring>
-                <xar:mlvar>#$numitems#</xar:mlvar>
-            </xar:ml>
+            Some examples : (assuming your users have read access by default)
             <br />
-            <hr />
-            <br />(Instance Definition #$extinstance#)
+            <br />- In order to allow 'Friends' to submit News Publications (and only that), define a privilege 'SubmitNews' (or whatever name you prefer), and choose the publication type "News Publications" (instance 1:All:All:All) and access level "Submit (Comment)" above. Press "Finish and Apply to Privilege", and then assign that privilege to the 'Friends' role.
+            <br />
+            <br />- In order to stop 'Strangers' from viewing Documents, define some privilege 'NoDocuments' with publication type "Documents" (instance 2:All:All:All) and access level "No Access". Then assign that privilege to the 'Strangers' role.
+            <br />
+            <br />- ...
             <br />
             <br />
-            <input type="submit" name="apply" value="#$applylabel#" /></div>
-        </form>
-        <br />
-        Some examples : (assuming your users have read access by default)
-        <br />
-        <br />- In order to allow 'Friends' to submit News Publications (and only that), define a privilege 'SubmitNews' (or whatever name you prefer), and choose the publication type "News Publications" (instance 1:All:All:All) and access level "Submit (Comment)" above. Press "Finish and Apply to Privilege", and then assign that privilege to the 'Friends' role.
-        <br />
-        <br />- In order to stop 'Strangers' from viewing Documents, define some privilege 'NoDocuments' with publication type "Documents" (instance 2:All:All:All) and access level "No Access". Then assign that privilege to the 'Strangers' role.
-        <br />
-        <br />- ...
-        <br />
-        <br />
-        Note: if you want to deny access to all publications in a particular category with ID 123, you can also define a privilege for module 'categories', component 'Category', category name 'All' and category ID '123'. This will remove the category from the publications map and categories navigation as well.
-</div>
+            Note: if you want to deny access to all publications in a particular category with ID 123, you can also define a privilege for module 'categories', component 'Category', category name 'All' and category ID '123'. This will remove the category from the publications map and categories navigation as well.
+    </div>
 </xar:template>
