@@ -27,8 +27,8 @@
                         xarModURL($module, 'admin', 'modify', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))
                     </xar:set>
                     <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
-                        <a href="#$link#" title="#xarML('Modify this item')#" style="margin-right: 5px">
-                            <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
+                        <a href="#$link#" title="#xarML('Modify this publication')#" style="margin-right: 5px">
+                            <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify Publication')#"/>
                         </a>
                     <xar:else />
                         <a href="#$link#">
@@ -41,8 +41,8 @@
                         xarModURL($module, 'admin', 'delete', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))
                     </xar:set>
                     <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
-                        <a href="#$link#" title="#xarML('Delete this item')#" style="margin-right: 5px">
-                            <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete')#"/>
+                        <a href="#$link#" title="#xarML('Delete this publication')#" style="margin-right: 5px">
+                            <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete Publication')#"/>
                         </a>
                     <xar:else />
                         <a href="#$link#">
@@ -58,13 +58,13 @@
             <xar:set name="ptid">$loopitem[$primaryalias]</xar:set>
             <xar:set name="args">DataObjectDescriptor::getObjectID(array('name' => $properties['name']->value))</xar:set>
             <xar:sec mask="ManagePublications" catch="false">
-                <a href="#xarModURL('dynamicdata','admin','modify',array('itemid' => $args['objectid']))#">                    
+                <a href="#xarModURL('publications','admin','modify_pubtype',array('itemid' => $ptid))#">                    
                     <img src="#xarTplGetImage('icons/modify.png','base')#"/>
                 </a>
             </xar:sec>
             &#160;|&#160;
             <xar:sec mask="ManagePublications" catch="false">
-                <a href="#xarModURL('dynamicdata','admin','delete',array('itemid' => $args['objectid'], 'name' => 'objects'))#">                    
+                <a href="#xarModURL('publications','admin','delete_pubtype',array('itemid' => $ptid, 'name' => 'objects'))#">                    
                     <img src="#xarTplGetImage('icons/delete.png','base')#"/>
                 </a>
             </xar:sec>
