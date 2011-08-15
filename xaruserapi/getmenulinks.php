@@ -21,8 +21,6 @@ function publications_userapi_getmenulinks()
     $menulinks = array();
     if (!xarSecurityCheck('ViewPublications',0)) return $menulinks;
 
-// TODO: re-evaluate for browsing by category
-
     $menulinks[] = Array('url'   => xarModURL('publications',
                                               'user',
                                               'view'),
