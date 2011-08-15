@@ -32,7 +32,8 @@ function publications_userapi_getmonthcount($args)
     $dbtype = xarDB::getType();
     switch ($dbtype) {
         case 'mysql':
-            $query = "SELECT LEFT(FROM_UNIXTIME(pubdate),7) AS mymonth, COUNT(*) FROM " . $publicationsdef['table'];
+            $query = "SELECT LEFT(FROM_UNIXTIME(start_date),7) AS mymonth, COUNT(*) FROM " . $publicationsdef['table'];
+//            echo $query;exit;
             break;
         case 'postgres':
             $query = "SELECT TO_CHAR(ABSTIME(pubdate),'YYYY-MM') AS mymonth, COUNT(*) FROM " . $publicationsdef['table'];
