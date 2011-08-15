@@ -1,21 +1,20 @@
 <?php
 /**
- * Publications module
+ * Publications Module
  *
  * @package modules
- * @copyright (C) copyright-placeholder
+ * @subpackage publications module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
+ * @copyright (C) 2011 Netspan AG
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Publications Module
- 
- * @author mikespub
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
-/**
- * delete item
- */
+
 function publications_admin_delete()
 {
+    if (!xarSecurityCheck('ModifyPublications')) return;
+
     //$return = xarModURL('publications', 'admin','view',array('ptid' => xarModVars::get('publications', 'defaultpubtype')));
     if(!xarVarFetch('confirmed',  'int', $confirmed,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('itemid',     'str', $itemid,     NULL,  XARVAR_DONT_SET)) {return;}

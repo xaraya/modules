@@ -332,10 +332,9 @@ function publications_user_viewmap($args)
     }
 
     if (!empty($ptid)) {
-        $object = DataObjectMaster::getObject(array('objectid' => $ptid));
-        $fields = $object->getFieldValues();
-        $pubtype_id = $object->properties['itemtype']->defaultvalue;
-        $template = $data['pubtypes'][$pubtype_id]['template'];
+        $object = DataObjectMaster::getObject(array('name' => 'publications_types'));
+        $object->getItem(array('itemid' => $ptid));
+        $template = $object->properties['template']->value;
     } else {
 // TODO: allow templates per category ?
        $template = null;

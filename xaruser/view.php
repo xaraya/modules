@@ -529,13 +529,13 @@ function publications_user_view($args)
     // Only show top level documents, not translations
     sys::import('xaraya.structures.query');
     $q = new Query();
-    $q->eq('state',3);
-    $q->eq('locale',xarUserGetNavigationLocale());
+    $q->eq('parent_id',0);
     $q->eq('pubtype_id',$ptid);
+    $q->eq('state',3);
 
-    // Suppress deleted items if not an admin
+    // Suppress deleted items
     // Remove this once listing property works with dataobject access
-    if (!xarIsParent('Administrators',xarUserGetVar('uname'))) $q->ne('state',0);
+    $q->ne('state',0);
     $data['conditions'] = $q;
 
     // Throw all the relevant settings we are using into the cache

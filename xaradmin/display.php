@@ -186,6 +186,9 @@ function publications_admin_display($args)
         $data['layout'] = 'detail';
     }
 
+    // Get the settings for this publication type;
+    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $ptid));
+
     // Set the theme if needed
     if (!empty($data['object']->properties['theme']->value)) xarTplSetThemeName($data['object']->properties['theme']->value);
     
