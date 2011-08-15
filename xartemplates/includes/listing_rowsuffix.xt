@@ -64,9 +64,13 @@
             </xar:sec>
             &#160;|&#160;
             <xar:sec mask="ManagePublications" catch="false">
-                <a href="#xarModURL('publications','admin','delete_pubtype',array('itemid' => $ptid, 'name' => 'objects'))#">                    
+                <xar:if condition="xarModVars::get('publications', 'defaultpubtype') eq $ptid">
                     <img src="#xarTplGetImage('icons/delete.png','base')#"/>
-                </a>
+                <xar:else/>
+                    <a href="#xarModURL('publications','admin','delete_pubtype',array('itemid' => $ptid, 'name' => 'objects'))#">                    
+                        <img src="#xarTplGetImage('icons/delete.png','base')#"/>
+                    </a>
+                </xar:if>
             </xar:sec>
             &#160;|&#160;
             <xar:sec mask="AdminPublications" catch="false">
