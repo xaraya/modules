@@ -34,9 +34,9 @@
             <mask>AdminPublications</mask>
             <type>admin</type>
             <includes>
-                <includeitem>viewpubtypes</includeitem>
+                <includeitem>view_pubtypes</includeitem>
             </includes>
-            <target>viewpubtypes</target>
+            <target>view_pubtypes</target>
             <title>Publication Types</title>
             <label>Publication Types</label>
         </menuitem>
