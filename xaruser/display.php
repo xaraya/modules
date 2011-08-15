@@ -177,8 +177,6 @@ function publications_user_display($args)
         }
     }
     
-    $publication = $data['object']->getFieldValues();
-
     // Specific layout within a template (optional)
     if (isset($layout)) {
         $data['layout'] = $layout;
@@ -186,6 +184,9 @@ function publications_user_display($args)
         $data['layout'] = 'detail';
     }
     
+    // Get the settings for this publication type;
+    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $ptid));
+
     // Set the theme if needed
     if (!empty($data['object']->properties['theme']->value)) xarTplSetThemeName($data['object']->properties['theme']->value);
     

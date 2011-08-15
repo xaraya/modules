@@ -60,5 +60,4 @@
             </xar:if>
         </xar:if>
     </xar:if>
-    <xar:template file="navtabs-user" type="module" />
 </xar:template>

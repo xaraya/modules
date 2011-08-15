@@ -463,23 +463,20 @@
                 </fieldset>
                 <fieldset>
                     <legend>
+                        Access
+                    </legend>
+                    <legend>
                         Add Access
                     </legend>
                     <xar:data-input type="access" name="access_add"/>
-                </fieldset>
-                <fieldset>
                     <legend>
                         Display Access
                     </legend>
                     <xar:data-input type="access" name="access_display"/>
-                </fieldset>
-                <fieldset>
                     <legend>
                         Modify Access
                     </legend>
                     <xar:data-input type="access" name="access_modify"/>
-                </fieldset>
-                <fieldset>
                     <legend>
                         Delete Access
                     </legend>

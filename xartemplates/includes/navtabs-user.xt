@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:if condition="!empty($settings['showmap']) or !empty($settings['showarchives']) or !empty($settings['showsubmit'])">
+    <xar:if condition="!empty($settings['showmap']) OR !empty($settings['showarchives']) OR !empty($settings['showsubmit'])">
         <xar:style scope="module" module="base" file="navtabs" />
         <dl class="xar-tabs">
             <dt class="help">
@@ -9,7 +9,7 @@
             <xar:if condition="!empty($settings['showmap'])">
                 <dd>
                     <a href="#xarModURL('publications', 'user', 'viewmap', array('ptid' => !empty($ptid) ? $ptid : null))#">
-                        #xarML('View Publication Map')# 
+                        View Publication Map
                     </a>
                 </dd>
             </xar:if>
@@ -23,7 +23,7 @@
             <xar:if condition="!empty($settings['showarchives'])">
                 <dd>
                     <a href="xarModURL('publications', 'user', 'archive', array('ptid' => !empty($ptid) ? $ptid : null))">
-                        #xarML('View Archives')# 
+                        View Archives
                     </a>
                 </dd>
             </xar:if>

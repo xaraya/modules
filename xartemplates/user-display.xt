@@ -3,6 +3,7 @@
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
 <xar:data-display object="$object" tplmodule="publications" layout="$layout"/>
+<xar:template file="navtabs-user" type="module" />
 
 <!--
     <xar:template file="publinks" type="module" />
