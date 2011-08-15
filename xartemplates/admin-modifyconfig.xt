@@ -380,6 +380,7 @@
                     <legend>
                         Publication States
                     </legend>
+                    <xar:set name="states">xarModAPIFunc('publications','user','getstates')</xar:set>
                     <table class="xar-fullwidth">
                         <tr>
                             <td valign="top" style="width: 50%">
@@ -388,19 +389,7 @@
                                         Default start state
                                     </label>
                                     <xar:if condition="!empty($withstate)">
-                                        <select name="settings[defaultstate]" id="settings_defaultstate">
-                                            <xar:foreach in="$stateoptions" value="$stateoption">
-                                                <xar:if condition="$stateoption['value'] eq $defaultstate">
-                                                    <option value="#$stateoption['value']#" selected="selected">
-                                                        #$stateoption['label']#
-                                                    </option>
-                                                    <xar:else />
-                                                    <option value="#$stateoption['value']#">
-                                                        #$stateoption['label']#
-                                                    </option>
-                                                </xar:if>
-                                            </xar:foreach>
-                                        </select>
+                                        <xar:data-input name="settings[defaultstate]" id="settings_defaultstate" options="$states" value="$defaultstate"/>
                                     <xar:else />
                                         <input type="hidden" name="settings[defaultstate]" id="settings_defaultstate" value="2" />
                                             N/A
@@ -413,19 +402,7 @@
                                         Default process state
                                     </label>
                                     <xar:if condition="!empty($withstate)">
-                                        <select name="settings[defaultprocessstate]" id="settings_defaultprocessstate">
-                                            <xar:foreach in="$stateoptions" value="$stateoption">
-                                                <xar:if condition="$stateoption['value'] eq $defaultprocessstate">
-                                                    <option value="#$stateoption['value']#" selected="selected">
-                                                        #$stateoption['label']#
-                                                    </option>
-                                                    <xar:else />
-                                                    <option value="#$stateoption['value']#">
-                                                        #$stateoption['label']#
-                                                    </option>
-                                                </xar:if>
-                                            </xar:foreach>
-                                        </select>
+                                        <xar:data-input name="settings[defaultprocessstate]" id="settings_defaultprocessstate" options="$states" value="$defaultprocessstate"/>
                                     <xar:else />
                                         <input type="hidden" name="settings[defaultprocessstate]" id="settings_defaultprocessstate" value="2" />
                                             N/A
