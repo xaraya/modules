@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+    <!-- Get the name of the publication type. It is supposed to be "publications_something" -->
+    <xar:if condition="strlen($object->name) le 13">
+        <xar:set name="pubtype">'generic'</xar:set>
+    <xar:else/>
+        <xar:set name="pubtype">substr($object->name,13)</xar:set>
+    </xar:if>
+    
+    <!-- Display eachn  item ithe summary template -->
+    <xar:foreach in="$items" key="$itemid" value="$fields">
+        <xar:set name="dummy">$object->setFieldValues($fields)</xar:set>
+    
+        <xar:if condition="$fields['summary_template'] AND !empty($fields['id'])">
+            <xar:set name="filename">$pubtype . '/summary' . $fields['id'] . '.xt'</xar:set>
+            <xar:if condition="!file_exists(sys::code() . 'modules/publications/xartemplates/objects/' . $filename)">
+                <xar:set name="filename">$pubtype . '/summary.xt'</xar:set>
+            </xar:if>
+        <xar:else/>
+            <xar:set name="filename">$pubtype . '/summary.xt'</xar:set>
+        </xar:if>
+            <xar:set name="fields">array('fields' => $items[$itemid])</xar:set>
+        <xar:template file="$filename" type="system"/>
+    </xar:foreach>
+</xar:template>
