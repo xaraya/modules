@@ -67,7 +67,7 @@ function publications_admin_modify($args)
     if ($data['tab'] == 'newtranslation') {
         $data['object']->properties['id']->setValue(0);
         $data['object']->properties['parent']->setValue($data['itemid']);
-        $data['items'][0] = $data['object']->getFieldValues();
+        $data['items'][0] = $data['object']->getFieldValues(array(),1);
         $data['tab'] = '';
     } else {
         $data['items'] = array();
@@ -75,11 +75,11 @@ function publications_admin_modify($args)
 
     // Get the base document
     $data['object']->getItem(array('itemid' => $data['itemid']));
-    $fieldvalues = $data['object']->getFieldValues();
+    $fieldvalues = $data['object']->getFieldValues(array(),1);
     if (!empty($fieldvalues['parent'])) {
         $id = $fieldvalues['parent'];
         $data['object']->getItem(array('itemid' => $id));
-        $fieldvalues = $data['object']->getFieldValues();
+        $fieldvalues = $data['object']->getFieldValues(array(),1);
     }
     $data['items'][$data['itemid']] = $fieldvalues;
 
@@ -91,7 +91,7 @@ function publications_admin_modify($args)
         // Clear the previous values before starting the next round
         $data['object']->clearFieldValues();
         $data['object']->getItem(array('itemid' => $key));
-        $data['items'][$key] = $data['object']->getFieldValues();
+        $data['items'][$key] = $data['object']->getFieldValues(array(),1);
     }
 
     return $data;
