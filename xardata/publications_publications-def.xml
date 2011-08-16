@@ -50,7 +50,7 @@
       <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>publication.description</source>
-      <status>33</status>
+      <status>34</status>
       <seq>4</seq>
       <configuration></configuration>
     </property>
@@ -170,7 +170,7 @@
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>publication.start_date</source>
-      <status>34</status>
+      <status>33</status>
       <seq>25</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -180,7 +180,7 @@
       <type>datetime</type>
       <defaultvalue>time()+31536000</defaultvalue>
       <source>publication.end_date</source>
-      <status>34</status>
+      <status>33</status>
       <seq>26</seq>
       <configuration>a:0:{}</configuration>
     </property>
