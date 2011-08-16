@@ -526,6 +526,9 @@ function publications_user_view($args)
     $data['items'] = $object->getItems();
     $data['object'] = DataObjectMaster::getObjectList(array('name' => $data['pubtypeobject']->properties['name']->value));
     
+    // Get the items here
+    $data['object']->getItems();
+
     // Only show top level documents, not translations
     sys::import('xaraya.structures.query');
     $q = new Query();
