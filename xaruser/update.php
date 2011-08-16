@@ -56,7 +56,7 @@ function publications_user_update()
         $thisvalid = $data['object']->checkInput();
         $isvalid = $isvalid && $thisvalid;
     // Store each item for later processing
-        $itemsdata[$prefix] = $data['object']->getFieldValues();
+        $itemsdata[$prefix] = $data['object']->getFieldValues(array(),1);
     }*/
     
     if ($data['preview'] || !$isvalid) {

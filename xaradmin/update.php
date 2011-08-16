@@ -65,7 +65,7 @@ function publications_admin_update()
         $thisvalid = $data['object']->checkInput();
         $isvalid = $isvalid && $thisvalid;
     // Store each item for later processing
-        $itemsdata[$prefix] = $data['object']->getFieldValues();
+        $itemsdata[$prefix] = $data['object']->getFieldValues(array(),1);
     }
 
     if ($data['preview'] || !$isvalid) {
@@ -116,7 +116,7 @@ function publications_admin_update()
 
     // Now talk to the database
     foreach ($itemsdata as $id => $itemdata) {
-        $data['object']->setFieldValues($itemdata);
+        $data['object']->setFieldValues($itemdata,1);
 
         if (empty($id)) {$item = $data['object']->createItem();}
         else {$item = $data['object']->updateItem();}

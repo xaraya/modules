@@ -49,7 +49,7 @@ function publications_user_modify($args)
     // If creating a new translation get an empty copy
     if ($data['tab'] == 'newtranslation') {
         $data['object']->properties['parent']->setValue($id);
-        $data['items'][0] = $data['object']->getFieldValues();
+        $data['items'][0] = $data['object']->getFieldValues(array(),1);
         $data['tab'] = '';
     } else {
         $data['items'] = array();
@@ -57,7 +57,7 @@ function publications_user_modify($args)
 
     // Get the base document
     $data['object']->getItem(array('itemid' => $id));
-    $data['items'][$id] = $data['object']->getFieldValues();
+    $data['items'][$id] = $data['object']->getFieldValues(array(),1);
 
     // Get any translations of the base document
     $data['objectlist'] = DataObjectMaster::getObjectList(array('name' => $name));
@@ -65,7 +65,7 @@ function publications_user_modify($args)
     $items = $data['objectlist']->getItems(array('where' => $where));
     foreach ($items as $key => $value) {
         $data['object']->getItem(array('itemid' => $key));
-        $data['items'][$key] = $data['object']->getFieldValues();
+        $data['items'][$key] = $data['object']->getFieldValues(array(),1);
     }
     
     if (!empty($ptid)) {
