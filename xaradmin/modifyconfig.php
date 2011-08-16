@@ -98,7 +98,7 @@ function publications_admin_modifyconfig()
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
     $data['settings'] = $pubtypeobject->properties['configuration']->getValue();
-var_dump($data['settings']);//exit;
+
     return $data;
 }
 ?>
