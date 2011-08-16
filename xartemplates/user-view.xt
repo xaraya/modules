@@ -2,9 +2,13 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="publinks" type="module" />
-
+<!--
     <xar:if condition="!empty($ptid) or !empty($catid)">
         <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" catid="$catid" showcatcount="$settings['showcatcount']" showempty="1" />
     </xar:if>
     <xar:data-input type="listing" object="$object" layout="publications-user" conditions="$conditions" tplmodule="publications"/>
+-->
+<xar:data-view object="$object" tplmodule="publications"/>
+    
+
 </xar:template>

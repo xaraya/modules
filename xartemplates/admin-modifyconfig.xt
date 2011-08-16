@@ -234,7 +234,7 @@
                                 <div class="xar-form-input-wrapper">
                                     <label for="number_of_columns" class="help xar-form-label" title="#xarML('Number of columns to display on view pages.')#">
                                         Number of columns
-                                    </label> 
+                                    </label>
                                     <input type="text" name="settings[number_of_columns]" id="settings_number_of_columns" size="1" maxlength="2" value="#$settings['number_of_columns']#" />
                                 </div>
                             </td>
