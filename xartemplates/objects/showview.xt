@@ -11,7 +11,7 @@
     
     <!-- Display eachn  item ithe summary template -->
     <xar:foreach in="$items" key="$itemid" value="$fields">
-        <xar:set name="dummy">$object->setFieldValues($fields)</xar:set>
+        <xar:set name="dummy">$object->setFieldValues($fields,1)</xar:set>
     
         <xar:if condition="$fields['summary_template'] AND !empty($fields['id'])">
             <xar:set name="filename">$pubtype . '/summary' . $fields['id'] . '.xt'</xar:set>

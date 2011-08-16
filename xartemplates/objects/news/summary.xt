@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     
-    <xar:set name="fields">$object->getFieldValues()</xar:set>
+    <xar:set name="fields">$object->getFieldValues(array(),1)</xar:set>
 
     <!-- Title -->
     <h3>
