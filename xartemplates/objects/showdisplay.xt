@@ -6,9 +6,21 @@
     </xar:if>
 
     <xar:set name="settings">xarModAPIFunc('publications','user','getsettings',array('ptid' => $properties['itemtype']->value))</xar:set>
-    <xar:if condition="$layout eq 'default' OR $layout eq 'detail'">
-        <xar:template file="display-detail-generic" />
-    <xar:elseif condition="$layout eq 'summary'" />
-        <xar:template file="display-summary-generic" />
+
+    <!-- Get the name of the publication type. It is supposed to be "publications_something" -->
+    <xar:if condition="strlen($object->name) le 13">
+        <xar:set name="pubtype">'generic'</xar:set>
+    <xar:else/>
+        <xar:set name="pubtype">substr($object->name,13)</xar:set>
     </xar:if>
+
+    <xar:if condition="$properties['detail_template']->value AND !empty($properties['id']->value)">
+        <xar:set name="filename">$pubtype . '/detail_' . $properties['id']->value . '.xt'</xar:set>
+        <xar:if condition="!file_exists(sys::code() . 'modules/publications/xartemplates/objects/' . $filename)">
+            <xar:set name="filename">$pubtype . '/detail.xt'</xar:set>
+        </xar:if>
+    <xar:else/>
+        <xar:set name="filename">$pubtype . '/detail.xt'</xar:set>
+    </xar:if>
+    <xar:template file="$filename" type="system"/>
 </xar:template>

@@ -1,42 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<!--
-    This is a generic admin list template for any DD object. You can use a specific template
-    for one particular object in this directory as showlist-[objectname].xd, and/or
-    use templates in your own [module]/xartemplates/objects directory by specifying the
-    tplmodule="..." argument in the xar:data-list BL tag or showList() method call.
--->
-<xar:style scope="module" module="dynamicdata" file="dd"/>
-<xar:if condition="!empty($isprimary) and xarModIsHooked('categories',$modname,$itemtype)">
-    <xar:template file="catnavigation"/>
-</xar:if>
-
-<xar:if condition="empty($layout)">
-    <xar:set name="layout">'default'</xar:set>
-</xar:if>
-
-<!-- Use the subtemplate for the layout specified -->
-<xar:template file="objectlist-$layout"/>
-
-<!-- Conditionally add pager stuff -->
-<xar:if condition="!empty($prevurl) or !empty($nexturl)">
-    <p>
-        <xar:if condition="!empty($prevurl)">
-            <a href="#$prevurl#">
-                &#60;&#60;
-            </a>
-            <xar:else />
-            ---
+    <!-- Get the name of the publication type. It is supposed to be "publications_something" -->
+    <xar:if condition="strlen($object->name) le 13">
+        <xar:set name="pubtype">'generic'</xar:set>
+    <xar:else/>
+        <xar:set name="pubtype">substr($object->name,13)</xar:set>
+    </xar:if>
+    
+    <!-- Display eachn  item ithe summary template -->
+    <xar:foreach in="$items" key="$itemid" value="$fields">
+        <xar:set name="dummy">$object->setFieldValues($fields)</xar:set>
+    
+        <xar:if condition="$fields['summary_template'] AND !empty($fields['id'])">
+            <xar:set name="filename">$pubtype . '/summary' . $fields['id'] . '.xt'</xar:set>
+            <xar:if condition="!file_exists(sys::code() . 'modules/publications/xartemplates/objects/' . $filename)">
+                <xar:set name="filename">$pubtype . '/summary.xt'</xar:set>
+            </xar:if>
+        <xar:else/>
+            <xar:set name="filename">$pubtype . '/summary.xt'</xar:set>
         </xar:if>
-        <xar:if condition="!empty($nexturl)">
-            <a href="#$nexturl#">
-                &#62;&#62;
-            </a>
-            <xar:else />
-            ---
-        </xar:if>
-    </p>
-</xar:if>
+            <xar:set name="fields">array('fields' => $items[$itemid])</xar:set>
+        <xar:template file="$filename" type="system"/>
+    </xar:foreach>
 </xar:template>
