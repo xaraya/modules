@@ -12,9 +12,9 @@
 /**
  * the main user function
  */
-function publications_user_main($args)
+function publications_user_main()
 {
-    return xarController::redirect(xarModURL('publications', 'user', 'view',$args));
+    return xarController::redirect(xarModURL('publications', 'user', 'view'));
 }
 
 ?>
