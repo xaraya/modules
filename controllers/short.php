@@ -29,6 +29,10 @@ class PublicationsShortController extends ShortActionController
                 return parent::decode($data);
             break;
 
+            case 'view':
+                $data['func'] = 'view';
+            break;
+            
             case 'display':
             default:
                 $data['func'] = 'display';
@@ -122,9 +126,9 @@ class PublicationsShortController extends ShortActionController
 
               default:
                 return;
-                break;
+              break;
                 
-              case 'display':
+//              case 'display':
               case 'main':
 
                 // We need a page ID to continue, for now.
