@@ -191,7 +191,16 @@ function publications_user_display($args)
     if (!empty($data['object']->properties['theme']->value)) xarTplSetThemeName($data['object']->properties['theme']->value);
     
     // Set the page template if needed
-    if (!empty($data['object']->properties['page_template']->value)) xarTplSetPageTemplateName($data['object']->properties['page_template']->value);
+    if (!empty($data['object']->properties['page_template']->value)) {
+        $pagename = $data['object']->properties['page_template']->value;
+        $position = strpos($pagename,'.');
+        if ($position === false) {
+            $pagetemplate = $pagename;
+        } else {
+            $pagetemplate = substr($pagename,0,$position);
+        }
+        xarTpl::setPageTemplateName($pagetemplate);
+    }
 
     // Now we can cache all this data away for the blocks.
     // The blocks should have access to most of the same data as the page.
