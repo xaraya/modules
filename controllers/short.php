@@ -29,6 +29,7 @@ class PublicationsShortController extends ShortActionController
                 return parent::decode($data);
             break;
 
+            case '':
             case 'view':
                 $data['func'] = 'view';
             break;
