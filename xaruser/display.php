@@ -190,7 +190,18 @@ function publications_user_display($args)
     // Set the theme if needed
     if (!empty($data['object']->properties['theme']->value)) xarTplSetThemeName($data['object']->properties['theme']->value);
     
-    // Set the page template if needed
+    // Set the page template from the pubtype if needed
+    if (!empty($data['settings']['page_template'])) {
+        $pagename = $data['settings']['page_template'];
+        $position = strpos($pagename,'.');
+        if ($position === false) {
+            $pagetemplate = $pagename;
+        } else {
+            $pagetemplate = substr($pagename,0,$position);
+        }
+        xarTpl::setPageTemplateName($pagetemplate);
+    }
+    // It can be overridden by the page itself
     if (!empty($data['object']->properties['page_template']->value)) {
         $pagename = $data['object']->properties['page_template']->value;
         $position = strpos($pagename,'.');
