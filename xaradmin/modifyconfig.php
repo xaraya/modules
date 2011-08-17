@@ -97,7 +97,7 @@ function publications_admin_modifyconfig()
     // Get the publication type for this display
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
-    $data['settings'] = $pubtypeobject->properties['configuration']->getValue();
+    $data['settings'] = unserialize($pubtypeobject->properties['configuration']->getValue());
 
     return $data;
 }

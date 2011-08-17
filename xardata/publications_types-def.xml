@@ -1,21 +1,21 @@
 <object name="publications_types">
-  <objectid>32</objectid>
+  <objectid>968</objectid>
   <label>Publication Types</label>
   <module_id>182</module_id>
-  <itemtype>10</itemtype>
+  <itemtype>306</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
+  <isalias>true</isalias>
   <datastore>relational</datastore>
   <config>a:0:{}</config>
-  <sources>a:1:{s:8:"pubtypes";a:2:{i:0;s:22:"xar_publications_types";i:1;s:8:"internal";}}</sources>
+  <sources>a:1:{s:8:&quot;pubtypes&quot;;a:2:{i:0;s:22:&quot;xar_publications_types&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
   <relations>a:0:{}</relations>
   <objects>a:0:{}</objects>
-  <isalias>1</isalias>
   <properties>
     <property name="id">
-      <id>304</id>
+      <id>13020</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -25,7 +25,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="name">
-      <id>305</id>
+      <id>13021</id>
       <label>Name</label>
       <type>objectref</type>
       <defaultvalue></defaultvalue>
@@ -35,7 +35,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="description">
-      <id>306</id>
+      <id>13022</id>
       <label>Description</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -45,7 +45,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="template">
-      <id>306</id>
+      <id>13023</id>
       <label>Template</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -55,7 +55,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="configuration">
-      <id>307</id>
+      <id>13024</id>
       <label>Configuration</label>
       <type>array</type>
       <defaultvalue></defaultvalue>
@@ -64,14 +64,24 @@
       <seq>5</seq>
       <configuration>a:7:{s:15:"display_columns";s:2:"30";s:12:"display_rows";s:1:"1";s:17:"display_key_label";s:3:"Key";s:19:"display_value_label";s:5:"Value";s:14:"display_layout";s:7:"default";s:24:"initialization_addremove";s:1:"2";s:32:"initialization_associative_array";s:1:"1";}</configuration>
     </property>
+    <property name="access">
+      <id>13332</id>
+      <label>access</label>
+      <type>static</type>
+      <defaultvalue></defaultvalue>
+      <source>pubtypes.access</source>
+      <status>34</status>
+      <seq>6</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
     <property name="state">
-      <id>308</id>
+      <id>13025</id>
       <label>State</label>
       <type>dropdown</type>
       <defaultvalue>3</defaultvalue>
       <source>pubtypes.state</source>
       <status>33</status>
-      <seq>6</seq>
+      <seq>7</seq>
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:30:"0,Deleted;1,Inactive;3,Active;";}</configuration>
     </property>
   </properties>

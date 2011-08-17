@@ -5,6 +5,7 @@
     <description>News Publication</description>
     <template>news</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
+    <access>a:0:{}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="2">
@@ -13,6 +14,7 @@
     <description>Document</description>
     <template>document</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
+    <access>a:0:{}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="3">
@@ -21,6 +23,7 @@
     <description>Review</description>
     <template>review</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
+    <access>a:0:{}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="4">
@@ -29,6 +32,7 @@
     <description>FAQ</description>
     <template>faq</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
+    <access>a:0:{}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="5">
@@ -37,6 +41,7 @@
     <description>Picture</description>
     <template>picture</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
+    <access>a:0:{}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="6">
@@ -45,6 +50,7 @@
     <description>Web Link</description>
     <template>weblink</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
+    <access>a:0:{}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="7">
@@ -53,6 +59,7 @@
     <description>Quote</description>
     <template>quote</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
+    <access>a:0:{}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="8">
@@ -61,6 +68,7 @@
     <description>Download</description>
     <template>download</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
+    <access>a:0:{}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="9">
@@ -69,6 +77,7 @@
     <description>Translation</description>
     <template>translation</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
+    <access>a:0:{}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="10">
@@ -77,6 +86,7 @@
     <description>Default Publication</description>
     <template>publication</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
+    <access>a:0:{}</access>
     <state>3</state>
   </publications_types>
 </items>

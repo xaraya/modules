@@ -352,30 +352,34 @@ function publications_user_view($args)
     }
 
     // retrieve the number of comments for each article
-    if ($data['settings']['showcomments']) {
-        $idlist = array();
-        foreach ($publications as $article) {
-            $idlist[] = $article['id'];
+    if (xarModIsAvailable('coments')) {
+        if ($data['settings']['showcomments']) {
+            $idlist = array();
+            foreach ($publications as $article) {
+                $idlist[] = $article['id'];
+            }
+            $numcomments = xarModAPIFunc('comments', 'user', 'get_countlist',
+                array('modid' => $c_modid, 'objectids' => $idlist)
+            );
         }
-        $numcomments = xarModAPIFunc('comments', 'user', 'get_countlist',
-            array('modid' => $c_modid, 'objectids' => $idlist)
-        );
     }
 
     // retrieve the keywords for each article
-    if ($data['settings']['showkeywords']) {
-        $idlist = array();
-        foreach ($publications as $article) {
-            $idlist[] = $article['id'];
+    if (xarModIsAvailable('coments')) {
+        if ($data['settings']['showkeywords']) {
+            $idlist = array();
+            foreach ($publications as $article) {
+                $idlist[] = $article['id'];
+            }
+    
+            $keywords = xarModAPIFunc('keywords', 'user', 'getmultiplewords',
+                array(
+                    'modid' => $c_modid,
+                    'objectids' =>  $idlist,
+                    'itemtype'  => $ptid
+                )
+            );
         }
-
-        $keywords = xarModAPIFunc('keywords', 'user', 'getmultiplewords',
-            array(
-                'modid' => $c_modid,
-                'objectids' =>  $idlist,
-                'itemtype'  => $ptid
-            )
-        );
     }
 /* ------------------------------------------------------------
     // retrieve the categories for each article
@@ -540,6 +544,18 @@ function publications_user_view($args)
     // Remove this once listing property works with dataobject access
     $q->ne('state',0);
     $data['conditions'] = $q;
+
+    // Set the page template if needed
+    if (!empty($data['settings']['page_template'])) {
+        $pagename = $data['settings']['page_template'];
+        $position = strpos($pagename,'.');
+        if ($position === false) {
+            $pagetemplate = $pagename;
+        } else {
+            $pagetemplate = substr($pagename,0,$position);
+        }
+        xarTpl::setPageTemplateName($pagetemplate);
+    }
 
     // Throw all the relevant settings we are using into the cache
 //    $data['settings']['pubtypeobject'] = $data['pubtypeobject']->properties['configuration']->getValue();

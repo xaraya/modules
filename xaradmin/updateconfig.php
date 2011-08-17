@@ -126,8 +126,8 @@ function publications_admin_updateconfig()
             'modify' => $modifyaccess,
             'delete' => $deleteaccess,
         );
-        $pubtypeobject->properties['configuration']->setValue($allaccess);
-//        $pubtypeobject->properties['configuration']->setValue($settings);
+        $pubtypeobject->properties['access']->setValue(serialize($allaccess));
+        $pubtypeobject->properties['configuration']->setValue(serialize($settings));
         $pubtypeobject->updateItem(array('itemid' => $ptid));
 
         $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
