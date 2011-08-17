@@ -298,7 +298,7 @@
                             Edit template
                         </a>
                     </div>
-                    <xar:var name="firstline">None</xar:var>
+                    <xar:var name="firstline">(current template)</xar:var>
                     <xar:set name="firstline">",$firstline"</xar:set>
                     <div class="xar-form-input-wrapper">
                         <label for="page_template" class="help xar-form-label" title="#xarML('Define the page template for this publication type')#">                    
@@ -306,6 +306,8 @@
                         </label>
                         <xar:data-input type="filepicker" name="settings[page_template]" value="$settings['page_template']" basedir="{theme}/pages" firstline="$firstline"/>
                     </div>
+                    <xar:var name="firstline">(current theme)</xar:var>
+                    <xar:set name="firstline">",$firstline"</xar:set>
                     <div class="xar-form-input-wrapper">
                         <label for="theme" class="help xar-form-label" title="#xarML('Define the theme for this publication type')#">                    
                             Theme Override

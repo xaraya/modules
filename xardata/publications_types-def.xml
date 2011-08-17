@@ -57,7 +57,7 @@
     <property name="configuration">
       <id>13024</id>
       <label>Configuration</label>
-      <type>array</type>
+      <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>pubtypes.configuration</source>
       <status>34</status>
@@ -67,7 +67,7 @@
     <property name="access">
       <id>13332</id>
       <label>access</label>
-      <type>static</type>
+      <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>pubtypes.access</source>
       <status>34</status>
