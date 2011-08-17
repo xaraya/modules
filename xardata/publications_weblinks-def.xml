@@ -185,14 +185,14 @@
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:19:"0,inherit;1,custom;";}</configuration>
     </property>
     <property name="page_template">
-      <id>792</id>
+      <id>13160</id>
       <label>Page Template</label>
-      <type>textbox</type>
+      <type>filepicker</type>
       <defaultvalue></defaultvalue>
       <source>publication.page_template</source>
       <status>34</status>
       <seq>30</seq>
-      <configuration>a:0:{}</configuration>
+      <configuration>a:4:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:26:"validation_file_extensions";s:2:"xt";s:28:"initialization_basedirectory";s:13:"{theme}/pages";}</configuration>
     </property>
     <property name="theme">
       <id>139</id>
