@@ -102,15 +102,19 @@
                     Edit template
                 </a>
             </div>
+            <xar:var name="firstline">(current template)</xar:var>
+            <xar:set name="firstline">",$firstline"</xar:set>
             <div class="xar-form-input-wrapper">
                 <xar:var name="label">Page Template</xar:var>
                 <xar:data-label property="$properties['page_template']" for="id" label="$label" />
-                <xar:data-input property="$properties['page_template']" />
+                <xar:data-input property="$properties['page_template']" firstline="$firstline" />
             </div>
+            <xar:var name="firstline">(current theme)</xar:var>
+            <xar:set name="firstline">",$firstline"</xar:set>
             <div class="xar-form-input-wrapper">
                 <xar:var name="label">Theme</xar:var>
                 <xar:data-label property="$properties['theme']" for="id" label="$label" />
-                <xar:data-input property="$properties['theme']" />
+                <xar:data-input property="$properties['theme']" firstline="$firstline" />
             </div>
             <div class="xar-form-input-wrapper">
                 <xar:var name="label">HTML Page Title</xar:var>

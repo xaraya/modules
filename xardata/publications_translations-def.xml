@@ -191,17 +191,17 @@
       <source>publication.page_template</source>
       <status>34</status>
       <seq>30</seq>
-      <configuration>a:4:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:26:"validation_file_extensions";s:2:"xt";s:28:"initialization_basedirectory";s:13:"{theme}/pages";}</configuration>
+      <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:26:"validation_file_extensions";s:2:"xt";s:28:"initialization_basedirectory";s:13:"{theme}/pages";s:24:"initialization_firstline";s:19:",(current template)";}</configuration>
     </property>
     <property name="theme">
-      <id>139</id>
+      <id>13161</id>
       <label>Theme</label>
       <type>objectref</type>
-      <defaultvalue>0</defaultvalue>
+      <defaultvalue></defaultvalue>
       <source>publication.theme</source>
       <status>34</status>
       <seq>31</seq>
-      <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:6:"themes";s:25:"initialization_store_prop";s:4:"name";s:27:"initialization_display_prop";s:4:"name";}</configuration>
+      <configuration>a:6:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:6:"themes";s:25:"initialization_store_prop";s:4:"name";s:27:"initialization_display_prop";s:4:"name";s:24:"initialization_firstline";s:16:",[current theme]";}</configuration>
     </property>
     <property name="categories">
       <id>793</id>
