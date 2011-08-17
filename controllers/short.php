@@ -29,13 +29,12 @@ class PublicationsShortController extends ShortActionController
                 return parent::decode($data);
             break;
 
-            case '':
+            default:
             case 'view':
                 $data['func'] = 'view';
             break;
             
             case 'display':
-            default:
                 $data['func'] = 'display';
 
                 $module = xarController::$request->getModule();
@@ -129,7 +128,11 @@ class PublicationsShortController extends ShortActionController
                 return;
               break;
                 
-//              case 'display':
+              case 'display':
+                $path[] = 'display';
+                if (empty($params['id'])) return;
+              break;
+              
               case 'main':
 
                 // We need a page ID to continue, for now.
@@ -210,10 +213,7 @@ class PublicationsShortController extends ShortActionController
                         }
                     }
                 }
-                break;
-
-            default:
-                break;
+            break;
         }
         
         // Encode the processed params
