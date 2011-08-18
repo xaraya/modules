@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!--
     <xar:template file="publinks" type="module" />
-    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$id" cids="$cids" showcatcount="$showcatcount" showempty="0" />
+    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$id" cids="$cids" show_catcount="$show_catcount" showempty="0" />
     -->
     
     <xar:set name="publication_state">

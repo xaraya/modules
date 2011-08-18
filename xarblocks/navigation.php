@@ -22,7 +22,7 @@ function publications_navigationblock_init()
 {
     return array(
         'layout' => 1,
-        'showcatcount' => 0,
+        'show_catcount' => 0,
         'showchildren' => 0,
         'showempty' => false,
         'startmodule' => '',
@@ -181,8 +181,8 @@ function publications_navigationblock_display($blockinfo)
     }
 
     // See if we need to show a count per category
-    if (!isset($showcatcount)) {
-        $showcatcount = 0;
+    if (!isset($show_catcount)) {
+        $show_catcount = 0;
     }
 
     // See if we need to show the children of current categories
@@ -191,10 +191,10 @@ function publications_navigationblock_display($blockinfo)
     }
 
     // Get current category counts (optional array of cid => count)
-    if (empty($showcatcount)) {
+    if (empty($show_catcount)) {
         $catcount = array();
     }
-    if (empty($showempty) || !empty($showcatcount)) {
+    if (empty($showempty) || !empty($show_catcount)) {
         // A 'deep count' sums the totals at each node with the totals of all descendants.
         if (xarVarIsCached('Blocks.categories', 'deepcount')) {
             $deepcount = xarVarGetCached('Blocks.categories', 'deepcount');
@@ -207,14 +207,14 @@ function publications_navigationblock_display($blockinfo)
         }
     }
 
-    if (!empty($showcatcount)) {
+    if (!empty($show_catcount)) {
         if (xarVarIsCached('Blocks.categories', 'catcount')) {
             $catcount = xarVarGetCached('Blocks.categories', 'catcount');
         } else {
             // Get number of items per category (for this module).
-            // If showcatcount == 2 then add in all descendants too.
+            // If show_catcount == 2 then add in all descendants too.
 
-            if ($showcatcount == 1) {
+            if ($show_catcount == 1) {
                 // We want to display only children category counts.
                 $catcount = xarModAPIFunc(
                     'categories','user', 'groupcount',

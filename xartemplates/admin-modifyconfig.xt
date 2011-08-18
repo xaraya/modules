@@ -265,7 +265,7 @@
                         <label for="prevnextart" class="help xar-form-label" title="#xarML('Show link to previous/next item in display.')#">                    
                             Show link to previous/next item in display
                         </label>
-                        <xar:data-input type="checkbox" name="settings[prevnextart]" checked="$settings['prevnextart']" />
+                        <xar:data-input type="checkbox" name="prevnextart" checked="$settings['prevnextart']" />
                     </div>
                 </fieldset>
                 <fieldset>
@@ -323,37 +323,37 @@
                         <tr>
                             <td valign="top" style="width: 50%">
                         <div class="xar-form-input-wrapper">
-                            <label for="showkeywords" class="help xar-form-label" title="#xarML('Show keywords on view page.')#">
+                            <label for="show_keywords" class="help xar-form-label" title="#xarML('Show keywords on view page.')#">
                                 Show Keywords
                             </label>
                             <xar:if condition="!empty($seenhook['keywords'])">
-                                <xar:data-input type="checkbox" name="settings[showkeywords]" checked="$settings['showkeywords']" />
+                                <xar:data-input type="checkbox" name="show_keywords" checked="$settings['show_keywords']" />
                             <xar:else />
-                                <input type="hidden" name="settings[showkeywords]" id="settings_showkeywords" value="#$settings['showkeywords']#" />&#160;
+                                <input type="hidden" name="show_keywords" id="settings_show_keywords" value="#$settings['show_keywords']#" />&#160;
                                 N/A,&#10; the keywords module is not hooked
                             </xar:if>
                         </div>
                         <div class="xar-form-input-wrapper">
-                            <label for="showhitcounts" class="help xar-form-label" title="#xarML('Show hit counts on view page.')#">
+                            <label for="show_hitcount" class="help xar-form-label" title="#xarML('Show hit counts on view page.')#">
                                 Show Hit Counts
                             </label>
                             <xar:if condition="!empty($seenhook['hitcount'])">
-                                <xar:data-input type="checkbox" name="settings[showhitcounts]" checked="$settings['showhitcounts']" />
+                                <xar:data-input type="checkbox" name="show_hitcount" checked="$settings['show_hitcount']" />
                             <xar:else />
-                                <input type="hidden" name="settings[showhitcounts]" id="settings_showhitcounts" value="#$settings['showhitcounts']#" />&#160;
+                                <input type="hidden" name="show_hitcount" id="settings_show_hitcount" value="#$settings['show_hitcount']#" />&#160;
                                 N/A,&#10; the hitcount module is not hooked
                             </xar:if>
                         </div>
                             </td>
                             <td valign="top" style="width: 50%">
                         <div class="xar-form-input-wrapper">
-                            <label for="showratings" class="help xar-form-label" title="#xarML('Show ratings on view page.')#">
+                            <label for="show_ratings" class="help xar-form-label" title="#xarML('Show ratings on view page.')#">
                                 Show Ratings
                             </label>
                             <xar:if condition="!empty($seenhook['ratings'])">
-                                <xar:data-input type="checkbox" name="settings[showratings]" checked="$settings['showratings']" />
+                                <xar:data-input type="checkbox" name="show_ratings" checked="$settings['show_ratings']" />
                             <xar:else />
-                                <input type="hidden" name="settings[showratings]" id="settings_showratings" value="#$settings['showratings']#" />&#160;
+                                <input type="hidden" name="show_ratings" id="settings_show_ratings" value="#$settings['show_ratings']#" />&#160;
                                 N/A,&#10; the ratings module is not hooked
                             </xar:if>
                         </div>
@@ -369,30 +369,30 @@
                         <tr>
                             <td valign="top" style="width: 50%">
                                 <div class="xar-form-input-wrapper">
-                                    <label for="showpublinks" class="help xar-form-label" title="#xarML('Show links to publication types.')#">
+                                    <label for="show_publinks" class="help xar-form-label" title="#xarML('Show links to publication types.')#">
                                         Show links to publication types
                                     </label>
-                                    <xar:data-input type="checkbox" name="settings[showpublinks]" checked="$settings['showpublinks']" />
+                                    <xar:data-input type="checkbox" name="show_publinks" checked="$settings['show_publinks']" />
                                 </div>
                                 <div class="xar-form-input-wrapper">
-                                    <label for="showpubcount" class="help xar-form-label" title="#xarML('Show links to publication types.')#">
+                                    <label for="show_pubcount" class="help xar-form-label" title="#xarML('Show links to publication types.')#">
                                         Show number of publications in publication links
                                     </label>
-                                    <xar:data-input type="checkbox" name="settings[showpubcount]" checked="$settings['showpubcount']" />
+                                    <xar:data-input type="checkbox" name="show_pubcount" checked="$settings['show_pubcount']" />
                                 </div>
                             </td>
                             <td valign="top" style="width: 50%">
                                 <div class="xar-form-input-wrapper">
-                                    <label for="showarchives" class="help xar-form-label" title="#xarML('Show link to archives.')#">
+                                    <label for="show_archives" class="help xar-form-label" title="#xarML('Show link to archives.')#">
                                         Show link to archives
                                     </label>
-                                    <xar:data-input type="checkbox" name="settings[showarchives]" checked="$settings['showarchives']" />
+                                    <xar:data-input type="checkbox" name="show_archives" checked="$settings['show_archives']" />
                                 </div>
                                 <div class="xar-form-input-wrapper">
-                                    <label for="showmap" class="help xar-form-label" title="#xarML('Show link to publication map.')#">
+                                    <label for="show_map" class="help xar-form-label" title="#xarML('Show link to publication map.')#">
                                         Show link to publication map
                                     </label>
-                                    <xar:data-input type="checkbox" name="settings[showmap]" checked="$settings['showmap']" />
+                                    <xar:data-input type="checkbox" name="show_map" checked="$settings['show_map']" />
                                 </div>
                             </td>
                         </tr>
@@ -406,18 +406,18 @@
                         <tr>
                             <td valign="top" style="width: 50%">
                                 <div class="xar-form-input-wrapper">
-                                    <label for="dotransform" class="help xar-form-label" title="#xarML('Call transform hooks in summaries.')#">
+                                    <label for="do_transform" class="help xar-form-label" title="#xarML('Call transform hooks in summaries.')#">
                                         Transform hooks in summaries
                                     </label>
-                                    <xar:data-input type="checkbox" name="settings[dotransform]" checked="$settings['dotransform']" />
+                                    <xar:data-input type="checkbox" name="do_transform" checked="$settings['do_transform']" />
                                 </div>
                             </td>
                             <td valign="top" style="width: 50%">
                                 <div class="xar-form-input-wrapper">
-                                    <label for="titletransform" class="help xar-form-label" title="#xarML('Call transform hooks in titles.')#">
+                                    <label for="title_transform" class="help xar-form-label" title="#xarML('Call transform hooks in titles.')#">
                                         Transform hooks in titles
                                     </label>
-                                    <xar:data-input type="checkbox" name="settings[titletransform]" checked="$settings['titletransform']" />
+                                    <xar:data-input type="checkbox" name="title_transform" checked="$settings['title_transform']" />
                                 </div>
                             </td>
                         </tr>
@@ -467,33 +467,33 @@
                         <tr>
                             <td valign="top" style="width: 50%">
                                 <div class="xar-form-input-wrapper">
-                                    <label for="showcategories" class="help xar-form-label" title="#xarML('Show category links in publication summaries .')#">
+                                    <label for="show_categories" class="help xar-form-label" title="#xarML('Show category links in publication summaries .')#">
                                         Category links in summaries
                                     </label>
-                                    <xar:data-input type="checkbox" name="settings[showcategories]" checked="$settings['showcategories']" />
+                                    <xar:data-input type="checkbox" name="show_categories" checked="$settings['show_categories']" />
                                 </div>
                                 <div class="xar-form-input-wrapper">
-                                    <label for="showcatcount" class="help xar-form-label" title="#xarML('Show number of publications in category navigation.')#">
+                                    <label for="show_catcount" class="help xar-form-label" title="#xarML('Show number of publications in category navigation.')#">
                                         Show number of publications in category navigation
                                     </label>
-                                    <xar:data-input type="checkbox" name="settings[showcatcount]" checked="$settings['showcatcount']" />
+                                    <xar:data-input type="checkbox" name="show_catcount" checked="$settings['show_catcount']" />
                                 </div>
                             </td>
                             <td valign="top" style="width: 50%">
                                 <div class="xar-form-input-wrapper">
-                                    <label for="showprevnext" class="help xar-form-label" title="#xarML('Show previous/next category.')#">
+                                    <label for="show_prevnext" class="help xar-form-label" title="#xarML('Show previous/next category.')#">
                                         Show previous/next category
                                     </label>
-                                    <xar:data-input type="checkbox" name="settings[showprevnext]" checked="$settings['showprevnext']" />
+                                    <xar:data-input type="checkbox" name="show_prevnext" checked="$settings['show_prevnext']" />
                                 </div>
                                 <div class="xar-form-input-wrapper">
-                                    <label for="showcomments" class="help xar-form-label" title="#xarML('Show comments on view page.')#">
+                                    <label for="show_comments" class="help xar-form-label" title="#xarML('Show comments on view page.')#">
                                         Show number of comments
                                     </label>
                                     <xar:if condition="!empty($seenhook['comments'])">
-                                        <xar:data-input type="checkbox" name="settings[showcomments]" checked="$settings['showcomments']" />
+                                        <xar:data-input type="checkbox" name="show_comments" checked="$settings['show_comments']" />
                                     <xar:else />
-                                        <input type="hidden" name="settings[showcomments]" id="settings_showcomments" value="#$settings['showcomments']#" />&#160;
+                                        <input type="hidden" name="show_comments" id="settings_show_comments" value="#$settings['show_comments']#" />&#160;
                                         N/A,&#10; the keywords module is not hooked
                                     </xar:if>
                                 </div>

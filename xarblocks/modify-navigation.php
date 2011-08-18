@@ -30,8 +30,8 @@ function publications_navigationblock_modify($blockinfo)
     if (empty($vars['layout'])) {
         $vars['layout'] = 1;
     }
-    if (empty($vars['showcatcount'])) {
-        $vars['showcatcount'] = 0;
+    if (empty($vars['show_catcount'])) {
+        $vars['show_catcount'] = 0;
     }
     if (empty($vars['showchildren'])) {
         $vars['showchildren'] = 0;
@@ -151,7 +151,7 @@ function publications_navigationblock_update($blockinfo)
 {
     $vars = array();
     if(!xarVarFetch('layout',       'isset', $vars['layout'],       NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('showcatcount', 'isset', $vars['showcatcount'], NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('show_catcount', 'isset', $vars['show_catcount'], NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('showchildren', 'isset', $vars['showchildren'], NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('showempty',    'checkbox', $vars['showempty'],    false, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('startmodule',  'isset', $vars['startmodule'],  NULL, XARVAR_DONT_SET)) {return;}

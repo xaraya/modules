@@ -276,19 +276,19 @@ function publications_admin_display($args)
     }
 
     // show the number of publications for each publication type
-    if (!isset($showpubcount)) {
-        if (!isset($settings['showpubcount']) || !empty($settings['showpubcount'])) {
-            $showpubcount = 1; // default yes
+    if (!isset($show_pubcount)) {
+        if (!isset($settings['show_pubcount']) || !empty($settings['show_pubcount'])) {
+            $show_pubcount = 1; // default yes
         } else {
-            $showpubcount = 0;
+            $show_pubcount = 0;
         }
     }
     // show the number of publications for each category
-    if (!isset($showcatcount)) {
-        if (empty($settings['showcatcount'])) {
-            $showcatcount = 0; // default no
+    if (!isset($show_catcount)) {
+        if (empty($settings['show_catcount'])) {
+            $show_catcount = 0; // default no
         } else {
-            $showcatcount = 1;
+            $show_catcount = 1;
         }
     }
 
@@ -484,8 +484,8 @@ function publications_admin_display($args)
 
     // Summary is always included, is that handled somewhere else? (publication config says i can ex/include it)
     // <mikespub> publications config allows you to call transforms for the publications summaries in the view function
-    if (!isset($titletransform)) {
-        if (empty($settings['titletransform'])) {
+    if (!isset($title_transform)) {
+        if (empty($settings['title_transform'])) {
             $data['transform'][] = 'summary';
             $data['transform'][] = 'body';
             $data['transform'][] = 'notes';
@@ -524,32 +524,30 @@ function publications_admin_display($args)
     $data['publabel'] = xarML('Publication');
     $data['publinks'] = array(); //xarModAPIFunc('publications','user','getpublinks',
                                  //    array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
-                                 //          'count' => $showpubcount));
-    if (isset($showmap)) {
-        $settings['showmap'] = $showmap;
+                                 //          'count' => $show_pubcount));
+    if (isset($show_map)) {
+        $settings['show_map'] = $show_map;
     }
-    if (!empty($settings['showmap'])) {
+    if (!empty($settings['show_map'])) {
         $data['maplabel'] = xarML('View Publication Map');
         $data['maplink'] = xarModURL('publications','user','viewmap',
                                     array('ptid' => $ptid));
     }
-    if (isset($showarchives)) {
-        $settings['showarchives'] = $showarchives;
+    if (isset($show_archives)) {
+        $settings['show_archives'] = $show_archives;
     }
-    if (!empty($settings['showarchives'])) {
+    if (!empty($settings['show_archives'])) {
         $data['archivelabel'] = xarML('View Archives');
         $data['archivelink'] = xarModURL('publications','user','archive',
                                         array('ptid' => $ptid));
     }
-    if (isset($showpublinks)) {
-        $settings['showpublinks'] = $showpublinks;
-    }
-    if (!empty($settings['showpublinks'])) {
-        $data['showpublinks'] = 1;
+    if (isset($show_publinks)) $settings['show_publinks'] = $show_publinks;
+    if (!empty($settings['show_publinks'])) {
+        $data['show_publinks'] = 1;
     } else {
-        $data['showpublinks'] = 0;
+        $data['show_publinks'] = 0;
     }
-    $data['showcatcount'] = $showcatcount;
+    $data['show_catcount'] = $show_catcount;
 
     // Tell the hitcount hook not to display the hitcount, but to save it
     // in the variable cache.
@@ -616,7 +614,7 @@ function publications_admin_display($args)
     }
 
     // optional category count
-    if ($showcatcount && !empty($ptid)) {
+    if ($show_catcount && !empty($ptid)) {
         $pubcatcount = xarModAPIFunc('publications',
                                     'user',
                                     'getpubcatcount',

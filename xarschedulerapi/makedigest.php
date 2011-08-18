@@ -58,14 +58,14 @@ function publications_schedulerapi_makedigest($args)
                                    'startdate' => $lastdigest,
                                    // override some defaults here if you want
                                    'numitems' => 20,
-                                   'showcategories' => 1,
-                                   'showprevnext' => 0,
-                                   'showcomments' => 0,
-                                   'showhitcounts' => 0,
-                                   'showratings' => 0,
-                                   'showarchives' => 0,
-                                   'showmap' => 0,
-                                   'showpublinks' => 0));
+                                   'show_categories' => 1,
+                                   'show_prevnext' => 0,
+                                   'show_comments' => 0,
+                                   'show_hitcount' => 0,
+                                   'show_ratings' => 0,
+                                   'show_archives' => 0,
+                                   'show_map' => 0,
+                                   'show_publinks' => 0));
 
     // update the last digest time
     xarModVars::set('publications','lastdigest',$now);

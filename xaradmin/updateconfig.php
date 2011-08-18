@@ -35,12 +35,10 @@ function publications_admin_updateconfig()
     if (!xarSecurityCheck('AdminPublications',1,'Publication',"$ptid:All:All:All")) return;
 
     if ($data['tab'] == 'global') {
-        if(!xarVarFetch('items_per_page',      'isset', $items_per_page,      20,  XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('defaultpubtype',    'isset', $defaultpubtype,    1,  XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('sortpubtypes',      'isset', $sortpubtypes,   'id',  XARVAR_NOT_REQUIRED)) {return;}
         if (!xarVarFetch('defaultlanguage', 'str:1:100', $defaultlanguage, xarModVars::get('publications', 'defaultlanguage'), XARVAR_NOT_REQUIRED)) return;
 
-        xarModVars::set('publications', 'items_per_page', $items_per_page);
         xarModVars::set('publications', 'defaultpubtype', $defaultpubtype);
         xarModVars::set('publications', 'sortpubtypes', $sortpubtypes);
         xarModVars::set('publications', 'defaultlanguage', $defaultlanguage);
@@ -100,6 +98,29 @@ function publications_admin_updateconfig()
         $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
         $pubtypeobject->getItem(array('itemid' => $ptid));
         $configsettings = $pubtypeobject->properties['configuration']->getValue();
+
+        $checkbox = DataPropertyMaster::getProperty(array('name' => 'checkbox'));
+        $boxes = array(
+                        'show_hitount',
+                        'show_ratings',
+                        'show_keywords',
+                        'show_comments',
+                        'show_prevnext',
+                        'show_archives',
+                        'show_publinks',
+                        'show_pubcount',
+                        'show_map',
+                        'prevnextart',
+                        'dot_transform',
+                        'title_transform',
+                        'show_categories',
+                        'show_catcount',
+                        'show_prevnext',
+                       );
+        foreach ($boxes as $box) {
+            $isvalid = $checkbox->checkInput($box);
+            if ($isvalid) $settings[$box] = $checkbox->value;
+        }
 
 //        foreach ($configsettings as $key => $value)
 //            if (!isset($settings[$key])) $settings[$key] = 0;

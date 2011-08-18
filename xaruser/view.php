@@ -19,8 +19,8 @@
  * catid=1+2 : category 1 AND 2  == cids[0]=1&cids[1]=2&andcids=1
  *
  * @param template string Alternative default view-template name.
- * @param showcatcount integer Show the number of publications for each category (0..1)
- * @param showpubcount integer Show the number of publications for each publication type (0..1)
+ * @param show_catcount integer Show the number of publications for each category (0..1)
+ * @param show_pubcount integer Show the number of publications for each publication type (0..1)
  *
  * @todo Provide a 'data only' mode that returns each item as data rather than through a rendered template
  *
@@ -102,7 +102,7 @@ function publications_user_view($args)
     }
 
     // Do not transform titles if we are not transforming output at all.
-    if (empty($data['settings']['dotransform'])) $data['settings']['dotitletransform'] = 0;
+    if (empty($data['settings']['do_transform'])) $data['settings']['dotitletransform'] = 0;
 
     // Page template for frontpage or depending on publication type (optional)
     // Note : this cannot be overridden in templates
@@ -126,7 +126,7 @@ function publications_user_view($args)
         array(
             'ptid' => $ishome ? '' : $ptid,
             'state' => $c_posted,
-            'count' => $data['settings']['showpubcount']
+            'count' => $data['settings']['show_pubcount']
         )
     );
     $data['pager'] = '';
@@ -199,10 +199,10 @@ function publications_user_view($args)
     $extra = array();
 //    $extra[] = 'author';
 
-    // Note: we always include cids for security checks now (= performance impact if showcategories was 0)
+    // Note: we always include cids for security checks now (= performance impact if show_categories was 0)
     $extra[] = 'cids';
-    if ($data['settings']['showhitcounts']) $extra[] = 'counter';
-    if ($data['settings']['showratings']) $extra[] = 'rating';
+    if ($data['settings']['show_hitcount']) $extra[] = 'counter';
+    if ($data['settings']['show_ratings']) $extra[] = 'rating';
     if (xarModIsHooked('dynamicdata', 'publications', $ptid)) $extra[] = 'dynamicdata';
     if (xarModIsHooked('uploads', 'publications', $ptid)) xarVarSetCached('Hooks.uploads', 'ishooked', 1);
 
@@ -322,7 +322,7 @@ function publications_user_view($args)
     }
 
     // optional category count
-    if ($data['settings']['showcatcount']) {
+    if ($data['settings']['show_catcount']) {
         if (!empty($ptid)) {
             $pubcatcount = xarModAPIFunc('publications', 'user', 'getpubcatcount',
                 // frontpage or approved
@@ -353,7 +353,7 @@ function publications_user_view($args)
 
     // retrieve the number of comments for each article
     if (xarModIsAvailable('coments')) {
-        if ($data['settings']['showcomments']) {
+        if ($data['settings']['show_comments']) {
             $idlist = array();
             foreach ($publications as $article) {
                 $idlist[] = $article['id'];
@@ -366,7 +366,7 @@ function publications_user_view($args)
 
     // retrieve the keywords for each article
     if (xarModIsAvailable('coments')) {
-        if ($data['settings']['showkeywords']) {
+        if ($data['settings']['show_keywords']) {
             $idlist = array();
             foreach ($publications as $article) {
                 $idlist[] = $article['id'];
@@ -384,7 +384,7 @@ function publications_user_view($args)
 /* ------------------------------------------------------------
     // retrieve the categories for each article
     $catinfo = array();
-    if ($showcategories) {
+    if ($show_categories) {
         $cidlist = array();
         foreach ($publications as $article) {
             if (!empty($article['cids']) && count($article['cids']) > 0) {
@@ -485,10 +485,10 @@ function publications_user_view($args)
         }
 
         // TODO: clean up depending on field format
-        if ($dotransform) {
+        if ($do_transform) {
             $article['itemtype'] = $article['pubtype_id'];
             // TODO: what about transforming DD fields?
-            if ($titletransform) {
+            if ($title_transform) {
                 $article['transform'] = array('title', 'summary', 'body', 'notes');
             } else {
                 $article['transform'] = array('summary', 'body', 'notes');

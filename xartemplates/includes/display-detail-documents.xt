@@ -4,7 +4,7 @@
     <xar:template file="publinks" type="module" />
     <!--
     <xar:set name="cids">$properties['categories']->getValue()</xar:set>
-    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$properties['id']" cids="$cids" showcatcount="$settings['showcatcount']" showempty="0" />
+    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$properties['id']" cids="$cids" show_catcount="$settings['show_catcount']" showempty="0" />
     -->
 
     <xar:set name="publication_state">

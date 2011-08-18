@@ -134,26 +134,26 @@ function publications_user_search($args)
     if (!empty($ptid) && isset($pubtypes[$ptid])) {
         $ptids = array($ptid);
         $settings = unserialize(xarModVars::get('publications', 'settings.'.$ptid));
-        if (empty($settings['showcategories'])) {
-            $showcategories = 0;
+        if (empty($settings['show_categories'])) {
+            $show_categories = 0;
         } else {
-            $showcategories = 1;
+            $show_categories = 1;
         }
     } elseif (!empty($ptids) && count($ptids) > 0) {
         foreach ($ptids as $curptid) {
             // default view doesn't apply here ?!
         }
-        $showcategories = 1;
+        $show_categories = 1;
     } elseif (!isset($ptids)) {
     //    $ptids = array(xarModVars::get('publications','defaultpubtype'));
         $ptids = array();
         foreach ($pubtypes as $pubid => $pubtype) {
             $ptids[] = $pubid;
         }
-        $showcategories = 1;
+        $show_categories = 1;
     } else {
     // TODO: rethink this when we're dealing with multi-pubtype categories
-        $showcategories = 0;
+        $show_categories = 0;
     }
 
     // turn $catid into $cids array (and set $andcids flag)
@@ -371,7 +371,7 @@ function publications_user_search($args)
 
                 // retrieve the categories for each article
                 $catinfo = array();
-                if ($showcategories) {
+                if ($show_categories) {
                     $cidlist = array();
                     foreach ($publications as $article) {
                         if (!empty($article['cids']) && count($article['cids']) > 0) {
@@ -441,7 +441,7 @@ function publications_user_search($args)
 
                     // categories this article belongs to
                     $categories = array();
-                    if ($showcategories && !empty($article['cids']) &&
+                    if ($show_categories && !empty($article['cids']) &&
                         is_array($article['cids']) && count($article['cids']) > 0) {
 
                         $cidlist = $article['cids'];
