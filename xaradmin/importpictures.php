@@ -37,7 +37,7 @@ function publications_admin_importpictures()
     $data = array();
 
     if (!isset($baseurl)) {
-        $data['baseurl'] = 'modules/publications/xarimages/';
+        $data['baseurl'] = sys::code() . 'modules/publications/xarimages/';
     } else {
         $data['baseurl'] = $baseurl;
     }
