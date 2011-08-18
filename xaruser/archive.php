@@ -359,22 +359,22 @@ function publications_user_archive($args)
             $settings = unserialize($string);
         }
     }
-    if (!isset($showpublinks)) {
-        if (!empty($settings['showpublinks'])) {
-            $showpublinks = 1;
+    if (!isset($show_publinks)) {
+        if (!empty($settings['show_publinks'])) {
+            $show_publinks = 1;
         } else {
-            $showpublinks = 0;
+            $show_publinks = 0;
         }
     }
     // show the number of publications for each publication type
-    if (!isset($showpubcount)) {
-        if (!isset($settings['showpubcount']) || !empty($settings['showpubcount'])) {
-            $showpubcount = 1; // default yes
+    if (!isset($show_pubcount)) {
+        if (!isset($settings['show_pubcount']) || !empty($settings['show_pubcount'])) {
+            $show_pubcount = 1; // default yes
         } else {
-            $showpubcount = 0;
+            $show_pubcount = 0;
         }
     }
-//    $showcatcount = 0; // unused here
+//    $show_catcount = 0; // unused here
 
     // return template out
     $data = array('months' => $months,
@@ -388,12 +388,12 @@ function publications_user_archive($args)
                                               'month' => $month,
                                                'sort' => $sort)),
                  'showdate' => $showdate,
-                 'showpublinks' => $showpublinks,
+                 'show_publinks' => $show_publinks,
                  'publabel' => xarML('Publication'),
                  'publinks' => xarModAPIFunc('publications','user','getpublinks',
                                             array('ptid' => $ptid,
                                                   'state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
-                                                  'count' => $showpubcount,
+                                                  'count' => $show_pubcount,
                                                   // override default 'view'
                                                   'func' => 'archive')),
                  'maplabel' => xarML('View Publication Map'),

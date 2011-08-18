@@ -99,6 +99,9 @@ function publications_admin_modifyconfig()
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
     $data['settings'] = unserialize($pubtypeobject->properties['configuration']->getValue());
 
+    sys::import('modules.publications.xaruserapi.getsettings');
+    $data['settings'] = $data['settings'] + publications_userapi_getglobalsettings();
+    
     return $data;
 }
 ?>

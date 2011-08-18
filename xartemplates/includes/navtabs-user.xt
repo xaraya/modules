@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:if condition="!empty($settings['showmap']) OR !empty($settings['showarchives']) OR !empty($settings['showsubmit'])">
+    <xar:if condition="!empty($settings['show_map']) OR !empty($settings['show_archives']) OR !empty($settings['showsubmit'])">
         <xar:style scope="module" module="base" file="navtabs" />
         <dl class="xar-tabs">
             <dt class="help">
                 Options                 : 
             </dt>
-            <xar:if condition="!empty($settings['showmap'])">
+            <xar:if condition="!empty($settings['show_map'])">
                 <dd>
                     <a href="#xarModURL('publications', 'user', 'viewmap', array('ptid' => !empty($ptid) ? $ptid : null))#">
                         View Publication Map
@@ -20,7 +20,7 @@
                     </a>
                 </dd>
             </xar:if>
-            <xar:if condition="!empty($settings['showarchives'])">
+            <xar:if condition="!empty($settings['show_archives'])">
                 <dd>
                     <a href="xarModURL('publications', 'user', 'archive', array('ptid' => !empty($ptid) ? $ptid : null))">
                         View Archives

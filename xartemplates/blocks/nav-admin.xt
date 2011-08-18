@@ -74,12 +74,12 @@
     </label>
 </div>
 <div class="xar-form-input-wrapper">
-    <label class="xar-form-label" for="showcatcount#$blockid#">        
+    <label class="xar-form-label" for="show_catcount#$blockid#">        
         Show count per category        
     </label>
-    <select name="showcatcount" id="showcatcount#$blockid#">
+    <select name="show_catcount" id="show_catcount#$blockid#">
         <xar:loop name="$catcounts">
-            <xar:if condition="$showcatcount eq $loop:item['id']">
+            <xar:if condition="$show_catcount eq $loop:item['id']">
                 <option value="#$loop:item['id']#" selected="selected">
                     #$loop:item['name']#
                 </option>

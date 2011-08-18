@@ -35,7 +35,7 @@ function publications_userapi_getmenulinks()
                              'title' => xarML('Display #(1)',$item['description']),
                              'label' => $item['description']);
 
-            if (!empty($settings['showarchives'])) {
+            if (!empty($settings['show_archives'])) {
                 $menulinks[] = Array('url'   => xarModURL('publications',
                                                           'user',
                                                           'archive',

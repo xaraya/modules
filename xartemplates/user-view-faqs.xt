@@ -5,7 +5,7 @@
     <a name="titles">
     </a>
     <xar:if condition="!empty($ptid) or !empty($catid)">
-        <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" catid="$catid" showcatcount="$showcatcount" showempty="1" />
+        <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" catid="$catid" show_catcount="$settings['show_catcount']" showempty="1" />
     </xar:if>
     <xar:if condition="!empty($titles) and count($titles) gt 0">
         <ul>
@@ -70,7 +70,7 @@
             </xar:foreach>
         </xar:if>
     </div>
-    <xar:if condition="!empty($showprevnext)">
+    <xar:if condition="!empty($show_prevnext)">
         <xar:data-output type="categorynavigation" layout="prevnext" />
     </xar:if>
     <xar:if condition="!empty($maplink) or !empty($archivelink)">
