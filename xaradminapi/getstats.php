@@ -35,17 +35,17 @@ function publications_adminapi_getstats($args)
             $dbtype = xarDB::getType();
             switch ($dbtype) {
                 case 'mysql':
-                    $newfields[] = "LEFT(FROM_UNIXTIME(pubdate),4) AS myyear";
+                    $newfields[] = "LEFT(FROM_UNIXTIME(start_date),4) AS myyear";
                     $newgroups[] = "myyear";
                     break;
                 case 'postgres':
-                    $newfields[] = "TO_CHAR(ABSTIME(pubdate),'YYYY') AS myyear";
+                    $newfields[] = "TO_CHAR(ABSTIME(start_date),'YYYY') AS myyear";
                 // CHECKME: do we need to use TO_CHAR(...) for the group field too ?
                     $newgroups[] = "myyear";
                     break;
                 case 'mssql':
-                    $newfields[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,pubdate,'1/1/1970'),120),4) as myyear";
-                    $newgroups[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,pubdate,'1/1/1970'),120),4)";
+                    $newfields[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,start_date,'1/1/1970'),120),4) as myyear";
+                    $newgroups[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,start_date,'1/1/1970'),120),4)";
                     break;
                 // TODO:  Add SQL queries for Oracle, etc.
                 default:
@@ -55,17 +55,17 @@ function publications_adminapi_getstats($args)
             $dbtype = xarDB::getType();
             switch ($dbtype) {
                 case 'mysql':
-                    $newfields[] = "LEFT(FROM_UNIXTIME(pubdate),7) AS mymonth";
+                    $newfields[] = "LEFT(FROM_UNIXTIME(start_date),7) AS mymonth";
                     $newgroups[] = "mymonth";
                     break;
                 case 'postgres':
-                    $newfields[] = "TO_CHAR(ABSTIME(pubdate),'YYYY-MM') AS mymonth";
+                    $newfields[] = "TO_CHAR(ABSTIME(start_date),'YYYY-MM') AS mymonth";
                 // CHECKME: do we need to use TO_CHAR(...) for the group field too ?
                     $newgroups[] = "mymonth";
                     break;
                 case 'mssql':
-                    $newfields[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,pubdate,'1/1/1970'),120),7) as mymonth";
-                    $newgroups[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,pubdate,'1/1/1970'),120),7)";
+                    $newfields[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,start_date,'1/1/1970'),120),7) as mymonth";
+                    $newgroups[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,start_date,'1/1/1970'),120),7)";
                     break;
                 // TODO:  Add SQL queries for Oracle, etc.
                 default:
@@ -75,17 +75,17 @@ function publications_adminapi_getstats($args)
             $dbtype = xarDB::getType();
             switch ($dbtype) {
                 case 'mysql':
-                    $newfields[] = "LEFT(FROM_UNIXTIME(pubdate),10) AS myday";
+                    $newfields[] = "LEFT(FROM_UNIXTIME(start_date),10) AS myday";
                     $newgroups[] = "myday";
                     break;
                 case 'postgres':
-                    $newfields[] = "TO_CHAR(ABSTIME(pubdate),'YYYY-MM-DD') AS myday";
+                    $newfields[] = "TO_CHAR(ABSTIME(start_date),'YYYY-MM-DD') AS myday";
                 // CHECKME: do we need to use TO_CHAR(...) for the group field too ?
                     $newgroups[] = "myday";
                     break;
                 case 'mssql':
-                    $newfields[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,pubdate,'1/1/1970'),120),10) as myday";
-                    $newgroups[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,pubdate,'1/1/1970'),120),10)";
+                    $newfields[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,start_date,'1/1/1970'),120),10) as myday";
+                    $newgroups[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,start_date,'1/1/1970'),120),10)";
                     break;
                 // TODO:  Add SQL queries for Oracle, etc.
                 default:

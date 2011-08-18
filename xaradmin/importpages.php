@@ -40,7 +40,7 @@ function publications_admin_importpages()
     $data = array();
 
     if (empty($basedir)) {
-        $data['basedir'] = realpath('modules/publications');
+        $data['basedir'] = realpath(sys::code() . 'modules/publications');
     } else {
         $data['basedir'] = realpath($basedir);
     }
