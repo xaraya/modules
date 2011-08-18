@@ -525,6 +525,7 @@ function publications_user_view($args)
 
     // Get the publications we want to view
     $data['object'] = DataObjectMaster::getObject(array('name' => $data['pubtypeobject']->properties['name']->value));
+    $data['objectname'] = $data['pubtypeobject']->properties['name']->value;
     
     $object = DataObjectMaster::getObjectList(array('name' => $data['pubtypeobject']->properties['name']->value));
     $data['items'] = $object->getItems();
