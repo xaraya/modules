@@ -66,6 +66,7 @@ function publications_userapi_getglobalsettings()
                 'detail_template' => '',
                 'page_template' => "",
                 'theme' => '',
+                'allow_translations' => true,
                     );
     return $settings;
 }
