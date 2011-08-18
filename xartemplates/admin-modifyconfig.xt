@@ -284,7 +284,7 @@
                         </label>
                         <xar:data-input type="radio" name="settings[summary_template]" value="$settings['summary_template']" options="$options"/>
                         &#160;
-                        <a href="#xarModURL('publications','admin','templates_page',array('file' => 'summary','ptid' => $ptid))#">
+                        <a href="#xarModURL('publications','admin','templates_type',array('file' => 'summary','ptid' => $ptid))#">
                             Edit template
                         </a>
                     </div>
@@ -294,7 +294,7 @@
                         </label>
                         <xar:data-input type="radio" name="settings[detail_template]" value="$settings['detail_template']" options="$options"/>
                         &#160;
-                        <a href="#xarModURL('publications','admin','templates_page',array('file' => 'detail','ptid' => $ptid))#">
+                        <a href="#xarModURL('publications','admin','templates_type',array('file' => 'detail','ptid' => $ptid))#">
                             Edit template
                         </a>
                     </div>
