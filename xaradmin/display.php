@@ -83,7 +83,10 @@ function publications_admin_display($args)
     $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
     $itemid = $data['object']->getItem(array('itemid' => $id));
     
-    // If this is a redirect page, then send it on its way now
+# --------------------------------------------------------
+#
+# If this is a redirect page, then send it on its way now
+#
     if ($data['object']->properties['redirect_flag']->value) {
     
         // If this is from a link of a redirect child page, use the child param as new URL
@@ -145,12 +148,11 @@ function publications_admin_display($args)
                 $page
             );
 
-# --------------------------------------------------------
-            
             return $page;
         }
     }
-
+# --------------------------------------------------------
+            
     // Get the complete tree for this section of pages.
     // We need this for blocks etc.
     $tree = xarMod::apiFunc(
@@ -179,22 +181,52 @@ function publications_admin_display($args)
         }
     }
     
-    // Specific layout within a template (optional)
-    if (isset($layout)) {
-        $data['layout'] = $layout;
-    } else {
-        $data['layout'] = 'detail';
-    }
-
-    // Get the settings for this publication type;
-    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $ptid));
-
-    // Set the theme if needed
+# --------------------------------------------------------
+#
+# Set the theme if needed
+#
     if (!empty($data['object']->properties['theme']->value)) xarTplSetThemeName($data['object']->properties['theme']->value);
     
-    // Set the page template if needed
-    if (!empty($data['object']->properties['page_template']->value)) xarTplSetPageTemplateName($data['object']->properties['page_template']->value);
+    // Set the page template from the pubtype if needed
+    if (!empty($data['settings']['page_template'])) {
+        $pagename = $data['settings']['page_template'];
+        $position = strpos($pagename,'.');
+        if ($position === false) {
+            $pagetemplate = $pagename;
+        } else {
+            $pagetemplate = substr($pagename,0,$position);
+        }
+        xarTpl::setPageTemplateName($pagetemplate);
+    }
+    // It can be overridden by the page itself
+    if (!empty($data['object']->properties['page_template']->value)) {
+        $pagename = $data['object']->properties['page_template']->value;
+        $position = strpos($pagename,'.');
+        if ($position === false) {
+            $pagetemplate = $pagename;
+        } else {
+            $pagetemplate = substr($pagename,0,$position);
+        }
+        xarTpl::setPageTemplateName($pagetemplate);
+    }
 
+# --------------------------------------------------------
+#
+# Additional data
+#
+    // Specific layout within a template (optional)
+    $data['layout'] = isset($layout) ? $layout : 'detail';
+    
+    // Get the settings for this publication type;
+    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $ptid));
+    
+    // The name of this object
+    $data['objectname'] = $data['object']->name;
+    
+# --------------------------------------------------------
+#
+# Cache data for blocks
+#
     // Now we can cache all this data away for the blocks.
     // The blocks should have access to most of the same data as the page.
     xarVarSetCached('Blocks.publications', 'pagedata', $tree);
