@@ -183,12 +183,6 @@ function publications_admin_display($args)
     
 # --------------------------------------------------------
 #
-# Set the theme if needed
-#
-    if (!empty($data['object']->properties['theme']->value)) xarTplSetThemeName($data['object']->properties['theme']->value);
-    
-# --------------------------------------------------------
-#
 # Additional data
 #
     // Specific layout within a template (optional)
@@ -199,6 +193,12 @@ function publications_admin_display($args)
     
     // The name of this object
     $data['objectname'] = $data['object']->name;
+    
+# --------------------------------------------------------
+#
+# Set the theme if needed
+#
+    if (!empty($data['object']->properties['theme']->value)) xarTplSetThemeName($data['object']->properties['theme']->value);
     
 # --------------------------------------------------------
 #
