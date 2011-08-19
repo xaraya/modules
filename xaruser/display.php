@@ -181,11 +181,27 @@ function publications_user_display($args)
     
 # --------------------------------------------------------
 #
+# Additional data
+#
+    // Specific layout within a template (optional)
+    $data['layout'] = isset($layout) ? $layout : 'detail';
+    
+    // Get the settings for this publication type;
+    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $ptid));
+    
+    // The name of this object
+    $data['objectname'] = $data['object']->name;
+    
+# --------------------------------------------------------
+#
 # Set the theme if needed
 #
     if (!empty($data['object']->properties['theme']->value)) xarTplSetThemeName($data['object']->properties['theme']->value);
     
-    // Set the page template from the pubtype if needed
+# --------------------------------------------------------
+#
+# Set the page template from the pubtype if needed
+#
     if (!empty($data['settings']['page_template'])) {
         $pagename = $data['settings']['page_template'];
         $position = strpos($pagename,'.');
@@ -208,19 +224,6 @@ function publications_user_display($args)
         xarTpl::setPageTemplateName($pagetemplate);
     }
 
-# --------------------------------------------------------
-#
-# Additional data
-#
-    // Specific layout within a template (optional)
-    $data['layout'] = isset($layout) ? $layout : 'detail';
-    
-    // Get the settings for this publication type;
-    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $ptid));
-    
-    // The name of this object
-    $data['objectname'] = $data['object']->name;
-    
 # --------------------------------------------------------
 #
 # Cache data for blocks
