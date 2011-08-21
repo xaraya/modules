@@ -68,7 +68,7 @@ function publications_admin_update()
         $itemsdata[$prefix] = $data['object']->getFieldValues(array(),1);
     }
 
-    if ($data['preview'] || !$isvalid) {var_dump($data['object']->getInvalids());
+    if ($data['preview'] || !$isvalid) {
         // Preview or bad data: redisplay the form
         $data['properties'] = $data['object']->getProperties();
         if ($data['preview']) $data['tab'] = 'preview';

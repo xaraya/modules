@@ -98,6 +98,7 @@ function publications_admin_modifyconfig()
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
     $data['settings'] = unserialize($pubtypeobject->properties['configuration']->getValue());
+    $data['access'] = unserialize($pubtypeobject->properties['access']->getValue());
 
     sys::import('modules.publications.xaruserapi.getsettings');
     $data['settings'] = $data['settings'] + publications_userapi_getglobalsettings();
