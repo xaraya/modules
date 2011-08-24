@@ -108,7 +108,11 @@ function publications_user_display($args)
             unset($other_params['type']);
             unset($other_params['func']);
             unset($other_params['child']);
-            $page = xarMod::guiFunc($info['module'],'user',$info['func'],$other_params);
+            try {
+                $page = xarMod::guiFunc($info['module'],'user',$info['func'],$other_params);
+            } catch (Exception $e) {
+                return xarResponse::NotFound();
+            }
             
             // Debug
             // echo xarModURL($info['module'],'user',$info['func'],$other_params);
