@@ -84,19 +84,11 @@ function publications_admin_view($args)
     $data['catid'] = $catid;
 
     if (empty($ptid)) {
-        if (!xarSecurityCheck('EditPublications',0,'Publication',"All:All:All:All")) {
-            $msg = xarML('You have no permission to edit #(1)',
-                         'Publications');
-        throw new ForbiddenOperationException(null, $msg);
-        }
+        if (!xarSecurityCheck('EditPublications',1,'Publication',"All:All:All:All")) return;
     } elseif (!is_numeric($ptid) || !isset($pubtypes[$ptid])) {
         $msg = xarML('Invalid publication type');
         throw new BadParameterException(null,$msg);
-    } elseif (!xarSecurityCheck('EditPublications',0,'Publication',"$ptid:All:All:All")) {
-        $msg = xarML('You have no permission to edit #(1)',
-                     $pubtypes[$ptid]['description']);
-        throw new ForbiddenOperationException(null, $msg);
-    }
+    } elseif (!xarSecurityCheck('EditPublications',0,'Publication',"$ptid:All:All:All")) return;
 
     if (!empty($ptid)) {
         $settings = unserialize(xarModVars::get('publications', 'settings.'.$ptid));
