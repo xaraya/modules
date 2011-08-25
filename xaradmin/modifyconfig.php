@@ -43,7 +43,7 @@ function registration_admin_modifyconfig()
                     xarModVars::set('registration', 'showprivacy', $showprivacy);
                     xarModVars::set('registration', 'termslink', $termslink);
                     xarModVars::set('registration', 'privacylink', $privacylink);
-                    xarResponse::redirect($data['return_url']);
+                    xarController::redirect($data['return_url']);
                     return true;
                 }
             }
@@ -84,7 +84,7 @@ function registration_admin_modifyconfig()
                 xarModVars::set('registration', 'usermessage', $usermessage);
                 xarModVars::set('registration', 'adminmessage', $adminmessage);
                 xarModVars::set('registration', 'notificationmodule', $notificationmodule);
-                xarResponse::redirect($data['return_url']);
+                xarController::redirect($data['return_url']);
                 return true;
             }
             // create the dropdown of groups for the template display
@@ -120,7 +120,7 @@ function registration_admin_modifyconfig()
 
                 $disallowedips = serialize($disallowedips);
                 xarModVars::set('registration', 'disallowedips', $disallowedips);
-                xarResponse::redirect($data['return_url']);
+                xarController::redirect($data['return_url']);
                 return true;
             }
             $checkip = xarModVars::get('registration', 'disallowedips');

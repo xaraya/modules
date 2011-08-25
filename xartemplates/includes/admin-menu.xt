@@ -4,7 +4,7 @@
 <xar:if condition="xarModVars::get('themes','adminpagemenu')">
     <xar:sec mask="AdminRegistration" catch="false">
     <xar:style scope="module" module="base" file="navtabs"/>
-    <xar:set name="request">xarRequest::getInfo()</xar:set>
+    <xar:set name="request">xarController::$request->getInfo()</xar:set>
     <xar:set name="activetab">#$request.2#</xar:set>
     <div>
         <ul class="xar-tabs xar-alt xar-norm-outline">

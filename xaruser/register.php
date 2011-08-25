@@ -39,7 +39,7 @@ function registration_user_register()
     //If a user is already logged in, no reason to see this.
     //We are going to send them to their account.
     if (xarUserIsLoggedIn()) {
-        xarResponse::redirect(xarModURL('roles', 'user', 'account'));
+        xarController::redirect(xarModURL('roles', 'user', 'account'));
        return true;
     }
     $allowregistration = xarModVars::get('registration', 'allowregistration');
@@ -130,7 +130,7 @@ function registration_user_register()
         
             // this prevents users passing input via get params and by-passing age/ip check
             if (!xarSession::getVar('registration.ageconfirm'))
-                xarResponse::redirect(xarModURL('registration', 'user', 'register'));
+                xarController::redirect(xarModURL('registration', 'user', 'register'));
 
             // initialise registration object
             $object = DataObjectMaster::getObject(array('name' => $regobjectname));
