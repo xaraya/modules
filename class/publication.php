@@ -19,6 +19,8 @@ class Publication extends DataObject
     {
         $isvalid = parent::checkInput($args,$suppress,$priority);
 
+        // If the rest of the publication is valid, then do the access part
+        // Note this is a collection of access properties; hence the complicated process of saving it
         if ($isvalid) {
             $access = DataPropertyMaster::getProperty(array('name' => 'access'));
             $prefix = $this->getFieldPrefix();
@@ -41,8 +43,8 @@ class Publication extends DataObject
             $isvalid = $isvalid && $validprop;
             $allaccess = array(
                 'display' => $displayaccess,
-                'modify' => $modifyaccess,
-                'delete' => $deleteaccess,
+                'modify'  => $modifyaccess,
+                'delete'  => $deleteaccess,
             );
             $this->properties['access']->setValue($allaccess);
        }
