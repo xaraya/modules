@@ -36,6 +36,10 @@ function articles_userapi_showfield($args)
         if ($args['type'] == 'textarea_small') {
             $args['type'] = 'textarea';
         }
+        // quick hack to at least get a display
+        if ($args['type'] == 'status') {
+            $args['type'] = 'textbox';
+        }
         // let DynamicData handle it
         return xarMod::apiFunc('dynamicdata','admin','showinput',$args);
     }

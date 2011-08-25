@@ -73,7 +73,6 @@ function articles_admin_create()
                                                        'configuration' => $value['validation']));
             $check = $properties[$field]->checkInput($field);
             if (!$check) {
-echo var_dump($properties[$field]);
                 $article[$field] = '';
                 $invalid[$field] = $properties[$field]->invalid;
                 $preview = 1;
@@ -152,9 +151,10 @@ echo var_dump($properties[$field]);
 
     // call transform input hooks
     $article['transform'] = array('summary','body','notes');
+/*
     $article = xarModCallHooks('item', 'transform-input', 0, $article,
                                'articles', $ptid);
-
+*/
     // Pass to API
     try {
         $aid = xarMod::apiFunc('articles', 'admin', 'create', $article);
