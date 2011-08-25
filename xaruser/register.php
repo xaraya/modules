@@ -101,10 +101,13 @@ function registration_user_register()
             $object = DataObjectMaster::getObject(array('name' => $regobjectname));
             if (empty($object)) return;
 
-            if (isset($fieldvalues)) 
-                $object->setFieldValues($fieldvalues);
-            
-            $item = array();          
+            if (isset($fieldvalues)) {
+                $object->setFieldValues($fieldvalues,1);
+            }
+
+            /* Call hooks here, others than just dyn data
+             * We pass the phase in here to tell the hook it should check the data
+             */
             $item['module'] = 'registration';
             $item['itemid'] = '';
             $item['itemtype'] = xarRoles::ROLES_USERTYPE;
@@ -142,7 +145,6 @@ function registration_user_register()
                 $invalid['agreetoterms'] = xarMod::apiFunc('registration','user','checkvar', 
                     array('type'=>'agreetoterms', 'var'=>$agreetoterms));
 
-            // check unique email if necessary 
             if (xarModVars::get('roles','uniqueemail')) {
                 $email = $object->properties['email']->value;
                 $user = xarMod::apiFunc('roles','user', 'get', array('email' => $email));
@@ -181,6 +183,13 @@ function registration_user_register()
             
             return xarTplModule('registration','user', 'confirmregistration', $data);
 
+            $values = $object->getFieldValues(array(),1);
+            xarSession::setVar('Registration.UserInfo',$values);
+            // everything seems OK -> go on to the next step
+            $data = xarTplModule('registration','user', 'confirmregistration',
+                                 array('object'      => $object,
+                                       'authid'      => $authid,
+                                       'hookoutput'  => $hookoutput));
         break;
         
         case 'createuser': // create account 
