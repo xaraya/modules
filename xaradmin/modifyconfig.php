@@ -69,7 +69,7 @@ function query_admin_modifyconfig()
             }
             xarModVars::set('query', 'debugusers', serialize($newusers));
 
-            xarResponse::Redirect(xarModURL('query', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+            xarController::redirect(xarModURL('query', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
             // Return
             return true;
             break;
