@@ -19,6 +19,7 @@ function publications_adminapi_getpubtypeaccess($args)
 
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $args['ptid']));
+    if (empty($pubtypeobject->properties['access']->value)) return "a:0:{}";
 
     return $pubtypeobject->properties['access']->value;
 }
