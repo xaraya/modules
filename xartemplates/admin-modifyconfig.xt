@@ -553,8 +553,19 @@
                     <legend>
                         Redirect URLs
                     </legend>
-                    <xar:data-input type="array"/>
+                    <xar:data-input type="array" name="redirects"/>
                 </fieldset>
+                <div class="xar-form-input-wrapper">
+                    <div class="xar-form-container-after">
+                        <xar:set name="label">xarML('Update Configuration')</xar:set>
+                        <xar:button type="submit" label="$label" />
+                        &#160;
+                        <xar:set name="label">xarML('Reset')</xar:set>
+                        <xar:button type="cancel" label="$label" />
+                        <input type="hidden" name="tab" id="tab" value="#$tab#" />
+                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" /> 
+                    </div>
+                </div>
            </form>
         </xar:if>
     </div>
