@@ -43,7 +43,7 @@ function translations_admin_delete_fuzzy_result()
         unlink($fileName);
     }
 
-    xarResponse::Redirect(xarModURL('translations', 'admin', 'translate', 
+    xarController::redirect(xarModURL('translations', 'admin', 'translate', 
         array('dnType' => $dnType,
               'dnName' => $dnName,
               'extid' => $extid)));

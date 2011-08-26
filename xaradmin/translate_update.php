@@ -94,8 +94,8 @@ function translations_admin_translate_update()
     $gen->close();
 
     // voll
-    // xarResponse::Redirect(xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>$subtype, 'subname'=>$subname)));
-    xarResponse::Redirect(xarModURL('translations', 'admin', 'translate_subtype',
+    // xarController::redirect(xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>$subtype, 'subname'=>$subname)));
+    xarController::redirect(xarModURL('translations', 'admin', 'translate_subtype',
        array(
            'dnType' => $dnType,
            'dnName' => $dnName,

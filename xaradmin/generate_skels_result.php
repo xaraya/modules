@@ -65,7 +65,7 @@ function translations_admin_generate_skels_result()
 
     $tplData = $res;
     if ($tplData == NULL) {
-        xarResponse::Redirect(xarModURL('translations', 'admin', 'generate_skels_info'));
+        xarController::redirect(xarModURL('translations', 'admin', 'generate_skels_info'));
     }
 
     $druidbar = translations_create_druidbar(GENSKELS, $dnType, $dnName, $extid);

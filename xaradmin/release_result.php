@@ -39,7 +39,7 @@ function translations_admin_release_result()
 
     $filename = $res;
     if ($filename == NULL) {
-        xarResponse::Redirect(xarModURL('translations', 'admin', 'release_info'));
+        xarController::redirect(xarModURL('translations', 'admin', 'release_info'));
     }
 
     $tplData['url'] = sys::varpath().'/cache/'.$filename;

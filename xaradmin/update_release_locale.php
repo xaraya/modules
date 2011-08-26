@@ -23,7 +23,7 @@ function translations_admin_update_release_locale()
     if (!xarVarFetch('extid','int',$extid)) return;
             
     translations_release_locale($locale);
-    xarResponse::Redirect(xarModURL('translations', 'admin', 'generate_trans_info', array(
+    xarController::redirect(xarModURL('translations', 'admin', 'generate_trans_info', array(
         'dnType' => $dnType,
         'dnName' => $dnName,
         'extid'  => $extid)));

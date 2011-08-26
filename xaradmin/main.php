@@ -23,7 +23,7 @@
 */
 function translations_admin_main()
 {
-    xarResponse::Redirect(xarModURL('translations', 'admin', 'start'));
+    xarController::redirect(xarModURL('translations', 'admin', 'start'));
     return array();
 }
 
