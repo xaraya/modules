@@ -150,7 +150,7 @@ function articles_admin_updateconfig()
     if (empty($ptid)) {
         $ptid = null;
     }
-    xarResponse::Redirect(xarModURL('articles', 'admin', 'modifyconfig',
+    xarController::redirect(xarModURL('articles', 'admin', 'modifyconfig',
                                   array('ptid' => $ptid)));
     return true;
 }

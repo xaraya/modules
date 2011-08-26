@@ -80,7 +80,7 @@ function articles_user_viewmap($args)
             $catid = NULL;
         }
         $url = xarModURL('articles','user','view',array('ptid' => $ptid, 'catid' => $catid));
-        xarResponse::Redirect($url);
+        xarController::redirect($url);
         return;
     }
 

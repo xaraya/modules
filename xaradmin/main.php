@@ -26,7 +26,7 @@ function articles_admin_main()
 
         // Return the template variables defined in this function
         //return array('welcome' => $welcome);
-        xarResponse::Redirect(xarModURL('articles', 'admin', 'view'));
+        xarController::redirect(xarModURL('articles', 'admin', 'view'));
     // success
     return true;
 

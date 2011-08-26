@@ -53,12 +53,12 @@ function articles_user_redirect($args)
         }
         if ($value['format'] == 'url' && !empty($article[$field]) && $article[$field] != 'http://') {
 // TODO: add some verifications here !
-            xarResponse::Redirect($article[$field]);
+            xarController::redirect($article[$field]);
             return true;
         } elseif ($value['format'] == 'urltitle' && !empty($article[$field]) && substr($article[$field],0,2) == 'a:') {
             $array = unserialize($article[$field]);
             if (!empty($array['link']) && $array['link'] != 'http://') {
-                xarResponse::Redirect($array['link']);
+                xarController::redirect($array['link']);
                 return true;
             }
         }

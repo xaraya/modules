@@ -82,7 +82,7 @@ function articles_admin_pubtypes()
             } else {
                 // Redirect to the admin view page
                 xarSession::setVar('statusmsg', xarML('Publication type created'));
-                xarResponse::Redirect(xarModURL('articles', 'admin', 'pubtypes',
+                xarController::redirect(xarModURL('articles', 'admin', 'pubtypes',
                                               array('action' => 'view')));
                 return true;
             }
@@ -113,7 +113,7 @@ function articles_admin_pubtypes()
             } else {
                 // Redirect back to the admin modify page to continue editing
                 xarSession::setVar('statusmsg', xarML('Publication type updated'));
-                xarResponse::Redirect(xarModURL('articles', 'admin', 'pubtypes', 
+                xarController::redirect(xarModURL('articles', 'admin', 'pubtypes', 
                                               array('ptid'=>$ptid,'action' => 'modify')));
                 return true;
             }
@@ -126,7 +126,7 @@ function articles_admin_pubtypes()
             } else {
                 // Redirect to the admin view page
                 xarSession::setVar('statusmsg', xarML('Publication type deleted'));
-                xarResponse::Redirect(xarModURL('articles', 'admin', 'pubtypes',
+                xarController::redirect(xarModURL('articles', 'admin', 'pubtypes',
                                               array('action' => 'view')));
                 return true;
             }

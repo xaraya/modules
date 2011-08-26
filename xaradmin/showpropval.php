@@ -95,7 +95,7 @@ function articles_admin_showpropval($args)
                                             array('ptid' => $ptid,
                                                   'action' => 'modify'));
                 }
-                xarResponse::Redirect($return_url);
+                xarController::redirect($return_url);
                 return true;
             }
         } else {

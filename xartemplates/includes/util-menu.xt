@@ -4,7 +4,7 @@
 <xar:comment>Common Administration menu</xar:comment>
 <xar:style scope="module" module="base" file="navtabs" />
 
-<xar:set name="info">xarRequest::getInfo()</xar:set>
+<xar:set name="info">xarContreoller::$request->getInfo()</xar:set>
 <xar:set name="activetab">$info[2]</xar:set>
 <xar:set name="activetype">$info[1]</xar:set>
 <div>

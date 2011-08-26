@@ -104,7 +104,7 @@ function articles_admin_updatestatus()
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {
             extract($lastviewarray);
-            xarResponse::Redirect(xarModURL('articles', 'admin', 'view',
+            xarController::redirect(xarModURL('articles', 'admin', 'view',
                                           array('ptid' => $ptid,
                                                 'catid' => $catid,
                                                 'status' => $status,
@@ -116,7 +116,7 @@ function articles_admin_updatestatus()
     if (empty($catid)) {
         $catid = null;
     }
-    xarResponse::Redirect(xarModURL('articles', 'admin', 'view',
+    xarController::redirect(xarModURL('articles', 'admin', 'view',
                                   array('ptid' => $ptid, 'catid' => $catid)));
 
     return true;

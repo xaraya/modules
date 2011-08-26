@@ -177,31 +177,31 @@ function articles_admin_create()
     // Save and continue editing via feature request.
     if (isset($save)){
         if (xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')) {
-            xarResponse::Redirect(xarModURL('articles', 'admin', 'modify',
+            xarController::redirect(xarModURL('articles', 'admin', 'modify',
                                           array('aid' => $aid)));
         } else {
-            xarResponse::Redirect(xarModURL('articles', 'user', 'view',
+            xarController::redirect(xarModURL('articles', 'user', 'view',
                                           array('ptid' => $ptid)));
         }
     }
     // Save and view the new article
     if (isset($view)){
-        xarResponse::Redirect(xarModURL('articles', 'user', 'display',
+        xarController::redirect(xarModURL('articles', 'user', 'display',
                                       array('ptid' => $ptid,
                                             'aid' => $aid)));   
     }
 
     if (!empty($return_url)) {
-        xarResponse::Redirect($return_url);
+        xarController::redirect($return_url);
         return true;
     }
 
     // if we can edit articles, go to admin view, otherwise go to user view
     if (xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')) {
-        xarResponse::Redirect(xarModURL('articles', 'admin', 'view',
+        xarController::redirect(xarModURL('articles', 'admin', 'view',
                                       array('ptid' => $ptid)));
     } else {
-        xarResponse::Redirect(xarModURL('articles', 'user', 'view',
+        xarController::redirect(xarModURL('articles', 'user', 'view',
                                       array('ptid' => $ptid)));
     }
 
