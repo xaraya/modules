@@ -92,7 +92,7 @@ function publications_admin_updateconfig()
         // Pull the base category ids from the template and save them
         $picker = DataPropertyMaster::getProperty(array('name' => 'categorypicker'));
         $picker->checkInput('basecid');
-    } else {
+    } elseif ($data['tab'] == 'pubtypes') {
 
         // Get the publication type for this display and save the settings to it
         $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
@@ -159,6 +159,11 @@ function publications_admin_updateconfig()
             xarModDelAlias($pubtypes[$ptid]['name'],'publications');
         }
 
+    } elseif ($data['tab'] == 'redirects') {
+        $redirects = DataPropertyMaster::getProperty(array('name' => 'array'));
+        $redirects->display_column_definition['value'] = array(array("From","To"),array(2,2),array("",""),array("",""));  
+        $isvalid = $redirects->checkInput("redirects");
+        xarModVars::set('publications','redirects',$redirects->value);
     }
     xarController::redirect(xarModURL('publications', 'admin', 'modifyconfig',
                                   array('ptid' => $ptid, 'tab' => $data['tab'])));
