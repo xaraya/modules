@@ -45,12 +45,20 @@
         if (xarModVars::get('sitemapper','file_create_xml')) {
             $filename = xarModVars::get('sitemapper','xml_filename');
             if (empty($filename)) throw new Exception(xarML("Missing file name"));
-            file_put_contents($filename . ".xml", $tplString);
+            try {
+                file_put_contents($filename . ".xml", $tplString);
+            } catch (Exception $e) {
+                return xarTpl::module('sitemapper','user','errors',array('layout' => 'no_permission'));
+            }
         }
         if (xarModVars::get('sitemapper','file_create_zip')) {
             $filename = xarModVars::get('sitemapper','zip_filename');
             if (empty($filename)) throw new Exception(xarML("Missing file name"));
-            file_put_contents($filename . ".gz", gzencode($tplString));
+            try {
+                file_put_contents($filename . ".gz", gzencode($tplString));
+            } catch (Exception $e) {
+                return xarTpl::module('sitemapper','user','errors',array('layout' => 'no_permission'));
+            }
         }
         
         return $data;
