@@ -49,15 +49,14 @@ class TPLParser
             $i++;
             
         // Ignore certain nodes            
-            if ($reader->name == "xar:set" || $reader->name == "xar:comment") {
+            if ($reader->name == "xar:set" || $reader->name == "xar:comment" || $reader->name == "script") {
                 if (!$reader->next()) break;
                 $i++;
             }
             
             if ($reader->nodeType == XMLReader::TEXT) {
                $string = $reader->value;
-            }
-            else if ($reader->name == "xar:mlstring") {
+            } else if ($reader->name == "xar:mlstring") {
                $string = $reader->value;
             } else {
                 continue;
