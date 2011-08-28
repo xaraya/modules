@@ -1,6 +1,6 @@
 <object name="sitemapper_sources">
   <objectid>983</objectid>
-  <label>Sitemapper_sources</label>
+  <label>Sitemapper Sources</label>
   <module_id>182</module_id>
   <itemtype>320</itemtype>
   <class>DataObject</class>

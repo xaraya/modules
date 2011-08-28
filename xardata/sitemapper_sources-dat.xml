@@ -215,4 +215,16 @@
     <modified>1297350887</modified>
     <state>3</state>
   </sitemapper_sources>
+  <sitemapper_sources itemid="19">
+    <id>19</id>
+    <module>publications</module>
+    <source_type>2</source_type>
+    <gen_type>user</gen_type>
+    <gen_function>getitemlinks</gen_function>
+    <display_type>user</display_type>
+    <display_function>display</display_function>
+    <parameters></parameters>
+    <modified>1314525877</modified>
+    <state>3</state>
+  </sitemapper_sources>
 </items>
