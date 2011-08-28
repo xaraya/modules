@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <td class="#$item_class#" style="text-align: center;" nowrap="nowrap">
-        <xar:access level="500">
-            <a href="#xarModURL($module, 'admin', 'modify', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Modify this item')#" style="margin-right: 5px">
-                <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
-            </a>
-        </xar:access>
-        <xar:access level="700">
-            <a href="#xarModURL($module, 'admin', 'delete', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Delete this item')#" style="margin-right: 5px">
-                <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete')#"/>
-            </a>
-        </xar:access>
+        <xar:if condition="$objectname eq 'sitemapper_links'">
+            <xar:access level="500">
+                <a href="#xarModURL($module, 'admin', 'modify', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Modify this item')#" style="margin-right: 5px">
+                    <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
+                </a>
+            </xar:access>
+            <xar:access level="700">
+                <a href="#xarModURL($module, 'admin', 'delete', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Delete this item')#" style="margin-right: 5px">
+                    <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete')#"/>
+                </a>
+            </xar:access>
             <a target="_blank" href="#$loopitem['location']#" title="#xarML('Display this item')#" style="margin-right: 5px">
                 <img src="#xarTplGetImage('icons/'.'display.png', 'base')#" width="16" height="16" alt="#xarML('Display')#"/>
             </a>
+        <xar:else/>
+            <xar:access level="500">
+                <a href="#xarModURL($module, 'admin', 'modify', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Modify this item')#" style="margin-right: 5px">
+                    <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
+                </a>
+            </xar:access>
+            <xar:access level="700">
+                <a href="#xarModURL($module, 'admin', 'delete', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Delete this item')#" style="margin-right: 5px">
+                    <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete')#"/>
+                </a>
+            </xar:access>
+        </xar:if>
     </td>
 </xar:template>
