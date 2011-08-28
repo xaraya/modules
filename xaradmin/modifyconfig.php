@@ -103,6 +103,7 @@ function publications_admin_modifyconfig()
     sys::import('modules.publications.xaruserapi.getsettings');
     $data['settings'] = $data['settings'] + publications_userapi_getglobalsettings();
     
+    $data['redirects'] = unserialize(xarModVars::get('publications','redirects'));
     return $data;
 }
 ?>
