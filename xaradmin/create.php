@@ -35,6 +35,11 @@ function publications_admin_create()
     $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
     
     if ($data['preview'] || !$isvalid) {
+        // Show debug info if called for
+        if (!$isvalid && 
+            xarModVars::get('publications','debugmode') && 
+            in_array(xarUserGetVar('uname'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+            var_dump($data['object']->getInvalids());}
         // Preview or bad data: redisplay the form
         $data['properties'] = $data['object']->getProperties();
         if ($data['preview']) $data['tab'] = 'preview';
