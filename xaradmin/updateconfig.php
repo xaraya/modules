@@ -38,6 +38,7 @@ function publications_admin_updateconfig()
         if(!xarVarFetch('defaultpubtype',    'isset', $defaultpubtype,    1,  XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('sortpubtypes',      'isset', $sortpubtypes,   'id',  XARVAR_NOT_REQUIRED)) {return;}
         if (!xarVarFetch('defaultlanguage', 'str:1:100', $defaultlanguage, xarModVars::get('publications', 'defaultlanguage'), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('debugmode',    'checkbox', $debugmode, xarModVars::get('publications', 'debugmode'), XARVAR_NOT_REQUIRED)) return;
 
         xarModVars::set('publications', 'defaultpubtype', $defaultpubtype);
         xarModVars::set('publications', 'sortpubtypes', $sortpubtypes);
