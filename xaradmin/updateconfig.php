@@ -43,6 +43,7 @@ function publications_admin_updateconfig()
         xarModVars::set('publications', 'defaultpubtype', $defaultpubtype);
         xarModVars::set('publications', 'sortpubtypes', $sortpubtypes);
         xarModVars::set('publications', 'defaultlanguage', $defaultlanguage);
+        xarModVars::set('publications', 'debugmode', $debugmode);
 
         // Get the special pages.
         foreach(array('defaultpage', 'errorpage', 'notfoundpage', 'noprivspage') as $special_name) {
