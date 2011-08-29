@@ -140,6 +140,7 @@ function publications_init()
     xarModVars::set('publications', 'errorpage', 0);
     xarModVars::set('publications', 'notfoundpage', 0);
     xarModVars::set('publications', 'noprivspage', 0);
+    xarModVars::set('publications', 'debugmode', false);
 
     // Save publications settings for each publication type
     /*
