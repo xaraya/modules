@@ -12,21 +12,22 @@
     </h3>
     
     <!-- Author -->
-    <xar:ml>
-        <xar:mlstring>Posted by: #(1) on #(2) #(3)</xar:mlstring>
-        <xar:mlvar>#xarUserGetVar('name',$fields['author'])#</xar:mlvar>
-        <xar:mlvar>#xarLocaleGetFormattedDate('long',$fields['created'])#</xar:mlvar>
-        <xar:mlvar>#xarLocaleGetFormattedTime('long',$fields['created'])#</xar:mlvar>
-    </xar:ml>
+    <div>
+        <xar:ml>
+            <xar:mlstring>Posted by: #(1) on #(2) #(3)</xar:mlstring>
+            <xar:mlvar>#xarUserGetVar('name',$fields['author'])#</xar:mlvar>
+            <xar:mlvar>#xarLocaleGetFormattedDate('long',$fields['created'])#</xar:mlvar>
+            <xar:mlvar>#xarLocaleGetFormattedTime('long',$fields['created'])#</xar:mlvar>
+        </xar:ml>
+    </div>
 
     <!-- Summary -->
     <div class="xar-publications-summary">
         <xar:data-output property="$properties['introduction']" value="$fields['introduction']"/>
     </div>
     
-    <div class="xar-align-right">
-    
     <!-- Word count -->
+    <div class="xar-align-right">    
         <xar:set name="intro_length">strlen($fields['introduction'])</xar:set>
         <xar:set name="news_length">strlen($fields['body'])</xar:set>
         <xar:set name="total_length">$intro_length + $news_length</xar:set>
