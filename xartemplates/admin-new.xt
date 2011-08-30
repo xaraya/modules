@@ -29,7 +29,7 @@
             </div>
         </form>
         <div style="clear:both">&#160;</div>
-        <xar:if condition="!empty($object->withupload)">
+        <xar:if condition="!empty($object->upload)">
             <xar:set name="enctype">
                 'multipart/form-data'
             </xar:set>
