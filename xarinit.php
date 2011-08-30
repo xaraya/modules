@@ -56,7 +56,13 @@ function sniffer_init()
     if (!$result) return false;
 
     // set index -- can't do this on a text field via table ddl
-    $query = "ALTER TABLE xar_sniffer ADD UNIQUE i_xar_sniff_ag ( xar_ua_agent ( 328 ) ) ";
+    //$query = "ALTER TABLE xar_sniffer ADD UNIQUE i_xar_sniff_ag ( xar_ua_agent ( 328 ) ) ";
+    $index = array(
+        'name'   => 'i_'.$xartable['sniffer'].'_ag',
+        'fields' => array('xar_ua_agent'),
+        'unique' => true
+    );
+    $query = xarDBCreateIndex($xartable['sniffer'], $index);
     $result = &$dbconn->Execute($query);
     if (!$result) return false;
 
