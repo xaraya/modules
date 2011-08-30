@@ -42,8 +42,7 @@
 
                 <xar:set name="index">$index + 1</xar:set>
                 <div id="page-#$index#" style="display: #$visible[0]#">
-                    <xar:set name="contentfile">'content-' . $object->name</xar:set>
-                    <xar:template file="$contentfile" type="module" />
+                    <xar:data-form object="$object" tplmodule="publications" fieldprefix="$key" />
                 </div>
 
                 <xar:set name="index">$index + 1</xar:set>

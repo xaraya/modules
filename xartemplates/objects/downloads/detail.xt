@@ -6,6 +6,9 @@
     <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$id" cids="$cids" />
     -->
 
+    <xar:set name="fields">$object->getFieldValues(array(),1)</xar:set>
+
+    <!-- State -->
     <xar:set name="publication_state">
         $properties['state']->value
     </xar:set>
@@ -14,29 +17,41 @@
         This item cannot be viewed
     <xar:else />
         <div class="article-view">
+
+            <!-- Title -->
             <h3>
                 <xar:template file="editicons"/>
-                <xar:data-output property="$properties['title']" />
+                <xar:data-output property="$properties['title']" value="$fields['title']" />
             </h3>
+            <!--
                 <xar:if condition="!empty($categories) and count($categories) gt 0">
                     [ <xar:foreach in="$categories" value="$cat">
                         #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
                     </xar:foreach> ]
                 </xar:if>
-            <h5>Summary:</h5>
+            -->
+            
+            <!-- Description -->
+            <h4>Description:</h4>
             <p>
-                <xar:data-output property="$properties['summary']" />
+                <xar:data-output property="$properties['summary']" value="$fields['summary']" />
             </p>
-            <h5>Download:</h5>
-            <xar:if condition="empty($properties['fileupload']->value)">
-            <xar:elseif condition="xarModIsHooked('uploads','publications',$properties['itemtype']->value) and substr($properties['fileupload']->value,0,1) eq ';'" />
+            
+            <!-- Download link -->
+            <h4>Link:</h4>
+            <xar:set name="filepath">
+                $properties['fileupload']->initialization_basedirectory . '/'. $fields['fileupload']
+            </xar:set>
+            <xar:if condition="empty($fields['fileupload'])">
+                <!-- Nothing to display -->
+            <xar:elseif condition="xarModIsHooked('uploads','publications',$fields['itemtype']) and substr($fields['fileupload'],0,1) eq ';'" />
             <xar:comment>
                 If you hook the uploads module to publications, then file upload fields will contain
                 a comma-separated list of file ids, and you will need to call an API function to
                 retrieve the file information. For dynamic extra fields, you can use [fieldname]_output
                 directly to access the file information.
             </xar:comment>
-                <xar:set name="fileupload_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $properties['fileupload']->value, 'multiple' => true))</xar:set>
+                <xar:set name="fileupload_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $fields['fileupload'], 'multiple' => true))</xar:set>
                 <xar:foreach in="$fileupload_output" key="$fileid" value="$fileinfo">
                     <p>
                         <a href="#$fileinfo['fileDownload']#">
@@ -44,31 +59,32 @@
                         </a>
                     </p>
                 </xar:foreach>
-            <xar:elseif condition="file_exists('var/uploads/'.$properties['fileupload']->value)" />
+            <xar:elseif condition="file_exists($filepath)" />
                 <p>
-                    <a href="var/uploads/#$properties['fileupload']->value#" title="#$properties['fileupload']->value#">
-                        <xar:data-output property="$properties['fileupload']" />
+                    <a href="#$filepath#" title="#$fields['title']#">
+                        <xar:data-output property="$properties['fileupload']" value="$fields['fileupload']" />
                     </a>
                 </p>
             <xar:else />
                 <p>
-                    <xar:data-output property="$properties['fileupload']" />
+                    <xar:data-output property="$properties['fileupload']" value="$fields['fileupload']" />
                 </p>
             </xar:if>
         </div>
 
+        <!-- Previous and next links -->
         <xar:if condition="!empty($prevart) || !empty($nextart)">
-        <br />
-        <table border="0" width="95%">
-        <tr>
-            <td align="left"><xar:if condition="!empty($prevart)"><a href="#$prevart#">
-                <img src="#xarTplGetImage('icons/go-previous.png','base')#"/>
-            </a></xar:if>&#160;</td>
-            <td align="right">&#160;<xar:if condition="!empty($nextart)"> <a href="#$nextart#">
-                <img src="#xarTplGetImage('icons/go-next.png','base')#"/>
-            </a></xar:if></td>
-        </tr>
-        </table>
+            <br />
+            <table border="0" width="95%">
+            <tr>
+                <td align="left"><xar:if condition="!empty($prevart)"><a href="#$prevart#">
+                    <img src="#xarTplGetImage('icons/go-previous.png','base')#"/>
+                </a></xar:if>&#160;</td>
+                <td align="right">&#160;<xar:if condition="!empty($nextart)"> <a href="#$nextart#">
+                    <img src="#xarTplGetImage('icons/go-next.png','base')#"/>
+                </a></xar:if></td>
+            </tr>
+            </table>
         </xar:if>
     </xar:if>
 </xar:template>
