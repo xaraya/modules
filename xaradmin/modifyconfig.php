@@ -21,7 +21,7 @@ function articles_admin_modifyconfig()
 
     // Security check
     if (empty($ptid)) {
-        $ptid = '';
+        $ptid = 0;
         if (!xarSecurityCheck('AdminArticles')) return;
     } else {
         if (!xarSecurityCheck('AdminArticles',1,'Article',"$ptid:All:All:All")) return;
