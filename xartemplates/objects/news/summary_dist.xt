@@ -6,6 +6,7 @@
 
     <!-- Title -->
     <h3>
+        <xar:template file="editicons"/>
         <a class="xar-title" href="#xarModURL('publications','user','display',array('id' => $fields['id']))#">
             <xar:data-output property="$properties['title']" value="$fields['title']"/>
         </a>
