@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <!--
-        This is a generic form template for any DD object. You can use a specific template
-        for one particular object in this directory as showform-[objectname].xd, and/or
-        use templates in your own [module]/xartemplates/objects directory by specifying the
-        tplmodule="..." argument in the xar:data-form BL tag or showForm() method call.
-    -->
-    <xar:if condition="empty($layout) or $layout eq 'default'">
-        <xar:foreach in="$properties" key="$name" value="$property">
-            <xar:if condition="$property->getDisplayStatus() != DataPropertyMaster::DD_DISPLAYSTATE_HIDDEN">
-                <div class="xar-form-input-wrapper">
-                    <xar:data-label property="$properties[$name]" for="id"/>
-                    <xar:data-input property="$properties[$name]"/>
-                </div>
-            <xar:else />
-                <xar:data-input property="$properties[$name]" hidden="true"/>
-            </xar:if>
-        </xar:foreach>
-    <xar:else />
+    <xar:if condition="!isset($layout) OR empty($layout)">
+        <xar:set name="layout">'default'</xar:set>
     </xar:if>
+
+    <xar:set name="settings">xarModAPIFunc('publications','user','getsettings',array('ptid' => $properties['itemtype']->value))</xar:set>
+
+    <!-- Get the name of the publication type. It is supposed to be "publications_something" -->
+    <xar:if condition="strlen($object->name) le 13">
+        <xar:set name="pubtype">'generic'</xar:set>
+    <xar:else/>
+        <xar:set name="pubtype">substr($object->name,13)</xar:set>
+    </xar:if>
+
+    <xar:if condition="$properties['detail_template']->value AND !empty($properties['id']->value)">
+        <xar:set name="filename">$pubtype . '/input_' . $properties['id']->value . '.xt'</xar:set>
+        <xar:if condition="!file_exists(sys::code() . 'modules/publications/xartemplates/objects/' . $filename)">
+            <xar:set name="filename">$pubtype . '/input.xt'</xar:set>
+        </xar:if>
+    <xar:else/>
+        <xar:set name="filename">$pubtype . '/input.xt'</xar:set>
+    </xar:if>
+    <xar:template file="$filename" type="system"/>
 </xar:template>
