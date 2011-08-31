@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:set name="fields">$object->getFieldValues(array(),1)</xar:set>
+
+    <!-- Title -->
     <xar:if condition="!empty($categories) and count($categories) gt 0">
         <p>
             [
@@ -15,7 +18,7 @@
     </xar:if>
     <div id="main-content">
         <ul>
-            <xar:if condition="xarModIsHooked('uploads','publications',$pubtype_id) and substr($body,0,1) eq ';'">
+            <xar:if condition="xarModIsHooked('uploads','publications',$fields['itemtype']) and substr($body,0,1) eq ';'">
         
                 <xar:template file="editicons"/>
         
@@ -30,17 +33,17 @@
                                 <img src="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#" width="150px" alt="#$title#" />
                             </xar:if>
                             <span>
-                                <xar:data-output property="$properties['title']" />
+                                <xar:data-output property="$properties['title']" value="$fields['title']"/>
                             </span>
                         </a>
                     </li>
                 </xar:foreach>
             <xar:else />
                 <li>
-                    <a href="#$link#">
-                        <img src="#$properties['summary']->getValue()#" alt="#$properties['title']->getValue()#" />
+                    <a href="#xarModURL('articles', 'user', 'display',array('id'=>$fields['id']))#">
+                        <img src="#$fields['thumbnail']#" alt="#$fields['title']#" />
                         <span>
-                            <xar:data-output property="$properties['title']" />
+                            <xar:data-output property="$properties['title']" value="$fields['title']" />
                         </span>
                     </a>
                 </li>
@@ -48,6 +51,7 @@
         </ul>
     </div>
 
+    <!-- Previous and next links -->
     <xar:if condition="!empty($counter)">
         <xar:if condition="$counter eq 1">
             (#$counter#&#160;read)
@@ -56,6 +60,7 @@
         </xar:if>
     </xar:if>
 
+    <!-- Keywords -->
     <div class="xar-publications-keywords">
         <xar:if condition="!empty($keywords)">            
             Keywords            :
