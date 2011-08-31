@@ -17,10 +17,12 @@ function publications_userapi_gettranslationid($args)
     if (empty($args['id'])) return 0;
     
     sys::import('xaraya.structures.query');
+    
+    $parts = explode('.',xarUserGetNavigationLocale());
 
     $xartable = xarDB::getTables();
     $q = new Query('SELECT',$xartable['publications']);
-    $q->eq('locale',xarUserGetNavigationLocale());
+    $q->eq('locale',$parts[0]);
     $c[] = $q->peq('id',$args['id']);
     $c[] = $q->peq('parent_id',$args['id']);
     $q->qor($c);
