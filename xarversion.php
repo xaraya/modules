@@ -18,14 +18,10 @@ $modversion['user']           = 1;
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
 $modversion['dependency']     = array(
-                                        8,
-                                    30012,
-                                    30046,
+//                                        8,
                                      ); // we need the icalendar module installed
 $modversion['dependencyinfo'] = array(
-                                    8 => 'icalendar',
-                                    30012 => 'math',
-                                    30046 => 'listings',
+//                                    8 => 'icalendar',
                                      );
 $modversion['securityschema'] = array('calendar::event'     => 'Event Title::Event ID',
                                       'calendar::category'  => 'Category Name::Category ID',

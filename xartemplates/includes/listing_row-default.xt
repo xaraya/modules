@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-
     <tr class="$item_class">
-        <xar:template file="listingslist_rowprefix" module="$module,listings"/>
+        <xar:template file="listing_rowprefix" module="$module" property="listing""/>
         <xar:foreach in="$fields" key="$field">
             <xar:set name="value">$loopitem[$field]</xar:set>
             <xar:set name="column">$columns[$field]</xar:set>
-            <xar:if condition="($field eq $primaryalias AND !$showprimary) OR $column eq 'return_link'">
+            <xar:if condition="($field eq $primaryalias AND !$show_primary) OR $column eq 'return_link'">
                 <xar:continue />
             </xar:if>
             <td>
@@ -45,6 +44,6 @@
             </xar:foreach>
         </xar:if>
     -->
-        <xar:template file="listingslist_rowsuffix" module="$module,listings"/>
+        <xar:template file="listing_rowsuffix" module="$module" property="listing"/>
     </tr>
 </xar:template>

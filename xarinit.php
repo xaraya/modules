@@ -189,21 +189,9 @@ function calendar_init()
 # Set up hooks
 #
 
-    sys::import('xaraya.structures.hooks.observer');
-    $observer = new BasicObserver('calendar','admin','hookcreate');
-    $observer->register('item', 'create', 'API');
-    $observer = new BasicObserver('calendar','admin','hookupdate');
-    $observer->register('item', 'update', 'API');
-    $observer = new BasicObserver('calendar','admin','hookdelete');
-    $observer->register('item', 'delete', 'API');
-
-    // Register config hook
-//    $observer = new BasicObserver('quotas','admin','getconfighook');
-//    $observer->register('module', 'getconfig', 'API');
-    
-    // Set up the hook to listings
-    $subject = new HookSubject('listings');
-    $subject->attach($observer);
+    xarModRegisterHook('item', 'create', 'API','calendar', 'admin', 'hookcreate');
+    xarModRegisterHook('item', 'update', 'API','calendar', 'admin', 'hookupdate');
+//    xarModRegisterHook('item', 'delete', 'API','calendar', 'admin', 'hookdelete');
 
 # --------------------------------------------------------
 #

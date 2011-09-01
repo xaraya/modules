@@ -72,10 +72,10 @@ function calendar_user_delete($args)
 
     $itemid = $myobject->deleteItem();
     if (!empty($return_url)) {
-        xarResponse::redirect($return_url);
+        xarController::redirect($return_url);
     } else {
         $default = xarModVars::get('calendar','default_view');
-        xarResponse::redirect(xarModURL('calendar', 'user', $default,
+        xarController::redirect(xarModURL('calendar', 'user', $default,
                                       array(
                                       'page' => $default
                                       )));

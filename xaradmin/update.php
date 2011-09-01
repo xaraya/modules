@@ -74,13 +74,13 @@
         xarModCallHooks('item', 'update', $itemid, $item);
 
         if (!empty($return_url)) {
-            xarResponse::redirect($return_url);
+            xarController::redirect($return_url);
         } elseif ($myobject->objectid == 2) { // for dynamic properties, return to modifyprop
             $objectid = $myobject->properties['objectid']->value;
-            xarResponse::redirect(xarModURL('dynamicdata', 'admin', 'modifyprop',
+            xarController::redirect(xarModURL('dynamicdata', 'admin', 'modifyprop',
                                           array('itemid' => $objectid)));
         } else {
-            xarResponse::redirect(xarModURL('dynamicdata', 'admin', 'view',
+            xarController::redirect(xarModURL('dynamicdata', 'admin', 'view',
                                           array(
                                           'itemid' => $objectid,
                                           'tplmodule' => $tplmodule

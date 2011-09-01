@@ -102,7 +102,7 @@ function calendar_admin_updateconfig()
 
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
-    xarResponse::redirect(xarModURL('calendar', 'admin', 'modifyconfig'));
+    xarController::redirect(xarModURL('calendar', 'admin', 'modifyconfig'));
 
     // Return
     return true;

@@ -1,24 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
+
     <div class="xar-mod-head">
+
         <span class="xar-mod-title">
+
             <xar:if condition="xarModVars::get('calendar','useModuleAlias')">
+
                 <xar:var scope="module" module="calendar" name="aliasname"/>
+
             <xar:else />
+
                 Manage Calendar Master Tables
+
             </xar:if>
+
         </span>
+
     </div>
+
     <div class="xar-mod-body">
+
         <p style="text-align: right; margin: 15px 0 0 0;">
+
             <xar:if condition="xarMod::isAvailable('export')">
+
                 <a href="#xarModURL('calendar','user','export')#"><b>Download Items</b></a>
+
             </xar:if>
+
         </p>
+
         <form method="post" action="#xarServer::getCurrentURL()#" style="margin-top: 10px; margin-bottom: 10px;">
+
             Choose an object:&#160;<xar:data-input type="dropdown" name="objectname" value="$objectname" options="$options" onchange="javascript:submit()"/>
+
         </form>
-        <xar:data-input type="listingslist" object="$objectname"/>
+
+        <xar:data-input type="listing" objectname="$objectname"/>
+
     </div>
+
 </xar:template>

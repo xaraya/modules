@@ -5,7 +5,7 @@
     <xar:data-input type="calendardisplay" timeframe="month"/>
 
     <xar:set name="page">'month'</xar:set>
-    <xar:data-input type="listingslist" conditions="$conditions" object="calendar_event" fields="id,name,start_time,end_time,return_link" tplmodule="calendar" page="$page"/>
+    <xar:data-input type="listing" conditions="$conditions" objectname="calendar_event" fields="id,name,start_time,end_time,return_link" tplmodule="calendar" page="$page"/>
 
     <!-- include the calendar footer -->
     <xar:template file="todayfooter"/>

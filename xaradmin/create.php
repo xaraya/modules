@@ -68,9 +68,9 @@
         xarModCallHooks('item', 'create', $itemid, $item);
 
         if (!empty($return_url)) {
-            xarResponse::redirect($return_url);
+            xarController::redirect($return_url);
         } else {
-            xarResponse::redirect(xarModURL('dynamicdata', 'admin', 'view',
+            xarController::redirect(xarModURL('dynamicdata', 'admin', 'view',
                                           array(
                                           'itemid' => $myobject->objectid,
                                           'tplmodule' => $tplmodule

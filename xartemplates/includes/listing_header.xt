@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-
     <tr>
-        <xar:template file="listingslist_headerprefix" module="$module,listings"/>
+        <xar:template file="listing_headerprefix" module="$module" property="listing"/>
         <xar:foreach in="$fields" key="$column" value="$field">
-            <xar:if condition="(($column eq $primaryalias) AND !$showprimary) OR strpos($column,'return_link')">
+            <xar:if condition="(($column eq $primaryalias) AND !$show_primary) OR strpos($column,'return_link')">
                 <xar:continue />
             </xar:if>
             <th>
@@ -13,9 +12,9 @@
                     #$field#
                 </a>
                 <xar:set name="subdata">array_merge($params,array('column' => $column))</xar:set>
-                <xar:template module="listings" file="sortarrows" subdata="$subdata"/>
+                <xar:template file="sortarrows" subdata="$subdata" module="$module" property="listing"/>
             </th>
         </xar:foreach>
-        <xar:template file="listingslist_headersuffix" module="$module,listings"/>
+        <xar:template file="listing_headersuffix" module="$module" property="listing"/>
     </tr>
 </xar:template>
