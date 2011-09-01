@@ -77,8 +77,8 @@ function publications_admin_modify($args)
     $data['object']->getItem(array('itemid' => $data['itemid']));
     $fieldvalues = $data['object']->getFieldValues(array(),1);
     if (!empty($fieldvalues['parent'])) {
-        $id = $fieldvalues['parent'];
-        $data['object']->getItem(array('itemid' => $id));
+        $data['itemid'] = $fieldvalues['parent'];
+        $data['object']->getItem(array('itemid' => $data['itemid']));
         $fieldvalues = $data['object']->getFieldValues(array(),1);
     }
     $data['items'][$data['itemid']] = $fieldvalues;
