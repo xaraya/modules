@@ -48,8 +48,7 @@
             <xar:set name="itemcount">count($items)</xar:set>
             <xar:template file="pagetabs" type="module" />
             <div id="page-1" style="display: #$visible[0]#">
-                <xar:set name="contentfile">'content-' . $object->name</xar:set>
-                <xar:template file="$contentfile" type="module" />
+                <xar:data-form object="$object" tplmodule="publications" fieldprefix="$key" />
             </div>
             <div id="page-2" style="display: #$visible[1]#">
                 <xar:template file="publication-settings" type="module" />
