@@ -213,7 +213,7 @@ function publications_treeapi_array_image_substitution($node)
     static $image_list = NULL;
 
     if (!isset($image_list)) {
-        $style = 'class="xar-xarpages-tree"';
+        $style = 'class="xar-publications-tree"';
 
         $image_list[_PUBLICATIONS_O_CONNECTOR] =
             '<img '.$style.' src="' . xarTplGetImage('n_nosub.gif', 'publications') . '" alt="0"/>';
