@@ -1,7 +1,7 @@
 <adminmenu>
     <menuitems>
         <menuitem>
-            <mask>EditPublications</mask>
+            <mask>ManagePublications</mask>
             <type>admin</type>
             <includes>
                 <includeitem>view_pages</includeitem>
@@ -11,7 +11,7 @@
             <label>View Pages Tree</label>
         </menuitem>
         <menuitem>
-            <mask>EditPublications</mask>
+            <mask>ManagePublications</mask>
             <type>admin</type>
             <includes>
                 <includeitem>view</includeitem>
@@ -21,7 +21,7 @@
             <label>Manage Publications</label>
         </menuitem>
         <menuitem>
-            <mask>EditPublications</mask>
+            <mask>ManagePublications</mask>
             <type>admin</type>
             <includes>
                 <includeitem>new</includeitem>
