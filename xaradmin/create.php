@@ -51,6 +51,10 @@ function publications_admin_create()
 
     // if we can edit publications, go to admin view, otherwise go to user view
     if (xarSecurityCheck('EditPublications',0,'Publication',$data['ptid'].':All:All:All')) {
+        // Redirect if we came from somewhere else
+        $cuurent_listview = xarSession::getVar('publications_current_listview');
+        if (!empty($cuurent_listview)) xarController::redirect($cuurent_listview);
+        
         xarController::redirect(xarModURL('publications', 'admin', 'view',
                                       array('ptid' => $data['ptid'])));
     } else {
