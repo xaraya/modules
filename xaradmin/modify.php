@@ -73,7 +73,8 @@ function publications_admin_modify($args)
         $data['items'] = array();
     }
 
-    // Get the base document
+    // Get the base document. If this itemid is not the base doc,
+    // then first find the correct itemid
     $data['object']->getItem(array('itemid' => $data['itemid']));
     $fieldvalues = $data['object']->getFieldValues(array(),1);
     if (!empty($fieldvalues['parent'])) {
