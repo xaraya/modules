@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:style scope="module" module="xarpages" file="xarpages"/>
+    <xar:style scope="module" file="admin-style"/>
 
     <div class="xar-mod-head"><span class="xar-mod-title">Page Administration</span></div>
 
@@ -62,7 +62,7 @@
                                 #$loop:item.xar_map#
                                 #xarVarPrepForDisplay($loop:item.name)#
                             </td>
-                            <td class="#$row_class#" title="#xarML('Status: ')# #$loop:item.status#"><span class="xar-xarpages-status-#$loop:item.status#">#xarVarPrepForDisplay($loop:item.ptid.name)#: #xarVarPrepForDisplay($loop:item.title)#</span></td>
+                            <td class="#$row_class#" title="#xarML('Status: ')# #$loop:item.status#"><span class="xar-publications-status-#$loop:item.status#">#xarVarPrepForDisplay($loop:item.ptid.name)#: #xarVarPrepForDisplay($loop:item.title)#</span></td>
                             <td class="#$row_class#" style="text-align: center;">
                                 <xar:if condition="!empty($loop:item.edit_allowed)">
                                     <xar:set name="link">

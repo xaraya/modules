@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <img class="xar-module-icon" src="modules/publications/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        <img class="xar-module-icon" src="modules/publications/xarimages/publications.png" alt="official icon" width="96" height="96" />
         <h2>
                 Overview
         </h2> <h3>

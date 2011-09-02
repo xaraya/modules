@@ -1,18 +1,19 @@
 <?php
+/**
+ * Publications Module
+ *
+ * @package modules
+ * @subpackage publications module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
+ * @copyright (C) 2011 Netspan AG
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Jason Judge
+ */
 
 /**
- * File: $Id$
- *
  * Displays a crumb-trail block
  * Shows the visitor's current position in the page hierarchy
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2004 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.com
- *
- * @subpackage Xarpages Module
- * @author Jason Judge
 */
 sys::import('modules.publications.xarblocks.crumb');
 
