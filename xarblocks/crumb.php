@@ -1,16 +1,18 @@
 <?php
 /**
- * File: $Id$
+ * Publications Module
  *
+ * @package modules
+ * @subpackage publications module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
+ * @copyright (C) 2011 Netspan AG
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Jason Judge
+ */
+/**
  * Displays a crumb-trail block
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2004 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.com
- *
- * @subpackage Xarpages Module
- * @author Jason Judge
 */
 sys::import('xaraya.structures.containers.blocks.basicblock');
 
@@ -61,7 +63,7 @@ class Publications_CrumbBlock extends BasicBlock implements iBlock
         if (empty($id)) {return;}
 
         // The page details may have been cached, if
-        // we are in the xarpages module, or have several
+        // we have several
         // blocks on the same page showing the same tree.
         if (xarVarIsCached('Blocks.publications', 'pagedata')) {
             // Pages are cached?

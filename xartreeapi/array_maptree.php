@@ -18,18 +18,18 @@
  */
 
 // Maximum allowable branch depth
-define('_XARPAGES_MAX_DEPTH', 20);
+define('_PUBLICATIONS_MAX_DEPTH', 20);
 
 // These defines are threaded view specific and should be here
 // Used for creation of the visual (threaded) tree
-define('_XARPAGES_NO_CONNECTOR', 'N');      // '' (zero-width)
-define('_XARPAGES_O_CONNECTOR', 'O');       // o- (root with no children)
-define('_XARPAGES_P_CONNECTOR', 'P');       // P  (root with children)
-define('_XARPAGES_DASH_CONNECTOR', '-');    // --
-define('_XARPAGES_T_CONNECTOR', '+');       // +- (non-last child in a group)
-define('_XARPAGES_L_CONNECTOR', 'L');       // |_
-define('_XARPAGES_I_CONNECTOR', '|');       // |
-define('_XARPAGES_BLANK_CONNECTOR', 'B');   // '  ' (spacer)
+define('_PUBLICATIONS_NO_CONNECTOR', 'N');      // '' (zero-width)
+define('_PUBLICATIONS_O_CONNECTOR', 'O');       // o- (root with no children)
+define('_PUBLICATIONS_P_CONNECTOR', 'P');       // P  (root with children)
+define('_PUBLICATIONS_DASH_CONNECTOR', '-');    // --
+define('_PUBLICATIONS_T_CONNECTOR', '+');       // +- (non-last child in a group)
+define('_PUBLICATIONS_L_CONNECTOR', 'L');       // |_
+define('_PUBLICATIONS_I_CONNECTOR', '|');       // |
+define('_PUBLICATIONS_BLANK_CONNECTOR', 'B');   // '  ' (spacer)
 
 /**
  * Takes a an array of related (parent -> child) values and assigns a depth to
@@ -108,33 +108,33 @@ function publications_treeapi_array_maptree($items)
     $total = count($items);
     $listsize = $total - 1;
 
-    $depth_flags = array_pad(array(0 => 0), _XARPAGES_MAX_DEPTH, false);
+    $depth_flags = array_pad(array(0 => 0), _PUBLICATIONS_MAX_DEPTH, false);
 
     // Create the matrix starting from the end and working our way towards
     // the beginning.
     // FIXME: the items array is not necessarily indexed by a sequential number.
     for ($counter = $listsize; $counter >= 0; $counter -= 1) {
         // Unmapped matrix for current page.
-        $matrix = array_pad(array(0 => 0), _XARPAGES_MAX_DEPTH, _XARPAGES_NO_CONNECTOR);
+        $matrix = array_pad(array(0 => 0), _PUBLICATIONS_MAX_DEPTH, _PUBLICATIONS_NO_CONNECTOR);
 
-        // Make sure to $depth = $depth modulus _XARPAGES_MAX_DEPTH  - because we are only ever showing
+        // Make sure to $depth = $depth modulus _PUBLICATIONS_MAX_DEPTH  - because we are only ever showing
         // limited levels of depth.
-        $current_depth  = @$items[$counter]['depth'] % _XARPAGES_MAX_DEPTH;
-        $next_depth     = (($counter -1) < 0 ? -1 : @$items[$counter-1]['depth'] % _XARPAGES_MAX_DEPTH);
-        $prev_depth     = (($counter +1) > $listsize ? -1 : @$items[$counter+1]['depth'] % _XARPAGES_MAX_DEPTH);
+        $current_depth  = @$items[$counter]['depth'] % _PUBLICATIONS_MAX_DEPTH;
+        $next_depth     = (($counter -1) < 0 ? -1 : @$items[$counter-1]['depth'] % _PUBLICATIONS_MAX_DEPTH);
+        $prev_depth     = (($counter +1) > $listsize ? -1 : @$items[$counter+1]['depth'] % _PUBLICATIONS_MAX_DEPTH);
 
         // first start by placing the depth point in the matrix
         // if the current comment has children place a P connetor
         if (!empty($items[$counter]['child_keys'])) {
-            $matrix[$current_depth] = _XARPAGES_P_CONNECTOR;
+            $matrix[$current_depth] = _PUBLICATIONS_P_CONNECTOR;
         } else {
             // if the current comment doesn't have children
             // and it is at depth ZERO it is an O connector
             // otherwise use a dash connector
             if (!$current_depth) {
-                $matrix[$current_depth] = _XARPAGES_O_CONNECTOR;
+                $matrix[$current_depth] = _PUBLICATIONS_O_CONNECTOR;
             } else {
-                $matrix[$current_depth] = _XARPAGES_DASH_CONNECTOR;
+                $matrix[$current_depth] = _PUBLICATIONS_DASH_CONNECTOR;
             }
         }
 
@@ -143,7 +143,7 @@ function publications_treeapi_array_maptree($items)
         // below we figure out what the other connectors are...
         if (0 != $current_depth) {
             if ($current_depth != $prev_depth) {
-                $matrix[$current_depth - 1] = _XARPAGES_L_CONNECTOR;
+                $matrix[$current_depth - 1] = _PUBLICATIONS_L_CONNECTOR;
             }
 
             // In order to have a T connector the current depth must
@@ -153,11 +153,11 @@ function publications_treeapi_array_maptree($items)
                 // we need a T connector.
                 if ($current_depth == 0 || $depth_flags[$current_depth-1]) {
                     $depth_flags[$current_depth-1] = false;
-                    $matrix[$current_depth - 1] = _XARPAGES_T_CONNECTOR;
+                    $matrix[$current_depth - 1] = _PUBLICATIONS_T_CONNECTOR;
                 }
 
                 if ($current_depth == $prev_depth) {
-                    $matrix[($current_depth - 1)] = _XARPAGES_T_CONNECTOR;
+                    $matrix[($current_depth - 1)] = _PUBLICATIONS_T_CONNECTOR;
                 }
 
             }
@@ -168,13 +168,13 @@ function publications_treeapi_array_maptree($items)
             // and Blank connectors.
             for ($node = $current_depth; $node >= 0; $node -= 1) {
                 // Be sure not to overwrite another node in the matrix
-                if ($matrix[$node] == _XARPAGES_NO_CONNECTOR) {
+                if ($matrix[$node] == _PUBLICATIONS_NO_CONNECTOR) {
                     // If a depth buoy was set for this depth, add I connector.
                     if ($depth_flags[$node]) {
-                        $matrix[$node] = _XARPAGES_I_CONNECTOR;
+                        $matrix[$node] = _PUBLICATIONS_I_CONNECTOR;
                     } else {
                         // Otherwise add a blank connector (a spacer).
-                        $matrix[$node] = _XARPAGES_BLANK_CONNECTOR;
+                        $matrix[$node] = _PUBLICATIONS_BLANK_CONNECTOR;
                     }
                 }
             }
@@ -215,21 +215,21 @@ function publications_treeapi_array_image_substitution($node)
     if (!isset($image_list)) {
         $style = 'class="xar-xarpages-tree"';
 
-        $image_list[_XARPAGES_O_CONNECTOR] =
-            '<img '.$style.' src="' . xarTplGetImage('n_nosub.gif', 'xarpages') . '" alt="0"/>';
-        $image_list[_XARPAGES_P_CONNECTOR] =
-            '<img '.$style.' src="' . xarTplGetImage('n_sub.gif', 'xarpages') . '" alt="P"/>';
-        $image_list[_XARPAGES_T_CONNECTOR] =
-            '<img '.$style.' src="' . xarTplGetImage('n_sub_branch_t.gif', 'xarpages') . '" alt="t"/>';
-        $image_list[_XARPAGES_L_CONNECTOR] =
-            '<img '.$style.' src="' . xarTplGetImage('n_sub_branch_l.gif', 'xarpages') . '" alt="L"/>';
-        $image_list[_XARPAGES_I_CONNECTOR] =
-            '<img '.$style.' src="' . xarTplGetImage('n_sub_line.gif', 'xarpages') . '" alt="|"/>';
-        $image_list[_XARPAGES_BLANK_CONNECTOR] =
-            '<img '.$style.' src="' . xarTplGetImage('n_spacer.gif', 'xarpages') . '" alt="&#160;"/>';
-        $image_list[_XARPAGES_DASH_CONNECTOR] =
-            '<img '.$style.' src="' . xarTplGetImage('n_sub_end.gif', 'xarpages') . '" alt="_"/>';
-        $image_list[_XARPAGES_NO_CONNECTOR] = '';
+        $image_list[_PUBLICATIONS_O_CONNECTOR] =
+            '<img '.$style.' src="' . xarTplGetImage('n_nosub.gif', 'publications') . '" alt="0"/>';
+        $image_list[_PUBLICATIONS_P_CONNECTOR] =
+            '<img '.$style.' src="' . xarTplGetImage('n_sub.gif', 'publications') . '" alt="P"/>';
+        $image_list[_PUBLICATIONS_T_CONNECTOR] =
+            '<img '.$style.' src="' . xarTplGetImage('n_sub_branch_t.gif', 'publications') . '" alt="t"/>';
+        $image_list[_PUBLICATIONS_L_CONNECTOR] =
+            '<img '.$style.' src="' . xarTplGetImage('n_sub_branch_l.gif', 'publications') . '" alt="L"/>';
+        $image_list[_PUBLICATIONS_I_CONNECTOR] =
+            '<img '.$style.' src="' . xarTplGetImage('n_sub_line.gif', 'publications') . '" alt="|"/>';
+        $image_list[_PUBLICATIONS_BLANK_CONNECTOR] =
+            '<img '.$style.' src="' . xarTplGetImage('n_spacer.gif', 'publications') . '" alt="&#160;"/>';
+        $image_list[_PUBLICATIONS_DASH_CONNECTOR] =
+            '<img '.$style.' src="' . xarTplGetImage('n_sub_end.gif', 'publications') . '" alt="_"/>';
+        $image_list[_PUBLICATIONS_NO_CONNECTOR] = '';
     }
 
     if (isset($image_list[$node])) {

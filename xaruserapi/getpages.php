@@ -133,11 +133,13 @@ function publications_userapi_getpages($args)
             tpages.rightpage_id,
             tpages.parentpage_id,
             tpages.access,
-            tpages.state
+            tpages.state,
+            pt.description
+            
         ';
     }
 
-    $query .= ' FROM ' . $xartable['publications'] . ' AS tpages';
+    $query .= ' FROM ' . $xartable['publications'] . ' AS tpages INNER JOIN ' . $xartable['publications_types'] . ' AS pt ON pt.id = tpages.pubtype_id ';
 
     // If the request is to fetch a tree that *contains* a particular
     // page, then add the extra sub-queries in here.
@@ -206,7 +208,8 @@ function publications_userapi_getpages($args)
             $rightpage_id,
             $parentpage_id,
             $access,
-            $state
+            $state,
+            $pubtype_name
             ) = $result->fields;
 
             // Fetch the next record as soon as we have the value, so
@@ -231,8 +234,8 @@ function publications_userapi_getpages($args)
                 }
             }
 
-            // JDJ 2008-06-11: now only need ViewXarpagesPage to be able to select the page,
-            // but ReadXarpagesPage to actually read it.
+            // JDJ 2008-06-11: now only need ViewPublicationsPage to be able to select the page,
+            // but ReadPublicationsPage to actually read it.
             // The lowest privilege will be inherited, so one page with only View privilege
             // will cause all descendent pages to have, at most, view privilege.
             // We still need to fetch full details of these view-only pages, but we must flag
@@ -323,6 +326,7 @@ function publications_userapi_getpages($args)
                 'right' => (int)$rightpage_id,
                 'access' => unserialize($access),
                 'status' => $state,
+                'pubtype_name' => $pubtype_name,
             );
             $index += 1;
         }
