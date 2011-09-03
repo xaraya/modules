@@ -1,15 +1,14 @@
 <?php
 /**
- * Publications module
+ * Publications Module
  *
  * @package modules
- * @copyright (C) copyright-placeholder
+ * @subpackage publications module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
+ * @copyright (C) 2011 Netspan AG
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Publications Module
- 
- * @author mikespub
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * return an array with coded states
@@ -19,11 +18,12 @@ function publications_userapi_getstates()
 {
     // Simplistic getstates function
     // Obviously needs to be smarter along with the other state functions
-    return array(0 => xarML('Submitted'),
-                 1 => xarML('Rejected'),
-                 2 => xarML('Approved'),
-                 3 => xarML('Frontpage'),
-           //    4 => xarML('Unknown')
+    return array(0 => xarML('Deleted'),
+                 1 => xarML('Inactive'),
+                 2 => xarML('Draft'),
+                 3 => xarML('Active'),
+                 4 => xarML('Frontpage'),
+                 5 => xarML('Empty')
                  );
 }
 ?>
