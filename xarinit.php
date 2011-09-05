@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  *  Module Initialisation Function
  *  @version $Id: xarinit.php,v 1.7 2003/06/24 20:08:10 roger Exp $
