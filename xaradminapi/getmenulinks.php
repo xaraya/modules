@@ -17,6 +17,6 @@
  */
 function &weather_adminapi_getmenulinks()
 {
-    return xarMod::apiFunc('base','admin','menuarray',array('module' => 'quotas'));
+    return xarMod::apiFunc('base','admin','menuarray',array('module' => 'weather'));
 }
 ?>
