@@ -1,6 +1,15 @@
 <adminmenu>
     <menuitems>
         <menuitem>
+            <mask>ManageUploads</mask>
+            <includes>
+                <includeitem>browse_files</includeitem>
+            </includes>
+            <target>browse_files</target>
+            <title>Manage files under the uploads or trusted directories</title>
+            <label>Browse Files</label>
+        </menuitem>
+        <menuitem>
             <mask>EditUploads</mask>
             <includes>
                 <includeitem>view</includeitem>

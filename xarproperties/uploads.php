@@ -95,8 +95,9 @@ class UploadProperty extends FileUploadProperty
 
     function checkInput($name='', $value = null)
     {
-        if (isset($this->fieldname)) $name = $this->fieldname;
-        else $name = 'dd_'.$this->id;
+//        if (isset($this->fieldname)) $name = $this->fieldname;
+//        else $name = 'dd_'.$this->id;
+        if (empty($name)) $name = 'dd_' . $this->id;
 
         if (!xarVarFetch($name . '_dbvalue', 'str', $dbvalue,  '', XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch($name . '_clear', 'checkbox', $clear,  0, XARVAR_NOT_REQUIRED)) return;
@@ -130,21 +131,22 @@ class UploadProperty extends FileUploadProperty
 
         switch ($data['action']) {
             case _UPLOADS_GET_UPLOAD:
+        var_dump($_FILES);
                 if (!xarVarFetch($name . '_max_file_size', "int::$this->validation_max_file_size", $this->validation_max_file_size)) return;
-                if (!xarVarValidate('array:1:', $_FILES[$name . '_attach_upload'])) return;
+                if (!xarVarValidate('array', $_FILES[$name . '_attach_upload'])) return;
 
                 $data['upload'] =& $_FILES[$name . '_attach_upload'];
-
+//array_pop($data['upload']);
                 if (empty($data['upload']['name'])) {
                     // No file name entered, ignore
                     $this->value = '';
                     return true;
                 } elseif (!$this->validateExtension($data['upload']['name'])) {
+        var_dump($_POST);
                     $this->invalid = xarML('The file type is not allowed');
                     $this->value = null;
                     return false;
                 }
-
                 break;
             case _UPLOADS_GET_EXTERNAL:
                 // minimum external import link must be: ftp://a.ws  <-- 10 characters total
@@ -236,7 +238,7 @@ class UploadProperty extends FileUploadProperty
         }
 
 //        if(!$this->createValue($data))return false;
-        
+
         // Store the particulares so the createValue method can find them
         $this->propertydata = $data;
         xarVarSetCached('DynamicData.Upload',$name,$this->value);
@@ -475,6 +477,7 @@ class UploadProperty extends FileUploadProperty
 
     function getActiveInputMethod($name=null)
     {
+        if (!empty($this->initialization_initial_method)) return $this->initialization_initial_method;
         if (empty($name)) $name = $this->name;
         $typeCheck = 'enum:0';
         if (!empty($this->initialization_file_input_methods)) {

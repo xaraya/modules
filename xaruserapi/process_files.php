@@ -31,7 +31,6 @@ xarModAPILoad('uploads', 'user');
 
 function uploads_userapi_process_files( $args )
 {
-
     extract($args);
 
     $storeList = array();
@@ -83,7 +82,7 @@ function uploads_userapi_process_files( $args )
         // Set in the uploads method
         //$allow_duplicate = xarModVars::get('uploads', 'file.allow-duplicate-upload');
 
-
+var_dump($upload);exit;
             // Rearange the uploads array so we can pass the uploads one by one
             $uploadarray = array();
             foreach ($upload['name'] as $key => $value) $uploadarray[$key]['name'] = $value;

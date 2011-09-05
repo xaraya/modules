@@ -92,7 +92,7 @@ function & uploads_userapi_transform ( $body )
                 return $body;
         }
 
-        $body = ereg_replace("#$type:$id#", $replacement, $body);
+        $body = preg_replace("/#$type:$id#/", $replacement, $body);
     }
 
     return $body;

@@ -26,26 +26,23 @@ function uploads_admin_get_files()
     $actionList[] = _UPLOADS_GET_REFRESH_LOCAL;
     $actionList = 'enum:' . implode(':', $actionList);
 
-    if (!xarVarFetch('action',        $actionList, $action, '', XARVAR_NOT_REQUIRED)) return;
+    // What action are we performing?
+    if (!xarVarFetch('action',        $actionList, $args['action'], NULL, XARVAR_NOT_REQUIRED)) return;
 
     // StoreType can -only- be one of FSDB or DB_FULL
     $storeTypes = _UPLOADS_STORE_FSDB . ':' . _UPLOADS_STORE_DB_FULL;
     if (!xarVarFetch('storeType',     "enum:$storeTypes", $storeType, '', XARVAR_NOT_REQUIRED)) return;
 
-
     // now make sure someone hasn't tried to change our maxsize on us ;-)
     $file_maxsize = xarModVars::get('uploads', 'file.maxsize');
 
-    if (!isset($action)) {
-        $action = NULL;
-    }
-    $args['action']    = $action;
-
-    switch ($action) {
+    switch ($args['action']) {
         case _UPLOADS_GET_UPLOAD:
             $uploads = DataPropertyMaster::getProperty(array('name' => 'uploads'));
+            $uploads->initialization_initial_method = $args['action'];
             $uploads->checkInput('upload');
             $args['upload'] = $uploads->propertydata;
+            var_dump($args);exit;
             break;
         case _UPLOADS_GET_EXTERNAL:
             // minimum external import link must be: ftp://a.ws  <-- 10 characters total
@@ -89,7 +86,6 @@ function uploads_admin_get_files()
             $data['getAction']['REFRESH']     = _UPLOADS_GET_REFRESH_LOCAL;
             $data['local_import_post_url']    = xarModURL('uploads', 'admin', 'get_files');
             $data['external_import_post_url'] = xarModURL('uploads', 'admin', 'get_files');
-            $data['upload_post_url'] = xarModURL('uploads', 'admin', 'get_files');
             $data['fileList'] = xarModAPIFunc('uploads', 'user', 'import_get_filelist',
                                                array('fileLocation' => $cwd, 'onlyNew' => TRUE));
 

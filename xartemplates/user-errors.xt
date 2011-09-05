@@ -25,8 +25,8 @@
                 </div>
             <xar:elseif condition="$layout eq 'maxfilesize'"/>
                 <div style="margin-top: 20px; margin-left: 20px">
-                   <xar:mlstring>File size exceeds the maximum allowable based on the server's settings.</xar:mlstring>
-                   <br/> <xar:mlstring>Maximun allowed file size:</xar:mlstring> #$maxallowed#
+                   File size exceeds the maximum allowable based on the server's settings.
+                   <br/> Maximun allowed file size: #$maxallowed#
                 </div>
             <xar:elseif condition="$layout eq 'not_accessible'"/>
                 <div style="margin-top: 20px">
