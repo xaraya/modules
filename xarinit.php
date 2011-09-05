@@ -75,10 +75,12 @@
     #
     # Set up hooks
     #
+    /*
         sys::import('xaraya.structures.hooks.observer');
         $observer = new BasicObserver('xarayatesting');
         $subject = new HookSubject('comments');
         $subject->attach($observer);
+        */
 
     # --------------------------------------------------------
     #

@@ -194,7 +194,7 @@
 <property name="created">
 <id>1380</id>
 <label>Created</label>
-<type>formatteddatetime</type>
+<type>datetime</type>
 <defaultvalue>time()</defaultvalue>
 <source>xar_xarayatesting_test.timestamp</source>
 <status>67</status>
