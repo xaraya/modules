@@ -2,11 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
     <xar:set name="adminIcon">xarTplGetImage('admin.gif', 'calendar')</xar:set>
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">
-            Calendar
-        </span>
-    </div>
+    <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body" style="display:block;">
         <h2>Overview</h2>
         <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">

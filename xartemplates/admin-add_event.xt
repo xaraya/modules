@@ -3,7 +3,7 @@
 
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
-    <div class="xar-mod-head"><span class="xar-mod-title">New Event</span></div>
+    <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body"><h2>This functionality is still not inclulded <br />
             You can play with the form (it's fun isn't it) but submitting it will do nothing</h2>
     <div style="margin: auto;">

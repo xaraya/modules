@@ -2,20 +2,10 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">
-            <xar:if condition="xarModVars::get('calendar','useModuleAlias')">
-                <xar:var scope="module" module="calendar" name="aliasname"/>
-            <xar:else />
-                Calendar Administration
-            </xar:if>
-        </span>
-    </div>
+    <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <h2>
-            
-                Modify Configuration
-            
+        <h2>            
+            Modify Configuration            
         </h2>
         <div>
             <xar:template file="headerconfig" type="module"/>
@@ -27,21 +17,15 @@
         <form method="post" action="&xar-modurl-calendar-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
             <xar:if condition="$tab eq 'calendar_general'">
                 <h3>
-                    
-                        General Options
-                    
+                    General Options
                 </h3>
                 <fieldset>
                     <legend>
-                        
-                            Page Layout
-                        
+                        Page Layout
                     </legend>
                     <div class="xar-form-input-wrapper">
                         <label for="items_per_page" title="#xarML('Number of items to show on each page.')#" class="xar-form-label">
-                            
-                                Items Per Page:
-                            
+                            Items Per Page:
                         </label>
                         <xar:set name="value"><xar:var scope="module" module="calendar" name="items_per_page"/></xar:set>
                         <input type="text" name="items_per_page" id="items_per_page" value="#$value#" maxlength="3" class="xar-form-textshort"/>
@@ -53,25 +37,19 @@
                             <input type="checkbox" name="shorturls" id="shorturls" value="1"/>
                         </xar:if>
                         <label for="shorturls" title="#xarML('Enable short URLs for Calendar module')#">
-                            
-                                Enable Short URLs
-                            
+                            Enable Short URLs
                         </label>
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
-                            
-                                Use a module alias
-                            
+                        <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">                            
+                            Use a module alias
                         </label>
                         <xar:set name="checked">xarModVars::get('calendar','useModuleAlias')</xar:set>
                         <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked"/>
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
-                                
-                                    Module Alias Name
-                                
+                            Module Alias Name
                         </label>
                         <xar:set name="value"><xar:var scope="module" module="calendar" name="aliasname"/></xar:set>
                         <input type="text" name="aliasname" id="aliasname" value="#$value#" size="32" maxlength="100"/>
@@ -81,18 +59,14 @@
                 <h3>
                     <xar:set name="ucname">UCFirst($tabmodule)</xar:set>
                     <xar:ml>
-                        
-                            Module Defaults for #(1)
-                        
+                        Module Defaults for #(1)
                         <xar:mlvar>#$ucname#</xar:mlvar>
                     </xar:ml>
                 </h3>
             </xar:if>
             <fieldset>
                 <legend>
-                    
-                        Display Settings
-                    
+                    Display Settings
                 </legend>
                 <xar:template file="display"/>
             </fieldset>
@@ -168,46 +142,46 @@
             </td>
         </tr>
         <tr>
-                <td><label for="cal_sdow">Day of the week your week starts on</label></td>
-                <td><select name="cal_sdow" id="cal_sdow">
-                        <xar:if condition="$cal_sdow eq 0">
-                            <option value="0" selected="selected">Sunday</option>
-                        <xar:else />
-                            <option value="0">Sunday</option>
-                        </xar:if>
-                        <xar:if condition="$cal_sdow eq 1">
-                            <option value="1" selected="selected">Monday</option>
-                        <xar:else />
-                            <option value="1">Monday</option>
-                        </xar:if>
-                        <xar:if condition="$cal_sdow eq 2">
-                            <option value="2" selected="selected">Tuesday</option>
-                        <xar:else />
-                            <option value="2">Tuesday</option>
-                        </xar:if>
-                        <xar:if condition="$cal_sdow eq 3">
-                            <option value="2" selected="selected">Wednesday</option>
-                        <xar:else />
-                            <option value="2">Wednesday</option>
-                        </xar:if>
-                        <xar:if condition="$cal_sdow eq 4">
-                            <option value="4" selected="selected">Thursday</option>
-                        <xar:else />
-                            <option value="4">Thursday</option>
-                        </xar:if>
-                        <xar:if condition="$cal_sdow eq 5">
-                            <option value="5" selected="selected">Friday</option>
-                        <xar:else />
-                            <option value="5">Friday</option>
-                        </xar:if>
-                        <xar:if condition="$cal_sdow eq 6">
-                            <option value="6" selected="selected">Saturday</option>
-                        <xar:else />
-                            <option value="6">Saturday</option>
-                        </xar:if>
+            <td><label for="cal_sdow">Day of the week your week starts on</label></td>
+            <td><select name="cal_sdow" id="cal_sdow">
+                    <xar:if condition="$cal_sdow eq 0">
+                        <option value="0" selected="selected">Sunday</option>
+                    <xar:else />
+                        <option value="0">Sunday</option>
+                    </xar:if>
+                    <xar:if condition="$cal_sdow eq 1">
+                        <option value="1" selected="selected">Monday</option>
+                    <xar:else />
+                        <option value="1">Monday</option>
+                    </xar:if>
+                    <xar:if condition="$cal_sdow eq 2">
+                        <option value="2" selected="selected">Tuesday</option>
+                    <xar:else />
+                        <option value="2">Tuesday</option>
+                    </xar:if>
+                    <xar:if condition="$cal_sdow eq 3">
+                        <option value="2" selected="selected">Wednesday</option>
+                    <xar:else />
+                        <option value="2">Wednesday</option>
+                    </xar:if>
+                    <xar:if condition="$cal_sdow eq 4">
+                        <option value="4" selected="selected">Thursday</option>
+                    <xar:else />
+                        <option value="4">Thursday</option>
+                    </xar:if>
+                    <xar:if condition="$cal_sdow eq 5">
+                        <option value="5" selected="selected">Friday</option>
+                    <xar:else />
+                        <option value="5">Friday</option>
+                    </xar:if>
+                    <xar:if condition="$cal_sdow eq 6">
+                        <option value="6" selected="selected">Saturday</option>
+                    <xar:else />
+                        <option value="6">Saturday</option>
+                    </xar:if>
 
-                    </select>
-                </td>
+                </select>
+            </td>
         </tr>
 
 

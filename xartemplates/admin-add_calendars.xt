@@ -3,7 +3,7 @@
 
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
-    <div class="xar-mod-head"><span class="xar-mod-title">New Event</span></div>
+    <xar:template file="admin-mod-head"/>
     <div style="margin: auto;">
     <xar:if condition="$calid ge 1">
       <h2>#$message#</h2>
