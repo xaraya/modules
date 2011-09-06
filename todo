@@ -10,7 +10,7 @@
         srcFileName
         srcResource    
 
-$image = new image_base($fileName);
+$image = new image_base($fileName); 
 
 $image->rotate(90);
 $image->percent(90);
