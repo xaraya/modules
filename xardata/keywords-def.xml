@@ -13,7 +13,7 @@
       <label>ID</label>
       <type>itemid</type>
       <default></default>
-      <source>xar_keywords.xar_id</source>
+      <source>xar_keywords.id</source>
       <status>1</status>
       <order>1</order>
       <validation></validation>
@@ -23,7 +23,7 @@
       <label>Keyword</label>
       <type>dropdown</type>
       <default></default>
-      <source>xar_keywords.xar_keyword</source>
+      <source>xar_keywords.keyword</source>
       <status>1</status>
       <order>2</order>
       <validation>xarModAPIFunc('keywords','user','getlist')</validation>
@@ -33,7 +33,7 @@
       <label>Module</label>
       <type>module</type>
       <default></default>
-      <source>xar_keywords.xar_moduleid</source>
+      <source>xar_keywords.moduleid</source>
       <status>1</status>
       <order>3</order>
       <validation></validation>
@@ -43,7 +43,7 @@
       <label>Itemtype</label>
       <type>integerbox</type>
       <default></default>
-      <source>xar_keywords.xar_itemtype</source>
+      <source>xar_keywords.itemtype</source>
       <status>1</status>
       <order>4</order>
       <validation></validation>
@@ -53,7 +53,7 @@
       <label>Itemid</label>
       <type>integerbox</type>
       <default></default>
-      <source>xar_keywords.xar_itemid</source>
+      <source>xar_keywords.itemid</source>
       <status>1</status>
       <order>5</order>
       <validation></validation>

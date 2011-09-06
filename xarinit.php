@@ -188,6 +188,7 @@ function keywords_init()
 // MichelV: Why not have an add privilege in here? Admin to add keywords seems way overdone
     xarRegisterMask('ReadKeywords', 'All', 'keywords', 'Item', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('AddKeywords', 'All', 'keywords', 'Item', 'All:All:All', 'ACCESS_COMMENT');
+    xarRegisterMask('ManageKeywords', 'All', 'keywords', 'Item', 'All:All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdminKeywords', 'All', 'keywords', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
 # --------------------------------------------------------
@@ -196,7 +197,7 @@ function keywords_init()
 #
     $module = 'keywords';
     $objects = array(
-                   'keywords',
+//                   'keywords_keywords',
                      );
 
     if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
@@ -302,8 +303,6 @@ function keywords_upgrade($oldversion)
  */
 function keywords_delete()
 {
-    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'keywords'));
-
     // Remove module hooks
     if (!xarModUnregisterHook('item', 'new', 'GUI',
                            'keywords', 'admin', 'newhook')) {
@@ -358,8 +357,7 @@ function keywords_delete()
     xarRemoveMasks('keywords');
     xarRemoveInstances('keywords');
 
-    // Deletion successful
-    return true;
+    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'keywords'));
 }
 
 ?>

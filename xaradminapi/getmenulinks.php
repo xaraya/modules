@@ -36,6 +36,11 @@ function keywords_adminapi_getmenulinks()
                              ,'label'  => xarML('Modify Config')
                              ,'active' => array('modifyconfig')
         );
+        $menulinks[] = array( 'url'    => xarModURL('keywords','admin','hooks')
+                             ,'title'  => xarML('Configure the hooks for this module')
+                             ,'label'  => xarML('Manage Hooks')
+                             ,'active' => array('hooks')
+        );
         $menulinks[] = array( 'url'    => xarModURL('keywords','admin','overview')
                              ,'title'  => xarML('Introduction on handling this module')
                              ,'label'  => xarML('Overview')
