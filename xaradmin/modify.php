@@ -29,7 +29,7 @@ function scheduler_admin_modify()
     }
 
     if (empty($jobs[$itemid])) {
-        xarResponse::redirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
+        xarController::redirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
         return true;
     }
 
@@ -91,7 +91,7 @@ function scheduler_admin_modify()
         $serialjobs = serialize($jobs);
         xarModVars::set('scheduler','jobs',$serialjobs);
 
-        xarResponse::redirect(xarModURL('scheduler', 'admin', 'modify',
+        xarController::redirect(xarModURL('scheduler', 'admin', 'modify',
                                       array('itemid' => $itemid)));
         return true;
     }

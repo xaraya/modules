@@ -4,28 +4,28 @@
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
         <h2>
-            <xar:mlstring>
+            
                 Delete Scheduler Job
-            </xar:mlstring>
+            
         </h2>
         <fieldset>
             <legend>
-                <xar:mlstring>Confirm deleting this job?</xar:mlstring>
+                Confirm deleting this job?
             </legend>
             <p>
-                <xar:mlstring>Module:</xar:mlstring>
+                Module:
                 #$module#
             </p>
             <p>
-                <xar:mlstring>Type:</xar:mlstring>
+                Type:
                 #$functype#
             </p>
             <p>
-                <xar:mlstring>Function:</xar:mlstring>
+                Function:
                 #$func#
             </p>
             <p>
-                <xar:mlstring>Trigger:</xar:mlstring>
+                Trigger:
                 #$triggers.$job_trigger#
             </p>
         </fieldset>
@@ -34,8 +34,8 @@
 
         <xar:if condition="$running ne 0 or $job_trigger ne 0">
             <p class="xar-alt-outline xar-padding-thick">
-                <xar:mlstring>This job must be disabled and not running to allow deletion.</xar:mlstring> 
-                <a href="#xarModURL('scheduler','admin','modify',array('itemid'=>$id))#"><xar:mlstring>Please set its trigger to disabled</xar:mlstring></a>.
+                This job must be disabled and not running to allow deletion. 
+                <a href="#xarModURL('scheduler','admin','modify',array('itemid'=>$id))#">Please set its trigger to disabled</a>.
             </p>
 
 

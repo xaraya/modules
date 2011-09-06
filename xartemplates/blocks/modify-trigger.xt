@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
 <div class="xar-form-input-wrapper">
-    <label for="showstatus#$blockid#" class="help xar-form-label" title="#xarML('Show the status of the trigger to administrators?')#"><xar:mlstring>Show status to admins</xar:mlstring></label>
+    <label for="showstatus#$blockid#" class="help xar-form-label" title="#xarML('Show the status of the trigger to administrators?')#">Show status to admins</label>
     <xar:if condition="empty($showstatus)">
         <input type="checkbox" name="showstatus" id="showstatus#$blockid#" value="1" />
     <xar:else />

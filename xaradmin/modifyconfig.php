@@ -73,7 +73,7 @@ function scheduler_admin_modifyconfig()
                              'module' => '',
                              'type' => '',
                              'func' => '',
-                             'interval' => '',
+                             'interval' => '0t',
                              'config' => array(),
                              'lastrun' => '',
                              'result' => ''
