@@ -50,7 +50,7 @@ function scheduler_admin_delete()
     // Pass to API
     xarModAPIFunc('scheduler', 'admin', 'delete',array('itemid' => $itemid));
 
-    xarResponse::redirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
+    xarController::redirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
 
     return true;
 }

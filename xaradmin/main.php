@@ -18,7 +18,7 @@ function scheduler_admin_main()
 {
     if (!xarSecurityCheck('AdminScheduler')) return;
 
-        xarResponse::redirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
+        xarController::redirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
 
     return true;
 }

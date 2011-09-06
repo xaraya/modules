@@ -74,7 +74,7 @@ function scheduler_admin_update($args)
         return;
     }
 
-    xarResponse::redirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
+    xarController::redirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
 
     return true;
 }

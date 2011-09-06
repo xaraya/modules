@@ -23,7 +23,7 @@
 */
 sys::import('modules.scheduler.xarblocks.trigger');
 
-class TriggerBlockAdmin extends TriggerBlock implements iBlock
+class Scheduler_TriggerBlockAdmin extends Scheduler_TriggerBlock implements iBlock
 {
 /**
  * Modify Function to the Blocks Admin

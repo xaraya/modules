@@ -98,11 +98,11 @@ function scheduler_admin_create()
 
         xarModAPIFunc('scheduler','admin','create', $job);
 
-        xarResponse::redirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
+        xarController::redirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
         return true;
     }
 
-    xarResponse::redirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
+    xarController::redirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
     return true;
 }
 ?>

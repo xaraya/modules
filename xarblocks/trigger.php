@@ -18,7 +18,7 @@
 // Inherit properties and methods from BasicBlock class
 sys::import('xaraya.structures.containers.blocks.basicblock');
 
-class TriggerBlock extends BasicBlock implements iBlock
+class Scheduler_TriggerBlock extends BasicBlock implements iBlock
 {
     public $name                = 'TriggerBlock';
     public $module              = 'scheduler';
