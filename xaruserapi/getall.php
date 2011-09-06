@@ -23,21 +23,11 @@
  */
 function scheduler_userapi_getall($args)
 {
-    extract($args);
-
-    $where = array();
-    $bindvars = array();
-
-    if (isset($trigger) && in_array($trigger, array(0,1,2,3))) {
-        $where[] = "job_trigger = ?";
-        $bindvars = $trigger;
-    } elseif (isset($module) && isset($functype) && isset($func)) {
-        $where[] = " module = ?";
-        $bindvars = $module;
-        $where[] = " functype = ?";
-        $bindvars = $functype;
-        $where[] = " func = ?";
-        $bindvars = $func;
+    $serialjobs = xarModVars::get('scheduler','jobs');
+    if (empty($serialjobs)) {
+        $jobs = array();
+    } else {
+        $jobs = unserialize($serialjobs);
     }
 
 

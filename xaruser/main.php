@@ -17,16 +17,66 @@
  */
 function scheduler_user_main()
 {
-    if (!xarVarFetch('itemid', 'id', $itemid,'',XARVAR_NOT_REQUIRED)) return;
-
-    $args = array();
-
-    if(!empty($itemid)) {
-        $args['itemid'] = $itemid;
-    } else {
-        $args['trigger'] = 1;
+    // check if we have the right trigger
+    $trigger = xarModVars::get('scheduler','trigger');
+    if (empty($trigger) || $trigger != 'external') {
+        return xarML('Wrong trigger');
     }
 
+    // get the IP
+    $ip = xarServer::getVar('REMOTE_ADDR');
+    $forwarded = xarServer::getVar('HTTP_X_FORWARDED_FOR');
+    if (!empty($forwarded)) {
+        $proxy = $ip;
+        $ip = preg_replace('/,.*/', '', $forwarded);
+    }
+
+    $checktype = xarModVars::get('scheduler','checktype');
+    $checkvalue = xarModVars::get('scheduler','checkvalue');
+
+// TODO: allow IP range or domain here if that's what people want (insecure)
+    $isvalid = 0;
+    switch ($checktype) {
+        case 'local':
+            if (empty($proxy) && !empty($ip) && $ip == '127.0.0.1') {
+                $isvalid = 1;
+            }
+            break;
+        case 'ip':
+            if (empty($proxy) && !empty($ip) && $ip == $checkvalue) {
+                $isvalid = 1;
+            }
+            break;
+        case 'proxy':
+            if (!empty($proxy) && !empty($ip) && $ip == $checkvalue) {
+                $isvalid = 1;
+            }
+            break;
+        case 'host':
+            if (!empty($ip)) {
+                $hostname = @gethostbyaddr($ip);
+                // same player, shoot again...
+                if (empty($hostname)) {
+                    $hostname = @gethostbyaddr($ip);
+                }
+                if (!empty($hostname) && $hostname == $checkvalue) {
+                    $isvalid = 1;
+                }
+            }
+            break;
+    }
+
+            if (empty($hostname)) {
+                $hostname = 'unknown';
+            }
+        }
+        xarLogMessage("scheduler: Failed trigger attempt from host $ip ($hostname).");
+        return xarML('Wrong trigger')." $ip ($hostname) at " . date('j', time());
+    }
+
+    // check when we last ran the scheduler
+    $lastrun = xarModVars::get('scheduler', 'lastrun');
+    $now = time();
 /*
     if (!empty($lastrun) && $lastrun > $now - ((60*5)-1) )  // Make sure it's been at least five minutes
     {
@@ -35,7 +85,11 @@ function scheduler_user_main()
     }
 */
 
-    $output = xarModAPIFunc('scheduler','user','runjobs', $args);
+    // update the last run time
+    xarModVars::set('scheduler','lastrun',$now - 60); // remove the margin here
+    xarModVars::set('scheduler','running',1);
+
+    $output = xarMod::apiFunc('scheduler','user','runjobs');
 
 // TODO: dump exceptions ?
     return $output;

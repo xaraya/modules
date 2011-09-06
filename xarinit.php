@@ -18,8 +18,8 @@
  */
 function scheduler_init()
 {
-    //Load Table Maintenance API
-    sys::import('xaraya.tableddl');
+    xarModVars::set('scheduler', 'trigger', 'disabled');
+    xarModVars::set('scheduler', 'lastrun', 0);
 
     // Create database table
 
@@ -89,7 +89,7 @@ function scheduler_init()
 
     xarRegisterMask('AdminScheduler', 'All', 'scheduler', 'All', 'All', 'ACCESS_ADMIN');
 
-    if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+    if (!xarMod::apiFunc('blocks', 'admin', 'register_block_type',
                        array('modName' => 'scheduler',
                              'blockType' => 'trigger'))) throw new Exception("Trigger block  could not be created");;
 
@@ -107,7 +107,7 @@ function scheduler_upgrade($oldversion)
     switch ($oldversion) {
         case '1.0':
             // Code to upgrade from version 1.0 goes here
-            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+            if (!xarMod::apiFunc('blocks', 'admin', 'register_block_type',
                                array('modName' => 'scheduler',
                                      'blockType' => 'trigger'))) return;
             // fall through to the next upgrade
@@ -291,7 +291,7 @@ function scheduler_delete()
 
     xarRemoveMasks('scheduler');
 
-    if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type',
+    if (!xarMod::apiFunc('blocks', 'admin', 'unregister_block_type',
                        array('modName' => 'scheduler',
                              'blockType' => 'trigger'))) return;
 

@@ -133,12 +133,11 @@ function scheduler_adminapi_update($args)
 
     if (!xarSecurityCheck('AdminScheduler')) return;
 
-    $job = xarModAPIFunc('scheduler','user','get', array('itemid' => $id));
-
-    if (empty($job)) {
-        $msg = xarML('Invalid itemid for #(2) function #(3)() in module #(4)',
-                     'admin', 'update', 'scheduler');
-        throw new BadParameterException($msg);
+    $serialjobs = xarModVars::get('scheduler','jobs');
+    if (empty($serialjobs)) {
+        $jobs = array();
+    } else {
+        $jobs = unserialize($serialjobs);
     }
 
     $config = serialize($config);
@@ -194,6 +193,20 @@ function scheduler_adminapi_update($args)
         $dbconn->rollback();                
         throw $e;              
     }
+    if (!empty($interval)) {
+        $jobs[$itemid]['interval'] = $interval;
+    }
+    if (isset($config)) {
+        $jobs[$itemid]['config'] = $config;
+    }
+    if (isset($lastrun)) {
+        $jobs[$itemid]['lastrun'] = $lastrun;
+    }
+    if (isset($result)) {
+        $jobs[$itemid]['result'] = $result;
+    }
+    $serialjobs = serialize($jobs);
+    xarModVars::set('scheduler','jobs',$serialjobs);
 
     return true;
 }

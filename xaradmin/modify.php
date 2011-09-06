@@ -21,12 +21,16 @@ function scheduler_admin_modify()
 
     if (!xarSecurityCheck('AdminScheduler')) return;
 
-    $job = xarmodAPIFunc('scheduler','user','get',array('itemid' => $itemid));
+    $serialjobs = xarModVars::get('scheduler', 'jobs');
+    if (empty($serialjobs)) {
+        $jobs = array();
+    } else {
+        $jobs = unserialize($serialjobs);
+    }
 
-    if (empty($job)) {
-        $msg = xarML('Invalid job id for #(1) function #(2)() in module #(3)',
-                     'user', 'modify', 'scheduler');
-        throw BadParameterException($msg);
+    if (empty($jobs[$itemid])) {
+        xarResponse::redirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
+        return true;
     }
 
     if (!xarVarFetch('confirm','isset',$confirm,NULL,XARVAR_NOT_REQUIRED)) return;
@@ -78,37 +82,16 @@ function scheduler_admin_modify()
         if (!empty($config['enddate'])) {
             $config['enddate'] = strtotime($config['enddate']);
         }
-
-        if (!xarVarFetch('job_trigger','int',$job_trigger,0,XARVAR_NOT_REQUIRED)) return;
-        $triggers = xarModAPIFunc('scheduler','user','triggers');
-        if (!isset($triggers[$job_trigger])) {
-            $msg = xarML('Invalid trigger type for #(1) function #(2)() in module #(3)',
-                         'user', 'modify', 'scheduler');
-            throw BadParameterException($msg);
-        }
-        $job['job_trigger'] = $job_trigger;
-
-        if (!xarVarFetch('checktype','int',$checktype,1,XARVAR_NOT_REQUIRED)) return;
-        $checktypes = xarmodAPIFunc('scheduler','user','sources');
-        if (!isset($checktypes[$checktype])) {
-            $msg = xarML('Invalid checktype type for #(1) function #(2)() in module #(3)',
-                         'user', 'modify', 'scheduler');
-            throw BadParameterException($msg);
-        }
-        $job['checktype'] = $checktype;
-
-        if (!xarVarFetch('checkvalue','isset',$checkvalue,'',XARVAR_NOT_REQUIRED)) return;
-        $job['checkvalue'] = $checkvalue;
-
-        if ($job_interval == '0c' && !empty($config['crontab'])) {
-            $config['crontab']['nextrun'] = xarModAPIFunc('scheduler','user','nextrun',
+        if ($interval == '0c' && !empty($config['crontab'])) {
+            $config['crontab']['nextrun'] = xarMod::apiFunc('scheduler','user','nextrun',
                                                           $config['crontab']);
         }
         $job['config'] = $config;
 
-        xarModAPIFunc('scheduler','admin','update', $job);
+        $serialjobs = serialize($jobs);
+        xarModVars::set('scheduler','jobs',$serialjobs);
 
-        xarController::redirect(xarModURL('scheduler', 'admin', 'modify',
+        xarResponse::redirect(xarModURL('scheduler', 'admin', 'modify',
                                       array('itemid' => $itemid)));
         return true;
     }
@@ -133,7 +116,7 @@ function scheduler_admin_modify()
 
     $data['itemid'] = $itemid;
     $data['authid'] = xarSecGenAuthKey();
-    $data['intervals'] = xarModAPIFunc('scheduler','user','intervals');
+    $data['intervals'] = xarMod::apiFunc('scheduler','user','intervals');
 
     // Prefill the configuration array
     if (empty($data['config'])) {

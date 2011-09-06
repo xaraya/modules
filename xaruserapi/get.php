@@ -48,43 +48,11 @@ function scheduler_userapi_get($args)
         throw new BadParameterException($msg);
     }
 
-    //Load Table Maintenance API
-    sys::import('xaraya.tableddl');
-
-    // Get database information
-    $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
-    $prefix = xarDB::getPrefix();
-
-    $table = $xartable['scheduler_jobs'];
-
-    $query = "SELECT
-                id,
-                module,
-                functype,
-                func,
-                job_interval,
-                lastrun,
-                result,
-                job_trigger,
-                checktype,
-                checkvalue,
-                config
-            FROM $table";
-
-    $bindvars = array();
-    $where = array();
-
-    if (isset($itemid)) {
-        $where[] = "id = ?";
-        $bindvars[] = $itemid;
-    } elseif (isset($module) && isset($functype) && isset($func)) {
-        $where[] = " module = ?";
-        $bindvars = $module;
-        $where[] = " functype = ?";
-        $bindvars = $functype;
-        $where[] = " func = ?";
-        $bindvars = $func;
+    $serialjobs = xarModVars::get('scheduler','jobs');
+    if (empty($serialjobs)) {
+        $jobs = array();
+    } else {
+        $jobs = unserialize($serialjobs);
     }
 
     if(count($where) > 0) {

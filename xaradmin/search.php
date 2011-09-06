@@ -21,7 +21,7 @@ function scheduler_admin_search()
     $data = array();
     $data['found'] = array();
 
-    $modules = realpath('modules');
+    $modules = sys::code().'modules';
     $dh = opendir($modules);
     if (empty($dh)) return $data;
     while (($dir = readdir($dh)) !== false) {

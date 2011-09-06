@@ -21,6 +21,12 @@ function scheduler_admin_modifyconfig()
 
     $data = array();
 
+    $data['trigger'] = xarModVars::get('scheduler', 'trigger');
+    $data['checktype'] = xarModVars::get('scheduler', 'checktype');
+    $data['checkvalue'] = xarModVars::get('scheduler', 'checkvalue');
+
+    $data['ip'] = xarServer::getVar('REMOTE_ADDR');
+
     $forwarded = xarServer::getVar('HTTP_X_FORWARDED_FOR');
     if (!empty($forwarded)) {
         $data['proxy'] = $data['ip'];
@@ -28,10 +34,54 @@ function scheduler_admin_modifyconfig()
         $data['ip'] = xarVarPrepForDisplay($data['ip']);
     }
 
-    $data['jobs'] = xarModAPIFunc('scheduler','user','getall');
+    $jobs = xarModVars::get('scheduler', 'jobs');
+    if (empty($jobs)) {
+        $data['jobs'] = array();
+    } else {
+        $data['jobs'] = unserialize($jobs);
+    }
+    $maxid = xarModVars::get('scheduler','maxjobid');
+    if (!isset($maxid)) {
+        // re-number jobs starting from 1 and save maxid
+        $maxid = 0;
+        $newjobs = array();
+        foreach ($data['jobs'] as $job) {
+            $maxid++;
+            $newjobs[$maxid] = $job;
+        }
+        xarModVars::set('scheduler','maxjobid',$maxid);
+        $serialjobs = serialize($newjobs);
+        xarModVars::set('scheduler','jobs',$serialjobs);
+        $data['jobs'] = $newjobs;
+    }
 
-    $modules = xarModAPIFunc('modules', 'admin', 'getlist',
-                             array('filter' => array('AdminCapable' => true)));
+    if (!xarVarFetch('addjob','str',$addjob,'',XARVAR_NOT_REQUIRED)) return;
+    if (!empty($addjob) && preg_match('/^(\w+);(\w+);(\w+)$/',$addjob,$matches)) {
+        $maxid++;
+        xarModVars::set('scheduler','maxjobid',$maxid);
+        $data['jobs'][$maxid] = array(
+                                      'module' => $matches[1],
+                                      'type' => $matches[2],
+                                      'func' => $matches[3],
+                                      'interval' => '',
+                                      'config' => array(),
+                                      'lastrun' => '',
+                                      'result' => ''
+                                     );
+    }
+    $data['jobs'][0] = array(
+                             'module' => '',
+                             'type' => '',
+                             'func' => '',
+                             'interval' => '',
+                             'config' => array(),
+                             'lastrun' => '',
+                             'result' => ''
+                            );
+    $data['lastrun'] = xarModVars::get('scheduler','lastrun');
+
+    $modules = xarMod::apiFunc('modules', 'admin', 'getlist',
+                             array('filter' => array('AdminCapable' => 1)));
     $data['modules'] = array();
     foreach ($modules as $module) {
         $data['modules'][$module['name']] = $module['displayname'];
@@ -41,9 +91,7 @@ function scheduler_admin_modifyconfig()
                            'admin' => 'admin',
                            'user' => 'user',
                           );
-    $data['intervals'] = xarModAPIFunc('scheduler','user','intervals');
-    $data['triggers'] = xarModAPIFunc('scheduler','user','triggers');
-    
+    $data['intervals'] = xarMod::apiFunc('scheduler','user','intervals');
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'scheduler',
                              array('module' => 'scheduler'));

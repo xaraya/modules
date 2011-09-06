@@ -66,23 +66,24 @@ function scheduler_adminapi_create($args)
         $invalid[] = 'checktype';
     }
 
-    if (!empty($checktype) && !is_string($checkvalue)) {
-        $invalid[] = 'checkvalue';
+    $serialjobs = xarModVars::get('scheduler','jobs');
+    if (empty($serialjobs)) {
+        $jobs = array();
+    } else {
+        $jobs = unserialize($serialjobs);
     }
 
     if (!isset($result)) {
         $result = '';
     }
-
-    if (!isset($lastrun) || !is_numeric($lastrun)) {
-        $lastrun = 0;
-    }
-
-    if(!is_array($config)) {
-        $config = '';
-    } else {
-        if(!isset($config['params']) || !is_string($config['params'])) {
-            $config['params'] = '';
+    $maxid = xarModVars::get('scheduler','maxjobid');
+    if (!isset($maxid)) {
+        // re-number jobs starting from 1 and save maxid
+        $maxid = 0;
+        $newjobs = array();
+        foreach ($jobs as $job) {
+            $maxid++;
+            $newjobs[$maxid] = $job;
         }
         if(!isset($config['startdate']) || !is_numeric($config['startdate'])) {
             $config['startdate'] = '';
@@ -119,15 +120,8 @@ function scheduler_adminapi_create($args)
             }
         }
     }
-
-    if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     join(', ', $invalid), 'admin', 'update', 'scheduler');
-        throw new BadParameterException($msg);
-    }
-
-//    if (!xarSecurityCheck('AdminScheduler')) return;
-
+    $maxid++;
+    xarModVars::set('scheduler','maxjobid',$maxid);
     if (empty($config)) {
         $config = array();
     }
@@ -137,6 +131,15 @@ function scheduler_adminapi_create($args)
     if (empty($result)) {
         $result = '';
     }
+    $jobs[$maxid] = array('module' => $module,
+                          'type' => $type,
+                          'func' => $func,
+                          'interval' => $interval,
+                          'config' => $config,
+                          'lastrun' => $lastrun,
+                          'result' => $result);
+    $serialjobs = serialize($jobs);
+    xarModVars::set('scheduler','jobs',$serialjobs);
 
     $config = serialize($config);
 

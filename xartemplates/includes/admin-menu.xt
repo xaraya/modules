@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <!-- License:GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:comment>Common Administration menu</xar:comment>
-    <xar:style scope="module" module="base" file="navtabs"/>
-
-    <xar:set name="request">xarController::$request->getInfo()</xar:set>
-    <xar:set name="activetab">#$request.2#</xar:set>
-    <div>
-      <dl class="xar-tabs">
-        <dt class="help" title="Choose an action to perform">
-          <xar:mlstring>Actions:</xar:mlstring>
-        </dt>
-        <xar:sec mask="AdminScheduler" catch="false">
-            <xar:set name="tabclass">$activetab=='search'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-              <a href="&xar-modurl-scheduler-admin-search;">
-                <xar:mlstring>Search for Scheduler Functions</xar:mlstring>
-              </a>
-            </dd>
-        </xar:sec>
-
-        <xar:sec mask="AdminScheduler" catch="false">
-            <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-              <a href="&xar-modurl-scheduler-admin-modifyconfig;">
-                <xar:mlstring>Modify Config</xar:mlstring>
-              </a>
-            </dd>
-        </xar:sec>
-
-        <xar:sec mask="AdminScheduler" catch="false">
-        <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-          <a href="&xar-modurl-scheduler-admin-overview;">
-            <xar:mlstring>Overview</xar:mlstring>
-          </a>
-        </dd>
-        </xar:sec>
-      </dl>
-    </div>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:if condition="xarModVars::get('themes','adminpagemenu')">
+    <xar:sec mask="AdminScheduler" catch="false">
+        <xar:style scope="module" module="base" file="navtabs"/>
+        <xar:set name="request">xarRequest::getInfo()</xar:set>
+        <xar:set name="activetab">#$request.2#</xar:set>
+        <xar:set name="tabactive">'xar-tab-active'</xar:set>
+        <xar:set name="linkactive">'xar-accent xar-accent-outline'</xar:set>
+        <xar:set name="tabinactive">'xar-tab'</xar:set>
+        <xar:set name="linkinactive">'xar-norm xar-norm-outline'</xar:set>
+        <div>
+            <ul class="xar-tabs xar-alt xar-norm-outline">
+                <li class="xar-tabs-label help" title="#xarML('Choose an action to perform')#">Actions:</li>
+                <xar:set name="tabclass">$activetab=='search'?$tabactive:$tabinactive</xar:set>
+                <xar:set name="linkclass">$activetab=='search'?$linkactive:$linkinactive</xar:set>
+                <li class="#$tabclass#">
+                    <a class="#$linkclass#" href="#xarModURL('scheduler', 'admin', 'search')#">
+                        Search for Scheduler Functions
+                    </a>
+                </li>
+                <xar:set name="tabclass">$activetab=='modifyconfig'?$tabactive:$tabinactive</xar:set>
+                <xar:set name="linkclass">$activetab=='modifyconfig'?$linkactive:$linkinactive</xar:set>
+                <li class="#$tabclass#">
+                    <a class="#$linkclass#" href="#xarModURL('scheduler', 'admin', 'modifyconfig')#">
+                        Modify Config
+                    </a>
+                </li>
+                <xar:set name="tabclass">$activetab=='main'?$tabactive:$tabinactive</xar:set>
+                <xar:set name="linkclass">$activetab=='main'?$linkactive:$linkinactive</xar:set>
+                <li class="#$tabclass#">
+                    <a class="#$linkclass#" href="#xarModURL('scheduler', 'admin', 'main')#">
+                        Overview
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </xar:sec>
+</xar:if>
 </xar:template>
