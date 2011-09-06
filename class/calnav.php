@@ -1,5 +1,5 @@
 <?php
-    sys::import('xaraya.structures.containers.blocks.block');
+    sys::import('xaraya.structures.containers.blocks.basicblock');
 
     class CalnavBlock extends Block
     {
