@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <tr class="$item_class">
-        <xar:template file="listing_rowprefix" module="$module" property="listing""/>
+        <xar:template file="listing_rowprefix" module="$module" property="listing"/>
         <xar:foreach in="$fields" key="$field">
             <xar:set name="value">$loopitem[$field]</xar:set>
             <xar:set name="column">$columns[$field]</xar:set>
