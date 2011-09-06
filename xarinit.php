@@ -16,6 +16,8 @@
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
+sys::import('xaraya.tableddl');
+
 function scheduler_init()
 {
     xarModVars::set('scheduler', 'trigger', 'disabled');
