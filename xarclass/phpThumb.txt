@@ -459,7 +459,7 @@ function RedirectToCachedFile() {
         } elseif (preg_match('/\.ico$/i', $phpThumb->cache_filename)) {
             header('Content-Type: image/x-icon');
         }
-        if (!@$PHPTHUMB_CONFIG['cache_force_passthru'] && preg_matchg('/^'.preg_quote($nice_docroot).'(.*)$/', $nice_cachefile, $matches)) {
+        if (!@$PHPTHUMB_CONFIG['cache_force_passthru'] && preg_match('/^'.preg_quote($nice_docroot).'(.*)$/', $nice_cachefile, $matches)) {
             header('Location: '.dirname($matches[1]).'/'.urlencode(basename($matches[1])));
         } else {
             @readfile($phpThumb->cache_filename);

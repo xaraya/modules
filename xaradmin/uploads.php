@@ -81,7 +81,8 @@ function images_admin_uploads($args)
 
         // Add pager
         if (!empty($numitems) && $countitems > $numitems) {
-            $data['pager'] = xarTplGetPager($startnum,
+            sys::import('modules.base.class.pager');
+            $data['pager'] = xarTplPager::getPager($startnum,
                                             $countitems,
                                             xarModURL('images', 'admin', 'uploads',
                                                       array('startnum' => '%%',
