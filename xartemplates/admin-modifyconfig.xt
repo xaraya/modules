@@ -11,23 +11,23 @@
 </xar:if>
 
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Headlines Administration</xar:mlstring></span>
+    <span class="xar-mod-title">Headlines Administration</span>
 </div>
 
 <div id="notsogoodbutok" class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
     <h2>
         <a href="#xarModURL('headlines', 'admin', 'modifyconfig')#" title="#xarML('permalink')#">
-            <xar:mlstring>Modify Configuration</xar:mlstring>
+            Modify Configuration
         </a>
     </h2>
     <form class="xar-formwidget" action="#xarModURL('headlines', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset class="xar-norm">
-            <legend><xar:mlstring>Global Configuration</xar:mlstring></legend>
+            <legend>Global Configuration</legend>
             <input type="hidden" name="authid" value="#$authid#" />
             <div class="xar-form-input-wrapper">
                 <label for="shorturls" class="xar-form-label" title="#xarML('Show short urls for the headlines')#">
-                    <xar:mlstring>Support Short URLs</xar:mlstring>
+                    Support Short URLs
                 </label>
                 <xar:if condition="$shorturlschecked">
                     <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
@@ -38,9 +38,9 @@
             </div>
             <div class="xar-form-input-wrapper">
                 <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
-                        <xar:mlstring>
+                        
                             Use a module alias
-                        </xar:mlstring>
+                        
                 </label>
                 <xar:if condition="xarModVars::get('headlines', 'useModuleAlias')">
                     <input type="checkbox" name="modulealias" id="modulealias" value="1" checked="checked" />
@@ -51,17 +51,17 @@
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
-                        <xar:mlstring>
+                        
                             Module Alias Name
-                        </xar:mlstring>
+                        
                 </label>
                 <input type="text" name="aliasname" id="aliasname" value="#xarModVars::get('headlines', 'aliasname')#" size="32" maxlength="100" />
             </div>
              <div class="xar-form-input-wrapper">
                 <label for = "adminajax" class="xar-form-label" title="#xarML('Turn on simple AJAX support for admin functions')#">
-                        <xar:mlstring>
+                        
                             Use AJAX in admin display
-                        </xar:mlstring>
+                        
                 </label>
                 <xar:if condition="xarModVars::get('headlines', 'adminajax')">
                     <input type="checkbox" name="adminajax" id="adminajax" value="1" checked="checked" />
@@ -72,9 +72,9 @@
 
              <div class="xar-form-input-wrapper">
                 <label for = "userajax" class="xar-form-label" title="#xarML('Turn on simple AJAX support for user functions')#">
-                        <xar:mlstring>
+                        
                             Use AJAX in user display
-                        </xar:mlstring>
+                        
                 </label>
                 <xar:if condition="xarModVars::get('headlines', 'userajax')">
                     <input type="checkbox" name="userajax" id="userajax" value="1" checked="checked" />
@@ -85,34 +85,34 @@
         </fieldset>
         <fieldset>
             <legend>
-                <xar:mlstring>Overview Configuration</xar:mlstring>
+                Overview Configuration
             </legend>
             <div class="xar-form-input-wrapper">
                 <label for="sortorder" class="xar-form-label" title="#xarML('Default sort order for user main')#">
-                    <xar:mlstring>Sort Order</xar:mlstring>
+                    Sort Order
                 </label>
                 <select name="sortorder" id="sortorder">
                     <xar:if condition="xarModVars::get('headlines', 'sortorder') == 'date'">
                         <option value="default">
-                            <xar:mlstring>
+                            
                                 Default: Sort by Order field
-                            </xar:mlstring>
+                            
                         </option>
                         <option value="date" selected="selected">
-                            <xar:mlstring>
+                            
                                 Date: Latest first
-                            </xar:mlstring>
+                            
                         </option>
                     <xar:else />
                         <option value="default" selected="selected">
-                            <xar:mlstring>
+                            
                                 Default: Sort by Order field
-                            </xar:mlstring>
+                            
                         </option>
                         <option value="date">
-                            <xar:mlstring>
+                            
                                 Date: Latest first
-                            </xar:mlstring>
+                            
                         </option>
                     </xar:if>
                 </select>
@@ -120,13 +120,13 @@
 
             <div class="xar-form-input-wrapper">
                 <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of items per page to show')#">
-                    <xar:mlstring>Items Per Page</xar:mlstring>
+                    Items Per Page
                 </label>
                 <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModVars::get('headlines', 'itemsperpage', 1)#" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="showcomments" class="xar-form-label">
-                    <xar:mlstring>Show number of comments</xar:mlstring>
+                    Show number of comments
                 </label>
                 <xar:if condition="xarMod::isAvailable('comments') and xarModIsHooked('comments', 'headlines')">
                     <xar:if condition="$showcomments">
@@ -137,13 +137,13 @@
                 <xar:else />
                     <input type="checkbox" value="1" name="showcomments" id="showcomments" disabled="disabled" />
                     <span class="xar-sub"><em>
-                        <xar:mlstring>(hook comments to headlines to make this available)</xar:mlstring>
+                        (hook comments to headlines to make this available)
                     </em></span>
                 </xar:if>
             </div>
              <div class="xar-form-input-wrapper">
                 <label for="showratings" class="xar-form-label">
-                    <xar:mlstring>Show rating</xar:mlstring>
+                    Show rating
                 </label>
                 <xar:if condition="xarMod::isAvailable('ratings') and xarModIsHooked('ratings',
 'headlines')">
@@ -155,13 +155,13 @@
                 <xar:else />
                     <input type="checkbox" value="1" name="showratings" id="showratings" disabled="disabled" />
                     <span class="xar-sub"><em>
-                        <xar:mlstring>(hook ratings to headlines to make this available)</xar:mlstring>
+                        (hook ratings to headlines to make this available)
                     </em></span>
                 </xar:if>
             </div>
               <div class="xar-form-input-wrapper">
                 <label for="showhitcount" class="xar-form-label">
-                    <xar:mlstring>Show number of hits</xar:mlstring>
+                    Show number of hits
                 </label>
                 <xar:if condition="xarMod::isAvailable('hitcount') and xarModIsHooked('hitcount', 'headlines')">
                     <xar:if condition="$showhitcount">
@@ -172,13 +172,13 @@
                 <xar:else />
                     <input type="checkbox" value="1" name="showhitcount" id="showhitcount" disabled="disabled" />
                     <span class="xar-sub"><em>
-                        <xar:mlstring>(hook hitcount to headlines to make this available)</xar:mlstring>
+                        (hook hitcount to headlines to make this available)
                     </em></span>
                 </xar:if>
             </div>
              <div class="xar-form-input-wrapper">
                 <label for="showkeywords" class="xar-form-label">
-                    <xar:mlstring>Show keywords</xar:mlstring>
+                    Show keywords
                 </label>
                 <xar:if condition="xarMod::isAvailable('keywords') and xarModIsHooked('keywords', 'headlines')">
                     <xar:if condition="$showkeywords">
@@ -189,18 +189,18 @@
                 <xar:else />
                     <input type="checkbox" value="1" name="showkeywords" id="showkeywords" disabled="disabled" />
                     <span class="xar-sub"><em>
-                        <xar:mlstring>(hook keywords to headlines to make this available)</xar:mlstring>
+                        (hook keywords to headlines to make this available)
                     </em></span>
                 </xar:if>
             </div>
         </fieldset>
         <fieldset>
             <legend>
-                <xar:mlstring>Feed Display Configuration</xar:mlstring>
+                Feed Display Configuration
             </legend>
             <div class="xar-form-input-wrapper">
                 <label for="parser" class="xar-form-label" title="#xarML('Select the parser to use')#">
-                    <xar:mlstring>Parser</xar:mlstring>
+                    Parser
                 </label>
 
                 <select name="parser" id="parser" onchange="this.form.submit()">
@@ -215,7 +215,7 @@
             </div>
             <xar:if condition="$parser eq 'simplepie'">
                 <div class="xar-form-input-wrapper-before">
-                    <strong><xar:mlstring>These settings allow you to take advantage of SimplePie content.</xar:mlstring></strong>
+                    <strong>These settings allow you to take advantage of SimplePie content.</strong>
                 </div>
                 <div class="xar-form-input-wrapper-after">
                     <xar:if condition="xarModVars::get('headlines', 'showchanimage')">
@@ -223,7 +223,7 @@
                     <xar:else />
                         <input type="checkbox" value="1" name="showchanimage" id="showchanimage" />
                     </xar:if>
-                    <label for="showchanimage" class="help" title="#xarML('Display the channel image supplied with a feed')#"><xar:mlstring>Show channel images (if available)</xar:mlstring></label>
+                    <label for="showchanimage" class="help" title="#xarML('Display the channel image supplied with a feed')#">Show channel images (if available)</label>
                     </div>
                 <div class="xar-form-input-wrapper-after">
                     <xar:if condition="xarModVars::get('headlines', 'showitemimage')">
@@ -231,7 +231,7 @@
                     <xar:else />
                         <input type="checkbox" value="1" name="showitemimage" id="showitemimage" />
                     </xar:if>
-                    <label for="showitemimage" class="help" title="#xarML('Display the image supplied with channel items')#"><xar:mlstring>Show item images (if available)</xar:mlstring></label>
+                    <label for="showitemimage" class="help" title="#xarML('Display the image supplied with channel items')#">Show item images (if available)</label>
                     </div>
                 <div class="xar-form-input-wrapper-after">
                     <xar:if condition="xarModVars::get('headlines', 'showitemcats')">
@@ -239,31 +239,31 @@
                     <xar:else />
                         <input type="checkbox" value="1" name="showitemcats" id="showitemcats" />
                     </xar:if>
-                    <label for="showitemcats" class="help" title="#xarML('Display the categories supplied with channel items')#"><xar:mlstring>Show item categories (if available)</xar:mlstring></label>
+                    <label for="showitemcats" class="help" title="#xarML('Display the categories supplied with channel items')#">Show item categories (if available)</label>
                 </div>
              </xar:if>
 
             <div class="xar-form-input-wrapper">
                 <label for="feeditemsperpage" class="xar-form-label" title="#xarML('Number of feed items per page to show')#">
-                    <xar:mlstring>Maximum Items Per Feed</xar:mlstring>
+                    Maximum Items Per Feed
                 </label>
-                <input type="text" name="feeditemsperpage" id="feeditemsperpage" size="3" maxlength="3" value="#xarModVars::get('headlines', 'feeditemsperpage', 1)#" /><em>(<xar:mlstring>0 = show all</xar:mlstring>)</em>
+                <input type="text" name="feeditemsperpage" id="feeditemsperpage" size="3" maxlength="3" value="#xarModVars::get('headlines', 'feeditemsperpage', 1)#" /><em>(0 = show all)</em>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="maxdescription" class="xar-form-label">
-                    <xar:mlstring>Truncate long descriptions to no more than</xar:mlstring>
+                    Truncate long descriptions to no more than
                 </label>
-                <input type="text" name="maxdescription" id="maxdescription" size="5" maxlength="5" value="#$maxdescription#" /><xar:mlstring> characters.</xar:mlstring> <em>(<xar:mlstring>0 = don't truncate</xar:mlstring>)</em>
+                <input type="text" name="maxdescription" id="maxdescription" size="5" maxlength="5" value="#$maxdescription#" /> characters. <em>(0 = don't truncate)</em>
             </div>
         </fieldset>
         <fieldset>
             <legend>
-                <xar:mlstring>Import Configuration</xar:mlstring>
+                Import Configuration
             </legend>
             <xar:if condition="xarMod::isAvailable('articles')">
             <div class="xar-form-input-wrapper">
                 <label for="importpubtype" class="xar-form-label" title="#xarML('Choose a publication type for import.')#">
-                        <xar:mlstring>Import to Publication Type</xar:mlstring>
+                        Import to Publication Type
                 </label>
                 <select name="importpubtype" id="importpubtype">
                     <option value="0"></option>
@@ -276,16 +276,16 @@
                     </xar:foreach>
                 </select>
                 <p class="xar-form-container-after">
-                    <xar:mlstring>
+                    
                         Your publication type must already exist in the Articles module
                         and have at least a title and summary field.
-                    </xar:mlstring>
+                    
                 </p>
             </div>
 
             <div class="xar-form-input-wrapper">
                 <label for="uniqueid" class="xar-form-label" title="#xarML('Determine what makes a headline unique.')#">
-                    <xar:mlstring>Unique Identifier for Import</xar:mlstring>
+                    Unique Identifier for Import
                 </label>
                 <xar:set name="options">
                     array('feed;link' => xarML('Feed + Link'),
@@ -318,7 +318,7 @@
                     <input type="checkbox" name="magpie" id="magpie" value="1" />
                 </xar:if>
                 <label for="magpie" title="#xarML('Use Magpie Module for Process of Feeds')#">
-                    <xar:mlstring>Use Magpie Module for Feeds</xar:mlstring>
+                    Use Magpie Module for Feeds
                 </label>
 
             </div>
@@ -326,7 +326,7 @@
             </xar:comment>
         </fieldset>
         <fieldset>
-            <legend><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></legend>
+            <legend>Configuration of Hooked Modules</legend>
             #$hooks#
         </fieldset>
         <fieldset>

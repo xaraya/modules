@@ -11,7 +11,7 @@
 </xar:if>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Headlines Module</xar:mlstring>
+        Headlines Module
     </span>
 </div>
 <div id="notsogoodbutok" class="xar-mod-body">
@@ -27,7 +27,7 @@
         </xar:if>
         <h2 class="xar-margin-nonebottom">
             <a href="#xarModURL('headlines', 'user', 'main')#" title="#xarML('Return to main headlines')#" onclick="#$onclick#">
-                <xar:mlstring>Headlines</xar:mlstring>
+                Headlines
             </a> :
             <a href = "#$chanlink#" title="#$chantitle#" rel="external"> #$chantitle# </a>
         </h2>
@@ -41,7 +41,7 @@
         </xar:if>
            <xar:if condition="!empty($lastseen)">
                 <div class="xar-sub">
-                    <xar:mlstring>Last updated</xar:mlstring> #xarLocaleGetFormattedDate('medium',$lastseen)# #xarLocaleGetFormattedTime('medium',$lastseen)#
+                    Last updated #xarLocaleGetFormattedDate('medium',$lastseen)# #xarLocaleGetFormattedTime('medium',$lastseen)#
                 </div>
             </xar:if>
         </xar:if>
@@ -93,7 +93,7 @@
                     #$loop:item['description']#
                 </div>
                 <xar:if condition="!empty($showimport)">
-                    <xar:set name="implabel"><xar:mlstring>Import to News Queue</xar:mlstring></xar:set>
+                    <xar:set name="implabel">Import to News Queue</xar:set>
                     <p class="xar-sub">
                     <xar:if condition="!empty($magpie)">
                     <xar:comment>
@@ -121,10 +121,10 @@
         </xar:ml>
     </div>
     <p><a href="#xarModURL('headlines', 'user', 'main')#" title="#xarML('Return to main headlines')#" onclick="#$onclick#">
-        <xar:mlstring>Back to main headlines</xar:mlstring>
+        Back to main headlines
     </a></p>
     <xar:if condition="!empty($hooks)">
-        <h3><xar:mlstring>Options</xar:mlstring>:</h3>
+        <h3>Options:</h3>
         #$hooks#
     </xar:if>
 </div>

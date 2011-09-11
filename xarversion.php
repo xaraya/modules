@@ -24,7 +24,7 @@ $modversion['user']         = 1;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
 $modversion['dependency'] = array(
-                                  151
+//                                  151
                                   );
 $modversion['dependencyinfo'] = array(
                                     0 => array(

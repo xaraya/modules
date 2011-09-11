@@ -12,9 +12,9 @@
             </xar:if>
             <xar:if condition="!empty($loop:item['channel']) and $showdescriptions">
                 <p class="xar-sub">
-                    <xar:mlstring>
+                    
                         From
-                    </xar:mlstring>:
+                    :
                     #xarVarPrepHTMLDisplay($loop:item['channel'])#
                 </p>
             </xar:if>

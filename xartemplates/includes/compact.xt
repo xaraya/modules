@@ -3,9 +3,9 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:comment> Legend </xar:comment>
 <div class="xar-accent-outline xar-sub" style="margin-top:5px;margin-bottom:5px;padding:3px;text-align:center;">
-    <xar:mlstring>
+    
         Actions: [E]dit [R]emove
-    </xar:mlstring>
+    
 </div>
 <xar:comment> two pseudo-columns compact layout (tested in css compliant browser) </xar:comment>
 <div>
@@ -14,13 +14,13 @@
             <div class="xar-accent-outline" style="position:relative;left:0px;width:49%;height:1.5em;border-width:0px 0px 1px 0px;">
                 <div class="xar-sub" style="float:right;width:auto;height:1.5em;text-align:right;">
                     [ <a href="#$loop:item['editurl']#" onclick="#$onclick#">
-                            <xar:mlstring>
+                            
                                 E
-                            </xar:mlstring>
+                            
                         </a>|<a href="#$loop:item['deleteurl']#" onclick="#$loop:item['javascript']#">
-                            <xar:mlstring>
+                            
                                 R
-                            </xar:mlstring>
+                            
                         </a>
                     ]
                 </div>
@@ -30,13 +30,13 @@
             <div class="xar-accent-outline" style="position:relative;top:-1.5em;left:51%;width:49%;height:1.5em;margin-bottom:-1.3em;border-width:0px 0px 1px 0px;">
                 <div class="xar-sub" style="float:right;width:auto;height:1.5em;text-align:right;">
                     [ <a href="#$loop:item['editurl']#" onclick="#$onclick#">
-                            <xar:mlstring>
+                            
                                 E
-                            </xar:mlstring>
+                            
                         </a>|<a href="#$loop:item['deleteurl']#" onclick="#$loop:item['javascript']#">
-                            <xar:mlstring>
+                            
                                 R
-                            </xar:mlstring>
+                            
                         </a>
                     ]
                 </div>

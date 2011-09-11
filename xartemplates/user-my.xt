@@ -9,8 +9,8 @@
 <xar:else/>
   <xar:set name="onclick">"return true;"</xar:set>
 </xar:if>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Headlines</xar:mlstring></span></div>
-<div id="notsogoodbutok" class="xar-mod-body"><h2><xar:mlstring>My Headlines</xar:mlstring></h2>
+<div class="xar-mod-head"><span class="xar-mod-title">Headlines</span></div>
+<div id="notsogoodbutok" class="xar-mod-body"><h2>My Headlines</h2>
 <div style="margin: auto;">
 
 <xar:if condition="!empty($config)">
@@ -32,7 +32,7 @@
 </xar:if>
 
 <xar:if condition="empty($feedlist)">
-    <xar:mlstring>No headlines selected</xar:mlstring>
+    No headlines selected
 <xar:else/>
     <xar:comment> arrange the layout of the different blocks as you prefer </xar:comment>
     <xar:foreach in="$feedlist" value="$feed">
@@ -47,9 +47,9 @@
 
 <p>
 [
-<a href="#xarModURL('headlines','user','my',array('config' => 1))#" onclick="#$onclick#"><xar:mlstring>Configure my headlines</xar:mlstring></a>
+<a href="#xarModURL('headlines','user','my',array('config' => 1))#" onclick="#$onclick#">Configure my headlines</a>
 |
-<a href="#xarModURL('headlines', 'user', 'main')#" onclick="#$onclick#"><xar:mlstring>Back to main headlines</xar:mlstring></a>
+<a href="#xarModURL('headlines', 'user', 'main')#" onclick="#$onclick#">Back to main headlines</a>
 ]
 </p>
 </div>

@@ -17,13 +17,13 @@
 <div>
   <dl class="xar-tabs">
     <dt class="help" title="#xarML('Choose an action to perform')#">
-      <xar:mlstring>Actions:</xar:mlstring>
+      Actions:
     </dt>
 
         <xar:set name="tabclass">$activetab=='new'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-headlines-admin-new;" onclick="#$onclick#">
-            <xar:mlstring>Add Headline</xar:mlstring>
+            Add Headline
           </a>
         </dd>
         <xar:if condition="$activetab eq 'view' or $activetab eq 'modify' or $activetab eq 'delete'">
@@ -33,20 +33,20 @@
         </xar:if>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-headlines-admin-view;" onclick="#$onclick#">
-            <xar:mlstring>Manage Headlines</xar:mlstring>
+            Manage Headlines
           </a>
         </dd>
         <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-headlines-admin-modifyconfig;" onclick="#$onclick#">
-            <xar:mlstring>Modify Config</xar:mlstring>
+            Modify Config
           </a>
         </dd>
 
         <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-headlines-admin-overview;" onclick="#$onclick#">
-            <xar:mlstring>Overview</xar:mlstring>
+            Overview
           </a>
         </dd>
 

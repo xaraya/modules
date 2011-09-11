@@ -11,12 +11,12 @@
 </xar:if>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Headlines Module</xar:mlstring>
+        Headlines Module
     </span>
 </div>
 <div id="notsogoodbutok" class="xar-mod-body">
      <xar:template type="module" file="admin-menu" />
-    <h2><xar:mlstring>Headlines</xar:mlstring></h2>
+    <h2>Headlines</h2>
     <xar:if condition="xarModIsHooked('categories','headlines')">
         <xar:categories-navigation layout="trails" showchildren="1" module="headlines" func="main" showcatcount="1" catid="$catid" />
     </xar:if>
@@ -48,15 +48,15 @@
         </xar:if>
         <div class="xar-sub">
             <xar:set name="lastseen">#$loop:item['lastitem']#</xar:set>
-            <xar:mlstring>Last updated</xar:mlstring> #xarLocaleGetFormattedDate('medium',$lastseen)# #xarLocaleGetFormattedTime('medium',$lastseen)#
+            Last updated #xarLocaleGetFormattedDate('medium',$lastseen)# #xarLocaleGetFormattedTime('medium',$lastseen)#
         </div>
         </div>
         <div class="xar-alt xar-clearboth">[
         <xar:if condition="!empty($loop:item['viewlink'])">
             <xar:if condition="$showimport ne '1'">
-                <xar:set name="headlink"><xar:mlstring>Browse Latest Headlines</xar:mlstring></xar:set>
+                <xar:set name="headlink">Browse Latest Headlines</xar:set>
             <xar:else />
-                <xar:set name="headlink"><xar:mlstring>Review Headlines for Import</xar:mlstring></xar:set>
+                <xar:set name="headlink">Review Headlines for Import</xar:set>
             </xar:if>
             <a href="#$loop:item['viewlink']#" title="#$headlink#" onclick="#$onclick#">#$headlink#</a>
         </xar:if>
@@ -71,11 +71,11 @@
             | #$loop:item['ratings']#
         </xar:if>
         <xar:if condition="!empty($showimport) and !empty($loop:item['importlink'])">
-            <xar:set name="implabel"><xar:mlstring>Import All Headlines to Queue</xar:mlstring></xar:set>
+            <xar:set name="implabel">Import All Headlines to Queue</xar:set>
             | <a href="#$loop:item['importlink']#" title="#$implabel#">#$implabel#</a>
         </xar:if>
         <xar:if condition="!empty($loop:item['keywords'])">
-            | <xar:mlstring>Keywords</xar:mlstring>:
+            | Keywords:
             <xar:loop name="$loop:item['keywords']" id="word">
                 <a href="#xarModURL('keywords', 'user', 'main', array('keyword' => $loop:word:item))#" title="#$loop:word:item#">#$loop:word:item#</a>
                 <xar:if condition="$loop:word:index != (count($loop:item['keywords'])-1)">
@@ -90,7 +90,7 @@
     <xar:comment>
     <xar:template type="module" file="user-menu" />
     <p>
-    <a href="&xar-modurl-headlines-user-my;"><xar:mlstring>My headlines</xar:mlstring></a>
+    <a href="&xar-modurl-headlines-user-my;">My headlines</a>
     </p>
     </xar:comment>
 </div>

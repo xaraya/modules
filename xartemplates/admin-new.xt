@@ -20,42 +20,42 @@
 </xar:if>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>
+        
             Headlines Administration
-        </xar:mlstring>
+        
     </span>
 </div>
 <div id="notsogoodbutok" class="xar-mod-body">
 <xar:template type="module" file="admin-menu" />
     <h2>
         <a href="#xarModURL('headlines', 'admin', 'new')#" title="#xarML('permalink')#">
-        <xar:mlstring>
+        
             New Headline
-        </xar:mlstring>
+        
         </a>
     </h2>
     <p>
         <a href="http://www.syndic8.com">
-            <xar:mlstring>
+            
                 List of available feeds
-            </xar:mlstring>
+            
         </a>
     </p>
     <form action="#xarModURL('headlines', 'admin', 'create')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <fieldset>
             <legend>
                 <strong>
-                    <xar:mlstring>
+                    
                         Add Feed
-                    </xar:mlstring>
+                    
                 </strong>
             </legend>
             <input type="hidden" name="authid" value="#$authid#" />
            <div class="xar-form-input-wrapper">
                 <label for="url"  class="xar-form-label" title="#xarML('The url of the feed that you are wanting to add to your system')#">
-                        <xar:mlstring>
+                        
                             URL
-                        </xar:mlstring>
+                        
                 </label>
                 <input type="text" name="url" id="url" value="#$url#" size="40" maxlength="255" />
                 <xar:if condition="!empty($warning)">
@@ -64,43 +64,43 @@
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="title" class="xar-form-label" title="#xarML('This is an alternate title for the feed to be displayed on the user display')#">
-                        <xar:mlstring>
+                        
                             Alt Title
-                        </xar:mlstring>
+                        
                 </label>
                 <input type="text" name="title" id="title" value="#$title#" size="40" maxlength="255" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="desc" class="xar-form-label" title="#xarML('This is an alternate description for the feed to be displayed on the user display')#">
-                        <xar:mlstring>
+                        
                             Alt Description
-                        </xar:mlstring>
+                        
                 </label>
                 <input type="text" name="desc" id="desc" value="#$desc#" size="40" maxlength="255" />
             </div>
             </fieldset>
        <fieldset>
             <legend>
-                <xar:mlstring>Feed Display Configuration</xar:mlstring>
+                Feed Display Configuration
             </legend>
             <div class="xar-form-input-wrapper-before">
-                <em><xar:mlstring>These settings over-ride global settings</xar:mlstring></em>
+                <em>These settings over-ride global settings</em>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of items per page to show')#">
-                    <xar:mlstring>Maximum Items Per Feed</xar:mlstring>
+                    Maximum Items Per Feed
                 </label>
-                <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsperpage#" /><em>(<xar:mlstring>0 = show all</xar:mlstring>)</em>
+                <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsperpage#" /><em>(0 = show all)</em>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="maxdescription" class="xar-form-label">
-                    <xar:mlstring>Truncate long descriptions to no more than</xar:mlstring>
+                    Truncate long descriptions to no more than
                 </label>
-                <input type="text" name="maxdescription" id="maxdescription" size="5" maxlength="5" value="#$maxdescription#" /><xar:mlstring> characters.</xar:mlstring> <em>(<xar:mlstring>0 = don't truncate</xar:mlstring>)</em>
+                <input type="text" name="maxdescription" id="maxdescription" size="5" maxlength="5" value="#$maxdescription#" /> characters. <em>(0 = don't truncate)</em>
             </div>
              <xar:if condition="$parser eq 'simplepie'">
                 <div class="xar-form-input-wrapper-before">
-                    <strong><xar:mlstring>These settings allow you to take advantage of SimplePie content.</xar:mlstring></strong>
+                    <strong>These settings allow you to take advantage of SimplePie content.</strong>
                 </div>
                 <div class="xar-form-input-wrapper-after">
                     <xar:if condition="$showchanimage">
@@ -108,7 +108,7 @@
                     <xar:else />
                         <input type="checkbox" value="1" name="showchanimage" id="showchanimage" />
                     </xar:if>
-                    <label for="showchanimage" class="help" title="#xarML('Display the channel image supplied with a feed')#"><xar:mlstring>Show channel images (if available)</xar:mlstring></label>
+                    <label for="showchanimage" class="help" title="#xarML('Display the channel image supplied with a feed')#">Show channel images (if available)</label>
                     </div>
                 <div class="xar-form-input-wrapper-after">
                     <xar:if condition="$showitemimage">
@@ -116,7 +116,7 @@
                     <xar:else />
                         <input type="checkbox" value="1" name="showitemimage" id="showitemimage" />
                     </xar:if>
-                    <label for="showitemimage" class="help" title="#xarML('Display the image supplied with channel items')#"><xar:mlstring>Show item images (if available)</xar:mlstring></label>
+                    <label for="showitemimage" class="help" title="#xarML('Display the image supplied with channel items')#">Show item images (if available)</label>
                     </div>
                 <div class="xar-form-input-wrapper-after">
                     <xar:if condition="$showitemcats">
@@ -124,16 +124,16 @@
                     <xar:else />
                         <input type="checkbox" value="1" name="showitemcats" id="showitemcats" />
                     </xar:if>
-                    <label for="showitemcats" class="help" title="#xarML('Display the categories supplied with channel items')#"><xar:mlstring>Show item categories (if available)</xar:mlstring></label>
+                    <label for="showitemcats" class="help" title="#xarML('Display the categories supplied with channel items')#">Show item categories (if available)</label>
                 </div>
              </xar:if>
             </fieldset>
             <fieldset>
                 <legend>
                     <strong>
-                        <xar:mlstring>
+                        
                             Configuration of Hooked Modules
-                        </xar:mlstring>
+                        
                     </strong>
                 </legend>
                 #$hooks#

@@ -5,13 +5,13 @@
     <table border="0" width="100%" cellspacing="0" cellpadding="2">
         <tr>
             <th style="text-align: left; padding-left: 10px;">
-                <xar:mlstring>Headline URL</xar:mlstring>
+                Headline URL
             </th>
             <th style="text-align: left; padding-left: 10px;">
-                <xar:mlstring>Order</xar:mlstring>
+                Order
             </th>
             <th style="text-align: center;padding-left: 10px;" nowrap="nowrap">
-                <xar:mlstring>Actions</xar:mlstring>
+                Actions
             </th>
         </tr>
         <xar:loop name="$items">
@@ -29,9 +29,9 @@
                 #$loop:item['order']#
             </td>
             <td class="xar-norm-outline" style="text-align: center; width: 150px;border-width: 0px 0px 1px 0px;border-style: dotted;">
-                <a href="#xarModURL('headlines', 'user', 'view', array('hid' => $loop:item['hid']))#" onclick="#$onclick#"><xar:mlstring>View</xar:mlstring></a> |
-                <a href="#$loop:item['editurl']#"  onclick="#$onclick#"><xar:mlstring>Edit</xar:mlstring></a>  |
-                <a href="#$loop:item['deleteurl']#" onclick="#$loop:item['javascript']# "><xar:mlstring>Delete</xar:mlstring></a>
+                <a href="#xarModURL('headlines', 'user', 'view', array('hid' => $loop:item['hid']))#" onclick="#$onclick#">View</a> |
+                <a href="#$loop:item['editurl']#"  onclick="#$onclick#">Edit</a>  |
+                <a href="#$loop:item['deleteurl']#" onclick="#$loop:item['javascript']# ">Delete</a>
             </td>
         </tr>
         </xar:loop>

@@ -9,11 +9,11 @@
 <xar:else/>
   <xar:set name="onclick">"return true;"</xar:set>
 </xar:if>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Headlines Administration</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title">Headlines Administration</span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div id="notsogoodbutok" class="xar-mod-body">
 <xar:template type="module" file="admin-menu" />
-<h2><xar:mlstring>Delete Headline</xar:mlstring></h2>
+<h2>Delete Headline</h2>
 <div align="center">
 <form method="post" action="#xarModURL('headlines', 'admin', 'delete')#" enctype="application/x-www-form-urlencoded" >
     <input type="hidden" name="authid" value="#$authid#" />
@@ -21,10 +21,10 @@
     <input type="hidden" name="confirm" id="confirm" value="1"/>
     <input type="hidden" name="confirmation" id="confirmation" value="1"/>
 
-    <p><xar:mlstring>Confirm deletion of Headline</xar:mlstring></p>
+    <p>Confirm deletion of Headline</p>
 
     <input type="submit" value="#$submitlabel#"  tabindex="1" /><br /><br />
-    <a href="#xarModURL('headlines', 'admin', 'view')#" onclick="#$onclick#" ><xar:mlstring>Cancel deletion of Headline</xar:mlstring></a>
+    <a href="#xarModURL('headlines', 'admin', 'view')#" onclick="#$onclick#" >Cancel deletion of Headline</a>
 </form>
 </div>
 </div>

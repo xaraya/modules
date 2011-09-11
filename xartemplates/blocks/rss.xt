@@ -5,7 +5,7 @@
     <xar:if condition="!empty($show_chantitle) or ($show_chandesc and !empty($chandesc))">
         <div>
             <xar:if condition="$show_chantitle">
-                <h4><xar:mlstring>Headlines from:</xar:mlstring></h4>
+                <h4>Headlines from:</h4>
                 <a href="#xarVarPrepForDisplay($chanlink)#" title="#$chantitle#" rel="external">#$chantitle#</a>
             </xar:if>
             <xar:if condition="$show_chandesc and !empty($chandesc)">
@@ -64,7 +64,7 @@
     </xar:if>
     <xar:if condition="isset($linkhid) and !empty($linkhid)">
         <div class="xar-align-right xar-sub">
-            [<a href="#xarModURL('headlines', 'user', 'view', array('hid' => $linkhid))#"><xar:mlstring>Browse Headlines</xar:mlstring></a>]
+            [<a href="#xarModURL('headlines', 'user', 'view', array('hid' => $linkhid))#">Browse Headlines</a>]
         </div>
     </xar:if>
 <xar:else />
