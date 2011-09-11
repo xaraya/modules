@@ -21,7 +21,7 @@ function headlines_admin_main()
 {
     // Security Check
     if(!xarSecurityCheck('EditHeadlines')) return;
-    xarResponse::Redirect(xarModURL('headlines', 'admin', 'view'));
+    xarController::redirect(xarModURL('headlines', 'admin', 'view'));
     // success
     return true;
 }

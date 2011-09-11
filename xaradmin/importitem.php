@@ -22,7 +22,7 @@ function headlines_admin_importitem()
     if (!xarVarFetch('hid','int', $hid)) return;
     $importpubtype = xarModVars::get('headlines','importpubtype');
     if (empty($importpubtype)) {
-        xarResponse::Redirect(xarModURL('headlines', 'user', 'view', array('hid' => $hid)));
+        xarController::redirect(xarModURL('headlines', 'user', 'view', array('hid' => $hid)));
         return true;
     }
     $article['title'] = $title;
@@ -31,6 +31,6 @@ function headlines_admin_importitem()
     $article['ptid'] = $importpubtype;
     $article['status'] = 2;
     xarMod::apiFunc('articles', 'admin', 'create', $article);
-    xarResponse::Redirect(xarModURL('headlines', 'user', 'view', array('hid' => $hid)));
+    xarController::redirect(xarModURL('headlines', 'user', 'view', array('hid' => $hid)));
 }
 ?>

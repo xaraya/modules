@@ -33,9 +33,6 @@ class Headlines_RssBlockAdmin extends Headlines_RssBlock implements iBlock
         $links = xarMod::apiFunc('headlines', 'user', 'getall');
         $vars['items'] = $links;
 
-        // Defaults
-        if (!isset($vars['rssurl'])) $vars['rssurl'] = $this->rssurl;
-
         // bug[ 5322 ] - check for hid
         if (is_numeric($vars['rssurl'])) {
             $headline = xarMod::apiFunc('headlines', 'user', 'get', array('hid' => $vars['rssurl']));

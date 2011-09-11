@@ -86,7 +86,7 @@ function headlines_admin_update()
     if (empty($return_url)) {
         $return_url = xarModURL('headlines', 'admin', 'view');
     }
-    xarResponse::Redirect($return_url);
+    xarController::redirect($return_url);
 
     // Return
     return true;

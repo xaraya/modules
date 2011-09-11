@@ -33,7 +33,7 @@ function headlines_user_view($args)
 
     // Check and see if a feed has been supplied to us.
     if (empty($links['url'])) {
-        xarResponse::Redirect(xarModURL('headlines', 'user', 'main'));
+        xarController::redirect(xarModURL('headlines', 'user', 'main'));
         return true;
     }
     

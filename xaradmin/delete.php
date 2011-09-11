@@ -54,7 +54,7 @@ function headlines_admin_delete()
                        'delete',
                        array('hid' => $hid))) return;
 
-    xarResponse::Redirect(xarModURL('headlines', 'admin', 'view'));
+    xarController::redirect(xarModURL('headlines', 'admin', 'view'));
 
     // Return
     return true;
