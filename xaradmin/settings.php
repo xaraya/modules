@@ -22,7 +22,7 @@ function headlines_admin_settings()
     if(!xarSecurityCheck('EditHeadlines')) return;
     if (!xarVarFetch('selstyle', 'str:1:', $selstyle, 'plain', XARVAR_NOT_REQUIRED)) return;
     xarModVars::set('headlines', 'selstyle', $selstyle);
-    xarResponse::Redirect(xarModURL('headlines', 'admin', 'view'));
+    xarController::redirect(xarModURL('headlines', 'admin', 'view'));
     return true;
 }
 ?>

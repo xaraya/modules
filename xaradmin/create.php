@@ -72,7 +72,7 @@ function headlines_admin_create($args)
     if (empty($return_url)) {
         $return_url = xarModURL('headlines', 'admin', 'view');
     }
-    xarResponse::Redirect($return_url);
+    xarController::redirect($return_url);
 
     // Return
     return true;

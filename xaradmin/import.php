@@ -23,7 +23,7 @@ function headlines_admin_import()
 
     $importpubtype = xarModVars::get('headlines','importpubtype');
     if (empty($importpubtype)) {
-        xarResponse::Redirect(xarModURL('headlines', 'admin', 'modifyconfig'));
+        xarController::redirect(xarModURL('headlines', 'admin', 'modifyconfig'));
         return true;
     }
 
@@ -34,9 +34,9 @@ function headlines_admin_import()
     if (!isset($imported)) return;
 
     if (empty($imported)) {
-        xarResponse::Redirect(xarModURL('headlines', 'user', 'view', array('hid' => $hid)));
+        xarController::redirect(xarModURL('headlines', 'user', 'view', array('hid' => $hid)));
     } else {
-        xarResponse::Redirect(xarModURL('articles', 'admin', 'view', array('ptid' => $importpubtype)));
+        xarController::redirect(xarModURL('articles', 'admin', 'view', array('ptid' => $importpubtype)));
     }
     return true;
 }

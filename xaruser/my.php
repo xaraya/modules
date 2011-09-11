@@ -35,7 +35,7 @@ function headlines_user_my()
             } else {
                 xarSessionSetVar('headlines_showfeeds',$feeds);
             }
-            xarResponse::Redirect(xarModURL('headlines', 'user', 'my'));
+            xarController::redirect(xarModURL('headlines', 'user', 'my'));
             return true;
         }
     }

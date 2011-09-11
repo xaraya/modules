@@ -37,7 +37,7 @@ function headlines_admin_view()
                                 'numitems' => xarModVars::get('headlines',
                                                            'itemsperpage')));
     if (empty($links)){
-        //xarResponse::Redirect(xarModURL('headlines', 'admin', 'new'));
+        //xarController::redirect(xarModURL('headlines', 'admin', 'new'));
     }
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($links); $i++) {

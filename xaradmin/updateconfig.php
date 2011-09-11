@@ -102,7 +102,7 @@ function headlines_admin_updateconfig()
    xarModVars::set('headlines', 'aliasname', $newalias);
 
     xarModCallHooks('module','updateconfig','headlines', array('module' => 'headlines'));
-    xarResponse::Redirect(xarModURL('headlines', 'admin', 'modifyconfig'));
+    xarController::redirect(xarModURL('headlines', 'admin', 'modifyconfig'));
     return true;
 }
 
