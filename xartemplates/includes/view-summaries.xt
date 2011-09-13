@@ -58,7 +58,7 @@
             There are no publications to display
         </div>
     <xar:else />
-        <xar:template file="listingslist_pagerline" module="$module,listings" />
+        <xar:template file="listing_pagerline" module="$module" property="listing" />
         <xar:if condition="!empty($context['number_of_columns'])">
             <div id="article-columns" style="width: 98%;">
                 <xar:foreach in="$items" key="$itemid" value="$item">

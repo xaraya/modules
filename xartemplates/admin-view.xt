@@ -52,18 +52,9 @@
                 </h3>
             </xar:if>
             <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" urltype="admin" itemtype="$ptid" catid="$catid" />
-            <xar:javascript module="base" filename="checkall.js" />
-            <form method="post" id="viewpublications" action="#xarModURL('publications','admin','updatestate')#">
-                <div>
-                    <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
-                    <input type="hidden" name="catid" id="catid" value="#$catid#" />
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-
-                    <div style="width: 100%">
-                        <xar:data-input type="listing" object="$object" conditions="$conditions" fieldlist="name,title,author,pages,version,redirect_flag,start_date,end_date,state" tplmodule="publications" layout="publications-admin"/>
-                    </div>
-                </div>
-            </form>
+            <div style="width: 100%">
+               <xar:data-input type="listing" object="$object" conditions="$conditions" fieldlist="name,title,author,pages,version,redirect_flag,start_date,end_date,state" tplmodule="publications" layout="publications-admin"/>
+            </div>
         </div>
     </div>
 </xar:template>
