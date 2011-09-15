@@ -97,11 +97,17 @@ function publications_admin_modifyconfig()
     // Get the publication type for this display
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
-    $data['settings'] = unserialize($pubtypeobject->properties['configuration']->getValue());
     $data['access'] = unserialize($pubtypeobject->properties['access']->getValue());
 
+    // Get the settings for this module
     sys::import('modules.publications.xaruserapi.getsettings');
-    $data['settings'] = $data['settings'] + publications_userapi_getglobalsettings();
+    $settings = @unserialize($pubtypeobject->properties['configuration']->getValue());
+    $globalsettings = publications_userapi_getglobalsettings();
+    if (is_array($pubtypesettings)) {
+        $data['settings'] = $settings + $globalsettings;
+    } else {
+        $data['settings'] = $globalsettings;
+    }
     
     $data['redirects'] = unserialize(xarModVars::get('publications','redirects'));
     return $data;
