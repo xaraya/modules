@@ -60,9 +60,11 @@
             <!-- Define alpahnumeric states here -->
             <xar:set name="state">
                 array(
+                        0 => 'deleted',
                         1 => 'inactive',
                         3 => 'active',
                         2 => 'template',
+                        4 => 'frontpage',
                         5 => 'empty',
                 )
             </xar:set>

@@ -15,15 +15,26 @@
         <a class="xar-title" href="#xarModURL('publications','user','display',array('id' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
             <xar:data-output property="$properties['title']" />
         </a>
-        <br />        
-            Description: <xar:data-output property="$properties['summary']" />
         <br />
-        <xar:if condition="!empty($notes)">            
+        
+        <!-- Description -->
+        <xar:if condition="!empty($properties['summary']) AND !empty($fields['summary'])">            
+            Description: <xar:data-output property="$properties['summary']" />
+            <br />
+        </xar:if>
+        
+        <!-- Source -->
+        <xar:if condition="!empty($properties['notes']) AND !empty($fields['notes'])">            
             Source: <xar:data-output property="$properties['notes']" />
             <br />
-        </xar:if>        
+        </xar:if>
+        
+        <!-- Date added -->
+        <xar:if condition="!empty($properties['created']) AND !empty($fields['created'])">            
             Added on: #xarLocaleGetFormattedDate('long',$properties['created']->value)# 
-          #xarLocaleGetFormattedTime('long',$properties['created']->value)#
+            #xarLocaleGetFormattedTime('long',$properties['created']->value)#
+        </xar:if>
+        
         <xar:if condition="!empty($rating)">
             -            
                 Rating            

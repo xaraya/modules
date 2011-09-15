@@ -29,13 +29,15 @@ function publications_userapi_getsettings($data)
         
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
-    try {
-        $pubtypesettings = unserialize($pubtypeobject->properties['configuration']->getValue());
-    } catch (Exception $e) {
-        $pubtypesettings = array();
-    }
+
+    $pubtypesettings = @unserialize($pubtypeobject->properties['configuration']->getValue());
     $globalsettings = publications_userapi_getglobalsettings();
-    $settings = $pubtypesettings + $globalsettings;
+    if (is_array($pubtypesettings)) {
+        $settings = $pubtypesettings + $globalsettings;
+    } else {
+        $settings = $globalsettings;
+    }
+
     xarCore::setCached('publications', 'context' . $data['ptid'], $settings);
     return $settings;
 }

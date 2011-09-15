@@ -97,8 +97,14 @@ function publications_admin_display($args)
         } else {
             $url = $data['object']->properties['redirect_url']->value;
         }
-        $params = parse_url($url);
-        $params['query'] = preg_replace('/&amp;/','&',$params['query']);
+        
+        // Bail if the URL is bad
+        try {
+            $params = parse_url($url);
+            $params['query'] = preg_replace('/&amp;/','&',$params['query']);
+        } catch (Exception $e) {
+            return xarResponse::NotFound();
+        }
         
         // If this is an external link, show it without further processing
         if (!empty($params['host']) && $params['host'] != xarServer::getHost() && $params['host'].":".$params['port'] != xarServer::getHost()) {

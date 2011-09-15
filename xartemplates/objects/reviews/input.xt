@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:data-input property="$properties['id']" hidden="hidden" />
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Name</xar:var>
+        <xar:data-label property="$properties['name']" for="id" label="$label" />
+        <xar:data-input property="$properties['name']" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Title</xar:var>
+        <xar:data-label property="$properties['title']" for="id" label="$label" />
+        <xar:data-input property="$properties['title']" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Review</xar:var>
+        <xar:data-label property="$properties['review']" for="id" label="$label" />
+        <xar:data-input property="$properties['review']" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Related Link</xar:var>
+        <xar:data-label property="$properties['related_link']" for="id" label="$label" />
+        <xar:data-input property="$properties['related_link']" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Image</xar:var>
+        <xar:data-label property="$properties['image']" for="id" label="$label" />
+        <xar:data-input property="$properties['image']" />
+    </div>
+    <xar:if condition="!$properties['parent']->value">
+        <div class="xar-form-input-wrapper">
+            <xar:data-input property="$properties['position']"/>
+        </div>
+    </xar:if>
+</xar:template>
