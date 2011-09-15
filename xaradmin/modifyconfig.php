@@ -103,7 +103,7 @@ function publications_admin_modifyconfig()
     sys::import('modules.publications.xaruserapi.getsettings');
     $settings = @unserialize($pubtypeobject->properties['configuration']->getValue());
     $globalsettings = publications_userapi_getglobalsettings();
-    if (is_array($pubtypesettings)) {
+    if (is_array($settings)) {
         $data['settings'] = $settings + $globalsettings;
     } else {
         $data['settings'] = $globalsettings;
