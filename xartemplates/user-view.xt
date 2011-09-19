@@ -7,7 +7,8 @@
     <xar:data-getitems properties="$properties" values="$items" object="$object">
       <xar:select>
         <xar:andconditions>
-          <xar:condition operator="eq" property="state">3</xar:condition>
+          <xar:condition operator="eq" property="itemtype">$ptid</xar:condition>
+          <xar:condition operator="in" property="state">array(3,5)</xar:condition>
           <xar:condition operator="eq" property="parent">0</xar:condition>
         </xar:andconditions>
       </xar:select>
