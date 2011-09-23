@@ -93,11 +93,12 @@ class Headlines_RssBlockAdmin extends Headlines_RssBlock implements iBlock
         return $vars;
     }
 
-    public function insert(Array $data=array())
+    public function update(Array $data=array())
     {
-        $vars = array();
+        $data = parent::update($data);
+        $vars = !empty($data['content']) ? $data['content'] : array();
 
-        if (!xarVarFetch('rssurl', 'str:1:', $vars['rssurl'], $this->rssurl, XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVarFetch('rssurl', 'str:1:', $vars['rssurl'], $this->rssurl, XARVAR_DONT_REUSE)) {return;}
         // The 'otherrssurl' can override the 'rssurl'
         if (!xarVarFetch('otherrssurl', 'str:1:', $otherrssurl, $this->rssurl, XARVAR_NOT_REQUIRED)) {return;}
         // FR: added check for correct url format, including local urls
@@ -107,11 +108,11 @@ class Headlines_RssBlockAdmin extends Headlines_RssBlock implements iBlock
                     $vars['rssurl'] = $otherrssurl;
                 }
             } elseif (substr($otherrssurl,0,1) == '/') {
-                $server = xarServerGetHost();
-                $protocol = xarServerGetProtocol();
+                $server = xarServer::getHost();
+                $protocol = xarServer::getProtocol();
                 $vars['rssurl'] = $protocol . '://' . $server . $otherrssurl;
             } else {
-                $baseurl = xarServerGetBaseURL();
+                $baseurl = xarServer::getBaseURL();
                 $vars['rssurl'] = $baseurl . $otherrssurl;
             }
         }
@@ -126,23 +127,23 @@ class Headlines_RssBlockAdmin extends Headlines_RssBlock implements iBlock
         // TODO: check for duplicates
         // TODO: check otherrssurl against stored headlines
 
-        if (!xarVarFetch('maxitems', 'int:0', $vars['maxitems'], $this->maxitems, XARVAR_NOT_REQUIRED)) {return;}
-        if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], $this->showdescriptions, XARVAR_NOT_REQUIRED)) {return;}
-        if (!xarVarFetch('show_chantitle', 'checkbox', $vars['show_chantitle'], $this->show_chantitle, XARVAR_NOT_REQUIRED)) {return;}
-        if (!xarVarFetch('show_chandesc', 'checkbox', $vars['show_chandesc'], $this->show_chandesc, XARVAR_NOT_REQUIRED)) {return;}
-        if (!xarVarFetch('refresh', 'int:0', $vars['refresh'], $this->refresh, XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVarFetch('maxitems', 'int:0', $vars['maxitems'], $this->maxitems, XARVAR_DONT_REUSE)) {return;}
+        if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], $this->showdescriptions, XARVAR_DONT_REUSE)) {return;}
+        if (!xarVarFetch('show_chantitle', 'checkbox', $vars['show_chantitle'], $this->show_chantitle, XARVAR_DONT_REUSE)) {return;}
+        if (!xarVarFetch('show_chandesc', 'checkbox', $vars['show_chandesc'], $this->show_chandesc, XARVAR_DONT_REUSE)) {return;}
+        if (!xarVarFetch('refresh', 'int:0', $vars['refresh'], $this->refresh, XARVAR_DONT_REUSE)) {return;}
         // bug [4545]
-        if (!xarVarFetch('truncate', 'int:0', $vars['truncate'], $this->truncate, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('truncate', 'int:0', $vars['truncate'], $this->truncate, XARVAR_DONT_REUSE)) return;
         // FR: add alt title/description/link
-        if (!xarVarFetch('alt_chantitle', 'str:1:', $vars['alt_chantitle'], $this->alt_chantitle, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('alt_chandesc', 'str:1:', $vars['alt_chandesc'], $this->alt_chandesc, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('alt_chanlink', 'str:1:', $vars['alt_chanlink'], $this->alt_chanlink, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('alt_chantitle', 'str:1:', $vars['alt_chantitle'], $this->alt_chantitle, XARVAR_DONT_REUSE)) return;
+        if (!xarVarFetch('alt_chandesc', 'str:1:', $vars['alt_chandesc'], $this->alt_chandesc, XARVAR_DONT_REUSE)) return;
+        if (!xarVarFetch('alt_chanlink', 'str:1:', $vars['alt_chanlink'], $this->alt_chanlink, XARVAR_DONT_REUSE)) return;
         if (!preg_match("!^http://|https://|ftp://!", $vars['alt_chanlink'])) $vars['alt_chanlink'] = $this->alt_chanlink;
-        if (!xarVarFetch('linkhid', 'checkbox', $vars['linkhid'], $this->linkhid, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('show_chanimage', 'checkbox', $vars['show_chanimage'], $this->show_chanimage, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('show_itemimage', 'checkbox', $vars['show_itemimage'], $this->show_itemimage, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('show_itemcats', 'checkbox', $vars['show_itemcats'], $this->show_itemcats, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('show_warning', 'checkbox', $vars['show_warning'], false, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('linkhid', 'checkbox', $vars['linkhid'], $this->linkhid, XARVAR_DONT_REUSE)) return;
+        if (!xarVarFetch('show_chanimage', 'checkbox', $vars['show_chanimage'], $this->show_chanimage, XARVAR_DONT_REUSE)) return;
+        if (!xarVarFetch('show_itemimage', 'checkbox', $vars['show_itemimage'], $this->show_itemimage, XARVAR_DONT_REUSE)) return;
+        if (!xarVarFetch('show_itemcats', 'checkbox', $vars['show_itemcats'], $this->show_itemcats, XARVAR_DONT_REUSE)) return;
+        if (!xarVarFetch('show_warning', 'checkbox', $vars['show_warning'], false, XARVAR_DONT_REUSE)) return;
 
         $data['content'] = $vars;
         return $data;

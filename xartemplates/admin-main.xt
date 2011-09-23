@@ -52,46 +52,30 @@
         
         <ol>
             <li>
-                
-                    <strong>Add Headlines</strong>: Add a new syndication headline for processing.
-                
+                <strong>Add Headlines</strong>: Add a new syndication headline for processing.
             </li>
             <li>
-                
-                    <strong>Manage Headlines</strong>: View, edit and delete headlines that you have added to your site. Add alternative titles and headlines for your feeds, and order the display of the feeds.
-                
+                <strong>Manage Headlines</strong>: View, edit and delete headlines that you have added to your site. Add alternative titles and headlines for your feeds, and order the display of the feeds.
             </li>
             <li>
-                
-                    <strong>Modify Configuration</strong>: Configure module options. You have these options to choose from...
-                
+                <strong>Modify Configuration</strong>: Configure module options. You have these options to choose from...                
                 <ul>
                     <li>
-                        
-                            <strong>Global Configuration</strong>:
-                        
+                        <strong>Global Configuration</strong>:
                         <ul>
                             <li>
-                                
-                                    Support Short URLs: use this if you want headlines to use shorturls.
-                                
+                                Support Short URLs: use this if you want headlines to use shorturls.
                             </li>
                             <li>
-                                
-                                    Use a module alias: when you want to use a different name for the module in shorturls
-                                
+                                Use a module alias: when you want to use a different name for the module in shorturls
                             </li>
-                            <li>
-                                
-                                    Use AJAX: Headlines module includes a very simple AJAX implementation (cfr. Example Module Admin GUI) for both Admin and User GUI functions. Here You can turn the option on or off for those  functions.
-                                
+                            <li>                                
+                                Use AJAX: Headlines module includes a very simple AJAX implementation (cfr. Example Module Admin GUI) for both Admin and User GUI functions. Here You can turn the option on or off for those  functions.
                             </li>
                          </ul>
                     </li>
                     <li>
-                        
-                            <strong>Overview Configuration</strong>: these settings control how Headlines User Main GUI displays to your users
-                        
+                        <strong>Overview Configuration</strong>: these settings control how Headlines User Main GUI displays to your users
                         <ul>
                             <li>
                                 
