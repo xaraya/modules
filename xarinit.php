@@ -44,6 +44,7 @@ function publications_init()
             pages               integer unsigned NOT NULL DEFAULT '1',
             locale              varchar(20) NOT NULL DEFAULT '',
             page_title          varchar(255) NOT NULL DEFAULT '',
+            page_description    text,
             keywords            text,
             leftpage_id         integer unsigned NULL,
             rightpage_id        integer unsigned NULL,

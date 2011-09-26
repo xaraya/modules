@@ -294,6 +294,16 @@
       <seq>40</seq>
       <configuration>a:0:{}</configuration>
     </property>
+    <property name="page_description">
+      <id>980</id>
+      <label>HTML Page Description</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.page_description</source>
+      <status>34</status>
+      <seq>41</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
     <property name="keywords">
       <id>980</id>
       <label>HTML Keywords</label>
@@ -301,7 +311,7 @@
       <defaultvalue></defaultvalue>
       <source>publication.keywords</source>
       <status>34</status>
-      <seq>41</seq>
+      <seq>42</seq>
       <configuration>a:0:{}</configuration>
     </property>
   </properties>
