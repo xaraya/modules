@@ -9,7 +9,7 @@
         <xar:andconditions>
           <xar:condition operator="eq" property="itemtype">$ptid</xar:condition>
           <xar:condition operator="in" property="state">array(3,4)</xar:condition>
-          <xar:condition operator="eq" property="parent">0</xar:condition>
+          <xar:condition operator="eq" property="locale">xarUserGetNavigationLocale()</xar:condition>
         </xar:andconditions>
       </xar:select>
     </xar:data-getitems>
