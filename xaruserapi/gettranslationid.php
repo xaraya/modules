@@ -16,13 +16,20 @@ function publications_userapi_gettranslationid($args)
     if (!isset($args['id'])) throw new BadParameterException('id');
     if (empty($args['id'])) return 0;
     
+    // We can check on a full locale or just a partial one (excluding charset)
+    if (empty($args['partiallocale'])) $args['partiallocale'] = 0;
+
     sys::import('xaraya.structures.query');
     
-    $parts = explode('.',xarUserGetNavigationLocale());
+    $locale = xarUserGetNavigationLocale();
+    if ($args['partiallocale']) {
+        $parts = explode('.',$locale);
+        $locale = $parts[0];
+    }
 
     $xartable = xarDB::getTables();
     $q = new Query('SELECT',$xartable['publications']);
-    $q->eq('locale',$parts[0]);
+    $q->eq('locale',$locale);
     $c[] = $q->peq('id',$args['id']);
     $c[] = $q->peq('parent_id',$args['id']);
     $q->qor($c);
