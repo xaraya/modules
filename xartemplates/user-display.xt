@@ -1,8 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    
+    <!-- Set a custom page title, if one exists -->
+    <xar:set name="page_title">$object->properties['page_title']->getValue()</xar:set>
+    <xar:if condition="!empty($page_title)">
+        <xar:set name="dummy">xarTpl::setPageTitle($page_title)</xar:set>
+    </xar:if>
+    
+    <!-- Set a custom page description, if one exists -->
+    <xar:set name="page_description">$object->properties['page_description']->getValue()</xar:set>
+    <xar:if condition="!empty($page_description)">
+        <xar:meta type="name" value="description" content="$page_description" lang="en" dir="ltr"/>
+     </xar:if>
 
-<xar:data-display object="$object" tplmodule="publications" layout="$layout"/>
-<xar:template file="navtabs-user" type="module" />
+    <!-- Apend custom keywords, if they exist -->
+    <xar:set name="keywords">$object->properties['keywords']->getValue()</xar:set>
+    <xar:if condition="!empty($keywords)">
+        <xar:meta type="name" value="keywords" content="$keywords" lang="en" dir="ltr" append="1"/>
+     </xar:if>
+
+    <xar:data-display object="$object" tplmodule="publications" layout="$layout"/>
+    <xar:template file="navtabs-user" type="module" />
 
 </xar:template>
