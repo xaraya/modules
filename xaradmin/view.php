@@ -25,7 +25,8 @@ function shouter_admin_view()
 
     $data['items'] = array();
 
-    $data['pager'] = xarTplGetPager($startnum,
+    sys::import('modules.base.class.pager');
+    $data['pager'] = xarTplPager::getPager($startnum,
         xarModAPIFunc('shouter', 'user', 'countitems'),
         xarModURL('shouter', 'admin', 'view', array('startnum' => '%%')),
         xarModVars::get('shouter', 'itemsperpage'));
@@ -47,7 +48,7 @@ function shouter_admin_view()
         }
         $items[$i]['edittitle'] = xarML('Edit');
 
-        if (xarSecurityCheck('DeleteShouter', 0, 'Item', "$item[name]:All:$item[shoutid]")) {
+        if (xarSecurityCheck('ManageShouter', 0, 'Item', "$item[name]:All:$item[shoutid]")) {
             $items[$i]['deleteurl'] = xarModURL('shouter', 'admin', 'delete',
                                           array('shoutid' => $item['shoutid']));
         } else {
@@ -55,7 +56,7 @@ function shouter_admin_view()
         }
         $items[$i]['deletetitle'] = xarML('Delete');
 
-        if (xarSecurityCheck('DeleteAllShouter', 0, 'All', "$item[name]:All:$item[shoutid]")) {
+        if (xarSecurityCheck('AdminShouter', 0, 'All', "$item[name]:All:$item[shoutid]")) {
             $items[$i]['deleteallurl'] = xarModURL('shouter', 'admin', 'deleteall');
         } else {
             $items[$i]['deleteallurl'] = '';

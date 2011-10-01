@@ -10,6 +10,8 @@
  * @author Neil Whittaker
  */
 
+    sys::import('xaraya.structures.containers.blocks.basicblock');
+
     class Shouter_ShoutBlock extends BasicBlock implements iBlock
     {
         public $name                = 'Shoutblock';
@@ -30,46 +32,38 @@
         public $anonymouspost       = false;
 
 
-/**
- * Display shoutblock
- *
- * @param array $blockinfo
- * @return array
- */
+    /**
+     * Display shoutblock
+     *
+     * @param array $blockinfo
+     * @return array
+     */
         function display(Array $data=array())
         {
             $data = parent::display($data);
             if (empty($data)) return;
 
             $items = xarModAPIFunc('shouter', 'user', 'getall',
-                             array('numitems' => $vars['numitems'])
+                             array('numitems' => $data['numitems'])
                      );
         
             $totitems = count($items);
             for ($i = 0; $i < $totitems; $i++) {
                 $item = $items[$i];
-                $items[$i]['shout'] = wordwrap(xarVarPrepForDisplay($item['shout']), $vars['blockwrap'], "\n", 1);
+                $items[$i]['shout'] = wordwrap(xarVarPrepForDisplay($item['shout']), $data['blockwrap'], "\n", 1);
             }
         
-            $data['shouturl'] = xarModURL('shouter', 'admin', 'create',array(),false);
-            $data['anonymouspost'] = $vars['anonymouspost'];
-        
-            $lightrow = xarModVars::get('shouter','lightrow');
-            $data['lightrow'] = "background:#".$vars['lightrow'].";";
-        
-            $darkrow = xarModVars::get('shouter','darkrow');
-            $data['darkrow'] = "background:#".$vars['darkrow'].";";
-        
+            $data['shouturl'] = xarModURL('shouter', 'admin', 'create',array(),false);        
         
             $blockwidth = xarModVars::get('shouter','blockwidth');
-            $data['blockwidth'] = "width:".$vars['blockwidth']."px;";
+            $data['blockwidth'] = "width:".$data['blockwidth']."px;";
         
             $data['refresh'] = true;
         
-            if ($vars['shoutblockrefresh'] == 0) {
+            if ($data['shoutblockrefresh'] == 0) {
                 $data['refresh'] = false;
             }
-            $data['shoutblockrefresh'] = $vars['shoutblockrefresh'] . '000';
+            $data['shoutblockrefresh'] = $data['shoutblockrefresh'] . '000';
         
             // Transform Hook for smilies
             $data['items'] = array();
@@ -85,9 +79,9 @@
                 $data['items'][] = $item;
             }
         
-            $data['blockurl'] = xarModURL('blocks', 'user', 'display',array('name' => $blockinfo['name']),false);
+            $data['blockurl'] = xarModURL('blocks', 'user', 'display',array('name' => $data['name']),false);
         
-            $requestinfo = xarRequest::getInfo();
+            $requestinfo = xarController::$request->getInfo();
         
         
             /**
@@ -97,6 +91,8 @@
             if ($requestinfo[0] == 'blocks' && $requestinfo[1] == 'admin') {
                 $data['refresh'] = false;
             }
+            $vars['content'] = $data;
+            $data = array_merge($data,$vars);
             return $data;
         }
 }

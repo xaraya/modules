@@ -32,7 +32,7 @@ function shouter_admin_delete($args)
 
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    if (!xarSecurityCheck('DeleteShouter', 1, 'Item', "$item[name]:All:$shoutid")) {
+    if (!xarSecurityCheck('ManageShouter', 1, 'Item', "$item[name]:All:$shoutid")) {
         return;
     }
     // Check for confirmation.
@@ -55,6 +55,6 @@ function shouter_admin_delete($args)
         return;
     }
 
-    xarResponse::redirect(xarModURL('shouter', 'admin', 'view'));
+    xarController::redirect(xarModURL('shouter', 'admin', 'view'));
 }
 ?>

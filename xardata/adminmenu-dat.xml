@@ -1,0 +1,21 @@
+<adminmenu>
+    <menuitems> 
+        <menuitem>
+            <includes>
+                <includeitem>main</includeitem>
+                <includeitem>overview</includeitem>
+            </includes>
+            <target>main</target>
+            <label>Overview</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageShouter</mask>
+            <includes>
+                <includeitem>view</includeitem>
+            </includes>
+            <target>view</target>
+            <title>Manage shouts </title>
+            <label>Manage Items</label>
+        </menuitem>
+    </menuitems>
+</adminmenu>

@@ -202,7 +202,7 @@ menu.php) and the appropriate files from the xaruser folder as I don't need any 
 
 -- Typecast the bindvars in the following files in folder xaradminapi: create.php, update.php ---- didn't see it anywhere else.
 -- Ensured that all php files are using xarML in functions.
--- ensured <xar:mlstring>text goes here</xar:mlstring> is used for all text!
+-- ensured text goes here is used for all text!
 
 
 0.2.7b (16 Jan 05): reformatted the date/time in the shoutblock.xd template to conform better.
@@ -284,14 +284,14 @@ and added the following code to remove the hook upon deactivation of the module 
 
 0.1.3.5 (10 Jan 05): Added deleteall.php files to xaradmin, and xaradminapi folders (which I got from the referrers module, since it has a function that deletes all referrers). Also added mask to xarinit.php as follows:
 --------------------------------------------
- xarRegisterMask('DeleteAllShouter', 'All', 'shouter','All','All:All:All', 'ACCESS_DELETE');
+ xarRegisterMask('AdminShouter', 'All', 'shouter','All','All:All:All', 'ACCESS_DELETE');
 --------------------------------------------
 
 
  Additionally, in xaradmin\view.php I added the following at line 75:
 -----------------------------------------------------------------------------------------------
 // now I will add my delete all sec check
- if (xarSecurityCheck('DeleteAllShouter', 0, 'All', "$item[xar_name]:All:$item[xar_exid]")) {
+ if (xarSecurityCheck('AdminShouter', 0, 'All', "$item[xar_name]:All:$item[xar_exid]")) {
             $items[$i]['deleteallurl'] = xarModURL('shouter',
                 'admin',
                 'deleteall');

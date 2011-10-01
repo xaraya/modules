@@ -26,7 +26,7 @@ function shouter_admin_create($args)
 
     if (empty($shout)) {
         if (!empty($redirect)) {
-            xarResponse::redirect($redirect);
+            xarController::redirect($redirect);
         } else {
             return xarML('Nothing to shout about');
         }
@@ -62,7 +62,7 @@ function shouter_admin_create($args)
     if (!isset($shoutid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     if (!empty($redirect)) {
-        xarResponse::redirect($redirect);
+        xarController::redirect($redirect);
     } else {
         return '';
     }

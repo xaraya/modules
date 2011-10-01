@@ -21,7 +21,7 @@ function shouter_admin_deleteall($args)
 
     if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarSecurityCheck('DeleteAllShouter')) return;
+    if (!xarSecurityCheck('AdminShouter')) return;
 
     $items = xarModAPIFunc('shouter', 'user', 'getall');
 
@@ -48,6 +48,6 @@ function shouter_admin_deleteall($args)
         return;
     }
 
-    xarResponse::redirect(xarModURL('shouter', 'admin', 'view'));
+    xarController::redirect(xarModURL('shouter', 'admin', 'view'));
 }
 ?>

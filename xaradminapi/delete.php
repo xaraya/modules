@@ -31,7 +31,7 @@ function shouter_adminapi_delete($args)
                     array('shoutid' => $shoutid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    if (!xarSecurityCheck('DeleteShouter', 1, 'Item', "$item[name]:All:$shoutid")) {
+    if (!xarSecurityCheck('ManageShouter', 1, 'Item', "$item[name]:All:$shoutid")) {
         return;
     }
 

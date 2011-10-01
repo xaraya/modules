@@ -48,7 +48,7 @@ function shouter_init()
     */
     if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
                  array('modName' => 'shouter',
-                       'blockType' => 'shoutblock'))) return;
+                       'blockType' => 'shout'))) return;
     // Register hooks:
     // Enable smilies hook for the shouter module
     if (xarModIsAvailable('smilies')) {
@@ -72,8 +72,7 @@ function shouter_init()
     xarRegisterMask('ReadShouter', 'All', 'shouter', 'Item', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('EditShouter', 'All', 'shouter', 'Item', 'All:All:All', 'ACCESS_EDIT');
     xarRegisterMask('AddShouter', 'All', 'shouter', 'Item', 'All:All:All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteShouter', 'All', 'shouter', 'Item', 'All:All:All', 'ACCESS_DELETE');
-    xarRegisterMask('DeleteAllShouter', 'All', 'shouter','All','All:All:All', 'ACCESS_DELETE');
+    xarRegisterMask('ManageShouter', 'All', 'shouter', 'Item', 'All:All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdminShouter', 'All', 'shouter', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
     return true;
@@ -84,27 +83,6 @@ function shouter_init()
  */
 function shouter_delete()
 {
-    $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
-
-    $query = xarDBDropTable($xartable['shouter']);
-    if (empty($query)) return;
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-
-    // we won't need this later
-    xarModVars::delete_all('shouter');
-
-    if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type',
-                 array('modName' => 'shouter',
-                       'blockType' => 'shoutblock'))) return;
-
-    xarModAPIFunc('modules','admin','disablehooks',
-            array('callerModName' => 'shouter', 'hookModName' => 'smilies'));
-
-    xarRemoveMasks('shouter');
-    xarRemoveInstances('shouter');
-
-    return true;
+    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'shouter'));
 }
 ?>

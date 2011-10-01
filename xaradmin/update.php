@@ -56,6 +56,6 @@ function shouter_admin_update($args)
     } 
     xarSessionSetVar('statusmsg', xarML('Shouter Item was successfully updated!')); 
 
-    xarResponse::redirect(xarModURL('shouter', 'admin', 'view')); 
+    xarController::redirect(xarModURL('shouter', 'admin', 'view')); 
 } 
 ?>

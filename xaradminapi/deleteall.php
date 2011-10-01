@@ -17,7 +17,7 @@
  */
 function shouter_adminapi_deleteall()
 {
-    if (!xarSecurityCheck('DeleteAllShouter')) return;
+    if (!xarSecurityCheck('AdminShouter')) return;
 
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();

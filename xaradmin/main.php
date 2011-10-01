@@ -22,7 +22,7 @@ function shouter_admin_main()
 
         return $data;
     } else {
-        xarResponse::redirect(xarModURL('shouter', 'admin', 'view'));
+        xarController::redirect(xarModURL('shouter', 'admin', 'view'));
     }
 
     return true;

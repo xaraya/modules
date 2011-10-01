@@ -1,0 +1,97 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+        <!-- License:GPL http://www.gnu.org/copyleft/gpl.html -->
+    <fieldset>
+        <legend>Display Options</legend>
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="numitems#$blockid#" class="xar-form-label" title="#xarML('Number of items per page')#">
+                    Shouts to Display:
+                </label>
+            </div>
+            <div class="xar-col">
+                <input type="text" name="numitems" id="numitems#$blockid#" value="#$numitems#" maxlength="3" class="xar-form-textshort"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="blockwidth#$blockid#" class="xar-form-label" title="#xarML('Block Width (in pixels)')#">
+                    Block Width (in pixels):
+                </label>
+            </div>
+            <div class="xar-col">
+                <input type="text" name="blockwidth" id="blockwidth#$blockid#" value="#$blockwidth#" maxlength="3" class="xar-form-textshort"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="blockwrap#$blockid#" class="xar-form-label" title="#xarML('Number of characters to wrap after (1 to 99)')#">
+                    Number of characters to wrap after (1 to 99):
+                </label>
+            </div>
+            <div class="xar-col">
+                <input type="text" name="blockwrap" id="blockwrap#$blockid#" value="#$blockwrap#" maxlength="2" class="xar-form-textshort"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:set name="idvalue">'lightrow' .$blockid</xar:set>
+                <label for="#$idvalue#" class="xar-form-label" title="#xarML('Light Row (add in hexadecimal format ex. F0F0F0)')#">
+                    Light Row (add in hexadecimal format ex. F0F0F0):
+                </label>
+            </div>
+            <div class="xar-col">
+                <xar:data-input type="tcolorpicker" name="lightrow" id="$idvalue" value="$lightrow" maxlength="6" class="xar-form-textshort"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:set name="idvalue">'darkrow' .$blockid</xar:set>
+                <label for="#$idvalue#" class="xar-form-label" title="#xarML('Dark Row (add in hexadecimal format ex. F0F0F0)')#">
+                    Dark Row (add in hexadecimal format ex. F0F0F0):
+                </label>
+            </div>
+            <div class="xar-col">
+                <xar:data-input type="tcolorpicker" name="darkrow" id="$idvalue" value="$darkrow" maxlength="6" class="xar-form-textshort"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="allowsmilies#$blockid#" class="xar-form-label" title="#xarML('Allow Smilies?')#">
+                    Allow Smilies?
+                </label>
+            </div>
+            <div class="xar-col">
+                <xar:if condition="xarModIsAvailable('smilies')">
+                    <xar:data-input type="checkbox" name="allowsmilies" id="allowsmilies#$blockid#" value="$allowsmilies"/>
+                <xar:else />
+                    <span style="xar-error;">
+                        Smilies Module is not available.
+                    </span>
+                </xar:if>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Other Options</legend>
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="anonymouspost#$blockid#" class="xar-form-label" title="#xarML('You wanna let anonymous post??')#">
+                    You wanna let anonymous post??
+               </label>
+            </div>
+            <div class="xar-col">
+               <xar:data-input type="checkbox" name="anonymouspost" id="anonymouspost#$blockid#" value="$anonymouspost"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="shoutblockrefresh#$blockid#" class="xar-form-label" title="#xarML('Shout Block Refresh Time (in seconds)')#">
+                    Shout Block Refresh Time (in seconds):
+                </label>
+            </div>
+            <div class="xar-col">
+                <input type="text" name="shoutblockrefresh" id="shoutblockrefresh#$blockid#" value="#$shoutblockrefresh#" maxlength="3" class="xar-form-textshort"/>
+            </div>
+        </div>
+    </fieldset>
+</xar:template>
