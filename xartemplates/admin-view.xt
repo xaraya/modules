@@ -1,14 +1,15 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License:GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Shouter Administration</xar:mlstring></span>
 </div>
 <div id="notsogoodbutok" class="xar-mod-body">
-    <xar:template type="module" file="admin-menu" />
+    <xar:template type="module" file="admin-menu"/>
 
     <fieldset>
         <legend><xar:mlstring>View Shouts</xar:mlstring></legend>
 
-      <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+      <xar:if condition="xarSession::getVar('statusmsg') != ''">
           <p>#xarSessionGetVar('statusmsg')#</p>
       </xar:if>
 
@@ -55,7 +56,8 @@
     </fieldset>
 
     <form method="post" name="deleteall" id="post" action="#xarModURL('shouter', 'admin', 'deleteall')#">
-        <input style="margin-top: 5px;" type="submit" name="deleteall" value="#xarML('Delete all Shouts')#" />
+        <input style="margin-top: 5px;" type="submit" name="deleteall" value="#xarML('Delete all Shouts')#"/>
     </form>
 </div>
 <xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
+</xar:template>

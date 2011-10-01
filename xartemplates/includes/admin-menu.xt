@@ -1,6 +1,7 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License:GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:comment>Common Administration menu</xar:comment>
-<xar:if condition="xarModGetVar('themes','adminpagemenu')">
+<xar:if condition="xarModVars::get('themes','adminpagemenu')">
 
 <xar:comment>
   Simple demonstration of using xml http requests (aka 'ajax'). The xml http
@@ -21,14 +22,14 @@
 <xar:if condition="true">
   <!-- If the dojo module is active, why not take advantage of it? -->
   <xar:if condition="!xarModIsAvailable('dojo')">
-    <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
+    <xar:javascript filename="xmlhttprequest.js" module="base" position="body"/>
   </xar:if>
   <xar:set name="onclick">"return loadContent(this.href,'notsogoodbutok');"</xar:set>
 <xar:else/>
   <xar:set name="onclick">"return true;"</xar:set>
 </xar:if>
 
-<xar:style scope="module" module="base" file="navtabs" />
+<xar:style scope="module" module="base" file="navtabs"/>
 
 <xar:comment>
   Set a variable that matches the template name. It does not consider template type.
@@ -37,7 +38,7 @@
   xarRequestInfo() returns the modulename, type and function in an array for
   the function we want the third element (i.e. at index 2)
 </xar:comment>
-<xar:set name="request">xarRequestGetInfo()</xar:set>
+<xar:set name="request">xarRequest::getInfo()</xar:set>
 <xar:set name="activetab">#$request.2#</xar:set>
 
 <div>
@@ -50,7 +51,7 @@
     <xar:sec mask="ViewShouter" catch="false">
         <xar:set name="tabclass">($activetab=='view' or $activetab=='new')?'active':''</xar:set>
         <dd class="#$tabclass#">
-            <a href="&xar-modurl-shouter-admin-view;" onclick="#$onclick#" >
+            <a href="&xar-modurl-shouter-admin-view;" onclick="#$onclick#">
                 <xar:mlstring>Manage Items</xar:mlstring>
             </a>
         </dd>
@@ -70,3 +71,4 @@
   </dl>
 </div>
 </xar:if>
+</xar:template>

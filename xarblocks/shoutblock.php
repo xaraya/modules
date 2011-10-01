@@ -1,7 +1,7 @@
 <?php
 /**
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.zwiggybo.com
  *
@@ -10,40 +10,25 @@
  * @author Neil Whittaker
  */
 
-/**
- * Initialize shoutblock
- *
- * @return array
- */
-function shouter_shoutblockblock_init()
-{
-    return array(
-        'numitems'          => 5,
-        'blockwidth'        => 180,
-        'blockwrap'         => 19,
-        'allowsmilies'      => true,
-        'lightrow'          => 'FFFFFF',
-        'darkrow'           => 'E0E0E0',
-        'shoutblockrefresh' => 0,
-        'anonymouspost'     => false,
-    );
-}
+    class Shouter_ShoutBlock extends BasicBlock implements iBlock
+    {
+        public $name                = 'Shoutblock';
+        public $module              = 'shouter';
+        public $text_type           = 'Shoutblock';
+        public $text_type_long      = 'Shoutblock';
 
-/**
- * Get information about the shoutblock
- *
- * @return array
- */
-function shouter_shoutblockblock_info()
-{
-    return array('text_type'      => 'Shoutblock',
-                 'module'         => 'shouter',
-                 'text_type_long' => 'Shoutblock',
-                 'allow_multiple' => false,
-                 'form_content'    => true,
-                 'form_refresh'   => true,
-                 'show_preview'   => false);
-}
+        public $form_content        = true;
+        public $form_refresh        = true;
+
+        public $numitems            = 5;
+        public $blockwidth          = 180;
+        public $blockwrap           = 19;
+        public $allowsmilies        = true;
+        public $lightrow            = 'FFFFFF';
+        public $darkrow             = 'E0E0E0';
+        public $shoutblockrefresh   = 0;
+        public $anonymouspost       = false;
+
 
 /**
  * Display shoutblock
@@ -51,81 +36,68 @@ function shouter_shoutblockblock_info()
  * @param array $blockinfo
  * @return array
  */
-function shouter_shoutblockblock_display($blockinfo)
-{
-    if (!xarSecurityCheck('ReadShouterBlock', 0, 'Block', $blockinfo['title'])) {return;}
+        function display(Array $data=array())
+        {
+            $data = parent::display($data);
+            if (empty($data)) return;
 
-    /* Get variables from content block.
-     * Content is a serialized array for legacy support, but will be
-     * an array (not serialized) once all blocks have been converted.
-     */
-    if (!is_array($blockinfo['content'])) {
-        $vars = @unserialize($blockinfo['content']);
-    } else {
-        $vars = $blockinfo['content'];
-    }
-    $items = xarModAPIFunc('shouter', 'user', 'getall',
-                     array('numitems' => $vars['numitems'])
-             );
-
-    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {return;}
-
-    $totitems = count($items);
-    for ($i = 0; $i < $totitems; $i++) {
-        $item = $items[$i];
-        $items[$i]['shout'] = wordwrap(xarVarPrepForDisplay($item['shout']), $vars['blockwrap'], "\n", 1);
-    }
-
-
-
-    $data['shouturl'] = xarModURL('shouter', 'admin', 'create',array(),false);
-    $data['anonymouspost'] = $vars['anonymouspost'];
-
-    $lightrow = xarModGetVar('shouter','lightrow');
-    $data['lightrow'] = "background:#".$vars['lightrow'].";";
-
-    $darkrow = xarModGetVar('shouter','darkrow');
-    $data['darkrow'] = "background:#".$vars['darkrow'].";";
-
-
-    $blockwidth = xarModGetVar('shouter','blockwidth');
-    $data['blockwidth'] = "width:".$vars['blockwidth']."px;";
-
-    $data['refresh'] = true;
-
-    if ($vars['shoutblockrefresh'] == 0) {
-        $data['refresh'] = false;
-    }
-    $data['shoutblockrefresh'] = $vars['shoutblockrefresh'] . '000';
-
-    // Transform Hook for smilies
-    $data['items'] = array();
-
-    foreach ($items as $item) {
-        $item['module'] = 'shouter';
-        $item['itemtype'] = 0;
-        $item['itemid'] = $item['shoutid'];
-        $item['transform'] = array('shout');
-
-        $item = xarModCallHooks('item', 'transform', $item['shoutid'], $item);
-        // Display the content
-        $data['items'][] = $item;
-    }
-
-    $data['blockurl'] = xarModURL('blocks', 'user', 'display',array('name' => $blockinfo['name']),false);
-
-    $requestinfo = xarRequestGetInfo();
-
-
-    /**
-     * Don't refresh inside of blocks admin
-     * @todo: need a better way to handle whether to load the onLoad event for the timer
-     */
-    if ($requestinfo[0] == 'blocks' && $requestinfo[1] == 'admin') {
-        $data['refresh'] = false;
-    }
-    $blockinfo['content'] = $data;
-
-    return $blockinfo;
+            $items = xarModAPIFunc('shouter', 'user', 'getall',
+                             array('numitems' => $vars['numitems'])
+                     );
+        
+            $totitems = count($items);
+            for ($i = 0; $i < $totitems; $i++) {
+                $item = $items[$i];
+                $items[$i]['shout'] = wordwrap(xarVarPrepForDisplay($item['shout']), $vars['blockwrap'], "\n", 1);
+            }
+        
+            $data['shouturl'] = xarModURL('shouter', 'admin', 'create',array(),false);
+            $data['anonymouspost'] = $vars['anonymouspost'];
+        
+            $lightrow = xarModVars::get('shouter','lightrow');
+            $data['lightrow'] = "background:#".$vars['lightrow'].";";
+        
+            $darkrow = xarModVars::get('shouter','darkrow');
+            $data['darkrow'] = "background:#".$vars['darkrow'].";";
+        
+        
+            $blockwidth = xarModVars::get('shouter','blockwidth');
+            $data['blockwidth'] = "width:".$vars['blockwidth']."px;";
+        
+            $data['refresh'] = true;
+        
+            if ($vars['shoutblockrefresh'] == 0) {
+                $data['refresh'] = false;
+            }
+            $data['shoutblockrefresh'] = $vars['shoutblockrefresh'] . '000';
+        
+            // Transform Hook for smilies
+            $data['items'] = array();
+        
+            foreach ($items as $item) {
+                $item['module'] = 'shouter';
+                $item['itemtype'] = 0;
+                $item['itemid'] = $item['shoutid'];
+                $item['transform'] = array('shout');
+        
+                $item = xarModCallHooks('item', 'transform', $item['shoutid'], $item);
+                // Display the content
+                $data['items'][] = $item;
+            }
+        
+            $data['blockurl'] = xarModURL('blocks', 'user', 'display',array('name' => $blockinfo['name']),false);
+        
+            $requestinfo = xarRequest::getInfo();
+        
+        
+            /**
+             * Don't refresh inside of blocks admin
+             * @todo: need a better way to handle whether to load the onLoad event for the timer
+             */
+            if ($requestinfo[0] == 'blocks' && $requestinfo[1] == 'admin') {
+                $data['refresh'] = false;
+            }
+            return $data;
+        }
 }
 ?>

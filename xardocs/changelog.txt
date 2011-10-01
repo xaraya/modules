@@ -20,7 +20,7 @@ removed THE FOLLOWING FROM line #61 of xaruserapi/getall.php: $xar_total,
 
 0.8.5 (18 Sep 05): Removed inline styles and added them to the module style-sheet. Changed the style-sheet link method to the new method employed by Xaraya:
 -----------------------
-<xar:style scope="module" module="shouter" file="shouter" /><xar:additional-styles />
+<xar:style scope="module" module="shouter" file="shouter"/><xar:additional-styles />
 -----------------------
 
 
@@ -54,12 +54,12 @@ for ($i = 0; $i < $totitems; $i++) {
 
 0.7.1 (21 Mar 05): simply modified line #27 in xartemplates/admin-modifyconfig.xd to follow the format of the one used in headlines block refresh. Actually, that line is commented out, and I have a similar one below it without the #$blockid# as part of the 'id' because that caused an error.
 
-<input type="text" name="shoutblockrefresh" id="shoutblockrefresh#$blockid#" size="5" maxlength="5" value="#$shoutblockrefresh#" />
+<input type="text" name="shoutblockrefresh" id="shoutblockrefresh#$blockid#" size="5" maxlength="5" value="#$shoutblockrefresh#"/>
 ------------------------------------------------------------------
 
 also changed line #27 in xaradmin\modifyconfig.php to reflect the name change for the value in the template:
 ------------------------------------------------------------------
-$data['shoutblockrefresh'] = xarModGetVar('shouter', 'shoutblockrefresh');
+$data['shoutblockrefresh'] = xarModVars::get('shouter', 'shoutblockrefresh');
 ------------------------------------------------------------------
 Commented out line #33,34 in xaradmin\modifyconfig.php to get rid of turning on/off line colors, since they can be set.
 
@@ -92,7 +92,7 @@ adding the following in shoutblock.php:
 
 0.5.3 - 0.5.9 (16 Feb 05): made changes to allow for setting anonymous posting, or prohibiting it:
 in shoutblock.php:
-    $data['anonymouspost'] = xarModGetVar('shouter','anonymouspost');
+    $data['anonymouspost'] = xarModVars::get('shouter','anonymouspost');
 in admin-modifyconfig.xd made changes, and in modifyconfig.php, and updateconfig.php. 
 *NOTE:Although the configuration seems to 'stick'in the admin checkbox, nothing happens when the box is checked.
 
@@ -106,7 +106,7 @@ Included in those changes (in conjuction with the ones I was already pursuing) w
 Put in your variable values instead of hardcoded ones in field value.
 
 2. shoutblock.php
-No need for xarVarFetch on mod vars. Just grab them with xarModGetVar like
+No need for xarVarFetch on mod vars. Just grab them with xarModVars::get like
 you do further down. Commented out the xarVarFetch.
 
 3. shoutblock.xd
@@ -127,7 +127,7 @@ use #$mycolor#.
 I added the following to xaradmin\create.php
 ------------------------------------------------------------------
     $data['rowcolorslabel'] = xarVarPrepForDisplay(xarML('Alternating Row Colors:'));
-    $data['rowcolors'] = xarModGetVar('shouter', 'rowcolors') ? true : false;    
+    $data['rowcolors'] = xarModVars::get('shouter', 'rowcolors') ? true : false;    
 ------------------------------------------------------------------
 ...and added the following to xaradmin\updateconfig.php:
 ------------------------------------------------------------------
@@ -155,7 +155,7 @@ In xaradmin\modifyconfig.php, I added at line #23:
 ------------------------------------------------------------------
 // allow smilies....
     $data['smilieslabel'] = xarVarPrepForDisplay(xarML('Allow Smilies?'));
-    $data['allowsmilies'] = xarModGetVar('shouter', 'allowsmilies') ? true : false;
+    $data['allowsmilies'] = xarModVars::get('shouter', 'allowsmilies') ? true : false;
 // end allow smilies... 
 ------------------------------------------------------------------
 
@@ -179,7 +179,7 @@ then added in the same file (xaradmin\updateconfig.php), added at line #12 :
 ------------------------------------------------------------------
 then in the same file (xaradmin\updateconfig.php), added at line #28 :
 ------------------------------------------------------------------
-    xarModSetVar('shouter', 'allowsmilies', $allowsmilies);
+    xarModVars::set('shouter', 'allowsmilies', $allowsmilies);
 ------------------------------------------------------------------
 Finally, in the template admin-modifyconfig.xd, I made a few changes.... I won't note them here.
 

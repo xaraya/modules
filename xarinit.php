@@ -1,7 +1,7 @@
 <?php
 /**
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.zwiggybo.com
  *
@@ -9,14 +9,14 @@
  * @link http://xaraya.com/index.php/release/236.html
  * @author Neil Whittaker
  */
-xarDBLoadTableMaintenanceAPI();
+sys::import('xaraya.tableddl');
 /**
  * Initialize the module
  */
 function shouter_init()
 {
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $shoutertable = $xartable['shouter'];
     $fields = array(
@@ -36,14 +36,14 @@ function shouter_init()
     if (!$result) return;
 
     /*
-    xarModSetVar('shouter', 'anonymouspost', false);
-    xarModSetVar('shouter', 'shoutblockrefresh', 5);
-    xarModSetVar('shouter', 'lightrow', 'FFFFFF');
-    xarModSetVar('shouter', 'darkrow', 'E0E0E0');
-    xarModSetVar('shouter', 'blockwidth', 180);
-    xarModSetVar('shouter', 'itemsperpage', 10);
-    xarModSetVar('shouter', 'allowsmilies', true);
-    xarModSetVar('shouter', 'blockwrap', 19);
+    xarModVars::set('shouter', 'anonymouspost', false);
+    xarModVars::set('shouter', 'shoutblockrefresh', 5);
+    xarModVars::set('shouter', 'lightrow', 'FFFFFF');
+    xarModVars::set('shouter', 'darkrow', 'E0E0E0');
+    xarModVars::set('shouter', 'blockwidth', 180);
+    xarModVars::set('shouter', 'itemsperpage', 10);
+    xarModVars::set('shouter', 'allowsmilies', true);
+    xarModVars::set('shouter', 'blockwrap', 19);
 
     */
     if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
@@ -84,8 +84,8 @@ function shouter_init()
  */
 function shouter_delete()
 {
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $query = xarDBDropTable($xartable['shouter']);
     if (empty($query)) return;
@@ -93,7 +93,7 @@ function shouter_delete()
     if (!$result) return;
 
     // we won't need this later
-    xarModDelAllVars('shouter');
+    xarModVars::delete_all('shouter');
 
     if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type',
                  array('modName' => 'shouter',

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.zwiggybo.com
  *
@@ -26,7 +26,7 @@ function shouter_admin_create($args)
 
     if (empty($shout)) {
         if (!empty($redirect)) {
-            xarResponseRedirect($redirect);
+            xarResponse::redirect($redirect);
         } else {
             return xarML('Nothing to shout about');
         }
@@ -62,7 +62,7 @@ function shouter_admin_create($args)
     if (!isset($shoutid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     if (!empty($redirect)) {
-        xarResponseRedirect($redirect);
+        xarResponse::redirect($redirect);
     } else {
         return '';
     }
