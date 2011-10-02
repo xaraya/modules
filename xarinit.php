@@ -23,7 +23,7 @@ function figlet_init()
                            'transform')) return;
 
     // Set up module variable
-    xarModSetVar('figlet', 'defaultfont', 'standard.flf');
+    xarModVars::set('figlet', 'defaultfont', 'standard.flf');
 
     //Register Mask
     xarRegisterMask('ReadFiglet','All','figlet','All','All','ACCESS_READ');

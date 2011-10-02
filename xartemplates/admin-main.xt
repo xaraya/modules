@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>Overview</h2>
+        <div style="padding: 1px;" class="xar-norm-outline">
+            <div style="float:right;padding:10px;">
+                <img src="#xarTplGetImage('module-generic.png', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon"/>
+            </div>
+            <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+                What is it?
+            </div>
+            <br />
+            <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+                The Figlet module uses a class written by <a href="http://www.thebobo.com/?page=php,figlet#do">Lucas Baltes</a> to transform text to Ascii art.  This module includes a special text transform called transformfig which will take any call to it and transform the text to Ascii art of your choosing.  It also offers a user page to allow any text to be transformed.  Good for use with signatures, etc.
+            </div>
+            <br />
+            <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+                How to use it?
+            </div>
+            <br />
+            <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+                From the menu, you have one choice. 
+                "Modify Configuration".  From this menu option, you can update the necessary configuration options, such as the default font to use.
+            </div>
+            <br />
+            <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+                Included Blocks
+            </div>
+            <br />
+            <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+                The Mail Module has no blocks included at this time.
+            </div>
+            <br />
+            <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+                Included Hooks
+            </div>
+            <br />
+            <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+                The figlet modules uses a special case text transform which when called will transform text to ascii art.
+            </div>
+        </div>
+    </div>
+</xar:template>

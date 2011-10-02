@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body"><h2>Modify Figlet Configuration</h2><br />
+        <div style="margin: auto;">
+            <form action="#xarModUrl('figlet', 'admin', 'updateconfig')#" method="post">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <p><label for="font">Available Fonts</label>: 
+                <select name="font" id="font" size="1">
+                    <xar:loop name="$fontselect">
+                        <xar:if condition="$fontnow eq $loop:item['fontname']">
+                            <option value="#$loop:item['fontname']#" selected="selected">#$loop:item['fontname']#</option>
+                        <xar:else />
+                            <option value="#$loop:item['fontname']#">#$loop:item['fontname']#</option>
+                        </xar:if>
+                    </xar:loop>
+                </select></p>
+                <input type="submit" value="#$submit#"  tabindex="3" />
+            </form>
+        </div>
+    </div>
+</xar:template>

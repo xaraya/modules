@@ -20,7 +20,7 @@ function figlet_admin_main()
     if(!xarSecurityCheck('AdminFiglet')) return;
     // Return the output
     return array();
-    //    xarResponseRedirect(xarModURL('figlet', 'admin', 'modifyconfig'));
+    //    xarController::redirect(xarModURL('figlet', 'admin', 'modifyconfig'));
 
     // success
 //    return true;
@@ -35,7 +35,7 @@ function figlet_admin_modifyconfig()
     if(!xarSecurityCheck('AdminFiglet')) return;
 
     // Get Fonts
-    $handle = opendir('modules/figlet/xarfonts');
+    $handle = opendir(sys::code().'modules/figlet/xarfonts');
 
     while($f = readdir($handle)){
         if ($f != '.' && $f != '..' && $f != 'SCCS'){
@@ -51,7 +51,7 @@ function figlet_admin_modifyconfig()
         $data['fontselect'][] = array('fontname' => $v);
     }
 
-    $data['fontnow'] = xarModGetVar('figlet', 'defaultfont');
+    $data['fontnow'] = xarModVars::get('figlet', 'defaultfont');
     $data['submit'] = xarML('submit');
     $data['authid'] = xarSecGenAuthKey();
 
@@ -63,16 +63,16 @@ function figlet_admin_modifyconfig()
  */
 function figlet_admin_updateconfig()
 {
-    $font = xarVarCleanFromInput('font');
+    if (!xarVarFetch('font', 'str:1:100', $font, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 
     if (!xarSecConfirmAuthKey()) return;
 
     // Security Check
     if(!xarSecurityCheck('AdminFiglet')) return;
 
-    xarModSetVar('figlet', 'defaultfont', $font);
+    xarModVars::set('figlet', 'defaultfont', $font);
 
-    xarResponseRedirect(xarModURL('figlet', 'admin', 'modifyconfig'));
+    xarController::redirect(xarModURL('figlet', 'admin', 'modifyconfig'));
 
     return true;
 }

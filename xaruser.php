@@ -23,9 +23,8 @@
  */
 function figlet_user_main()
 {
-    list($font,
-         $text) = xarVarCleanFromInput('font',
-                                       'text');
+    if (!xarVarFetch('font', 'str:1:100', $font, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    if (!xarVarFetch('text', 'str:1:100', $text, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 
     // Security Check
     if(!xarSecurityCheck('ReadFiglet')) return;
@@ -42,11 +41,11 @@ function figlet_user_main()
     }
 
     if (!empty($font)){
-        require("modules/figlet/xarclass/phpfiglet_class.php");
+        sys::import('modules.figlet.xarclass.phpfiglet_class');
 
         $phpFiglet = new phpFiglet();
 
-        if ($phpFiglet->loadFont("modules/figlet/xarfonts/$font")) {
+        if ($phpFiglet->loadFont(sys::code()."modules/figlet/xarfonts/$font")) {
             $data['output'] = $phpFiglet->display("$text");
         } else {
             $msg = xarML('There is no font defined.');
@@ -65,7 +64,7 @@ function figlet_user_main()
 
     // Get Fonts
 
-    $handle = opendir('modules/figlet/xarfonts');
+    $handle = opendir(sys::code().'modules/figlet/xarfonts');
 
     while($f = readdir($handle)){
         if ($f != '.' && $f != '..' && $f != 'SCCS'){
@@ -81,7 +80,6 @@ function figlet_user_main()
         $data['fontselect'][] = array('fontname' => $v);
     }
 
-    $data['submit'] = xarML('submit');
     $data['font'] = $font;
     $data['text'] = $text;
     
