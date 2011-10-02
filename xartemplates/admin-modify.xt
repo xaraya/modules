@@ -1,47 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Ephemerids Administration</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-body">
-    <xar:template type="module" module="ephemerids" file="admin-menu" />
-<h2><xar:mlstring>Modify Ephemerid</xar:mlstring></h2>
-<div align="center">
-
-    <form action="&xar-modurl-ephemerids-admin-update;" method="post" enctype="application/x-www-form-urlencoded">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="eid" id="eid" value="#$eid#" />
-        <label for="tid"><xar:mlstring>Type</xar:mlstring></label>:
-            <select name="tid" id="tid" size="1" tabindex="2">
-            <xar:if condition="$tid eq '1'">
-            <option value="1" selected="selected"><xar:mlstring>Ephemerid</xar:mlstring></option>
-            <xar:else />
-            <option value="1"><xar:mlstring>Ephemerid</xar:mlstring></option>
-            </xar:if>
-            <xar:if condition="$tid eq '2'">
-            <option value="2" selected="selected"><xar:mlstring>Nameday</xar:mlstring></option>
-            <xar:else />
-            <option value="2"><xar:mlstring>Nameday</xar:mlstring></option>
-            </xar:if>
-            </select>
-        <label for="did"><xar:mlstring>Day</xar:mlstring></label>:
-            <input type="text" name="did" id="did" value="#$did#" size="4" maxlength="5" tabindex="3" />
-        <label for="mid"><xar:mlstring>Month</xar:mlstring></label>:
-            <input type="text" name="mid" id="mid" value="#$mid#" size="4" maxlength="5" tabindex="3" />    
-        <label for="yid"><xar:mlstring>Year</xar:mlstring></label>:
-            <input type="text" name="yid" id="yid" value="#$yid#" size="4" maxlength="5" tabindex="3" />
-        <label for="elanguage"><xar:mlstring>Language</xar:mlstring></label>: -- TODO
-            <select name="elanguage" id="elanguage" size="0" tabindex="4">
-                <option value="all">All</option>
-            </select>
-        <br /><br />
-        <label for="content"><xar:mlstring>Description</xar:mlstring></label>:
-        <br />
-            <textarea name="content" id="content" rows="10" cols="60" tabindex="5">#$content#</textarea>
-        <br /><br />
-            <xar:set name="$submitbutton"><xar:mlstring>Submit</xar:mlstring></xar:set> 
-            <input type="submit" value="#$submitbutton#"  tabindex="6" />
-        </form>
-
-</div>
-</div>
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>Modify Ephemerid</h2>
+        <div align="center">
+        
+            <form action="&xar-modurl-ephemerids-admin-update;" method="post" enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="eid" id="eid" value="#$eid#" />
+                <label for="tid">Type</label>:
+                    <select name="tid" id="tid" size="1" tabindex="2">
+                    <xar:if condition="$tid eq '1'">
+                    <option value="1" selected="selected">Ephemerid</option>
+                    <xar:else />
+                    <option value="1">Ephemerid</option>
+                    </xar:if>
+                    <xar:if condition="$tid eq '2'">
+                    <option value="2" selected="selected">Nameday</option>
+                    <xar:else />
+                    <option value="2">Nameday</option>
+                    </xar:if>
+                    </select>
+                <label for="did">Day</label>:
+                    <input type="text" name="did" id="did" value="#$did#" size="4" maxlength="5" tabindex="3" />
+                <label for="mid">Month</label>:
+                    <input type="text" name="mid" id="mid" value="#$mid#" size="4" maxlength="5" tabindex="3" />    
+                <label for="yid">Year</label>:
+                    <input type="text" name="yid" id="yid" value="#$yid#" size="4" maxlength="5" tabindex="3" />
+                <label for="elanguage">Language</label>
+                    <select name="elanguage" id="elanguage" size="0" tabindex="4">
+                        <option value="all">All</option>
+                    </select>
+                <br /><br />
+                <label for="content">Description</label>:
+                <br />
+                    <textarea name="content" id="content" rows="10" cols="60" tabindex="5">#$content#</textarea>
+                <br /><br />
+                    <xar:var name="label">Submit</xar:var> 
+                    <xar:button type="submit" label="$label"  tabindex="6" />
+                </form>
+        
+        </div>
+    </div>
 </xar:template>

@@ -1,54 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Ephemerids Administration</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-body">
-  <xar:template type="module" module="ephemerids" file="admin-menu" />
-  <h2><xar:mlstring>Ephemerids List</xar:mlstring></h2>
-
-  <table border="0" width="100%" cellpadding="2" cellspacing="0">
-    <tr>
-        <th>#$typelabel#</th>
-        <th>#$daylabel#</th>
-        <th>#$monthlabel#</th>
-        <th>#$yearlabel#</th>
-        <th>#$eventlabel#</th>
-        <th>#$optionslabel#</th>
-    </tr>
-    <xar:loop name="$ephemlist">
-    <tr>
-        <td align="center">
-        <xar:if condition="$loop:item['tid'] eq '1'">
-        <xar:mlstring>Ephemerid</xar:mlstring>
-        <xar:else />
-        <xar:mlstring>Nameday</xar:mlstring>
-        </xar:if>
-        </td>
-        <td align="center">#$loop:item['did']#</td>
-        <td align="center">#$loop:item['mid']#</td>
-        <td align="center">
-        <xar:if condition="$loop:item['tid'] eq '1'">
-        #$loop:item['yid']#
-        <xar:else />
-        ---
-        </xar:if>
-        </td>
-        <td>#$loop:item['content']#</td>
-        <td>[ 
-            <xar:if condition="empty($loop:item['editurl'])">
-               #$loop:item['edittitle']#
-            <xar:else />
-               <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
-            </xar:if>
-           |
-            <xar:if condition="empty($loop:item['deleteurl'])">
-               #$loop:item['deletetitle']#
-            <xar:else />
-               <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
-            </xar:if> ]
-        </td>
-    </tr>
-    </xar:loop>
-</table>
-</div>
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>Ephemerids List</h2>
+    
+        <table border="0" width="100%" cellpadding="2" cellspacing="0">
+            <tr>
+                <th>#$typelabel#</th>
+                <th>#$daylabel#</th>
+                <th>#$monthlabel#</th>
+                <th>#$yearlabel#</th>
+                <th>#$eventlabel#</th>
+                <th>#$optionslabel#</th>
+            </tr>
+            <xar:loop name="$ephemlist">
+            <tr>
+                <td align="center">
+                <xar:if condition="$loop:item['tid'] eq '1'">
+                Ephemerid
+                <xar:else />
+                Nameday
+                </xar:if>
+                </td>
+                <td align="center">#$loop:item['did']#</td>
+                <td align="center">#$loop:item['mid']#</td>
+                <td align="center">
+                <xar:if condition="$loop:item['tid'] eq '1'">
+                #$loop:item['yid']#
+                <xar:else />
+                ---
+                </xar:if>
+                </td>
+                <td>#$loop:item['content']#</td>
+                <td>[ 
+                    <xar:if condition="empty($loop:item['editurl'])">
+                       #$loop:item['edittitle']#
+                    <xar:else />
+                       <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+                    </xar:if>
+                   |
+                    <xar:if condition="empty($loop:item['deleteurl'])">
+                       #$loop:item['deletetitle']#
+                    <xar:else />
+                       <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+                    </xar:if> ]
+                </td>
+            </tr>
+            </xar:loop>
+        </table>
+    </div>
 </xar:template>

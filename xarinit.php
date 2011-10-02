@@ -27,11 +27,11 @@ function ephemerids_init()
 
     // Define the table structure
     $fields = array(
-        'xar_eid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_tid'=>array('type'=>'integer','size'=>4,'null'=>FALSE,'default'=>'1'),
-        'xar_did'=>array('type'=>'integer','size'=>'small','size'=>2,'null'=>FALSE,'default'=>'0'),
-        'xar_mid'=>array('type'=>'integer','size'=>'small','size'=>2,'null'=>FALSE,'default'=>'0'),
-        'xar_yid'=>array('type'=>'integer','size'=>4,'null'=>FALSE,'default'=>'0'),
+        'xar_eid'=>array('type'=>'integer', 'unsigned' => true,'null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_tid'=>array('type'=>'integer', 'unsigned' => true,'size'=>4,'null'=>FALSE,'default'=>'1'),
+        'xar_did'=>array('type'=>'integer', 'unsigned' => true,'size'=>'small','size'=>2,'null'=>FALSE,'default'=>'0'),
+        'xar_mid'=>array('type'=>'integer', 'unsigned' => true,'size'=>'small','size'=>2,'null'=>FALSE,'default'=>'0'),
+        'xar_yid'=>array('type'=>'integer', 'unsigned' => true,'size'=>4,'null'=>FALSE,'default'=>'0'),
         'xar_content'=>array('type'=>'text','null'=>FALSE),
         'xar_elanguage'=>array('type'=>'varchar','size'=>32,'null'=>FALSE)
     );
@@ -56,7 +56,7 @@ function ephemerids_init()
     xarRegisterMask('ReadEphemerids','All','ephemerids','All','All','ACCESS_READ');
     xarRegisterMask('EditEphemerids','All','ephemerids','All','All','ACCESS_EDIT');
     xarRegisterMask('AddEphemerids','All','ephemerids','All','All','ACCESS_ADD');
-    xarRegisterMask('DeleteEphemerids','All','ephemerids','All','All','ACCESS_DELETE');
+    xarRegisterMask('ManageEphemerids','All','ephemerids','All','All','ACCESS_DELETE');
     xarRegisterMask('AdminEphemerids','All','ephemerids','All','All','ACCESS_ADMIN');
 
     // Initialisation successful
@@ -68,35 +68,9 @@ function ephemerids_init()
  */
 function ephemerids_upgrade($oldversion)
 {
-    // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-
-    $ephemtable = $xartable['ephem'];
-
-    xarDBLoadTableMaintenanceAPI();
-
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case '1.4.0':
-            // Code to upgrade from version 1.3 goes here
-            xarModVars::set('ephemerids', 'itemsperpage', 20);
-            xarModDelVar('ephemerids', 'detail');
-            xarModDelVar('ephemerids', 'table');
-        case '1.4.1':
-            // Code to upgrade from version 1.4 goes here
-            $changes = array('command'     => 'add',
-                             'field'       => 'xar_tid',
-                             'type'        => 'integer',
-                             'null'        => false,
-                             'default'     => '1');
-            $query = xarDBAlterTable($ephemtable, $changes);
-            $result = &$dbconn->Execute($query);
-            if (!$result) return;
-
-            // Close result set
-            $result->Close();
-
+        case '2.0.0':
             break;
     }
     return true;
@@ -107,31 +81,7 @@ function ephemerids_upgrade($oldversion)
  */
 function ephemerids_delete()
 {
-    // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-
-    // Delete tables
-    $query = "DROP TABLE $xartable[ephem]";
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    // Delete module variables
-    xarModDelVar('ephemerids', 'itemsperpage');
-
-    // Remove Masks and Instances
-    xarRemoveMasks('ephemerids');
-    xarRemoveInstances('ephemerids');
-
-    // UnRegister blocks
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'unregister_block_type',
-                       array('modName'  => 'ephemerids',
-                             'blockType'=> 'ephem'))) return;
-
-    // Deletion successful
-    return true;
+    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'epheremids'));
 }
 
 ?>

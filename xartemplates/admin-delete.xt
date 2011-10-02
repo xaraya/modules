@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Ephemerids Administration</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-body">
-<xar:template type="module" module="ephemerids" file="admin-menu" />
-<h2><xar:mlstring>Ephemerids Module Overview</xar:mlstring></h2>
-
-<form method="post" action="&xar-modurl-ephemerids-admin-delete;" enctype="application/x-www-form-urlencoded" >
-    <input type="hidden" name="authid" value="#$authid#" />
-    <input type="hidden" name="eid" id="eid" value="#$eid#" />
-    <input type="hidden" name="confirm" id="confirm" value="1"/>
-    <input type="hidden" name="confirmation" id="confirmation" value="1"/>
-
-    <p><xar:mlstring>Confirm deletion of Ephemerid</xar:mlstring></p>
-
-    <xar:set name="$submitbutton"><xar:mlstring>Submit</xar:mlstring></xar:set>
-    <input type="submit" value="#$submitbutton#"  tabindex="1" /><br /><br />
-
-    <a href="&xar-modurl-ephemerids-admin-main;"><xar:mlstring>Cancel deletion of Ephemerid</xar:mlstring></a>
-</form>
-</div>
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>Ephemerids Module Overview</h2>
+        
+        <form method="post" action="&xar-modurl-ephemerids-admin-delete;" enctype="application/x-www-form-urlencoded" >
+            <input type="hidden" name="authid" value="#$authid#" />
+            <input type="hidden" name="eid" id="eid" value="#$eid#" />
+            <input type="hidden" name="confirm" id="confirm" value="1"/>
+            <input type="hidden" name="confirmation" id="confirmation" value="1"/>
+        
+            <p>Confirm deletion of Ephemerid</p>
+        
+            <xar:set name="$submitbutton">Submit</xar:set>
+            <input type="submit" value="#$submitbutton#"  tabindex="1" /><br /><br />
+        
+            <a href="&xar-modurl-ephemerids-admin-main;">Cancel deletion of Ephemerid</a>
+        </form>
+    </div>
 </xar:template>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:if condition="$emptycontent">
-<xar:mlstring>No Historical Reference for this date in history</xar:mlstring>
-<xar:else />
-<xar:loop name="$items">
-    <xar:if condition="$loop:item['tid'] eq '1'"> 
-    <p><xar:ml><xar:mlstring>In:&nbsp;&nbsp;<b>#(1)</b></xar:mlstring><xar:mlvar>#$loop:item['yid']#</xar:mlvar></xar:ml></p>
+    <xar:if condition="$emptycontent">
+        No reference for this date in history
     <xar:else />
-    <p><b><xar:mlstring>Nameday</xar:mlstring></b></p>
+        <xar:loop name="$items">
+            <xar:if condition="$loop:item['tid'] eq '1'"> 
+                <div><xar:ml><xar:mlstring>On this day in:&#160;&#160;<b>#(1)</b></xar:mlstring><xar:mlvar>#$loop:item['yid']#</xar:mlvar></xar:ml></div>
+            <xar:else />
+                <div><b>Nameday</b></div>
+            </xar:if>
+            <div>#$loop:item['content']#</div>
+        </xar:loop>
     </xar:if>
-    <p>#$loop:item['content']#</p>
-</xar:loop>
-</xar:if>
 </xar:template>

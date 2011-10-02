@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Ephemerids Administration</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-body">
-    <xar:template type="module" module="ephemerids" file="admin-menu" />
-    <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
-
-    <form method="post" action="#xarModURL('ephemerids', 'admin', 'updateconfig')#" enctype="application/x-www-form-urlencoded" >
-    <fieldset>
-        <legend><xar:mlstring>General Options</xar:mlstring></legend>
-      <div class="xar-form-input-wrapper">
-        <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of example items per page')#">
-          <xar:mlstring>Items Per Page:</xar:mlstring>
-        </label>
-        <input type="text" name="itemsperpage" id="itemsperpage" value="#xarModVars::get('ephemerids', 'itemsperpage')#" maxlength="3" class="xar-form-textshort" />
-      </div>
-      </fieldset>
-        <xar:set name="$updatebutton"><xar:mlstring>Update Ephemerids Configuration</xar:mlstring></xar:set>
-        <p class="xar-form-input-wrapper-after;">
-            <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="submit" value="#$updatebutton#"  tabindex="3" />
-        </p>
-    </form>
-</div>
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>Modify Configuration</h2>
+    
+        <form method="post" action="#xarModURL('ephemerids', 'admin', 'modifyconfig')#" enctype="application/x-www-form-urlencoded" >
+            <xar:if condition="$tab eq 'general'">
+                <xar:data-form object="$module_settings"/>
+            </xar:if>
+            <div class="xar-form-input-wrapper-after;">
+                <input type="hidden" name="phase" id="phase" value="update"/>
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                <xar:var name="label">Update Configuration</xar:var>
+                <xar:button type="submit" label="$label"  tabindex="3" />
+            </div>
+        </form>
+    </div>
 </xar:template>
