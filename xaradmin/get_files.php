@@ -42,7 +42,6 @@ function uploads_admin_get_files()
             $uploads->initialization_initial_method = $args['action'];
             $uploads->checkInput('upload');
             $args['upload'] = $uploads->propertydata;
-            var_dump($args);exit;
             break;
         case _UPLOADS_GET_EXTERNAL:
             // minimum external import link must be: ftp://a.ws  <-- 10 characters total

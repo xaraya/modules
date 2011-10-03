@@ -131,7 +131,6 @@ class UploadProperty extends FileUploadProperty
 
         switch ($data['action']) {
             case _UPLOADS_GET_UPLOAD:
-        var_dump($_FILES);
                 if (!xarVarFetch($name . '_max_file_size', "int::$this->validation_max_file_size", $this->validation_max_file_size)) return;
                 if (!xarVarValidate('array', $_FILES[$name . '_attach_upload'])) return;
 
@@ -142,7 +141,6 @@ class UploadProperty extends FileUploadProperty
                     $this->value = '';
                     return true;
                 } elseif (!$this->validateExtension($data['upload']['name'])) {
-        var_dump($_POST);
                     $this->invalid = xarML('The file type is not allowed');
                     $this->value = null;
                     return false;
