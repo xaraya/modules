@@ -17,9 +17,9 @@
  * @author mikespub <mikespub@xaraya.com>
  *
  */
-sys::import('modules.dynamicdata.class.properties.base');
+sys::import('modules.base.xarproperties.integerbox');
 
-class HitCountProperty extends DataProperty
+class HitCountProperty extends NumberBoxProperty
 {
     public $id         = 101;
     public $name       = 'hitcount';
@@ -37,11 +37,10 @@ class HitCountProperty extends DataProperty
         // we want a reference to the object here
         $this->include_reference = 1;
 
-    // CHECKME: force using the dummy datastore for this property
-        $this->source = 'dummy';
-
-    // CHECKME: force the no input status for this property
-        $this->status = $this->getDisplayStatus() + DataPropertyMaster::DD_INPUTSTATE_NOINPUT;
+        // Force settings for datastore, input and display status
+        $this->source = '';
+        $this->setInputStatus(DataPropertyMaster::DD_INPUTSTATE_NOINPUT);
+        $this->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISPLAYONLY);
     }
 
     public function getValue()
