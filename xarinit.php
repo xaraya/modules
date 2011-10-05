@@ -136,6 +136,7 @@ function hitcount_init()
     xarRegisterMask('ViewHitcountItems','All','hitcount','Item','All:All:All','ACCESS_OVERVIEW');
     xarRegisterMask('ReadHitcountItem','All','hitcount','Item','All:All:All','ACCESS_READ');
     xarRegisterMask('DeleteHitcountItem','All','hitcount','Item','All:All:All','ACCESS_DELETE');
+    xarRegisterMask('ManageHitcount','All','hitcount','All','All','ACCESS_DELETE');
     xarRegisterMask('AdminHitcount','All','hitcount','All','All','ACCESS_ADMIN');
 
     xarRegisterPrivilege('ViewHitcount','All','hitcount','All','All','ACCESS_OVERVIEW');

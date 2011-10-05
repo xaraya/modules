@@ -17,10 +17,13 @@
  */
 function hitcount_admin_main()
 {
-    // Security Check
-    if(!xarSecurityCheck('AdminHitcount')) return;
-    xarController::redirect(xarModURL('hitcount', 'admin', 'modifyconfig'));
-    // success
+    if(!xarSecurityCheck('ManageHitcount')) return;
+
+    if (xarModVars::get('modules', 'disableoverview') == 0) {
+        return array();
+    } else {
+        xarController::redirect(xarModURL('hitcount', 'admin', 'view'));
+    }
     return true;
 }
 

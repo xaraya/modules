@@ -1,0 +1,39 @@
+<adminmenu>
+    <menuitems>
+        <menuitem>
+            <includes>
+                <includeitem>main</includeitem>
+                <includeitem>overview</includeitem>
+            </includes>
+            <target>main</target>
+            <label>Overview</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageHitcount</mask>
+            <includes>
+                <includeitem>view</includeitem>
+            </includes>
+            <target>view</target>
+            <title>View hitcount statistics per module</title>
+            <label>View Statistics</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageHitcount</mask>
+            <includes>
+                <includeitem>hooks</includeitem>
+            </includes>
+            <target>hooks</target>
+            <title>Configure hooks for this module</title>
+            <label>Enable Hooks</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminHitcount</mask>
+            <includes>
+                <includeitem>modifyconfig</includeitem>
+            </includes>
+            <target>modifyconfig</target>
+            <title>Modify the configuration settings of this module</title>
+            <label>Modify Configuration</label>
+        </menuitem>
+    </menuitems>
+</adminmenu>
