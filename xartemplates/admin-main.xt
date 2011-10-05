@@ -44,7 +44,8 @@
                 Included Properties
         </h3>
         <p>
-                Or you can add the Hit Count property directly to your dynamic data objects.
+                Or you can add the Hit Count property directly to your dynamic data objects. In this case the showOutput method wil show the number of hits. and the showInput method will show a textbox that lets you change the number of hits (cheating).
+                In all cases the coordinates of the page are stored as module/itemtype/itemid. For dataobjects this will mean module = 182 and itemtype = objectid - 1.
         </p>
 
     </div>
