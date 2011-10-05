@@ -3,7 +3,7 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 <div class="xar-mod-head">
   <span class="xar-mod-title">
-    <xar:mlstring>Keywords Module</xar:mlstring>
+    Keywords Module
   </span>
 </div>
 <div class="xar-mod-body">
@@ -16,7 +16,7 @@
     <xar:if condition="empty($items)">
       <div class="xar-form-input-wrapper">
         <h4>
-          <xar:mlstring>No keywords found !</xar:mlstring>
+          No keywords found !
         </h4>
       </div>
     <xar:else /> 
@@ -68,7 +68,7 @@
               <xar:comment>you could skip these items </xar:comment>
               <a href="#$item['url']#">
                 <xar:ml>
-                  <xar:mlstring>item #(1) </xar:mlstring>
+                  <xar:mlstring>item #(1)</xar:mlstring>
                   <xar:mlvar>
                     #$item['itemid']# 
                   </xar:mlvar>
@@ -76,7 +76,7 @@
                             </a>
                         <xar:else />
                             <xar:comment>you could skip these items </xar:comment>
-                            <xar:mlstring>item </xar:mlstring>
+                            item 
                             #$item['moduleid']# #$item['itemtype']# #$item['itemid']# 
                             <!-- </a> -->
                         </xar:if>
@@ -85,27 +85,27 @@
             </ul>
             <p>
                 <a href="javascript:history.back(-1)">
-                    <xar:mlstring>Click here to go back </xar:mlstring>
+                    Click here to go back 
                 </a>
             </p>
         </div>
     <xar:elseif condition="$status eq 1 and empty($keyword)" />
-        <xar:mlstring>No keywords</xar:mlstring>
+        No keywords
     <xar:elseif condition="$status eq 2" />
         <h2>
-            <xar:mlstring>Overview of Keyword Assignments</xar:mlstring>
+            Overview of Keyword Assignments
         </h2>
-        <xar:mlstring>Unable to find corresponding item</xar:mlstring>
+        Unable to find corresponding item
     <xar:elseif condition="$status eq 3" />
         <h2>
-            <xar:mlstring>Overview of Keyword Assignments</xar:mlstring>
+            Overview of Keyword Assignments
         </h2>
-        <xar:mlstring>Unable to find module for the corresponding item</xar:mlstring>
+        Unable to find module for the corresponding item
     <xar:else />
         <h2>
-            <xar:mlstring>Overview of Keyword Assignments</xar:mlstring>
+            Overview of Keyword Assignments
         </h2>
-            <xar:mlstring>Unknown status</xar:mlstring>
+            Unknown status
   </xar:if>
 </div>
 </xar:template>

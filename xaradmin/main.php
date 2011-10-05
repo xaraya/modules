@@ -26,8 +26,12 @@ function keywords_admin_main()
 {
     // Security Check
     if (!xarSecurityCheck('AdminKeywords')) return;
-    xarController::redirect(xarModURL('keywords', 'admin', 'modifyconfig'));
-    // success
-    return array();//true;
+
+    if (xarModVars::get('modules', 'disableoverview') == 0) {
+        return array();
+    } else {
+        xarController::redirect(xarModURL('keywords', 'admin', 'view'));
+    }
+    return array();
 }
 ?>

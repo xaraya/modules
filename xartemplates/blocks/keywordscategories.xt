@@ -10,7 +10,7 @@ $item['name'],$item['description'],$item['image'],$item['parent'],$item['left'],
 <xar:if condition="!empty($items)">
     <br />
 
-    <div class="xar-block-title"><xar:mlstring>Keywords related categories</xar:mlstring>:</div>
+    <div class="xar-block-title">Keywords related categories:</div>
     <xar:foreach in="$items" value="$item">
         &#149;#xarVarPrepForDisplay($item['name'])#&#160;
         <xar:if condition="!empty($item['image'])">
@@ -19,7 +19,7 @@ $item['name'],$item['description'],$item['image'],$item['parent'],$item['left'],
         <xar:if condition="!empty($item['description'])">
             #xarVarPrepForDisplay($item['description'])#<br />
         </xar:if>
-    <a href="#$item['link']#"><xar:mlstring>Read More</xar:mlstring></a>
+    <a href="#$item['link']#">Read More</a>
     <br /><br />
     </xar:foreach>
 </xar:if>

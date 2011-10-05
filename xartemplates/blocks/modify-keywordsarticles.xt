@@ -6,13 +6,13 @@
     <span style="float: left; width: 20%; text-align: right;">
         <!-- block configuration options -->
         <span class="help" title="#xarML('Choose the publication type for the featured items.')#">
-            <label for="pubtypeid#$blockid#"><xar:mlstring>Publication Type</xar:mlstring>:</label>
+            <label for="pubtypeid#$blockid#">Publication Type:</label>
         </span>
     </span>
     
     <span style="float: right; width: 78%; text-align: left;">
         <select name="ptid" id="pubtypeid#$blockid#">
-            <option value="0"><xar:mlstring>All</xar:mlstring></option>
+            <option value="0">All</option>
             <xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
                 <xar:if condition="!empty($ptid) and $ptid eq $pubid">
                     <option value="#$pubid#" selected="selected">#$pubtype['descr']#</option>
@@ -27,11 +27,11 @@
 <!-- TODO
                 <div style="clear: both; padding-top: 10px;">
                 <span style="float: left; width: 20%; text-align: right;">
-                        <span class="help" title="#xarML('Choose the category for the featured items.')#"><label for="catfilter#$blockid#"><xar:mlstring>Category</xar:mlstring></label>:</span>
+                        <span class="help" title="#xarML('Choose the category for the featured items.')#"><label for="catfilter#$blockid#">Category</label>:</span>
                 </span>
                 <span style="float: right; width: 78%; text-align: left;">
                         <select name="cid" id="catfilter#$blockid#">
-                                <option value="0"><xar:mlstring>All</xar:mlstring></option>
+                                <option value="0">All</option>
                                 <xar:foreach in="$categorylist" value="$catlistx">
                                         <xar:if condition="!empty($cid) and $cid eq $catlistx['cid']">
                                                 <option value="#$catlistx['cid']#" selected="selected">#$catlistx['name']#</option>
@@ -47,7 +47,7 @@
 <div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 20%; text-align: right;">
         <span class="help" title="#xarML('Choose the status (e.g. Approved, Front Page) for the featured items.')#">
-            <label for="status#$blockid#"><xar:mlstring>Status</xar:mlstring>:</label>
+            <label for="status#$blockid#">Status:</label>
         </span>
     </span>
     <span style="float: right; width: 78%; text-align: left;">
@@ -66,7 +66,7 @@
 <div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 20%; text-align: right;">
         <span class="help" title="#xarML('How many minutes to wait before updating this block.')#">
-            <label for="refreshtime#$blockid#"><xar:mlstring>Time to refresh block (minutes)</xar:mlstring>:</label>
+            <label for="refreshtime#$blockid#">Time to refresh block (minutes):</label>
         </span>
     </span>
     <span style="float: right; width: 78%; text-align: left;">

@@ -1,84 +1,87 @@
-<xar:style scope="module" module="base" file="navtabs" />
-<dl class="xar-tabs">
-    <dt class="help" title="#xarML('Click on a tab to filter the keywords to be selected')#">
-        <xar:mlstring>Filter</xar:mlstring>:
-    </dt>
-    <xar:if condition="$tab eq 0">
-        <dd class="active">
-            <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '0'))#">
-                <xar:mlstring>All</xar:mlstring>
-            </a>
-        </dd>
-    <xar:else/>
-        <dd>
-            <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '0'))#">
-                <xar:mlstring>All</xar:mlstring>
-            </a>
-        </dd>
-    </xar:if>
-    <xar:if condition="$tab eq 1">
-        <dd class="active">
-            <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '1'))#">
-                <xar:mlstring>a - f</xar:mlstring>
-            </a>
-        </dd>
-    <xar:else/>
-        <dd>
-            <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '1'))#">
-                <xar:mlstring>a - f</xar:mlstring>
-            </a>
-        </dd>
-    </xar:if>
-    <xar:if condition="$tab eq 2">
-        <dd class="active">
-            <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '2'))#">
-                <xar:mlstring>g - l</xar:mlstring>
-            </a>
-        </dd>
-    <xar:else/>
-        <dd>
-            <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '2'))#">
-                <xar:mlstring>g - l</xar:mlstring>
-            </a>
-        </dd>
-    </xar:if>
-    <xar:if condition="$tab eq 3">
-        <dd class="active">
-            <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '3'))#">
-                <xar:mlstring>m - r</xar:mlstring>
-            </a>
-        </dd>
-    <xar:else/>
-        <dd>
-            <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '3'))#">
-                <xar:mlstring>m - r</xar:mlstring>
-            </a>
-        </dd>
-    </xar:if>
-    <xar:if condition="$tab eq 4">
-        <dd class="active">
-            <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '4'))#">
-                <xar:mlstring>s - z</xar:mlstring>
-            </a>
-        </dd>
-    <xar:else/>
-        <dd>
-            <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '4'))#">
-                <xar:mlstring>s - z</xar:mlstring>
-            </a>
-        </dd>
-    </xar:if>
-    <xar:if condition="$tab eq 5">
-        <dd class="active">
-            <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '5'))#">
-                <xar:mlstring>other</xar:mlstring>
-            </a>
-        </dd>
-    <xar:else/>
-        <dd>
-            <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '5'))#">
-                <xar:mlstring> other</xar:mlstring>
-            </a>
-        </dd>
-    </xar:if>
-</dl>
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:style scope="module" module="base" file="navtabs" />
+    <dl class="xar-tabs">
+        <dt class="help" title="#xarML('Click on a tab to filter the keywords to be selected')#">
+            Filter:
+        </dt>
+        <xar:if condition="$tab eq 0">
+            <dd class="active">
+                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '0'))#">
+                    All
+                </a>
+            </dd>
+        <xar:else/>
+            <dd>
+                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '0'))#">
+                    All
+                </a>
+            </dd>
+        </xar:if>
+        <xar:if condition="$tab eq 1">
+            <dd class="active">
+                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '1'))#">
+                    a - f
+                </a>
+            </dd>
+        <xar:else/>
+            <dd>
+                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '1'))#">
+                    a - f
+                </a>
+            </dd>
+        </xar:if>
+        <xar:if condition="$tab eq 2">
+            <dd class="active">
+                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '2'))#">
+                    g - l
+                </a>
+            </dd>
+        <xar:else/>
+            <dd>
+                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '2'))#">
+                    g - l
+                </a>
+            </dd>
+        </xar:if>
+        <xar:if condition="$tab eq 3">
+            <dd class="active">
+                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '3'))#">
+                    m - r
+                </a>
+            </dd>
+        <xar:else/>
+            <dd>
+                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '3'))#">
+                    m - r
+                </a>
+            </dd>
+        </xar:if>
+        <xar:if condition="$tab eq 4">
+            <dd class="active">
+                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '4'))#">
+                    s - z
+                </a>
+            </dd>
+        <xar:else/>
+            <dd>
+                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '4'))#">
+                    s - z
+                </a>
+            </dd>
+        </xar:if>
+        <xar:if condition="$tab eq 5">
+            <dd class="active">
+                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '5'))#">
+                    other
+                </a>
+            </dd>
+        <xar:else/>
+            <dd>
+                <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '5'))#">
+                     other
+                </a>
+            </dd>
+        </xar:if>
+    </dl>
+</xar:template>

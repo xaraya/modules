@@ -4,12 +4,12 @@
   <!--
                 <div style="clear: both; padding-top: 10px;">
                 <span style="float: left; width: 20%; text-align: right;">
-                        <span class="help" title="#xarML('Choose the base category for the related categories.')#"><label for="catfilter#$blockid#"><xar:mlstring>Category</xar:mlstring></label>:</span>
+                        <span class="help" title="#xarML('Choose the base category for the related categories.')#"><label for="catfilter#$blockid#">Category</label>:</span>
                 </span>
 
                 <span style="float: right; width: 78%; text-align: left;">
                         <select name="cid" id="catfilter#$blockid#">
-                                <option value="0"><xar:mlstring>All</xar:mlstring></option>
+                                <option value="0">All</option>
                                 <xar:foreach in="$categorylist" value="$catlistx">
                                         <xar:if condition="!empty($cid) and $cid eq $catlistx['cid']">
                                                 <option value="#$catlistx['cid']#" selected="selected">#$catlistx['name']#</option>
@@ -23,7 +23,7 @@
 -->
                 <div style="clear: both; padding-top: 10px;">
                 <span style="float: left; width: 20%; text-align: right;">
-                        <span class="help" title="#xarML('How many minutes to wait before updating this block.')#"><label for="refreshtime#$blockid#"><xar:mlstring>Time to refresh block (minutes)</xar:mlstring></label>:</span>
+                        <span class="help" title="#xarML('How many minutes to wait before updating this block.')#"><label for="refreshtime#$blockid#">Time to refresh block (minutes)</label>:</span>
                 </span>
                 <span style="float: right; width: 78%; text-align: left;">
                         <input type="text" name="refreshtime" id="refreshtime#$blockid#" value="#$refreshtime#" size="7" maxlength="6" />

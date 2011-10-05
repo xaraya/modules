@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Keywords Administration</xar:mlstring></span></div>
-<div class="xar-mod-body">
-<xar:template type="module" file="admin-menu" />
-<h2><xar:mlstring>New Keyword Assignment</xar:mlstring></h2><br />
-<div style="margin: auto;">
-<xar:mlstring>Note : you should modify the original module item if you want to use new keywords or avoid duplicates !</xar:mlstring>
-<form method="post">
-<table border="0" cellpadding="5">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <xar:data-form object="$object" />
-    <tr><td colspan="2">
-      #$hooks#
-    </td></tr>
-    <tr><td colspan="2" align="center"><input type="submit" name="confirm" value="#$confirm#" /></td></tr>
-</table>
-</form>
-</div>
-</div>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>New Keyword Assignment</h2><br />
+        <div style="margin: auto;">
+            Note : you should modify the original module item if you want to use new keywords or avoid duplicates !
+            <form method="post">
+                <table border="0" cellpadding="5">
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <xar:data-form object="$object" />
+                    <tr><td colspan="2">
+                      #$hooks#
+                    </td></tr>
+                    <tr><td colspan="2" align="center"><input type="submit" name="confirm" value="#$confirm#" /></td></tr>
+                </table>
+            </form>
+        </div>
+    </div>
 </xar:template>

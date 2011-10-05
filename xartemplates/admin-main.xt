@@ -1,62 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Keywords Administration</xar:mlstring></span>
-        </div>
-<div class="xar-mod-body">
-    <xar:template type="module" file="admin-menu" />
-    <img src="#xarTplGetImage('module-generic.png', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
-    <h2>
-        <xar:mlstring>Overview</xar:mlstring>
-    </h2>
-    <h3>
-            <xar:mlstring>What is it?</xar:mlstring>
-    </h3>
-        <p><em><xar:mlstring>Keywords is a Xaraya Utility Module.</xar:mlstring></em>
-        <xar:mlstring>The Keywords module allows you to assign keywords to module items (taxonomy) and to look up items by keyword.
-        To use keywords in your content items you must </xar:mlstring>
-        <a href="&xar-modurl-modules-admin-hooks;&amp;hook=keywords#currenthook"><xar:mlstring>hook the Keywords module</xar:mlstring></a><xar:mlstring> to any module or itemtype where where you want to use it.</xar:mlstring>
-        </p>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <img src="#xarTplGetImage('module-generic.png', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
+        <h2>
+            Overview
+        </h2>
         <h3>
-            <xar:mlstring>How to use it?</xar:mlstring>
-       </h3>
-         <p><xar:mlstring>After enabling the keywords hooks for a particular module and itemtype, you'll see an input box when entering content in the module item. Here you can fill in relevant keywords whenever you create or modify a module item.
-         When viewing an item that has keywords associated, you can retrieve a list of other items having the same keyword(s).</xar:mlstring></p>
-         <p><xar:mlstring>You can also restrict keywords to a predefined set of words. Further you can make them specific for each hooked module and itemtype.</xar:mlstring>
-         </p>
-         <p><xar:mlstring>In the future this module may try to extract keywords
-         automatically from other fields on create/update. Contributions in that or other directions are welcome :-)</xar:mlstring></p>
-         <h3>
-            <xar:mlstring>Included Blocks</xar:mlstring>
+                What is it?
         </h3>
-           <p>
-           <xar:mlstring>There are no included blocks at this time. However you can use Keywords in your Meta Block. The keywords from your Keyword module for any given item (eg an article) are inserted into your webpage page keyword metatag.</xar:mlstring>
-           </p>
-        <h3>
-            <xar:mlstring>Included Hooks</xar:mlstring>
-    </h3>
-        <p>
-            <ul>
-                <li><xar:mlstring>new/create/modify/update/delete -- Allows you to create/update keywords</xar:mlstring></li>
-                <li><xar:mlstring>display/search -- Allows you to display/search keywords</xar:mlstring></li>
-            </ul>
-        </p>
-  <h3>
-    <xar:mlstring>Further Information</xar:mlstring>
-  </h3>
-  <p>
-    <xar:mlstring>Further information on the Keywords module can be found at</xar:mlstring>
-  </p>
-  <ul>
-    <li><xar:mlstring>Keywords Extension page at</xar:mlstring> <a title="#xarML('Keywords Module - Xaraya Extension 187')#" href="http://www.xaraya.com/index.php/release/187.html">Xaraya Extension and Releases</a>.
-      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
-    </li>
-    <li><xar:mlstring>Related tutorials and documentation on Keywords found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/keywords/" title="#xarML('Related documentation on Keywords')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
-    </li>
-  </ul>
-  <p class="xar-sub">
-    <strong>&#160;<xar:mlstring>Keywords Module Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 1.0.0&#160; 2006-04-09
-  </p>
-</div>
+            <p><em>Keywords is a Xaraya Utility Module.</em>
+            The Keywords module allows you to assign keywords to module items (taxonomy) and to look up items by keyword.
+            To use keywords in your content items you must 
+            <a href="&xar-modurl-modules-admin-hooks;&amp;hook=keywords#currenthook">hook the Keywords module</a> to any module or itemtype where where you want to use it.
+            </p>
+            <h3>
+                How to use it?
+           </h3>
+             <p>After enabling the keywords hooks for a particular module and itemtype, you'll see an input box when entering content in the module item. Here you can fill in relevant keywords whenever you create or modify a module item.
+             When viewing an item that has keywords associated, you can retrieve a list of other items having the same keyword(s).</p>
+             <p>You can also restrict keywords to a predefined set of words. Further you can make them specific for each hooked module and itemtype.
+             </p>
+             <p>In the future this module may try to extract keywords
+             automatically from other fields on create/update. Contributions in that or other directions are welcome :-)</p>
+             <h3>
+                Included Blocks
+            </h3>
+               <p>
+               There are no included blocks at this time. However you can use Keywords in your Meta Block. The keywords from your Keyword module for any given item (eg an article) are inserted into your webpage page keyword metatag.
+               </p>
+            <h3>
+                Included Hooks
+        </h3>
+            <p>
+                <ul>
+                    <li>new/create/modify/update/delete -- Allows you to create/update keywords</li>
+                    <li>display/search -- Allows you to display/search keywords</li>
+                </ul>
+            </p>
+      <h3>
+        Further Information
+      </h3>
+      <p>
+        Further information on the Keywords module can be found at
+      </p>
+      <ul>
+        <li>Keywords Extension page at <a title="#xarML('Keywords Module - Xaraya Extension 187')#" href="http://www.xaraya.com/index.php/release/187.html">Xaraya Extension and Releases</a>.
+           Click on Version History tab at the bottom to get the latest release information.
+        </li>
+        <li>Related tutorials and documentation on Keywords found at <a href="http://www.xaraya.com/index.php/keywords/keywords/" title="#xarML('Related documentation on Keywords')#">Xaraya Documentation.</a>
+        </li>
+      </ul>
+      <p class="xar-sub">
+        <strong>&#160;Keywords Module Overview</strong><br />&#160;Version 1.0.0&#160; 2006-04-09
+      </p>
+    </div>
 </xar:template>
