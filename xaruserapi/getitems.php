@@ -32,14 +32,12 @@ function keywords_userapi_getitems($args)
     if (!empty($id)) {
         if (!is_numeric($id) && !is_array($id)) {
             $msg = xarML('Invalid #(1)', 'keywords id');
-            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-            return;
+            throw new Exception($msg);
         }
     } else {
         if (!isset($keyword)) {
             $msg = xarML('Invalid #(1)', 'keyword');
-            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-            return;
+            throw new Exception($msg);
         }
     }
 

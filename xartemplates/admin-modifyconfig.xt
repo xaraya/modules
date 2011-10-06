@@ -8,113 +8,134 @@
         </h2>
          <form name="post" id="post" action="&xar-modurl-keywords-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
              <fieldset>
-                <legend>
-                    Settings
-                </legend>
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <div class="xar-form-input-wrapper">
-                    <label for="isalias" title="#xarML('Activate short url support')#" class="xar-form-label">
-                        Enable Short URLs
-                    </label>
-                    <xar:if condition="!empty($isalias)">
-                        <input type="checkbox" name="isalias" id="isalias" value="1" checked="checked" />
-                    <xar:else/>
-                        <input type="checkbox" name="isalias" id="isalias" value="1" />
-                    </xar:if>
+                <xar:data-form object="$module_settings"/>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label for="displaycolumns" title="#xarML('Number of columns for keyword display')#" class="xar-form-label">
+                            Columns for keyword display
+                        </label>
+                    </div>
+                    <div class="xar-col">
+                        <xar:if condition="!empty($displaycolumns)">
+                            <input type="text" name="displaycolumns" id="delimiters" value="#$displaycolumns#" size="1" />
+                        <xar:else/>
+                            <input type="text" name="displaycolumns" id="displaycolumns" value="" size="1" />
+                        </xar:if>
+                    </div>
                 </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="displaycolumns" title="#xarML('Number of columns for keyword display')#" class="xar-form-label">
-                        Columns for keyword display
-                    </label>
-                    <xar:if condition="!empty($displaycolumns)">
-                        <input type="text" name="displaycolumns" id="delimiters" value="#$displaycolumns#" size="1" />
-                    <xar:else/>
-                        <input type="text" name="displaycolumns" id="displaycolumns" value="" size="1" />
-                    </xar:if>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label for="showsort" title="#xarML('Show the alpha list for the keywords')#" class="xar-form-label">
+                            Show Sort List
+                        </label>
+                    </div>
+                    <div class="xar-col">
+                        <xar:if condition="!empty($showsort)">
+                            <input type="checkbox" name="showsort" id="showsort" value="1" checked="checked" />
+                        <xar:else/>
+                            <input type="checkbox" name="showsort" id="showsort" value="1" />
+                        </xar:if>
+                    </div>
                 </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="showsort" title="#xarML('Show the alpha list for the keywords')#" class="xar-form-label">
-                        Show Sort List
-                    </label>
-                    <xar:if condition="!empty($showsort)">
-                        <input type="checkbox" name="showsort" id="showsort" value="1" checked="checked" />
-                    <xar:else/>
-                        <input type="checkbox" name="showsort" id="showsort" value="1" />
-                    </xar:if>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label for="delimiters" title="#xarML('Define keywords delimiters list. Not use space if you want to use multi words keyword')#" class="xar-form-label">
+                            Valid Delimiter List
+                        </label>
+                    </div>
+                    <div class="xar-col">
+                        <xar:if condition="!empty($delimiters)">
+                             <input type="text" name="delimiters" id="delimiters" value="#$delimiters#" size="40" />
+                        <xar:else/>
+                             <input type="text" name="delimiters" id="delimiters" value="" size="40" />
+                        </xar:if>
+                    </div>
                 </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="delimiters" title="#xarML('Define keywords delimiters list. Not use space if you want to use multi words keyword')#" class="xar-form-label">
-                        Valid Delimiter List
-                    </label>
-                    <xar:if condition="!empty($delimiters)">
-                         <input type="text" name="delimiters" id="delimiters" value="#$delimiters#" size="40" />
-                    <xar:else/>
-                         <input type="text" name="delimiters" id="delimiters" value="" size="40" />
-                    </xar:if>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="restricted" title="#xarML('Restrict keywords to the following allowed list')#" class="xar-form-label">
-                        Restrict keywords
-                    </label>
-                     <select name="restricted" id="restricted" onchange="javascript:this.form.action = '&xar-modurl-keywords-admin-modifyconfig;';this.form.submit();">
-                         <xar:if condition="$restricted eq 1">
-                             <option value="1" selected="selected">#xarML('Yes')#</option>
-                         <xar:else />
-                             <option value="1">#xarML('Yes')#</option>
-                         </xar:if>
-                         <xar:if condition="$restricted eq 0">
-                             <option value="0" selected="selected">#xarML('No')#</option>
-                         <xar:else/>
-                             <option value="0">#xarML('No')#</option>
-                         </xar:if>
-                     </select>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label for="restricted" title="#xarML('Restrict keywords to the following allowed list')#" class="xar-form-label">
+                            Restrict keywords
+                        </label>
+                    </div>
+                    <div class="xar-col">
+                         <select name="restricted" id="restricted" onchange="javascript:this.form.action = '&xar-modurl-keywords-admin-modifyconfig;';this.form.submit();">
+                             <xar:if condition="$restricted eq 1">
+                                 <option value="1" selected="selected">#xarML('Yes')#</option>
+                             <xar:else />
+                                 <option value="1">#xarML('Yes')#</option>
+                             </xar:if>
+                             <xar:if condition="$restricted eq 0">
+                                 <option value="0" selected="selected">#xarML('No')#</option>
+                             <xar:else/>
+                                 <option value="0">#xarML('No')#</option>
+                             </xar:if>
+                         </select>
+                    </div>
                 </div>
                 <xar:if condition="$restricted eq 1">
-                    <div class="xar-form-input-wrapper">
-                        <label for="useitemtype" title="#xarML('Use different keywords for different itemtype')#" class="xar-form-label">
-                            Use itemtype
-                        </label>
-                        <select name="useitemtype" id="useitemtype" onchange="javascript:this.form.action = '&xar-modurl-keywords-admin-modifyconfig;';this.form.submit();">
-                            <xar:if condition="$useitemtype eq 1">
-                                <option value="1" selected="selected">#xarML('Yes')#</option>
-                            <xar:else />
-                                <option value="1">#xarML('Yes')#</option>
-                            </xar:if>
-                            <xar:if condition="$useitemtype eq 0">
-                                <option value="0" selected="selected">#xarML('No')#</option>
-                            <xar:else/>
-                                <option value="0">#xarML('No')#</option>
-                            </xar:if>
-                        </select>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label for="useitemtype" title="#xarML('Use different keywords for different itemtype')#" class="xar-form-label">
+                                Use itemtype
+                            </label>
+                        </div>
+                        <div class="xar-col">
+                            <select name="useitemtype" id="useitemtype" onchange="javascript:this.form.action = '&xar-modurl-keywords-admin-modifyconfig;';this.form.submit();">
+                                <xar:if condition="$useitemtype eq 1">
+                                    <option value="1" selected="selected">#xarML('Yes')#</option>
+                                <xar:else />
+                                    <option value="1">#xarML('Yes')#</option>
+                                </xar:if>
+                                <xar:if condition="$useitemtype eq 0">
+                                    <option value="0" selected="selected">#xarML('No')#</option>
+                                <xar:else/>
+                                    <option value="0">#xarML('No')#</option>
+                                </xar:if>
+                            </select>
+                        </div>
                     </div>
                     <xar:if condition="$useitemtype eq 0">
                         <xar:foreach in="$settings" key="$modname" value="$config">
-                            <div class="xar-form-input-wrapper">
-                                <label for="keywords[#$modname#]" title="#xarML('Define keywords for the')# #$modname# #xarML('module')#" class="xar-form-label">
-                                        Allowed Keywords for module
-                                        <strong>
-                                            #$modname#
-                                        </strong>
-                                </label>
-                               <textarea name="keywords[#$modname#]" id="keywords[#$modname#]" cols="32" rows="3" >#xarVarPrepForDisplay($config['keywords'])#</textarea>
+                            <div class="xar-row">
+                                <div class="xar-col">
+                                    <label for="keywords[#$modname#]" title="#xarML('Define keywords for the')# #$modname# #xarML('module')#" class="xar-form-label">
+                                            Allowed Keywords for module
+                                            <strong>
+                                                #$modname#
+                                            </strong>
+                                    </label>
+                                </div>
+                                <div class="xar-col">
+                                   <textarea name="keywords[#$modname#]" id="keywords[#$modname#]" cols="32" rows="3" >#xarVarPrepForDisplay($config['keywords'])#</textarea>
+                                </div>
                             </div>
                         </xar:foreach>
                     <xar:else/>
                         <xar:foreach in="$settings" key="$modname" value="$module">
                             <xar:foreach in="$module" key="$itemtype" value="$item">
-                                <div class="xar-form-input-wrapper">
-                                    <label for="keywords[#$modname#.#$itemtype#]" title="#xarML('Define keywords for this itemtype of the')# #$modname# #xarML('module')#" class="xar-form-label">
-                                        #xarML('Allowed Keywords for:')# <strong>#$item['label']#</strong> [module #$modname#]
-                                    </label>
-                                    <textarea name="keywords[#$modname#.#$itemtype#]" id="keywords[#$modname#]" cols="32" rows="2" >#xarVarPrepForDisplay($item['keywords'])#</textarea>
+                                <div class="xar-row">
+                                    <div class="xar-col">
+                                        <label for="keywords[#$modname#.#$itemtype#]" title="#xarML('Define keywords for this itemtype of the')# #$modname# #xarML('module')#" class="xar-form-label">
+                                            #xarML('Allowed Keywords for:')# <strong>#$item['label']#</strong> [module #$modname#]
+                                        </label>
+                                    </div>
+                                    <div class="xar-col">
+                                        <textarea name="keywords[#$modname#.#$itemtype#]" id="keywords[#$modname#]" cols="32" rows="2" >#xarVarPrepForDisplay($item['keywords'])#</textarea>
+                                    </div>
                                 </div>
                             </xar:foreach>
                         </xar:foreach>
                     </xar:if>
                 </xar:if>
             </fieldset>
-            <div class="xar-form-input-wrapper-after">
-                <input type="submit" value="#xarML('Submit')#" />
+            <div class="xar-row">
+                <div class="xar-col">
+                </div>
+                <div class="xar-col">
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                    <xar:var name="label">Submit</xar:var>
+                    <xar:button type="submit" label="$label" />
+                </div>     
             </div>     
         </form>
     </div>

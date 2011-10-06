@@ -27,23 +27,13 @@
 function keywords_admin_modifyconfig()
 {
     // Default value is NULL for providing NOT isset variables to following code
-    if (!xarVarFetch('restricted', 'int:0:1', $restricted, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('useitemtype', 'int:0:1', $useitemtype, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('restricted', 'int:0:1', $data['restricted'], xarModVars::get('keywords','restricted'), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('useitemtype', 'int:0:1', $data['useitemtype'], xarModVars::get('keywords','useitemtype'), XARVAR_NOT_REQUIRED)) return;
     if (!xarSecurityCheck('AdminKeywords')) return;
 
-    $data = array();
-
-    if (isset($restricted)) {
-        $data['restricted'] = $restricted;
-    } else {
-        $data['restricted'] = xarModVars::get('keywords','restricted');
-    }
-
-    if (isset($useitemtype)) {
-        $data['useitemtype'] = $useitemtype;
-    } else {
-        $data['useitemtype'] = xarModVars::get('keywords','useitemtype');
-    }
+    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'keywords'));
+    $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls, user_menu_link');
+    $data['module_settings']->getItem();
 
     $data['settings'] = array();
     $keywords = xarModAPIFunc('keywords',

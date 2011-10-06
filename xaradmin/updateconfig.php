@@ -80,6 +80,17 @@ function keywords_admin_updateconfig()
     if (isset($delimiters)) {
         xarModVars::set('keywords','delimiters',trim($delimiters));
     }
+    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'keywords'));
+    $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls, user_menu_link');
+    $data['module_settings']->getItem();
+
+    $isvalid = $data['module_settings']->checkInput();
+    if (!$isvalid) {
+        return xarTpl::module('keywords','admin','modifyconfig', $data);
+    } else {
+        $itemid = $data['module_settings']->updateItem();
+    }
+
     xarController::redirect(xarModURL('keywords', 'admin', 'modifyconfig'));
     return true;
 }

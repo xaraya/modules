@@ -31,12 +31,12 @@ function keywords_userapi_getwords($args)
 
     if (!isset($modid) || !is_numeric($modid)) {
         $msg = xarML('Invalid #(1)', 'module id');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        throw new Exception($msg);
         return;
     }
     if (!isset($itemid) || !is_numeric($itemid)) {
         $msg = xarML('Invalid #(1)', 'item id');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        throw new Exception($msg);
         return;
     }
 
