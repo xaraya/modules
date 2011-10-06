@@ -19,6 +19,9 @@
         {
             $data = parent::display($data);
             
+            $vars['color'] = $this->color;
+            $vars['background'] = $this->background;
+            
             $vars['tags'] = xarMod::apiFunc('keywords','user','getkeywordhits');
             $data['content'] = $vars;
             return $data;
