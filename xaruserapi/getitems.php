@@ -50,7 +50,7 @@ function keywords_userapi_getitems($args)
     $query = "SELECT id,
                      itemid,
                      keyword,
-                     moduleid,
+                     module_id,
                      itemtype
               FROM $keywordstable";
     if (!empty($id)) {
@@ -103,7 +103,7 @@ function keywords_userapi_getitems($args)
         list($item['id'],
              $item['itemid'],
              $item['keyword'],
-             $item['moduleid'],
+             $item['module_id'],
              $item['itemtype']) = $result->fields;
         $items[$item['id']] = $item;
         $result->MoveNext();

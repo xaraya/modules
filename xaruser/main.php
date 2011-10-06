@@ -67,16 +67,16 @@ if (!xarSecurityCheck('ReadKeywords')) return;
         // build up a list of item ids per module & item type
         $modules = array();
         foreach ($items as $id => $item) {
-             if (!isset($modules[$item['moduleid']])) {
-                 $modules[$item['moduleid']] = array();
+             if (!isset($modules[$item['module_id']])) {
+                 $modules[$item['module_id']] = array();
              }
              if (empty($item['itemtype'])) {
                  $item['itemtype'] = 0;
              }
-             if (!isset($modules[$item['moduleid']][$item['itemtype']])) {
-                 $modules[$item['moduleid']][$item['itemtype']] = array();
+             if (!isset($modules[$item['module_id']][$item['itemtype']])) {
+                 $modules[$item['module_id']][$item['itemtype']] = array();
              }
-             $modules[$item['moduleid']][$item['itemtype']][$item['itemid']] = $id;
+             $modules[$item['module_id']][$item['itemtype']][$item['itemid']] = $id;
         }
 
         // get the corresponding URL and title (if any)
