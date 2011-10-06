@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:set name="idvalue">'color' .$blockid</xar:set>
+            <label for="#$idvalue#" class="xar-form-label" title="#xarML('Light Row (add in hexadecimal format ex. F0F0F0)')#">
+                Text color:
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:data-input type="tcolorpicker" name="color" id="$idvalue" value="$color" maxlength="6" class="xar-form-textshort"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:set name="idvalue">'background' .$blockid</xar:set>
+            <label for="#$idvalue#" class="xar-form-label" title="#xarML('Dark Row (add in hexadecimal format ex. F0F0F0)')#">
+                Background color:
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:data-input type="tcolorpicker" name="background" id="$idvalue" value="$background" maxlength="6" class="xar-form-textshort"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="cloudtype" title="#xarML('What type of cloud to show in the block')#" class="xar-form-label">
+                <xar:mlstring>
+                    Cloud Type:
+                </xar:mlstring>
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:set name="options">
+                array(
+                    array('id' => 1, 'name' => 'Category items'),
+                    array('id' => 2, 'name' => 'Number of hits'),
+                    array('id' => 3, 'name' => 'Keywords'),
+                )
+            </xar:set>
+            <xar:data-input type="dropdown" name="cloudtype" options="$options" value="$cloudtype"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            &#160;
+        </div>
+        <div class="xar-col">
+            <xar:if condition="$status eq 'not_available'">
+                <span class="xar-alert">The required module is not installed</span>
+            </xar:if>
+        </div>
+    </div>
+</xar:template>

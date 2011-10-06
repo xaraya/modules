@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<!--
+    <xar:if condition="$cloudtype eq 1 or empty($cloudtype)"> 
+        <xar:set name="items">xarMod::apiFunc('keywords','user','getlist',array('count'=>'1'))</xar:set> 
+    <xar:if condition="$cloudtype eq 2"/> 
+        <xar:set name="tags">xarMod::apiFunc('keywords','user','cloud')</xar:set> 
+    <xar:if condition="$cloudtype eq 3"/> 
+        <xar:set name="keyarray">xarMod::apiFunc('keywords','user','getlist',array('count'=>'1'))</xar:set> 
+    </xar:if> 
+-->
+    <xar:if condition="!empty($tags)"> 
+        <xar:set name="max">max($tags)</xar:set> 
+        <xar:if condition="!empty($title)"> 
+            <div class="xar-block-head"> 
+                <div class="xar-block-title">#$title#</div> 
+            </div> 
+        </xar:if> 
+        <xar:if condition="!empty($tags)">
+            <div style="text-align: center;">
+                <xar:foreach in="$tags" key="$keyword" value="$count">  
+                    <xar:set name="ratio">round(70+80*$count/$max)</xar:set>  
+                    <a href="index.php?module=keywords&amp;fun=display&amp;keyword=#$keyword#" style="font-size:#$ratio#%;" title="#$count# items">#$keyword#</a>&#160;
+                </xar:foreach>
+            </div>
+        </xar:if>      
+    </xar:if> 
+
+</xar:template>

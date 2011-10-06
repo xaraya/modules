@@ -158,6 +158,12 @@ function keywords_init()
                            'keywords', 'user', 'search')) {
         return;
     }
+    // Register blocks
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName'  => 'keywords',
+                             'blockType'=> 'cloud'))) return;
 /*
     // Register blocks
     if (!xarModAPIFunc('blocks',

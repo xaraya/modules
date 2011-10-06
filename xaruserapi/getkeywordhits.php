@@ -9,23 +9,10 @@
  *
  * @subpackage Keywords Module
  * @link http://xaraya.com/index.php/release/187.html
- * @author mikespub
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
-/**
- * display keywords entry
- *
- * @param $args['itemid'] item id of the keywords entry
- * @return array Item
- * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
- */
-function keywords_user_cloud($args)
-{
-    if (!xarSecurityCheck('ReadKeywords')) return;
-
-//    $keywords = xarmodapifunc('keywords','user','getlist',array('count'=>'1'));
-    
-//    var_dump($keywords);exit;
-    
+function keywords_userapi_getkeywordhits($args)
+{    
     sys::import('xaraya.structures.query');
    
     $dbconn =& xarDB::getConn();
@@ -49,11 +36,11 @@ function keywords_user_cloud($args)
     $q->addorder('k.keyword','ASC');
     $q->run();
     
+    // Reorganize to an array where the keywords are keys
     $tags = array();
     foreach ($q->output() as $tag) $tags[$tag['keyword']] = $tag['hits'];
     
-    $data['tags'] = $tags;   
-    return $data;
+    return $tags;
 }
 
 ?>
