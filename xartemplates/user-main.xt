@@ -20,28 +20,10 @@
         </h4>
       </div>
     <xar:else /> 
-      <xar:comment>Start the list column output</xar:comment>
-      <xar:set name="totitemspercol">round($totitems/$displaycolumns)</xar:set>
+      <!-- Start the list column output -->
+      <xar:set name="totitemspercol">round($totitems/$displaycolumns)</xar:set>#$totitemspercol#
       <xar:set name="divwidth">round(95/$displaycolumns)</xar:set>
       <div class="xar-form-input-wrapper">
-        <xar:while condition="count($items) gt 0">
-          <xar:set name="i">1</xar:set>
-          <xar:comment> Begin list column div </xar:comment>
-          <div class="xar-floatleft xar-align-left" style="width: #$divwidth#%;">
-            <ul>
-            <xar:while condition="count($items) gt 0">
-              <xar:set name="$item">array_shift($items)</xar:set>
-              <li class="xar-list-nostyle">
-                <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
-              </li>
-              <xar:if condition="$i++ ge $totitemspercol">
-                <xar:break/>
-              </xar:if>
-            </xar:while>
-            </ul>
-          </div> 
-          <xar:comment> End list column div </xar:comment>
-        </xar:while>
       </div>
     </xar:if>
   <xar:elseif condition="$status eq 1 and !empty($keyword)" />
@@ -56,39 +38,38 @@
     <div class="xar-standard-box-padding">
       <ul class="xar-list-nostyle">
         <xar:foreach in="$items" key="$id" value="$item">
-          <li>
-            <xar:if condition="!empty($item['modname'])">
-              [#$item['modname']#] 
-            </xar:if>
-            <xar:if condition="!empty($item['url']) and !empty($item['label'])">
-              <a href="#$item['url']#">
-                #$item['label']# 
-              </a>
-              <xar:elseif condition="!empty($item['url'])" />
-              <xar:comment>you could skip these items </xar:comment>
-              <a href="#$item['url']#">
-                <xar:ml>
-                  <xar:mlstring>item #(1)</xar:mlstring>
-                  <xar:mlvar>
-                    #$item['itemid']# 
-                  </xar:mlvar>
-                                </xar:ml>
-                            </a>
-                        <xar:else />
-                            <xar:comment>you could skip these items </xar:comment>
-                            item 
-                            #$item['moduleid']# #$item['itemtype']# #$item['itemid']# 
-                            <!-- </a> -->
-                        </xar:if>
-                    </li>
-                </xar:foreach>
-            </ul>
-            <p>
-                <a href="javascript:history.back(-1)">
-                    Click here to go back 
-                </a>
-            </p>
-        </div>
+            <li>
+                <xar:if condition="!empty($item['modname'])">
+                    [#$item['modname']#] 
+                </xar:if>
+                <xar:if condition="!empty($item['url']) and !empty($item['label'])">
+                    <a href="#$item['url']#">
+                        #$item['label']# 
+                    </a>
+                <xar:elseif condition="!empty($item['url'])" />
+                    <!-- you could skip these items -->
+                    <a href="#$item['url']#">
+                        <xar:ml>
+                            <xar:mlstring>item #(1)</xar:mlstring>
+                            <xar:mlvar>
+                                #$item['itemid']# 
+                            </xar:mlvar>
+                        </xar:ml>
+                    </a>
+                <xar:else />
+                    <!-- you could skip these items -->
+                        item 
+                        #$item['moduleid']# #$item['itemtype']# #$item['itemid']# 
+                </xar:if>
+            </li>
+        </xar:foreach>
+      </ul>
+      <p>
+        <a href="javascript:history.back(-1)">
+            Click here to go back 
+        </a>
+      </p>
+    </div>
     <xar:elseif condition="$status eq 1 and empty($keyword)" />
         No keywords
     <xar:elseif condition="$status eq 2" />

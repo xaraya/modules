@@ -19,10 +19,17 @@
         {
             $data = parent::display($data);
             
-            $vars['color'] = $this->color;
-            $vars['background'] = $this->background;
-            
-            $vars['tags'] = xarMod::apiFunc('keywords','user','getkeywordhits');
+            $vars['color'] = $data['color'];
+            $vars['background'] = $data['background'];
+            $vars['tags'] = array();
+            switch ($data['cloudtype']) {
+                case 1:
+                break;
+                case 2:
+                case 3:
+                    $vars['tags'] = xarMod::apiFunc('keywords','user','getkeywordhits',array('cloudtype' => $data['cloudtype']));
+                break;                
+            }
             $data['content'] = $vars;
             return $data;
         }
