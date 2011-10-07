@@ -62,7 +62,7 @@
                         <strong>Special Pages</strong>
                     </legend>
 
-                <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
                 <input type="hidden" name="form" id="form" value="form"/>
                     <p class="param">
                         <label for="defaultpage">Default page</label>
