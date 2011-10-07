@@ -7,7 +7,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div>
     <xar:if condition="$showdisplay eq 1">
-        <xar:mlstring>Ratings</xar:mlstring>&#160;
+        Ratings&#160;
         <xar:if condition="$style eq 'percentage'">
             #$rating# %
         <xar:elseif condition="$style eq 'outoffive'" />
@@ -36,15 +36,15 @@
             </xar:for>
         <xar:elseif condition="$style eq 'customised'" />
             <xar:if condition="$rating gt 80">
-                <strong><xar:mlstring>Excellent</xar:mlstring></strong>
+                <strong>Excellent</strong>
             <xar:elseif condition="$rating gt 60"/>
-                <strong><xar:mlstring>Good</xar:mlstring></strong>
+                <strong>Good</strong>
             <xar:elseif condition="$rating gt 40"/>
-                <strong><xar:mlstring>Average</xar:mlstring></strong>
+                <strong>Average</strong>
             <xar:elseif condition="$rating gt 20"/>
-                <strong><xar:mlstring>Bad</xar:mlstring></strong>
+                <strong>Bad</strong>
             <xar:else />
-                <strong><xar:mlstring>Very Bad</xar:mlstring></strong>
+                <strong>Very Bad</strong>
             </xar:if>
         </xar:if>
     </xar:if>
@@ -112,11 +112,11 @@
                         </select>
                     <xar:elseif condition="$style eq 'customised'" />
                         <select name="rating" id="rating" size="1">
-                            <option value="90"><xar:mlstring>Excellent</xar:mlstring></option>
-                            <option value="70"><xar:mlstring>Good</xar:mlstring></option>
-                            <option value="50" selected="selected"><xar:mlstring>Average</xar:mlstring></option>
-                            <option value="30"><xar:mlstring>Bad</xar:mlstring></option>
-                            <option value="10"><xar:mlstring>Very Bad</xar:mlstring></option>
+                            <option value="90">Excellent</option>
+                            <option value="70">Good</option>
+                            <option value="50" selected="selected">Average</option>
+                            <option value="30">Bad</option>
+                            <option value="10">Very Bad</option>
                         </select>
                     </xar:if>
 

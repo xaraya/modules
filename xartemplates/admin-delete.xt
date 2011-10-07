@@ -1,41 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-
-
-
-
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>Ratings Administration</xar:mlstring>
-    </span>
-</div>
-<div class="xar-mod-body">
-    <xar:template type="module" module="ratings" file="admin-menu" />
-    <h2><xar:mlstring>Delete Ratings</xar:mlstring></h2>
-    <form name="post" id="post" action="&xar-modurl-ratings-admin-delete;" method="post" enctype="application/x-www-form-urlencoded">
-    <fieldset>
-        <legend>
-            <xar:mlstring>Delete Confirmation</xar:mlstring>
-        </legend>
-    <div class="xar-form-input-wrapper-before">
-<xar:if condition="empty($modname)">
-    <xar:mlstring>Are you sure you want to delete all ratings ?</xar:mlstring>
-<xar:elseif condition="empty($itemid)"/>
-    <xar:ml><xar:mlstring>Are you sure you want to delete all ratings for module <strong>#(1)</strong> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar></xar:ml>
-<xar:else/>
-    <xar:ml><xar:mlstring>Are you sure you want to delete all ratings for module <strong>#(1)</strong> item <strong>#(2)</strong> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar><xar:mlvar>#$itemid#</xar:mlvar></xar:ml>
-</xar:if>
-    </div>
-    </fieldset>
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="modid" id="modid" value="#$modid#" />
-    <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
-    <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
-        <div class="xar-form-input-wrapper-after">
-            <input type="submit" name="confirm" value="#xarML('Confirm')#" />
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>Delete Ratings</h2>
+        <form name="post" id="post" action="&xar-modurl-ratings-admin-delete;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
+            <legend>
+                Delete Confirmation
+            </legend>
+        <div class="xar-form-input-wrapper-before">
+    <xar:if condition="empty($modname)">
+        Are you sure you want to delete all ratings ?
+    <xar:elseif condition="empty($itemid)"/>
+        <xar:ml><xar:mlstring>Are you sure you want to delete all ratings for module <strong>#(1)</strong> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar></xar:ml>
+    <xar:else/>
+        <xar:ml><xar:mlstring>Are you sure you want to delete all ratings for module <strong>#(1)</strong> item <strong>#(2)</strong> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar><xar:mlvar>#$itemid#</xar:mlvar></xar:ml>
+    </xar:if>
         </div>
-    </form>
-</div>
-
+        </fieldset>
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="modid" id="modid" value="#$modid#" />
+        <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
+        <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+            <div class="xar-form-input-wrapper-after">
+                <input type="submit" name="confirm" value="#xarML('Confirm')#" />
+            </div>
+        </form>
+    </div>
 </xar:template>

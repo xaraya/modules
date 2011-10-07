@@ -129,7 +129,7 @@ function ratings_init()
     xarRegisterMask('OverviewRatings', 'All', 'ratings', 'All', 'All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadRatings', 'All', 'ratings', 'All', 'All', 'ACCESS_READ');
     xarRegisterMask('AddRatings', 'All', 'ratings', 'All', 'All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteRatings', 'All', 'ratings', 'All', 'All', 'ACCESS_DELETE');
+    xarRegisterMask('ManageRatings', 'All', 'ratings', 'All', 'All', 'ACCESS_DELETE');
     xarRegisterMask('AdminRatings', 'All', 'ratings', 'All', 'All', 'ACCESS_ADMIN');
 
     xarRegisterMask('CommentRatings', 'All', 'ratings', 'Item', 'All:All:All', 'ACCESS_COMMENT');

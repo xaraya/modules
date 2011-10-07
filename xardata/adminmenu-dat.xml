@@ -1,0 +1,32 @@
+<adminmenu>
+    <menuitems>
+        <menuitem>
+            <includes>
+                <includeitem>main</includeitem>
+                <includeitem>overview</includeitem>
+            </includes>
+            <target>main</target>
+            <title>Show the overview screen</title>
+            <label>Overview</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageRatings</mask>
+            <includes>
+                <includeitem>view</includeitem>
+                <includeitem>dekete</includeitem>
+            </includes>
+            <target>view</target>
+            <title>View the ratings statistics</title>
+            <label>Statistics</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminRatings</mask>
+            <includes>
+                <includeitem>modifyconfig</includeitem>
+            </includes>
+            <target>modifyconfig</target>
+            <title>Modify the configuration settings</title>
+            <label>Modify Configuration</label>
+        </menuitem>
+    </menuitems>
+</adminmenu>

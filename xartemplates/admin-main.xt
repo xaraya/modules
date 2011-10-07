@@ -1,81 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-
-
-
-
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Ratings Administration</xar:mlstring></span>
-</div>
-<div class="xar-mod-body">
-    <xar:template type="module" module="ratings" file="admin-menu" />
-    <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
-    <h2>
-        <xar:mlstring>Overview</xar:mlstring>
-    </h2>
-
-    <h3>
-        <xar:mlstring>What is it?</xar:mlstring>
-    </h3>
-
-    <p>
-        <em><xar:mlstring>Ratings is a Xaraya Utility Module.</xar:mlstring></em>
-        <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
+        <h2>
+            Overview
+        </h2>
+    
+        <h3>
+            What is it?
+        </h3>
+    
+        <p>
+            <em>Ratings is a Xaraya Utility Module.</em>
+            It is currently responsible for accomplishing these tasks:
+            <ul>
+                <li>The ratings module is a utility module that allows you to add a rating type to any content module that supports hooks.</li>
+            </ul>
+        </p>
+    
+        <h3>
+            How to use it?
+        </h3>
+    
+        <p>
+            
+            From the Modules Administration configure the ratings hook with any content module that you would like to allow a rating to happen.  You can configure the appearance of the ratings from the configure portion in the ratings administration.
+            
+        </p>
+    
+        <h3>
+            Included Blocks
+        </h3>
+    
+        <p>
+            There are no included blocks at this time.
+        </p>
+    
+        <h3>
+            Included Hooks
+        </h3>
+    
+        <p>
+            The ratings hook is a display hook to allow content modules to rate content.
+        </p>
+    
+        <h3>
+            Further Information
+        </h3>
+    
+        <p>
+            <strong>Notice for users of Ratings versions 1.2.1 and below:</strong> Prior to version 1.3.0, Ratings incorrectly stored rating values greater than 10 as 9.99999.  The true value of these ratings is lost and cannot be corrected, and version 1.3.0 makes no changes to existing values.
+        </p>
+    
+        <p>
+            Further information on the Ratings module can be found at
+        </p>
         <ul>
-            <li><xar:mlstring>The ratings module is a utility module that allows you to add a rating type to any content module that supports hooks.</xar:mlstring></li>
+            <li>
+                Ratings Extension page at <a title="#xarML('Ratings Module - Xaraya Extension 41')#" href="http://www.xaraya.com/index.php/release/41.html">Xaraya Extension and Releases</a>.
+                 Click on Version History tab at the bottom to get the latest release information.
+            </li>
+            <li>
+                Related tutorials and documentation on Ratings found at <a href="http://www.xaraya.com/index.php/keywords/ratings/" title="#xarML('Related documentation on Ratings')#">Xaraya Documentation.</a>
+            </li>
         </ul>
-    </p>
-
-    <h3>
-        <xar:mlstring>How to use it?</xar:mlstring>
-    </h3>
-
-    <p>
-        <xar:mlstring>
-        From the Modules Administration configure the ratings hook with any content module that you would like to allow a rating to happen.  You can configure the appearance of the ratings from the configure portion in the ratings administration.
-        </xar:mlstring>
-    </p>
-
-    <h3>
-        <xar:mlstring>Included Blocks</xar:mlstring>
-    </h3>
-
-    <p>
-        <xar:mlstring>There are no included blocks at this time.</xar:mlstring>
-    </p>
-
-    <h3>
-        <xar:mlstring>Included Hooks</xar:mlstring>
-    </h3>
-
-    <p>
-        <xar:mlstring>The ratings hook is a display hook to allow content modules to rate content.</xar:mlstring>
-    </p>
-
-    <h3>
-        <xar:mlstring>Further Information</xar:mlstring>
-    </h3>
-
-    <p>
-        <strong><xar:mlstring>Notice for users of Ratings versions 1.2.1 and below:</xar:mlstring></strong> <xar:mlstring>Prior to version 1.3.0, Ratings incorrectly stored rating values greater than 10 as 9.99999.  The true value of these ratings is lost and cannot be corrected, and version 1.3.0 makes no changes to existing values.</xar:mlstring>
-    </p>
-
-    <p>
-        <xar:mlstring>Further information on the Ratings module can be found at</xar:mlstring>
-    </p>
-    <ul>
-        <li>
-            <xar:mlstring>Ratings Extension page at</xar:mlstring> <a title="#xarML('Ratings Module - Xaraya Extension 41')#" href="http://www.xaraya.com/index.php/release/41.html">Xaraya Extension and Releases</a>.
-            <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
-        </li>
-        <li>
-            <xar:mlstring>Related tutorials and documentation on Ratings found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/ratings/" title="#xarML('Related documentation on Ratings')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
-        </li>
-    </ul>
-    <p class="xar-sub">
-        <strong>&#160;<xar:mlstring>Ratings Module Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 1.1.0&#160; 2008-06-12
-    </p>
-</div>
-
+        <p class="xar-sub">
+            <strong>&#160;Ratings Module Overview</strong><br />&#160;Version 1.1.0&#160; 2008-06-12
+        </p>
+    </div>
 </xar:template>
