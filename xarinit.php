@@ -17,7 +17,10 @@
  */
 function ratings_init()
 {
-    // Get database information
+    # --------------------------------------------------------
+    #
+    # Set tables
+    #
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
     // Load Table Maintainance API
@@ -54,10 +57,19 @@ function ratings_init()
 
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-    // Set up module variables
+
+    # --------------------------------------------------------
+    #
+    # Set up modvars
+    #
     xarModVars::set('ratings', 'defaultstyle', 'outoffivestars');
     xarModVars::set('ratings', 'seclevel', 'medium');
-    // Set up module hooks
+    xarModSetVar('ratings', 'shownum', 1);
+
+    # --------------------------------------------------------
+    #
+    # Set up hooks
+    #
     if (!xarModRegisterHook('item',
             'display',
             'GUI',
