@@ -9,7 +9,7 @@
         <xar:set name="pubtype">substr($object->name,13)</xar:set>
     </xar:if>
     
-    <!-- Display eachn  item ithe summary template -->
+    <!-- Display each  item ithe summary template -->
     <xar:foreach in="$items" key="$itemid" value="$fields">
         <xar:set name="dummy">$object->setFieldValues($fields,1)</xar:set>
     
@@ -21,7 +21,7 @@
         <xar:else/>
             <xar:set name="filename">$pubtype . '/summary.xt'</xar:set>
         </xar:if>
-            <xar:set name="fields">array('fields' => $items[$itemid])</xar:set>
+        <xar:set name="fields">array('fields' => $items[$itemid])</xar:set>
         <xar:template file="$filename" type="system"/>
     </xar:foreach>
 </xar:template>

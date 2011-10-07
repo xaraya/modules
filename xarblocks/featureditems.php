@@ -56,7 +56,7 @@
             $data = parent::display($data);
         
             // Defaults
-            if (empty($data['state'])) {$data['state'] = $this->featuredid;}
+            if (empty($data['state'])) {$data['state'] = $this->state;}
 
             if (!isset($data['showvalue'])) {
                 if ($data['toptype'] == 'rating') {
