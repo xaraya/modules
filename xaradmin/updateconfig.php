@@ -28,7 +28,7 @@ function ratings_admin_updateconfig()
 
     $settings = array('default');
     
-    $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
+    $hookedmodules = xarMod::apiFunc('modules', 'admin', 'gethookedmodules',
                                    array('hookModName' => 'ratings'));
 
     if (isset($hookedmodules) && is_array($hookedmodules)) {
@@ -36,7 +36,7 @@ function ratings_admin_updateconfig()
             // we have hooks for individual item types here
             if (!isset($value[0])) {
                 // Get the list of all item types for this module (if any)
-                $mytypes = xarModAPIFunc($modname,'user','getitemtypes',
+                $mytypes = xarMod::apiFunc($modname,'user','getitemtypes',
                                          // don't throw an exception if this function doesn't exist
                                          array(), 0);
                 foreach ($value as $itemtype => $val) {
@@ -51,32 +51,32 @@ function ratings_admin_updateconfig()
 	foreach($settings as $modname) {
 		if($modname == 'default') {
 			if(isset($style['default'])) {
-				xarModSetVar('ratings','defaultstyle', $style['default']);
+				xarModVars::set('ratings','defaultstyle', $style['default']);
 			}
 			if(isset($seclevel['default'])) {
-				xarModSetVar('ratings','seclevel', $seclevel['default']);
+				xarModVars::set('ratings','seclevel', $seclevel['default']);
 			}
 			if(!isset($shownum['default']) || $shownum['default'] != 1) {
-				xarModSetVar('ratings','shownum', 0);
+				xarModVars::set('ratings','shownum', 0);
 			} else {
-				xarModSetVar('ratings','shownum', 1);
+				xarModVars::set('ratings','shownum', 1);
 			}
 		} else {
 			if(isset($style[$modname])) {
-				xarModSetVar('ratings',"style.$modname", $style[$modname]);
+				xarModVars::set('ratings',"style.$modname", $style[$modname]);
 			}
 			if(isset($seclevel[$modname])) {
-				xarModSetVar('ratings',"seclevel.$modname", $seclevel[$modname]);
+				xarModVars::set('ratings',"seclevel.$modname", $seclevel[$modname]);
 			}
 			if(!isset($shownum[$modname]) || $shownum[$modname] != 1) {
-				xarModSetVar('ratings',"shownum.$modname", 0);
+				xarModVars::set('ratings',"shownum.$modname", 0);
 			} else {
-				xarModSetVar('ratings',"shownum.$modname", 1);
+				xarModVars::set('ratings',"shownum.$modname", 1);
 			}
 		}
 	}
 
-    xarResponseRedirect(xarModURL('ratings', 'admin', 'modifyconfig'));
+    xarController::redirect(xarModURL('ratings', 'admin', 'modifyconfig'));
 
     return true;
 }

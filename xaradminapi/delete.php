@@ -39,8 +39,8 @@ function ratings_adminapi_delete($args)
     // if we're coming from the delete GUI (or elsewhere)
     } elseif (!empty($confirm)) {
         // Database information
-        $dbconn =& xarDBGetConn();
-        $xartable =& xarDBGetTables();
+        $dbconn =& xarDB::getConn();
+        $xartable =& xarDB::getTables();
         $ratingstable = $xartable['ratings'];
 
         $query = "DELETE FROM $ratingstable ";
@@ -56,12 +56,12 @@ function ratings_adminapi_delete($args)
             if (empty($itemtype) || !is_numeric($itemtype)) {
                 $itemtype = 0;
             }
-            $query .= " WHERE xar_moduleid = ?
-                          AND xar_itemtype = ?";
+            $query .= " WHERE module_id = ?
+                          AND itemtype = ?";
             $bindvars[] = $modid;
             $bindvars[] = $itemtype;
             if (!empty($itemid)) {
-                $query .= " AND xar_itemid = ?";
+                $query .= " AND itemid = ?";
                 $bindvars[] = $itemid;
             }
         }
@@ -69,7 +69,7 @@ function ratings_adminapi_delete($args)
         $result =& $dbconn->Execute($query, $bindvars);
         if (!$result) return;
 
-// TODO: delete user votes with xarModDelVar('ratings',"$modname:$itemtype:$itemid");
+// TODO: delete user votes with xarModVars::delete('ratings',"$modname:$itemtype:$itemid");
 
         return true;
     }

@@ -32,7 +32,7 @@ function ratings_userapi_get($args)
                        new SystemException($msg));
         return;
     }
-    $modid = xarModGetIDFromName($modname);
+    $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     xarML('module id'), 'user', 'get', 'ratings');
@@ -49,15 +49,15 @@ function ratings_userapi_get($args)
     if(!xarSecurityCheck('ReadRatings')) return;
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $ratingstable = $xartable['ratings'];
     // Get items
-    $query = "SELECT xar_rating
+    $query = "SELECT rating
             FROM $ratingstable
-            WHERE xar_moduleid = ?
-              AND xar_itemid = ?
-              AND xar_itemtype = ?";
+            WHERE module_id = ?
+              AND itemid = ?
+              AND itemtype = ?";
     $bindvars = array($modid, $objectid, $itemtype);
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;

@@ -33,7 +33,7 @@ function ratings_adminapi_deleteall($args)
         return false;
     }
 
-    $modid = xarModGetIDFromName($objectid);
+    $modid = xarMod::getRegID($objectid);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module ID', 'admin', 'deleteall', 'ratings');
@@ -47,19 +47,19 @@ function ratings_adminapi_deleteall($args)
     // avoid potential security holes or just too much wasted processing
     if(!xarSecurityCheck('DeleteRatings')) return;
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $ratingstable = $xartable['ratings'];
 
     $query = "DELETE FROM $ratingstable
-            WHERE xar_moduleid = ?";
+            WHERE module_id = ?";
     $result =& $dbconn->Execute($query, array($modid));
     if (!$result) return;
 
     // hmmm, I think we'll skip calling more hooks here... :-)
     //xarModCallHooks('item', 'delete', '', '');
 
-// TODO: delete user votes with xarModDelVar('ratings',"$modname:$itemtype:$itemid");
+// TODO: delete user votes with xarModVars::delete('ratings',"$modname:$itemtype:$itemid");
 
     // Return the extra info
     if (!isset($extrainfo)) {

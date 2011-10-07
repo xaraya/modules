@@ -35,7 +35,7 @@ function ratings_userapi_getitems($args)
         return;
     }
     if (!empty($modname)) {
-        $modid = xarModGetIDFromName($modname);
+        $modid = xarMod::getRegID($modname);
     }
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -56,30 +56,30 @@ function ratings_userapi_getitems($args)
     if(!xarSecurityCheck('ReadRatings')) return;
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $ratingstable = $xartable['ratings'];
 
     // Get items
-    $query = "SELECT xar_itemid, xar_rating, xar_numratings
+    $query = "SELECT itemid, rating, numratings
             FROM $ratingstable
-            WHERE xar_moduleid = ?
-              AND xar_itemtype = ?";
+            WHERE module_id = ?
+              AND itemtype = ?";
 
     $bindvars[] = (int) $modid;
     $bindvars[] = (int) $itemtype;
 
     if (isset($itemids) && count($itemids) > 0) {
         $allids = join(', ',$itemids);
-        $query .= " AND xar_itemid IN (?)";
+        $query .= " AND itemid IN (?)";
         $bindvars[] = $allids;
     }
     if ($sort == 'rating') {
-        $query .= " ORDER BY xar_rating DESC, xar_numratings DESC";
+        $query .= " ORDER BY rating DESC, numratings DESC";
     } elseif ($sort == 'numratings') {
-        $query .= " ORDER BY xar_numratings DESC, xar_rating DESC";
+        $query .= " ORDER BY numratings DESC, rating DESC";
     } else {
-        $query .= " ORDER BY xar_itemid ASC";
+        $query .= " ORDER BY itemid ASC";
     }
 
     $result =& $dbconn->Execute($query, $bindvars);

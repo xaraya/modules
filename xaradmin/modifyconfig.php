@@ -26,9 +26,9 @@ function ratings_admin_modifyconfig()
     // Security Check
     if (!xarSecurityCheck('AdminRatings')) return;
 
-    $defaultstyle = xarModGetVar('ratings', 'defaultstyle');
-    $defaultseclevel = xarModGetVar('ratings', 'seclevel');
-    $defaultshownum = xarModGetVar('ratings', 'shownum');
+    $defaultstyle = xarModVars::get('ratings', 'defaultstyle');
+    $defaultseclevel = xarModVars::get('ratings', 'seclevel');
+    $defaultshownum = xarModVars::get('ratings', 'shownum');
 
     $data['settings'] = array();
     $data['settings']['default'] = array('label' => xarML('Default configuration'),
@@ -36,7 +36,7 @@ function ratings_admin_modifyconfig()
                                          'seclevel' => $defaultseclevel,
                                          'shownum' => $defaultshownum);
 
-    $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
+    $hookedmodules = xarMod::apiFunc('modules', 'admin', 'gethookedmodules',
                                    array('hookModName' => 'ratings'));
 
     if (isset($hookedmodules) && is_array($hookedmodules)) {
@@ -44,22 +44,22 @@ function ratings_admin_modifyconfig()
             // we have hooks for individual item types here
             if (!isset($value[0])) {
                 // Get the list of all item types for this module (if any)
-                $mytypes = xarModAPIFunc($modname,'user','getitemtypes',
+                $mytypes = xarMod::apiFunc($modname,'user','getitemtypes',
                                          // don't throw an exception if this function doesn't exist
                                          array(), 0);
                 foreach ($value as $itemtype => $val) {
-                    $style = xarModGetVar('ratings', "style.$modname.$itemtype");
+                    $style = xarModVars::get('ratings', "style.$modname.$itemtype");
                     if (empty($style)) {
                         $style = $defaultstyle;
                     }
-                    $seclevel = xarModGetVar('ratings', "seclevel.$modname.$itemtype");
+                    $seclevel = xarModVars::get('ratings', "seclevel.$modname.$itemtype");
                     if (empty($seclevel)) {
                         $seclevel = $defaultseclevel;
                     }
-                    $shownum = xarModGetVar('ratings', "shownum.$modname.$itemtype");
+                    $shownum = xarModVars::get('ratings', "shownum.$modname.$itemtype");
                     if (empty($shownum)) {
                         $shownum = $defaultshownum;
-                        xarModSetVar('ratings',"shownum.$modname.$itemtype", $defaultshownum);
+                        xarModVars::set('ratings',"shownum.$modname.$itemtype", $defaultshownum);
                     }
                     if (isset($mytypes[$itemtype])) {
                         $type = $mytypes[$itemtype]['label'];
@@ -74,18 +74,18 @@ function ratings_admin_modifyconfig()
                                                                     'shownum' => $shownum);
                 }
             } else {
-                $style = xarModGetVar('ratings', 'style.' . $modname);
+                $style = xarModVars::get('ratings', 'style.' . $modname);
                 if (empty($style)) {
                     $style = $defaultstyle;
                 }
-                $seclevel = xarModGetVar('ratings', 'seclevel.' . $modname);
+                $seclevel = xarModVars::get('ratings', 'seclevel.' . $modname);
                 if (empty($seclevel)) {
                     $seclevel = $defaultseclevel;
                 }
-                $shownum = xarModGetVar('ratings', 'shownum.' . $modname);
+                $shownum = xarModVars::get('ratings', 'shownum.' . $modname);
                 if (empty($shownum)) {
                     $shownum = $defaultshownum;
-                    xarModSetVar('ratings',"shownum.$modname", $defaultshownum);
+                    xarModVars::set('ratings',"shownum.$modname", $defaultshownum);
                 }
                 $link = xarModURL($modname,'user','main');
                 $data['settings'][$modname] = array('label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),

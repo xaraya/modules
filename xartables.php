@@ -26,7 +26,7 @@ function ratings_xartables()
     // Initialise table array
     $xartable = array();
     // Name for ratings database entities
-    $ratings = xarDBGetSiteTablePrefix() . '_ratings';
+    $ratings = xarDB::getPrefix() . '_ratings';
     // Table name
     $xartable['ratings'] = $ratings;
     // Return table information

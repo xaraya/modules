@@ -25,7 +25,7 @@ function ratings_admin_main()
     // Security Check
     if (!xarSecurityCheck('AdminRatings')) return;
 
-        xarResponseRedirect(xarModURL('ratings', 'admin', 'modifyconfig'));
+        xarController::redirect(xarModURL('ratings', 'admin', 'modifyconfig'));
 
     // success
     return true;

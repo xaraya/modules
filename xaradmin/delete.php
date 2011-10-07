@@ -33,12 +33,12 @@ function ratings_admin_delete()
 
         $what = '';
         if (!empty($modid)) {
-            $modinfo = xarModGetInfo($modid);
+            $modinfo = xarMod::getInfo($modid);
             if (empty($itemtype)) {
                 $data['modname'] = ucwords($modinfo['displayname']);
             } else {
                 // Get the list of all item types for this module (if any)
-                $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
+                $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                          // don't throw an exception if this function doesn't exist
                                          array(), 0);
                 if (isset($mytypes) && !empty($mytypes[$itemtype])) {
@@ -55,14 +55,14 @@ function ratings_admin_delete()
     }
 
     if (!xarSecConfirmAuthKey()) return;
-    if (!xarModAPIFunc('ratings','admin','delete',
+    if (!xarMod::apiFunc('ratings','admin','delete',
                        array('modid' => $modid,
                              'itemtype' => $itemtype,
                              'itemid' => $itemid,
                              'confirm' => $confirm))) {
         return;
     }
-    xarResponseRedirect(xarModURL('ratings', 'admin', 'view'));
+    xarController::redirect(xarModURL('ratings', 'admin', 'view'));
     return true;
 }
 

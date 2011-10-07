@@ -33,7 +33,7 @@ function ratings_userapi_topitems($args)
                        new SystemException($msg));
         return;
     }
-    $modid = xarModGetIDFromName($modname);
+    $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     xarML('module id'), 'user', 'topitems', 'ratings');
@@ -50,16 +50,16 @@ function ratings_userapi_topitems($args)
     if(!xarSecurityCheck('ReadRatings')) return;
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $ratingstable = $xartable['ratings'];
 
     // Get items
-    $query = "SELECT xar_itemid, xar_rating
+    $query = "SELECT itemid, rating
             FROM $ratingstable
-            WHERE xar_moduleid = ?
-              AND xar_itemtype = ?
-            ORDER BY xar_rating DESC";
+            WHERE module_id = ?
+              AND itemtype = ?
+            ORDER BY rating DESC";
     $bindvars = array($modid, $itemtype);
     if (!isset($numitems) || !is_numeric($numitems)) {
         $numitems = 10;

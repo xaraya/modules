@@ -27,7 +27,7 @@ function ratings_user_rate($args)
     if (!xarSecConfirmAuthKey()) return;
 
     // Pass to API
-    $newrating = xarModAPIFunc('ratings',
+    $newrating = xarMod::apiFunc('ratings',
                               'user',
                               'rate',
                               array('modname'    => $modname,
@@ -37,11 +37,11 @@ function ratings_user_rate($args)
 
     if (isset($newrating)) {
         // Success
-            xarSessionSetVar('ratings_statusmsg', xarML('Thank you for rating this item.',
+            xarSession::setVar('ratings_statusmsg', xarML('Thank you for rating this item.',
                     'ratings'));
     }
 
-    xarResponseRedirect($returnurl);
+    xarController::redirect($returnurl);
 
     return true;
 }

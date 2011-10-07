@@ -35,7 +35,7 @@ function ratings_userapi_rate($args)
                        new SystemException($msg));
         return;
     }
-    $modid = xarModGetIDFromName($modname);
+    $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     xarML('module id'), 'user', 'rate', 'ratings');
@@ -53,25 +53,25 @@ function ratings_userapi_rate($args)
 
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $ratingstable = $xartable['ratings'];
 
     // Multipe rate check
     if (!empty($itemtype)) {
-        $seclevel = xarModGetVar('ratings', "seclevel.$modname.$itemtype");
+        $seclevel = xarModVars::get('ratings', "seclevel.$modname.$itemtype");
         if (!isset($seclevel)) {
-            $seclevel = xarModGetVar('ratings', 'seclevel.'.$modname);
+            $seclevel = xarModVars::get('ratings', 'seclevel.'.$modname);
         }
     } else {
-        $seclevel = xarModGetVar('ratings', 'seclevel.'.$modname);
+        $seclevel = xarModVars::get('ratings', 'seclevel.'.$modname);
     }
     if (!isset($seclevel)) {
-        $seclevel = xarModGetVar('ratings', 'seclevel');
+        $seclevel = xarModVars::get('ratings', 'seclevel');
     }
     if ($seclevel == 'high') {
         if (xarUserIsLoggedIn()) {
-            $rated = xarModGetUserVar('ratings',$modname.':'.$itemtype.':'.$objectid);
+            $rated = xarModUserVars::get('ratings',$modname.':'.$itemtype.':'.$objectid);
             if (!empty($rated) && $rated > 1) {
                 return;
             }
@@ -81,12 +81,12 @@ function ratings_userapi_rate($args)
     } elseif ($seclevel == 'medium') {
         // Check to see if user has already voted
         if (xarUserIsLoggedIn()) {
-            $rated = xarModGetUserVar('ratings',$modname.':'.$itemtype.':'.$objectid);
+            $rated = xarModUserVars::get('ratings',$modname.':'.$itemtype.':'.$objectid);
             if (!empty($rated) && $rated > time() - 24*60*60) {
                 return;
             }
         } else {
-            $rated = xarSessionGetVar('ratings:'.$modname.':'.$itemtype.':'.$objectid);
+            $rated = xarSession::getVar('ratings:'.$modname.':'.$itemtype.':'.$objectid);
             if (!empty($rated) && $rated > time() - 24*60*60) {
                 return;
             }
@@ -94,13 +94,13 @@ function ratings_userapi_rate($args)
     } // No check for low
 
     // Get current information on rating
-    $query = "SELECT xar_rid,
-                   xar_rating,
-                   xar_numratings
+    $query = "SELECT rid,
+                   rating,
+                   numratings
             FROM $ratingstable
-            WHERE xar_moduleid = ?
-              AND xar_itemid = ?
-              AND xar_itemtype = ?";
+            WHERE module_id = ?
+              AND itemid = ?
+              AND itemtype = ?";
     $bindvars = array($modid, $objectid, $itemtype);
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
@@ -116,9 +116,9 @@ function ratings_userapi_rate($args)
 
         // Insert new rating
         $query = "UPDATE $ratingstable
-                SET xar_rating = ?,
-                    xar_numratings = ?
-                WHERE xar_rid = ?";
+                SET rating = ?,
+                    numratings = ?
+                WHERE rid = ?";
         $bindvars = array($newrating, $newnumratings, $rid);
         $result =& $dbconn->Execute($query, $bindvars);
         if (!$result) return;
@@ -129,12 +129,12 @@ function ratings_userapi_rate($args)
         // Get a new ratings ID
         $rid = $dbconn->GenId($ratingstable);
         // Create new rating
-        $query = "INSERT INTO $ratingstable(xar_rid,
-                                          xar_moduleid,
-                                          xar_itemid,
-                                          xar_itemtype,
-                                          xar_rating,
-                                          xar_numratings)
+        $query = "INSERT INTO $ratingstable(rid,
+                                          module_id,
+                                          itemid,
+                                          itemtype,
+                                          rating,
+                                          numratings)
                 VALUES (?,
                         ?,
                         ?,
@@ -151,21 +151,21 @@ function ratings_userapi_rate($args)
     // Set note that user has rated this item if required
     if ($seclevel == 'high') {
         if (xarUserIsLoggedIn()) {
-            xarModSetUserVar('ratings',$modname.':'.$itemtype.':'.$objectid,time());
+            xarModUserVars::set('ratings',$modname.':'.$itemtype.':'.$objectid,time());
         } else {
             // nope
         }
     } elseif ($seclevel == 'medium') {
         if (xarUserIsLoggedIn()) {
-            xarModSetUserVar('ratings',$modname.':'.$itemtype.':'.$objectid,time());
+            xarModUserVars::set('ratings',$modname.':'.$itemtype.':'.$objectid,time());
         } else {
-            xarSessionSetVar('ratings:'.$modname.':'.$itemtype.':'.$objectid,time());
+            xarSession::setVar('ratings:'.$modname.':'.$itemtype.':'.$objectid,time());
         }
     }
     // CHECKME: find some cleaner way to update the page cache if necessary
     if (function_exists('xarOutputFlushCached') &&
-        xarModGetVar('xarcachemanager','FlushOnNewRating')) {
-        $modinfo = xarModGetInfo($modid);
+        xarModVars::get('xarcachemanager','FlushOnNewRating')) {
+        $modinfo = xarMod::getInfo($modid);
         // this may not be agressive enough flushing for all sites
         // we could flush "$modinfo[name]-" to remove all output cache associated with a module
         xarOutputFlushCached("$modinfo[name]-user-display-");

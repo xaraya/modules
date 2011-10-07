@@ -1,7 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+
+
+
+
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div>
     <xar:if condition="$showdisplay eq 1">
-        <xar:mlstring>Ratings</xar:mlstring>&nbsp;
+        <xar:mlstring>Ratings</xar:mlstring>&#160;
         <xar:if condition="$style eq 'percentage'">
             #$rating# %
         <xar:elseif condition="$style eq 'outoffive'" />
@@ -124,3 +130,5 @@
         </xar:if>
     </xar:if>
 </div>
+
+</xar:template>

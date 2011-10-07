@@ -22,15 +22,15 @@ function ratings_userapi_getmodules($args)
     if (!xarSecurityCheck('OverviewRatings')) return;
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $ratingstable = $xartable['ratings'];
 
     // Get items
-    $query = "SELECT xar_moduleid, xar_itemtype, COUNT(xar_itemid), SUM(xar_numratings)
+    $query = "SELECT module_id, itemtype, COUNT(itemid), SUM(numratings)
             FROM $ratingstable
-            GROUP BY xar_moduleid, xar_itemtype
-            ORDER BY xar_moduleid, xar_itemtype";
+            GROUP BY module_id, itemtype
+            ORDER BY module_id, itemtype";
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;

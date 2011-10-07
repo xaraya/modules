@@ -27,15 +27,15 @@ function ratings_admin_view()
     $data = array();
 
     if (empty($modid)) {
-        $modlist = xarModAPIFunc('ratings','user','getmodules');
+        $modlist = xarMod::apiFunc('ratings','user','getmodules');
 
         $data['moditems'] = array();
         $data['numitems'] = 0;
         $data['numratings'] = 0;
         foreach ($modlist as $modid => $itemtypes) {
-            $modinfo = xarModGetInfo($modid);
+            $modinfo = xarMod::getInfo($modid);
             // Get the list of all item types for this module (if any)
-            $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
+            $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                      // don't throw an exception if this function doesn't exist
                                      array(), 0);
             foreach ($itemtypes as $itemtype => $stats) {
@@ -67,13 +67,13 @@ function ratings_admin_view()
         }
         $data['delete'] = xarModURL('ratings','admin','delete');
     } else {
-        $modinfo = xarModGetInfo($modid);
+        $modinfo = xarMod::getInfo($modid);
         if (empty($itemtype)) {
             $data['modname'] = ucwords($modinfo['displayname']);
             $itemtype = null;
         } else {
             // Get the list of all item types for this module (if any)
-            $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
+            $mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                      // don't throw an exception if this function doesn't exist
                                      array(), 0);
             if (isset($mytypes) && !empty($mytypes[$itemtype])) {
@@ -86,7 +86,7 @@ function ratings_admin_view()
         }
 
         $data['modid'] = $modid;
-        $data['moditems'] = xarModAPIFunc('ratings','user','getitems',
+        $data['moditems'] = xarMod::apiFunc('ratings','user','getitems',
                                           array('modid' => $modid,
                                                 'itemtype' => $itemtype,
                                                 'sort' => $sort));

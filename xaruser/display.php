@@ -59,31 +59,31 @@ function ratings_user_display($args)
     }
 
     if (empty($modname)) {
-        $modname = xarModGetName();
+        $modname = xarMod::getName();
     }
     $args['modname'] = $modname;
     $args['itemtype'] = $itemtype;
 
     if (!isset($style)) {
         if (!empty($itemtype)) {
-            $style = xarModGetVar('ratings', "style.$modname.$itemtype");
+            $style = xarModVars::get('ratings', "style.$modname.$itemtype");
         }
         if (!isset($style)) {
-            $style = xarModGetVar('ratings', 'style.'.$modname);
+            $style = xarModVars::get('ratings', 'style.'.$modname);
         }
         if (!isset($style)) {
-            $style = xarModGetVar('ratings', 'defaultstyle');
+            $style = xarModVars::get('ratings', 'defaultstyle');
         }
     }
     if (!isset($shownum)) {
         if (!empty($itemtype)) {
-            $shownum = xarModGetVar('ratings', "shownum.$modname.$itemtype");
+            $shownum = xarModVars::get('ratings', "shownum.$modname.$itemtype");
         }
         if (!isset($shownum)) {
-            $shownum = xarModGetVar('ratings', 'shownum.'.$modname);
+            $shownum = xarModVars::get('ratings', 'shownum.'.$modname);
         }
         if (!isset($shownum)) {
-            $shownum = xarModGetVar('ratings', 'shownum');
+            $shownum = xarModVars::get('ratings', 'shownum');
         }
     }
 
@@ -112,7 +112,7 @@ function ratings_user_display($args)
 
     // Run API function
     // Bug 6160 Use getitems at first, then get if we get weird results
-    $rating = xarModAPIFunc('ratings',
+    $rating = xarMod::apiFunc('ratings',
                            'user',
                            'getitems',
                            $args);
@@ -123,7 +123,7 @@ function ratings_user_display($args)
         $data['numratings'] = $rating[$key_id[0]]['numratings'];
     } else {
         // Use old fashioned way
-        $data['rawrating'] = xarModAPIFunc('ratings',
+        $data['rawrating'] = xarMod::apiFunc('ratings',
                            'user',
                            'get',
                            $args);
@@ -170,23 +170,23 @@ function ratings_user_display($args)
 
     // Multiple rate check
     if (!empty($itemtype)) {
-        $seclevel = xarModGetVar('ratings', "seclevel.$modname.$itemtype");
+        $seclevel = xarModVars::get('ratings', "seclevel.$modname.$itemtype");
         if (!isset($seclevel)) {
-            $seclevel = xarModGetVar('ratings', 'seclevel.'.$modname);
+            $seclevel = xarModVars::get('ratings', 'seclevel.'.$modname);
         }
     } else {
-        $seclevel = xarModGetVar('ratings', 'seclevel.'.$modname);
+        $seclevel = xarModVars::get('ratings', 'seclevel.'.$modname);
     }
     if (!isset($seclevel)) {
-        $seclevel = xarModGetVar('ratings', 'seclevel');
+        $seclevel = xarModVars::get('ratings', 'seclevel');
     }
     if ($seclevel == 'high') {
         // Check to see if user has already voted
         if (xarUserIsLoggedIn()) {
-            if (!xarModGetVar('ratings',$modname.':'.$itemtype.':'.$objectid)) {
-                xarModSetVar('ratings',$modname.':'.$itemtype.':'.$objectid,1);
+            if (!xarModVars::get('ratings',$modname.':'.$itemtype.':'.$objectid)) {
+                xarModVars::set('ratings',$modname.':'.$itemtype.':'.$objectid,1);
             }
-            $rated = xarModGetUserVar('ratings',$modname.':'.$itemtype.':'.$objectid);
+            $rated = xarModUserVars::get('ratings',$modname.':'.$itemtype.':'.$objectid);
             if (!empty($rated) && $rated > 1) {
                 $data['rated'] = true;
             }
@@ -199,15 +199,15 @@ function ratings_user_display($args)
     } elseif ($seclevel == 'medium') {
         // Check to see if user has already voted
         if (xarUserIsLoggedIn()) {
-            if (!xarModGetVar('ratings',$modname.':'.$itemtype.':'.$objectid)) {
-                xarModSetVar('ratings',$modname.':'.$itemtype.':'.$objectid,1);
+            if (!xarModVars::get('ratings',$modname.':'.$itemtype.':'.$objectid)) {
+                xarModVars::set('ratings',$modname.':'.$itemtype.':'.$objectid,1);
             }
-            $rated = xarModGetUserVar('ratings',$modname.':'.$itemtype.':'.$objectid);
+            $rated = xarModUserVars::get('ratings',$modname.':'.$itemtype.':'.$objectid);
             if (!empty($rated) && $rated > time() - 24*60*60) {
                 $data['rated'] = true;
             }
         } else {
-            $rated = xarSessionGetVar('ratings:'.$modname.':'.$itemtype.':'.$objectid);
+            $rated = xarSession::getVar('ratings:'.$modname.':'.$itemtype.':'.$objectid);
             if (!empty($rated) && $rated > time() - 24*60*60) {
                 $data['rated'] = true;
             }
