@@ -103,7 +103,8 @@
                                 <input type="text" name="label[#$field['name']#]" id="label_#$field['name']#" value="#$field['label']#" />
                             </td>
                             <td class="xar-norm">
-                                <xar:articles-field type="fieldtype" name="format['.$field['name'].']" value="$field['format']" />
+                                <xar:set name="formatname">"format['{$field['name']}']"</xar:set>
+                                <xar:articles-field type="fieldtype" name="$formatname" value="$field['format']" />
                             </td>
                             <td class="xar-align-center">
                                 <xar:if condition="$field.input == true">
@@ -231,7 +232,8 @@
                                 <input type="text" name="label[#$field['name']#]" id="label_#$field['name']#" value="#$field['label']#" />
                             </td>
                             <td class="xar-norm">
-                                <xar:articles-field type="fieldtype" name="format['.$field['name'].']" value="$field['format']" />
+                                <xar:set name="formatname">"format['{$field['name']}']"</xar:set>
+                                <xar:articles-field type="fieldtype" name="$formatname" value="$field['format']" />
                             </td>
                             <td class="xar-align-center">
                                 <xar:if condition="$field.input == true">
@@ -344,7 +346,7 @@
                 <input type="submit" value="#$buttonlabel#" />
                 <br />
                 <br />
-                <a href="&xar-modurl-articles-admin-pubtypes;">
+                <a href="#xarModUrl('articles', 'admin', 'pubtypes')#">
                     <xar:mlstring>
                         Cancel Delete
                     </xar:mlstring>
