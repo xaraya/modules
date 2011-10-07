@@ -1,6 +1,6 @@
 <?php
 /**
- * Ratings Module
+ * Ratings Module 
  *
  * @package modules
  * @copyright (C) 2002-2007 The Digital Development Foundation
