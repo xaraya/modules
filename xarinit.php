@@ -23,7 +23,7 @@ function ratings_init()
     // Load Table Maintainance API
     sys::import('xaraya.tableddl');
     // Create table
-    $fields = array('rid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
+    $fields = array('id' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
         'module_id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
         'itemtype' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
         'itemid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
@@ -201,8 +201,6 @@ function ratings_upgrade($oldversion)
                            MODIFY COLUMN rating double(8,5) NOT NULL default '0.00000'";
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-
-
     }
     return true;
 }
