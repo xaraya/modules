@@ -225,26 +225,6 @@ function ratings_delete()
                              'ratings', 'admin', 'deleteall')) {
         return;
     }
-
-    // Delete module variables
-    xarModVars::delete_all('ratings');
-
-    // Get database information
-    $dbconn =& xarDB::getConn();
-    $xartable =& xarDB::getTables();
-
-    sys::import('xaraya.tableddl');
-    // Delete tables
-    // Generate the SQL to drop the table using the API
-    $query = xarDBDropTable($xartable['ratings']);
-    if (empty($query)) return; // throw back
-    // Drop the table and send exception if returns false.
-    $result = &$dbconn->Execute($query);
-    if (!$result) return;
-    // Remove Masks and Instances
-    xarRemoveMasks('ratings');
-    xarRemoveInstances('ratings');
-    // Deletion successful
-    return true;
+        return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => ''ratings));
 }
 ?>

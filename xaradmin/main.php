@@ -23,10 +23,13 @@
 function ratings_admin_main()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminRatings')) return;
+    if (!xarSecurityCheck('ManageRatings')) return;
 
-        xarController::redirect(xarModURL('ratings', 'admin', 'modifyconfig'));
-
+    if (xarModVars::get('modules', 'disableoverview') == 0) {
+        return array();
+    } else {
+        xarController::redirect(xarModURL('ratings', 'admin', 'view'));
+    }
     // success
     return true;
 }

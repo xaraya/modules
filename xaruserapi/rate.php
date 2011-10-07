@@ -94,7 +94,7 @@ function ratings_userapi_rate($args)
     } // No check for low
 
     // Get current information on rating
-    $query = "SELECT rid,
+    $query = "SELECT id,
                    rating,
                    numratings
             FROM $ratingstable
@@ -107,7 +107,7 @@ function ratings_userapi_rate($args)
 
     if (!$result->EOF) {
         // Update current rating
-        list($rid, $currating, $numratings) = $result->fields;
+        list($id, $currating, $numratings) = $result->fields;
         $result->close();
 
         // Calculate new rating
@@ -118,8 +118,8 @@ function ratings_userapi_rate($args)
         $query = "UPDATE $ratingstable
                 SET rating = ?,
                     numratings = ?
-                WHERE rid = ?";
-        $bindvars = array($newrating, $newnumratings, $rid);
+                WHERE id = ?";
+        $bindvars = array($newrating, $newnumratings, $id);
         $result =& $dbconn->Execute($query, $bindvars);
         if (!$result) return;
 
@@ -127,9 +127,9 @@ function ratings_userapi_rate($args)
         $result->close();
 
         // Get a new ratings ID
-        $rid = $dbconn->GenId($ratingstable);
+        $id = $dbconn->GenId($ratingstable);
         // Create new rating
-        $query = "INSERT INTO $ratingstable(rid,
+        $query = "INSERT INTO $ratingstable(id,
                                           module_id,
                                           itemid,
                                           itemtype,
@@ -141,7 +141,7 @@ function ratings_userapi_rate($args)
                         ?,
                         ?,
                         ?)";
-        $bindvars = array($rid, $modid, $objectid, $itemtype, $rating, 1);
+        $bindvars = array($id, $modid, $objectid, $itemtype, $rating, 1);
         $result =& $dbconn->Execute($query, $bindvars);
         if (!$result) return;
 
