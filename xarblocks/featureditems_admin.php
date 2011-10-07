@@ -27,7 +27,7 @@
 
             if (!isset($data['pubtype_id']))        $data['pubtype_id'] = $this->pubtype_id;
             if (!isset($data['catfilter']))         $data['catfilter'] = $this->numitems;
-            if (!isset($data['state']))             $data['state'] = $this->numitems;
+            if (!isset($data['state']))             $data['state'] = $this->state;
             if (!isset($data['itemlimit']))         $data['itemlimit'] = $this->itemlimit;
             if (!isset($data['featuredid']))        $data['featuredid'] = $this->featuredid;
             if (!isset($data['alttitle']))          $data['alttitle'] = $this->alttitle;
@@ -37,7 +37,6 @@
             if (!isset($data['moreitems']))         $data['moreitems'] = $this->moreitems;
             if (!isset($data['toptype']))           $data['toptype'] = $this->toptype;
             if (!isset($data['showsummary']))       $data['showsummary'] = $this->showsummary;
-            if (!isset($data['linkpubtype']))       $data['linkpubtype'] = $this->linkpubtype;
             if (!isset($data['linkpubtype']))       $data['linkpubtype'] = $this->linkpubtype;
             if (!isset($data['linkcat']))           $data['linkcat'] = $this->linkcat;
 
