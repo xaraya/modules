@@ -147,7 +147,7 @@ function publications_admin_updateconfig()
             'display' => $displayaccess,
             'modify' => $modifyaccess,
             'delete' => $deleteaccess,
-        );var_dump($_POST);var_dump($allaccess);//exit;
+        );
         $pubtypeobject->properties['access']->setValue(serialize($allaccess));
         $pubtypeobject->properties['configuration']->setValue(serialize($settings));
         $pubtypeobject->updateItem(array('itemid' => $ptid));
