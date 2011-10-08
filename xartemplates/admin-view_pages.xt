@@ -4,7 +4,7 @@
 
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <h2>View Pages</h2>
+        <h2>View Publications Tree</h2>
 
         <xar:set name="root_pages">#xarMod::apiFunc('publications', 'user', 'getpages', array('parent'=&gt;0))#</xar:set>
         <xar:if condition="!empty($root_pages)">
