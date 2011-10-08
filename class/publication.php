@@ -62,7 +62,7 @@ class Publication extends DataObject
         } else {
             $this->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
         }
-        unset($this->fieldlist);
+        $this->fieldlist = array();
 
         return parent::createItem($args);
     }
@@ -78,7 +78,7 @@ class Publication extends DataObject
         } else {
             $this->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
         }
-        unset($this->fieldlist);
+        $this->fieldlist = array();
         
         return parent::updateItem($args);
     }

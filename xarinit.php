@@ -37,6 +37,8 @@ function publications_init()
             body1               text,
             body2               text,
             body3               text,
+            body4               text,
+            body5               text,
             notes               text,
             seq                 integer unsigned NOT NULL DEFAULT '0',
             parent_id           integer unsigned NOT NULL DEFAULT '0',

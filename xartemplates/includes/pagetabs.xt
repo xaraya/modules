@@ -7,7 +7,7 @@
     </xar:if>
     <xar:set name="index">0</xar:set>
     <xar:if condition="$settings['allow_translations'] AND !empty($properties['id']->value)">
-        <div style="float:right" id="newtranslaiton">
+        <div style="float:right" id="newtranslation">
             <xar:if condition="$layout eq 'publications-admin'">
                 <a href="#xarModURL('publications','admin','modify',array('itemid' => $itemid, 'name' => $object->name, 'tplmodule' => 'publications','tab' => 'newtranslation'))#">
                     New Translation
@@ -37,7 +37,6 @@
                     &#160;<xar:data-output property="$properties['locale']" value="$item['locale']" link=""/>
                 </a>
              </li>
-
 
             <!--<xar:if condition="$tab eq 'settings'">
                 <xar:set name="class">"active"</xar:set>
