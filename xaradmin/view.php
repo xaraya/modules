@@ -357,7 +357,7 @@ function publications_admin_view($args)
     $data['object'] = DataObjectMaster::getObjectList(array('name' => $pubtypeobject->properties['name']->value));
 
     // Flag this as the current list view
-    xarSession::setVar('publications_current_listview', xarServer::getCurrentURL());
+    xarSession::setVar('publications_current_listview', xarServer::getCurrentURL(array('ptid' => $ptid)));
     
     return xarTplModule('publications', 'admin', 'view', $data, $template);
 }
