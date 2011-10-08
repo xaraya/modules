@@ -3,13 +3,11 @@
  * Ratings Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @subpackage ratings module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Ratings Module
- * @link http://xaraya.com/index.php/release/41.html
- * @author Jim McDonald
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * handle ratings property
@@ -25,6 +23,8 @@ class RatingProperty extends FloatBoxProperty
     public $name       = 'rating';
     public $desc       = 'Rating';
     public $reqmodules = array('ratings');
+    
+    public $initialization_ratingstyle = 'outoffivestars';
 
     public $display_tooltip = 'Number of times this item was displayed';
 
@@ -55,14 +55,14 @@ class RatingProperty extends FloatBoxProperty
 
     public function showInput(Array $data = array())
     {
-        $data['value'] = $this->getHitcount($data);
+//        $data['value'] = $this->getHitcount($data);
         return parent::showInput($data);
     }
 
     public function showOutput(Array $data = array())
     {
         // the dummy datastore will use the itemid as value for this property !
-        $data['value'] = $this->getHitcount($data, 1);
+//        $data['value'] = $this->getHitcount($data, 1);
         return parent::showOutput($data);
     }
 

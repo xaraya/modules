@@ -1,14 +1,12 @@
 <?php
 /**
- * Ratings Module 
+ * Ratings Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @subpackage ratings module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Ratings Module
- * @link http://xaraya.com/index.php/release/41.html
  * @author Jim McDonald
  */
 /**
@@ -62,7 +60,7 @@ function ratings_init()
     #
     # Set up modvars
     #
-    xarModVars::set('ratings', 'defaultstyle', 'outoffivestars');
+    xarModVars::set('ratings', 'defaultratingsstyle', 'outoffivestars');
     xarModVars::set('ratings', 'seclevel', 'medium');
     xarModSetVar('ratings', 'shownum', 1);
 

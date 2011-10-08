@@ -19,15 +19,11 @@
                     <label for="ratingsstyle_#$confcounter#" class="xar-form-label">
                         Rating Style:
                     </label>
-                    <select name="ratingsstyle[#$modname#]" id="ratingsstyle_#$confcounter#">
-                    <xar:foreach in="$ratingsstyleoptions" value="$option">
-                        <xar:if condition="$option['id'] eq $config['ratingsstyle']">
-                            <option value="#$option['id']#" selected="selected">#$option['name']#</option>
-                        <xar:else />
-                            <option value="#$option['id']#">#$option['name']#</option>
-                        </xar:if>
-                    </xar:foreach>
-                    </select>
+                    <xar:set name="options">xarMod::apiFunc('ratings','user','getstyles')</xar:set>
+                    <xar:set name="name">'ratingsstyle[' . $modname . ']'</xar:set>
+                    <xar:set name="id">'ratingsstyle_' . $modname</xar:set>
+                    <xar:set name="options">xarMod::apiFunc('ratings','user','getstyles')</xar:set>
+                    <xar:data-input type="dropdown" name="$name" id="$id" options="$options" value="$config['ratingsstyle']"/>
                 </div>
                 <div class="xar-form-input-wrapper">
                   <label for="seclevel_#$confcounter#" class="xar-form-label">
