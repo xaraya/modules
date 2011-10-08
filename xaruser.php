@@ -1,17 +1,14 @@
 <?php 
 /**
- * File: $Id: s.xaruser.php 1.45 03/01/17 18:39:10+01:00 jan@jack.iwr.uni-heidelberg.de $
+ * Figlet Module
  *
- * Figlet
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @link http://www.xaraya.com
- * 
- * @subpackage Figlet
- * @author Lucas Baltes, John Cox 
- *
-*/
+ * @package modules
+ * @subpackage figlet module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Lucas Baltes, John Cox
+ */
 
 /**
  * The standard figlet output

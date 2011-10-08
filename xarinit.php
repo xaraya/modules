@@ -1,16 +1,14 @@
 <?php
 /**
- * File: $Id: s.xaradmin.php 1.28 03/02/08 17:38:40-05:00 John.Cox@mcnabb. $
+ * Figlet Module
  *
- * Figlet
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @link http://www.xaraya.com
- *
+ * @package modules
  * @subpackage figlet module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Lucas Baltes, John Cox
-*/
+ */
 
 function figlet_init()
 {
