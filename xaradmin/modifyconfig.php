@@ -96,6 +96,13 @@ function publications_admin_modifyconfig()
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
     $data['access'] = unserialize($pubtypeobject->properties['access']->getValue());
+    if (empty($data['access']))
+        $data['access'] = array(
+                            'add' => array(),
+                            'display' => array(),
+                            'modify' => array(),
+                            'delete' => array(),
+                            );
 
     // Get the settings for this module
     sys::import('modules.publications.xaruserapi.getsettings');
