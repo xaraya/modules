@@ -26,13 +26,13 @@ function ratings_admin_modifyconfig()
     // Security Check
     if (!xarSecurityCheck('AdminRatings')) return;
 
-    $defaultstyle = xarModVars::get('ratings', 'defaultstyle');
+    $defaultratingsstyle = xarModVars::get('ratings', 'defaultratingstyle');
     $defaultseclevel = xarModVars::get('ratings', 'seclevel');
     $defaultshownum = xarModVars::get('ratings', 'shownum');
 
     $data['settings'] = array();
     $data['settings']['default'] = array('label' => xarML('Default configuration'),
-                                         'style' => $defaultstyle,
+                                         'ratingsstyle' => $defaultratingsstyle,
                                          'seclevel' => $defaultseclevel,
                                          'shownum' => $defaultshownum);
 
@@ -48,9 +48,9 @@ function ratings_admin_modifyconfig()
                                          // don't throw an exception if this function doesn't exist
                                          array(), 0);
                 foreach ($value as $itemtype => $val) {
-                    $style = xarModVars::get('ratings', "style.$modname.$itemtype");
-                    if (empty($style)) {
-                        $style = $defaultstyle;
+                    $ratingsstyle = xarModVars::get('ratings', "ratingsstyle.$modname.$itemtype");
+                    if (empty($ratingsstyle)) {
+                        $ratingsstyle = $defaultratingsstyle;
                     }
                     $seclevel = xarModVars::get('ratings', "seclevel.$modname.$itemtype");
                     if (empty($seclevel)) {
@@ -69,14 +69,14 @@ function ratings_admin_modifyconfig()
                         $link = xarModURL($modname,'user','view',array('itemtype' => $itemtype));
                     }
                     $data['settings']["$modname.$itemtype"] = array('label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
-                                                                    'style' => $style,
+                                                                    'ratingsstyle' => $ratingsstyle,
                                                                     'seclevel' => $seclevel,
                                                                     'shownum' => $shownum);
                 }
             } else {
-                $style = xarModVars::get('ratings', 'style.' . $modname);
-                if (empty($style)) {
-                    $style = $defaultstyle;
+                $ratingsstyle = xarModVars::get('ratings', 'ratingsstyle.' . $modname);
+                if (empty($ratingsstyle)) {
+                    $ratingsstyle = $defaultratingsstyle;
                 }
                 $seclevel = xarModVars::get('ratings', 'seclevel.' . $modname);
                 if (empty($seclevel)) {
@@ -89,14 +89,14 @@ function ratings_admin_modifyconfig()
                 }
                 $link = xarModURL($modname,'user','main');
                 $data['settings'][$modname] = array('label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
-                                                    'style' => $style,
+                                                    'ratingsstyle' => $ratingsstyle,
                                                     'seclevel' => $seclevel,
                                                     'shownum' => $shownum);
             }
         }
     }
 
-    $data['styleoptions'] = array(
+    $data['ratingsstyleoptions'] = array(
         array('id' => 'percentage', 'name' => xarML('Percentage')),
         array('id' => 'outoffive', 'name' => xarML('Number out of five')),
         array('id' => 'outoffivestars', 'name' => xarML('Stars out of five')),

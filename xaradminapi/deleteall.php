@@ -14,7 +14,7 @@
 /**
  * delete all ratings items for a module - hook for ('module','remove','API')
  *
- * @param $args['objectid'] ID of the object (must be the module name here !!)
+ * @param $args['itemid'] ID of the itemid (must be the module name here !!)
  * @param $args['extrainfo'] extra information
  * @return bool true on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -23,23 +23,19 @@ function ratings_adminapi_deleteall($args)
 {
     extract($args);
 
-    // When called via hooks, we should get the real module name from objectid
+    // When called via hooks, we should get the real module name from itemid
     // here, because the current module is probably going to be 'modules' !!!
-    if (!isset($objectid) || !is_string($objectid)) {
+    if (!isset($itemid) || !is_string($itemid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID (= module name)', 'admin', 'deleteall', 'ratings');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
+                    'itemid (= module name)', 'admin', 'deleteall', 'ratings');
+        throw new Exception($msg);
     }
 
     $modid = xarMod::getRegID($objectid);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module ID', 'admin', 'deleteall', 'ratings');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
+        throw new Exception($msg);
     }
 
 // TODO: re-evaluate this for hook calls !!

@@ -14,7 +14,7 @@
 /**
  * delete a ratings item - hook for ('item','delete','API')
  *
- * @param $args['objectid'] ID of the object
+ * @param $args['itemid'] ID of the item
  * @param $args['extrainfo'] extra information
  * @param $args['confirm'] string coming from the delete GUI function
  * @param $args['modid'] int module id
@@ -28,7 +28,7 @@ function ratings_adminapi_delete($args)
     extract($args);
 
     // if we're coming via a hook call
-    if (isset($objectid)) {
+    if (isset($itemid)) {
     // TODO: cfr. hitcount delete stuff, once we enable item delete hooks
         // Return the extra info
         if (!isset($extrainfo)) {
@@ -49,9 +49,7 @@ function ratings_adminapi_delete($args)
             if (!is_numeric($modid)) {
                 $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                              'module id', 'admin', 'delete', 'Ratings');
-                xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                                new SystemException($msg));
-                return false;
+                throw new Exception($msg);
             }
             if (empty($itemtype) || !is_numeric($itemtype)) {
                 $itemtype = 0;

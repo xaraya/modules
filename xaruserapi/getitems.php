@@ -30,9 +30,7 @@ function ratings_userapi_getitems($args)
     if (!isset($modname) && !isset($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     xarML('module name'), 'user', 'getitems', 'ratings');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
     if (!empty($modname)) {
         $modid = xarMod::getRegID($modname);
@@ -40,9 +38,7 @@ function ratings_userapi_getitems($args)
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     xarML('module id'), 'user', 'getitems', 'ratings');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
     // Bug 5856: is this needed?
     if (!isset($itemtype)) {

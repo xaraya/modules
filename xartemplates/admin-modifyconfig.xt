@@ -16,12 +16,12 @@
                     #$config['label']#
                 </legend>
                 <div class="xar-form-input-wrapper">
-                    <label for="style_#$confcounter#" class="xar-form-label">
+                    <label for="ratingsstyle_#$confcounter#" class="xar-form-label">
                         Rating Style:
                     </label>
-                    <select name="style[#$modname#]" id="style_#$confcounter#">
-                    <xar:foreach in="$styleoptions" value="$option">
-                        <xar:if condition="$option['id'] eq $config['style']">
+                    <select name="ratingsstyle[#$modname#]" id="ratingsstyle_#$confcounter#">
+                    <xar:foreach in="$ratingsstyleoptions" value="$option">
+                        <xar:if condition="$option['id'] eq $config['ratingsstyle']">
                             <option value="#$option['id']#" selected="selected">#$option['name']#</option>
                         <xar:else />
                             <option value="#$option['id']#">#$option['name']#</option>

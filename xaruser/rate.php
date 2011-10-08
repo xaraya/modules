@@ -19,7 +19,7 @@ function ratings_user_rate($args)
     // Get parameters
     if (!xarVarFetch('modname',   'isset', $modname,    NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('itemtype',  'isset', $itemtype,   NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('objectid',  'isset', $objectid,   NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('itemid',    'isset', $itemid,     NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('returnurl', 'isset', $returnurl,  NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('rating',    'isset', $rating,     NULL, XARVAR_DONT_SET)) {return;}
 
@@ -32,7 +32,7 @@ function ratings_user_rate($args)
                               'rate',
                               array('modname'    => $modname,
                                     'itemtype'   => $itemtype,
-                                    'objectid'   => $objectid,
+                                    'itemid'     => $itemid,
                                     'rating'     => $rating));
 
     if (isset($newrating)) {

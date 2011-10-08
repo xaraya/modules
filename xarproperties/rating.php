@@ -33,7 +33,7 @@ class RatingProperty extends FloatBoxProperty
     function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
-        $this->filepath   = 'modules/hitcount/xarproperties';
+        $this->filepath   = 'modules/ratings/xarproperties';
         // we want a reference to the object here
         $this->include_reference = 1;
 

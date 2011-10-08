@@ -17,7 +17,7 @@
 function ratings_admin_updateconfig()
 {
     // Get parameters
-    if(!xarVarFetch('style',    'array', $style,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('ratingsstyle',    'array', $ratingsstyle,    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('seclevel', 'array', $seclevel, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('shownum', 'array', $shownum, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
@@ -50,8 +50,8 @@ function ratings_admin_updateconfig()
 
 	foreach($settings as $modname) {
 		if($modname == 'default') {
-			if(isset($style['default'])) {
-				xarModVars::set('ratings','defaultstyle', $style['default']);
+			if(isset($ratingsstyle['default'])) {
+				xarModVars::set('ratings','defaultratingsstyle', $ratingsstyle['default']);
 			}
 			if(isset($seclevel['default'])) {
 				xarModVars::set('ratings','seclevel', $seclevel['default']);
@@ -62,8 +62,8 @@ function ratings_admin_updateconfig()
 				xarModVars::set('ratings','shownum', 1);
 			}
 		} else {
-			if(isset($style[$modname])) {
-				xarModVars::set('ratings',"style.$modname", $style[$modname]);
+			if(isset($ratingsstyle[$modname])) {
+				xarModVars::set('ratings',"ratingsstyle.$modname", $ratingsstyle[$modname]);
 			}
 			if(isset($seclevel[$modname])) {
 				xarModVars::set('ratings',"seclevel.$modname", $seclevel[$modname]);

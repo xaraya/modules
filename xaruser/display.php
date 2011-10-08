@@ -13,9 +13,9 @@
  */
 /**
  * display rating for a specific item, and request rating
- * @param $args['objectid'] ID of the item this rating is for
+ * @param $args['itemid'] ID of the item this rating is for
  * @param $args['extrainfo'] URL to return to if user chooses to rate
- * @param $args['style'] style to display this rating in (optional)
+ * @param $args['ratingsstyle'] ratings style to display this rating in (optional)
  * @param $args['shownum'] bool to show number of ratings (optional)
  * @param $args['showdisplay'] bool to show rating result (optional)
  * @param $args['showinput'] bool to show rating form (optional)
@@ -27,7 +27,7 @@ function ratings_user_display($args)
     extract($args);
 
     $data = array();
-    $data['objectid'] = $objectid;
+    $data['itemid'] = $itemid;
 
     $itemtype = 0;
     if (isset($extrainfo) && is_array($extrainfo)) {
@@ -40,9 +40,9 @@ function ratings_user_display($args)
         if (isset($extrainfo['returnurl']) && is_string($extrainfo['returnurl'])) {
             $data['returnurl'] = $extrainfo['returnurl'];
         }
-        if (isset($extrainfo['style']) && is_string($extrainfo['style'])) {
-            if(in_array($style, array('outoffive','outoffivestars','outoften','outoftenstars','customised'))) {
-                $style = $extrainfo['style'];
+        if (isset($extrainfo['ratingsstyle']) && is_string($extrainfo['ratingsstyle'])) {
+            if(in_array($ratingsstyle, array('outoffive','outoffivestars','outoften','outoftenstars','customised'))) {
+                $ratingsstyle = $extrainfo['ratingsstyle'];
             }
         }
         if (isset($extrainfo['shownum']) && ($extrainfo['shownum'] == 0 || $extrainfo['shownum'] == 1)) {
@@ -64,15 +64,15 @@ function ratings_user_display($args)
 //    $args['modname'] = $modname;
 //    $args['itemtype'] = $itemtype;
 
-    if (!isset($style)) {
+    if (!isset($ratingsstyle)) {
         if (!empty($itemtype)) {
-            $style = xarModVars::get('ratings', "style.$modname.$itemtype");
+            $ratingsstyle = xarModVars::get('ratings', "ratingsstyle.$modname.$itemtype");
         }
-        if (!isset($style)) {
-            $style = xarModVars::get('ratings', 'style.'.$modname);
+        if (!isset($ratingsstyle)) {
+            $ratingsstyle = xarModVars::get('ratings', 'ratingsstyle.'.$modname);
         }
-        if (!isset($style)) {
-            $style = xarModVars::get('ratings', 'defaultstyle');
+        if (!isset($ratingsstyle)) {
+            $ratingsstyle = xarModVars::get('ratings', 'defaultratingsstyle');
         }
     }
     if (!isset($shownum)) {
@@ -103,7 +103,7 @@ function ratings_user_display($args)
         return;
     }
 
-    $data['style'] = $style;
+    $data['ratingsstyle'] = $ratingsstyle;
     $data['modname'] = $modname;
     $data['itemtype'] = $itemtype;
     $data['shownum'] = $shownum;
@@ -113,7 +113,7 @@ function ratings_user_display($args)
     // Select the right rating
     $args['modname'] = $modname;
     $args['itemtype'] = $itemtype;
-    $args['itemids'] = array($objectid);
+    $args['itemids'] = array($itemid);
 
     // Run API function
     // Bug 6160 Use getitems at first, then get if we get weird results
@@ -122,7 +122,7 @@ function ratings_user_display($args)
                            'getitems',
                            $args);
     // Select the way to get the rating
-    if (!empty($rating[$objectid])) {
+    if (!empty($rating[$itemid])) {
 //        $key_id = array_keys($rating);
         $data['rawrating'] = $rating[$key_id[0]]['rating'];
         $data['numratings'] = $rating[$key_id[0]]['numratings'];
@@ -142,7 +142,7 @@ function ratings_user_display($args)
         }
 
         // Display current rating
-        switch($data['style']) {
+        switch($data['ratingsstyle']) {
             case 'percentage':
                 $data['rating'] = sprintf("%.1f",$data['rawrating']);
                 break;
@@ -188,10 +188,10 @@ function ratings_user_display($args)
     if ($seclevel == 'high') {
         // Check to see if user has already voted
         if (xarUserIsLoggedIn()) {
-            if (!xarModVars::get('ratings',$modname.':'.$itemtype.':'.$objectid)) {
-                xarModVars::set('ratings',$modname.':'.$itemtype.':'.$objectid,1);
+            if (!xarModVars::get('ratings',$modname.':'.$itemtype.':'.$itemid)) {
+                xarModVars::set('ratings',$modname.':'.$itemtype.':'.$itemid,1);
             }
-            $rated = xarModUserVars::get('ratings',$modname.':'.$itemtype.':'.$objectid);
+            $rated = xarModUserVars::get('ratings',$modname.':'.$itemtype.':'.$itemid);
             if (!empty($rated) && $rated > 1) {
                 $data['rated'] = true;
             }
@@ -204,15 +204,15 @@ function ratings_user_display($args)
     } elseif ($seclevel == 'medium') {
         // Check to see if user has already voted
         if (xarUserIsLoggedIn()) {
-            if (!xarModVars::get('ratings',$modname.':'.$itemtype.':'.$objectid)) {
-                xarModVars::set('ratings',$modname.':'.$itemtype.':'.$objectid,1);
+            if (!xarModVars::get('ratings',$modname.':'.$itemtype.':'.$itemid)) {
+                xarModVars::set('ratings',$modname.':'.$itemtype.':'.$itemid,1);
             }
-            $rated = xarModUserVars::get('ratings',$modname.':'.$itemtype.':'.$objectid);
+            $rated = xarModUserVars::get('ratings',$modname.':'.$itemtype.':'.$itemid);
             if (!empty($rated) && $rated > time() - 24*60*60) {
                 $data['rated'] = true;
             }
         } else {
-            $rated = xarSession::getVar('ratings:'.$modname.':'.$itemtype.':'.$objectid);
+            $rated = xarSession::getVar('ratings:'.$modname.':'.$itemtype.':'.$itemid);
             if (!empty($rated) && $rated > time() - 24*60*60) {
                 $data['rated'] = true;
             }
@@ -221,7 +221,7 @@ function ratings_user_display($args)
 
     // module name is mandatory here, because this is displayed via hooks (= from within another module)
     // set an authid, but only if the current user can rate the item
-    if (xarSecurityCheck('CommentRatings', 0, 'Item', "$modname:$itemtype:$objectid")) {
+    if (xarSecurityCheck('CommentRatings', 0, 'Item', "$modname:$itemtype:$itemid")) {
         $data['authid'] = xarSecGenAuthKey('ratings');
     }
     return $data;
