@@ -1,15 +1,14 @@
 <?php
 /**
- * Publications module
+ * Publications Module
  *
  * @package modules
- * @copyright (C) copyright-placeholder
+ * @subpackage publications module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
+ * @copyright (C) 2011 Netspan AG
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * 
- *
- * @subpackage Publications Module
- 
- * @author M. Lutolf
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * retrieve the settings of a publication type
