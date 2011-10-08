@@ -7,6 +7,7 @@
   <filepath>modules/publications/class/publication.php</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
+  <datastore>relational</datastore>
   <config>a:1:{s:5:"where";s:12:"itemtype = 9";}</config>
   <sources>a:1:{s:11:"publication";a:2:{i:0;s:16:"xar_publications";i:1;s:8:"internal";}}</sources>
   <relations>a:0:{}</relations>
