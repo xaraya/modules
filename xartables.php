@@ -1,14 +1,12 @@
 <?php
 /**
- * Hitcount
+ * Hitcount Module
  *
  * @package modules
- * @copyright (C) copyright-placeholder
+ * @subpackage hitcount module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Hitcount Module
- * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
 

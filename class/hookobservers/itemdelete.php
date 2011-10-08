@@ -1,5 +1,14 @@
 <?php
 /**
+ * Hitcount Module
+ *
+ * @package modules
+ * @subpackage hitcount module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ */
+/**
  * Event Subject Observer
  *
  * Event Subject is notified every time xarEvents::notify is called
