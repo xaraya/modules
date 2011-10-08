@@ -1,16 +1,13 @@
 <?php
 /**
- * Random Block
+ * Publications Module
  *
  * @package modules
- * @copyright (C) copyright-placeholder
+ * @subpackage publications module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Publications Module
- 
  * @author mikespub
- *
  */
 /**
  * initialise block
