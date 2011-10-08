@@ -124,7 +124,7 @@
                     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
                     <xar:set name="itemkeys">implode(',',array_keys($items))</xar:set>
                     <input type="hidden" name="items" id="items" value="#$itemkeys#" />
-                    <xar:var name="label">Create Preview</xar:var>
+                    <xar:var name="label">Preview</xar:var>
                     <xar:button type="submit" name="preview" label="$label" />
                     &#160;
                     <xar:var name="label">Update Document</xar:var>
