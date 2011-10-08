@@ -36,7 +36,7 @@
         </xar:if>
 
         <xar:if condition="empty($pages)">
-             No pages defined
+             No publications defined
         <xar:else />
             <xar:access level="600">
                 <div style="text-align: right">

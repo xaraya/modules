@@ -7,8 +7,8 @@
                 <includeitem>view_pages</includeitem>
             </includes>
             <target>view_pages</target>
-            <title>View Pages Tree</title>
-            <label>View Pages Tree</label>
+            <title>View Publications Tree</title>
+            <label>View Publications Tree</label>
         </menuitem>
         <menuitem>
             <mask>ManagePublications</mask>
