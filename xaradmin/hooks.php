@@ -1,12 +1,13 @@
 <?php
 /**
+ * Keywords Module
+ *
  * @package modules
  * @subpackage keywords module
- * @category Third Party Module
+ * @category Third Party Xaraya Module
  * @version 2.0.0
- * @copyright see the html/credits.html file in this release
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * @link http://xaraya.com/index.php/release/187.html
  */
 /**
  * Configure hooks by hook module

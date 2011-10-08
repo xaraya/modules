@@ -1,22 +1,16 @@
 <?php
 /**
- * Hitcount
+ * Keywords Module
  *
  * @package modules
- * @copyright (C) 2002-2009 The Digital Development Foundation
+ * @subpackage keywords module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Hitcount Module
- * @link http://xaraya.com/index.php/release/177.html
- * @author Hitcount Module Development Team
+ * @link http://xaraya.com/index.php/release/187.html
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-/**
- * Handle the hitcount property
- * @author mikespub <mikespub@xaraya.com>
- *
- */
 sys::import('modules.base.xarproperties.textbox');
 
 class KeywordsProperty extends TextBoxProperty

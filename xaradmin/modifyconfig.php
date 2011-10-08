@@ -1,16 +1,15 @@
 <?php
 /**
- * Keywords Modfiy Config form
+ * Keywords Module
  *
  * @package modules
- * @copyright (C) 2002-2009 The Digital Development Foundation
+ * @subpackage keywords module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Keywords Module
  * @link http://xaraya.com/index.php/release/187.html
  * @author mikespub
-*/
+ */
 
 /**
  * Prepare data for form. May be called from form itself with updated
