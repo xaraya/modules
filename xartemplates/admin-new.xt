@@ -78,10 +78,12 @@
                 <div class="xar-form-input-wrapper-after">
                     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
-                    <xar:comment>The return_url can be set here to return to another page that the admin-view one</xar:comment>
-                    <input type="submit" name="preview" id="preview" value="#xarML('Create Preview')#" />
+                    <!-- The return_url can be set here to return to another page that the admin-view one -->
+                    <xar:var name="label">Preview</xar:var>
+                    <xar:button type="submit" name="preview" label="$label" />
                     &#160;
-                    <input type="submit" value="#xarML('Create Document')#" />
+                    <xar:var name="label">Create Document</xar:var>
+                    <xar:button type="submit" label="$label" />
                 </div>
             </div>
         </form>
