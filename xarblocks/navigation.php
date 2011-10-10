@@ -12,38 +12,35 @@
 /**
  * initialise block
  */
-    sys::import('xaraya.structures.containers.blocks.basicblock');
+sys::import('xaraya.structures.containers.blocks.basicblock');
 
-    class Categories_NavigationBlock extends BasicBlock implements iBlock
-    {
-        public $name                = 'NavigationBlock';
-        public $module              = 'categories';
-        public $text_type           = 'Show navigation';
-        public $text_type_long      = 'Show navigation';
-        public $allow_multiple      = true;
+class Categories_NavigationBlock extends BasicBlock implements iBlock
+{
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type                = 'navigation';
+    protected $module              = 'categories';
+    protected $text_type           = 'Show navigation';
+    protected $text_type_long      = 'Show navigation';
+    // Additional info, supplied by developer, optional 
+    protected $type_category       = 'block'; // options [(block)|group] 
+    protected $author              = 'Jim McDonald';
 
-        public $form_content        = false;
-        public $form_refresh        = false;
-        public $pageshared          = 0;
-        public $usershared          = 1;
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    protected $show_help    = false; // let the subsystem know if this block type supplies help info
 
-        public $show_preview        = true;
-
-        public $layout              = false;
-        public $showcatcount        = false;
-        public $showempty           = false;
-        public $startmodule         = '';
-        public $dynamictitle        = false;
-
-
+    public $layout              = false;
+    public $showcatcount        = false;
+    public $showempty           = false;
+    public $startmodule         = '';
+    public $dynamictitle        = false;
 
     /**
      * display block
      */
-    function display(Array $data=array())
+    function display()
     {
-        $vars = parent::display($data);
-        if (empty($vars)) return;
+        $vars = $this->getContent();
 
         extract($vars);
 
@@ -288,8 +285,6 @@
         // pass information about current function to template
         $data['type'] = $type;
         $data['func'] = $func;
-
-        $blockinfo['content'] = '';
 
         // Generate output
         switch ($layout) {
@@ -871,22 +866,15 @@
                 }
                 break;
         }
-        $data['blockid'] = $blockinfo['bid'];
-
-        // Populate block info for passing back to theme.
 
         // The template base is set by this block if not already provided.
         // The base is 'nav-tree', 'nav-trails' or 'nav-prevnext', but allow
         // the admin to override this completely.
-        $blockinfo['_bl_template_base'] = 'nav-' . $template;
+        // Set template base.
+        $this->setTemplateBase('nav-' . $template);
 
-        // Return data, not rendered content.
-        $blockinfo['content'] = $data;
-        if (!empty($blockinfo['content'])) {
-            return $blockinfo;
-        }
-
-        return;
+        return $data;
+        
     }
 }
 

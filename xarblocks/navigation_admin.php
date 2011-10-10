@@ -18,9 +18,9 @@ class Categories_NavigationBlockAdmin extends Categories_NavigationBlock impleme
  * Modify Function to the Blocks Admin
  * @param $data array containing title,content
  */
-    public function modify(Array $data=array())
+    public function modify()
     {
-        $vars = parent::modify($data);
+        $vars = $this->getContent();
 
         $vars['modules'] = array();
         $vars['modules'][] = array('id' => '',
@@ -45,7 +45,7 @@ class Categories_NavigationBlockAdmin extends Categories_NavigationBlock impleme
             $modlabel = xarML('#(1)', ucwords($modulecatbases['module']));
 
             $vars['modules'][] = array(
-                'label' => $modlabel
+                'name' => $modlabel
             );
 
             $indent = '&#160;&#160;&#160;';
@@ -95,8 +95,10 @@ class Categories_NavigationBlockAdmin extends Categories_NavigationBlock impleme
             }
         }
 
-        $vars['blockid'] = $blockinfo['bid'];
+
         // Return output
+        // FIXME: this is wrong, fix the template name and return $vars;
+        $vars['blockid'] = $this->block_id;
         return xarTplBlock('categories', 'nav-admin', $vars);
     }
 
@@ -104,28 +106,28 @@ class Categories_NavigationBlockAdmin extends Categories_NavigationBlock impleme
  * Updates the Block config from the Blocks Admin
  * @param $data array containing title,content
  */
-    public function update(Array $data=array())
+    public function update()
     {
-        $vars = parent::update($data);
         if(!xarVarFetch('layout',       'isset', $vars['layout'],       $this->layout, XARVAR_DONT_SET)) {return;}
-        if(!xarVarFetch('showcatcount', 'isset', $vars['showcatcount'], $this->showcatcount, XARVAR_DONT_SET)) {return;}
+        if(!xarVarFetch('showcatcount', 'isset', $vars['showcatcount'], false, XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('showchildren', 'isset', $vars['showchildren'], $this->showchildren, XARVAR_DONT_SET)) {return;}
-        if(!xarVarFetch('showempty',    'checkbox', $vars['showempty'],    $this->showempty, XARVAR_DONT_SET)) {return;}
+        if(!xarVarFetch('showempty',    'checkbox', $vars['showempty'], false, XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('startmodule',  'isset', $vars['startmodule'],  $this->startmodule, XARVAR_DONT_SET)) {return;}
-        if(!xarVarFetch('dynamictitle', 'checkbox', $vars['dynamictitle'], $this->i, XARVAR_DONT_SET)) {return;}
-
-        $data['content'] = $vars;
-
-        return $data;
+        if(!xarVarFetch('dynamictitle', 'checkbox', $vars['dynamictitle'],  false, XARVAR_NOT_REQUIRED)) {return;}
+        
+        $this->setContent($vars);
+        return true;
     }
 
     /**
      * built-in block help/information system.
      */
+    /*
     function categories_navigationblock_help()
     {
         return '';
     }
+    */
 }
 
 ?>
