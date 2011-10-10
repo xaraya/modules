@@ -19,42 +19,27 @@
     {
         function modify(Array $data=array())
         {
-            $data = parent::modify($data);
-            if (!isset($data['numitems']))        $data['numitems'] = $this->numitems;
-            if (!isset($data['pubtype_id']))      $data['pubtype_id'] = $this->pubtype_id;
-            if (!isset($data['linkpubtype']))     $data['linkpubtype'] = $this->linkpubtype;
-            if (!isset($data['nopublimit']))      $data['nopublimit'] = $this->nopublimit;
-            if (!isset($data['catfilter']))       $data['catfilter'] = $this->catfilter;
-            if (!isset($data['includechildren'])) $data['includechildren'] = $this->includechildren;
-            if (!isset($data['nocatlimit']))      $data['nocatlimit'] = $this->nocatlimit;
-            if (!isset($data['linkcat']))         $data['linkcat'] = $this->linkcat;
-            if (!isset($data['dynamictitle']))    $data['dynamictitle'] = $this->dynamictitle;
-            if (!isset($data['showsummary']))     $data['showsummary'] = $this->showsummary;
-            if (!isset($data['showdynamic']))     $data['showdynamic'] = $this->showdynamic;
-            if (!isset($data['showvalue']))       $data['showvalue'] = $this->showvalue;
-            if (!isset($data['state']))           $data['state'] = $this->state;
-            if (!isset($data['toptype']))         $data['toptype'] = $this->toptype;
+            $data = $this->getContent();
             return $data;
         }
 
         public function update(Array $data=array())
         {
-            $data = parent::update($data);
             $args = array();
             
             if (!xarVarFetch('numitems',        'int:1:200', $args['numitems'],        $this->numitems, XARVAR_NOT_REQUIRED)) {return;}
             if (!xarVarFetch('pubtype_id',      'id',        $args['pubtype_id'],      $this->pubtype_id, XARVAR_NOT_REQUIRED)) {return;}
-            if (!xarVarFetch('linkpubtype',     'checkbox',  $args['linkpubtype'],     $this->linkpubtype, XARVAR_NOT_REQUIRED)) {return;}
-            if (!xarVarFetch('nopublimit',      'checkbox',  $args['nopublimit'],      $this->nopublimit, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('linkpubtype',     'checkbox',  $args['linkpubtype'],     false, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('nopublimit',      'checkbox',  $args['nopublimit'],      false, XARVAR_NOT_REQUIRED)) {return;}
             if (!xarVarFetch('catfilter',       'id',        $args['catfilter'],       $this->catfilter, XARVAR_NOT_REQUIRED)) {return;}
-            if (!xarVarFetch('includechildren', 'checkbox',  $args['includechildren'], $this->includechildren, XARVAR_NOT_REQUIRED)) {return;}
-            if (!xarVarFetch('nocatlimit',      'checkbox',  $args['nocatlimit'],      $this->nocatlimit, XARVAR_NOT_REQUIRED)) {return;}
-            if (!xarVarFetch('linkcat',         'checkbox',  $args['linkcat'],         $this->linkcat, XARVAR_NOT_REQUIRED)) {return;}
-            if (!xarVarFetch('dynamictitle',    'checkbox',  $args['dynamictitle'],    $this->dynamictitle, XARVAR_NOT_REQUIRED)) {return;}
-            if (!xarVarFetch('showsummary',     'checkbox',  $args['showsummary'],     $this->showsummary, XARVAR_NOT_REQUIRED)) {return;}
-            if (!xarVarFetch('showdynamic',     'checkbox',  $args['showdynamic'],     $this->showdynamic, XARVAR_NOT_REQUIRED)) {return;}
-            if (!xarVarFetch('showvalue',       'checkbox',  $args['showvalue'],       $this->showvalue, XARVAR_NOT_REQUIRED)) {return;}
-            if (!xarVarFetch('state',           'strlist:,:int:1:4', $args['state'],   $this->state, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('includechildren', 'checkbox',  $args['includechildren'], false, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('nocatlimit',      'checkbox',  $args['nocatlimit'],      false, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('linkcat',         'checkbox',  $args['linkcat'],         false, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('dynamictitle',    'checkbox',  $args['dynamictitle'],    false, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('showsummary',     'checkbox',  $args['showsummary'],     false, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('showdynamic',     'checkbox',  $args['showdynamic'],     false, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('showvalue',       'checkbox',  $args['showvalue'],       false, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('pubstate',           'strlist:,:int:1:4', $args['pubstate'],   $this->pubstate, XARVAR_NOT_REQUIRED)) {return;}
             if (!xarVarFetch('toptype',         'enum:author:date:hits:rating:title', $args['toptype'], $this->toptype, XARVAR_NOT_REQUIRED)) {return;}
 
             if ($args['nopublimit'] == true) {
@@ -67,8 +52,8 @@
             if ($args['includechildren']) {
                 $args['linkcat'] = 0;
             }
-            $data['content'] = $args;
-            return $data;
+            $this->setContent($args);
+            return true;
         }
     }
 ?>

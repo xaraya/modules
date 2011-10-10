@@ -13,35 +13,50 @@
  * initialise block
  * @author Roger Keays
  */
-    sys::import('xaraya.structures.containers.blocks.basicblock');
+sys::import('xaraya.structures.containers.blocks.basicblock');
 
-    class Publications_RandomBlock extends BasicBlock implements iBlock
-    {
-        public $locale            = '';
-        public $alttitle          = '';
-        public $altsummary        = '';
-        public $showtitle         = true;
-        public $showsummary       = true;
-        public $showpubdate       = false;
-        public $showauthor        = false;
-        public $showsubmit        = false;
-        public $state             = '2,3';
+class Publications_RandomBlock extends BasicBlock implements iBlock
+{
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'random';
+    protected $module           = 'publications'; // module block type belongs to, if any
+    protected $text_type        = 'Random Publication';  // Block type display name
+    protected $text_type_long   = 'Show a single random publication'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    // @todo: drop the show_help flag, and go back to checking if help method is declared 
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
-        public function __construct(Array $data=array())
+    public $numitems          = 1;
+    public $catfilter         = array();
+    public $pubtype_id        = 0;
+    public $locale            = '';
+    public $alttitle          = '';
+    public $altsummary        = '';
+    public $showtitle         = true;
+    public $showsummary       = true;
+    public $showpubdate       = false;
+    public $showauthor        = false;
+    public $showsubmit        = false;
+    // chris: state is a reserved property name used by blocks
+    //public $state               = '2,3';
+    public $pubstate            = '2,3';
+
+        public function display()
         {
-            parent::__construct($data);
-            $this->text_type = 'Random publication';
-            $this->text_type_long = 'Show a single random publication';
-        }
-
-        public function display(Array $data=array())
-        {
-            $data = parent::display($data);
+            $data = $this->getContent();
 
             // frontpage or approved state
-            if (empty($data['state']))          $statearray = $this->state;
-            elseif (!is_array($data['state']))  $statearray = split(',', $data['state']);
-            else                                $statearray = $data['state'];
+            if (empty($data['pubstate']))          $statearray = $this->state;
+            elseif (!is_array($data['pubstate']))  $statearray = explode(',', $data['pubstate']);
+            else                                $statearray = $data['pubstate'];
 
             if (empty($data['locale']))             $lang = null;
             elseif ($data['locale'] == 'current')   $lang = xarMLSGetCurrentLocale();
@@ -96,5 +111,5 @@
 
             return;$data;
         }
-    }
+}
 ?>

@@ -15,36 +15,46 @@
  */
     sys::import('xaraya.structures.containers.blocks.basicblock');
 
-    class Publications_TopitemsBlock extends BasicBlock implements iBlock
-    {
-        public $numitems           = 5;
-        public $pubtype_id         = 0;
-        public $nopublimit         = false;
-        public $linkpubtype        = true;
-        public $catfilter          = 0;
-        public $includechildren    = false;
-        public $nocatlimit         = true;
-        public $linkcat            = false;
-        public $dynamictitle       = true;
-        public $toptype            = 'hits';
-        public $showvalue          = true;
-        public $showsummary        = false;
-        public $showdynamic        = false;
-        public $state             = '2,3';
+class Publications_TopitemsBlock extends BasicBlock implements iBlock
+{
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'topitems';
+    protected $module           = 'publications'; // module block type belongs to, if any
+    protected $text_type        = 'Top Items';  // Block type display name
+    protected $text_type_long   = 'Show top publications'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    // @todo: drop the show_help flag, and go back to checking if help method is declared 
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
-        public function __construct(Array $data=array())
-        {
-            parent::__construct($data);
-            $this->text_type = 'Top Items';
-            $this->text_type_long = 'Show top publications';
-            $this->module = 'publications';
-            $this->allow_multiple = true;
-            $this->show_preview = true;
-        }
+    public $numitems           = 5;
+    public $pubtype_id         = 0;
+    public $nopublimit         = false;
+    public $linkpubtype        = true;
+    public $catfilter          = 0;
+    public $includechildren    = false;
+    public $nocatlimit         = true;
+    public $linkcat            = false;
+    public $dynamictitle       = true;
+    public $toptype            = 'hits';
+    public $showvalue          = true;
+    public $showsummary        = false;
+    public $showdynamic        = false;
+    // chris: state is a reserved property name used by blocks
+    //public $state               = '2,3';
+    public $pubstate            = '2,3';
+
         
         public function display(Array $data=array())
         {
-            $data = parent::display($data);
+            $data = $this->getContent();
 
             // see if we're currently displaying an article
             if (xarVarIsCached('Blocks.publications', 'id')) {
@@ -54,24 +64,24 @@
             }
 
             if (!empty($data['dynamictitle'])) {
-                if ($data['content']['toptype'] == 'rating') {
+                if ($data['toptype'] == 'rating') {
                     $data['title'] = xarML('Top Rated');
-                } elseif ($data['content']['toptype'] == 'hits') {
+                } elseif ($data['toptype'] == 'hits') {
                     $data['title'] = xarML('Top');
                 } else {
                     $data['title'] = xarML('Latest');
                 }
             }
 
-            if (!empty($data['content']['nocatlimit'])) {
+            if (!empty($data['nocatlimit'])) {
                 // don't limit by category
                 $cid = 0;
                 $cidsarray = array();
             } else {
-                if (!empty($data['content']['catfilter'])) {
+                if (!empty($data['catfilter'])) {
                     // use admin defined category
-                    $cidsarray = array($data['content']['catfilter']);
-                    $cid = $data['content']['catfilter'];
+                    $cidsarray = array($data['catfilter']);
+                    $cid = $data['catfilter'];
                 } else {
                     // use the current category
                     // Jonn: this currently only works with one category at a time
@@ -99,7 +109,7 @@
                 }
 
                 //echo $includechildren;
-                if (!empty($data['content']['includechildren']) && !empty($cidsarray[0]) && !strstr($cidsarray[0],'_')) {
+                if (!empty($data['includechildren']) && !empty($cidsarray[0]) && !strstr($cidsarray[0],'_')) {
                     $cidsarray[0] = '_' . $cidsarray[0];
                 }
 
@@ -111,7 +121,7 @@
                         array('cid' => $cid, 'return_itself' => 'return_itself')
                     );
                 }
-                if ((!empty($cidsarray)) && (isset($thiscategory[0]['name'])) && !empty($data['content']['dynamictitle'])) {
+                if ((!empty($cidsarray)) && (isset($thiscategory[0]['name'])) && !empty($data['dynamictitle'])) {
                     $data['title'] .= ' ' . $thiscategory[0]['name'];
                 }
             }
@@ -120,16 +130,16 @@
             // MarieA - moved to always get pubtypes.
             $publication_types = xarModAPIFunc('publications', 'user', 'get_pubtypes');
 
-            if (!empty($data['content']['nopublimit'])) {
+            if (!empty($data['nopublimit'])) {
                 //don't limit by publication type
                 $ptid = 0;
-                if (!empty($data['content']['dynamictitle'])) {
+                if (!empty($data['dynamictitle'])) {
                     $data['title'] .= ' ' . xarML('Content');
                 }
             } else {
                 // MikeC: Check to see if admin has specified that only a specific
                 // Publication Type should be displayed.  If not, then default to original TopItems configuration.
-                if ($data['content']['pubtype_id'] == 0)
+                if ($data['pubtype_id'] == 0)
                 {
                     if (xarVarIsCached('Blocks.publications', 'ptid')) {
                         $ptid = xarVarGetCached('Blocks.publications', 'ptid');
@@ -140,10 +150,10 @@
                     }
                 } else {
                     // MikeC: Admin Specified a publication type, use it.
-                    $ptid = $data['content']['pubtype_id'];
+                    $ptid = $data['pubtype_id'];
                 }
 
-                if (!empty($data['content']['dynamictitle'])) {
+                if (!empty($data['dynamictitle'])) {
                     if (!empty($ptid) && isset($publication_types[$ptid]['description'])) {
                         $data['title'] .= ' ' . xarVarPrepForDisplay($publication_types[$ptid]['description']);
                     } else {
@@ -153,20 +163,20 @@
             }
 
             // frontpage or approved state
-            if (empty($data['content']['state'])) {
+            if (empty($data['pubstate'])) {
                 $statearray = array(2,3);
-            } elseif (!is_array($data['content']['state'])) {
-                $statearray = preg_split('/,/', $data['state']);
+            } elseif (!is_array($data['pubstate'])) {
+                $statearray = preg_split('/,/', $data['pubstate']);
             } else {
-                $statearray = $data['content']['state'];
+                $statearray = $data['pubstate'];
             }
 
             // get cids for security check in getall
             $fields = array('id', 'title', 'pubtype_id', 'cids');
-            if ($data['content']['toptype'] == 'rating' && xarModIsHooked('ratings', 'publications', $ptid)) {
+            if ($data['toptype'] == 'rating' && xarModIsHooked('ratings', 'publications', $ptid)) {
                 array_push($fields, 'rating');
                 $sort = 'rating';
-            } elseif ($data['content']['toptype'] == 'hits' && xarModIsHooked('hitcount', 'publications', $ptid)) {
+            } elseif ($data['toptype'] == 'hits' && xarModIsHooked('hitcount', 'publications', $ptid)) {
                 array_push($fields, 'counter');
                 $sort = 'hits';
             } else {
@@ -174,10 +184,10 @@
                 $sort = 'date';
             }
 
-            if (!empty($data['content']['showsummary'])) {
+            if (!empty($data['showsummary'])) {
                 array_push($fields, 'summary');
             }
-            if (!empty($data['content']['showdynamic']) && xarModIsHooked('dynamicdata', 'publications', $ptid)) {
+            if (!empty($data['showdynamic']) && xarModIsHooked('dynamicdata', 'publications', $ptid)) {
                 array_push($fields, 'dynamicdata');
             }
 
@@ -191,7 +201,7 @@
                     'create_date' => time(),
                     'fields' => $fields,
                     'sort' => $sort,
-                    'numitems' => $data['content']['numitems']
+                    'numitems' => $data['numitems']
                 )
             );
 
@@ -207,21 +217,21 @@
                         'publications', 'user', 'display',
                         array(
                             'itemid' => $article['id'],
-                            'catid' => ((!empty($data['content']['linkcat']) && !empty($data['content']['catfilter'])) ? $data['content']['catfilter'] : NULL)
+                            'catid' => ((!empty($data['linkcat']) && !empty($data['catfilter'])) ? $data['catfilter'] : NULL)
                         )
                     );
                 } else {
                     $article['link'] = '';
                 }
 
-                if (!empty($data['content']['showvalue'])) {
-                    if ($data['content']['toptype'] == 'rating') {
+                if (!empty($data['showvalue'])) {
+                    if ($data['toptype'] == 'rating') {
                         if (!empty($article['rating'])) {
                           $article['value'] = intval($article['rating']);
                         }else {
                             $article['value']=0;
                         }
-                    } elseif ($data['content']['toptype'] == 'hits') {
+                    } elseif ($data['toptype'] == 'hits') {
                         if (!empty($article['counter'])) {
                             $article['value'] = $article['counter'];
                         } else {
@@ -241,7 +251,7 @@
                 }
 
                 // MikeC: Bring the summary field back as $desc
-                if (!empty($data['content']['showsummary'])) {
+                if (!empty($data['showsummary'])) {
                     $article['summary']  = xarVarPrepHTMLDisplay($article['summary']);
                     $article['transform'] = array('summary', 'title');
                     $article = xarModCallHooks('item', 'transform', $article['id'], $article, 'publications');
@@ -250,7 +260,7 @@
                 }
 
                 // MarieA: Bring the pubtype description back as $descr
-                if (!empty($data['content']['nopublimit'])) {
+                if (!empty($data['nopublimit'])) {
                     $article['pubtypedescr'] = $publication_types[$article['pubtype_id']]['description'];
                     //jojodee: while we are here bring the pubtype name back as well
                     $article['pubtypename'] = $publication_types[$article['pubtype_id']]['name'];
@@ -258,7 +268,10 @@
                 // this will also pass any dynamic data fields (if any)
                 $items[] = $article;
             }
-            $data['content']['items'] =$items;
+            $data['items'] = $items;
+            if (!empty($data['dynamictitle'])) {
+                $this->setTitle($data['title']);
+            }
             return $data;
         }    
     }

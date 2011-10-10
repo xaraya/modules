@@ -18,28 +18,39 @@ sys::import('xaraya.structures.containers.blocks.basicblock');
 
 class Publications_CrumbBlock extends BasicBlock implements iBlock
 {
-    public $name                = 'CrumbBlock';
-    public $module              = 'publications';
-    public $text_type           = 'Crumbtrail';
-    public $text_type_long      = 'Publications Crumbtrail Block';
-    public $notes               = 'Provides an ancestry trail of the current page in the hierarchy';
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type                = 'crumb';
+    protected $module              = 'publications';
+    protected $text_type           = 'Crumbtrail';
+    protected $text_type_long      = 'Publications Crumbtrail Block';
+    protected $notes               = 'Provides an ancestry trail of the current page in the hierarchy';
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author = '';
+    protected $contact = '';
+    protected $credits = '';
+    protected $license = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    // @todo: drop the show_help flag, and go back to checking if help method is declared 
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
     public $include_root        = false;
     public $root_ids           = array();
 
 /**
  * Display func.
- * @param $blockinfo array
- * @returns $blockinfo array
+ * @param none
+ * @returns $data array of template data
  * @todo Option to display the menu even when not on a relevant page
+ * @FIXME: if blocks are called before the main module is loaded their values are always empty
+ * @FIXME: the calls to cache have no fallbacks and assume module is current main module.
  */
 
-    function display(Array $data=array())
+    function display()
     {
-        $data = parent::display($data);
-        if (empty($data)) return;
-
-        $vars = $data['content'];
+        $vars = $this->getContent();
 
         if (!empty($vars['root_ids']) && is_array($vars['root_ids'])) {
             $root_ids = $vars['root_ids'];
@@ -50,7 +61,7 @@ class Publications_CrumbBlock extends BasicBlock implements iBlock
         // To start with, we need to know the current page.
         // It could be set (fixed) for the block, passed in
         // via the page cache, or simply not present.
-        $pid = 0;
+        $id = 1;
 
         // Automatic: that means look at the page cache.
         if (xarVarIsCached('Blocks.publications', 'current_id')) {
@@ -108,9 +119,7 @@ class Publications_CrumbBlock extends BasicBlock implements iBlock
 
         // Pass the page data into the block.
         // Merge it in with the existing block details.
-        $vars = array_merge($vars, $pagedata);
-
-        $data['content'] = $vars;
+        $data = array_merge($vars, $pagedata);
 
         return $data;
 

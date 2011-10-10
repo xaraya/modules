@@ -17,43 +17,41 @@
  */
     sys::import('xaraya.structures.containers.blocks.basicblock');
 
-    class Publications_RelatedBlock extends BasicBlock implements iBlock
-    {
-        public $numitems          = 5;
-        public $showvalue         = true;
-        public $nocache           = 1; // don't cache by default
-        public $usershared        = 1; // share across group members
-        public $pageshared        = 0; // don't share across pages
-        public $showauthor        = false;
-        public $showsubmit        = false;
-        public $state             = '2,3';
+class Publications_RelatedBlock extends BasicBlock implements iBlock
+{
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'related';
+    protected $module           = 'publications'; // module block type belongs to, if any
+    protected $text_type        = 'Related publication';  // Block type display name
+    protected $text_type_long   = 'Show related categories and author links'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    // @todo: drop the show_help flag, and go back to checking if help method is declared 
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
-        public function __construct(Array $data=array())
+    public $numitems          = 5;
+    public $showvalue         = true;
+    public $showsubmit        = false;
+    public $showpubtype      = true;
+    public $showcategory     = true;
+    public $showauthor       = true;
+    // chris: state is a reserved property name used by blocks
+    //public $state               = '2,3';
+    public $pubstate            = '2,3';
+
+
+        public function display()
         {
-            parent::__construct($data);
-            $this->text_type = 'Related publication';
-            $this->text_type_long = 'Show related categories and author links';
-            $this->allow_multiple = true;
-            $this->form_content   = false;
-            $this->form_refresh   = false;
-            $this->show_preview   = true;
-            
-            $this->show_pubtype  = true;
-            $this->show_category = true;
-            $this->show_author   = true;
-        }
 
-        public function display(Array $data=array())
-        {
-            $data = parent::display($data);
-            $vars = $data['content'];
+            $vars = $this->getContent();
             
-            if (empty($vars['numitems']))         $vars['numitems'] = $this->numitems;
-            if (empty($vars['showvalue']))        $vars['showvalue'] = $this->showvalue;
-            if (empty($vars['showpubtype']))      $vars['showpubtype'] = $this->show_pubtype;
-            if (empty($vars['showcategory']))     $vars['showcategory'] = $this->show_category;
-            if (empty($vars['showauthor']))       $vars['showauthor'] = $this->show_author;
-
             // Trick : work with cached variables here (set by the module function)        
             // Check if we've been through publications display
             if (!xarVarIsCached('Blocks.publications','current_id')) {return;}
@@ -106,12 +104,10 @@
 
             // Populate block info and pass to theme
             if ($links > 0) {
-                // Set the data to return.
-                $data['content'] = $vars;
-                return $data;
+                return $vars;
             }
         
             return;
         }
-    }
+}
 ?>

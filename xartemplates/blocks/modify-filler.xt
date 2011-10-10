@@ -27,7 +27,7 @@
                     array('id' => '2', 'name' => xarML('Approved'))
                 )
             </xar:set>        
-            <xar:data-input type="dropdown" name="state" options="$options" value="$state"/>
+            <xar:data-input type="dropdown" name="pubstate" options="$options" value="$pubstate"/>
         </div>
     </div>
     <div class="xar-row">

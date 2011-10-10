@@ -12,17 +12,14 @@
 /**
  * Original Author of file: Jim McDonald
  */
-/**
- * modify block settings
- */
-function publications_navigationblock_modify($blockinfo)
+sys::import('modules.publications.xarblocks.navigation');
+
+class Publications_NavigationBlockAdmin extends Publications_NavigationBlock
 {
-    // Get current content
-    if (!is_array($blockinfo['content'])) {
-        $vars = @unserialize($blockinfo['content']);
-    } else {
-        $vars = $blockinfo['content'];
-    }
+    function modify()
+    {
+
+    $vars = $this->getContent();
 
     // Defaults
     if (empty($vars['layout'])) {
@@ -137,16 +134,13 @@ function publications_navigationblock_modify($blockinfo)
         }
     }
 
-    $vars['blockid'] = $blockinfo['bid'];
+    $vars['blockid'] = $this->block_id;
     // Return output
     return xarTplBlock('publications', 'nav-admin', $vars);
-}
-
-/**
- * update block settings
- */
-function publications_navigationblock_update($blockinfo)
-{
+    }
+    
+    public function update()
+    {
     $vars = array();
     if(!xarVarFetch('layout',       'isset', $vars['layout'],       NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('show_catcount', 'isset', $vars['show_catcount'], NULL, XARVAR_DONT_SET)) {return;}
@@ -154,18 +148,9 @@ function publications_navigationblock_update($blockinfo)
     if(!xarVarFetch('showempty',    'checkbox', $vars['showempty'],    false, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('startmodule',  'isset', $vars['startmodule'],  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('dynamictitle', 'checkbox', $vars['dynamictitle'], false, XARVAR_DONT_SET)) {return;}
+    $this->setContent($vars);
+    return true;
+    }    
 
-    $blockinfo['content'] = $vars;
-
-    return $blockinfo;
 }
-
-/**
- * built-in block help/information system.
- */
-function publications_navigationblock_help()
-{
-    return '';
-}
-
 ?>
