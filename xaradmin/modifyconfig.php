@@ -1,13 +1,12 @@
 <?php
 /**
- * Ephemerids
+ * Ephemerids Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @subpackage ephemerids module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Ephemerids Module
  * @link http://xaraya.com/index.php/release/15.html
  * @author Volodymyr Metenchuk
  */
@@ -55,6 +54,5 @@ function ephemerids_admin_modifyconfig()
             break;
     }
     return $data;
-    xarController::redirect(xarModURL('ephemerids', 'admin', 'modifyconfig'));
 }
 ?>
