@@ -29,27 +29,22 @@ class Scheduler_TriggerBlockAdmin extends Scheduler_TriggerBlock implements iBlo
  * Modify Function to the Blocks Admin
  * @param $data array containing title,content
  */
-    public function modify(Array $data=array())
+    public function modify()
     {
-        $data = parent::modify($data);
-        if (empty($data['showstatus'])) $data['showstatus'] = $this->showtriggerstatus;
-        return $data;
+        return $this->getContent();
     }
 
 /**
  * Updates the Block config from the Blocks Admin
  * @param $data array containing title,content
  */
-    public function update(Array $data=array())
+    public function update()
     {
-        $data = parent::update($data);
-        if (!xarVarFetch('showstatus', 'int', $showstatus, 0, XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-//        if (empty($data['showstatus'])) $data['showstatus'] = $this->showtriggerstatus;
-
-        $vars = $data;
-        $data['content'] = $vars;
-
-        return $data;
+        $vars = array();
+        if(!xarVarFetch('showstatus',  'checkbox', $vars['showstatus'],  0, XARVAR_DONT_SET)) {return;}
+        $this->setContent($vars);
+        return true;
     }
+
 }
 ?>
