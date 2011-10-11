@@ -14,25 +14,30 @@
 /**
  * Ephemerids block
  */
-    sys::import('xaraya.structures.containers.blocks.basicblock');
+sys::import('xaraya.structures.containers.blocks.basicblock');
 
-    class Ephemerids_EphemBlock extends BasicBlock
-    {
-        public $name                = 'Ephemerids';
-        public $module              = 'ephemerids';
-        public $text_type           = 'Ephemerids';
-        public $text_type_long      = 'Ephemerids Block';
-        public $allow_multiple      = true;
-        public $show_preview        = true;
-
-        public $form_content        = false;
-        public $form_refresh        = false;
-
+class Ephemerids_EphemBlock extends BasicBlock
+{
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'ephem';
+    protected $module           = 'ephemerids'; // module block type belongs to, if any
+    protected $text_type        = 'Ephemerids';  // Block type display name
+    protected $text_type_long   = 'Show Ephemerids'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    // @todo: drop the show_help flag, and go back to checking if help method is declared 
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
         function display(Array $data=array())
         {
-            $data = parent::display($data);
-            if (empty($data)) return;
+            $data = $this->getContent();
 
             // Database information
             xarModDBInfoLoad('ephemerids');
@@ -53,17 +58,10 @@
                 $data['emptycontent'] = true;
             }
         
-            if (empty($blockinfo['title'])){
-                $blockinfo['title'] = xarML('Historical Reference');
+            if (empty($this->title)){
+                $this->setTitle(xarML('Historical Reference'));
             }
         
-            if (empty($blockinfo['template'])) {
-                $template = 'ephem';
-            } else {
-                $template = $blockinfo['template'];
-            }
-            $vars['content'] = $data;
-            $data = array_merge($data,$vars);
             return $data;
         }
 }
