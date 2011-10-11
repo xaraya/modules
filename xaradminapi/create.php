@@ -132,7 +132,7 @@ function scheduler_adminapi_create($args)
         $result = '';
     }
     $jobs[$maxid] = array('module' => $module,
-                          'type' => $type,
+                          'type' => $functype,
                           'func' => $func,
                           'interval' => $interval,
                           'config' => $config,
