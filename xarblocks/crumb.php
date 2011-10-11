@@ -16,11 +16,21 @@ sys::import('xaraya.structures.containers.blocks.basicblock');
 
 class Xarpages_CrumbBlock extends BasicBlock implements iBlock
 {
-    public $name                = 'CrumbBlock';
-    public $module              = 'xarpages';
-    public $text_type           = 'Crumbtrail';
-    public $text_type_long      = 'Xarpages Crumbtrail Block';
-    public $notes               = 'Provides an ancestry trail of the current page in the hierarchy';
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'crumb';
+    protected $module           = 'xarpages'; // module block type belongs to, if any
+    protected $text_type        = 'Crumb Trail';  // Block type display name
+    protected $text_type_long   = 'Xarpages Crumbtrail Block'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview 
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
     public $include_root        = false;
     public $root_pids           = array();
@@ -32,12 +42,10 @@ class Xarpages_CrumbBlock extends BasicBlock implements iBlock
  * @todo Option to display the menu even when not on a relevant page
  */
 
-    function display(Array $data=array())
+    function display()
     {
-        $data = parent::display($data);
-        if (empty($data)) return;
 
-        $vars = $data['content'];
+        $vars = $this->getContent();
 
         if (!empty($vars['root_pids']) && is_array($vars['root_pids'])) {
             $root_pids = $vars['root_pids'];
@@ -118,9 +126,7 @@ class Xarpages_CrumbBlock extends BasicBlock implements iBlock
         // Merge it in with the existing block details.
         $vars = array_merge($vars, $pagedata);
 
-        $data['content'] = $vars;
-
-        return $data;
+        return $vars;
 
     }
 

@@ -15,37 +15,34 @@
  * init func
  */
 
-    sys::import('xaraya.structures.containers.blocks.basicblock');
+sys::import('xaraya.structures.containers.blocks.basicblock');
 
-    class Xarpages_MenuBlock extends BasicBlock implements iBlock
-    {
-        public $name                = 'MenuBlock';
-        public $module              = 'xarpages';
-        public $text_type           = 'Content';
-        public $text_type_long      = 'Xarpages Menu Block';
-        public $allow_multiple      = true;
+class Xarpages_MenuBlock extends BasicBlock implements iBlock
+{
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'menu';
+    protected $module           = 'xarpages'; // module block type belongs to, if any
+    protected $text_type        = 'Xarpages Menu';  // Block type display name
+    protected $text_type_long   = 'Show xarpages menu links'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    // @todo: drop the show_help flag, and go back to checking if help method is declared 
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
-        public $form_content        = false;
-        public $form_refresh        = false;
-
-        public $show_preview        = true;
-        public $multi_homed         = true;
-        public $current_source      = 'AUTO'; // Other values: 'DEFAULT'
-        public $default_pid         = 0; // 0 == 'None'
-        public $root_pids           = array();
-        public $prune_pids          = array();
-        public $max_level           = 0;
-        public $start_level         = 0;
-
-        public $func_update         = 'menublock_update';
-        public $notes               = "no notes";
-
-
-/**
- * Display func.
- * @param $blockinfo array
- * @returns $blockinfo array
- */
+    public $multi_homed         = true;
+    public $current_source      = 'AUTO'; // Other values: 'DEFAULT'
+    public $default_pid         = 0; // 0 == 'None'
+    public $root_pids           = array();
+    public $prune_pids          = array();
+    public $max_level           = 0;
+    public $start_level         = 0;
 
 /**
  * Display func.
@@ -54,7 +51,7 @@
  * @todo Option to display the menu even when not on a relevant page
  */
 
-    function display(Array $data=array())
+    function display()
     {
     // TODO:
     // We want a few facilities:
@@ -72,11 +69,7 @@
     //    This will also move the current page, if it happens to be in the
     //    pruned section, down to the pruning page. [done]
 
-        $data = parent::display($data);
-        if (empty($data)) return;
-
-        // Pointer to simplify referencing.
-        $vars =& $data;
+        $vars = $this->getContent();
 
         if (!empty($vars['root_pids']) && is_array($vars['root_pids'])) {
             $root_pids = $vars['root_pids'];
@@ -256,9 +249,9 @@
         // Pass the page data into the block.
         // Merge it in with the existing block details.
         // TODO: It may be quicker to do the merge the other way around?
-        $data['content'] = array_merge($vars, $pagedata);
+        $vars = array_merge($vars, $pagedata);
 
-        return $data;
+        return $vars;
     }
 }
 

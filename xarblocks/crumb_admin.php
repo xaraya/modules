@@ -22,10 +22,9 @@ class Xarpages_CrumbBlockAdmin extends Xarpages_CrumbBlock implements iBlock
      * Modify Function to the Blocks Admin
      * @param $blockinfo array
      */
-    public function modify(Array $data=array())
+    public function modify()
     {
-        $data = parent::modify($data);
-        if (empty($data)) return;
+        $data = $this->getContent();
 
         // Defaults
         if (!isset($data['include_root'])) {$data['include_root'] = false;}
@@ -63,11 +62,9 @@ class Xarpages_CrumbBlockAdmin extends Xarpages_CrumbBlock implements iBlock
  * Updates the Block config from the Blocks Admin
  * @param $blockinfo array containing title,content
  */
-    public function update(Array $data=array())
+    public function update()
     {
-        $data = parent::update($data);
-        // Reference to content array.
-        $vars =& $data['content'];
+        $vars = $this->getContent();
 
         if (xarVarFetch('include_root', 'bool', $include_root, false, XARVAR_NOT_REQUIRED)) {
             $vars['include_root'] = $include_root;
@@ -93,9 +90,8 @@ class Xarpages_CrumbBlockAdmin extends Xarpages_CrumbBlock implements iBlock
             // Reorder the keys.
             $vars['root_pids'] = array_values($vars['root_pids']);
         }
-        $data['content'] = $vars;
-
-        return $data;
+        $this->setContent($vars);
+        return true;
 
     }
 }

@@ -29,9 +29,9 @@
  * @param $blockinfo array containing title,content
  */
 
-        public function modify(Array $data=array())
+        public function modify()
         {
-            $data = parent::modify($data);
+            $data = $this->getContent();
 
             // Get a list of all pages for the drop-downs.
             // Get the tree of all pages, without the DD for speed.
@@ -77,9 +77,8 @@
  * Updates the Block config from the Blocks Admin
  * @param $blockinfo array containing title,content
  */
-        public function update(Array $data=array())
+        public function update()
         {
-            $data = parent::update($data);
 
             xarVarFetch('multi_homed', 'int', $vars['multi_homed'], 0, XARVAR_NOT_REQUIRED);
 
@@ -139,9 +138,10 @@
             // The start level.
             // Hide the menu if the current page is below this level.
             xarVarFetch('start_level', 'int:0:999', $vars['start_level'], 0, XARVAR_NOT_REQUIRED);
+            
+            $this->setContent($vars);
+            return true;
 
-            $data['content'] = $vars;
-            return $data;
         }
     }
 
