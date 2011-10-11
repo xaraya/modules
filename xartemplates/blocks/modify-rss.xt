@@ -114,7 +114,7 @@
     <label for="refresh#$blockid#" class="xar-form-label help" title="#xarML('Number of seconds before refreshing the feed.')#">
         Refresh Rate
     </label>
-    <input type="text" name="refresh" id="refresh#$blockid#" size="5" maxlength="5" value="#$refresh#" />
+    <input type="text" name="rssrefresh" id="rssrefresh#$blockid#" size="5" maxlength="5" value="#$rssrefresh#" />
 </div>
 <div class="xar-form-input-wrapper-after">
     <xar:data-input type="checkbox" name="show_warning" value="$show_warning" />

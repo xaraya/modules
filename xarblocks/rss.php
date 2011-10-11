@@ -23,22 +23,23 @@ sys::import('xaraya.structures.containers.blocks.basicblock');
 
 class Headlines_RssBlock extends BasicBlock implements iBlock
 {
-    public $nocache             = 1;
-
-    public $name                = 'RssBlock';
-    public $module              = 'headlines';
-    public $text_type           = 'RSS';
-    public $text_type_long      = 'RSS Newsfeed';
-    public $pageshared          = 1;
-    public $usershared          = 1;
-    public $refresh             = 3600;        // (deprec)
-    public $cacheexpire         = 3601; // right after the refresh rate :-)
-    public $allow_multiple      = true;
-    public $func_update         = 'headlines_rssblock_insert';
-    public $form_content        = false;
-    public $form_refresh        = false;
-    public $show_preview        = true;
-
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'rss';
+    protected $module           = 'headlines'; // module block type belongs to, if any
+    protected $text_type        = 'RSS';  // Block type display name
+    protected $text_type_long   = 'RSS Newsfeed'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    // @todo: drop the show_help flag, and go back to checking if help method is declared 
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
+ 
     public $rssurl              = '';
     public $maxitems            = 5;
     public $showdescriptions    = false;
@@ -53,6 +54,7 @@ class Headlines_RssBlock extends BasicBlock implements iBlock
     public $show_chanimage      = 0;  // added for SimplePie
     public $show_itemimage      = 0;  // added for SimpePie
     public $show_itemcats       = 0;  // added for SimpePie
+    public $rssrefresh             = 3600;
 
 
 /**
@@ -61,18 +63,11 @@ class Headlines_RssBlock extends BasicBlock implements iBlock
  */
     function display(Array $data=array())
     {
-        $data = parent::display($data);
-        if (empty($data)) return;
-
-        $vars = $data;
-
-        $data['content'] = '';
+        $vars = $this->getContent();
 
         // Check and see if a feed has been supplied to us.
         if (empty($vars['rssurl'])) {
-            $data['title'] = xarML('Headlines');
-            $data['content'] = xarML('No Feed URL Specified');
-            return $data;
+            return xarML('No Feed URL Specified');
         }
 
         // bug[ 5322 ]
@@ -82,39 +77,28 @@ class Headlines_RssBlock extends BasicBlock implements iBlock
                 $feedfile = $headline['url'];
                 $thishid = $headline['hid'];
             } else {
-                $data['title'] = xarML('Headlines');
-                $data['content'] = xarML('No Feed URL Specified');
-                return $data;
+                return xarML('No Feed URL Specified');
             }
         } else {
             $feedfile = $vars['rssurl'];
         }
 
-        if (!isset($vars['maxitems'])) $vars['maxitems'] = $this->maxitems;
-        if (!isset($vars['show_chantitle'])) $vars['show_chantitle'] = $this->show_chantitle;
-        if (!isset($vars['show_chandesc'])) $vars['show_chandesc'] = $this->show_chandesc;
-        if (empty($vars['refresh'])) $vars['refresh'] = $this->refresh;
-        if (!isset($vars['linkhid'])) $vars['linkhid'] = $this->linkhid;
-        if (!isset($vars['show_warning'])) $vars['show_warning'] = $this->show_warning;
-
         // CHECKME: this forces early refresh regardless of caching options, why do we do that? old code below
         // define('MAGPIE_CACHE_AGE', round($refresh/2)); // set lower than block cache so we always get something
         // simplepie'cache_max_minutes' => round($refresh/2*60) - bug, simplepie caching is in seconds
         // this only happens in the rss block, need to work out if it's necessary
-        $refresh = $vars['refresh']/2;
+        $refresh = $vars['rssrefresh']/2;
         if (!$vars['showdescriptions']) {
             $vars['truncate'] = 0; // no point doing extra work for nothing :)
         }
         // call api function to get the parsed feed (or warning)
-        $data = array_merge($data, xarMod::apiFunc('headlines', 'user', 'getparsed',
+        $vars = array_merge($vars, xarMod::apiFunc('headlines', 'user', 'getparsed',
                     array('feedfile' => $feedfile, 'refresh' => $refresh,
                           'numitems' => $vars['maxitems'], 'truncate' => $vars['truncate'])));
         // TODO: option to hide block here instead
-        if (!empty($data['warning'])) {
+        if (!empty($vars['warning'])) {
             if (empty($vars['show_warning'])) return;
-            $data['title'] = xarML('Headlines');
-            $data['content'] = xarVarPrepForDisplay($data['warning']);
-            return $data;
+            return xarVarPrepForDisplay($vars['warning']);
         } else {
             // here we see if this feed has been updated by comparing the stored hash against the
             // hash provided by the getparsed function, if they're different, we update the feed
@@ -127,27 +111,20 @@ class Headlines_RssBlock extends BasicBlock implements iBlock
         }
 
         // FR: add alt channel title/desc/link
-        if (!isset($vars['alt_chantitle'])) $vars['alt_chantitle'] = $this->alt_chantitle;
-        if (!isset($vars['alt_chandesc'])) $vars['alt_chandesc'] = $this->alt_chandesc;
-        if (!isset($vars['alt_chanlink'])) $vars['alt_chanlink'] = $this->alt_chanlink;
-        if (!empty($vars['alt_chantitle'])) $data['chantitle'] = $vars['alt_chantitle'];
-        if (!empty($vars['alt_chandesc'])) $data['chandesc'] = $vars['alt_chandesc'];
-        if (!empty($vars['alt_chanlink'])) $data['chanlink'] = $vars['alt_chanlink'];
-        // optionally show images and cats if available (SimplePie required)
-        if (!isset($vars['show_chanimage'])) $vars['show_chanimage'] = $this->show_chanimage;
-        if (!isset($vars['show_itemimage'])) $vars['show_itemimage'] = $this->show_itemimage;
-        if (!isset($vars['show_itemcats'])) $vars['show_itemcats'] = $this->show_itemcats;
+        if (!empty($vars['alt_chantitle'])) $vars['chantitle'] = $vars['alt_chantitle'];
+        if (!empty($vars['alt_chandesc'])) $vars['chandesc'] = $vars['alt_chandesc'];
+        if (!empty($vars['alt_chanlink'])) $vars['chanlink'] = $vars['alt_chanlink'];
         // make sure SimplePie's available
         if (!xarMod::isAvailable('simplepie')) {
-            $vars['show_chanimage'] = $this->show_chanimage;
-            $vars['show_itemimage'] = $this->show_itemimage;
-            $vars['show_itemcats'] = $this->show_itemcats;
+            $vars['show_chanimage'] = false;
+            $vars['show_itemimage'] = false;
+            $vars['show_itemcats'] = false;
         }
         if ($vars['linkhid'] && (isset($thishid)&& !empty($thishid))) {
             $vars['linkhid'] = $thishid;
         }
-        if (!isset($vars['show_warning'])) $vars['show_warning'] = $this->show_warning;
 
+        return $vars;
         $data['content'] = array(
             'feedcontent'  => $data['feedcontent'],
             'blockid'      => $data['bid'],

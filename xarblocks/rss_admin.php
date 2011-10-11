@@ -15,10 +15,9 @@ class Headlines_RssBlockAdmin extends Headlines_RssBlock implements iBlock
  * Modify Function to the Blocks Admin
  * @param $data array containing title,content
  */
-    public function modify(Array $data=array())
+    public function modify()
     {
-        $data = parent::modify($data);
-        $vars = $data;
+        $vars = $this->getContent();
 
         // Migrate $row['rssurl'] to content if present
         if (!empty($vars['url'])) {
@@ -54,19 +53,6 @@ class Headlines_RssBlockAdmin extends Headlines_RssBlock implements iBlock
             }
         }
 
-        // Defaults
-        if (!isset($vars['show_chantitle'])) $vars['show_chantitle'] = $this->show_chantitle;
-        if (!isset($vars['show_chandesc'])) $vars['show_chandesc'] = $this->show_chandesc;
-        if (!isset($vars['showdescriptions'])) $vars['showdescriptions'] = $this->showdescriptions;
-        if (!isset($vars['maxitems'])) $vars['maxitems'] = $this->maxitems;
-        if (!isset($vars['refresh'])) $vars['refresh'] = $this->refresh;
-        // bug [4545]
-        if (!isset($vars['truncate'])) $vars['truncate'] = $this->truncate;
-        // FR: add alt title/description/link
-        if (!isset($vars['alt_chantitle'])) $vars['alt_chantitle'] = $this->alt_chantitle;
-        if (!isset($vars['alt_chandesc'])) $vars['alt_chandesc'] = $this->alt_chandesc;
-        if (!isset($vars['alt_chanlink'])) $vars['alt_chanlink'] = $this->alt_chanlink;
-        if (!isset($vars['linkhid'])) $vars['linkhid'] = $this->linkhid;
         // get the current parser
         $vars['parser'] = xarModVars::get('headlines', 'parser');
         // check for legacy magpie code, checkme: is this still necessary?
@@ -80,14 +66,14 @@ class Headlines_RssBlockAdmin extends Headlines_RssBlock implements iBlock
             if (!isset($vars['show_itemcats'])) $vars['show_itemcats'] = $this->show_itemcats;
         } else {
             // otherwise set false (defaults)
-            $vars['show_chanimage'] = $this->show_chanimage;
-            $vars['show_itemimage'] = $this->show_itemimage;
-            $vars['show_itemcats'] = $this->show_itemcats;
+            $vars['show_chanimage'] = false;
+            $vars['show_itemimage'] = false;
+            $vars['show_itemcats'] = false;
         }
         if (!isset($vars['show_warning'])) $vars['show_warning'] = $this->show_warning;
 
 
-        $vars['blockid'] = $data['bid'];
+        $vars['blockid'] = $this->block_id;
 
         // Just return the template variables.
         return $vars;
@@ -95,8 +81,6 @@ class Headlines_RssBlockAdmin extends Headlines_RssBlock implements iBlock
 
     public function update(Array $data=array())
     {
-        $data = parent::update($data);
-        $vars = !empty($data['content']) ? $data['content'] : array();
 
         if (!xarVarFetch('rssurl', 'str:1:', $vars['rssurl'], $this->rssurl, XARVAR_DONT_REUSE)) {return;}
         // The 'otherrssurl' can override the 'rssurl'
@@ -128,9 +112,9 @@ class Headlines_RssBlockAdmin extends Headlines_RssBlock implements iBlock
         // TODO: check otherrssurl against stored headlines
 
         if (!xarVarFetch('maxitems', 'int:0', $vars['maxitems'], $this->maxitems, XARVAR_DONT_REUSE)) {return;}
-        if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], $this->showdescriptions, XARVAR_DONT_REUSE)) {return;}
-        if (!xarVarFetch('show_chantitle', 'checkbox', $vars['show_chantitle'], $this->show_chantitle, XARVAR_DONT_REUSE)) {return;}
-        if (!xarVarFetch('show_chandesc', 'checkbox', $vars['show_chandesc'], $this->show_chandesc, XARVAR_DONT_REUSE)) {return;}
+        if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], false, XARVAR_DONT_REUSE)) {return;}
+        if (!xarVarFetch('show_chantitle', 'checkbox', $vars['show_chantitle'], false, XARVAR_DONT_REUSE)) {return;}
+        if (!xarVarFetch('show_chandesc', 'checkbox', $vars['show_chandesc'], false, XARVAR_DONT_REUSE)) {return;}
         if (!xarVarFetch('refresh', 'int:0', $vars['refresh'], $this->refresh, XARVAR_DONT_REUSE)) {return;}
         // bug [4545]
         if (!xarVarFetch('truncate', 'int:0', $vars['truncate'], $this->truncate, XARVAR_DONT_REUSE)) return;
@@ -140,13 +124,14 @@ class Headlines_RssBlockAdmin extends Headlines_RssBlock implements iBlock
         if (!xarVarFetch('alt_chanlink', 'str:1:', $vars['alt_chanlink'], $this->alt_chanlink, XARVAR_DONT_REUSE)) return;
         if (!preg_match("!^http://|https://|ftp://!", $vars['alt_chanlink'])) $vars['alt_chanlink'] = $this->alt_chanlink;
         if (!xarVarFetch('linkhid', 'checkbox', $vars['linkhid'], $this->linkhid, XARVAR_DONT_REUSE)) return;
-        if (!xarVarFetch('show_chanimage', 'checkbox', $vars['show_chanimage'], $this->show_chanimage, XARVAR_DONT_REUSE)) return;
-        if (!xarVarFetch('show_itemimage', 'checkbox', $vars['show_itemimage'], $this->show_itemimage, XARVAR_DONT_REUSE)) return;
-        if (!xarVarFetch('show_itemcats', 'checkbox', $vars['show_itemcats'], $this->show_itemcats, XARVAR_DONT_REUSE)) return;
+        if (!xarVarFetch('show_chanimage', 'checkbox', $vars['show_chanimage'], false, XARVAR_DONT_REUSE)) return;
+        if (!xarVarFetch('show_itemimage', 'checkbox', $vars['show_itemimage'], false, XARVAR_DONT_REUSE)) return;
+        if (!xarVarFetch('show_itemcats', 'checkbox', $vars['show_itemcats'], false, XARVAR_DONT_REUSE)) return;
         if (!xarVarFetch('show_warning', 'checkbox', $vars['show_warning'], false, XARVAR_DONT_REUSE)) return;
 
-        $data['content'] = $vars;
-        return $data;
+        $this->setContent($vars);
+        return true;
+
     }
 }
 ?>

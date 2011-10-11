@@ -22,14 +22,21 @@
 sys::import('xaraya.structures.containers.blocks.basicblock');
 class Headlines_CloudBlock extends BasicBlock implements iBlock
 {
-
-    public $name                = 'CloudBlock';
-    public $module              = 'headlines';
-    public $text_type           = 'RSS Cloud';
-    public $text_type_long      = 'RSS Cloud';
-    public $pageshared          = 1;
-    public $usershared          = 1;
-    public $nocache             = 1;
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'cloud';
+    protected $module           = 'headlines'; // module block type belongs to, if any
+    protected $text_type        = 'RSS Cloud';  // Block type display name
+    protected $text_type_long   = 'RSS Cloud'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
     public $rssurl              = '';
     public $maxitems            = 5;
@@ -39,12 +46,9 @@ class Headlines_CloudBlock extends BasicBlock implements iBlock
  * Display func.
  * @param $data array containing title,content
  */
-    function display(Array $data=array())
+    function display()
     {
-        $data = parent::display($data);
-        if (empty($data)) return;
-
-        $vars = $data['content'];
+        $vars = $this->getContent();
 
         $links = xarMod::apiFunc('headlines', 'user', 'getall',
             array(
@@ -81,35 +85,29 @@ class Headlines_CloudBlock extends BasicBlock implements iBlock
         }
         $vars['feedcontent'] = $feedcontent;
 
-        $data['content'] = $vars;
-
-        return $data;
+        return $vars;
     }
 
 /**
  * Modify func.
  * @param $data array containing title,content
  */
-    function modify(Array $data=array())
+    function modify()
     {
-        return parent::modify($data);
+        return $this->getContent();
     }
 
 /**
  * Update func.
  * @param $data array containing title,content
  */
-    function update(Array $data=array())
+    function update()
     {
-        $data = parent::update($data);
-        if (empty($data)) return;
-
         $vars = array();
         if (!xarVarFetch('maxitems', 'int:0', $vars['maxitems'], 5, XARVAR_NOT_REQUIRED)) {return;}
         if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], XARVAR_NOT_REQUIRED)) {return;}
-        $data['content'] = $vars;
-        return $data;
-
+        $this->setContent($vars);
+        return true;
     }
 
 }
