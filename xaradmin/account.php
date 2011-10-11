@@ -195,7 +195,12 @@ function twitter_admin_account($args)
                             break;
                         }
                         if (empty($return_url))
-                            $return_url = xarModURL('twitter', 'admin', 'account');
+                            $return_url = xarModURL('twitter', 'admin', 'account',
+                                array(
+                                    'tab' => $data['tab'], 
+                                    'method' => $data['method'], 
+                                    'rt' => $data['rt']
+                                ));
 
                         xarController::redirect($return_url);
                     }

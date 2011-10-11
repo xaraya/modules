@@ -14,12 +14,22 @@
 sys::import('xaraya.structures.containers.blocks.basicblock');
 class Twitter_TimelineBlock extends BasicBlock implements iBlock
 {
-    public $nocache         = 1;
-
-    public $name        = 'TimelineBlock';
-    public $module          = 'twitter';
-    public $text_type       = 'Twitter Timeline';
-    public $text_type_long      = 'Displays Twitter Timelines';
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'timeline';
+    protected $module           = 'twitter'; // module block type belongs to, if any
+    protected $text_type        = 'Twitter Timeline';  // Block type display name
+    protected $text_type_long   = 'Show Twitter timeline'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    // @todo: drop the show_help flag, and go back to checking if help method is declared 
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
     public $screen_name     = '';
     public $numitems        = 3;
@@ -34,11 +44,9 @@ class Twitter_TimelineBlock extends BasicBlock implements iBlock
  * Display func.
  * @param $data array containing title,content
  */
-    function display(Array $data=array())
+    function display()
     {
-        $data = parent::display($data);
-        if (empty($data)) return;
-        $vars = $data['content'];
+        $vars = $this->getContent();
 
         if (empty($vars['screen_name'])) {
             $items = xarMod::apiFunc('twitter', 'rest', 'timeline',
@@ -55,19 +63,23 @@ class Twitter_TimelineBlock extends BasicBlock implements iBlock
         if (count($items) > $vars['numitems'])
             $items = array_slice($items, 0, $vars['numitems']);
         $vars['status_elements'] = !$items ? array() : $items;
-        if (!empty($vars['dyntitle']))
-            $data['title'] = !empty($vars['screen_name']) ? '@'.$vars['screen_name'] : xarML('Public Timeline');
-
-        $data['content'] = $vars;
-        return $data;
+        if (!empty($vars['dyntitle'])) {
+            $title = !empty($vars['screen_name']) ? '@'.$vars['screen_name'] : xarML('Public Timeline');
+            $this->setTitle($title);
+        }
+        return $vars;
+    }
+    
+    public function modify()
+    {
+        return $this->getContent();
     }
 /**
  * Updates the Block config from the Blocks Admin
  * @param $data array containing title,content
  */
-    public function update(Array $data=array())
+    public function update()
     {
-        $data = parent::update($data);
         $vars = array();
         if (!xarVarFetch('screen_name', 'str:1:20', $vars['screen_name'], '', XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('numitems', 'int', $vars['numitems'], 3, XARVAR_NOT_REQUIRED)) return;
@@ -78,8 +90,8 @@ class Twitter_TimelineBlock extends BasicBlock implements iBlock
         if (!xarVarFetch('showmodule', 'checkbox', $vars['showmodule'], false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showfollow', 'checkbox', $vars['showfollow'], false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('dyntitle', 'checkbox', $vars['dyntitle'], false, XARVAR_NOT_REQUIRED)) return;
-        $data['content'] = $vars;
-        return $data;
+        $this->setContent($vars);
+        return true;
     }
 
 }
