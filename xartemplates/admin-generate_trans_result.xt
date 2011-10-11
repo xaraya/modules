@@ -4,9 +4,9 @@
 
     <xar:template type="module" file="druidbar"/>
 
-    <h4><xar:mlstring>Packaging the translation</xar:mlstring></h4>
+    <h4>Packaging the translation</h4>
     <p>
-    <xar:mlstring>Translations successfully generated. The results are shown below.</xar:mlstring>
+    Translations successfully generated. The results are shown below.
     </p>
     <table width="100%">
       <tr>

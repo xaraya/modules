@@ -2,11 +2,11 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 #$druidbar#
 <br />
-<xar:mlstring>Module name</xar:mlstring>: #$displayname#<br />
-<xar:mlstring>Module original name</xar:mlstring>: #$name#<br />
-<xar:mlstring>Module version</xar:mlstring>: #$version#<br />
+Module name: #$displayname#<br />
+Module original name: #$name#<br />
+Module version: #$version#<br />
 <br />
-<xar:mlstring>Make a choice</xar:mlstring>:<br />
+Make a choice:<br />
 <br />
 #$opbar#
 </xar:template>

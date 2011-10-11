@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div class="xar-mod-head">
-      <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
+      <span class="xar-mod-title">Translations Administration</span>
     </div>
     <div class="xar-mod-body">
        <xar:template type="module" module="translations" file="admin-nav"/>
-       <h2><xar:mlstring>Batch Operations</xar:mlstring></h2>
-       <h4><xar:mlstring>Possible operations</xar:mlstring></h4>
+       <h2>Batch Operations</h2>
+       <h4>Possible operations</h4>
        <p>
           <ol>
-            <li><xar:mlstring>Generating / updating skeletons for core and all extensions</xar:mlstring></li>
-            <li><xar:mlstring>Generating the translation for core and all extensions</xar:mlstring>
+            <li>Generating / updating skeletons for core and all extensions</li>
+            <li>Generating the translation for core and all extensions
 
             </li>
-            <li><xar:mlstring>Packaging the generated translations in a downloadable archives</xar:mlstring></li>
+            <li>Packaging the generated translations in a downloadable archives</li>
           </ol>
-          <xar:mlstring>To generate all skeletons for all modules, use the button below:</xar:mlstring>
+          To generate all skeletons for all modules, use the button below:
        </p>
 
        <form method="post" name="post" id="post" action="#xarModURL('translations', 'admin', 'generate_skels_result')#">

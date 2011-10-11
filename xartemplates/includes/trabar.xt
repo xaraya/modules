@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:if condition="count($subnames) gt 0">
       <p>
-        <xar:mlstring>Choose which entries you want to translate from the list below.</xar:mlstring>
+        Choose which entries you want to translate from the list below.
       </p>
 
         <form name="trabar" id="trabar" method="post" action="#xarModURL('translations','admin','translate_subtype')#" onchange="this.submit();">
@@ -61,7 +61,7 @@
 
     <xar:else />
       <p>
-        <xar:mlstring>There are no entries to translate.</xar:mlstring>
+        There are no entries to translate.
       </p>
     </xar:if>
 </xar:template>

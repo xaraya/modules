@@ -2,11 +2,11 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
-      <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
+      <span class="xar-mod-title">Translations Administration</span>
     </div>
     <div class="xar-mod-body">
        <xar:template type="module" module="translations" file="admin-nav"/>
-        <h2><xar:mlstring>Generate Skels</xar:mlstring></h2>
+        <h2>Generate Skels</h2>
        <xar:template type="module" file="admin-menu"/>
 
     <!-- Show progress -->
@@ -20,7 +20,7 @@
     </h4>
 
     <p>
-    <xar:mlstring>Now we're going to generate skels, this operation could take several minutes. Just take a break!</xar:mlstring>
+    Now we're going to generate skels, this operation could take several minutes. Just take a break!
     </p>
     <form method="post" name="post" id="post" action="#xarModURL('translations', 'admin', 'generate_skels_result')#">
     <input type="hidden" name="dnType" value="#$dnType#"/>

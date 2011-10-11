@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Translations  Module</xar:mlstring></span></div>
-    <div class="xar-mod-body"><h3><xar:mlstring>Useful information about translations</xar:mlstring></h3>
+    <div class="xar-mod-head"><span class="xar-mod-title">Translations  Module</span></div>
+    <div class="xar-mod-body"><h3>Useful information about translations</h3>
         <div style="margin: auto;">
-            <p><xar:mlstring>1. Translations status</xar:mlstring></p>
+            <p>1. Translations status</p>
         </div>
     </div>
 </xar:template>

@@ -2,11 +2,11 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
-      <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
+      <span class="xar-mod-title">Translations Administration</span>
     </div>
     <div class="xar-mod-body">
        <xar:template type="module" module="translations" file="admin-nav"/>
-       <h2><xar:mlstring>Translate Subtype</xar:mlstring></h2>
+       <h2>Translate Subtype</h2>
        <xar:template type="module" file="admin-menu"/>
 
     <xar:template type="module" file="druidbar"/>
@@ -26,7 +26,7 @@
     <input type="hidden" name="dnName" value="#$dnName#"/>
     <input type="hidden" name="extid" value="#$extid#"/>
 
-    <h5><xar:mlstring>Strings:</xar:mlstring></h5>
+    <h5>Strings:</h5>
     <xar:loop id="entries" name="$entries">
       <div>
         <xar:template type="module" file="translate-string-item" subdata="$loop:item"/>
@@ -34,7 +34,7 @@
     </xar:loop>
 
 
-    <h5><xar:mlstring>Keys:</xar:mlstring></h5>
+    <h5>Keys:</h5>
     <xar:loop id="keyEntries" name="$keyEntries">
       <div>
         <xar:template type="module" file="translate-key-item" subdata="$loop:item"/>
@@ -45,14 +45,14 @@
     <input type="submit" name="sbt" id="sbt" value="#xarML('OK')#"/>
     </p>
 
-    <h5><xar:mlstring>Fuzzy Strings:</xar:mlstring></h5>
+    <h5>Fuzzy Strings:</h5>
     <xar:loop id="fuzzyEntries" name="$fuzzyEntries">
       <div>
         <xar:template type="module" file="fuzzy-string-item" subdata="$loop:item"/>
       </div>
     </xar:loop>
 
-    <h5><xar:mlstring>Fuzzy Keys:</xar:mlstring></h5>
+    <h5>Fuzzy Keys:</h5>
     <xar:loop id="fuzzyKeyEntries" name="$fuzzyKeyEntries">
       <div>
         <xar:template type="module" file="fuzzy-key-item" subdata="$loop:item"/>

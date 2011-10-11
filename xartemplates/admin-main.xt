@@ -2,61 +2,61 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
-  <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
+  <span class="xar-mod-title">Translations Administration</span>
 </div>
 <div class="xar-mod-body">
   <xar:template type="module" module="translations" file="admin-nav"/>
   <img src="#xarTplGetImage('module-generic.png', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon"/>
   <h2>
-    <xar:mlstring>Overview</xar:mlstring>
+    Overview
   </h2>
   <h3>
-    <xar:mlstring>What is it?</xar:mlstring>
+    What is it?
   </h3>
   <p>
-    <xar:mlstring>The Xaraya MLS is a tool to automate the translation process for Xaraya.
-      The process roughly consists of two parts:</xar:mlstring>
+    The Xaraya MLS is a tool to automate the translation process for Xaraya.
+      The process roughly consists of two parts:
     <ol>
-      <li><xar:mlstring>Translating</xar:mlstring></li>
-      <li><xar:mlstring>Generating &amp; Packaging</xar:mlstring></li>
+      <li>Translating</li>
+      <li>Generating &amp; Packaging</li>
     </ol>
   </p>
 
-  <h4><xar:mlstring>The translating process</xar:mlstring></h4>
+  <h4>The translating process</h4>
   <p>
-    <xar:mlstring>The translating proces consists of the following steps:</xar:mlstring>
+    The translating proces consists of the following steps:
     <ol>
-      <li><xar:mlstring>Choosing the language (locale) to work on</xar:mlstring></li>
-      <li><xar:mlstring>Choosing what to translate</xar:mlstring></li>
-      <li><xar:mlstring>Generating / updating skeletons for the chosen locale and subsystem</xar:mlstring></li>
-      <li><xar:mlstring>Translating the terms found in the elements for the subsystem</xar:mlstring></li>
+      <li>Choosing the language (locale) to work on</li>
+      <li>Choosing what to translate</li>
+      <li>Generating / updating skeletons for the chosen locale and subsystem</li>
+      <li>Translating the terms found in the elements for the subsystem</li>
     </ol>
   </p>
 
-  <h4><xar:mlstring>The generating &amp; packaging process</xar:mlstring></h4>
+  <h4>The generating &amp; packaging process</h4>
   <p>
-    <xar:mlstring>The generating and packaging process consists of the following steps:</xar:mlstring>
+    The generating and packaging process consists of the following steps:
     <ol>
-      <li><xar:mlstring>Generating the translation, giving an overview of the translated items</xar:mlstring></li>
-      <li><xar:mlstring>Packaging the generated translation in a downloadable archive</xar:mlstring></li>
+      <li>Generating the translation, giving an overview of the translated items</li>
+      <li>Packaging the generated translation in a downloadable archive</li>
     </ol>
   </p>
 
   <p>
-    <a href="&xar-modurl-translations-admin-start;"><xar:mlstring>Start translating</xar:mlstring></a>
+    <a href="&xar-modurl-translations-admin-start;">Start translating</a>
   </p>
-    <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+    <h3>Further Information</h3>
     <p>
-         <xar:mlstring>Further information on the Translations module can be found at</xar:mlstring>
+         Further information on the Translations module can be found at
     </p>
     <ul>
-        <li><xar:mlstring>Uploads Extension page at</xar:mlstring> <a title="#xarML('Translations Module - Xaraya Extension 77')#" href="http://www.xaraya.com/index.php/release/77.html">Xaraya Extension and Releases</a>.
-            <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+        <li>Uploads Extension page at <a title="#xarML('Translations Module - Xaraya Extension 77')#" href="http://www.xaraya.com/index.php/release/77.html">Xaraya Extension and Releases</a>.
+             Click on Version History tab at the bottom to get the latest release information.
         </li>
-        <li><xar:mlstring>Related tutorials and documentation on Translations found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/translations/" title="#xarML('Related documentation on Translations')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a></li>
+        <li>Related tutorials and documentation on Translations found at <a href="http://www.xaraya.com/index.php/keywords/translations/" title="#xarML('Related documentation on Translations')#">Xaraya Documentation.</a></li>
     </ul>
     <p class="xar-sub">
-        <strong>&#160;<xar:mlstring>Translations Module Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 1.0.0&#160; 2006-03-08
+        <strong>&#160;Translations Module Overview</strong><br />&#160;Version 1.0.0&#160; 2006-03-08
     </p>
 </div>
 </xar:template>

@@ -19,26 +19,26 @@
 
     <fieldset>
         <legend>
-           <xar:mlstring>Summary of Current Settings</xar:mlstring>
+           Summary of Current Settings
         </legend>
 
     <table class="xar-fullwidth xar-noborder xar-align-left" cellpadding="2" cellspacing="1">
         <tr >
             <th class="xar-alt" width="45%" valign="top">
-                <xar:mlstring>Translation Settings</xar:mlstring>
+                Translation Settings
             </th>
             <th class="xar-alt">
-                <xar:mlstring>Site MLS Settings</xar:mlstring>
+                Site MLS Settings
             </th>
         </tr>
         <tr>
             <td width="45%" valign="top">
-                <xar:mlstring>Translating</xar:mlstring>
+                Translating
                 <span class="xar-title">
             <!-- TODO: we are using the session var here, but it is really the directory, to cater for name/dir independence -->
                     &#160;#$menu_dntypetext#&#160;#$menu_dnnametext#&#160;
                 </span>
-                <xar:mlstring>to:</xar:mlstring>&#160;
+                to:&#160;
                 <span class="xar-title">
                     <a href="#xarModURL('translations','admin','start')#">
                         #xarSessionGetVar('translations_working_locale')#
@@ -46,14 +46,14 @@
                 </span>
     <!--
                 <br/>
-                <xar:mlstring>Translation Backend</xar:mlstring>:
+                Translation Backend:
                 <span class="xar-title">
                     <a href="#xarModURL('translations','admin','modifyconfig')#">
                         <xar:var scope="config" name="Site.MLS.TranslationsBackend"/>
                     </a>
                 </span>
                 <br/>
-                <xar:mlstring>Release Backend</xar:mlstring>:
+                Release Backend:
                 <span class="xar-title">
                     <a href="#xarModURL('translations','admin','modifyconfig')#">
                     <xar:var scope="module" module="translations" name="release_backend_type"/>
@@ -63,15 +63,15 @@
             </td>
 
             <td width="45%" valign="top">
-                <xar:mlstring>Site Display Locale</xar:mlstring>:
+                Site Display Locale:
                 <span class="xar-title">&#160;
                     <a href="#xarModURL('base','admin','modifyconfig', array('tab' => 'locales'))#">
                         <xar:var scope="config" name="Site.MLS.DefaultLocale"/>
                     </a>
                 </span>&#160;
-                <xar:mlstring>(recommended: utf)</xar:mlstring>
+                (recommended: utf)
                 <br/>
-                <xar:mlstring>MLS Mode</xar:mlstring>:
+                MLS Mode:
                 <span class="xar-title">&#160;
                     <a href="#xarModURL('base','admin','modifyconfig', array('tab' => 'locales'))#">
                         <xar:var scope="config" name="Site.MLS.MLSMode"/>

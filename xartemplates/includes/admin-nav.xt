@@ -21,7 +21,7 @@
           </xar:if>
             <li class="#$tabclass#">
               <a href="#xarModURL('translations','admin','start')#" class="#$linkclass#">
-                <xar:mlstring>Translate</xar:mlstring>
+                Translate
               </a>
             </li>
         </xar:sec>
@@ -35,7 +35,7 @@
             </xar:if>
             <li class="#$tabclass#">
               <a href="#xarModURL('translations','admin','bulk')#" class="#$linkclass#">
-                    <xar:mlstring>Batch Operations</xar:mlstring>
+                    Batch Operations
                 </a>
             </li>
         </xar:sec>
@@ -49,7 +49,7 @@
             </xar:if>
             <li class="#$tabclass#">
               <a href="#xarModURL('translations','admin','show_status')#" class="#$linkclass#">
-                    <xar:mlstring>Translation Status</xar:mlstring>
+                    Translation Status
                 </a>
             </li>
         </xar:sec>
@@ -63,7 +63,7 @@
             </xar:if>
             <li class="#$tabclass#">
               <a href="#xarModURL('translations','admin','modifyconfig')#" class="#$linkclass#">
-                <xar:mlstring>Modify Config</xar:mlstring>
+                Modify Config
               </a>
             </li>
         </xar:sec>
@@ -78,7 +78,7 @@
             </xar:if>
             <li class="#$tabclass#">
               <a href="#xarModURL('translations','admin','overview')#" class="#$linkclass#">
-                <xar:mlstring>Overview</xar:mlstring>
+                Overview
               </a>
             </li>
         </xar:sec>

@@ -5,7 +5,7 @@
     <!-- Show progress -->
     <xar:template type="module" file="druidbar"/>
 
-    <h4><xar:mlstring>Getting the translated package</xar:mlstring></h4>
+    <h4>Getting the translated package</h4>
     <p>
       <xar:ml>
         <xar:mlstring>A translation package archive has been created, with the translations for #(1)</xar:mlstring>
@@ -19,7 +19,7 @@
       </xar:ml>
     </p>
     <p>
-      <xar:mlstring>The package is located inside your var/cache directory.</xar:mlstring> 
+      The package is located inside your var/cache directory. 
     </p>
     <br />
     <xar:template type="module" file="opbar"/>
