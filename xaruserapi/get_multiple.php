@@ -50,16 +50,16 @@ function comments_userapi_get_multiple($args)
     } else
         if (!isset($objectid) && isset($author)) {
             $objectid = 0;
-    } 
+    }
 
-	// is $id ever set in get_multiple?
+    // is $id ever set in get_multiple?
     if (!isset($id) || !is_numeric($id)) {
         $id = 0;
     } else {
         $nodelr = xarMod::apiFunc('comments',
                                 'user',
                                 'get_node_lrvalues',
-                                 array('id' => $id)); 
+                                 array('id' => $id));
     }
 
     // Optional argument for Pager -
@@ -79,33 +79,33 @@ function comments_userapi_get_multiple($args)
     //$xartable = xarDB::getTables();
 
     // initialize the commentlist array
-    $commentlist = array(); 
+    $commentlist = array();
 
-	if (isset($author) && $author > 0) {
+    if (isset($author) && $author > 0) {
         $args['author'] = $author;
     }
 
-	// not sure if this ever happens
-    if ($id > 0) { 
+    // not sure if this ever happens
+    if ($id > 0) {
         $args['left_id'] = (int) $nodelr['left_id'];
         $args['right_id'] = (int) $nodelr['right_id'];
     }
 
-	$commentlist = xarMod::apiFunc('comments','user','getitems',$args);
+    $commentlist = xarMod::apiFunc('comments','user','getitems',$args);
 
-	$arr = array();
+    $arr = array();
 
-	foreach ($commentlist as $val) {
-		$val['postanon'] = $val['anonpost'];
-		$val['datetime'] = $val['date'];
-		$val['role_id'] = $val['author'];
-		$val['author'] = xarUserGetVar('name',$val['author']);
-		$arr[] = $val;
-	}
+    foreach ($commentlist as $val) {
+        $val['postanon'] = $val['anonpost'];
+        $val['datetime'] = $val['date'];
+        $val['role_id'] = $val['author'];
+        $val['author'] = xarUserGetVar('name',$val['author']);
+        $arr[] = $val;
+    }
 
-	$commentlist = $arr;
+    $commentlist = $arr;
 
-    //Psspl:Modifided the Sql query for getting anonpost_to field.  
+    //Psspl:Modifided the Sql query for getting anonpost_to field.
     // if the depth is zero then we
     // only want one comment
     /*$sql = "SELECT  title AS title,
@@ -198,12 +198,12 @@ function comments_userapi_get_multiple($args)
         $result->MoveNext();
     }
     $result->Close();
-*/  
+*/
 
     if (!empty($commentlist) && !comments_renderer_array_markdepths_bypid($commentlist)) {
         $msg = xarML('#(1) Unable to create depth by pid', __FILE__.'('.__LINE__.'):  ');
         throw new Exception($msg);
-    } 
+    }
 
     return $commentlist;
 }

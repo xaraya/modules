@@ -23,26 +23,26 @@ function comments_userapi_get_blacklist($args)
     }
     $items = array();
 
-	sys::import('modules.dynamicdata.class.objects.master');
-	$list = DataObjectMaster::getObjectList(array(
-							'name' => 'blacklist',
-							'numitems' => $numitems,
-							'startnum' => $startnum
-		));
+    sys::import('modules.dynamicdata.class.objects.master');
+    $list = DataObjectMaster::getObjectList(array(
+                            'name' => 'blacklist',
+                            'numitems' => $numitems,
+                            'startnum' => $startnum
+        ));
 
-	if (!is_object($list)) return;
+    if (!is_object($list)) return;
 
-	$items = $list->getItems(); 
+    $items = $list->getItems();
 
-	$arr = array();
+    $arr = array();
 
-	foreach ($items as $val) {
-		$arr[] = array('id'       => $val['id'],
+    foreach ($items as $val) {
+        $arr[] = array('id'       => $val['id'],
                              'domain'   => $val['domain']
-							);
-	}
+                            );
+    }
 
-	$items = $arr;
+    $items = $arr;
 
 
    /* // Get database setup

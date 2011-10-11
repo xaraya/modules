@@ -14,26 +14,26 @@
         <xar:if condition="!empty($withupload)">
            <xar:set name="enctype">'multipart/form-data'</xar:set>
         </xar:if>
-	 
-               
+
+
         <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
-           
+
             <fieldset>
                 <legend>
                     Modify
                 </legend>
- 
+
                 <xar:data-form object="$object" tplmodule="comments" template="modify" />
-		 
-             </fieldset> 
+
+             </fieldset>
            <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                 <input type="hidden" name="id" id="id" value="#$id#" />
-                <input type="hidden" name="confirm" id="confirm" value="true" /> 
+                <input type="hidden" name="confirm" id="confirm" value="true" />
                 &#160;&#160;&#160;
                 <input type="submit" value="#xarML('Save and Edit')#" />&#160;
-		<input type="submit" value="#xarML('Save and Display')#" name="view" />
-            </div>  
+        <input type="submit" value="#xarML('Save and Display')#" name="view" />
+            </div>
         </form>
     </div>
 </xar:template>

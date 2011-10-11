@@ -8,7 +8,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage comments Module
- * @link http://www.xaraya.com/index.php/release/14.html 
+ * @link http://www.xaraya.com/index.php/release/14.html
  */
  sys::import('modules.comments.xarincludes.defines');
 /**
@@ -16,23 +16,23 @@
  * module
  */
 function comments_admin_modifyconfig()
-{ 
+{
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('Admincomments')) return;
 
     // Check if this template has been submitted, or if we just got here
-    if (!xarVarFetch('phase',        'str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return; 
- 
+    if (!xarVarFetch('phase',        'str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
     // Get the object we'll be working with for comments-specific configuration
     $object = DataObjectMaster::getObject(array('name' => 'comments_module_settings'));
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
     $object->getItem(array('itemid' => 0));
-	$data['object'] = $object;
-	
+    $data['object'] = $object;
+
     // Get the object we'll be working with for common configuration settings
     $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'comments'));
     // Decide which fields are configurable in this module
@@ -112,7 +112,7 @@ function comments_admin_modifyconfig()
             # Note that, as in those examples, this code could be placed in the modifyconfig.php file
             # and this file dispensed with.
             #
-            
+
                 // Load the DD master object class. This line will likely disappear in future versions
                 sys::import('modules.dynamicdata.class.objects.master');
                 // Get the object we'll be working with
@@ -120,11 +120,11 @@ function comments_admin_modifyconfig()
                 // Get the data from the form
                 $isvalid = $object->checkInput();
                 // Update the item with itemid = 0
-				 
-				
+
+
                 $item = $object->updateItem(array('itemid' => 0));
 
-				xarResponse::redirect(xarModURL('comments','admin','modifyconfig'));
+                xarResponse::redirect(xarModURL('comments','admin','modifyconfig'));
 
             # --------------------------------------------------------
             #

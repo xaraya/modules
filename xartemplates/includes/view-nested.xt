@@ -6,7 +6,7 @@
             <a name="#$loop:item['id']#"></a>
             <xar:set name="item">#$loop:item#</xar:set>
             <xar:template file="action_buttons"/>
-        
+
             <xar:if condition="isset($package['transformed-title'])">
                 <h4>#$package['transformed-title']#</h4><a name="comment#$loop:item['id']#" class="anchor">&#160;</a>
             <xar:else />

@@ -59,7 +59,7 @@
                             <td class="xar-valign-middle xar-align-center">
                                 #$loop:item['inactive']#
                             </td>
-                            <td class="xar-valign-middle xar-align-center"> 
+                            <td class="xar-valign-middle xar-align-center">
                                 <a href="#$loop:item['delete_url']#"><b>Delete</b></a>
                             </td>
                         </tr>

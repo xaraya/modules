@@ -3,43 +3,43 @@
     <xar:comment>jojodee - this template and the associated function seem redundant - handled by overview function</xar:comment>
     <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Comments</xar:mlstring></span></div>
     <div class="xar-mod-body">
-    
+
         <xar:template type="module" file="admintabs"/>
 
         <h2><xar:mlstring>View Comments</xar:mlstring></h2>
 
-	<xar:if condition="$showfilters"> 
-		<xar:foreach in="$makefilters" key="$thisfield" value="$startval">
+    <xar:if condition="$showfilters">
+        <xar:foreach in="$makefilters" key="$thisfield" value="$startval">
 
-		#xarMod::apiFunc('filters','user','makefilter',array(
-			'thisfield' => $thisfield,
-			'func' => 'view',
-			'module' => 'comments',
-			'startval' => $startval,
-			'filterlabel' => 'Filter:'
-			))#
-		
-		</xar:foreach>
+        #xarMod::apiFunc('filters','user','makefilter',array(
+            'thisfield' => $thisfield,
+            'func' => 'view',
+            'module' => 'comments',
+            'startval' => $startval,
+            'filterlabel' => 'Filter:'
+            ))#
 
-	</xar:if>
+        </xar:foreach>
 
-	<xar:if condition="$total eq 0">
+    </xar:if>
 
-		<p>There are no comments.</p>
+    <xar:if condition="$total eq 0">
 
-	<xar:elseif condition="isset($results) and $results eq 0" /> 
+        <p>There are no comments.</p>
 
-		<p>No content items match your criteria.</p>
+    <xar:elseif condition="isset($results) and $results eq 0" />
 
-	<xar:else /> 
-		<xar:data-view object="$list" tplmodule="comments" template="admin_items" sort="$sort" />  
-		<xar:if condition="isset($results)">
-			<xar:set name="total">$results</xar:set>
-		</xar:if>
-		<xar:pager startnum="$list->startnum" itemsperpage="$list->numitems" total="$total"/>
-	</xar:if>
+        <p>No content items match your criteria.</p>
 
-	
- 
+    <xar:else />
+        <xar:data-view object="$list" tplmodule="comments" template="admin_items" sort="$sort" />
+        <xar:if condition="isset($results)">
+            <xar:set name="total">$results</xar:set>
+        </xar:if>
+        <xar:pager startnum="$list->startnum" itemsperpage="$list->numitems" total="$total"/>
+    </xar:if>
+
+
+
     </div>
 </xar:template>

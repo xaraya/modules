@@ -26,7 +26,7 @@
  */
 function comments_userapi_getitems($args)
 {
-  
+
     // Get arguments from argument array
     extract($args);
 
@@ -54,68 +54,68 @@ function comments_userapi_getitems($args)
     $xartable = xarDB::getTables();
     $commentstable = $xartable['comments'];*/
 
-	$where = '';
-	$join = ''; 
+    $where = '';
+    $join = '';
 
     switch ($status) {
         case 'active':
             $where .= "status eq ". _COM_STATUS_ON;
-			$join = ' AND ';
+            $join = ' AND ';
             break;
-        case 'inactive': 
+        case 'inactive':
             $where .= "status eq ". _COM_STATUS_OFF;
-			$join = ' AND ';
+            $join = ' AND ';
             break;
         default:
         case 'all':
             $where .= "status ne ". _COM_STATUS_ROOT_NODE;
-			$join = ' AND ';
+            $join = ' AND ';
     }
 
-	if (isset($author)) {
-		$where = $where . $join . 'author eq ' . $author;
-		$join = ' AND ';
-	}
-	if (isset($itemtype) && !empty($itemtype)) { 
-		$where = $where . $join . 'itemtype eq ' . $itemtype;
-		$join = ' AND ';
-	}
-	if (isset($left_id) && isset($right_id)) {
-		$where = $where . $join . 'left_id ge ' . $left_id;
-		$join = ' AND ';
-		$where = $where . $join . 'right_id le ' . $right_id;
-	}
-	if (isset($modid)) {
-		$where = $where . $join . 'modid eq ' . $modid;
-		$join = ' AND ';
-	}
-	if (isset($objectid)) {
-		$where = $where . $join . 'objectid eq ' . $objectid;
-	}
+    if (isset($author)) {
+        $where = $where . $join . 'author eq ' . $author;
+        $join = ' AND ';
+    }
+    if (isset($itemtype) && !empty($itemtype)) {
+        $where = $where . $join . 'itemtype eq ' . $itemtype;
+        $join = ' AND ';
+    }
+    if (isset($left_id) && isset($right_id)) {
+        $where = $where . $join . 'left_id ge ' . $left_id;
+        $join = ' AND ';
+        $where = $where . $join . 'right_id le ' . $right_id;
+    }
+    if (isset($modid)) {
+        $where = $where . $join . 'modid eq ' . $modid;
+        $join = ' AND ';
+    }
+    if (isset($objectid)) {
+        $where = $where . $join . 'objectid eq ' . $objectid;
+    }
 
-	if (isset($startnum)) {
-		$filters['startnum'] = $startnum;
-	}
-	if (isset($numitems)) {
-		$filters['numitems'] = $numitems;
-	}
+    if (isset($startnum)) {
+        $filters['startnum'] = $startnum;
+    }
+    if (isset($numitems)) {
+        $filters['numitems'] = $numitems;
+    }
 
-	if (!empty($where)) {
-		$filters['where'] = $where;
-	} else {
-		$filters = array();
-	}
+    if (!empty($where)) {
+        $filters['where'] = $where;
+    } else {
+        $filters = array();
+    }
 
-	sys::import('modules.dynamicdata.class.objects.master');
-	$list = DataObjectMaster::getObjectList(array(
-							'name' => 'comments'
-		));
+    sys::import('modules.dynamicdata.class.objects.master');
+    $list = DataObjectMaster::getObjectList(array(
+                            'name' => 'comments'
+        ));
 
-	if (!is_object($list)) return;
+    if (!is_object($list)) return;
 
-	$items = $list->getItems($filters);  
+    $items = $list->getItems($filters);
 
-	return $items;
+    return $items;
 
     // Get items
     /*$bindvars = array();

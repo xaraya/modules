@@ -20,13 +20,13 @@
         <div>
         Module: <strong>#$modname#</strong>
         </div>
-	<div>
-	<xar:if condition="isset($itemtype)">
-		Itemtype: <strong>#$itemtype#
-		<xar:if condition="isset($itemtypelabel)"> 
-			- #$itemtypelabel#
-		</xar:if></strong>
-	</xar:if>
+    <div>
+    <xar:if condition="isset($itemtype)">
+        Itemtype: <strong>#$itemtype#
+        <xar:if condition="isset($itemtypelabel)">
+            - #$itemtypelabel#
+        </xar:if></strong>
+    </xar:if>
         </div>
 
         <div class="xar-align-center">

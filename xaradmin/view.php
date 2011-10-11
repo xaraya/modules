@@ -24,67 +24,67 @@ function comments_admin_view()
         return;
     }
 
-	if(!xarVarFetch('startnum', 'int', $startnum, 1, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('startnum', 'int', $startnum, 1, XARVAR_NOT_REQUIRED)) {return;}
 
-	$sort = xarMod::apiFunc('comments','admin','sort', array(
-		//how to sort if the URL or config say otherwise...
-		'sortfield_fallback' => 'date', 
-		'ascdesc_fallback' => 'DESC'
-	));
-	$data['sort'] = $sort;
+    $sort = xarMod::apiFunc('comments','admin','sort', array(
+        //how to sort if the URL or config say otherwise...
+        'sortfield_fallback' => 'date',
+        'ascdesc_fallback' => 'DESC'
+    ));
+    $data['sort'] = $sort;
 
-	$object = DataObjectMaster::getObject(array('name' => 'comments'));
-	$config = $object->configuration; 
-	$adminfields = $config['adminfields'];
-	$numitems = xarModVars::get('comments','items_per_page');
+    $object = DataObjectMaster::getObject(array('name' => 'comments'));
+    $config = $object->configuration;
+    $adminfields = $config['adminfields'];
+    $numitems = xarModVars::get('comments','items_per_page');
 
-	$filters = array();
+    $filters = array();
 
-	// Total number of comments for use in the pager
-	$total = DataObjectMaster::getObjectList(array(
-							'name' => 'comments',
-							'numitems' => NULL,
-							'where' => 'status ne ' . _COM_STATUS_ROOT_NODE
-							));
-	$data['total'] = $total->countItems();
+    // Total number of comments for use in the pager
+    $total = DataObjectMaster::getObjectList(array(
+                            'name' => 'comments',
+                            'numitems' => NULL,
+                            'where' => 'status ne ' . _COM_STATUS_ROOT_NODE
+                            ));
+    $data['total'] = $total->countItems();
 
-	$filters_min_items = xarModVars::get('comments','filters_min_item_count');
-	
-	$data['makefilters'] = array();
-	$data['showfilters'] = false;
+    $filters_min_items = xarModVars::get('comments','filters_min_item_count');
 
-	if(xarModIsAvailable('filters') && xarModVars::get('comments','enable_filters') && $data['total'] >= $filters_min_items) {
-		$data['showfilters'] = true;
-		$filterfields = $config['filterfields'];
-		$get_results = xarMod::apiFunc('filters','user','dd_get_results', array(
-							'filterfields' => $filterfields,
-							'object' => 'comments'
-							)); 
-		$data = array_merge($data, $get_results);
-		if (isset($data['filters'])) $filters = $data['filters'];
-	} 
+    $data['makefilters'] = array();
+    $data['showfilters'] = false;
 
-	if(isset($filters['where'])) {
-		$filters['where'] .=  ' and ';
-	} else {
-		$filters['where'] = '';
-	}
+    if(xarModIsAvailable('filters') && xarModVars::get('comments','enable_filters') && $data['total'] >= $filters_min_items) {
+        $data['showfilters'] = true;
+        $filterfields = $config['filterfields'];
+        $get_results = xarMod::apiFunc('filters','user','dd_get_results', array(
+                            'filterfields' => $filterfields,
+                            'object' => 'comments'
+                            ));
+        $data = array_merge($data, $get_results);
+        if (isset($data['filters'])) $filters = $data['filters'];
+    }
 
-	$filters['where'] .= 'status ne ' . _COM_STATUS_ROOT_NODE;
+    if(isset($filters['where'])) {
+        $filters['where'] .=  ' and ';
+    } else {
+        $filters['where'] = '';
+    }
 
-	$list = DataObjectMaster::getObjectList(array(
-							'name' => 'comments',
-							'sort' => $sort,
-							'startnum' => $startnum,
-							'numitems' => $numitems,
-							'fieldlist' => $adminfields
-		));
+    $filters['where'] .= 'status ne ' . _COM_STATUS_ROOT_NODE;
 
-	if (!is_object($list)) return;
+    $list = DataObjectMaster::getObjectList(array(
+                            'name' => 'comments',
+                            'sort' => $sort,
+                            'startnum' => $startnum,
+                            'numitems' => $numitems,
+                            'fieldlist' => $adminfields
+        ));
 
-	$list->getItems($filters);
-	
-	$data['list'] = $list;
+    if (!is_object($list)) return;
+
+    $list->getItems($filters);
+
+    $data['list'] = $list;
 
     return $data;
 

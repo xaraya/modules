@@ -40,10 +40,10 @@ function comments_admin_stats()
         //Psspl:Commneted codew for resolving error.
         //$mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                  // don't throw an exception if this function doesn't exist
-          //                       array(), 0); 
+          //                       array(), 0);
         foreach ($itemtypes as $itemtype => $stats) {
             $moditem = array();
-			$moditem['modid'] = $modid;
+            $moditem['modid'] = $modid;
             $moditem['pages'] = $stats['items'];
             $moditem['total'] = $stats['comments'];
             if (isset($inactive[$modid]) && isset($inactive[$modid][$itemtype])) {

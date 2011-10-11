@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-  
+
   <style>
   .xar-form-input-wrapper {
-	margin-bottom: 9px;
+    margin-bottom: 9px;
   }
   hr {
-	margin: 15px 0 15px 0; 
-	color: ##ddd;
-	background-color: ##ddd;
-	height: 1px;
-	border: none;
+    margin: 15px 0 15px 0;
+    color: ##ddd;
+    background-color: ##ddd;
+    height: 1px;
+    border: none;
   }
   </style>
     <div class="xar-mod-head">
@@ -82,7 +82,7 @@
                     </xar:set>
                     <xar:data-input type="dropdown" name="render" id="render" options="$options" value="$value"/>
                 </div>
-		<div class="xar-form-input-wrapper">
+        <div class="xar-form-input-wrapper">
                     <xar:set name="checked">
                         xarModVars::get('comments','usersetrendering')
                     </xar:set>
@@ -91,9 +91,9 @@
                                 Allow users to set comment rendering style in their account?
                             </xar:mlstring>
                     </label>
-		    <xar:data-input type="checkbox" name="usersetrendering" id="usersetrendering" checked="$checked"/>
+            <xar:data-input type="checkbox" name="usersetrendering" id="usersetrendering" checked="$checked"/>
                 </div>
-		<hr />
+        <hr />
                 <div class="xar-form-input-wrapper">
                     <label for="sortby" class="xar-form-label" title="#xarML('The sorting mode to be used as default.')#">
                                <xar:mlstring>
@@ -130,7 +130,7 @@
                     </xar:set>
                     <xar:data-input type="dropdown" name="order" id="order" options="$options" value="$value"/>
                 </div>
-		<hr />
+        <hr />
                 <div class="xar-form-input-wrapper">
                     <xar:set name="checked">
                         xarModVars::get('comments','AllowPostAsAnon')
@@ -140,9 +140,9 @@
                                 Allow anonymous posting
                             </xar:mlstring>
                     </label>
-		    <xar:data-input type="checkbox" name="postanon" id="postanon" checked="$checked"/>
+            <xar:data-input type="checkbox" name="postanon" id="postanon" checked="$checked"/>
                 </div>
-               
+
                 <div class="xar-form-input-wrapper">
                     <label for="editstamp" class="xar-form-label" title="#xarML('Default value for Comment Edit Stamp use')#">
                             <xar:mlstring>
@@ -170,10 +170,10 @@
                                 Wrap Long Entries
                             </xar:mlstring>
                     </label>
-		    <xar:data-input type="checkbox" name="wrap" id="wrap" checked="$checked"/>
+            <xar:data-input type="checkbox" name="wrap" id="wrap" checked="$checked"/>
                 </div>
-		<hr />
-		 <div class="xar-form-input-wrapper">
+        <hr />
+         <div class="xar-form-input-wrapper">
                     <label for="numstats" class="xar-form-label"  title="#xarML('Statistics page ordering.')#">
                             <xar:mlstring>
                                 Number of Items in Statistics
@@ -191,7 +191,7 @@
                                 Show Title in Statistics
                             </xar:mlstring>
                     </label>
-		    <xar:data-input type="checkbox" name="showtitle" id="showtitle" checked="$checked"/>
+            <xar:data-input type="checkbox" name="showtitle" id="showtitle" checked="$checked"/>
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="rssnumitems" class="xar-form-label" title="#xarML('Number of items in RSS Feed')#">
@@ -202,7 +202,7 @@
                     <xar:set name="rssnumitems">xarModVars::get('comments','rssnumitems')</xar:set>
                     <input type="text" name="rssnumitems" id="rssnumitems" size="4" maxlength="4" value="#$rssnumitems#"/>
                 </div>
-                
+
                 <!-- Black list not available
                 <div class="xar-form-input-wrapper">
                     <label for="useblacklist" class="xar-form-input-wrapper" title="#xarML('Use comment blacklist for comment spam checking.')#">
@@ -218,32 +218,32 @@
                 -->
             </fieldset>
 
-	        <xar:if condition="xarModIsAvailable('filters')">
-	    <fieldset class="mod_settings">
-	    
-	    <h4>Filters Module:</h4>
+            <xar:if condition="xarModIsAvailable('filters')">
+        <fieldset class="mod_settings">
 
-			<xar:set name="name">'enable_filters'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
+        <h4>Filters Module:</h4>
 
-	     <xar:set name="name">'filters_min_item_count'</xar:set>
-	    <div class="xar-form-input-wrapper">
-			<xar:data-label property="$properties[$name]" for="id" />       
-			<xar:data-input property="$properties[$name]" />		
-	     </div>
+            <xar:set name="name">'enable_filters'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />
+            <xar:data-input property="$properties[$name]" />
+         </div>
 
-	     </fieldset>
-	<xar:else /> 
-	 <div style="display:none">
-		<xar:set name="ffid">$properties['enable_filters']->id</xar:set>
-		<input type="checkbox" name="dd_#$ffid#" value="false" />
-		<xar:data-input property="$properties['filters_min_ct_count']" />
-		<xar:data-input property="$properties['filters_min_item_count']" />
-	 </div>
-	</xar:if>
+         <xar:set name="name">'filters_min_item_count'</xar:set>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" for="id" />
+            <xar:data-input property="$properties[$name]" />
+         </div>
+
+         </fieldset>
+    <xar:else />
+     <div style="display:none">
+        <xar:set name="ffid">$properties['enable_filters']->id</xar:set>
+        <input type="checkbox" name="dd_#$ffid#" value="false" />
+        <xar:data-input property="$properties['filters_min_ct_count']" />
+        <xar:data-input property="$properties['filters_min_item_count']" />
+     </div>
+    </xar:if>
 
 
             <fieldset>

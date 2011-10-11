@@ -41,7 +41,7 @@ function comments_init()
         'date'      => array('type'=>'integer',  'null'=>FALSE),
         'author'    => array('type'=>'integer',  'null'=>FALSE,  'size'=>'medium','default'=>1),
         'title'     => array('type'=>'varchar',  'null'=>FALSE,  'size'=>100),
-		'objecturl'     => array('type'=>'text',  'null'=>FALSE,  'size'=>'medium'),
+        'objecturl'     => array('type'=>'text',  'null'=>FALSE,  'size'=>'medium'),
         'hostname'  => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
         'text'      => array('type'=>'text',     'null'=>TRUE,   'size'=>'medium'),
         'left_id'      => array('type'=>'integer',  'null'=>FALSE),
@@ -143,11 +143,11 @@ function comments_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-	$module = 'comments';
+    $module = 'comments';
     $objects = array(
                 'comments',
-				'comments_module_settings',
-				'blacklist'
+                'comments_module_settings',
+                'blacklist'
                 );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
@@ -162,7 +162,7 @@ function comments_init()
     xarModVars::set('comments','depth', _COM_MAX_DEPTH);
     xarModVars::set('comments','AllowPostAsAnon',1);
     xarModVars::set('comments','AuthorizeComments',0);
-	xarModVars::set('comments','AllowCollapsableThreads',1);
+    xarModVars::set('comments','AllowCollapsableThreads',1);
     xarModVars::set('comments','CollapsedBranches',serialize(array()));
     xarModVars::set('comments','editstamp',1);
     xarModVars::set('comments','usersetrendering',false);
@@ -173,10 +173,10 @@ function comments_init()
     xarModVars::set('comments', 'wrap', false);
     xarModVars::set('comments', 'showtitle', false);
     xarModVars::set('comments', 'useblacklist', false);
-	xarModVars::set('comments','enable_filters',1);     
-	xarModVars::set('comments','filters_min_item_count',3);
+    xarModVars::set('comments','enable_filters',1);
+    xarModVars::set('comments','filters_min_item_count',3);
 
-	# --------------------------------------------------------
+    # --------------------------------------------------------
 #
 # Set up configuration modvars (general)
 #
@@ -205,7 +205,7 @@ function comments_init()
     // module delete hook
     if (!xarModRegisterHook('module', 'remove', 'API','comments', 'admin', 'remove_module'))
         return false;
-
+/*
     if (!xarModRegisterHook('module', 'modifyconfig', 'GUI',
                             'comments', 'admin', 'modifyconfighook')) {
         return false;
@@ -214,6 +214,7 @@ function comments_init()
                             'comments', 'admin', 'updateconfighook')) {
         return false;
     }
+*/
     /**
      * Define instances for this module
      * Format is
@@ -257,9 +258,9 @@ function comments_init()
     xarRegisterMask('ReadComments',     'All','comments', 'All','All:All:All','ACCESS_READ',      'See and Read Comments');
     xarRegisterMask('PostComments',     'All','comments', 'All','All:All:All','ACCESS_COMMENT',   'Post a new Comment');
     xarRegisterMask('ReplyComments',    'All','comments', 'All','All:All:All','ACCESS_COMMENT',   'Reply to a Comment');
-	xarRegisterMask('ModerateComments', 'All','comments', 'All','All:All:All','ACCESS_MODERATE',  'Moderate Comments');
+    xarRegisterMask('ModerateComments', 'All','comments', 'All','All:All:All','ACCESS_MODERATE',  'Moderate Comments');
     xarRegisterMask('EditComments',     'All','comments', 'All','All:All:All','ACCESS_EDIT',      'Edit Comments');
-	xarRegisterMask('AddComments',     'All','comments', 'All','All:All:All','ACCESS_ADD',      'Add Comments');
+    xarRegisterMask('AddComments',     'All','comments', 'All','All:All:All','ACCESS_ADD',      'Add Comments');
     xarRegisterMask('DeleteComments',   'All','comments', 'All','All:All:All','ACCESS_DELETE',    'Delete a Comment or Comments');
     xarRegisterMask('AdminComments',    'All','comments', 'All','All:All:All','ACCESS_ADMIN',     'Administrate Comments');
 
@@ -379,6 +380,7 @@ function comments_upgrade($oldversion)
             if (!$result)
                 return;
         case '1.3.0':
+        /*
             if (!xarModRegisterHook('module', 'modifyconfig', 'GUI',
                                     'comments', 'admin', 'modifyconfighook')) {
                 return false;
@@ -387,6 +389,7 @@ function comments_upgrade($oldversion)
                                     'comments', 'admin', 'updateconfighook')) {
                 return false;
             }
+        */
             xarModVars::set('comments', 'allowhookoverride', false);
             xarModVars::set('comments', 'edittimelimit', 0);
         case '2.0':

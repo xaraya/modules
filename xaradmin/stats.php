@@ -38,10 +38,10 @@ function comments_admin_stats()
         //Psspl:Commneted codew for resolving error.
         //$mytypes = xarMod::apiFunc($modinfo['name'],'user','getitemtypes',
                                  // don't throw an exception if this function doesn't exist
-          //                       array(), 0); 
+          //                       array(), 0);
         foreach ($itemtypes as $itemtype => $stats) {
             $moditem = array();
-			$moditem['modid'] = $modid;
+            $moditem['modid'] = $modid;
             $moditem['items'] = $stats['items'];
             $moditem['total'] = $stats['comments'];
             if (isset($inactive[$modid]) && isset($inactive[$modid][$itemtype])) {
@@ -65,15 +65,15 @@ function comments_admin_stats()
                                                array('modid' => $modid,
                                                      'itemtype' => $itemtype));
 
-			$moditem['delete_url'] = xarModURL('comments','admin','delete',
+            $moditem['delete_url'] = xarModURL('comments','admin','delete',
                                                array('dtype' => 'itemtype',
-                                                     'modid' => $modid, 
-													'redirect' => 'stats', 
-													'itemtype' => $itemtype));
+                                                     'modid' => $modid,
+                                                    'redirect' => 'stats',
+                                                    'itemtype' => $itemtype));
             $moditems[] = $moditem;
             $data['gt_items'] += $moditem['items'];
             $data['gt_total'] += $moditem['total'];
-			$data['gt_inactive'] += $moditem['inactive'];
+            $data['gt_inactive'] += $moditem['inactive'];
         }
     }
     $data['moditems']             = $moditems;

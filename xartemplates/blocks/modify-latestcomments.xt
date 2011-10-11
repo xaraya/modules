@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div style="clear: both; padding-top: 10px;"> 
+<div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 100%; text-align: left;">
     <b>
       <xar:mlstring>Special Options</xar:mlstring>
@@ -9,7 +9,7 @@
   </span>
 </div>
 
-<div style="clear: both; padding-top: 10px;"> 
+<div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 20%; text-align: right;">
     <xar:mlstring>Number of comments to display</xar:mlstring>
   </span>
@@ -17,9 +17,9 @@
     <input type="text" name="howmany" value="#$howmany#" size="3" maxlength="3" tabindex="1"/>
   </span>
 </div>
-<div style="clear: both; padding-top: 10px;"> 
+<div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 20%; text-align: right;">
-    <xar:mlstring>Truncate long titles to no more than</xar:mlstring> 
+    <xar:mlstring>Truncate long titles to no more than</xar:mlstring>
   </span>
   <span style="float: right; width: 78%; text-align: left;">
     <input type="text" name="truncate" value="#$truncate#" size="3" maxlength="3" tabindex="2"/>
@@ -39,14 +39,14 @@
           <option value="#$key#">#$value#</option>
         </xar:if>
       </xar:foreach>
-    </select>        
+    </select>
   </span>
 </div>
 <div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 20%; text-align: right;">
     <xar:mlstring>Comment title</xar:mlstring>
   </span>
-  <span style="float: right; width: 78%; text-align: left;">        
+  <span style="float: right; width: 78%; text-align: left;">
     <select tabindex="5" name="addcomment">
       <xar:if condition="$addcomment eq '0'">
         <option value="0" selected="selected">
@@ -87,7 +87,7 @@
     </select>
   </span>
 </div>
-<div style="clear: both; padding-top: 10px;">    
+<div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 20%; text-align: right;">
     <xar:mlstring>Author name</xar:mlstring>
   </span>
@@ -129,7 +129,7 @@
           <xar:mlstring>Show with link to author email**</xar:mlstring>
         </option>
       </xar:if>
-    </select>        
+    </select>
   </span>
 </div>
 <div style="clear: both; padding-top: 10px;">
@@ -166,13 +166,13 @@
         </option>
       </xar:if>
     </select>
-  </span>    
+  </span>
 </div>
 <div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 20%; text-align: right;">
     <xar:mlstring>Object title* (e.g. article title)</xar:mlstring>
   </span>
-  <span style="float: right; width: 78%; text-align: left;">        
+  <span style="float: right; width: 78%; text-align: left;">
     <select name="addobject" tabindex="8">
       <xar:if condition="$addobject eq '0'">
         <option value="0" selected="selected">
@@ -224,7 +224,7 @@
       <xar:else/>
       <input type="checkbox" name="adddate" value="on" tabindex="9"/>
     </xar:if>
-  </span>    
+  </span>
 </div>
 <div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 20%; text-align: right;">
@@ -237,7 +237,7 @@
       <xar:else/>
       <input type="checkbox" name="adddaysep" value="on" tabindex="10"/>
     </xar:if>
-  </span>    
+  </span>
 </div>
 <div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 20%; text-align: right;">
@@ -250,33 +250,33 @@
       <xar:else/>
       <input type="checkbox" name="addprevious" value="on" tabindex="11"/>
     </xar:if>
-    
-  </span>    
+
+  </span>
 </div>
-<div style="clear: both; padding-top: 10px;"> 
+<div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 100%; text-align: left;">
-    <a name="notes"> 
+    <a name="notes">
       <b><xar:mlstring>Notes</xar:mlstring></b>
     </a>
   </span>
 </div>
 
-<div style="clear: both; padding-top: 10px;"> 
+<div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 100%; text-align: left;">
     *<xar:mlstring>Not all modules may support this</xar:mlstring>
   </span>
 </div>
-<div style="clear: both; padding-top: 10px;"> 
+<div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 100%; text-align: left;">
     **<xar:mlstring>Option not yet implemented</xar:mlstring>
   </span>
 </div>
-<div style="clear: both; padding-top: 10px;"> 
+<div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 100%; text-align: left;">
     ***<xar:mlstring>Relevant only when comments are displayed in flat or nested mode</xar:mlstring>
   </span>
 </div>
-<div style="clear: both; padding-top: 10px;"> 
+<div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 100%; text-align: left;">
     ****<xar:mlstring>The separator will place "Today", "Yesterday", or the day of the week whenever
       appropriate</xar:mlstring>

@@ -3,23 +3,23 @@
 
 
 fieldset.mod_settings, div#mod_settings fieldset {
-	border-bottom: 1px solid #ccc;
-	padding-bottom: 15px;
-	margin-bottom: 7px;
-	border-top: none;
-} 
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+    margin-bottom: 7px;
+    border-top: none;
+}
 fieldset#mod_settings_last {
-	border-bottom: 1px solid transparent; 
+    border-bottom: 1px solid transparent;
 }
 
 #info_msg {
-	clear: both;
-	padding-top: 4px;
-	margin: 0 0 11px 0;
+    clear: both;
+    padding-top: 4px;
+    margin: 0 0 11px 0;
 }
 #confirm_msg .xar-form-label {
-	width: 100%;
-	padding-bottom: 7px;
+    width: 100%;
+    padding-bottom: 7px;
 }
 .xar-cm-wrapper {
     height: 3.5em;

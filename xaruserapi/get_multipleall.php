@@ -43,12 +43,12 @@ function comments_userapi_get_multipleall($args)
     $commentlist = array();
 
     $query = "SELECT  title AS subject,
-                      comment AS text,
+                      text AS comment,
                       date AS datetime,
                       author AS author,
-                      id]AS id,
+                      id AS id,
                       status AS status,
-                      postanon AS postanon,
+                      anonpost AS postanon,
                       modid AS modid,
                       itemtype AS itemtype,
                       objectid AS objectid

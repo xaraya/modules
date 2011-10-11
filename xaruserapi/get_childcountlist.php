@@ -23,7 +23,7 @@
  */
 function comments_userapi_get_childcountlist($args)
 {
-	
+
     extract($args);
 
     if (!isset($left) || !is_numeric($left) || !isset($right) || !is_numeric($right)) {
@@ -31,7 +31,7 @@ function comments_userapi_get_childcountlist($args)
         throw new BadParameterException($msg);
     }
 
-	$dbconn = xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
 
     $bind = array((int)$left, (int)$right, _COM_STATUS_ON, (int)$modid, (int)$objectid, (int)$itemtype);

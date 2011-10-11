@@ -35,7 +35,7 @@ function comments_userapi_get_count($args)
         throw new BadParameterException($msg);
     }
 
-    if (!isset($status) || !is_numeric($status)) { 
+    if (!isset($status) || !is_numeric($status)) {
         $status = _COM_STATUS_ON;
     }
 

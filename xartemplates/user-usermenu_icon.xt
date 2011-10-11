@@ -10,7 +10,7 @@
                     Comments
                 </xar:mlstring>
             </a>
-        </dd>    
+        </dd>
     <xar:else />
         <dd>
             <a href="#xarModURL('roles', 'user', 'account', array('moduleload' => 'comments'))#">
@@ -18,6 +18,6 @@
                     Comments
                 </xar:mlstring>
             </a>
-        </dd>    
+        </dd>
     </xar:if>
 </xar:template>
