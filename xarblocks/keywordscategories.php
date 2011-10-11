@@ -16,48 +16,31 @@
  * Mostly taken from the topitems.php block of the articles module.(See credits)
  * @TODO : Add multi categories support with + - ...
  */
-/**
- * initialise block
- */
+sys::import('xaraya.structures.containers.blocks.basicblock');
 
-function keywords_keywordscategoriesblock_init()
+class Keywords_KeywordscategoriesBlock extends BasicBlock implements iBlock
 {
-    return true;
-}
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'keywordscategories';
+    protected $module           = 'keywords'; // module block type belongs to, if any
+    protected $text_type        = 'Keywords Categories';  // Block type display name
+    protected $text_type_long   = 'Show categories related by keywords'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
-/**
- * get information on block
- * @return array
- */
-
-function keywords_keywordscategoriesblock_info()
-{
-    // Details of block.
-    return array(
-        'text_type'         => 'Keywords Categories',
-        'module'            => 'keywords',
-        'text_type_long'    => 'Show categories related by keywords',
-        'allow_multiple'    => true,
-        'form_content'      => false,
-        'form_refresh'      => false,
-        'show_preview'      => false
-    );
-}
-
-/**
- * display block
- * @return array with block
- */
-
-function keywords_keywordscategoriesblock_display(& $blockinfo)
-{
-    // Security check
-    if(!xarSecurityCheck('ReadKeywords')) return;
-
-    // Get variables from content block
-    $vars = @unserialize($blockinfo['content']);
-    // Defaults
-    //$vars = _keywords_keywordscategoriesblock_checkdefaults($vars);
+    public $refreshtime = 1440;
+    
+    public function display()
+    {
+        $vars = $this->getContent();
 
     // Allow refresh by setting refreshrandom variable
     if (!xarVarFetch('refreshrandom', 'int:1:1', $vars['refreshtime'], 0, XARVAR_DONT_SET)) return;
@@ -77,28 +60,28 @@ function keywords_keywordscategoriesblock_display(& $blockinfo)
     } else {
         //Get the keywords related categories
         if (xarVarIsCached('Blocks.articles', 'cids')) {
-            $data['modid'] = xarModGetIDFromName('categories');
-            $data['cids'] = xarVarGetCached('Blocks.articles','cids');
-            if (empty($data['cids']) || !is_array($data['cids']) || count($data['cids']) == 0) return '';
+            $vars['modid'] = xarModGetIDFromName('categories');
+            $vars['cids'] = xarVarGetCached('Blocks.articles','cids');
+            if (empty($vars['cids']) || !is_array($vars['cids']) || count($vars['cids']) == 0) return '';
 
             $keywords = array();
-            foreach ($data['cids'] as $id => $cid) {
+            foreach ($vars['cids'] as $id => $cid) {
                 // if we're viewing all items below a certain category, i.e. catid = _NN
                 $cid = str_replace('_', '', $cid);
                 $keywords = xarModAPIFunc('keywords','user','getwords',
                                    array('itemid' => $cid,
-                                            'modid' => $data['modid']));
+                                            'modid' => $vars['modid']));
             }
             if (empty($keywords) || !is_array($keywords) || count($keywords) == 0) return '';
             //for each keyword in keywords[]
             $items = array();
-            $data['items'] = array();
+            $vars['items'] = array();
             foreach ($keywords as $id => $word) {
                // get the list of items to which this keyword is assigned
                //TODO Make itemtype / modid dependant
                 $items = $items + xarModAPIFunc('keywords','user','getitems',
                                    array('keyword' => $word,
-                                        'modid' => $data['modid']));
+                                        'modid' => $vars['modid']));
             }
             //make itemid unique (worst ever code)
             $tmp = array();
@@ -110,13 +93,13 @@ function keywords_keywordscategoriesblock_display(& $blockinfo)
                 }
             }
              foreach ($itemsB as $id => $item) {
-                 if (!in_array($item['itemid'], $data['cids'])) {
+                 if (!in_array($item['itemid'], $vars['cids'])) {
                         $categories = xarModAPIFunc('categories','user','getcatinfo',
                                        array('cid' => $item['itemid']));
                          //TODO : display config
                         //'aid','title','summary','authorid', 'pubdate','pubtypeid','notes','status','body'
                         //if the related article already exist do not add it
-                       $data['items'][] = array(
+                       $vars['items'][] = array(
                                 'keyword' => $item['keyword'],
                                 'modid' =>  $item['moduleid'],
                                 'itemtype' => $item['itemtype'],
@@ -133,19 +116,8 @@ function keywords_keywordscategoriesblock_display(& $blockinfo)
                 }
         }
     }
-    // Set the data to return.
-    $blockinfo['content'] =& $data;
-    return $blockinfo;
+
+    return $vars;
+    }
 }
-
-/**
- * built-in block help/information system.
- */
-
-function keywords_keywordscategoriesblock_help()
-{
-    // No information yet.
-    return '';
-}
-
 ?>
