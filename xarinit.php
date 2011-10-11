@@ -166,36 +166,6 @@ function headlines_upgrade($oldVersion)
  */
 function headlines_delete()
 {
-    $dbconn =& xarDB::getConn();
-    $tables =& xarDB::getTables();
-    $prefix = xarDB::getPrefix();
-    //Load Table Maintenance API
-    sys::import('xaraya.tableddl');
-
-    $headlinesTable = $tables['headlines'];
-
-    // Generate the SQL to drop the table using the API
-    $query = xarDB::dropTable($headlinesTable);
-    if (empty($query)) return; // throw back
-
-    // Drop the table and send exception if returns false.
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    // UnRegister blocks
-    if (!xarMod::apiFunc('blocks',
-                       'admin',
-                       'unregister_block_type',
-                       array('modName'  => 'headlines',
-                             'blockType'=> 'rss'))) return;
-    if (!xarMod::apiFunc('blocks',
-                       'admin',
-                       'unregister_block_type',
-                       array('modName'  => 'headlines',
-                             'blockType'=> 'cloud'))) return;
-    xarModDelAllVars('headlines');
-    xarRemoveMasks('headlines');
-    xarRemoveInstances('headlines');
-    return true;
+    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'headlines'));
 }
 ?>
