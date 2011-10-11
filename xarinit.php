@@ -80,7 +80,7 @@ function ephemerids_upgrade($oldversion)
  */
 function ephemerids_delete()
 {
-    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'epheremids'));
+    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'ephemerids'));
 }
 
 ?>
