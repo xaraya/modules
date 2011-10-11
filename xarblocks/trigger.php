@@ -15,14 +15,22 @@ sys::import('xaraya.structures.containers.blocks.basicblock');
 
 class Scheduler_TriggerBlock extends BasicBlock implements iBlock
 {
-    public $name                = 'TriggerBlock';
-    public $module              = 'scheduler';
-    public $text_type           = 'Trigger';
-    public $text_type_long      = 'Trigger for the scheduler (using an external trigger is better)';
-    public $allow_multiple      = false;
-    public $nocache             = 1;
-    public $pageshared          = 0;
-    public $usershared          = 0;
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'trigger';
+    protected $module           = 'scheduler'; // module block type belongs to, if any
+    protected $text_type        = 'Scheduler Trigger';  // Block type display name
+    protected $text_type_long   = 'Trigger for the scheduler (external trigger is recommended)'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    // @todo: drop the show_help flag, and go back to checking if help method is declared 
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
     public $showstatus          = false;
 
@@ -32,14 +40,13 @@ class Scheduler_TriggerBlock extends BasicBlock implements iBlock
  */
     function display(Array $data=array())
     {
-        $data = parent::display($data);
-        if (empty($data)) return;
+        $vars = $this->getContent();
 
         // check if we have the right trigger
         $trigger = xarModVars::get('scheduler','trigger');
         if (empty($trigger) || $trigger != 'block') {
-            $data['content']['msg'] = xarML('Wrong trigger');
-            return $data;
+            $vars['msg'] = xarML('Wrong trigger');
+            return $vars;
         }
 
         // check when we last ran the scheduler
@@ -50,8 +57,8 @@ class Scheduler_TriggerBlock extends BasicBlock implements iBlock
                 return;
             } else {
                 $diff = time() - $lastrun;
-                $data['content']['msg'] = xarML('Last run was #(1) minutes #(2) seconds ago', intval($diff / 60), $diff % 60);
-                return $data;
+                $vars['msg'] = xarML('Last run was #(1) minutes #(2) seconds ago', intval($diff / 60), $diff % 60);
+                return $vars;
             }
         }
 
@@ -73,8 +80,8 @@ class Scheduler_TriggerBlock extends BasicBlock implements iBlock
             if (empty($vars['showstatus'])) {
                 return;
             } else {
-                $data['content']['msg'] = xarML('Some other process is running jobs right now');
-                return $data;
+                $vars['msg'] = xarML('Some other process is running jobs right now');
+                return $vars;
             }
         }
 
@@ -88,36 +95,9 @@ class Scheduler_TriggerBlock extends BasicBlock implements iBlock
         if (empty($vars['showstatus'])) {
             return;
         } else {
-            $data['content']['msg'] = xarML('Running Jobs');
-            return $data;
+            $vars['msg'] = xarML('Running Jobs');
+            return $vars;
         }
-    }
-
-/**
- * Modify Function to the Blocks Admin
- * @param $data array containing title,content
- */
-    public function modify(Array $data=array())
-    {
-        return parent::modify($data);
-    }
-
-/**
- * Updates the Block config from the Blocks Admin
- * @param $data array containing title,content
- */
-    public function update(Array $data=array())
-    {
-        $data = parent::update($data);
-        if (empty($data)) return;
-        $vars = array();
-        if(!xarVarFetch('showstatus',  'isset', $vars['showstatus'],  NULL, XARVAR_DONT_SET)) {return;}
-        if (empty($vars['showstatus'])) {
-            $vars['showstatus'] = 0;
-        }
-
-        $data['content'] = $vars;
-        return $data;
     }
 }
 
