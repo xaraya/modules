@@ -3,19 +3,19 @@
     <div class="xar-mod-head">
         <span class="xar-mod-title">Private Messages</span>
     </div>
-    
+
 <xar:template type="module" file="user-menu"/>
-    
+
     <div class="xar-mod-body">
 
     <h2>#$input_title#</h2>
 
-	<xar:data-view object="$list" tplmodule="messages" sort="$sort" folder="$folder" fieldlist="$fieldlist" />  
+    <xar:data-view object="$list" tplmodule="messages" sort="$sort" folder="$folder" fieldlist="$fieldlist" />
 
-	<xar:if condition="isset($results)">
-		<xar:set name="total">$results</xar:set>
-	</xar:if>
-	<xar:pager startnum="$list->startnum" itemsperpage="$list->numitems" total="$total"/>
+    <xar:if condition="isset($results)">
+        <xar:set name="total">$results</xar:set>
+    </xar:if>
+    <xar:pager startnum="$list->startnum" itemsperpage="$list->numitems" total="$total"/>
 
     </div>
 </xar:template>

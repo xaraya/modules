@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="messages" file="messages"/>
- 
+
 <div class="xar-mod-head">
     <span class="xar-mod-title">Private Messages</span>
 </div>
 
 <xar:template type="module" file="user-menu"/>
-    
+
     <div class="xar-mod-body">
 
     <xar:if condition="xarMod::apiFunc('messages' , 'user' , 'isset_grouplist')">
@@ -15,31 +15,31 @@
     <h2>#$input_title#</h2>
 
     <form id="inputbox" action="#$post_url#" method="post" enctype="multipart/form-data">
-	 
-	<xar:if condition="$reply">
-	<div id="message_display" class="reply_display">
-		<xar:data-display object="$display" tplmodule="messages" replyto="$replyto" />
-	</div>
-	</xar:if>
 
-            <xar:data-form object="$object" tplmodule="messages" template="new" reply="$reply" replyto="$replyto" to="$to" opt="$opt" /> 
+    <xar:if condition="$reply">
+    <div id="message_display" class="reply_display">
+        <xar:data-display object="$display" tplmodule="messages" replyto="$replyto" />
+    </div>
+    </xar:if>
+
+            <xar:data-form object="$object" tplmodule="messages" template="new" reply="$reply" replyto="$replyto" to="$to" opt="$opt" />
 
         <div class="xar-align-center xar-margin-thick">
             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
-            <input type="hidden" name="reply" id="reply" value="#$reply#"/> 
+            <input type="hidden" name="reply" id="reply" value="#$reply#"/>
             <input type="submit" name="draft" id="draft" value="#xarML('Save draft')#" class="xar-margin-thickright"/>
-	    <input type="submit" name="saveandedit" id="saveandedit" value="#xarML('Save draft and edit')#" class="xar-margin-thickright"/>
+        <input type="submit" name="saveandedit" id="saveandedit" value="#xarML('Save draft and edit')#" class="xar-margin-thickright"/>
             <input type="submit" name="send" id="send" value="#xarML('Send')#" class="xar-margin-thickright"/>
         </div>
     </form>
 
     <xar:else />
 
-		No recipients are configured for your group.
+        No recipients are configured for your group.
 
-		<xar:sec mask="AdminMessages" catch="false">
-			<a href="#xarmodurl('messages','admin','modifyconfig')#">Modify the allowed recipients in the Role Groups settings</a>.			
-		</xar:sec>
+        <xar:sec mask="AdminMessages" catch="false">
+            <a href="#xarmodurl('messages','admin','modifyconfig')#">Modify the allowed recipients in the Role Groups settings</a>.
+        </xar:sec>
 
     </xar:if>
 </div>

@@ -11,17 +11,17 @@
     <xar:template type="module" file="admintabs"/>
 
     <div class="xar-mod-body">
-     
-	<div style="float: right;"><a href="#xarmodurl('messages','user','view')#">View Inbox</a> | <a href="#xarmodurl('messages','user','new')#">New Message</a></div>
+
+    <div style="float: right;"><a href="#xarmodurl('messages','user','view')#">View Inbox</a> | <a href="#xarmodurl('messages','user','new')#">New Message</a></div>
 
         <h2>Modify Default Configuration</h2>
 
         <form method="post" action="#xarServer::getCurrentURL()#">
-              
+
             <xar:data-form object="$object" itemid="0" tplmodule="messages" groups="$groups" template="module_settings" layout="top"/>
             <xar:data-form object="$module_settings"/>
-	    <xar:data-form object="$object" itemid="0" tplmodule="messages" groups="$groups" template="module_settings" layout="bottom"/>
-		
+        <xar:data-form object="$object" itemid="0" tplmodule="messages" groups="$groups" template="module_settings" layout="bottom"/>
+
 
             <div class="xar-form-input-after">
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
@@ -33,6 +33,6 @@
                 <xar:button type="submit" label="$label" />
             </div>
         </form>
- 
+
     </div>
 </xar:template>

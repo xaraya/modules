@@ -11,7 +11,7 @@
                         No error message is available.
                         <br />
                         Please contact the system administrator.
-                    </div>                    
+                    </div>
                 <xar:elseif condition="$layout eq 'bad_id'"/>
                     <div style="margin-top: 20px; margin-left: 20px">
                         You are attempting to access a message that you did not create, or which was not sent to you..
@@ -21,9 +21,9 @@
                         No error message is available.
                         <br />
                         Please contact the system administrator.
-                    </div>                    
+                    </div>
                 </xar:if>
-                
+
         </fieldset>
     </div>
 </xar:template>

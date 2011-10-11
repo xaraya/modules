@@ -14,28 +14,29 @@
 
 sys::import('modules.messages.xarincludes.defines');
 
-function messages_user_display($args) {
+function messages_user_display($args) 
+{
 
-	extract($args);
+    extract($args);
 
     if (!xarSecurityCheck('ReadMessages')) return;
-   
+
     //if (!xarVarFetch('object', 'str', $object, 'messages_messages', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('id', 'int', $id, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $data['folder'], 'inbox', XARVAR_NOT_REQUIRED)) return;
 
-	$data['id'] = $id;
+    $data['id'] = $id;
 
-	xarTplSetPageTitle(xarML('Read Message'));
-	$data['input_title']    = xarML('Read Message');
-    
+    xarTplSetPageTitle(xarML('Read Message'));
+    $data['input_title']    = xarML('Read Message');
+
     //Psspl:Added the code for configuring the user-menu
     //$data['allow_newpm'] = xarMod::apiFunc('messages' , 'user' , 'isset_grouplist');
 
     $object = DataObjectMaster::getObject(array('name' => 'messages_messages'));
     $object->getItem(array('itemid' => $id));
 
-	$data['replyto'] = $object->properties['replyto']->value;
+    $data['replyto'] = $object->properties['replyto']->value;
 
     $current_user = xarSession::getVar('role_id');
 
@@ -66,13 +67,13 @@ function messages_user_display($args) {
             $object->properties['author_status']->setValue(MESSAGES_STATUS_READ);
             $object->updateItem();
         }
-    } 
-    if ($current_user == $object->properties['to']->value) {  
+    }
+    if ($current_user == $object->properties['to']->value) {
         $object->properties['recipient_status']->setValue(MESSAGES_STATUS_READ);
         $object->updateItem();
     }
 
-	$data['object'] = $object;
+    $data['object'] = $object;
 
     return $data;
 }

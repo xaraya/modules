@@ -19,23 +19,32 @@
 
     class Messages_NewmessagesBlock extends BasicBlock
     {
-        public $name                = 'NewMessagesBlock';
-        public $module              = 'messages';
-        public $text_type           = 'Messages';
-        public $text_type_long      = 'My Messages';
-        public $allow_multiple      = true;
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'newmessages';
+    protected $module           = 'messages'; // module block type belongs to, if any
+    protected $text_type        = 'New Messages';  // Block type display name
+    protected $text_type_long   = 'Show new messages for logged in users'; // Block type description
+    // Additional info, supplied by developer, optional
+    protected $type_category    = 'block'; // options [(block)|group]
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
 
-        function display(Array $data=array())
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    // @todo: drop the show_help flag, and go back to checking if help method is declared
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
+
+        function display()
         {
-            $data = parent::display($data);
-            if (empty($data)) return;
-            $vars = $data['content'];
+            $vars = $this->getContent();
 
             $itemtype=1;
-        
+
             // Get Logged in Users ID
             $role_id = xarSession::getVar('role_id');
-        
+
             // Count total Messages
             $totalin = xarMod::apiFunc('messages',
                                       'user',
@@ -44,7 +53,7 @@
                                           'recipient' => $role_id
                         ));
             $vars['totalin'] = $totalin;
-        
+
             // Count Unread Messages
             $unread = xarMod::apiFunc('messages',
                                       'user',
@@ -54,23 +63,14 @@
                                           'unread'=>true
                         ));
             $vars['unread'] = $unread;
-        
+
             // No messages return emptymessage
-            if (empty($unread) || $unread == 0){ 
-                $vars['content'] = 'No new messages';
-                if (empty($data['title'])){
-                    $data['title'] = xarML('My Messages');
-                }
-                $data['content'] = $vars;
+            if (empty($unread) || $unread == 0){
+                return xarML('No new messages');
             } else {
                 $vars['numitems'] = $unread;
-                $data['content'] = $vars;
-        
-                if (empty($data['title'])){
-                    $data['title'] = xarML('My Messages');
-                }
             }
-            return $data;
+            return $vars;
         }
-    }        
+    }
 ?>

@@ -2,56 +2,56 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- This is the generic form for any modules dd user_settings object. -->
-    
+
         <!--
             This is the default layout, used when a module doesn't provide it's own showform-usermenu template
-        --> 
+        -->
         <fieldset>
 
             <legend>#$object->label#</legend>
 
-	    <xar:if condition="xarModVars::get('messages', 'allowusersendredirect')">
-	<xar:set name="name">'user_send_redirect'</xar:set>
+        <xar:if condition="xarModVars::get('messages', 'allowusersendredirect')">
+    <xar:set name="name">'user_send_redirect'</xar:set>
                 <div class="xar-form-input-wrapper">
                     <xar:data-label property="$properties[$name]" for="id"/>
                     <xar:data-input property="$properties[$name]"/>
                 </div>
-		<br />
-	<xar:else />
-		<xar:set name="send_redirect">xarModVars::get('messages', 'send_redirect')</xar:set>
-		<xar:data-input property="$properties['user_send_redirect']" hidden="hidden" value="$send_redirect" />
-	</xar:if>
-            
-	    <xar:if condition="xarModVars::get('messages', 'sendemail')">
-		<xar:set name="name">'user_sendemail'</xar:set>
+        <br />
+    <xar:else />
+        <xar:set name="send_redirect">xarModVars::get('messages', 'send_redirect')</xar:set>
+        <xar:data-input property="$properties['user_send_redirect']" hidden="hidden" value="$send_redirect" />
+    </xar:if>
+
+        <xar:if condition="xarModVars::get('messages', 'sendemail')">
+        <xar:set name="name">'user_sendemail'</xar:set>
                 <div class="xar-form-input-wrapper">
                     <xar:data-label property="$properties[$name]" for="id"/>
                     <xar:data-input property="$properties[$name]"/>
                 </div>
-		<br />
-	<xar:else />
-		<xar:data-input property="$properties['user_sendemail']" hidden="hidden" />
-	 </xar:if>
+        <br />
+    <xar:else />
+        <xar:data-input property="$properties['user_sendemail']" hidden="hidden" />
+     </xar:if>
 
-	<xar:if condition="xarModVars::get('messages', 'allowautoreply')">
-		<xar:set name="name">'enable_autoreply'</xar:set>
+    <xar:if condition="xarModVars::get('messages', 'allowautoreply')">
+        <xar:set name="name">'enable_autoreply'</xar:set>
                 <div class="xar-form-input-wrapper">
                     <xar:data-label property="$properties[$name]" for="id"/>
                     <xar:data-input property="$properties[$name]"/>
                 </div>
 
-		<xar:set name="name">'autoreply'</xar:set>
+        <xar:set name="name">'autoreply'</xar:set>
                 <div class="xar-form-input-wrapper">
                     <xar:data-label property="$properties[$name]" for="id"/>
                     <xar:data-input property="$properties[$name]"/>
                 </div>
-	<xar:else />
-		<xar:data-input property="$properties['enable_autoreply']" hidden="hidden" />
-		<xar:data-input property="$properties['autoreply']" hidden="hidden" />
-	</xar:if>
+    <xar:else />
+        <xar:data-input property="$properties['enable_autoreply']" hidden="hidden" />
+        <xar:data-input property="$properties['autoreply']" hidden="hidden" />
+    </xar:if>
 
-	
 
-        </fieldset> 
- 
+
+        </fieldset>
+
 </xar:template>

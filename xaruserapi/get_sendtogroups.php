@@ -10,20 +10,20 @@
  * @subpackage Messages Module
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
- */ 
+ */
 /**
  * Get the list of groups this user can send to
- * @return array		$sendtogroups the IDs of groups this user can send to
+ * @return array        $sendtogroups the IDs of groups this user can send to
  */
 
 sys::import('modules.messages.xarincludes.defines');
 
     function messages_userapi_get_sendtogroups($args)
-    { 
+    {
         extract($args);
 
         if (!isset($currentuser)) $currentuser = xarUserGetVar('id');
-    
+
         // First we get all the parents of the current user
         sys::import('xaraya.structures.query');
         $xartable = xarDB::getTables();
@@ -36,19 +36,19 @@ sys::import('modules.messages.xarincludes.defines');
         $q->eq('id', $currentuser);
 
         if(!$q->run()) return;
-        $parents =  $q->output(); 
- 
+        $parents =  $q->output();
+
         // Find the groups these parents can send to
-        $sendtogroups = array();  
+        $sendtogroups = array();
         foreach ($parents as $parent) {
-            $allowedgroups = unserialize(xarModItemVars::get('messages',"allowedsendmessages",$parent['parent_id'])); 
-			if (!empty($allowedgroups)) {
-				foreach ($allowedgroups as $allowedgroup) {
-					$sendtogroups[$allowedgroup] = $allowedgroup;
-				}
-			}
-        }                
-	 
+            $allowedgroups = unserialize(xarModItemVars::get('messages',"allowedsendmessages",$parent['parent_id']));
+            if (!empty($allowedgroups)) {
+                foreach ($allowedgroups as $allowedgroup) {
+                    $sendtogroups[$allowedgroup] = $allowedgroup;
+                }
+            }
+        }
+
         return $sendtogroups;
     }
 ?>

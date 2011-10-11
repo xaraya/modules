@@ -10,28 +10,28 @@
  * @subpackage Messages Module
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
- */ 
+ */
 /**
  * Check to see if a message was anonymous
- * @param int	$id the message id
- * @return boolean  
+ * @param int    $id the message id
+ * @return boolean
  */
 
 function messages_userapi_checkanonymous($args)
 {
     extract($args);
 
-	if ($id == 0) { 
-		return false;
-	}
+    if ($id == 0) {
+        return false;
+    }
 
-	sys::import('modules.dynamicdata.class.objects.master');
-    
-	$object = DataObjectMaster::getObject(array('name' => 'messages_messages'));
-	$object->getItem(array('itemid' => $id));
-	$postanon = $object->properties['postanon']->value;
+    sys::import('modules.dynamicdata.class.objects.master');
 
-	return $postanon;
-	 
+    $object = DataObjectMaster::getObject(array('name' => 'messages_messages'));
+    $object->getItem(array('itemid' => $id));
+    $postanon = $object->properties['postanon']->value;
+
+    return $postanon;
+
 }
 ?>

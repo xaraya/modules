@@ -30,7 +30,7 @@ function messages_userapi_getmenulinks ( $args )
             'url'      => xarModURL('messages', 'user', 'new'),
             'title'    => 'Send a message to someone',
             'label'    => 'New Message' );
-    } 
+    }
 
     return $menulinks;
 }

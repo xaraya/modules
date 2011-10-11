@@ -1,4 +1,4 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"> 
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
 <!--     <xar:set name="action">
         isset($action) ? $action : 'check'
@@ -24,7 +24,7 @@
         </xar:set>
     <xar:else />
         <xar:set name="is_sendtouser">
-            xarMod::apiFunc('messages','user','is_sendtouser', 
+            xarMod::apiFunc('messages','user','is_sendtouser',
                 array(
                     'currentuser' => $vettor,
                     'sendtouser' => $vettee,
@@ -34,7 +34,7 @@
     </xar:if> -->
 
     <xar:comment>
-    <!-- Message-Posting-Host: #$message['posting-host']# --> 
+    <!-- Message-Posting-Host: #$message['posting-host']# -->
     </xar:comment>
 
     <div class="xar-form-input-wrapper">
@@ -55,11 +55,11 @@
         <span class="xar-form-label">
             To:
         </span>
-	<xar:if condition="is_numeric($replyto) and xarMod::apiFunc('messages','user','checkanonymous',array('id' => $replyto))">
-	Anonymous
-	<xar:else />
-         #xarUserGetVar('name',$recipient)# 
-	 </xar:if>
+    <xar:if condition="is_numeric($replyto) and xarMod::apiFunc('messages','user','checkanonymous',array('id' => $replyto))">
+    Anonymous
+    <xar:else />
+         #xarUserGetVar('name',$recipient)#
+     </xar:if>
     </div>
 
     <div class="xar-form-input-wrapper">
@@ -82,8 +82,8 @@
 
     <xar:comment>Psspl:Added the code for folder type</xar:comment>
         <xar:if condition="isset($folder)">
-            <input type="hidden" value="#$folder#" name="folder" id="folder"/>    
-        </xar:if> 
+            <input type="hidden" value="#$folder#" name="folder" id="folder"/>
+        </xar:if>
 
 
 

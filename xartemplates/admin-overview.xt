@@ -9,65 +9,65 @@
 
 <div class="xar-mod-body">
 
-	  <div style="float: right;"><a href="#xarmodurl('messages','user','view')#">View Inbox</a> | <a href="#xarmodurl('messages','user','new')#">New Message</a></div>
+      <div style="float: right;"><a href="#xarmodurl('messages','user','view')#">View Inbox</a> | <a href="#xarmodurl('messages','user','new')#">New Message</a></div>
 
-	  <h2>Messages Overview</h2>  
+      <h2>Messages Overview</h2>
 
-	  <p>A private messaging module.</p>
+      <p>A private messaging module.</p>
 
-	  <p>Before using this module you must specify who should be permitted to send to whom.  This is done in the <strong>Role Groups</strong> fieldset in the <a href="#xarModURL('messages','admin','modifyconfig')#">Modify Config tab</a>.</p>
- 
+      <p>Before using this module you must specify who should be permitted to send to whom.  This is done in the <strong>Role Groups</strong> fieldset in the <a href="#xarModURL('messages','admin','modifyconfig')#">Modify Config tab</a>.</p>
 
-	<h3>Enable User Settings</h3>
 
-	<p>To enable User Settings, check the box for "Enable User Settings" in the <a href="#xarmodurl('messages','admin','modifyconfig')#">Modify Config tab</a> and choose the specific settings to enable in the <strong>User Settings</strong> fieldset.  Depending on which settings you enable, the following may be configurable by users in their Roles account:</p>
+    <h3>Enable User Settings</h3>
 
-	<ul><li><em>Tab to open after sending message</em> -- Redirect to this tab after sending a message.</li>
-	<li><em>Email me when I receive a new message</em> -- Enable email delivery to the user's email address.</li>
-	<li><em>Enable my autoreply</em> -- Turn on/off the autoreply.</li>
-	<li><em>Autoreply text</em> -- The text of the autoreply.</li>
-	</ul>
+    <p>To enable User Settings, check the box for "Enable User Settings" in the <a href="#xarmodurl('messages','admin','modifyconfig')#">Modify Config tab</a> and choose the specific settings to enable in the <strong>User Settings</strong> fieldset.  Depending on which settings you enable, the following may be configurable by users in their Roles account:</p>
 
-	<h3>Admin Settings</h3>
+    <ul><li><em>Tab to open after sending message</em> -- Redirect to this tab after sending a message.</li>
+    <li><em>Email me when I receive a new message</em> -- Enable email delivery to the user's email address.</li>
+    <li><em>Enable my autoreply</em> -- Turn on/off the autoreply.</li>
+    <li><em>Autoreply text</em> -- The text of the autoreply.</li>
+    </ul>
 
-	<p>These settings are available in the <strong>Admin Settings</strong> fieldset:</p>
+    <h3>Admin Settings</h3>
 
-		
-	<ul>
-	<li><em>Allow anonymous messages</em> -- Allow users to send messages anonymously.</li> 
+    <p>These settings are available in the <strong>Admin Settings</strong> fieldset:</p>
 
-	<li><em>Strip tags from autoreplies</em> -- If you do not enable this, and you turn on the "Show template filenames" settings in the themes module, HTML comments will appear in autoreplies.  It is recommended that you leave this checked.</li>
 
-	<li><em>Default tab to open after send</em> -- Redirect to this tab after sending a message.  The "Tab to open" user setting will override this admin setting.</li>
-	</ul>
+    <ul>
+    <li><em>Allow anonymous messages</em> -- Allow users to send messages anonymously.</li>
 
-	<h3>How to Create a Link to Message a Specific User</h3>
+    <li><em>Strip tags from autoreplies</em> -- If you do not enable this, and you turn on the "Show template filenames" settings in the themes module, HTML comments will appear in autoreplies.  It is recommended that you leave this checked.</li>
 
-	<p>In these examples, 11 is the user ID of the recipient:</p>
-	
-	<style>
-	pre { margin-left: 10px; }
-	</style>
+    <li><em>Default tab to open after send</em> -- Redirect to this tab after sending a message.  The "Tab to open" user setting will override this admin setting.</li>
+    </ul>
 
-	<pre>##xarModURL('messages','user','new',array('to' => 11))##</pre>
+    <h3>How to Create a Link to Message a Specific User</h3>
 
-	<p>Optionally, set the 'opt' argument to true if you would like the form to display a userlist dropdown with the value set to the specified user:</p>
-	<pre>##xarModURL('messages','user','new',array('to' => 11, 'opt' => true))##</pre>
-	<p>If you don't set 'opt' to true, the form will display the recipient's username and pass the user ID in a hidden input.</p>
-	<p>Depending on context, a link might look something like...</p>
-	<pre>&lt;a href="##xarModURL('messages','user','new',array('to' => $uid))##">
-	Send a PM to ##xarUserGetVar('name',$uid)##
+    <p>In these examples, 11 is the user ID of the recipient:</p>
+
+    <style>
+    pre { margin-left: 10px; }
+    </style>
+
+    <pre>##xarModURL('messages','user','new',array('to' => 11))##</pre>
+
+    <p>Optionally, set the 'opt' argument to true if you would like the form to display a userlist dropdown with the value set to the specified user:</p>
+    <pre>##xarModURL('messages','user','new',array('to' => 11, 'opt' => true))##</pre>
+    <p>If you don't set 'opt' to true, the form will display the recipient's username and pass the user ID in a hidden input.</p>
+    <p>Depending on context, a link might look something like...</p>
+    <pre>&lt;a href="##xarModURL('messages','user','new',array('to' => $uid))##">
+    Send a PM to ##xarUserGetVar('name',$uid)##
 &lt;/a></pre>
 
 
-	 <h3>Message Templates</h3>
+     <h3>Message Templates</h3>
 
-	 <p>In the Messages module's xartemplates directory, some default message templates are provided:</p>
-	 <ul>
-	 <li>user-email-subject.xt</li>
-	  <li>user-email-body.xt</li>
-	  <li>user-autoreply-subject.xt</li>
-	  <li>user-autoreply-body.xt</li>
-	  </ul>
+     <p>In the Messages module's xartemplates directory, some default message templates are provided:</p>
+     <ul>
+     <li>user-email-subject.xt</li>
+      <li>user-email-body.xt</li>
+      <li>user-autoreply-subject.xt</li>
+      <li>user-autoreply-body.xt</li>
+      </ul>
 </div>
 </xar:template>
