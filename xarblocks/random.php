@@ -20,13 +20,21 @@ sys::import('xaraya.structures.containers.blocks.basicblock');
 
 class Articles_RandomBlock extends BasicBlock implements iBlock
 {
-    public $name                = 'GlossaryBlock';
-    public $module              = 'articles';
-    public $text_type           = 'Glossary';
-    public $text_type_long      = 'Show a glossary summary in a side block';
-    public $pageshared          = 1;
-    public $usershared          = 1;
-    public $nocache             = 0;
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'random';
+    protected $module           = 'articles'; // module block type belongs to, if any
+    protected $text_type        = 'Random Article';  // Block type display name
+    protected $text_type_long   = 'Show a random article'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
     public $pubtypeid     = 0;
     public $catfilter     = 0;
@@ -46,12 +54,9 @@ class Articles_RandomBlock extends BasicBlock implements iBlock
  * Display func.
  * @param $data array containing title,content
  */
-    function display(Array $args=array())
+    function display()
     {
-        $data = parent::display($args);
-        if (empty($data)) return;
-
-        $vars = $data['content'];
+        $vars = $this->getContent();
 
         // frontpage or approved status
         if (empty($vars['status'])) {
@@ -129,8 +134,7 @@ class Articles_RandomBlock extends BasicBlock implements iBlock
 
         // Pass details back for rendering.
         if (count($vars['items']) > 0) {
-            $data['content'] = $vars;
-            return $data;
+            return $vars;
         }
 
         // Nothing to render.
@@ -142,24 +146,10 @@ class Articles_RandomBlock extends BasicBlock implements iBlock
  * @param $data array containing title,content
  * @TODO: Move this to block_admin after 2.1.0
  */
-    public function modify(Array $data=array())
+    public function modify()
     {
-        $data = parent::modify($data);
-        // Defaults
-        if (empty($data['pubtypeid'])) {$data['pubtypeid'] = '';}
-        if (empty($data['catfilter'])) {$data['catfilter'] = '';}
-        if (empty($data['status'])) {$data['status'] = array(3, 2);}
-        if (empty($data['language'])) {$data['language'] = '';}
-        if (empty($data['numitems'])) {$data['numitems'] = 5;}
-        if (empty($data['alttitle'])) {$data['alttitle'] = '';}
-        if (empty($data['altsummary'])) {$data['altsummary'] = '';}
-        if (empty($data['showtitle'])) {$data['showtitle'] = false;}
-        if (empty($data['showsummary'])) {$data['showsummary'] = false;}
-        if (empty($data['showpubdate'])) {$data['showpubdate'] = false;}
-        if (empty($data['showauthor'])) {$data['showauthor'] = false;}
-        if (empty($data['showsubmit'])) {$data['showsubmit'] = false;}
-        if (empty($data['showdynamic'])) {$data['showdynamic'] = false;}
-        if (empty($data['linkpubtype'])) {$data['linkpubtype'] = false;}
+        $data = $this->getContent();
+
         $data['pubtypes'] = xarMod::apiFunc('articles', 'user', 'getpubtypes');
         $data['categorylist'] = xarMod::apiFunc('categories', 'user', 'getcat');
         $data['statusoptions'] = array(
@@ -183,9 +173,8 @@ class Articles_RandomBlock extends BasicBlock implements iBlock
  * @param $data array containing title,content
  * @TODO: Move this to block_admin after 2.1.0
  */
-    public function update(Array $data=array())
+    public function update()
     {
-        $data = parent::update($data);
         $vars = array();
 
         xarVarFetch('pubtypeid', 'id', $vars['pubtypeid'], 0, XARVAR_NOT_REQUIRED);
@@ -203,8 +192,8 @@ class Articles_RandomBlock extends BasicBlock implements iBlock
         xarVarFetch('showdynamic', 'checkbox', $vars['showdynamic'], false, XARVAR_NOT_REQUIRED);
         xarVarFetch('linkpubtype', 'checkbox', $vars['linkpubtype'], false, XARVAR_NOT_REQUIRED);
 
-        $data['content'] = $vars;
-        return $data;
+        $this->setContent($vars);
+        return true;
     }
 
 }

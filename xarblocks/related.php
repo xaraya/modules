@@ -21,13 +21,22 @@ sys::import('xaraya.structures.containers.blocks.basicblock');
 
 class Articles_RelatedBlock extends BasicBlock implements iBlock
 {
-    public $name                = 'RelatedBlock';
-    public $module              = 'articles';
-    public $text_type           = 'Related';
-    public $text_type_long      = 'Show related categories and author links';
-    public $pageshared          = 0;
-    public $usershared          = 1;
-    public $nocache             = 1;
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'related';
+    protected $module           = 'articles'; // module block type belongs to, if any
+    protected $text_type        = 'Related Articles';  // Block type display name
+    protected $text_type_long   = 'Show related categories and author links'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    // @todo: drop the show_help flag, and go back to checking if help method is declared 
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
     public $numitems    = 5;
     public $showvalue   = true;
@@ -36,12 +45,9 @@ class Articles_RelatedBlock extends BasicBlock implements iBlock
  * Display func.
  * @param $data array containing title,content
  */
-    function display(Array $args=array())
+    function display()
     {
-        $data = parent::display($args);
-        if (empty($data)) return;
-
-        $vars = $data['content'];
+        $vars = $this->getContent();
 
         // Defaults
         if (empty($vars['numitems'])) {
@@ -101,8 +107,7 @@ class Articles_RelatedBlock extends BasicBlock implements iBlock
 
         // Populate block info and pass to theme
         if ($links > 0) {
-            $data['content'] = $vars;
-            return $data;
+            return $vars;
         }
 
         return;
@@ -113,9 +118,9 @@ class Articles_RelatedBlock extends BasicBlock implements iBlock
  * @param $data array containing title,content
  * @TODO: Move this to block_admin after 2.1.0
  */
-    public function modify(Array $data=array())
+    public function modify()
     {
-        $data = parent::modify($data);
+        $data = $this->getContent();
         // Defaults
         if (empty($data['numitems'])) {
             $data['numitems'] = 5;
@@ -133,16 +138,15 @@ class Articles_RelatedBlock extends BasicBlock implements iBlock
  * @param $data array containing title,content
  * @TODO: Move this to block_admin after 2.1.0
  */
-    public function update(Array $data=array())
+    public function update()
     {
-        $data = parent::update($data);
         $vars = array();
 
         if (!xarVarFetch('numitems', 'int:1:100', $vars['numitems'], 5, XARVAR_NOT_REQUIRED)) {return;}
         if (!xarVarFetch('showvalue', 'checkbox', $vars['showvalue'], false, XARVAR_NOT_REQUIRED)) {return;}
-
-        $data['content'] = $vars;
-        return $data;
+        
+        $this->setContent($vars);
+        return true;
     }
 
 }

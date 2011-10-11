@@ -22,12 +22,21 @@ sys::import('xaraya.structures.containers.blocks.basicblock');
 
 class Articles_FeatureditemsBlock extends BasicBlock implements iBlock
 {
-    public $name                = 'FeatureditemsBlock';
-    public $module              = 'articles';
-    public $text_type           = 'Featured Items';
-    public $text_type_long      = 'Show featured articles';
-    public $pageshared          = 1;
-    public $nocache             = 1;
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'featureditems';
+    protected $module           = 'articles'; // module block type belongs to, if any
+    protected $text_type        = 'Featured Items';  // Block type display name
+    protected $text_type_long   = 'Show featured articles'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
     public $featuredaid = 0;
     public $alttitle    = '';
@@ -49,12 +58,9 @@ class Articles_FeatureditemsBlock extends BasicBlock implements iBlock
  * Display func.
  * @param $data array containing title,content
  */
-    function display(Array $args=array())
+    function display()
     {
-        $data = parent::display($args);
-        if (empty($data)) return;
-
-        $vars = $data['content'];
+        $vars = $this->getContent();
 
         if (empty($vars['featuredaid'])) {$vars['featuredaid'] = 0;}
         if (empty($vars['alttitle'])) {$vars['alttitle'] = '';}
@@ -239,11 +245,11 @@ class Articles_FeatureditemsBlock extends BasicBlock implements iBlock
 
         // Set the data to return.
         $vars['name'] = $this->name;
-        $vars['bid'] = $this->bid;
+        $vars['bid'] = $this->block_id;
         $vars['module'] = $this->module;
         $vars['type'] = $this->type;
-        $data['content'] = $vars;
-        return $data;
+
+        return $vars;
     }
 
 /**
@@ -251,24 +257,9 @@ class Articles_FeatureditemsBlock extends BasicBlock implements iBlock
  * @param $data array containing title,content
  * @TODO: Move this to block_admin after 2.1.0
  */
-    public function modify(Array $data=array())
+    public function modify()
     {
-        $data = parent::modify($data);
-        // Defaults
-        if (empty($data['pubtypeid'])) {$data['pubtypeid'] = '';}
-        if (empty($data['catfilter'])) {$data['catfilter'] = '';}
-        if (empty($data['status'])) {$data['status'] = array(3, 2);}
-        if (empty($data['itemlimit'])) {$data['itemlimit'] = 0;}
-        if (empty($data['featuredaid'])) {$data['featuredaid'] = 0;}
-        if (empty($data['alttitle'])) {$data['alttitle'] = '';}
-        if (empty($data['altsummary'])) {$data['altsummary'] = '';}
-        if (empty($data['showfeaturedsum'])) {$data['showfeaturedsum'] = false;}
-        if (empty($data['showfeaturedbod'])) {$data['showfeaturedbod'] = false;}
-        if (empty($data['moreitems'])) {$data['moreitems'] = array();}
-        if (empty($data['toptype'])) {$data['toptype'] = 'date';}
-        if (empty($data['showsummary'])) {$data['showsummary'] = false;}
-        if (empty($data['linkpubtype'])) {$data['linkpubtype'] = false;}
-        if (!isset($data['linkcat'])) {$data['linkcat'] = false;}
+        $data = $this->getContent();
 
         if (!isset($data['showvalue'])) {
             if ($data['toptype'] == 'rating') {
@@ -364,11 +355,9 @@ class Articles_FeatureditemsBlock extends BasicBlock implements iBlock
  * @param $data array containing title,content
  * @TODO: Move this to block_admin after 2.1.0
  */
-    public function update(Array $data=array())
+    public function update()
     {
-        $data = parent::update($data);
         // Make sure we retrieve the new pubtype from the configuration form.
-        // TODO: use xarVarFetch()
         xarVarFetch('pubtypeid', 'id', $vars['pubtypeid'], 0, XARVAR_NOT_REQUIRED);
         xarVarFetch('catfilter', 'id', $vars['catfilter'], 0, XARVAR_NOT_REQUIRED);
         xarVarFetch('status', 'int:0:4', $vars['status'], NULL, XARVAR_NOT_REQUIRED);
@@ -384,9 +373,10 @@ class Articles_FeatureditemsBlock extends BasicBlock implements iBlock
         xarVarFetch('showvalue', 'checkbox', $vars['showvalue'], false, XARVAR_NOT_REQUIRED);
         xarVarFetch('linkpubtype', 'checkbox', $vars['linkpubtype'], false, XARVAR_NOT_REQUIRED);
         xarVarFetch('linkcat', 'checkbox', $vars['linkcat'], false, XARVAR_NOT_REQUIRED);
+        
+        $this->setContent($vars);
+        return true;
 
-        $data['content'] = $vars;
-        return $data;
     }
 
 }

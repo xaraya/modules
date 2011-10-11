@@ -19,13 +19,21 @@ sys::import('xaraya.structures.containers.blocks.basicblock');
 
 class Articles_GlossaryBlock extends BasicBlock implements iBlock
 {
-    public $name                = 'GlossaryBlock';
-    public $module              = 'articles';
-    public $text_type           = 'Glossary';
-    public $text_type_long      = 'Show a glossary summary in a side block';
-    public $pageshared          = 0;
-    public $usershared          = 1;
-    public $nocache             = 1;
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'glossary';
+    protected $module           = 'articles'; // module block type belongs to, if any
+    protected $text_type        = 'Glossary';  // Block type display name
+    protected $text_type_long   = 'Show a glossary summary in a side block'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    protected $show_help    = true;  // let the subsystem know if this block type has a help() method
 
     public $paramname   = 'glossaryitem';
     public $ptid        = 0;
@@ -35,12 +43,10 @@ class Articles_GlossaryBlock extends BasicBlock implements iBlock
  * Display func.
  * @param $data array containing title,content
  */
-    function display(Array $args=array())
+    function display()
     {
-        $data = parent::display($args);
-        if (empty($data)) return;
 
-        $vars = $data['content'];
+        $vars = $this->getContent();
 
         // Get the glossary parameter.
         // TODO: make parameter name configurable.
@@ -86,10 +92,9 @@ class Articles_GlossaryBlock extends BasicBlock implements iBlock
         // The title of a block does not go through any further tag stripping
         // because it is normally under admin control (the admin may wish to
         // add working tags to the title).
-        $data['title'] = str_replace('{term}', xarVarPrepForDisplay($glossaryterm), $data['title']);
+        $this->setTitle(str_replace('{term}', xarVarPrepForDisplay($glossaryterm), $data['title']));
 
-        $data['content'] = $vars;
-        return $data;
+        return $vars;
     }
 
 /**
@@ -97,9 +102,9 @@ class Articles_GlossaryBlock extends BasicBlock implements iBlock
  * @param $data array containing title,content
  * @TODO: Move this to block_admin after 2.1.0
  */
-    public function modify(Array $data=array())
+    public function modify()
     {
-        $data = parent::modify($data);
+        $data = $this->getContent();
         // Pub type drop-down list values.
         $data['pubtypes'] = xarMod::apiFunc('articles', 'user', 'getpubtypes');
 
@@ -126,23 +131,20 @@ class Articles_GlossaryBlock extends BasicBlock implements iBlock
  * @param $data array containing title,content
  * @TODO: Move this to block_admin after 2.1.0
  */
-    public function update(Array $data=array())
+    public function update()
     {
-        $data = parent::update($data);
         $vars = array();
 
         xarVarFetch('paramname', 'str:1:20', $vars['paramname'], 'glossaryterm', XARVAR_NOT_REQUIRED);
         xarVarFetch('ptid', 'int:0:', $vars['ptid'], 0, XARVAR_NOT_REQUIRED);
         xarVarFetch('cid', 'int:0:', $vars['cid'], 0, XARVAR_NOT_REQUIRED);
-
-        $data['content'] = $vars;
-        return $data;
+        $this->setContent($vars);
+        return true;
     }
 
     public function help(Array $data=array())
     {
-        $data = parent::getInfo($data);
-        return $data;
+        return $this->getContent();
     }
 
 }

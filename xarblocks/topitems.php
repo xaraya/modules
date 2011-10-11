@@ -20,13 +20,21 @@ sys::import('xaraya.structures.containers.blocks.basicblock');
 
 class Articles_TopitemsBlock extends BasicBlock implements iBlock
 {
-    public $name                = 'TopitemsBlock';
-    public $module              = 'articles';
-    public $text_type           = 'Top Items';
-    public $text_type_long      = 'Show top articles';
-    public $pageshared          = 1;
-    public $usershared          = 1;
-    public $nocache             = 0;
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'topitems';
+    protected $module           = 'articles'; // module block type belongs to, if any
+    protected $text_type        = 'Top Items';  // Block type display name
+    protected $text_type_long   = 'Show top articles'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
     public $numitems = 5;
     public $pubtypeid = 0;
@@ -47,17 +55,10 @@ class Articles_TopitemsBlock extends BasicBlock implements iBlock
  * Display func.
  * @param $data array containing title,content
  */
-    function display(Array $args=array())
+    function display()
     {
-        $data = parent::display($args);
-        if (empty($data)) return;
-
-        $vars = $data['content'];
-        // This is to maintain legacy consistancy
-        if (!isset($vars['linkpubtype'])) {
-            $vars['linkpubtype'] = true;
-        }
-
+        $vars = $this->getContent();
+        
         // see if we're currently displaying an article
         if (xarVarIsCached('Blocks.articles', 'aid')) {
             $curaid = xarVarGetCached('Blocks.articles', 'aid');
@@ -274,9 +275,11 @@ class Articles_TopitemsBlock extends BasicBlock implements iBlock
 
         // Populate block info and pass to theme
         if (count($items) > 0) {
+            if (!empty($vars['dynamictitle'])) {
+                $this->setTitle($data['title']);
+            }
             $vars['items'] = $items;
-            $data['content'] = $vars;
-            return $data;
+            return $vars;
         }
         return;
     }
@@ -286,9 +289,9 @@ class Articles_TopitemsBlock extends BasicBlock implements iBlock
  * @param $data array containing title,content
  * @TODO: Move this to block_admin after 2.1.0
  */
-    public function modify(Array $data=array())
+    public function modify()
     {
-        $data = parent::modify($data);
+        $data = $this->getContent();
         if (!isset($data['linkpubtype'])) {
             $data['linkpubtype'] = true;
         }
@@ -323,9 +326,8 @@ class Articles_TopitemsBlock extends BasicBlock implements iBlock
  * @param $data array containing title,content
  * @TODO: Move this to block_admin after 2.1.0
  */
-    public function update(Array $data=array())
+    public function update()
     {
-        $data = parent::update($data);
         $vars = array();
         if (!xarVarFetch('numitems', 'int:1:200', $vars['numitems'], 5, XARVAR_NOT_REQUIRED)) {return;}
         if (!xarVarFetch('pubtypeid', 'id', $vars['pubtypeid'], 0, XARVAR_NOT_REQUIRED)) {return;}
@@ -352,9 +354,10 @@ class Articles_TopitemsBlock extends BasicBlock implements iBlock
         if ($vars['includechildren'] == true) {
             $vars['linkcat'] = false;
         }
+        
+        $this->setContent($vars);
 
-        $data['content'] = $vars;
-        return $data;
+        return true;
     }
 
 }
