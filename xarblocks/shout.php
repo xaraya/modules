@@ -14,13 +14,22 @@
 
     class Shouter_ShoutBlock extends BasicBlock implements iBlock
     {
-        public $name                = 'Shoutblock';
-        public $module              = 'shouter';
-        public $text_type           = 'Shoutblock';
-        public $text_type_long      = 'Shoutblock';
-
-        public $form_content        = true;
-        public $form_refresh        = true;
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'shout';
+    protected $module           = 'shouter'; // module block type belongs to, if any
+    protected $text_type        = 'Shout';  // Block type display name
+    protected $text_type_long   = 'Show shouts'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    // @todo: drop the show_help flag, and go back to checking if help method is declared 
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
         public $numitems            = 5;
         public $blockwidth          = 180;
@@ -38,10 +47,9 @@
      * @param array $blockinfo
      * @return array
      */
-        function display(Array $data=array())
+        function display()
         {
-            $data = parent::display($data);
-            if (empty($data)) return;
+            $data = $this->getContent();
 
             $items = xarModAPIFunc('shouter', 'user', 'getall',
                              array('numitems' => $data['numitems'])
@@ -79,7 +87,7 @@
                 $data['items'][] = $item;
             }
         
-            $data['blockurl'] = xarModURL('blocks', 'user', 'display',array('name' => $data['name']),false);
+            $data['blockurl'] = xarModURL('blocks', 'user', 'display',array('name' => $this->name),false);
         
             $requestinfo = xarController::$request->getInfo();
         
@@ -91,8 +99,7 @@
             if ($requestinfo[0] == 'blocks' && $requestinfo[1] == 'admin') {
                 $data['refresh'] = false;
             }
-            $vars['content'] = $data;
-            $data = array_merge($data,$vars);
+            
             return $data;
         }
 }
