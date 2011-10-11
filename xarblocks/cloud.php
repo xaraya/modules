@@ -15,23 +15,29 @@
 
     class Keywords_CloudBlock extends BasicBlock
     {
-        public $name                = 'CloudBlock';
-        public $module              = 'math';
-        public $text_type           = 'Cloud';
-        public $text_type_long      = 'Cloud Block';
-        public $allow_multiple      = true;
-        public $show_preview        = true;
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'cloud';
+    protected $module           = 'keywords'; // module block type belongs to, if any
+    protected $text_type        = 'Keywords Cloud';  // Block type display name
+    protected $text_type_long   = 'Display keywords cloud'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
         public $cloudtype           = 1;
         public $color               = '#000000';
         public $background          = '#FFFFFF';
 
-        function display(Array $data=array())
+        function display()
         {
-            $data = parent::display($data);
-            
-            $vars['color'] = $data['color'];
-            $vars['background'] = $data['background'];
+            $vars = $this->getContent();
             $vars['tags'] = array();
             switch ($data['cloudtype']) {
                 case 1:
@@ -41,16 +47,12 @@
                     $vars['tags'] = xarMod::apiFunc('keywords','user','getkeywordhits',array('cloudtype' => $data['cloudtype']));
                 break;                
             }
-            $data['content'] = $vars;
-            return $data;
+            return $vars;
         }
 
-        function modify(Array $data=array())
+        function modify()
         {
-            $data = parent::modify($data);
-            
-            if (empty($data['color'])) $data['color'] = $this->color;
-            if (empty($data['background'])) $data['background'] = $this->background;
+            $data = $this->getContent();
             
             $data['status'] = '';
             switch ($data['cloudtype']) {
@@ -65,17 +67,14 @@
             return $data;
         }
 
-        public function update(Array $data=array())
+        public function update()
         {
-            $data = parent::update($data);
-
             // Get the cloud type
             if (!xarVarFetch('cloudtype',  'int',      $vars['cloudtype'], $this->cloudtype, XARVAR_NOT_REQUIRED)) {return;}
             if (!xarVarFetch('color',      'str:1:',   $vars['color'],          $this->color,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('background', 'str:1:',   $vars['background'],           $this->background,XARVAR_NOT_REQUIRED)) return;
-            $data['content'] = $vars;
-
-            return $data;
+            $this->setContent($vars);
+            return true;
         }
     }
 ?>
