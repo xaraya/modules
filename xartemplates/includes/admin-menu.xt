@@ -38,13 +38,19 @@
             <!-- TODO: we are using the session var here, but it is really the directory, to cater for name/dir independence -->
                     &#160;#$menu_dntypetext#&#160;#$menu_dnnametext#&#160;
                 </span>
+                from:&#160;
+                <span class="xar-title">
+                    <a href="#xarModURL('base','admin','modifyconfig', array('tab' => 'locales'))#">
+                        <xar:var scope="config" name="Site.MLS.DefaultLocale"/>
+                    </a>
+                </span>&#160;
                 to:&#160;
                 <span class="xar-title">
                     <a href="#xarModURL('translations','admin','start')#">
                         #xarSessionGetVar('translations_working_locale')#
                     </a>
                 </span>
-    <!--
+
                 <br/>
                 Translation Backend:
                 <span class="xar-title">
@@ -59,7 +65,7 @@
                     <xar:var scope="module" module="translations" name="release_backend_type"/>
                     </a>
                 </span>
-    -->
+
             </td>
 
             <td width="45%" valign="top">
