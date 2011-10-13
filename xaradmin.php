@@ -270,40 +270,43 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
         $selectedsubtype = $subtype;
         $selectedsubname = $subname;
 
-        $theme_contexts_list[] = 'themes:'.$themename.'::common';
+        $theme_contexts_list[] = array(
+                                    'dntype' => XARMLS_DNTYPE_THEME,
+                                    'dnname' => $themename,
+                                    'subtype' => 'themes:',
+                                    'subname' => 'common');
 
-        $dirnames = xarMod::apiFunc('translations','admin','get_theme_dirs',array('themedir'=>$themedir));
-        foreach ($dirnames as $dirname) {
-            $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
-            $subnames = xarMod::apiFunc('translations','admin','get_theme_files',
-                                  array('themedir'=>"themes/$themedir/$dirname",'pattern'=>$pattern));
-            foreach ($subnames as $subname) {
-                $theme_contexts_list[] = 'themes:'.$themename.':'.$dirname.':'.$subname;
+        $files = xarMod::apiFunc('translations','admin','get_files',array('themedir'=>$themedir));
+    
+        $prefix = 'themes/'.$themename;
+        foreach ($files as $file) {
+            $dirname = dirname($file);
+            if (strpos($prefix,$dirname) == 0) {
+                $dirname = substr($dirname, strlen($prefix) + 1);
+            } else {
+                throw new Exception('mismatch: ' . $prefix . " " . $dirname);
             }
+            $subname = basename($file,'.xt');
+            $theme_contexts_list[] = array(
+                                        'dntype' => XARMLS_DNTYPE_THEME,
+                                        'dnname' => $themename,
+                                        'subtype' => 'themes:' . $dirname,
+                                        'subname' => $subname);
         }
 
         $subtypes = array();
         $subnames = array();
         $entrydata = array();
         foreach ($theme_contexts_list as $theme_context) {
-            list ($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':',$theme_context);
-            $args = array();
-            $ctxtype2 = 'themes:'.$ctxtype1;
-            $args['dntype'] = XARMLS_DNTYPE_THEME;
-            $args['dnname'] = $dnname1;
-            $args['subtype'] = $ctxtype2;
-            $args['subname'] = $ctxname1;
-            $entry = xarMod::apiFunc('translations','admin','getcontextentries',$args);
+            $entry = xarMod::apiFunc('translations','admin','getcontextentries',$theme_context);
             if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
                 $entrydata[] = $entry;
-                $subtypes[] = $ctxtype2;
-                $subnames[] = $ctxname1;
+                $subtypes[] = $theme_context['subtype'];
+                $subnames[] = $theme_context['subname'];
             }
         }
         break;
     }
-    $subData = array();
-
     $subData = array('subtypes'=>$subtypes,
                  'subnames'=>$subnames,
                  'entrydata'=>$entrydata,

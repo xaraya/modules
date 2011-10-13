@@ -56,24 +56,26 @@ function translations_adminapi_generate_theme_skels($args)
     // Parse files
     $transEntriesCollection = array();
     $transKeyEntriesCollection = array();
+    $theme_contexts_list = array();
 
-    $dirnames = xarMod::apiFunc('translations','admin','get_theme_dirs',array('themedir'=>$themedir));
+    $files = xarMod::apiFunc('translations','admin','get_files',array('themedir'=>$themedir));
 
-    foreach ($dirnames as $dirname) {
-        ${$dirname . "names"} = array();
-        $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
-        $xtype = 'xt';
-        $subnames = xarMod::apiFunc('translations','admin','get_theme_files',
-                         array('themedir'=>"themes/$themedir/$dirname",'pattern'=>$pattern));
-        foreach ($subnames as $subname) {
-            $theme_contexts_list[] = 'themes:'.$themename.':'.$dirname.':'.$subname;
-            $parser = new TPLParser();
-            $parser->parse("themes/$themedir/$dirname/$subname.$xtype");
-            ${$dirname . "names"}[] = $subname;
-
-            $transEntriesCollection[$dirname.'::'.$subname] = $parser->getTransEntries();
-            $transKeyEntriesCollection[$dirname.'::'.$subname] = $parser->getTransKeyEntries();
+    $prefix = 'themes/'.$themename;
+    foreach ($files as $file) {
+        $dirname = dirname($file);
+        if (strpos($prefix,$dirname) == 0) {
+            $dirname = substr($dirname, strlen($prefix) + 1);
+        } else {
+            throw new Exception('mismatch: ' . $prefix . " " . $dirname);
         }
+        $subname = basename($file,'.xt');
+        $theme_contexts_list[] = 'themes:'.$themename.':'.$dirname.':'.$subname;
+        $parser = new TPLParser();
+        $parser->parse($file);
+        ${$dirname . "names"}[] = $subname;
+
+        $transEntriesCollection[$dirname.'::'.$subname] = $parser->getTransEntries();
+        $transKeyEntriesCollection[$dirname.'::'.$subname] = $parser->getTransKeyEntries();
     }
 
     $transEntriesCollection = theme_translations_gather_common_entries($transEntriesCollection);

@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:if condition="count($subnames) gt 0">
-      <p>
-        Choose which entries you want to translate from the list below.
-      </p>
-
+        <p>
+            Choose which entries you want to translate from the list below.
+        </p>
+    
         <form name="trabar" id="trabar" method="post" action="#xarModURL('translations','admin','translate_subtype')#" onchange="this.submit();">
-        <input type="hidden" name="dnType" value="#$dnType#"/>
-        <input type="hidden" name="dnName" value="#$dnName#"/>
-        <input type="hidden" name="extid" value="#$extid#"/>
-        <select name="defaultcontext" id="defaultcontext" size="1">
-        <xar:for start="$i=0" test="$i lt count($subnames)" iter="$i++">
-            <xar:if condition="($entrydata[$i]['numEmptyEntries'] + $entrydata[$i]['numEmptyKeyEntries']) eq 0">
-              <xar:set name="optcolor">'color: black;'</xar:set>
-            <xar:else />
-              <xar:set name="optcolor">'color: red;'</xar:set>
-            </xar:if>
-            <xar:if condition="$subtypes[$i].':'.$subnames[$i] eq $selectedsubtype.':'.$selectedsubname">
-                <xar:set name="optcolor">'color: blue;'</xar:set>
-                <option style="#$optcolor#" value="#$subtypes[$i]#:#$subnames[$i]#" selected="selected">
-                <xar:ml>
-                <xar:mlstring>#(1):#(2) (#(3) strings, #(4) keys; untranslated - #(5) strings, #(6) keys)</xar:mlstring>
-                <xar:mlvar>#$subtypes[$i]#</xar:mlvar>
-                <xar:mlvar>#$subnames[$i]#</xar:mlvar>
-                <xar:mlvar>#$entrydata[$i]['numEntries']#</xar:mlvar>
-                <xar:mlvar>#$entrydata[$i]['numKeyEntries']#</xar:mlvar>
-                <xar:mlvar>#$entrydata[$i]['numEmptyEntries']#</xar:mlvar>
-                <xar:mlvar>#$entrydata[$i]['numEmptyKeyEntries']#</xar:mlvar>
-                </xar:ml>
-                </option>
-            <xar:else />
-                <option style="#$optcolor#" value="#$subtypes[$i]#:#$subnames[$i]#">
-                <xar:ml>
-                <xar:mlstring>#(1):#(2) (#(3) strings, #(4) keys; untranslated - #(5) strings, #(6) keys)</xar:mlstring>
-                <xar:mlvar>#$subtypes[$i]#</xar:mlvar>
-                <xar:mlvar>#$subnames[$i]#</xar:mlvar>
-                <xar:mlvar>#$entrydata[$i]['numEntries']#</xar:mlvar>
-                <xar:mlvar>#$entrydata[$i]['numKeyEntries']#</xar:mlvar>
-                <xar:mlvar>#$entrydata[$i]['numEmptyEntries']#</xar:mlvar>
-                <xar:mlvar>#$entrydata[$i]['numEmptyKeyEntries']#</xar:mlvar>
-                </xar:ml>
-                </option>
-            </xar:if>
-        </xar:for>
-        </select>
-        <input name="sbt" id="sbt" type="submit" value="#xarML('Select')#"  />
+            <input type="hidden" name="dnType" value="#$dnType#"/>
+            <input type="hidden" name="dnName" value="#$dnName#"/>
+            <input type="hidden" name="extid" value="#$extid#"/>
+            <select name="defaultcontext" id="defaultcontext" size="1">
+                <xar:for start="$i=0" test="$i lt count($subnames)" iter="$i++">
+                    <xar:if condition="($entrydata[$i]['numEmptyEntries'] + $entrydata[$i]['numEmptyKeyEntries']) eq 0">
+                      <xar:set name="optcolor">'color: black;'</xar:set>
+                    <xar:else />
+                      <xar:set name="optcolor">'color: red;'</xar:set>
+                    </xar:if>
+                    <xar:if condition="$subtypes[$i].':'.$subnames[$i] eq $selectedsubtype.':'.$selectedsubname">
+                        <xar:set name="optcolor">'color: blue;'</xar:set>
+                        <option style="#$optcolor#" value="#$subtypes[$i]#:#$subnames[$i]#" selected="selected">
+                        <xar:ml>
+                        <xar:mlstring>#(1):#(2) (#(3) strings, #(4) keys; untranslated - #(5) strings, #(6) keys)</xar:mlstring>
+                        <xar:mlvar>#$subtypes[$i]#</xar:mlvar>
+                        <xar:mlvar>#$subnames[$i]#</xar:mlvar>
+                        <xar:mlvar>#$entrydata[$i]['numEntries']#</xar:mlvar>
+                        <xar:mlvar>#$entrydata[$i]['numKeyEntries']#</xar:mlvar>
+                        <xar:mlvar>#$entrydata[$i]['numEmptyEntries']#</xar:mlvar>
+                        <xar:mlvar>#$entrydata[$i]['numEmptyKeyEntries']#</xar:mlvar>
+                        </xar:ml>
+                        </option>
+                    <xar:else />
+                        <option style="#$optcolor#" value="#$subtypes[$i]#:#$subnames[$i]#">
+                        <xar:ml>
+                        <xar:mlstring>#(1):#(2) (#(3) strings, #(4) keys; untranslated - #(5) strings, #(6) keys)</xar:mlstring>
+                        <xar:mlvar>#$subtypes[$i]#</xar:mlvar>
+                        <xar:mlvar>#$subnames[$i]#</xar:mlvar>
+                        <xar:mlvar>#$entrydata[$i]['numEntries']#</xar:mlvar>
+                        <xar:mlvar>#$entrydata[$i]['numKeyEntries']#</xar:mlvar>
+                        <xar:mlvar>#$entrydata[$i]['numEmptyEntries']#</xar:mlvar>
+                        <xar:mlvar>#$entrydata[$i]['numEmptyKeyEntries']#</xar:mlvar>
+                        </xar:ml>
+                        </option>
+                    </xar:if>
+                </xar:for>
+            </select>
+            <input name="sbt" id="sbt" type="submit" value="#xarML('Select')#"  />
         </form>
 
         <script type="text/javascript">

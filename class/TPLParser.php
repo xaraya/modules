@@ -49,7 +49,7 @@ class TPLParser
             $i++;
             
         // Ignore certain nodes            
-            if ($reader->name == "xar:set" || $reader->name == "xar:comment" || $reader->name == "script") {
+            if ($reader->name == "xar:set" || $reader->name == "xar:comment" || $reader->name == "script" || $reader->name == "style") {
                 if (!$reader->next()) break;
                 $i++;
             }

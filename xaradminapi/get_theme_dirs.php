@@ -1,15 +1,16 @@
 <?php
 /**
- * Get directories list from theme directory
+ * Translations Module
  *
  * @package modules
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @link http://www.xaraya.com
- *
- * @subpackage translations
+ * @subpackage translations module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://xaraya.com/index.php/release/77.html
  * @author Marco Canini
  * @author Marcel van der Boom <marcel@xaraya.com>
-*/
+ */
 
 //  This function returns an array containing all the xt files
 //  in a given directory
@@ -62,21 +63,17 @@ function translations_adminapi_get_theme_dirs($args)
                         $force = 0;
                         $filesBlock = false;
                         $filesIncl = false;
-                        $path = "themes/$themedir/modules/$moddir/blocks";
-                        if (is_dir($path)) {
-                            $filesBlock = searchFiles($path, $prefix);
+                        if (is_dir("themes/$themedir/modules/$moddir/blocks")) {
+                            $filesBlock = searchFiles("themes/$themedir/modules/$moddir/blocks", $prefix);
                         }
-                        $path = "themes/$themedir/modules/$moddir/includes";
-                        if (is_dir($path)) {
-                            $filesIncl = searchFiles($path, $prefix);
+                        if (is_dir("themes/$themedir/modules/$moddir/includes")) {
+                            $filesIncl = searchFiles("themes/$themedir/modules/$moddir/includes", $prefix);
                         }
-                        $path = "themes/$themedir/modules/$moddir/properties";
-                        if (is_dir($path)) {
-                            $filesIncl = searchFiles($path, $prefix);
+                        if (is_dir("themes/$themedir/modules/$moddir/properties")) {
+                            $filesIncl = searchFiles("themes/$themedir/modules/$moddir/properties", $prefix);
                         }
-                        $path = "themes/$themedir/modules/$moddir/objects";
-                        if (is_dir($path)) {
-                            $filesIncl = searchFiles($path, $prefix);
+                        if (is_dir("themes/$themedir/modules/$moddir/objects")) {
+                            $filesIncl = searchFiles("themes/$themedir/modules/$moddir/objects", $prefix);
                         }
                         if ($filesBlock || $filesIncl) $force = 1;
                         searchFiles("themes/$themedir/modules/$moddir", $prefix, $force);

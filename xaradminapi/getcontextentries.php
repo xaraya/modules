@@ -17,10 +17,10 @@ function translations_adminapi_getcontextentries($args)
 {
     extract($args);
 
-    $dnType = $dntype;
-    $dnName = $dnname;
-    $ctxType = $subtype;
-    $ctxName = $subname;
+    $dnType = $dntype;          // themes, modules etc.
+    $dnName = $dnname;          // theme, module name
+    $ctxType = $subtype;        // filepath
+    $ctxName = $subname;        // filename
 
     $locale = translations_working_locale();
 

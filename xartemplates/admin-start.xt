@@ -5,68 +5,66 @@
       <span class="xar-mod-title">Translations Administration</span>
     </div>
     <div class="xar-mod-body">
-       <xar:template type="module" module="translations" file="admin-nav"/>
-       <h2>Start Translate</h2>
-       <xar:template file="admin-menu" type="module"/>
+        <xar:template type="module" module="translations" file="admin-nav"/>
+        <h2>Start Translate</h2>
+        <xar:template file="admin-menu" type="module"/>
 
-    <form name="workingLocaleForm" id="workingLocaleForm" action="#xarModURL('translations','admin','update_working_locale')#" method="post">
-      <fieldset>
-          <legend>Choose locale to work on</legend>
+        <form name="workingLocaleForm" id="workingLocaleForm" action="#xarModURL('translations','admin','update_working_locale')#" method="post">
+          <fieldset>
+              <legend>Choose locale to work on</legend>
+    
+          <p class="xar-form-input-wrapper-before">
+            While working with the Translations module you always work on the translation of one particular
+              locale. Choose that locale below. Choosing the locale will activate the proper storage location for the translated
+              items while you are working on a translation.</p>
+          <p class="xar-form-input-wrapper-before">
+            If you don't see the locale you want to translate in the dropdown below, you will need to create it (in your var/locale directory) and activate it on <em>Languages and Locales</em> in the <em>Modify Config</em> section of the 
+            <a href="&xar-modurl-base-admin-modifyconfig;&amp;tab=locales">
+                Base module.
+            </a>  
+          </p>
+          <p class="xar-form-input-wrapper xar-padding-thickends">
+            <label class="xar-form-label">Choose the working locale:</label>
+            <select name="locale" id="locale" onchange="document.workingLocaleForm.submit();">
+              <xar:for start="$i=0" test="$i lt count($locales)" iter="$i++">
+                <xar:if condition="$locales[$i] eq $working_locale">
+                  <option value="#$locales[$i]#" selected="selected">#$locales[$i]#</option>
+                  <xar:else />
+                  <option value="#$locales[$i]#">#$locales[$i]#</option>
+                </xar:if>
+              </xar:for>
+            </select>
+            &#160;
+           <xar:var name="select_locale">Select this locale</xar:var>
+            <xar:button type="submit" label="$select_locale"/>
+          </p>
+          </fieldset>
+        </form>
 
-      <p class="xar-form-input-wrapper-before">
-        While working with the Translations module you always work on the translation of one particular
-          locale. Choose that locale below. Choosing the locale will activate the proper storage location for the translated
-          items while you are working on a translation.</p>
-      <p class="xar-form-input-wrapper-before">
-        If you don't see the locale you want to translate in the dropdown below, you will need to create it (in your var/locale directory) and activate it on <em>Languages and Locales</em> in the <em>Modify Config</em> section of the 
-        <a href="&xar-modurl-base-admin-modifyconfig;&amp;tab=locales">
-            Base module.
-        </a>  
-      </p>
-      <p class="xar-form-input-wrapper xar-padding-thickends">
-        <label class="xar-form-label">Choose the working locale:</label>
-        <select name="locale" id="locale" onchange="document.workingLocaleForm.submit();">
-          <xar:for start="$i=0" test="$i lt count($locales)" iter="$i++">
-            <xar:if condition="$locales[$i] eq $working_locale">
-              <option value="#$locales[$i]#" selected="selected">#$locales[$i]#</option>
-              <xar:else />
-              <option value="#$locales[$i]#">#$locales[$i]#</option>
-            </xar:if>
-          </xar:for>
-        </select>
-
-       <xar:var name="select_locale">Select this locale</xar:var>
-        <input type="submit" value="#$select_locale#"/>
-      </p>
-      </fieldset>
-    </form>
-
-     <fieldset>
-          <legend>Choose a translation job</legend>
-
-    <p class="xar-form-input-wrapper-before">
-      After you have set the working locale above, choose a translation job:
-    </p>
-
-     <ul>
-        <li>
-          <a href="#xarModURL('translations','admin','update_info')#&amp;dntype=core">
-            Translate the core
-          </a>
-        </li>
-        <li>
-          <a href="#xarModURL('translations','admin','update_info')#&amp;dntype=module">
-            Translate a module
-          </a>
-        </li>
-        <li>
-          <a href="#xarModURL('translations','admin','update_info')#&amp;dntype=theme">
-            Translate a theme
-          </a>
-        </li>
-      </ul>
-
-      </fieldset>
+        <fieldset>
+            <legend>Choose a translation job</legend>
+            <div>
+              After you have set the working locale above, choose a translation job:
+            </div>
+            
+             <ul>
+                <li>
+                  <a href="#xarModURL('translations','admin','update_info')#&amp;dntype=core">
+                    Translate the core
+                  </a>
+                </li>
+                <li>
+                  <a href="#xarModURL('translations','admin','update_info')#&amp;dntype=module">
+                    Translate a module
+                  </a>
+                </li>
+                <li>
+                  <a href="#xarModURL('translations','admin','update_info')#&amp;dntype=theme">
+                    Translate a theme
+                  </a>
+                </li>
+              </ul>
+        </fieldset>
 
     </div>
 </xar:template>

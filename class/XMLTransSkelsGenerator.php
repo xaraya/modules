@@ -132,7 +132,7 @@ class XMLTranslationsSkelsGenerator
         }
         $this->fileName .= $ctxName . ".xml";
 
-        $this->fp = fopen($this->fileName.'.swp', 'w');
+        $this->fp = $this->fopen_recursive($this->fileName.'.swp', 'w');
 
         // XML files are always encoded in utf-8
         // The utf-8 encoding is guarateed by the fact that translations module
@@ -143,6 +143,18 @@ class XMLTranslationsSkelsGenerator
         return true;
     }
 
+    function fopen_recursive($path, $mode, $chmod=0755)
+    {
+        $directory = dirname($path);
+        $file = basename($path);
+        IF (!is_dir($directory)) {
+            IF (!mkdir($directory, $chmod, 1)) {
+                return false;
+            }
+        }
+        return fopen ($path, $mode);
+    }
+    
     function open($ctxType, $ctxName)
     {
         assert('!empty($this->baseDir)');
