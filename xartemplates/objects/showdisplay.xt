@@ -15,13 +15,12 @@
     </xar:if>
 
     <xar:set name="includepath">"objects/$pubtype"</xar:set>
+    <xar:set name="filename">'detail'</xar:set>
     <xar:if condition="$properties['detail_template']->value AND !empty($properties['id']->value)">
-        <xar:set name="filename">'/detail_' . $propertes['id']->value</xar:set>
-        <xar:if condition="!xarTpl::exists('module', 'publications', $filename, null, $includepath)">
-            <xar:set name="filename">'detail'</xar:set>
-        </xar:if>
+        <xar:set name="template">$properties['id']->value</xar:set>
     <xar:else/>
-        <xar:set name="filename">'detail'</xar:set>
+        <xar:set name="template">''</xar:set>
     </xar:if>
-    <xar:template type="module" module="publications" file="$filename" includepath="$includepath"/>
+    <xar:template type="module" module="publications" file="$filename" includepath="$includepath" template="$template"/>
+
 </xar:template>

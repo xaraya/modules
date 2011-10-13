@@ -13,15 +13,13 @@
     <xar:foreach in="$items" key="$itemid" value="$fields">
         <xar:set name="dummy">$object->setFieldValues($fields,1)</xar:set>
         <xar:set name="includepath">"objects/$pubtype"</xar:set>
+        <xar:set name="filename">'summary'</xar:set>
         <xar:if condition="$fields['summary_template'] AND !empty($fields['id'])">
-            <xar:set name="filename">"summary{$fields['id']}"</xar:set>
-            <xar:if condition="!xarTpl::exists('module','publications',$filename,null,$includepath)">
-                <xar:set name="filename">'summary'</xar:set>
-            </xar:if>
+            <xar:set name="template">$fields['id']</xar:set>
         <xar:else/>
-            <xar:set name="filename">'summary'</xar:set>
+            <xar:set name="template">''</xar:set>
         </xar:if>
+        <xar:template type="module" module="publications" file="$filename" includepath="$includepath" template="$template"/>
         <xar:set name="fields">array('fields' => $items[$itemid])</xar:set>
-        <xar:template type="module" module="publications" file="$filename" includepath="$includepath"/>
     </xar:foreach>
 </xar:template>
