@@ -1,13 +1,15 @@
 <?php
-// $Id$
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Marco Canini
-// Purpose of file: PHP files parsing
-// ----------------------------------------------------------------------
+/**
+ * Translations Module
+ *
+ * @package modules
+ * @subpackage translations module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://xaraya.com/index.php/release/77.html
+ * @author Marco Canini
+ */
 
 class PHPParser
 {

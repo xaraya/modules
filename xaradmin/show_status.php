@@ -1,14 +1,15 @@
 <?php
 /**
- * Status report for the current translation
+ * Translations Module
  *
  * @package modules
- * @subpackage translations
- * @copyright (C) 2004 Marcel van der Boom
- * @link http://www.xaraya.com
- * 
+ * @subpackage translations module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://xaraya.com/index.php/release/77.html
  * @author Marcel van der Boom <marcel@xaraya.com>
-*/
+ */
 
 function &count_entries(&$entries)
 {
