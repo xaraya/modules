@@ -95,7 +95,7 @@ class XMLTranslationsSkelsGenerator
 
         switch ($dnType) {
             case XARMLS_DNTYPE_MODULE:
-            $this->baseDir = sys::code() . "$modules_dir/$dnName/";
+            $this->baseDir = "$modules_dir/$dnName/";
             if (!file_exists($this->baseDir)) mkdir($this->baseDir, 0777);
 
             $dirnames = xarMod::apiFunc('translations','admin','get_module_dirs',array('moddir'=>$dnName));
