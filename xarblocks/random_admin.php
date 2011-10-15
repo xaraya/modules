@@ -19,7 +19,7 @@
     {
         public function modify(Array $data=array())
         {
-            $data = parent::modify($data);
+            $data = $this->getContent();
             if(!empty($data['catfilter'])) {
                 $cidsarray = array($data['catfilter']);
             } else {
@@ -42,8 +42,8 @@
             xarVarFetch('showpubdate', 'checkbox', $data['showpubdate'], false, XARVAR_NOT_REQUIRED);
             xarVarFetch('showauthor', 'checkbox', $data['showauthor'], false, XARVAR_NOT_REQUIRED);
             xarVarFetch('showsubmit', 'checkbox', $data['showsubmit'], false, XARVAR_NOT_REQUIRED);
-
-            return parent::update($data);
+            $this->setContent($data);
+            return true;
         }
     }
 ?>

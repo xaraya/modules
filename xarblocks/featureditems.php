@@ -15,89 +15,87 @@
  * @author Jonn Beams (based on code from TopItems block)
  *
  */
-    sys::import('xaraya.structures.containers.blocks.basicblock');
+sys::import('xaraya.structures.containers.blocks.basicblock');
 
-    class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
+class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
+{
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'featureditems';
+    protected $module           = 'publications'; // module block type belongs to, if any
+    protected $text_type        = 'Featured Items';  // Block type display name
+    protected $text_type_long   = 'Show featured publications'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    // @todo: drop the show_help flag, and go back to checking if help method is declared 
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
+
+    public $numitems            = 5;
+    public $pubtype_id          = 0;
+    public $linkpubtype         = true;
+    public $itemlimit           = 0;
+    public $featuredid          = 0;
+    public $catfilter           = 0;
+    public $linkcat             = false;
+    public $includechildren     = false;
+    public $nocatlimit          = true;
+    public $alttitle            = '';
+    public $altsummary          = '';
+    public $showvalue           = true;
+    public $moreitems           = array();
+    public $showfeaturedsum     = false;
+    public $showfeaturedbod     = false;
+    public $showsummary         = false;
+    // chris: state is a reserved property name used by blocks
+    //public $state               = '2,3';
+    public $pubstate            = '2,3';
+    public $toptype             = 'ratings'; 
+
+    public function display()
     {
-        public $numitems            = 5;
-        public $pubtype_id          = 0;
-        public $linkpubtype         = true;
-        public $itemlimit           = 0;
-        public $featuredid          = 0;
-        public $catfilter           = 0;
-        public $linkcat             = false;
-        public $includechildren     = false;
-        public $nocatlimit          = true;
-        public $alttitle            = '';
-        public $altsummary          = '';
-        public $showvalue           = true;
-        public $moreitems           = array();
-        public $showfeaturedsum     = false;
-        public $showfeaturedbod     = false;
-        public $showsummary         = false;
-        public $state               = '2,3';
-
-        public function __construct(Array $data=array())
-        {
-            parent::__construct($data);
-            $this->text_type = 'Featured Items';
-            $this->text_type_long = 'Show featured publications';
-            $this->allow_multiple = true;
-            $this->show_preview = true;
-
-            $this->toptype = 'ratings';
-        }
-
-        public function display(Array $data=array())
-        {
-            $data = parent::display($data);
+        $data = $this->getContent();
         
-            // Defaults
-            if (empty($data['state'])) {$data['state'] = $this->state;}
+        // defaults
+        $featuredid = $data['featuredid'];
+        
+        $fields = array('id', 'title', 'cids');
+        
+        $fields[] = 'dynamicdata';
+        
+        // Initialize arrays
+        $data['feature'] = array();
+        $data['items'] = array();
 
-            if (!isset($data['showvalue'])) {
-                if ($data['toptype'] == 'rating') {
-                    $data['showvalue'] = false;
-                } else {
-                    $data['showvalue'] = true;
-                }
+        // Setup featured item
+        if ($featuredid > 0) {
+        
+            if (xarModIsHooked('uploads', 'publications', $data['pubtype_id'])) {
+                xarVarSetCached('Hooks.uploads','ishooked',1);
             }
         
-            $featuredid = $data['featuredid'];
-        
-            $fields = array('id', 'title', 'cids');
-        
-            $fields[] = 'dynamicdata';
-        
-            // Initialize arrays
-            $data['feature'] = array();
-            $data['items'] = array();
-
-            // Setup featured item
-            if ($featuredid > 0) {
-        
-                if (xarModIsHooked('uploads', 'publications', $data['pubtype_id'])) {
-                    xarVarSetCached('Hooks.uploads','ishooked',1);
-                }
-        
-              if($featart = xarModAPIFunc(
-                'publications','user','getall',
+            if ($featart = xarModAPIFunc('publications','user','getall',
                 array(
-                'ids' => array($featuredid),
-                'extra' => array('cids','dynamicdata')))) 
-              {
+                    'ids' => array($featuredid),
+                    'extra' => array('cids','dynamicdata')))
+                ) {
 
                 foreach($featart as $featuredart) {
 
                     $fieldlist = array('id', 'title', 'summary', 'owner', 'pubdate',
-                                       'pubtype_id', 'notes', 'state', 'body', 'cids');
-        
+                                   'pubtype_id', 'notes', 'state', 'body', 'cids');
+            
                     $featuredlink = xarModURL(
                         'publications', 'user', 'display',
                         array(
                             'id' => $featuredart['id'],
-                            'itemtype' => (!empty($vars['linkpubtype']) ? $featuredart['pubtype_id'] : NULL),
-                            'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
+                            'itemtype' => (!empty($data['linkpubtype']) ? $featuredart['pubtype_id'] : NULL),
+                            'catid' => ((!empty($data['linkcat']) && !empty($data['catfilter'])) ? $data['catfilter'] : NULL)
                         )
                     );
                     if (empty($data['showfeaturedbod'])) {$data['showfeaturedbod'] = false;}
@@ -136,7 +134,7 @@
             $fields = array('id', 'title', 'pubtype_id', 'cids');
         
             // Added the 'summary' field to the field list.
-            if (!empty($vars['showsummary'])) {
+            if (!empty($data['showsummary'])) {
                 $fields[] = 'summary';
             }
         
@@ -153,11 +151,11 @@
                $sort = $data['toptype'];
             }
 
-            if (!empty($vars['moreitems'])) {
+            if (!empty($data['moreitems'])) {
                 $publications = xarModAPIFunc(
                     'publications', 'user', 'getall',
                     array(
-                        'ids' => $vars['moreitems'],
+                        'ids' => $data['moreitems'],
                         'enddate' => time(),
                         'fields' => $fields,
                         'sort' => $sort
@@ -178,7 +176,7 @@
                             array (
                                 'id' => $article['id'],
                                 'itemtype' => (!empty($vars['linkpubtype']) ? $article['pubtype_id'] : NULL),
-                                'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
+                                'catid' => ((!empty($data['linkcat']) && !empty($data['catfilter'])) ? $data['catfilter'] : NULL)
                             )
                         );
                     } else {
@@ -187,12 +185,12 @@
         
                     $count = '';
                     // TODO: find a nice clean way to show all sort types
-                    if ($vars['showvalue']) {
-                        if ($vars['toptype'] == 'rating') {
+                    if ($data['showvalue']) {
+                        if ($data['toptype'] == 'rating') {
                             $count = intval($article['rating']);
-                        } elseif ($vars['toptype'] == 'hits') {
+                        } elseif ($data['toptype'] == 'hits') {
                             $count = $article['counter'];
-                        } elseif ($vars['toptype'] == 'date') {
+                        } elseif ($data['toptype'] == 'date') {
                             // TODO: make user-dependent
                             if (!empty($article['pubdate'])) {
                                 $count = strftime("%Y-%m-%d", $article['pubdate']);
@@ -222,7 +220,7 @@
                         'count' => $count,
                         'cids' => $cids,
                         'pubdate' => $pubdate,
-                        'desc' => ((!empty($vars['showsummary']) && !empty($article['summary'])) ? $article['summary'] : ''),
+                        'desc' => ((!empty($data['showsummary']) && !empty($article['summary'])) ? $article['summary'] : ''),
                         'id' => $article['id']
                     );
                 }
@@ -231,9 +229,6 @@
                 // Nothing to display.
                 return;
             }
-
-            // Set the data to return.
-            $data['content'] = $data;
             return $data;
         }
 /*
