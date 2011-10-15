@@ -11,51 +11,56 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-    sys::import('xaraya.structures.containers.blocks.basicblock');
+sys::import('xaraya.structures.containers.blocks.basicblock');
 
-    class Publications_FillerBlock extends BasicBlock implements iBlock
+class Publications_FillerBlock extends BasicBlock implements iBlock
+{
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'filler';
+    protected $module           = 'publications'; // module block type belongs to, if any
+    protected $text_type        = 'Featured Items';  // Block type display name
+    protected $text_type_long   = 'Show featured publications'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = '';
+    protected $contact          = '';
+    protected $credits          = '';
+    protected $license          = '';
+    
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    // @todo: drop the show_help flag, and go back to checking if help method is declared 
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
+
+
+    public $pubtype_id          = 0;
+    public $fillerid            = 0;
+    public $displaytype         = 'summary';
+    public $alttitle            = '';
+    public $alttext             = '';
+    // chris: state is a reserved property name used by blocks
+    //public $state               = '2,3';
+    public $pubstate            = '2,3';
+    public $toptype             = 'ratings'; 
+
+    public function display()
     {
-        public $pubtype_id          = 0;
-        public $fillerid            = 0;
-        public $displaytype         = 'summary';
-        public $alttitle            = '';
-        public $alttext          = '';
-        public $state               = '2,3';
+        $data = $this->getContent();
 
-        public function __construct(Array $data=array())
-        {
-            parent::__construct($data);
-            $this->text_type = 'Featured Items';
-            $this->text_type_long = 'Show featured publications';
-            $this->allow_multiple = true;
-            $this->show_preview = true;
-
-            $this->toptype = 'ratings';
-        }
-
-        public function display(Array $data=array())
-        {
-            $data = parent::display($data);
+        // Setup featured item
+        if ($data['fillerid'] > 0) {
         
-            // Defaults
-            if (empty($data['state'])) {$data['state'] = $this->state;}
+            $fillerid = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $data['fillerid']));
+            $ptid = xarMod::apiFunc('publications','user','getitempubtype',array('itemid' => $data['fillerid']));
+            $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
+            $pubtypeobject->getItem(array('itemid' => $ptid));
+            $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
+            $data['object']->getItem(array('itemid' => $data['fillerid']));
 
-            // Setup featured item
-            if ($data['fillerid'] > 0) {
-        
-                $fillerid = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $data['fillerid']));
-                $ptid = xarMod::apiFunc('publications','user','getitempubtype',array('itemid' => $data['fillerid']));
-                $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-                $pubtypeobject->getItem(array('itemid' => $ptid));
-                $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
-                $data['object']->getItem(array('itemid' => $data['fillerid']));
-        
-                $data['content'] = $data;
-                return $data;
+            return $data;
 
-            } 
-            return;
-        }
+        } 
+        return;
     }
-
+}
 ?>

@@ -18,39 +18,16 @@
 
     class Publications_FeatureditemsBlockAdmin extends Publications_FeatureditemsBlock
     {
-        function modify(Array $data=array())
+        function modify()
         {
-            $data = parent::modify($data);
-
-            if (!isset($data['pubtype_id']))        $data['pubtype_id'] = $this->pubtype_id;
-            if (!isset($data['catfilter']))         $data['catfilter'] = $this->numitems;
-            if (!isset($data['state']))             $data['state'] = $this->state;
-            if (!isset($data['itemlimit']))         $data['itemlimit'] = $this->itemlimit;
-            if (!isset($data['featuredid']))        $data['featuredid'] = $this->featuredid;
-            if (!isset($data['alttitle']))          $data['alttitle'] = $this->alttitle;
-            if (!isset($data['altsummary']))        $data['altsummary'] = $this->altsummary;
-            if (!isset($data['showfeaturedsum']))   $data['showfeaturedsum'] = $this->showfeaturedsum;
-            if (!isset($data['showfeaturedbod']))   $data['showfeaturedbod'] = $this->showfeaturedbod;
-            if (!isset($data['moreitems']))         $data['moreitems'] = $this->moreitems;
-            if (!isset($data['toptype']))           $data['toptype'] = $this->toptype;
-            if (!isset($data['showsummary']))       $data['showsummary'] = $this->showsummary;
-            if (!isset($data['linkpubtype']))       $data['linkpubtype'] = $this->linkpubtype;
-            if (!isset($data['linkcat']))           $data['linkcat'] = $this->linkcat;
-
-            if (!isset($data['showvalue'])) {
-                if ($data['toptype'] == 'rating') {
-                    $data['showvalue'] = false;
-                } else {
-                    $data['showvalue'] = true;
-                }
-            }
+            $data = $this->getContent();
         
             $data['fields'] = array('id', 'name');
 
-            if (!is_array($data['state'])) {
-                $statearray = array($data['state']);
+            if (!is_array($data['pubstate'])) {
+                $statearray = array($data['pubstate']);
             } else {
-                $statearray = $data['state'];
+                $statearray = $data['pubstate'];
             }
         
             if(!empty($data['catfilter'])) {
@@ -119,19 +96,17 @@
                 }
             }
             $data['morepublications'] = $data['filtereditems'];
-            $data['blockid'] = $data['bid'];
 
             return $data;
         }
 
         function update(Array $data=array())
         {
-            $data = parent::update($data);
             $args = array();
             xarVarFetch('pubtype_id',       'int',       $args['pubtype_id'],      $this->pubtype_id, XARVAR_NOT_REQUIRED);
             xarVarFetch('catfilter',        'id',        $args['catfilter'],       $this->catfilter, XARVAR_NOT_REQUIRED);
             xarVarFetch('nocatlimit',       'checkbox',  $args['nocatlimit'],      $this->nocatlimit, XARVAR_NOT_REQUIRED);
-            xarVarFetch('state',            'str',       $args['state'],           $this->state, XARVAR_NOT_REQUIRED);
+            xarVarFetch('pubstate',         'str',       $args['pubstate'],        $this->pubstate, XARVAR_NOT_REQUIRED);
             xarVarFetch('itemlimit',        'int:1',     $args['itemlimit'],       $this->itemlimit, XARVAR_NOT_REQUIRED);
             xarVarFetch('toptype',  'enum:author:date:hits:rating:title', $args['toptype'], $this->toptype, XARVAR_NOT_REQUIRED);
             xarVarFetch('featuredid',       'id',        $args['featuredid'],      $this->featuredid, XARVAR_NOT_REQUIRED);
@@ -144,9 +119,9 @@
             xarVarFetch('showvalue',        'checkbox',  $args['showvalue'],       0, XARVAR_NOT_REQUIRED);
             xarVarFetch('linkpubtype',      'checkbox',  $args['linkpubtype'],     0, XARVAR_NOT_REQUIRED);
             xarVarFetch('linkcat',          'checkbox',  $args['linkcat'],         0, XARVAR_NOT_REQUIRED);
-        
-            $data['content'] = $args;
-            return $data;
+            
+            $this->setContent($args);
+            return true;        
         }
 }
 ?>
