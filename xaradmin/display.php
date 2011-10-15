@@ -87,15 +87,24 @@ function publications_admin_display($args)
 #
 # If this is a redirect page, then send it on its way now
 #
-    if ($data['object']->properties['redirect_flag']->value) {
-    
+    $redirect_type = $data['object']->properties['redirect_flag']->value;
+    if ($redirect_type) {
+        // This is a simple redirect to another page
+            try {
+                $url = $data['object']->properties['redirect_url']->value;
+                xarController::redirect($url, 301);    
+            } catch (Exception $e) {
+                return xarResponse::NotFound();
+            }
+    } elseif {
+        // This displays a page of a different module
         // If this is from a link of a redirect child page, use the child param as new URL
         if(!xarVarFetch('child',    'str', $child,  NULL, XARVAR_NOT_REQUIRED)) {return;}
         if (!empty($child)) {
             // Turn entities into amps
             $url = urldecode($child);
         } else {
-            $url = $data['object']->properties['redirect_url']->value;
+            $url = $data['object']->properties['proxy_url']->value;
         }
         
         // Bail if the URL is bad
@@ -108,7 +117,7 @@ function publications_admin_display($args)
         
         // If this is an external link, show it without further processing
         if (!empty($params['host']) && $params['host'] != xarServer::getHost() && $params['host'].":".$params['port'] != xarServer::getHost()) {
-            xarController::redirect($url);
+            xarController::redirect($url, 301);
         } else{
             parse_str($params['query'], $info);
             $other_params = $info;
@@ -116,7 +125,11 @@ function publications_admin_display($args)
             unset($other_params['type']);
             unset($other_params['func']);
             unset($other_params['child']);
-            $page = xarMod::guiFunc($info['module'],'user',$info['func'],$other_params);
+            try {
+                $page = xarMod::guiFunc($info['module'],'user',$info['func'],$other_params);
+            } catch (Exception $e) {
+                return xarResponse::NotFound();
+            }
             
             // Debug
             // echo xarModURL($info['module'],'user',$info['func'],$other_params);
