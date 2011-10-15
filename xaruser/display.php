@@ -108,7 +108,7 @@ function publications_user_display($args)
         else return xarTplModule('publications', 'user', 'empty');
     }
 
-s# --------------------------------------------------------
+# --------------------------------------------------------
 #
 # If this is a redirect page, then send it on its way now
 #
