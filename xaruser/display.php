@@ -86,7 +86,7 @@ function publications_user_display($args)
 # If this is a redirect page, then send it on its way now
 #
     $redirect_type = $data['object']->properties['redirect_flag']->value;
-    if ($redirect_type) {
+    if ($redirect_type == 1) {
         // This is a simple redirect to another page
             try {
                 $url = $data['object']->properties['redirect_url']->value;
@@ -94,7 +94,7 @@ function publications_user_display($args)
             } catch (Exception $e) {
                 return xarResponse::NotFound();
             }
-    } elseif {
+    } elseif ($redirect_type == 2) {
         // This displays a page of a different module    
         // If this is from a link of a redirect child page, use the child param as new URL
         if(!xarVarFetch('child',    'str', $child,  NULL, XARVAR_NOT_REQUIRED)) {return;}
