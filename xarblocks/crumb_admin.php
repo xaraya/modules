@@ -21,12 +21,12 @@ class Publications_CrumbBlockAdmin extends Publications_CrumbBlock implements iB
 {
     /**
      * Modify Function to the Blocks Admin
-     * @param $blockinfo array
+     * @param none
+     * @return array template data
      */
-    public function modify(Array $data=array())
+    public function modify()
     {
-        $data = parent::modify($data);
-        if (empty($data)) return;
+        $data = $this->getContent();
 
         // Defaults
         if (!isset($data['include_root'])) {$data['include_root'] = false;}
@@ -63,13 +63,12 @@ class Publications_CrumbBlockAdmin extends Publications_CrumbBlock implements iB
     }
 /**
  * Updates the Block config from the Blocks Admin
- * @param $blockinfo array containing title,content
+ * @param none
+ * @return bool true on success
  */
-    public function update(Array $data=array())
+    public function update()
     {
-        $data = parent::update($data);
-        // Reference to content array.
-        $vars =& $data['content'];
+        $vars = $this->getContent();
 
         if (xarVarFetch('include_root', 'checkbox', $include_root, 0, XARVAR_NOT_REQUIRED)) {
             $vars['include_root'] = $include_root;
@@ -95,9 +94,8 @@ class Publications_CrumbBlockAdmin extends Publications_CrumbBlock implements iB
             // Reorder the keys.
             $vars['root_ids'] = array_values($vars['root_ids']);
         }
-        $data['content'] = $vars;
-
-        return $data;
+        $this->setContent($vars);
+        return true;
 
     }
 }
