@@ -44,11 +44,17 @@ function publications_user_display($args)
     // Override xarVarFetch
     extract ($args);
     
-    // If no id supplied, get the default id.
+# --------------------------------------------------------
+#
+# If no ID supplied, try getting the id of the default page.
+#
     if (empty($id)) $id = xarModVars::get('publications', 'defaultpage');
     $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
     
-    // If the document doesn't exist, we might be viewing a pubtype
+# --------------------------------------------------------
+#
+# If still no ID, check if we are trying to display a pubtype
+#
     if (empty($name) && empty($ptid) && empty($id)) {
         // Nothing to be done
         $id = xarModVars::get('publications', 'notfoundpage');
@@ -57,9 +63,16 @@ function publications_user_display($args)
         xarController::redirect(xarModURL('publications','user','view'));
     }
     
-    // We have come to the end of the line
+# --------------------------------------------------------
+#
+# If still no ID, we have come to the end of the line
+#
     if (empty($id)) return xarResponse::NotFound();
     
+# --------------------------------------------------------
+#
+# We have an ID, now first get the page
+#
     // Here we get the publication type first, and then from that the page
     // Perhaps more efficient to get the page directly?
     $ptid = xarMod::apiFunc('publications','user','getitempubtype',array('itemid' => $id));
@@ -82,6 +95,20 @@ function publications_user_display($args)
     $itemid = $data['object']->getItem(array('itemid' => $id));
     
 # --------------------------------------------------------
+#
+# Are we allowed to see this page?
+#
+    $accessconstraints = unserialize($data['object']->properties['access']->value);
+    $access = DataPropertyMaster::getProperty(array('name' => 'access'));
+    $allow = $access->check($accessconstraints['display']);
+    
+    // If no access, then bail showing a forbidden or an empty page
+    if (!$allow) {
+        if ($accessconstraints['display']['failure']) return xarResponse::Forbidden();
+        else return xarTplModule('publications', 'user', 'empty');
+    }
+
+s# --------------------------------------------------------
 #
 # If this is a redirect page, then send it on its way now
 #
