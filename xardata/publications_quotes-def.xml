@@ -39,7 +39,7 @@
       <label>Source</label>
       <type>textbox</type>
       <defaultvalue>New Quote</defaultvalue>
-      <source>publication.name</source>
+      <source>publication.description</source>
       <status>33</status>
       <seq>3</seq>
       <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"2";}</configuration>
@@ -49,7 +49,7 @@
       <label>Quote</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
-      <source>publication.body1</source>
+      <source>publication.summary</source>
       <status>34</status>
       <seq>4</seq>
       <configuration></configuration>
