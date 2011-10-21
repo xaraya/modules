@@ -81,7 +81,7 @@
       <defaultvalue></defaultvalue>
       <source>publication.body2</source>
       <status>34</status>
-      <seq>6</seq>
+      <seq>7</seq>
       <configuration></configuration>
     </property>
     <property name="body_3">
@@ -91,7 +91,27 @@
       <defaultvalue></defaultvalue>
       <source>publication.body3</source>
       <status>34</status>
-      <seq>6</seq>
+      <seq>8</seq>
+      <configuration></configuration>
+    </property>
+    <property name="body_4">
+      <id>842</id>
+      <label>Body 3</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.body4</source>
+      <status>34</status>
+      <seq>9</seq>
+      <configuration></configuration>
+    </property>
+    <property name="body_5">
+      <id>842</id>
+      <label>Body 3</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.body5</source>
+      <status>34</status>
+      <seq>10</seq>
       <configuration></configuration>
     </property>
     <property name="notes">
@@ -101,7 +121,7 @@
       <defaultvalue></defaultvalue>
       <source>publication.notes</source>
       <status>34</status>
-      <seq>7</seq>
+      <seq>11</seq>
       <configuration></configuration>
     </property>
     <property name="parent">
