@@ -41,7 +41,7 @@
 
     <!-- Read more -->
         <a href="#xarModURL('publications','user','display',array('id' => $fields['id']))#">                
-            Read More
+            Read more
         </a>
     </div>
 </xar:template>
