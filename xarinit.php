@@ -62,7 +62,7 @@ function publications_init()
             summary_template    varchar(255) NOT NULL DEFAULT '',
             detail_template     varchar(255) NOT NULL DEFAULT '',
             page_template       varchar(255) NOT NULL DEFAULT '',
-            theme               integer unsigned NOT NULL DEFAULT '0',
+            theme               varchar(64) NOT NULL DEFAULT '',
             access              text,
             state               tinyint NOT NULL DEFAULT '3',
             process_state       tinyint NOT NULL DEFAULT '1',
