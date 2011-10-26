@@ -16,14 +16,22 @@ sys::import('xaraya.structures.containers.blocks.basicblock');
 
 class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
 {
-    public $no_cache            = 0;
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'topitems';
+    protected $module           = 'crispbb'; // module block type belongs to, if any
+    protected $text_type        = 'Forums top items';  // Block type display name
+    protected $text_type_long   = 'Show forum topics'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = 'Chris Powis';
+    protected $contact          = 'crisp@crispcreations.co.uk';
+    protected $credits          = '';
+    protected $license          = '';
 
-    public $name                = 'TopitemsBlock';
-    public $module              = 'crispbb';
-    public $text_type           = 'crispBB Top Items';
-    public $text_type_long      = 'Displays forum topics';
-    public $show_preview        = true;
-
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
+    
     public $numitems            = 5;
     public $fids                = array();
     public $sort                = 'ptime';
@@ -33,13 +41,9 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
  * Display func.
  * @param $data array containing title,content
  */
-    function display(Array $data=array())
+    function display()
     {
-        $data = parent::display($data);
-        if (empty($data)) return;
-        //if (!xarSecurityCheck('ReadCrispBBBlock', 0, 'Block', $data['name'])) {return;}
-
-        $vars = isset($data['content']) ? $data['content'] : array();
+        $vars = $this->getContent();
         // Defaults
         $forums = xarMod::apiFunc('crispbb', 'user', 'getitemlinks');
         $this->fids = !empty($forums) && is_array($forums) ? array_keys($forums) : array();
@@ -65,8 +69,7 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
                 'numitems' => $vars['numitems']
             ));
 
-        $data['content'] = $vars;
-        return $data;
+        return $vars;
     }
 
 /**
@@ -75,7 +78,7 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
  */
     public function modify(Array $data=array())
     {
-        $data = parent::modify($data);
+        $data = $this->getContent();
 
         // Defaults
         $forums = xarMod::apiFunc('crispbb', 'user', 'getitemlinks');
@@ -108,7 +111,6 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
  */
     public function update(Array $data=array())
     {
-        $data = parent::update($data);
         $vars = array();
 
         $forums = xarMod::apiFunc('crispbb', 'user', 'getitemlinks');
@@ -118,9 +120,9 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
         if (!xarVarFetch('fids', 'list', $vars['fids'], $this->fids, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('sort', 'pre:trim:lower:enum:ptime:numhits:numratings', $vars['sort'], $this->sort, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('order', 'pre:trim:upper:enum:ASC:DESC', $vars['order'], $this->order, XARVAR_NOT_REQUIRED)) return;
+        $this->setContent($vars);
+        return true;
 
-        $data['content'] = $vars;
-        return $data;
     }
 }
 ?>

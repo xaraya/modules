@@ -16,13 +16,21 @@ sys::import('xaraya.structures.containers.blocks.basicblock');
 
 class Crispbb_UserPanelBlock extends BasicBlock implements iBlock
 {
-    public $nocache            = 1;
+    // File Information, supplied by developer, never changes during a versions lifetime, required
+    protected $type             = 'userpanel';
+    protected $module           = 'crispbb'; // module block type belongs to, if any
+    protected $text_type        = 'crispBB User Panel';  // Block type display name
+    protected $text_type_long   = 'Display user information to current logged in user'; // Block type description
+    // Additional info, supplied by developer, optional 
+    protected $type_category    = 'block'; // options [(block)|group] 
+    protected $author           = 'Chris Powis';
+    protected $contact          = 'crisp@crispcreations.co.uk';
+    protected $credits          = '';
+    protected $license          = '';
 
-    public $name                = 'UserpanelBlock';
-    public $module              = 'crispbb';
-    public $text_type           = 'crispBB Userpanel';
-    public $text_type_long      = 'Displays user information for current logged in user';
-    public $show_preview        = true;
+    // blocks subsystem flags
+    protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
+    protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
     public $showusername        = true;
     public $showaccount         = true;
@@ -37,22 +45,11 @@ class Crispbb_UserPanelBlock extends BasicBlock implements iBlock
  * Display func.
  * @param $data array containing title,content
  */
-    function display(Array $data=array())
+    function display()
     {
-        $data = parent::display($data);
-        if (empty($data)) return;
         if (!xarUserIsLoggedIn()) return;
 
-        $vars = isset($data['content']) ? $data['content'] : array();
-        // Defaults
-        if (!isset($vars['showusername']))   $vars['showusername']   = $this->showusername;
-        if (!isset($vars['showaccount']))    $vars['showaccount']    = $this->showaccount;
-        if (!isset($vars['showtimenow']))    $vars['showtimenow']    = $this->showtimenow;
-        if (!isset($vars['showlastvisit']))  $vars['showlastvisit']  = $this->showlastvisit;
-        if (!isset($vars['showthisvisit']))  $vars['showthisvisit']  = $this->showthisvisit;
-        if (!isset($vars['showtotalvisit'])) $vars['showtotalvisit'] = $this->showtotalvisit;
-        if (!isset($vars['showwaiting']))    $vars['showwaiting']    = $this->showwaiting;
-        if (!isset($vars['showlogout']))     $vars['showlogout']     = $this->showlogout;
+        $vars = $this->getContent();
 
         $now = time();
         sys::import('modules.crispbb.class.tracker');
@@ -81,8 +78,7 @@ class Crispbb_UserPanelBlock extends BasicBlock implements iBlock
             $vars['showwaiting'] = xarMod::guiFunc('crispbb', 'admin', 'waitingcontent');
         }
 
-        $data['content'] = $vars;
-        return $data;
+        return $vars;
     }
 
 
@@ -92,17 +88,7 @@ class Crispbb_UserPanelBlock extends BasicBlock implements iBlock
  */
     public function modify(Array $data=array())
     {
-        $data = parent::modify($data);
-
-        // Defaults
-        if (!isset($data['showusername']))   $data['showusername']   = $this->showusername;
-        if (!isset($data['showaccount']))    $data['showaccount']    = $this->showaccount;
-        if (!isset($data['showtimenow']))    $data['showtimenow']    = $this->showtimenow;
-        if (!isset($data['showlastvisit']))  $data['showlastvisit']  = $this->showlastvisit;
-        if (!isset($data['showthisvisit']))  $data['showthisvisit']  = $this->showthisvisit;
-        if (!isset($data['showtotalvisit'])) $data['showtotalvisit'] = $this->showtotalvisit;
-        if (!isset($data['showwaiting']))    $data['showwaiting']    = $this->showwaiting;
-        if (!isset($data['showlogout']))     $data['showlogout']     = $this->showlogout;
+        $data = $this->getContent();
 
         return $data;
     }
@@ -113,7 +99,6 @@ class Crispbb_UserPanelBlock extends BasicBlock implements iBlock
  */
     public function update(Array $data=array())
     {
-        $data = parent::update($data);
         $vars = array();
         if (!xarVarFetch('showusername', 'checkbox', $vars['showusername'], false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showaccount', 'checkbox', $vars['showaccount'], false, XARVAR_NOT_REQUIRED)) return;
@@ -123,8 +108,8 @@ class Crispbb_UserPanelBlock extends BasicBlock implements iBlock
         if (!xarVarFetch('showtotalvisit', 'checkbox', $vars['showtotalvisit'], false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showwaiting', 'checkbox', $vars['showwaiting'], false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showlogout', 'checkbox', $vars['showlogout'], false, XARVAR_NOT_REQUIRED)) return;
-        $data['content'] = $vars;
-        return $data;
+        $this->setContent($vars);
+        return true;
     }
 }
 ?>
