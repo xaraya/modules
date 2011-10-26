@@ -17,9 +17,9 @@
         <xar:template file="editicons"/>
 
         <!-- Title -->
-        <h1>
+        <div class="xar-title">
             <xar:data-output property="$properties['title']" />
-        </h1>
+        </div>
         <!--
         <div class="xar-floatright">#$topic_icons#</div>
         -->
