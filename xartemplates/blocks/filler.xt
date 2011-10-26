@@ -3,7 +3,9 @@
     <xar:if condition="empty($alttitle) AND empty($alttext)">
         <xar:data-display object="$object" tplmodule="publications"/>
     <xar:else/>
-        <h3>#$alttitle#</h3>
+        <div class="xar-title">
+            #$alttitle#
+        </div>
         <div>
             #$alttext#
         </div>
