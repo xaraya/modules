@@ -5,14 +5,14 @@
     <xar:set name="fields">$object->getFieldValues(array(),1)</xar:set>
 
     <!-- Title -->
-    <h3>
+    <div class="xar-publications-news-summary-title">
         <a class="xar-title" href="#xarModURL('publications','user','display',array('id' => $fields['id']))#">
             <xar:data-output property="$properties['title']" value="$fields['title']"/>
         </a>
-    </h3>
+    </div>
     
     <!-- Author -->
-    <div>
+    <div class="xar-publications-news-summary-postby">
         <xar:ml>
             <xar:mlstring>Posted by: #(1) on #(2) #(3)</xar:mlstring>
             <xar:mlvar>#xarUserGetVar('name',$fields['author'])#</xar:mlvar>
