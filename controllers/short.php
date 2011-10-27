@@ -134,7 +134,6 @@ class PublicationsShortController extends ShortActionController
 
               case 'display':
                 $path[] = 'display';
-                if (empty($params['id'])) return;
               break;
               
               case 'main':
