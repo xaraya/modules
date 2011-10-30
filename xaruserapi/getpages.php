@@ -128,6 +128,7 @@ function publications_userapi_getpages($args)
             tpages.name,
             tpages.title,
             tpages.pubtype_id,
+            tpages.parent_id,
             tpages.locale,
             tpages.leftpage_id,
             tpages.rightpage_id,
@@ -203,6 +204,7 @@ function publications_userapi_getpages($args)
             $name,
             $title,
             $pubtype_id,
+            $base_id,
             $locale,
             $leftpage_id,
             $rightpage_id,
@@ -320,6 +322,8 @@ function publications_userapi_getpages($args)
                 'name' => $name,
                 'title' => $title,
                 'ptid' => (int)$pubtype_id,
+                'base_id' => (int)$base_id,
+                'locale' => $locale,
                 'parent_key' => $parent_key,
                 'parent_id' => (int)$parentpage_id,
                 'left' => (int)$leftpage_id,
@@ -344,7 +348,6 @@ function publications_userapi_getpages($args)
             }
         }
     }
-
     return $pages;
 }
 

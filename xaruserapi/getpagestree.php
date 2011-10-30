@@ -18,7 +18,7 @@ function publications_userapi_getpagestree($args)
     // Check out 'getpages' for the complete range of parameters that can be
     // passed in to restrict the pages retrieved.
     // We only want the base pages
-    $args['baseonly'] = 1;
+//    $args['baseonly'] = 1;
     $pages = xarMod::apiFunc('publications', 'user', 'getpages', $args);
 
     // Return if no pages found.
@@ -42,9 +42,18 @@ function publications_userapi_getpagestree($args)
     $children_pages = array();
     $depthstack = array();
     $pathstack = array();
+    $translations = array();
 
     // Create some additional arrays to help navigate the [flat] pages array.
     foreach($pages as $key => $page) {
+    
+        // Assign where the locale info will be placed
+        if ($page['base_id']) {
+            $translations[$page['base_id']][] = substr($page['locale'],0,2);
+        } else {
+            $translations[$page['id']][] = substr($page['locale'],0,2);
+        }
+        
         // Put links in the pages themselves.
         // Ensure each page has at least an empty array of child keys.
         if (!isset($pages[$key]['child_keys'])) {
@@ -102,9 +111,18 @@ function publications_userapi_getpagestree($args)
         // Imploding it can give a directory-style path, which is handy
         // in admin pages and reports.
         $pages[$key]['namepath'] = $pathstack;
+
     }
 
-    $tree['pages'] =& $pages;
+    // Now remove all pages that are not base pages and add the locales
+    $finishedpages = array();
+    foreach($pages as $page) {
+        if ($page['base_id']) continue;
+        if (isset($translations[$page['id']])) $page['translations'] = $translations[$page['id']];
+        $finishedpages[] = $page;
+    }
+
+    $tree['pages'] =& $finishedpages;
 
     $tree['child_refs'] = array(
         'keys' => $children_keys,
