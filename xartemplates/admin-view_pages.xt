@@ -72,6 +72,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Translations</th>
                     <th>Options</th>
                 </tr>
                 <xar:loop name="$pages">
@@ -89,6 +90,10 @@
                             </td>
                             <td class="#$row_class#" title="#xarML('Status: ')# #$state[$loop->item['status']]#">
                                 <span class="xar-publications-status-#$state[$loop->item['status']]#">#xarVarPrepForDisplay($loop:item.pubtype_name)#: #xarVarPrepForDisplay($loop:item.title)#</span>
+                            </td>
+                            <td align="left" class="#$row_class#">
+                                <xar:set name="translations">implode(',',$loop->item['translations'])</xar:set>
+                                #$translations#
                             </td>
                             <td class="#$row_class#" style="text-align: right;" nowrap="nowrap">
                                 <xar:if condition="xarUserIsLoggedIn()">

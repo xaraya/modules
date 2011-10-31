@@ -9,8 +9,22 @@
         <xar:set name="pubtype">substr($object->name,13)</xar:set>
     </xar:if>
     
-    <!-- Display each  item ithe summary template -->
+    <!-- Get an access object to use for checking access -->
+    <xar:set name="access">DataPropertyMaster::getProperty(array('name' => 'access'))</xar:set>
+    
+    <!-- We want to display each item in its summary template -->
     <xar:foreach in="$items" key="$itemid" value="$fields">
+    
+    <!-- Get this item's access constraints for display -->
+        <xar:set name="accessconstraints">unserialize($fields['access'])</xar:set>
+        <xar:set name="allowed">$access->check($accessconstraints['display'])</xar:set>
+    
+    <!-- If no access, then just move on -->
+        <xar:if condition="!$allowed">
+            <xar:continue/>
+        </xar:if>
+        
+    <!-- Access allowed; now figure out which template to use -->
         <xar:set name="dummy">$object->setFieldValues($fields,1)</xar:set>
         <xar:set name="includepath">"objects/$pubtype"</xar:set>
         <xar:set name="filename">'summary'</xar:set>
@@ -20,6 +34,8 @@
             <xar:set name="template">''</xar:set>
         </xar:if>
         <xar:template type="module" module="publications" file="$filename" includepath="$includepath" template="$template"/>
+
+    <!-- Display -->
         <xar:set name="fields">array('fields' => $items[$itemid])</xar:set>
     </xar:foreach>
 </xar:template>

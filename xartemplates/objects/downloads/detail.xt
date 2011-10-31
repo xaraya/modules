@@ -19,10 +19,10 @@
         <div class="article-view">
 
             <!-- Title -->
-            <h3>
+            <div class="xar-title">
                 <xar:template file="editicons"/>
                 <xar:data-output property="$properties['title']" value="$fields['title']" />
-            </h3>
+            </div>
             <!--
                 <xar:if condition="!empty($categories) and count($categories) gt 0">
                     [ <xar:foreach in="$categories" value="$cat">

@@ -36,19 +36,32 @@ function publications_user_display($args)
     // Get parameters from user
 // this is used to determine whether we come from a pubtype-based view or a
 // categories-based navigation
-    if(!xarVarFetch('name',    'str',   $name,  '', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('ptid',   'id',    $ptid,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemid',  'id',    $id,    NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('page',    'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('name',      'str',   $name,  '', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('ptid',     'id',    $ptid,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('itemid',    'id',    $id,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('page',      'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('translate', 'int:1', $translate,  1, XARVAR_NOT_REQUIRED)) {return;}
     
     // Override xarVarFetch
     extract ($args);
     
-    // If no id supplied, get the default id.
+# --------------------------------------------------------
+#
+# If no ID supplied, try getting the id of the default page.
+#
     if (empty($id)) $id = xarModVars::get('publications', 'defaultpage');
-    $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
+
+# --------------------------------------------------------
+#
+# Get the ID of the translation if required
+#
+    if ($translate)
+        $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
     
-    // If the document doesn't exist, we might be viewing a pubtype
+# --------------------------------------------------------
+#
+# If still no ID, check if we are trying to display a pubtype
+#
     if (empty($name) && empty($ptid) && empty($id)) {
         // Nothing to be done
         $id = xarModVars::get('publications', 'notfoundpage');
@@ -57,9 +70,16 @@ function publications_user_display($args)
         xarController::redirect(xarModURL('publications','user','view'));
     }
     
-    // We have come to the end of the line
+# --------------------------------------------------------
+#
+# If still no ID, we have come to the end of the line
+#
     if (empty($id)) return xarResponse::NotFound();
     
+# --------------------------------------------------------
+#
+# We have an ID, now first get the page
+#
     // Here we get the publication type first, and then from that the page
     // Perhaps more efficient to get the page directly?
     $ptid = xarMod::apiFunc('publications','user','getitempubtype',array('itemid' => $id));
@@ -83,17 +103,40 @@ function publications_user_display($args)
     
 # --------------------------------------------------------
 #
+# Are we allowed to see this page?
+#
+    $accessconstraints = unserialize($data['object']->properties['access']->value);
+    $access = DataPropertyMaster::getProperty(array('name' => 'access'));
+    $allow = $access->check($accessconstraints['display']);
+    
+    // If no access, then bail showing a forbidden or an empty page
+    if (!$allow) {
+        if ($accessconstraints['display']['failure']) return xarResponse::Forbidden();
+        else return xarTplModule('publications', 'user', 'empty');
+    }
+
+# --------------------------------------------------------
+#
 # If this is a redirect page, then send it on its way now
 #
-    if ($data['object']->properties['redirect_flag']->value) {
-    
+    $redirect_type = $data['object']->properties['redirect_flag']->value;
+    if ($redirect_type == 1) {
+        // This is a simple redirect to another page
+            try {
+                $url = $data['object']->properties['redirect_url']->value;
+                xarController::redirect($url, 301);    
+            } catch (Exception $e) {
+                return xarResponse::NotFound();
+            }
+    } elseif ($redirect_type == 2) {
+        // This displays a page of a different module    
         // If this is from a link of a redirect child page, use the child param as new URL
         if(!xarVarFetch('child',    'str', $child,  NULL, XARVAR_NOT_REQUIRED)) {return;}
         if (!empty($child)) {
             // Turn entities into amps
             $url = urldecode($child);
         } else {
-            $url = $data['object']->properties['redirect_url']->value;
+            $url = $data['object']->properties['proxy_url']->value;
         }
         
         // Bail if the URL is bad
@@ -106,7 +149,7 @@ function publications_user_display($args)
         
         // If this is an external link, show it without further processing
         if (!empty($params['host']) && $params['host'] != xarServer::getHost() && $params['host'].":".$params['port'] != xarServer::getHost()) {
-            xarController::redirect($url);
+            xarController::redirect($url, 301);
         } else{
             parse_str($params['query'], $info);
             $other_params = $info;

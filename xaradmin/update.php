@@ -117,12 +117,24 @@ function publications_admin_update()
     $article = xarModCallHooks('item', 'transform-input', $data['itemid'], $article,
                                'publications', $data['ptid']);
 
-    // Now talk to the database
+    // Now talk to the database. Loop through all the translation pages
     foreach ($itemsdata as $id => $itemdata) {
+        // Get the data for this item
         $data['object']->setFieldValues($itemdata,1);
 
+        // Save or create the item (depends whether this translation is new)
         if (empty($id)) {$item = $data['object']->createItem();}
         else {$item = $data['object']->updateItem();}
+        
+        // Check if we have an alias and set it as an alias of the publications module
+        $alias_flag = $data['object']->properties['alias_flag']->value;
+        if ($alias_flag == 1) {
+            $alias = $data['object']->properties['alias']->value;
+            if (!empty($alias)) xarModAlias::set($alias, 'publications');
+        } elseif($alias_flag == 2) {
+            $alias = $data['object']->properties['name']->value;
+            if (!empty($alias)) xarModAlias::set($alias, 'publications');
+        }
 
         // Clear the itemid property in preparation for the next round
         unset($data['object']->itemid);
