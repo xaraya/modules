@@ -14,13 +14,15 @@
         <xar:set name="pubtype">substr($object->name,13)</xar:set>
     </xar:if>
 
+    <!-- Figure out which template to use -->
+    <xar:set name="includepath">"objects/$pubtype"</xar:set>
+    <xar:set name="filename">'input'</xar:set>
     <xar:if condition="$properties['detail_template']->value AND !empty($properties['id']->value)">
-        <xar:set name="filename">$pubtype . '/input_' . $properties['id']->value . '.xt'</xar:set>
-        <xar:if condition="!file_exists(sys::code() . 'modules/publications/xartemplates/objects/' . $filename)">
-            <xar:set name="filename">$pubtype . '/input.xt'</xar:set>
-        </xar:if>
+        <xar:set name="template">$properties['id']->value</xar:set>
     <xar:else/>
-        <xar:set name="filename">$pubtype . '/input.xt'</xar:set>
+        <xar:set name="template">''</xar:set>
     </xar:if>
-    <xar:template file="$filename" type="system"/>
+
+    <!-- Display -->
+    <xar:template type="module" module="publications" file="$filename" includepath="$includepath" template="$template"/>
 </xar:template>

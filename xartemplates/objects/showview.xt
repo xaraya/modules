@@ -26,18 +26,15 @@
         
     <!-- Access allowed; now figure out which template to use -->
         <xar:set name="dummy">$object->setFieldValues($fields,1)</xar:set>
-    
+        <xar:set name="includepath">"objects/$pubtype"</xar:set>
+        <xar:set name="filename">'summary'</xar:set>
         <xar:if condition="$fields['summary_template'] AND !empty($fields['id'])">
-            <xar:set name="filename">$pubtype . '/summary' . $fields['id'] . '.xt'</xar:set>
-            <xar:if condition="!file_exists(sys::code() . 'modules/publications/xartemplates/objects/' . $filename)">
-                <xar:set name="filename">$pubtype . '/summary.xt'</xar:set>
-            </xar:if>
+            <xar:set name="template">$fields['id']</xar:set>
         <xar:else/>
-            <xar:set name="filename">$pubtype . '/summary.xt'</xar:set>
+            <xar:set name="template">''</xar:set>
         </xar:if>
 
     <!-- Display -->
-        <xar:set name="fields">array('fields' => $items[$itemid])</xar:set>
-        <xar:template file="$filename" type="system"/>
+        <xar:template type="module" module="publications" file="$filename" includepath="$includepath" template="$template"/>
     </xar:foreach>
 </xar:template>
