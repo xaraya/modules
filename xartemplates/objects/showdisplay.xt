@@ -23,8 +23,6 @@
             <xar:set name="template">''</xar:set>
         </xar:if>
     </xar:if>
-    <xar:template type="module" module="publications" file="$filename" includepath="$includepath" template="$template"/>
-
 
     <!-- Display -->
     <xar:template type="module" module="publications" file="$filename" includepath="$includepath" template="$template"/>
