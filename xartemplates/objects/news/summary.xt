@@ -6,7 +6,7 @@
 
     <!-- Title -->
     <div class="xar-publications-news-summary-title">
-        <a class="xar-title" href="#xarModURL('publications','user','display',array('id' => $fields['id']))#">
+        <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $fields['id']))#">
             <xar:data-output property="$properties['title']" value="$fields['title']"/>
         </a>
     </div>

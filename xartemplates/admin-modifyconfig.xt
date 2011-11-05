@@ -153,7 +153,8 @@
                         <label class="help xar-form-label" for="usealias" title="#xarML('Removes the publications module name from the short url.')#">
                             Alias for short URLs
                         </label>
-                        <xar:data-input type="checkbox" name="usealias" checked="$usealias" />&#160;
+                        <xar:set name="value">xarModVars::get('publications', 'usealias')</xar:set>
+                        <xar:data-input type="checkbox" name="usealias" checked="$value" />&#160;
                         <xar:ml>
                                 Use '#(1)' as alias in short URLs
                             <xar:mlvar>
@@ -180,12 +181,13 @@
                             array(
                                 array('id' => 0, 'name' => 'No'),
                                 array('id' => 1, 'name' => 'Yes, and append date for duplicates'),
-                                array('id' => '2', 'name' => 'Yes, and append publication id for duplicates'),
-                                array('id' => '3', 'name' => 'Yes, but use publication ids for duplicates'),
-                                array('id' => '4', 'name' => 'Yes, and ignore duplicates (faster)'),
+                                array('id' => 2, 'name' => 'Yes, and append publication id for duplicates'),
+                                array('id' => 3, 'name' => 'Yes, but use publication ids for duplicates'),
+                                array('id' => 4, 'name' => 'Yes, and ignore duplicates (faster)'),
                             )
                         </xar:set>
-                        <xar:data-input name="usetitleforurl" type="dropdown" options="$options" value="$usetitleforurl" />&#160;
+                        <xar:set name="value">xarModVars::get('publications', 'usetitleforurl')</xar:set>
+                        <xar:data-input type="dropdown" name="usetitleforurl" options="$options" value="$value" />&#160;
                     </div>
                 </fieldset>
                 <fieldset class="xar-norm">
