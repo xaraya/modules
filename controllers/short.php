@@ -14,13 +14,16 @@
 /**
  * Supported URLs :
  *
- * /publications/page1/page2...
+ * /publications/pubtype_name/page_name...
+ * /publications/page_id...
 **/
 
 sys::import('xaraya.mapper.controllers.short');
 
 class PublicationsShortController extends ShortActionController
 {
+    public $pubtypes = array();
+    
     function decode(Array $data=array())
     {
         $token1 = $this->firstToken();
@@ -29,9 +32,27 @@ class PublicationsShortController extends ShortActionController
                 return parent::decode($data);
             break;
 
-            default:
             case 'view':
                 $data['func'] = 'view';
+                
+                // Get the pubtype
+                $token2 = $this->nextToken();
+                if ($token2) {
+                    // Get all publication types present
+                    if (empty($this->pubtypes)) $this->pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+                    
+                    if (xarModVars::get('publications', 'usetitleforurl')) {
+                        // Match the first token
+                        foreach ($this->pubtypes as $id => $pubtype) {
+                            if (strtolower($token2) == strtolower(str_replace(' ','_',$pubtype['description']))) {
+                                $data['ptid'] = $id;
+                                break;
+                            }
+                        }
+                    } else {
+                        $data['ptid'] = $token2;
+                    }
+                }
             break;
             
             case 'display':
@@ -39,7 +60,7 @@ class PublicationsShortController extends ShortActionController
 
                 $module = xarController::$request->getModule();
                 $roottoken = $this->firstToken();
-                
+
                 // Look for a root page with the name as the first part of the path.
                 $rootpage = xarMod::apiFunc(
                     'publications', 'user', 'getpages',
@@ -110,6 +131,62 @@ class PublicationsShortController extends ShortActionController
                     }
                 }
             break;
+
+            default:
+                // Here we are dealing with publications/pubtype[/publication] or publications/itemid
+                // Get all publication types present
+                if (empty($this->pubtypes)) $this->pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+                
+                $token2 = $this->nextToken();
+
+                // Match the first token
+                foreach ($this->pubtypes as $id => $pubtype) {
+                    if (xarModVars::get('publications', 'usetitleforurl')) {
+                        if (strtolower($token1) == strtolower(str_replace(' ','_',$pubtype['description']))) {
+                            $data['ptid'] = $id;
+                            break;
+                        }
+                    } else {
+                        if ($token1 == $id) {
+                            if ($token2) {
+                                $data['ptid'] = $id;
+                            } else {
+                                $data['itemid'] = $id;
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                // We now have the pubtype; check for the publication
+                if (!$token2) {
+                    // No more tokens; set this as a view or display, dependingh on whether the token was an id or not
+                    if (xarModVars::get('publications', 'usetitleforurl')) {
+                        $data['func'] = 'view';
+                    } else {
+                        $data['func'] = 'display';
+                    }
+                } else {
+                    // This is a publication display; find which publication
+                    // Bail if we don't have a valid pubtype 
+                    if (!isset($data['ptid'])) $data['ptid'] = 0;
+                    sys::import('xaraya.structures.query');
+                    $xartables = xarDB::getTables();
+                    $q = new Query('SELECT',$xartables['publications']);
+                    $q->eq('pubtype_id',$data['ptid']);
+                    if (xarModVars::get('publications', 'usetitleforurl')) {
+                        $q->eq('name',str_replace('_',' ',$token2));
+                    } else {
+                        $q->eq('id',(int)$token2);
+                    }
+                    $q->addfield('id');
+                    $q->run();
+                    $result = $q->row();
+                    if (!empty($result['id'])) $data['id'] = $result['id'];
+                    else $data['id'] = 0;
+                    $data['func'] = 'display';
+                }
+            break;
         }
         return $data;
     }
@@ -117,26 +194,59 @@ class PublicationsShortController extends ShortActionController
 
 
     public function encode(xarRequest $request)
-    {  
+    {
         if ($request->getType() == 'admin') return parent::encode($request);
 
         $params = $request->getFunctionArgs();
         $path = array();
         switch($request->getFunction()) {
 
-              default:
-                return;
-              break;
-                
-              case 'view':
+            case 'view':
                 $path[] = 'view';
-              break;
+                if (isset($params['ptid'])) {
+                    // Get all publication types present
+                    if (empty($this->pubtypes)) $this->pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+                    // Match to the function token
+                    foreach ($this->pubtypes as $id => $pubtype) {
+                        if ($params['ptid'] == $id) {
+                            $path[] = strtolower(str_replace(' ','_',$pubtype['description']));
+                            unset($params['ptid']);
+                            break;
+                        }
+                    }
+                }
+            break;
+            
+            case 'viewmap':
+                $path[] = 'viewmap';
+                $params = array();
+            break;
 
-              case 'display':
-                $path[] = 'display';
-              break;
-              
-              case 'main':
+            case 'display':
+                
+                if (isset($params['itemid'])) {
+                    sys::import('xaraya.structures.query');
+                    $xartables = xarDB::getTables();
+                    $q = new Query('SELECT',$xartables['publications']);
+                    $q->eq('id',$params['itemid']);
+                    $q->addfield('pubtype_id');
+                    $q->addfield('name');
+                    $q->addfield('id');
+                    $q->run();
+                    $result = $q->row();
+                    if (xarModVars::get('publications', 'usetitleforurl')) {
+                        // Get all publication types present
+                        if (empty($this->pubtypes)) $this->pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+                        if (!empty($result['pubtype_id'])) $path[] = strtolower($this->pubtypes[$result['pubtype_id']]['description']);
+                        if (!empty($result['name'])) $path[] = strtolower(str_replace(' ','_',$result['name']));
+                    } else {
+                        if (!empty($result['itemid'])) $path[] = $result['itemid'];
+                    }
+                }
+                $params = array();
+            break;
+            
+            case 'main':
 
                 // We need a page ID to continue, for now.
                 // TODO: allow this to be expanded to page names.
@@ -217,9 +327,14 @@ class PublicationsShortController extends ShortActionController
                     }
                 }
             break;
+
+            default:
+                return;
+            break;
+            
         }
-        
         // Encode the processed params
+//        var_dump($this->getFunction($path));
         $request->setFunction($this->getFunction($path));
         
         // Send the unprocessed params back

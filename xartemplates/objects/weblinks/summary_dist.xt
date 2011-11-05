@@ -12,7 +12,7 @@
         
         <xar:template file="editicons"/>
         
-        <a class="xar-title" href="#xarModURL('publications','user','display',array('id' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
+        <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
             <xar:data-output property="$properties['title']" />
         </a>
         <br />        
