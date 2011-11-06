@@ -171,6 +171,7 @@ class PublicationsShortController extends ShortActionController
                     // Bail if we don't have a valid pubtype 
                     if (!isset($data['ptid'])) $data['ptid'] = 0;
                     sys::import('xaraya.structures.query');
+                    xarModLoad('publications');
                     $xartables = xarDB::getTables();
                     $q = new Query('SELECT',$xartables['publications']);
                     $q->eq('pubtype_id',$data['ptid']);
@@ -224,6 +225,7 @@ class PublicationsShortController extends ShortActionController
                 
                 if (isset($params['itemid'])) {
                     sys::import('xaraya.structures.query');
+                    xarModLoad('publications');
                     $xartables = xarDB::getTables();
                     $q = new Query('SELECT',$xartables['publications']);
                     $q->eq('id',$params['itemid']);
