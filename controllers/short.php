@@ -190,8 +190,6 @@ class PublicationsShortController extends ShortActionController
         }
         return $data;
     }
-    
-
 
     public function encode(xarRequest $request)
     {
@@ -334,7 +332,6 @@ class PublicationsShortController extends ShortActionController
             
         }
         // Encode the processed params
-//        var_dump($this->getFunction($path));
         $request->setFunction($this->getFunction($path));
         
         // Send the unprocessed params back
