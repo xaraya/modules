@@ -201,8 +201,6 @@ function publications_user_view($args)
     $extra[] = 'cids';
     if ($data['settings']['show_hitcount']) $extra[] = 'counter';
     if ($data['settings']['show_ratings']) $extra[] = 'rating';
-    if (xarModIsHooked('dynamicdata', 'publications', $ptid)) $extra[] = 'dynamicdata';
-    if (xarModIsHooked('uploads', 'publications', $ptid)) xarVarSetCached('Hooks.uploads', 'ishooked', 1);
 
     $now = time();
 
