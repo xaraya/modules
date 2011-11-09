@@ -44,7 +44,7 @@ class PublicationsShortController extends ShortActionController
                     if (xarModVars::get('publications', 'usetitleforurl')) {
                         // Match the first token
                         foreach ($this->pubtypes as $id => $pubtype) {
-                            if (strtolower($token2) == strtolower(str_replace(' ','_',$pubtype['description']))) {
+                            if (strtolower($token2) == strtolower($pubtype['description'])) {
                                 $data['ptid'] = $id;
                                 break;
                             }
@@ -142,7 +142,7 @@ class PublicationsShortController extends ShortActionController
                 // Match the first token
                 foreach ($this->pubtypes as $id => $pubtype) {
                     if (xarModVars::get('publications', 'usetitleforurl')) {
-                        if (strtolower($token1) == strtolower(str_replace(' ','_',$pubtype['description']))) {
+                        if (strtolower($token1) == strtolower($pubtype['description'])) {
                             $data['ptid'] = $id;
                             break;
                         }
@@ -176,7 +176,7 @@ class PublicationsShortController extends ShortActionController
                     $q = new Query('SELECT',$xartables['publications']);
                     $q->eq('pubtype_id',$data['ptid']);
                     if (xarModVars::get('publications', 'usetitleforurl')) {
-                        $q->eq('name',str_replace('_',' ',$token2));
+                        $q->eq('name',$token2);
                     } else {
                         $q->eq('id',(int)$token2);
                     }
@@ -208,7 +208,7 @@ class PublicationsShortController extends ShortActionController
                     // Match to the function token
                     foreach ($this->pubtypes as $id => $pubtype) {
                         if ($params['ptid'] == $id) {
-                            $path[] = strtolower(str_replace(' ','_',$pubtype['description']));
+                            $path[] = strtolower($pubtype['description']);
                             unset($params['ptid']);
                             break;
                         }
@@ -238,7 +238,7 @@ class PublicationsShortController extends ShortActionController
                         // Get all publication types present
                         if (empty($this->pubtypes)) $this->pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
                         if (!empty($result['pubtype_id'])) $path[] = strtolower($this->pubtypes[$result['pubtype_id']]['description']);
-                        if (!empty($result['name'])) $path[] = strtolower(str_replace(' ','_',$result['name']));
+                        if (!empty($result['name'])) $path[] = strtolower($result['name']);
                     } else {
                         if (!empty($result['itemid'])) $path[] = $result['itemid'];
                     }
