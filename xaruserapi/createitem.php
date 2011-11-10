@@ -49,12 +49,13 @@ function fulltext_userapi_createitem($args)
         $bindvars = array($nextId, $module_id, $itemtype, $itemid, $text);
         $stmt = $dbconn->prepareStatement($query);
         $result = $stmt->executeUpdate($bindvars);
+        $id = $dbconn->getId();
         $dbconn->commit();
     } catch (SQLException $e) {
         $dbconn->rollback();
         throw $e;
     }
-    $id = $dbconn->PO_Insert_ID($ftable, 'id');
+    
     if (empty($id)) return;
     // return item to caller (saves a further getitem call in itemupdate hook function)   
     $item = array(

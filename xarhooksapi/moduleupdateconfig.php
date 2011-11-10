@@ -29,7 +29,22 @@ function fulltext_hooksapi_moduleupdateconfig($args)
         }
     }
     
-    if (!xarVarFetch('fulltext_searchfields', 'pre:trim:str:1:', $searchfields, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('fulltext_searchfields', 'isset', $searchfields, '', XARVAR_NOT_REQUIRED)) return;
+
+    if (!empty($searchfields)) {
+        if (!is_array($searchfields))
+            $searchfields = strpos($searchfields, ',') === false ? array($searchfields) : array_map('trim', explode(',', $searchfields));
+        try {
+            $itemfields = xarMod::apiFunc($module, 'user', 'getitemfields',
+                array('module' => $module, 'itemtype' => $itemtype));
+        } catch (Exception $e) {
+            $itemfields = array();
+        }
+        if (!empty($itemfields))
+            $searchfields = array_intersect(array_flip($itemfields), $searchfields); 
+        
+        $searchfields = join(',', $searchfields);    
+    }
 
     // set settings for current module
     $varname = 'fulltext_settings';

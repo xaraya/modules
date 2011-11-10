@@ -16,6 +16,13 @@ function fulltext_adminapi_getmenulinks($args)
     );
 
     $menulinks[] = array(
+        'url' => xarModURL('fulltext','admin','hooks'),
+        'title' => xarML('Manage Fulltext Search Hooks'),
+        'label' => xarML('Hooks'),
+        'active' => array('hooks'),
+    );
+
+    $menulinks[] = array(
         'url' => xarModURL('fulltext','admin','search'),
         'title' => xarML('Fulltext Search'),
         'label' => xarML('Search'),

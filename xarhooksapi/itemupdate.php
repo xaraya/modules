@@ -39,27 +39,6 @@ function fulltext_hooksapi_itemupdate($args)
     if (empty($objectid) || !is_numeric($objectid))
         throw new BadParameterException('objectid');
 
-    // make sure we have an item to update 
-    $item = xarMod::apiFunc('fulltext', 'user', 'getitem',
-        array(
-            'module_id' => $module_id,
-            'itemtype' => $itemtype,
-            'itemid' => $objectid,
-        ));
-
-    // fulltext module must have been hooked since this item was created, create it now
-    if (empty($item)) {
-
-        $item = xarMod::apiFunc('fulltext', 'user', 'createitem',
-            array(
-                'module_id' => $module_id,
-                'itemtype' => $itemtype,
-                'itemid' => $objectid,
-            ));
-        if (empty($item))
-            throw new NotFoundException('fulltext');
-    } 
-
     // get settings for current module
     $varname = 'fulltext_settings';
     // optionally for current itemtype
@@ -101,14 +80,32 @@ function fulltext_hooksapi_itemupdate($args)
     }   
     
     $text = strip_tags($text);
-
-    // Store the updated text for this item
-    if (!xarModAPIFunc('fulltext', 'user', 'updateitem',
+    
+    // make sure we have an item to update 
+    $item = xarMod::apiFunc('fulltext', 'user', 'getitem',
         array(
-            'id' => $item['id'],
-            'text' => $text,
-        ))) return;
+            'module_id' => $module_id,
+            'itemtype' => $itemtype,
+            'itemid' => $objectid,
+        ));
 
+    // fulltext module must have been hooked since this item was created, create it now
+    if (empty($item)) {
+        $item = xarMod::apiFunc('fulltext', 'user', 'createitem',
+            array(
+                'module_id' => $module_id,
+                'itemtype' => $itemtype,
+                'itemid' => $objectid,
+                'text' => $text,
+            ));
+    } else {
+        // Store the updated text for this item
+        if (!xarModAPIFunc('fulltext', 'user', 'updateitem',
+            array(
+                'id' => $item['id'],
+                'text' => $text,
+            ))) return;
+    }
     $extrainfo['fulltext_id'] = $item['id'];
     
     return $extrainfo;

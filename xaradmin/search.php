@@ -4,25 +4,31 @@ function fulltext_admin_search($args)
     
     if (!xarVarFetch('q', 'pre:trim:str:1:', $q, "", XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('startnum', 'int:1:', $startnum, null, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('search', 'checkbox', $search, false, XARVAR_NOT_REQUIRED)) return;
     
     $itemsperpage = xarModVars::get('fulltext', 'items_per_page');
+
+    $data = array();
     
-    if ($search) {
-        $items = xarMod::apiFunc('fulltext', 'user', 'search',
+    if (!empty($q)) {
+        $items = xarMod::apiFunc('fulltext', 'user', 'getitems',
             array(
                 'q' => $q,
                 'startnum' => $startnum,
                 'numitems' => $itemsperpage,
             ));
-    }
+        $total = xarMod::apiFunc('fulltext', 'user', 'countitems',
+            array(
+                'q' => $q,
+            ));
+    } 
+    
     static $_modinfos = array();
     $results = array();
     if (!empty($items)) {
         foreach ($items as $item) {
             if (!isset($_modinfos[$item['module_id']]))
                 $_modinfos[$item['module_id']] = xarMod::getInfo($item['module_id']);
-            $modinfo = $_modinfos[$item['module_id']];
+            $modinfo =& $_modinfos[$item['module_id']];
             if (!isset($_modinfos[$item['module_id']]['itemtypes'])) {
                 try {
                     $_modinfos[$item['module_id']]['itemtypes'] = xarMod::apiFunc($modinfo['name'], 'user', 'getitemtypes');
@@ -74,9 +80,12 @@ function fulltext_admin_search($args)
             $results[] = $itemlink;
         }
     }            
-    $data = array();
+
     $data['q'] = $q;
     $data['results'] = $results;
+    $data['startnum'] = $startnum;
+    $data['itemsperpage'] = $itemsperpage;
+    $data['total'] = !empty($total) ? $total : 0;
     
     return $data;
     

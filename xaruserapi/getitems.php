@@ -12,9 +12,11 @@ function fulltext_userapi_getitems($args)
         $invalid[] = 'itemid';
     if (isset($id) && !is_numeric($id))
         $invalid[] = 'id';
+    if (!isset($q) && !is_string($q))
+        $invalid[] = 'query';
     
     if (!empty($invalid)) {
-        $vars = array(join(', ', $invalid), 'user api', 'getitems', 'Fulltext');
+        $vars = array(join(', ', $invalid), 'userapi', 'getitems', 'Fulltext');
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in #(4) module');
             throw new BadParameterException($vars, $msg);
     }
@@ -23,11 +25,21 @@ function fulltext_userapi_getitems($args)
     $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     $ftable = $tables['fulltext'];
+    $select = array();
     $where = array();
+    $orderby = array();
     $bindvars = array();
 
-    $query = "SELECT ft.id, ft.module_id, ft.itemtype, ft.item_id, ft.text
-              FROM $ftable ft";
+    $select['id'] = 'ft.id';
+    $select['module_id'] = 'ft.module_id';
+    $select['itemtype'] = 'ft.itemtype';
+    $select['itemid'] = 'ft.item_id';
+    $select['text'] = 'ft.text';
+
+    if (!empty($q)) {
+        $select['score'] = 'MATCH(ft.text) AGAINST (?) AS score';
+        $bindvars[] = $q;
+    }   
     
     if (!empty($module_id)) {
         $where[] = 'ft.module_id = ?';
@@ -45,26 +57,40 @@ function fulltext_userapi_getitems($args)
         $where[] = 'ft.id = ?';
         $bindvars[] = $id;
     }
+
+    if (!empty($q)) {
+        $where[] = 'MATCH(ft.text) AGAINST (?)';
+        $bindvars[] = $q;
+        if (empty($orderby['score']))
+            $orderby['score'] = 'score DESC';
+    }       
+ 
+    $query = "SELECT " . join(',',$select);
+    $query .= " FROM $ftable ft";   
     if (!empty($where))
         $query .= " WHERE " . join(" AND ", $where);
+    if (!empty($orderby)) 
+        $query .= ' ORDER BY ' . join(',', $orderby);  
 
     $stmt = $dbconn->prepareStatement($query);
+    if (!empty($numitems)) {
+        $stmt->setLimit($numitems);
+        if (empty($startnum))
+            $startnum = 1;
+        $stmt->setOffset($startnum - 1);
+    }
     $result = $stmt->executeQuery($bindvars);
     if (!$result) return;
     
     $items = array();
     while($result->next()) {
-        list($id, $module_id, $itemtype, $itemid, $text) = $result->fields;
-        $items[] = array(
-            'id' => $id,
-            'module_id' => $module_id,
-            'itemtype' => $itemtype,
-            'itemid' => $itemid,
-            'text' => $text,
-        );
+        $item = array();
+        foreach (array_keys($select) as $field) 
+            $item[$field] = array_shift($result->fields);
+        $items[] = $item;
     }
     $result->close();
-    return $items;
-    
+
+    return $items;    
 }
 ?>

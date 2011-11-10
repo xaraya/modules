@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-form-input-wrapper">
-        <label class="xar-form-label" for="fulltext_searchfields">Fulltext Search Fields</label>
-        <xar:data-input type="textbox" id="fulltext_searchfields" name="fulltext_searchfields" value="$searchfields"/>
-        <xar:data-input type="hidden" name="fulltext_searchmodule" id="fulltext_searchmodule" value="#$searchmodule#"/>
-        <xar:data-input type="hidden" name="fulltext_searchitemtype" id="fulltext_searchitemtype" value="#$searchitemtype#"/>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="fulltext_searchfields">Fulltext Search Fields</label>
+        </div>
+        <div class="xar-col">
+            <xar:if condition="!empty($searchitemfields)">
+                <xar:data-input type="multiselect" name="fulltext_searchfields" id="fulltext_searchfields_multi" options="$searchitemfields" value="$searchfields"/>
+            <xar:else/>
+                <xar:data-input type="textbox" id="fulltext_searchfields" name="fulltext_searchfields" value="$searchfields"/>
+            </xar:if>
+            <xar:data-input type="hidden" name="fulltext_searchmodule" id="fulltext_searchmodule" value="#$searchmodule#"/>
+            <xar:data-input type="hidden" name="fulltext_searchitemtype" id="fulltext_searchitemtype" value="#$searchitemtype#"/>
+        </div>
     </div>
 </xar:template>

@@ -50,10 +50,20 @@ function fulltext_hooks_modulemodifyconfig($args)
         $settings = array(
             'searchfields' => '',
         );
+
+    try {
+        $itemfields = xarMod::apiFunc($module, 'user', 'getitemfields',
+            array('module' => $module, 'itemtype' => $itemtype));
+    } catch (Exception $e) {
+        $itemfields = array();
+    }
+    if (!empty($itemfields) && !empty($settings['searchfields']))
+        $settings['searchfields'] = strpos($settings['searchfields'], ',') === false ? array($settings['searchfields']) : array_map('trim', explode(',', $settings['searchfields']));
    
     $data = $settings;
     $data['searchmodule'] = $module;
     $data['searchitemtype'] = $itemtype;
+    $data['searchitemfields'] = $itemfields;    
     
     return xarTplModule('fulltext', 'hooks', 'modulemodifyconfig', $data);
 }

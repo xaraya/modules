@@ -3,6 +3,8 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template type="module" file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <p class="xar-note">TODO --</p>
+        <h2>Configure Fulltext Hooks</h2>
+        <xar:set name="url">xarModURL('fulltext','admin','hooks')</xar:set>
+        <xar:module main="false" module="modules" type="admin" func="hooks" curhook="fulltext" return_url="$url"/>
     </div>
 </xar:template>

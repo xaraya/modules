@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">Fulltext Search Administration</span>
-    </div>
+    <xar:template type="module" file="admin-mod-head"/>
     <div class="xar-mod-body">
-    
+        <h2>Modify Fulltext Configuration</h2>
+        <form action="#xarServer::getCurrentURL()#" method="post" enctype="application/x-www-form-urlencoded">
+            <fieldset>
+                <xar:data-form object="$module_settings"/>
+            </fieldset>
+            <fieldset>
+                <div class="xar-form-actions xar-align-center">
+                    <xar:data-input type="hidden" name="phase" id="phase" value="update"/>
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                    <xar:var name="submitLabel">Update</xar:var>
+                    <input type="submit" value="#$submitLabel#"/>                
+                </div>            
+            </fieldset>
+        </form>    
     </div>
 </xar:template>

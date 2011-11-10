@@ -8,15 +8,17 @@ function fulltext_init()
     $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     $prefix = xarDB::getPrefix();
+    $charset = xarSystemVars::get(sys::CONFIG, 'DB.Charset');
+    $dbtype = xarSystemVars::get(sys::CONFIG, 'DB.Type');
     $ftable = $tables['fulltext'];
     
     // @TODO: prevent install when db is not MySQL or just skip fulltext indexing ?
+    // @CHECKME: is there a way to declare a db type dependency ?
 
-    try {
-        $charset = xarSystemVars::get(sys::CONFIG, 'DB.Charset');
+    try {        
         $dbconn->begin();
         /**
-         * CREATE TABLE xar_index (
+         * CREATE TABLE xar_fulltext (
          *   id         integer NOT NULL auto_increment,
          *   module_id  integer default 0,
          *   itemtype   integer default 0,
@@ -33,7 +35,7 @@ function fulltext_init()
              'text' => array('type'=>'text', 'size'=>'medium', 'charset' => $charset)
          );
 
-         // Create the eventsystem table
+         // Create the fulltext table
          $query = xarDBCreateTable($ftable, $fields);
          $dbconn->Execute($query);
 
@@ -48,10 +50,12 @@ function fulltext_init()
          $dbconn->Execute($query);
 
         // @TODO: prevent install when db is not MySQL or just skip this...?
-        // Add fulltext index
-        $index = 'i_'.$prefix.'_fulltext_text';
-        $query = "ALTER TABLE $ftable ADD FULLTEXT $index (text)";
-        $dbconn->Execute($query);
+        if ($dbtype == 'mysql' || $dbtype == 'mysqli') {
+            // Add fulltext index
+            $index = 'i_'.$prefix.'_fulltext_text';
+            $query = "ALTER TABLE $ftable ADD FULLTEXT $index (text)";
+            $dbconn->Execute($query);
+        }
     
          // Let's commit this, since we're gonna do some other stuff
          $dbconn->commit();
@@ -64,10 +68,17 @@ function fulltext_init()
     xarModRegisterHook('item', 'create', 'api', 'fulltext', 'hooks', 'itemcreate');    
     xarModRegisterHook('item', 'update', 'api', 'fulltext', 'hooks', 'itemupdate');    
     xarModRegisterHook('item', 'delete', 'api', 'fulltext', 'hooks', 'itemdelete');        
-    xarModRegisterHook('item', 'display', 'gui', 'fulltext', 'hooks', 'itemdisplay');
+    //xarModRegisterHook('item', 'display', 'gui', 'fulltext', 'hooks', 'itemdisplay');
     xarModRegisterHook('module', 'modifyconfig', 'gui', 'fulltext', 'hooks', 'modulemodifyconfig');            
     xarModRegisterHook('module', 'updateconfig', 'api', 'fulltext', 'hooks', 'moduleupdateconfig');
     //xarModRegisterHook('module', 'remove', 'api', 'fulltext', 'hooks', 'moduleremove');
+
+    xarRegisterMask('ReadFulltext','All','fulltext','All','All','ACCESS_READ');
+    xarRegisterMask('EditFulltext','All','fulltext','All','All','ACCESS_EDIT');
+    xarRegisterMask('ManageFulltext','All','fulltext','All','All','ACCESS_DELETE');
+    xarRegisterMask('AdminFulltext','All','fulltext','All','All','ACCESS_ADMIN');
+    
+    xarModVars::set('fulltext', 'items_per_page', 20);
        
     return true;
 }
@@ -79,11 +90,25 @@ function fulltext_activate()
 
 function fulltext_upgrade($oldversion)
 {
+    // Get database information
+    $dbconn = xarDB::getConn();
+    $tables =& xarDB::getTables();
+    $prefix = xarDB::getPrefix();
+    $charset = xarSystemVars::get(sys::CONFIG, 'DB.Charset');
+    $dbtype = xarSystemVars::get(sys::CONFIG, 'DB.Type');
+    $ftable = $tables['fulltext'];
+
+    switch ($oldversion) {
+        
+        default:
+            // current version
+            break;
+    }
     return true;
 }
 
 function fulltext_delete()
 {
-    return true;
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', array('module' => 'fulltext'));
 }
 ?>

@@ -2,7 +2,7 @@
 $modversion['name']               = 'fulltext';
 $modversion['id']                 = '189205';
 $modversion['displayname']        = xarML('Fulltext Search');
-$modversion['version']            = '2.2.0';
+$modversion['version']            = '2.2.1';
 $modversion['description']        = 'MySQL Fulltext Search';
 $modversion['displaydescription'] = xarML('MySQL Fulltext Search');
 $modversion['credits']            = '';
