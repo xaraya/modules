@@ -14,6 +14,7 @@
         <xar:set name="pubtype">substr($object->name,13)</xar:set>
     </xar:if>
 
+    <!-- Figure out which template to use -->
     <xar:set name="includepath">"objects/$pubtype"</xar:set>
     <xar:set name="filename">'input'</xar:set>
     <xar:if condition="$properties['detail_template']->value AND !empty($properties['id']->value)">
@@ -21,6 +22,7 @@
     <xar:else/>
         <xar:set name="template">''</xar:set>
     </xar:if>
+
+    <!-- Display -->
     <xar:template type="module" module="publications" file="$filename" includepath="$includepath" template="$template"/>
-    
 </xar:template>

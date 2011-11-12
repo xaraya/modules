@@ -33,9 +33,8 @@
         <xar:else/>
             <xar:set name="template">''</xar:set>
         </xar:if>
-        <xar:template type="module" module="publications" file="$filename" includepath="$includepath" template="$template"/>
 
     <!-- Display -->
-        <xar:set name="fields">array('fields' => $items[$itemid])</xar:set>
+        <xar:template type="module" module="publications" file="$filename" includepath="$includepath" template="$template"/>
     </xar:foreach>
 </xar:template>
