@@ -3,6 +3,8 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="publinks" type="module" />
 
+    <xar:set name="now">time()</xar:set>
+
     <!-- Get the list of object items we want -->
     <xar:data-getitems properties="$properties" values="$items" object="$object">
       <xar:select>
@@ -10,6 +12,8 @@
           <xar:condition operator="eq" property="itemtype">$ptid</xar:condition>
           <xar:condition operator="in" property="state">array(3,4)</xar:condition>
           <xar:condition operator="eq" property="locale">xarUserGetNavigationLocale()</xar:condition>
+          <xar:condition operator="le" property="start_date">$now</xar:condition>
+          <xar:condition operator="ge" property="end_date">$now</xar:condition>
         </xar:andconditions>
       </xar:select>
     </xar:data-getitems>
@@ -17,6 +21,8 @@
     <!-- For debugging
     <xar:set name="dummy">$object->dataquery->qecho()</xar:set>
     <xar:set name="dummy">var_dump($items)</xar:set>
+    <xar:set name="dummy">var_dump(xarLocaleGetFormattedDate('long',$now))</xar:set>
+    <xar:set name="dummy">var_dump(xarLocaleGetFormattedTime('long',$now))</xar:set>
     -->
     
     <!-- Display the list of objects -->
