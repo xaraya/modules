@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:set name="ptid">$object->objectid</xar:set>
+    <xar:template file="publinks" type="module" />
+    <!--
+    <xar:set name="cids">$properties['categories']->getValue()</xar:set>
+    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$properties['id']" cids="$cids" show_catcount="$settings['show_catcount']" showempty="0" />
+    -->
+    
+    <xar:set name="publication_state">
+        $properties['state']->value
+    </xar:set>
+
+    <xar:if condition="$publication_state lt 3">
+        This item cannot be viewed
+    <xar:else />
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+            <tr>
+                <td align="left" valign="top" class="xar-normal">
+
+                    <xar:template file="editicons"/>
+
+                    <span class="xar-title">
+                        <xar:data-output property="$properties['title']" />
+                    </span>
+                    <br />
+                    <!--
+                    <xar:if condition="!empty($counter)">
+                        (#$counter#
+                            Reads
+                        )
+                    </xar:if>
+                    <div align="right">
+                        <span class="xar-sub"> #$topic_icons# </span>
+                    </div>
+                    <br />
+                    -->
+                    <br />
+                    <xar:data-output property="$properties['source']" />
+                    <br />
+                    <xar:data-output property="$properties['translation']" />
+                    <br />
+                    <span class="xar-quote">
+                        <xar:data-output property="$properties['notes']" /> 
+                    </span>
+                    <!--
+                    <xar:if condition="!empty($previous) and !empty($next)">
+                        <div class="xar-normal xar-align-right xar-padding-thick">
+                            <span> #$previous# </span> <span> #$next# </span>
+                        </div>
+                    </xar:if>
+                    -->
+                </td>
+            </tr>
+        </table>
+        <xar:if condition="!empty($prevart) || !empty($nextart)">
+            <br />
+            <table border="0" width="95%">
+                <tr>
+                    <td align="left">
+                        <xar:if condition="!empty($prevart)">
+                            <a href="#$prevart#">
+                                <img src="#xarTplGetImage('icons/go-previous.png','base')#"/>
+                            </a>
+                        </xar:if>
+                        &#160;
+                    </td>
+                    <td align="right">
+                        &#160;
+                        <xar:if condition="!empty($nextart)">
+                            <a href="#$nextart#">
+                                <img src="#xarTplGetImage('icons/go-next.png','base')#"/>
+                            </a>
+                        </xar:if>
+                    </td>
+                </tr>
+            </table>
+        </xar:if>
+    </xar:if>
+</xar:template>
