@@ -234,8 +234,10 @@
                     </legend>
                     <xar:data-input type="categorypicker" name="basecid" module="publications" itemtype="$ptid" />
                 </fieldset>
-                <div class="xar-form-input-wrapper">
-                    <div class="xar-form-container-after">
+                <div class="xar-row">
+                    <div class="xar-col">
+                    </div>
+                    <div class="xar-col">
                         <xar:set name="label">xarML('Update Configuration')</xar:set>
                         <xar:button type="submit" label="$label" />
                         &#160;
@@ -247,14 +249,18 @@
                 </div>
             </form>
         <xar:elseif condition="$tab eq 'pubtypes'" />
-            <div class="xar-form-input-wrapper">
-                <label class="help xar-form-label" title="#xarML('Select the type of publication whose settings you want to configure')#">                    
-                    Publication Type                    
-                </label>
-                <form method="post" action="#xarModURL('publications','admin','modifyconfig',array('tab' => 'pubtypes'))#">
-                    <xar:set name="onchange">"javascript:this.form.submit();"</xar:set>
-                    <xar:data-input name="ptid" type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$onchange" />
-                </form>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <label class="help xar-form-label" title="#xarML('Select the type of publication whose settings you want to configure')#">                    
+                        Publication Type                    
+                    </label>
+                </div>
+                <div class="xar-col">
+                    <form method="post" action="#xarModURL('publications','admin','modifyconfig',array('tab' => 'pubtypes'))#">
+                        <xar:set name="onchange">"javascript:this.form.submit();"</xar:set>
+                        <xar:data-input name="ptid" type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$onchange" />
+                    </form>
+                </div>
             </div>
            <form class="xar-formwidget" action="&xar-modurl-publications-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
                 <input type="hidden" name="ptid" value="#$ptid#" />
@@ -337,42 +343,58 @@
                             array('id' => 1, 'name' => 'custom'),
                         )
                     </xar:set>
-                    <div class="xar-form-input-wrapper">
+                <div class="xar-row">
+                    <div class="xar-col">
                         <label for="summary_template" class="help xar-form-label" title="#xarML('Define the summary template for this publication type')#">                    
                             Summary Template
                         </label>
+                    </div>
+                    <div class="xar-col">
                         <xar:data-input type="radio" name="settings[summary_template]" value="$settings['summary_template']" options="$options"/>
                         &#160;
                         <a href="#xarModURL('publications','admin','templates_type',array('file' => 'summary','ptid' => $ptid))#">
                             Edit template
                         </a>
                     </div>
-                    <div class="xar-form-input-wrapper">
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col">
                         <label for="detail_template" class="help xar-form-label" title="#xarML('Define the detail template for this publication type')#">                    
                             Detail Template
                         </label>
+                    </div>
+                    <div class="xar-col">
                         <xar:data-input type="radio" name="settings[detail_template]" value="$settings['detail_template']" options="$options"/>
                         &#160;
                         <a href="#xarModURL('publications','admin','templates_type',array('file' => 'detail','ptid' => $ptid))#">
                             Edit template
                         </a>
                     </div>
-                    <xar:var name="firstline">(current template)</xar:var>
-                    <xar:set name="firstline">",$firstline"</xar:set>
-                    <div class="xar-form-input-wrapper">
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <xar:var name="firstline">(current template)</xar:var>
+                        <xar:set name="firstline">",$firstline"</xar:set>
                         <label for="page_template" class="help xar-form-label" title="#xarML('Define the page template for this publication type')#">                    
                             Page Template Override
                         </label>
+                    </div>
+                    <div class="xar-col">
                         <xar:data-input type="filepicker" name="settings[page_template]" value="$settings['page_template']" basedir="{theme}/pages" firstline="$firstline"/>
                     </div>
-                    <xar:var name="firstline">(current theme)</xar:var>
-                    <xar:set name="firstline">",$firstline"</xar:set>
-                    <div class="xar-form-input-wrapper">
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <xar:var name="firstline">(current theme)</xar:var>
+                        <xar:set name="firstline">",$firstline"</xar:set>
                         <label for="theme" class="help xar-form-label" title="#xarML('Define the theme for this publication type')#">                    
                             Theme Override
                         </label>
+                    </div>
+                    <div class="xar-col">
                         <xar:data-input type="theme" name="settings[theme]" value="$settings['theme']"  firstline="$firstline"/>
                     </div>
+                </div>
                 </fieldset>
                 <fieldset class="xar-norm">
                     <legend>
@@ -581,8 +603,10 @@
                     </legend>
                     <xar:data-input type="access" name="access_delete" value="$access['delete']"/>
                 </fieldset>
-                <div class="xar-form-input-wrapper">
-                    <div class="xar-form-container-after">
+                <div class="xar-row">
+                    <div class="xar-col">
+                    </div>
+                    <div class="xar-col">
                         <xar:var name="label">Update Configuration</xar:var>
                         <xar:button type="submit" label="$label" />
                         &#160;
