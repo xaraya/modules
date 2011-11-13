@@ -1,34 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:data-input property="$properties['id']" hidden="hidden" />
-    <div class="xar-form-input-wrapper">
-        <xar:var name="label">Name</xar:var>
-        <xar:data-label property="$properties['name']" for="id" label="$label" />
-        <xar:data-input property="$properties['name']" />
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">Name</xar:var>
+            <xar:data-label property="$properties['name']" for="id" label="$label" />
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['name']" />
+        </div>
     </div>
-    <div class="xar-form-input-wrapper">
-        <xar:var name="label">Question</xar:var>
-        <xar:data-label property="$properties['question']" for="id" label="$label" />
-        <xar:data-input property="$properties['question']" />
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">Question</xar:var>
+            <xar:data-label property="$properties['question']" for="id" label="$label" />
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['question']" />
+        </div>
     </div>
-    <div class="xar-form-input-wrapper">
-        <xar:var name="label">Details</xar:var>
-        <xar:data-label property="$properties['details']" for="id" label="$label" />
-        <xar:data-input property="$properties['details']" />
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">Details</xar:var>
+            <xar:data-label property="$properties['details']" for="id" label="$label" />
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['details']" />
+        </div>
     </div>
-    <div class="xar-form-input-wrapper">
-        <xar:var name="label">Answer</xar:var>
-        <xar:data-label property="$properties['answer']" for="id" label="$label" />
-        <xar:data-input property="$properties['answer']" />
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">Answer</xar:var>
+            <xar:data-label property="$properties['answer']" for="id" label="$label" />
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['answer']" />
+        </div>
     </div>
-    <div class="xar-form-input-wrapper">
-        <xar:var name="label">Submitted By</xar:var>
-        <xar:data-label property="$properties['submitted_by']" for="id" label="$label" />
-        <xar:data-input property="$properties['submitted_by']" />
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">Submitted By</xar:var>
+            <xar:data-label property="$properties['submitted_by']" for="id" label="$label" />
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['submitted_by']" />
+        </div>
     </div>
     <xar:if condition="!$properties['parent']->value">
-        <div class="xar-form-input-wrapper">
-            <xar:data-input property="$properties['position']"/>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:data-input property="$properties['position']"/>
+            </div>
         </div>
     </xar:if>
 </xar:template>
