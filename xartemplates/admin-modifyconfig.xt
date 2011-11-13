@@ -61,12 +61,16 @@
                     <legend>
                         Language Configuration
                     </legend>
-                    <div class="xar-form-input-wrapper">
-                        <label class="xar-form-label" for="defaultlanguage" title="#xarML('The languae we fall back on if no translation is available')#">
-                            Default Language
-                        </label> 
-                        <xar:set name="value">xarModVars::get('publications', 'defaultlanguage')</xar:set>
-                        <xar:data-input type="languages" name="defaultlanguage" value="$value" />
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label class="xar-form-label" for="defaultlanguage" title="#xarML('The languae we fall back on if no translation is available')#">
+                                Default Language
+                            </label> 
+                        </div>
+                        <div class="xar-col">
+                            <xar:set name="value">xarModVars::get('publications', 'defaultlanguage')</xar:set>
+                            <xar:data-input type="languages" name="defaultlanguage" value="$value" />
+                        </div>
                     </div>
                 </fieldset>
                 <fieldset>
@@ -76,33 +80,47 @@
                     <xar:var name="firstline">-- None --</xar:var>
                     <xar:set name="firstline">"0,$firstline"</xar:set>
                     <xar:set name="options">$treeoptions</xar:set>
-                    <div class="xar-form-input-wrapper">
-                        <label class="xar-form-label" for="defaultpage">
-                            Default page
-                        </label>
-                        <xar:set name="value">xarModVars::get('publications', 'defaultpage')</xar:set>
-                        <xar:data-input type="dropdown" name="defaultpage" value="$value" options="$options" firstline="$firstline"/>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label class="xar-form-label" for="defaultpage">
+                                Default page
+                            </label>
+                            <xar:set name="value">xarModVars::get('publications', 'defaultpage')</xar:set>
+                        </div>
+                        <div class="xar-col">
+                            <xar:data-input type="dropdown" name="defaultpage" value="$value" options="$options" firstline="$firstline"/>
+                        </div>
                     </div>
-                    <div class="xar-form-input-wrapper">
-                        <label class="xar-form-label" for="errorpage">
-                            Error page
-                        </label>
-                        <xar:set name="value">xarModVars::get('publications', 'errorpage')</xar:set>
-                        <xar:data-input type="dropdown" name="errorpage" value="$value" options="$options" firstline="$firstline"/>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label class="xar-form-label" for="errorpage">
+                                Error page
+                            </label>
+                        </div>
+                        <div class="xar-col">
+                            <xar:set name="value">xarModVars::get('publications', 'errorpage')</xar:set>
+                            <xar:data-input type="dropdown" name="errorpage" value="$value" options="$options" firstline="$firstline"/>
+                        </div>
                     </div>
-                    <div class="xar-form-input-wrapper">
-                        <label class="xar-form-label" for="notfoundpage">
-                            Not found page
-                        </label>
-                        <xar:set name="value">xarModVars::get('publications', 'notfoundpage')</xar:set>
-                        <xar:data-input type="dropdown" name="notfoundpage" value="$value" options="$options" firstline="$firstline"/>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label class="xar-form-label" for="notfoundpage">
+                                Not found page
+                            </label>
+                        </div>
+                        <div class="xar-col">
+                            <xar:set name="value">xarModVars::get('publications', 'notfoundpage')</xar:set>
+                            <xar:data-input type="dropdown" name="notfoundpage" value="$value" options="$options" firstline="$firstline"/>
+                        </div>
                     </div>
-                    <div class="xar-form-input-wrapper">
-                        <label class="xar-form-label" for="noprivspage">
-                            No privileges page
-                        </label>
-                        <xar:set name="value">xarModVars::get('publications', 'noprivspage')</xar:set>
-                        <xar:data-input type="dropdown" name="noprivspage" value="$value" options="$options" firstline="$firstline"/>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label class="xar-form-label" for="noprivspage">
+                                No privileges page
+                            </label>
+                            <xar:set name="value">xarModVars::get('publications', 'noprivspage')</xar:set>
+                            <xar:data-input type="dropdown" name="noprivspage" value="$value" options="$options" firstline="$firstline"/>
+                        </div>
                     </div>
                 </fieldset>
 
@@ -110,38 +128,50 @@
                     <legend>
                         Global Configuration
                     </legend>
-                    <div class="xar-form-input-wrapper">
-                        <label class="help xar-form-label" for="defaultpubtype" title="#xarML('Note: selecting Defaults here implies navigating (by category) across all publication types')#">
-                            Default Publication Type
-                        </label> 
-                        <xar:data-input name="defaultpubtype" type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" />
-                        (for the Publications "Front Page")                    
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label class="help xar-form-label" for="defaultpubtype" title="#xarML('Note: selecting Defaults here implies navigating (by category) across all publication types')#">
+                                Default Publication Type
+                            </label> 
+                        </div>
+                        <div class="xar-col">
+                            <xar:data-input name="defaultpubtype" type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" />
+                            (for the Publications "Front Page")                    
+                        </div>
                     </div>
-                    <div class="xar-form-input-wrapper">
-                        <label class="help xar-form-label" for="sortpubtypes" title="#xarML('Sort order for Publication Types in menus, publication map etc.')#">
-                            Publication Type Sort Order
-                        </label>
-                        <xar:set name="options">
-                            array(
-                                array('id' => 'id', 'name' => 'ID'),
-                                array('id' => 'name', 'name' => 'Name'),
-                                array('id' => 'description', 'name' => 'Description'),
-                            )
-                        </xar:set>
-                        <xar:data-input name="sortpubtypes" type="dropdown" options="$options" />&#160;
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label class="help xar-form-label" for="sortpubtypes" title="#xarML('Sort order for Publication Types in menus, publication map etc.')#">
+                                Publication Type Sort Order
+                            </label>
+                        </div>
+                        <div class="xar-col">
+                            <xar:set name="options">
+                                array(
+                                    array('id' => 'id', 'name' => 'ID'),
+                                    array('id' => 'name', 'name' => 'Name'),
+                                    array('id' => 'description', 'name' => 'Description'),
+                                )
+                            </xar:set>
+                            <xar:data-input name="sortpubtypes" type="dropdown" options="$options" />&#160;
+                        </div>
                     </div>
                     <xar:if condition="xarDB::getType() eq 'mysql'">
-                    <div class="xar-form-input-wrapper">
-                    <xar:comment>
-                        You can adapt the field list here if you want e.g. to ignore the notes field for full-text search
-                    </xar:comment>
-                        <label class="help xar-form-label" for="fulltext" title="#xarML('Enable full-text search in MySQL')#">
-                            Full-text search in MySQL                        
-                        </label>
-                        <xar:set name="checked">xarModVars::get('publications', 'fulltextsearch')</xar:set>
-                        <xar:data-input name="fulltext" type="checkbox" checked="$checked" />&#160;
-                        [<a href="http://dev.mysql.com/doc/refman/4.1/en/fulltext-restrictions.html">with restrictions</a>]
-                    </div>
+                        <div class="xar-row">
+                            <div class="xar-col">
+                            <!--
+                                You can adapt the field list here if you want e.g. to ignore the notes field for full-text search
+                            -->
+                                <label class="help xar-form-label" for="fulltext" title="#xarML('Enable full-text search in MySQL')#">
+                                    Full-text search in MySQL                        
+                                </label>
+                            </div>
+                            <div class="xar-col">
+                                <xar:set name="checked">xarModVars::get('publications', 'fulltextsearch')</xar:set>
+                                <xar:data-input name="fulltext" type="checkbox" checked="$checked" />&#160;
+                                [<a href="http://dev.mysql.com/doc/refman/4.1/en/fulltext-restrictions.html">with restrictions</a>]
+                            </div>
+                        </div>
                     </xar:if>
                 </fieldset>
                 <fieldset class="xar-norm">
@@ -149,18 +179,22 @@
                         Site Configuration
                     </legend>
                     <input type="hidden" name="id" id="id" value="#$ptid#" />
-                    <div class="xar-form-input-wrapper">
-                        <label class="help xar-form-label" for="usealias" title="#xarML('Removes the publications module name from the short url.')#">
-                            Alias for short URLs
-                        </label>
-                        <xar:set name="value">xarModVars::get('publications', 'usealias')</xar:set>
-                        <xar:data-input type="checkbox" name="usealias" checked="$value" />&#160;
-                        <xar:ml>
-                                Use '#(1)' as alias in short URLs
-                            <xar:mlvar>
-                                #$alias#
-                            </xar:mlvar>
-                        </xar:ml>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label class="help xar-form-label" for="usealias" title="#xarML('Removes the publications module name from the short url.')#">
+                                Alias for short URLs
+                            </label>
+                        </div>
+                        <div class="xar-col">
+                            <xar:set name="value">xarModVars::get('publications', 'usealias')</xar:set>
+                            <xar:data-input type="checkbox" name="usealias" checked="$value" />&#160;
+                            <xar:ml>
+                                    Use '#(1)' as alias in short URLs
+                                <xar:mlvar>
+                                    #$alias#
+                                </xar:mlvar>
+                            </xar:ml>
+                        </div>
                     </div>
                     <!--
                     <div class="xar-form-input-wrapper">
@@ -170,24 +204,28 @@
                         <input type="text" name="settings[page_template]" id="page_template" size="20" maxlength="60" value="#$settings['page_template']#" />
                     </div>
                     -->
-                    <div class="xar-form-input-wrapper">
-                        <label class="help xar-form-label" for="usetitleforurl" title="#xarML('Note: if a title contains characters that are illegal in a URL, the title will not be used..')#">                    
-                            Use title in short URLs                    
-                        </label>
-                        <xar:comment>
-                            You can add your own formats here and in encode/decode_shorturl
-                        </xar:comment>
-                        <xar:set name="options">
-                            array(
-                                array('id' => 0, 'name' => 'No'),
-                                array('id' => 1, 'name' => 'Yes, and append date for duplicates'),
-                                array('id' => 2, 'name' => 'Yes, and append publication id for duplicates'),
-                                array('id' => 3, 'name' => 'Yes, but use publication ids for duplicates'),
-                                array('id' => 4, 'name' => 'Yes, and ignore duplicates (faster)'),
-                            )
-                        </xar:set>
-                        <xar:set name="value">xarModVars::get('publications', 'usetitleforurl')</xar:set>
-                        <xar:data-input type="dropdown" name="usetitleforurl" options="$options" value="$value" />&#160;
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label class="help xar-form-label" for="usetitleforurl" title="#xarML('Note: if a title contains characters that are illegal in a URL, the title will not be used..')#">                    
+                                Use title in short URLs                    
+                            </label>
+                            <!--
+                                You can add your own formats here and in encode/decode_shorturl
+                            -->
+                        </div>
+                        <div class="xar-col">
+                            <xar:set name="options">
+                                array(
+                                    array('id' => 0, 'name' => 'No'),
+                                    array('id' => 1, 'name' => 'Yes, and append date for duplicates'),
+                                    array('id' => 2, 'name' => 'Yes, and append publication id for duplicates'),
+                                    array('id' => 3, 'name' => 'Yes, but use publication ids for duplicates'),
+                                    array('id' => 4, 'name' => 'Yes, and ignore duplicates (faster)'),
+                                )
+                            </xar:set>
+                            <xar:set name="value">xarModVars::get('publications', 'usetitleforurl')</xar:set>
+                            <xar:data-input type="dropdown" name="usetitleforurl" options="$options" value="$value" />&#160;
+                        </div>
                     </div>
                 </fieldset>
                 <fieldset class="xar-norm">
