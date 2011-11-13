@@ -22,13 +22,14 @@ function publications_admin_updateconfig()
     // Get parameters
     //A lot of these probably are bools, still might there be a need to change the template to return
     //'true' and 'false' to use those...
-    if(!xarVarFetch('settings',          'array',   $settings,      array(), XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('usetitleforurl',    'int', $usetitleforurl,  xarModVars::get('publications', 'usetitleforurl'),  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('defaultstate',     'isset', $defaultstate,     0,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('defaultsort',       'isset', $defaultsort,     'date',  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('usealias',          'int', $usealias,        0,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('ptid',              'isset', $ptid,            xarModVars::get('publications', 'defaultpubtype'),  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'global', XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('settings',          'array',   $settings,        array(), XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('usetitleforurl',    'int',     $usetitleforurl,  xarModVars::get('publications', 'usetitleforurl'),  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('defaultstate',      'isset',   $defaultstate,    0,  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('defaultsort',       'isset',   $defaultsort,     'date',  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('usealias',          'int',     $usealias,        0,  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('ptid',              'isset',   $ptid,            xarModVars::get('publications', 'defaultpubtype'),  XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('multilanguage',    'int',     $multilanguage,   0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tab',              'str:1:10',$data['tab'],     'global', XARVAR_NOT_REQUIRED)) return;
 
     if (!xarSecurityCheck('AdminPublications',1,'Publication',"$ptid:All:All:All")) return;
 
@@ -44,6 +45,7 @@ function publications_admin_updateconfig()
         xarModVars::set('publications', 'debugmode', $debugmode);
         xarModVars::set('publications', 'usealias', $usealias);
         xarModVars::set('publications', 'usetitleforurl', $usetitleforurl);
+        xarModVars::set('publications', 'multilanguage', $multilanguage);
 
         // Get the special pages.
         foreach(array('defaultpage', 'errorpage', 'notfoundpage', 'noprivspage') as $special_name) {

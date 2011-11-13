@@ -63,7 +63,18 @@
                     </legend>
                     <div class="xar-row">
                         <div class="xar-col">
-                            <label class="xar-form-label" for="defaultlanguage" title="#xarML('The languae we fall back on if no translation is available')#">
+                            <label class="xar-form-label" for="multilanguage" title="#xarML('Support more than one language')#">
+                                Support Translations
+                            </label> 
+                        </div>
+                        <div class="xar-col">
+                            <xar:set name="value">xarModVars::get('publications', 'multilanguage')</xar:set>
+                            <xar:data-input type="checkbox" name="multilanguage" value="$value" />
+                        </div>
+                    </div>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label class="xar-form-label" for="defaultlanguage" title="#xarML('The language we fall back on if no translation is available')#">
                                 Default Language
                             </label> 
                         </div>

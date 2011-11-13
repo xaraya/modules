@@ -15,6 +15,16 @@ sys::import('modules.dynamicdata.class.objects.base');
 
 class Publication extends DataObject
 {
+    public function __construct(DataObjectDescriptor $descriptor)
+    {
+        parent::__construct($descriptor);
+        if (!xarModVars::get('publications', 'multilanguage')) {
+            if (isset($this->properties['locale'])) {
+                $this->properties['locale']->setInputStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
+            }
+        }
+    }
+    
     public function checkInput(Array $args = array(), $suppress=0, $priority='dd')
     {
         $isvalid = parent::checkInput($args,$suppress,$priority);
