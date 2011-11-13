@@ -149,7 +149,7 @@ function publications_init()
     xarModVars::set('publications', 'notfoundpage', 0);
     xarModVars::set('publications', 'noprivspage', 0);
     xarModVars::set('publications', 'debugmode', false);
-
+    xarModVars::get('publications', 'multilanguage', true)
     // Save publications settings for each publication type
     /*
     foreach ($settings as $id => $values) {
@@ -194,50 +194,8 @@ function publications_init()
     }
 
 */
+
 /*
-    // Register blocks
-/*    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'register_block_type',
-                       array('modName'  => 'publications',
-                             'blockType'=> 'related'))) return;
-*/
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'register_block_type',
-                       array('modName'  => 'publications',
-                             'blockType'=> 'topitems'))) return;
-
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'register_block_type',
-                       array('modName'  => 'publications',
-                             'blockType'=> 'featureditems'))) return;
-
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'register_block_type',
-                       array('modName'  => 'publications',
-                             'blockType'=> 'random'))) return;
-
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'register_block_type',
-                       array('modName'  => 'publications',
-                             'blockType'=> 'related'))) return;
-
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'register_block_type',
-                       array('modName'  => 'publications',
-                             'blockType'=> 'crumb'))) return;
-/*
-/*
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'register_block_type',
-                       array('modName'  => 'publications',
-                             'blockType'=> 'glossary'))) return;
 
     if (!xarModRegisterHook('item', 'search', 'GUI',
                            'publications', 'user', 'search')) {
