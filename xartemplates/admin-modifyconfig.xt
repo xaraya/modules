@@ -129,6 +129,8 @@
                             <label class="xar-form-label" for="noprivspage">
                                 No privileges page
                             </label>
+                        </div>
+                        <div class="xar-col">
                             <xar:set name="value">xarModVars::get('publications', 'noprivspage')</xar:set>
                             <xar:data-input type="dropdown" name="noprivspage" value="$value" options="$options" firstline="$firstline"/>
                         </div>
