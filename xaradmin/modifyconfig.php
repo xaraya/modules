@@ -115,6 +115,12 @@ function publications_admin_modifyconfig()
     }
     
     $data['redirects'] = unserialize(xarModVars::get('publications','redirects'));
+    
+    // Whether the languages property is loaded
+    sys::import('modules.dynamicdata.class.properties.registration');
+    $types = PropertyRegistration::Retrieve();
+    $data['languages'] = isset($types[30039]);
+
     return $data;
 }
 ?>

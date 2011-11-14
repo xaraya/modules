@@ -45,7 +45,15 @@ function publications_admin_updateconfig()
         xarModVars::set('publications', 'debugmode', $debugmode);
         xarModVars::set('publications', 'usealias', $usealias);
         xarModVars::set('publications', 'usetitleforurl', $usetitleforurl);
-        xarModVars::set('publications', 'multilanguage', $multilanguage);
+        
+        // Allow multilanguage only if the languages property is present
+        sys::import('modules.dynamicdata.class.properties.registration');
+        $types = PropertyRegistration::Retrieve();
+        if (isset($types[30039])) {
+            xarModVars::set('publications', 'multilanguage', $multilanguage);
+        } else {
+            xarModVars::set('publications', 'multilanguage', 0);
+        }
 
         // Get the special pages.
         foreach(array('defaultpage', 'errorpage', 'notfoundpage', 'noprivspage') as $special_name) {
