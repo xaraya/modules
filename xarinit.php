@@ -149,7 +149,7 @@ function publications_init()
     xarModVars::set('publications', 'notfoundpage', 0);
     xarModVars::set('publications', 'noprivspage', 0);
     xarModVars::set('publications', 'debugmode', false);
-    xarModVars::get('publications', 'multilanguage', true)
+    xarModVars::get('publications', 'multilanguage', true);
     // Save publications settings for each publication type
     /*
     foreach ($settings as $id => $values) {

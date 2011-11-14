@@ -18,9 +18,12 @@ class Publication extends DataObject
     public function __construct(DataObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
-        if (!xarModVars::get('publications', 'multilanguage')) {
+        
+        // If we allow multilanguage, then turn the locale property into type languages
+        if (xarModVars::get('publications', 'multilanguage')) {
             if (isset($this->properties['locale'])) {
-                $this->properties['locale']->setInputStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
+                $this->properties['locale']->setInputStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
+                $this->properties['locale']->type = 30039;      // languages property
             }
         }
     }
@@ -65,6 +68,13 @@ class Publication extends DataObject
     {
         // Save the access property
         $this->properties['access']->setInputStatus(DataPropertyMaster::DD_INPUTSTATE_ADDMODIFY);
+
+        // If multilanguages is not enabled just save the default language value
+        if (!xarModVars::get('publications', 'multilanguage')) {
+            if (isset($this->properties['locale'])) {
+                $this->properties['locale']->setInputStatus(DataPropertyMaster::DD_INPUTSTATE_ADDMODIFY);
+            }
+        }
 
         // Ignore the position if this isn't the base document
         if (empty($this->properties['parent']->value)) {
