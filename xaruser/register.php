@@ -101,6 +101,12 @@ function registration_user_register()
             $object = DataObjectMaster::getObject(array('name' => $regobjectname));
             if (empty($object)) return;
 
+            if (!xarModVars::get('registration', 'chooseownpassword')) {
+                $fieldlist = array_flip($object->getFieldList());
+                unset($fieldlist['password']);
+                $object->setFieldList(array_keys($fieldlist));
+            }
+
             if (isset($fieldvalues)) {
                 $object->setFieldValues($fieldvalues,1);
             }
@@ -135,6 +141,12 @@ function registration_user_register()
             // initialise registration object
             $object = DataObjectMaster::getObject(array('name' => $regobjectname));
             if (empty($object)) return;            
+            if (!xarModVars::get('registration', 'chooseownpassword')) {
+                $fieldlist = array_flip($object->getFieldList());
+                unset($fieldlist['password']);
+                $object->setFieldList(array_keys($fieldlist));
+            }
+
             // Check object input            
             $isvalid = $object->checkInput();
             
@@ -276,7 +288,7 @@ function registration_user_register()
             if (!xarModVars::get('registration', 'chooseownpassword')){
                 $pass = xarMod::apiFunc('roles', 'user', 'makepass');
                 $fieldvalues['password'] = $pass;
-                $object->setFieldValues($fieldvalues);
+                $object->setFieldValues($fieldvalues,1);
             }
 
             // Create the user, assigning it to a parent

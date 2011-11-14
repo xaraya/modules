@@ -29,6 +29,13 @@ class RegisteredUser extends DataObject
         if ($q->getrows() > 0) {
             throw new DuplicateException(array('role',$data['uname']));
         }
+        // if the user didn't choose their own password we need to get it before it gets encrypted
+        // so we can include it in the email we're going to send them 
+        if (!xarModVars::get('registration', 'chooseownpassword')) {
+            $password = $this->properties['password']->value;
+            // and then call the setValue method so it gets hashed 
+            $this->properties['password']->setValue($password);
+        }
 
         $id = parent::createItem($data);
 
@@ -55,7 +62,7 @@ class RegisteredUser extends DataObject
         // note: dont email password if user chose his own (should this condition be in the createnotify api instead?)
 
         $emailargs = $this->getFieldValues();
-        $emailargs['password'] = xarModVars::get('registration', 'chooseownpassword') ? '' : $this->properties['password']->value;
+        $emailargs['password'] = !empty($password) ? $password : '';
         $emailvalues = $emailargs;
         $emailargs['emailvalues'] = $emailvalues;
         $ret = xarMod::apiFunc('registration','user','createnotify',$emailargs);
