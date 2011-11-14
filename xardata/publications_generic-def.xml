@@ -24,7 +24,7 @@
       <id>836</id>
       <label>Name</label>
       <type>textbox</type>
-      <defaultvalue>New Generic Document</defaultvalue>
+      <defaultvalue>new_generic_document</defaultvalue>
       <source>xar_publications.name</source>
       <status>33</status>
       <seq>2</seq>
@@ -143,10 +143,10 @@
     <property name="locale">
       <id>848</id>
       <label>Language</label>
-      <type>languages</type>
+      <type>static</type>
       <defaultvalue>xarModVars::get('publications', 'defaultlanguage')</defaultvalue>
       <source>xar_publications.locale</source>
-      <status>33</status>
+      <status>161</status>
       <seq>23</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_firstline";s:19:"0,Choose a language";}</configuration>
     </property>

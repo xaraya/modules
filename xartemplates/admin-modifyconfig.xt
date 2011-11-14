@@ -79,8 +79,12 @@
                             </label> 
                         </div>
                         <div class="xar-col">
-                            <xar:set name="value">xarModVars::get('publications', 'defaultlanguage')</xar:set>
-                            <xar:data-input type="languages" name="defaultlanguage" value="$value" />
+                            <xar:if condition="$languages">
+                                <xar:set name="value">xarModVars::get('publications', 'defaultlanguage')</xar:set>
+                                <xar:data-input type="languages" name="defaultlanguage" value="$value" />
+                            <xar:else/>
+                                <span class="xar-warning">The languages property is not available</span>
+                            </xar:if>
                         </div>
                     </div>
                 </fieldset>
