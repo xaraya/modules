@@ -22,7 +22,6 @@
         <div style="margin: auto;">
             <form class="xar-xarpages-admin" action="#xarServer::getCurrentURL()#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);">
                 <xar:data-form object="$module_settings"/>
-            <xar:template file="display" module="base" subdata="$subdata"/>
                 <fieldset class="formelements xar-norm">
                     <legend>
                         <strong>Properties</strong>
