@@ -381,7 +381,7 @@ function crispbb_user_search()
                         }
                         if (empty($iconlist)) {
                             $iconlist = xarMod::apiFunc('crispbb', 'user', 'gettopicicons',
-                                array('iconfolder' => $data['iconfolder']));
+                                array('iconfolder' => $post['iconfolder']));
                             $iconlists[$item['fid']] = $iconlist;
                         }
                         if (!empty($iconlist[$item['topicicon']])) {
