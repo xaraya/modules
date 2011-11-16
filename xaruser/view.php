@@ -57,6 +57,9 @@ function publications_user_view($args)
     // Override if needed from argument array (e.g. ptid, numitems etc.)
     extract($args);
 
+    // We need a number here
+    if (!is_numeric($ptid)) return xarResponse::NotFound();
+
     // Constants used throughout.
     //
     // publications module ID
