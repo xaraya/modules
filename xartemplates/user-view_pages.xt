@@ -37,7 +37,7 @@
         </xar:if>
 
         <xar:if condition="empty($pages)">
-             No pages defined
+             No publications defined
         <xar:else />
             <xar:if condition="!empty($add_allowed)">
                 <div><a href="#xarModURL('publications','admin','new')#">Add Page</a></div>
