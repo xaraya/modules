@@ -28,12 +28,12 @@
       <order>2</order>
       <validation>xarModAPIFunc('keywords','user','getlist')</validation>
     </property>
-    <property name="moduleid">
+    <property name="module_id">
       <id>68</id>
       <label>Module</label>
       <type>module</type>
       <default></default>
-      <source>xar_keywords.moduleid</source>
+      <source>xar_keywords.module_id</source>
       <status>1</status>
       <order>3</order>
       <validation></validation>

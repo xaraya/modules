@@ -52,7 +52,7 @@ function keywords_adminapi_limited($args)
     $query = "INSERT INTO $keywordstable (
               id,
               keyword,
-              moduleid,
+              module_id,
               itemtype)
               VALUES (
               ?,

@@ -34,7 +34,7 @@ function keywords_userapi_search($args)
     // Get item
     $query = "SELECT DISTINCT id,
                    keyword,
-                   moduleid,
+                   module_id,
                    itemtype,
                    itemid
                    FROM $keywordstable

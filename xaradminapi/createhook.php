@@ -151,7 +151,7 @@ function keywords_adminapi_createhook($args)
         // Create new keyword
         $query = "INSERT INTO $keywordstable (id,
                                            keyword,
-                                           moduleid,
+                                           module_id,
                                            itemtype,
                                            itemid)
                                     VALUES (?,

@@ -23,6 +23,7 @@ function keywords_adminapi_updatehook($args)
 {
     extract($args);
 
+
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'object id', 'admin', 'updatehook', 'keywords');
@@ -193,6 +194,7 @@ function keywords_adminapi_updatehook($args)
         $new = $cleanwords;
     }
 
+
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords'];
@@ -216,7 +218,7 @@ function keywords_adminapi_updatehook($args)
             // Create new keywords
             $query = "INSERT INTO $keywordstable (id,
                                                keyword,
-                                               moduleid,
+                                               module_id,
                                                itemtype,
                                                itemid)
                     VALUES (?,
@@ -232,7 +234,7 @@ function keywords_adminapi_updatehook($args)
             //$keywordsid = $dbconn->PO_Insert_ID($keywordstable, 'id');
         }
     }
-    $extrainfo['keywords'] = join(' ',$cleanwords);
+    $extrainfo['keywords'] = join(' ',$new);
     // Return extrainfo or the next hook will fail
     return $extrainfo;
 }
