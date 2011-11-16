@@ -4,76 +4,124 @@
         <legend>
             Characteristics
         </legend>
-        <div class="xar-form-input-wrapper">
-            <xar:var name="label">Document ID</xar:var>
-            <xar:data-label property="$properties['id']" for="id" label="$label" />
-            <xar:data-input property="$properties['id']" />
-            <xar:data-input property="$properties['parent']" hidden="hidden"/>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">Document ID</xar:var>
+                <xar:data-label property="$properties['id']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['id']" />
+                <xar:data-input property="$properties['parent']" hidden="hidden"/>
+            </div>
         </div>
-        <div class="xar-form-input-wrapper">
-            <xar:var name="label">Publication Type</xar:var>
-            <xar:data-label property="$properties['itemtype']" for="id" label="$label" />
-            <xar:data-input property="$properties['itemtype']" value="$ptid" />
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">Publication Type</xar:var>
+                <xar:data-label property="$properties['itemtype']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['itemtype']" value="$ptid" />
+            </div>
         </div>
-        <div class="xar-form-input-wrapper">
-            <xar:var name="label">Language</xar:var>
-            <xar:data-label property="$properties['locale']" for="id" label="$label" />
-            <xar:data-input property="$properties['locale']"/>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">Language</xar:var>
+                <xar:data-label property="$properties['locale']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['locale']"/>
+            </div>
         </div>
-        <div class="xar-form-input-wrapper">
-            <xar:var name="label">Current Version</xar:var>
-            <xar:data-label property="$properties['version']" for="id" label="$label" />
-            <xar:data-input property="$properties['version']" />
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">Current Version</xar:var>
+                <xar:data-label property="$properties['version']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['version']" />
+            </div>
         </div>
-        <div class="xar-form-input-wrapper">
-            <xar:var name="label">Author</xar:var>
-            <xar:data-label property="$properties['author']" for="id" label="$label" />
-            <xar:data-input property="$properties['author']" />
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">Author</xar:var>
+                <xar:data-label property="$properties['author']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['author']" />
+            </div>
         </div>
-        <div class="xar-form-input-wrapper">
-            <xar:var name="label">Number of Pages</xar:var>
-            <xar:data-label property="$properties['pages']" for="id" label="$label" />
-            <xar:data-input property="$properties['pages']" />
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">Number of Pages</xar:var>
+                <xar:data-label property="$properties['pages']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['pages']" />
+            </div>
         </div>
     </fieldset>
     <fieldset>
         <legend>
             Publication
         </legend>
-        <div class="xar-form-input-wrapper">
-            <xar:var name="label">Start Publication</xar:var>
-            <xar:data-label property="$properties['start_date']" for="id" label="$label" />
-            <xar:data-input property="$properties['start_date']" />
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">Start Publication</xar:var>
+                <xar:data-label property="$properties['start_date']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['start_date']" />
+            </div>
         </div>
-        <div class="xar-form-input-wrapper">
-            <xar:var name="label">End Publicazion</xar:var>
-            <xar:data-label property="$properties['end_date']" for="id" label="$label" />
-            <xar:data-input property="$properties['end_date']" />
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">End Publicazion</xar:var>
+                <xar:data-label property="$properties['end_date']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['end_date']" />
+            </div>
         </div>
     </fieldset>
     <fieldset>
         <legend>
             Status
         </legend>
-        <div class="xar-form-input-wrapper">
-            <xar:var name="label">Document State</xar:var>
-            <xar:data-label property="$properties['state']" for="id" label="$label" />
-            <xar:data-input property="$properties['state']" />
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">Document State</xar:var>
+                <xar:data-label property="$properties['state']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['state']" />
+            </div>
         </div>
-        <div class="xar-form-input-wrapper">
-            <xar:var name="label">Process State</xar:var>
-            <xar:data-label property="$properties['process_state']" for="id" label="$label" />
-            <xar:data-input property="$properties['process_state']" />
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">Process State</xar:var>
+                <xar:data-label property="$properties['process_state']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['process_state']" />
+            </div>
         </div>
-        <div class="xar-form-input-wrapper">
-            <xar:var name="label">Date Created</xar:var>
-            <xar:data-label property="$properties['created']" for="id" label="$label" />
-            <xar:data-input property="$properties['created']" />
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">Date Created</xar:var>
+                <xar:data-label property="$properties['created']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['created']" />
+            </div>
         </div>
-        <div class="xar-form-input-wrapper">
-            <xar:var name="label">Date Last Modified</xar:var>
-            <xar:data-label property="$properties['modified']" for="id" label="$label" />
-            <xar:data-input property="$properties['modified']" />
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">Date Last Modified</xar:var>
+                <xar:data-label property="$properties['modified']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['modified']" />
+            </div>
         </div>
     </fieldset>
     <!--
@@ -84,82 +132,130 @@
             <legend>
                 Presentation
             </legend>
-            <div class="xar-form-input-wrapper">
-                <xar:var name="label">Summary Template</xar:var>
-                <xar:data-label property="$properties['summary_template']" for="id" label="$label" />
-                <xar:data-input property="$properties['summary_template']" />
-                &#160;
-                <a href="#xarModURL('publications','admin','templates_page',array('file' => 'summary','ptid' => $properties['itemtype']->value,'itemid' => $properties['id']->value))#">
-                    Edit template
-                </a>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">Summary Template</xar:var>
+                    <xar:data-label property="$properties['summary_template']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['summary_template']" />
+                    &#160;
+                    <a href="#xarModURL('publications','admin','templates_page',array('file' => 'summary','ptid' => $properties['itemtype']->value,'itemid' => $properties['id']->value))#">
+                        Edit template
+                    </a>
+                </div>
             </div>
-            <div class="xar-form-input-wrapper">
-                <xar:var name="label">Detail Template</xar:var>
-                <xar:data-label property="$properties['detail_template']" for="id" label="$label" />
-                <xar:data-input property="$properties['detail_template']" />
-                &#160;
-                <a href="#xarModURL('publications','admin','templates_page',array('file' => 'detail','ptid' => $properties['itemtype']->value,'itemid' => $properties['id']->value))#">
-                    Edit template
-                </a>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">Detail Template</xar:var>
+                    <xar:data-label property="$properties['detail_template']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['detail_template']" />
+                    &#160;
+                    <a href="#xarModURL('publications','admin','templates_page',array('file' => 'detail','ptid' => $properties['itemtype']->value,'itemid' => $properties['id']->value))#">
+                        Edit template
+                    </a>
+                </div>
             </div>
-            <xar:var name="firstline">(current template)</xar:var>
-            <xar:set name="firstline">",$firstline"</xar:set>
-            <div class="xar-form-input-wrapper">
-                <xar:var name="label">Page Template</xar:var>
-                <xar:data-label property="$properties['page_template']" for="id" label="$label" />
-                <xar:data-input property="$properties['page_template']" firstline="$firstline" />
+            <div class="xar-row">
+                <xar:var name="firstline">(current template)</xar:var>
+                <xar:set name="firstline">",$firstline"</xar:set>
+                <div class="xar-col">
+                    <xar:var name="label">Page Template</xar:var>
+                    <xar:data-label property="$properties['page_template']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['page_template']" firstline="$firstline" />
+                </div>
             </div>
-            <xar:var name="firstline">(current theme)</xar:var>
-            <xar:set name="firstline">",$firstline"</xar:set>
-            <div class="xar-form-input-wrapper">
-                <xar:var name="label">Theme</xar:var>
-                <xar:data-label property="$properties['theme']" for="id" label="$label" />
-                <xar:data-input property="$properties['theme']" firstline="$firstline" />
+            <div class="xar-row">
+                <xar:var name="firstline">(current theme)</xar:var>
+                <xar:set name="firstline">",$firstline"</xar:set>
+                <div class="xar-col">
+                    <xar:var name="label">Theme</xar:var>
+                    <xar:data-label property="$properties['theme']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['theme']" firstline="$firstline" />
+                </div>
             </div>
-            <div class="xar-form-input-wrapper">
-                <xar:var name="label">HTML Page Title</xar:var>
-                <xar:data-label property="$properties['page_title']" for="id" label="$label" />
-                <xar:data-input property="$properties['page_title']" />
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">HTML Page Title</xar:var>
+                    <xar:data-label property="$properties['page_title']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['page_title']" />
+                </div>
             </div>
-            <div class="xar-form-input-wrapper">
-                <xar:var name="label">HTML Page Description</xar:var>
-                <xar:data-label property="$properties['page_description']" for="id" label="$label" />
-                <xar:data-input property="$properties['page_description']" />
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">HTML Page Description</xar:var>
+                    <xar:data-label property="$properties['page_description']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['page_description']" />
+                </div>
             </div>
-            <div class="xar-form-input-wrapper">
-                <xar:var name="label">HTML Keywords</xar:var>
-                <xar:data-label property="$properties['keywords']" for="id" label="$label" />
-                <xar:data-input property="$properties['keywords']" />
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">HTML Keywords</xar:var>
+                    <xar:data-label property="$properties['keywords']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['keywords']" />
+                </div>
             </div>
         </fieldset>
         <fieldset>
             <legend>
                 Redirects and Aliases
             </legend>
-            <div class="xar-form-input-wrapper">
-                <xar:var name="label">Type of redirect</xar:var>
-                <xar:data-label property="$properties['redirect_flag']" for="id" label="$label" />
-                <xar:data-input property="$properties['redirect_flag']" />
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">Type of redirect</xar:var>
+                    <xar:data-label property="$properties['redirect_flag']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['redirect_flag']" />
+                </div>
             </div>
-            <div class="xar-form-input-wrapper">
-                <xar:var name="label">Redirect URL</xar:var>
-                <xar:data-label property="$properties['redirect_url']" for="id" label="$label" />
-                <xar:data-input property="$properties['redirect_url']" />
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">Redirect URL</xar:var>
+                    <xar:data-label property="$properties['redirect_url']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['redirect_url']" />
+                </div>
             </div>
-            <div class="xar-form-input-wrapper">
-                <xar:var name="label">URL to proxy</xar:var>
-                <xar:data-label property="$properties['proxy_url']" for="id" label="$label" />
-                <xar:data-input property="$properties['proxy_url']" />
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">URL to proxy</xar:var>
+                    <xar:data-label property="$properties['proxy_url']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['proxy_url']" />
+                </div>
             </div>
-            <div class="xar-form-input-wrapper">
-                <xar:var name="label">Type of alias</xar:var>
-                <xar:data-label property="$properties['alias_flag']" for="id" label="$label" />
-                <xar:data-input property="$properties['alias_flag']" />
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">Type of alias</xar:var>
+                    <xar:data-label property="$properties['alias_flag']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['alias_flag']" />
+                </div>
             </div>
-            <div class="xar-form-input-wrapper">
-                <xar:var name="label">Alias name</xar:var>
-                <xar:data-label property="$properties['alias']" for="id" label="$label" />
-                <xar:data-input property="$properties['alias']" />
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">Alias name</xar:var>
+                    <xar:data-label property="$properties['alias']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['alias']" />
+                </div>
             </div>
         </fieldset>
     <!--
