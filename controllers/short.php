@@ -203,17 +203,21 @@ class PublicationsShortController extends ShortActionController
             case 'view':
                 $path[] = 'view';
                 if (isset($params['ptid'])) {
-                    // Get all publication types present
-                    if (empty($this->pubtypes)) $this->pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
-                    // Match to the function token
-                    foreach ($this->pubtypes as $id => $pubtype) {
-                        if ($params['ptid'] == $id) {
-                            $path[] = strtolower($pubtype['description']);
-                            unset($params['ptid']);
-                            break;
+                    if (xarModVars::get('publications', 'usetitleforurl')) {
+                        // Get all publication types present
+                        if (empty($this->pubtypes)) $this->pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+                        // Match to the function token
+                        foreach ($this->pubtypes as $id => $pubtype) {
+                            if ($params['ptid'] == $id) {
+                                $path[] = strtolower($pubtype['description']);
+                                break;
+                            }
                         }
+                    } else {
+                        $path[] = $params['ptid'];
                     }
                 }
+                unset($params['ptid']);
             break;
             
             case 'viewmap':
