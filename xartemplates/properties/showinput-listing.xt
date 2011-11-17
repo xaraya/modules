@@ -8,13 +8,18 @@
         <xar:set name="url">xarServer::getCurrentURL($params)</xar:set>
 
         <xar:style scope="module" module="base" file="navtabs" />
-        <xar:template file="listing_alphabet" module="$module" property="listing" />
-
-        <br />
-
-        <xar:template file="listing_searchboxline" module="$module" property="listing" />
-        <xar:template file="listing_summaryline" module="$module" property="listing" />
-        <xar:template file="listing_pagerline" module="$module" property="listing" />
+        <div>
+            <xar:template file="listing_alphabet" module="$module" property="listing" />
+        </div>
+        <div style="clear: both">
+            <xar:template file="listing_searchboxline" module="$module" property="listing" />
+        </div>
+        <div>
+            <xar:template file="listing_summaryline" module="$module" property="listing" />
+        </div>
+        <div>
+            <xar:template file="listing_pagerline" module="$module" property="listing" />
+        </div>
         <table style="clear:both; width: 100%" border="0">
             <xar:template file="listing_header" module="$module" property="listing" />
             <xar:template file="listing_body" module="$module" property="listing" />
