@@ -94,7 +94,7 @@
         </label> 
     </div> 
     <div class="xar-form-input-wrapper">
-        <label class="xar-form-label help" title="#xarML('Choose the state (e.g. Approved, Front Page) for the featured items.')#" for="state#$blockid#">             
+        <label class="xar-form-label help" title="#xarML('Choose the state (e.g. Approved, Front Page) for the featured items.')#" for="pubstate#$blockid#">             
             Status             
         </label>
         <xar:set name="options">
@@ -104,6 +104,6 @@
                 array('id' => '2', 'name' => xarML('Approved'))
             )
         </xar:set>        
-        <xar:data-input type="dropdown" name="stateoptions" options="$options" value="$state"/>
+        <xar:data-input type="dropdown" name="pubstate" options="$options" value="$pubstate"/>
     </div>
 </xar:template>
