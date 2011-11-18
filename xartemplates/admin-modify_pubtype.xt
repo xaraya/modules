@@ -7,7 +7,7 @@
             Modify publication type: #$properties['description']->value#
         </h2>
 
-        <form method="post" action="#xarModURL('publication','admin','modify_pubtype')#">
+        <form method="post" action="#xarModURL('publications','admin','modify_pubtype')#">
           <fieldset>
             <legend>Modify item details</legend>
             <xar:data-form object="$object"/>
