@@ -1,0 +1,36 @@
+<items>
+  <publications_documents itemid="1">
+    <id>1</id>
+    <name>welcome_document</name>
+    <title>Welcome</title>
+    <body>We are currently under construction. Please come back soon as we continue to add content.</body>
+    <notes>This document can be used as a placeholder for sites under construction.</notes>
+    <parent>0</parent>
+    <author>6</author>
+    <state>3</state>
+    <pages>1</pages>
+    <locale>en_US.utf-8</locale>
+    <itemtype>2</itemtype>
+    <start_date>1321701019</start_date>
+    <end_date>1353237019</end_date>
+    <version>1</version>
+    <summary_template>0</summary_template>
+    <detail_template>0</detail_template>
+    <page_template></page_template>
+    <theme></theme>
+    <categories></categories>
+    <created>1321701019</created>
+    <modified>1321701019</modified>
+    <process_state>1</process_state>
+    <position>a:42:{s:2:&quot;id&quot;;s:1:&quot;3&quot;;s:4:&quot;name&quot;;s:16:&quot;welcome_document&quot;;s:5:&quot;title&quot;;s:7:&quot;Welcome&quot;;s:11:&quot;description&quot;;N;s:7:&quot;summary&quot;;N;s:5:&quot;body1&quot;;s:77:&quot;We are currently under construction. Please come back soon as we add content.&quot;;s:5:&quot;body2&quot;;N;s:5:&quot;body3&quot;;N;s:5:&quot;body4&quot;;N;s:5:&quot;body5&quot;;N;s:5:&quot;notes&quot;;s:72:&quot;This document can be used as a placeholder for sites under construction.&quot;;s:3:&quot;seq&quot;;s:1:&quot;0&quot;;s:9:&quot;parent_id&quot;;s:1:&quot;0&quot;;s:10:&quot;pubtype_id&quot;;s:1:&quot;2&quot;;s:5:&quot;pages&quot;;s:1:&quot;1&quot;;s:6:&quot;locale&quot;;s:11:&quot;de_DE.utf-8&quot;;s:10:&quot;page_title&quot;;s:0:&quot;&quot;;s:16:&quot;page_description&quot;;s:0:&quot;&quot;;s:8:&quot;keywords&quot;;s:0:&quot;&quot;;s:11:&quot;leftpage_id&quot;;s:1:&quot;3&quot;;s:12:&quot;rightpage_id&quot;;s:1:&quot;4&quot;;s:13:&quot;parentpage_id&quot;;s:1:&quot;0&quot;;s:10:&quot;start_date&quot;;s:10:&quot;1321701019&quot;;s:8:&quot;end_date&quot;;s:10:&quot;1353237019&quot;;s:5:&quot;owner&quot;;s:1:&quot;6&quot;;s:7:&quot;version&quot;;s:1:&quot;1&quot;;s:11:&quot;create_date&quot;;s:10:&quot;1321701019&quot;;s:11:&quot;modify_date&quot;;s:10:&quot;1321701019&quot;;s:16:&quot;summary_template&quot;;s:1:&quot;0&quot;;s:15:&quot;detail_template&quot;;s:1:&quot;0&quot;;s:13:&quot;page_template&quot;;s:0:&quot;&quot;;s:5:&quot;theme&quot;;s:0:&quot;&quot;;s:6:&quot;access&quot;;s:256:&quot;a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}&quot;;s:5:&quot;state&quot;;s:1:&quot;3&quot;;s:13:&quot;process_state&quot;;s:1:&quot;1&quot;;s:13:&quot;redirect_flag&quot;;s:1:&quot;0&quot;;s:12:&quot;redirect_url&quot;;s:0:&quot;&quot;;s:9:&quot;proxy_url&quot;;s:0:&quot;&quot;;s:10:&quot;alias_flag&quot;;s:1:&quot;0&quot;;s:5:&quot;alias&quot;;s:0:&quot;&quot;;s:7:&quot;left_id&quot;;s:1:&quot;3&quot;;s:8:&quot;right_id&quot;;s:1:&quot;4&quot;;}</position>
+    <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
+    <redirect_flag>0</redirect_flag>
+    <redirect_url></redirect_url>
+    <proxy_url></proxy_url>
+    <alias_flag>0</alias_flag>
+    <alias></alias>
+    <page_title></page_title>
+    <page_description></page_description>
+    <keywords></keywords>
+  </publications_documents>
+</items>

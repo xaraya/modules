@@ -16,6 +16,11 @@
                         <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete')#"/>
                     </a>
                 </xar:access>
+                <xar:access level="200">
+                    <a href="#xarModURL($module, 'user', 'display', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Delete this item')#" style="margin-right: 5px">
+                        <img src="#xarTplGetImage('icons/'.'display.png', 'base')#" width="16" height="16" alt="#xarML('Display')#"/>
+                    </a>
+                </xar:access>
                 <input type="checkbox" name="optionscheckbox" id="#$loopitem[$primaryalias]#"  />
             </td>
         </xar:if>
@@ -47,6 +52,20 @@
                     <xar:else />
                         <a href="#$link#">
                             Delete
+                        </a>
+                    </xar:if>
+                </xar:access>
+                <xar:access level="200">
+                    <xar:set name="link">
+                        xarModURL($module, 'admin', 'display', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))
+                    </xar:set>
+                    <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
+                        <a href="#$link#" title="#xarML('Display this item')#" style="margin-right: 5px">
+                            <img src="#xarTplGetImage('icons/'.'display.png', 'base')#" width="16" height="16" alt="#xarML('Display Publication')#"/>
+                        </a>
+                    <xar:else />
+                        <a href="#$link#">
+                            Display
                         </a>
                     </xar:if>
                 </xar:access>
