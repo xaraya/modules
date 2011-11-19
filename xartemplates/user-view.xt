@@ -6,14 +6,17 @@
     <xar:set name="now">time()</xar:set>
 
     <!-- Get the list of object items we want -->
+    <!-- Note: itemtype is already defined in the code -->
     <xar:data-getitems properties="$properties" values="$items" object="$object">
       <xar:select>
         <xar:andconditions>
-          <xar:condition operator="eq" property="itemtype">$ptid</xar:condition>
           <xar:condition operator="in" property="state">array(3,4)</xar:condition>
           <xar:condition operator="eq" property="locale">xarUserGetNavigationLocale()</xar:condition>
           <xar:condition operator="le" property="start_date">$now</xar:condition>
-          <xar:condition operator="ge" property="end_date">$now</xar:condition>
+          <xar:orconditions>
+            <xar:condition operator="ge" property="end_date">$now</xar:condition>
+            <xar:condition operator="eq" property="no_end">1</xar:condition>
+          </xar:orconditions>
         </xar:andconditions>
       </xar:select>
     </xar:data-getitems>

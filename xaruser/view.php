@@ -533,7 +533,7 @@ function publications_user_view($args)
     
     // Get the items here
 //    $items = $data['object']->getItems();
-
+/* We're doing this in the template now
     // Only show top level documents, not translations
     sys::import('xaraya.structures.query');
     $q = new Query();
@@ -545,7 +545,7 @@ function publications_user_view($args)
     // Remove this once listing property works with dataobject access
     $q->ne('state',0);
     $data['conditions'] = $q;
-
+*/
     // Set the page template if needed
     if (!empty($data['settings']['page_template'])) {
         $pagename = $data['settings']['page_template'];

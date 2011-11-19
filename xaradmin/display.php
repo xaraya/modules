@@ -110,9 +110,10 @@ function publications_admin_display($args)
     $accessconstraints = unserialize($data['object']->properties['access']->value);
     $access = DataPropertyMaster::getProperty(array('name' => 'access'));
     $allow = $access->check($accessconstraints['display']);
+    $nopublish = (time() < $data['object']->properties['start_date']->value) || ((time() > $data['object']->properties['end_date']->value) && !$data['object']->properties['no_end']->value);
     
     // If no access, then bail showing a forbidden or an empty page
-    if (!$allow) {
+    if (!$allow || $nopublish) {
         if ($accessconstraints['display']['failure']) return xarResponse::Forbidden();
         else return xarTplModule('publications', 'user', 'empty');
     }
