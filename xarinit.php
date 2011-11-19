@@ -55,6 +55,7 @@ function publications_init()
             parentpage_id       integer unsigned NULL,
             start_date          integer unsigned NOT NULL,
             end_date            integer unsigned NOT NULL,
+            mo_end              tinyint NOT NULL DEFAULT '1',
             owner               integer unsigned NULL,
             version             integer unsigned NULL,
             create_date         integer unsigned NULL,
