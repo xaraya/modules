@@ -21,7 +21,7 @@ function publications_userapi_getmenulinks()
 
     $menulinks[] = Array('url'   => xarModURL('publications',
                                               'user',
-                                              'view'),
+                                              'main'),
                          'title' => xarML('Highlighted Publications'),
                          'label' => xarML('Front Page'));
 
