@@ -15,7 +15,7 @@
 
     function foo_admin_main()
     {
-        if(!xarSecurityCheck('AdminFoo')) return;
+        if(!xarSecurityCheck('ManageFoo')) return;
 
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return array();
