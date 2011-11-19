@@ -4,7 +4,7 @@
  *
  * @package modules
  * @subpackage foo module
- * @copyright (C) 2010 Netspan AG
+ * @copyright (C) 2011 Netspan AG
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <mfl@netspan.ch>
  */
@@ -18,7 +18,7 @@
         // Security Check
         if (!xarSecurityCheck('ReadFoo')) return;
 
-//        xarResponse::redirect(xarModURL('foo', 'user', 'view'));
+//        xarController::redirect(xarModURL('foo', 'user', 'view'));
         // success
         return array(); //true;
     }

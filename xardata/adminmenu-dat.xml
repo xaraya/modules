@@ -15,7 +15,7 @@
                 <includeitem>view</includeitem>
             </includes>
             <target>view</target>
-            <title>Manage the master tables of thsi module</title>
+            <title>Manage the master tables of this module</title>
             <label>Master Tables</label>
         </menuitem>
         <menuitem>

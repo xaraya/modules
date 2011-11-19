@@ -4,7 +4,7 @@
  *
  * @package modules
  * @subpackage foo module
- * @copyright (C) 2010 Netspan AG
+ * @copyright (C) 2011 Netspan AG
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <mfl@netspan.ch>
  */
@@ -37,7 +37,7 @@
             $item = $data['object']->deleteItem();
                 
             // Jump to the next page
-            xarResponse::redirect(xarModURL('foo','admin','view'));
+            xarController::redirect(xarModURL('foo','admin','view'));
             return true;
         }
         return $data;

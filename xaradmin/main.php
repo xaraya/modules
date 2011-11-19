@@ -4,7 +4,7 @@
  *
  * @package modules
  * @subpackage foo module
- * @copyright (C) 2010 Netspan AG
+ * @copyright (C) 2011 Netspan AG
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <mfl@netspan.ch>
  */
@@ -20,7 +20,7 @@
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return array();
         } else {
-            xarResponse::redirect(xarModURL('foo', 'admin', 'modifyconfig'));
+            xarController::redirect(xarModURL('foo', 'admin', 'modifyconfig'));
         }
         // success
         return true;
