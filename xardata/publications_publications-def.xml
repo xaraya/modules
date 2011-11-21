@@ -205,7 +205,7 @@
       <label>Open Ended</label>
       <type>checkbox</type>
       <defaultvalue>1</defaultvalue>
-      <source>publication.no_end</source>
+      <source>xar_publications.no_end</source>
       <status>33</status>
       <seq>27</seq>
       <configuration>a:0:{}</configuration>
