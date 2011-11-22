@@ -20,10 +20,10 @@
                         Rating Style:
                     </label>
                     <xar:set name="options">xarMod::apiFunc('ratings','user','getstyles')</xar:set>
-                    <xar:set name="name">'ratingsstyle[' . $modname . ']'</xar:set>
+                    <xar:set name="ratingname">'ratingsstyle[' . $modname . ']'</xar:set>
                     <xar:set name="id">'ratingsstyle_' . $modname</xar:set>
                     <xar:set name="options">xarMod::apiFunc('ratings','user','getstyles')</xar:set>
-                    <xar:data-input type="dropdown" name="$name" id="$id" options="$options" value="$config['ratingsstyle']"/>
+                    <xar:data-input type="dropdown" name="$ratingname" id="$id" options="$options" value="$config['ratingsstyle']"/>
                 </div>
                 <div class="xar-form-input-wrapper">
                   <label for="seclevel_#$confcounter#" class="xar-form-label">

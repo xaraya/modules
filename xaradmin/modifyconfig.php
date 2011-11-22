@@ -25,7 +25,7 @@ function ratings_admin_modifyconfig()
     // Security Check
     if (!xarSecurityCheck('AdminRatings')) return;
 
-    $defaultratingsstyle = xarModVars::get('ratings', 'defaultratingstyle');
+    $defaultratingsstyle = xarModVars::get('ratings', 'defaultratingsstyle');
     $defaultseclevel = xarModVars::get('ratings', 'seclevel');
     $defaultshownum = xarModVars::get('ratings', 'shownum');
 
