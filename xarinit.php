@@ -63,7 +63,7 @@ function ratings_init()
     #
     xarModVars::set('ratings', 'defaultratingsstyle', 'outoffivestars');
     xarModVars::set('ratings', 'seclevel', 'medium');
-    xarModSetVar('ratings', 'shownum', 1);
+    xarModVars::set('ratings', 'shownum', 1);
 
     # --------------------------------------------------------
     #
@@ -234,6 +234,6 @@ function ratings_delete()
                              'ratings', 'admin', 'deleteall')) {
         return;
     }
-        return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => ''ratings));
+        return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'ratings'));
 }
 ?>
