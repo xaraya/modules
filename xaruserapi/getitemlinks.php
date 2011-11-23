@@ -123,7 +123,7 @@ function crispbb_userapi_getitemlinks($args)
                         'title' => $post['ttitle'],
                         'label' => xarVarPrepForDisplay($post['ttitle']),
                         'id' => $post['tid'],
-                        'name' => $topic['ttitle']
+                        'name' => $post['ttitle']
                     );
                 }
             }
