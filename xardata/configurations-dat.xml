@@ -1,0 +1,9 @@
+<items>
+  <configurations>
+    <name>initialization_ratingstyle</name>
+    <label>Rating Style</label>
+    <description>The type of display for the rating</description>
+    <property_id>1115</property_id>
+    <configuration>a:4:{s:15:"display_columns";s:1:"3";s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:59:"module,Locations Table;dynamic,Dynamic Storage;hooks,Hooks;";}</configuration>
+  </configurations>
+</items>
