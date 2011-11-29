@@ -83,6 +83,48 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
         $stepCount = $currentStep + 1;
 
         break;
+    case XARMLS_DNTYPE_PROPERTY:
+        $stepLabels[CHOOSE] = xarML('Choose a property');
+        $stepLabels[INFO] = xarML('Overview');
+        $stepLabels[GENSKELS] = xarML('Skel. Generation');
+        $stepLabels[TRAN] = xarML('Translate');
+        $stepLabels[DELFUZZY] = xarML('Delete fuzzy');
+        $stepLabels[GENTRANS] = xarML('Trans. Generation');
+        $stepLabels[REL] = xarML('Release');
+        $stepLabels[DOWNLOAD] = xarML('Download');
+
+        $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_property');
+        $stepURLs[INFO] = xarModURL('translations', 'admin', 'theme_overview', $urlarray);
+        $stepURLs[GENSKELS] = xarModURL('translations','admin','generate_skels_info', $urlarray);
+        $stepURLs[TRAN] = xarModURL('translations', 'admin', 'translate', $urlarray);
+        $stepURLs[DELFUZZY] = xarModURL('translations','admin','delete_fuzzy', $urlarray);
+        $stepURLs[GENTRANS] = xarModURL('translations', 'admin', 'generate_trans_info', $urlarray);
+        $stepURLs[REL] = xarModURL('translations', 'admin', 'release_info', $urlarray);
+
+        $stepCount = $currentStep + 1;
+
+        break;
+    case XARMLS_DNTYPE_BLOCK:
+        $stepLabels[CHOOSE] = xarML('Choose a block');
+        $stepLabels[INFO] = xarML('Overview');
+        $stepLabels[GENSKELS] = xarML('Skel. Generation');
+        $stepLabels[TRAN] = xarML('Translate');
+        $stepLabels[DELFUZZY] = xarML('Delete fuzzy');
+        $stepLabels[GENTRANS] = xarML('Trans. Generation');
+        $stepLabels[REL] = xarML('Release');
+        $stepLabels[DOWNLOAD] = xarML('Download');
+
+        $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_block');
+        $stepURLs[INFO] = xarModURL('translations', 'admin', 'property_overview', $urlarray);
+        $stepURLs[GENSKELS] = xarModURL('translations','admin','generate_skels_info', $urlarray);
+        $stepURLs[TRAN] = xarModURL('translations', 'admin', 'translate', $urlarray);
+        $stepURLs[DELFUZZY] = xarModURL('translations','admin','delete_fuzzy', $urlarray);
+        $stepURLs[GENTRANS] = xarModURL('translations', 'admin', 'generate_trans_info', $urlarray);
+        $stepURLs[REL] = xarModURL('translations', 'admin', 'release_info', $urlarray);
+
+        $stepCount = $currentStep + 1;
+
+        break;
     case XARMLS_DNTYPE_THEME:
         $stepLabels[CHOOSE] = xarML('Choose a theme');
         $stepLabels[INFO] = xarML('Overview');

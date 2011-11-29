@@ -6,16 +6,16 @@
     </div>
     <div class="xar-mod-body">
        <xar:template type="module" module="translations" file="admin-nav"/>
-       <h2>Choose a Theme</h2>
+       <h2>Choose a Block</h2>
        <xar:template file="admin-menu" type="module"/>
 
         <xar:template type="module" file="druidbar"/>
         <p class="xar-form-input-wrapper-before">
-          Choose which theme you want to translate from the list below.
+          Choose which block you want to translate from the list below.
         </p>
         <ul>
         <xar:loop name="$themelist">
-          <li><a href="#xarModURL('translations', 'admin', 'theme_overview', array('extid' => $loop:item['regid']))#">
+          <li><a href="#xarModURL('translations', 'admin', 'block_overview', array('extid' => $loop:item['regid']))#">
             #$loop:item['displayname']#
           </a></li>
         </xar:loop>

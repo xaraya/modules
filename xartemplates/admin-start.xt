@@ -29,7 +29,7 @@
               <xar:for start="$i=0" test="$i lt count($locales)" iter="$i++">
                 <xar:if condition="$locales[$i] eq $working_locale">
                   <option value="#$locales[$i]#" selected="selected">#$locales[$i]#</option>
-                  <xar:else />
+                <xar:else />
                   <option value="#$locales[$i]#">#$locales[$i]#</option>
                 </xar:if>
               </xar:for>
@@ -56,6 +56,16 @@
                 <li>
                   <a href="#xarModURL('translations','admin','update_info')#&amp;dntype=module">
                     Translate a module
+                  </a>
+                </li>
+                <li>
+                  <a href="#xarModURL('translations','admin','update_info')#&amp;dntype=property">
+                    Translate a property
+                  </a>
+                </li>
+                <li>
+                  <a href="#xarModURL('translations','admin','update_info')#&amp;dntype=block">
+                    Translate a block
                   </a>
                 </li>
                 <li>

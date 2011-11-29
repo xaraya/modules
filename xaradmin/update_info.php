@@ -18,7 +18,7 @@ function translations_admin_update_info()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    if (!xarVarFetch('dntype', 'regexp:/^(core|module|theme)$/', $type)) return;
+    if (!xarVarFetch('dntype', 'regexp:/^(core|module|property|block|theme)$/', $type)) return;
 
     switch ($type) {
         case 'core':
@@ -26,6 +26,12 @@ function translations_admin_update_info()
         break;
         case 'module':
         $url = xarModURL('translations', 'admin', 'choose_a_module');
+        break;
+        case 'property':
+        $url = xarModURL('translations', 'admin', 'choose_a_property');
+        break;
+        case 'block':
+        $url = xarModURL('translations', 'admin', 'choose_a_block');
         break;
         case 'theme':
         $url = xarModURL('translations', 'admin', 'choose_a_theme');
