@@ -16,12 +16,12 @@ function translations_admin_choose_a_block()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    if (!($blocklist = xarMod::apiFunc('themes','admin','getthemelist',array('filter' => array('State' => XARTHEME_STATE_ANY))))) return;
+    if (!$blocklist = xarMod::apiFunc('blocks','types','getitems',array('module_id' => 0, 'type_state' => xarBlock::TYPE_STATE_ACTIVE))) return;
 
-    $tplData = translations_create_druidbar(CHOOSE, XARMLS_DNTYPE_PROPERTY, '', 0);
-    $tplData['blocklist'] = $blocklist;
-    $tplData['dnType'] = XARMLS_DNTYPE_BLOCK;
-    return $tplData;
+    $data = translations_create_druidbar(CHOOSE, XARMLS_DNTYPE_PROPERTY, '', 0);
+    $data['blocklist'] = $blocklist;
+    $data['dnType'] = XARMLS_DNTYPE_BLOCK;
+    return $data;
 }
 
 ?>

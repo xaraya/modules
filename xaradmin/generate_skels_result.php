@@ -10,6 +10,7 @@
  * @link http://xaraya.com/index.php/release/77.html
  * @author Marco Canini
  * @author Marcel van der Boom <marcel@xaraya.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * Parse the generation request and show a result page.
@@ -57,6 +58,14 @@ function translations_admin_generate_skels_result()
                 $res = xarMod::apiFunc('translations','admin','generate_module_skels',$args);
             }
         break;
+        case XARMLS_DNTYPE_PROPERTY:
+        $args['propertyid'] = $extid;
+        $res = xarMod::apiFunc('translations','admin','generate_property_skels',$args);
+        break;
+        case XARMLS_DNTYPE_BLOCK:
+        $args['blockid'] = $extid;
+        $res = xarMod::apiFunc('translations','admin','generate_block_skels',$args);
+        break;
         case XARMLS_DNTYPE_THEME:
         $args['themeid'] = $extid;
         $res = xarMod::apiFunc('translations','admin','generate_theme_skels',$args);
@@ -76,6 +85,8 @@ function translations_admin_generate_skels_result()
     if ($dnType == XARMLS_DNTYPE_CORE) $dnTypeText = 'core';
     elseif ($dnType == XARMLS_DNTYPE_THEME) $dnTypeText = 'theme';
     elseif ($dnType == XARMLS_DNTYPE_MODULE) $dnTypeText = 'module';
+    elseif ($dnType == XARMLS_DNTYPE_PROPERTY) $dnTypeText = 'property';
+    elseif ($dnType == XARMLS_DNTYPE_BLOCK) $dnTypeText = 'block';
     else $dnTypeText = '';
     $tplData['dnTypeText'] = $dnTypeText;
     $tplData['dnTypeAll']= $dnTypeAll;

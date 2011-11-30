@@ -8,25 +8,33 @@
  * @version 2.0.0
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/77.html
- * @author Marc Lutolf <mfl@netspan.ch>
+ * @author Marco Canini
+ * @author Marcel van der Boom <marcel@xaraya.com>
  */
 
-function translations_admin_choose_a_property()
+function translations_admin_property_overview()
 {
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
-    
+
+    if (!xarVarFetch('extid', 'id', $id)) return;
+
     xarMod::apiLoad('dynamicdata');
     $tables = xarDB::getTables();
     sys::import('xaraya.structures.query');
     $q = new Query('SELECT',$tables['dynamic_properties_def']);
-    $q->eq('modid', 0);
+    $q->eq('id', $id);
     $q->run();
-    $propertylist = $q->output();
+    $data = $q->row();
     
-    $data = translations_create_druidbar(CHOOSE, XARMLS_DNTYPE_PROPERTY, '', 0);
-    $data['propertylist'] = $propertylist;
     $data['dnType'] = XARMLS_DNTYPE_PROPERTY;
+    $data['dnName'] = $data['name'];
+    $data['propertyid'] = $id;
+
+    $druidbar = translations_create_druidbar(INFO, XARMLS_DNTYPE_PROPERTY, $data['name'], $id);
+    $opbar = translations_create_opbar(OVERVIEW, XARMLS_DNTYPE_PROPERTY, $data['name'], $id);
+    $data = array_merge($data, $druidbar, $opbar);
+
     return $data;
 }
 

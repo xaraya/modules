@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
        <xar:template type="module" module="translations" file="admin-nav"/>
-       <h2>Translate Core</h2>
+       <h2>Translate Properties</h2>
        <xar:template file="admin-menu" type="module"/>
 
-        <h4>Translating the core</h4>
-        Xaraya version number: #$verNum#<br />
-        Xaraya version id: #$verId#<br />
-        Xaraya version sub: #$verSub#<br />
+        <xar:template type="module" file="druidbar"/>
+        Property name: #$name#<br />
         <br />
         Make a choice:<br />
         <br />

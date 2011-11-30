@@ -42,9 +42,11 @@ class PHPTranslationsGenerator
         if (file_exists($locales_dir)) {
             if (file_exists($locale_dir)) {
                 if (file_exists($php_dir)) {
-                    if (file_exists($modules_dir) && file_exists($themes_dir) &&
+                    if (file_exists($modules_dir) && file_exists($properties_dir) && file_exists($blocks_dir) && file_exists($themes_dir) &&
                         file_exists($core_dir)) {
                         if (!is_writeable($modules_dir)) $canWrite = 0;
+                        if (!is_writeable($properties_dir)) $canWrite = 0;
+                        if (!is_writeable($blocks_dir)) $canWrite = 0;
                         if (!is_writeable($themes_dir)) $canWrite = 0;
                         if (!is_writeable($core_dir)) $canWrite = 0;
                     } else {
@@ -53,6 +55,16 @@ class PHPTranslationsGenerator
                                 if (!is_writeable($modules_dir)) $canWrite = 0;
                             } else {
                                 mkdir($modules_dir, 0777);
+                            }
+                            if (file_exists($properties_dir)) {
+                                if (!is_writeable($properties_dir)) $canWrite = 0;
+                            } else {
+                                mkdir($properties_dir, 0777);
+                            }
+                            if (file_exists($blocks_dir)) {
+                                if (!is_writeable($blocks_dir)) $canWrite = 0;
+                            } else {
+                                mkdir($blocks_dir, 0777);
                             }
                             if (file_exists($themes_dir)) {
                                 if (!is_writeable($themes_dir)) $canWrite = 0;
@@ -72,6 +84,8 @@ class PHPTranslationsGenerator
                     if (is_writeable($locale_dir)) {
                         mkdir($php_dir, 0777);
                         mkdir($modules_dir, 0777);
+                        mkdir($properties_dir, 0777);
+                        mkdir($blocks_dir, 0777);
                         mkdir($themes_dir, 0777);
                         mkdir($core_dir, 0777);
                     } else {
@@ -83,6 +97,8 @@ class PHPTranslationsGenerator
                     mkdir($locale_dir, 0777);
                     mkdir($php_dir, 0777);
                     mkdir($modules_dir, 0777);
+                    mkdir($properties_dir, 0777);
+                    mkdir($blocks_dir, 0777);
                     mkdir($themes_dir, 0777);
                     mkdir($core_dir, 0777);
                 } else {
@@ -107,6 +123,28 @@ class PHPTranslationsGenerator
             foreach ($dirnames as $dirname) {
                 if (file_exists($this->baseDir.$dirname)) continue;
                 if (!file_exists(sys::code() . "modules/$dnName/xar$dirname")) continue;
+                mkdir($this->baseDir.$dirname, 0777);
+            }
+            break;
+            case XARMLS_DNTYPE_PROPERTY:
+            $this->baseDir = "$properties_dir/$dnName/";
+            if (!file_exists($this->baseDir)) mkdir($this->baseDir, 0777);
+            //if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
+            $dirnames = xarMod::apiFunc('translations','admin','get_property_dirs',array('propertydir'=>$dnName));
+            foreach ($dirnames as $dirname) {
+                if (file_exists($this->baseDir.$dirname)) continue;
+                if (!file_exists("properties/$dnName/$dirname")) continue;
+                mkdir($this->baseDir.$dirname, 0777);
+            }
+            break;
+            case XARMLS_DNTYPE_BLOCK:
+            $this->baseDir = "$blocks_dir/$dnName/";
+            if (!file_exists($this->baseDir)) mkdir($this->baseDir, 0777);
+            //if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
+            $dirnames = xarMod::apiFunc('translations','admin','get_block_dirs',array('blockdir'=>$dnName));
+            foreach ($dirnames as $dirname) {
+                if (file_exists($this->baseDir.$dirname)) continue;
+                if (!file_exists("blocks/$dnName/$dirname")) continue;
                 mkdir($this->baseDir.$dirname, 0777);
             }
             break;

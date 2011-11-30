@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head">
-      <span class="xar-mod-title">Translations Administration</span>
-    </div>
+    <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
        <xar:template type="module" module="translations" file="admin-nav"/>
        <h2>Choose a module</h2>
        <xar:template file="admin-menu" type="module"/>
 
-    <xar:template type="module" file="druidbar"/>
-    <p>
-    Choose which module you want to translate from the list below.
-    </p>
-    <ul>
-    <xar:loop name="$modlist">
-      <li><a href="#xarModURL('translations', 'admin', 'module_overview', array('extid' => $loop:item['regid']))#">
-        #$loop:item['name']#&#160;-&#160;#$loop:item['displayname']#
-      </a></li>
-    </xar:loop>
-    </ul>
+        <xar:template type="module" file="druidbar"/>
+        <p>
+        Choose which module you want to translate from the list below.
+        </p>
+        <ul>
+            <xar:loop name="$modlist">
+              <li><a href="#xarModURL('translations', 'admin', 'module_overview', array('extid' => $loop:item['regid']))#">
+                #$loop:item['name']#&#160;-&#160;#$loop:item['displayname']#
+              </a></li>
+            </xar:loop>
+        </ul>
     </div>
 </xar:template>

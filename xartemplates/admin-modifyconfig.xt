@@ -3,44 +3,42 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:base-include-javascript module="base" filename="formcheck.js"/>
     <xar:style file="navtabs" module="base" scope="module"/>
-    <div class="xar-mod-head">
-      <span class="xar-mod-title">Translations Administration</span>
-    </div>
+    <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
        <xar:template type="module" module="translations" file="admin-nav"/>
        <h2>Modify Translations Configuration</h2>
        <xar:template file="admin-menu" type="module"/>
 
-    <dl class="xar-tabs">
-        <dt class="help" title="#xarML('Choose a set of configuration options')#">
-            Actions : 
-        </dt>
-        <xar:if condition="$tab eq 'display'">
-            <dd class="active">
-                <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'display'))#" class="active">
-                    Translations Display
-                </a>
-            </dd>
-        <xar:else />
-            <dd>
-                <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'display'))#">    
-                    Translations Display
-                </a>
-            </dd>    
-        </xar:if>
-        <xar:if condition="$tab eq 'release'">
-            <dd class="active">
-                <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'release'))#" class="active">
-                    Translations Release
-                </a>
-            </dd>
-        <xar:else />
-            <dd>
-                <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'release'))#">    
-                    Translations Release
-                </a>
-            </dd>    
-        </xar:if>
+        <dl class="xar-tabs">
+            <dt class="help" title="#xarML('Choose a set of configuration options')#">
+                Actions : 
+            </dt>
+            <xar:if condition="$tab eq 'display'">
+                <dd class="active">
+                    <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'display'))#" class="active">
+                        Translations Display
+                    </a>
+                </dd>
+            <xar:else />
+                <dd>
+                    <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'display'))#">    
+                        Translations Display
+                    </a>
+                </dd>    
+            </xar:if>
+            <xar:if condition="$tab eq 'release'">
+                <dd class="active">
+                    <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'release'))#" class="active">
+                        Translations Release
+                    </a>
+                </dd>
+            <xar:else />
+                <dd>
+                    <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'release'))#">    
+                        Translations Release
+                    </a>
+                </dd>    
+            </xar:if>
         </dl>
 
         <xar:comment> Begin Display Options </xar:comment>

@@ -29,5 +29,5 @@
       </xar:ml>
     </p>
     <br />
-<xar:template type="module" file="opbar"/>
+    <xar:template type="module" file="opbar"/>
 </xar:template>

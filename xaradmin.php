@@ -177,6 +177,12 @@ function &translations_create_opbar($currentOp, $dnType, $dnName, $extid)
         case XARMLS_DNTYPE_MODULE:
         $opURLs[OVERVIEW] = xarModURL('translations', 'admin', 'module_overview', $urlarray);
         break;
+        case XARMLS_DNTYPE_PROPERTY:
+        $opURLs[OVERVIEW] = xarModURL('translations', 'admin', 'property_overview', $urlarray);
+        break;
+        case XARMLS_DNTYPE_BLOCK:
+        $opURLs[OVERVIEW] = xarModURL('translations', 'admin', 'block_overview', $urlarray);
+        break;
         case XARMLS_DNTYPE_THEME:
         $opURLs[OVERVIEW] = xarModURL('translations', 'admin', 'theme_overview', $urlarray);
         break;
@@ -249,6 +255,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
              $subnames[] = 'core';
         }
         break;
+
         case XARMLS_DNTYPE_MODULE:
 
         $modid = $extid;
@@ -288,6 +295,112 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
             $args = array();
             $ctxtype2 = 'modules:'.$ctxtype1;
             $args['dntype'] = XARMLS_DNTYPE_MODULE;
+            $args['dnname'] = $dnname1;
+            $args['subtype'] = $ctxtype2;
+            $args['subname'] = $ctxname1;
+            $entry = xarMod::apiFunc('translations','admin','getcontextentries',$args);
+            if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
+                $entrydata[] = $entry;
+                $subtypes[] = $ctxtype2;
+                $subnames[] = $ctxname1;
+            }
+        }
+        break;
+
+        case XARMLS_DNTYPE_PROPERTY:
+
+        xarMod::apiLoad('dynamicdata');
+        $tables = xarDB::getTables();
+        sys::import('xaraya.structures.query');
+        $q = new Query('SELECT',$tables['dynamic_properties_def']);
+        $q->eq('id', $extid);
+        $q->run();
+        $propertyinfo = $q->row();
+        
+        $propertyname = $propertyinfo['name'];
+        $propertydir = $propertyinfo['name'];
+
+        $selectedsubtype = $subtype;
+        $selectedsubname = $subname;
+
+        $property_contexts_list[] = 'properties:'.$propertyname.'::common';
+
+        $subnames = xarMod::apiFunc('translations','admin','get_property_phpfiles',array('propertydir'=>$propertydir));
+        foreach ($subnames as $subname) {
+            $property_contexts_list[] = 'properties:'.$propertyname.'::'.$subname;
+        }
+
+        $dirnames = xarMod::apiFunc('translations','admin','get_property_dirs',array('propertydir'=>$propertydir));
+        foreach ($dirnames as $dirname) {
+            if (!preg_match('!^templates!i', $dirname, $matches))
+                $pattern = '/^([a-z0-9\-_]+)\.php$/i';
+            else 
+                $pattern = '/^([a-z0-9\-_]+)\.xd$/i';
+            $subnames = xarMod::apiFunc('translations','admin','get_property_files',
+                                  array('propertydir'=>sys::code() . "properties/$propertydir/xar$dirname",'pattern'=>$pattern));
+            foreach ($subnames as $subname) {
+                $property_contexts_list[] = 'properties:'.$propertyname.':'.$dirname.':'.$subname;
+            }
+        }
+
+        $subtypes = array();
+        $subnames = array();
+        $entrydata = array();
+        foreach ($property_contexts_list as $property_context) {
+            list ($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':',$property_context);
+            $args = array();
+            $ctxtype2 = 'properties:'.$ctxtype1;
+            $args['dntype'] = XARMLS_DNTYPE_PROPERTY;
+            $args['dnname'] = $dnname1;
+            $args['subtype'] = $ctxtype2;
+            $args['subname'] = $ctxname1;
+            $entry = xarMod::apiFunc('translations','admin','getcontextentries',$args);
+            if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
+                $entrydata[] = $entry;
+                $subtypes[] = $ctxtype2;
+                $subnames[] = $ctxname1;
+            }
+        }
+        break;
+
+        case XARMLS_DNTYPE_BLOCK:
+
+        $blockinfo = xarMod::apiFunc('blocks','types','getitem',array('type_id' => $extid, 'type_state' => xarBlock::TYPE_STATE_ACTIVE));
+        
+        $blockname = $blockinfo['type'];
+        $blockdir = $blockinfo['type'];
+
+        $selectedsubtype = $subtype;
+        $selectedsubname = $subname;
+
+        $block_contexts_list[] = 'blocks:'.$blockname.'::common';
+
+        $subnames = xarMod::apiFunc('translations','admin','get_block_phpfiles',array('blockdir'=>$blockdir));
+        foreach ($subnames as $subname) {
+            $block_contexts_list[] = 'blocks:'.$blockname.'::'.$subname;
+        }
+
+        $dirnames = xarMod::apiFunc('translations','admin','get_block_dirs',array('blockdir'=>$blockdir));
+        foreach ($dirnames as $dirname) {
+            if (!preg_match('!^templates!i', $dirname, $matches))
+                $pattern = '/^([a-z0-9\-_]+)\.php$/i';
+            else 
+                $pattern = '/^([a-z0-9\-_]+)\.xd$/i';
+            $subnames = xarMod::apiFunc('translations','admin','get_block_files',
+                                  array('blockdir'=>sys::code() . "properties/$blockdir/xar$dirname",'pattern'=>$pattern));
+            foreach ($subnames as $subname) {
+                $block_contexts_list[] = 'properties:'.$blockname.':'.$dirname.':'.$subname;
+            }
+        }
+
+        $subtypes = array();
+        $subnames = array();
+        $entrydata = array();
+        foreach ($block_contexts_list as $block_context) {
+            list ($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':',$block_context);
+            $args = array();
+            $ctxtype2 = 'blocks:'.$ctxtype1;
+            $args['dntype'] = XARMLS_DNTYPE_PROPERTY;
             $args['dnname'] = $dnname1;
             $args['subtype'] = $ctxtype2;
             $args['subname'] = $ctxname1;
