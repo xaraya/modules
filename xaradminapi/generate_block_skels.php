@@ -84,15 +84,15 @@ function translations_adminapi_generate_block_skels($args)
             $xtype = 'php';
         }
         else {
-            $pattern = '/^([a-z0-9\-_]+)\.xd$/i';
-            $xtype = 'xd';
+            $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
+            $xtype = 'xt';
         }
         $subnames = xarMod::apiFunc('translations','admin','get_block_files',
                          array('blockdir'=>sys::code() . "blocks/$blockdir/xar$dirname",'pattern'=>$pattern));
         xarLogVariable('subnames',$subnames);
         foreach ($subnames as $subname) {
             $block_contexts_list[] = 'blocks:'.$blockname.':'.$dirname.':'.$subname;
-            if ($xtype == 'xd') $parser = new TPLParser();
+            if ($xtype == 'xt') $parser = new TPLParser();
             else $parser = new PHPParser();
             $parser->parse(sys::code() . "blocks/$blockdir/xar$dirname/$subname.$xtype");
             ${$dirname . "names"}[] = $subname;

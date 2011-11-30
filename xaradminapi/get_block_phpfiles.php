@@ -25,14 +25,8 @@ function translations_adminapi_get_block_phpfiles($args)
     if (file_exists(sys::code() . "blocks/$blockdir")) {
         $dd = opendir(sys::code() . "blocks/$blockdir");
         while ($filename = readdir($dd)) {
-//            if (is_dir(sys::code() . "blocks/$blockdir/$filename") && (substr($filename,0,3) == "xar")) {
-//                $names[] = mb_ereg_replace("^xar","",$filename);
-//                continue;
-//            }
             if (!preg_match('!^([a-z\-_]+)\.php$!i', $filename, $matches)) continue;
             $phpname = $matches[1];
-//            if ($phpname == 'xarversion') continue;
-            if ($phpname == 'xartables') continue;
             $names[] = mb_ereg_replace("^xar","",$phpname);
         }
         closedir($dd);

@@ -69,7 +69,7 @@ function translations_adminapi_generate_property_skels($args)
     $property_contexts_list = array();
     foreach ($subnames as $subname) {
         $property_contexts_list[] = 'properties:'.$propertyname.'::'.$subname;
-        $filename = sys::code() . "properties/$propertydir/xar$subname.php";
+        $filename = sys::code() . "properties/$propertydir/$subname.php";
 
         if (file_exists($filename)) {
             $parser = new PHPParser();
@@ -90,15 +90,15 @@ function translations_adminapi_generate_property_skels($args)
             $xtype = 'php';
         }
         else {
-            $pattern = '/^([a-z0-9\-_]+)\.xd$/i';
-            $xtype = 'xd';
+            $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
+            $xtype = 'xt';
         }
         $subnames = xarMod::apiFunc('translations','admin','get_property_files',
                          array('propertydir'=>sys::code() . "properties/$propertydir/xar$dirname",'pattern'=>$pattern));
         xarLogVariable('subnames',$subnames);
         foreach ($subnames as $subname) {
             $property_contexts_list[] = 'properties:'.$propertyname.':'.$dirname.':'.$subname;
-            if ($xtype == 'xd') $parser = new TPLParser();
+            if ($xtype == 'xt') $parser = new TPLParser();
             else $parser = new PHPParser();
             $parser->parse(sys::code() . "properties/$propertydir/xar$dirname/$subname.$xtype");
             ${$dirname . "names"}[] = $subname;
