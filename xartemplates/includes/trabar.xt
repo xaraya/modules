@@ -44,7 +44,9 @@
                     </xar:if>
                 </xar:for>
             </select>
-            <input name="sbt" id="sbt" type="submit" value="#xarML('Select')#"  />
+            &#160;
+            <xar:var name="label">Select</xar:var>
+            <xar:button name="sbt" type="submit" label="$label" />
         </form>
 
         <script type="text/javascript">

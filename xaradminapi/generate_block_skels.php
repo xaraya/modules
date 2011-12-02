@@ -63,7 +63,7 @@ function translations_adminapi_generate_block_skels($args)
     $block_contexts_list = array();
     foreach ($subnames as $subname) {
         $block_contexts_list[] = 'blocks:'.$blockname.'::'.$subname;
-        $filename = sys::code() . "blocks/$blockdir/xar$subname.php";
+        $filename = sys::code() . "blocks/$blockdir/$subname.php";
 
         if (file_exists($filename)) {
             $parser = new PHPParser();

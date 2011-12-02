@@ -31,6 +31,10 @@ function translations_adminapi_getcontextentries($args)
     if (!$backend->bindDomain($dnType, $dnName)) {
         if ($dnType == XARMLS_DNTYPE_MODULE) {
             $msg = xarML('Could not bind translation backend to module \'#(1)\'. Try regenerating skeletons.', $dnName);
+        } elseif ($dnType == XARMLS_DNTYPE_PROPERTY) {
+            $msg = xarML('Could not bind translation backend to property \'#(1)\'. Try regenerating skeletons.', $dnName);
+        } elseif ($dnType == XARMLS_DNTYPE_BLOCK) {
+            $msg = xarML('Could not bind translation backend to block \'#(1)\'. Try regenerating skeletons.', $dnName);
         } elseif ($dnType == XARMLS_DNTYPE_THEME) {
             $msg = xarML('Could not bind translation backend to theme \'#(1)\'. Try regenerating skeletons.', $dnName);
         } elseif ($dnType == XARMLS_DNTYPE_CORE) {

@@ -9,10 +9,7 @@
 
     <xar:template type="module" file="druidbar"/>
 
-    <h4>What to translate?</h4>
-    <!-- voll p>
-      Choose which part you want to translate from the list below.
-    </p -->
+    <h4>Choose the items to translate?</h4>
 
     <!-- Generated list of things for which there are skeletons -->
     <xar:template type="module" file="trabar"/>

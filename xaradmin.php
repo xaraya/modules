@@ -276,10 +276,10 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
 
         $dirnames = xarMod::apiFunc('translations','admin','get_module_dirs',array('moddir'=>$moddir));
         foreach ($dirnames as $dirname) {
-            if (!preg_match('!^templates!i', $dirname, $matches))
+            if (!preg_match('!^xartemplates!i', $dirname, $matches))
                 $pattern = '/^([a-z0-9\-_]+)\.php$/i';
             else 
-                $pattern = '/^([a-z0-9\-_]+)\.xd$/i';
+                $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
             $subnames = xarMod::apiFunc('translations','admin','get_module_files',
                                   array('moddir'=>sys::code() . "modules/$moddir/xar$dirname",'pattern'=>$pattern));
             foreach ($subnames as $subname) {
@@ -335,7 +335,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
             if (!preg_match('!^templates!i', $dirname, $matches))
                 $pattern = '/^([a-z0-9\-_]+)\.php$/i';
             else 
-                $pattern = '/^([a-z0-9\-_]+)\.xd$/i';
+                $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
             $subnames = xarMod::apiFunc('translations','admin','get_property_files',
                                   array('propertydir'=>sys::code() . "properties/$propertydir/xar$dirname",'pattern'=>$pattern));
             foreach ($subnames as $subname) {
@@ -385,12 +385,13 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
             if (!preg_match('!^templates!i', $dirname, $matches))
                 $pattern = '/^([a-z0-9\-_]+)\.php$/i';
             else 
-                $pattern = '/^([a-z0-9\-_]+)\.xd$/i';
+                $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
             $subnames = xarMod::apiFunc('translations','admin','get_block_files',
-                                  array('blockdir'=>sys::code() . "properties/$blockdir/xar$dirname",'pattern'=>$pattern));
+                                  array('blockdir'=>sys::code() . "blocks/$blockdir/xar$dirname",'pattern'=>$pattern));
             foreach ($subnames as $subname) {
-                $block_contexts_list[] = 'properties:'.$blockname.':'.$dirname.':'.$subname;
+                $block_contexts_list[] = 'blocks:'.$blockname.':'.$dirname.':'.$subname;
             }
+
         }
 
         $subtypes = array();
@@ -400,7 +401,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
             list ($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':',$block_context);
             $args = array();
             $ctxtype2 = 'blocks:'.$ctxtype1;
-            $args['dntype'] = XARMLS_DNTYPE_PROPERTY;
+            $args['dntype'] = XARMLS_DNTYPE_BLOCK;
             $args['dnname'] = $dnname1;
             $args['subtype'] = $ctxtype2;
             $args['subname'] = $ctxname1;
@@ -417,10 +418,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
         $themeid = $extid;
         if (!$themeinfo = xarMod::getInfo($themeid,'theme')) return;
 
-        // FIXME this is because bug 
-        //$themename = $themeinfo['name'];
         $themename = $themeinfo['osdirectory'];
-
         $themedir = $themeinfo['osdirectory'];
 
         $selectedsubtype = $subtype;
