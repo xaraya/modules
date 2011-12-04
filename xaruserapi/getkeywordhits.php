@@ -12,14 +12,14 @@
  */
 
 function keywords_userapi_getkeywordhits($args)
-{    
+{
     if (!isset($args['cloudtype'])) $args['cloudtype'] = 3;
-    
+
     // Return nothing if we asked for hits and the hitcount module is not available
     if ($args['cloudtype'] == 1 && !xarModIsAvailable('hitcount')) return array();
-    
+
     sys::import('xaraya.structures.query');
-   
+
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
 
@@ -27,7 +27,7 @@ function keywords_userapi_getkeywordhits($args)
     $q->addtable($xartable['keywords'],'k');
     $q->addfield('k.keyword AS keyword');
     $q->addfield('COUNT(k.id) AS count');
-    
+
     if ($args['cloudtype'] == 2) {
         xarModAPILoad('hitcount');
         $xartable =& xarDB::getTables();
@@ -40,7 +40,7 @@ function keywords_userapi_getkeywordhits($args)
     $q->addgroup('k.keyword');
     $q->addorder('k.keyword','ASC');
     $q->run();
-    
+
     // Reorganize to an array where the keywords are keys
     $tags = array();
     if ($args['cloudtype'] == 2) {

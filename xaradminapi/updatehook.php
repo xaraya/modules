@@ -23,21 +23,13 @@ function keywords_adminapi_updatehook($args)
 {
     extract($args);
 
+    if (empty($extrainfo))
+        $extrainfo = array();
 
     if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object id', 'admin', 'updatehook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        return $extrainfo;
-    }
-    if (!isset($extrainfo) || !is_array($extrainfo)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'extrainfo', 'admin', 'updatehook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $extrainfo;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('objectid', 'admin', 'updatehook', 'keywords');
+        throw new BadParameterException($vars, $msg);
     }
 
     // We can exit immediately if the status flag is set because we are just updating
@@ -54,13 +46,11 @@ function keywords_adminapi_updatehook($args)
         $modname = $extrainfo['module'];
     }
 
-    $modid = xarModGetIDFromName($modname);
+    $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module name', 'admin', 'updatehook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $extrainfo;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('module', 'admin', 'updatehook', 'keywords');
+        throw new BadParameterException($vars, $msg);
     }
 
     if (!empty($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
@@ -74,168 +64,84 @@ function keywords_adminapi_updatehook($args)
     } else {
         $itemid = $objectid;
     }
-    if (empty($itemid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'item id', 'admin', 'updatehook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $extrainfo;
-    }
 
-    if (!xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:$itemid")) {
+    // @todo: replace this with access prop
+    if (!xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:$itemid"))
         return $extrainfo;
-    }
 
-    // check if we need to save some keywords here
-    if (isset($extrainfo['keywords']) && is_string($extrainfo['keywords'])) {
+    // get settings currently in force for this module/itemtype
+    $settings = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
+        array(
+            'module' => $modname,
+            'itemtype' => $itemtype,
+        ));
+
+    // get the index_id for this module/itemtype/item
+    $index_id = xarMod::apiFunc('keywords', 'index', 'getid',
+        array(
+            'module' => $modname,
+            'itemtype' => $itemtype,
+            'itemid' => $itemid,
+        ));
+
+    // see if keywords were passed to hook call
+    if (!empty($extrainfo['keywords'])) {
         $keywords = $extrainfo['keywords'];
     } else {
-        xarVarFetch('keywords', 'str:1:', $keywords, '', XARVAR_NOT_REQUIRED);
-    }
-    if (empty($keywords)) {
-        $keywords = '';
+        // otherwise, try fetch from form input
+        if (!xarVarFetch('keywords', 'isset',
+            $keywords, null, XARVAR_DONT_SET)) return;
     }
 
- $words = xarModAPIFunc('keywords',
-                         'admin',
-                         'separekeywords',
-                          array('keywords' => $keywords));
+    // we may have been given a string list
+    if (!empty($keywords) && !is_array($keywords)) {
+        $keywords = xarModAPIFunc('keywords','admin','separekeywords',
+            array(
+                'keywords' => $keywords,
+            ));
+    }
 
-/*
-    // get the list of delimiters to work with
+    // it's ok if there are no keywords
+    if (empty($keywords))
+        $keywords = array();
+
+    // get the current keywords associated with this item
+    $oldwords = xarMod::apiFunc('keywords', 'words', 'getwords',
+        array(
+            'index_id' => $index_id,
+        ));
+
+    if (!empty($settings['restrict_words'])) {
+        $restricted_list = xarMod::apiFunc('keywords', 'words', 'getwords',
+            array(
+                'index_id' => $settings['index_id'],
+            ));
+        // store only keywords that are also in the restricted list
+        $keywords = array_intersect($keywords, $restricted_list);
+    }
+    $toadd = array_filter(array_unique(array_diff($keywords, $oldwords)));
+    $toremove = array_filter(array_unique(array_diff($oldwords, $keywords)));
+
+    if (!empty($toadd)) {
+        if (!xarMod::apiFunc('keywords', 'words', 'createitems',
+            array(
+                'index_id' => $index_id,
+                'keyword' => $toadd,
+            ))) return;
+    }
+    if (!empty($toremove)) {
+        if (!xarMod::apiFunc('keywords', 'words', 'deleteitems',
+            array(
+                'index_id' => $index_id,
+                'keyword' => $toremove,
+            ))) return;
+    }
+
+    // Retrieve the list of allowed delimiters
     $delimiters = xarModVars::get('keywords','delimiters');
-    $dellength = strlen($delimiters);
+    $delimiter = !empty($delimiters) ? $delimiters[0] : ',';
+    $extrainfo['keywords'] = implode($delimiter, $keywords);
 
-    // extract individual keywords from the input string (comma, semi-column or space separated)
-    for ($i=0; $i<$dellength; $i++) {
-        $delimiter = substr($delimiters,$i,1);
-        if (strstr($keywords,$delimiter)) {
-            $words = explode($delimiter,$keywords);
-        }
-    }
-    //if nothing has been separated, just plop the whole string (possibly only one keyword) into words.
-    if (!isset($words)) {
-        $words = array();
-        $words[] = $keywords;
-    }
-   */
-
-    // old way with hardcoded separators
-    /*if (strstr($keywords,',')) {
-        $words = explode(',',$keywords);
-    } elseif (strstr($keywords,';')) {
-        $words = explode(';',$keywords);
-    } else {
-        $words = explode(' ',$keywords);
-    }*/
-    // CHECK is this needed? separekeywords already trims the words
-    $cleanwords = array();
-    foreach ($words as $word) {
-        $word = trim($word);
-        if (empty($word)) continue;
-        $cleanwords[] = $word;
-    }
-
-/* TODO: restrict to predefined keyword list
-    $restricted = xarModVars::get('keywords','restricted');
-    if (!empty($restricted)) {
-        $wordlist = array();
-        if (!empty($itemtype)) {
-            $getlist = xarModVars::get('keywords',$modname.'.'.$itemtype);
-        } else {
-            $getlist = xarModVars::get('keywords',$modname);
-        }
-        if (!isset($getlist)) {
-            $getlist = xarModVars::get('keywords','default');
-        }
-        if (!empty($getlist)) {
-            $wordlist = split(',',$getlist);
-        }
-        if (count($wordlist) > 0) {
-            $acceptedwords = array();
-            foreach ($cleanwords as $word) {
-                if (!in_array($word, $wordlist)) continue;
-                $acceptedwords[] = $word;
-            }
-            $cleanwords = $acceptedwords;
-        }
-    }
-*/
-
-    // get the current keywords for this item
-    $oldwords = xarModAPIFunc('keywords','user','getwords',
-                              array('modid' => $modid,
-                                    'itemtype' => $itemtype,
-                                    'itemid' => $itemid));
-
-    $delete = array();
-    $keep = array();
-    $new = array();
-    // check what we need to delete, what we can keep, and what's new
-    if (isset($oldwords) && count($oldwords) > 0) {
-        foreach ($oldwords as $id => $word) {
-            if (!in_array($word,$cleanwords)) {
-                $delete[$id] = $word;
-            } else {
-                $keep[] = $word;
-            }
-        }
-        foreach ($cleanwords as $word) {
-            if (!in_array($word,$keep)) {
-                $new[] = $word;
-            }
-        }
-        if (count($delete) == 0 && count($new) == 0) {
-            $extrainfo['keywords'] = join(' ',$cleanwords);
-
-            return $extrainfo;
-        }
-    } else {
-        $new = $cleanwords;
-    }
-
-
-    $dbconn =& xarDB::getConn();
-    $xartable =& xarDB::getTables();
-    $keywordstable = $xartable['keywords'];
-
-    if (count($delete) > 0) {
-        // Delete old words for this module item
-        $idlist = array_keys($delete);
-        $query = "DELETE FROM $keywordstable
-                  WHERE id IN (" . join(', ',$idlist) . ")";
-
-        $result =& $dbconn->Execute($query);
-        if (!$result) {
-            return $extrainfo;
-        }
-    }
-
-    if (count($new) > 0) {
-        foreach ($new as $word) {
-            // Get a new keywords ID
-            $nextId = $dbconn->GenId($keywordstable);
-            // Create new keywords
-            $query = "INSERT INTO $keywordstable (id,
-                                               keyword,
-                                               module_id,
-                                               itemtype,
-                                               itemid)
-                    VALUES (?,
-                            ?,
-                            ?,
-                            ?,
-                            ?)";
-
-            $result =& $dbconn->Execute($query,array($nextId, $word, $modid, $itemtype, $objectid));
-            if (!$result) {
-                return $extrainfo;
-            }
-            //$keywordsid = $dbconn->PO_Insert_ID($keywordstable, 'id');
-        }
-    }
-    $extrainfo['keywords'] = join(' ',$new);
-    // Return extrainfo or the next hook will fail
     return $extrainfo;
 }
 ?>

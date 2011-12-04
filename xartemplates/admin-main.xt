@@ -12,8 +12,8 @@
         </h3>
             <p><em>Keywords is a Xaraya Utility Module.</em>
             The Keywords module allows you to assign keywords to module items (taxonomy) and to look up items by keyword.
-            To use keywords in your content items you must 
-            <a href="&xar-modurl-modules-admin-hooks;&amp;hook=keywords#currenthook">hook the Keywords module</a> to any module or itemtype where where you want to use it.
+            To use keywords in your content items you must
+            <a href="#xarModURL('keywords', 'admin', 'hooks')#">hook the Keywords module</a> to any module or itemtype where where you want to use it.
             </p>
             <h3>
                 How to use it?

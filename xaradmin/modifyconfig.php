@@ -25,81 +25,126 @@
  */
 function keywords_admin_modifyconfig()
 {
-    // Default value is NULL for providing NOT isset variables to following code
-    if (!xarVarFetch('restricted', 'int:0:1', $data['restricted'], xarModVars::get('keywords','restricted'), XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('useitemtype', 'int:0:1', $data['useitemtype'], xarModVars::get('keywords','useitemtype'), XARVAR_NOT_REQUIRED)) return;
     if (!xarSecurityCheck('AdminKeywords')) return;
 
-    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'keywords'));
-    $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls, user_menu_link');
-    $data['module_settings']->getItem();
+    if (!xarVarFetch('module_id', 'id',
+        $module_id, null, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('itemtype', 'int:0:',
+        $itemtype, null, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('phase', 'pre:trim:lower:enum:update',
+        $phase, 'form', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('return_url', 'pre:trim:str:1:',
+        $return_url, '', XARVAR_NOT_REQUIRED)) return;
 
-    $data['settings'] = array();
-    $keywords = xarModAPIFunc('keywords',
-                              'admin',
-                              'getwordslimited',
-                              array('moduleid' => '0'));
+    $data = array();
 
-
-    // $keywords = xarModVars::get('keywords','default');
-    if ($data['useitemtype']== 0) {
-    $data['settings']['default'] = array('label' => xarML('Default configuration'),
-                                         'keywords' => $keywords);
+    if (empty($module_id)) {
+        $modname = 'keywords';
+        $itemtype = null;
     } else {
-    $data['settings']['default'][0] = array('label' => xarML('Default configuration'),
-                                            'keywords' => $keywords);
+        $modname = xarMod::getName($module_id);
     }
 
-    $hookedmodules = xarModAPIFunc('modules',
-                                   'admin',
-                                   'gethookedmodules',
-                                   array('hookModName' => 'keywords'));
+    if ($modname == 'keywords') {
+        $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',
+            array('module' => 'keywords'));
+        $data['module_settings']->setFieldList('use_module_alias, module_alias_name, enable_short_urls, use_module_icons');
+        $data['module_settings']->getItem();
+    }
 
-    if (isset($hookedmodules) && is_array($hookedmodules)) {
-        foreach ($hookedmodules as $modname => $value) {
-            if ($data['useitemtype']== 1) {
-                $modules[$modname] = xarModAPIFunc($modname,'user','getitemtypes',array(), 0);
-                if (!isset($modules[$modname])) {
-                    $modules[$modname][0]['label']= $modname;
-                 }
-                foreach ($modules as $mod => $v1) {
-                    foreach ($v1 as $itemtype => $item) {
-                        foreach ($item as $k3 => $v3) {
-                            $moduleid = xarModGetIDFromName($mod,'module');
-                         $keywords = xarModAPIFunc('keywords',
-                                                   'admin',
-                                                   'getwordslimited',
-                                                   array('moduleid' => $moduleid,
-                                'itemtype' => $itemtype));
-                            if ($itemtype == 0) {
-                                $link = xarModURL($mod,'user','main');
-                            } else {
-                                $link = xarModURL($mod,'user','view',array('itemtype' => $itemtype));
-                            }
-                            $label = $item['label'];
-                            $data['settings'][$mod][$itemtype] = array('label'     => $label,
-                                                                    'keywords'   => $keywords);
-                        }
-                    }
-                }
-            } else {
-                      $moduleid = xarModGetIDFromName($modname,'module');
-                      $keywords = xarModAPIFunc('keywords',
-                                                'admin',
-                                                'getwordslimited',
-                                                 array('moduleid' => $moduleid));
-                $link = xarModURL($modname,'user','main');
-                $data['settings'][$modname] = array('label'    => $modname,
-                                                    'keywords'   => $keywords);
+    if ($phase == 'update') {
+        if (!xarSecConfirmAuthKey())
+            return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
+        if ($modname == 'keywords') {
+            $isvalid = $data['module_settings']->checkInput();
+            if ($isvalid) {
+                $itemid = $data['module_settings']->updateItem();
+                if (!xarVarFetch('delimiters', 'pre:trim:str:1:',
+                    $delimiters, xarModVars::get('keywords', 'delimiters', ','), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('stats_per_page', 'int:0:',
+                    $stats_per_page, xarModVars::get('keywords', 'stats_per_page',100), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('items_per_page', 'int:0:',
+                    $items_per_page, xarModVars::get('keywords', 'items_per_page',20), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('user_layout', 'pre:trim:lower:enum:list:cloud',
+                    $user_layout, xarModVars::get('keywords', 'user_layout','list'), XARVAR_NOT_REQUIRED)) return;
+                xarModVars::set('keywords', 'delimiters', $delimiters);
+                xarModVars::set('keywords', 'stats_per_page', $stats_per_page);
+                xarModVars::set('keywords', 'items_per_page', $items_per_page);
+                xarModVars::set('keywords', 'user_layout', $user_layout);
+                //if ($user_layout == 'list') {
+                    if (!xarVarFetch('cols_per_page', 'int:0:',
+                        $cols_per_page, xarModVars::get('keywords', 'cols_per_page', 2), XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('words_per_page', 'int:0:',
+                        $words_per_page, xarModVars::get('keywords', 'words_per_page', 50), XARVAR_NOT_REQUIRED)) return;
+                    xarModVars::set('keywords', 'cols_per_page', $cols_per_page);
+                    xarModVars::set('keywords', 'words_per_page', $words_per_page);
+                //} else {
+                    // the cloudy stuff
+                    if (!xarVarFetch('cloud_font_min', 'int:1:',
+                        $cloud_font_min, xarModVars::get('keywords', 'cloud_font_min', 1), XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('cloud_font_max', 'int:1:',
+                        $cloud_font_max, xarModVars::get('keywords', 'cloud_font_max', 1), XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('cloud_font_unit', 'pre:trim:lower:enum:em:pt:px:%',
+                        $cloud_font_unit, xarModVars::get('keywords', 'cloud_font_unit', 'em'), XARVAR_NOT_REQUIRED)) return;
+                    xarModVars::set('keywords', 'cloud_font_min', $cloud_font_min);
+                    xarModVars::set('keywords', 'cloud_font_max', $cloud_font_max);
+                    xarModVars::set('keywords', 'cloud_font_unit', $cloud_font_unit);
+                //}
             }
         }
+        if (!xarMod::apiFunc('keywords', 'hooks', 'moduleupdateconfig',
+            array(
+                'objectid' => $modname,
+                'extrainfo' => array('module' => $modname, 'itemtype' => $itemtype),
+            ))) return;
+        if (empty($return_url))
+            $return_url = xarModURL('keywords', 'admin', 'modifyconfig',
+                array(
+                    'module_id' => $module_id,
+                    'itemtype' => $itemtype,
+                ));
+        xarController::redirect($return_url);
     }
 
-    $data['isalias'] = xarModVars::get('keywords','SupportShortURLs');
-    $data['showsort'] = xarModVars::get('keywords','showsort');
-    $data['displaycolumns'] = xarModVars::get('keywords','displaycolumns');
-    $data['delimiters'] = xarModVars::get('keywords','delimiters');
-    $data['authid'] = xarSecGenAuthKey();
+    // form phase
+    $data['module_id'] = $module_id;
+    $data['modname'] = $modname;
+    $data['itemtype'] = $itemtype;
+
+    if ($modname == 'keywords') {
+        $data['delimiters'] = xarModVars::get('keywords', 'delimiters');
+        $data['stats_per_page'] = xarModVars::get('keywords', 'stats_per_page', 100);
+        $data['items_per_page'] = xarModVars::get('keywords', 'items_per_page', 20);
+        $data['user_layout'] = xarModVars::get('keywords', 'user_layout', 'list');
+
+        if ($data['user_layout'] == 'list') {
+            $data['cols_per_page'] = xarModVars::get('keywords', 'cols_per_page', 2);
+            $data['words_per_page'] = xarModVars::get('keywords', 'words_per_page',50);
+        } else {
+            $data['cloud_font_min'] = xarModVars::get('keywords', 'cloud_font_min', 1);
+            $data['cloud_font_max'] = xarModVars::get('keywords', 'cloud_font_max', 3);
+            $data['cloud_font_unit'] = xarModVars::get('keywords', 'cloud_font_unit', 'em');
+            $data['font_units'] = array(
+                array('id' => 'em', 'name' => 'em'),
+                array('id' => 'pt', 'name' => 'pt'),
+                array('id' => 'px', 'name' => 'px'),
+                array('id' => '%', 'name' => '%'),
+            );
+        }
+
+        $data['user_layouts'] = array(
+            array('id' => 'list', 'name' => xarML('List')),
+            array('id' => 'cloud', 'name' => xarML('Cloud')),
+        );
+    }
+
+    $data['subjects'] = xarMod::apiFunc('keywords', 'hooks', 'getsubjects');
+    $data['hook_config'] = xarMod::guiFunc('keywords', 'hooks', 'modulemodifyconfig',
+        array(
+            'objectid' => $modname,
+            'extrainfo' => array('module' => $modname, 'itemtype' => $itemtype)
+        ));
+
     return $data;
 }
 ?>

@@ -9,25 +9,25 @@
             <label>Overview</label>
         </menuitem>
         <menuitem>
-            <mask>ManageHitcount</mask>
+            <mask>ManageKeywords</mask>
             <includes>
                 <includeitem>view</includeitem>
             </includes>
             <target>view</target>
-            <title>Overview of the keyword assignments</title>
+            <title>Overview of keywords listings</title>
             <label>View Keywords</label>
         </menuitem>
         <menuitem>
-            <mask>ManageHitcount</mask>
+            <mask>ManageKeywords</mask>
             <includes>
                 <includeitem>hooks</includeitem>
             </includes>
             <target>hooks</target>
-            <title>Configure hooks for this module</title>
-            <label>Enable Hooks</label>
+            <title>Configure hooks from this module</title>
+            <label>Manage Hooks</label>
         </menuitem>
         <menuitem>
-            <mask>AdminHitcount</mask>
+            <mask>AdminKeywords</mask>
             <includes>
                 <includeitem>modifyconfig</includeitem>
             </includes>

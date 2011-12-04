@@ -24,20 +24,13 @@ function keywords_admin_modifyhook($args)
 {
     extract($args);
 
-    if (!isset($extrainfo)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'extrainfo', 'admin', 'modifyhook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $msg;
-    }
+    if (empty($extrainfo))
+        $extrainfo = array();
 
     if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID', 'admin', 'modifyhook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $msg;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('objectid', 'admin', 'modifyhook', 'keywords');
+        throw new BadParameterException($vars, $msg);
     }
 
     // When called via hooks, the module name may be empty. Get it from current module.
@@ -47,13 +40,11 @@ function keywords_admin_modifyhook($args)
         $modname = $extrainfo['module'];
     }
 
-    $modid = xarModGetIDFromName($modname);
+    $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module name', 'admin', 'modifyhook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $msg;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('module', 'admin', 'modifyhook', 'keywords');
+        throw new BadParameterException($vars, $msg);
     }
 
     if (!empty($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
@@ -68,59 +59,73 @@ function keywords_admin_modifyhook($args)
         $itemid = $objectid;
     }
 
+    // @todo: replace this with access prop
     if (!xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:$itemid")) return '';
 
-    // Retrieve the list of allowed delimiters.  Use the first one as the default.
-    $delimiters = xarModVars::get('keywords','delimiters');
-    $delimiter = substr($delimiters,0,1);
+    // get settings currently in force for this module/itemtype
+    $settings = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
+        array(
+            'module' => $modname,
+            'itemtype' => $itemtype,
+        ));
 
-    // Provide a $delimiter separated string of keywords for the form
-    // Get old keywords from database and join them
-    $oldwords = xarModAPIFunc('keywords', 'user', 'getwords',
-                      array('modid'    => $modid,
-                            'itemtype' => $itemtype,
-                            'itemid'   => $itemid)
-    );
-    if (isset($oldwords) && count($oldwords) > 0) {
-        $keywords = join($delimiter, $oldwords);
-    }
-    // Check if we have some keywords from a Preview or so and use them
-    if (isset($extrainfo['keywords'])) {
+    // get the index_id for this module/itemtype/item
+    $index_id = xarMod::apiFunc('keywords', 'index', 'getid',
+        array(
+            'module' => $modname,
+            'itemtype' => $itemtype,
+            'itemid' => $itemid,
+        ));
+
+    // see if keywords were passed to hook call
+    if (!empty($extrainfo['keywords'])) {
         $keywords = $extrainfo['keywords'];
     } else {
-        xarVarFetch('keywords', 'str:1:', $newkeywords, NULL, XARVAR_NOT_REQUIRED);
-        if (isset($newkeywords)) {
-            // We had a 'keywords' field in the form
-            $keywords = $newkeywords;
-        }
+        // could be an item preview, try fetch from form input
+        if (!xarVarFetch('keywords', 'isset',
+            $keywords, null, XARVAR_DONT_SET)) return;
     }
-    if (empty($keywords)) {
-        $keywords = '';
+    // keywords not supplied
+    if (!isset($keywords)) {
+        // get the keywords associated with this item
+        $keywords = xarMod::apiFunc('keywords', 'words', 'getwords',
+            array(
+                'index_id' => $index_id,
+            ));
+    }
+    // we may have been given a string list
+    if (!empty($keywords) && !is_array($keywords)) {
+        $keywords = xarModAPIFunc('keywords','admin','separekeywords',
+            array(
+                'keywords' => $keywords,
+            ));
     }
 
-    $restricted = xarModVars::get('keywords','restricted');
-    if ($restricted == '0') {
-        // $keywords is delivered as string
-        $wordlist = array();
+    // it's ok if there are no keywords
+    if (empty($keywords))
+        $keywords = array();
+
+    // Retrieve the list of allowed delimiters
+    $delimiters = xarModVars::get('keywords','delimiters');
+
+    $data = $settings;
+    if (empty($settings['restrict_words'])) {
+        // no restrictions, display expects a string
+        // Use first delimiter to join words
+        $delimiter = !empty($delimiters) ? $delimiters[0] : ',';
+        $data['keywords'] = !empty($keywords) ? implode($delimiter, $keywords) : '';
     } else {
-        // $keywords needs to be an array for restriced input
-        $keywords = xarModAPIFunc('keywords','admin','separekeywords'
-                                 ,array('keywords' => $keywords)
-        );
-        // Get array of predefined words
-        $keywords1 = xarModAPIFunc('keywords', 'user', 'getwordslimited',
-                                   array('moduleid' => $modid,
-                                         'itemtype' => $itemtype)
-        );
-        $wordlist=array_diff($keywords1, $keywords);
+        // get restricted list based on current settings
+        $data['restricted_list'] = xarMod::apiFunc('keywords', 'words', 'getwords',
+            array(
+                'index_id' => $settings['index_id'],
+            ));
+        // return only keywords that are also in the restricted list
+        $data['keywords'] = array_intersect($keywords, $data['restricted_list']);
     }
+    $data['delimiters'] = $delimiters;
 
-    return xarTplModule('keywords', 'admin', 'modifyhook',
-                        array('keywords' => $keywords,
-                              'wordlist' => $wordlist,
-                              'delimiters' => $delimiters,
-                              'delimiter' => $delimiter,
-                              'restricted' => $restricted));
+    return xarTpl::module('keywords', 'admin', 'modifyhook', $data);
+
 }
-
 ?>

@@ -22,49 +22,38 @@ function keywords_adminapi_removehook($args)
 {
     extract($args);
 
-    if (!isset($extrainfo)) {
+    if (empty($extrainfo))
         $extrainfo = array();
-    }
 
     // When called via hooks, we should get the real module name from objectid
     // here, because the current module is probably going to be 'modules' !!!
     if (!isset($objectid) || !is_string($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID (= module name)', 'admin', 'removehook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
+        $msg = 'Invalid #(1) for #(2) module #(3) function #(4)()';
+        $vars = array('objectid (module name)', 'keywords', 'adminapi', 'removehook');
+        throw new BadParameterException($vars, $msg);
     }
 
-    $modid = xarModGetIDFromName($objectid);
+    $modname = $objectid;
+
+    $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module ID', 'admin', 'removehook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
+        $msg = 'Invalid #(1) for #(2) module #(3) function #(4)()';
+        $vars = array('objectid (module name)', 'keywords', 'adminapi', 'removehook');
+        throw new BadParameterException($vars, $msg);
     }
 
-    // Get database setup
-    $dbconn =& xarDB::getConn();
-    $xartable =& xarDB::getTables();
+    // delete all words associated with this module
+    if (!xarMod::apiFunc('keywords', 'words', 'deleteitems',
+        array(
+            'module_id' => $modid,
+        ))) return;
 
-    $keywords = $xartable['keywords'];
+    // delete all indexes for this module
+    if (!xarMod::apiFunc('keywords', 'index', 'deleteitems',
+        array(
+            'module_id' => $modid,
+        ))) return;
 
-    // Delete the entries
-    $query = "DELETE FROM $keywords
-               WHERE module_id = ?";
-
-    $result =& $dbconn->Execute($query,array($modid));
-    if (!$result) {
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
-    }
     // Return the extra info
     return $extrainfo;
 }

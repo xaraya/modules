@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="!empty($keywords)">
+    <div class="xar-keywords-list">
+        <xar:if condition="!empty($showlabel)">
+        Keywords:&#160;
+        </xar:if>
+        <xar:loop name="$keywords">
+            <a href="#xarModURL('keywords', 'admin', 'view', array('keyword' => $loop:item))#">#$loop:item#</a>
+            <xar:if condition="$loop:index lt count($keywords)">,&#160;</xar:if>
+        </xar:loop>
+    </div>
+</xar:if>
+</xar:template>

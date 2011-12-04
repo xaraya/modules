@@ -9,7 +9,7 @@
             <label for="pubtypeid#$blockid#">Publication Type:</label>
         </span>
     </span>
-    
+
     <span style="float: right; width: 78%; text-align: left;">
         <select name="ptid" id="pubtypeid#$blockid#">
             <option value="0">All</option>

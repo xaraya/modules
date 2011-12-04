@@ -2,88 +2,77 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
-    <div class="xar-mod-body"><h2><xar:ml><xar:mlstring>Select Hooked Modules for Privilege '#(1)'</xar:mlstring><xar:mlvar>#$extname#</xar:mlvar></xar:ml></h2>
-        <div style="margin: auto;">
-        
-        <form method="post" action="&xar-modurl-keywords-admin-privileges;">
+    <div class="xar-mod-body">
+        <h2>Select Module Items for Privilege #$extname#</h2>
+        <form method="post" action="#xarModURL('keywords', 'admin', 'privileges')#">
             <input type="hidden" name="extpid" id="extpid" value="#$extpid#" />
             <input type="hidden" name="extname" id="extname" value="#$extname#" />
             <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#" />
             <input type="hidden" name="extmodule" id="extmodule" value="#$extmodule#" />
             <input type="hidden" name="extcomponent" id="extcomponent" value="#$extcomponent#" />
-        
-        <table border="1" cellpadding="8" cellspacing="0">
-        <tr><th valign="top" align="right">
-        Hooked Module
-        </th><td>
-            <select name="moduleid" onchange="submit()">
-                <option value="0">All</option>
-                <xar:foreach in="$modlist" key="$modid" value="$modname">
-                    <xar:if condition="!empty($moduleid) and $moduleid eq $modid">
-                        <option value="#$modid#" selected="selected">#$modname#</option>
-                    <xar:else />
-                        <option value="#$modid#">#$modname#</option>
-                    </xar:if>
-                </xar:foreach>
-            </select>
-        </td></tr>
-        
-        <tr><th valign="top" align="right">
-        Item Type
-        </th><td>
-            <input type="text" name="itemtype" id="itemtype" value="#$itemtype#" size="10" onchange="submit()" />
-            <!-- TODO: show dropdown box for all relevant item types -->
-        </td></tr>
-        
-        <tr><th valign="top" align="right">
-        Item ID
-        </th><td>
-            <input type="text" name="itemid" id="itemid" value="#$itemid#" size="10" onchange="submit()" />
-            <!-- TODO: show dropdown box for all relevant item ids (if not too many) -->
-        </td></tr>
-        
-        <tr><th valign="top" align="right">
-        Access Level
-        </th><td>
-            <select name="extlevel" id="extlevel">
-                <xar:if condition="$extlevel eq 0">
-                    <option value="0" selected="selected">No Access</option>
-                <xar:else />
-                    <option value="0">No Access</option>
-                </xar:if>
-                <xar:if condition="$extlevel eq 200">
-                    <option value="200" selected="selected">Read</option>
-                <xar:else />
-                    <option value="200">Read</option>
-                </xar:if>
-                 <xar:if condition="$extlevel eq 300">
-                    <option value="300" selected="selected">Add</option>
-                <xar:else />
-                    <option value="300">Add</option>
-                </xar:if>
-                <xar:if condition="$extlevel eq 800">
-                    <option value="800" selected="selected">Admin</option>
-                <xar:else />
-                    <option value="800">Admin</option>
-                </xar:if>
-            </select>
-        </td></tr>
-        
-        <tr><td colspan="2" align="center">
-            <input type="submit" value="#$refreshlabel#" />
-        </td></tr>
-        </table>
-        
-        <br />
-        <xar:ml><xar:mlstring>There are #(1) entries matching these selection criteria at the moment</xar:mlstring><xar:mlvar>#$numitems#</xar:mlvar></xar:ml>
-        <br /><hr /><br />
-        (Instance Definition #$extinstance#)
-        <br /><br />
-        <input type="submit" name="apply" value="#$applylabel#" />
+            <input type="hidden" name="pparentid" id="pparentid" value="#$pparentid#"/>
+            <fieldset>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label for="keywords_moduleid">Module</label>
+                    </div>
+                    <div class="xar-col">
+                        <xar:set name="firstline">array('id' => 0, 'name' => 'All')</xar:set>
+                        <xar:data-input type="dropdown" name="moduleid" id="keywords_moduleid" value="$moduleid" options="$modlist" firstline="$firstline" onchange="this.form.submit();return false;"/>
+                        <xar:if condition="empty($modlist)">
+                            <p class="xar-note">Keywords does not appear to be hooked to an modules</p>
+                        </xar:if>
+                    </div>
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label for="keywords_itemtype">Itemtype</label>
+                    </div>
+                    <div class="xar-col">
+                        <xar:if condition="!empty($typelist)">
+                            <xar:set name="firstline">array('id' => 0, 'name' => 'All')</xar:set>
+                            <xar:data-input type="dropdown" name="itemtype" id="keywords_itemtype_select" value="$itemtype" options="$typelist" firstline="$firstline" onchange="this.form.submit();return false;"/>
+                        <xar:else/>
+                            <xar:data-input type="integerbox" name="itemtype" id="keywords_itemtype" value="$itemtype" size="10"/>&#160; (0 = All Itemtypes)
+                        </xar:if>
+                    </div>
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label for="keywords_itemid">Item ID</label>
+                    </div>
+                    <div class="xar-col">
+                        <xar:if condition="!empty($itemlist)">
+                            <xar:set name="firstline">array('id' => 0, 'name' => 'All')</xar:set>
+                            <xar:data-input type="dropdown" name="itemid" id="keywords_itemid_select" value="$itemid" options="$itemlist" firstline="$firstline" onchange="this.form.submit();return false;"/>
+                        <xar:else/>
+                            <xar:data-input type="integerbox" name="itemid" id="keywords_itemid" value="$itemid" size="10"/>&#160; (0 = All Items)
+                        </xar:if>
+                    </div>
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label for="keywords_extlevel">Access Level</label>
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input type="dropdown" name="extlevel" id="keywords_extlevel" value="$extlevel" options="$extlevels"/>
+                    </div>
+                </div>
+                <div class="xar-align-center">
+                    <xar:var name="refreshLabel">Refresh Selection</xar:var>
+                    <input type="submit" value="#$refreshLabel#"/>
+                </div>
+            </fieldset>
+            <fieldset>
+                <p>Instance Definition #$extinstance#</p>
+                <p class="xar-note">There are #$numitems# entries matching these selection criteria at the moment</p>
+
+                <div class="xar-align-center">
+                    <xar:var name="submitLabel">Finish and Apply to Privilege</xar:var>
+                    <input type="submit" name="apply" value="#$submitLabel#"/>
+                </div>
+            </fieldset>
         </form>
-        <br />
-        
-        
         Some examples :  (assuming your users have read access by default)<br /><br />
         - In order to allow 'Friends' to view the keywords for articles, define a privilege 'ReadArticleKeywords'
         (or whatever name you prefer), and choose the module "Articles" (instance 151:All:All) and access level "Read" above.
@@ -91,8 +80,7 @@
         <br /><br />
         - ...
         <br /><br />
-        
-        
-        </div>
+
     </div>
+
 </xar:template>

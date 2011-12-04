@@ -102,12 +102,12 @@ class KeywordsProperty extends TextBoxProperty
         }
 
     }
-    
+
     public function createValue($itemid=0)
     {
         // Make sure we have the keywords table
         xarModAPILoad('keywords');
-        
+
         $dbconn =& xarDB::getConn();
         $xartable =& xarDB::getTables();
         $keywordstable = $xartable['keywords'];
@@ -141,7 +141,7 @@ class KeywordsProperty extends TextBoxProperty
                                   array('modid' => $this->objectref->moduleid,
                                         'itemtype' => $this->objectref->itemtype,
                                         'itemid' => $itemid));
-    
+
         $delete = array();
         $keep = array();
         $new = array();
@@ -168,7 +168,7 @@ class KeywordsProperty extends TextBoxProperty
 
         // Make sure we have the keywords table
         xarModAPILoad('keywords');
-        
+
         $dbconn =& xarDB::getConn();
         $xartable =& xarDB::getTables();
         $keywordstable = $xartable['keywords'];
@@ -178,10 +178,10 @@ class KeywordsProperty extends TextBoxProperty
             $idlist = array_keys($delete);
             $query = "DELETE FROM $keywordstable
                       WHERE id IN (" . join(', ',$idlist) . ")";
-    
+
             $result =& $dbconn->Execute($query);
         }
-    
+
         if (count($new) > 0) {
             foreach ($new as $word) {
                 // Get a new keywords ID
@@ -197,7 +197,7 @@ class KeywordsProperty extends TextBoxProperty
                                 ?,
                                 ?,
                                 ?)";//echo $query;var_dump($word);var_dump($this->objectref->moduleid);var_dump($this->objectref->itemtype);var_dump($itemid);exit;
-    
+
                 $result =& $dbconn->Execute($query,array($nextId, $word, $this->objectref->moduleid, $this->objectref->itemtype, $itemid));
             }
         }

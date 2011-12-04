@@ -3,9 +3,109 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <h2>Overview of Keyword Assignments</h2>
-        <div style="margin: auto;">
-            <xar:data-list module="keywords" />
+        <div class="xar-mod-page-head">
+            <h2>Overview of Keyword Associations</h2>
+            <xar:template type="module" module="keywords" file="admin-module-tabs"/>
+            <form method="get" action="#xarServer::getCurrentURL()#">
+                <input type="hidden" name="module" id="module_name" value="keywords"/>
+                <input type="hidden" name="type" id="module_type" value="admin"/>
+                <input type="hidden" name="func" id="func" value="view"/>
+                <input type="hidden" name="module_id" id="module_id" value="#$module_id#"/>
+                <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#"/>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <xar:var name="filterTitle">Optionally filter items by keyword(s)</xar:var>
+                        <label for="keyword" title="#$filterTitle#">Filter items by keyword(s)*</label>
+                    </div>
+                    <div class="xar-col">
+                        <input type="text" name="keyword" id="keyword" value="#$keyword#"/>
+                        &#160;
+                        <xar:var name="filterLabel">Apply Filter</xar:var>
+                        <input type="submit" value="#$filterLabel#"/>
+                        &#160;( *delimiters: <strong>#$delimiters#</strong> )
+                    </div>
+            </div>
+            </form>
+        </div>
+        <div class="xar-mod-page-body">
+
+            <xar:var name="modifylabel">Modify</xar:var>
+            <xar:var name="modifytitle">Modify associations with this item</xar:var>
+            <xar:var name="deletelabel">Delete</xar:var>
+            <xar:var name="deletetitle">Delete all associations with this item</xar:var>
+            <xar:var name="displaylabel">Display</xar:var>
+            <xar:var name="displaytitle">Display module item</xar:var>
+            <xar:if condition="!empty($use_icons)">
+                <xar:set name="modifyicon">xarTpl::getImage('icons/modify.png','theme')</xar:set>
+                <xar:set name="deleteicon">xarTpl::getImage('icons/delete.png','theme')</xar:set>
+                <xar:set name="displayicon">xarTpl::getImage('icons/display.png','theme')</xar:set>
+            </xar:if>
+
+            <xar:pager startnum="$startnum" itemsperpage="$items_per_page" total="$total"/>
+            <table class="xar-fullwidth">
+                <caption class="xar-align-left">
+                    <xar:if condition="empty($modname)">
+                        All
+                    <xar:else/>
+                        #$modules[$modname]['displayname']#
+                        <xar:if condition="!empty($itemtype)">
+                            #$modules[$modname]['itemtypes'][$itemtype]['label']#
+                        </xar:if>
+                    </xar:if>
+                    Associations
+                </caption>
+                <thead>
+                    <tr>
+                        <xar:if condition="empty($modname)">
+                            <th>Module</th>
+                        </xar:if>
+                        <xar:if condition="empty($itemtype)">
+                            <th>Itemtype</th>
+                        </xar:if>
+                        <th>Item</th>
+                        <th class="xar-align-center">Words</th>
+                        <th class="xar-align-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <xar:if condition="!empty($items)">
+                        <xar:foreach in="$items" value="$item">
+                            <tr>
+                                <xar:if condition="empty($modname)">
+                                    <td>
+                                        <!-- #$modules[$item['module']]['displayname']# -->
+                                        #$item['module']#
+                                    </td>
+                                </xar:if>
+                                <xar:if condition="empty($itemtype)">
+                                    <td>
+                                        #$item['itemtype']# - #$modules[$item['module']]['itemtypes'][$item['itemtype']]['label']#
+                                    </td>
+                                </xar:if>
+                                <td>
+                                    #$item['itemid']# - #$modules[$item['module']]['itemlinks'][$item['itemtype']][$item['itemid']]['label']#
+                                </td>
+                                <td class="xar-align-center">
+                                    #$item['numwords']#
+                                </td>
+                                <td class="xar-align-right">
+                                    <xar:set name="return_url">urlencode(xarServer::getCurrentURL())</xar:set>
+                                    <xar:if condition="empty($use_icons)">
+                                    <a href="#$modules[$item['module']]['itemlinks'][$item['itemtype']][$item['itemid']]['url']#" title="#$displaytitle#: #$modules[$item['module']]['itemlinks'][$item['itemtype']][$item['itemid']]['title']#">#$displaylabel#</a>&#160;
+                                    <a href="#xarModURL('keywords', 'admin', 'modify', array('module_id' => $item['module_id'], 'itemtype' => $item['itemtype'], 'itemid' => $item['itemid'], 'return_url' => $return_url))#" title="#$modifytitle#">#$modifylabel#</a>&#160;
+                                    <a href="#xarModURL('keywords', 'admin', 'delete', array('module_id' => $item['module_id'], 'itemtype' => $item['itemtype'], 'itemid' => $item['itemid'], 'return_url' => $return_url))#" title="#$deletetitle#">#$deletelabel#</a>
+                                    <xar:else/>
+                                    <a href="#$modules[$item['module']]['itemlinks'][$item['itemtype']][$item['itemid']]['url']#" title="#$displaytitle#: #$modules[$item['module']]['itemlinks'][$item['itemtype']][$item['itemid']]['title']#" class="xar-icon"><img src="#$displayicon#" alt="#$displaylabel#" class="xar-icon"/></a>&#160;
+                                    <a href="#xarModURL('keywords', 'admin', 'modify', array('module_id' => $item['module_id'], 'itemtype' => $item['itemtype'], 'itemid' => $item['itemid'], 'return_url' => $return_url))#" class="xar-icon" title="#$modifytitle#"><img src="#$modifyicon#" alt="#$modifylabel#" class="xar-icon"/></a>&#160;
+                                    <a href="#xarModURL('keywords', 'admin', 'delete', array('module_id' => $item['module_id'], 'itemtype' => $item['itemtype'], 'itemid' => $item['itemid'], 'return_url' => $return_url))#" class="xar-icon" title="#$deletetitle#"><img src="#$deleteicon#" alt="#$deletelabel#" class="xar-icon"/></a>
+                                    </xar:if>
+                                </td>
+                            </tr>
+                        </xar:foreach>
+                    </xar:if>
+                </tbody>
+            </table>
+            <xar:pager startnum="$startnum" itemsperpage="$items_per_page" total="$total"/>
         </div>
     </div>
 </xar:template>

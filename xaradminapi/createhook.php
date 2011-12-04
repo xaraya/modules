@@ -23,153 +23,108 @@ function keywords_adminapi_createhook($args)
 {
     extract($args);
 
-    if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID', 'admin', 'createhook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
-    }
-    if (!isset($extrainfo) || !is_array($extrainfo)) {
+    if (empty($extrainfo))
         $extrainfo = array();
+
+    if (!isset($objectid) || !is_numeric($objectid)) {
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('objectid', 'admin', 'createhook', 'keywords');
+        throw new BadParameterException($vars, $msg);
     }
 
-    // When called via hooks, modname wil be empty, but we get it from the
-    // extrainfo or the current module
-    if (empty($modname)) {
-        if (!empty($extrainfo['module'])) {
-            $modname = $extrainfo['module'];
-        } else {
-            $modname = xarModGetName();
-        }
+    // When called via hooks, the module name may be empty. Get it from current module.
+    if (empty($extrainfo['module'])) {
+        $modname = xarModGetName();
+    } else {
+        $modname = $extrainfo['module'];
     }
-    $modid = xarModGetIDFromName($modname);
+
+    $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module name', 'admin', 'createhook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('module', 'admin', 'newhook', 'keywords');
+        throw new BadParameterException($vars, $msg);
     }
 
-    if (!isset($itemtype) || !is_numeric($itemtype)) {
-         if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
-             $itemtype = $extrainfo['itemtype'];
-         } else {
-             $itemtype = 0;
-         }
+    if (!empty($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
+        $itemtype = $extrainfo['itemtype'];
+    } else {
+        $itemtype = 0;
     }
 
-    // check if we need to save some keywords here
-    if (isset($extrainfo['keywords']) && is_string($extrainfo['keywords'])) {
+    if (!empty($extrainfo['itemid']) && is_numeric($extrainfo['itemid'])) {
+        $itemid = $extrainfo['itemid'];
+    } else {
+        $itemid = $objectid;
+    }
+
+    // @todo: replace this with access prop
+    // chris: amazingly, this is the only function that didn't call this originally ?
+    //if (!xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:$itemid"))
+    //    return $extrainfo;
+
+    // get settings currently in force for this module/itemtype
+    $settings = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
+        array(
+            'module' => $modname,
+            'itemtype' => $itemtype,
+        ));
+
+    // get the index_id for this module/itemtype/item
+    $index_id = xarMod::apiFunc('keywords', 'index', 'getid',
+        array(
+            'module' => $modname,
+            'itemtype' => $itemtype,
+            'itemid' => $itemid,
+        ));
+
+    // see if keywords were passed to hook call
+    if (!empty($extrainfo['keywords'])) {
         $keywords = $extrainfo['keywords'];
     } else {
-        xarVarFetch('keywords', 'str:1:', $keywords, '', XARVAR_NOT_REQUIRED);
-    }
-    if (empty($keywords)) {
-        return $extrainfo;
+        // otherwise, try fetch from form input
+        if (!xarVarFetch('keywords', 'isset',
+            $keywords, null, XARVAR_DONT_SET)) return;
     }
 
-  $words = xarModAPIFunc('keywords',
-                         'admin',
-                         'separekeywords',
-                          array('keywords' => $keywords));
+    // we may have been given a string list
+    if (!empty($keywords) && !is_array($keywords)) {
+        $keywords = xarModAPIFunc('keywords','admin','separekeywords',
+            array(
+                'keywords' => $keywords,
+            ));
+    }
 
-/*
-    // get the list of delimiters to work with
+    // it's ok if there are no keywords
+    if (empty($keywords))
+        return $extrainfo; //$keywords = array();
+
+    if (!empty($settings['restrict_words'])) {
+        $restricted_list = xarMod::apiFunc('keywords', 'words', 'getwords',
+            array(
+                'index_id' => $settings['index_id'],
+            ));
+        // store only keywords that are also in the restricted list
+        $keywords = array_intersect($keywords, $restricted_list);
+    }
+    $keywords = array_filter(array_unique($keywords));
+
+    // keywords may be empty after restrictions and filters are applied
+    if (empty($keywords))
+        return $extrainfo; //$keywords = array();
+
+    // have keywords, create associations
+    if (!xarMod::apiFunc('keywords', 'words', 'createitems',
+        array(
+            'index_id' => $index_id,
+            'keyword' => $keywords,
+        ))) return;
+
+    // Retrieve the list of allowed delimiters
     $delimiters = xarModVars::get('keywords','delimiters');
-    $dellength = strlen($delimiters);
+    $delimiter = !empty($delimiters) ? $delimiters[0] : ',';
+    $extrainfo['keywords'] = implode($delimiter, $keywords);
 
-    // extract individual keywords from the input string (comma, semi-column or space separated)
-    for ($i=0; $i<$dellength; $i++) {
-        $delimiter = substr($delimiters,$i,1);
-        if (strstr($keywords,$delimiter)) {
-            $words = explode($delimiter,$keywords);
-        }
-    }
-    //if nothing has been separated, just plop the whole string (possibly only one keyword) into words.
-    if (!isset($words)) {
-        $words = array();
-        $words[] = $keywords;
-    }
-  */
-    // old way of doing it with hardcoded delimiters
-    /*if (strstr($keywords,',')) {
-        $words = explode(',',$keywords);
-    } elseif (strstr($keywords,';')) {
-        $words = explode(';',$keywords);
-    } else {
-        $words = explode(' ',$keywords);
-    }*/
-
-    $cleanwords = array();
-    foreach ($words as $word) {
-        $word = trim($word);
-        if (empty($word)) continue;
-        $cleanwords[] = $word;
-    }
-    if (count($cleanwords) < 1) {
-        return $extrainfo;
-    }
-
-/* TODO: restrict to predefined keyword list
-    $restricted = xarModVars::get('keywords','restricted');
-    if (!empty($restricted)) {
-        $wordlist = array();
-        if (!empty($itemtype)) {
-            $getlist = xarModVars::get('keywords',$modname.'.'.$itemtype);
-        } else {
-            $getlist = xarModVars::get('keywords',$modname);
-        }
-        if (!isset($getlist)) {
-            $getlist = xarModVars::get('keywords','default');
-        }
-        if (!empty($getlist)) {
-            $wordlist = split(',',$getlist);
-        }
-        if (count($wordlist) > 0) {
-            $acceptedwords = array();
-            foreach ($cleanwords as $word) {
-                if (!in_array($word, $wordlist)) continue;
-                $acceptedwords[] = $word;
-            }
-            if (count($acceptedwords) < 1) {
-                return $extrainfo;
-            }
-            $cleanwords = $acceptedwords;
-        }
-    }
-*/
-
-    $dbconn =& xarDB::getConn();
-    $xartable =& xarDB::getTables();
-    $keywordstable = $xartable['keywords'];
-
-    foreach ($cleanwords as $word) {
-        // Get a new keywords ID
-        $nextId = $dbconn->GenId($keywordstable);
-        // Create new keyword
-        $query = "INSERT INTO $keywordstable (id,
-                                           keyword,
-                                           module_id,
-                                           itemtype,
-                                           itemid)
-                                    VALUES (?,
-                                            ?,
-                                            ?,
-                                            ?,
-                                            ?)";
-        $result =& $dbconn->Execute($query,array($nextId, $word, $modid, $itemtype, $objectid));
-
-        if (!$result) {
-            // we *must* return $extrainfo for now, or the next hook will fail
-            //return false;
-            return $extrainfo;
-        }
-
-        //$keywordsid = $dbconn->PO_Insert_ID($keywordstable, 'id');
-    }
-    $extrainfo['keywords'] = join(' ',$cleanwords);
     return $extrainfo;
 }
 ?>

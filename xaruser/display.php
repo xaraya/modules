@@ -14,6 +14,7 @@
  * display keywords entry
  *
  * @param $args['itemid'] item id of the keywords entry
+ * @checkme: this appears to display a link to a display of an item, why is this needed?
  * @return array Item
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */

@@ -33,9 +33,9 @@ class Keywords_KeywordsarticlesBlockAdmin extends Keywords_KeywordsarticlesBlock
 
         $vars['blockid'] = $this->block_id;
         // Return output
-        return $vars;        
+        return $vars;
     }
-    
+
     public function update()
     {
         if (!xarVarFetch('ptid', 'id', $vars['ptid'],$this->ptid, XARVAR_NOT_REQUIRED)) return;
@@ -43,7 +43,7 @@ class Keywords_KeywordsarticlesBlockAdmin extends Keywords_KeywordsarticlesBlock
         if (!xarVarFetch('status', 'str:1:', $vars['status'], $this->status, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('refreshtime', 'int:1:', $vars['refreshtime'],1,XARVAR_NOT_REQUIRED)) return;
         $this->setContent($vars);
-        return true; 
+        return true;
     }
 }
 ?>

@@ -20,13 +20,13 @@
     protected $module           = 'keywords'; // module block type belongs to, if any
     protected $text_type        = 'Keywords Cloud';  // Block type display name
     protected $text_type_long   = 'Display keywords cloud'; // Block type description
-    // Additional info, supplied by developer, optional 
-    protected $type_category    = 'block'; // options [(block)|group] 
+    // Additional info, supplied by developer, optional
+    protected $type_category    = 'block'; // options [(block)|group]
     protected $author           = '';
     protected $contact          = '';
     protected $credits          = '';
     protected $license          = '';
-    
+
     // blocks subsystem flags
     protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
     protected $show_help    = false; // let the subsystem know if this block type has a help() method
@@ -39,13 +39,13 @@
         {
             $vars = $this->getContent();
             $vars['tags'] = array();
-            switch ($data['cloudtype']) {
+            switch ($vars['cloudtype']) {
                 case 1:
                 break;
                 case 2:
                 case 3:
-                    $vars['tags'] = xarMod::apiFunc('keywords','user','getkeywordhits',array('cloudtype' => $data['cloudtype']));
-                break;                
+                    $vars['tags'] = xarMod::apiFunc('keywords','user','getkeywordhits',array('cloudtype' => $vars['cloudtype']));
+                break;
             }
             return $vars;
         }
@@ -53,7 +53,7 @@
         function modify()
         {
             $data = $this->getContent();
-            
+
             $data['status'] = '';
             switch ($data['cloudtype']) {
                 default:

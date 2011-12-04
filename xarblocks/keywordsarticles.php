@@ -26,17 +26,17 @@ class Keywords_KeywordsarticlesBlock extends BasicBlock implements iBlock
     protected $module           = 'keywords'; // module block type belongs to, if any
     protected $text_type        = 'Keywords Articles';  // Block type display name
     protected $text_type_long   = 'Show articles related by keywords'; // Block type description
-    // Additional info, supplied by developer, optional 
-    protected $type_category    = 'block'; // options [(block)|group] 
+    // Additional info, supplied by developer, optional
+    protected $type_category    = 'block'; // options [(block)|group]
     protected $author           = '';
     protected $contact          = '';
     protected $credits          = '';
     protected $license          = '';
-    
+
     // blocks subsystem flags
     protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
     protected $show_help    = false; // let the subsystem know if this block type has a help() method
-    
+
     public $ptid = '';
     public $cid = '';
     public $status = '2,3';
@@ -128,7 +128,7 @@ class Keywords_KeywordsarticlesBlock extends BasicBlock implements iBlock
                 }
         }
     }
-    return $vars;        
+    return $vars;
     }
 
 }

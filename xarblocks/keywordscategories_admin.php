@@ -24,7 +24,7 @@ class Keywords_KeywordscategoriesBlockAdmin extends Keywords_KeywordscategoriesB
         $vars['blockid'] = $this->block_id;
         return $vars;
     }
-    
+
     public function update()
     {
         if (!xarVarFetch('refreshtime', 'int:1:', $vars['refreshtime'],1,XARVAR_NOT_REQUIRED)) return;

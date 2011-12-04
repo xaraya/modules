@@ -24,72 +24,61 @@ function keywords_adminapi_deletehook($args)
 {
     extract($args);
 
+    if (empty($extrainfo))
+        $extrainfo = array();
+
     if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'object id', 'admin', 'deletehook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
-    }
-    if (!isset($extrainfo) || !is_array($extrainfo)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'extrainfo', 'admin', 'deletehook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('objectid', 'adminapi', 'deletehook', 'keywords');
+        throw new BadParameterException($vars, $msg);
     }
 
-    // When called via hooks, the module name may be empty, so we get it from
-    // the current module
+    // When called via hooks, the module name may be empty. Get it from current module.
     if (empty($extrainfo['module'])) {
         $modname = xarModGetName();
     } else {
         $modname = $extrainfo['module'];
     }
 
-    $modid = xarModGetIDFromName($modname);
+    $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'module name', 'admin', 'deletehook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('module', 'adminapi', 'deletehook', 'keywords');
+        throw new BadParameterException($vars, $msg);
     }
 
-    if (!empty($extrainfo['itemtype'])) {
+    if (!empty($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
         $itemtype = $extrainfo['itemtype'];
     } else {
         $itemtype = 0;
     }
 
-    if (!empty($extrainfo['itemid'])) {
+    if (!empty($extrainfo['itemid']) && is_numeric($extrainfo['itemid'])) {
         $itemid = $extrainfo['itemid'];
     } else {
         $itemid = $objectid;
     }
-    if (empty($itemid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'item id', 'admin', 'deletehook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
-    }
 
-    $dbconn =& xarDB::getConn();
-    $xartable =& xarDB::getTables();
-    $keywordstable = $xartable['keywords'];
-    $query = "DELETE FROM $keywordstable
-              WHERE module_id = ?
-                AND itemtype = ?
-                AND itemid   = ?";
+    // get the index_id for this module/itemtype/item
+    $index_id = xarMod::apiFunc('keywords', 'index', 'getid',
+        array(
+            'module' => $modname,
+            'itemtype' => $itemtype,
+            'itemid' => $itemid,
+        ));
 
-    $result =& $dbconn->Execute($query,array($modid, $itemtype, $itemid));
-    if (!$result) {
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
-    }
-    // Return the extra info
+    // delete all keywords associated with this item
+    if (!xarMod::apiFunc('keywords', 'words', 'deleteitems',
+        array(
+            'index_id' => $index_id,
+        ))) return;
+
+    // delete the index
+    if (!xarMod::apiFunc('keywords', 'index', 'deleteitem',
+        array(
+            'id' => $index_id,
+        ))) return;
+
     return $extrainfo;
 }
 ?>

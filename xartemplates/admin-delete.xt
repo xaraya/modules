@@ -3,15 +3,85 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <h2>Delete Keyword Assignment</h2>
-        <div style="margin: auto;">
-            <xar:data-display object="$object" />
-            <form method="post">
-                <table border="0" cellpadding="5">
-                    <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
-                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                    <tr><td colspan="2" align="center"><input type="submit" name="confirm" value="#$confirm#" /></td></tr>
-                </table>
+        <div class="xar-mod-page-head">
+            <h2>Manage Keyword Associations</h2>
+            <xar:template type="module" module="keywords" file="admin-module-tabs"/>
+        </div>
+        <div class="xar-mod-page-body">
+            <h3>Delete Item Associations</h3>
+            <form method="post" action="#xarModURL('keywords', 'admin', 'delete')#">
+                <fieldset>
+                    <legend>Item Info</legend>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            Module
+                        </div>
+                        <div class="xar-col">
+                            #$modules[$modname]['displayname']#
+                        </div>
+                    </div>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            Itemtype
+                        </div>
+                        <div class="xar-col">
+                            <xar:if condition="!empty($itemtype)">
+                                #$modules[$modname]['itemtypes'][$itemtype]['label']#
+                            <xar:else/>
+                                0
+                            </xar:if>
+                        </div>
+                    </div>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            Item ID
+                        </div>
+                        <div class="xar-col">
+                            #$itemid#
+                        </div>
+                    </div>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            Item
+                        </div>
+                        <div class="xar-col">
+                            <a href="#$item['url']#" title="#$item['title']#">#$item['label']#</a>
+                        </div>
+                    </div>
+                    <xar:if condition="!empty($display_hook)">
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            Keywords
+                        </div>
+                        <div class="xar-col">
+                            <xar:var name="display_hook"/>
+                        </div>
+                    </div>
+                    </xar:if>
+                </fieldset>
+                <fieldset>
+                    <legend>Delete Item Keywords</legend>
+                    <p class="xar-alert">Please confirm that you want to delete all associations with this item</p>
+                    <p class="xar-note">Once associations are deleted the item will no longer be listed in the keywords statistics</p>
+                </fieldset>
+                <xar:var name="submitLabel">Confirm Delete</xar:var>
+                <xar:if condition="!empty($submitLabel)">
+                    <fieldset>
+                        <div class="xar-align-center">
+                            <input type="hidden" name="phase" id="phase" value="confirm"/>
+                            <input type="hidden" name="module_id" id="module_id" value="#$module_id#"/>
+                            <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#"/>
+                            <input type="hidden" name="itemid" id="itemid" value="#$itemid#"/>
+                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                            <input type="hidden" name="return_url" id="return_url" value="#$return_url#"/>
+                            <input type="submit" value="#$submitLabel#"/>
+                            &#160;
+                            &#160;
+                            <xar:var name="cancelLabel">Cancel</xar:var>
+                            <input type="submit" name="cancel" value="#$cancelLabel#"/>
+                        </div>
+                    </fieldset>
+                </xar:if>
             </form>
         </div>
     </div>

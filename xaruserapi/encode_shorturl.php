@@ -27,23 +27,23 @@ function keywords_userapi_encode_shorturl($args)
     if (!isset($func)) {
         return;
     }
-	$path = array();
-	$get = $args;
+    $path = array();
+    $get = $args;
 
     $module = 'keywords';
-	$path[] = $module;
+    $path[] = $module;
 
     if ($func == 'main') {
-	    unset($get['func']);
+        unset($get['func']);
         if (!empty($tab)) {
             $path[] = 'tab'.$tab;
             unset($get['tab']);
         } elseif (!empty($keyword)) {
-		    $path[] = $keyword;
-	     	unset($get['keyword']);
+            $path[] = $keyword;
+             unset($get['keyword']);
             if (!empty($id)) {
-			    $path[] = $id;
-			    unset($getp['id']);
+                $path[] = $id;
+                unset($getp['id']);
             }
         }
     } else {

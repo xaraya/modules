@@ -19,6 +19,7 @@ function keywords_adminapi_separekeywords($args)
     extract($args);
 
     //if (!xarSecurityCheck('AdminKeywords')) return;
+    // @checkme: add privs just to parse a string?
     if (!xarSecurityCheck('AddKeywords')) return;
 
     $delimiters = xarModVars::get('keywords', 'delimiters');

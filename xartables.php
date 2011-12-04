@@ -33,6 +33,7 @@ function keywords_xartables()
     $keywordsTable_restr = xarDB::getPrefix() . '_keywords_restr';
     // Set the table name
     $xarTables['keywords_restr'] = $keywordsTable_restr;
+    $xarTables['keywords_index'] = xarDB::getPrefix() . '_keywords_index';
 
 
     // Return the table information

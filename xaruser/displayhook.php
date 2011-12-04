@@ -20,80 +20,90 @@
  */
 function keywords_user_displayhook($args)
 {
-    if (!xarSecurityCheck('ReadKeywords',0)) return '';
-
     extract($args);
 
-    if (!isset($extrainfo)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'extrainfo', 'user', 'displayhook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $msg;
-    }
+    if (empty($extrainfo))
+        $extrainfo = array();
 
     if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID', 'user', 'displayhook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $msg;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('objectid', 'user', 'displayhook', 'keywords');
+        throw new BadParameterException($vars, $msg);
     }
 
-    // When called via hooks, the module name may be empty, so we get it from
-    // the current module
-    if (is_array($extrainfo) && !empty($extrainfo['module']) && is_string($extrainfo['module'])) {
-        $modname = $extrainfo['module'];
-    } else {
+
+    // When called via hooks, the module name may be empty. Get it from current module.
+    if (empty($extrainfo['module'])) {
         $modname = xarModGetName();
+    } else {
+        $modname = $extrainfo['module'];
     }
 
-    $modid = xarModGetIDFromName($modname);
+    $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module name ' . $modname, 'user', 'displayhook', 'keywords');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $msg;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('module', 'admin', 'updatehook', 'keywords');
+        throw new BadParameterException($vars, $msg);
     }
 
-    if (is_array($extrainfo) && isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
+    if (!empty($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
         $itemtype = $extrainfo['itemtype'];
     } else {
         $itemtype = 0;
     }
 
-    if (is_array($extrainfo) && isset($extrainfo['itemid']) && is_numeric($extrainfo['itemid'])) {
+    if (!empty($extrainfo['itemid'])) {
         $itemid = $extrainfo['itemid'];
     } else {
         $itemid = $objectid;
     }
 
-    $words = xarModAPIFunc('keywords','user','getwords',
-                           array('modid' => $modid,
-                                 'itemtype' => $itemtype,
-                                 'itemid' => $itemid));
-    // return empty string here
-    if (empty($words) || !is_array($words) || count($words) == 0) return '';
+    // @todo: replace this with access prop
+    if (!xarSecurityCheck('ReadKeywords',0)) return '';
 
-    $data = array();
+    // get settings currently in force for this module/itemtype
+    $settings = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
+        array(
+            'module' => $modname,
+            'itemtype' => $itemtype,
+        ));
 
-    $data['words'] = array();
-    foreach ($words as $id => $word) {
-       $item = array();
-       $item['id'] = $id;
-       $item['url'] = xarModURL(
-           'keywords','user','main',
-           array('keyword' => $word)
-       );
-       $item['keyword'] = xarVarPrepForDisplay($word);
-       $data['words'][$id] = $item;
+    // get the index_id for this module/itemtype/item
+    $index_id = xarMod::apiFunc('keywords', 'index', 'getid',
+        array(
+            'module' => $modname,
+            'itemtype' => $itemtype,
+            'itemid' => $itemid,
+        ));
+
+    // get the keywords associated with this item
+    $keywords = xarMod::apiFunc('keywords', 'words', 'getwords',
+        array(
+            'index_id' => $index_id,
+        ));
+
+
+    // config may have changed since the keywords were added
+    if (!empty($settings['restrict_words'])) {
+        $restricted_list = xarMod::apiFunc('keywords', 'words', 'getwords',
+            array(
+                'index_id' => $settings['index_id'],
+            ));
+        // show only keywords that are also in the restricted list
+        $keywords = array_intersect($keywords, $restricted_list);
     }
 
-    $keys = implode(",",$words);
+    // @fixme: this is unreliable, hooks are not exclusive to current main module during a request
+    $keys = implode(',',$keywords);
     xarVarSetCached('Blocks.keywords','keys',$keys);
 
-    return xarTplModule('keywords', 'user', 'displayhook', $data);
-}
+    $data = $settings;
+    $data['keywords'] = $keywords;
 
+    $data['showlabel'] = isset($extrainfo['showlabel']) ? $extrainfo['showlabel'] : true;
+
+    $tpltype = isset($extrainfo['tpltype']) ? $extrainfo['tpltype'] : 'user';
+
+    return xarTpl::module('keywords', $tpltype, 'displayhook', $data);
+}
 ?>

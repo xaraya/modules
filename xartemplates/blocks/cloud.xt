@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:if condition="!empty($tags)"> 
-        <xar:set name="max">max($tags)</xar:set> 
+    <xar:if condition="!empty($tags)">
+        <xar:set name="max">max($tags)</xar:set>
         <div style="text-align: center; background-color: #$background#">
-            <xar:foreach in="$tags" key="$keyword" value="$count">  
-                <xar:set name="ratio">round(70+80*$count/$max)</xar:set>  
+            <xar:foreach in="$tags" key="$keyword" value="$count">
+                <!-- checkme: where does $count come from? -->
+                <xar:set name="ratio">round(70+80*$count/$max)</xar:set>
+                <!-- the display fun(c) displays a link to an item. However, we're fetching
+                     keywords which may belong to multiple item(s), how is this ever meant to work? -->
                 <a href="index.php?module=keywords&amp;fun=display&amp;keyword=#$keyword#" style="color: #$color#;font-size:#$ratio#%; text-decoration: none" title="#$count# items">#$keyword#</a>&#160;
             </xar:foreach>
         </div>
     <xar:else/>
         No tags currently available
-    </xar:if> 
+    </xar:if>
 
 </xar:template>

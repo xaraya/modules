@@ -17,7 +17,162 @@
  */
 function keywords_user_main($args)
 {
-if (!xarSecurityCheck('ReadKeywords')) return;
+    if (!xarSecurityCheck('ReadKeywords')) return;
+
+    if (!xarVarFetch('keyword', 'pre:trim:str:1:',
+        $keyword, null, XARVAR_DONT_SET)) return;
+
+    if (!xarVarFetch('startnum', 'int:1:',
+        $startnum, null, XARVAR_NOT_REQUIRED)) return;
+
+    $data = array();
+
+    if (!empty($keyword)) {
+        $items_per_page = xarModVars::get('keywords', 'items_per_page', 20);
+        $total = xarMod::apiFunc('keywords', 'words', 'countitems',
+            array(
+                //'module_id' => $module_id,
+                //'itemtype' => $itemtype,
+                'keyword' => $keyword,
+                'skip_restricted' => true,
+            ));
+        $items = xarMod::apiFunc('keywords', 'words', 'getitems',
+            array(
+                //'module_id' => $module_id,
+                //'itemtype' => $itemtype,
+                'keyword' => $keyword,
+                'skip_restricted' => true,
+                'startnum' => $startnum,
+                'numitems' => $items_per_page,
+            ));
+
+        $modlist = xarMod::apiFunc('keywords', 'words', 'getmodulecounts',
+            array(
+                'skip_restricted' => true,
+            ));
+        $modtypes = array();
+        $modules = array();
+        foreach ($modlist as $module => $itemtypes) {
+            $modules[$module] = xarMod::getBaseInfo($module);
+            $modules[$module]['itemtypes'] = $itemtypes;
+            if (!isset($modtypes[$module])) {
+                try {
+                    $modtypes[$module] = xarMod::apiFunc($module, 'user', 'getitemtypes');
+                } catch (Exception $e) {
+                    $modtypes[$module] = array();
+                }
+            }
+            foreach ($itemtypes as $typeid => $typeinfo) {
+                if (empty($typeid)) continue;
+                if (!isset($modtypes[$module][$typeid])) {
+                    $modtypes[$module][$typeid] = array(
+                        'label' => xarML('Itemtype #(1)', $typeid),
+                        'title' => xarML('View itemtype #(1) items', $typeid),
+                        'url' => xarModURL($module, 'user', 'view', array('itemtype' => $typeid)),
+                    );
+                }
+                $modules[$module]['itemtypes'][$typeid] += $modtypes[$module][$typeid];
+            }
+        }
+
+        $seenitems = array();
+        foreach ($items as $item) {
+            if (!isset($seenitems[$item['module']]))
+                $seenitems[$item['module']] = array();
+            if (!isset($seenitems[$item['module']][$item['itemtype']]))
+                $seenitems[$item['module']][$item['itemtype']] = array();
+            $seenitems[$item['module']][$item['itemtype']][$item['itemid']] = $item;
+        }
+        foreach ($seenitems as $module => $itemtypes) {
+            $modules[$module]['itemlinks'] = array();
+            foreach ($itemtypes as $typeid => $itemids) {
+                $modules[$module]['itemlinks'][$typeid] = $itemids;
+                try {
+                    $itemlinks = xarMod::apiFunc($module, 'user', 'getitemlinks',
+                        array(
+                            'itemtype' => $typeid,
+                            'itemids' => array_keys($itemids),
+                        ));
+                } catch (Exception $e) {
+                    $itemlinks = array();
+                }
+                foreach (array_keys($itemids) as $id) {
+                    if (!isset($itemlinks[$id])) {
+                        $itemlinks[$id] = array(
+                            'label' => xarML('Item #(1)', $id),
+                            'title' => xarML('Display Item #(1)', $id),
+                            'url' => xarModURL($module, 'user', 'display',
+                                array('itemtype' => !empty($itemtype) ? $itemtype : null, 'itemid' => $id)),
+                        );
+                    }
+                    $modules[$module]['itemlinks'][$typeid][$id] += $itemlinks[$id];
+                }
+            }
+        }
+        $data['modules'] = $modules;
+        $data['items_per_page'] = $items_per_page;
+        $data['total'] = $total;
+        $data['items'] = $items;
+        $data['use_icons'] = xarModVars::get('keywords', 'use_module_icons');
+    } else {
+        $user_layout = xarModVars::get('keywords', 'user_layout', 'list');
+
+        switch ($user_layout) {
+            case 'list':
+            default:
+                $cols_per_page = xarModVars::get('keywords', 'cols_per_page', 2);
+                $items_per_page = xarModVars::get('keywords', 'words_per_page', 50);
+                $total = xarMod::apiFunc('keywords', 'words', 'countwords',
+                    array(
+                        'skip_restricted' => true,
+                    ));
+                $items = xarMod::apiFunc('keywords', 'words', 'getwordcounts',
+                    array(
+                        'startnum' => $startnum,
+                        'numitems' => $items_per_page,
+                        'skip_restricted' => true,
+                    ));
+                $data['cols_per_page'] = $cols_per_page;
+                $data['items_per_page'] = $items_per_page;
+                $data['total'] = $total;
+                $data['items'] = $items;
+            break;
+            case 'cloud':
+                $items = xarMod::apiFunc('keywords', 'words', 'getwordcounts',
+                    array(
+                        'skip_restricted' => true,
+                    ));
+                $counts = array();
+                foreach ($items as $item)
+                    $counts[$item['keyword']] = $item['count'];
+                $font_min = xarModVars::get('keywords', 'cloud_font_min');
+                $font_max = xarModVars::get('keywords', 'cloud_font_max');
+                $font_unit = xarModVars::get('keywords', 'cloud_font_unit');
+                $min_count = min($counts);
+                $max_count = max($counts);
+                $range = $max_count - $min_count;
+                if ($range <= 0)
+                    $range = 1;
+                $font_range = $font_min - $font_max;
+                if ($font_range <= 0)
+                    $font_range = 1;
+                $range_step = $font_range/$range;
+                foreach ($items as $k => $item) {
+                    $count = $counts[$item['keyword']];
+                    $items[$k]['weight'] = $font_min + ( ( $count - $min_count ) * $range_step );
+                }
+                $data['items'] = $items;
+                $data['unit'] = $font_unit;
+
+            break;
+        }
+        $data['user_layout'] = $user_layout;
+    }
+
+    $data['startnum'] = $startnum;
+    $data['keyword'] = $keyword;
+
+    return $data;
 
     xarVarFetch('keyword','str',$keyword,'', XARVAR_DONT_SET);
     xarVarFetch('id','id',$id,'', XARVAR_DONT_SET);
@@ -53,10 +208,12 @@ if (!xarSecurityCheck('ReadKeywords')) return;
                      'tab' => $tab);
 
     } elseif (empty($id)) {
-	    $keyword = rawurldecode($keyword);
-		if (strpos($keyword,'_') !== false) {
-		    $keyword = str_replace('_',' ',$keyword);
-		}
+        // @checkme: necessary to decode? already done by php?
+        $keyword = rawurldecode($keyword);
+        // @checkme: we don't replace spaces with underscores when constructing links
+        if (strpos($keyword,'_') !== false) {
+            $keyword = str_replace('_',' ',$keyword);
+        }
         // get the list of items to which this keyword is assigned
         $items = xarModAPIFunc('keywords','user','getitems',
                                array('keyword' => $keyword));
@@ -82,14 +239,14 @@ if (!xarSecurityCheck('ReadKeywords')) return;
         foreach ($modules as $moduleid => $itemtypes) {
             $modinfo = xarModGetInfo($moduleid);
             if (!isset($modinfo) || empty($modinfo['name'])) return;
-            
+
             // Get the list of all item types for this module (if any)
             try {
                 $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes');
             } catch (Exception $e) {
                 $mytypes = array();
             }
-            
+
             foreach ($itemtypes as $itemtype => $itemlist) {
                 $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
                                            array('itemtype' => $itemtype,
@@ -126,6 +283,11 @@ if (!xarSecurityCheck('ReadKeywords')) return;
                      'keyword' => xarVarPrepForDisplay($keyword),
                      'items' => $items);
     }
+
+    // @checkme: what's all this?
+    // if we're given an id we redirect to item display?
+    // we already got a link pointing to the item display url, why isn't that used
+    // in the template instead of pointing here?
     $items = xarModAPIFunc(
         'keywords','user','getitems',
         array('keyword' => $keyword,
