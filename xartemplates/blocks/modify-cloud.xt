@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label for="cloud_module_id">Module</label>
+                    </div>
+                    <div class="xar-col">
+                        <xar:set name="firstline">array('id' => 0, 'name' => 'All')</xar:set>
+                        <xar:data-input type="dropdown" name="cloud_module_id" id="cloud_module_id" value="$cloud_module_id" options="$modlist" firstline="$firstline" onchange="this.form.submit();return false;"/>
+                        <xar:if condition="empty($modlist)">
+                            <p class="xar-note">Keywords does not appear to be hooked to any modules</p>
+                        </xar:if>
+                    </div>
+                </div>
+                <xar:if condition="!empty($cloud_module_id)">
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label for="cloud_itemtype">Itemtype</label>
+                    </div>
+                    <div class="xar-col">
+                        <xar:if condition="!empty($typelist)">
+                            <xar:set name="firstline">array('id' => 0, 'name' => 'All')</xar:set>
+                            <xar:data-input type="dropdown" name="cloud_itemtype" id="cloud_itemtype" value="$cloud_itemtype" options="$typelist" firstline="$firstline" onchange="this.form.submit();return false;"/>
+                        <xar:else/>
+                            <xar:data-input type="integerbox" name="cloud_itemtype" id="cloud_itemtype" value="$cloud_itemtype" size="10"/>&#160; (0 = All Itemtypes)
+                        </xar:if>
+                    </div>
+                </div>
+                </xar:if>
+
     <div class="xar-row">
         <div class="xar-col">
             <xar:var name="fminTitle">Minimum font size to use</xar:var>

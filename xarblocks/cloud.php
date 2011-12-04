@@ -30,10 +30,11 @@ class Keywords_CloudBlock extends BasicBlock
     protected $show_preview = true;  // let the subsystem know if it's ok to show a preview
     protected $show_help    = false; // let the subsystem know if this block type has a help() method
 
-    public $multiplier = 'wordcount';
     public $cloud_font_min;
     public $cloud_font_max;
     public $cloud_font_unit;
+    public $cloud_module_id;
+    public $cloud_itemtype;
 
         public $cloudtype           = 1;
         public $color               = '#000000';
@@ -51,8 +52,11 @@ class Keywords_CloudBlock extends BasicBlock
     function display()
     {
         $data = $this->getContent();
+
         $items = xarMod::apiFunc('keywords', 'words', 'getwordcounts',
             array(
+                'module_id' => $this->cloud_module_id,
+                'itemtype' => $this->cloud_itemtype,
                 'skip_restricted' => true,
             ));
         if (empty($items)) return;
@@ -78,7 +82,7 @@ class Keywords_CloudBlock extends BasicBlock
         }
         $data['items'] = $items;
         $data['unit'] = $font_unit;                   
-            
+           
         return $data;
         /* 
             // @TODO: figure out where/how to implement these options 
@@ -96,9 +100,25 @@ class Keywords_CloudBlock extends BasicBlock
         */
     }
 
-    function modify()
+    public function modify()
     {
         $data = $this->getContent();
+
+        // get the list of modules (and their itemtypes) keywords is currently hooked to
+        $subjects = xarMod::apiFunc('keywords', 'hooks', 'getsubjects');
+
+        $modlist = array();
+        $typelist = array();
+        foreach ($subjects as $modname => $modinfo) {
+            $modlist[$modinfo['regid']] = array('id' => $modinfo['regid'], 'name' =>$modinfo['displayname']);
+            if ($this->cloud_module_id == $modinfo['regid'] && !empty($modinfo['itemtypes'])) {
+                foreach ($modinfo['itemtypes'] as $typeid => $typeinfo) {
+                    $typelist[$typeid] = array('id' => $typeid, 'name' => $typeid .' - '. $typeinfo['label']);
+                }
+            }
+        }
+        $data['modlist'] = $modlist;
+        $data['typelist'] = $typelist;
 
         $data['font_units'] = array(
             array('id' => 'em', 'name' => 'em'),
@@ -128,6 +148,13 @@ class Keywords_CloudBlock extends BasicBlock
 
     public function update()
     {
+        if (!xarVarFetch('cloud_module_id', 'id',
+            $vars['cloud_module_id'], null, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('cloud_itemtype', 'int:1',
+            $vars['cloud_itemtype'], null, XARVAR_NOT_REQUIRED)) return;
+        // reset itemtype if all modules selected or module changes 
+        if (empty($vars['cloud_module_id']) || $vars['cloud_module_id'] != $this->cloud_module_id)
+            $vars['cloud_itemtype'] = null;
         if (!xarVarFetch('cloud_font_min', 'int:1:',
             $vars['cloud_font_min'], 1, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('cloud_font_max', 'int:1:',
