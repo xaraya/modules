@@ -153,7 +153,7 @@ function keywords_user_main($args)
                 $range = $max_count - $min_count;
                 if ($range <= 0)
                     $range = 1;
-                $font_range = $font_min - $font_max;
+                $font_range = $font_max - $font_min;
                 if ($font_range <= 0)
                     $font_range = 1;
                 $range_step = $font_range/$range;

@@ -3,6 +3,35 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-row">
         <div class="xar-col">
+            <xar:var name="fminTitle">Minimum font size to use</xar:var>
+            <label for="cloud_font_min" title="#$fminTitle#">Cloud minimum font size</label>
+        </div>
+        <div class="xar-col">
+            <xar:data-input type="integerbox" name="cloud_font_min" id="cloud_font_min" value="$cloud_font_min"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="fmaxTitle">Maximum font size to use</xar:var>
+            <label for="cloud_font_max" title="#$fmaxTitle#">Cloud maximum font size</label>
+        </div>
+        <div class="xar-col">
+            <xar:data-input type="integerbox" name="cloud_font_max" id="cloud_font_max" value="$cloud_font_max"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="fsTitle">The font size units to use</xar:var>
+            <label for="cloud_font_unit" title="#$fsTitle#">Cloud font size units</label>
+        </div>
+        <div class="xar-col">
+            <xar:data-input type="dropdown" name="cloud_font_unit" id="cloud_font_unit" value="$cloud_font_unit" options="$font_units"/>
+        </div>
+    </div>
+
+<!--
+    <div class="xar-row">
+        <div class="xar-col">
             <xar:set name="idvalue">'color' .$blockid</xar:set>
             <label for="#$idvalue#" class="xar-form-label" title="#xarML('Light Row (add in hexadecimal format ex. F0F0F0)')#">
                 Text color:
@@ -52,4 +81,5 @@
             </xar:if>
         </div>
     </div>
+-->
 </xar:template>
