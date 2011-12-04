@@ -106,8 +106,7 @@ function keywords_wordsapi_getitems(Array $args=array())
 
     if (!empty($skip_restricted)) {
         $from['idx'] = "$idxtable idx";
-        $where[] = '(idx.module_id != ? OR idx.itemid != 0)';
-        $bindvars[] = xarMod::getRegId('keywords');
+        $where[] = 'idx.itemid != 0';
     }
 
     if (!empty($from['idx'])) {

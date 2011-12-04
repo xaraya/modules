@@ -55,11 +55,14 @@ function keywords_hooksapi_getsettings(Array $args=array())
                 // while we're here, set them
                 xarModVars::set($module, 'keywords_config_'.$itemtype, serialize($config));
             $config['itemtype_config'] = $itemtype;
+            unset($config['module_config'], $config['default_config']);
         } else {
             $config['module_config'] = $module;
+            unset($config['default_config'], $config['itemtype_config']);
         }
     } else {
         $config['default_config'] = $module;
+        unset($config['module_config'], $config['itemtype_config']);
     }
 
     return $config;

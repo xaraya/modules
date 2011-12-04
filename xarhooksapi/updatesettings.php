@@ -38,6 +38,7 @@ function keywords_hooksapi_updatesettings(Array $args=array())
     } else {
         $modvar = 'keywords_config_'.$itemtype;
     }
+    unset($settings['default_config'], $settings['module_config'], $settings['itemtype_config']);
     xarModVars::set($module, $modvar, serialize($settings));
 
     return true;
