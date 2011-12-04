@@ -53,7 +53,7 @@ function keywords_hooks_modulemodifyconfig(Array $args=array())
     $data['module'] = $modname;
     $data['module_id'] = $modid;
     $data['itemtype'] = $itemtype;
-    print_r($data);
+
     return xarTpl::module('keywords', 'hooks', 'modulemodifyconfig', $data);
 }
 ?>
