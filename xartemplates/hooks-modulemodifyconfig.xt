@@ -50,6 +50,15 @@
                 <div class="xar-col">
                     <textarea name="keywords_settings[restricted_list]" id="keywords_settings_restricted_list" cols="40" rows="5">#$restricted_list#</textarea>
                 </div>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <xar:var name="delTitle">Define permitted keyword delimiters (no spaces)</xar:var>
+                        <label for="delimiters" title="#$delTitle#">Word delimiters</label>
+                    </div>
+                    <div class="xar-col">
+                        <strong>#$delimiters#</strong>
+                    </div>
+                </div>
             </div>
         </xar:if>
         <input type="hidden" name="keywords_settings[index_id]" id="keywords_settings_index_id" value="#$index_id#"/>

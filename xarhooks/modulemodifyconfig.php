@@ -47,7 +47,10 @@ function keywords_hooks_modulemodifyconfig(Array $args=array())
             array(
                 'index_id' => $data['index_id'],
             ));
-        $data['restricted_list'] = implode(', ', $restricted_list);
+        $data['delimiters'] = xarModVars::get('keywords', 'delimiters');
+        $delim = !empty($data['delimiters'][0]) ? $data['delimiters'][0] : ',';
+        $data['restricted_list'] = implode("$delim ", $restricted_list);
+        
     }
 
     $data['module'] = $modname;
