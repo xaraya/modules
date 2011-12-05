@@ -29,5 +29,23 @@
                 <xar:data-input type="multiselect" name="keywords" id="keywords_multi" options="$restricted_list" value="$keywords" size="10" layout="combo"/>
             </div>
         </div>
+        <xar:if condition="!empty($is_manager) and !empty($allow_manager_add)">
+            <div class="xar-row">
+                <div class="xar-col">
+                    <label for="">Additional Keywords</label>
+                </div>
+                <div class="xar-col">
+                    <input type="text" name="restricted_extra" id="restricted_extra" value="#$restricted_extra#" class="xar-form-textxxlong" maxlength="254" />
+                </div>
+            </div>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <label for="keywords">Allowed delimiters:</label>
+                </div>
+                <div class="xar-col">
+                    #$delimiters#
+                </div>
+            </div>
+        </xar:if>
     </xar:if>
 </xar:template>

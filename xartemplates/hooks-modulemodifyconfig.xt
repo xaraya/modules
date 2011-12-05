@@ -50,14 +50,24 @@
                 <div class="xar-col">
                     <textarea name="keywords_settings[restricted_list]" id="keywords_settings_restricted_list" cols="40" rows="5">#$restricted_list#</textarea>
                 </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <xar:var name="delTitle">Define permitted keyword delimiters (no spaces)</xar:var>
-                        <label for="delimiters" title="#$delTitle#">Word delimiters</label>
-                    </div>
-                    <div class="xar-col">
-                        <strong>#$delimiters#</strong>
-                    </div>
+            </div>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="delTitle">Define permitted keyword delimiters (no spaces)</xar:var>
+                    <label for="delimiters" title="#$delTitle#">Word delimiters</label>
+                </div>
+                <div class="xar-col">
+                    <strong>#$delimiters#</strong>
+                </div>
+            </div>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="addTitle">Allow managers to add to restricted list when creating/modifying items</xar:var>
+                    <label for="keywords_settings_allow_manager_add" title="#$addTitle#">Managers can Add Keywords?</label>
+                </div>
+                <div class="xar-col">
+                    <xar:data-input type="checkbox" name="keywords_settings[allow_manager_add]" id="keywords_settings_allow_manager_add" checked="$allow_manager_add"/>
+                    &#160;<span class="xar-note">#$addTitle#</span>                    
                 </div>
             </div>
         </xar:if>

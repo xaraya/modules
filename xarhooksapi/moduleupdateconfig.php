@@ -65,6 +65,9 @@ function keywords_hooksapi_moduleupdateconfig($args)
     if ($restrict_words && $status_quo) {
         if (!xarVarFetch('keywords_settings["restricted_list"]', 'pre:trim:str:1:',
             $restricted_list, '', XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('keywords_settings["allow_manager_add"]', 'checkbox',
+            $allow_manager_add, false, XARVAR_NOT_REQUIRED)) return;
+        $settings['allow_manager_add'] = $allow_manager_add;
         $old_list = xarMod::apiFunc('keywords', 'words', 'getwords',
             array(
                 'index_id' => $settings['index_id'],

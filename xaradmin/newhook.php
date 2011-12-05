@@ -87,12 +87,12 @@ function keywords_admin_newhook($args)
 
     // Retrieve the list of allowed delimiters
     $delimiters = xarModVars::get('keywords','delimiters');
-
+    $delimiter = !empty($delimiters) ? $delimiters[0] : ',';
+    
     $data = $settings;
     if (empty($settings['restrict_words'])) {
         // no restrictions, display expects a string
         // Use first delimiter to join words
-        $delimiter = !empty($delimiters) ? $delimiters[0] : ',';
         $data['keywords'] = !empty($keywords) ? implode($delimiter, $keywords) : '';
     } else {
         // get restricted list based on current settings
@@ -102,6 +102,31 @@ function keywords_admin_newhook($args)
             ));
         // return only keywords that are also in the restricted list
         $data['keywords'] = array_intersect($keywords, $data['restricted_list']);
+        // see if managers are allowed to add to restricted list
+        if (!empty($data['allow_manager_add'])) {
+            // see if current user is a manager
+            $data['is_manager'] = xarSecurityCheck('ManageKeywords',0,'Item', "$modid:$itemtype:$itemid");
+            if (!empty($data['is_manager'])) {
+                // see if keywords were passed to hook call
+                if (!empty($extrainfo['restricted_extra'])) {
+                    $toadd = $extrainfo['restricted_extra'];
+                } else {
+                    // could be an item preview, try fetch from form input
+                    if (!xarVarFetch('restricted_extra', 'isset',
+                        $toadd, array(), XARVAR_NOT_REQUIRED)) return;
+                }
+                // we may have been given a string list
+                if (!empty($toadd) && !is_array($toadd)) {
+                    $toadd = xarModAPIFunc('keywords','admin','separekeywords',
+                        array(
+                            'keywords' => $toadd,
+                        ));
+                }
+                // display expects a string 
+                $data['restricted_extra'] = !empty($toadd) ? implode($delimiter, array_unique($toadd)) : '';
+            }
+        }
+
     }
     $data['delimiters'] = $delimiters;
 

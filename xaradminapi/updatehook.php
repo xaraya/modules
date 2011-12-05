@@ -118,6 +118,39 @@ function keywords_adminapi_updatehook($args)
             ));
         // store only keywords that are also in the restricted list
         $keywords = array_intersect($keywords, $restricted_list);
+        // see if managers are allowed to add to restricted list
+        if (!empty($settings['allow_manager_add'])) {
+            // see if current user is a manager
+            $data['is_manager'] = xarSecurityCheck('ManageKeywords',0,'Item', "$modid:$itemtype:$itemid");
+            if (!empty($data['is_manager'])) {
+                // see if keywords were passed to hook call
+                if (!empty($extrainfo['restricted_extra'])) {
+                    $toadd = $extrainfo['restricted_extra'];
+                } else {
+                    // could be an item preview, try fetch from form input
+                    if (!xarVarFetch('restricted_extra', 'isset',
+                        $toadd, array(), XARVAR_NOT_REQUIRED)) return;
+                }
+                // we may have been given a string list
+                if (!empty($toadd) && !is_array($toadd)) {
+                    $toadd = xarModAPIFunc('keywords','admin','separekeywords',
+                        array(
+                            'keywords' => $toadd,
+                        ));
+                }
+                if (!empty($toadd)) {
+                    // add words to restricted list
+                    if (!xarMod::apiFunc('keywords', 'words', 'createitems',
+                        array(
+                            'index_id' => $settings['index_id'],
+                            'keyword' => array_unique(array_diff($toadd, $keywords)),
+                        ))) return;
+                    // merge words with existing keywords 
+                    $keywords = array_merge($keywords, $toadd);
+                }
+            }
+        }
+
     }
     $toadd = array_filter(array_unique(array_diff($keywords, $oldwords)));
     $toremove = array_filter(array_unique(array_diff($oldwords, $keywords)));

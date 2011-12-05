@@ -4,6 +4,7 @@ function keywords_hooksapi_getsettings(Array $args=array())
     $config = array(
         'global_config' => false,    // apply defaults to all modules (if keywords) and/or itemtypes
         'restrict_words' => false,   // use a restricted list of keywords
+        'allow_manager_add' => true, // allow managers to add keywords to restricted list on item create/modify
         'index_id' => xarMod::apiFunc('keywords', 'index', 'getid', array('module' => 'keywords')),
     );
 
@@ -18,7 +19,7 @@ function keywords_hooksapi_getsettings(Array $args=array())
     $keywords_config = @unserialize(xarModVars::get('keywords', 'keywords_config'));
 
     if (!empty($keywords_config))
-        $config = $keywords_config;
+        $config = $keywords_config + $config;
     $config['index_id'] = xarMod::apiFunc('keywords', 'index', 'getid',
         array('module' => 'keywords'));
     // first run, (or unset manually elsewhere), use the defaults
@@ -33,7 +34,7 @@ function keywords_hooksapi_getsettings(Array $args=array())
         $module_config = @unserialize(xarModVars::get($module, 'keywords_config'));
 
         if (!empty($module_config))
-            $config = $module_config;
+            $config = $module_config + $config;;
         $config['index_id'] = xarMod::apiFunc('keywords', 'index', 'getid',
             array('module' => $module));
         // first run, (or unset manually elsewhere)
@@ -47,7 +48,7 @@ function keywords_hooksapi_getsettings(Array $args=array())
             $itemtype_config = @unserialize(xarModVars::get($module, 'keywords_config_'.$itemtype));
 
             if (!empty($itemtype_config))
-                $config = $itemtype_config;
+                $config = $itemtype_config + $config;;
             $config['index_id'] = xarMod::apiFunc('keywords', 'index', 'getid',
                 array('module' => $module, 'itemtype' => $itemtype));
             // first run, (or unset manually elsewhere), use the module defaults
