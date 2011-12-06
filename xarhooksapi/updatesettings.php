@@ -16,30 +16,19 @@ function keywords_hooksapi_updatesettings(Array $args=array())
             'module' => $module,
             'itemtype' => $itemtype,
         ));
-
-    if (!empty($defaults['default_config'])) {
+    
+    if ($defaults['config_state'] == 'default') {
         // per module settings disabled, if this isn't the keywords module, bail
         if ($module != 'keywords') return;
-    } elseif (!empty($defaults['module_config'])) {
+    } elseif ($defaults['config_state'] == 'module') {
         // per itemtype settings disabled, if this isn't itemtype 0, bail
         if (!empty($itemtype)) return;
     }
 
     if (empty($settings))
         $settings = $defaults;
-
-    foreach (array_keys($settings) as $key)
-        if (!array_key_exists($key, $defaults)) unset($settings[$key]);
-    foreach (array_keys($defaults) as $key)
-        if (!array_key_exists($key, $settings)) $settings[$key] = $default[$key];
-
-    if (!empty($defaults['default_config']) || !empty($defaults['module_config'])) {
-        $modvar = 'keywords_config';
-    } else {
-        $modvar = 'keywords_config_'.$itemtype;
-    }
-    unset($settings['default_config'], $settings['module_config'], $settings['itemtype_config']);
-    xarModVars::set($module, $modvar, serialize($settings));
+        
+    Keywords::setConfig($module, $itemtype, $settings);
 
     return true;
 }

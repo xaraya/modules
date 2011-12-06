@@ -49,10 +49,10 @@ function keywords_hooksapi_moduleupdateconfig($args)
             'itemtype' => $itemtype,
         ));
 
-    if (!empty($settings['default_config'])) {
+    if ($settings['config_state'] == 'default') {
         // per module settings disabled, if this isn't the keywords module, bail
         if ($modname != 'keywords') return $extrainfo;
-    } elseif (!empty($settings['module_config'])) {
+    } elseif ($settings['config_state'] == 'module') {
         // per itemtype settings disabled, if this isn't itemtype 0, bail
         if (!empty($itemtype)) return $extrainfo;
     }
@@ -64,8 +64,8 @@ function keywords_hooksapi_moduleupdateconfig($args)
     if (!xarVarFetch('keywords_settings["auto_tag_persist"]', 'checkbox',
         $auto_tag_persist, false, XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('keywords_settings["meta_keywords"]', 'checkbox',
-        $meta_keywords, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('keywords_settings["meta_keywords"]', 'int:0:2',
+        $meta_keywords, 0, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('keywords_settings["restrict_words"]', 'checkbox',
         $restrict_words, false, XARVAR_NOT_REQUIRED)) return;
@@ -133,7 +133,7 @@ function keywords_hooksapi_moduleupdateconfig($args)
             'module' => $modname,
             'itemtype' => $itemtype,
             'settings' => $settings,
-        ))) return;
+        ))) return $extrainfo;
 
     return $extrainfo;
 }

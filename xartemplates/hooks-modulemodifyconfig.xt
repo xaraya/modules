@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <!-- show form in the following conditions
-         1) (default_config) per module config disabled and this is the keywords module
-         2) (module_config) per itemtype config disabled and no itemtype
-         3) (itemtype_config) per itemtype config enabled 
+    <!-- show form in the following $config_state conditions
+         1) (default) per module config disabled and this is the keywords module
+         2) (module) per itemtype config disabled and no itemtype
+         3) (itemtype) per itemtype config enabled 
     -->
-    <xar:if condition="(!empty($default_config) and $module eq 'keywords') or
-        (!empty($module_config) and empty($itemtype)) or
-        (!empty($itemtype_config))">
+    <xar:if condition="($config_state eq 'default' and $module eq 'keywords') or
+        ($config_state eq 'module' and empty($itemtype)) or
+        ($config_state eq 'itemtype')">
         <xar:if condition="empty($itemtype)">
             <!-- no itemtype, we're displaying the defaults for a module -->
             <xar:if condition="$module eq 'keywords'">
                 <!-- if it's the keywords module, show the per module checkbox -->
                 <xar:var name="global_label">Disable Per Module Configuration</xar:var>
                 <xar:var name="global_note">Check this if you want to use the settings below for all modules</xar:var>
-            <xar:elseif condition="!empty($module_config)"/>
+            <xar:elseif condition="$config_state eq 'module' and empty($itemtype)"/>
                 <!-- config for some other module, show the per itemtype checkbox -->
                 <xar:var name="global_label">Disable Per Itemtype Configuration</xar:var>
                 <xar:var name="global_note">Check this if you want to use the settings below for all module itemtypes</xar:var>
@@ -109,22 +109,5 @@
         <input type="hidden" name="keywords_settings[index_id]" id="keywords_settings_index_id" value="#$index_id#"/>
         <input type="hidden" name="keywords_settings[module]" id="keywords_settings_module" value="#$module#"/>
         <input type="hidden" name="keywords_settings[itemtype]" id="keywords_settings_itemtype" value="#$itemtype#"/>
-    <xar:else/>
-    <!--
-        <div class="xar-row">
-            <div class="xar-col">
-                <label>Keywords:</label>
-            </div>
-            <div class="xar-col">
-                <p class="xar-note">
-                <xar:if condition="!empty($default_config)">
-                    Using default settings
-                <xar:elseif condition="!empty($module_config)"/>
-                    Using #$module# module default settings
-                </xar:if>
-                </p>
-            </div>
-        </div>
-     -->
     </xar:if>
 </xar:template>

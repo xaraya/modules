@@ -87,7 +87,9 @@ function keywords_user_displayhook($args)
         ));
 
     // @checkme: do we need to merge in auto tags here ?
-
+    // if there are auto tags and they're persistent, add them to keywords
+    if (!empty($data['auto_tag_create']) && !empty($data['auto_tag_persist']))
+        $keywords = array_unique(array_merge($keywords, $data['auto_tag_create']));
 
     // config may have changed since the keywords were added
     if (!empty($data['restrict_words'])) {
