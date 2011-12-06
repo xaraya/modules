@@ -59,6 +59,8 @@ function keywords_hooksapi_moduleupdateconfig($args)
         $global_config, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('keywords_settings["auto_tag_create"]', 'pre:trim:str:1:',
         $auto_tag_create, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('keywords_settings["auto_tag_persist"]', 'checkbox',
+        $auto_tag_persist, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('keywords_settings["restrict_words"]', 'checkbox',
         $restrict_words, false, XARVAR_NOT_REQUIRED)) return;
 
@@ -112,6 +114,7 @@ function keywords_hooksapi_moduleupdateconfig($args)
     $settings['global_config'] = $global_config;
     $settings['restrict_words'] = $restrict_words;
     $settings['auto_tag_create'] = !empty($auto_tag_create) ? $auto_tag_create : array();
+    $settings['auto_tag_persist'] = $auto_tag_persist;
 
     if (!xarMod::apiFunc('keywords', 'hooks', 'updatesettings',
         array(

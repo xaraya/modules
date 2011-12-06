@@ -105,6 +105,10 @@ function keywords_adminapi_updatehook($args)
     if (empty($keywords))
         $keywords = array();
 
+    // if there are auto tags and they're persistent, add them to keywords
+    if (!empty($settings['auto_tag_create']) && !empty($settings['auto_tag_persist']))
+        $keywords = array_merge($keywords, $settings['auto_tag_create']);
+
     // get the current keywords associated with this item
     $oldwords = xarMod::apiFunc('keywords', 'words', 'getwords',
         array(

@@ -45,6 +45,15 @@
         </div>
         <div class="xar-row">
             <div class="xar-col">
+                <label for="keywords_settings_auto_tag_persist">Prevent Removal of Auto Tags?</label>
+            </div>
+            <div class="xar-col">
+                <xar:data-input type="checkbox" name="keywords_settings[auto_tag_persist]" id="keywords_settings_auto_tag_persist" checked="$auto_tag_persist"/>
+                &#160;<span class="xar-note">Check this if you want items permanently tagged with auto keywords</span>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
                 <xar:var name="delTitle">Define permitted keyword delimiters (no spaces)</xar:var>
                 <label for="delimiters" title="#$delTitle#">Word delimiters</label>
             </div>

@@ -63,7 +63,7 @@ function keywords_admin_modifyhook($args)
     if (!xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:$itemid")) return '';
 
     // get settings currently in force for this module/itemtype
-    $settings = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
+    $data = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
         array(
             'module' => $modname,
             'itemtype' => $itemtype,
@@ -104,21 +104,25 @@ function keywords_admin_modifyhook($args)
     // it's ok if there are no keywords
     if (empty($keywords))
         $keywords = array();
+    
+    // if there are auto tags and they're persistent, add them to keywords
+    if (!empty($data['auto_tag_create']) && !empty($data['auto_tag_persist']))
+        $keywords = array_merge($keywords, $data['auto_tag_create']);
+    
 
     // Retrieve the list of allowed delimiters
     $delimiters = xarModVars::get('keywords','delimiters');
     $delimiter = !empty($delimiters) ? $delimiters[0] : ',';
     
-    $data = $settings;
-    if (empty($settings['restrict_words'])) {
+    if (empty($data['restrict_words'])) {
         // no restrictions, display expects a string
         // Use first delimiter to join words        
-        $data['keywords'] = !empty($keywords) ? implode($delimiter, $keywords) : '';
+        $data['keywords'] = !empty($keywords) ? implode($delimiter, array_unique($keywords)) : '';
     } else {
         // get restricted list based on current settings
         $data['restricted_list'] = xarMod::apiFunc('keywords', 'words', 'getwords',
             array(
-                'index_id' => $settings['index_id'],
+                'index_id' => $data['index_id'],
             ));
         // return only keywords that are also in the restricted list
         $data['keywords'] = array_intersect($keywords, $data['restricted_list']);
