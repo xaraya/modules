@@ -57,10 +57,18 @@ function keywords_hooksapi_moduleupdateconfig($args)
 
     if (!xarVarFetch('keywords_settings["global_config"]', 'checkbox',
         $global_config, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('keywords_settings["auto_tag_create"]', 'pre:trim:str:1:',
+        $auto_tag_create, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('keywords_settings["restrict_words"]', 'checkbox',
         $restrict_words, false, XARVAR_NOT_REQUIRED)) return;
 
-    // when switching between restricted and unrestricted we want to preserve words in the db
+    if (!empty($auto_tag_create)) 
+        $auto_tag_create = xarModAPIFunc('keywords','admin','separekeywords',
+            array(
+                'keywords' => $auto_tag_create,
+            ));
+
+    // when switching between restricted and unrestricted we want to preserve settings
     $status_quo = $restrict_words == $settings['restrict_words'];
     if ($restrict_words && $status_quo) {
         if (!xarVarFetch('keywords_settings["restricted_list"]', 'pre:trim:str:1:',
@@ -72,8 +80,13 @@ function keywords_hooksapi_moduleupdateconfig($args)
             array(
                 'index_id' => $settings['index_id'],
             ));
-        $new_list = (strpos($restricted_list, ',') !== false) ?
-            array_map('trim', explode(',', $restricted_list)) : array(trim($restricted_list));
+        $new_list = xarModAPIFunc('keywords','admin','separekeywords',
+            array(
+                'keywords' => $restricted_list,
+            ));
+        // be sure to add any auto tags to the list 
+        if (!empty($auto_tag_create))
+            $new_list = array_merge($new_list, $auto_tag_create);
         $new_list = array_values(array_unique(array_filter($new_list)));
         // add everything from new list that's not in old list
         $toadd = array_diff($new_list, $old_list);
@@ -98,6 +111,7 @@ function keywords_hooksapi_moduleupdateconfig($args)
 
     $settings['global_config'] = $global_config;
     $settings['restrict_words'] = $restrict_words;
+    $settings['auto_tag_create'] = !empty($auto_tag_create) ? $auto_tag_create : array();
 
     if (!xarMod::apiFunc('keywords', 'hooks', 'updatesettings',
         array(

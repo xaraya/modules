@@ -5,6 +5,7 @@ function keywords_hooksapi_getsettings(Array $args=array())
         'global_config' => false,    // apply defaults to all modules (if keywords) and/or itemtypes
         'restrict_words' => false,   // use a restricted list of keywords
         'allow_manager_add' => true, // allow managers to add keywords to restricted list on item create/modify
+        'auto_tag_create' => array(),// array of words to automatically attach to new items
         'index_id' => xarMod::apiFunc('keywords', 'index', 'getid', array('module' => 'keywords')),
     );
 

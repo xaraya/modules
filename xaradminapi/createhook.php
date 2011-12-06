@@ -99,6 +99,10 @@ function keywords_adminapi_createhook($args)
     if (empty($keywords))
         $keywords = array();
 
+    // see if we are auto tagging new items, and add words to list 
+    if (!empty($settings['auto_tag_create'])) 
+        $keywords = array_merge($keywords, $settings['auto_tag_create']);
+
     if (!empty($settings['restrict_words'])) {
         $restricted_list = xarMod::apiFunc('keywords', 'words', 'getwords',
             array(

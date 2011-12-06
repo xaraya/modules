@@ -4,7 +4,7 @@
     <!-- show form in the following conditions
          1) (default_config) per module config disabled and this is the keywords module
          2) (module_config) per itemtype config disabled and no itemtype
-         3) (itemtype_config)
+         3) (itemtype_config) per itemtype config enabled 
     -->
     <xar:if condition="(!empty($default_config) and $module eq 'keywords') or
         (!empty($module_config) and empty($itemtype)) or
@@ -36,6 +36,24 @@
         </xar:if>
         <div class="xar-row">
             <div class="xar-col">
+                <label for="keywords_settings_auto_tag_create">Auto Tag New Items</label>
+            </div>
+            <div class="xar-col">
+                <xar:data-input type="textbox" name="keywords_settings[auto_tag_create]" id="keywords_settings_auto_tag_create" value="$auto_tag_create" class="xar-form-textxxlong"/>
+                <p class="xar-note">Enter a list of keywords to automatically attach to new items</p>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="delTitle">Define permitted keyword delimiters (no spaces)</xar:var>
+                <label for="delimiters" title="#$delTitle#">Word delimiters</label>
+            </div>
+            <div class="xar-col">
+                <strong>#$delimiters#</strong>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
                 <label for="keywords_settings_restrict_words">Restrict Words</label>
             </div>
             <div class="xar-col">
@@ -51,15 +69,7 @@
                     <textarea name="keywords_settings[restricted_list]" id="keywords_settings_restricted_list" cols="40" rows="5">#$restricted_list#</textarea>
                 </div>
             </div>
-            <div class="xar-row">
-                <div class="xar-col">
-                    <xar:var name="delTitle">Define permitted keyword delimiters (no spaces)</xar:var>
-                    <label for="delimiters" title="#$delTitle#">Word delimiters</label>
-                </div>
-                <div class="xar-col">
-                    <strong>#$delimiters#</strong>
-                </div>
-            </div>
+
             <div class="xar-row">
                 <div class="xar-col">
                     <xar:var name="addTitle">Allow managers to add to restricted list when creating/modifying items</xar:var>
