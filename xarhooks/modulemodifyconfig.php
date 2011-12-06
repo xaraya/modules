@@ -36,6 +36,8 @@ function keywords_hooks_modulemodifyconfig(Array $args=array())
         $itemtype = 0;
     }
 
+    if (!xarSecurityCheck('AdminKeywords', 0, 'Item', "$modid:$itemtype:All")) return '';
+
     $data = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
         array(
             'module' => $modname,
@@ -62,6 +64,17 @@ function keywords_hooks_modulemodifyconfig(Array $args=array())
     $data['module_id'] = $modid;
     $data['itemtype'] = $itemtype;
 
+    $data['meta_options'] = array(
+        0 => array('id' => 0, 'name' => xarML('Never')),
+        1 => array('id' => 1, 'name' => xarML('Append to existing')),
+        2 => array('id' => 2, 'name' => xarML('Replace existing')),
+    );
+
+    if (!empty($data['meta_keywords'])) {
+        sys::import('modules.themes.class.xarmeta');
+        $data['meta_langs'] = xarMeta::getLanguages();
+    }
+    
     return xarTpl::module('keywords', 'hooks', 'modulemodifyconfig', $data);
 }
 ?>

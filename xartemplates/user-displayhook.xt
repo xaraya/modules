@@ -11,5 +11,8 @@
             <xar:if condition="$loop:index lt count($keywords)">,&#160;</xar:if>
         </xar:loop>
     </div>
+    <xar:if condition="!empty($meta_keywords) and !empty($meta_content)">
+        <xar:meta type="name" value="keywords" content="$meta_content" lang="$meta_lang" append="$meta_append" />
+    </xar:if>
 </xar:if>
 </xar:template>

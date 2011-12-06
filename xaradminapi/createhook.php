@@ -58,11 +58,6 @@ function keywords_adminapi_createhook($args)
         $itemid = $objectid;
     }
 
-    // @todo: replace this with access prop
-    // chris: amazingly, this is the only function that didn't call this originally ?
-    //if (!xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:$itemid"))
-    //    return $extrainfo;
-
     // get settings currently in force for this module/itemtype
     $settings = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
         array(
@@ -85,6 +80,9 @@ function keywords_adminapi_createhook($args)
         // otherwise, try fetch from form input
         if (!xarVarFetch('keywords', 'isset',
             $keywords, null, XARVAR_DONT_SET)) return;
+        // keywords from form input, check current user has permission to add keywords here 
+        if (!empty($keywords) && !xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:All"))
+            return $extrainfo;  // no permission, no worries
     }
 
     // we may have been given a string list
@@ -113,7 +111,7 @@ function keywords_adminapi_createhook($args)
         // see if managers are allowed to add to restricted list
         if (!empty($settings['allow_manager_add'])) {
             // see if current user is a manager
-            $data['is_manager'] = xarSecurityCheck('ManageKeywords',0,'Item', "$modid:$itemtype:$itemid");
+            $data['is_manager'] = xarSecurityCheck('ManageKeywords',0,'Item', "$modid:$itemtype:All");
             if (!empty($data['is_manager'])) {
                 // see if keywords were passed to hook call
                 if (!empty($extrainfo['restricted_extra'])) {

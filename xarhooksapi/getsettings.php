@@ -6,7 +6,9 @@ function keywords_hooksapi_getsettings(Array $args=array())
         'restrict_words' => false,   // use a restricted list of keywords
         'allow_manager_add' => true, // allow managers to add keywords to restricted list on item create/modify
         'auto_tag_create' => array(),// array of words to automatically attach to new items
-        'auto_tag_persist' => false, // indicate if auto tags can be removed on modify 
+        'auto_tag_persist' => false, // indicate if auto tags can be removed on modify
+        'meta_keywords' => 0,        // use item display keywords in meta tag never, append, replace
+        'meta_lang' => '',           // language to use in meta tag if append or replace
         'index_id' => xarMod::apiFunc('keywords', 'index', 'getid', array('module' => 'keywords')),
     );
 

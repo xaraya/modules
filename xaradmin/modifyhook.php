@@ -59,7 +59,7 @@ function keywords_admin_modifyhook($args)
         $itemid = $objectid;
     }
 
-    // @todo: replace this with access prop
+    // no permission, no worries, just don't display the form 
     if (!xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:$itemid")) return '';
 
     // get settings currently in force for this module/itemtype

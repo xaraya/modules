@@ -65,10 +65,6 @@ function keywords_adminapi_updatehook($args)
         $itemid = $objectid;
     }
 
-    // @todo: replace this with access prop
-    if (!xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:$itemid"))
-        return $extrainfo;
-
     // get settings currently in force for this module/itemtype
     $settings = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
         array(
@@ -86,11 +82,15 @@ function keywords_adminapi_updatehook($args)
 
     // see if keywords were passed to hook call
     if (!empty($extrainfo['keywords'])) {
+        // keywords passed programatically, don't check current user here, this has nothing to do with them 
         $keywords = $extrainfo['keywords'];
     } else {
         // otherwise, try fetch from form input
         if (!xarVarFetch('keywords', 'isset',
             $keywords, null, XARVAR_DONT_SET)) return;
+        // keywords from form input, check current user has permission to add keywords here 
+        if (!empty($keywords) && !xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:$itemid"))
+            return $extrainfo;  // no permission, no worries
     }
 
     // we may have been given a string list

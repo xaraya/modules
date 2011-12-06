@@ -36,7 +36,16 @@
         </xar:if>
         <div class="xar-row">
             <div class="xar-col">
-                <label for="keywords_settings_auto_tag_create">Auto Tag New Items</label>
+                <xar:var name="delTitle">Allowed keyword delimiters</xar:var>
+                <label for="delimiters" title="#$delTitle#">Word delimiters</label>
+            </div>
+            <div class="xar-col">
+                <strong>#$delimiters#</strong>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="keywords_settings_auto_tag_create">New Item Keywords</label>
             </div>
             <div class="xar-col">
                 <xar:data-input type="textbox" name="keywords_settings[auto_tag_create]" id="keywords_settings_auto_tag_create" value="$auto_tag_create" class="xar-form-textxxlong"/>
@@ -45,22 +54,29 @@
         </div>
         <div class="xar-row">
             <div class="xar-col">
-                <label for="keywords_settings_auto_tag_persist">Prevent Removal of Auto Tags?</label>
+                <label for="keywords_settings_auto_tag_persist">Persist New Item Keywords?</label>
             </div>
             <div class="xar-col">
                 <xar:data-input type="checkbox" name="keywords_settings[auto_tag_persist]" id="keywords_settings_auto_tag_persist" checked="$auto_tag_persist"/>
-                &#160;<span class="xar-note">Check this if you want items permanently tagged with auto keywords</span>
+                &#160;<span class="xar-note">Check this if you want to prevent removal of new item keywords</span>
             </div>
         </div>
         <div class="xar-row">
             <div class="xar-col">
-                <xar:var name="delTitle">Define permitted keyword delimiters (no spaces)</xar:var>
-                <label for="delimiters" title="#$delTitle#">Word delimiters</label>
+                <xar:var name="metaTitle">Dynamically add/replace keywords meta tag data when an item is displayed</xar:var>
+                <label for="keywords_settings_meta_keywords" title="#$metaTitle#">Use Item Keywords in Meta Tag?</label>
             </div>
             <div class="xar-col">
-                <strong>#$delimiters#</strong>
+                
+                <xar:data-input type="dropdown" name="keywords_settings[meta_keywords]" id="keywords_settings_meta_keywords" value="$meta_keywords" options="$meta_options"/>
+                <xar:if condition="$meta_keywords gt 0 and !empty($meta_langs)">
+                    <xar:set name="firstline">array('id' => 0, 'name' => 'n/a')</xar:set>
+                    &#160;<label for="keywords_settings_meta_lang">lang</label> =
+                    <xar:data-input type="dropdown" name="keywords_settings[meta_lang]" id="keywords_settings_meta_lang" value="$meta_lang" options="$meta_langs" firstline="$firstline"/>
+                </xar:if>
             </div>
         </div>
+
         <div class="xar-row">
             <div class="xar-col">
                 <label for="keywords_settings_restrict_words">Restrict Words</label>

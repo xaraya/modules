@@ -59,14 +59,18 @@ function keywords_user_displayhook($args)
     }
 
     // @todo: replace this with access prop
-    if (!xarSecurityCheck('ReadKeywords',0)) return '';
+    if (!xarSecurityCheck('ReadKeywords',0, 'Item', "$modid:$itemtype:$itemid")) return '';
 
     // get settings currently in force for this module/itemtype
-    $settings = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
+    $data = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
         array(
             'module' => $modname,
             'itemtype' => $itemtype,
         ));
+
+    // Retrieve the list of allowed delimiters
+    $delimiters = xarModVars::get('keywords','delimiters');
+    $delimiter = !empty($delimiters) ? $delimiters[0] : ',';
 
     // get the index_id for this module/itemtype/item
     $index_id = xarMod::apiFunc('keywords', 'index', 'getid',
@@ -82,28 +86,39 @@ function keywords_user_displayhook($args)
             'index_id' => $index_id,
         ));
 
+    // @checkme: do we need to merge in auto tags here ?
+
 
     // config may have changed since the keywords were added
-    if (!empty($settings['restrict_words'])) {
+    if (!empty($data['restrict_words'])) {
         $restricted_list = xarMod::apiFunc('keywords', 'words', 'getwords',
             array(
-                'index_id' => $settings['index_id'],
+                'index_id' => $data['index_id'],
             ));
         // show only keywords that are also in the restricted list
         $keywords = array_intersect($keywords, $restricted_list);
     }
 
-    // @fixme: this is unreliable, hooks are not exclusive to current main module during a request
+    if (empty($keywords))
+        return '';
+
+    // @fixme: mistakenly assumes this hook is called only once, and always by current main module func 
+    // @checkme: cache a cumultive list of keywords encountered during this request ?
+    // @fixme: find some way to identify and cache the 'real' current main module/itemtype/item keywords 
     $keys = implode(',',$keywords);
     xarVarSetCached('Blocks.keywords','keys',$keys);
 
-    $data = $settings;
-    $data['keywords'] = $keywords;
+    // see if we're handling dynamic keywords 
+    if (!empty($data['meta_keywords'])) {
+        // prep data for template 
+        $data['meta_append'] = $data['meta_keywords'] == 1 ? 1 : 0;
+        $data['meta_content'] = implode($delimiter, $keywords);
+    }
 
+    $data['keywords'] = $keywords;
     $data['showlabel'] = isset($extrainfo['showlabel']) ? $extrainfo['showlabel'] : true;
 
     $tpltype = isset($extrainfo['tpltype']) ? $extrainfo['tpltype'] : 'user';
-
     return xarTpl::module('keywords', $tpltype, 'displayhook', $data);
 }
 ?>

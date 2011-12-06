@@ -41,6 +41,8 @@ function keywords_hooksapi_moduleupdateconfig($args)
         $itemtype = 0;
     }
 
+    if (!xarSecurityCheck('AdminKeywords', 0, 'Item', "$modid:$itemtype:All")) return $extrainfo;
+
     $settings = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
         array(
             'module' => $modname,
@@ -61,6 +63,10 @@ function keywords_hooksapi_moduleupdateconfig($args)
         $auto_tag_create, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('keywords_settings["auto_tag_persist"]', 'checkbox',
         $auto_tag_persist, false, XARVAR_NOT_REQUIRED)) return;
+
+    if (!xarVarFetch('keywords_settings["meta_keywords"]', 'checkbox',
+        $meta_keywords, false, XARVAR_NOT_REQUIRED)) return;
+
     if (!xarVarFetch('keywords_settings["restrict_words"]', 'checkbox',
         $restrict_words, false, XARVAR_NOT_REQUIRED)) return;
 
@@ -69,6 +75,12 @@ function keywords_hooksapi_moduleupdateconfig($args)
             array(
                 'keywords' => $auto_tag_create,
             ));
+
+    if (!empty($meta_keywords)) {
+        if (!xarVarFetch('keywords_settings["meta_lang"]', 'pre:trim:lower:str:1:',
+            $meta_lang, $settings['meta_lang'], XARVAR_NOT_REQUIRED)) return;
+        $settings['meta_lang'] = $meta_lang;
+    }
 
     // when switching between restricted and unrestricted we want to preserve settings
     $status_quo = $restrict_words == $settings['restrict_words'];
@@ -112,10 +124,10 @@ function keywords_hooksapi_moduleupdateconfig($args)
     }
 
     $settings['global_config'] = $global_config;
-    $settings['restrict_words'] = $restrict_words;
     $settings['auto_tag_create'] = !empty($auto_tag_create) ? $auto_tag_create : array();
     $settings['auto_tag_persist'] = $auto_tag_persist;
-
+    $settings['meta_keywords'] = $meta_keywords;
+    $settings['restrict_words'] = $restrict_words;
     if (!xarMod::apiFunc('keywords', 'hooks', 'updatesettings',
         array(
             'module' => $modname,
