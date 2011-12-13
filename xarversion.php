@@ -29,6 +29,6 @@ $modversion['user']         = 0;
 $modversion['class']        = 'Admin';
 $modversion['category']     = 'Global';
 $modversion['dependencyinfo'] = array(
-		0 => array('name' => 'core', 'version_ge' => '2.2.0', 'version_le' => '2.2.9')
-	);
+        0 => array('name' => 'core', 'version_ge' => '2.2.0')
+    );
 ?>
