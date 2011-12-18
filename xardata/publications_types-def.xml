@@ -54,6 +54,36 @@
       <seq>4</seq>
       <configuration>a:0:{}</configuration>
     </property>
+    <property name="page_title">
+      <id>14591</id>
+      <label>HTML Page Title</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.page_title</source>
+      <status>34</status>
+      <seq>5</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="page_description">
+      <id>14592</id>
+      <label>HTML Page Description</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.page_description</source>
+      <status>34</status>
+      <seq>6</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="keywords">
+      <id>14593</id>
+      <label>HTML Keywords</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.keywords</source>
+      <status>34</status>
+      <seq>7</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
     <property name="configuration">
       <id>13024</id>
       <label>Configuration</label>
@@ -61,7 +91,7 @@
       <defaultvalue></defaultvalue>
       <source>pubtypes.configuration</source>
       <status>34</status>
-      <seq>5</seq>
+      <seq>8</seq>
       <configuration>a:7:{s:15:"display_columns";s:2:"30";s:12:"display_rows";s:1:"1";s:17:"display_key_label";s:3:"Key";s:19:"display_value_label";s:5:"Value";s:14:"display_layout";s:7:"default";s:24:"initialization_addremove";s:1:"2";s:32:"initialization_associative_array";s:1:"1";}</configuration>
     </property>
     <property name="access">
@@ -71,7 +101,7 @@
       <defaultvalue></defaultvalue>
       <source>pubtypes.access</source>
       <status>34</status>
-      <seq>6</seq>
+      <seq>9</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="state">
@@ -81,7 +111,7 @@
       <defaultvalue>3</defaultvalue>
       <source>pubtypes.state</source>
       <status>33</status>
-      <seq>7</seq>
+      <seq>10</seq>
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:30:"0,Deleted;1,Inactive;3,Active;";}</configuration>
     </property>
   </properties>
