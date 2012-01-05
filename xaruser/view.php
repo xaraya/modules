@@ -57,8 +57,10 @@ function publications_user_view($args)
     // Override if needed from argument array (e.g. ptid, numitems etc.)
     extract($args);
 
-    // We need a number here
-    if (!is_numeric($ptid)) return xarResponse::NotFound();
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+
+    // We need a valid pubtype number here
+    if (!is_numeric($ptid) || !isset($pubtypes[$ptid])) return xarResponse::NotFound();
 
     // Constants used throughout.
     //
@@ -527,8 +529,8 @@ function publications_user_view($args)
     $data['objectname'] = $data['pubtypeobject']->properties['name']->value;
     $data['ptid'] = $ptid;
     
-    $object = DataObjectMaster::getObjectList(array('name' => $data['pubtypeobject']->properties['name']->value));
-    $data['items'] = $object->getItems();
+//    $object = DataObjectMaster::getObjectList(array('name' => $data['pubtypeobject']->properties['name']->value));
+//    $data['items'] = $object->getItems();
     $data['object'] = DataObjectMaster::getObjectList(array('name' => $data['pubtypeobject']->properties['name']->value));
     
     // Get the items here
