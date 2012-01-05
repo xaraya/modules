@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    
+    <!-- Load the stylesheet for this publication type -->
+    <xar:style file="blog" title="Blog Stylesheet"/>
+    
+    <!-- Get the values for this page -->
+    <xar:set name="fields">$object->getFieldValues(array(),1)</xar:set>
+
+    <!-- The number of characters to display in summary view -->
+    <xar:set name="summarylength">100</xar:set>
+    <xar:if condition="$summarylength ne 0">
+        <xar:set name="summary">substr($fields['introduction'],0,$summarylength)</xar:set>
+    <xar:else/>
+        <xar:set name="summary">$fields['introduction']</xar:set>
+    </xar:if>
+    
+    <!-- Title -->
+    <div class="xar-publications-blog-summary-title">
+        <xar:template file="editicons"/>
+        <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $fields['id']))#">
+            <xar:data-output property="$properties['title']" value="$fields['title']"/>
+        </a>
+    </div>
+    
+    <!-- Author -->
+    <div class="xar-publications-blog-summary-postby">
+        <xar:ml>
+            <xar:mlstring>Posted by: #(1) on #(2) #(3)</xar:mlstring>
+            <xar:mlvar>#xarUserGetVar('name',$fields['author'])#</xar:mlvar>
+            <xar:mlvar>#xarLocaleGetFormattedDate('long',$fields['created'])#</xar:mlvar>
+            <xar:mlvar>#xarLocaleGetFormattedTime('long',$fields['created'])#</xar:mlvar>
+        </xar:ml>
+    </div>
+
+    <!-- Summary -->
+    <div class="xar-publications-blog-summary-text">
+        <xar:data-output property="$properties['introduction']" value="$summary"/>
+    </div>
+
+    <!-- Word count -->
+    <div class="xar-align-right">    
+        <xar:set name="intro_length">strlen($fields['introduction'])</xar:set>
+        <xar:set name="news_length">strlen($fields['body'])</xar:set>
+        <xar:set name="total_length">$intro_length + $news_length</xar:set>
+        <xar:if condition="$total_length eq 1">
+            (#$total_length#&#160;                
+                word)
+            <xar:else />
+            (#$total_length#&#160;                
+                words)
+        </xar:if>
+
+    <!-- Read more -->
+        <a href="#xarModURL('publications','user','display',array('id' => $fields['id']))#">                
+            Read more
+        </a>
+    </div>
+    <div class="xar-publications-blog-summary-footer">
+    </div>
+</xar:template>
