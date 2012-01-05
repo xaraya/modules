@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+    <!-- Load the stylesheet for this publication type -->
+    <xar:style file="blog" title="Blog Stylesheet"/>
+    
+    <xar:set name="publication_state">
+        $properties['state']->value
+    </xar:set>
+
+    <xar:if condition="$publication_state lt 3">
+        This item cannot be viewed
+    <xar:else />
+
+        <xar:template file="editicons"/>
+
+        <!-- Title -->
+        <div class="xar-publications-blog-summary-title">
+            <xar:data-output property="$properties['title']" />
+        </div>
+        <!--
+        <div class="xar-floatright">#$topic_icons#</div>
+        -->
+
+        <!-- Author -->
+        <div class="xar-publications-blog-summary-postby">
+            <xar:if condition="!empty($profile)">
+                <xar:set name="author_string">'
+                <a href="'.$profile.'">' . $properties['author']->getValue() . '</a>'</xar:set>
+            <xar:else />
+                <xar:set name="author_string">$properties['author']->getValue()</xar:set>
+            </xar:if>
+            <xar:ml>
+                <xar:mlstring>Posted by: #(1) on #(2) #(3)</xar:mlstring>
+                <xar:mlvar>#$author_string#</xar:mlvar>
+                <xar:mlvar>#xarLocaleGetFormattedDate('long',$properties['created']->value)#</xar:mlvar>
+                <xar:mlvar>#xarLocaleGetFormattedTime('long',$properties['created']->value)#</xar:mlvar>
+            </xar:ml>
+            <xar:if condition="!empty($counter)">
+                <xar:ml>
+                    <xar:mlstring>(#(1) Reads)</xar:mlstring>
+                    <xar:mlvar>#$counter#</xar:mlvar>
+                </xar:ml>
+            </xar:if>
+        </div>
+
+        <!-- Summary -->
+        <div class="xar-publications-blog-summary-text">
+            <xar:data-output property="$properties['introduction']" />
+        </div>
+
+        <!-- Body -->
+        <div class="xar-publications-blog-summary-text">
+            <xar:data-output property="$properties['body']" />
+        </div>
+
+        <!-- Notes -->
+        <xar:if condition="!empty($properties['note']->value)">
+            <p class="xar-quote">Note :
+            <em>
+                <xar:data-output property="$properties['note']" />
+            </em></p>
+        </xar:if>
+        
+        <!-- Back link -->
+        <div style="margin-bottom: 10px">
+            <xar:var name="label">Back</xar:var>
+            <xar:button type="cancel" label="$label"/>
+        </div>
+        
+        <!-- Link to previous or next -->
+        <xar:if condition="!empty($previous) and !empty($next)">
+            <div class="xar-normal xar-align-right">#$previous# #$next#</div>
+        </xar:if>
+
+        <style>
+            .addthis_button_facebook_like iframe {
+                width: 100px !important;
+            }
+            .twitter-share-button a {
+                height: 19px !important;
+            }
+            . g-plusone div {
+                height: 19px !important;
+            }
+        </style>
+
+        <script type="text/javascript">
+          (function() {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/plusone.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+          })();
+        </script>
+        
+        <xar:set name="url">urlencode(xarServer::getCurrentURL())</xar:set>
+        <a href="http://twitter.com/share" class="twitter-share-button"  data-count="none">Tweet</a>
+        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+        <iframe class="addthis_button_facebook_like" src="http://www.facebook.com/plugins/like.php?href=#$url#&amp;send=false&amp;layout=button_count&amp;width=90&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=20" scrolling="no" frameborder="0" style="margin-left:20px; border:none; overflow:hidden; width:70px; height:20px;" allowTransparency="true">
+        <xar:comment>workaround for empty tag</xar:comment></iframe>
+        <div class="g-plusone" data-size="medium" data-count="false" ></div>
+
+    </xar:if>
+</xar:template>
