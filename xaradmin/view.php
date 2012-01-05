@@ -84,8 +84,7 @@ function publications_admin_view($args)
     if (empty($ptid)) {
         if (!xarSecurityCheck('EditPublications',1,'Publication',"All:All:All:All")) return;
     } elseif (!is_numeric($ptid) || !isset($pubtypes[$ptid])) {
-        $msg = xarML('Invalid publication type');
-        throw new BadParameterException(null,$msg);
+        return xarResponse::NotFound();
     } elseif (!xarSecurityCheck('EditPublications',1,'Publication',"$ptid:All:All:All")) return;
 
     if (!empty($ptid)) {

@@ -96,7 +96,7 @@
     </property>
     <property name="access">
       <id>13332</id>
-      <label>access</label>
+      <label>Access</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>pubtypes.access</source>

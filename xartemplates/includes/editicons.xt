@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">        
     <xar:sec mask="ManagePublications" catch="false">
+        <a href="#xarModURL('publications', 'admin', 'new',array('ptid' => 11))#" style="float:right; margin-right: 10px">
+            <img src="#xarTplGetImage('icons/add.png','base')#"/>
+        </a>
+        &#160;
         <a href="#xarModURL('publications', 'admin', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
             <img src="#xarTplGetImage('icons/modify.png','base')#"/>
         </a>

@@ -14,7 +14,7 @@
         <xar:meta type="name" value="description" content="$page_description" lang="en" dir="ltr"/>
      </xar:if>
 
-    <!-- Apend custom keywords, if they exist -->
+    <!-- Append custom keywords, if they exist -->
     <xar:set name="keywords">$object->properties['keywords']->getValue()</xar:set>
     <xar:if condition="!empty($keywords)">
         <xar:meta type="name" value="keywords" content="$keywords" lang="en" dir="ltr" append="1"/>
