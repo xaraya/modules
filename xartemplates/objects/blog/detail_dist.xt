@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
     <!-- Load the stylesheet for this publication type -->
-    <xar:style file="blog" title="Blog Stylesheet"/>
+    <xar:style method="import" file="blog" title="Blog Stylesheet"/>
     
     <xar:set name="publication_state">
         $properties['state']->value
@@ -100,6 +100,24 @@
         <iframe class="addthis_button_facebook_like" src="http://www.facebook.com/plugins/like.php?href=#$url#&amp;send=false&amp;layout=button_count&amp;width=90&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=20" scrolling="no" frameborder="0" style="margin-left:20px; border:none; overflow:hidden; width:70px; height:20px;" allowTransparency="true">
         <xar:comment>workaround for empty tag</xar:comment></iframe>
         <div class="g-plusone" data-size="medium" data-count="false" ></div>
+
+        <style type="text/css">
+            @import "#sys::code()#modules/publications/xarstyles/jquery.bookmark.css";
+            
+            ##basicBookmark ul { width: 320px; }
+            .bookmark_list span.bookmark_icons {
+                background: url(#sys::code()#modules/publications/xarstyles/bookmarks.png) no-repeat center;
+            }
+        </style>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+        <script type="text/javascript" src="#sys::code()#modules/publications/xartemplates/scripts/jquery.bookmark.min.js"></script>
+        <script type="text/javascript" src="#sys::code()#modules/publications/xartemplates/scripts/jquery.bookmark.ext.pack.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $('#basicBookmark').bookmark();
+            });
+        </script>
+        <div id="basicBookmark"></div>
 
     </xar:if>
 </xar:template>
