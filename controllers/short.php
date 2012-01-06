@@ -139,28 +139,34 @@ class PublicationsShortController extends ShortActionController
                 
                 $token2 = $this->nextToken();
 
-                // Match the first token
-                foreach ($this->pubtypes as $id => $pubtype) {
-                    if (xarModVars::get('publications', 'usetitleforurl')) {
-                        if (strtolower($token1) == strtolower($pubtype['description'])) {
-                            $data['ptid'] = $id;
-                            break;
-                        }
-                    } else {
-                        if ($token1 == $id) {
-                            if ($token2) {
+                // A single numeric token is an id
+                if (!$token2 && is_numeric($token1) && !xarModVars::get('publications', 'usetitleforurl')) {
+                    $data['itemid'] = $token1;
+                } else {
+                
+                    // Match the first token
+                    foreach ($this->pubtypes as $id => $pubtype) {
+                        if (xarModVars::get('publications', 'usetitleforurl')) {
+                            if (strtolower($token1) == strtolower($pubtype['description'])) {
                                 $data['ptid'] = $id;
-                            } else {
-                                $data['itemid'] = $id;
+                                break;
                             }
-                            break;
+                        } else {
+                            if ($token1 == $id) {
+                                if ($token2) {
+                                    $data['ptid'] = $id;
+                                } else {
+                                    $data['itemid'] = $id;
+                                }
+                                break;
+                            }
                         }
                     }
                 }
 
                 // We now have the pubtype; check for the publication
                 if (!$token2) {
-                    // No more tokens; set this as a view or display, dependingh on whether the token was an id or not
+                    // No more tokens; set this as a view or display, depending on whether the token was an id or not
                     if (xarModVars::get('publications', 'usetitleforurl')) {
                         $data['func'] = 'view';
                     } else {
