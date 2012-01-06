@@ -244,7 +244,7 @@ class PublicationsShortController extends ShortActionController
                         if (!empty($result['pubtype_id'])) $path[] = strtolower($this->pubtypes[$result['pubtype_id']]['description']);
                         if (!empty($result['name'])) $path[] = strtolower($result['name']);
                     } else {
-                        if (!empty($result['itemid'])) $path[] = $result['itemid'];
+                        if (!empty($result['id'])) $path[] = $result['id'];
                     }
                 }
                 $params = array();
