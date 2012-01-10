@@ -28,7 +28,7 @@
       <id>858</id>
       <label>Name</label>
       <type>textbox</type>
-      <defaultvalue>new_blog_item</defaultvalue>
+      <defaultvalue>new_blog_post</defaultvalue>
       <source>publication.name</source>
       <status>33</status>
       <seq>2</seq>

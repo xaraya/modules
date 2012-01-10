@@ -53,7 +53,7 @@
         </xar:if>
 
     <!-- Read more -->
-        <a href="#xarModURL('publications','user','display',array('id' => $fields['id']))#">                
+        <a href="#xarModURL('publications','user','display',array('itemid' => $fields['id']))#">                
             Read more
         </a>
     </div>
