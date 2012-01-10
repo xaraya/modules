@@ -21,9 +21,12 @@ class Publication extends DataObject
         
         // If we allow multilanguage, then turn the locale property into type languages
         if (xarModVars::get('publications', 'multilanguage')) {
-            if (isset($this->properties['locale'])) {
+            if (isset($this->properties['locale']) && DataPropertyMaster::isAvailable('languages')) {
                 $this->properties['locale']->setInputStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
-                $this->properties['locale']->type = 30039;      // languages property
+                $args = $this->properties['locale']->getPublicProperties();
+                $args['type'] = 30039;      // languages property
+                $args['status'] = 34;       // display status
+                $this->properties['locale'] = DataPropertyMaster::getProperty($args);
             }
         }
     }

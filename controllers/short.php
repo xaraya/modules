@@ -156,7 +156,7 @@ class PublicationsShortController extends ShortActionController
                                 if ($token2) {
                                     $data['ptid'] = $id;
                                 } else {
-                                    $data['itemid'] = $id;
+                                    $data['itemid'] = $id; // This should neve happen. should be taken care of above
                                 }
                                 break;
                             }
