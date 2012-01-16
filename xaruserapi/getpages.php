@@ -335,7 +335,7 @@ function publications_userapi_getpages($args)
             $index += 1;
         }
 
-        if ($dd_flag && !empty($pages)) {
+/*        if ($dd_flag && !empty($pages)) {
             // Get the DD properties for the page tree.
             $dd_data = xarMod::apiFunc('publications', 'user', 'getpagedd', array('pages' => $pages));
 
@@ -347,6 +347,7 @@ function publications_userapi_getpages($args)
                 }
             }
         }
+*/
     }
     return $pages;
 }
