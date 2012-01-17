@@ -31,9 +31,9 @@
         public $show_preview        = true;
         public $multi_homed         = true;
         public $current_source      = 'AUTO'; // Other values: 'DEFAULT'
-        public $default_pid         = 0; // 0 == 'None'
+        public $default_id          = 0; // 0 == 'None'
         public $root_ids            = array();
-        public $prune_pids          = array();
+        public $prune_ids           = array();
         public $max_level           = 0;
         public $start_level         = 0;
 
@@ -233,7 +233,6 @@
 
         // Here we add the various flags to the pagedata, based on
         // the current page.
-        var_dump($id);exit;
         $pagedata = xarMod::apiFunc(
             'publications', 'user', 'addcurrentpageflags',
             array('pagedata' => $pagedata, 'id' => $id, 'root_ids' => $root_ids)

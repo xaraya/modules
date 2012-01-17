@@ -46,25 +46,25 @@
                 $data['all_pages']['pages'][$key]['slash_separated'] =  '/' . implode('/', $page['namepath']);
             }
 
-            // Get the descriptions together for the current root pids.
+            // Get the descriptions together for the current root ids.
             // TODO: we could prune the 'add root page' list so it only includes
             // the pages which are not yet under one of the selected root pages.
             // That would just be an extra little usability touch.
-            $data['root_pids'] = array_flip($data['root_pids']);
-            foreach($data['root_pids'] as $key => $value) {
+            $data['root_ids'] = array_flip($data['root_ids']);
+            foreach($data['root_ids'] as $key => $value) {
                 if (isset($data['all_pages']['pages'][$key])) {
-                    $data['root_pids'][$key] = $data['all_pages']['pages'][$key]['slash_separated'];
+                    $data['root_ids'][$key] = $data['all_pages']['pages'][$key]['slash_separated'];
                 } else {
-                    $data['root_pids'][$key] = xarML('Unknown');
+                    $data['root_ids'][$key] = xarML('Unknown');
                 }
             }
 
-            $data['prune_pids'] = array_flip($data['prune_pids']);
-            foreach($data['prune_pids'] as $key => $value) {
+            $data['prune_ids'] = array_flip($data['prune_ids']);
+            foreach($data['prune_ids'] as $key => $value) {
                 if (isset($data['all_pages']['pages'][$key])) {
-                    $data['prune_pids'][$key] = $data['all_pages']['pages'][$key]['slash_separated'];
+                    $data['prune_ids'][$key] = $data['all_pages']['pages'][$key]['slash_separated'];
                 } else {
-                    $data['prune_pids'][$key] = xarML('Unknown');
+                    $data['prune_ids'][$key] = xarML('Unknown');
                 }
             }
 
@@ -83,53 +83,53 @@
 
             xarVarFetch('multi_homed', 'int', $vars['multi_homed'], 0, XARVAR_NOT_REQUIRED);
 
-            // AUTO: the block picks up the page from cache Blocks.publications/current_pid.
+            // AUTO: the block picks up the page from cache Blocks.publications/current_id.
             // DEFAULT: the block always uses the default page.
             // AUTODEFAULT: same as AUTO, but use the default page rather than NULL if outside and root page
             xarVarFetch('current_source', 'pre:upper:passthru:enum:AUTO:DEFAULT:AUTODEFAULT', $vars['current_source'], 'AUTO', XARVAR_NOT_REQUIRED);
 
             // The default page if none found by any other method.
-            xarVarFetch('default_pid', 'int:0', $vars['default_pid'], 0, XARVAR_NOT_REQUIRED);
+            xarVarFetch('default_id', 'int:0', $vars['default_id'], 0, XARVAR_NOT_REQUIRED);
 
             // The root pages define sections of the page landscape that this block applies to.
-            if (!isset($data['root_pids'])) $vars['root_pids'] = $this->root_pids;
-            else $vars['root_pids'] = $data['root_pids'];
+            if (!isset($data['root_ids'])) $vars['root_ids'] = $this->root_ids;
+            else $vars['root_ids'] = $data['root_ids'];
 
-            xarVarFetch('new_root_pid', 'int:0', $new_root_pid, 0, XARVAR_NOT_REQUIRED);
-            if (!empty($new_root_pid)) $vars['root_pids'][] = $new_root_pid;
+            xarVarFetch('new_root_id', 'int:0', $new_root_id, 0, XARVAR_NOT_REQUIRED);
+            if (!empty($new_root_id)) $vars['root_ids'][] = $new_root_id;
 
-            xarVarFetch('remove_root_pid', 'list:int:1', $remove_root_pid, array(), XARVAR_NOT_REQUIRED);
+            xarVarFetch('remove_root_id', 'list:int:1', $remove_root_id, array(), XARVAR_NOT_REQUIRED);
             // Easier to check with the keys and values flipped.
-            $vars['root_pids'] = array_flip($vars['root_pids']);
-            foreach($remove_root_pid as $remove) {
-                if (isset($vars['root_pids'][$remove])) {
-                    unset($vars['root_pids'][$remove]);
+            $vars['root_ids'] = array_flip($vars['root_ids']);
+            foreach($remove_root_id as $remove) {
+                if (isset($vars['root_ids'][$remove])) {
+                    unset($vars['root_ids'][$remove]);
                 }
             }
             // Flip keys and values back.
-            $vars['root_pids'] = array_flip($vars['root_pids']);
+            $vars['root_ids'] = array_flip($vars['root_ids']);
             // Reorder the keys.
-            $vars['root_pids'] = array_values($vars['root_pids']);
+            $vars['root_ids'] = array_values($vars['root_ids']);
 
             // The pruning pages define sections of the page landscape that this block applies to.
-            if (!isset($data['prune_pids'])) $vars['prune_pids'] = $this->prune_pids;
-            else $vars['prune_pids'] = $data['prune_pids'];
+            if (!isset($data['prune_ids'])) $vars['prune_ids'] = $this->prune_ids;
+            else $vars['prune_ids'] = $data['prune_ids'];
 
-            xarVarFetch('new_prune_pid', 'int:0', $new_prune_pid, 0, XARVAR_NOT_REQUIRED);
-            if (!empty($new_prune_pid)); $vars['prune_pids'][] = $new_prune_pid;
+            xarVarFetch('new_prune_id', 'int:0', $new_prune_id, 0, XARVAR_NOT_REQUIRED);
+            if (!empty($new_prune_id)); $vars['prune_ids'][] = $new_prune_id;
 
-            xarVarFetch('remove_prune_pid', 'list:int:1', $remove_prune_pid, array(), XARVAR_NOT_REQUIRED);
+            xarVarFetch('remove_prune_id', 'list:int:1', $remove_prune_id, array(), XARVAR_NOT_REQUIRED);
             // Easier to check with the keys and values flipped.
-            $vars['prune_pids'] = array_flip($vars['prune_pids']);
-            foreach($remove_prune_pid as $remove) {
-                if (isset($vars['prune_pids'][$remove])) {
-                    unset($vars['prune_pids'][$remove]);
+            $vars['prune_ids'] = array_flip($vars['prune_ids']);
+            foreach($remove_prune_id as $remove) {
+                if (isset($vars['prune_ids'][$remove])) {
+                    unset($vars['prune_ids'][$remove]);
                 }
             }
             // Flip keys and values back.
-            $vars['prune_pids'] = array_flip($vars['prune_pids']);
+            $vars['prune_ids'] = array_flip($vars['prune_ids']);
             // Reorder the keys.
-            $vars['prune_pids'] = array_values($vars['prune_pids']);
+            $vars['prune_ids'] = array_values($vars['prune_ids']);
 
             // The maximum number of levels that are displayed.
             // This value does not affect the tree data, but is passed to the menu rendering

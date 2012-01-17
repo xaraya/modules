@@ -21,4 +21,4 @@
 
     <xar:set name="parent">$root_page</xar:set>
     <xar:template file="menu"/>
-    </xar:template>
+</xar:template>
