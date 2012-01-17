@@ -32,7 +32,7 @@
         public $multi_homed         = true;
         public $current_source      = 'AUTO'; // Other values: 'DEFAULT'
         public $default_pid         = 0; // 0 == 'None'
-        public $root_pids           = array();
+        public $root_ids            = array();
         public $prune_pids          = array();
         public $max_level           = 0;
         public $start_level         = 0;
@@ -72,44 +72,43 @@
     //    This will also move the current page, if it happens to be in the
     //    pruned section, down to the pruning page. [done]
 
-        $data = parent::display($data);
-        if (empty($data)) return;
+        $data = $this->getContent();
 
         // Pointer to simplify referencing.
         $vars =& $data;
 
-        if (!empty($vars['root_pids']) && is_array($vars['root_pids'])) {
-            $root_pids = $vars['root_pids'];
+        if (!empty($data['root_ids']) && is_array($data['root_ids'])) {
+            $root_ids = $data['root_ids'];
         } else {
-            $root_pids = array();
+            $root_ids = array();
         }
 
-        if (!empty($vars['prune_pids']) && is_array($vars['prune_pids'])) {
-            $prune_pids = $vars['prune_pids'];
+        if (!empty($data['prune_ids']) && is_array($data['prune_ids'])) {
+            $prune_ids = $data['prune_ids'];
         } else {
-            $prune_pids = array();
+            $prune_ids = array();
         }
 
         // To start with, we need to know the current page.
         // It could be set (fixed) for the block, passed in
         // via the page cache, or simply not present.
-        $pid = 0;
-        if (empty($vars['current_source']) || $vars['current_source'] == 'AUTO' || $vars['current_source'] == 'AUTODEFAULT') {
+        $id = 0;
+        if (empty($data['current_source']) || $data['current_source'] == 'AUTO' || $data['current_source'] == 'AUTODEFAULT') {
             // Automatic: that means look at the page cache.
-            if (xarVarIsCached('Blocks.publications', 'current_pid')) {
-                $cached_pid = xarVarGetCached('Blocks.publications', 'current_pid');
+            if (xarVarIsCached('Blocks.publications', 'current_id')) {
+                $cached_id = xarVarGetCached('Blocks.publications', 'current_id');
                 // Make sure it is numeric.
-                if (isset($cached_pid) && is_numeric($cached_pid)) {
-                    $pid = $cached_pid;
+                if (isset($cached_id) && is_numeric($cached_id)) {
+                    $id = $cached_id;
                 }
             }
         }
 
         // Now we may or may not have a page ID.
         // If the page is not set, then check for a default.
-        if (empty($pid) && !empty($vars['default_pid'])) {
+        if (empty($id) && !empty($data['default_id'])) {
             // Set the current page to be the default.
-            $pid = $vars['default_pid'];
+            $id = $data['default_id'];
         }
 
         // The page details *may* have been cached, if
@@ -124,25 +123,25 @@
             //$pagedata = unserialize(serialize($pagedata));
             // If the cached tree does not contain the current page,
             // then we cannot use it.
-            if (!isset($pagedata['pages'][$pid])) {
+            if (!isset($pagedata['pages'][$id])) {
                 $pagedata = array();
             }
         }
 
-        // If there is no pid, then we have no page or tree to display.
-        if (empty($pid)) {return;}
+        // If there is no id, then we have no page or tree to display.
+        if (empty($id)) {return;}
 
         // If necessary, check whether the current page is under one of the
-        // of the allowed root pids.
-        if (!empty($root_pids)) {
-            if (!xarMod::apiFunc('publications', 'user', 'pageintrees', array('pid' => $pid, 'tree_roots' => $root_pids))) {
+        // of the allowed root ids.
+        if (!empty($root_ids)) {
+            if (!xarMod::apiFunc('publications', 'user', 'pageintrees', array('id' => $id, 'tree_roots' => $root_ids))) {
                 // Not under a root.
                 // If the mode is AUTO then leave the menu blank.
-                if ($vars['current_source'] == 'AUTO' || $vars['current_source'] == 'DEFAULT' || empty($vars['default_pid'])) {
+                if ($data['current_source'] == 'AUTO' || $data['current_source'] == 'DEFAULT' || empty($data['default_id'])) {
                     return;
                 } else {
                     // Use the default page instead.
-                    $pid = $vars['default_pid'];
+                    $id = $data['default_id'];
                     $pagedata = array();
                 }
             }
@@ -154,9 +153,9 @@
             $pagedata = xarMod::apiFunc(
                 'publications', 'user', 'getpagestree',
                 array(
-                    'tree_contains_pid' => $pid,
+                    'tree_contains_id' => $id,
                     'dd_flag' => true,
-                    'key' => 'pid',
+                    'key' => 'id',
                     'status' => 'ACTIVE,EMPTY'
                 )
             );
@@ -180,28 +179,28 @@
         // the current page does not fit into the specified range.
         // If the start level is greater than 0, then work back through ancestors to find
         // the implied root page.
-        if (!empty($vars['start_level'])) {
+        if (!empty($data['start_level'])) {
             // FIXME: '+1' only needed if the root page is being hidden. Maybe.
-            if ($pagedata['pages'][$pid]['depth'] + (!empty($vars['multi_homed']) ? 1 : 0) < $vars['start_level']) {
+            if ($pagedata['pages'][$id]['depth'] + (!empty($data['multi_homed']) ? 1 : 0) < $data['start_level']) {
                 // We are outside the start level.
                 // Hide the block if there is no default page to set.
                 return;
             } else {
                 // We are within a start level.
                 // Scan through ancestors, and find the one with the specified level,
-                // and add it to the root pids list.
-                $scan_pid = $pid;
+                // and add it to the root ids list.
+                $scan_id = $id;
                 while (true) {
-                    if (empty($pagedata['pages'][$scan_pid]['parent_pid'])) break;
-                    if ($pagedata['pages'][$scan_pid]['depth'] < $vars['start_level']) {
-                        $root_pids[] = $scan_pid;
+                    if (empty($pagedata['pages'][$scan_id]['parent_id'])) break;
+                    if ($pagedata['pages'][$scan_id]['depth'] < $data['start_level']) {
+                        $root_ids[] = $scan_id;
                         break;
                     }
-                    $scan_pid = $pagedata['pages'][$scan_pid]['parent_pid'];
+                    $scan_id = $pagedata['pages'][$scan_id]['parent_id'];
                 }
 
-                // If the root pid has no children, we should hide the block.
-                if (!empty($vars['multi_homed']) && empty($pagedata['pages'][$scan_pid]['child_keys'])) return;
+                // If the root id has no children, we should hide the block.
+                if (!empty($data['multi_homed']) && empty($pagedata['pages'][$scan_id]['child_keys'])) return;
             }
         }
 
@@ -212,21 +211,21 @@
 
         // Optionally prune branches from the tree.
         // TODO: Make sure we only prune above the root nodes. Trust the user for now to do that.
-        //$prune_pids = array(15);
-        if (!empty($prune_pids)) {
-            foreach($prune_pids as $prune_pid) {
-                if (isset($pagedata['pages'][$prune_pid])) {
+        //$prune_ids = array(15);
+        if (!empty($prune_ids)) {
+            foreach($prune_ids as $prune_id) {
+                if (isset($pagedata['pages'][$prune_id])) {
                     // The page exists.
                     // Move the current page if necessary.
-                    if ($pagedata['pages'][$pid]['left'] > $pagedata['pages'][$prune_pid]['left'] && $pagedata['pages'][$pid]['left'] < $pagedata['pages'][$prune_pid]['right']) {
+                    if ($pagedata['pages'][$id]['left'] > $pagedata['pages'][$prune_id]['left'] && $pagedata['pages'][$id]['left'] < $pagedata['pages'][$prune_id]['right']) {
                         // Move the current page down from within the pruned section, to
                         // the current pruning point.
-                        $pid = $prune_pid;
+                        $id = $prune_id;
                     }
 
                     // Reset any of the pruning point's children.
-                    $pagedata['pages'][$prune_pid]['child_keys'] = array();
-                    $pagedata['pages'][$prune_pid]['has_children'] = false;
+                    $pagedata['pages'][$prune_id]['child_keys'] = array();
+                    $pagedata['pages'][$prune_id]['has_children'] = false;
                     //var_dump($pagedata);
                 }
             }
@@ -234,9 +233,10 @@
 
         // Here we add the various flags to the pagedata, based on
         // the current page.
+        var_dump($id);exit;
         $pagedata = xarMod::apiFunc(
             'publications', 'user', 'addcurrentpageflags',
-            array('pagedata' => $pagedata, 'pid' => $pid, 'root_pids' => $root_pids)
+            array('pagedata' => $pagedata, 'id' => $id, 'root_ids' => $root_ids)
         );
 
         // If not multi-homed, then create a 'root root' page - a virtual page
@@ -244,7 +244,7 @@
         // much easier to implement. The templates need never display the
         // root page passed into them, and always start with the children of
         // that root page.
-        if (empty($vars['multi_homed'])) {
+        if (empty($data['multi_homed'])) {
             $pagedata['pages'][0] = array(
                 'child_keys' => array($pagedata['root_page']['key']),
                 'has_children' => true, 'is_ancestor' => true
@@ -256,7 +256,7 @@
         // Pass the page data into the block.
         // Merge it in with the existing block details.
         // TODO: It may be quicker to do the merge the other way around?
-        $data['content'] = array_merge($vars, $pagedata);
+        $data = array_merge($data, $pagedata);
 
         return $data;
     }
