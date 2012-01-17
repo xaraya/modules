@@ -334,20 +334,6 @@ function publications_userapi_getpages($args)
             );
             $index += 1;
         }
-
-/*        if ($dd_flag && !empty($pages)) {
-            // Get the DD properties for the page tree.
-            $dd_data = xarMod::apiFunc('publications', 'user', 'getpagedd', array('pages' => $pages));
-
-            // Merge the DD data into the main page tree.
-            // TODO: an easier way to merge arrays? This just seems clumsy.
-            if (!empty($dd_data)) {
-                foreach($dd_data as $key => $data) {
-                    $pages[$key]['dd'] = $data;
-                }
-            }
-        }
-*/
     }
     return $pages;
 }

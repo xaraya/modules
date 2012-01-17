@@ -116,10 +116,10 @@ function publications_userapi_getpagestree($args)
 
     // Now remove all pages that are not base pages and add the locales
     $finishedpages = array();
-    foreach($pages as $page) {
+    foreach($pages as $key => $page) {
         if ($page['base_id']) continue;
         if (isset($translations[$page['id']])) $page['translations'] = $translations[$page['id']];
-        $finishedpages[] = $page;
+        $finishedpages[$key] = $page;
     }
 
     $tree['pages'] =& $finishedpages;
