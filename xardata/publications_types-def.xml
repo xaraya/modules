@@ -59,7 +59,7 @@
       <label>HTML Page Title</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
-      <source>publication.page_title</source>
+      <source>pubtypes.page_title</source>
       <status>34</status>
       <seq>5</seq>
       <configuration>a:0:{}</configuration>
@@ -69,7 +69,7 @@
       <label>HTML Page Description</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
-      <source>publication.page_description</source>
+      <source>pubtypes.page_description</source>
       <status>34</status>
       <seq>6</seq>
       <configuration>a:0:{}</configuration>
@@ -79,7 +79,7 @@
       <label>HTML Keywords</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
-      <source>publication.keywords</source>
+      <source>pubtypes.keywords</source>
       <status>34</status>
       <seq>7</seq>
       <configuration>a:0:{}</configuration>
