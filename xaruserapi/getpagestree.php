@@ -119,7 +119,7 @@ function publications_userapi_getpagestree($args)
     foreach($pages as $key => $page) {
         if ($page['base_id']) continue;
         if (isset($translations[$page['id']])) $page['translations'] = $translations[$page['id']];
-        $finishedpages[$key] = $page;
+        $finishedpages[] = $page;
     }
 
     $tree['pages'] =& $finishedpages;
