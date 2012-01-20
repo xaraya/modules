@@ -19,8 +19,17 @@ function publications_userapi_addcurrentpageflags($args)
 {
     extract($args);
 
-    if (empty($pagedata) || empty($id) || !isset($pagedata['pages'][$id])) {return;}
-
+    if (empty($pagedata) || empty($id)) {return array();}
+    
+    $targetpagekey = false;
+    foreach ($pagedata['pages'] as $key => $page) {
+        if ($page['id'] == $id) {
+            $targetpagekey = true;
+            break;
+        }
+    }
+    if (!$targetpagekey) return array();
+    
     if (empty($root_ids) || !is_array($root_ids)) {
         $root_ids = array();
     }
@@ -48,7 +57,7 @@ function publications_userapi_addcurrentpageflags($args)
     // set in previous loops.
 
     // Point the current page at the page in the tree.
-    $pagedata['current_page'] =& $pagedata['pages'][$id];
+    $pagedata['current_page'] =& $pagedata['pages'][$key];
 
     // Create an ancestors array.
     // Shift the pages onto the start of the array, so the resultant array
@@ -58,7 +67,7 @@ function publications_userapi_addcurrentpageflags($args)
     // in the hierarchy.
     // Ancestors will include self - filter out in the template if required.
     $pagedata['ancestors'] = array();
-    $this_id = $id;
+    $this_id = $key;
 
     // TODO: allow a 'virtual root' to stop before we reach the real root page. Used
     // when we are filtering lower sections of a tree. Physically remove pages that
@@ -147,8 +156,8 @@ function publications_userapi_addcurrentpageflags($args)
         }
     }
 
-    $pagedata['id'] = $id;
-    $pagedata['pages'][$id]['is_current'] = true;
+    $pagedata['id'] = $key;
+    $pagedata['pages'][$key]['is_current'] = true;
 
     return $pagedata;
 }
