@@ -85,7 +85,6 @@
 
         if (!empty($data['prune_ids']) && is_array($data['prune_ids'])) {
             $prune_ids = $data['prune_ids'];
-        var_dump($prune_ids);exit;
         } else {
             $prune_ids = array();
         }
