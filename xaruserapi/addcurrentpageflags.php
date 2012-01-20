@@ -156,8 +156,8 @@ function publications_userapi_addcurrentpageflags($args)
         }
     }
 
-    $pagedata['id'] = $key;
-    $pagedata['pages'][$key]['is_current'] = true;
+    $pagedata['id'] = $this_id;
+    $pagedata['pages'][$this_id]['is_current'] = true;
 
     return $pagedata;
 }
