@@ -85,6 +85,7 @@
 
         if (!empty($data['prune_ids']) && is_array($data['prune_ids'])) {
             $prune_ids = $data['prune_ids'];
+        var_dump($prune_ids);exit;
         } else {
             $prune_ids = array();
         }
@@ -231,6 +232,11 @@
             }
         }
 
+        // transform to the format we need for displaying the menu
+        $temp = array();
+        foreach ($pagedata['pages'] as $k => $v) $temp[$v['id']] = $v;
+        $pagedata['pages'] = $temp;
+        
         // Here we add the various flags to the pagedata, based on
         // the current page.
         $pagedata = xarMod::apiFunc(
