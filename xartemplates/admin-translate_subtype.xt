@@ -40,7 +40,8 @@
         </xar:loop>
     
         <p>
-        <input type="submit" name="sbt" id="sbt" value="#xarML('OK')#"/>
+        <xar:var name="label">Save Translations</xar:var>
+        <xar:button type="submit" name="sbt" id="sbt" value="$label"/>
         </p>
     
         <h5>Fuzzy Strings:</h5>
