@@ -83,15 +83,15 @@ function translations_adminapi_generate_module_skels($args)
             $xtype = 'php';
         }
         else {
-            $pattern = '/^([a-z0-9\-_]+)\.xd$/i';
-            $xtype = 'xd';
+            $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
+            $xtype = 'xt';
         }
         $subnames = xarMod::apiFunc('translations','admin','get_module_files',
                          array('moddir'=>sys::code() . "modules/$moddir/xar$dirname",'pattern'=>$pattern));
         xarLogVariable('subnames',$subnames);
         foreach ($subnames as $subname) {
             $module_contexts_list[] = 'modules:'.$modname.':'.$dirname.':'.$subname;
-            if ($xtype == 'xd') $parser = new TPLParser();
+            if ($xtype == 'xt') $parser = new TPLParser();
             else $parser = new PHPParser();
             $parser->parse(sys::code() . "modules/$moddir/xar$dirname/$subname.$xtype");
             ${$dirname . "names"}[] = $subname;
