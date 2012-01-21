@@ -73,7 +73,7 @@ function translations_adminapi_generate_module_trans($args)
         if (!preg_match('!^templates!i', $dirname, $matches))
             $pattern = '/^([a-z0-9\-_]+)\.php$/i';
         else
-            $pattern = '/^([a-z0-9\-_]+)\.xd$/i';
+            $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
         $subnames = xarMod::apiFunc('translations','admin','get_module_files',
                               array('moddir'=>sys::code() . "modules/$moddir/xar$dirname",'pattern'=>$pattern));
         foreach ($subnames as $subname) {

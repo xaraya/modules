@@ -275,18 +275,20 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
         }
 
         $dirnames = xarMod::apiFunc('translations','admin','get_module_dirs',array('moddir'=>$moddir));
+
+
         foreach ($dirnames as $dirname) {
-            if (!preg_match('!^xartemplates!i', $dirname, $matches))
+            if (!preg_match('%^templates%i', $dirname, $matches))
                 $pattern = '/^([a-z0-9\-_]+)\.php$/i';
             else 
                 $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
             $subnames = xarMod::apiFunc('translations','admin','get_module_files',
-                                  array('moddir'=>sys::code() . "modules/$moddir/xar$dirname",'pattern'=>$pattern));
+                                  array('moddir' => sys::code() . "modules/$moddir/xar$dirname",'pattern'=>$pattern));
+
             foreach ($subnames as $subname) {
                 $module_contexts_list[] = 'modules:'.$modname.':'.$dirname.':'.$subname;
             }
         }
-
         $subtypes = array();
         $subnames = array();
         $entrydata = array();

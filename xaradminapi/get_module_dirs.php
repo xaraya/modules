@@ -47,13 +47,13 @@ function translations_adminapi_get_module_dirs($args)
     }
     if (file_exists(sys::code() . "modules/$moddir/xartemplates")) {
         if (file_exists(sys::code() . "modules/$moddir/xartemplates/includes"))
-            $names[] = 'templates/includes';
+            $names[] = 'xartemplates/includes';
         if (file_exists(sys::code() . "modules/$moddir/xartemplates/blocks"))
-            $names[] = 'templates/blocks';
+            $names[] = 'xartemplates/blocks';
         if (file_exists(sys::code() . "modules/$moddir/xartemplates/properties"))
-            $names[] = 'templates/properties';
+            $names[] = 'xartemplates/properties';
         if (file_exists(sys::code() . "modules/$moddir/xartemplates/objects"))
-            $names[] = 'templates/objects';
+            $names[] = 'xartemplates/objects';
     }
     return $names;
 }
