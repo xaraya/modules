@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+    <!-- Load the stylesheet for this publication type -->
+    <xar:style method="import" file="document" title="Document Stylesheet"/>
+    
     <div class="xar-norm xar-standard-box-padding">
         <xar:if condition="!empty($categories) and count($categories) gt 0">[
         <xar:foreach in="$categories" value="$cat">#$cat['cjoin']#
@@ -8,7 +12,7 @@
         
         <xar:template file="editicons"/>
         
-        <span class="xar-title">
+        <span class="xar-publications-document-summary-title">
             <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
                 <xar:data-output property="$properties['title']" />
             </a>
@@ -19,7 +23,7 @@
                 reads)</xar:if>
             </xar:if>
         </span>
-        <div class="xar-publications-keywords">
+        <div class="xar-publications-document-summary-keywords">
             <xar:if condition="!empty($keywords)">
                 Keywords:
                 <xar:loop name="$keywords">
