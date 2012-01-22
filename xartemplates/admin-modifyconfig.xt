@@ -344,6 +344,12 @@
                         Display Settings
                     </legend>
                     <div class="xar-form-input-wrapper">
+                        <label for="allow_translations" class="help xar-form-label" title="#xarML('Allow translations in this publications type')#">                    
+                            Allow translations
+                        </label>
+                        <xar:data-input type="checkbox" name="allow_translations" checked="$settings['allow_translations']" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
                         <label for="prevnextart" class="help xar-form-label" title="#xarML('Show link to previous/next item in display.')#">                    
                             Show link to previous/next item in display
                         </label>
