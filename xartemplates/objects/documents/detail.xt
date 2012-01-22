@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+    <!-- Load the stylesheet for this publication type -->
+    <xar:style method="import" file="document" title="Document Stylesheet"/>
+    
     <xar:set name="ptid">$object->objectid</xar:set>
     <xar:template file="publinks" type="module" />
     <!--
@@ -21,7 +25,7 @@
 
                     <xar:template file="editicons"/>
 
-                    <span class="xar-title">
+                    <span class=".xar-publications-document-detail-title">
                         <xar:data-output property="$properties['title']" />
                     </span>
                     <br />
