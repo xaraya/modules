@@ -76,7 +76,7 @@ function articles_randomblock_display($blockinfo)
     if (empty($vars['status'])) {
             $statusarray = array(2,3);
     } elseif (!is_array($vars['status'])) {
-            $statusarray = split(',', $vars['status']);
+            $statusarray = explode(',', $vars['status']);
     } else {
             $statusarray = $vars['status'];
     }
