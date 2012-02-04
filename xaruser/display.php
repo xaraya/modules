@@ -125,6 +125,13 @@ function publications_user_display($args)
         // This is a simple redirect to another page
             try {
                 $url = $data['object']->properties['redirect_url']->value;
+                
+                // Check if this is a Xaraya function
+                $pos = strpos($url, 'xar');
+                if ($pos === 0) {
+                    eval('$url = ' . $url .';');
+                }
+                
                 xarController::redirect($url, 301);    
             } catch (Exception $e) {
                 return xarResponse::NotFound();
@@ -142,6 +149,12 @@ function publications_user_display($args)
         
         // Bail if the URL is bad
         try {
+            // Check if this is a Xaraya function
+            $pos = strpos($url, 'xar');
+            if ($pos === 0) {
+                eval('$url = ' . $url .';');
+            }
+            
             $params = parse_url($url);
             $params['query'] = preg_replace('/&amp;/','&',$params['query']);
         } catch (Exception $e) {
