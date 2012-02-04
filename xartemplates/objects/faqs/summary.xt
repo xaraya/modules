@@ -11,7 +11,7 @@
         
     <xar:template file="editicons"/>
         
-    <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
+    <a class="xar-publications-faq-summary-title" href="#xarModURL('publications','user','display',array('itemid' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
         <xar:data-output property="$properties['question']" />
     </a>
     <xar:if condition="!empty($counter)">
@@ -22,16 +22,18 @@
         </xar:if>
     </xar:if>
     <xar:if condition="!empty($properties['submitted_by']->value)">
-        by 
-        <xar:data-output property="$properties['submitted_by']" />
+        <div class="xar-publications-faq-summary-postby">
+            by 
+            <xar:data-output property="$properties['submitted_by']" />
+        </div>
     </xar:if>
     <xar:if condition="!empty($properties['details']->value)">
-        <p><em>
-            <xar:data-output property="$properties['summary']" />
-        </em></p>
+        <p class="xar-publications-faq-summary-text">
+            <xar:data-output property="$properties['details']" />
+        </p>
     </xar:if>
     <xar:if condition="!empty($properties['answer']->value)">
-        <p>
+        <p class="xar-publications-faq-summary-text">
             <xar:data-output property="$properties['answer']" />
         </p>
     </xar:if>

@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
     <!-- Load the stylesheet for this publication type -->
-    <xar:style method="import" file="document" title="Document Stylesheet"/>
+    <xar:style method="import" module="publications" file="document" title="Document Stylesheet"/>
     
     <div class="xar-norm xar-standard-box-padding">
         <xar:if condition="!empty($categories) and count($categories) gt 0">[

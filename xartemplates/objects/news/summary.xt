@@ -2,6 +2,9 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     
+    <!-- Load the stylesheet for this publication type -->
+    <xar:style method="import" module="publications" file="news" title="Document Stylesheet"/>
+    
     <xar:set name="fields">$object->getFieldValues(array(),1)</xar:set>
 
     <!-- Title -->
@@ -22,7 +25,7 @@
     </div>
 
     <!-- Summary -->
-    <div class="xar-publications-summary">
+    <div class="xar-publications-summary-text">
         <xar:data-output property="$properties['introduction']" value="$fields['introduction']"/>
     </div>
     
