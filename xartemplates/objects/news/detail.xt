@@ -6,6 +6,9 @@
     <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$id" cids="$cids" show_catcount="$settings['show_catcount']" showempty="0" />
     -->
     
+    <!-- Load the stylesheet for this publication type -->
+    <xar:style method="import" module="publications" file="news" title="Document Stylesheet"/>
+    
     <xar:set name="publication_state">
         $properties['state']->value
     </xar:set>
@@ -17,7 +20,7 @@
         <xar:template file="editicons"/>
 
         <!-- Title -->
-        <div class="xar-title">
+        <div class="xar-publications-news-detail-title">
             <xar:data-output property="$properties['title']" />
         </div>
         <!--
@@ -45,12 +48,12 @@
         </div>
 
         <!-- Introduction -->
-        <div>
+        <div class="xar-publications-news-detail-text>
             <xar:data-output property="$properties['introduction']" />
         </div>
 
         <!-- Body -->
-        <div>
+        <div class="xar-publications-news-detail-text>
             <xar:data-output property="$properties['body']" />
         </div>
 

@@ -19,7 +19,7 @@
 
                     <xar:template file="editicons"/>
 
-                    <span class="xar-title">
+                    <span class="xar-publications-faq-detail-title">
                         <xar:data-output property="$properties['question']" />
                     </span>
                     <br />
@@ -29,22 +29,20 @@
                     </div>
                     -->
                     <br />
-                    <xar:if condition="!empty($properties['detail']->value)">
-                        <em>
-                            <xar:data-output property="$properties['detail']" />
-                        </em>
-                        <br />
+                    <xar:if condition="!empty($properties['details']->value)">
+                         <div class="xar-publications-faq-detail-text">
+                            <xar:data-output property="$properties['details']" />
+                        </div>
                     </xar:if>
                     <xar:if condition="!empty($submitted_by)">
-                        <span class="xar-quote">
+                        <div class="xar-publications-faq-detail-postby">
                             Submitted by
                             <xar:data-output property="$properties['submitted_by']" />
-                        </span>
-                        <br />
+                        </div>
                     </xar:if>
-                    <br />
-                    <xar:data-output property="$properties['answer']" />
-                    <br />
+                    <div class="xar-publications-faq-detail-text">
+                        <xar:data-output property="$properties['answer']" />
+                    </div>
                     <xar:if condition="!empty($previous) and !empty($next)">
                         <div class="xar-normal xar-align-right xar-padding-thick">
                             <span> #$previous# </span> <span> #$next# </span>
