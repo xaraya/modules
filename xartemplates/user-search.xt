@@ -33,7 +33,7 @@
                         array('id' => 'fulltext boolean', 'name' => xarML('full-text boolean')),
                     )             
                 </xar:set>
-                <xar:data-input name="searchtype" options="$options" value="$searchtype" />
+                <xar:data-input type="dropdown" name="searchtype" options="$options" value="$searchtype" />
               </td>
             </tr>
       </xar:if>
