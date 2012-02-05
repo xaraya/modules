@@ -270,9 +270,9 @@ function publications_user_search($args)
         } else {
             $checked = '';
         }
-        $data['publications'][] = array('pubid' => $pubid,
-                                        'pubdescr' => xarVarPrepForDisplay($pubtype['description']),
-                                        'pubchecked' => $checked);
+        $data['publications'][] = array('id' => $pubid,
+                                        'description' => xarVarPrepForDisplay($pubtype['description']),
+                                        'checked' => $checked);
     }
 
     $data['categories'] = array();
