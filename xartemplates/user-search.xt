@@ -51,8 +51,7 @@
                         <xar:break />
                     </xar:if>
                     <xar:set name="pubtype">array_pop($publications)</xar:set>
-            <!--          <input type="checkbox" name="ptids[]" id="#$pubtype['description']#" value="#$pubtype['id']#"#$pubtype['checked']# /> -->
-                      <input type="checkbox" name="ptids[]" id="#$pubtype['description']#" value="#$pubtype['id']#" />
+                      <input type="checkbox" name="ptids[]" id="#$pubtype['description']#" value="#$pubtype['id']#" checked="#$pubtype['checked']#" /> 
                       <label for="#$pubtype['description']#">#$pubtype['description']#</label> <br />
                       <xar:if condition="$i++ and $i % 2 eq 0">
                         <xar:break />
