@@ -90,9 +90,9 @@
           <td><xar:foreach in="$fieldlist" value="$item">
               <xar:if condition="!empty($fulltextfields) and in_array($item['id'],$fulltextfields)">
                 <input type="checkbox" name="publications_fields[#$item['id']#]" id="publications_fields_#$item['id']#" value="1" checked="checked" disabled="disabled" />
-                <xar:elseif condition="$item['checked']"/>
+              <xar:elseif condition="$item['checked']"/>
                 <input type="checkbox" name="publications_fields[#$item['id']#]" id="publications_fields_#$item['id']#" value="1" checked="checked" />
-                <xar:else/>
+              <xar:else/>
                 <input type="checkbox" name="publications_fields[#$item['id']#]" id="publications_fields_#$item['id']#" value="1" />
               </xar:if>
               <label for="publications_fields_#$item['id']#">#$item['name']#</label>
