@@ -219,11 +219,11 @@ function publications_user_search($args)
     }
 
     if (empty($fields)) {
-        $fieldlist = array('title', 'summary', 'body');
+        $fieldlist = array('title', 'description', 'summary');
     } else {
         $fieldlist = array_keys($fields);
         // don't pass fields via URLs if we stick to the default list
-        if (count($fields) == 3 && isset($fields['title']) && isset($fields['summary']) && isset($fields['body'])) {
+        if (count($fields) == 3 && isset($fields['title']) && isset($fields['description']) && isset($fields['summary'])) {
             $fields = null;
         }
     }
@@ -257,8 +257,8 @@ function publications_user_search($args)
     // TODO: show field labels when we're dealing with only 1 pubtype
         $data['fieldlist'] = array(
                                     array('id' => 'title', 'name' => xarML('title'), 'checked' => in_array('title',$fieldlist)),
+                                    array('id' => 'description', 'name' => xarML('description'), 'checked' => in_array('description',$fieldlist)),
                                     array('id' => 'summary', 'name' => xarML('summary'), 'checked' => in_array('summary',$fieldlist)),
-                                    array('id' => 'body', 'name' => xarML('body'), 'checked' => in_array('body',$fieldlist)),
                                     array('id' => 'notes', 'name' => xarML('notes'), 'checked' => in_array('notes',$fieldlist)),
                                    );
     }
