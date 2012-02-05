@@ -223,7 +223,7 @@ function publications_userapi_leftjoin($args)
     }
 
     if (empty($searchfields)) {
-        $searchfields = array('title','summary','body1');
+        $searchfields = array('title','description','summary','body1');
     }
 
     if (!empty($search))
