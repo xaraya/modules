@@ -478,7 +478,8 @@ function publications_user_search($args)
 
                 // Pager
 // TODO: make count depend on locale in the future
-                $pager = xarTplGetPager($startnum,
+                sys::import('modules.base.class.pager');
+                $pager = xarTplPager::getPager($startnum,
                                         xarModAPIFunc('publications', 'user', 'countitems',
                                                       array('cids' => $cids,
                                                             'andcids' => $andcids,
