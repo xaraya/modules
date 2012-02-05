@@ -2,6 +2,13 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
+    <!-- Load the stylesheet for this publication type -->
+    <xar:style method="import" module="publications" file="publication_type" title="Publication Type Stylesheet"/>
+    
+    <div class="xar-publications-type-title">
+        #$object->label#
+    </div>
+    
     <!-- Get the name of the publication type. It is supposed to be "publications_something" -->
     <xar:if condition="strlen($object->name) le 13">
         <xar:set name="pubtype">'generic'</xar:set>

@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
     <!-- Load the stylesheet for this publication type -->
-    <xar:style method="import" module="publications" file="faq" title="Document Stylesheet"/>
+    <xar:style method="import" module="publications" file="faq" title="FAQ Stylesheet"/>
     
     <xar:template file="publinks" type="module" />
     <!--
