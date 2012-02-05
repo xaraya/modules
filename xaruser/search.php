@@ -219,11 +219,11 @@ function publications_user_search($args)
     }
 
     if (empty($fields)) {
-        $fieldlist = array('title', 'description', 'summary');
+        $fieldlist = array('title', 'description', 'summary', 'body1');
     } else {
         $fieldlist = array_keys($fields);
         // don't pass fields via URLs if we stick to the default list
-        if (count($fields) == 3 && isset($fields['title']) && isset($fields['description']) && isset($fields['summary'])) {
+        if (count($fields) == 3 && isset($fields['title']) && isset($fields['description']) && isset($fields['summary']) && isset($fields['body1'])) {
             $fields = null;
         }
     }
@@ -259,6 +259,7 @@ function publications_user_search($args)
                                     array('id' => 'title', 'name' => xarML('title'), 'checked' => in_array('title',$fieldlist)),
                                     array('id' => 'description', 'name' => xarML('description'), 'checked' => in_array('description',$fieldlist)),
                                     array('id' => 'summary', 'name' => xarML('summary'), 'checked' => in_array('summary',$fieldlist)),
+                                    array('id' => 'body1', 'name' => xarML('body1'), 'checked' => in_array('body1',$fieldlist)),
                                     array('id' => 'notes', 'name' => xarML('notes'), 'checked' => in_array('notes',$fieldlist)),
                                    );
     }

@@ -61,7 +61,7 @@ function publications_userapi_getall($args)
     if (empty($ptid)) $ptid = null;
 
     // Default fields in publications (for now)
-    $columns = array('id','name','title','description','summary','owner','pubtype_id',
+    $columns = array('id','name','title','description','summary','body1','owner','pubtype_id',
                      'notes','state','start_date');
 
     // Optional fields in publications (for now)
