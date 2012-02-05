@@ -12,12 +12,12 @@
 /**
  * return the field names and correct values for querying (or joining on)
  * the publications table
- * example 1 : SELECT ..., $title, $body,...
+ * example 1 : SELECT ..., $title, $body1,...
  *             FROM $table
  *             WHERE $title LIKE 'Hello world%'
  *                 AND $where
  *
- * example 2 : SELECT ..., $title, $body,...
+ * example 2 : SELECT ..., $title, $body1,...
  *             FROM ...
  *             LEFT JOIN $table
  *                 ON $field = <name of articleid field in your module>
@@ -46,7 +46,7 @@
  *               'where' => 'nuke_publications.id IN (...)',
  *               'title'  => 'nuke_publications.title',
  *               ...
- *               'body'  => 'nuke_publications.body')
+ *               'body1'  => 'nuke_publications.body1')
  */
 function publications_userapi_leftjoin($args)
 {
@@ -69,7 +69,7 @@ function publications_userapi_leftjoin($args)
 
     // Add available columns in the publications table (for now)
     $columns = array('id','name','title','summary','owner','pubtype_id',
-                     'notes','state','body','locale','create_date','start_date');
+                     'notes','state','body1','locale','create_date','start_date');
     foreach ($columns as $column) {
         $leftjoin[$column] = $publicationstable . '.' . $column;
     }
@@ -165,7 +165,7 @@ function publications_userapi_leftjoin($args)
 
     if (!empty($where)) {
         // find all single-quoted pieces of text and replace them first, to allow where clauses
-        // like : title eq 'this and that' and body eq 'here or there'
+        // like : title eq 'this and that' and body1 eq 'here or there'
         $idx = 0;
         $found = array();
         if (preg_match_all("/'(.*?)'/",$where,$matches)) {
@@ -223,7 +223,7 @@ function publications_userapi_leftjoin($args)
     }
 
     if (empty($searchfields)) {
-        $searchfields = array('title','summary','body');
+        $searchfields = array('title','summary','body1');
     }
 
     if (!empty($search))
