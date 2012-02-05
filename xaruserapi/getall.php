@@ -31,9 +31,9 @@
  *                           (unix timestamp format)
  * @param $args['enddate'] publications published before enddate
  *                         (unix timestamp format)
- * @param $args['fields'] array with all the fields to return per article
+ * @param $args['fields'] array with all the fields to return per publication
  *                        Default list is : 'id','title','summary','owner',
- *                        'create_date','pubtype_id','notes','state','body'
+ *                        'create_date','pubtype_id','notes','state','body1'
  *                        Optional fields : 'cids','author','counter','rating','dynamicdata'
  * @param $args['extra'] array with extra fields to return per article (in addition
  *                       to the default list). So you can EITHER specify *all* the
