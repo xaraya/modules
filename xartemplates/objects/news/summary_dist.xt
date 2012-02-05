@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     
     <!-- Load the stylesheet for this publication type -->
-    <xar:style method="import" module="publications" file="news" title="Document Stylesheet"/>
+    <xar:style method="import" module="publications" file="news" title="News Stylesheet"/>
     
     <xar:set name="fields">$object->getFieldValues(array(),1)</xar:set>
 
