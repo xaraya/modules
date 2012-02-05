@@ -65,7 +65,7 @@ function publications_admin_updateconfig()
         if (xarDB::getType() == 'mysql') {
             if (!xarVarFetch('fulltext', 'isset', $fulltext, '', XARVAR_NOT_REQUIRED)) {return;}
             $oldval = xarModVars::get('publications', 'fulltextsearch');
-            $index = 'fulltext';
+            $index = 'i_' . xarDB::getPrefix() . '_publications_fulltext';
             if (empty($fulltext) && !empty($oldval)) {
                 // Get database setup
                 $dbconn = xarDB::getConn();
@@ -77,7 +77,7 @@ function publications_admin_updateconfig()
                 if (!$result) return;
                 xarModVars::set('publications', 'fulltextsearch', '');
             } elseif (!empty($fulltext) && empty($oldval)) {
-                $searchfields = array('title','description','summary','notes');
+                $searchfields = array('title','description','summary','body1','notes');
 //                $searchfields = explode(',',$fulltext);
                 // Get database setup
                 $dbconn = xarDB::getConn();
