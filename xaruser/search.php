@@ -337,7 +337,7 @@ function publications_user_search($args)
     }
 
     if (!empty($q) || (!empty($author) && isset($owner)) || !empty($search) || !empty($ptid) || !empty($startdate) || $enddate != $now || !empty($catid)) {
-        $getfields = array('id','title', 'pubdate','pubtype_id','cids');
+        $getfields = array('id','title', 'startdate','pubtype_id','cids');
         // Return the relevance when using MySQL full-text search
         //if (!empty($search) && !empty($searchtype) && substr($searchtype,0,8) == 'fulltext') {
         //    $getfields[] = 'relevance';
@@ -425,13 +425,13 @@ function publications_user_search($args)
                                      array('ptid' => $article['pubtype_id'],
                                            'id' => $article['id']));
                     // publication date of article (if needed)
-                    if (!empty($pubtypes[$curptid]['config']['pubdate']['label'])
-                        && !empty($article['pubdate'])) {
-                        $date = xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $article['pubdate']);
-                        $pubdate = $article['pubdate'];
+                    if (!empty($pubtypes[$curptid]['config']['startdate']['label'])
+                        && !empty($article['startdate'])) {
+                        $date = xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $article['startdate']);
+                        $startdate = $article['startdate'];
                     } else {
                         $date = '';
-                        $pubdate = 0;
+                        $startdate = 0;
                     }
                     if (empty($article['title'])) {
                         $article['title'] = xarML('(none)');
@@ -469,7 +469,7 @@ function publications_user_search($args)
                     $items[] = array('title' => xarVarPrepHTMLDisplay($article['title']),
                                      'link' => $link,
                                      'date' => $date,
-                                     'pubdate' => $pubdate,
+                                     'startdate' => $startdate,
                                      'relevance' => isset($article['relevance']) ? $article['relevance'] : null,
                                      'categories' => $categories);
                 }
