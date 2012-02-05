@@ -337,7 +337,7 @@ function publications_user_search($args)
     }
 
     if (!empty($q) || (!empty($author) && isset($owner)) || !empty($search) || !empty($ptid) || !empty($startdate) || $enddate != $now || !empty($catid)) {
-        $getfields = array('id','title', 'startdate','pubtype_id','cids');
+        $getfields = array('id','title', 'start_date','pubtype_id','cids');
         // Return the relevance when using MySQL full-text search
         //if (!empty($search) && !empty($searchtype) && substr($searchtype,0,8) == 'fulltext') {
         //    $getfields[] = 'relevance';
