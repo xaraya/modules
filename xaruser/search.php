@@ -424,7 +424,7 @@ function publications_user_search($args)
                     $curptid = $article['pubtype_id'];
                     $link = xarModURL('publications','user','display',
                                      array('ptid' => $article['pubtype_id'],
-                                           'id' => $article['id']));
+                                           'itemid' => $article['id']));
                     // publication date of article (if needed)
                     if (!empty($pubtypes[$curptid]['config']['startdate']['label'])
                         && !empty($article['startdate'])) {
