@@ -549,7 +549,7 @@ function publications_user_search($args)
             return xarTplModule('publications','user','search',$data);
         }
 
-        $data['state'] = xarML('No publications found matching this search');
+        $data['state'] = xarML('No pages found matching this search');
     }
 
     return xarTplModule('publications','user','search',$data);
