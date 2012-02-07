@@ -298,6 +298,12 @@ function publications_admin_display($args)
     xarVarSetCached('Blocks.publications', 'ptid', $ptid);
     xarVarSetCached('Blocks.publications', 'author', $data['object']->properties['author']->value);
 
+# --------------------------------------------------------
+#
+# Make the properties available to the template 
+#
+    $data['properties'] =& $data['object']->properties;
+    
     return $data;
 
 
