@@ -13,7 +13,7 @@
 
 function publications_admin_delete()
 {
-    if (!xarSecurityCheck('ModifyPublications')) return;
+    if (!xarSecurityCheck('ManagePublications')) return;
 
     //$return = xarModURL('publications', 'admin','view',array('ptid' => xarModVars::get('publications', 'defaultpubtype')));
     if(!xarVarFetch('confirmed',  'int', $confirmed,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
@@ -38,7 +38,7 @@ function publications_admin_delete()
 /*------------- Ask for Confirmation.  If yes, action ----------------------------*/
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $publication = DataObjectMaster::getObject(array('name' => 'publications_documents'));
+    $publication = DataObjectMaster::getObject(array('name' => 'publications_publications'));
     if (!isset($confirmed)) {
         $data['idlist'] = $idlist;
         if (count($ids) > 1) {
