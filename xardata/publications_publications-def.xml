@@ -1,6 +1,6 @@
 <object name="publications_publications">
   <objectid>60</objectid>
-  <label>Generic Document</label>
+  <label>General Document</label>
   <module_id>182</module_id>
   <itemtype>30</itemtype>
   <class>Publication</class>
