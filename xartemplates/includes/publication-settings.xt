@@ -300,16 +300,18 @@
         <xar:set name="propname">"dd_" . $properties['access']->id . '_delete'</xar:set>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['delete']"/>
     </fieldset>
-    <fieldset>
-        <legend>
-            Categories
-        </legend>
-        <div class="xar-form-input-wrapper">
-            <xar:var name="label">Categories</xar:var>
-            <xar:data-label property="$properties['categories']" for="id" label="$label" />
-            <xar:data-input property="$properties['categories']" />
-        </div>
-    </fieldset>
+    <xar:if condition="!xarModIsAvailable('categories')">
+        <fieldset>
+            <legend>
+                Categories
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <xar:var name="label">Categories</xar:var>
+                <xar:data-label property="$properties['categories']" for="id" label="$label" />
+                <xar:data-input property="$properties['categories']" />
+            </div>
+        </fieldset>
+    </xar:if>
     <fieldset>
         <legend>
             Allowed Tags

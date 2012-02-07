@@ -38,7 +38,7 @@
             </tr>
       </xar:if>
       <tr>
-        <td>Publications</td>
+        <td>Pages</td>
         <td>
           <table border="0" cellpadding="0" cellspacing="3">
             <xar:set name="i">0</xar:set>
