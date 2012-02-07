@@ -14,7 +14,7 @@
         $properties['state']->value
     </xar:set>
 
-    <xar:if condition="$publication_state lt 3">
+    <xar:if condition="$publication_state lt 3 AND !xarSecurityCheck('ManagePublications',0)">
         This item cannot be viewed
     <xar:else />
         <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">

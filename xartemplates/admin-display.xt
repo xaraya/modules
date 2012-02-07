@@ -2,7 +2,10 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
-    <div class="xar-mod-body">    
+    <div class="xar-mod-body">
+        <div>
+            The state of this page is <b><xar:data-output property="$properties['state']"/></b>
+        </div>
         <xar:data-display object="$object" tplmodule="publications" layout="$layout"/>
     </div>
 </xar:template>
