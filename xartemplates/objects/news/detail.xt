@@ -48,12 +48,12 @@
         </div>
 
         <!-- Introduction -->
-        <div class="xar-publications-news-detail-text>
+        <div class="xar-publications-news-detail-text">
             <xar:data-output property="$properties['introduction']" />
         </div>
 
         <!-- Body -->
-        <div class="xar-publications-news-detail-text>
+        <div class="xar-publications-news-detail-text">
             <xar:data-output property="$properties['body']" />
         </div>
 
