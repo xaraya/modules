@@ -254,6 +254,8 @@ function publications_user_search($args)
         foreach ($states as $id => $name) {
             $data['statelist'][] = array('id' => $id, 'name' => $name, 'checked' => in_array($id,$state));
         }
+    }
+
     // TODO: show field labels when we're dealing with only 1 pubtype
         $data['fieldlist'] = array(
                                     array('id' => 'title', 'name' => xarML('title'), 'checked' => in_array('title',$fieldlist)),
@@ -262,7 +264,6 @@ function publications_user_search($args)
                                     array('id' => 'body1', 'name' => xarML('body1'), 'checked' => in_array('body1',$fieldlist)),
                                     array('id' => 'notes', 'name' => xarML('notes'), 'checked' => in_array('notes',$fieldlist)),
                                    );
-    }
 
     $data['publications'] = array();
     foreach ($pubtypes as $pubid => $pubtype) {
