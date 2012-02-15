@@ -17,12 +17,14 @@
         This item cannot be viewed
     <xar:else />
 
-        <xar:template file="editicons"/>
-
         <!-- Title -->
         <div class="xar-publications-news-detail-title">
             <xar:data-output property="$properties['title']" />
         </div>
+
+        <!-- Edit icons if allowed -->
+        <xar:template file="editicons"/>
+
         <!--
         <div class="xar-floatright">#$topic_icons#</div>
         -->

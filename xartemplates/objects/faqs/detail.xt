@@ -17,12 +17,13 @@
     <xar:if condition="$publication_state lt 3 AND !xarSecurityCheck('ManagePublications',0)">
         This item cannot be viewed
     <xar:else />
-        <xar:template file="editicons"/>
-
         <!-- Question -->
         <div class="xar-publications-faq-detail-title">
             <xar:data-output property="$properties['question']" />
         </div>
+
+        <!-- Edit icons if allowed -->
+        <xar:template file="editicons"/>
 
         <!-- Question detail -->
         <xar:if condition="!empty($properties['details']->value)">

@@ -13,18 +13,20 @@
         This item cannot be viewed
     <xar:else />
 
-        <xar:template file="editicons"/>
-
         <!-- Title -->
-        <div class="xar-publications-blog-summary-title">
+        <div class="xar-publications-blog-detail-title">
             <xar:data-output property="$properties['title']" />
         </div>
+
+        <!-- Edit icons if allowed -->
+        <xar:template file="editicons"/>
+
         <!--
         <div class="xar-floatright">#$topic_icons#</div>
         -->
 
         <!-- Author -->
-        <div class="xar-publications-blog-summary-postby">
+        <div class="xar-publications-blog-detail-postby">
             <xar:if condition="!empty($profile)">
                 <xar:set name="author_string">'
                 <a href="'.$profile.'">' . $properties['author']->getValue() . '</a>'</xar:set>
@@ -46,12 +48,12 @@
         </div>
 
         <!-- Summary -->
-        <div class="xar-publications-blog-summary-text">
+        <div class="xar-publications-blog-detail-text">
             <xar:data-output property="$properties['introduction']" />
         </div>
 
         <!-- Body -->
-        <div class="xar-publications-blog-summary-text">
+        <div class="xar-publications-blog-detail-text">
             <xar:data-output property="$properties['body']" />
         </div>
 

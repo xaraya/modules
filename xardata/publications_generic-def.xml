@@ -232,7 +232,7 @@
       <source>publication.page_template</source>
       <status>34</status>
       <seq>31</seq>
-      <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:26:"validation_file_extensions";s:2:"xt";s:28:"initialization_basedirectory";s:13:"{theme}/pages";s:24:"initialization_firstline";s:19:",(current template)";}</configuration>
+      <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:26:"validation_file_extensions";s:2:"xt";s:28:"initialization_basedirectory";s:18:"{user_theme}/pages";s:24:"initialization_firstline";s:19:",(current template)";}</configuration>
     </property>
     <property name="theme">
       <id>13161</id>
