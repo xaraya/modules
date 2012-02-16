@@ -7,11 +7,7 @@
   <filepath>modules/publications/class/publication.php</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
-  <datastore>relational</datastore>
-  <config>a:1:{s:5:"where";s:12:"itemtype = 9";}</config>
-  <sources>a:1:{s:11:"publication";a:2:{i:0;s:16:"xar_publications";i:1;s:8:"internal";}}</sources>
-  <relations>a:0:{}</relations>
-  <objects>a:0:{}</objects>
+  <config>a:1:{s:5:"where";a:1:{i:0;s:12:"itemtype = 9";}}</config>
   <isalias>false</isalias>
   <properties>
     <property name="id">
@@ -19,7 +15,7 @@
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
-      <source>publication.id</source>
+      <source>xar_publications.id</source>
       <status>65</status>
       <seq>1</seq>
       <configuration></configuration>
@@ -29,7 +25,7 @@
       <label>Name</label>
       <type>textbox</type>
       <defaultvalue>new_translation</defaultvalue>
-      <source>publication.name</source>
+      <source>xar_publications.name</source>
       <status>33</status>
       <seq>2</seq>
       <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"2";}</configuration>
@@ -39,7 +35,7 @@
       <label>Title</label>
       <type>textbox</type>
       <defaultvalue>New Translation</defaultvalue>
-      <source>publication.title</source>
+      <source>xar_publications.title</source>
       <status>33</status>
       <seq>3</seq>
       <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"2";}</configuration>
@@ -49,7 +45,7 @@
       <label>Source Text</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
-      <source>publication.body1</source>
+      <source>xar_publications.body1</source>
       <status>34</status>
       <seq>4</seq>
       <configuration></configuration>
@@ -59,7 +55,7 @@
       <label>Translation</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
-      <source>publication.body2</source>
+      <source>xar_publications.body2</source>
       <status>34</status>
       <seq>5</seq>
       <configuration></configuration>
@@ -69,7 +65,7 @@
       <label>Notes</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
-      <source>publication.notes</source>
+      <source>xar_publications.notes</source>
       <status>34</status>
       <seq>6</seq>
       <configuration></configuration>
@@ -79,7 +75,7 @@
       <label>Parent</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
-      <source>publication.parent_id</source>
+      <source>xar_publications.parent_id</source>
       <status>67</status>
       <seq>19</seq>
       <configuration>a:0:{}</configuration>
@@ -89,7 +85,7 @@
       <label>Author</label>
       <type>username</type>
       <defaultvalue>xarUserGetVar('uname')</defaultvalue>
-      <source>publication.owner</source>
+      <source>xar_publications.owner</source>
       <status>33</status>
       <seq>20</seq>
       <configuration>a:6:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";}</configuration>
@@ -99,7 +95,7 @@
       <label>State</label>
       <type>dropdown</type>
       <defaultvalue>3</defaultvalue>
-      <source>publication.state</source>
+      <source>xar_publications.state</source>
       <status>33</status>
       <seq>21</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:58:"0,Deleted;1,Inactive;2,Draft;3,Active;4,Frontpage;5,Empty;";}</configuration>
@@ -109,7 +105,7 @@
       <label>Pages</label>
       <type>integerbox</type>
       <defaultvalue>1</defaultvalue>
-      <source>publication.pages</source>
+      <source>xar_publications.pages</source>
       <status>33</status>
       <seq>22</seq>
       <configuration></configuration>
@@ -119,7 +115,7 @@
       <label>Language</label>
       <type>static</type>
       <defaultvalue>xarModVars::get('publications', 'defaultlanguage')</defaultvalue>
-      <source>publication.locale</source>
+      <source>xar_publications.locale</source>
       <status>161</status>
       <seq>23</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_firstline";s:19:"0,Choose a language";}</configuration>
@@ -129,7 +125,7 @@
       <label>Type</label>
       <type>objectref</type>
       <defaultvalue>9</defaultvalue>
-      <source>publication.pubtype_id</source>
+      <source>xar_publications.pubtype_id</source>
       <status>33</status>
       <seq>24</seq>
       <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:18:"publications_types";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:11:"description";}</configuration>
@@ -139,7 +135,7 @@
       <label>Start Date</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
-      <source>publication.start_date</source>
+      <source>xar_publications.start_date</source>
       <status>33</status>
       <seq>25</seq>
       <configuration>a:0:{}</configuration>
@@ -149,7 +145,7 @@
       <label>End Date</label>
       <type>datetime</type>
       <defaultvalue>time()+31536000</defaultvalue>
-      <source>publication.end_date</source>
+      <source>xar_publications.end_date</source>
       <status>33</status>
       <seq>26</seq>
       <configuration>a:0:{}</configuration>
@@ -159,7 +155,7 @@
       <label>Open Ended</label>
       <type>checkbox</type>
       <defaultvalue>1</defaultvalue>
-      <source>publication.no_end</source>
+      <source>xar_publications.no_end</source>
       <status>33</status>
       <seq>27</seq>
       <configuration>a:0:{}</configuration>
@@ -169,7 +165,7 @@
       <label>Version</label>
       <type>integerbox</type>
       <defaultvalue>1</defaultvalue>
-      <source>publication.version</source>
+      <source>xar_publications.version</source>
       <status>65</status>
       <seq>28</seq>
       <configuration>a:0:{}</configuration>
@@ -179,7 +175,7 @@
       <label>Summary Template</label>
       <type>radio</type>
       <defaultvalue>0</defaultvalue>
-      <source>publication.summary_template</source>
+      <source>xar_publications.summary_template</source>
       <status>34</status>
       <seq>29</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:19:"0,inherit;1,custom;";}</configuration>
@@ -189,7 +185,7 @@
       <label>Detail Template</label>
       <type>radio</type>
       <defaultvalue>0</defaultvalue>
-      <source>publication.detail_template</source>
+      <source>xar_publications.detail_template</source>
       <status>34</status>
       <seq>30</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:19:"0,inherit;1,custom;";}</configuration>
@@ -199,7 +195,7 @@
       <label>Page Template</label>
       <type>filepicker</type>
       <defaultvalue></defaultvalue>
-      <source>publication.page_template</source>
+      <source>xar_publications.page_template</source>
       <status>34</status>
       <seq>31</seq>
       <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:26:"validation_file_extensions";s:2:"xt";s:28:"initialization_basedirectory";s:18:"{user_theme}/pages";s:24:"initialization_firstline";s:19:",(current template)";}</configuration>
@@ -209,7 +205,7 @@
       <label>Theme</label>
       <type>objectref</type>
       <defaultvalue></defaultvalue>
-      <source>publication.theme</source>
+      <source>xar_publications.theme</source>
       <status>34</status>
       <seq>32</seq>
       <configuration>a:6:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:6:"themes";s:25:"initialization_store_prop";s:4:"name";s:27:"initialization_display_prop";s:4:"name";s:24:"initialization_firstline";s:16:",[current theme]";}</configuration>
@@ -229,7 +225,7 @@
       <label>Created</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
-      <source>publication.create_date</source>
+      <source>xar_publications.create_date</source>
       <status>66</status>
       <seq>34</seq>
       <configuration>a:0:{}</configuration>
@@ -239,7 +235,7 @@
       <label>Modified</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
-      <source>publication.modify_date</source>
+      <source>xar_publications.modify_date</source>
       <status>66</status>
       <seq>35</seq>
       <configuration>a:0:{}</configuration>
@@ -249,7 +245,7 @@
       <label>Process State</label>
       <type>dropdown</type>
       <defaultvalue>1</defaultvalue>
-      <source>publication.process_state</source>
+      <source>xar_publications.process_state</source>
       <status>34</status>
       <seq>36</seq>
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:58:"0,Rejected;1,Submitted;2,On Hold;3,Approved;4,Checked Out;";}</configuration>
@@ -259,7 +255,7 @@
       <label>Position</label>
       <type>celkoposition</type>
       <defaultvalue></defaultvalue>
-      <source></source>
+      <source>dummy</source>
       <status>34</status>
       <seq>37</seq>
       <configuration>a:6:{s:14:"display_layout";s:7:"default";s:25:"initialization_celkotable";s:16:"xar_publications";s:24:"initialization_celkoname";s:4:"name";s:29:"initialization_celkoparent_id";s:13:"parentpage_id";s:28:"initialization_celkoright_id";s:12:"rightpage_id";s:27:"initialization_celkoleft_id";s:11:"leftpage_id";}</configuration>
@@ -269,7 +265,7 @@
       <label>Access</label>
       <type>access</type>
       <defaultvalue>xarMod::apiFunc('publications','admin','getpubtypeaccess',array('ptid'=&gt;1))</defaultvalue>
-      <source>publication.access</source>
+      <source>xar_publications.access</source>
       <status>162</status>
       <seq>38</seq>
       <configuration>a:0:{}</configuration>
@@ -279,7 +275,7 @@
       <label>Redirect Flag</label>
       <type>radio</type>
       <defaultvalue>0</defaultvalue>
-      <source>publication.redirect_flag</source>
+      <source>xar_publications.redirect_flag</source>
       <status>33</status>
       <seq>39</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:54:"0,No redirect;1,Redirect to a page/URL;2,Proxy a page;";}</configuration>
@@ -289,7 +285,7 @@
       <label>Redirect URL</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
-      <source>publication.redirect_url</source>
+      <source>xar_publications.redirect_url</source>
       <status>34</status>
       <seq>40</seq>
       <configuration>a:0:{}</configuration>
@@ -299,7 +295,7 @@
       <label>Proxy URL</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
-      <source>publication.proxy_url</source>
+      <source>xar_publications.proxy_url</source>
       <status>33</status>
       <seq>41</seq>
       <configuration>a:0:{}</configuration>
@@ -309,7 +305,7 @@
       <label>Alias Flag</label>
       <type>radio</type>
       <defaultvalue>0</defaultvalue>
-      <source>publication.alias_flag</source>
+      <source>xar_publications.alias_flag</source>
       <status>33</status>
       <seq>42</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:53:"0,No alias;1,Use the value below;2,Use the page name;";}</configuration>
@@ -319,7 +315,7 @@
       <label>Alias</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>publication.alias</source>
+      <source>xar_publications.alias</source>
       <status>34</status>
       <seq>43</seq>
       <configuration>a:0:{}</configuration>
@@ -329,7 +325,7 @@
       <label>HTML Page Title</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
-      <source>publication.page_title</source>
+      <source>xar_publications.page_title</source>
       <status>34</status>
       <seq>44</seq>
       <configuration>a:0:{}</configuration>
@@ -339,7 +335,7 @@
       <label>HTML Page Description</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
-      <source>publication.page_description</source>
+      <source>xar_publications.page_description</source>
       <status>34</status>
       <seq>45</seq>
       <configuration>a:0:{}</configuration>
@@ -349,7 +345,7 @@
       <label>HTML Keywords</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
-      <source>publication.keywords</source>
+      <source>xar_publications.keywords</source>
       <status>34</status>
       <seq>46</seq>
       <configuration>a:0:{}</configuration>
