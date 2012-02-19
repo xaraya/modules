@@ -26,9 +26,8 @@ function publications_user_main($args)
 #
 # Get the ID of the translation if required
 #
-        if (!empty($args['$translate']))
-            $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
-        return xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $id)));
+        if(!xarVarFetch('translate', 'int:1', $translate,  1, XARVAR_NOT_REQUIRED)) {return;}
+        return xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $id,'translate' => $translate)));
     } else {
 # --------------------------------------------------------
 #
