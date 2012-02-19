@@ -300,7 +300,7 @@
         <xar:set name="propname">"dd_" . $properties['access']->id . '_delete'</xar:set>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['delete']"/>
     </fieldset>
-    <xar:if condition="!xarModIsAvailable('categories')">
+    <xar:if condition="xarModIsAvailable('categories')">
         <fieldset>
             <legend>
                 Categories
