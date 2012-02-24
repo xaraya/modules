@@ -134,224 +134,234 @@
       <seq>24</seq>
       <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:18:"publications_types";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:11:"description";}</configuration>
     </property>
-    <property name="start_date">
+    <property name="pagetype">
       <id>251</id>
+      <label>Page Type</label>
+      <type>dropdown</type>
+      <defaultvalue>1</defaultvalue>
+      <source>publication.pagetype_id</source>
+      <status>33</status>
+      <seq>25</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:21:"1,HTML;2,BlockLayout;";}</configuration>
+    </property>
+    <property name="start_date">
+      <id>252</id>
       <label>Start Date</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>publication.start_date</source>
       <status>33</status>
-      <seq>25</seq>
+      <seq>26</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="end_date">
-      <id>252</id>
+      <id>253</id>
       <label>End Date</label>
       <type>datetime</type>
       <defaultvalue>time()+31536000</defaultvalue>
       <source>publication.end_date</source>
       <status>33</status>
-      <seq>26</seq>
+      <seq>27</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="no_end">
-      <id>253</id>
+      <id>254</id>
       <label>Open Ended</label>
       <type>checkbox</type>
       <defaultvalue>1</defaultvalue>
       <source>publication.no_end</source>
       <status>33</status>
-      <seq>27</seq>
+      <seq>28</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="version">
-      <id>254</id>
+      <id>255</id>
       <label>Version</label>
       <type>integerbox</type>
       <defaultvalue>1</defaultvalue>
       <source>publication.version</source>
       <status>65</status>
-      <seq>28</seq>
+      <seq>29</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="summary_template">
-      <id>792</id>
+      <id>256</id>
       <label>Summary Template</label>
       <type>radio</type>
       <defaultvalue>0</defaultvalue>
       <source>publication.summary_template</source>
       <status>34</status>
-      <seq>29</seq>
+      <seq>30</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:19:"0,inherit;1,custom;";}</configuration>
     </property>
     <property name="detail_template">
-      <id>792</id>
+      <id>257</id>
       <label>Detail Template</label>
       <type>radio</type>
       <defaultvalue>0</defaultvalue>
       <source>publication.detail_template</source>
       <status>34</status>
-      <seq>30</seq>
+      <seq>31</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:19:"0,inherit;1,custom;";}</configuration>
     </property>
     <property name="page_template">
-      <id>13160</id>
+      <id>258</id>
       <label>Page Template</label>
       <type>filepicker</type>
       <defaultvalue></defaultvalue>
       <source>publication.page_template</source>
       <status>34</status>
-      <seq>31</seq>
+      <seq>32</seq>
       <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:26:"validation_file_extensions";s:2:"xt";s:28:"initialization_basedirectory";s:18:"{user_theme}/pages";s:24:"initialization_firstline";s:19:",(current template)";}</configuration>
     </property>
     <property name="theme">
-      <id>13161</id>
+      <id>259</id>
       <label>Theme</label>
       <type>objectref</type>
       <defaultvalue></defaultvalue>
       <source>publication.theme</source>
       <status>34</status>
-      <seq>32</seq>
+      <seq>33</seq>
       <configuration>a:6:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:6:"themes";s:25:"initialization_store_prop";s:4:"name";s:27:"initialization_display_prop";s:4:"name";s:24:"initialization_firstline";s:16:",[current theme]";}</configuration>
     </property>
     <property name="categories">
-      <id>793</id>
+      <id>260</id>
       <label>Categories</label>
       <type>categories</type>
       <defaultvalue></defaultvalue>
       <source></source>
       <status>32</status>
-      <seq>33</seq>
+      <seq>34</seq>
       <configuration>a:3:{s:14:"display_layout";s:7:"default";s:21:"validation_categories";s:1:"0";s:19:"validation_override";s:1:"1";}</configuration>
     </property>
     <property name="created">
-      <id>794</id>
+      <id>261</id>
       <label>Created</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>publication.create_date</source>
       <status>66</status>
-      <seq>34</seq>
+      <seq>35</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="modified">
-      <id>795</id>
+      <id>262</id>
       <label>Modified</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>publication.modify_date</source>
       <status>66</status>
-      <seq>35</seq>
+      <seq>36</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="process_state">
-      <id>796</id>
+      <id>263</id>
       <label>Process State</label>
       <type>dropdown</type>
       <defaultvalue>1</defaultvalue>
       <source>publication.process_state</source>
       <status>34</status>
-      <seq>36</seq>
+      <seq>37</seq>
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:58:"0,Rejected;1,Submitted;2,On Hold;3,Approved;4,Checked Out;";}</configuration>
     </property>
     <property name="position">
-      <id>977</id>
+      <id>264</id>
       <label>Position</label>
       <type>celkoposition</type>
       <defaultvalue></defaultvalue>
       <source></source>
       <status>34</status>
-      <seq>37</seq>
+      <seq>38</seq>
       <configuration>a:6:{s:14:"display_layout";s:7:"default";s:25:"initialization_celkotable";s:16:"xar_publications";s:24:"initialization_celkoname";s:4:"name";s:29:"initialization_celkoparent_id";s:13:"parentpage_id";s:28:"initialization_celkoright_id";s:12:"rightpage_id";s:27:"initialization_celkoleft_id";s:11:"leftpage_id";}</configuration>
     </property>
     <property name="access">
-      <id>978</id>
+      <id>265</id>
       <label>Access</label>
       <type>access</type>
       <defaultvalue>xarMod::apiFunc('publications','admin','getpubtypeaccess',array('ptid'=&gt;1))</defaultvalue>
       <source>publication.access</source>
       <status>162</status>
-      <seq>38</seq>
+      <seq>39</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="redirect_flag">
-      <id>14588</id>
+      <id>266</id>
       <label>Redirect Flag</label>
       <type>radio</type>
       <defaultvalue>0</defaultvalue>
       <source>publication.redirect_flag</source>
       <status>33</status>
-      <seq>39</seq>
+      <seq>40</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:54:"0,No redirect;1,Redirect to a page/URL;2,Proxy a page;";}</configuration>
     </property>
     <property name="redirect_url">
-      <id>14589</id>
+      <id>267</id>
       <label>Redirect URL</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>publication.redirect_url</source>
       <status>34</status>
-      <seq>40</seq>
+      <seq>41</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="proxy_url">
-      <id>14590</id>
+      <id>268</id>
       <label>Proxy URL</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>publication.proxy_url</source>
       <status>33</status>
-      <seq>41</seq>
+      <seq>42</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="alias_flag">
-      <id>14594</id>
+      <id>269</id>
       <label>Alias Flag</label>
       <type>radio</type>
       <defaultvalue>0</defaultvalue>
       <source>publication.alias_flag</source>
       <status>33</status>
-      <seq>42</seq>
+      <seq>43</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:53:"0,No alias;1,Use the value below;2,Use the page name;";}</configuration>
     </property>
     <property name="alias">
-      <id>14595</id>
+      <id>270</id>
       <label>Alias</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>publication.alias</source>
       <status>34</status>
-      <seq>43</seq>
+      <seq>44</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="page_title">
-      <id>14591</id>
+      <id>271</id>
       <label>HTML Page Title</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>publication.page_title</source>
       <status>34</status>
-      <seq>44</seq>
+      <seq>45</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="page_description">
-      <id>14592</id>
+      <id>272</id>
       <label>HTML Page Description</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>publication.page_description</source>
       <status>34</status>
-      <seq>45</seq>
+      <seq>46</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="keywords">
-      <id>14593</id>
+      <id>273</id>
       <label>HTML Keywords</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>publication.keywords</source>
       <status>34</status>
-      <seq>46</seq>
+      <seq>47</seq>
       <configuration>a:0:{}</configuration>
     </property>
   </properties>
