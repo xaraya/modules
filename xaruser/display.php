@@ -181,7 +181,7 @@ function publications_user_display($args)
             // echo xarModURL($info['module'],'user',$info['func'],$other_params);
 # --------------------------------------------------------
 #
-# The transform of the subordinate function's template
+# For proxy pages: the transform of the subordinate function's template
 #
             // Find the URLs in submits
             $pattern='/(action)="([^"\r\n]*)"/';
@@ -216,10 +216,49 @@ function publications_user_display($args)
             return $page;
         }
     }
+    
 # --------------------------------------------------------
+#
+# If this is a bloccklayout page, then process it
+#
 
-    // Get the complete tree for this section of pages.
-    // We need this for blocks etc.
+    if ($data['object']->properties['pagetype']->value == 2) {
+        // Get a copy of the compiler
+        sys::import('xaraya.templating.compiler');
+        $blCompiler = XarayaCompiler::instance();
+        
+        // Get the data fields
+        $fields = array();
+        $sourcefields = array('title','description','summary','body1','body2','body3','body4','body5','notes');
+        $prefix = strlen('publications.')-1;
+        foreach ($data['object']->properties as $prop) {
+            if (in_array(substr($prop->source, $prefix), $sourcefields)) $fields[] = $prop->name;
+        }
+
+        // Run each template field through the compiler
+        foreach ($fields as $field) {
+            try{        
+                $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
+                $tplString .= xarMod::apiFunc('publications','user','prepareforbl',array('string' => $data['object']->properties[$field]->value));
+
+                $tplString .= '</xar:template>';
+
+                $tplString = $blCompiler->compilestring($tplString);
+                // We don't allow passing $data to the template for now
+                $tpldata = array();
+                $tplString = xarTplString($tplString, $tpldata);
+            } catch(Exception $e) {
+                var_dump($tplString);
+            }
+            $data['object']->properties[$field]->value = $tplString;
+        }
+    }
+
+# --------------------------------------------------------
+#
+# Get the complete tree for this section of pages. We need this for blocks etc.
+#
+
     $tree = xarMod::apiFunc(
         'publications', 'user', 'getpagestree',
         array(
@@ -309,6 +348,12 @@ function publications_user_display($args)
     xarVarSetCached('Blocks.publications', 'ptid', $ptid);
     xarVarSetCached('Blocks.publications', 'author', $data['object']->properties['author']->value);
 
+# --------------------------------------------------------
+#
+# Make the properties available to the template 
+#
+    $data['properties'] =& $data['object']->properties;
+    
     return $data;
 }
 
