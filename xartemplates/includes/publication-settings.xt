@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <fieldset>
         <legend>
-            Characteristics
+            Page Characteristics
         </legend>
         <div class="xar-row">
             <div class="xar-col">
@@ -21,6 +21,15 @@
             </div>
             <div class="xar-col">
                 <xar:data-input property="$properties['itemtype']" value="$ptid" />
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">Page Type</xar:var>
+                <xar:data-label property="$properties['pagetype']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['pagetype']"/>
             </div>
         </div>
         <div class="xar-row">
@@ -62,7 +71,7 @@
     </fieldset>
     <fieldset>
         <legend>
-            Publication
+            Publication Period
         </legend>
         <div class="xar-row">
             <div class="xar-col">

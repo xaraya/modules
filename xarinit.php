@@ -45,6 +45,7 @@ function publications_init()
             seq                 integer unsigned NOT NULL DEFAULT '0',
             parent_id           integer unsigned NOT NULL DEFAULT '0',
             pubtype_id          tinyint NOT NULL DEFAULT '1',
+            pagetype_id         tinyint NOT NULL DEFAULT '1',
             pages               integer unsigned NOT NULL DEFAULT '1',
             locale              varchar(64) NOT NULL DEFAULT '',
             page_title          varchar(255) NOT NULL DEFAULT '',
@@ -112,6 +113,8 @@ function publications_init()
                      'publications_reviews',
                      'publications_translations',
                      'publications_weblinks',
+                     'publications_publications',
+                     'publications_blog',
                      );
 
     if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
@@ -328,90 +331,6 @@ function publications_delete()
 {
     $module = 'publications';
     return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => $module));
-
-   // TODO: remove everything below here
-   // Get database information
-    $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
-
-    //Load Table Maintainance API
-    sys::import('xaraya.tableddl');
-
-    // Generate the SQL to drop the table using the API
-    $query = xarDBDropTable($xartable['publications']);
-    if (empty($query)) return; // throw back
-
-    // Drop the table and send exception if returns false.
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    // Generate the SQL to drop the table using the API
-    $query = xarDBDropTable($xartable['publications_types']);
-    if (empty($query)) return; // throw back
-
-    // Drop the table and send exception if returns false.
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-// TODO: remove entries from categories_linkage !
-
-    // Delete module variables
-
-    //FIXME: This is breaking the removal of the module...
-    xarModVars::delete('publications', 'items_per_page');
-
-    xarModVars::delete('publications', 'SupportShortURLs');
-
-    xarModVars::delete('publications', 'number_of_categories');
-    xarModVars::delete('publications', 'mastercids');
-
-// TODO: remove all current pubtypes
-
-    xarModVars::delete('publications', 'settings.1');
-    xarModVars::delete('publications', 'settings.2');
-    xarModVars::delete('publications', 'settings.3');
-    xarModVars::delete('publications', 'settings.4');
-    xarModVars::delete('publications', 'settings.5');
-    xarModVars::delete('publications', 'settings.6');
-
-    xarModVars::delete('publications', 'defaultpubtype');
-
-    // UnRegister blocks
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'unregister_block_type',
-                       array('modName'  => 'publications',
-                             'blockType'=> 'related'))) return;
-
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'unregister_block_type',
-                       array('modName'  => 'publications',
-                             'blockType'=> 'topitems'))) return;
-
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'unregister_block_type',
-                       array('modName'  => 'publications',
-                             'blockType'=> 'featureditems'))) return;
-
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'unregister_block_type',
-                       array('modName'  => 'publications',
-                             'blockType'=> 'glossary'))) return;
-
-    /**
-     * Remove instances
-     */
-
-    // Remove Masks and Instances
-    xarRemoveMasks('publications');
-    xarRemoveInstances('publications');
-
-
-    // Deletion successful
-    return true;
 }
 
 ?>
