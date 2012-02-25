@@ -36,7 +36,10 @@
         <xar:if condition="!empty($fields['image'])">
             <div style="width: 400px">
                 <div style="float: left;">
-                    <img src="var/uploads/#$fields['image']#" style="width: 200px; height: 133px; margin-right: 25px;" />
+                    <xar:set name="filepath">
+                        $properties['image']->initialization_basedirectory . '/'. $fields['image']
+                    </xar:set>
+                    <img src="#$filepath#" style="margin-right: 25px;" />
                 </div>
                 <div class="xar-publications-download-detail-text ">
                     <xar:data-output property="$properties['summary']" value="$fields['summary']" />
