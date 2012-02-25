@@ -11,6 +11,11 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
  
+/**
+ * Make a translation page the base page
+ *
+ */
+
 function publications_adminapi_promote_alias($args)
 {
     // Get arguments from argument array
