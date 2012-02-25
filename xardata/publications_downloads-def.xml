@@ -44,24 +44,34 @@
       <seq>3</seq>
       <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"2";}</configuration>
     </property>
-    <property name="summary">
+    <property name="image">
       <id>801</id>
-      <label>Summary</label>
-      <type>textarea</type>
+      <label>Image</label>
+      <type>image</type>
       <defaultvalue></defaultvalue>
       <source>publication.description</source>
       <status>33</status>
       <seq>4</seq>
+      <configuration>a:6:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:26:"validation_file_extensions";s:20:"gif,jpg,jpeg,png,bmp";s:27:"initialization_image_source";s:5:"local";s:28:"initialization_basedirectory";s:11:"var/uploads";}</configuration>
+    </property>
+    <property name="summary">
+      <id>802</id>
+      <label>Summary</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.summary</source>
+      <status>33</status>
+      <seq>5</seq>
       <configuration></configuration>
     </property>
     <property name="fileupload">
-      <id>802</id>
+      <id>803</id>
       <label>File Upload</label>
       <type>fileupload</type>
       <defaultvalue></defaultvalue>
       <source>publication.notes</source>
       <status>33</status>
-      <seq>5</seq>
+      <seq>6</seq>
       <configuration></configuration>
     </property>
     <property name="parent">
