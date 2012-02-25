@@ -28,6 +28,9 @@ function publications_userapi_getrelativepages($args)
     $q->addtable($xartable['publications'],'p');
     
     switch ($args['scope']) {
+        case 'descendents':
+            return xarMod::apiFunc('publications','user','getpages',array('parent' => $args['itemid']));
+        break;
         case 'children': 
             $q->eq('p.parent_id', $args['itemid']);
             $q->addfield('p.id');
