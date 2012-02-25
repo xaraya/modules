@@ -32,7 +32,7 @@ function publications_userapi_getrelativepages($args)
             return xarMod::apiFunc('publications','user','getpages',array('parent' => $args['itemid']));
         break;
         case 'children': 
-            $q->eq('p.parent_id', $args['itemid']);
+            $q->eq('p.parentpage_id', $args['itemid']);
             $q->addfield('p.id');
             $q->addfield('p.name');
             $q->addfield('p.title');
@@ -41,7 +41,7 @@ function publications_userapi_getrelativepages($args)
         break;
         case 'siblings':
             $q->addtable($xartable['publications'],'p1');
-            $q->join('p.parent_id', 'p1.parent_id');
+            $q->join('p.parentpage_id', 'p1.parentpage_id');
             $q->eq('p.id', $args['itemid']);
             $q->gt('p1.state', 2);
             $q->addfield('p1.id');
