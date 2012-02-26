@@ -31,6 +31,7 @@ function publications_admin_update()
     if(!xarVarFetch('modify_cids',  'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('preview',      'isset', $data['preview'],   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('quit',         'isset', $data['quit'],      NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('front',        'isset', $data['front'],     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('tab',          'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('returnurl',    'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
 
