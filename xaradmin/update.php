@@ -152,6 +152,9 @@ function publications_admin_update()
 
             xarController::redirect(xarModURL('publications', 'admin', 'view',
                                           array('ptid' => $data['ptid'])));
+        } elseif ($data['front']) {
+            xarController::redirect(xarModURL('publications', 'user', 'display',
+                                          array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])));
         } else {
             xarController::redirect(xarModURL('publications', 'admin', 'modify',
                                           array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])));

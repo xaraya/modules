@@ -89,6 +89,8 @@
                     &#160;
                     <xar:var name="label">Update and Quit</xar:var>
                     <xar:button type="submit" name="quit" label="$label" />
+                    <xar:var name="label">Update and Show</xar:var>
+                    <xar:button type="submit" name="front" label="$label" />
                     <xar:comment>
                         show a link to delete the article
                     </xar:comment>
