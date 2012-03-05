@@ -29,6 +29,11 @@ function publications_userapi_getrelativepages($args)
     
     switch ($args['scope']) {
         case 'descendants':
+            $q->addtable($xartable['publications'],'root');
+            $q->eq('root.id', $args['itemid']);
+            $q->le('root.leftpage_id','expr:p.leftpage_id');
+            $q->ge('root.rightpage_id','expr:p.rightpage_id');
+        /*
             $q->eq('member.id', $args['itemid']);
             $q->addtable($xartable['publications'],'member');
             $q->addtable($xartable['publications'],'root');
@@ -36,6 +41,7 @@ function publications_userapi_getrelativepages($args)
             $q->ge('root.rightpage_id','expr:member.rightpage_id');
             $q->gt('p.leftpage_id','expr:root.leftpage_id');
             $q->lt('p.rightpage_id','expr:root.rightpage_id');
+            */
         break;
         case 'children': 
             $q->eq('p.parentpage_id', $args['itemid']);
