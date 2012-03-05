@@ -28,7 +28,9 @@ function publications_userapi_getrelativepages($args)
     $q->addtable($xartable['publications'],'p');
     
     switch ($args['scope']) {
-        case 'descendents':
+        case 'descendants':
+            if (empty($args['ptid'])) $q->eq('p.pubtype_id', $ptid);
+                return xarMod::apiFunc('publications','user','getpages',array('parent' => $args['itemid'], 'itemtype' => $args['ptid']));
             return xarMod::apiFunc('publications','user','getpages',array('parent' => $args['itemid']));
         break;
         case 'children': 
@@ -52,6 +54,7 @@ function publications_userapi_getrelativepages($args)
         break;
     }
 //    $q->qecho();
+    if (empty($args['ptid'])) $q->eq('p.pubtype_id', $ptid);
     $q->run();
     $result = $q->output();
     return $result;

@@ -2,7 +2,7 @@
 
 // Get all matching pages.
 // Retrieve the page type details here too
-// pid: page ID (optional)
+// itemid: page ID (optional)
 // pids: list of page ID (optional)
 // name: page name
 // itemtype: page itemtype
