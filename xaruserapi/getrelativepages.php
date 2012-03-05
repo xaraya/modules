@@ -36,30 +36,20 @@ function publications_userapi_getrelativepages($args)
             $q->ge('root.rightpage_id','expr:member.rightpage_id');
             $q->gt('p.leftpage_id','expr:root.leftpage_id');
             $q->lt('p.rightpage_id','expr:root.rightpage_id');
-            if (!empty($args['ptid'])) $q->eq('p.pubtype_id', $ptid);
         break;
         case 'children': 
             $q->eq('p.parentpage_id', $args['itemid']);
-            $q->addfield('p.id');
-            $q->addfield('p.name');
-            $q->addfield('p.title');
-            $q->addfield('p.description');
-            $q->addfield('p.summary');
         break;
         case 'siblings':
             $q->addtable($xartable['publications'],'p1');
             $q->join('p.parentpage_id', 'p1.parentpage_id');
-            $q->eq('p.id', $args['itemid']);
-            $q->gt('p1.state', 2);
-            $q->addfield('p1.id');
-            $q->addfield('p1.name');
-            $q->addfield('p1.title');
-            $q->addfield('p1.description');
-            $q->addfield('p1.summary');
+            $q->eq('p1.id', $args['itemid']);
         break;
     }
 //    $q->qecho();
-    if (empty($args['ptid'])) $q->eq('p.pubtype_id', $ptid);
+    if (!empty($args['ptid'])) $q->eq('p.pubtype_id', $ptid);
+    $q->gt('p.state', 2);
+    $q->setorder('p.title');
     $q->run();
     $result = $q->output();
     return $result;
