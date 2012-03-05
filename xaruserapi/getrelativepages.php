@@ -46,10 +46,10 @@ function publications_userapi_getrelativepages($args)
             $q->eq('p1.id', $args['itemid']);
         break;
     }
-//    $q->qecho();
-    if (!empty($args['ptid'])) $q->eq('p.pubtype_id', $ptid);
+    if (!empty($args['itemtype'])) $q->eq('p.pubtype_id', $ptid);
     $q->gt('p.state', 2);
-    $q->setorder('p.title');
+    $q->addorder('p.title');
+//    $q->qecho();
     $q->run();
     $result = $q->output();
     return $result;
