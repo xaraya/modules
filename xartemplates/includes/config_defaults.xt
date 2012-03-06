@@ -5,8 +5,8 @@
             <label for="defaultfrontpage" title="#xarML('The default page to show in the front end.')#" class="xar-form-label">
                 Default front end page                
             </label>
-        <div class="xar-col">
         </div>
+        <div class="xar-col">
             <xar:set name="value">xarModVars::get('publications','defaultfrontpage')</xar:set>
             <input name="defaultfrontpage" id="defaultfrontpage" value="#$value#" size="50" />
         </div>
@@ -16,8 +16,8 @@
             <label for="defaultbackpage" title="#xarML('The default page to show in the back end.')#" class="xar-form-label">
                 Default back end page                
             </label>
-        <div class="xar-col">
         </div>
+        <div class="xar-col">
             <xar:set name="value">xarModVars::get('publications','defaultbackpage')</xar:set>
             <input name="defaultbackpage" id="defaultbackpage" value="#$value#" size="50"/>
         </div>
