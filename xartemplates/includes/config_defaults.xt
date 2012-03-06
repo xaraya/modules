@@ -8,7 +8,7 @@
         <div class="xar-col">
         </div>
             <xar:set name="value">xarModVars::get('publications','defaultfrontpage')</xar:set>
-            <input name="defaultfrontpage" id="defaultfrontpage" value="#$value#" />
+            <input name="defaultfrontpage" id="defaultfrontpage" value="#$value#" size="50" />
         </div>
     </div>
     <div class="xar-row">
@@ -19,7 +19,7 @@
         <div class="xar-col">
         </div>
             <xar:set name="value">xarModVars::get('publications','defaultbackpage')</xar:set>
-            <input name="defaultbackpage" id="defaultbackpage" value="#$value#" />
+            <input name="defaultbackpage" id="defaultbackpage" value="#$value#" size="50"/>
         </div>
     </div>
 </xar:template>
