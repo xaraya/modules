@@ -18,16 +18,19 @@
 function publications_admin_main()
 {
 
-// Security Check
+    // Security Check
     if (!xarSecurityCheck('EditPublications')) return;
-       $welcome = '';
 
-        // Return the template variables defined in this function
-        //return array('welcome' => $welcome);
+    $redirect = xarModVars::get('publications','defaultbackpage');
+    if (!empty($redirect)) {
+        $truecurrenturl = xarServer::getCurrentURL(array(), false);
+        $urldata = xarModAPIFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+        xarController::redirect($urldata['redirecturl']);
+        return true;
+    } else {
         xarController::redirect(xarModURL('publications', 'admin', 'view'));
-    // success
+    }
     return true;
-
 }
 
 ?>
