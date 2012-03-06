@@ -58,6 +58,12 @@
                     <xar:template file="config_defaults"/>
                 </fieldset>
                 <fieldset>
+                    <legend>                    
+                        Debugging                    
+                    </legend>
+                    <xar:template file="config_debug"/>
+                </fieldset>
+                <fieldset>
                     <legend>
                         Language Configuration
                     </legend>
