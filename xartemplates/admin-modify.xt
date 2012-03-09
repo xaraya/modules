@@ -38,7 +38,7 @@
                 <xar:set name="dummy">$object->setFieldPrefix($key)</xar:set>
                 
                 <!-- Add the itemid as a reference for e.g. position, categories -->
-                <xar:set name="dummy">$object->setFieldPrefix($key)</xar:set>
+                <xar:set name="dummy">$object->itemid = $key</xar:set>
 
                 <xar:if condition="$tab eq 'preview' AND $index eq 0">
                     <xar:set name="visible">array('none','none','block')</xar:set>
