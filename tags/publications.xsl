@@ -18,4 +18,15 @@
     </xsl:processing-instruction>
   </xsl:template>
 
+  <xsl:template match="xar:publications-item">
+    <xsl:processing-instruction name="php">
+      <xsl:text>echo xarMod::guiFunc("publications","user","display",</xsl:text>
+      <!-- Add attributes -->
+      <xsl:call-template name="atts2args">
+        <xsl:with-param name="nodeset" select="@*[name()!='module' and name()!='func' and name()!='type']"/>
+      </xsl:call-template>
+      <xsl:text>);</xsl:text>
+    </xsl:processing-instruction>
+  </xsl:template>
+
 </xsl:stylesheet>
