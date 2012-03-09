@@ -28,7 +28,7 @@
       <id>858</id>
       <label>Name</label>
       <type>textbox</type>
-      <defaultvalue>new_news_item</defaultvalue>
+      <defaultvalue>new_catalogue_item</defaultvalue>
       <source>publication.name</source>
       <status>33</status>
       <seq>2</seq>
@@ -38,7 +38,7 @@
       <id>859</id>
       <label>Title</label>
       <type>textbox</type>
-      <defaultvalue>New News Item</defaultvalue>
+      <defaultvalue>New Catalogue Item</defaultvalue>
       <source>publication.title</source>
       <status>33</status>
       <seq>3</seq>
