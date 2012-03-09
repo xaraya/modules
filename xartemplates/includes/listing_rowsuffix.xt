@@ -91,47 +91,42 @@
             <xar:set name="ptid">$loopitem[$primaryalias]</xar:set>
             <xar:set name="args">DataObjectDescriptor::getObjectID(array('name' => $properties['name']->value))</xar:set>
             <xar:sec mask="ManagePublications" catch="false">
-                <a href="#xarModURL('publications','admin','modify_pubtype',array('itemid' => $ptid))#">                    
+                <a href="#xarModURL('publications','admin','modify_pubtype',array('itemid' => $ptid))#" style="margin-right: 5px">                    
                     <img src="#xarTplGetImage('icons/modify.png','base')#"/>
                 </a>
             </xar:sec>
-            &#160;|&#160;
             <xar:sec mask="ManagePublications" catch="false">
                 <xar:if condition="xarModVars::get('publications', 'defaultpubtype') eq $ptid">
-                    <img src="#xarTplGetImage('icons/delete.png','base')#"/>
+                    <img src="#xarTplGetImage('icons/delete.png','base')#" style="margin-right: 5px"/>
                 <xar:else/>
-                    <a href="#xarModURL('publications','admin','delete_pubtype',array('itemid' => $ptid, 'name' => 'objects'))#">                    
+                    <a href="#xarModURL('publications','admin','delete_pubtype',array('itemid' => $ptid, 'name' => 'objects'))#" style="margin-right: 5px">                    
                         <img src="#xarTplGetImage('icons/delete.png','base')#"/>
                     </a>
                 </xar:if>
             </xar:sec>
-            &#160;|&#160;
             <xar:sec mask="AdminPublications" catch="false">
-                <a href="#xarModURL('publications','admin','modifyconfig',array('ptid' => $ptid, 'tab' => 'pubtypes'))#">                    
+                <a href="#xarModURL('publications','admin','modifyconfig',array('ptid' => $ptid, 'tab' => 'pubtypes'))#" style="margin-right: 5px">                    
                     <img src="#xarTplGetImage('icons/modify-config.png','base')#"/>
                 </a>
             <xar:else />                
-                Publication Config
+                Publication Config &#160;|&#160;
             </xar:sec>
-            &#160;|&#160;
             <xar:sec mask="EditPublications" catch="false">
-                <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#">                    
+                <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#" style="margin-right: 5px">                    
                     <img src="#xarTplGetImage('icons/item-list.png','base')#"/>
                 </a>
             <xar:else />                
-                View Publications
+                View Publications &#160;|&#160;
             </xar:sec>
-            &#160;|&#160;
             <xar:sec mask="AddPublications" catch="false">
-                <a href="#xarModURL('publications','admin','new',array('ptid' => $ptid))#">                    
+                <a href="#xarModURL('publications','admin','new',array('ptid' => $ptid))#" style="margin-right: 5px">                    
                     <img src="#xarTplGetImage('icons/add.png','base')#"/>
                 </a>
             <xar:else />                
-                Add Publication
-            </xar:sec>
-            &#160;|&#160;
+                Add Publication &#160;|&#160;
+            </xar:sec>            
             <xar:sec mask="AdminPublications" catch="false">
-                <a href="#xarModURL('publications','admin','templates_type',array('ptid' => $ptid, 'tab' => 'pubtypes'))#">                    
+                <a href="#xarModURL('publications','admin','templates_type',array('ptid' => $ptid, 'tab' => 'pubtypes'))#" style="margin-right: 5px">                    
                     <img src="#xarTplGetImage('template.png','publications')#"/>
                 </a>
             <xar:else />                
