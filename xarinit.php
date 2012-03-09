@@ -115,6 +115,7 @@ function publications_init()
                      'publications_weblinks',
                      'publications_publications',
                      'publications_blog',
+                     'publications_catalogue',
                      );
 
     if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
