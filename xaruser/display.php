@@ -41,6 +41,7 @@ function publications_user_display($args)
     if(!xarVarFetch('itemid',    'id',    $id,    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('page',      'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('translate', 'int:1', $translate,  1, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('layout',    'int:1', $data['layout'],  'detail', XARVAR_NOT_REQUIRED)) {return;}
     
     // Override xarVarFetch
     extract ($args);
@@ -289,9 +290,6 @@ function publications_user_display($args)
 #
 # Additional data
 #
-    // Specific layout within a template (optional)
-    $data['layout'] = isset($layout) ? $layout : 'detail';
-    
     // Get the settings for this publication type;
     $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $ptid));
     
