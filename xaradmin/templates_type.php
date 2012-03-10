@@ -33,7 +33,7 @@ function publications_admin_templates_type($args)
 
     $basepath = sys::code() . "modules/publications/xartemplates/objects/" . $pubtype;
     $sourcefile = $basepath . "/" . $data['file'] . ".xt";
-    $overridepath = "themes/" . xarModVars::get('themes', 'default_theme') . "modules/publications/objects/" . $pubtype;
+    $overridepath = "themes/" . xarModVars::get('themes', 'default_theme') . "/modules/publications/objects/" . $pubtype;
     $overridefile = $overridepath . "/" . $data['file'] . ".xt";
 
     // Let the template know what kind of file this is
