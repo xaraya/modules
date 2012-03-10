@@ -18,9 +18,9 @@
                         <xar:data-input type="dropdown" name="file" options="$files" value="$file" onchange="$onchange" />
                         &#160;
                         <xar:if condition="$filetype eq 'module'">
-                            This is a module template
+                            This is a module template. Saving this will create a theme template.
                         <xar:else/>
-                            This is a theme template
+                            This is a theme template.
                         </xar:if>
                     </form>
                 </div>
