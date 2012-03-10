@@ -71,6 +71,16 @@ function publications_admin_templates_page($args)
     return $data;
 }
 
+function is_writeable_dir($path)
+{
+    $patharray = explode("/",$path);
+    $path = "";
+    foreach ($patharray as $child) {
+        if (!file_exists($path . "/" . $child)) break;
+    }
+    return check_dir($path);
+} 
+
 /**
  * Check whether directory permissions allow to write and read files inside it
  *
