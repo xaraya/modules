@@ -35,13 +35,22 @@ function publications_admin_templates_page($args)
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
 
     $basepath = sys::code() . "modules/publications/xartemplates/objects/" . $pubtype;
-    $source = $basepath . "/" . $data['file'] . "_" . $data['itemid'] . ".xt";
+    $sourcefile = $basepath . "/" . $data['file'] . "_" . $data['itemid'] . ".xt";
+    $overridepath = sys::code() . "themes/" . xarTpl::getThemeDir() . "/publications/templates/objects/" . $pubtype;
+    $overridefile = $overridepath . "/" . $data['file'] . ".xt";
 
-    if ($confirm && !empty($data['source_data'])) {
-        xarMod::apiFunc('publications', 'admin', 'write_file', array('file' => $source, 'data' => $data['source_data']));
+    // Let the template know what kind of file this is
+    if (file_exists($overridefile)) {
+        $data['filetype'] = 'theme';
+    } else {
+        $data['filetype'] = 'module';
     }
     
-    $data['source_data'] = trim(xarMod::apiFunc('publications', 'admin', 'read_file', array('file' => $source)));
+    if ($confirm && !empty($data['source_data'])) {
+        xarMod::apiFunc('publications', 'admin', 'write_file', array('file' => $sourcefile, 'data' => $data['source_data']));
+    }
+    
+    $data['source_data'] = trim(xarMod::apiFunc('publications', 'admin', 'read_file', array('file' => $sourcefile)));
 
     // Initialize the template
     if (empty($data['source_data'])) {

@@ -31,26 +31,30 @@
                 <form method="post" action="#xarModURL('publications','admin','templates_type')#">
                     <xar:data-input type="dropdown" name="file" options="$files" value="$file" onchange="$onchange" />
                     <input type="hidden" name="ptid" value="#$ptid#" />
+                    &#160;
+                    <xar:if condition="$filetype eq 'module'">
+                        This is a module template
+                    <xar:else/>
+                        This is a theme template
+                    </xar:if>
                 </form>
             </div>
         </div>
         <div style="clear:both">&#160;</div>
         <form method="post" id="post" action="#xarServer::getCurrentURL()#" enctype="application/x-www-form-urlencoded" >
-            <fieldset>
-                <xar:data-input type="codemirror" name="source_data" value="$source_data"/>
-            </fieldset>
-            <fieldset>
-                <div class="xar-form-input-wrapper">
-                    <div class="xar-form-input-wrapper-after">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                        <input type="hidden" name="confirm" id="confirm" value="1" />
-                        <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
-                        <input type="hidden" name="file" id="file" value="#$file#" />
-                        <xar:var name="label">Update Template</xar:var>
-                        <xar:button type="submit" label="$label" />
-                    </div>
+            <xar:data-input type="codemirror" name="source_data" value="$source_data"/>
+            <div class="xar-row" style="margin-top: 10px">
+                <div class="xar-col">
                 </div>
-            </fieldset>
+                <div class="xar-col">
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="confirm" id="confirm" value="1" />
+                    <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+                    <input type="hidden" name="file" id="file" value="#$file#" />
+                    <xar:var name="label">Update Template</xar:var>
+                    <xar:button type="submit" label="$label" />
+                </div>
+            </div>
         </form>
     </div>
 </xar:template>

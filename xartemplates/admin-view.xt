@@ -53,7 +53,7 @@
             </xar:if>
             <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" urltype="admin" itemtype="$ptid" catid="$catid" />
             <div style="width: 100%">
-               <xar:data-input type="listing" object="$object" conditions="$conditions" fieldlist="name,title,author,pages,version,redirect_flag,start_date,end_date,state" tplmodule="publications" layout="publications-admin"/>
+               <xar:data-input type="listing" object="$object" conditions="$conditions" fieldlist="name,title,author,pages,version,redirect_flag,start_date,end_date,state,itemtype" tplmodule="publications" layout="publications-admin"/>
             </div>
         </div>
     </div>
