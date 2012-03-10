@@ -18,7 +18,7 @@
     <xar:else />
 
         <!-- Title -->
-        <div class="xar-publications-download-summary-title">
+        <div class="xar-publications-catalogue-summary-title">
             <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $fields['id']))#">
                 <xar:data-output property="$properties['title']" value="$fields['title']"/>
             </a>

@@ -41,7 +41,7 @@ function publications_admin_display($args)
     if(!xarVarFetch('itemid',    'id',    $id,    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('page',      'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('translate', 'int:1', $translate,  1, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('layout',    'int:1', $data['layout'],  'detail', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('layout',    'str:1', $data['layout'],  'detail', XARVAR_NOT_REQUIRED)) {return;}
     
     // Override xarVarFetch
     extract ($args);
