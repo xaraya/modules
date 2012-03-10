@@ -97,7 +97,7 @@
     <property name="download">
       <id>865</id>
       <label>Download</label>
-      <type>textarea</type>
+      <type>filepicker</type>
       <defaultvalue></defaultvalue>
       <source>publication.body4</source>
       <status>34</status>
