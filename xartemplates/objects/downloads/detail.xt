@@ -6,9 +6,6 @@
     <xar:style method="import" module="publications" file="download" title="Download Stylesheet"/>
     
     <xar:template file="publinks" type="module" />
-    <!--
-    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$id" cids="$cids" />
-    -->
 
     <xar:set name="fields">$object->getFieldValues(array(),1)</xar:set>
 
@@ -30,7 +27,7 @@
         <xar:template file="editicons"/>
 
         <!-- Description -->
-        <div class="xar-publications-download-detail-text ">
+        <div class="xar-publications-download-detail-title ">
             <b>Description</b>
         </div>
         <xar:if condition="!empty($fields['image'])">

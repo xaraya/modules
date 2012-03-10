@@ -9,6 +9,8 @@
     <!-- Load the stylesheet for this publication type -->
     <xar:style method="import" module="publications" file="catalogue" title="Catalogue Stylesheet"/>
     
+    <xar:set name="fields">$object->getFieldValues(array(),1)</xar:set>
+
     <xar:set name="publication_state">
         $properties['state']->value
     </xar:set>
@@ -25,42 +27,110 @@
         <!-- Edit icons if allowed -->
         <xar:template file="editicons"/>
 
-        <!--
-        <div class="xar-floatright">#$topic_icons#</div>
-        -->
-        <div class="xar-sub">
-            <xar:if condition="!empty($profile)">
-                <xar:set name="author_string">'
-                <a href="'.$profile.'">' . $properties['author']->getValue() . '</a>'</xar:set>
-            <xar:else />
-                <xar:set name="author_string">$properties['author']->getValue()</xar:set>
-            </xar:if>
-            <xar:ml>
-                <xar:mlstring>Posted by: #(1) on #(2) #(3)</xar:mlstring>
-                <xar:mlvar>#$author_string#</xar:mlvar>
-                <xar:mlvar>#xarLocaleGetFormattedDate('long',$properties['created']->value)#</xar:mlvar>
-                <xar:mlvar>#xarLocaleGetFormattedTime('long',$properties['created']->value)#</xar:mlvar>
-            </xar:ml>
-            <xar:if condition="!empty($counter)">
+        <xar:if condition="!empty($profile)">
+            <xar:set name="author_string">'
+            <a href="'.$profile.'">' . $properties['author']->getValue() . '</a>'</xar:set>
+        <xar:else />
+            <xar:set name="author_string">$properties['author']->getValue()</xar:set>
+        </xar:if>
+
+        <!-- Summary -->
+        <xar:if condition="!empty($fields['detail_image'])">
+            <div>
+                <div style="float: left;">
+                    <xar:set name="imagepath">
+                        $properties['detail_image']->initialization_basedirectory . '/'. $fields['detail_image']
+                    </xar:set>
+                    <a href="#$filepath#" title="#$fields['title']#">
+                        <img src="#$imagepath#" style="margin-right: 25px; vertical-align:text-top; border: 1px dotted gray" />
+                    </a>
+                </div>
+                <div class="xar-publications-catalogue-author-text ">
+                    <xar:ml>
+                        <xar:mlstring>Posted by: #(1) on #(2) #(3)</xar:mlstring>
+                        <xar:mlvar>#$author_string#</xar:mlvar>
+                        <xar:mlvar>#xarLocaleGetFormattedDate('long',$fields['created'])#</xar:mlvar>
+                        <xar:mlvar>#xarLocaleGetFormattedTime('long',$fields['created'])#</xar:mlvar>
+                    </xar:ml>
+                    <xar:if condition="!empty($counter)">
+                        <xar:ml>
+                            <xar:mlstring>(#(1) Reads)</xar:mlstring>
+                            <xar:mlvar>#$counter#</xar:mlvar>
+                        </xar:ml>
+                    </xar:if>
+                </div>
+                <div class="xar-publications-catalogue-detail-text ">
+                    <xar:data-output property="$properties['summary']" value="$fields['summary']" />
+                </div>
+            </div>
+        <xar:else/>
+            <div class="xar-publications-catalogue-author-text ">
                 <xar:ml>
-                    <xar:mlstring>(#(1) Reads)</xar:mlstring>
-                    <xar:mlvar>#$counter#</xar:mlvar>
+                    <xar:mlstring>Posted by: #(1) on #(2) #(3)</xar:mlstring>
+                    <xar:mlvar>#$author_string#</xar:mlvar>
+                    <xar:mlvar>#xarLocaleGetFormattedDate('long',$fields['created'])#</xar:mlvar>
+                    <xar:mlvar>#xarLocaleGetFormattedTime('long',$fields['created'])#</xar:mlvar>
                 </xar:ml>
-            </xar:if>
-        </div>
+                <xar:if condition="!empty($counter)">
+                    <xar:ml>
+                        <xar:mlstring>(#(1) Reads)</xar:mlstring>
+                        <xar:mlvar>#$counter#</xar:mlvar>
+                    </xar:ml>
+                </xar:if>
+            </div>
+            <div class="xar-publications-catalogue-detail-text " style="min-height: 200px;">
+                <xar:data-output property="$properties['summary']" value="$fields['summary']" />
+            </div>
+        </xar:if>
 
-        <!-- Introduction -->
-        <div class="xar-publications-catalogue-detail-text">
-            <xar:data-output property="$properties['introduction']" />
-        </div>
+        <!-- Detail -->
+        <xar:if condition="!empty($fields['detail'])">
+            <div class="xar-publications-catalogue-detail-text">
+                <xar:data-output property="$properties['detail']" />
+            </div>
+        </xar:if>
 
-        <!-- Body -->
-        <div class="xar-publications-catalogue-detail-text">
-            <xar:data-output property="$properties['body']" />
-        </div>
+        <!-- Download link(s) -->
+        <xar:set name="filepath">
+            $properties['download']->initialization_basedirectory . '/'. $fields['download']
+        </xar:set>
 
+        <xar:if condition="empty($fields['download'])">
+            <!-- Nothing to display -->
+
+        <xar:elseif condition="xarModIsHooked('uploads','publications',$fields['itemtype']) and substr($fields['fileupload'],0,1) eq ';'" />
+            <!-- Hook output -->
+            <xar:comment>
+                If you hook the uploads module to publications, then file upload fields will contain
+                a comma-separated list of file ids, and you will need to call an API function to
+                retrieve the file information. For dynamic extra fields, you can use [fieldname]_output
+                directly to access the file information.
+            </xar:comment>
+            <xar:set name="fileupload_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $fields['fileupload'], 'multiple' => true))</xar:set>
+            <xar:foreach in="$fileupload_output" key="$fileid" value="$fileinfo">
+                <p>
+                    <a href="#$fileinfo['fileDownload']#">
+                        #$fileinfo['fileName']#
+                    </a>
+                </p>
+            </xar:foreach>
+        <xar:elseif condition="file_exists($filepath)" />
+            <!-- Simple download link -->
+            <div>
+                <a href="#$filepath#" title="#$fields['title']#">
+                    Download this file:&#160;
+                    <xar:data-output property="$properties['download']" value="$fields['download']" />
+                </a>
+            </div>
+        <xar:else />
+            <!-- Link exists, but we don't have a file, so display the file name -->
+            <div>
+                <xar:data-output property="$properties['download']" value="$fields['download']" />
+            </div>
+        </xar:if>
+        
         <!-- Notes -->
-        <xar:if condition="!empty($properties['note']->value)">
+        <xar:if condition="!empty($fields['note'])">
             <p class="xar-quote">Note :
             <em>
                 <xar:data-output property="$properties['note']" />
