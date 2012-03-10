@@ -31,6 +31,11 @@
             <xar:data-input type="codemirror" name="source_data" value="$source_data"/>
             <div class="xar-row" style="margin-top: 10px">
                 <div class="xar-col">
+                        <xar:if condition="$writable">
+                            This is file can be saved.
+                        <xar:else/>
+                            <span class="warning">This file cannot be saved: no permission</span>
+                        </xar:if>
                 </div>
                 <div class="xar-col">
                     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />

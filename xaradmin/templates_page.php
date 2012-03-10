@@ -48,6 +48,9 @@ function publications_admin_templates_page($args)
         $filepath = $sourcefile;
     }
     
+    // Check the directory and file permissions
+        $data['writable'] = is_writable($overridefile);
+    
     if ($confirm && !empty($data['source_data'])) {
         xarMod::apiFunc('publications', 'admin', 'write_file', array('file' => $overridefile, 'data' => $data['source_data']));
     }
@@ -66,5 +69,28 @@ function publications_admin_templates_page($args)
         array('id' => 'detail',  'name' => 'detail display'),
     );
     return $data;
+}
+
+/**
+ * Check whether directory permissions allow to write and read files inside it
+ *
+ * @access private
+ * @param string dirname directory name
+ * @return boolean true if directory is writable, readable and executable
+ */
+function check_dir($dirname)
+{
+    if (@touch($dirname . '/.check_dir')) {
+        $fd = @fopen($dirname . '/.check_dir', 'r');
+        if ($fd) {
+            fclose($fd);
+            unlink($dirname . '/.check_dir');
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+    return true;
 }
 ?>
