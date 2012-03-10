@@ -41,9 +41,7 @@
                     <xar:set name="imagepath">
                         $properties['detail_image']->initialization_basedirectory . '/'. $fields['detail_image']
                     </xar:set>
-                    <a href="#$filepath#" title="#$fields['title']#">
-                        <img src="#$imagepath#" style="margin-right: 25px; vertical-align:text-top; border: 1px dotted gray" />
-                    </a>
+                    <img src="#$imagepath#" style="margin-right: 25px; vertical-align:text-top; border: 1px dotted gray" />
                 </div>
                 <div class="xar-publications-catalogue-author-text ">
                     <xar:ml>
