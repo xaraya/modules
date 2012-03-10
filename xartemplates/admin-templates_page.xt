@@ -34,7 +34,13 @@
                         <xar:if condition="$writable">
                             This is file can be saved.
                         <xar:else/>
-                            <span class="warning">This file cannot be saved: no permission</span>
+                            <span class="warning">                            
+                                <xar:if condition="$filetype eq 'module'">
+                                    This file cannot be saved: check the directory permissions
+                                <xar:else/>
+                                    This file cannot be saved: no permission
+                                </xar:if>
+                            </span>
                         </xar:if>
                 </div>
                 <div class="xar-col">

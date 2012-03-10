@@ -43,13 +43,14 @@ function publications_admin_templates_page($args)
     if (file_exists($overridefile)) {
         $data['filetype'] = 'theme';
         $filepath = $overridefile;
+        $data['writable'] = is_writable($overridefile);
     } else {
         $data['filetype'] = 'module';
         $filepath = $sourcefile;
+        $data['writable'] = check_dir($overridepath);
     }
     
     // Check the directory and file permissions
-        $data['writable'] = is_writable($overridefile);
     
     if ($confirm && !empty($data['source_data'])) {
         xarMod::apiFunc('publications', 'admin', 'write_file', array('file' => $overridefile, 'data' => $data['source_data']));
