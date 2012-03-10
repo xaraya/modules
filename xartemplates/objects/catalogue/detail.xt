@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <!--
-    <xar:template file="publinks" type="module" />
-    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$id" cids="$cids" show_catcount="$settings['show_catcount']" showempty="0" />
-    -->
     
     <!-- Load the stylesheet for this publication type -->
     <xar:style method="import" module="publications" file="catalogue" title="Catalogue Stylesheet"/>
@@ -78,7 +74,7 @@
                     </xar:ml>
                 </xar:if>
             </div>
-            <div class="xar-publications-catalogue-detail-text " style="min-height: 200px;">
+            <div class="xar-publications-catalogue-detail-text">
                 <xar:data-output property="$properties['summary']" value="$fields['summary']" />
             </div>
         </xar:if>
