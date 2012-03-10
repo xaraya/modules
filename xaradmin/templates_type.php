@@ -39,8 +39,10 @@ function publications_admin_templates_type($args)
     // Let the template know what kind of file this is
     if (file_exists($overridefile)) {
         $data['filetype'] = 'theme';
+        $filepath = $overridefile;
     } else {
         $data['filetype'] = 'module';
+        $filepath = $sourcefile;
     }
     
     if ($confirm && !empty($data['source_data'])) {

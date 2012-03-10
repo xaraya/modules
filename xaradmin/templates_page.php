@@ -42,15 +42,17 @@ function publications_admin_templates_page($args)
     // Let the template know what kind of file this is
     if (file_exists($overridefile)) {
         $data['filetype'] = 'theme';
+        $filepath = $overridefile;
     } else {
         $data['filetype'] = 'module';
+        $filepath = $sourcefile;
     }
     
     if ($confirm && !empty($data['source_data'])) {
         xarMod::apiFunc('publications', 'admin', 'write_file', array('file' => $sourcefile, 'data' => $data['source_data']));
     }
     
-    $data['source_data'] = trim(xarMod::apiFunc('publications', 'admin', 'read_file', array('file' => $sourcefile)));
+    $data['source_data'] = trim(xarMod::apiFunc('publications', 'admin', 'read_file', array('file' => $filepath)));
 
     // Initialize the template
     if (empty($data['source_data'])) {
