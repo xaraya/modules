@@ -36,8 +36,8 @@ function publications_admin_templates_page($args)
 
     $basepath = sys::code() . "modules/publications/xartemplates/objects/" . $pubtype;
     $sourcefile = $basepath . "/" . $data['file'] . "_" . $data['itemid'] . ".xt";
-    $overridepath = sys::code() . "themes/" . xarTpl::getThemeDir() . "/publications/templates/objects/" . $pubtype;
-    $overridefile = $overridepath . "/" . $data['file'] . ".xt";
+    $overridepath = sys::code() . "themes/" . xarModVars::get('themes', 'default_theme') . "/modules/publications/objects/" . $pubtype;
+    $overridefile = $overridepath . "/" . $data['file'] . "_" . $data['itemid'] . ".xt";
 
     // Let the template know what kind of file this is
     if (file_exists($overridefile)) {
