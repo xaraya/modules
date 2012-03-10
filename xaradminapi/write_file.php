@@ -15,6 +15,8 @@ function publications_adminapi_write_file($args)
 {
     if (empty($args['file'])) return false;
     try {
+        $dir = dirname($args['file']);
+        if (!file_exists($dir)) mkdir($dir, 0777, true);
         $fp = fopen($args['file'], "wb");
     
         if (get_magic_quotes_gpc()) {
