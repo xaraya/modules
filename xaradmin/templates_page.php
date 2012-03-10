@@ -52,7 +52,7 @@ function publications_admin_templates_page($args)
     } else {
         $data['filetype'] = 'module';
         $filepath = $sourcefile;
-        $data['writable'] = check_dir($overridepath);
+        $data['writable'] = is_writeable_dir($overridepath);
     }
     
     $data['source_data'] = trim(xarMod::apiFunc('publications', 'admin', 'read_file', array('file' => $filepath)));
@@ -74,9 +74,11 @@ function publications_admin_templates_page($args)
 function is_writeable_dir($path)
 {
     $patharray = explode("/",$path);
-    $path = "";
+    array_shift($patharray);
+    $path = "themes";
     foreach ($patharray as $child) {
         if (!file_exists($path . "/" . $child)) break;
+        $path = $path . "/" . $child;
     }
     return check_dir($path);
 } 
