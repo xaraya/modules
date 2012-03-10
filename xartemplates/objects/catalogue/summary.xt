@@ -89,5 +89,5 @@
                 Read More
             </a>
         </div>
-    <(xar:if>
+    </xar:if>
 </xar:template>
