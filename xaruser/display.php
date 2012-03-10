@@ -38,13 +38,14 @@ function publications_user_display($args)
 // categories-based navigation
     if(!xarVarFetch('name',      'str',   $name,  '', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('ptid',     'id',    $ptid,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemid',    'id',    $id,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('itemid',    'id',    $itemid,    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('page',      'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('translate', 'int:1', $translate,  1, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('layout',    'str:1', $data['layout'],  'detail', XARVAR_NOT_REQUIRED)) {return;}
     
     // Override xarVarFetch
     extract ($args);
+    $id = $itemid;
     
 # --------------------------------------------------------
 #
