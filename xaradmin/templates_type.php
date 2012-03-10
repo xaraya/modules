@@ -36,6 +36,11 @@ function publications_admin_templates_type($args)
     $overridepath = "themes/" . xarModVars::get('themes', 'default_theme') . "/modules/publications/objects/" . $pubtype;
     $overridefile = $overridepath . "/" . $data['file'] . ".xt";
 
+    // If we are saving, write the file now
+    if ($confirm && !empty($data['source_data'])) {
+        xarMod::apiFunc('publications', 'admin', 'write_file', array('file' => $overridefile, 'data' => $data['source_data']));
+    }
+    
     // Let the template know what kind of file this is
     if (file_exists($overridefile)) {
         $data['filetype'] = 'theme';
@@ -44,10 +49,6 @@ function publications_admin_templates_type($args)
     } else {
         $data['filetype'] = 'module';
         $filepath = $sourcefile;
-    }
-    
-    if ($confirm && !empty($data['source_data'])) {
-        xarMod::apiFunc('publications', 'admin', 'write_file', array('file' => $overridefile, 'data' => $data['source_data']));
     }
     
     $data['source_data'] = trim(xarMod::apiFunc('publications', 'admin', 'read_file', array('file' => $filepath)));
