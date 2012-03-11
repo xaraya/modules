@@ -68,36 +68,6 @@ function publications_user_update()
         return xarTplModule('publications','user','modify', $data);
     }
     
-/*    if (empty($itemid) || !is_numeric($itemid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     'item id', 'user', 'update', 'Publications');
-        throw new BadParameterException(null,$msg);
-    }
-
-    if (!empty($cids) && count($cids) > 0) {
-        $article['cids'] = array_values(preg_grep('/\d+/',$cids));
-    } else {
-        $article['cids'] = array();
-    }
-
-    // for preview
-    $article['pubtype_id'] = $data['ptid'];
-    $article['id'] = $id;
-
-    if ($preview || count($invalid) > 0) {
-        $data = xarModFunc('publications','admin','modify',
-                             array('preview' => true,
-                                   'article' => $article,
-                                   'return_url' => $return_url,
-                                   'invalid' => $invalid));
-        unset($article);
-        if (is_array($data)) {
-            return xarTplModule('publications','admin','modify',$data);
-        } else {
-            return $data;
-        }
-    }
-*/
     // call transform input hooks
     $article['transform'] = array('summary','body','notes');
     $article = xarModCallHooks('item', 'transform-input', $itemid, $article,

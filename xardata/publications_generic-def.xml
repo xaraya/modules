@@ -308,7 +308,7 @@
       <id>265</id>
       <label>Access</label>
       <type>access</type>
-      <defaultvalue>xarMod::apiFunc('publications','admin','getpubtypeaccess',array('ptid'=&gt;1))</defaultvalue>
+      <defaultvalue>xarMod::apiFunc('publications','admin','getpubtypeaccess',array('ptid'=&gt;10))</defaultvalue>
       <source>publication.access</source>
       <status>162</status>
       <seq>39</seq>
