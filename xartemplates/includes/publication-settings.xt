@@ -296,17 +296,17 @@
         <legend>
             Display Access
         </legend>
-        <xar:set name="propname">"dd_" . $properties['access']->id . '_display'</xar:set>
+        <xar:set name="propname">$object->getFieldPrefix() . "_dd_" . $properties['access']->id . '_display'</xar:set>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['display']"/>
         <legend>
             Modify Access
         </legend>
-        <xar:set name="propname">"dd_" . $properties['access']->id . '_modify'</xar:set>
+        <xar:set name="propname">$object->getFieldPrefix() . "_dd_" . $properties['access']->id . '_modify'</xar:set>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['modify']"/>
         <legend>
             Delete Access
         </legend>
-        <xar:set name="propname">"dd_" . $properties['access']->id . '_delete'</xar:set>
+        <xar:set name="propname">$object->getFieldPrefix() . "_dd_" . $properties['access']->id . '_delete'</xar:set>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['delete']"/>
     </fieldset>
     <xar:if condition="xarModIsAvailable('categories')">
