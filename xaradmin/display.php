@@ -36,17 +36,21 @@ function publications_admin_display($args)
     // Get parameters from user
 // this is used to determine whether we come from a pubtype-based view or a
 // categories-based navigation
+// Note we support both id and itemid
     if(!xarVarFetch('name',      'str',   $name,  '', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('ptid',     'id',    $ptid,  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('itemid',    'id',    $itemid,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('id',        'id',    $id,    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('page',      'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('translate', 'int:1', $translate,  1, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('layout',    'str:1', $layout,  'detail', XARVAR_NOT_REQUIRED)) {return;}
     
     // Override xarVarFetch
     extract ($args);
-    $id = $itemid;
-    
+
+    //The itemid var takes precedence if it exiata
+    if (isset($itemid)) $id = $itemid;
+        
 # --------------------------------------------------------
 #
 # If no ID supplied, try getting the id of the default page.
