@@ -118,8 +118,8 @@ function publications_admin_update()
     if (xarSecurityCheck('EditPublications',0,'Publication',$data['ptid'].':All:All:All')) {
         if ($data['quit']) {
             // Redirect if we came from somewhere else
-            $cuurent_listview = xarSession::getVar('publications_current_listview');
-            if (!empty($cuurent_listview)) xarController::redirect($cuurent_listview);
+            $current_listview = xarSession::getVar('publications_current_listview');
+            if (!empty($current_listview)) xarController::redirect($current_listview);
 
             xarController::redirect(xarModURL('publications', 'admin', 'view',
                                           array('ptid' => $data['ptid'])));
