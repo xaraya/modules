@@ -297,28 +297,28 @@
             Display Access
         </legend>
         <xar:set name="prefix">$object->getFieldPrefix()</xar:set>
-        <xar:if condition="$prefix ne ''">
-            <xar:set name="propname">$prefix . "_dd_" . $properties['access']->id . '_display'</xar:set>
-        <xar:else/>
+        <xar:if condition="empty($prefix) AND $prefix ne '0'">
             <xar:set name="propname">"dd_" . $properties['access']->id . '_display'</xar:set>
+        <xar:else/>
+            <xar:set name="propname">$prefix . "_dd_" . $properties['access']->id . '_display'</xar:set>
         </xar:if>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['display']"/>
         <legend>
             Modify Access
         </legend>
-        <xar:if condition="$prefix ne ''">
-            <xar:set name="propname">$prefix . "_dd_" . $properties['access']->id . '_modify'</xar:set>
-        <xar:else/>
+        <xar:if condition="empty($prefix) AND $prefix ne '0'">
             <xar:set name="propname">"dd_" . $properties['access']->id . '_modify'</xar:set>
+        <xar:else/>
+            <xar:set name="propname">$prefix . "_dd_" . $properties['access']->id . '_modify'</xar:set>
         </xar:if>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['modify']"/>
         <legend>
             Delete Access
         </legend>
-        <xar:if condition="$prefix ne ''">
-            <xar:set name="propname">$prefix . "_dd_" . $properties['access']->id . '_delete'</xar:set>
-        <xar:else/>
+        <xar:if condition="empty($prefix) AND $prefix ne '0'">
             <xar:set name="propname">"dd_" . $properties['access']->id . '_delete'</xar:set>
+        <xar:else/>
+            <xar:set name="propname">$prefix . "_dd_" . $properties['access']->id . '_delete'</xar:set>
         </xar:if>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['delete']"/>
     </fieldset>
