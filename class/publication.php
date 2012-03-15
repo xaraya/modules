@@ -46,7 +46,7 @@ class Publication extends DataObject
             if (empty($prefix) && $prefix !== '0') {
                 $name = "dd_" . $this->properties['access']->id;
             } else {
-                $name = $this->getFieldPrefix() . "_dd_" . $this->properties['access']->id;
+                $name = $prefix . "_dd_" . $this->properties['access']->id;
             }
             $validprop = $access->checkInput($name . "_display");
             $displayaccess = $access->value;
