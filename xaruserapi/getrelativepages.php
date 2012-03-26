@@ -18,9 +18,9 @@
 
 function publications_userapi_getrelativepages($args)
 {
-    extract($args);
     if (empty($args['itemid'])) $args['itemid'] = 0;
     if (empty($args['scope'])) $args['scope'] = 'siblings';
+    if (empty($args['sort'])) $args['sort'] = 0;
 
     $xartable = xarDB::getTables();
     sys::import('xaraya.structures.query');
@@ -59,7 +59,13 @@ function publications_userapi_getrelativepages($args)
     $q->addfield('p.title');
     $q->addfield('p.description');
     $q->addfield('p.summary');
-    $q->setorder('p.title');
+    
+    // We can force alpha sorting, or else sort according to tree position
+    if($args['sort']) {
+        $q->setorder('p.title');
+    } else {
+        $q->setorder('p.leftpage_id');
+    }
 //    $q->qecho();
     $q->run();
     $result = $q->output();
