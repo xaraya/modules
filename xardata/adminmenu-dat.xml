@@ -54,6 +54,16 @@
             <mask>AdminPublications</mask>
             <type>admin</type>
             <includes>
+                <includeitem>stylesheet_type</includeitem>
+            </includes>
+            <target>stylesheet_type</target>
+            <title>Manage stylesheets</title>
+            <label>Stylesheets</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminPublications</mask>
+            <type>admin</type>
+            <includes>
                 <includeitem>stats</includeitem>
             </includes>
             <target>stats</target>

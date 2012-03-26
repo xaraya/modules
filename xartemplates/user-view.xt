@@ -20,7 +20,7 @@
         <xar:meta type="name" value="keywords" content="$keywords" lang="en" dir="ltr" append="1"/>
      </xar:if>
 
-    <xar:template file="publinks" type="module" />
+    <xar:template file="publinks" type="module" module="publications"/>
 
     <xar:set name="now">time()</xar:set>
 
