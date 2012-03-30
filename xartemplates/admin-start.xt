@@ -17,7 +17,7 @@
               items while you are working on a translation.</p>
           <p class="xar-form-input-wrapper-before">
             If you don't see the locale you want to translate in the dropdown below, you will need to create it (in your var/locale directory) and activate it on <em>Languages and Locales</em> in the <em>Modify Config</em> section of the 
-            <a href="&xar-modurl-base-admin-modifyconfig;&amp;tab=locales">
+            <a href="#xarModURL('translations','admin','modifyconfig',array('tab'=>'locales'))#">
                 Base module.
             </a>  
           </p>
@@ -47,27 +47,27 @@
             
              <ul>
                 <li>
-                  <a href="#xarModURL('translations','admin','update_info')#&amp;dntype=core">
+                  <a href="#xarModURL('translations','admin','update_info',array('dntype'=>'core'))#">
                     Translate the core
                   </a>
                 </li>
                 <li>
-                  <a href="#xarModURL('translations','admin','update_info')#&amp;dntype=module">
+                  <a href="#xarModURL('translations','admin','update_info',array('dntype'=>'module'))#">
                     Translate a module
                   </a>
                 </li>
                 <li>
-                  <a href="#xarModURL('translations','admin','update_info')#&amp;dntype=property">
+                  <a href="#xarModURL('translations','admin','update_info',array('dntype'=>'property'))#">
                     Translate a property
                   </a>
                 </li>
                 <li>
-                  <a href="#xarModURL('translations','admin','update_info')#&amp;dntype=block">
+                  <a href="#xarModURL('translations','admin','update_info',array('dntype'=>'block'))#">
                     Translate a block
                   </a>
                 </li>
                 <li>
-                  <a href="#xarModURL('translations','admin','update_info')#&amp;dntype=theme">
+                  <a href="#xarModURL('translations','admin','update_info',array('dntype'=>'theme'))#">
                     Translate a theme
                   </a>
                 </li>

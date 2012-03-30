@@ -41,7 +41,7 @@
       </p>
     
       <p>
-        <a href="&xar-modurl-translations-admin-start;">Start translating</a>
+        <a href="#xarModURL('translations','admin','start')#">Start translating</a>
       </p>
         <h3>Further Information</h3>
         <p>

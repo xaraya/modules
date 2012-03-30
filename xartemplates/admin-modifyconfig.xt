@@ -43,7 +43,7 @@
 
         <xar:comment> Begin Display Options </xar:comment>
         <xar:if condition="$tab eq 'display'">
-            <form action="&xar-modurl-translations-admin-updateconfig;" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded">
+            <form action="#xarModURL('translations','admin','updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded">
                 <fieldset>
                     <legend>Display during translation</legend>
 
@@ -85,7 +85,7 @@
 
         <xar:comment> Begin Release Options </xar:comment>
         <xar:elseif condition="$tab eq 'release'"/>
-            <form action="&xar-modurl-translations-admin-updateconfig;" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded">
+            <form action="#xarModURL('translations','admin','updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded">
                 <fieldset>
                     <legend>Translations storage</legend>
                     <p class="xar-form-input-wrapper-before">
