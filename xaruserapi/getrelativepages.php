@@ -54,11 +54,11 @@ function publications_userapi_getrelativepages($args)
     }
     if (!empty($args['itemtype'])) $q->eq('p.pubtype_id', $args['itemtype']);
     $q->gt('p.state', 2);
-    $q->addfield('p.id');
-    $q->addfield('p.name');
-    $q->addfield('p.title');
-    $q->addfield('p.description');
-    $q->addfield('p.summary');
+    $q->addfield('p.id AS id');
+    $q->addfield('p.name AS name');
+    $q->addfield('p.title AS title');
+    $q->addfield('p.description AS description');
+    $q->addfield('p.summary AS summary');
     
     // We can force alpha sorting, or else sort according to tree position
     if($args['sort']) {
@@ -69,6 +69,27 @@ function publications_userapi_getrelativepages($args)
 //    $q->qecho();
     $q->run();
     $result = $q->output();
+    
+    // If we are looking for translations rather than base documents, then find what translations are available and substitute them
+    // CHECKME: is there a better way?
+    
+    if (!empty($result) && xarModVars::get('publications', 'defaultlanguage') != xarUserGetNavigationLocale()) {
+        $indexedresult = array();
+        foreach ($indexedresult as $k => $v) $indexed[$k] = $v;
+        $ids = array_keys($indexedresult);
+        
+        $q = new Query();
+        $q->addtable($xartable['publications']);
+        $q->addfield('id');
+        $q->addfield('name');
+        $q->addfield('title');
+        $q->addfield('description');
+        $q->addfield('summary');
+        $q->in('parent_id',$ids);
+        $q->run();
+        foreach ($q->output() as $row) $indexedresult[$row[$i]] = $row;
+        $result = $indexedresult;
+    }
     return $result;
 }
 ?>
