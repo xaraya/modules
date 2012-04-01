@@ -77,22 +77,24 @@ function publications_userapi_getrelativepages($args)
     
     // If we are looking for translations rather than base documents, then find what translations are available and substitute them
     // CHECKME: is there a better way?
+    // If there is no translation the base document remains. Is this desired outcome?
     
     if (!empty($result) && xarModVars::get('publications', 'defaultlanguage') != xarUserGetNavigationLocale()) {
         $indexedresult = array();
-        foreach ($indexedresult as $k => $v) $indexedresult[$k] = $v;
+        foreach ($result as $v) $indexedresult[$v['id']] = $v;
         $ids = array_keys($indexedresult);
         
         $q = new Query();
         $q->addtable($xartable['publications']);
         $q->addfield('id');
+        $q->addfield('parent_id');
         $q->addfield('name');
         $q->addfield('title');
         $q->addfield('description');
         $q->addfield('summary');
         $q->in('parent_id',$ids);
         $q->run();
-        foreach ($q->output() as $row) $indexedresult[$row[$i]] = $row;
+        foreach ($q->output() as $row) $indexedresult[$row['parent_id']] = $row;
         $result = $indexedresult;
     }
     return $result;
