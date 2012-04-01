@@ -22,6 +22,11 @@ function publications_userapi_getrelativepages($args)
     if (empty($args['scope'])) $args['scope'] = 'siblings';
     if (empty($args['sort'])) $args['sort'] = 0;
 
+    // Make sure we have the base translation id
+    if (!empty($args['itemid'])) {
+        $args['itemid'] = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $args['itemid'], 'locale' => xarModVars::get('publications', 'defaultlanguage')));
+    }
+
     $xartable = xarDB::getTables();
     sys::import('xaraya.structures.query');
     $q = new Query();
@@ -75,7 +80,7 @@ function publications_userapi_getrelativepages($args)
     
     if (!empty($result) && xarModVars::get('publications', 'defaultlanguage') != xarUserGetNavigationLocale()) {
         $indexedresult = array();
-        foreach ($indexedresult as $k => $v) $indexed[$k] = $v;
+        foreach ($indexedresult as $k => $v) $indexedresult[$k] = $v;
         $ids = array_keys($indexedresult);
         
         $q = new Query();

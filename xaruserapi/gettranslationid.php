@@ -48,7 +48,7 @@ function publications_userapi_gettranslationid($args)
         return $result['id']; 
     } elseif ($args['locale'] == xarUserGetNavigationLocale()) {
         // No need to look further
-        return $args['id']
+        return $args['id'];
     } elseif ($args['locale'] == xarModVars::get('publications', 'defaultlanguage')) {
         // Force getting the base document
         $q = new Query('SELECT',$xartable['publications']);
