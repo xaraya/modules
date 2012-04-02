@@ -4,7 +4,7 @@
         xarVarFetch('pageName', 'str:1', $pageName, '', XARVAR_NOT_REQUIRED)
     </xar:set>
     <xar:if condition="$pageName ne 'module'">
-        <xar:sec mask="ManagePublications" catch="false" AND xarTpl::getPageTemplateName() ne 'module'>
+        <xar:sec mask="ManagePublications" catch="false">
             <a href="#xarModURL('publications', 'admin', 'new',array('ptid' => 11))#" style="float:right; margin-right: 10px">
                 <img src="#xarTplGetImage('icons/add.png','base')#"/>
             </a>
