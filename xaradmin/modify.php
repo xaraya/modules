@@ -47,16 +47,6 @@ function publications_admin_modify($args)
     $data['object']->getItem(array('itemid' => $data['itemid']));
     $data['ptid'] = $data['object']->properties['itemtype']->value;
     
-    //FIXME This should be configuration in the celko property itself
-
-    $data['object']->properties['position']->initialization_celkoparent_id = 'parentpage_id';
-    $data['object']->properties['position']->initialization_celkoright_id = 'rightpage_id';
-    $data['object']->properties['position']->initialization_celkoleft_id  = 'leftpage_id';
-
-    $xartable = xarDB::getTables();
-
-    $data['object']->properties['position']->initialization_itemstable = $xartable['publications'];
-
     // Send the publication type and the object properties to the template 
     $data['properties'] = $data['object']->getProperties();
     
