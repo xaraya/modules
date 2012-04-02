@@ -19,7 +19,7 @@
 function publications_userapi_getrelativepages($args)
 {
     if (empty($args['itemid'])) $args['itemid'] = 0;
-    if (empty($args['scope'])) $args['scope'] = 'siblings';
+    if (empty($args['scope'])) $args['scope'] = 'descendents';
     if (empty($args['sort'])) $args['sort'] = 0;
 
     // Make sure we have the base translation id
