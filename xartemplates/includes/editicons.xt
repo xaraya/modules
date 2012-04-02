@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">        
-    <xar:sec mask="ManagePublications" catch="false">
+    <xar:sec mask="ManagePublications" catch="false" AND xarTpl::getPageTemplateName() ne 'module'>
         <a href="#xarModURL('publications', 'admin', 'new',array('ptid' => 11))#" style="float:right; margin-right: 10px">
             <img src="#xarTplGetImage('icons/add.png','base')#"/>
         </a>

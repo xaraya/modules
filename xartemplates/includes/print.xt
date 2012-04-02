@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">        
-    <a href="#xarServer::getCurrentURL(array('pageName' => 'module'))#" style="float:right; margin-right: 10px">
-        <img src="#xarTplGetImage('icons/document-print.png','base')#"/>
-    </a>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="xarTpl::getPageTemplateName() ne 'module'">
+        <a href="#xarServer::getCurrentURL(array('pageName' => 'module'))#" style="float:right; margin-right: 10px">
+            <img src="#xarTplGetImage('icons/document-print.png','base')#"/>
+        </a>
+    </xar:if>
 </xar:template>
