@@ -27,7 +27,7 @@
         <xar:template file="editicons"/>
 
         <!-- Description -->
-        <div class="xar-publications-download-detail-title ">
+        <div class="xar-publications-download-detail-title">
             <b>Description</b>
         </div>
         <xar:if condition="!empty($fields['image'])">
@@ -43,7 +43,7 @@
                 </div>
             </div>
         <xar:else/>
-            <div class="xar-publications-download-detail-text ">
+            <div class="xar-publications-download-detail-text">
                 <xar:data-output property="$properties['summary']" value="$fields['summary']" />
             </div>
         </xar:if>
@@ -74,15 +74,19 @@
             </xar:foreach>
         <xar:elseif condition="file_exists($filepath)" />
             <!-- Simple download link -->
-            <div>
+            <xar:set name="filesize">
+                number_format(filesize($filepath)/1000,1)
+            </xar:set>
+            <div class="xar-publications-download-detail-text ">
                 <a href="#$filepath#" title="#$fields['title']#">
                     Download this file:&#160;
-                    <xar:data-output property="$properties['fileupload']" value="$fields['fileupload']" />
+                    <xar:data-output property="$properties['download']" value="$fields['download']" />&#160;
+                    (#$filesize#kB)
                 </a>
             </div>
         <xar:else />
             <!-- Link exists, but we don't have a file, so display the file name -->
-            <div>
+            <div class="xar-publications-download-detail-text ">
                 <xar:data-output property="$properties['fileupload']" value="$fields['fileupload']" />
             </div>
         </xar:if>
