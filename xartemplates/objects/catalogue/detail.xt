@@ -23,6 +23,9 @@
         <!-- Edit icons if allowed -->
         <xar:template file="editicons"/>
 
+        <!-- Print button -->
+        <xar:template file="print"/>
+
         <xar:if condition="!empty($profile)">
             <xar:set name="author_string">'
             <a href="'.$profile.'">' . $properties['author']->getValue() . '</a>'</xar:set>
