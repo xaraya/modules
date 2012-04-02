@@ -25,6 +25,9 @@
             <xar:data-output property="$properties['title']" />
         </div>
 
+        <!-- Print button -->
+        <xar:template file="print"/>
+
         <!-- Edit icons if allowed -->
         <xar:template file="editicons"/>
 

@@ -25,6 +25,9 @@
         <!-- Edit icons if allowed -->
         <xar:template file="editicons"/>
 
+        <!-- Print button -->
+        <xar:template file="print"/>
+
         <!-- Question detail -->
         <xar:if condition="!empty($properties['details']->value)">
              <div class="xar-publications-faq-detail-text">
