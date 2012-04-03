@@ -64,6 +64,7 @@ function publications_userapi_getrelativepages($args)
     $q->addfield('p.title AS title');
     $q->addfield('p.description AS description');
     $q->addfield('p.summary AS summary');
+    $q->addfield('p.rightpage_id AS rightpage_id');
     
     // We can force alpha sorting, or else sort according to tree position
     if($args['sort']) {
@@ -73,16 +74,39 @@ function publications_userapi_getrelativepages($args)
     }
 //    $q->qecho();
     $q->run();
-    $result = $q->output();
+    $pages = $q->output();
+    
+    $depthstack = array();
+    foreach($pages as $key => $page) {
+        // Calculate the relative nesting level.
+        // 'depth' is 0-based. Top level (root node) is zero.
+        if (!empty($depthstack)) {
+            while (!empty($depthstack) && end($depthstack) < $page['rightpage_id']) {
+                array_pop($depthstack);
+            }
+        }
+        $depthstack[$page['id']] = $page['rightpage_id'];
+        $pages[$key]['depth'] = (empty($depthstack) ? 0 : count($depthstack) - 1);
+        // This item is the path for each page, based on page IDs.
+        // It is effectively a list of ancestor IDs for a page.
+        // FIXME: some paths seem to get a '0' root ID. They should only have real page IDs.
+        $pages[$key]['idpath'] = array_keys($depthstack);
+
+        $pathstack[$key] = $page['name'];
+        // This item is the path for each page, based on names.
+        // Imploding it can give a directory-style path, which is handy
+        // in admin pages and reports.
+        $pages[$key]['namepath'] = $pathstack;
+    }
     
     // If we are looking for translations rather than base documents, then find what translations are available and substitute them
     // CHECKME: is there a better way?
     // If there is no translation the base document remains. Is this desired outcome?
     
-    if (!empty($result) && xarModVars::get('publications', 'defaultlanguage') != xarUserGetNavigationLocale()) {
-        $indexedresult = array();
-        foreach ($result as $v) $indexedresult[$v['id']] = $v;
-        $ids = array_keys($indexedresult);
+    if (!empty($pages) && xarModVars::get('publications', 'defaultlanguage') != xarUserGetNavigationLocale()) {
+        $indexedpages = array();
+        foreach ($pages as $v) $indexedpages[$v['id']] = $v;
+        $ids = array_keys($indexedpages);
         
         $q = new Query();
         $q->addtable($xartable['publications']);
@@ -94,9 +118,15 @@ function publications_userapi_getrelativepages($args)
         $q->addfield('summary');
         $q->in('parent_id',$ids);
         $q->run();
-        foreach ($q->output() as $row) $indexedresult[$row['parent_id']] = $row;
-        $result = $indexedresult;
+        foreach ($q->output() as $row) {
+            // Copy the name and id paths so we don't have to recalculate them
+            $row['idpath'] = $indexedpages[$row['parent_id']]['idpath'];
+            $row['namepath'] = $indexedpages[$row['parent_id']]['namepath'];
+            // Add the entire row to the result pages
+            $indexedpages[$row['parent_id']] = $row;
+        }
+        $pages =& $indexedpages;
     }
-    return $result;
+    return $pages;
 }
 ?>

@@ -61,6 +61,9 @@ function publications_user_display($args)
 #
 # Get the ID of the translation if required
 #
+    // First save the "untranslated" id
+    xarVarSetCached('Blocks.publications', 'current_base_id', $id);
+
     if ($translate)
         $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
     
@@ -171,6 +174,10 @@ function publications_user_display($args)
         if (!empty($params['host']) && $params['host'] != xarServer::getHost() && $params['host'].":".$params['port'] != xarServer::getHost()) {
             xarController::redirect($url, 301);
         } else{
+            $request = new xarRequest($url);
+            $router = xarController::getRouter();
+            $router->route($request);
+            var_dump($router->currentRoute);exit;
             parse_str($params['query'], $info);
             $other_params = $info;
             unset($other_params['module']);
