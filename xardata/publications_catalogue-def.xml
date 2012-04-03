@@ -404,5 +404,15 @@
       <seq>47</seq>
       <configuration>a:0:{}</configuration>
     </property>
+    <property name="sitemap_flag">
+      <id>273</id>
+      <label>Site Map Flag</label>
+      <type>checkbox</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.sitemap_flag</source>
+      <status>34</status>
+      <seq>48</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
   </properties>
 </object>

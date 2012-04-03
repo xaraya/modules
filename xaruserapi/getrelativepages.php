@@ -14,6 +14,11 @@
 /**
  * Get pages relative to a given page
  *
+ * Filters:
+ * Add an arg of the type $args['filter_foo'] = bar
+ * will add a condition to the SELECT as
+ * WHERE foo = bar
+ *
  */
 
 function publications_userapi_getrelativepages($args)
@@ -27,6 +32,15 @@ function publications_userapi_getrelativepages($args)
         $args['itemid'] = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $args['itemid'], 'locale' => xarModVars::get('publications', 'defaultlanguage')));
     }
 
+    // Identify any filters
+    $filters = array();
+    foreach ($args as $k => $v) {
+        if (strpos($k, 'filter_') === 0) {
+            $argname = substr($k,7);
+            $filters[$argname] = $v;
+        }
+    }
+    
     $xartable = xarDB::getTables();
     sys::import('xaraya.structures.query');
     $q = new Query();
@@ -65,6 +79,9 @@ function publications_userapi_getrelativepages($args)
     $q->addfield('p.description AS description');
     $q->addfield('p.summary AS summary');
     $q->addfield('p.rightpage_id AS rightpage_id');
+    
+    // Add any fiters we found
+    foreach ($filters as $k => $v) $q->eq($k, $v);
     
     // We can force alpha sorting, or else sort according to tree position
     if($args['sort']) {
@@ -117,6 +134,10 @@ function publications_userapi_getrelativepages($args)
         $q->addfield('description');
         $q->addfield('summary');
         $q->in('parent_id',$ids);
+
+        // Add any fiters we found
+        foreach ($filters as $k => $v) $q->eq($k, $v);
+    
         $q->run();
         foreach ($q->output() as $row) {
             // Copy the name and id paths so we don't have to recalculate them
