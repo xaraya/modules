@@ -61,6 +61,9 @@ function publications_admin_display($args)
 #
 # Get the ID of the translation if required
 #
+    // First save the "untranslated" id
+    xarVarSetCached('Blocks.publications', 'current_base_id', $id);
+
     if ($translate)
         $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
     
