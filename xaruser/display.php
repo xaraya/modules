@@ -175,9 +175,6 @@ function publications_user_display($args)
             xarController::redirect($url, 301);
         } else{
             $request = new xarRequest($url);
-            $router = xarController::getRouter();
-            $router->route($request);
-            var_dump($router->currentRoute);exit;
             parse_str($params['query'], $info);
             $other_params = $info;
             unset($other_params['module']);
@@ -185,7 +182,7 @@ function publications_user_display($args)
             unset($other_params['func']);
             unset($other_params['child']);
             try {
-                $page = xarMod::guiFunc($info['module'],'user',$info['func'],$other_params);
+                $page = xarMod::guiFunc($request->getModule(),'user',$request->getFunction(),$other_params);
             } catch (Exception $e) {
                 return xarResponse::NotFound();
             }
