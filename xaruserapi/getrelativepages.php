@@ -145,6 +145,7 @@ function publications_userapi_getrelativepages($args)
         $q->run();
         foreach ($q->output() as $row) {
             // Copy the name and id paths so we don't have to recalculate them
+            $row['depth'] = $indexedpages[$row['parent_id']]['depth'];
             $row['idpath'] = $indexedpages[$row['parent_id']]['idpath'];
             $row['namepath'] = $indexedpages[$row['parent_id']]['namepath'];
             // Add the entire row to the result pages
