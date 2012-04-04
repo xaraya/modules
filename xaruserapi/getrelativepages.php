@@ -24,6 +24,7 @@
 function publications_userapi_getrelativepages($args)
 {
     if (empty($args['itemid'])) $args['itemid'] = 0;
+    if ($args['itemid'] == 0) $args['scope'] = 'all';
     if (empty($args['scope'])) $args['scope'] = 'descendants';
     if (empty($args['sort'])) $args['sort'] = 0;
 
@@ -47,6 +48,9 @@ function publications_userapi_getrelativepages($args)
     $q->addtable($xartable['publications'],'p');
     
     switch ($args['scope']) {
+        case 'all':
+            $q->gt('p.leftpage_id', 0);
+        break;
         case 'descendants':
             $q->addtable($xartable['publications'],'root');
             $q->eq('root.id', $args['itemid']);
