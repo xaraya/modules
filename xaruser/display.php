@@ -175,6 +175,12 @@ function publications_user_display($args)
             xarController::redirect($url, 301);
         } else{
             $request = new xarRequest($url);
+            $router = new xarRouter();
+            $router->route($request);
+            $request->setRoute($router->getRoute());
+            $dispatcher = new xarDispatcher();
+            $response = new xarResponse();
+            $dispatcher->dispatch($request, $response);
             parse_str($params['query'], $info);
             $other_params = $info;
             unset($other_params['module']);
