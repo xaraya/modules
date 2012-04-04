@@ -46,7 +46,7 @@
             <div class="xar-row" style="margin-top: 10px">
                 <div class="xar-col">
                     <xar:if condition="$writable">
-                        This is file can be saved.
+                        This file can be saved.
                     <xar:else/>
                         <span class="warning">                            
                             <xar:if condition="$filetype eq 'module'">
