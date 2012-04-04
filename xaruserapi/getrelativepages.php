@@ -24,7 +24,7 @@
 function publications_userapi_getrelativepages($args)
 {
     if (empty($args['itemid'])) $args['itemid'] = 0;
-    if (empty($args['scope'])) $args['scope'] = 'descendents';
+    if (empty($args['scope'])) $args['scope'] = 'descendants';
     if (empty($args['sort'])) $args['sort'] = 0;
 
     // Make sure we have the base translation id
@@ -81,7 +81,7 @@ function publications_userapi_getrelativepages($args)
     $q->addfield('p.rightpage_id AS rightpage_id');
     
     // Add any fiters we found
-    foreach ($filters as $k => $v) $q->eq($k, $v);
+    foreach ($filters as $k => $v) $q->eq('p.'.$k, $v);
     
     // We can force alpha sorting, or else sort according to tree position
     if($args['sort']) {
@@ -136,7 +136,7 @@ function publications_userapi_getrelativepages($args)
         $q->in('parent_id',$ids);
 
         // Add any fiters we found
-        foreach ($filters as $k => $v) $q->eq($k, $v);
+        foreach ($filters as $k => $v) $q->eq('p.'.$k, $v);
     
         $q->run();
         foreach ($q->output() as $row) {
