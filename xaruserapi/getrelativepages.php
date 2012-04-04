@@ -140,7 +140,7 @@ function publications_userapi_getrelativepages($args)
         $q->in('parent_id',$ids);
 
         // Add any fiters we found
-        foreach ($filters as $k => $v) $q->eq('p.'.$k, $v);
+        foreach ($filters as $k => $v) $q->eq($k, $v);
     
         $q->run();
         foreach ($q->output() as $row) {
