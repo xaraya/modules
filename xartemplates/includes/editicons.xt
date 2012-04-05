@@ -6,7 +6,7 @@
     <xar:if condition="$pageName ne 'module'">
         <xar:sec mask="ManagePublications" catch="false">
             <a href="#xarModURL('publications', 'admin', 'new',array('ptid' => 11))#" style="float:right; margin-right: 10px">
-                <img src="#xarTplGetImage('icons/new.png','base')#"/>
+                <img src="#xarTplGetImage('icons/document-new.png','base')#"/>
             </a>
             &#160;
             <a href="#xarModURL('publications', 'admin', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
