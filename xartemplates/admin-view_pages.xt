@@ -9,23 +9,17 @@
         <xar:set name="root_pages">#xarMod::apiFunc('publications', 'user', 'getpages', array('parent'=&gt;0))#</xar:set>
         <xar:if condition="!empty($root_pages)">
             <xar:set name="method">'get'</xar:set>
-            <form method="$method" action="#xarModURL('publications','admin','view_pages')#">
+            <form method="post" action="#xarModURL('publications','admin','view_pages')#">
                 <div>
-                    <xar:if condition="$method eq 'get'">
-                        <input name="module" type="hidden" value="publications"/>
-                        <input name="type" type="hidden" value="admin"/>
-                        <input name="func" type="hidden" value="view_pages"/>
-                    </xar:if>
-
                     <label for="contains">Select tree:</label>&#160;
 
                     <select name="contains" id="contains">
                         <option value="0">-- All --</option>
                         <xar:loop name="$root_pages">
                             <xar:if condition="$loop:item.id eq $contains">
-                                <option value="#$loop:item.id#" selected="selected">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.ptid.name)#)</option>
+                                <option value="#$loop:item.id#" selected="selected">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.pubtype_name)#)</option>
                             <xar:else />
-                                <option value="#$loop:item.id#">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.ptid.name)#)</option>
+                                <option value="#$loop:item.id#">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.pubtype_name)#)</option>
                             </xar:if>
                         </xar:loop>
                     </select>
