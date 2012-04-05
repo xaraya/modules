@@ -365,12 +365,22 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="sitemap_flag">
-      <id>273</id>
+      <id>274</id>
       <label>Site Map Flag</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
       <source>publication.sitemap_flag</source>
       <status>34</status>
+      <seq>48</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="sequence">
+      <id>275</id>
+      <label>Sequence</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.leftpage_id</source>
+      <status>161</status>
       <seq>48</seq>
       <configuration>a:0:{}</configuration>
     </property>
