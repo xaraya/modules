@@ -55,22 +55,24 @@
         
         <!-- Load the pages for this map -->
         <xar:set name="pages">xarMod::apiFunc('publications','user','getrelativepages',array('filter_sitemap_flag' => 1))</xar:set>
-        <table border="0" width="100%" cellspacing="0" cellpadding="0">
-            <xar:loop name="$pages">
-                <xar:if condition="$loop:index ge 0">
-                    <tr>
-                        <td align="left">
-                            <xar:for start="$i = 0" test="$i lt $loop->item['depth']" iter="$i++">
-                                &#160;&#160;&#160;&#160;
-                            </xar:for>
-                            <a href="#xarModURL('publications','user','display',array('itemid' => $loop->item['id']))#" title="$loop->item['title']">
-                             #xarVarPrepForDisplay($loop:item.title)#
-                             </a>
-                        </td>
-                    </tr>
-                </xar:if>
-            </xar:loop>
-        </table>
+        <div style="margin-top: 20px">
+            <table border="0" width="100%" cellspacing="0" cellpadding="0">
+                <xar:loop name="$pages">
+                    <xar:if condition="$loop:index ge 0">
+                        <tr>
+                            <td align="left">
+                                <xar:for start="$i = 0" test="$i lt $loop->item['depth']" iter="$i++">
+                                    &#160;&#160;&#160;&#160;
+                                </xar:for>
+                                <a href="#xarModURL('publications','user','display',array('itemid' => $loop->item['id']))#" title="$loop->item['title']">
+                                 #xarVarPrepForDisplay($loop:item.title)#
+                                 </a>
+                            </td>
+                        </tr>
+                    </xar:if>
+                </xar:loop>
+            </table>
+        </div>
 
         <!--
         <xar:if condition="!empty($previous) and !empty($next)">
