@@ -24,8 +24,8 @@
 function publications_userapi_getrelativepages($args)
 {
     if (empty($args['itemid'])) $args['itemid'] = 0;
-    if ($args['itemid'] == 0) $args['scope'] = 'all';
     if (empty($args['scope'])) $args['scope'] = 'descendants';
+    if (($args['itemid'] == 0) && ($args['scope'] == 'descendants')) $args['scope'] = 'all';
     if (empty($args['sort'])) $args['sort'] = 0;
 
     // Make sure we have the base translation id
