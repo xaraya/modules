@@ -404,14 +404,24 @@
       <seq>48</seq>
       <configuration>a:0:{}</configuration>
     </property>
-    <property name="sequence">
+    <property name="menu_flag">
       <id>275</id>
+      <label>Menu Flag</label>
+      <type>checkbox</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.menu_flag</source>
+      <status>34</status>
+      <seq>49</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="sequence">
+      <id>276</id>
       <label>Sequence</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
       <source>publication.leftpage_id</source>
       <status>161</status>
-      <seq>48</seq>
+      <seq>50</seq>
       <configuration>a:0:{}</configuration>
     </property>
   </properties>

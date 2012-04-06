@@ -66,6 +66,7 @@ function publications_init()
             page_template       varchar(255) NOT NULL DEFAULT '',
             theme               varchar(64) NOT NULL DEFAULT '',
             sitemap_flag        tinyint NOT NULL DEFAULT '0',
+            menu_flag           tinyint NOT NULL DEFAULT '0',
             access              text,
             state               tinyint NOT NULL DEFAULT '3',
             process_state       tinyint NOT NULL DEFAULT '1',
