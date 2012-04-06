@@ -41,6 +41,8 @@ function publications_userapi_getpages($args)
         $q->addfield('tpages.title AS title');
         $q->addfield('tpages.pubtype_id AS ptid');
         $q->addfield('tpages.parent_id AS base_id');
+        $q->addfield('tpages.sitemap_flag AS sitemap_flag');
+        $q->addfield('tpages.menu_flag AS menu_flag');
         $q->addfield('tpages.locale AS locale');
         $q->addfield('tpages.leftpage_id AS leftpage_id');
         $q->addfield('tpages.rightpage_id AS rightpage_id');

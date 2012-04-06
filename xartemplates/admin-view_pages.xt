@@ -4,28 +4,27 @@
 
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <h2>View Publications Tree</h2>
+        <h2>View Publications Trees</h2>
 
         <xar:set name="root_pages">#xarMod::apiFunc('publications', 'user', 'getpages', array('parent'=&gt;0))#</xar:set>
         <xar:if condition="!empty($root_pages)">
             <xar:set name="method">'get'</xar:set>
             <form method="post" action="#xarModURL('publications','admin','view_pages')#">
-                <div>
-                    <label for="contains">Select tree:</label>&#160;
+                <label for="contains">Select tree:</label>&#160;
 
-                    <select name="contains" id="contains">
-                        <option value="0">-- All --</option>
-                        <xar:loop name="$root_pages">
-                            <xar:if condition="$loop:item.id eq $contains">
-                                <option value="#$loop:item.id#" selected="selected">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.pubtype_name)#)</option>
-                            <xar:else />
-                                <option value="#$loop:item.id#">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.pubtype_name)#)</option>
-                            </xar:if>
-                        </xar:loop>
-                    </select>
-                    &#160;
-                    <input type="submit" value="#xarML('Refresh')#"/>
-                </div>
+                <select name="root_id" id="root_id">
+                    <option value="0">-- All --</option>
+                    <xar:loop name="$root_pages">
+                        <xar:if condition="$loop:item.id eq $root_id">
+                            <option value="#$loop:item.id#" selected="selected">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.pubtype_name)#)</option>
+                        <xar:else />
+                            <option value="#$loop:item.id#">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.pubtype_name)#)</option>
+                        </xar:if>
+                    </xar:loop>
+                </select>
+                &#160;
+                <xar:var name="label">Refresh</xar:var>
+                <xar:button type="submit" label="$label"/>
             </form>
         </xar:if>
 
@@ -62,9 +61,17 @@
                         5 => 'empty',
                 )
             </xar:set>
+            <xar:set name="options">
+                array(
+                //    array('id' => 0, 'name' => 'red-12.png'),
+                    array('id' => 1, 'name' => 'green-12.png'),
+                )
+            </xar:set>
             <table border="0" width="100%" cellspacing="0" cellpadding="0">
                 <tr>
                     <th>Name</th>
+                    <th style="text-align: center">M</th>
+                    <th style="text-align: center">S</th>
                     <th>Description</th>
                     <th>Translations</th>
                     <th>Options</th>
@@ -81,6 +88,14 @@
                             <td align="left" class="#$row_class#">
                                 #$loop:item.xar_map#
                                 #xarVarPrepForDisplay($loop:item.name)#
+                            </td>
+                            <td class="#$row_class#" style="text-align: center">
+                                <xar:set name="value">$loop->item['menu_flag']</xar:set>
+                                <xar:data-output type="iconcheckbox" icon_directory="set1" icon_options="$options" value="$value"/>
+                            </td>
+                            <td class="#$row_class#" style="text-align: center">
+                                <xar:set name="value">$loop->item['sitemap_flag']</xar:set>
+                                <xar:data-output type="iconcheckbox" icon_directory="set1" icon_options="$options" value="$value"/>
                             </td>
                             <td class="#$row_class#" title="#xarML('Status: ')# #$state[$loop->item['status']]#">
                                 <span class="xar-publications-status-#$state[$loop->item['status']]#">#xarVarPrepForDisplay($loop:item.pubtype_name)#: #xarVarPrepForDisplay($loop:item.title)#</span>
