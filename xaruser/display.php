@@ -106,6 +106,9 @@ function publications_user_display($args)
 */
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
+    // Save this as the current pubtype
+    xarVarSetCached('Publications', 'current_pubtype_object', $pubtypeobject);
+    
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
 //    $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
     $itemid = $data['object']->getItem(array('itemid' => $id));
@@ -235,7 +238,7 @@ function publications_user_display($args)
     
 # --------------------------------------------------------
 #
-# If this is a bloccklayout page, then process it
+# If this is a blocklayout page, then process it
 #
 
     if ($data['object']->properties['pagetype']->value == 2) {

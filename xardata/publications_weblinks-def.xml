@@ -47,31 +47,41 @@
     <property name="description">
       <id>238</id>
       <label>Description</label>
-      <type>editor</type>
+      <type>textarea</type>
       <defaultvalue></defaultvalue>
-      <source>publication.summary</source>
+      <source>publication.description</source>
       <status>34</status>
       <seq>4</seq>
       <configuration></configuration>
     </property>
-    <property name="website">
+    <property name="summary">
       <id>239</id>
+      <label>Description</label>
+      <type>editor</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.summary</source>
+      <status>34</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
+    <property name="website">
+      <id>240</id>
       <label>Web Site</label>
       <type>url</type>
       <defaultvalue></defaultvalue>
       <source>publication.body1</source>
       <status>34</status>
-      <seq>5</seq>
+      <seq>6</seq>
       <configuration></configuration>
     </property>
     <property name="source">
-      <id>240</id>
+      <id>241</id>
       <label>Source</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>publication.notes</source>
       <status>34</status>
-      <seq>6</seq>
+      <seq>7</seq>
       <configuration></configuration>
     </property>
     <property name="parent">
@@ -382,7 +392,7 @@
       <source>publication.sitemap_source_flag</source>
       <status>34</status>
       <seq>49</seq>
-      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:71:"1,Inherited From Type;2,Title Field;2,Description Field;3,Custom Field;";}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:71:"1,Inherited From Type;2,Title Field;3,Description Field;4,Custom Field;";}</configuration>
     </property>
     <property name="sitemap_custom_field">
       <id>276</id>
@@ -412,7 +422,7 @@
       <source>publication.menu_source_flag</source>
       <status>34</status>
       <seq>52</seq>
-      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:71:"1,Inherited From Type;2,Title Field;2,Description Field;3,Custom Field;";}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:71:"1,Inherited From Type;2,Title Field;3,Description Field;4,Custom Field;";}</configuration>
     </property>
     <property name="menu_custom_field">
       <id>279</id>
