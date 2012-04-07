@@ -70,6 +70,8 @@ function publications_userapi_getglobalsettings()
                 'detail_template' => '',
                 'page_template' => "",
                 'theme' => '',
+                'sitemap_source_flag' => 2,
+                'menu_source_flag' => 2,
                 'allow_translations' => true,
                     );
     return $settings;
