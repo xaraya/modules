@@ -21,16 +21,34 @@
         </div>
     <xar:elseif condition="$layout eq 'pubtypes'" />
         <div class="xar-floatright xar-padding-thick xar-halfwidth xar-align-right" style="padding-top:1em;">
-            <xar:sec mask="ManagePublications" catch="false">
-                <a href="#xarModURL('dynamicdata','util','import')#">                
-                    Import a Publication Type from XML                
-                </a>
+            <xar:access level="700">
+                <xar:set name="link">
+                    xarModURL('dynamicdata','util','import')
+                </xar:set>
+                <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
+                    <a href="#$link#" title="#xarML('Import a Publication Type from XML ')#" style="margin-right: 5px">
+                        <img src="#xarTplGetImage('icons/'.'software-install.png', 'base')#" width="16" height="16" alt="#xarML('Import')#"/>
+                    </a>
+                <xar:else />
+                    <a href="#$link#">
+                        Import a Publication Type from XML 
+                    </a>
+                </xar:if>
                 &#160;|&#160;
                 <xar:set name="args">DataObjectDescriptor::getObjectID(array('name' => 'publications_types'))</xar:set>
-                <a style="font-weight:bold;" href ="#xarModURL('dynamicdata','admin','new',array('objectid' => $args['objectid']))#">
-                    Add a new Publication Type
-                </a>
-            </xar:sec>
+                <xar:set name="link">
+                    xarModURL('dynamicdata','admin','new',array('objectid' => $args['objectid']))
+                </xar:set>
+                <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
+                    <a href="#$link#" title="#xarML('Add A New Publication Type')#" style="margin-right: 5px">
+                        <img src="#xarTplGetImage('icons/'.'document-new.png', 'base')#" width="16" height="16" alt="#xarML('Add')#"/>
+                    </a>
+                <xar:else />
+                    <a href="#$link#">
+                        Add a new Publication Type
+                    </a>
+                </xar:if>
+            </xar:access>
         </div>
     </xar:if>
 </xar:template>
