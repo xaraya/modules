@@ -21,6 +21,15 @@
     </div>
     <div class="xar-row">
         <div class="xar-col">
+            <xar:var name="label">Description</xar:var>
+            <xar:data-label property="$properties['description']" for="id" label="$label" />
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['description']" />
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
             <xar:var name="label">Review</xar:var>
             <xar:data-label property="$properties['review']" for="id" label="$label" />
         </div>

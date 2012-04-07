@@ -412,7 +412,7 @@
       <source>publication.sitemap_source_flag</source>
       <status>34</status>
       <seq>49</seq>
-      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:71:"1,Inherited From Type;2,Title Field;2,Description Field;3,Custom Field;";}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:71:"1,Inherited From Type;2,Title Field;3,Description Field;4,Custom Field;";}</configuration>
     </property>
     <property name="sitemap_custom_field">
       <id>276</id>
@@ -442,7 +442,7 @@
       <source>publication.menu_source_flag</source>
       <status>34</status>
       <seq>52</seq>
-      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:71:"1,Inherited From Type;2,Title Field;2,Description Field;3,Custom Field;";}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:71:"1,Inherited From Type;2,Title Field;3,Description Field;4,Custom Field;";}</configuration>
     </property>
     <property name="menu_custom_field">
       <id>279</id>

@@ -44,18 +44,28 @@
       <seq>3</seq>
       <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"2";}</configuration>
     </property>
-    <property name="introduction">
+    <property name="description">
       <id>860</id>
-      <label>Introduction</label>
+      <label>Description</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>publication.description</source>
+      <status>34</status>
+      <seq>4</seq>
+      <configuration></configuration>
+    </property>
+    <property name="introduction">
+      <id>861</id>
+      <label>Introduction</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.summary</source>
       <status>33</status>
       <seq>4</seq>
       <configuration></configuration>
     </property>
     <property name="body">
-      <id>861</id>
+      <id>862</id>
       <label>Body</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
@@ -65,7 +75,7 @@
       <configuration></configuration>
     </property>
     <property name="notes">
-      <id>862</id>
+      <id>863</id>
       <label>Notes</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
@@ -75,7 +85,7 @@
       <configuration></configuration>
     </property>
     <property name="parent">
-      <id>863</id>
+      <id>864</id>
       <label>Parent</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
@@ -85,7 +95,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="author">
-      <id>864</id>
+      <id>865</id>
       <label>Author</label>
       <type>username</type>
       <defaultvalue>xarUserGetVar('uname')</defaultvalue>
@@ -382,7 +392,7 @@
       <source>publication.sitemap_source_flag</source>
       <status>34</status>
       <seq>49</seq>
-      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:71:"1,Inherited From Type;2,Title Field;2,Description Field;3,Custom Field;";}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:71:"1,Inherited From Type;2,Title Field;3,Description Field;4,Custom Field;";}</configuration>
     </property>
     <property name="sitemap_custom_field">
       <id>276</id>
@@ -412,7 +422,7 @@
       <source>publication.menu_source_flag</source>
       <status>34</status>
       <seq>52</seq>
-      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:71:"1,Inherited From Type;2,Title Field;2,Description Field;3,Custom Field;";}</configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:71:"1,Inherited From Type;2,Title Field;3,Description Field;4,Custom Field;";}</configuration>
     </property>
     <property name="menu_custom_field">
       <id>279</id>
