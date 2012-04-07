@@ -364,24 +364,64 @@
       <seq>48</seq>
       <configuration>a:0:{}</configuration>
     </property>
-    <property name="menu_flag">
+    <property name="sitemap_source_flag">
       <id>275</id>
+      <label>Site Map Source</label>
+      <type>dropdown</type>
+      <defaultvalue>1</defaultvalue>
+      <source>publication.sitemap_source_flag</source>
+      <status>34</status>
+      <seq>49</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:71:"1,Inherited From Type;2,Title Field;2,Description Field;3,Custom Field;";}</configuration>
+    </property>
+    <property name="sitemap_custom_field">
+      <id>276</id>
+      <label>Site Map Custom Field</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.sitemap_alias</source>
+      <status>34</status>
+      <seq>50</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="menu_flag">
+      <id>277</id>
       <label>Menu Flag</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
       <source>publication.menu_flag</source>
       <status>34</status>
-      <seq>49</seq>
+      <seq>51</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="menu_source_flag">
+      <id>278</id>
+      <label>Menu Source</label>
+      <type>dropdown</type>
+      <defaultvalue>1</defaultvalue>
+      <source>publication.menu_source_flag</source>
+      <status>34</status>
+      <seq>52</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:71:"1,Inherited From Type;2,Title Field;2,Description Field;3,Custom Field;";}</configuration>
+    </property>
+    <property name="menu_custom_field">
+      <id>279</id>
+      <label>Menu Custom Field</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.menu_alias</source>
+      <status>34</status>
+      <seq>53</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="sequence">
-      <id>276</id>
+      <id>280</id>
       <label>Sequence</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
       <source>publication.leftpage_id</source>
       <status>161</status>
-      <seq>50</seq>
+      <seq>54</seq>
       <configuration>a:0:{}</configuration>
     </property>
   </properties>
