@@ -236,11 +236,47 @@
             </div>
             <div class="xar-row">
                 <div class="xar-col">
+                    <xar:var name="label">Site Map Source</xar:var>
+                    <xar:data-label property="$properties['sitemap_source_flag']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['sitemap_source_flag']" />
+                </div>
+            </div>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">Site Map Custom Field</xar:var>
+                    <xar:data-label property="$properties['sitemap_custom_field']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['sitemap_custom_field']" />
+                </div>
+            </div>
+            <div class="xar-row">
+                <div class="xar-col">
                     <xar:var name="label">Include in Menu</xar:var>
                     <xar:data-label property="$properties['menu_flag']" for="id" label="$label" />
                 </div>
                 <div class="xar-col">
                     <xar:data-input property="$properties['menu_flag']" />
+                </div>
+            </div>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">Menu Source</xar:var>
+                    <xar:data-label property="$properties['menu_source_flag']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['menu_source_flag']" />
+                </div>
+            </div>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">Menu Custom Field</xar:var>
+                    <xar:data-label property="$properties['menu_custom_field']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['menu_custom_field']" />
                 </div>
             </div>
         </fieldset>
