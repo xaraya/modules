@@ -372,58 +372,86 @@
                             array('id' => 1, 'name' => 'custom'),
                         )
                     </xar:set>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="summary_template" class="help xar-form-label" title="#xarML('Define the summary template for this publication type')#">                    
-                            Summary Template
-                        </label>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label for="summary_template" class="help xar-form-label" title="#xarML('Define the summary template for this publication type')#">                    
+                                Summary Template
+                            </label>
+                        </div>
+                        <div class="xar-col">
+                            <xar:data-input type="radio" name="settings[summary_template]" value="$settings['summary_template']" options="$options"/>
+                            &#160;
+                            <a href="#xarModURL('publications','admin','templates_type',array('file' => 'summary','ptid' => $ptid))#">
+                                Edit template
+                            </a>
+                        </div>
                     </div>
-                    <div class="xar-col">
-                        <xar:data-input type="radio" name="settings[summary_template]" value="$settings['summary_template']" options="$options"/>
-                        &#160;
-                        <a href="#xarModURL('publications','admin','templates_type',array('file' => 'summary','ptid' => $ptid))#">
-                            Edit template
-                        </a>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label for="detail_template" class="help xar-form-label" title="#xarML('Define the detail template for this publication type')#">                    
+                                Detail Template
+                            </label>
+                        </div>
+                        <div class="xar-col">
+                            <xar:data-input type="radio" name="settings[detail_template]" value="$settings['detail_template']" options="$options"/>
+                            &#160;
+                            <a href="#xarModURL('publications','admin','templates_type',array('file' => 'detail','ptid' => $ptid))#">
+                                Edit template
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="detail_template" class="help xar-form-label" title="#xarML('Define the detail template for this publication type')#">                    
-                            Detail Template
-                        </label>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label for="page_template" class="help xar-form-label" title="#xarML('Define the page template for this publication type')#">                    
+                                Page Template Override
+                            </label>
+                        </div>
+                        <div class="xar-col">
+                            <xar:var name="firstline">(current template)</xar:var>
+                            <xar:set name="firstline">",$firstline"</xar:set>
+                            <xar:data-input type="filepicker" name="settings[page_template]" value="$settings['page_template']" basedir="{user_theme}/pages" firstline="$firstline"/>
+                        </div>
                     </div>
-                    <div class="xar-col">
-                        <xar:data-input type="radio" name="settings[detail_template]" value="$settings['detail_template']" options="$options"/>
-                        &#160;
-                        <a href="#xarModURL('publications','admin','templates_type',array('file' => 'detail','ptid' => $ptid))#">
-                            Edit template
-                        </a>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label for="theme" class="help xar-form-label" title="#xarML('Define the theme for this publication type')#">                    
+                                Theme Override
+                            </label>
+                        </div>
+                        <div class="xar-col">
+                            <xar:var name="firstline">(current theme)</xar:var>
+                            <xar:set name="firstline">",$firstline"</xar:set>
+                            <xar:data-input type="theme" name="settings[theme]" value="$settings['theme']"  firstline="$firstline"/>
+                        </div>
                     </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <xar:var name="firstline">(current template)</xar:var>
-                        <xar:set name="firstline">",$firstline"</xar:set>
-                        <label for="page_template" class="help xar-form-label" title="#xarML('Define the page template for this publication type')#">                    
-                            Page Template Override
-                        </label>
+                    <xar:set name="options">
+                        array(
+                            array('id' => 2, 'name' => 'Title Field'),
+                            array('id' => 3, 'name' => 'Description Field'),
+                            array('id' => 4, 'name' => 'Custom Field'),
+                        )
+                    </xar:set>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label for="sitemap_source_flag" class="help xar-form-label" title="#xarML('Where publications of this type get their site map text')#">                    
+                                Site Map Source
+                            </label>
+                        </div>
+                        <div class="xar-col">
+                            <xar:data-input type="dropdown" name="settings[sitemap_source_flag]" options="$options" value="$settings['sitemap_source_flag']"/>
+                        </div>
                     </div>
-                    <div class="xar-col">
-                        <xar:data-input type="filepicker" name="settings[page_template]" value="$settings['page_template']" basedir="{user_theme}/pages" firstline="$firstline"/>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label for="menu_source_flag" class="help xar-form-label" title="#xarML('Where publications of this type get their menu text')#">                    
+                                Menu Source
+                            </label>
+                        </div>
+                        <div class="xar-col">
+                            <xar:data-input type="dropdown" name="settings[menu_source_flag]" options="$options" value="$settings['menu_source_flag']"/>
+                            <xar:data-input property="$properties['menu_source_flag']" />
+                        </div>
                     </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <xar:var name="firstline">(current theme)</xar:var>
-                        <xar:set name="firstline">",$firstline"</xar:set>
-                        <label for="theme" class="help xar-form-label" title="#xarML('Define the theme for this publication type')#">                    
-                            Theme Override
-                        </label>
-                    </div>
-                    <div class="xar-col">
-                        <xar:data-input type="theme" name="settings[theme]" value="$settings['theme']"  firstline="$firstline"/>
-                    </div>
-                </div>
                 </fieldset>
                 <fieldset class="xar-norm">
                     <legend>
