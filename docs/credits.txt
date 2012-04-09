@@ -1,8 +1,8 @@
-1. Designation: Foo module
+1. Designation: Wurfl module
 
 2. Author: Marc Lutolf <mfl@netspan.ch>
 
-3. Copyright: (C) 2011 Netspan AG
+3. Copyright: (C) 2012 Netspan AG
 
 4. License: GPL {@link http://www.gnu.org/licenses/gpl.html}
 

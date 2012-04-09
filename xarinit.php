@@ -1,91 +1,57 @@
 <?php
 /**
- * Foo Module
+ * Wurfl Module
  *
  * @package modules
- * @subpackage foo module
- * @copyright (C) 2011 Netspan AG
+ * @subpackage wurfl module
+ * @copyright (C) 2012 Netspan AG
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  *
- * Initialise or remove the foo module
+ * Initialise or remove the wurfl module
  *
  */
 
     sys::import('xaraya.structures.query');
 
-    function foo_init()
+    function wurfl_init()
     {
 
-    # --------------------------------------------------------
-    #
-    # Set tables
-    #
-        $q = new Query();
-        $prefix = xarDB::getPrefix();
-        
-        $query = "DROP TABLE IF EXISTS " . $prefix . "_foo_entries";
-        if (!$q->run($query)) return;
-        $query = "CREATE TABLE " . $prefix . "_foo_entries (
-            id                integer unsigned NOT NULL auto_increment,
-            name              varchar(254) NOT NULL default '', 
-            timecreated       integer unsigned NOT NULL default 0, 
-            role_id           integer unsigned NOT NULL default 0, 
-            state             tinyint(3) NOT NULL default 3, 
-            PRIMARY KEY  (id), 
-            KEY i_tag_name (name)
-        ) TYPE=MyISAM";
-        if (!$q->run($query)) return;
-  
-    # --------------------------------------------------------
-    #
-    # Set up masks
-    #
-        xarRegisterMask('ViewFoo','All','foo','All','All','ACCESS_OVERVIEW');
-        xarRegisterMask('ReadFoo','All','foo','All','All','ACCESS_READ');
-        xarRegisterMask('CommentFoo','All','foo','All','All','ACCESS_COMMENT');
-        xarRegisterMask('ModerateFoo','All','foo','All','All','ACCESS_MODERATE');
-        xarRegisterMask('EditFoo','All','foo','All','All','ACCESS_EDIT');
-        xarRegisterMask('AddFoo','All','foo','All','All','ACCESS_ADD');
-        xarRegisterMask('ManageFoo','All','foo','All','All','ACCESS_DELETE');
-        xarRegisterMask('AdminFoo','All','foo','All','All','ACCESS_ADMIN');
+        xarRegisterMask('ViewWurfl','All','wurfl','All','All','ACCESS_OVERVIEW');
+        xarRegisterMask('ReadWurfl','All','wurfl','All','All','ACCESS_READ');
+        xarRegisterMask('CommentWurfl','All','wurfl','All','All','ACCESS_COMMENT');
+        xarRegisterMask('ModerateWurfl','All','wurfl','All','All','ACCESS_MODERATE');
+        xarRegisterMask('EditWurfl','All','wurfl','All','All','ACCESS_EDIT');
+        xarRegisterMask('AddWurfl','All','wurfl','All','All','ACCESS_ADD');
+        xarRegisterMask('ManageWurfl','All','wurfl','All','All','ACCESS_DELETE');
+        xarRegisterMask('AdminWurfl','All','wurfl','All','All','ACCESS_ADMIN');
 
     # --------------------------------------------------------
     #
     # Set up privileges
     #
-        xarRegisterPrivilege('ViewFoo','All','foo','All','All','ACCESS_OVERVIEW');
-        xarRegisterPrivilege('ReadFoo','All','foo','All','All','ACCESS_READ');
-        xarRegisterPrivilege('CommentFoo','All','foo','All','All','ACCESS_COMMENT');
-        xarRegisterPrivilege('ModerateFoo','All','foo','All','All','ACCESS_MODERATE');
-        xarRegisterPrivilege('EditFoo','All','foo','All','All','ACCESS_EDIT');
-        xarRegisterPrivilege('AddFoo','All','foo','All','All','ACCESS_ADD');
-        xarRegisterPrivilege('ManageFoo','All','foo','All','All','ACCESS_DELETE');
-        xarRegisterPrivilege('AdminFoo','All','foo','All','All','ACCESS_ADMIN');
-
-    # --------------------------------------------------------
-    #
-    # Create DD objects
-    #
-        $module = 'foo';
-        $objects = array(
-                         );
-
-        if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+        xarRegisterPrivilege('ViewWurfl','All','wurfl','All','All','ACCESS_OVERVIEW');
+        xarRegisterPrivilege('ReadWurfl','All','wurfl','All','All','ACCESS_READ');
+        xarRegisterPrivilege('CommentWurfl','All','wurfl','All','All','ACCESS_COMMENT');
+        xarRegisterPrivilege('ModerateWurfl','All','wurfl','All','All','ACCESS_MODERATE');
+        xarRegisterPrivilege('EditWurfl','All','wurfl','All','All','ACCESS_EDIT');
+        xarRegisterPrivilege('AddWurfl','All','wurfl','All','All','ACCESS_ADD');
+        xarRegisterPrivilege('ManageWurfl','All','wurfl','All','All','ACCESS_DELETE');
+        xarRegisterPrivilege('AdminWurfl','All','wurfl','All','All','ACCESS_ADMIN');
 
     # --------------------------------------------------------
     #
     # Set up modvars
     #
-        $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'foo'));
+        $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'wurfl'));
         $module_settings->initialize();
 
         // Add variables like this next one when creating utility modules
         // This variable is referenced in the xaradmin/modifyconfig-utility.php file
         // This variable is referenced in the xartemplates/includes/defaults.xd file
-        xarModVars::set('foo', 'defaultmastertable','foo_foo');
+        xarModVars::set('wurfl', 'defaultmastertable','wurfl_wurfl');
 
     # --------------------------------------------------------
     #
@@ -95,14 +61,14 @@
         return true;
     }
 
-    function foo_upgrade()
+    function wurfl_upgrade()
     {
         return true;
     }
 
-    function foo_delete()
+    function wurfl_delete()
     {
-        $this_module = 'foo';
+        $this_module = 'wurfl';
         return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => $this_module));
     }
 

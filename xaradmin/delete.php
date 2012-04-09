@@ -1,10 +1,10 @@
 <?php
 /**
- * Foo Module
+ * Wurfl Module
  *
  * @package modules
- * @subpackage foo module
- * @copyright (C) 2011 Netspan AG
+ * @subpackage wurfl module
+ * @copyright (C) 2012 Netspan AG
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <mfl@netspan.ch>
  */
@@ -14,19 +14,19 @@
  */
     sys::import('modules.dynamicdata.class.objects.master');
     
-    function foo_admin_delete()
+    function wurfl_admin_delete()
     {
-        if (!xarSecurityCheck('ManageFoo')) return;
+        if (!xarSecurityCheck('ManageWurfl')) return;
 
-        if (!xarVarFetch('name',       'str:1',  $name,    'foo_foo',     XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('name',       'str:1',  $name,    'wurfl_wurfl',     XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('itemid' ,     'int',    $data['itemid'] , '' ,          XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('confirm',    'str:1',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
 
         $data['object'] = DataObjectMaster::getObject(array('name' => $name));
         $data['object']->getItem(array('itemid' => $data['itemid']));
 
-        $data['tplmodule'] = 'foo';
-        $data['authid'] = xarSecGenAuthKey('foo');
+        $data['tplmodule'] = 'wurfl';
+        $data['authid'] = xarSecGenAuthKey('wurfl');
 
         if ($data['confirm']) {
         
@@ -37,7 +37,7 @@
             $item = $data['object']->deleteItem();
                 
             // Jump to the next page
-            xarController::redirect(xarModURL('foo','admin','view'));
+            xarController::redirect(xarModURL('wurfl','admin','view'));
             return true;
         }
         return $data;

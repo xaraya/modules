@@ -1,4 +1,4 @@
-1. Designation: Foo module
+1. Designation: Wurfl module
 
 2. Purpose: to be added
 

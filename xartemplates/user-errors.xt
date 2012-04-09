@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head"><span class="xar-mod-title">Foo Error</span></div>
+    <div class="xar-mod-head"><span class="xar-mod-title">Wurfl Error</span></div>
     <div class="xar-mod-body">
         <fieldset>
         <legend>Problem Logging In</legend>
@@ -12,7 +12,7 @@
                     <br />
                     Please contact the system administrator.
                 </div>                    
-            <xar:elseif condition="$layout eq 'foo_error'"/>
+            <xar:elseif condition="$layout eq 'wurfl_error'"/>
                 <div style="margin-top: 20px; margin-left: 20px">
                     This is an error
                 </div>

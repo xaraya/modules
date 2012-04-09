@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+
+        <h3>
+            Test WURFL
+        </h3>
+        <ul>
+            <li><h4>VERSION: #$wurflInfo:version#</h4></li>
+        </ul>
+        <div id="content">
+            <xar:set name="ua">htmlspecialchars($ua)</xar:set>
+            User Agent: <b> #$ua#</b>
+            <ul>
+                <li>ID: #$requestingDevice:id#</li>
+                <li>Brand Name: #$requestingDevice:getCapability('brand_name')#</li>
+                <li>Model Name: #$requestingDevice:getCapability('model_name')#</li>
+                <li>Marketing Name: #$requestingDevice:getCapability('marketing_name')#</li>
+                <li>Preferred Markup: #$requestingDevice:getCapability('preferred_markup')#</li>
+                <li>Resolution Width: #$requestingDevice:getCapability('resolution_width')#</li>
+                <li>Resolution Height: #$requestingDevice:getCapability('resolution_height')#</li>
+            </ul>
+            <p><b>Query WURFL by providing the user agent:</b></p>
+            <form method="post" action="#xarServer::getCurrentURL()#">
+                <xar:set name="options">
+                    array(
+                        array('id' => 'accuracy', 'name' => 'Accuracy'),
+                        array('id' => 'performance', 'name' => 'Performance'),
+                    )
+                </xar:set>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label for="mode" title="#xarML('The mode to search the database in')#" class="xar-form-label">
+                            Search mode               
+                        </label>
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input type="radio" name="mode" value="$mode" options="$options"/>
+                    </div>
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label for="mode" title="#xarML('The mode to search the database in')#" class="xar-form-label">
+                            User agent               
+                        </label>
+                    </div>
+                    <div class="xar-col">
+                        <textarea name="ua" cols="50">#$ua#</textarea>
+                    </div>
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col">
+                    </div>
+                    <div class="xar-col">
+                    <xar:var name="label">Submit</xar:var>
+                        <xar:button type="submit" label="$label"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</xar:template>

@@ -1,10 +1,10 @@
 <?php
 /**
- * Foo Module
+ * Wurfl Module
  *
  * @package modules
- * @subpackage foo module
- * @copyright (C) 2011 Netspan AG
+ * @subpackage wurfl module
+ * @copyright (C) 2012 Netspan AG
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <mfl@netspan.ch>
  */
@@ -13,12 +13,11 @@
  *
  */
 
-    function foo_user_main()
+    function wurfl_user_main()
     {
         // Security Check
-        if (!xarSecurityCheck('ReadFoo')) return;
+        if (!xarSecurityCheck('ReadWurfl')) return;
 
-//        xarController::redirect(xarModURL('foo', 'user', 'view'));
         // success
         return array(); //true;
     }

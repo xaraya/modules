@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- Display list of stored redirects -->
+    <xar:if condition="!empty($redirects)">
+        <table class="xar-fullwidth xar-margin-thicktop">
+            <caption class="xar-align-left">Redirects</caption>
+            <thead>
+                <tr>
+                    <th>WURFL User Agent ID contains</th>
+                    <th>Target Theme</th>
+                    <th>Target Page Template</th>
+                    <th>Delete</th>
+                </tr>        
+            </thead>
+            <tbody>
+                <xar:foreach in="$redirects" key="$key" value="$redirecttag">
+                    <xar:set name="redirectname">"redirects[{$key}]"</xar:set>
+                    <xar:set name="redirectid">"redirects_{$key}"</xar:set>
+                    <tr>
+                        <td>
+                            <xar:set name="uaname">"{$redirectname}[source]"</xar:set>
+                            <xar:set name="uaid">"{$redirectid}_source"</xar:set>
+                            <input type="text" name="#$uaname#" id="#$uaid#" value="#$redirecttag.ua#" style="width: 20em"/>
+                        </td>
+                        <td>
+                            <xar:set name="themename">"{$redirectname}[theme]"</xar:set>
+                            <xar:set name="themeid">"{$redirectid}_theme"</xar:set>
+                            <input type="text" name="#$themename#" id="#$themeid#" value="#$redirecttag.theme#" style="width: 20em"/>
+                        </td>
+                        <td>
+                            <xar:set name="templatename">"{$redirectname}[template]"</xar:set>
+                            <xar:set name="templateid">"{$redirectid}_template"</xar:set>
+                            <input type="text" name="#$templatename#" id="#$templateid#" value="#$redirecttag.template#" style="width: 20em"/>
+                        </td>
+                        <td>
+                            <xar:set name="delname">"{$redirectname}[delete]"</xar:set>
+                            <xar:set name="delid">"{$redirectid}_delete"</xar:set>
+                            <input type="checkbox" name="#$delname#" id="#$delid#"/>                
+                        </td>
+                    </tr>
+                </xar:foreach>
+            </tbody>
+        </table>    
+    </xar:if>
+    
+    <!-- New redirect input -->
+    <table class="xar-fullwidth xar-margin-nonetop">
+        <caption class="xar-align-left">New Redirect</caption>
+        <thead>
+            <tr>
+                <th>WURFL User Agent ID contains</th>
+                <th>Target Theme</th>
+                <th>Target Page Template</th>
+            </tr>        
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <input type="text" name="redirectua" id="redirectua" value="" style="width: 20em"/>
+                </td>
+                <td>
+                    <input type="text" name="redirecttheme" id="redirecttheme" value="" style="width: 20em"/>
+                </td>
+                <td>
+                    <input type="text" name="redirecttemplate" id="redirecttemplate" value="" style="width: 20em"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</xar:template>

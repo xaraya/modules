@@ -1,10 +1,10 @@
 <?php
 /**
- * Foo Module
+ * Wurfl Module
  *
  * @package modules
- * @subpackage foo module
- * @copyright (C) 2011 Netspan AG
+ * @subpackage wurfl module
+ * @copyright (C) 2012 Netspan AG
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <mfl@netspan.ch>
  */
@@ -13,11 +13,11 @@
  * Version information
  *
  */
-    $modversion['name']           = 'foo';
-    $modversion['id']             = '30000';
+    $modversion['name']           = 'wurfl';
+    $modversion['id']             = '30211';
     $modversion['version']        = '1.0.0';
-    $modversion['displayname']    = xarML('Foo');
-    $modversion['description']    = xarML('A generic Web 2.0 module');
+    $modversion['displayname']    = xarML('Wurfl');
+    $modversion['description']    = xarML('A wrapper module for the WURFL API');
     $modversion['credits']        = 'credits.txt';
     $modversion['help']           = 'help.txt';
     $modversion['changelog']      = 'changelog.txt';
@@ -26,7 +26,7 @@
     $modversion['author']         = 'Marc Lutolf';
     $modversion['contact']        = 'http://www.netspan.ch/';
     $modversion['admin']          = true;
-    $modversion['user']           = true;
+    $modversion['user']           = false;
     $modversion['class']          = 'Complete';
     $modversion['category']       = 'Content';
     $modversion['securityschema'] = array();

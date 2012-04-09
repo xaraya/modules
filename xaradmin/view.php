@@ -1,22 +1,22 @@
 <?php
 /**
- * Foo Module
+ * Wurfl Module
  *
  * @package modules
- * @subpackage foo module
- * @copyright (C) 2011 Netspan AG
+ * @subpackage wurfl module
+ * @copyright (C) 2012 Netspan AG
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
- * View items of the foo object
+ * View items of the wurfl object
  *
  */
-    function foo_admin_view($args)
+    function wurfl_admin_view($args)
     {
-        if (!xarSecurityCheck('ManageFoo')) return;
+        if (!xarSecurityCheck('ManageWurfl')) return;
 
-        $modulename = 'foo';
+        $modulename = 'wurfl';
 
         // Define which object will be shown
         if (!xarVarFetch('objectname', 'str', $objectname, null, XARVAR_DONT_SET)) return;

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->    
+    <xar:if condition="!empty($redirects)">
+        <xar:foreach in="$redirects" value="$redirect">
+            <xar:if condition="strstr($currenturl,$redirect['source'])">
+                <xar:if condition="!empty($redirect['theme'])">
+                    #xarTpl::setThemeName($redirect['theme'])#
+                </xar:if>
+                <xar:if condition="!empty($redirect['template'])">
+                    #xarTpl::setPageTemplateName($redirect['template'])#
+                </xar:if>
+                <xar:break/>
+            </xar:if>
+        </xar:foreach>
+    </xar:if>
+</xar:template>

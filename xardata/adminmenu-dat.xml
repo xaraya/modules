@@ -7,25 +7,16 @@
             </includes>
             <target>main</target>
             <title>Short documentation of this module</title>
-            <label>Foo Overview</label>
+            <label>Overview</label>
         </menuitem>
         <menuitem>
-            <mask>ManageFoo</mask>
+            <mask>ManageWurfl</mask>
             <includes>
-                <includeitem>view</includeitem>
+                <includeitem>test</includeitem>
             </includes>
-            <target>view</target>
-            <title>Manage the master tables of this module</title>
-            <label>Master Tables</label>
-        </menuitem>
-        <menuitem>
-            <mask>AdminFoo</mask>
-            <includes>
-                <includeitem>modifyconfig</includeitem>
-            </includes>
-            <target>modifyconfig</target>
-            <title>Modify the configuration settings of this module</title>
-            <label>Modify Configuration</label>
+            <target>test</target>
+            <title>Query the WURFL database</title>
+            <label>Test</label>
         </menuitem>
     </menuitems>
 </adminmenu>

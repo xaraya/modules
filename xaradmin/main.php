@@ -1,10 +1,10 @@
 <?php
 /**
- * Foo Module
+ * Wurfl Module
  *
  * @package modules
- * @subpackage foo module
- * @copyright (C) 2011 Netspan AG
+ * @subpackage wurfl module
+ * @copyright (C) 2012 Netspan AG
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <mfl@netspan.ch>
  */
@@ -13,14 +13,14 @@
  *
  */
 
-    function foo_admin_main()
+    function wurfl_admin_main()
     {
-        if(!xarSecurityCheck('ManageFoo')) return;
+        if(!xarSecurityCheck('ManageWurfl')) return;
 
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return array();
         } else {
-            xarController::redirect(xarModURL('foo', 'admin', 'modifyconfig'));
+            xarController::redirect(xarModURL('wurfl', 'admin', 'modifyconfig'));
         }
         // success
         return true;

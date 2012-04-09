@@ -3,14 +3,33 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <img src="#xarTplGetImage('admin.gif', 'foo')#" alt="official icon" width="96" height="96" class="xar-module-icon"/>
+        <img src="#xarTplGetImage('admin.gif', 'wurfl')#" alt="official icon" width="96" height="96" class="xar-module-icon"/>
 
-        <h2>
+        <h3>
             Overview
-        </h2>
+        </h3>
 
         <p>
-            Dummy foo text
+            The WURFL module is a simple wrapper around the WURFL API and database.
+        </p>
+        <p>
+            WURFL (Wireless Universal Resource FiLe) is a compendium of all (?) user agents available on the Internet. 
+            More general information on WURFL can be found <a href="http://en.wikipedia.org/wiki/WURFL">here</a>. For developer information on the WURFL project's PHP API please go <a href="http://wurfl.sourceforge.net/php_index.php">here</a>. 
+        </p>
+        <p>
+            This module lets you use WURFL from within Xaraya. It has two API functions, wurfl_userapi_check_device and wurfl_userapi_check_device. The former returns an object modeling the requesting device (browser, iPad etc.), while the latter checks that device against a device ID entered (for instance generic_web_browser).
+        </p>
+        <p>
+            The module has no user interface, and a single admin page for testing WURFL <a href="#xarModURL('wurfl','admin','test')#">here</a>.
+        </p>
+        <p>
+            WURFL can be run in two modes: accuracy and perfomrance. The latter is the default, allowing for faster checks. Its output for any PC browser for instance will be a generic device descrioption. The accuracy mode can be used when speed is not as crucial, and an exact identification of the calling device (e.g. firefox_11_0) is required.
+        </p>
+        <p>
+            The workings of the API functions are simple and should be clear from examining the test page.
+        </p>
+        <p>
+            Note that after installing the module, the first time the test page (or any query of the WURFL database) is run, there will be a lag that can last up to 5 min while the module unpacks its database and sets up the required files for caching and persistence.
         </p>
         <div style="clear:both">&#160;</div>
     </div>
