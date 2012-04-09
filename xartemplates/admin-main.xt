@@ -17,7 +17,7 @@
             More general information on WURFL can be found <a href="http://en.wikipedia.org/wiki/WURFL">here</a>. For developer information on the WURFL project's PHP API please go <a href="http://wurfl.sourceforge.net/php_index.php">here</a>. 
         </p>
         <p>
-            This module lets you use WURFL from within Xaraya. It has two API functions, wurfl_userapi_check_device and wurfl_userapi_check_device. The former returns an object modeling the requesting device (browser, iPad etc.), while the latter checks that device against a device ID entered (for instance generic_web_browser).
+            This module lets you use WURFL from within Xaraya. It has two API functions, wurfl_userapi_get_device and wurfl_userapi_check_device. The former returns an object modeling the requesting device (browser, iPad etc.), while the latter checks that device against a device ID entered (for instance generic_web_browser).
         </p>
         <p>
             The module has no user interface, and a single admin page for testing WURFL <a href="#xarModURL('wurfl','admin','test')#">here</a>.
