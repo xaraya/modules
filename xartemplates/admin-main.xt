@@ -10,7 +10,7 @@
         </h3>
 
         <p>
-            The WURFL module is a simple wrapper around the WURFL API and database.
+            The WURFL module is a simple wrapper module around the WURFL API and database.
         </p>
         <p>
             WURFL (Wireless Universal Resource FiLe) is a compendium of all (?) user agents available on the Internet. 
