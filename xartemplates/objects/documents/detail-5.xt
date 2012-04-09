@@ -3,14 +3,10 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
     <!-- Load the stylesheet for this publication type -->
-    <xar:style method="import" module="publications" file="document" title="Document Stylesheet"/>
+    <xar:style method="import" module="publications" file="sitemap" title="Site Map Stylesheet"/>
     
     <xar:set name="ptid">$object->objectid</xar:set>
     <xar:template file="publinks" type="module" />
-    <!--
-    <xar:set name="cids">$properties['categories']->getValue()</xar:set>
-    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$properties['id']" cids="$cids" show_catcount="$settings['show_catcount']" showempty="0" />
-    -->
 
     <xar:set name="publication_state">
         $properties['state']->value
@@ -21,7 +17,7 @@
     <xar:else />
 
         <!-- Title -->
-        <div class="xar-publications-document-detail-title">
+        <div class="xar-publications-sitemap-detail-title">
             <xar:data-output property="$properties['title']" />
         </div>
 
@@ -42,7 +38,7 @@
         -->
 
         <!-- Body -->
-        <div class="xar-publications-document-detail-text">
+        <div class="xar-publications-sitemap-detail-text">
             <xar:data-output property="$properties['body']" />
         </div>
 
@@ -60,7 +56,7 @@
                 <xar:loop name="$pages">
                     <xar:if condition="$loop:index ge 0">
                         <tr>
-                            <td align="left">
+                            <td align="left" class="xar-publications-sitemap-level-#$loop:item.depth#">
                                 <xar:for start="$i = 0" test="$i lt $loop->item['depth']" iter="$i++">
                                     &#160;&#160;&#160;&#160;
                                 </xar:for>
