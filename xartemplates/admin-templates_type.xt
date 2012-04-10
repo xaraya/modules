@@ -48,6 +48,7 @@
                     <xar:if condition="$writable">
                         This file can be saved.
                     <xar:else/>
+                        <img src="#xarTplGetImage('exception.png','base')#" width="20px" height="20px"/>&#160;
                         <span class="warning">                            
                             <xar:if condition="$filetype eq 'module'">
                                 This file cannot be saved: check the directory permissions
