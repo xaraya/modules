@@ -17,14 +17,20 @@
     line-height: 1.5em;
 }
 
+.xar-publications-sitemap-level-1 {
+    font-size: 12pt;
+    margin: .5em 0 .25em 0;
+    line-height: 1.5em;
+}
+
 .xar-publications-sitemap-level-2 {
-    font-size: 10pt;
+    font-size: 11pt;
     margin: .5em 0 .25em 0;
     line-height: 1.0em;
 }
 
 .xar-publications-sitemap-level-3 {
-    font-size: 10pt;
+    font-size: 11pt;
     margin: .5em 0 .25em 0;
     line-height: 1.0em;
 }

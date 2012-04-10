@@ -134,6 +134,7 @@ function publications_userapi_get_sitemap_pages($args)
         $q->addfield('sitemap_alias');
         $q->addfield('pubtype_id');
         $q->in('parent_id',$ids);
+        $q->eq('locale',xarUserGetNavigationLocale());
 
         // Add any fiters we found
         foreach ($filters as $k => $v) $q->eq($k, $v);
