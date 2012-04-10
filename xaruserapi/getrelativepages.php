@@ -138,6 +138,7 @@ function publications_userapi_getrelativepages($args)
         $q->addfield('description');
         $q->addfield('summary');
         $q->in('parent_id',$ids);
+        $q->eq('locale',xarUserGetNavigationLocale());
 
         // Add any fiters we found
         foreach ($filters as $k => $v) $q->eq($k, $v);
