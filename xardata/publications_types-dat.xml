@@ -98,4 +98,13 @@
     <access>a:0:{}</access>
     <state>3</state>
   </publications_types>
+  <publications_types itemid="12">
+    <id>12</id>
+    <name>publications_catalogue</name>
+    <description>Catalogue</description>
+    <template>catalogue</template>
+    <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:15:"show_categories";s:1:"0";s:13:"show_catcount";s:1:"0";s:13:"show_prevnext";s:1:"1";s:13:"show_comments";s:1:"0";s:13:"show_hitcount";s:1:"0";s:12:"show_ratings";s:1:"0";s:13:"show_archives";s:1:"0";s:8:"show_map";s:1:"1";s:13:"show_publinks";s:1:"0";s:13:"show_pubcount";s:1:"1";s:12:"do_transform";s:1:"0";s:15:"title_transform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:3:"show_keywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:18:"allow_translations";s:1:"1";}</configuration>
+    <access>a:0:{}</access>
+    <state>3</state>
+  </publications_types>
 </items>

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+    <!-- Load the stylesheet for this publication type -->
+    <xar:style method="import" module="publications" file="download" title="Download Stylesheet"/>
+    
     <xar:template file="publinks" type="module" />
-    <!--
-    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$id" cids="$cids" />
-    -->
 
     <xar:set name="fields">$object->getFieldValues(array(),1)</xar:set>
 
@@ -16,61 +17,82 @@
     <xar:if condition="$publication_state lt 3 AND !xarSecurityCheck('ManagePublications',0)">
         This item cannot be viewed
     <xar:else />
-        <div class="article-view">
+    
+        <!-- Title -->
+        <div class="xar-publications-download-detail-title">
+            <xar:data-output property="$properties['title']" value="$fields['title']" />
+        </div>
 
-            <!-- Title -->
-            <div class="xar-title">
-                <xar:template file="editicons"/>
-                <xar:data-output property="$properties['title']" value="$fields['title']" />
+        <!-- Edit icons if allowed -->
+        <xar:template file="editicons"/>
+
+        <!-- Print button -->
+        <xar:template file="print"/>
+
+        <!-- Description -->
+        <div class="xar-publications-download-detail-title">
+            <b>Description</b>
+        </div>
+        <xar:if condition="!empty($fields['image'])">
+            <div style="width: 400px">
+                <div style="float: left;">
+                    <xar:set name="filepath">
+                        $properties['image']->initialization_basedirectory . '/'. $fields['image']
+                    </xar:set>
+                    <img src="#$filepath#" style="margin-right: 25px;" />
+                </div>
+                <div class="xar-publications-download-detail-text ">
+                    <xar:data-output property="$properties['summary']" value="$fields['summary']" />
+                </div>
             </div>
-            <!--
-                <xar:if condition="!empty($categories) and count($categories) gt 0">
-                    [ <xar:foreach in="$categories" value="$cat">
-                        #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
-                    </xar:foreach> ]
-                </xar:if>
-            -->
-            
-            <!-- Description -->
-            <h4>Description:</h4>
-            <p>
+        <xar:else/>
+            <div class="xar-publications-download-detail-text">
                 <xar:data-output property="$properties['summary']" value="$fields['summary']" />
-            </p>
+            </div>
+        </xar:if>
             
-            <!-- Download link -->
-            <h4>Link:</h4>
-            <xar:set name="filepath">
-                $properties['fileupload']->initialization_basedirectory . '/'. $fields['fileupload']
-            </xar:set>
-            <xar:if condition="empty($fields['fileupload'])">
-                <!-- Nothing to display -->
-            <xar:elseif condition="xarModIsHooked('uploads','publications',$fields['itemtype']) and substr($fields['fileupload'],0,1) eq ';'" />
+        <!-- Download link(s) -->
+        <xar:set name="filepath">
+            $properties['fileupload']->initialization_basedirectory . '/'. $fields['fileupload']
+        </xar:set>
+
+        <xar:if condition="empty($fields['fileupload'])">
+            <!-- Nothing to display -->
+
+        <xar:elseif condition="xarModIsHooked('uploads','publications',$fields['itemtype']) and substr($fields['fileupload'],0,1) eq ';'" />
+            <!-- Hook output -->
             <xar:comment>
                 If you hook the uploads module to publications, then file upload fields will contain
                 a comma-separated list of file ids, and you will need to call an API function to
                 retrieve the file information. For dynamic extra fields, you can use [fieldname]_output
                 directly to access the file information.
             </xar:comment>
-                <xar:set name="fileupload_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $fields['fileupload'], 'multiple' => true))</xar:set>
-                <xar:foreach in="$fileupload_output" key="$fileid" value="$fileinfo">
-                    <p>
-                        <a href="#$fileinfo['fileDownload']#">
-                            #$fileinfo['fileName']#
-                        </a>
-                    </p>
-                </xar:foreach>
-            <xar:elseif condition="file_exists($filepath)" />
+            <xar:set name="fileupload_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $fields['fileupload'], 'multiple' => true))</xar:set>
+            <xar:foreach in="$fileupload_output" key="$fileid" value="$fileinfo">
                 <p>
-                    <a href="#$filepath#" title="#$fields['title']#">
-                        <xar:data-output property="$properties['fileupload']" value="$fields['fileupload']" />
+                    <a href="#$fileinfo['fileDownload']#">
+                        #$fileinfo['fileName']#
                     </a>
                 </p>
-            <xar:else />
-                <p>
-                    <xar:data-output property="$properties['fileupload']" value="$fields['fileupload']" />
-                </p>
-            </xar:if>
-        </div>
+            </xar:foreach>
+        <xar:elseif condition="file_exists($filepath)" />
+            <!-- Simple download link -->
+            <xar:set name="filesize">
+                number_format(filesize($filepath)/1000,1)
+            </xar:set>
+            <div class="xar-publications-download-detail-text ">
+                <a href="#$filepath#" title="#$fields['title']#">
+                    Download this file:&#160;
+                    <xar:data-output property="$properties['download']" value="$fields['download']" />&#160;
+                    (#$filesize#kB)
+                </a>
+            </div>
+        <xar:else />
+            <!-- Link exists, but we don't have a file, so display the file name -->
+            <div class="xar-publications-download-detail-text ">
+                <xar:data-output property="$properties['fileupload']" value="$fields['fileupload']" />
+            </div>
+        </xar:if>
 
         <!-- Previous and next links -->
         <xar:if condition="!empty($prevart) || !empty($nextart)">

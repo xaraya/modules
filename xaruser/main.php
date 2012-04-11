@@ -26,15 +26,23 @@ function publications_user_main($args)
 #
 # Get the ID of the translation if required
 #
-        if (!empty($args['$translate']))
-            $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
-        return xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $id)));
+        if(!xarVarFetch('translate', 'int:1', $translate,  1, XARVAR_NOT_REQUIRED)) {return;}
+        return xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $id,'translate' => $translate)));
     } else {
 # --------------------------------------------------------
 #
-# No default page, just show the view page
+# No default page, check for a redirect or just show the view page
 #
-        return xarController::redirect(xarModURL('publications', 'user', 'view'));
+        $redirect = xarModVars::get('publications','defaultfrontpage');
+        if (!empty($redirect)) {
+            $truecurrenturl = xarServer::getCurrentURL(array(), false);
+            $urldata = xarModAPIFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+            xarController::redirect($urldata['redirecturl']);
+            return true;
+        } else {
+            xarController::redirect(xarModURL('publications', 'user', 'view'));
+        }
+        return true;
     }
 }
 

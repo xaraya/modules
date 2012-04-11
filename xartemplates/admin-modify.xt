@@ -30,8 +30,16 @@
             
             <xar:set name="index">0</xar:set>
             <xar:foreach in="$items" key="$key" value="$item">
+                
+                <!-- Pass the object its values -->
                 <xar:set name="dummy">$object->setFieldValues($item,1)</xar:set>
+
+                <!-- CHECKME: is this needed given we pass the prefix below -->
                 <xar:set name="dummy">$object->setFieldPrefix($key)</xar:set>
+                
+                <!-- Add the itemid as a reference for e.g. position, categories -->
+                <xar:set name="dummy">$object->itemid = $key</xar:set>
+
                 <xar:if condition="$tab eq 'preview' AND $index eq 0">
                     <xar:set name="visible">array('none','none','block')</xar:set>
                 <xar:elseif condition="$tab ne 'preview' AND $index eq 0" />
@@ -89,6 +97,9 @@
                     &#160;
                     <xar:var name="label">Update and Quit</xar:var>
                     <xar:button type="submit" name="quit" label="$label" />
+                    &#160;
+                    <xar:var name="label">Update and Show</xar:var>
+                    <xar:button type="submit" name="front" label="$label" />
                     <xar:comment>
                         show a link to delete the article
                     </xar:comment>

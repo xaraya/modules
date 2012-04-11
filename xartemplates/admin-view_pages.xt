@@ -4,34 +4,27 @@
 
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <h2>View Publications Tree</h2>
+        <h2>View Publications Trees</h2>
 
         <xar:set name="root_pages">#xarMod::apiFunc('publications', 'user', 'getpages', array('parent'=&gt;0))#</xar:set>
         <xar:if condition="!empty($root_pages)">
             <xar:set name="method">'get'</xar:set>
-            <form method="$method" action="#xarModURL('publications','admin','view_pages')#">
-                <div>
-                    <xar:if condition="$method eq 'get'">
-                        <input name="module" type="hidden" value="publications"/>
-                        <input name="type" type="hidden" value="admin"/>
-                        <input name="func" type="hidden" value="view_pages"/>
-                    </xar:if>
+            <form method="post" action="#xarModURL('publications','admin','view_pages')#">
+                <label for="contains">Select tree:</label>&#160;
 
-                    <label for="contains">Select tree:</label>&#160;
-
-                    <select name="contains" id="contains">
-                        <option value="0">-- All --</option>
-                        <xar:loop name="$root_pages">
-                            <xar:if condition="$loop:item.id eq $contains">
-                                <option value="#$loop:item.id#" selected="selected">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.ptid.name)#)</option>
-                            <xar:else />
-                                <option value="#$loop:item.id#">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.ptid.name)#)</option>
-                            </xar:if>
-                        </xar:loop>
-                    </select>
-                    &#160;
-                    <input type="submit" value="#xarML('Refresh')#"/>
-                </div>
+                <select name="root_id" id="root_id">
+                    <option value="0">-- All --</option>
+                    <xar:loop name="$root_pages">
+                        <xar:if condition="$loop:item.id eq $root_id">
+                            <option value="#$loop:item.id#" selected="selected">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.pubtype_name)#)</option>
+                        <xar:else />
+                            <option value="#$loop:item.id#">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.pubtype_name)#)</option>
+                        </xar:if>
+                    </xar:loop>
+                </select>
+                &#160;
+                <xar:var name="label">Refresh</xar:var>
+                <xar:button type="submit" label="$label"/>
             </form>
         </xar:if>
 
@@ -45,7 +38,7 @@
                     </xar:set>
                     <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                         <a href="#$link#" title="#xarML('Add A New Publication')#" style="margin-right: 5px">
-                            <img src="#xarTplGetImage('icons/'.'add.png', 'base')#" width="16" height="16" alt="#xarML('Add')#"/>
+                            <img src="#xarTplGetImage('icons/'.'document-new.png', 'base')#" width="16" height="16" alt="#xarML('Add')#"/>
                         </a>
                     <xar:else />
                         <a href="#$link#">
@@ -58,19 +51,37 @@
                 <div><a href="#xarModURL('publications','admin','new')#">Add Page</a></div>
             </xar:if>
             <!-- Define alpahnumeric states here -->
+            <xar:set name="stateoptions">
+                array(
+                    array('id' => 0, 'name' => 'Deleted'),
+                    array('id' => 1, 'name' => 'Inactive'),
+                    array('id' => 2, 'name' => 'Template'),
+                    array('id' => 3, 'name' => 'Active'),
+                    array('id' => 4, 'name' => 'Front Page'),
+                    array('id' => 5, 'name' => 'Empty'),
+                )
+            </xar:set>
             <xar:set name="state">
                 array(
-                        0 => 'deleted',
-                        1 => 'inactive',
-                        3 => 'active',
-                        2 => 'template',
-                        4 => 'frontpage',
-                        5 => 'empty',
+                    array('id' => 0, 'name' => 'red-12.png'),
+                    array('id' => 1, 'name' => 'yellow-12.png'),
+                    array('id' => 2, 'name' => 'orange-12.png'),
+                    array('id' => 3, 'name' => 'green-12.png'),
+                    array('id' => 4, 'name' => 'blue-12.png'),
+                    array('id' => 5, 'name' => 'clear-12.png'),
+                )
+            </xar:set>
+            <xar:set name="options">
+                array(
+                //    array('id' => 0, 'name' => 'red-12.png'),
+                    array('id' => 1, 'name' => 'green-12.png'),
                 )
             </xar:set>
             <table border="0" width="100%" cellspacing="0" cellpadding="0">
                 <tr>
                     <th>Name</th>
+                    <th style="text-align: center">M</th>
+                    <th style="text-align: center">S</th>
                     <th>Description</th>
                     <th>Translations</th>
                     <th>Options</th>
@@ -88,7 +99,17 @@
                                 #$loop:item.xar_map#
                                 #xarVarPrepForDisplay($loop:item.name)#
                             </td>
-                            <td class="#$row_class#" title="#xarML('Status: ')# #$state[$loop->item['status']]#">
+                            <td class="#$row_class#" style="text-align: center">
+                                <xar:set name="value">$loop->item['menu_flag']</xar:set>
+                                <xar:data-output type="iconcheckbox" icon_directory="set1" icon_options="$options" value="$value"/>
+                            </td>
+                            <td class="#$row_class#" style="text-align: center">
+                                <xar:set name="value">$loop->item['sitemap_flag']</xar:set>
+                                <xar:data-output type="iconcheckbox" icon_directory="set1" icon_options="$options" value="$value"/>
+                            </td>
+                            <td class="#$row_class#" title="#xarML('Status: ')# #$stateoptions[$loop->item['status']]['name']#">
+                                <xar:set name="value">$loop->item['status']</xar:set>
+                                <xar:data-output type="icondropdown" icon_directory="set1" icon_options="$state" value="$value"/>&#160;
                                 <span class="xar-publications-status-#$state[$loop->item['status']]#">#xarVarPrepForDisplay($loop:item.pubtype_name)#: #xarVarPrepForDisplay($loop:item.title)#</span>
                             </td>
                             <td align="left" class="#$row_class#">
@@ -108,6 +129,20 @@
                                         <xar:else />
                                             <a href="#$link#">
                                                 Modify
+                                            </a>
+                                        </xar:if>
+                                    </xar:access>
+                                    <xar:access level="700">
+                                        <xar:set name="link">
+                                            xarModURL('publications', 'admin', 'clone', array('ptid' => $loop->item['ptid'], 'itemid' => $loop->item['id']))
+                                        </xar:set>
+                                        <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
+                                            <a href="#$link#" title="#xarML('Clone this publication')#" style="margin-right: 5px">
+                                                <img src="#xarTplGetImage('icons/'.'add.png', 'base')#" width="16" height="16" alt="#xarML('Clone Publication')#"/>
+                                            </a>
+                                        <xar:else />
+                                            <a href="#$link#">
+                                                Clone
                                             </a>
                                         </xar:if>
                                     </xar:access>
@@ -136,6 +171,20 @@
                                         <xar:else />
                                             <a href="#$link#">
                                                 Display
+                                            </a>
+                                        </xar:if>
+                                    </xar:access>
+                                    <xar:access level="800">
+                                        <xar:set name="link">
+                                            xarModURL('publications', 'admin', 'templates_page', array('ptid' => $loop->item['ptid'], 'itemid' => $loop->item['id']))
+                                        </xar:set>
+                                        <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
+                                            <a href="#$link#" title="#xarML('Manage templates of this item')#" style="margin-right: 5px">
+                                                <img src="#xarTplGetImage('template.png','publications')#" width="16" height="16" alt="#xarML('Display Publication')#"/>
+                                            </a>
+                                        <xar:else />
+                                            <a href="#$link#">
+                                                Templates
                                             </a>
                                         </xar:if>
                                     </xar:access>

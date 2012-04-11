@@ -22,6 +22,9 @@
 
             <xar:template file="editicons"/>
 
+            <!-- Print button -->
+            <xar:template file="print"/>
+
             <xar:data-output property="$properties['title']" />
             <br />
           </td>

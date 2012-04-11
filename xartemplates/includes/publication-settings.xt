@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <fieldset>
         <legend>
-            Characteristics
+            Page Characteristics
         </legend>
         <div class="xar-row">
             <div class="xar-col">
@@ -21,6 +21,15 @@
             </div>
             <div class="xar-col">
                 <xar:data-input property="$properties['itemtype']" value="$ptid" />
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">Page Type</xar:var>
+                <xar:data-label property="$properties['pagetype']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['pagetype']"/>
             </div>
         </div>
         <div class="xar-row">
@@ -62,7 +71,7 @@
     </fieldset>
     <fieldset>
         <legend>
-            Publication
+            Publication Period
         </legend>
         <div class="xar-row">
             <div class="xar-col">
@@ -94,7 +103,7 @@
     </fieldset>
     <fieldset>
         <legend>
-            Status
+            Page Status
         </legend>
         <div class="xar-row">
             <div class="xar-col">
@@ -216,6 +225,60 @@
                     <xar:data-input property="$properties['keywords']" />
                 </div>
             </div>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">Include in Site Map</xar:var>
+                    <xar:data-label property="$properties['sitemap_flag']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['sitemap_flag']" />
+                </div>
+            </div>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">Site Map Source</xar:var>
+                    <xar:data-label property="$properties['sitemap_source_flag']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['sitemap_source_flag']" />
+                </div>
+            </div>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">Site Map Custom Field</xar:var>
+                    <xar:data-label property="$properties['sitemap_custom_field']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['sitemap_custom_field']" />
+                </div>
+            </div>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">Include in Menu</xar:var>
+                    <xar:data-label property="$properties['menu_flag']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['menu_flag']" />
+                </div>
+            </div>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">Menu Source</xar:var>
+                    <xar:data-label property="$properties['menu_source_flag']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['menu_source_flag']" />
+                </div>
+            </div>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">Menu Custom Field</xar:var>
+                    <xar:data-label property="$properties['menu_custom_field']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['menu_custom_field']" />
+                </div>
+            </div>
         </fieldset>
         <fieldset>
             <legend>
@@ -287,20 +350,33 @@
         <legend>
             Display Access
         </legend>
-        <xar:set name="propname">"dd_" . $properties['access']->id . '_display'</xar:set>
+        <xar:set name="prefix">$object->getFieldPrefix()</xar:set>
+        <xar:if condition="empty($prefix) AND $prefix ne '0'">
+            <xar:set name="propname">"dd_" . $properties['access']->id . '_display'</xar:set>
+        <xar:else/>
+            <xar:set name="propname">$prefix . "_dd_" . $properties['access']->id . '_display'</xar:set>
+        </xar:if>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['display']"/>
         <legend>
             Modify Access
         </legend>
-        <xar:set name="propname">"dd_" . $properties['access']->id . '_modify'</xar:set>
+        <xar:if condition="empty($prefix) AND $prefix ne '0'">
+            <xar:set name="propname">"dd_" . $properties['access']->id . '_modify'</xar:set>
+        <xar:else/>
+            <xar:set name="propname">$prefix . "_dd_" . $properties['access']->id . '_modify'</xar:set>
+        </xar:if>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['modify']"/>
         <legend>
             Delete Access
         </legend>
-        <xar:set name="propname">"dd_" . $properties['access']->id . '_delete'</xar:set>
+        <xar:if condition="empty($prefix) AND $prefix ne '0'">
+            <xar:set name="propname">"dd_" . $properties['access']->id . '_delete'</xar:set>
+        <xar:else/>
+            <xar:set name="propname">$prefix . "_dd_" . $properties['access']->id . '_delete'</xar:set>
+        </xar:if>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['delete']"/>
     </fieldset>
-    <xar:if condition="!xarModIsAvailable('categories')">
+    <xar:if condition="xarModIsAvailable('categories')">
         <fieldset>
             <legend>
                 Categories

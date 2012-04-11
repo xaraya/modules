@@ -35,13 +35,27 @@ function publications_admin_templates_page($args)
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
 
     $basepath = sys::code() . "modules/publications/xartemplates/objects/" . $pubtype;
-    $source = $basepath . "/" . $data['file'] . "_" . $data['itemid'] . ".xt";
+    $sourcefile = $basepath . "/" . $data['file'] . "_" . $data['itemid'] . ".xt";
+    $overridepath = "themes/" . xarModVars::get('themes', 'default_theme') . "/modules/publications/objects/" . $pubtype;
+    $overridefile = $overridepath . "/" . $data['file'] . "-" . $data['itemid'] . ".xt";
 
+    // If we are saving, write the file now
     if ($confirm && !empty($data['source_data'])) {
-        xarMod::apiFunc('publications', 'admin', 'write_file', array('file' => $source, 'data' => $data['source_data']));
+        xarMod::apiFunc('publications', 'admin', 'write_file', array('file' => $overridefile, 'data' => $data['source_data']));
     }
     
-    $data['source_data'] = trim(xarMod::apiFunc('publications', 'admin', 'read_file', array('file' => $source)));
+    // Let the template know what kind of file this is
+    if (file_exists($overridefile)) {
+        $data['filetype'] = 'theme';
+        $filepath = $overridefile;
+        $data['writable'] = is_writable($overridefile);
+    } else {
+        $data['filetype'] = 'module';
+        $filepath = $sourcefile;
+        $data['writable'] = is_writeable_dir($overridepath);
+    }
+    
+    $data['source_data'] = trim(xarMod::apiFunc('publications', 'admin', 'read_file', array('file' => $filepath)));
 
     // Initialize the template
     if (empty($data['source_data'])) {
@@ -55,5 +69,40 @@ function publications_admin_templates_page($args)
         array('id' => 'detail',  'name' => 'detail display'),
     );
     return $data;
+}
+
+function is_writeable_dir($path)
+{
+    $patharray = explode("/",$path);
+    array_shift($patharray);
+    $path = "themes";
+    foreach ($patharray as $child) {
+        if (!file_exists($path . "/" . $child)) break;
+        $path = $path . "/" . $child;
+    }
+    return check_dir($path);
+} 
+
+/**
+ * Check whether directory permissions allow to write and read files inside it
+ *
+ * @access private
+ * @param string dirname directory name
+ * @return boolean true if directory is writable, readable and executable
+ */
+function check_dir($dirname)
+{
+    if (@touch($dirname . '/.check_dir')) {
+        $fd = @fopen($dirname . '/.check_dir', 'r');
+        if ($fd) {
+            fclose($fd);
+            unlink($dirname . '/.check_dir');
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+    return true;
 }
 ?>

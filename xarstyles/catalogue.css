@@ -1,0 +1,41 @@
+/*
+    Used for the publications catalogue pages.
+    Override this in the theme to use your own custom CSS
+*/
+
+.xar-publications-catalogue-summary-title {
+    font-size: 12pt;
+    margin: .5em 0 .25em 0;
+    padding: 0;
+    border: 0 none;
+    line-height: 1.9em;
+}
+
+.xar-publications-catalogue-summary-postby {
+    font-size: 8pt;
+}
+
+.xar-publications-catalogue-summary-text {
+    font-size: 10pt;
+}
+
+.xar-publications-catalogue-summary-footer {
+    border-bottom: 1px solid;
+}
+
+.xar-publications-catalogue-detail-title {
+    font-size: 12pt;
+    margin: .5em 0 .25em 0;
+    padding: 0;
+    border: 0 none;
+    line-height: 1.9em;
+}
+
+.xar-publications-catalogue-detail-text {
+    font-size: 10pt;
+}
+.xar-publications-catalogue-author-text {
+    font-size: 8pt;
+}
+
+

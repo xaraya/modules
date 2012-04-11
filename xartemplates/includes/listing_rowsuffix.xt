@@ -43,6 +43,20 @@
                 </xar:access>
                 <xar:access level="700">
                     <xar:set name="link">
+                        xarModURL($module, 'admin', 'clone', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))
+                    </xar:set>
+                    <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
+                        <a href="#$link#" title="#xarML('Clone this publication')#" style="margin-right: 5px">
+                            <img src="#xarTplGetImage('icons/'.'add.png', 'base')#" width="16" height="16" alt="#xarML('Clone Publication')#"/>
+                        </a>
+                    <xar:else />
+                        <a href="#$link#">
+                            Clone
+                        </a>
+                    </xar:if>
+                </xar:access>
+                <xar:access level="700">
+                    <xar:set name="link">
                         xarModURL($module, 'admin', 'delete', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))
                     </xar:set>
                     <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
@@ -69,6 +83,20 @@
                         </a>
                     </xar:if>
                 </xar:access>
+                <xar:access level="800">
+                    <xar:set name="link">
+                        xarModURL($module, 'admin', 'templates_page', array('ptid' => $loopitem['itemtype'], 'itemid' => $loopitem[$primaryalias]))
+                    </xar:set>
+                    <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
+                        <a href="#$link#" title="#xarML('Manage templates of this item')#" style="margin-right: 5px">
+                            <img src="#xarTplGetImage('template.png','publications')#" width="16" height="16" alt="#xarML('Display Publication')#"/>
+                        </a>
+                    <xar:else />
+                        <a href="#$link#">
+                            Templates
+                        </a>
+                    </xar:if>
+                </xar:access>
                 <input type="checkbox" name="optionscheckbox" id="#$loopitem[$primaryalias]#"  />
             </td>
         </xar:if>
@@ -77,47 +105,42 @@
             <xar:set name="ptid">$loopitem[$primaryalias]</xar:set>
             <xar:set name="args">DataObjectDescriptor::getObjectID(array('name' => $properties['name']->value))</xar:set>
             <xar:sec mask="ManagePublications" catch="false">
-                <a href="#xarModURL('publications','admin','modify_pubtype',array('itemid' => $ptid))#">                    
+                <a href="#xarModURL('publications','admin','modify_pubtype',array('itemid' => $ptid))#" style="margin-right: 5px">                    
                     <img src="#xarTplGetImage('icons/modify.png','base')#"/>
                 </a>
             </xar:sec>
-            &#160;|&#160;
             <xar:sec mask="ManagePublications" catch="false">
                 <xar:if condition="xarModVars::get('publications', 'defaultpubtype') eq $ptid">
-                    <img src="#xarTplGetImage('icons/delete.png','base')#"/>
+                    <img src="#xarTplGetImage('icons/delete.png','base')#" style="margin-right: 5px"/>
                 <xar:else/>
-                    <a href="#xarModURL('publications','admin','delete_pubtype',array('itemid' => $ptid, 'name' => 'objects'))#">                    
+                    <a href="#xarModURL('publications','admin','delete_pubtype',array('itemid' => $ptid, 'name' => 'objects'))#" style="margin-right: 5px">                    
                         <img src="#xarTplGetImage('icons/delete.png','base')#"/>
                     </a>
                 </xar:if>
             </xar:sec>
-            &#160;|&#160;
             <xar:sec mask="AdminPublications" catch="false">
-                <a href="#xarModURL('publications','admin','modifyconfig',array('ptid' => $ptid, 'tab' => 'pubtypes'))#">                    
+                <a href="#xarModURL('publications','admin','modifyconfig',array('ptid' => $ptid, 'tab' => 'pubtypes'))#" style="margin-right: 5px">                    
                     <img src="#xarTplGetImage('icons/modify-config.png','base')#"/>
                 </a>
             <xar:else />                
-                Publication Config
+                Publication Config &#160;|&#160;
             </xar:sec>
-            &#160;|&#160;
             <xar:sec mask="EditPublications" catch="false">
-                <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#">                    
+                <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#" style="margin-right: 5px">                    
                     <img src="#xarTplGetImage('icons/item-list.png','base')#"/>
                 </a>
             <xar:else />                
-                View Publications
+                View Publications &#160;|&#160;
             </xar:sec>
-            &#160;|&#160;
             <xar:sec mask="AddPublications" catch="false">
-                <a href="#xarModURL('publications','admin','new',array('ptid' => $ptid))#">                    
+                <a href="#xarModURL('publications','admin','new',array('ptid' => $ptid))#" style="margin-right: 5px">                    
                     <img src="#xarTplGetImage('icons/add.png','base')#"/>
                 </a>
             <xar:else />                
-                Add Publication
-            </xar:sec>
-            &#160;|&#160;
+                Add Publication &#160;|&#160;
+            </xar:sec>            
             <xar:sec mask="AdminPublications" catch="false">
-                <a href="#xarModURL('publications','admin','templates_type',array('ptid' => $ptid, 'tab' => 'pubtypes'))#">                    
+                <a href="#xarModURL('publications','admin','templates_type',array('ptid' => $ptid, 'tab' => 'pubtypes'))#" style="margin-right: 5px">                    
                     <img src="#xarTplGetImage('template.png','publications')#"/>
                 </a>
             <xar:else />                

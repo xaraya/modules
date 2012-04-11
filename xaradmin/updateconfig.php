@@ -38,6 +38,8 @@ function publications_admin_updateconfig()
         if(!xarVarFetch('sortpubtypes',      'isset', $sortpubtypes,   'id',  XARVAR_NOT_REQUIRED)) {return;}
         if (!xarVarFetch('defaultlanguage', 'str:1:100', $defaultlanguage, xarModVars::get('publications', 'defaultlanguage'), XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('debugmode',    'checkbox', $debugmode, xarModVars::get('publications', 'debugmode'), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('defaultfrontpage', 'str', $defaultfrontpage, xarModVars::get('publications', 'defaultfrontpage'), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('defaultbackpage', 'str', $defaultbackpage, xarModVars::get('publications', 'defaultbackpage'), XARVAR_NOT_REQUIRED)) return;
 
         xarModVars::set('publications', 'defaultpubtype', $defaultpubtype);
         xarModVars::set('publications', 'sortpubtypes', $sortpubtypes);
@@ -45,6 +47,8 @@ function publications_admin_updateconfig()
         xarModVars::set('publications', 'debugmode', $debugmode);
         xarModVars::set('publications', 'usealias', $usealias);
         xarModVars::set('publications', 'usetitleforurl', $usetitleforurl);
+        xarModVars::set('publications', 'defaultfrontpage',$defaultfrontpage);
+        xarModVars::set('publications', 'defaultbackpage',$defaultbackpage);
         
         // Allow multilanguage only if the languages property is present
         sys::import('modules.dynamicdata.class.properties.registration');

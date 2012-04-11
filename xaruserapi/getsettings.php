@@ -23,6 +23,8 @@ function publications_userapi_getsettings($data)
 {
     if (empty($data['ptid']))
         throw new Exception('Missing publication type for caching');
+        
+    // If already cached, then get that
     if (xarCore::isCached('publications', 'context' . $data['ptid']))
         return xarCore::getCached('publications', 'context' . $data['ptid']);
         
@@ -70,6 +72,8 @@ function publications_userapi_getglobalsettings()
                 'detail_template' => '',
                 'page_template' => "",
                 'theme' => '',
+                'sitemap_source_flag' => 2,
+                'menu_source_flag' => 2,
                 'allow_translations' => true,
                     );
     return $settings;

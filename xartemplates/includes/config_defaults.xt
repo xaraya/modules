@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    If debug mode is active, exception messages are visible to the debug administrators, which are defined <a href="#xarModURL('roles','admin','modifyconfig',array('tab'=>'debugging'))#">here</a>.
     <div class="xar-row">
         <div class="xar-col">
-            <xar:var name="label">Debug mode</xar:var>
-            <label for="checked" title="#$label#" class="xar-form-label">            
-                Enable debug mode:            
+            <label for="defaultfrontpage" title="#xarML('The default page to show in the front end.')#" class="xar-form-label">
+                Default front end page                
             </label>
         </div>
         <div class="xar-col">
-            <xar:set name="checked">xarModVars::get('publications', 'debugmode')</xar:set>
-            <xar:data-input type="checkbox" name="debugmode"  checked="$checked"/>
+            <xar:set name="value">xarModVars::get('publications','defaultfrontpage')</xar:set>
+            <input name="defaultfrontpage" id="defaultfrontpage" value="#$value#" size="50" />
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="defaultbackpage" title="#xarML('The default page to show in the back end.')#" class="xar-form-label">
+                Default back end page                
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:set name="value">xarModVars::get('publications','defaultbackpage')</xar:set>
+            <input name="defaultbackpage" id="defaultbackpage" value="#$value#" size="50"/>
         </div>
     </div>
 </xar:template>

@@ -41,12 +41,12 @@ class Publication extends DataObject
             $access = DataPropertyMaster::getProperty(array('name' => 'access'));
             $prefix = $this->getFieldPrefix();
             
-            // Only ignore the prefix if we are creating the base document
+            // Only ignore the prefix if we are CREATING the base document
             // A translation would have a prefix of 0, which is valid
             if (empty($prefix) && $prefix !== '0') {
                 $name = "dd_" . $this->properties['access']->id;
             } else {
-                $name = $this->getFieldPrefix() . "_dd_" . $this->properties['access']->id;
+                $name = $prefix . "_dd_" . $this->properties['access']->id;
             }
             $validprop = $access->checkInput($name . "_display");
             $displayaccess = $access->value;

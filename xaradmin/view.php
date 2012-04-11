@@ -16,7 +16,7 @@ function publications_admin_view($args)
 {
     // Get parameters
     if(!xarVarFetch('startnum', 'isset', $startnum, 1,    XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('ptid',     'isset', $ptid,     xarModVars::get('publications', 'defaultpubtype'), XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('ptid',     'isset', $ptid,     NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('state',   'isset', $state,   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('itemtype', 'isset', $itemtype, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('catid',    'isset', $catid,    NULL, XARVAR_DONT_SET)) {return;}
@@ -27,6 +27,12 @@ function publications_admin_view($args)
     if(!xarVarFetch('object',   'str:1', $object,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     extract($args);
+
+    if (NULL === $ptid) {
+        $ptid = xarSession::getVar('publications_current_pubtype');
+        if (empty($ptid)) $ptid = xarModVars::get('publications', 'defaultpubtype');
+    }
+    xarSession::setVar('publications_current_pubtype', $ptid);
 
     $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
 

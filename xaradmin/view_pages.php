@@ -19,11 +19,17 @@ function publications_admin_view_pages($args)
     if (!xarSecurityCheck('ManagePublications')) return;
 
     // Accept a parameter to allow selection of a single tree.
-    xarVarFetch('contains', 'id', $contains, 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('root_id', 'int', $root_id, NULL, XARVAR_NOT_REQUIRED);
+
+    if (NULL === $root_id) {
+        $root_id = xarSession::getVar('publications_root_id');
+        if (empty($root_id)) $root_id = 0;
+    }
+    xarSession::setVar('publications_root_id', $root_id);
 
     $data = xarMod::apiFunc(
         'publications', 'user', 'getpagestree',
-        array('key' => 'index', 'dd_flag' => false, 'tree_contains_pid' => $contains)
+        array('key' => 'index', 'dd_flag' => false, 'tree_contains_id' => $root_id)
     );
 
     if (empty($data['pages'])) {
@@ -33,7 +39,7 @@ function publications_admin_view_pages($args)
         $data['pages'] = xarMod::apiFunc('publications', 'tree', 'array_maptree', $data['pages']);
     }
 
-    $data['contains'] = $contains;
+    $data['root_id'] = $root_id;
 
     // Check modify and delete privileges on each page.
     // EditPage - allows basic changes, but no moving or renaming (good for sub-editors who manage content)

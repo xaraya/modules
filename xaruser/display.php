@@ -36,14 +36,20 @@ function publications_user_display($args)
     // Get parameters from user
 // this is used to determine whether we come from a pubtype-based view or a
 // categories-based navigation
+// Note we support both id and itemid
     if(!xarVarFetch('name',      'str',   $name,  '', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('ptid',     'id',    $ptid,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemid',    'id',    $id,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('itemid',    'id',    $itemid,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('id',        'id',    $id,    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('page',      'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('translate', 'int:1', $translate,  1, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('layout',    'str:1', $layout,  'detail', XARVAR_NOT_REQUIRED)) {return;}
     
     // Override xarVarFetch
     extract ($args);
+    
+    //The itemid var takes precedence if it exiata
+    if (isset($itemid)) $id = $itemid;
     
 # --------------------------------------------------------
 #
@@ -55,6 +61,9 @@ function publications_user_display($args)
 #
 # Get the ID of the translation if required
 #
+    // First save the "untranslated" id
+    xarVarSetCached('Blocks.publications', 'current_base_id', $id);
+
     if ($translate)
         $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
     
@@ -97,8 +106,11 @@ function publications_user_display($args)
 */
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
+    // Save this as the current pubtype
+    xarVarSetCached('Publications', 'current_pubtype_object', $pubtypeobject);
+    
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
-    $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
+//    $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
     $itemid = $data['object']->getItem(array('itemid' => $id));
     
 # --------------------------------------------------------
@@ -165,6 +177,13 @@ function publications_user_display($args)
         if (!empty($params['host']) && $params['host'] != xarServer::getHost() && $params['host'].":".$params['port'] != xarServer::getHost()) {
             xarController::redirect($url, 301);
         } else{
+            $request = new xarRequest($url);
+            $router = new xarRouter();
+            $router->route($request);
+            $request->setRoute($router->getRoute());
+            $dispatcher = new xarDispatcher();
+            $response = new xarResponse();
+            $dispatcher->dispatch($request, $response);
             parse_str($params['query'], $info);
             $other_params = $info;
             unset($other_params['module']);
@@ -172,7 +191,7 @@ function publications_user_display($args)
             unset($other_params['func']);
             unset($other_params['child']);
             try {
-                $page = xarMod::guiFunc($info['module'],'user',$info['func'],$other_params);
+                $page = xarMod::guiFunc($request->getModule(),'user',$request->getFunction(),$other_params);
             } catch (Exception $e) {
                 return xarResponse::NotFound();
             }
@@ -181,7 +200,7 @@ function publications_user_display($args)
             // echo xarModURL($info['module'],'user',$info['func'],$other_params);
 # --------------------------------------------------------
 #
-# The transform of the subordinate function's template
+# For proxy pages: the transform of the subordinate function's template
 #
             // Find the URLs in submits
             $pattern='/(action)="([^"\r\n]*)"/';
@@ -216,10 +235,49 @@ function publications_user_display($args)
             return $page;
         }
     }
+    
 # --------------------------------------------------------
+#
+# If this is a blocklayout page, then process it
+#
 
-    // Get the complete tree for this section of pages.
-    // We need this for blocks etc.
+    if ($data['object']->properties['pagetype']->value == 2) {
+        // Get a copy of the compiler
+        sys::import('xaraya.templating.compiler');
+        $blCompiler = XarayaCompiler::instance();
+        
+        // Get the data fields
+        $fields = array();
+        $sourcefields = array('title','description','summary','body1','body2','body3','body4','body5','notes');
+        $prefix = strlen('publications.')-1;
+        foreach ($data['object']->properties as $prop) {
+            if (in_array(substr($prop->source, $prefix), $sourcefields)) $fields[] = $prop->name;
+        }
+
+        // Run each template field through the compiler
+        foreach ($fields as $field) {
+            try{        
+                $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
+                $tplString .= xarMod::apiFunc('publications','user','prepareforbl',array('string' => $data['object']->properties[$field]->value));
+
+                $tplString .= '</xar:template>';
+
+                $tplString = $blCompiler->compilestring($tplString);
+                // We don't allow passing $data to the template for now
+                $tpldata = array();
+                $tplString = xarTplString($tplString, $tpldata);
+            } catch(Exception $e) {
+                var_dump($tplString);
+            }
+            $data['object']->properties[$field]->value = $tplString;
+        }
+    }
+
+# --------------------------------------------------------
+#
+# Get the complete tree for this section of pages. We need this for blocks etc.
+#
+
     $tree = xarMod::apiFunc(
         'publications', 'user', 'getpagestree',
         array(
@@ -250,10 +308,10 @@ function publications_user_display($args)
 #
 # Additional data
 #
-    // Specific layout within a template (optional)
-    $data['layout'] = isset($layout) ? $layout : 'detail';
-    
-    // Get the settings for this publication type;
+    // Pass the layout to the template
+    $data['layout'] = $layout;
+
+    // Get the settings for this publication type
     $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $ptid));
     
     // The name of this object
@@ -309,6 +367,12 @@ function publications_user_display($args)
     xarVarSetCached('Blocks.publications', 'ptid', $ptid);
     xarVarSetCached('Blocks.publications', 'author', $data['object']->properties['author']->value);
 
+# --------------------------------------------------------
+#
+# Make the properties available to the template 
+#
+    $data['properties'] =& $data['object']->properties;
+    
     return $data;
 }
 

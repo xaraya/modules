@@ -17,11 +17,11 @@
         <xar:set name="filename">$layout</xar:set>
     <xar:else/>
         <xar:set name="filename">'detail'</xar:set>
-        <xar:if condition="$properties['detail_template']->value AND !empty($properties['id']->value)">
-            <xar:set name="template">$properties['id']->value</xar:set>
-        <xar:else/>
-            <xar:set name="template">''</xar:set>
-        </xar:if>
+    </xar:if>
+    <xar:if condition="$properties['detail_template']->value AND !empty($properties['id']->value)">
+        <xar:set name="template">$properties['id']->value</xar:set>
+    <xar:else/>
+        <xar:set name="template">''</xar:set>
     </xar:if>
 
     <!-- Display -->
