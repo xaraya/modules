@@ -78,6 +78,16 @@ function publications_userapi_get_menu_pages($args)
     $q->addfield('p.pubtype_id AS pubtype_id');
     $q->addfield('p.rightpage_id AS rightpage_id');
     
+    $q->addtable($xartable['publications'], 'tpages_member');
+    $q->eq('tpages_member.id', (int)$tree_contains_id);
+    // Join to find the root page of the tree containing the required page.
+    // This matches the complete tree for the root under the selected page.
+    $q->addtable($xartable['publications'], 'tpages_root');
+    $q->le('tpages_root.leftpage_id', 'expr:tpages_member.leftpage_id');
+    $q->ge('tpages_root.rightpage_id', 'expr:tpages_member.rightpage_id');
+    $q->between('tpages.leftpage_id', 'expr:tpages_root.leftpage_id AND tpages_root.rightpage_id');
+    $q->eq('tpages_root.parentpage_id', 0);
+
     // Add any fiters we found
     foreach ($filters as $k => $v) $q->eq('p.'.$k, $v);
     
