@@ -151,7 +151,7 @@
         if (empty($pagedata)) {
             // Get the page data here now.
             $pagedata = xarMod::apiFunc(
-                'publications', 'user', 'getpagestree',
+                'publications', 'user', 'get_menu_pages',
                 array(
                     'tree_contains_id' => $id,
                     'dd_flag' => true,
