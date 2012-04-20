@@ -58,7 +58,7 @@ function publications_userapi_getglobalsettings()
                 'show_hitcount' => false,
                 'show_ratings' => false,
                 'show_archives' => false,
-                'show_map' => true,
+                'show_map' => false,
                 'show_publinks' => false,
                 'show_pubcount' => true,
                 'do_transform' => true,
