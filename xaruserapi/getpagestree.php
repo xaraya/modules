@@ -118,7 +118,10 @@ function publications_userapi_getpagestree($args)
     $finishedpages = array();
     foreach($pages as $key => $page) {
         if ($page['base_id']) continue;
-        if (isset($translations[$page['id']])) $page['translations'] = $translations[$page['id']];
+        if (isset($translations[$page['id']])) {
+            $page['translations'] = $translations[$page['id']];
+            asort($page['translations']);
+        }
         $finishedpages[] = $page;
     }
 
