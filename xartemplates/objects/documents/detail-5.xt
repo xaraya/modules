@@ -19,23 +19,13 @@
         <!-- Title -->
         <div class="xar-publications-sitemap-detail-title">
             <xar:data-output property="$properties['title']" />
+
+            <!-- Edit icons if allowed -->
+            <xar:template file="editicons"/>
+    
+            <!-- Print button -->
+            <xar:template file="print"/>
         </div>
-
-        <!-- Print button -->
-        <xar:template file="print"/>
-
-        <!-- Edit icons if allowed -->
-        <xar:template file="editicons"/>
-
-        <!--
-        <xar:if condition="!empty($counter)">
-            (#$counter# Reads)
-        </xar:if>
-        <div align="right">
-            <span class="xar-sub"> #$topic_icons# </span>
-        </div>
-        <br />
-        -->
 
         <!-- Body -->
         <div class="xar-publications-sitemap-detail-text">
@@ -60,7 +50,7 @@
                                 <xar:for start="$i = 0" test="$i lt $loop->item['depth']" iter="$i++">
                                     &#160;&#160;&#160;&#160;
                                 </xar:for>
-                                <a href="#xarModURL('publications','user','display',array('itemid' => $loop->item['id']))#" title="$loop->item['title']">
+                                <a href="#xarModURL('publications','user','display',array('itemid' => $loop->item['id']))#" title="#$loop->item['title']#">
                                     <xar:set name="source_flag">$loop->item['sitemap_source_flag']</xar:set>
                                     <xar:if condition="$source_flag eq 1">
                                         <xar:set name="pubtypesettings">xarMod::apiFunc('publications','user','getsettings',array('ptid' => $loop->item['pubtype_id']))</xar:set>

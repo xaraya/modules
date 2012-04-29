@@ -23,13 +23,13 @@
         <!-- Title -->
         <div class="xar-publications-document-detail-title">
             <xar:data-output property="$properties['title']" />
+
+            <!-- Edit icons if allowed -->
+            <xar:template file="editicons"/>
+    
+            <!-- Print button -->
+            <xar:template file="print"/>
         </div>
-
-        <!-- Print button -->
-        <xar:template file="print"/>
-
-        <!-- Edit icons if allowed -->
-        <xar:template file="editicons"/>
 
         <!--
         <xar:if condition="!empty($counter)">

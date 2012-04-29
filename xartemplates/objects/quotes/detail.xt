@@ -14,13 +14,14 @@
         This item cannot be viewed
     <xar:else />
 
-        <xar:template file="editicons"/>
-
-        <!-- Print button -->
-        <xar:template file="print"/>
-
         <div class="xar-title">
             <xar:data-output property="$properties['source']" />
+
+            <!-- Edit icons if allowed -->
+            <xar:template file="editicons"/>
+    
+            <!-- Print button -->
+            <xar:template file="print"/>
         </div>
         <div class="xar-norm">
             Quote

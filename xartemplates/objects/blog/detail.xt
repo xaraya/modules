@@ -16,17 +16,13 @@
         <!-- Title -->
         <div class="xar-publications-blog-detail-title">
             <xar:data-output property="$properties['title']" />
+
+            <!-- Edit icons if allowed -->
+            <xar:template file="editicons"/>
+    
+            <!-- Print button -->
+            <xar:template file="print"/>
         </div>
-
-        <!-- Edit icons if allowed -->
-        <xar:template file="editicons"/>
-
-        <!-- Print button -->
-        <xar:template file="print"/>
-
-        <!--
-        <div class="xar-floatright">#$topic_icons#</div>
-        -->
 
         <!-- Author -->
         <div class="xar-publications-blog-detail-postby">

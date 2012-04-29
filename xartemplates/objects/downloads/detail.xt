@@ -21,13 +21,13 @@
         <!-- Title -->
         <div class="xar-publications-download-detail-title">
             <xar:data-output property="$properties['title']" value="$fields['title']" />
+
+            <!-- Edit icons if allowed -->
+            <xar:template file="editicons"/>
+    
+            <!-- Print button -->
+            <xar:template file="print"/>
         </div>
-
-        <!-- Edit icons if allowed -->
-        <xar:template file="editicons"/>
-
-        <!-- Print button -->
-        <xar:template file="print"/>
 
         <!-- Description -->
         <div class="xar-publications-download-detail-title">

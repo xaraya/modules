@@ -18,13 +18,14 @@
         <div id="wrap">
             <div id="header">
 
-                <xar:template file="editicons"/>
-
-                <!-- Print button -->
-                <xar:template file="print"/>
-
                 <h1>
                     <xar:data-output property="$properties['title']" />
+
+                    <!-- Edit icons if allowed -->
+                    <xar:template file="editicons"/>
+            
+                    <!-- Print button -->
+                    <xar:template file="print"/>
                 </h1>
                 <p>
                     <xar:if condition="!empty($counter)">

@@ -20,17 +20,14 @@
         <!-- Title -->
         <div class="xar-publications-news-detail-title">
             <xar:data-output property="$properties['title']" />
+
+            <!-- Edit icons if allowed -->
+            <xar:template file="editicons"/>
+    
+            <!-- Print button -->
+            <xar:template file="print"/>
         </div>
 
-        <!-- Edit icons if allowed -->
-        <xar:template file="editicons"/>
-
-        <!-- Print button -->
-        <xar:template file="print"/>
-
-        <!--
-        <div class="xar-floatright">#$topic_icons#</div>
-        -->
         <div class="xar-sub">
             <xar:if condition="!empty($profile)">
                 <xar:set name="author_string">'

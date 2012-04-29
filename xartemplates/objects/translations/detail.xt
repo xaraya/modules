@@ -19,15 +19,15 @@
             <tr>
                 <td align="left" valign="top" class="xar-normal">
 
-                    <xar:template file="editicons"/>
-
-                    <!-- Print button -->
-                    <xar:template file="print"/>
-
-                    <span class="xar-title">
+                    <div class="xar-title">
                         <xar:data-output property="$properties['title']" />
-                    </span>
-                    <br />
+            
+                        <!-- Edit icons if allowed -->
+                        <xar:template file="editicons"/>
+                
+                        <!-- Print button -->
+                        <xar:template file="print"/>
+                    </div>
                     <!--
                     <xar:if condition="!empty($counter)">
                         (#$counter#

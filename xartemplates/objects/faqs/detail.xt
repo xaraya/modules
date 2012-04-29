@@ -20,13 +20,13 @@
         <!-- Question -->
         <div class="xar-publications-faq-detail-title">
             <xar:data-output property="$properties['question']" />
+
+            <!-- Edit icons if allowed -->
+            <xar:template file="editicons"/>
+    
+            <!-- Print button -->
+            <xar:template file="print"/>
         </div>
-
-        <!-- Edit icons if allowed -->
-        <xar:template file="editicons"/>
-
-        <!-- Print button -->
-        <xar:template file="print"/>
 
         <!-- Question detail -->
         <xar:if condition="!empty($properties['details']->value)">
