@@ -49,7 +49,7 @@
             // Empty the table
             sys::import('xaraya.structures.query');
             $tables = xarDB::getTables();
-            $q = new Query('DELETE');
+            $q = new Query('DELETE', $tables['sitemapper_links']);
             $q->run();
             
             // Lazy man's empty
