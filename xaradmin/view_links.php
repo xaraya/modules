@@ -46,26 +46,32 @@
                 }
             }
             
+            // Empty the table
+            sys::import('xaraya.structures.query');
+            $tables = xarDB::getTables();
+            $q = new Query('DELETE');
+            $q->run();
+            
             // Lazy man's empty
             $object = DataObjectMaster::getObject(array('name' => 'sitemapper_links'));
             $defaultfields = $object->getFieldValues();
             foreach ($data['locations'] as $location) {
                 
-                // Seee if we alrady have this page in the DB
-                $objectlist = DataObjectMaster::getObjectList(array('name' => 'sitemapper_links'));
-                $where = "location = '" . $location . "'";
-                $item = $objectlist->getItems(array('where' => $where));
+                // See if we alrady have this page in the DB
+//                $objectlist = DataObjectMaster::getObjectList(array('name' => 'sitemapper_links'));
+//                $where = "location = '" . $location . "'";
+//                $item = $objectlist->getItems(array('where' => $where));
     
-                if (empty($item)) {
+//                if (empty($item)) {
                     $defaultfields['location'] = $location;
                     $object->setFieldValues($defaultfields);
                     $object->createItem(array('itemid' => 0));
-                } else {
+//                } else {
                     // Just jump for now
-                    continue;
-                    $object->setFieldValues(current($item));
-                    $object->updateItem();
-                }
+//                    continue;
+//                    $object->setFieldValues(current($item));
+//                    $object->updateItem();
+//                }
                 
             }
         } else {
