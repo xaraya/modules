@@ -112,6 +112,12 @@
             </div>
             <div class="xar-col">
                 <xar:data-input property="$properties['state']" />
+                &#160;
+                <xar:if condition="$properties['parent']->value != 0">
+                    <a href="#xarModURL('publications','admin','delete_translation',array('itemid'=>$properties['id']->value))#" title="#xarML('Delete this translation')#" style="margin-right: 5px">
+                        <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete Translation')#"/>
+                    </a>
+                </xar:if>
             </div>
         </div>
         <div class="xar-row">

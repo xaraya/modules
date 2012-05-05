@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>
+            #$title#
+        </h2>
+        <div class="xar-align-center">
+            <span class="xar-title">Confirm the deletion of the translation (<xar:data-output type="language" value="$item['locale']"/>) of the page:</span><br />
+            <xar:if condition="isset($name)">
+                '<div class="xar-align-center">#$name#'</div>
+            <xar:elseif condition="isset($item)" />
+                <div class="xar-align-center">
+                        #$item['name']# (ID #$item['id']#)
+                </div>
+            </xar:if>
+            <br/>
+            <form method="post" action="#xarServer::getCurrentURL()#">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+                <input type="hidden" name="confirmed" id="confirmed" value="1" />
+                <xar:if condition="!empty($returnurl)">
+                    <input type="hidden" name="returnurl" id="returnurl" value="#$returnurl#" />
+                </xar:if>
+                <xar:var name="label">Confirm</xar:var>
+                <xar:button type="submit" label="$label" />&#160;
+                <xar:var name="label">Cancel</xar:var>
+                <xar:button type="cancel" label="$label" />
+            </form>
+        </div>
+    </div>
+</xar:template>
