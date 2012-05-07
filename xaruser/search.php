@@ -262,7 +262,7 @@ function publications_user_search($args)
                                     array('id' => 'description', 'name' => xarML('description'), 'checked' => in_array('description',$fieldlist)),
                                     array('id' => 'summary', 'name' => xarML('summary'), 'checked' => in_array('summary',$fieldlist)),
                                     array('id' => 'body1', 'name' => xarML('body1'), 'checked' => in_array('body1',$fieldlist)),
-                                    array('id' => 'notes', 'name' => xarML('notes'), 'checked' => in_array('notes',$fieldlist)),
+//                                     array('id' => 'notes', 'name' => xarML('notes'), 'checked' => in_array('notes',$fieldlist)),
                                    );
 
     $data['publications'] = array();
