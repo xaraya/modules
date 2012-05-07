@@ -81,7 +81,7 @@ function publications_admin_updateconfig()
                 if (!$result) return;
                 xarModVars::set('publications', 'fulltextsearch', '');
             } elseif (!empty($fulltext) && empty($oldval)) {
-                $searchfields = array('title','description','summary','body1','notes');
+                $searchfields = array('title','description','summary','body1');
 //                $searchfields = explode(',',$fulltext);
                 // Get database setup
                 $dbconn = xarDB::getConn();
