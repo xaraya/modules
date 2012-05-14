@@ -76,7 +76,7 @@ function publications_user_modify($args)
 
     // Get any translations of the base document
     $data['objectlist'] = DataObjectMaster::getObjectList(array('name' => $name));
-    $where = "parent = " . $id;
+    $where = "parent = " . $data['itemid'];
     $items = $data['objectlist']->getItems(array('where' => $where));
     foreach ($items as $key => $value) {
         // Clear the previous values before starting the next round
