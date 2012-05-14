@@ -9,13 +9,14 @@
     </div>
     <div class="xar-mod-body">
         <h2>
-            Modify <xar:data-output property="$properties['itemtype']" value="$ptid"/>
+            Modify Document <xar:data-output property="$properties['title']"/>
         </h2>
         <div style="float:right">
             <a href="#xarModURL('publications','user','view',array('ptid' => $ptid))#">
                 Publications List
             </a>
         </div>
+        <div style="clear:both">&#160;</div>
         <xar:if condition="!empty($object->upload)">
             <xar:set name="enctype">
                 'multipart/form-data'
