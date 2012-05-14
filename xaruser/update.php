@@ -27,7 +27,7 @@ function publications_user_update()
     if (!xarSecurityCheck('ModeratePublications')) return;
 
     // Get parameters
-    if(!xarVarFetch('itemid',       'isset', $itemid,       NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('itemid',       'isset', $data['itemid'],       NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('items',        'str',   $items,       '', XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('ptid',         'isset', $data['ptid'],      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('modify_cids',  'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
