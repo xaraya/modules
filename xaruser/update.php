@@ -124,7 +124,7 @@ function publications_user_update()
         return true;
     } else {
         xarController::redirect(xarModURL('publications', 'user', 'modify',
-                                      array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $itemid)));
+                                      array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])));
         return true;
     }
 }
