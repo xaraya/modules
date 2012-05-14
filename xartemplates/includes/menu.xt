@@ -21,6 +21,7 @@
     <xar:set name="this_menu_level">$menu_level</xar:set>
     <xar:set name="menu_level">$menu_level + 1</xar:set>
     <xar:set name="parent_copy">$parent</xar:set>
+                    <xar:set name="xxx">var_dump($parent)</xar:set>
 
     <xar:if condition="!empty($parent_copy.has_children)">
         <!-- 
@@ -77,26 +78,40 @@
                                 An empty page with no children is treated as a section header,
                                 used to divide sections of pages in a single menu level.
                              -->
-                            <xar:if condition="$page.status eq 'EMPTY' and empty($page.has_children)">
-                                &gt; <xar:if condition="!empty($page.title)">
+                            <xar:if condition="$page.state eq 5 and empty($page.has_children)">
+                                <xar:set name="source_flag">$page['menu_source_flag']</xar:set>
+                                <xar:if condition="$source_flag eq 1">
+                                    <xar:set name="pubtypesettings">xarMod::apiFunc('publications','user','getsettings',array('ptid' => $page['pubtype_id']))</xar:set>
+                                    <xar:set name="source_flag">$pubtypesettings['menu_source_flag']</xar:set>
+                                </xar:if>
+                                &gt; 
+                                <xar:if condition="$source_flag eq 2">
                                     #xarVarPrepForDisplay($page.title)#
-                                <xar:elseif condition="!empty($page.description)"/>
+                                <xar:elseif condition="$source_flag eq 3"/>
                                     #xarVarPrepForDisplay($page.description)#
-                                <xar:else />
-                                    #$page.name#
+                                <xar:elseif condition="$source_flag eq 4"/>
+                                    #xarVarPrepForDisplay($page.menu_alias)#
                                 </xar:if>
                             <xar:else />
                                 <xar:set name="gourl">#xarModURL('publications','user','display',array('id'=&gt;$page.id))#</xar:set>
-                                <xar:if condition="!empty($page.title)">
+                                <xar:set name="source_flag">$page['menu_source_flag']</xar:set>
+                                <xar:if condition="$source_flag eq 1">
+                                    <xar:set name="pubtypesettings">xarMod::apiFunc('publications','user','getsettings',array('ptid' => $page['pubtype_id']))</xar:set>
+                                    <xar:set name="source_flag">$pubtypesettings['menu_source_flag']</xar:set>
+                                </xar:if>
+                                &gt; 
+                                <xar:if condition="$source_flag eq 2">
                                     <a href="#$gourl#" title="#xarVarPrepForDisplay($page.title)#">
                                         #xarVarPrepForDisplay($page.title)#
                                     </a>
-                                <xar:elseif condition="!empty($page.description)"/>
+                                <xar:elseif condition="$source_flag eq 3"/>
                                     <a href="#$gourl#" title="#xarVarPrepForDisplay($page.description)#">
                                         #xarVarPrepForDisplay($page.description)#
                                     </a>
-                                <xar:else />
-                                    #$page.name#
+                                <xar:elseif condition="$source_flag eq 4"/>
+                                    <a href="#$gourl#" title="#xarVarPrepForDisplay($page.menu_alias)#">
+                                        #xarVarPrepForDisplay($page.menu_alias)#
+                                    </a>
                                 </xar:if>
 
                                 <!-- Flag the current page -->

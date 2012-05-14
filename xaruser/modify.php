@@ -21,7 +21,7 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_modify($args)
 {
-    if (!xarSecurityCheck('UserEditPublications')) return;
+    if (!xarSecurityCheck('ModeratePublications')) return;
 
     extract($args);
 
@@ -79,25 +79,13 @@ function publications_user_modify($args)
     $where = "parent = " . $id;
     $items = $data['objectlist']->getItems(array('where' => $where));
     foreach ($items as $key => $value) {
+        // Clear the previous values before starting the next round
+        $data['object']->clearFieldValues();
         $data['object']->getItem(array('itemid' => $key));
         $data['items'][$key] = $data['object']->getFieldValues(array(),1);
     }
     
-    if (!empty($ptid)) {
-        $template = $item['name'];
-    } else {
-// TODO: allow templates per category ?
-       $template = null;
-    }
-
-    // Send the publication type and the object properties to the tempate 
-    $data['properties'] = $data['object']->getProperties();
-    $data['ptid'] = $data['properties']['itemtype']->value;
-    
-    // Get the settings of the publication type we are using
-    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
-    
-    return xarTplModule('publications', 'user', 'modify', $data, $template);
+    return $data;
 }
 
 ?>

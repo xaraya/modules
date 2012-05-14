@@ -303,7 +303,7 @@ function publications_user_display($args)
             }
         }
     }
-    */
+*/    
 # --------------------------------------------------------
 #
 # Additional data

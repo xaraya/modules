@@ -15,6 +15,8 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_new($args)
 {
+    if (!xarSecurityCheck('ModeratePublications')) return;
+
     extract($args);
 
     // Get parameters
