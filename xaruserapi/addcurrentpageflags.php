@@ -90,7 +90,7 @@ function publications_userapi_addcurrentpageflags($args)
 
         // Get the parent page.
         try {
-            $id_ancestor = $pagedata['pages'][$this_id]['parent_key'];
+            $id_ancestor = $pagedata['pages'][$this_id]['parentpage_id'];
         } catch (Exception $e) {
             $id_ancestor = 0;
         }
@@ -104,7 +104,7 @@ function publications_userapi_addcurrentpageflags($args)
             // Since we have reached the 'root' page for the purposes
             // of this ancestry, make sure this root page has no parents
             // by resetting any parent links.
-            $pagedata['pages'][$this_id]['parent_key'] = 0;
+            $pagedata['pages'][$this_id]['parentpage_id'] = 0;
 
             // Reference the root page in the main structure.
             $pagedata['root_page'] =& $pagedata['pages'][$root_id];
@@ -135,9 +135,9 @@ function publications_userapi_addcurrentpageflags($args)
     // a single tree.
     // Siblings will include self - filter out in the template if necessary.
     $pagedata['siblings'] = array();
-    if (!empty($pagedata['current_page']['parent_key']) && isset($pagedata['pages'][$pagedata['current_page']['parent_key']]['child_keys'])) {
+    if (!empty($pagedata['current_page']['parentpage_id']) && isset($pagedata['pages'][$pagedata['current_page']['parentpage_id']]['child_keys'])) {
         // Loop though all children of the parent.
-        foreach ($pagedata['pages'][$pagedata['current_page']['parent_key']]['child_keys'] as $key => $child) {
+        foreach ($pagedata['pages'][$pagedata['current_page']['parentpage_id']]['child_keys'] as $key => $child) {
             // Set flag for menus.
             $pagedata['pages'][$key]['is_sibling'] = true;
             // Reference the page.

@@ -76,16 +76,20 @@ function publications_userapi_get_menu_pages($args)
     $q->addfield('p.menu_source_flag AS menu_source_flag');
     $q->addfield('p.menu_alias AS menu_alias');
     $q->addfield('p.pubtype_id AS pubtype_id');
+    $q->addfield('p.parent_id AS parent_id');
+    $q->addfield('p.locale AS locale');
+    $q->addfield('p.parentpage_id AS parentpage_id');
     $q->addfield('p.rightpage_id AS rightpage_id');
+    $q->addfield('p.state AS state');
     
     $q->addtable($xartable['publications'], 'tpages_member');
-    $q->eq('tpages_member.id', (int)$tree_contains_id);
+    $q->eq('tpages_member.id', (int)$args['tree_contains_id']);
     // Join to find the root page of the tree containing the required page.
     // This matches the complete tree for the root under the selected page.
     $q->addtable($xartable['publications'], 'tpages_root');
     $q->le('tpages_root.leftpage_id', 'expr:tpages_member.leftpage_id');
     $q->ge('tpages_root.rightpage_id', 'expr:tpages_member.rightpage_id');
-    $q->between('tpages.leftpage_id', 'expr:tpages_root.leftpage_id AND tpages_root.rightpage_id');
+    $q->between('p.leftpage_id', 'expr:tpages_root.leftpage_id AND tpages_root.rightpage_id');
     $q->eq('tpages_root.parentpage_id', 0);
 
     // Add any fiters we found
@@ -100,7 +104,7 @@ function publications_userapi_get_menu_pages($args)
 //    $q->qecho();
     $q->run();
     $pages = $q->output();
-    
+  
     $depthstack = array();
     foreach($pages as $key => $page) {
         // Calculate the relative nesting level.
@@ -122,8 +126,12 @@ function publications_userapi_get_menu_pages($args)
         // Imploding it can give a directory-style path, which is handy
         // in admin pages and reports.
         $pages[$key]['namepath'] = $pathstack;
+
+        // Note: ['parent_id'] is the parent page ID,
+        // but ['parent'] is the parent item key in the
+        // pages array.
     }
-    
+
     // If we are looking for translations rather than base documents, then find what translations are available and substitute them
     // CHECKME: is there a better way?
     // If there is no translation the base document remains. Is this desired outcome?
@@ -155,6 +163,7 @@ function publications_userapi_get_menu_pages($args)
             $row['depth'] = $indexedpages[$row['parent_id']]['depth'];
             $row['idpath'] = $indexedpages[$row['parent_id']]['idpath'];
             $row['namepath'] = $indexedpages[$row['parent_id']]['namepath'];
+            $row['parentpage_id'] = $indexedpages[$row['parent_id']]['parentpage_id'];
             // Add the entire row to the result pages
             $indexedpages[$row['parent_id']] = $row;
         }

@@ -277,7 +277,7 @@ function publications_user_display($args)
 #
 # Get the complete tree for this section of pages. We need this for blocks etc.
 #
-
+/*
     $tree = xarMod::apiFunc(
         'publications', 'user', 'getpagestree',
         array(
@@ -303,7 +303,7 @@ function publications_user_display($args)
             }
         }
     }
-    
+*/    
 # --------------------------------------------------------
 #
 # Additional data
@@ -355,7 +355,7 @@ function publications_user_display($args)
 #
     // Now we can cache all this data away for the blocks.
     // The blocks should have access to most of the same data as the page.
-    xarVarSetCached('Blocks.publications', 'pagedata', $tree);
+//    xarVarSetCached('Blocks.publications', 'pagedata', $tree);
 
     // The 'serialize' hack ensures we have a proper copy of the
     // paga data, which is a self-referencing array. If we don't

@@ -15,6 +15,8 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_create()
 {
+    if (!xarSecurityCheck('ModeratePublications')) return;
+
     if (!xarVarFetch('ptid',       'id',    $data['ptid'])) {return;}
     if (!xarVarFetch('new_cids',   'array', $cids,    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('preview',    'str',   $data['preview'], NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -48,19 +50,12 @@ function publications_user_create()
     // Create the object
     $id = $data['object']->createItem();
 
-    // if we can edit publications, go to admin view, otherwise go to user view
-    if (xarSecurityCheck('CommentPublications',0,'Publication',$data['ptid'].':All:All:All')) {
-        // Redirect if we came from somewhere else
-        $current_listview = xarSession::getVar('publications_current_listview');
-        if (!empty($cuurent_listview)) xarController::redirect($current_listview);
+    // Redirect if we came from somewhere else
+    $current_listview = xarSession::getVar('publications_current_listview');
+    if (!empty($cuurent_listview)) xarController::redirect($current_listview);
 
-        xarController::redirect(xarModURL('publications', 'user', 'modify',
-                                      array('ptid' => $data['ptid'])));
-    } else {
-        xarController::redirect(xarModURL('publications', 'user', 'view',
-                                      array('ptid' => $data['ptid'])));
-    }
-
+    xarController::redirect(xarModURL('publications', 'user', 'view',
+                                  array('ptid' => $data['ptid'])));
     return true;
 }
 

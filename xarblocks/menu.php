@@ -151,12 +151,12 @@
         if (empty($pagedata)) {
             // Get the page data here now.
             $pagedata = xarMod::apiFunc(
-                'publications', 'user', 'get_menu_pages',
+                'publications', 'user', 'getmenutree',
                 array(
                     'tree_contains_id' => $id,
-                    'dd_flag' => true,
-                    'key' => 'id',
-                    'status' => 'ACTIVE,EMPTY'
+//                    'dd_flag' => true,
+//                    'key' => 'id',
+//                    'status' => 'ACTIVE,EMPTY'
                 )
             );
 
@@ -172,7 +172,6 @@
                 xarVarSetCached('Blocks.publications', 'pagedata', $pagedata);
             }
         }
-
 
         // If the user has set a 'start level' then make sure the page sits at that level or above.
         // TODO: take into account the options that allow default pages to be displayed when 
@@ -226,7 +225,6 @@
                     // Reset any of the pruning point's children.
                     $pagedata['pages'][$prune_id]['child_keys'] = array();
                     $pagedata['pages'][$prune_id]['has_children'] = false;
-                    //var_dump($pagedata);
                 }
             }
         }
@@ -250,7 +248,7 @@
         // that root page.
         if (empty($data['multi_homed'])) {
             $pagedata['pages'][0] = array(
-                'child_keys' => array($pagedata['root_page']['key']),
+                'child_keys' => array($pagedata['root_page']['id']),
                 'has_children' => true, 'is_ancestor' => true
             );
             unset($pagedata['root_page']);
@@ -261,6 +259,7 @@
         // Merge it in with the existing block details.
         // TODO: It may be quicker to do the merge the other way around?
         $data = array_merge($data, $pagedata);
+                    var_dump($pagedata);
 
         return $data;
     }
