@@ -43,7 +43,7 @@ function publications_userapi_getitemlinks($args)
     foreach ($result as $item) {
         if (empty($item['title'])) $item['title'] = xarML('Display Publication');
         $itemlinks[$item['id']] = array('url'   => xarModURL('publications', 'user', 'display',
-                                                         array('id' => $item['id'])),
+                                                         array('itemid' => $item['id'])),
                                     'title' => $item['title'],
                                     'label' => $item['description'],
                                     );
