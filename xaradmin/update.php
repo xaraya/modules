@@ -24,6 +24,8 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_admin_update()
 {
+    if (!xarSecurityCheck('ManagePublications')) return;
+
     // Get parameters
     if(!xarVarFetch('itemid',       'isset', $data['itemid'],       NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('items',        'str',   $items,       '', XARVAR_DONT_SET)) {return;}
@@ -115,23 +117,21 @@ function publications_admin_update()
     xarSession::setVar('statusmsg', xarML('Publication Updated'));
 
     // If quitting, go to admin view; otherwise redisplay the page
-    if (xarSecurityCheck('EditPublications',0,'Publication',$data['ptid'].':All:All:All')) {
-        if ($data['quit']) {
-            // Redirect if we came from somewhere else
-            $current_listview = xarSession::getVar('publications_current_listview');
-            if (!empty($current_listview)) xarController::redirect($current_listview);
+    if ($data['quit']) {
+        // Redirect if we came from somewhere else
+        $current_listview = xarSession::getVar('publications_current_listview');
+        if (!empty($current_listview)) xarController::redirect($current_listview);
 
-            xarController::redirect(xarModURL('publications', 'admin', 'view',
-                                          array('ptid' => $data['ptid'])));
-        } elseif ($data['front']) {
-            xarController::redirect(xarModURL('publications', 'user', 'display',
-                                          array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])));
-        } else {
-            xarController::redirect(xarModURL('publications', 'admin', 'modify',
-                                          array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])));
-        }
-        return true;
+        xarController::redirect(xarModURL('publications', 'admin', 'view',
+                                      array('ptid' => $data['ptid'])));
+    } elseif ($data['front']) {
+        xarController::redirect(xarModURL('publications', 'user', 'display',
+                                      array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])));
+    } else {
+        xarController::redirect(xarModURL('publications', 'admin', 'modify',
+                                      array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])));
     }
+    return true;
     
 }
 

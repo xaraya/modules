@@ -4,47 +4,13 @@
     <xar:javascript module="publications" filename="tabs.js" />
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            Publications Administration            
+            Manage Publications            
         </span>
     </div>
     <div class="xar-mod-body">
         <h2>
             Modify <xar:data-output property="$properties['itemtype']" value="$ptid"/>
         </h2>
-        <!--
-        <xar:comment>
-            You can use different admin-modify-[pubtype].xd templates for different pubtypes
-        </xar:comment>
-        <xar:comment>
-            retrieve the previous article in publication type ptid (with any state here)
-        </xar:comment>
-            <xar:set name="prevartinfo">
-                #xarModAPIFunc('publications','user','getprevious',array('ptid' => $ptid, 'id' => $id, 'state' => array(0,1,2,3)))#
-            </xar:set>
-        <xar:comment>
-        </xar:comment>
-        <xar:comment>
-            retrieve the next article in publication type ptid (with any state here)
-        </xar:comment>
-        <xar:comment>
-            <xar:set name="nextartinfo">
-                #xarModAPIFunc('publications','user','getnext',array('ptid' => $ptid, 'id' => $id, 'state' => array(0,1,2,3)))#
-            </xar:set>
-        </xar:comment>
-        <xar:comment>
-            show a link to modify the previous article with title
-        </xar:comment>
-        <xar:comment>
-        </xar:comment>
-        <xar:comment>
-            show a link to modify the next article with title
-        </xar:comment>
-        <xar:comment>
-            <xar:if condition="!empty($nextartinfo['id'])">
-                <a href="#xarModURL('publications','admin','modify',array('id' => $nextartinfo['id']))#">#xarVarPrepHTMLDisplay($nextartinfo['title'])# &gt;&gt;</a>
-            </xar:if>
-        </xar:comment>
-        -->
         <div style="float:right">
             <a href="#xarModURL('publications','user','view',array('ptid' => $ptid))#">
                 Publications List
@@ -67,9 +33,17 @@
             <xar:template file="pagetabs" type="module" />
             
             <xar:set name="index">0</xar:set>
-            <!--<xar:foreach in="$items" key="$key" value="$item">
+            <xar:foreach in="$items" key="$key" value="$item">
+                
+                <!-- Pass the object its values -->
                 <xar:set name="dummy">$object->setFieldValues($item,1)</xar:set>
-                <xar:set name="dummy">$object->setFieldPrefix($key)</xar:set>-->
+
+                <!-- CHECKME: is this needed given we pass the prefix below -->
+                <xar:set name="dummy">$object->setFieldPrefix($key)</xar:set>
+                
+                <!-- Add the itemid as a reference for e.g. position, categories -->
+                <xar:set name="dummy">$object->itemid = $key</xar:set>
+
                 <xar:if condition="$tab eq 'preview' AND $index eq 0">
                     <xar:set name="visible">array('none','none','block')</xar:set>
                 <xar:elseif condition="$tab ne 'preview' AND $index eq 0" />
@@ -80,8 +54,7 @@
 
                 <xar:set name="index">$index + 1</xar:set>
                 <div id="page-#$index#" style="display: #$visible[0]#">
-                    <xar:set name="contentfile">'content-' . $object->name</xar:set>
-                    <xar:template file="$contentfile" type="module" />
+                    <xar:data-form object="$object" tplmodule="publications" fieldprefix="$key" />
                 </div>
 
                 <xar:set name="index">$index + 1</xar:set>
@@ -92,36 +65,32 @@
                 <xar:set name="index">$index + 1</xar:set>
                 <div id="page-#$index#" style="display: #$visible[2]#">
                     <fieldset class="xar-standard-box-padding xar-overflow-auto">
-                        <xar:data-display object="$object" tplmodule="publications"  />
+                        <xar:data-display object="$object" tplmodule="publications" fieldprefix="$key" />
                     </fieldset>
                 </div>
-            <!--</xar:foreach>-->
+            </xar:foreach>
 
-                <xar:if condition="!empty($prevart) || !empty($nextart)">
-                    <div class="xar-normal xar-overflow-auto">
-                        <xar:if condition="!empty($prevart)">
-                        <a class="xar-floatleft" href="#$prevart#">
-                            <img src="#xarTplGetImage('icons/go-previous.png','base')#"/>
-                        </a>&#160;</xar:if>
-                        <xar:if condition="!empty($nextart)">
-                            <a class="xar-floatright" href="#$nextart#">
-                            next&gt;</a>
-                        </xar:if>
-                    </div>
-                </xar:if>
-                <xar:template file="navtabs-user" type="module" />
-<!--            <div class="xar-form-input-wrapper">
-                <label class="xar-form-label help" title="#xarML('This is the category or categories this website is assigned to.')#">
-                    Categories
-                </label>
-                <xar:data-input type="categories" name="categories" itemid="$id" itemtype="$ptid" returnitself="true" />
-            </div>
--->
+            <xar:if condition="!empty($prevart) || !empty($nextart)">
+                <div class="xar-normal xar-overflow-auto">
+                    <xar:if condition="!empty($prevart)">
+                    <a class="xar-floatleft" href="#$prevart#">
+                        <img src="#xarTplGetImage('icons/go-previous.png','base')#"/>
+                    </a>&#160;</xar:if>
+                    <xar:if condition="!empty($nextart)">
+                        <a class="xar-floatright" href="#$nextart#">
+                            <img src="#xarTplGetImage('icons/go-next.png','base')#"/>
+                        </a>
+                    </xar:if>
+                </div>
+            </xar:if>
+            <xar:template file="navtabs-user" type="module" />
+            
             <div class="xar-form-input-wrapper">
                 <div class="xar-form-container-after">
                     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                    <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#" />
+                    <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
                     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+                    <input type="hidden" name="returnurl" id="returnurl" value="#$returnurl#" />
                     <xar:set name="itemkeys">implode(',',array_keys($items))</xar:set>
                     <input type="hidden" name="items" id="items" value="#$itemkeys#" />
                     <xar:var name="label">Preview</xar:var>
