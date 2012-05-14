@@ -145,6 +145,17 @@
                             <xar:data-input type="dropdown" name="noprivspage" value="$value" options="$options" firstline="$firstline"/>
                         </div>
                     </div>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label class="xar-form-label" for="hide_tree_display">
+                                Hide Tree Display
+                            </label>
+                        </div>
+                        <div class="xar-col">
+                            <xar:set name="value">xarModVars::get('publications', 'hide_tree_display')</xar:set>
+                            <xar:data-input type="checkbox" name="hide_tree_display" value="$value"/>
+                        </div>
+                    </div>
                 </fieldset>
 
                 <fieldset class="xar-norm">

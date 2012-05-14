@@ -7,28 +7,31 @@
         <h2>
             New Publication
         </h2>
-        <xar:comment>
-            You can use different admin-new-[pubtype].xd templates for different pubtypes
-        </xar:comment>
-        <xar:comment>
+        <!--
+            You can use different admin-new-[pubtype].xt templates for different pubtypes
+        -->
+        <!--
             If you want to let users pre-select a category first, before selecting a publication type, you can use the following tag. Note that this only makes sense if you have a single base category for your publications
-    <!-- xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" urltype="admin" func="new" itemtype="$ptid" catid="$catid" /-->
-        </xar:comment>
+            xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" urltype="admin" func="new" itemtype="$ptid" catid="$catid"
+        -->
         <form method="post" action="#xarModURL('publications','admin','new')#">
-            <div class="xar-forms-wrapper" style="float:left">
-                <label title="#xarML('Select a type of publication to add')#" class="xar-form-label">
-                    Publication Type:
-                </label>
+            <div class="xar-row">
+                <div class="xar-col">
+                    <label title="#xarML('Select a type of publication to add')#">
+                        Publication Type:
+                    </label>
+                </div>
+                <div class="xar-col">
                     <xar:set name="onchange">"javascript:this.form.submit();"</xar:set>
                     <xar:data-input name="ptid" type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$onchange" />
-            </div>
-            <div style="float:right">
-                <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#">
-                    Publications List
-                </a>
+                </div>
+                <div class="xar-col" style="text-align: right; min-width: 40%">
+                    <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#">
+                        Publications List
+                    </a>
+                </div>
             </div>
         </form>
-        <div style="clear:both">&#160;</div>
         <xar:if condition="!empty($object->upload)">
             <xar:set name="enctype">
                 'multipart/form-data'

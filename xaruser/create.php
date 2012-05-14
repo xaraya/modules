@@ -22,32 +22,42 @@ function publications_user_create()
 
     // Confirm authorisation code
     // This has been disabled for now
-//    if (!xarSecConfirmAuthKey()) return;
+    // if (!xarSecConfirmAuthKey()) return;
 
     $data['items'] = array();
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
+    
     $isvalid = $data['object']->checkInput();
     
     $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
     
-    if ($data['preview'] || $isvalid) {
+    if ($data['preview'] || !$isvalid) {
+        // Show debug info if called for
+        if (!$isvalid && 
+            xarModVars::get('publications','debugmode') && 
+            in_array(xarUserGetVar('uname'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+            var_dump($data['object']->getInvalids());}
         // Preview or bad data: redisplay the form
         $data['properties'] = $data['object']->getProperties();
         if ($data['preview']) $data['tab'] = 'preview';
-        return xarTplModule('publications','user','new', $data);    
+        return xarTplModule('publications','admin','new', $data);    
     }
-
+    
     // Create the object
     $id = $data['object']->createItem();
 
     // if we can edit publications, go to admin view, otherwise go to user view
-    if (xarSecurityCheck('EditPublications',0,'Publication',$data['ptid'].':All:All:All')) {
-        xarResponse::redirect(xarModURL('publications', 'admin', 'view',
+    if (xarSecurityCheck('CommentPublications',0,'Publication',$data['ptid'].':All:All:All')) {
+        // Redirect if we came from somewhere else
+        $current_listview = xarSession::getVar('publications_current_listview');
+        if (!empty($cuurent_listview)) xarController::redirect($current_listview);
+
+        xarController::redirect(xarModURL('publications', 'user', 'modify',
                                       array('ptid' => $data['ptid'])));
     } else {
-        xarResponse::redirect(xarModURL('publications', 'user', 'view',
+        xarController::redirect(xarModURL('publications', 'user', 'view',
                                       array('ptid' => $data['ptid'])));
     }
 

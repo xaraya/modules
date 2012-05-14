@@ -166,6 +166,7 @@ function publications_init()
     xarModVars::get('publications', 'multilanguage', true);
     xarModVars::set('publications', 'defaultfrontpage','');
     xarModVars::set('publications', 'defaultbackpage','');
+    xarModVars::set('publications', 'hide_tree_display',0);
     
     // Save publications settings for each publication type
     /*
