@@ -82,8 +82,8 @@
     </fieldset>
                 <xar:data-input property="$properties['summary_template']" hidden="hidden" />
                 <xar:data-input property="$properties['detail_template']" hidden="hidden" />
-                <xar:data-input property="$properties['page_template']" firstline="$firstline" hidden="hidden" />
-                <xar:data-input property="$properties['theme']" firstline="$firstline" hidden="hidden" />
+                <xar:data-input property="$properties['page_template']" hidden="hidden" />
+                <xar:data-input property="$properties['theme']" hidden="hidden" />
                 <xar:data-input property="$properties['page_title']" hidden="hidden" />
                 <xar:data-input property="$properties['page_description']" hidden="hidden" />
                 <xar:data-input property="$properties['keywords']" hidden="hidden" />
