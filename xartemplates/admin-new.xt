@@ -54,7 +54,7 @@
                 <xar:data-form object="$object" tplmodule="publications" />
             </div>
             <div id="page-2" style="display: #$visible[1]#">
-                <xar:template file="publication-settings" type="module" />
+                <xar:template file="publication-settings-admin" type="module" />
             </div>
             <div id="page-3" style="display: #$visible[2]#">
                 <fieldset class="xar-standard-box-padding xar-overflow-auto">

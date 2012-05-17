@@ -38,7 +38,12 @@
                 <xar:data-label property="$properties['locale']" for="id" label="$label" />
             </div>
             <div class="xar-col">
-                <xar:data-input property="$properties['locale']"/>
+                <xar:if condition="xarModVars::get('publications', 'multilanguage')">
+                    <xar:data-input property="$properties['locale']"/>
+                <xar:else/>
+                    <xar:data-output property="$properties['locale']"/>
+                    <xar:data-input property="$properties['locale']" hidden="hidden"/>
+                </xar:if>
             </div>
         </div>
         <div class="xar-row">

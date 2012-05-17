@@ -55,7 +55,7 @@
 
                 <xar:set name="index">$index + 1</xar:set>
                 <div id="page-#$index#" style="display: #$visible[1]#">
-                    <xar:template file="publication-settings" type="module" />
+                    <xar:template file="publication-settings-admin" type="module" />
                 </div>
 
                 <xar:set name="index">$index + 1</xar:set>
