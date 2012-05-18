@@ -125,6 +125,7 @@
             <xar:set name="propname">$prefix . "_dd_" . $properties['access']->id . '_display'</xar:set>
         </xar:if>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['display']"/>
+        <hr/>
         <legend>
             Modify Access
         </legend>
@@ -134,6 +135,7 @@
             <xar:set name="propname">$prefix . "_dd_" . $properties['access']->id . '_modify'</xar:set>
         </xar:if>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['modify']"/>
+        <hr/>
         <legend>
             Delete Access
         </legend>
