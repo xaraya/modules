@@ -367,7 +367,7 @@
         <xar:else/>
             <xar:set name="propname">$prefix . "_dd_" . $properties['access']->id . '_display'</xar:set>
         </xar:if>
-        <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['display']"/>
+        <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['display']" group_multiselect="1"/>
         <hr/>
         <legend>
             Modify Access
@@ -377,7 +377,7 @@
         <xar:else/>
             <xar:set name="propname">$prefix . "_dd_" . $properties['access']->id . '_modify'</xar:set>
         </xar:if>
-        <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['modify']"/>
+        <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['modify']" group_multiselect="1"/>
         <hr/>
         <legend>
             Delete Access
@@ -387,7 +387,7 @@
         <xar:else/>
             <xar:set name="propname">$prefix . "_dd_" . $properties['access']->id . '_delete'</xar:set>
         </xar:if>
-        <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['delete']"/>
+        <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['delete']" group_multiselect="1"/>
     </fieldset>
     <xar:if condition="xarModIsAvailable('categories')">
         <fieldset>
