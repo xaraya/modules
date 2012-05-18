@@ -73,6 +73,7 @@ function publications_user_update()
         if (!$isvalid && 
             xarModVars::get('publications','debugmode') && 
             in_array(xarUserGetVar('uname'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+            echo xarML('The following were invalid fields:');echo "<br/>";
             var_dump($data['object']->getInvalids());}
         // Preview or bad data: redisplay the form
         $data['properties'] = $data['object']->getProperties();
