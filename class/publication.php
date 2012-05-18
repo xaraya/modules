@@ -39,6 +39,8 @@ class Publication extends DataObject
         // Note this is a collection of access properties; hence the complicated process of saving it
         if ($isvalid) {
             $access = DataPropertyMaster::getProperty(array('name' => 'access'));
+            $access->initialization_group_multiselect = true;
+            $access->validation_override = true;
             $prefix = $this->getFieldPrefix();
             
             // Only ignore the prefix if we are CREATING the base document
