@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <fieldset>
-        <legend>
-            Page Characteristics
-        </legend>
-                <xar:data-input property="$properties['id']" hidden="hidden" />
-                <xar:data-input property="$properties['parent']" hidden="hidden"/>
-                <xar:data-input property="$properties['itemtype']" value="$ptid" hidden="hidden" />
-                <xar:data-input property="$properties['pagetype']" hidden="hidden"/>
-        <xar:if condition="xarModVars::get('publications', 'multilanguage')">
-            <div class="xar-row">
-                <div class="xar-col">
-                    <xar:var name="label">Language</xar:var>
-                    <xar:data-label property="$properties['locale']" for="id" label="$label" />
+    <xar:data-input property="$properties['id']" hidden="hidden" />
+    <xar:data-input property="$properties['parent']" hidden="hidden"/>
+    <xar:data-input property="$properties['itemtype']" value="$ptid" hidden="hidden" />
+    <xar:data-input property="$properties['pagetype']" hidden="hidden"/>
+    <xar:data-input property="$properties['version']" hidden="hidden" />
+    <xar:data-input property="$properties['author']" hidden="hidden" />
+    <xar:data-input property="$properties['pages']" hidden="hidden" />
+    <xar:if condition="xarModVars::get('publications', 'multilanguage')">
+        <fieldset>
+            <legend>
+                Page Characteristics
+            </legend>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <xar:var name="label">Language</xar:var>
+                        <xar:data-label property="$properties['locale']" for="id" label="$label" />
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input property="$properties['locale']"/>
+                    </div>
                 </div>
-                <div class="xar-col">
-                    <xar:data-input property="$properties['locale']"/>
-                </div>
-            </div>
-        <xar:else/>
-            <xar:data-input property="$properties['locale']" hidden="hidden"/>
-        </xar:if>
-                <xar:data-input property="$properties['version']" hidden="hidden" />
-                <xar:data-input property="$properties['author']" hidden="hidden" />
-                <xar:data-input property="$properties['pages']" hidden="hidden" />
-    </fieldset>
+        </fieldset>
+    <xar:else/>
+        <xar:data-input property="$properties['locale']" hidden="hidden"/>
+    </xar:if>
     <fieldset>
         <legend>
             Publication Period
@@ -57,48 +57,47 @@
             </div>
         </div>
     </fieldset>
-    <fieldset>
-        <legend>
-            Page Status
-        </legend>
-        <div class="xar-row">
-            <div class="xar-col">
-                <xar:var name="label">Document State</xar:var>
-                <xar:data-label property="$properties['state']" for="id" label="$label" />
-            </div>
-            <div class="xar-col">
-                <xar:data-input property="$properties['state']" />
-                &#160;
-                <xar:if condition="$properties['parent']->value != 0">
+    <xar:if condition="$properties['parent']->value != 0">
+        <fieldset>
+            <legend>
+                Page Status
+            </legend>
+            <div class="xar-row">
+                <div class="xar-col">
+                    Delete Translation
+                </div>
+                <div class="xar-col">
+                    &#160;
                     <a href="#xarModURL('publications','admin','delete_translation',array('itemid'=>$properties['id']->value))#" title="#xarML('Delete this translation')#" style="margin-right: 5px">
                         <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete Translation')#"/>
                     </a>
-                </xar:if>
+                </div>
             </div>
-        </div>
-                <xar:data-input property="$properties['process_state']" hidden="hidden" />
-                <xar:data-input property="$properties['created']" hidden="hidden" />
-                <xar:data-input property="$properties['modified']" hidden="hidden" />
-    </fieldset>
-                <xar:data-input property="$properties['summary_template']" hidden="hidden" />
-                <xar:data-input property="$properties['detail_template']" hidden="hidden" />
-                <xar:data-input property="$properties['page_template']" hidden="hidden" />
-                <xar:data-input property="$properties['theme']" hidden="hidden" />
-                <xar:data-input property="$properties['page_title']" hidden="hidden" />
-                <xar:data-input property="$properties['page_description']" hidden="hidden" />
-                <xar:data-input property="$properties['keywords']" hidden="hidden" />
-                <xar:data-input property="$properties['sitemap_flag']" hidden="hidden" />
-                <xar:data-input property="$properties['sitemap_source_flag']" hidden="hidden" />
-                <xar:data-input property="$properties['sitemap_custom_field']" hidden="hidden" />
-                <xar:data-input property="$properties['menu_flag']" hidden="hidden" />
-                <xar:data-input property="$properties['menu_source_flag']" hidden="hidden" />
-                <xar:data-input property="$properties['menu_custom_field']" hidden="hidden" />
+        </fieldset>
+    </xar:if>
+    <xar:data-input property="$properties['state']" hidden="hidden" />
+    <xar:data-input property="$properties['process_state']" hidden="hidden" />
+    <xar:data-input property="$properties['created']" hidden="hidden" />
+    <xar:data-input property="$properties['modified']" hidden="hidden" />
+    <xar:data-input property="$properties['summary_template']" hidden="hidden" />
+    <xar:data-input property="$properties['detail_template']" hidden="hidden" />
+    <xar:data-input property="$properties['page_template']" hidden="hidden" />
+    <xar:data-input property="$properties['theme']" hidden="hidden" />
+    <xar:data-input property="$properties['page_title']" hidden="hidden" />
+    <xar:data-input property="$properties['page_description']" hidden="hidden" />
+    <xar:data-input property="$properties['keywords']" hidden="hidden" />
+    <xar:data-input property="$properties['sitemap_flag']" hidden="hidden" />
+    <xar:data-input property="$properties['sitemap_source_flag']" hidden="hidden" />
+    <xar:data-input property="$properties['sitemap_custom_field']" hidden="hidden" />
+    <xar:data-input property="$properties['menu_flag']" hidden="hidden" />
+    <xar:data-input property="$properties['menu_source_flag']" hidden="hidden" />
+    <xar:data-input property="$properties['menu_custom_field']" hidden="hidden" />
 
-                <xar:data-input property="$properties['redirect_flag']" hidden="hidden" />
-                <xar:data-input property="$properties['redirect_url']" hidden="hidden" />
-                <xar:data-input property="$properties['proxy_url']" hidden="hidden" />
-                <xar:data-input property="$properties['alias_flag']" hidden="hidden" />
-                <xar:data-input property="$properties['alias']" hidden="hidden" />
+    <xar:data-input property="$properties['redirect_flag']" hidden="hidden" />
+    <xar:data-input property="$properties['redirect_url']" hidden="hidden" />
+    <xar:data-input property="$properties['proxy_url']" hidden="hidden" />
+    <xar:data-input property="$properties['alias_flag']" hidden="hidden" />
+    <xar:data-input property="$properties['alias']" hidden="hidden" />
     <!--
     </xar:if>
     -->
@@ -145,6 +144,7 @@
         </xar:if>
         <xar:data-input property="$properties['access']" name="$propname" value="$propvalue['delete']"/>
     </fieldset>
+    <!--
     <xar:if condition="xarModIsAvailable('categories')">
         <fieldset>
             <legend>
@@ -177,4 +177,5 @@
             </div>
         </div>
     </fieldset>
+    -->
 </xar:template>
