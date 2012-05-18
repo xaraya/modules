@@ -81,7 +81,7 @@ function publications_user_update()
         // Get the settings of the publication type we are using
         $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
 
-        return xarTplModule('publications','admin','modify', $data);
+        return xarTplModule('publications','user','modify', $data);
     }
     
     // call transform input hooks
