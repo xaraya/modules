@@ -188,7 +188,9 @@
                                             </a>
                                         </xar:if>
                                     </xar:access>
-                                    <input type="checkbox" name="optionscheckbox" id="#$loop->item['id']#"  />
+                                    <xar:access level="700">
+                                        <input type="checkbox" name="optionscheckbox" id="#$loop->item['id']#"  />
+                                    </xar:access>
                                 </xar:if>
                             </td>
                         </tr>

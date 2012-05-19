@@ -97,7 +97,9 @@
                         </a>
                     </xar:if>
                 </xar:access>
-                <input type="checkbox" name="optionscheckbox" id="#$loopitem[$primaryalias]#"  />
+                <xar:access level="700">
+                    <input type="checkbox" name="optionscheckbox" id="#$loopitem[$primaryalias]#"  />
+                </xar:access>
             </td>
         </xar:if>
     <xar:elseif condition="$layout eq 'pubtypes'" />
