@@ -14,34 +14,35 @@
 
 function publications_admin_view_pages($args)
 {
+
+   if (!xarSecurityCheck('ManagePublications')) return;
+
     extract($args);
 
-    if (!xarSecurityCheck('ManagePublications')) return;
-
-    // Accept a parameter to allow selection of a single tree.
+   // Accept a parameter to allow selection of a single tree.
     xarVarFetch('root_id', 'int', $root_id, NULL, XARVAR_NOT_REQUIRED);
 
-    if (NULL === $root_id) {
+   if (NULL === $root_id) {
         $root_id = xarSession::getVar('publications_root_id');
         if (empty($root_id)) $root_id = 0;
     }
     xarSession::setVar('publications_root_id', $root_id);
 
-    $data = xarMod::apiFunc(
+   $data = xarMod::apiFunc(
         'publications', 'user', 'getpagestree',
         array('key' => 'index', 'dd_flag' => false, 'tree_contains_id' => $root_id)
     );
 
-    if (empty($data['pages'])) {
+   if (empty($data['pages'])) {
         // TODO: pass to template.
         return $data; //xarML('NO PAGES DEFINED');
     } else {
         $data['pages'] = xarMod::apiFunc('publications', 'tree', 'array_maptree', $data['pages']);
     }
 
-    $data['root_id'] = $root_id;
+   $data['root_id'] = $root_id;
 
-    // Check modify and delete privileges on each page.
+   // Check modify and delete privileges on each page.
     // EditPage - allows basic changes, but no moving or renaming (good for sub-editors who manage content)
     // AddPage - new pages can be added (further checks may limit it to certain page types)
     // DeletePage - page can be renamed, moved and deleted

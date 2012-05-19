@@ -14,6 +14,8 @@
  */
 function publications_admin_view($args)
 {
+    if (!xarSecurityCheck('EditPublications')) return;
+
     // Get parameters
     if(!xarVarFetch('startnum', 'isset', $startnum, 1,    XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('ptid',     'isset', $ptid,     NULL, XARVAR_NOT_REQUIRED)) {return;}

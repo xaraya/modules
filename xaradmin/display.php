@@ -33,6 +33,8 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_admin_display($args)
 {
+    if (!xarSecurityCheck('EditPublications')) return;
+
     // Get parameters from user
 // this is used to determine whether we come from a pubtype-based view or a
 // categories-based navigation

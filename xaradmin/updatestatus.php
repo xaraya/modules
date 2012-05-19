@@ -14,6 +14,8 @@
  */
 function publications_admin_updatestate()
 {
+    if (!xarSecurityCheck('EditPublications')) return;
+
     // Get parameters
     if(!xarVarFetch('ids',   'isset', $ids,    NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('state', 'isset', $state,  NULL, XARVAR_DONT_SET)) {return;}

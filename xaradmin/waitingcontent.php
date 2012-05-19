@@ -14,6 +14,7 @@
  */
 function publications_admin_waitingcontent()
 {
+    if (!xarSecurityCheck('EditPublications')) return;
 
     // Get publication types
     unset($publinks);

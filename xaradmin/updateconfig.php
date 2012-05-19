@@ -17,6 +17,8 @@ sys::import('modules.dynamicdata.class.properties.master');
 
 function publications_admin_updateconfig()
 {
+    if (!xarSecurityCheck('AdminPublications')) return;
+
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
     // Get parameters

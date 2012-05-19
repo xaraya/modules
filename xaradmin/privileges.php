@@ -16,6 +16,8 @@
  */
 function publications_admin_privileges($args)
 {
+    if (!xarSecurityCheck('EditPublications')) return;
+
     extract($args);
 
     // fixed params
