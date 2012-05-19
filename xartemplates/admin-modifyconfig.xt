@@ -657,19 +657,22 @@
                     <legend>
                         Add Access
                     </legend>
-                    <xar:data-input type="access" name="access_add" value="$access['add']"/>
+                    <xar:data-input type="access" name="access_add" value="$access['add']" group_multiselect="1"/>
+                    <hr/>
                     <legend>
                         Display Access
                     </legend>
-                    <xar:data-input type="access" name="access_display" value="$access['display']"/>
+                    <xar:data-input type="access" name="access_display" value="$access['display']" group_multiselect="1"/>
+                    <hr/>
                     <legend>
                         Modify Access
                     </legend>
-                    <xar:data-input type="access" name="access_modify" value="$access['modify']"/>
+                    <xar:data-input type="access" name="access_modify" value="$access['modify']" group_multiselect="1"/>
+                    <hr/>
                     <legend>
                         Delete Access
                     </legend>
-                    <xar:data-input type="access" name="access_delete" value="$access['delete']"/>
+                    <xar:data-input type="access" name="access_delete" value="$access['delete']" group_multiselect="1"/>
                 </fieldset>
                 <div class="xar-row">
                     <div class="xar-col">

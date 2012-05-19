@@ -150,6 +150,8 @@ function publications_admin_updateconfig()
         
         // Get the default access rules
         $access = DataPropertyMaster::getProperty(array('name' => 'access'));
+        $access->initialization_group_multiselect = true;
+        $access->validation_override = true;
         $validprop = $access->checkInput("access_add");
         $addaccess = $access->value;
         $isvalid = $isvalid && $validprop;
