@@ -124,7 +124,7 @@ function publications_admin_display($args)
     $nopublish = (time() < $data['object']->properties['start_date']->value) || ((time() > $data['object']->properties['end_date']->value) && !$data['object']->properties['no_end']->value);
     
     // If no access, then bail showing a forbidden or an empty page
-    if (!$data{'allow'] || $nopublish) {
+    if (!$data['allow'] || $nopublish) {
         if ($accessconstraints['display']['failure']) return xarResponse::Forbidden();
         else return $data;
     }
