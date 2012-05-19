@@ -13,7 +13,8 @@
 
             &#160;
             <xar:data-input type="dropdown" name="operation" options="$options" />&#160;
-            <input type="submit" value="#xarML('Execute')#" />&#160;
+            <xar:var name="label">Execute</xar:var>
+            <xar:button type="submit" label="$label"/>&#160;
             <xar:javascript filename="checkall.js" property="listing" position="body"/>
             <a href="javascript:listing_checkall(true)">Check All</a>&#160;|&#160;
             <a href="javascript:listing_checkall(false)">Uncheck All</a>
