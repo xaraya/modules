@@ -42,6 +42,7 @@ function publications_userapi_getrelativepages($args)
         }
     }
     
+    // FIXME: Combine everything below to single query to avoid the two loops at the end
     $xartable = xarDB::getTables();
     sys::import('xaraya.structures.query');
     $q = new Query();
@@ -76,10 +77,16 @@ function publications_userapi_getrelativepages($args)
         break;
     }
     if (!empty($args['itemtype'])) $q->eq('p.pubtype_id', $args['itemtype']);
-    $q->gt('p.state', 2);
+    
+    // We need to grab all the pages if we are looking for trnaslations, because the translation might have a valid stte
+    if (xarModVars::get('publications', 'defaultlanguage') == xarUserGetNavigationLocale()) {
+        $q->gt('p.state', 2);
+    }
+        
     $q->addfield('p.id AS id');
     $q->addfield('p.name AS name');
     $q->addfield('p.title AS title');
+    $q->addfield('p.state AS state');
     $q->addfield('p.description AS description');
     $q->addfield('p.summary AS summary');
     $q->addfield('p.rightpage_id AS rightpage_id');
@@ -137,6 +144,7 @@ function publications_userapi_getrelativepages($args)
         $q->addfield('title');
         $q->addfield('description');
         $q->addfield('summary');
+        $q->addfield('state');
         $q->in('parent_id',$ids);
         $q->eq('locale',xarUserGetNavigationLocale());
 
@@ -145,12 +153,20 @@ function publications_userapi_getrelativepages($args)
     
         $q->run();
         foreach ($q->output() as $row) {
+            // Remove any pages with invalid states now
+            if ($row['state'] < 3) unset($indexedpages[$row['parent_id']]);
+            
             // Copy the name and id paths so we don't have to recalculate them
             $row['depth'] = $indexedpages[$row['parent_id']]['depth'];
             $row['idpath'] = $indexedpages[$row['parent_id']]['idpath'];
             $row['namepath'] = $indexedpages[$row['parent_id']]['namepath'];
             // Add the entire row to the result pages
             $indexedpages[$row['parent_id']] = $row;
+        }
+        
+        // Now go through the remaining pages and check for no-show states
+        foreach ($indexedpages as $key => $page) {
+            if ($page['state'] < 3) unset($indexedpages[$key]);
         }
         $pages =& $indexedpages;
     }
