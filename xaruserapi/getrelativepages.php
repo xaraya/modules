@@ -168,8 +168,19 @@ function publications_userapi_getrelativepages($args)
         foreach ($indexedpages as $key => $page) {
             if ($page['state'] < 3) unset($indexedpages[$key]);
         }
+        
+        // Now sort by title if we need to
+        if($args['sort']) {
+            usort($indexedpages, 'multi_sort');
+        }
+
         $pages =& $indexedpages;
     }
     return $pages;
+}
+
+function multi_sort($a, $b)
+{
+    return $a['title'] > $b['title'];
 }
 ?>
