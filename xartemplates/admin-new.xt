@@ -3,108 +3,11 @@
     <!-- License:GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <h2>
-            Create Scheduler Job
-        </h2>
+        <h2>Create Scheduler Job</h2>
 
-        <form method="post" action="&xar-modurl-scheduler-admin-create;">
-                <div class="xar-form-input-wrapper">
-                    <label for="job_module" class="xar-form-label">
-                        Module
-                    </label>
-                    <select name="job_module" id="job_module">
-                        <xar:foreach in="$modules" key="$name" value="$display">
-                            <option value="#$name#">#$display#</option>
-                        </xar:foreach>
-                    </select>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="functype" class="xar-form-label">
-                        Type
-                    </label>
-                    <select name="functype">
-                        <xar:foreach in="$types" key="$name" value="$display">
-                            <option value="#$name#">#$display#</option>
-                        </xar:foreach>
-                    </select>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="job_func" class="xar-form-label">
-                        API Function
-                    </label>
-                    <input type="text" name="job_func" id="job_func" value="" size="10"/>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="config_params" class="xar-form-label">
-                        Parameters
-                    </label>
-                    <input type="text" name="config[params]" id="config_params" value=""/>
-                    example: array('ptid' => 1)
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="job_interval" class="xar-form-label">
-                        Interval
-                    </label>
-                    <select name="job_interval" id="job_interval">
-                        <xar:foreach in="$intervals" key="$name" value="$display">
-                            <option value="#$name#">#$display#</option>
-                        </xar:foreach>
-                    </select>
-                </div>
-
-                <div class="xar-form-input-wrapper">
-                    <label for="config_startdate" class="xar-form-label">
-                        Start Date
-                    </label>
-                    <xar:data-input type="calendar" name="config[startdate]" id="config_startdate" value=""/>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="config_enddate" class="xar-form-label">
-                        End Date
-                    </label>
-                    <xar:data-input type="calendar" name="config[enddate]" id="config_enddate" value=""/>
-                </div>
-
-            <fieldset>
-                <legend>
-                    Trigger Settings
-                </legend>
-
-                <div class="xar-form-input-wrapper">
-                    <label for="job_trigger" class="xar-form-label">
-                        Trigger Type
-                    </label>
-                    <select name="job_trigger" id="job_trigger">
-                        <xar:foreach in="$triggers" key="$triggerid" value="$triggername">
-                            <option value="#$triggerid#">#$triggername#</option>
-                        </xar:foreach>
-                    </select>
-                </div>
-
-                <p>
-                    The following settings are used to limit external access to the scheduler.
-                </p>
-
-                <div class="xar-form-input-wrapper">
-                    <label for="checktype" class="xar-form-label">
-                        Source Type
-                    </label>
-                    <select name="checktype" id="job_trigger">
-                        <xar:foreach in="$sources" key="$sourceid" value="$sourcename">
-                            <option value="#$sourceid#">#$sourcename#</option>
-                        </xar:foreach>
-                    </select>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="checkvalue" class="xar-form-label">
-                        Source
-                    </label>
-                    <input type="text" name="checkvalue" id="checkvalue" value=""/>
-                </div>
-
-
-            </fieldset>
-
+        <form method="post" action="#xarModURL('scheduler','admin','new')#">
+            <xar:data-form object="$object" tplmodule="scheduler"/>
+<!--
             <fieldset>
                 <legend>
                     Crontab
@@ -144,16 +47,17 @@
                     example: 1-5 = from Monday to Friday
                 </div>
             </fieldset>
-            <div class="xar-form-input-wrapper-after">
-                <input type="hidden" name="authid" id="authid" value="#$authid#"/>
-                <input type="submit" name="confirm" value="#xarML('Create Scheduler Job')#"/>
+            -->
+            <div class="xar-row">
+                <div class="xar-col">
+                    &#160;
+                </div>
+                <div class="xar-col">
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                    <xar:var name="label">Create Job</xar:var>
+                    <xar:button type="submit" name="confirm" label="$label"/>
+                </div>
             </div>
         </form>
-        <p>
-            
-                Please note that the scheduler module still needs to be triggered by some external mechanism, and that any crontab interval will apply at the first trigger after the next scheduled run
-                (i.e. if the crontab specifies each Monday at 8:15 and the next trigger comes on Tuesday at 10:45, the job will run then).
-            
-        </p>
     </div>
 </xar:template>

@@ -1,13 +1,12 @@
 <?php
 /**
- * Scheduler module
+ * Scheduler Module
  *
  * @package modules
- * @copyright (C) copyright-placeholder
+ * @subpackage scheduler module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Scheduler Module
  * @link http://xaraya.com/index.php/release/189.html
  * @author mikespub
  */
@@ -25,57 +24,34 @@ function scheduler_userapi_get($args)
 {
     extract($args);
     $invalid = array();
-    if (isset($itemid)) {
-        if (!is_numeric($itemid)) {
-            $invalid[] = 'item id';
-        }
-    } else {
+    if (empty($args['itemid']) || !is_numeric($args['itemid'])) {
+        throw new Exception(xarML('No itemid passed'));
+    }
+    /* Just focus on itemid for now
         if (empty($module) || !is_string($module)) {
             $invalid[] = 'module';
         }
         // CHECKME: why can't we use type instead of functype here?
-        if ((empty($type) || !is_string($type)) && (empty($functype) || !is_string($functype))) {
+        if ((empty($type) || !is_string($type)) && (empty($type) || !is_string($type))) {
             $invalid[] = 'type';
         }
-        if (empty($func) || !is_string($func)) {
-            $invalid[] = 'func';
+        if (empty($function) || !is_string($function)) {
+            $invalid[] = 'function';
         }
-    }
-
-    if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     join(', ', $invalid), 'user', 'get', 'scheduler');
-        throw new BadParameterException($msg);
-    }
-
-    $serialjobs = xarModVars::get('scheduler','jobs');
-    if (empty($serialjobs)) {
-        $jobs = array();
-    } else {
-        $jobs = unserialize($serialjobs);
-    }
-
-    if(count($where) > 0) {
-        $query .= " WHERE " . implode(' AND ', $where);
-    }
-
-    $stmt = $dbconn->prepareStatement($query);
-    $stmt->setLimit(1);
-
-    $result = $stmt->executeQuery($bindvars,ResultSet::FETCHMODE_ASSOC);
-
-    $jobs = array();
-
-    while($result->next()) {
-        $job = $result->fields;
-        if ($job['config'] != '') {
-            $job['config'] = unserialize($job['config']);
+        if (count($invalid) > 0) {
+            $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                         join(', ', $invalid), 'user', 'get', 'scheduler');
+            throw new BadParameterException($msg);
         }
-        $jobs[$job['id']] = $job;
-    }
 
-    // Return the job information
-    return current($jobs);
+    */
+    
+    sys::import('modules.dynamicdata.class.objects.master');
+    $object = DataObjectMaster::getObject(array('name' => 'scheduler_jobs'));
+    $object->getItem(array('itemid' => $args['itemid']));
+    $job = $object->getFieldValues();
+
+    return $job;
 }
 
 ?>

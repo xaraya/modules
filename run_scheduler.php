@@ -1,5 +1,16 @@
 <?php
 /**
+ * Scheduler Module
+ *
+ * @package modules
+ * @subpackage scheduler module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://xaraya.com/index.php/release/189.html
+ * @author mikespub
+ */
+/**
  * Instead of triggering the scheduler by retrieving the web page
  * index.php?module=scheduler or by using a trigger block on your
  * site, you can also execute this script directly using the PHP

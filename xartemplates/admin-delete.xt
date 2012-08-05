@@ -3,53 +3,54 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <h2>
-            
-                Delete Scheduler Job
-            
-        </h2>
+        <h2>Delete Scheduler Job</h2>
         <fieldset>
             <legend>
                 Confirm deleting this job?
             </legend>
             <p>
                 Module:
-                #$module#
+                <xar:data-output property="$properties['module']" />
             </p>
             <p>
                 Type:
-                #$functype#
+                <xar:data-output property="$properties['type']" />
             </p>
             <p>
                 Function:
-                #$func#
+                <xar:data-output property="$properties['function']" />
             </p>
             <p>
                 Trigger:
-                #$triggers.$job_trigger#
+                <xar:data-output property="$properties['job_trigger']" />
             </p>
         </fieldset>
 
-        <xar:set name="running">xarModVars::get('scheduler', 'running.' . $id)</xar:set>
+        <xar:set name="running">xarModVars::get('scheduler', 'running.' . $itemid)</xar:set>
 
-        <xar:if condition="$running ne 0 or $job_trigger ne 0">
+        <xar:if condition="$running ne 0 AND $properties['job_trigger']->value ne 0">
             <p class="xar-alt-outline xar-padding-thick">
                 This job must be disabled and not running to allow deletion. 
-                <a href="#xarModURL('scheduler','admin','modify',array('itemid'=>$id))#">Please set its trigger to disabled</a>.
+                <a href="#xarModURL('scheduler','admin','modify',array('itemid'=>$itemid))#">Please set its trigger to disabled</a>.
             </p>
-
-
         <xar:else />
-            <form method="post" action="&xar-modurl-scheduler-admin-delete;">
-                <div class="xar-align-center xar-margin-thickends">
-                    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
-                    <input type="hidden" name="confirm" id="confirm" value="true"/>
-                    <input type="hidden" name="itemid" id="itemid" value="#$id#"/>
-                    <input type="submit" value="#xarML('Delete Job')#" class="xar-margin-thicksides"/>
-                    <xar:set name="returnurl">
-                        #xarModURL('scheduler', 'admin', 'modifyconfig')#
-                    </xar:set>
-                    <input type="button" value="#xarML('Cancel')#" class="xar-margin-thicksides" onclick="window.location='#$returnurl#';"/>
+            <form method="post" action="#xarModURL('scheduler','admin','delete')#">
+                <div class="xar-row">
+                    <div class="xar-col">
+                        &#160;
+                    </div>
+                    <div class="xar-col">
+                        <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                        <input type="hidden" name="confirm" id="confirm" value="true"/>
+                        <input type="hidden" name="itemid" id="itemid" value="#$itemid#"/>
+                        <xar:var name="label">Delete Job</xar:var>
+                        <xar:button type="submit" label="$label" />
+                        <xar:set name="returnurl">
+                            #xarModURL('scheduler', 'admin', 'view')#
+                        </xar:set>
+                        <xar:var name="label">Cancel</xar:var>
+                        <xar:button type="cancel" label="$label" onclick="window.location='#$returnurl#';"/>
+                    </div>
                 </div>
             </form>
         </xar:if>

@@ -1,13 +1,12 @@
 <?php
 /**
- * Scheduler module
+ * Scheduler Module
  *
  * @package modules
- * @copyright (C) copyright-placeholder
+ * @subpackage scheduler module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Scheduler Module
  * @link http://xaraya.com/index.php/release/189.html
  * @author mikespub
  */
@@ -41,14 +40,14 @@ class Scheduler_TriggerBlock extends BasicBlock implements iBlock
     function display(Array $data=array())
     {
         $vars = $this->getContent();
-
+/*
         // check if we have the right trigger
         $trigger = xarModVars::get('scheduler','trigger');
         if (empty($trigger) || $trigger != 'block') {
             $vars['msg'] = xarML('Wrong trigger');
             return $vars;
         }
-
+*/
         // check when we last ran the scheduler
         $lastrun = xarModVars::get('scheduler', 'lastrun');
         $now = time() + 60; // add some margin here
@@ -74,7 +73,7 @@ class Scheduler_TriggerBlock extends BasicBlock implements iBlock
     //       So we need to find some better way to see if we're really the only ones playing here...
 
         // let's see if we're the only ones trying to run jobs at this moment
-        $GLOBALS['xarScheduler_LockFileHandle'] = fopen(xarCoreGetVarDirPath().'/cache/templates/scheduler.lock','w+');
+        $GLOBALS['xarScheduler_LockFileHandle'] = fopen(sys::varpath().'/cache/templates/scheduler.lock','w+');
         if (empty($GLOBALS['xarScheduler_LockFileHandle']) || !flock($GLOBALS['xarScheduler_LockFileHandle'], LOCK_EX | LOCK_NB)) {
             fclose($GLOBALS['xarScheduler_LockFileHandle']);
             if (empty($vars['showstatus'])) {

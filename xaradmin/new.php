@@ -1,13 +1,12 @@
 <?php
 /**
- * Scheduler module
+ * Scheduler Module
  *
  * @package modules
- * @copyright (C) copyright-placeholder
+ * @subpackage scheduler module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Scheduler Module
  * @link http://xaraya.com/index.php/release/189.html
  * @author mikespub
  */
@@ -19,28 +18,36 @@ function scheduler_admin_new()
 {
     if (!xarSecurityCheck('AdminScheduler')) return;
 
-    // Use the current job as $data
-    $data = array();
+    if (!xarVarFetch('confirm','isset',$confirm,'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('addjob','str',$addjob,'',XARVAR_NOT_REQUIRED)) return;
+    
+    sys::import('modules.dynamicdata.class.objects.master');
+    $data['object'] = DataObjectMaster::getObject(array('name' => 'scheduler_jobs'));
 
-    $modules = xarModAPIFunc('modules', 'admin', 'getlist',
-                             array('filter' => array('AdminCapable' => 1)));
-    $data['modules'] = array();
-    foreach ($modules as $module) {
-        $data['modules'][$module['name']] = $module['displayname'];
+    if (!empty($addjob) && preg_match('/^(\w+);(\w+);(\w+)$/',$addjob,$matches)) {
+        $data['object']->properties['module']->value = $matches[1];
+        $data['object']->properties['type']->value = $matches[2];
+        $data['object']->properties['function']->value = $matches[3];
     }
-    $data['types'] = array( // don't translate API types
-                           'scheduler' => 'scheduler',
-                           'admin' => 'admin',
-                           'user' => 'user',
-                          );
+    
+    if (!empty($confirm)) {
 
-    $data['triggers'] = xarModAPIFunc('scheduler','user','triggers');
-    $data['sources'] = xarModAPIFunc('scheduler','user','sources');
+        $isvalid = $data['object']->checkInput();
 
-    $data['authid'] = xarSecGenAuthKey();
-    $data['intervals'] = xarModAPIFunc('scheduler','user','intervals');
+        /*if ($job_interval == '0c' && !empty($config['crontab'])) {
+            $config['crontab']['nextrun'] = xarModAPIFunc('scheduler','user','nextrun',
+                                                          $config['crontab']);
+        }
+        $job['config'] = $config;*/
 
-    // Return the template variables defined in this function
+        if (!$isvalid) {var_dump($data['object']->getInvalids());exit;
+            xarController::redirect(xarModURL('scheduler', 'admin', 'new'));
+        }
+        
+        $itemid = $data['object']->createItem();
+        xarController::redirect(xarModURL('scheduler', 'admin', 'view'));
+        return true;
+    }
     return $data;
 }
 ?>

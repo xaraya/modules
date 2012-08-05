@@ -1,13 +1,12 @@
 <?php
 /**
- * Scheduler module
+ * Scheduler Module
  *
  * @package modules
- * @copyright (C) copyright-placeholder
+ * @subpackage scheduler module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Scheduler Module
  * @link http://xaraya.com/index.php/release/189.html
  * @author mikespub
  */
@@ -27,11 +26,13 @@ function scheduler_admin_delete()
     // Security Check
     if (!xarSecurityCheck('AdminScheduler')) return;
 
+    sys::import('modules.dynamicdata.class.objects.master');
+    $job = DataObjectMaster::getObject(array('name' => 'scheduler_jobs'));
+
     // Check for confirmation
     if (empty($confirm)) {
-        // No confirmation yet - get one
-
-        $job = xarmodAPIFunc('scheduler','user','get',array('itemid'=>$itemid));
+        // No confirmation yet - get the item
+        $job->getItem(array('itemid' => $itemid));
 
         if (empty($job)) {
             $msg = xarML('Job #(1) for #(2) function #(3)() in module #(4)',
@@ -39,19 +40,20 @@ function scheduler_admin_delete()
             throw new Exception($msg);
         }
 
-        $job['authid'] = xarSecGenAuthKey();
-        $job['triggers'] = xarModAPIFunc('scheduler','user','triggers');
-        return $job;
+        $data['authid'] = xarSecGenAuthKey();
+        $data['triggers'] = xarModAPIFunc('scheduler','user','triggers');
+        $data['job'] = $job;
+        $data['properties'] = $job->properties;
+        $data['itemid'] = $itemid;
+        return $data;
     }
 
     // Confirm Auth Key
     if (!xarSecConfirmAuthKey()) {return;}
 
+    $job->deleteItem(array('itemid' => $itemid));
     // Pass to API
-    xarModAPIFunc('scheduler', 'admin', 'delete',array('itemid' => $itemid));
-
-    xarController::redirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
-
+    xarController::redirect(xarModURL('scheduler', 'admin', 'view'));
     return true;
 }
 

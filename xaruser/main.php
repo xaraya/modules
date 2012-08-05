@@ -1,13 +1,12 @@
 <?php
 /**
- * Scheduler module
+ * Scheduler Module
  *
  * @package modules
- * @copyright (C) copyright-placeholder
+ * @subpackage scheduler module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Scheduler Module
  * @link http://xaraya.com/index.php/release/189.html
  * @author mikespub
  */
@@ -17,6 +16,7 @@
  */
 function scheduler_user_main()
 {
+/*
     // check if we have the right trigger
     $trigger = xarModVars::get('scheduler','trigger');
     if (empty($trigger) || $trigger != 'external') {
@@ -28,7 +28,7 @@ function scheduler_user_main()
     $forwarded = xarServer::getVar('HTTP_X_FORWARDED_FOR');
     if (!empty($forwarded)) {
         $proxy = $ip;
-        $ip = preg_replace('/,.*/', '', $forwarded);
+        $ip = preg_replace('/,.* /', '', $forwarded);
     }
 
     $checktype = xarModVars::get('scheduler','checktype');
@@ -65,6 +65,13 @@ function scheduler_user_main()
             }
             break;
     }
+    if (!$isvalid) {
+        if (!empty($ip)) {
+            $hostname = @gethostbyaddr($ip);
+            // same player, shoot again...
+            if (empty($hostname)) {
+                $hostname = @gethostbyaddr($ip);
+            }
 
             if (empty($hostname)) {
                 $hostname = 'unknown';
@@ -73,7 +80,7 @@ function scheduler_user_main()
         xarLogMessage("scheduler: Failed trigger attempt from host $ip ($hostname).");
         return xarML('Wrong trigger')." $ip ($hostname) at " . date('j', time());
     }
-
+*/
     // check when we last ran the scheduler
     $lastrun = xarModVars::get('scheduler', 'lastrun');
     $now = time();
@@ -87,12 +94,15 @@ function scheduler_user_main()
 
     // update the last run time
     xarModVars::set('scheduler','lastrun',$now - 60); // remove the margin here
+    
     xarModVars::set('scheduler','running',1);
-
-    $output = xarMod::apiFunc('scheduler','user','runjobs');
-
-// TODO: dump exceptions ?
-    return $output;
+    $data['output'] = xarMod::apiFunc('scheduler','user','runjobs');
+    xarModVars::delete('scheduler','running');
+    if (xarIsParent('Administrators', xarUserGetVar('uname'))) {
+        return $data;
+    } else {
+        return xarController::$response->NotFound();
+    }
 }
 
 ?>

@@ -1,13 +1,12 @@
 <?php
 /**
- * Scheduler module
+ * Scheduler Module
  *
  * @package modules
- * @copyright (C) copyright-placeholder
+ * @subpackage scheduler module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Scheduler Module
  * @link http://xaraya.com/index.php/release/189.html
  * @author mikespub
  */
@@ -21,11 +20,16 @@ function scheduler_admin_search()
     $data = array();
     $data['found'] = array();
 
+    $items = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_ACTIVE)));
+    $activemodules = array();
+    foreach ($items as $item) $activemodules[$item['name']] = 1;
+
     $modules = sys::code().'modules';
     $dh = opendir($modules);
     if (empty($dh)) return $data;
     while (($dir = readdir($dh)) !== false) {
         if (is_dir($modules . '/' . $dir) && is_dir($modules . '/' . $dir . '/xarschedulerapi')) {
+            if (!isset($activemodules[$dir])) continue;
             $dh2 = opendir($modules . '/' . $dir . '/xarschedulerapi');
             if (empty($dh2)) continue;
             while (($file = readdir($dh2)) !== false) {

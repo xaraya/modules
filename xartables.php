@@ -1,13 +1,12 @@
 <?php
 /**
- * Scheduler module
+ * Scheduler Module
  *
  * @package modules
- * @copyright (C) copyright-placeholder
+ * @subpackage scheduler module
+ * @category Third Party Xaraya Module
+ * @version 2.0.0
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Scheduler Module
  * @link http://xaraya.com/index.php/release/189.html
  * @author mikespub
  */
@@ -23,13 +22,8 @@
 function scheduler_xartables()
 {
     $tables = array();
-
-    $prefix = xarDB::getPrefix();
-
-    $tables['scheduler_jobs'] = $prefix . '_scheduler_jobs';
-
+    $tables['scheduler_jobs'] = xarDB::getPrefix() . '_scheduler_jobs';
     return $tables;
-
 }
 
 ?>

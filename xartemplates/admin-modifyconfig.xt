@@ -1,190 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-
     <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <h2>
-            Modify Configuration
-        </h2>
+        <h2>Modify Configuration</h2>
 
-        <p>
-            <a href="#xarModURL('scheduler','admin','new')#">Create Job</a>
-        </p>
-
-        <h3>
-            Existing Jobs
-        </h3>
-
-        <p>
-            Click the job ID to edit the job.
-        </p>
-
-        <table class="xar-fullwidth">   
-            <tr>
-                <th>ID</th>
-                <th>Module</th>
-                <th>Type</th>
-                <th>API Function</th>
-                <th>Interval</th>
-                <th>Last Run</th>
-                <th>Result</th>
-                <th>Actions</th>
-            </tr>
-            <xar:foreach in="$jobs" key="$id" value="$job">
-                <tr>
-                    <td class="xar-align-right">
-                        <xar:if condition="!empty($id)">
-                            <a href="#xarModURL('scheduler','admin','modify',array('itemid' => $id))#" title="#xarML('Edit Configuration')#">
-                                #$id#
-                            </a>
-                        </xar:if>
-                    </td>
-                    <td>
-                        <xar:if condition="$jobs[$id]['module'] eq ''">
-                            [ not set ]
-                        <xar:else />
-                            #$jobs.$id.module#
-                        </xar:if>
-                    </td>
-                    <td>
-                        #$jobs.$id.type#
-                    </td>
-                    <td>
-                        #$jobs.$id.func#
-                    </td>
-                    <td>
-                        <xar:set name="interval">$intervals[$jobs[$id]['interval']]</xar:set>
-                        #$interval#
-
-                    </td>
-                    <td>
-                        <input type="hidden" name="jobs[#$id#][lastrun]" value="#$job['lastrun']#"/>
-                        <xar:if condition="!empty($job['lastrun'])">
-                            #xarLocaleGetFormattedDate('short',$job['lastrun'])# - #xarLocaleGetFormattedTime('short',$job['lastrun'])#
-                </xar:if>
-              </td>
-              <td class="xar-align-center">
-                <input type="hidden" name="jobs[#$id#][result]" value="#$job['result']#" />
-                #$job['result']#
-              </td>
-            </tr>
-          </xar:foreach>
-        </table>
-        <form action="#xarModURL('scheduler','admin','updateconfig')#" method="post">
-        <fieldset>
-            <legend>
-                Trigger
-            </legend>
-            <table class="xar-fullwidth">
-              <tr>
-                <td align="right">
-                  <label for="trigger">Type</label>
-                </td>
-                <td align="left">
-                  <select name="trigger" id="trigger" onchange="submit();">
-                  <xar:if condition="$trigger eq 'disabled'">
-                    <option value="disabled" selected="selected">Disabled</option>
-                  <xar:else/>
-                    <option value="disabled">Disabled</option>
-                  </xar:if>
-                  <xar:if condition="$trigger eq 'external'">
-                    <option value="external" selected="selected">External Scheduler</option>
-                  <xar:else/>
-                    <option value="external">External Scheduler</option>
-                  </xar:if>
-                  <xar:if condition="$trigger eq 'block'">
-                    <option value="block" selected="selected">Trigger Block on Site</option>
-                  <xar:else/>
-                    <option value="block">Trigger Block on Site</option>
-                  </xar:if>
-                  <xar:if condition="$trigger eq 'event'">
-                    <option value="event" selected="selected" disabled="disabled">Event Handler on Site</option>
-                  <xar:else/>
-                    <option value="event" disabled="disabled">Event Handler on Site</option>
-                  </xar:if>
-                  </select>
-                </td>
-              </tr>
-            <xar:if condition="$trigger eq 'external'">
-              <tr>
-                <td colspan="2">
-                  <xar:ml><xar:mlstring>Your scheduler should get the following web page : <a href="#(1)">#(1)</a></xar:mlstring><xar:mlvar>#xarModURL('scheduler')#</xar:mlvar></xar:ml>
-                </td>
-              </tr>
-              <tr>
-                <td align="right">
-                  <label for="checktype">Source</label>
-                </td>
-                <td align="left">
-                  <select name="checktype" id="checktype">
-                  <xar:if condition="empty($checktype) or $checktype eq 'local'">
-                    <option value="local" selected="selected">Local Host</option>
-                  <xar:else/>
-                    <option value="local">Local Host</option>
-                  </xar:if>
-                  <xar:if condition="!empty($checktype) and $checktype eq 'ip'">
-                    <option value="ip" selected="selected">IP Address (direct connection)</option>
-                  <xar:else/>
-                    <option value="ip">IP Address (direct connection)</option>
-                  </xar:if>
-                  <xar:if condition="!empty($checktype) and $checktype eq 'proxy'">
-                    <option value="proxy" selected="selected">IP Address (behind proxy)</option>
-                  <xar:else/>
-                    <option value="proxy">IP Address (behind proxy)</option>
-                  </xar:if>
-                  <xar:if condition="!empty($checktype) and $checktype eq 'host'">
-                    <option value="host" selected="selected">Hostname</option>
-                  <xar:else/>
-                    <option value="host">Hostname</option>
-                  </xar:if>
-                  </select>
-                  <input type="text" name="checkvalue" id="checkvalue" value="#$checkvalue#" size="20"/>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2">
-                  <xar:if condition="!empty($proxy)">
-                    <xar:ml><xar:mlstring>Note: you are connected via proxy #(1) from IP address #(2) [#(3)]</xar:mlstring><xar:mlvar>#$proxy#</xar:mlvar><xar:mlvar>#$ip#</xar:mlvar><xar:mlvar>#$hostname#</xar:mlvar></xar:ml>
-                  <xar:else/>
-                    <xar:ml><xar:mlstring>Note: you are connected directly from IP address #(1) [#(2)]</xar:mlstring><xar:mlvar>#$ip#</xar:mlvar><xar:mlvar>#$hostname#</xar:mlvar></xar:ml>
-                  </xar:if>
-                </td>
-              </tr>
+        <form action="#xarModURL('scheduler', 'admin', 'modifyconfig', array('tab' => $tab))#" method="post" enctype="application/x-www-form-urlencoded" >
+            <xar:if condition="$tab eq 'general'">
+                <fieldset>
+                    <legend>        
+                        General Settings
+                    </legend>
+                    <xar:data-form object="$module_settings"/>
+                </fieldset>
             </xar:if>
-              <tr>
-                <td align="right">
-                  Last Run
-                </td>
-                <td align="left">
-                  <xar:if condition="!empty($lastrun)">
-                    #xarLocaleGetFormattedDate('long',$job['lastrun'])# - #xarLocaleGetFormattedTime('short',$job['lastrun'])#
-                  </xar:if>
-                </td>
-              </tr>
-              <tr>
-                <td align="right">
-                  <label for="reset">Reset Jobs</label>
-                </td>
-                <td align="left">
-                  <input type="checkbox" name="reset" id="reset" value="1" />
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2">
-                  #$hooks#
-                </td>
-              </tr>
-            </table>
-        </fieldset>
-        <div class="xar-form-input-wrapper-after">
-          <xar:if condition="xarModVars::get('scheduler','running')">
-            Warning: jobs are currently running - any changes you make now may be overwritten<br/>
-          </xar:if>
-            <input type="submit" value="#xarML('Update Configuration')#" />
-        </div>
-    </form>
-</div>
-
-
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                    <input type="hidden" name="phase" id="phase" value="update"/>
+                    <xar:var name="label">Update</xar:var>
+                    <xar:button type="submit" label="$label"/>
+                </div>
+            </fieldset>
+        </form>
+    </div>
 </xar:template>
