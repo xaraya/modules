@@ -126,6 +126,9 @@ function scheduler_init()
 #
 # Create DD objects
 #
+    // First pull in this module's properties as we use at least one in the objects below
+    PropertyRegistration::importPropertyTypes(false,array('modules/scheduler/xarproperties'));
+
     $module = 'scheduler';
     $objects = array(
                    'scheduler_jobs',
