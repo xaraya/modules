@@ -1,0 +1,159 @@
+<object name="scheduler_jobs">
+  <objectid>404</objectid>
+  <label>Scheduler Jobs</label>
+  <module_id>182</module_id>
+  <itemtype>137</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <access>a:0:{}</access>
+  <isalias>true</isalias>
+  <datastore>relational</datastore>
+  <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>
+  <sources>a:1:{s:4:&quot;jobs&quot;;a:2:{i:0;s:18:&quot;xar_scheduler_jobs&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
+  <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
+  <properties>
+    <property name="id">
+      <id>7772</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>jobs.id</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="module">
+      <id>7773</id>
+      <label>Module</label>
+      <type>module</type>
+      <defaultvalue></defaultvalue>
+      <source>jobs.module</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration>a:11:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:0:"";s:20:"validation_notequals";s:0:"";s:17:"validation_equals";s:0:"";s:24:"initialization_firstline";s:0:"";s:23:"initialization_function";s:90:"xarModAPIFunc('modules', 'admin', 'getlist',array('filter' => array('AdminCapable' => 1)))";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:0:"";s:25:"initialization_other_rule";s:0:"";}</configuration>
+    </property>
+    <property name="type">
+      <id>7774</id>
+      <label>Type</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>jobs.type</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration>a:11:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:0:"";s:20:"validation_notequals";s:0:"";s:17:"validation_equals";s:0:"";s:24:"initialization_firstline";s:0:"";s:23:"initialization_function";s:0:"";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:42:"scheduler,scheduler;admin,admin;user,user;";s:25:"initialization_other_rule";s:0:"";}</configuration>
+    </property>
+    <property name="function">
+      <id>7775</id>
+      <label>Function</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>jobs.function</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="job_trigger">
+      <id>7776</id>
+      <label>Trigger</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>jobs.job_trigger</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration>a:11:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:0:"";s:20:"validation_notequals";s:0:"";s:17:"validation_equals";s:0:"";s:24:"initialization_firstline";s:0:"";s:23:"initialization_function";s:44:"xarModAPIFunc('scheduler','user','triggers')";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:0:"";s:25:"initialization_other_rule";s:0:"";}</configuration>
+    </property>
+    <property name="source_type">
+      <id>7777</id>
+      <label>Source Type</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>jobs.sourcetype</source>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration>a:11:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:0:"";s:20:"validation_notequals";s:0:"";s:17:"validation_equals";s:0:"";s:24:"initialization_firstline";s:0:"";s:23:"initialization_function";s:43:"xarModAPIFunc('scheduler','user','sources')";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:0:"";s:25:"initialization_other_rule";s:0:"";}</configuration>
+    </property>
+    <property name="source">
+      <id>7778</id>
+      <label>Source</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>jobs.source</source>
+      <status>33</status>
+      <seq>7</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="parameters">
+      <id>7779</id>
+      <label>Parameters</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>jobs.parameters</source>
+      <status>34</status>
+      <seq>8</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="start_date">
+      <id>7780</id>
+      <label>Start Date</label>
+      <type>datetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>jobs.startdate</source>
+      <status>33</status>
+      <seq>9</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="end_date">
+      <id>7781</id>
+      <label>End Date</label>
+      <type>datetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>jobs.enddate</source>
+      <status>33</status>
+      <seq>10</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="crontab">
+      <id>7782</id>
+      <label>Crontab</label>
+      <type>crontab</type>
+      <defaultvalue></defaultvalue>
+      <source>jobs.crontab</source>
+      <status>34</status>
+      <seq>11</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="last_run">
+      <id>7783</id>
+      <label>Last Run</label>
+      <type>datetime</type>
+      <defaultvalue></defaultvalue>
+      <source>jobs.lastrun</source>
+      <status>33</status>
+      <seq>12</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="result">
+      <id>7784</id>
+      <label>Result</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>jobs.result</source>
+      <status>32</status>
+      <seq>13</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="job_interval">
+      <id>7785</id>
+      <label>Interval</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>jobs.job_interval</source>
+      <status>33</status>
+      <seq>14</seq>
+      <configuration>a:11:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:0:"";s:20:"validation_notequals";s:0:"";s:17:"validation_equals";s:0:"";s:24:"initialization_firstline";s:0:"";s:23:"initialization_function";s:45:"xarModAPIFunc('scheduler','user','intervals')";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:0:"";s:25:"initialization_other_rule";s:0:"";}</configuration>
+    </property>
+  </properties>
+</object>

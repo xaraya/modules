@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div>
+            <h2>Date Property</h2>
+                <h3>Description</h3>
+                <p>
+                    The Date dataproperty lets you input dates. It consists of several dropdown fields.  The dropdown is meant for choosing the unit of time (seconds, minutes, hours, days, weeks, months and years). The textbox is meant for entering the number of units. 
+                </p>
+                <p>
+                    The property stores dates internally as seconds.
+                </p>
+                <h3>Usage</h3>
+                <h4>Standalone</h4>
+                    <pre>
+    &lt;xar:data-input type="date" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output type="date" <i>[attr1="value1",...]</i> /&gt;
+                    </pre>
+            <h4>Bound</h4>
+                <pre>
+    &lt;xar:data-input property="$properties['date']" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output property="$properties['date']" <i>[attr1="value1",...]</i> /&gt;
+                </pre>
+            <h3>Attributes</h3>
+            <ul>
+                <li>
+                    <strong>start_year</strong>: integer [default=-5]&#160;The first year of the year dropdown. If not specified it is 5 years before the smaller of the current year or the year value of the property.
+                </li>
+                <li>
+                    <strong>end_year</strong>: integer [default=+5]&#160;The last year of the year dropdown. If not specified it is 5 years after the larger of the current year or the year value of the property.
+                </li>
+                <li>
+                    <strong>layout</strong>: string [default='default']&#160;The default layout shows year, month and day dropdowns. The monthyear layout shows only year and month dropdowns.
+                </li>
+            </ul>
+        </div>
+</xar:template>

@@ -1,0 +1,40 @@
+<adminmenu>
+    <menuitems>
+        <menuitem>
+            <includes>
+                <includeitem>main</includeitem>
+                <includeitem>overview</includeitem>
+            </includes>
+            <target>main</target>
+            <title>Show the overview screen</title>
+            <label>Overview</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageScheduler</mask>
+            <includes>
+                <includeitem>search</includeitem>
+            </includes>
+            <target>search</target>
+            <title>Search for scheduler API functions</title>
+            <label>Find Functions</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminScheduler</mask>
+            <includes>
+                <includeitem>view</includeitem>
+            </includes>
+            <target>view</target>
+            <title>Add, edit, delete entries scheduler entries</title>
+            <label>Manage Entries</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminScheduler</mask>
+            <includes>
+                <includeitem>modifyconfig</includeitem>
+            </includes>
+            <target>modifyconfig</target>
+            <title>Modify the configuration settings</title>
+            <label>Modify Configuration</label>
+        </menuitem>
+    </menuitems>
+</adminmenu>

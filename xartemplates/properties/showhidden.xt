@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <input type="hidden" name="#$name#_minute" id="#$id#_minute" value="#$value.minutes#"/>
+    <input type="hidden" name="#$name#_hour" id="#$id#_hour" value="#$value.hours#"/>
+    <input type="hidden" name="#$name#_day" id="#$id#_day" value="#$value.days#"/>
+    <input type="hidden" name="#$name#_month" id="#$id#_month" value="#$value.months#"/>
+    <input type="hidden" name="#$name#_weekday" id="#$id#_weekday" value="#$value.wwekdays#"/>
+
+    <xar:template file="dataproperty_additions" module="base"/>
+</xar:template>

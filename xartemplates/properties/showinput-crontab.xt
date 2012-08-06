@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="#$id#_minute" class="xar-form-label">
+                Minutes (0-59)
+            </label>
+        </div>
+        <div class="xar-col">
+            <input type="text" name="#$name#_minute" id="#$id#_minute" value="#$value['minutes']#"/>
+            example: 0,15,30,45 = every 15 minutes
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="#$id#_hour" class="xar-form-label">
+                Hours (0-23)
+            </label>
+        </div>
+        <div class="xar-col">
+            <input type="text" name="#$name#_hour" id="#$id#_hour" value="#$value['hours']#"/>
+            example: 8-18 = during business hours
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="#$id#_day" class="xar-form-label">
+                Days (1-31)
+            </label>
+        </div>
+        <div class="xar-col">
+            <input type="text" name="#$name#_day" id="#$id#_day" value="#$value['days']#"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="#$id#_month" class="xar-form-label">
+                Months (1-12)
+            </label>
+        </div>
+        <div class="xar-col">
+            <input type="text" name="#$name#_month" id="#$id#_month" value="#$value['months']#"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="#$id#_weekday" class="xar-form-label">
+                Week Days (0-6)
+            </label>
+        </div>
+        <div class="xar-col">
+            <input type="text" name="#$name#_weekday" id="#$id#_weekday" value="#$value['weekdays']#"/>
+            example: 1-5 = from Monday to Friday
+        </div>
+    </div>
+    <xar:template file="dataproperty_additions" module="base"/>
+</xar:template>

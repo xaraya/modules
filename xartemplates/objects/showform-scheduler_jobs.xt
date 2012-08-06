@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <fieldset>
+        <legend>
+            Job Settings
+        </legend>
+        <xar:data-input property="$properties['id']" hidden="hidden"/>
+        <xar:data-input property="$properties['last_run']" hidden="hidden"/>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:data-label property="$properties['module']" for="id"/>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['module']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:data-label property="$properties['type']" for="id"/>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['type']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:data-label property="$properties['function']" for="id"/>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['function']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:data-label property="$properties['parameters']" for="id"/>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['parameters']"/>
+                example: array('ptid' => 1)
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:data-label property="$properties['job_interval']" for="id"/>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['job_interval']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:data-label property="$properties['start_date']" for="id"/>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['start_date']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:data-label property="$properties['end_date']" for="id"/>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['end_date']"/>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>
+            Trigger Settings
+        </legend>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:data-label property="$properties['job_trigger']" for="id"/>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['job_trigger']"/>
+            </div>
+        </div>
+        <p>
+            The following settings are used to limit external access to the scheduler.
+        </p>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:data-label property="$properties['source_type']" for="id"/>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['source_type']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:data-label property="$properties['source']" for="id"/>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['source']"/>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            Crontab
+        </legend>
+
+        <xar:data-input property="$properties['crontab']"/>
+        <xar:set name="interval">$object->properties['job_interval']->value</xar:set>
+        <xar:if condition="$interval eq '0c' and !empty($config['crontab'])">
+            <div class="xar-row">
+                <div class="xar-col">
+                    <label class="xar-form-label">
+                        Next Run
+                    </label>
+                </div>
+                <div class="xar-col">
+                    <xar:if condition="empty($config['crontab']['nextrun'])">
+                        <xar:set name="nextrun">xarModAPIFunc('scheduler','user','nextrun',$config['crontab'])</xar:set>
+                        #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$nextrun)#
+                    <xar:else/>
+                        #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$config['crontab']['nextrun'])#
+                    </xar:if>
+                </div>
+            </div>
+        </xar:if>
+    </fieldset>
+    <p>
+        Please note that the scheduler module still needs to be triggered by some external mechanism, and that any crontab interval will apply at the first trigger after the next scheduled run
+        (i.e. if the crontab specifies each Monday at 8:15 and the next trigger comes on Tuesday at 10:45, the job will run then).
+    </p>
+</xar:template>
