@@ -259,7 +259,6 @@
         // Merge it in with the existing block details.
         // TODO: It may be quicker to do the merge the other way around?
         $data = array_merge($data, $pagedata);
-                    var_dump($pagedata);
 
         return $data;
     }
