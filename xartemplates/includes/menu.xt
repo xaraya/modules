@@ -21,7 +21,6 @@
     <xar:set name="this_menu_level">$menu_level</xar:set>
     <xar:set name="menu_level">$menu_level + 1</xar:set>
     <xar:set name="parent_copy">$parent</xar:set>
-                    <xar:set name="xxx">var_dump($parent)</xar:set>
 
     <xar:if condition="!empty($parent_copy.has_children)">
         <!-- 
