@@ -11,6 +11,15 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
+/**
+ * Parameters
+ *
+ * $id: the id of the page to be displayed
+ * $partiallocale: 1 if locales are of the form de_DE, else 0
+ * $locale: a partial or full locale that we want the page ID of
+ *
+ * N.B. set $local to xarModVars::get('publications', 'defaultlanguage') to force returning the base translation ID
+ */
 function publications_userapi_gettranslationid($args)
 {
     if (!isset($args['id'])) throw new BadParameterException('id');
