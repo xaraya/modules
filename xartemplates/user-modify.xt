@@ -38,7 +38,7 @@
                 <!-- Pass the object its values -->
                 <xar:set name="dummy">$object->setFieldValues($item,1)</xar:set>
 
-                <!-- CHECKME: is this needed given we pass the prefix below -->
+                <!-- Set the field prefix -->
                 <xar:set name="dummy">$object->setFieldPrefix($key)</xar:set>
                 
                 <!-- Add the itemid as a reference for e.g. position, categories -->
