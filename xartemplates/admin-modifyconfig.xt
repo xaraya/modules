@@ -317,14 +317,14 @@
                                     </label>
                                     <xar:set name="options">
                                         array(
-                                            array('id' => 'date', 'name' => 'Date'),
+                                            array('id' => 'modify_date', 'name' => 'Date (latest first)'),
+                                            array('id' => 'date ASC', 'name' => 'Date (oldest first)'),
                                             array('id' => 'title', 'name' => 'Title'),
                                             array('id' => 'hits', 'name' => 'Hits'),
                                             array('id' => 'rating', 'name' => 'Rating'),
                                             array('id' => 'id', 'name' => 'Publication ID'),
                                             array('id' => 'author', 'name' => 'Author'),
                                             array('id' => 'summary', 'name' => 'Summary'),
-                                            array('id' => 'date ASC', 'name' => 'Date (oldest first)'),
                                             array('id' => 'pubtype_id,date', 'name' => 'Customized'),
                                         )
                                     </xar:set>
