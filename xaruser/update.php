@@ -118,7 +118,8 @@ function publications_user_update()
     if ($data['quit']) {
         // Redirect if needed
         if (!xarVarFetch('return_url', 'str',   $return_url, '', XARVAR_NOT_REQUIRED)) {return;}
-        if (!empty($return_url)) 
+        if (!empty($return_url))
+            // FIXME: not good for short URLS
             xarController::redirect($return_url . '&itemid=' . $id);
     
         // Redirect if we came from somewhere else
