@@ -50,9 +50,14 @@ function publications_user_create()
     // Create the object
     $id = $data['object']->createItem();
 
+    // Redirect if needed
+    if (!xarVarFetch('return_url', 'str',   $return_url, '', XARVAR_NOT_REQUIRED)) {return;}
+    if (!empty($return_url)) 
+        xarController::redirect($return_url);
+    
     // Redirect if we came from somewhere else
     $current_listview = xarSession::getVar('publications_current_listview');
-    if (!empty($cuurent_listview)) xarController::redirect($current_listview);
+    if (!empty($current_listview)) xarController::redirect($current_listview);
 
     xarController::redirect(xarModURL('publications', 'user', 'view',
                                   array('ptid' => $data['ptid'])));

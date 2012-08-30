@@ -34,7 +34,6 @@ function publications_user_update()
     if(!xarVarFetch('preview',      'isset', $data['preview'],   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('quit',         'isset', $data['quit'],      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('tab',          'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('returnurl',    'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
 
     // Confirm authorisation code
     // This has been disabled for now
@@ -117,6 +116,11 @@ function publications_user_update()
     xarSession::setVar('statusmsg', xarML('Publication Updated'));
 
     if ($data['quit']) {
+        // Redirect if needed
+        if (!xarVarFetch('return_url', 'str',   $return_url, '', XARVAR_NOT_REQUIRED)) {return;}
+        if (!empty($return_url)) 
+            xarController::redirect($return_url);
+    
         // Redirect if we came from somewhere else
         $current_listview = xarSession::getVar('publications_current_listview');
         if (!empty($current_listview)) xarController::redirect($current_listview);
