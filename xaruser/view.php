@@ -533,21 +533,15 @@ function publications_user_view($args)
 //    $data['items'] = $object->getItems();
     $data['object'] = DataObjectMaster::getObjectList(array('name' => $data['pubtypeobject']->properties['name']->value));
     
-    // Get the items here
-//    $items = $data['object']->getItems();
-/* We're doing this in the template now
-    // Only show top level documents, not translations
-    sys::import('xaraya.structures.query');
-    $q = new Query();
-    $q->eq('parent_id',0);
-    $q->eq('pubtype_id',$ptid);
-    $q->eq('state',3);
-
-    // Suppress deleted items
-    // Remove this once listing property works with dataobject access
-    $q->ne('state',0);
-    $data['conditions'] = $q;
-*/
+// Cater to default settings
+    if ($data['sort'] == 'date ASC') {
+        $data['object']->dataquery->setorder('modify_date', 'ASC');
+    } elseif ($data['sort'] == 'modify_date' || $data['sort'] == 'date') {
+        $data['object']->dataquery->setorder('modify_date', 'DESC');
+    } else {
+        $data['object']->dataquery->setorder($data['sort'], 'ASC');
+    }
+    
     // Set the page template if needed
     if (!empty($data['settings']['page_template'])) {
         $pagename = $data['settings']['page_template'];

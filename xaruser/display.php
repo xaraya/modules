@@ -168,7 +168,7 @@ function publications_user_display($args)
             }
             
             $params = parse_url($url);
-            $params['query'] = preg_replace('/&amp;/','&',$params['query']);
+//            $params['query'] = preg_replace('/&amp;/','&',$params['query']);
         } catch (Exception $e) {
             return xarResponse::NotFound();
         }
@@ -182,16 +182,18 @@ function publications_user_display($args)
             $router->route($request);
             $request->setRoute($router->getRoute());
             $dispatcher = new xarDispatcher();
-            $response = new xarResponse();
-            $dispatcher->dispatch($request, $response);
+            $response = new xarResponse();//var_dump($request);exit;
+//            $dispatcher->dispatch($request, $response);
+/*
             parse_str($params['query'], $info);
             $other_params = $info;
             unset($other_params['module']);
             unset($other_params['type']);
             unset($other_params['func']);
             unset($other_params['child']);
+            */
             try {
-                $page = xarMod::guiFunc($request->getModule(),'user',$request->getFunction(),$other_params);
+                $page = xarMod::guiFunc($request->getModule(),'user',$request->getFunction(),$request->getFunctionArgs());
             } catch (Exception $e) {
                 return xarResponse::NotFound();
             }
