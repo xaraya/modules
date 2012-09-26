@@ -57,10 +57,16 @@ function publications_user_delete()
         return xarTplModule('publications','user', 'delete',$data);        
     } else {
         if (!xarSecConfirmAuthKey()) return;
+        
         foreach ($ids as $id) {
+            // Delete the publication
             $itemid = $publication->deleteItem(array('itemid' => $id));
             $data['message'] = "Publication deleted [ID $id]";
+
+            // Inform the world via hooks
+            xarModCallHooks('item', 'delete', $itemid);
         }
+        
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {

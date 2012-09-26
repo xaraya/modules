@@ -50,6 +50,9 @@ function publications_user_create()
     // Create the object
     $id = $data['object']->createItem();
 
+    // Inform the world via hooks
+    xarModCallHooks('item', 'create', $id);
+
     // Redirect if needed
     if (!xarVarFetch('return_url', 'str',   $return_url, '', XARVAR_NOT_REQUIRED)) {return;}
     if (!empty($return_url)) 
