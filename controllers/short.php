@@ -36,6 +36,14 @@ class PublicationsShortController extends ShortActionController
                 return parent::decode($data);
             break;
 
+            case 'new':
+                $data['func'] = 'new';
+            break;
+
+            case 'modify':
+                $data['func'] = 'modify';
+            break;
+
             case 'view':
                 $data['func'] = 'view';
                 
@@ -212,6 +220,16 @@ class PublicationsShortController extends ShortActionController
 
             case 'search':
                 $path[] = 'search';
+                $path = array_merge($path,$params);
+            break;
+
+            case 'modify':
+                $path[] = 'modify';
+                $path = array_merge($path,$params);
+            break;
+
+            case 'new':
+                $path[] = 'new';
                 $path = array_merge($path,$params);
             break;
 
