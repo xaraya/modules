@@ -40,8 +40,16 @@ class PublicationsShortController extends ShortActionController
                 $data['func'] = 'new';
             break;
 
+            case 'create':
+                $data['func'] = 'create';
+            break;
+
             case 'modify':
                 $data['func'] = 'modify';
+            break;
+
+            case 'update':
+                $data['func'] = 'update';
             break;
 
             case 'view':
@@ -223,13 +231,23 @@ class PublicationsShortController extends ShortActionController
                 $path = array_merge($path,$params);
             break;
 
+            case 'new':
+                $path[] = 'new';
+                $path = array_merge($path,$params);
+            break;
+
+            case 'create':
+                $path[] = 'create';
+                $path = array_merge($path,$params);
+            break;
+
             case 'modify':
                 $path[] = 'modify';
                 $path = array_merge($path,$params);
             break;
 
-            case 'new':
-                $path[] = 'new';
+            case 'update':
+                $path[] = 'update';
                 $path = array_merge($path,$params);
             break;
 
