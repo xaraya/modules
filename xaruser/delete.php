@@ -64,7 +64,8 @@ function publications_user_delete()
             $data['message'] = "Publication deleted [ID $id]";
 
             // Inform the world via hooks
-            xarModCallHooks('item', 'delete', $itemid);
+            $item = array('module' => 'publications', 'itemid' => $itemid, 'itemtype' => $publication->properties['itemtype']->value);
+            xarHooks::notify('ItemDelete', $item);
         }
         
         if (isset($returnurl)) {

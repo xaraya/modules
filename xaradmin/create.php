@@ -48,7 +48,11 @@ function publications_admin_create()
     }
     
     // Create the object
-    $id = $data['object']->createItem();
+    $itemid = $data['object']->createItem();
+
+    // Inform the world via hooks
+    $item = array('module' => 'publications', 'itemid' => $itemid, 'itemtype' => $data['object']->properties['itemtype']->value);
+    xarHooks::notify('ItemCreate', $item);
 
     // Redirect if we came from somewhere else
     $current_listview = xarSession::getVar('publications_current_listview');

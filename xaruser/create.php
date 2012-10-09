@@ -51,7 +51,8 @@ function publications_user_create()
     $itemid = $data['object']->createItem();
 
     // Inform the world via hooks
-    xarModCallHooks('item', 'create', $itemid);
+    $item = array('module' => 'publications', 'itemid' => $itemid, 'itemtype' => $data['object']->properties['itemtype']->value);
+    xarHooks::notify('ItemCreate', $item);
 
     // Redirect if needed
     if (!xarVarFetch('return_url', 'str',   $return_url, '', XARVAR_NOT_REQUIRED)) {return;}

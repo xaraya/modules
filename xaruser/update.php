@@ -116,7 +116,8 @@ function publications_user_update()
     xarSession::setVar('statusmsg', xarML('Publication Updated'));
 
     // Inform the world via hooks
-    xarModCallHooks('item', 'update', $data['itemid']);
+    $item = array('module' => 'publications', 'itemid' => $data['itemid'], 'itemtype' => $data['object']->properties['itemtype']->value);
+    xarHooks::notify('ItemUpdate', $item);
 
     if ($data['quit']) {
         // Redirect if needed

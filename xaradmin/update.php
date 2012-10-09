@@ -87,8 +87,8 @@ function publications_admin_update()
     
     // call transform input hooks
     $article['transform'] = array('summary','body','notes');
-    $article = xarModCallHooks('item', 'transform-input', $data['itemid'], $article,
-                               'publications', $data['ptid']);
+//    $article = xarModCallHooks('item', 'transform-input', $data['itemid'], $article,
+//                               'publications', $data['ptid']);
 
     // Now talk to the database. Loop through all the translation pages
     foreach ($itemsdata as $id => $itemdata) {
@@ -115,6 +115,10 @@ function publications_admin_update()
 
     // Success
     xarSession::setVar('statusmsg', xarML('Publication Updated'));
+
+    // Inform the world via hooks
+    $item = array('module' => 'publications', 'itemid' => $data['itemid'], 'itemtype' => $data['object']->properties['itemtype']->value);
+    xarHooks::notify('ItemUpdate', $item);
 
     // If quitting, go to admin view; otherwise redisplay the page
     if ($data['quit']) {

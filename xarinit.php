@@ -230,6 +230,10 @@ function publications_init()
 #
 # Set up hooks
 #
+    xarHooks::registerSubject('ItemCreate', 'item', 'publications');
+    xarHooks::registerSubject('ItemUpdate', 'item', 'publications');
+    xarHooks::registerSubject('ItemDelete', 'item', 'publications');
+
     sys::import('xaraya.structures.hooks.observer');
 
     // Enable publications hooks for search
