@@ -110,7 +110,7 @@
                             <td class="#$row_class#" title="#xarML('Status: ')# #$stateoptions[$loop->item['status']]['name']#">
                                 <xar:set name="value">$loop->item['status']</xar:set>
                                 <xar:data-output type="icondropdown" icon_directory="set1" icon_options="$state" value="$value"/>&#160;
-                                <span class="xar-publications-status-#$state[$loop->item['status']]#">#xarVarPrepForDisplay($loop:item.pubtype_name)#: #xarVarPrepForDisplay($loop:item.title)#</span>
+                                <span class="xar-publications-status-#$state[$loop->item['status']]['id']#">#xarVarPrepForDisplay($loop:item.pubtype_name)#: #xarVarPrepForDisplay($loop:item.title)#</span>
                             </td>
                             <td align="left" class="#$row_class#">
                                 <xar:set name="translations">implode(',',$loop->item['translations'])</xar:set>
