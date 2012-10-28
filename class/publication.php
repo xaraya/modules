@@ -88,7 +88,7 @@ class Publication extends DataObject
             $this->properties['position']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
         }
         $this->fieldlist = array();
-//var_dump($args);exit;
+
         return parent::createItem($args);
     }
 
