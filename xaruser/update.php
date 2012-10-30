@@ -33,6 +33,7 @@ function publications_user_update()
     if(!xarVarFetch('modify_cids',  'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('preview',      'isset', $data['preview'],   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('quit',         'isset', $data['quit'],      NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('front',        'isset', $data['front'],     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('tab',          'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
 
     // Confirm authorisation code
@@ -132,6 +133,9 @@ function publications_user_update()
         xarController::redirect(xarModURL('publications', 'user', 'view',
                                       array('ptid' => $data['ptid'])));
         return true;
+    } elseif ($data['front']) {
+        xarController::redirect(xarModURL('publications', 'user', 'display',
+                                      array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])));
     } else {
         xarController::redirect(xarModURL('publications', 'user', 'modify',
                                       array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])));
