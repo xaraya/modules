@@ -125,12 +125,25 @@
 
         // Rearrange them as needed for menus
         $data['menuarray'] = array();
+        $menusource = array(
+                            2 => 'title',
+                            3 => 'description',
+                            4 => 'menu_alias',
+                            );
         foreach ($g->getNodes() as $node) {
             $ndata = $node->getData();
+            $settings = unserialize($ndata['configuration']);
+            $menufield = isset($settings['menu_source_flag']) ? $menusource[$settings['menu_source_flag']] : 'title';
+            switch ($ndata['menu_source_flag']) {
+                case 1: $label = $menufield; break;
+                case 2: $label = 'title'; break;
+                case 3: $label = 'description'; break;
+                case 4: $label = 'menu_alias'; break;
+            }
             $data['menuarray'][$ndata['parentpage_id']][] = array(
                                                         'id'    => $ndata['id'],
                                                         'name'  => $ndata['name'],
-                                                        'label' => $ndata['title'],
+                                                        'label' => !empty($ndata[$label]) ? $ndata[$label] : $ndata['name'],
                                                     );
         }
         return $data;

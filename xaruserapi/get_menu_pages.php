@@ -67,6 +67,8 @@ function publications_userapi_get_menu_pages($args)
         break;
     }
     if (!empty($args['itemtype'])) $q->eq('p.pubtype_id', $args['itemtype']);
+    $q->addtable($xartable['publications_types'], 'pt');
+    $q->join('p.pubtype_id', 'pt.id');
     $q->eq('p.menu_flag', 1);
     $q->gt('p.state', 2);
     $q->addfield('p.id AS id');
@@ -82,6 +84,7 @@ function publications_userapi_get_menu_pages($args)
     $q->addfield('p.leftpage_id AS leftpage_id');
     $q->addfield('p.rightpage_id AS rightpage_id');
     $q->addfield('p.state AS state');
+    $q->addfield('pt.configuration AS configuration');
 
     if (isset($args['tree_contains_id'])) {
         $q->addtable($xartable['publications'], 'tpages_member');
@@ -94,7 +97,7 @@ function publications_userapi_get_menu_pages($args)
         $q->between('p.leftpage_id', 'expr:tpages_root.leftpage_id AND tpages_root.rightpage_id');
         $q->eq('tpages_root.parentpage_id', 0);
     }
-    // Add any fiters we found
+    // Add any filters we found
     foreach ($filters as $k => $v) $q->eq('p.'.$k, $v);
     
     // We can force alpha sorting, or else sort according to tree position
