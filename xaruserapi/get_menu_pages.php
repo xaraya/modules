@@ -77,6 +77,7 @@ function publications_userapi_get_menu_pages($args)
     $q->addfield('p.description AS description');
     $q->addfield('p.menu_source_flag AS menu_source_flag');
     $q->addfield('p.menu_alias AS menu_alias');
+    $q->addfield('p.access AS access');
     $q->addfield('p.pubtype_id AS pubtype_id');
     $q->addfield('p.parent_id AS parent_id');
     $q->addfield('p.locale AS locale');

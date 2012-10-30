@@ -59,12 +59,16 @@
         // Pointer to simplify referencing.
         $vars =& $data;
 
-        // If we don't have any page data, then fetch it now.
+#------------------------------------------------------------
+# If we don't have any page data, then fetch it now
+#
         if (empty($pagedata)) {
             $pagedata = xarMod::apiFunc('publications', 'user', 'get_menu_pages');
         }
         
-        // Add the chosen pages as nodes to a graph
+#------------------------------------------------------------
+# Add the chosen pages as nodes to a graph
+#
         sys::import('xaraya.structures.graph');
         $g = new Graph();
         foreach ($pagedata as $page) {
@@ -74,7 +78,9 @@
             $g->addNode($n);
         }
         
-        // Connect the nodes according to which page has which ancestor
+#------------------------------------------------------------
+# Connect the nodes according to which page has which ancestor
+#
         $allnodes =& $g->getNodes();
         foreach ($allnodes as $k => $n) {
             $ndata = $n->getData();
@@ -119,19 +125,35 @@
             }
         }
         
-        // Sort the nodes
+#------------------------------------------------------------
+# Sort the nodes
+#
         // $sorter = new TopologicalSorter();
         // $result = $sorter->sort($g);
 
-        // Rearrange them as needed for menus
+#------------------------------------------------------------
+# Rearrange them as needed for menus
+#
+        // Define some things we will need
         $data['menuarray'] = array();
         $menusource = array(
                             2 => 'title',
                             3 => 'description',
                             4 => 'menu_alias',
                             );
+        
+        $access = DataPropertyMaster::getProperty(array('name' => 'access'
+        ));
+        
         foreach ($g->getNodes() as $node) {
             $ndata = $node->getData();
+            
+            // Ignore this page if we don't have display access
+            $access->value = $ndata['access'];
+            $filter = $access->getValue();
+            if (!$access->check($filter['display'])) continue;
+            
+            // Figure out where the data for the label will be taken from
             $settings = unserialize($ndata['configuration']);
             $menufield = isset($settings['menu_source_flag']) ? $menusource[$settings['menu_source_flag']] : 'title';
             switch ($ndata['menu_source_flag']) {
@@ -140,6 +162,8 @@
                 case 3: $label = 'description'; break;
                 case 4: $label = 'menu_alias'; break;
             }
+            
+            // Assemble the menu item
             $data['menuarray'][$ndata['parentpage_id']][] = array(
                                                         'id'    => $ndata['id'],
                                                         'name'  => $ndata['name'],
