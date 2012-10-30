@@ -101,9 +101,12 @@
                     &#160;
                     <xar:var name="label">Update and Quit</xar:var>
                     <xar:button type="submit" name="quit" label="$label" />
-                    <xar:comment>
+                    &#160;
+                    <xar:var name="label">Update and Show</xar:var>
+                    <xar:button type="submit" name="front" label="$label" />
+                    <!--
                         show a link to delete the article
-                    </xar:comment>
+                    -->
                     <!--
                         <xar:sec mask="ManagePublications" catch="false">
                             <a href="#xarModURL('publications','admin','delete',array('id' => $object.itemid))#">
