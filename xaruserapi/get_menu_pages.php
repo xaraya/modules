@@ -14,7 +14,7 @@
 /**
  * Get pages relative to a given page
  *
- * Filters:www.woertz.ch
+ * Filters:
  * Add an arg of the type $args['filter_foo'] = bar
  * will add a condition to the SELECT as
  * WHERE foo = bar
@@ -41,7 +41,7 @@ function publications_userapi_get_menu_pages($args)
             $filters[$argname] = $v;
         }
     }
-    
+
     $xartable = xarDB::getTables();
     sys::import('xaraya.structures.query');
     $q = new Query();
@@ -79,19 +79,21 @@ function publications_userapi_get_menu_pages($args)
     $q->addfield('p.parent_id AS parent_id');
     $q->addfield('p.locale AS locale');
     $q->addfield('p.parentpage_id AS parentpage_id');
+    $q->addfield('p.leftpage_id AS leftpage_id');
     $q->addfield('p.rightpage_id AS rightpage_id');
     $q->addfield('p.state AS state');
-    
-    $q->addtable($xartable['publications'], 'tpages_member');
-    $q->eq('tpages_member.id', (int)$args['tree_contains_id']);
-    // Join to find the root page of the tree containing the required page.
-    // This matches the complete tree for the root under the selected page.
-    $q->addtable($xartable['publications'], 'tpages_root');
-    $q->le('tpages_root.leftpage_id', 'expr:tpages_member.leftpage_id');
-    $q->ge('tpages_root.rightpage_id', 'expr:tpages_member.rightpage_id');
-    $q->between('p.leftpage_id', 'expr:tpages_root.leftpage_id AND tpages_root.rightpage_id');
-    $q->eq('tpages_root.parentpage_id', 0);
 
+    if (isset($args['tree_contains_id'])) {
+        $q->addtable($xartable['publications'], 'tpages_member');
+        $q->eq('tpages_member.id', (int)$args['tree_contains_id']);
+        // Join to find the root page of the tree containing the required page.
+        // This matches the complete tree for the root under the selected page.
+        $q->addtable($xartable['publications'], 'tpages_root');
+        $q->le('tpages_root.leftpage_id', 'expr:tpages_member.leftpage_id');
+        $q->ge('tpages_root.rightpage_id', 'expr:tpages_member.rightpage_id');
+        $q->between('p.leftpage_id', 'expr:tpages_root.leftpage_id AND tpages_root.rightpage_id');
+        $q->eq('tpages_root.parentpage_id', 0);
+    }
     // Add any fiters we found
     foreach ($filters as $k => $v) $q->eq('p.'.$k, $v);
     
@@ -104,7 +106,7 @@ function publications_userapi_get_menu_pages($args)
 //    $q->qecho();
     $q->run();
     $pages = $q->output();
-  
+
     $depthstack = array();
     foreach($pages as $key => $page) {
         // Calculate the relative nesting level.
@@ -154,7 +156,7 @@ function publications_userapi_get_menu_pages($args)
         $q->in('parent_id',$ids);
         $q->eq('locale',xarUserGetNavigationLocale());
 
-        // Add any fiters we found
+        // Add any filters we found
         foreach ($filters as $k => $v) $q->eq($k, $v);
     
         $q->run();

@@ -53,9 +53,9 @@
  * @returns $blockinfo array
  * @todo Option to display the menu even when not on a relevant page
  */
-
     function display(Array $data=array())
     {
+
     // TODO:
     // We want a few facilities:
     // 1. Set a root higher than the real tree root. Pages will only

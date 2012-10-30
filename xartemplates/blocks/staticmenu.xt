@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+
+   <!--
+    This template illustrates how to create menus using the staticmenu block's $menuarry variable
+    Structure of $menuarray:
+    Each item in $menuarray has the structure
+        $menuarray[$menuindex][$itemindex] = array(
+                                                    'id' => $node_id,
+                                                    'name' => $node_name,
+                                                    'label' => $node_label,
+                                                  ) 
+        $menuindex is a number that designates the top level menu or a submenu
+            - $menuarray[0] contains the top level of the menu
+            - $menuarray[x] contains the top level of the menu
+        $itemindex is a number that designates an item in the top level menu or a submenu
+        
+        Override this template in your theme to customize your own menu.
+   -->
+   
+   <!-- Root menu -->
+    <ul style="margin-right: 5px">
+        <xar:foreach in="$menuarray[0]" value="$node">
+            <li class="rootVoice" href="#xarModURL('publications','user','display',array('itemid' => $node['id']))#">#$node['label']#</li>
+        </xar:foreach>
+    </ul>
+
+   <!-- Submenus -->
+    <xar:foreach in="$menuarray" key="$key" value="$nodes">
+        <xar:if condition="$key eq 0">
+            <xar:continue/>
+        </xar:if>
+        <div id="menu-#$key#">
+            <xar:foreach in="$nodes" value="$node">
+                <a class="sub-menu" href="#xarModURL('publications','user','display',array('itemid' => $node['id']))#">#$node['label']#</a>
+            </xar:foreach>
+        </div>
+    </xar:foreach>
+</xar:template>
