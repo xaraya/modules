@@ -8,10 +8,9 @@
             Manage Publication Stylesheets
         </h2>
         <div class="xar-row">
-            <div>
+            <div style="margin-right: 10px; float:left">
                 Stylesheet:
             </div>
-            &#160;
             <form method="post" action="#xarModURL('publications','admin','stylesheet_type')#" style="float:left">
                 <xar:var name="label">Refresh</xar:var>
                 <xar:button type="submit" label="$label"/>
