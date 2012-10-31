@@ -9,9 +9,7 @@
         </h2>
         <div class="xar-row">
             <div>
-                <label title="#xarML('Select the type of publication whose templates you want to manage')#" class="xar-form-label">
-                    Stylesheet:
-                </label>
+                Stylesheet:
                 &#160;
                 <form method="post" action="#xarModURL('publications','admin','stylesheet_type')#" style="float:left">
                     <xar:var name="label">Refresh</xar:var>
