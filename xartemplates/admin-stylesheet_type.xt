@@ -13,7 +13,7 @@
                     Stylesheet:
                 </label>
                 &#160;
-                <form method="post" action="#xarModURL('publications','admin','stylesheet_type')#">
+                <form method="post" action="#xarModURL('publications','admin','stylesheet_type')#" style="float:left">
                     <xar:var name="label">Refresh</xar:var>
                     <xar:button type="submit" label="$label"/>
                     &#160;
