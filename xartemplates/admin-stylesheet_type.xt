@@ -38,14 +38,14 @@
             <div class="xar-row" style="margin-top: 10px">
                 <div class="xar-col">
                     <xar:if condition="$writable">
-                        This file can be saved.
+                        This stylesheet can be saved.
                     <xar:else/>
                         <img src="#xarTplGetImage('exception.png','base')#" width="20px" height="20px"/>&#160;
                         <span class="warning">                            
                             <xar:if condition="$filetype eq 'module'">
-                                This file cannot be saved: check the directory permissions
+                                This stylesheet cannot be saved: check the directory permissions
                             <xar:else/>
-                                This file cannot be saved: no permission
+                                This stylesheet cannot be saved: no permission
                             </xar:if>
                         </span>
                     </xar:if>
