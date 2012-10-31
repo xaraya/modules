@@ -83,7 +83,7 @@
             <div class="xar-publications-download-detail-text ">
                 <a href="#$filepath#" title="#$fields['title']#">
                     Download this file:&#160;
-                    <xar:data-output property="$properties['download']" value="$fields['download']" />&#160;
+                    <xar:data-output property="$properties['fileupload']" value="$fields['fileupload']" />&#160;
                     (#$filesize#kB)
                 </a>
             </div>

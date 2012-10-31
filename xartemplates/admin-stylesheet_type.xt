@@ -5,7 +5,7 @@
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
         <h2>
-            Manage Publication Type Templates
+            Manage Publication Stylesheets
         </h2>
         <div class="xar-row">
             <div class="xar-col">
@@ -55,7 +55,7 @@
                     <input type="hidden" name="confirm" id="confirm" value="1" />
                     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
                     <input type="hidden" name="file" id="file" value="#$file#" />
-                    <xar:var name="label">Update Template</xar:var>
+                    <xar:var name="label">Update Stylesheet</xar:var>
                     <xar:button type="submit" label="$label" />
                 </div>
             </div>
