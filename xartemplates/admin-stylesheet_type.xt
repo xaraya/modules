@@ -10,10 +10,9 @@
         <div class="xar-row">
             <div class="xar-col">
                 <label title="#xarML('Select the type of publication whose templates you want to manage')#" class="xar-form-label">
-                    Publication Type:
+                    Stylesheet:
                 </label>
-            </div>
-            <div class="xar-col">
+                &#160;
                 <form method="post" action="#xarModURL('publications','admin','stylesheet_type')#">
                     <xar:var name="label">Refresh</xar:var>
                     <xar:button type="submit" label="$label"/>
