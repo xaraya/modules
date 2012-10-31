@@ -153,9 +153,11 @@ function publications_user_display($args)
         // If this is from a link of a redirect child page, use the child param as new URL
         if(!xarVarFetch('child',    'str', $child,  NULL, XARVAR_NOT_REQUIRED)) {return;}
         if (!empty($child)) {
+            // This page was submitted
             // Turn entities into amps
             $url = urldecode($child);
         } else {
+            // Get the proxy URL to redirect to
             $url = $data['object']->properties['proxy_url']->value;
         }
         
@@ -167,8 +169,9 @@ function publications_user_display($args)
                 eval('$url = ' . $url .';');
             }
             
+            // Parse the URL to get host and port
+            // we can use a simple parse_url() in this case
             $params = parse_url($url);
-//            $params['query'] = preg_replace('/&amp;/','&',$params['query']);
         } catch (Exception $e) {
             return xarResponse::NotFound();
         }
@@ -176,22 +179,23 @@ function publications_user_display($args)
         // If this is an external link, show it without further processing
         if (!empty($params['host']) && $params['host'] != xarServer::getHost() && $params['host'].":".$params['port'] != xarServer::getHost()) {
             xarController::redirect($url, 301);
+        } elseif (strpos(xarServer::getCurrentURL(),$url) === 0) {
+            // CHECKME: is this robust enough?
+            // Redirect to avoid recursion if $url is already our present URL
+            xarController::redirect($url, 301);
         } else{
+            // This is a local URL. We need to parse it, but parse_url is no longer good enough here
             $request = new xarRequest($url);
             $router = new xarRouter();
             $router->route($request);
             $request->setRoute($router->getRoute());
             $dispatcher = new xarDispatcher();
-            $response = new xarResponse();//var_dump($request);exit;
-//            $dispatcher->dispatch($request, $response);
-/*
-            parse_str($params['query'], $info);
-            $other_params = $info;
-            unset($other_params['module']);
-            unset($other_params['type']);
-            unset($other_params['func']);
-            unset($other_params['child']);
-            */
+
+            $controller = $dispatcher->findController($request);
+            $controller->actionstring = $request->getActionString();
+            $args = $controller->decode() + $request->getFunctionArgs();
+            $controller->chargeRequest($request, $args);
+
             try {
                 $page = xarMod::guiFunc($request->getModule(),'user',$request->getFunction(),$request->getFunctionArgs());
             } catch (Exception $e) {
