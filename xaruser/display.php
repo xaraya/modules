@@ -190,7 +190,6 @@ function publications_user_display($args)
             $router->route($request);
             $request->setRoute($router->getRoute());
             $dispatcher = new xarDispatcher();
-
             $controller = $dispatcher->findController($request);
             $controller->actionstring = $request->getActionString();
             $args = $controller->decode() + $request->getFunctionArgs();
