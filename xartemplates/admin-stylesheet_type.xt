@@ -10,24 +10,24 @@
         <div class="xar-row">
             <div>
                 Stylesheet:
-                &#160;
-                <form method="post" action="#xarModURL('publications','admin','stylesheet_type')#" style="float:left">
-                    <xar:var name="label">Refresh</xar:var>
-                    <xar:button type="submit" label="$label"/>
-                    &#160;
-                    <xar:data-input name="file" type="textbox" value="$file"/>
-                    &#160;
-                    <xar:if condition="$filetype eq 'module'">
-                        This is a module stylesheet. Saving this will create a theme stylesheet.
-                    <xar:elseif condition="$filetype eq 'theme'"/>
-                        This is a theme stylesheet.
-                    <xar:elseif condition="$filetype eq 'unknown'"/>
-                        This will create a new theme stylesheet.
-                    <xar:else/>
-                        Enter the name of a new or existing stylesheet.
-                    </xar:if>
-                </form>
             </div>
+            &#160;
+            <form method="post" action="#xarModURL('publications','admin','stylesheet_type')#" style="float:left">
+                <xar:var name="label">Refresh</xar:var>
+                <xar:button type="submit" label="$label"/>
+                &#160;
+                <xar:data-input name="file" type="textbox" value="$file"/>
+                &#160;
+                <xar:if condition="$filetype eq 'module'">
+                    This is a module stylesheet. Saving this will create a theme stylesheet.
+                <xar:elseif condition="$filetype eq 'theme'"/>
+                    This is a theme stylesheet.
+                <xar:elseif condition="$filetype eq 'unknown'"/>
+                    This will create a new theme stylesheet.
+                <xar:else/>
+                    Enter the name of a new or existing stylesheet.
+                </xar:if>
+            </form>
         </div>
         <div style="clear:both">&#160;</div>
         <form method="post" id="post" action="#xarServer::getCurrentURL()#" enctype="application/x-www-form-urlencoded" >
