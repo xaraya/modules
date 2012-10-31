@@ -9,7 +9,9 @@
         </h2>
         <div class="xar-row">
             <div style="margin-right: 10px; float:left">
-                Stylesheet:
+                <label title="#xarML('Enter the name of a stylesheet to edit')#">
+                    Stylesheet:
+                </label>
             </div>
             <form method="post" action="#xarModURL('publications','admin','stylesheet_type')#" style="float:left">
                 <xar:var name="label">Refresh</xar:var>
