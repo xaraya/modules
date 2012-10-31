@@ -8,11 +8,12 @@
             Manage Publication Stylesheets
         </h2>
         <div class="xar-row">
-            <div class="xar-col">
+            <div class="xar-col" style="text-align: right">
                 <label title="#xarML('Select the type of publication whose templates you want to manage')#" class="xar-form-label">
-                    Stylesheet:
+                    Publication Type:
                 </label>
-                &#160;
+            </div>
+            <div class="xar-col">
                 <form method="post" action="#xarModURL('publications','admin','stylesheet_type')#">
                     <xar:var name="label">Refresh</xar:var>
                     <xar:button type="submit" label="$label"/>
