@@ -44,7 +44,7 @@
     <author>6</author>
     <state>3</state>
     <pages>1</pages>
-    <locale>en_US,utf-8</locale>
+    <locale>en_US.utf-8</locale>
     <itemtype>2</itemtype>
     <start_date>1321726088</start_date>
     <end_date>1353262088</end_date>
@@ -79,7 +79,7 @@
     <author>6</author>
     <state>3</state>
     <pages>1</pages>
-    <locale>en_US,utf-8</locale>
+    <locale>en_US.utf-8</locale>
     <itemtype>2</itemtype>
     <start_date>1321726254</start_date>
     <end_date>1353262254</end_date>
@@ -114,7 +114,7 @@
     <author>6</author>
     <state>3</state>
     <pages>1</pages>
-    <locale>en_US,utf-8</locale>
+    <locale>en_US.utf-8</locale>
     <itemtype>2</itemtype>
     <start_date>1321726366</start_date>
     <end_date>1353262366</end_date>
@@ -149,7 +149,7 @@
     <author>6</author>
     <state>3</state>
     <pages>1</pages>
-    <locale>en_US,utf-8</locale>
+    <locale>en_US.utf-8</locale>
     <itemtype>2</itemtype>
     <start_date>time()</start_date>
     <end_date>time()</end_date>

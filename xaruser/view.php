@@ -51,7 +51,7 @@ function publications_user_view($args)
     //    if(!xarVarFetch('enddate',  'int:0', $enddate,   NULL, XARVAR_NOT_REQUIRED)) {return;}
     //    if(!xarVarFetch('where',    'str',   $where,     NULL, XARVAR_NOT_REQUIRED)) {return;}
 
-    // Added to impliment an Alpha Pager
+    // Added to implement an Alpha Pager
     if (!xarVarFetch('letter', 'pre:lower:passthru:str:1:20', $letter, NULL, XARVAR_NOT_REQUIRED)) return;
 
     // Override if needed from argument array (e.g. ptid, numitems etc.)
@@ -132,7 +132,7 @@ function publications_user_view($args)
             'count' => $data['settings']['show_pubcount']
         )
     );
-    $data['pager'] = '';
+//    $data['pager'] = '';
 
     // Add Sort to data passed to template so that we can automatically turn on alpha pager, if needed
     $data['sort'] = $sort;
@@ -152,7 +152,7 @@ function publications_user_view($args)
         if (!empty($settings['items_per_page'])) {
             $numitems = $settings['items_per_page'];
         } else {
-            $numitems = 20;
+            $numitems = xarModVars::get('publications', 'items_per_page');
         }
     }
 
@@ -235,7 +235,7 @@ function publications_user_view($args)
             $where .= $extrawhere;
         }
     }
-
+/*
     // Get publications
     $publications = xarModAPIFunc(
         'publications', 'user', 'getall',
@@ -260,7 +260,7 @@ function publications_user_view($args)
     if (!is_array($publications)) {
         throw new Exception('Failed to retrieve publications');
     }
-
+*/
     // TODO : support different 'index' templates for different types of publications
     //        (e.g. News, Sections, ...), depending on what "view" the user
     //        selected (per category, per publication type, a combination, ...) ?
@@ -504,7 +504,6 @@ function publications_user_view($args)
         $number++;echo $number;
     }
 ------------------------------------------------------------ */
-    unset($publications);
 
 
     // TODO: verify for other URLs as well
@@ -527,7 +526,7 @@ function publications_user_view($args)
     // Get the publications we want to view
     $data['object'] = DataObjectMaster::getObject(array('name' => $data['pubtypeobject']->properties['name']->value));
     $data['objectname'] = $data['pubtypeobject']->properties['name']->value;
-    $data['ptid'] = $ptid;
+    $data['ptid'] = (int)$ptid;
     
 //    $object = DataObjectMaster::getObjectList(array('name' => $data['pubtypeobject']->properties['name']->value));
 //    $data['items'] = $object->getItems();
@@ -541,6 +540,10 @@ function publications_user_view($args)
     } else {
         $data['object']->dataquery->setorder($data['sort'], 'ASC');
     }
+
+// Settings for the pager
+    $data['numitems'] = (int)$numitems;
+    $data['startnum'] = (int)$startnum;
     
     // Set the page template if needed
     if (!empty($data['settings']['page_template'])) {

@@ -16,6 +16,13 @@
         <xar:set name="pubtype">substr($object->name,13)</xar:set>
     </xar:if>
     
+    <!-- show the pager -->
+    <xar:if condition="$object:itemcount gt $object:numitems">
+        <div class="xar-align-center">
+            <xar:pager startnum="$object->startnum" itemsperpage="$object->numitems" total="$object->itemcount" urltemplate="$object->pagerurl"/>
+        </div>
+    </xar:if>
+    
     <!-- Get an access object to use for checking access -->
     <xar:set name="access">DataPropertyMaster::getProperty(array('name' => 'access'))</xar:set>
     
