@@ -28,7 +28,13 @@ $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
 $modversion['dependency']   = array(147);
 $modversion['dependencyinfo'] = array(
-                                      147 => 'categories',
-                                      30066 => 'ckeditor',
+                                    0 => array(
+                                            'name' => 'Xaraya Core',
+                                            'version_ge' => '2.2.0'
+                                         ),
+                                    30066 => array(
+                                            'name' => 'ckeditor',
+                                            'minversion' => '1.0.0'
+                                         ),
                                       );
 ?>
