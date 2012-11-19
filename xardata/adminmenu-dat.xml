@@ -1,0 +1,64 @@
+<adminmenu>
+    <menuitems>
+        <menuitem>
+            <mask>ManageHTML</mask>
+            <type>admin</type>
+            <includes>
+                <includeitem>new</includeitem>
+            </includes>
+            <target>new</target>
+            <title>Add a new tag</title>
+            <label>Add Tag</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageHTML</mask>
+            <type>admin</type>
+            <includes>
+                <includeitem>set</includeitem>
+            </includes>
+            <target>set</target>
+            <title>Set the allowed tags for use on your site</title>
+            <label>Set Tags</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageHTML</mask>
+            <type>admin</type>
+            <includes>
+                <includeitem>newtype</includeitem>
+            </includes>
+            <target>newtype</target>
+            <title>Add a new tag type for use on your site</title>
+            <label>Add Tag Type</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageHTML</mask>
+            <type>admin</type>
+            <includes>
+                <includeitem>viewtypes</includeitem>
+            </includes>
+            <target>viewtypes</target>
+            <title>View and edit tag types</title>
+            <label>View Tag Types</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminHTML</mask>
+            <type>admin</type>
+            <includes>
+                <includeitem>modifyconfig</includeitem>
+            </includes>
+            <target>modifyconfig</target>
+            <title>Modify the configuration of this module</title>
+            <label>Modify Configuration</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminHTML</mask>
+            <type>admin</type>
+            <includes>
+                <includeitem>overview</includeitem>
+            </includes>
+            <target>overview</target>
+            <title>Overview this module</title>
+            <label>Overview</label>
+        </menuitem>
+    </menuitems>
+</adminmenu>
