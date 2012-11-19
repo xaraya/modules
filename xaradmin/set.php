@@ -50,7 +50,7 @@ function html_admin_set()
             $allowed[$idx]['editurl'] = '';
         }
 
-        if (xarSecurityCheck('DeleteHTML')) { 
+        if (xarSecurityCheck('ManageHTML')) { 
             $allowed[$idx]['deleteurl'] = xarModURL('html',
                                                     'admin',
                                                     'delete',

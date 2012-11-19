@@ -22,7 +22,7 @@
 function html_admin_deletetype()
 {
     // Security Check
-    if(!xarSecurityCheck('DeleteHTML')) return;
+    if(!xarSecurityCheck('ManageHTML')) return;
 
     // Get parameters from input
     if (!xarVarFetch('id', 'int:0:', $id)) return;

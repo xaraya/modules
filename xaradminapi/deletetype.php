@@ -46,7 +46,7 @@ function html_adminapi_deletetype($args)
     }
 
     // Security Check
-    if(!xarSecurityCheck('DeleteHTML')) return;
+    if(!xarSecurityCheck('ManageHTML')) return;
 
     // Get datbase setup
     $dbconn = xarDB::getConn();

@@ -240,7 +240,7 @@ function html_init()
     xarRegisterMask('ReadHTML','All','html','All','All','ACCESS_READ');
     xarRegisterMask('EditHTML','All','html','All','All','ACCESS_EDIT');
     xarRegisterMask('AddHTML','All','html','All','All','ACCESS_ADD');
-    xarRegisterMask('DeleteHTML','All','html','All','All','ACCESS_DELETE');
+    xarRegisterMask('ManageHTML','All','html','All','All','ACCESS_DELETE');
     xarRegisterMask('AdminHTML','All','html','All','All','ACCESS_ADMIN');
 
     // Set up module hooks

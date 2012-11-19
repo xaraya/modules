@@ -49,7 +49,7 @@ function html_admin_viewtypes()
             $tagtypes[$idx]['editurl'] = '';
         }
 
-        if (xarSecurityCheck('DeleteHTML')) { 
+        if (xarSecurityCheck('ManageHTML')) { 
             $tagtypes[$idx]['deleteurl'] = xarModURL('html',
                                                      'admin',
                                                      'deletetype',

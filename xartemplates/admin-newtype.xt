@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License:GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+      <h2><xar:mlstring>Add Tag Type</xar:mlstring></h2>
+    
+        <form method="post" action="&xar-modurl-html-admin-createtype;" onsubmit="return xar_base_formCheck(this, html_fieldRequired, html_fieldDescription);" enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+            <fieldset>
+                <legend>
+                    <strong><xar:mlstring>Tag Type Details</xar:mlstring></strong>
+                </legend>
+        
+                <div class="xar-form-input-wrapper">
+                    <label for="tagtype" class="xar-form-label" title="#xarML('Tag Type')#">
+                        <xar:mlstring>Tag Type</xar:mlstring>:
+                    </label>
+                    <input type="text" name="tagtype" id="tagtype" value="" size="20" maxlength="20" tabindex="1"/>
+                </div>
+             </fieldset>
+             <fieldset>
+                <div class="xar-row">
+                    <div class="xar-col">
+                    </div>
+                    <div class="xar-col">
+                        <input type="submit" value="#$createbutton#"/>
+                    </div>
+                </div>
+             </fieldset>
+        </form>
+    </div>
+</xar:template>

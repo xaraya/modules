@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License:GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2><xar:mlstring>Edit Tag Type</xar:mlstring></h2>
+    
+        <form method="post" action="&xar-modurl-html-admin-edittype;" enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="authid" value="#$authid#"/>
+            <input type="hidden" name="id" id="id" value="#$id#"/>
+            <input type="hidden" name="confirm" id="confirm" value="1"/>
+            <fieldset>
+                <legend>
+                    <strong><xar:mlstring>Tag Type Details</xar:mlstring></strong>
+                </legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="tagtype" class="xar-form-label" title="#xarML('Tag Type Name')#">
+                        <xar:mlstring>Tag Type:</xar:mlstring>
+                    </label>
+                    <input type="text" name="tagtype" id="tagtype" value="#$type#" size="32" maxlength="100" tabindex="1"/>
+                </div>
+            </fieldset>
+             <fieldset>
+                <div class="xar-row">
+                    <div class="xar-col">
+                    </div>
+                    <div class="xar-col">
+                        <input type="submit" value="#$editbutton#"  tabindex="2"/>&#160;
+                        <a href="&xar-modurl-html-admin-viewtypes;"><xar:mlstring>Cancel edit of the tag.</xar:mlstring></a>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</xar:template>

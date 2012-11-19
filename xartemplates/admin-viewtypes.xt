@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License:GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+      <h2><xar:mlstring>View Tag Types</xar:mlstring></h2>
+        <table>
+            <tr>
+                <th>
+                     <xar:mlstring>Type</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Options</xar:mlstring>
+                </th>
+            </tr>
+            <xar:loop name="$items">
+                <xar:if condition="(($loop:index + 1) % 2)">
+                    <xar:set name="rowclass">'xar-norm'</xar:set>
+                <xar:else/>
+                    <xar:set name="rowclass">'xar-accent'</xar:set>
+                </xar:if>
+                <tr>
+                    <td class="#$rowclass#" align="center">
+                        #$loop:item['type']#
+                    </td>
+                <td align="center" class="#$rowclass#">
+                        <xar:if condition="empty($loop:item['editurl'])">
+                            <xar:mlstring>Edit</xar:mlstring>
+                            <xar:else />
+                                <a href="#$loop:item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a>
+                        </xar:if>
+                    &#160;|&#160;
+                        <xar:if condition="empty($loop:item['deleteurl'])">
+                            <xar:mlstring>Delete</xar:mlstring>
+                            <xar:else />
+                                <a href="#$loop:item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
+                        </xar:if>
+                    </td>
+                </tr>
+            </xar:loop>
+        </table>
+    </div>
+</xar:template>
