@@ -32,8 +32,15 @@
                 
                     // Single page
                     case 1:
-                        $link = xarModURL($source['module'],$source['display_type'],$source['display_function']);
-                        $data['locations'][] = $link;
+                        $linkdata = xarModURL($source['module'],$source['display_type'],$source['display_function']);
+                        if (is_array($linkdata)) {
+                            $locationdata = array();
+                            if (isset($linkdata['url'])) $locationdata['url'] = $linkdata['url'];
+                            if (isset($linkdata['modified'])) $locationdata['modified'] = $linkdata['modified'];
+                            $data['locations'][] = $locationdata;
+                        } else {
+                            $data['locations'][] = $link;
+                        }
                     break;
                     
                     // Multiple pages
