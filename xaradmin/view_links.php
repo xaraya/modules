@@ -38,9 +38,12 @@
                     
                     // Multiple pages
                     case 2:
-                        $links = xarMod::apiFunc($source['module'],$source['gen_type'],$source['gen_function']);
-                        foreach ($links as $link) {
-                            $data['locations'][] = $link['url'];
+                        $linkdata = xarMod::apiFunc($source['module'],$source['gen_type'],$source['gen_function']);
+                        foreach ($linkdata as $link) {
+                            $locationdata = array();
+                            if (isset($link['url'])) $locationdata['url'] = $link['url'];
+                            if (isset($link['modified'])) $locationdata['modified'] = $link['modified'];
+                            $data['locations'][] = $locationdata;
                         }
                     break;
                 }
@@ -52,27 +55,13 @@
             $q = new Query('DELETE', $tables['sitemapper_links']);
             $q->run();
             
-            // Lazy man's empty
             $object = DataObjectMaster::getObject(array('name' => 'sitemapper_links'));
             $defaultfields = $object->getFieldValues();
-            foreach ($data['locations'] as $location) {
-                
-                // See if we alrady have this page in the DB
-//                $objectlist = DataObjectMaster::getObjectList(array('name' => 'sitemapper_links'));
-//                $where = "location = '" . $location . "'";
-//                $item = $objectlist->getItems(array('where' => $where));
-    
-//                if (empty($item)) {
-                    $defaultfields['location'] = $location;
-                    $object->setFieldValues($defaultfields);
-                    $object->createItem(array('itemid' => 0));
-//                } else {
-                    // Just jump for now
-//                    continue;
-//                    $object->setFieldValues(current($item));
-//                    $object->updateItem();
-//                }
-                
+            foreach ($data['locations'] as $location) {    
+                if (isset($location['url'])) $defaultfields['location'] = $location['url'];
+                if (isset($location['modified'])) $defaultfields['last_modified'] = (int)$location['modified'];
+                $object->setFieldValues($defaultfields);
+                $object->createItem(array('itemid' => 0));                
             }
         } else {
         }
