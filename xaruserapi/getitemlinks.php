@@ -29,7 +29,7 @@ function publications_userapi_getitemlinks($args)
     $q->addfield('title');
     $q->addfield('description');
     $q->addfield('pubtype_id');
-    $q->addfield('modify_data AS modified');
+    $q->addfield('modify_date AS modified');
     $q->in('state',array(3,4));
     if (!empty($args['itemids'])) {
         $itemids = explode(',',$args['itemids']);
