@@ -34,11 +34,14 @@
                     case 1:
                         $linkdata = xarModURL($source['module'],$source['display_type'],$source['display_function']);
                         if (is_array($linkdata)) {
+                            // Need a special function here for each module
                             $locationdata = array();
                             if (isset($linkdata['url'])) $locationdata['url'] = $linkdata['url'];
                             if (isset($linkdata['modified'])) $locationdata['modified'] = $linkdata['modified'];
                             $data['locations'][] = $locationdata;
                         } else {
+                            // This is a "normal" display function
+                            // This does not send last_modified information
                             $data['locations'][] = $link;
                         }
                     break;
