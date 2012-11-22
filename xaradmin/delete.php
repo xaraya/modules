@@ -1,16 +1,16 @@
 <?php
 /**
- * Xaraya HTML Module
+ * HTML Module
  *
  * @package modules
- * @copyright (C) copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage HTML Module
- * @link http://xaraya.com/index.php/release/779.html
+ * @subpackage html module
+ * @category Third Party Xaraya Module
+ * @version 1.5.0
+ * @copyright see the html/credits.html file in this release
+ * @link http://www.xaraya.com/index.php/release/779.html
  * @author John Cox
  */
+
 /**
  * Delete a tag
  *
@@ -78,7 +78,7 @@ function html_admin_delete()
     xarSession::setVar('statusmsg', xarML('HTML Tag Deleted'));
 
     // Redirect
-    xarResponse::redirect(xarModURL('html', 'admin', 'set'));
+    xarController::redirect(xarModURL('html', 'admin', 'set'));
 
     // Return
     return true;
