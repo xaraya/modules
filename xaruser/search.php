@@ -125,6 +125,7 @@ function publications_user_search($args)
     }
 
     if (!isset($sort)) {
+
         $sort = null;
     }
 
@@ -470,6 +471,7 @@ function publications_user_search($args)
 
                     $items[] = array('title' => xarVarPrepHTMLDisplay($article['title']),
                                      'locale' => $article['locale'],
+
                                      'link' => $link,
                                      'date' => $date,
                                      'startdate' => $startdate,
@@ -515,9 +517,6 @@ function publications_user_search($args)
                     if (!isset($sort) || $sort == 'date') {
                         $othersort = 'title';
                     } else {
-                        $othersort = null;
-                    }
-                    if (!isset($othersort)) {
                         $othersort = 'date';
                     }
                     $sortlink = xarModURL('publications',
