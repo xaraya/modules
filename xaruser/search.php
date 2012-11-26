@@ -469,6 +469,7 @@ function publications_user_search($args)
                     }
 
                     $items[] = array('title' => xarVarPrepHTMLDisplay($article['title']),
+                                     'locale' => $article['locale'],
                                      'link' => $link,
                                      'date' => $date,
                                      'startdate' => $startdate,
@@ -516,6 +517,9 @@ function publications_user_search($args)
                     } else {
                         $othersort = null;
                     }
+                    if (!isset($othersort)) {
+                        $othersort = 'date';
+                    }
                     $sortlink = xarModURL('publications',
                                          'user',
                                          'search',
@@ -529,9 +533,7 @@ function publications_user_search($args)
                                                'fields' => $fields,
                                                'searchtype' => !empty($searchtype) ? $searchtype : null,
                                                'sort' => $othersort));
-                    if (!isset($othersort)) {
-                        $othersort = 'date';
-                    }
+
                     $pager .= '&#160;&#160;<a href="' . $sortlink . '">' .
                               xarML('sort by') . ' ' . xarML($othersort) . '</a>';
                 }
