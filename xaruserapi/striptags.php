@@ -20,9 +20,11 @@
  */
 function html_userapi_striptags($args)
 {
-    if (empty($args['string']))
+    if (!isset($args['string']))
         throw new Exception(xarML('No string was passed to the striptags function'));
         
+    if (empty($args['string'])) return $args['string'];
+
     // This turns the entities into UTF-8 chars
     // see http://www.php.net/manual/en/function.html-entity-decode.php#104617
     $string = html_entities_to_unicode($args['string']);
