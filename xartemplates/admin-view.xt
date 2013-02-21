@@ -5,7 +5,6 @@
         <h2>
             Manage Publications            
         </h2>
-
         <div>
             <div>
                 <label title="#xarML('Select a type of publication to add')#" class="xar-form-label">

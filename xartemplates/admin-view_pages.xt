@@ -123,11 +123,11 @@
                                             xarModURL('publications', 'admin', 'modify', array('ptid' => $loop->item['ptid'], 'itemid' => $loop->item['id']))
                                         </xar:set>
                                         <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
-                                            <a href="#$link#" title="#xarML('Modify this item')#" style="margin-right: 5px">
-                                                <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
+                                            <a href="#$link#" title="#xarML('Modify this publication')#" style="margin-right: 5px">
+                                                <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify Publication')#"/>
                                             </a>
                                         <xar:else />
-                                            <a href="#$link#">
+                                            <a href="#$link#" title="#xarML('Modify this publication')#" style="margin-right: 5px">
                                                 Modify
                                             </a>
                                         </xar:if>
@@ -141,7 +141,7 @@
                                                 <img src="#xarTplGetImage('icons/'.'add.png', 'base')#" width="16" height="16" alt="#xarML('Clone Publication')#"/>
                                             </a>
                                         <xar:else />
-                                            <a href="#$link#">
+                                            <a href="#$link#" title="#xarML('Clone this publication')#" style="margin-right: 5px">
                                                 Clone
                                             </a>
                                         </xar:if>
@@ -151,11 +151,11 @@
                                             xarModURL('publications', 'admin', 'delete', array('ptid' => $loop->item['ptid'], 'itemid' => $loop->item['id']))
                                         </xar:set>
                                         <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
-                                            <a href="#$link#" title="#xarML('Modify this item')#" style="margin-right: 5px">
-                                                <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete')#"/>
+                                            <a href="#$link#" title="#xarML('Delete this publication')#" style="margin-right: 5px">
+                                                <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete Publication')#"/>
                                             </a>
                                         <xar:else />
-                                            <a href="#$link#">
+                                            <a href="#$link#" title="#xarML('Delete this publication')#" style="margin-right: 5px">
                                                 Delete
                                             </a>
                                         </xar:if>
@@ -165,11 +165,11 @@
                                             xarModURL('publications', 'admin', 'display', array('ptid' => $loop->item['ptid'], 'itemid' => $loop->item['id']))
                                         </xar:set>
                                         <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
-                                            <a href="#$link#" title="#xarML('Modify this item')#" style="margin-right: 5px">
-                                                <img src="#xarTplGetImage('icons/'.'display.png', 'base')#" width="16" height="16" alt="#xarML('Delete')#"/>
+                                            <a href="#$link#" title="#xarML('Display this publication')#" style="margin-right: 5px">
+                                                <img src="#xarTplGetImage('icons/'.'display.png', 'base')#" width="16" height="16" alt="#xarML('Display Publication')#"/>
                                             </a>
                                         <xar:else />
-                                            <a href="#$link#">
+                                            <a href="#$link#" title="#xarML('Display this publication')#" style="margin-right: 5px">
                                                 Display
                                             </a>
                                         </xar:if>
@@ -179,11 +179,11 @@
                                             xarModURL('publications', 'admin', 'templates_page', array('ptid' => $loop->item['ptid'], 'itemid' => $loop->item['id']))
                                         </xar:set>
                                         <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
-                                            <a href="#$link#" title="#xarML('Manage templates of this item')#" style="margin-right: 5px">
-                                                <img src="#xarTplGetImage('template.png','publications')#" width="16" height="16" alt="#xarML('Display Publication')#"/>
+                                            <a href="#$link#" title="#xarML('Manage templates of this publication')#" style="margin-right: 5px">
+                                                <img src="#xarTplGetImage('template.png','publications')#" width="16" height="16" alt="#xarML('Manage Templates')#"/>
                                             </a>
                                         <xar:else />
-                                            <a href="#$link#">
+                                            <a href="#$link#" title="#xarML('Manage templates of this publication')#" style="margin-right: 5px">
                                                 Templates
                                             </a>
                                         </xar:if>
