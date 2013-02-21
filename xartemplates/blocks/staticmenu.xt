@@ -21,7 +21,18 @@
    <!-- Root menu -->
     <ul style="margin-right: 5px">
         <xar:foreach in="$menuarray[0]" value="$node">
-            <li class="rootVoice" href="#xarModURL('publications','user','display',array('itemid' => $node['id']))#">#$node['label']#</li>
+            <xar:set name="hilite">'hilite' . $node['id']</xar:set>
+            <xar:if condition="$node['id'] eq (int)xarVarGetCached('Blocks.publications', 'current_base_id')">
+                <xar:set name="hilite">'active'</xar:set>
+            <xar:else/>
+                <xar:set name="hilite">''</xar:set>
+            </xar:if>
+            <xar:if condition="isset($menuarray[$node['id']])">
+                <xar:set name="nodename">'menu-' . $node['id']</xar:set>
+                <li style="margin-right: 5px" class="rootVoice #$hilite# {menu: '#$nodename#'}"><a href="#xarModURL('publications','user','display',array('itemid' => $node['id']))#">#$node['label']#</a></li>
+            <xar:else/>
+                <li style="margin-right: 5px" class="rootVoice #$hilite# {menu: 'empty'}"><a href="#xarModURL('publications','user','display',array('itemid' => $node['id']))#">#$node['label']#</a></li>
+            </xar:if>
         </xar:foreach>
     </ul>
 
@@ -30,9 +41,19 @@
         <xar:if condition="$key eq 0">
             <xar:continue/>
         </xar:if>
-        <div id="menu-#$key#">
+        <div id="menu-#$key#" class="mbmenu">
             <xar:foreach in="$nodes" value="$node">
-                <a class="sub-menu" href="#xarModURL('publications','user','display',array('itemid' => $node['id']))#">#$node['label']#</a>
+                <xar:set name="hilite">'hilite' . $node['id']</xar:set>
+                <xar:if condition="$node['id'] eq (int)xarVarGetCached('Blocks.publications', 'current_base_id')">
+                    <xar:set name="hilite">'active'</xar:set>
+                <xar:else/>
+                    <xar:set name="hilite">''</xar:set>
+                </xar:if>
+                <xar:if condition="isset($menuarray[$node['id']])">
+                    <a class="{menu: 'menu-#$node['id']#'} sub-menu #$hilite#" href="#xarModURL('publications','user','display',array('itemid' => $node['id']))#">#$node['label']#</a>
+                <xar:else/>
+                    <a class="sub-menu #$hilite#" href="#xarModURL('publications','user','display',array('itemid' => $node['id']))#">#$node['label']#</a>
+                </xar:if>
             </xar:foreach>
         </div>
     </xar:foreach>
