@@ -266,7 +266,8 @@
                     <legend>
                         Categories
                     </legend>
-                    <xar:data-input type="categorypicker" name="basecid" module="publications" itemtype="$ptid" />
+                    <xar:set name="defaults">array('',0,1,0)</xar:set>
+                    <xar:data-input type="categorypicker" name="basecid" module="publications" column_defaults="$defaults" itemtype="$ptid" />
                 </fieldset>
                 <div class="xar-row">
                     <div class="xar-col">
