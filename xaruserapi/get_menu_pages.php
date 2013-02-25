@@ -84,6 +84,7 @@ function publications_userapi_get_menu_pages($args)
     $q->addfield('p.parentpage_id AS parentpage_id');
     $q->addfield('p.leftpage_id AS leftpage_id');
     $q->addfield('p.rightpage_id AS rightpage_id');
+    $q->addfield('p.redirect_flag AS redirect_flag');
     $q->addfield('p.state AS state');
     $q->addfield('pt.configuration AS configuration');
 
