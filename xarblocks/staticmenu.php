@@ -144,7 +144,6 @@
         
         $access = DataPropertyMaster::getProperty(array('name' => 'access'
         ));
-        
         foreach ($g->getNodes() as $node) {
             $ndata = $node->getData();
             
@@ -165,9 +164,11 @@
             
             // Assemble the menu item
             $data['menuarray'][$ndata['parentpage_id']][] = array(
-                                                        'id'    => $ndata['id'],
-                                                        'name'  => $ndata['name'],
-                                                        'label' => !empty($ndata[$label]) ? $ndata[$label] : $ndata['name'],
+                                                        'id'        => $ndata['id'],
+                                                        'name'      => $ndata['name'],
+                                                        'label'     => !empty($ndata[$label]) ? $ndata[$label] : $ndata['name'],
+                                                        'state'     => $ndata['state'],
+                                                        'redirect'  => $ndata['redirect_flag'],
                                                     );
         }
         return $data;
