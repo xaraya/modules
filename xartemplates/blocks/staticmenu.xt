@@ -29,14 +29,18 @@
                 <xar:set name="hilite">''</xar:set>
             </xar:if>
             
-            <!-- We set a link only if this node is not empty and not redirected or proxied -->
-
             <!-- Check if we have a submenu -->
             <xar:if condition="isset($menuarray[$node['id']])">
                 <xar:set name="nodename">'menu-' . $node['id']</xar:set>
-                <li style="margin-right: 5px" class="rootVoice #$hilite# {menu: '#$nodename#'}"><a href="#xarModURL('publications','user','display',array('itemid' => $node['id']))#">#$node['label']#</a></li>
             <xar:else/>
-                <li style="margin-right: 5px" class="rootVoice #$hilite# {menu: 'empty'}"><a href="#xarModURL('publications','user','display',array('itemid' => $node['id']))#">#$node['label']#</a></li>
+                <xar:set name="nodename">'empty'</xar:set>
+            </xar:if>
+
+            <!-- We set a link only if this node is not empty and not redirected or proxied -->
+            <xar:if condition="$node['redirect'] eq 0 AND $node['state'] eq 5">
+                <li style="margin-right: 5px" class="rootVoice #$hilite# {menu: '#$nodename#'}">#$node['label']#</li>
+            <xar:else/>
+                <li style="margin-right: 5px" class="rootVoice #$hilite# {menu: '#$nodename#'}"><a href="#xarModURL('publications','user','display',array('itemid' => $node['id']))#">#$node['label']#</a></li>
             </xar:if>
         </xar:foreach>
     </ul>
