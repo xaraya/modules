@@ -37,4 +37,12 @@ $modversion['dependencyinfo'] = array(
                                             'minversion' => '1.0.0'
                                          ),
                                       );
+$modversion['propertyinfo'] = array(
+                                    30039 => array(
+                                        'name' => 'language',
+                                        ),
+                                    30059 => array(
+                                        'name' => 'datetime',
+                                        ),
+                                    );
 ?>
