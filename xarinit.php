@@ -156,7 +156,7 @@ function publications_init()
     xarModVars::set('publications', 'defaultmastertable','publications_documents');
     xarModVars::set('publications', 'use_module_icons', 1);
     xarModVars::set('publications', 'fulltextsearch', '');
-    xarModVars::set('publications', 'defaultpubtype', 10);
+    xarModVars::set('publications', 'defaultpubtype', 2);
     xarModVars::set('publications', 'defaultlanguage', 'en_US.utf-8');
     xarModVars::set('publications', 'defaultpage', 1);
     xarModVars::set('publications', 'errorpage', 2);
