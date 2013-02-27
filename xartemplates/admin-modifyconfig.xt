@@ -170,7 +170,6 @@
                         </div>
                         <div class="xar-col">
                             <xar:data-input name="defaultpubtype" type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" />
-                            (for the Publications "Front Page")                    
                         </div>
                     </div>
                     <div class="xar-row">

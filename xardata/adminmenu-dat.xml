@@ -18,7 +18,7 @@
             </includes>
             <target>view</target>
             <title>Manage Publications</title>
-            <label>Manage Publications</label>
+            <label>Publications by Type</label>
         </menuitem>
         <menuitem>
             <mask>ManagePublications</mask>
