@@ -28,6 +28,7 @@
     <page_title></page_title>
     <page_description></page_description>
     <keywords></keywords>
+    <menu_flag>1</menu_flag>
   </publications_documents>
   <publications_documents itemid="2">
     <id>2</id>
@@ -58,6 +59,7 @@
     <page_title></page_title>
     <page_description></page_description>
     <keywords></keywords>
+    <menu_flag>0</menu_flag>
   </publications_documents>
   <publications_documents itemid="3">
     <id>3</id>
@@ -88,6 +90,7 @@
     <page_title></page_title>
     <page_description></page_description>
     <keywords></keywords>
+    <menu_flag>0</menu_flag>
   </publications_documents>
   <publications_documents itemid="4">
     <id>4</id>
@@ -118,6 +121,7 @@
     <page_title></page_title>
     <page_description></page_description>
     <keywords></keywords>
+    <menu_flag>0</menu_flag>
   </publications_documents>
   <publications_documents itemid="5">
     <id>4</id>
@@ -148,5 +152,6 @@
     <page_title></page_title>
     <page_description></page_description>
     <keywords></keywords>
+    <menu_flag>1</menu_flag>
   </publications_documents>
 </items>
