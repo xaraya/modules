@@ -44,8 +44,20 @@ $modversion['propertyinfo'] = array(
                                     30059 => array(
                                         'name' => 'datetime',
                                         ),
+                                    30099 => array(
+                                        'name' => 'pager',
+                                        ),
                                     30100 => array(
                                         'name' => 'listing',
+                                        ),
+                                    30101 => array(
+                                        'name' => 'codemirror',
+                                        ),
+                                    30122 => array(
+                                        'name' => 'iconcheckbox',
+                                        ),
+                                    30123 => array(
+                                        'name' => 'icondropown',
                                         ),
                                     );
 ?>
