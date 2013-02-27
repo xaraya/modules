@@ -11,17 +11,12 @@
     <pages>1</pages>
     <locale>en_US.utf-8</locale>
     <itemtype>2</itemtype>
-    <start_date>1321701019</start_date>
-    <end_date>1353237019</end_date>
-    <no_end>1</no_end>
     <version>1</version>
     <summary_template>0</summary_template>
     <detail_template>0</detail_template>
     <page_template></page_template>
     <theme></theme>
     <categories></categories>
-    <created>1321701019</created>
-    <modified>1321701019</modified>
     <process_state>1</process_state>
     <position>a:4:{i:0;i:1;i:1;i:0;i:2;i:1;i:3;i:2;}</position>
         <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
@@ -46,17 +41,12 @@
     <pages>1</pages>
     <locale>en_US.utf-8</locale>
     <itemtype>2</itemtype>
-    <start_date>1321726088</start_date>
-    <end_date>1353262088</end_date>
-    <no_end>1</no_end>
     <version>1</version>
     <summary_template>0</summary_template>
     <detail_template>0</detail_template>
     <page_template></page_template>
     <theme></theme>
     <categories></categories>
-    <created>1321726088</created>
-    <modified>1321726088</modified>
     <process_state>1</process_state>
     <position>a:4:{i:0;i:2;i:1;i:0;i:2;i:3;i:3;i:4;}</position>
     <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
@@ -81,17 +71,12 @@
     <pages>1</pages>
     <locale>en_US.utf-8</locale>
     <itemtype>2</itemtype>
-    <start_date>1321726254</start_date>
-    <end_date>1353262254</end_date>
-    <no_end>1</no_end>
     <version>1</version>
     <summary_template>0</summary_template>
     <detail_template>0</detail_template>
     <page_template></page_template>
     <theme></theme>
     <categories></categories>
-    <created>1321726254</created>
-    <modified>1321726254</modified>
     <process_state>1</process_state>
     <position>a:4:{i:0;i:3;i:1;i:0;i:2;i:5;i:3;i:6;}</position>
     <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
@@ -116,17 +101,12 @@
     <pages>1</pages>
     <locale>en_US.utf-8</locale>
     <itemtype>2</itemtype>
-    <start_date>1321726366</start_date>
-    <end_date>1353262366</end_date>
-    <no_end>1</no_end>
     <version>1</version>
     <summary_template>0</summary_template>
     <detail_template>0</detail_template>
     <page_template></page_template>
     <theme></theme>
     <categories></categories>
-    <created>1321726366</created>
-    <modified>1321726366</modified>
     <process_state>1</process_state>
     <position>a:4:{i:0;i:4;i:1;i:0;i:2;i:7;i:3;i:8;}</position>
     <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
@@ -151,17 +131,12 @@
     <pages>1</pages>
     <locale>en_US.utf-8</locale>
     <itemtype>2</itemtype>
-    <start_date>time()</start_date>
-    <end_date>time()</end_date>
-    <no_end>1</no_end>
     <version>1</version>
     <summary_template>0</summary_template>
     <detail_template>1</detail_template>
     <page_template></page_template>
     <theme></theme>
     <categories></categories>
-    <created>time()</created>
-    <modified>time()</modified>
     <process_state>1</process_state>
     <position>a:4:{i:0;i:5;i:1;i:0;i:2;i:9;i:3;i:10;}</position>
     <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>

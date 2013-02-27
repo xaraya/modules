@@ -151,10 +151,10 @@ function publications_init()
 # Set up modvars
 #
     xarModVars::set('publications', 'items_per_page', 20);
-    xarModVars::set('publications', 'useModuleAlias',0);
-    xarModVars::set('publications', 'aliasname','Publications');
+    xarModVars::set('publications', 'use_module_alias',0);
+    xarModVars::set('publications', 'module_alias_name','Publications');
     xarModVars::set('publications', 'defaultmastertable','publications_documents');
-    xarModVars::set('publications', 'SupportShortURLs', 1);
+    xarModVars::set('publications', 'use_module_icons', 1);
     xarModVars::set('publications', 'fulltextsearch', '');
     xarModVars::set('publications', 'defaultpubtype', 10);
     xarModVars::set('publications', 'defaultlanguage', 'en_US.utf-8');
@@ -164,8 +164,8 @@ function publications_init()
     xarModVars::set('publications', 'noprivspage', 4);
     xarModVars::set('publications', 'debugmode', false);
     xarModVars::get('publications', 'multilanguage', true);
-    xarModVars::set('publications', 'defaultfrontpage','');
-    xarModVars::set('publications', 'defaultbackpage','');
+    xarModVars::set('publications', 'defaultfrontpage','[publications:user:display]&id=1');
+    xarModVars::set('publications', 'defaultbackpage','[publications:admin:view_pages]');
     xarModVars::set('publications', 'hide_tree_display',0);
     
     // Save publications settings for each publication type

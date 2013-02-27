@@ -44,5 +44,8 @@ $modversion['propertyinfo'] = array(
                                     30059 => array(
                                         'name' => 'datetime',
                                         ),
+                                    30100 => array(
+                                        'name' => 'listing',
+                                        ),
                                     );
 ?>
