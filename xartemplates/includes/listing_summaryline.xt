@@ -30,11 +30,10 @@
                         <img src="#xarTplGetImage('icons/'.'software-install.png', 'base')#" width="16" height="16" alt="#xarML('Import')#"/>
                     </a>
                 <xar:else />
-                    <a href="#$link#">
+                    <a href="#$link#" style="margin-right: 5px">
                         Import a Publication Type from XML 
                     </a>
                 </xar:if>
-                &#160;|&#160;
                 <xar:set name="args">DataObjectDescriptor::getObjectID(array('name' => 'publications_types'))</xar:set>
                 <xar:set name="link">
                     xarModURL('dynamicdata','admin','new',array('objectid' => $args['objectid']))
@@ -44,7 +43,7 @@
                         <img src="#xarTplGetImage('icons/'.'document-new.png', 'base')#" width="16" height="16" alt="#xarML('Add')#"/>
                     </a>
                 <xar:else />
-                    <a href="#$link#">
+                    <a href="#$link#" style="margin-right: 5px">
                         Add a new Publication Type
                     </a>
                 </xar:if>
