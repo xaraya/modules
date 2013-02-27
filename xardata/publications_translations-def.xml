@@ -57,7 +57,7 @@
     <property name="source">
       <id>936</id>
       <label>Source Text</label>
-      <type>textarea</type>
+      <type>editor</type>
       <defaultvalue></defaultvalue>
       <source>publication.body1</source>
       <status>34</status>
@@ -67,7 +67,7 @@
     <property name="translation">
       <id>937</id>
       <label>Translation</label>
-      <type>textarea</type>
+      <type>editor</type>
       <defaultvalue></defaultvalue>
       <source>publication.body2</source>
       <status>34</status>
@@ -77,7 +77,7 @@
     <property name="notes">
       <id>938</id>
       <label>Notes</label>
-      <type>textarea</type>
+      <type>editor</type>
       <defaultvalue></defaultvalue>
       <source>publication.notes</source>
       <status>34</status>

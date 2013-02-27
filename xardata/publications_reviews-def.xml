@@ -67,7 +67,7 @@
     <property name="review">
       <id>918</id>
       <label>Review</label>
-      <type>textarea</type>
+      <type>editor</type>
       <defaultvalue></defaultvalue>
       <source>publication.body1</source>
       <status>34</status>

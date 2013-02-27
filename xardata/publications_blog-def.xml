@@ -57,7 +57,7 @@
     <property name="introduction">
       <id>861</id>
       <label>Introduction</label>
-      <type>textarea</type>
+      <type>editor</type>
       <defaultvalue></defaultvalue>
       <source>publication.summary</source>
       <status>33</status>
@@ -67,7 +67,7 @@
     <property name="body">
       <id>862</id>
       <label>Body</label>
-      <type>textarea</type>
+      <type>editor</type>
       <defaultvalue></defaultvalue>
       <source>publication.body1</source>
       <status>34</status>
@@ -77,7 +77,7 @@
     <property name="notes">
       <id>863</id>
       <label>Notes</label>
-      <type>textarea</type>
+      <type>editor</type>
       <defaultvalue></defaultvalue>
       <source>publication.notes</source>
       <status>34</status>

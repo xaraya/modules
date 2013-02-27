@@ -67,7 +67,7 @@
     <property name="quote">
       <id>900</id>
       <label>Quote</label>
-      <type>textarea</type>
+      <type>editor</type>
       <defaultvalue></defaultvalue>
       <source>publication.summary</source>
       <status>34</status>
@@ -77,7 +77,7 @@
     <property name="notes">
       <id>901</id>
       <label>Notes</label>
-      <type>textarea</type>
+      <type>editor</type>
       <defaultvalue></defaultvalue>
       <source>publication.notes</source>
       <status>34</status>

@@ -57,7 +57,7 @@
     <property name="summary">
       <id>839</id>
       <label>Summary</label>
-      <type>textarea</type>
+      <type>editor</type>
       <defaultvalue></defaultvalue>
       <source>publication.summary</source>
       <status>34</status>
@@ -97,7 +97,7 @@
     <property name="notes">
       <id>843</id>
       <label>Notes</label>
-      <type>textarea</type>
+      <type>editor</type>
       <defaultvalue></defaultvalue>
       <source>publication.notes</source>
       <status>34</status>
