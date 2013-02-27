@@ -25,22 +25,12 @@ function publications_userapi_getmenulinks()
                          'title' => xarML('Highlighted Publications'),
                          'label' => xarML('Front Page'));
 
-    $pubtypeobject = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
-    $items = $pubtypeobject->getItems(array('where' => 'state = 3'));
-
+    $items = xarMod::apiFunc('publications', 'user', 'get_menu_pages');
     foreach ($items as $item) {
-        $menulinks[] = Array('url'   => xarModURL('publications','user','view',array('ptid' => $item['id'])),
+        $menulinks[] = Array('url'   => xarModURL('publications','user','display',array('itemid' => $item['id'])),
                              'title' => xarML('Display #(1)',$item['description']),
-                             'label' => $item['description']);
+                             'label' => $item['title']);
 
-            if (!empty($settings['show_archives'])) {
-                $menulinks[] = Array('url'   => xarModURL('publications',
-                                                          'user',
-                                                          'archive',
-                                                          array('ptid' => $item['id'])),
-                                     'title' => xarML('View #(1) Archive',$item['description']),
-                                     'label' => '&#160;' . xarML('Archives'));
-            }
     }
 
     $menulinks[] = Array('url'   => xarModURL('publications',
