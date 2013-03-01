@@ -136,14 +136,15 @@
 #
         // Define some things we will need
         $data['menuarray'] = array();
-        $menusource = array(
-                            2 => 'title',
-                            3 => 'description',
-                            4 => 'menu_alias',
-                            );
         
         $access = DataPropertyMaster::getProperty(array('name' => 'access'
         ));
+        
+        // Get the information on publication types
+        $pubtypes = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
+        $pubtypes->dataquery->gt('state',2);
+        $typeinfo = $pubtypes->getItems();
+
         foreach ($g->getNodes() as $node) {
             $ndata = $node->getData();
             
@@ -153,10 +154,9 @@
             if (!$access->check($filter['display'])) continue;
             
             // Figure out where the data for the label will be taken from
-            $settings = unserialize($ndata['configuration']);
-            $menufield = isset($settings['menu_source_flag']) ? $menusource[$settings['menu_source_flag']] : 'title';
-            switch ($ndata['menu_source_flag']) {
-                case 1: $label = $menufield; break;
+            $menusource = $ndata['menu_source_flag'];
+            if ($menusource == 1) $menusource = $typeinfo[$ndata['pubtype_id']]['menu_source_flag'];
+            switch ($menusource) {
                 case 2: $label = 'title'; break;
                 case 3: $label = 'description'; break;
                 case 4: $label = 'menu_alias'; break;

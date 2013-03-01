@@ -13,6 +13,13 @@
 
      -->
 
+    <!-- We need $typeinfo for the menu labels-->
+    <xar:set name="dummy">
+        $pubtypes = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
+        $pubtypes->dataquery->gt('state',2);
+        $typeinfo = $pubtypes->getItems();
+    </xar:set>
+
     <xar:if condition="empty($max_level)">
         <xar:set name="max_level">0</xar:set>
     </xar:if>

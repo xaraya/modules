@@ -80,8 +80,7 @@
                             <xar:if condition="$page.state eq 5 and empty($page.has_children)">
                                 <xar:set name="source_flag">$page['menu_source_flag']</xar:set>
                                 <xar:if condition="$source_flag eq 1">
-                                    <xar:set name="pubtypesettings">xarMod::apiFunc('publications','user','getsettings',array('ptid' => $page['pubtype_id']))</xar:set>
-                                    <xar:set name="source_flag">$pubtypesettings['menu_source_flag']</xar:set>
+                                    <xar:set name="source_flag">$typeinfo[$page['itemtype']]['menu_source_flag']</xar:set>
                                 </xar:if>
                                 &gt; 
                                 <xar:if condition="$source_flag eq 2">
@@ -95,8 +94,7 @@
                                 <xar:set name="gourl">#xarModURL('publications','user','display',array('id'=&gt;$page.id))#</xar:set>
                                 <xar:set name="source_flag">$page['menu_source_flag']</xar:set>
                                 <xar:if condition="$source_flag eq 1">
-                                    <xar:set name="pubtypesettings">xarMod::apiFunc('publications','user','getsettings',array('ptid' => $page['pubtype_id']))</xar:set>
-                                    <xar:set name="source_flag">$pubtypesettings['menu_source_flag']</xar:set>
+                                    <xar:set name="source_flag">$typeinfo[$page['itemtype']]['menu_source_flag']</xar:set>
                                 </xar:if>
                                 &gt; 
                                 <xar:if condition="$source_flag eq 2">
