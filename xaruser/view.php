@@ -107,12 +107,6 @@ function publications_user_view($args)
     // Do not transform titles if we are not transforming output at all.
     if (empty($data['settings']['do_transform'])) $data['settings']['dotitletransform'] = 0;
 
-    // Page template for frontpage or depending on publication type (optional)
-    // Note : this cannot be overridden in templates
-    if (!empty($data['settings']['page_template'])) {
-        xarTplSetPageTemplateName($data['settings']['page_template']);
-    }
-
     if (empty($data['settings']['defaultsort'])) {
         $defaultsort = 'date';
     } else {
@@ -546,8 +540,10 @@ function publications_user_view($args)
     $data['startnum'] = (int)$startnum;
     
     // Set the page template if needed
-    if (!empty($data['settings']['page_template'])) {
-        $pagename = $data['settings']['page_template'];
+    // Page template for frontpage or depending on publication type (optional)
+    // Note : this cannot be overridden in templates
+    if (!empty($data['pubtypeobject']->properties['page_template']->value)) {
+        $pagename = $data['pubtypeobject']->properties['page_template']->value;
         $position = strpos($pagename,'.');
         if ($position === false) {
             $pagetemplate = $pagename;

@@ -321,8 +321,8 @@ function publications_admin_display($args)
 #
 # Set the page template from the pubtype if needed
 #
-    if (!empty($data['settings']['page_template'])) {
-        $pagename = $data['settings']['page_template'];
+    if (!empty($pubtypeobject->properties['page_template']->value)) {
+        $pagename = $pubtypeobject->properties['page_template']->value;
         $position = strpos($pagename,'.');
         if ($position === false) {
             $pagetemplate = $pagename;

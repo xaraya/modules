@@ -3,6 +3,7 @@
     <id>1</id>
     <name>welcome_document</name>
     <title>Welcome</title>
+    <description></description>
     <body>We are currently under construction. Please come back soon as we continue to add content.</body>
     <notes>This document can be used as a placeholder for sites under construction.</notes>
     <parent>0</parent>
@@ -11,15 +12,21 @@
     <pages>1</pages>
     <locale>en_US.utf-8</locale>
     <itemtype>2</itemtype>
+    <pagetype>1</pagetype>
+    <start_date>1362006069</start_date>
+    <end_date>1393542069</end_date>
+    <no_end>1</no_end>
     <version>1</version>
     <summary_template>0</summary_template>
     <detail_template>0</detail_template>
     <page_template></page_template>
     <theme></theme>
     <categories></categories>
+    <created>1362006069</created>
+    <modified>1362006069</modified>
     <process_state>1</process_state>
-    <position>a:4:{i:0;i:1;i:1;i:0;i:2;i:1;i:3;i:2;}</position>
-        <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
+    <position>a:4:{i:0;i:1;i:1;i:0;i:2;i:3;i:3;i:4;}</position>
+    <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
     <redirect_flag>0</redirect_flag>
     <redirect_url></redirect_url>
     <proxy_url></proxy_url>
@@ -28,12 +35,19 @@
     <page_title></page_title>
     <page_description></page_description>
     <keywords></keywords>
+    <sitemap_flag>0</sitemap_flag>
+    <sitemap_source_flag>1</sitemap_source_flag>
+    <sitemap_custom_field></sitemap_custom_field>
     <menu_flag>1</menu_flag>
+    <menu_source_flag>1</menu_source_flag>
+    <menu_custom_field></menu_custom_field>
+    <sequence>3</sequence>
   </publications_documents>
   <publications_documents itemid="2">
     <id>2</id>
     <name>error_page</name>
     <title>Error</title>
+    <description></description>
     <body>Sorry! An error has occurred.</body>
     <notes>This is a general error page where errors can be caught that are not due to the page not being found or access not granted.</notes>
     <parent>0</parent>
@@ -42,14 +56,20 @@
     <pages>1</pages>
     <locale>en_US.utf-8</locale>
     <itemtype>2</itemtype>
+    <pagetype>1</pagetype>
+    <start_date>1362006069</start_date>
+    <end_date>1393542069</end_date>
+    <no_end>1</no_end>
     <version>1</version>
     <summary_template>0</summary_template>
     <detail_template>0</detail_template>
     <page_template></page_template>
     <theme></theme>
     <categories></categories>
+    <created>1362006069</created>
+    <modified>1362006069</modified>
     <process_state>1</process_state>
-    <position>a:4:{i:0;i:2;i:1;i:0;i:2;i:3;i:3;i:4;}</position>
+    <position>a:4:{i:0;i:2;i:1;i:0;i:2;i:5;i:3;i:6;}</position>
     <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
     <redirect_flag>0</redirect_flag>
     <redirect_url></redirect_url>
@@ -59,12 +79,19 @@
     <page_title></page_title>
     <page_description></page_description>
     <keywords></keywords>
+    <sitemap_flag>0</sitemap_flag>
+    <sitemap_source_flag>1</sitemap_source_flag>
+    <sitemap_custom_field></sitemap_custom_field>
     <menu_flag>0</menu_flag>
+    <menu_source_flag>1</menu_source_flag>
+    <menu_custom_field></menu_custom_field>
+    <sequence>5</sequence>
   </publications_documents>
   <publications_documents itemid="3">
     <id>3</id>
     <name>not_found_page</name>
     <title>Page Not Found</title>
+    <description></description>
     <body>Sorry! The page you requested could not be found.</body>
     <notes>This page displays when the page requested isn't available to this user due to causes other than access permissions.</notes>
     <parent>0</parent>
@@ -73,14 +100,20 @@
     <pages>1</pages>
     <locale>en_US.utf-8</locale>
     <itemtype>2</itemtype>
+    <pagetype>1</pagetype>
+    <start_date>1362006069</start_date>
+    <end_date>1393542069</end_date>
+    <no_end>1</no_end>
     <version>1</version>
     <summary_template>0</summary_template>
     <detail_template>0</detail_template>
     <page_template></page_template>
     <theme></theme>
     <categories></categories>
+    <created>1362006069</created>
+    <modified>1362006069</modified>
     <process_state>1</process_state>
-    <position>a:4:{i:0;i:3;i:1;i:0;i:2;i:5;i:3;i:6;}</position>
+    <position>a:4:{i:0;i:3;i:1;i:0;i:2;i:7;i:3;i:8;}</position>
     <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
     <redirect_flag>0</redirect_flag>
     <redirect_url></redirect_url>
@@ -90,12 +123,19 @@
     <page_title></page_title>
     <page_description></page_description>
     <keywords></keywords>
+    <sitemap_flag>0</sitemap_flag>
+    <sitemap_source_flag>1</sitemap_source_flag>
+    <sitemap_custom_field></sitemap_custom_field>
     <menu_flag>0</menu_flag>
+    <menu_source_flag>1</menu_source_flag>
+    <menu_custom_field></menu_custom_field>
+    <sequence>7</sequence>
   </publications_documents>
   <publications_documents itemid="4">
     <id>4</id>
     <name>no_permissions_page</name>
     <title>No Access</title>
+    <description></description>
     <body>Sorry! You do not have access to this page.</body>
     <notes>This page displays when access is not granted to the current user.</notes>
     <parent>0</parent>
@@ -104,14 +144,20 @@
     <pages>1</pages>
     <locale>en_US.utf-8</locale>
     <itemtype>2</itemtype>
+    <pagetype>1</pagetype>
+    <start_date>1362006069</start_date>
+    <end_date>1393542069</end_date>
+    <no_end>1</no_end>
     <version>1</version>
     <summary_template>0</summary_template>
     <detail_template>0</detail_template>
     <page_template></page_template>
     <theme></theme>
     <categories></categories>
+    <created>1362006069</created>
+    <modified>1362006069</modified>
     <process_state>1</process_state>
-    <position>a:4:{i:0;i:4;i:1;i:0;i:2;i:7;i:3;i:8;}</position>
+    <position>a:4:{i:0;i:4;i:1;i:0;i:2;i:9;i:3;i:10;}</position>
     <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
     <redirect_flag>0</redirect_flag>
     <redirect_url></redirect_url>
@@ -121,12 +167,19 @@
     <page_title></page_title>
     <page_description></page_description>
     <keywords></keywords>
+    <sitemap_flag>0</sitemap_flag>
+    <sitemap_source_flag>1</sitemap_source_flag>
+    <sitemap_custom_field></sitemap_custom_field>
     <menu_flag>0</menu_flag>
+    <menu_source_flag>1</menu_source_flag>
+    <menu_custom_field></menu_custom_field>
+    <sequence>9</sequence>
   </publications_documents>
   <publications_documents itemid="5">
-    <id>4</id>
+    <id>5</id>
     <name>sitemap_page</name>
     <title>Site Map</title>
+    <description></description>
     <body>Click on a link to go to the corresponding page.</body>
     <notes>This page displays a site map of the publications. The publications included in the map are those whose site map flag has been set.</notes>
     <parent>0</parent>
@@ -135,14 +188,20 @@
     <pages>1</pages>
     <locale>en_US.utf-8</locale>
     <itemtype>2</itemtype>
+    <pagetype>1</pagetype>
+    <start_date>1362006069</start_date>
+    <end_date>1393542069</end_date>
+    <no_end>1</no_end>
     <version>1</version>
     <summary_template>0</summary_template>
     <detail_template>1</detail_template>
     <page_template></page_template>
     <theme></theme>
     <categories></categories>
+    <created>1362006069</created>
+    <modified>1362006069</modified>
     <process_state>1</process_state>
-    <position>a:4:{i:0;i:5;i:1;i:0;i:2;i:9;i:3;i:10;}</position>
+    <position>a:4:{i:0;i:5;i:1;i:0;i:2;i:11;i:3;i:12;}</position>
     <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
     <redirect_flag>0</redirect_flag>
     <redirect_url></redirect_url>
@@ -152,6 +211,119 @@
     <page_title></page_title>
     <page_description></page_description>
     <keywords></keywords>
+    <sitemap_flag>0</sitemap_flag>
+    <sitemap_source_flag>1</sitemap_source_flag>
+    <sitemap_custom_field></sitemap_custom_field>
     <menu_flag>1</menu_flag>
+    <menu_source_flag>1</menu_source_flag>
+    <menu_custom_field></menu_custom_field>
+    <sequence>11</sequence>
+  </publications_documents>
+  <publications_documents itemid="6">
+    <id>6</id>
+    <name>doc_publication_types</name>
+    <title>Publication Types</title>
+    <description></description>
+    <body>&lt;p&gt;
+	Publication types represent different types of content to be published. There are twelve such types predefined in the Publications module:&lt;/p&gt;
+&lt;table border=&quot;0&quot; cellpadding=&quot;1&quot; cellspacing=&quot;1&quot; height=&quot;133&quot; width=&quot;272&quot;&gt;
+	&lt;tbody&gt;
+		&lt;tr&gt;
+			&lt;td&gt;
+				&lt;ul&gt;
+					&lt;li&gt;
+						Blog&lt;/li&gt;
+					&lt;li&gt;
+						Catalogue&lt;/li&gt;
+					&lt;li&gt;
+						Document&lt;/li&gt;
+					&lt;li&gt;
+						Download&lt;/li&gt;
+					&lt;li&gt;
+						Events&lt;/li&gt;
+					&lt;li&gt;
+						FAQ&lt;/li&gt;
+				&lt;/ul&gt;
+			&lt;/td&gt;
+			&lt;td&gt;
+				&lt;ul&gt;
+					&lt;li&gt;
+						Generic Publication&lt;/li&gt;
+					&lt;li&gt;
+						Picture&lt;/li&gt;
+					&lt;li&gt;
+						Quote&lt;/li&gt;
+					&lt;li&gt;
+						Review&lt;/li&gt;
+					&lt;li&gt;
+						Translation&lt;/li&gt;
+					&lt;li&gt;
+						Web Link&lt;/li&gt;
+				&lt;/ul&gt;
+			&lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;
+	Each publication type defines a set of pages with common features. A pubtlication ype will typically a number of content fields, such as title, decription etc. that refer to the content of its pages. These fields will be defined in accordance with the publication types specific requirements. For instance, a web link publiction type icludes a field for web URLS, a FAQ publication type includes fields fro question and answer, and so on.&lt;/p&gt;
+&lt;p&gt;
+	The definition of each publication type includes a series of configuration fields, that define the &amp;quot;background&amp;quot; properties of its publications. Examples of such fields are start and end publication times, access rules, language etc. These can be set for each document. For instance, one such setting defines whether a publication will be included in the pulbication modules sitemap page. For more information on these settings go here. In general you should not attempt to change the definition of any of the configuration fields.&lt;/p&gt;
+&lt;p&gt;
+	Each publication type also has configuration fields, which are inherited by its publications unless specifically overridden. These configuration fields can be modified by clicking the &amp;quot;Modify&amp;quot; icon of a publication type &lt;a href=&quot;#xarModURL('publications','admin','view_pubtypes')#&quot;&gt;here&lt;/a&gt;. As an example, one such field defines the publication type&amp;#39;s meta keywords. Unless specifically overridden in a page/publication, all the publication type&amp;#39;s pages will have the same meta keywords. The publication type in turn inherits some of these fields, such as access rules, from the global settings of the publications module.&lt;/p&gt;
+&lt;p&gt;
+	Finally, publication types have some cofiguration settings which apply to all of its pages, such as the sort order of pages in its views. These default values for these settings are inherited from the publication module&amp;#39;s global settings. These configuration setings can be modified by clicking the &amp;quot;Configure&amp;quot; icon of a publication type &lt;a href=&quot;#xarModURL('publications','admin','view_pubtypes')#&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;
+	Publication types are fairly flexible. They can be interchanged (e.g. turning a news article type into a documention type) with the caveat that the content of the pages may change in certain cases as a result, depending on which content fields the old and new publication type have.&lt;/p&gt;
+&lt;p&gt;
+	Each publication type has several default templates. The templates serve to format and display the contents of the publication types pages.&amp;nbsp; These templates are:&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;
+		&lt;strong&gt;input&lt;/strong&gt;: the input form used to enter content when creating or modifying a page.&lt;/li&gt;
+	&lt;li&gt;
+		&lt;strong&gt;summary display&lt;/strong&gt;: the display template used when a group of publications are displayed together, such as a listing of news articles.&lt;/li&gt;
+	&lt;li&gt;
+		&lt;strong&gt;detail display&lt;/strong&gt;: the template used to display a single page.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;
+	Each publication type is a dd object, and its definition can be modified through the Dynamicdata backend &lt;a href=&quot;#xarModURL('dynamicdata','admin','view')#&quot;&gt;here&lt;/a&gt;. It is fairly easy to create new types. This involves cloning an existing type (usually the so called generic publication type), and its templates, and modifying the newly created object appropriately.&lt;/p&gt;
+</body>
+    <notes>&lt;br /&gt;
+</notes>
+    <parent>0</parent>
+    <author>6</author>
+    <state>3</state>
+    <pages>1</pages>
+    <locale>en_US.utf-8</locale>
+    <itemtype>2</itemtype>
+    <pagetype>2</pagetype>
+    <start_date>1362059106</start_date>
+    <end_date>1393595106</end_date>
+    <no_end>1</no_end>
+    <version>1</version>
+    <summary_template>0</summary_template>
+    <detail_template>0</detail_template>
+    <page_template></page_template>
+    <theme></theme>
+    <categories></categories>
+    <created>1362059106</created>
+    <modified>1362059106</modified>
+    <process_state>1</process_state>
+    <position>a:4:{i:0;i:6;i:1;i:0;i:2;i:1;i:3;i:2;}</position>
+    <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;N;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;N;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;N;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
+    <redirect_flag>0</redirect_flag>
+    <redirect_url></redirect_url>
+    <proxy_url></proxy_url>
+    <alias_flag>0</alias_flag>
+    <alias></alias>
+    <page_title></page_title>
+    <page_description></page_description>
+    <keywords></keywords>
+    <sitemap_flag>0</sitemap_flag>
+    <sitemap_source_flag>1</sitemap_source_flag>
+    <sitemap_custom_field></sitemap_custom_field>
+    <menu_flag>1</menu_flag>
+    <menu_source_flag>1</menu_source_flag>
+    <menu_custom_field></menu_custom_field>
+    <sequence>1</sequence>
   </publications_documents>
 </items>

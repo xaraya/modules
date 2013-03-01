@@ -332,8 +332,8 @@ function publications_user_display($args)
 #
 # Set the page template from the pubtype if needed
 #
-    if (!empty($data['settings']['page_template'])) {
-        $pagename = $data['settings']['page_template'];
+    if (!empty($pubtypeobject->properties['page_template']->value)) {
+        $pagename = $pubtypeobject->properties['page_template']->value;
         $position = strpos($pagename,'.');
         if ($position === false) {
             $pagetemplate = $pagename;
@@ -354,6 +354,37 @@ function publications_user_display($args)
         xarTpl::setPageTemplateName($pagetemplate);
     }
 
+# --------------------------------------------------------
+#
+# Do the same for page title, page description and keywords
+# The values (if any) are then passed to the meta tag in the template
+#
+    // Page title
+    if (!empty($pubtypeobject->properties['page_title']->value)) {
+        $data['page_title'] = $pubtypeobject->properties['page_title']->value;
+    }
+    // It can be overridden by the page itself
+    if (!empty($data['object']->properties['page_template']->value)) {
+        $data['page_title'] = $data['object']->properties['page_title']->value;
+    }
+
+    // Page description
+    if (!empty($pubtypeobject->properties['page_description']->value)) {
+        $data['page_description'] = $pubtypeobject->properties['page_description']->value;
+    }
+    // It can be overridden by the page itself
+    if (!empty($data['object']->properties['page_description']->value)) {
+        $data['page_description'] = $data['object']->properties['page_description']->value;
+    }
+
+    // Page keywords
+    if (!empty($pubtypeobject->properties['keywords']->value)) {
+        $data['keywords'] = $pubtypeobject->properties['keywords']->value;
+    }
+    // It can be overridden by the page itself
+    if (!empty($data['object']->properties['keywords']->value)) {
+        $data['keywords'] = $data['object']->properties['keywords']->value;
+    }
 # --------------------------------------------------------
 #
 # Cache data for blocks

@@ -40,11 +40,21 @@ function publications_admin_modify_pubtype($args)
         $data['object']->getItem(array('itemid' => $item['id']));
     }
 
-    // Send the publication type and the object properties to the template 
-    $data['properties'] = $data['object']->getProperties();
-    
+    // Unpack the access data
+    $data['access'] = unserialize($data['object']->properties['access']->getValue());
+    if (empty($data['access']))
+        $data['access'] = array(
+                            'add' => array(),
+                            'display' => array(),
+                            'modify' => array(),
+                            'delete' => array(),
+                            );
+
     // Get the settings of the publication type we are using
     $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['itemid']));
+    
+    // Send the publication type and the object properties to the template 
+    $data['properties'] = $data['object']->getProperties();
     
     if ($data['confirm']) {
     
@@ -54,6 +64,30 @@ function publications_admin_modify_pubtype($args)
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
         
+        // Get the default access rules
+        $access = DataPropertyMaster::getProperty(array('name' => 'access'));
+        $access->initialization_group_multiselect = true;
+        $access->validation_override = true;
+        $validprop = $access->checkInput("access_add");
+        $addaccess = $access->value;
+        $isvalid = $isvalid && $validprop;
+        $validprop = $access->checkInput("access_display");
+        $displayaccess = $access->value;
+        $isvalid = $isvalid && $validprop;
+        $validprop = $access->checkInput("access_modify");
+        $modifyaccess = $access->value;
+        $isvalid = $isvalid && $validprop;
+        $validprop = $access->checkInput("access_delete");
+        $deleteaccess = $access->value;
+        $isvalid = $isvalid && $validprop;
+        $allaccess = array(
+            'add' => $addaccess,
+            'display' => $displayaccess,
+            'modify' => $modifyaccess,
+            'delete' => $deleteaccess,
+        );
+        $data['object']->properties['access']->setValue(serialize($allaccess));
+
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
             return xarTplModule('publications','admin','modify_pubtype', $data);        

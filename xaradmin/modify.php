@@ -86,27 +86,6 @@ function publications_admin_modify($args)
     }
 
     return $data;
-
-// ----------------------------------------------------------------------------
-    $ptid = $publication['pubtype_id'];
-
-    $data = array();
-    $data['ptid'] = $ptid;
-    $data['id'] = $id;
-
-    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
-
-    // Security check
-    $input = array();
-    $input['publication'] = $publication;
-    $input['mask'] = 'EditPublications';
-    if (!xarModAPIFunc('publications','user','checksecurity',$input)) {
-        $msg = xarML('You have no permission to modify #(1) item #(2)',
-                     $pubtypes[$ptid]['descr'], xarVarPrepForDisplay($id));
-        throw new ForbiddenOperationException(null, $msg);
-    }
-    unset($input);
-
 }
 
 ?>
