@@ -2,29 +2,29 @@
 /*
  * Gallery - a web based photo album viewer and editor
  * Copyright (C) 2000-2003 Bharat Mediratta
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or (at
  * your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 ?>
 <?php
-class AlbumDB 
+class AlbumDB
 {
     var $albumList;
     var $albumOrder;
 
-    function AlbumDB($loadphotos=TRUE) 
+    function AlbumDB($loadphotos=TRUE)
     {
         global $gallery;
 
@@ -60,7 +60,7 @@ class AlbumDB
 
         if ($fd = fs_opendir($dir)) {
             while ($file = readdir($fd)) {
-                if (!ereg("^\.", $file) && 
+                if (!preg_match("/^\./", $file) &&
                     fs_is_dir("$dir/$file") &&
                     strcmp($file, "_vti_cnf") &&
                     !in_array($file, $this->albumOrder)) {
@@ -79,7 +79,7 @@ class AlbumDB
         }
     }
 
-    function renameAlbum($oldName, $newName) 
+    function renameAlbum($oldName, $newName)
     {
         global $gallery;
 
@@ -105,7 +105,7 @@ class AlbumDB
         return 1;
     }
 
-    function newAlbumName() 
+    function newAlbumName()
     {
         global $gallery;
 
@@ -132,12 +132,12 @@ class AlbumDB
         return $name;
     }
 
-    function numAlbums($user) 
+    function numAlbums($user)
     {
         return sizeof($this->getVisibleAlbums($user));
     }
-    
-    function numPhotos($user) 
+
+    function numPhotos($user)
     {
         $numPhotos = 0;
         foreach ($this->albumList as $album) {
@@ -151,7 +151,7 @@ class AlbumDB
         return $numPhotos;
     }
 
-    function getCachedNumPhotos($user) 
+    function getCachedNumPhotos($user)
     {
         $numPhotos = 0;
         foreach ($this->albumList as $album) {
@@ -162,7 +162,7 @@ class AlbumDB
         return $numPhotos;
     }
 
-    function getAlbum($user, $index) 
+    function getAlbum($user, $index)
     {
         global $gallery;
         $list = $this->getVisibleAlbums($user);
@@ -172,7 +172,7 @@ class AlbumDB
         return $list[$index-1];
     }
 
-    function getAlbumbyName($name) 
+    function getAlbumbyName($name)
     {
         global $gallery;
         /* Look for an exact match */
@@ -194,15 +194,15 @@ class AlbumDB
                 return $album;
             }
         }
-        
+
         return 0;
     }
 
-    function moveAlbum($user, $index, $newIndex) 
+    function moveAlbum($user, $index, $newIndex)
     {
 
         // This is tricky.  The old and new indices are only relevant
-        // within the list of albums that this user is able to see!  
+        // within the list of albums that this user is able to see!
         // Find the location that the user desires and determine that it's
         // one of three cases:
         //    1. At the beginning of the album
@@ -240,7 +240,7 @@ class AlbumDB
         return;
     }
 
-    function moveAlbumAbsolute($index, $newIndex) 
+    function moveAlbumAbsolute($index, $newIndex)
     {
         /* Pull album out */
         $name = array_splice($this->albumOrder, $index, 1);
@@ -249,7 +249,7 @@ class AlbumDB
         array_splice($this->albumOrder, $newIndex, 0, $name);
     }
 
-    function getVisibleAlbums($user) 
+    function getVisibleAlbums($user)
     {
         global $gallery;
         $list = array();
@@ -262,7 +262,7 @@ class AlbumDB
         return $list;
     }
 
-    function save() 
+    function save()
     {
         global $gallery;
         $success = 0;

@@ -22,7 +22,7 @@ class phpthumb_functions {
     }
 
 
-    function builtin_function_exists($functionname) 
+    function builtin_function_exists($functionname)
     {
         if (function_exists('get_defined_functions')) {
             static $get_defined_functions = array();
@@ -35,7 +35,7 @@ class phpthumb_functions {
     }
 
 
-    function version_compare_replacement_sub($version1, $version2, $operator='') 
+    function version_compare_replacement_sub($version1, $version2, $operator='')
     {
         // If you specify the third optional operator argument, you can test for a particular relationship.
         // The possible operators are: <, lt, <=, le, >, gt, >=, ge, ==, =, eq, !=, <>, ne respectively.
@@ -96,7 +96,7 @@ class phpthumb_functions {
     }
 
 
-    function version_compare_replacement($version1, $version2, $operator='') 
+    function version_compare_replacement($version1, $version2, $operator='')
     {
         if (function_exists('version_compare')) {
             // built into PHP v4.1.0+
@@ -109,8 +109,8 @@ class phpthumb_functions {
 
         // and also inserts dots . before and after any non number so that for example '4.3.2RC1' becomes '4.3.2.RC.1'.
         // Then it splits the results like if you were using explode('.',$ver). Then it compares the parts starting from left to right.
-        $version1 = eregi_replace('([0-9]+)([A-Z]+)([0-9]+)', '\\1.\\2.\\3', $version1);
-        $version2 = eregi_replace('([0-9]+)([A-Z]+)([0-9]+)', '\\1.\\2.\\3', $version2);
+        $version1 = preg_replace('/([0-9]+)([A-Z]+)([0-9]+)/i', '\\1.\\2.\\3', $version1);
+        $version2 = preg_replace('/([0-9]+)([A-Z]+)([0-9]+)/i', '\\1.\\2.\\3', $version2);
 
         $parts1 = explode('.', $version1);
         $parts2 = explode('.', $version1);
@@ -125,7 +125,7 @@ class phpthumb_functions {
     }
 
 
-    function phpinfo_array() 
+    function phpinfo_array()
     {
         static $phpinfo_array = array();
         if (empty($phpinfo_array)) {
@@ -139,7 +139,7 @@ class phpthumb_functions {
     }
 
 
-    function exif_info() 
+    function exif_info()
     {
         static $exif_info = array();
         if (empty($exif_info)) {
@@ -166,7 +166,7 @@ class phpthumb_functions {
     }
 
 
-    function ImageTypeToMIMEtype($imagetype) 
+    function ImageTypeToMIMEtype($imagetype)
     {
         if (function_exists('image_type_to_mime_type') && ($imagetype >= 1) && ($imagetype <= 16)) {
             // PHP v4.3.0+
@@ -212,9 +212,9 @@ class phpthumb_functions {
     }
 
 
-    function IsHexColor($HexColorString) 
+    function IsHexColor($HexColorString)
     {
-        return eregi('^[0-9A-F]{6}$', $HexColorString);
+        return preg_match('/^[0-9A-F]{6}$/i', $HexColorString);
     }
 
 
@@ -509,7 +509,7 @@ class phpthumb_functions {
         static $cache_gd_version = array();
         if (empty($cache_gd_version)) {
             $gd_info = gd_info();
-            if (eregi('bundled \((.+)\)$', $gd_info['GD Version'], $matches)) {
+            if (preg_match('/bundled \((.+)\)$/i', $gd_info['GD Version'], $matches)) {
                 $cache_gd_version[1] = $gd_info['GD Version'];  // e.g. "bundled (2.0.15 compatible)"
                 $cache_gd_version[0] = (float) $matches[1];     // e.g. "2.0" (not "bundled (2.0.15 compatible)")
             } else {
@@ -531,7 +531,7 @@ class phpthumb_functions {
             }
             while (!feof($fp)) {
                 $headerline = fgets($fp, 4096);
-                if (eregi('^Content-Length: (.*)', $headerline, $matches)) {
+                if (preg_match('/^Content-Length: (.*)/i', $headerline, $matches)) {
                     $size = intval($matches[1]);
                     break;
                 }
@@ -552,7 +552,7 @@ class phpthumb_functions {
             }
             while (!feof($fp)) {
                 $headerline = fgets($fp, 4096);
-                if (eregi('^Last-Modified: (.*)', $headerline, $matches)) {
+                if (preg_match('/^Last-Modified: (.*)/i', $headerline, $matches)) {
                     $date = strtotime($matches[1]) - date('Z');
                     break;
                 }
@@ -647,10 +647,10 @@ class phpthumb_functions {
                 } else {
                     $Data_body .= $line;
                 }
-                if (eregi('^HTTP/[\\.0-9]+ ([0-9]+) (.+)$', rtrim($line), $matches)) {
+                if (preg_match('~^HTTP/[\\.0-9]+ ([0-9]+) (.+)$~i', rtrim($line), $matches)) {
                     list($dummy, $errno, $errstr) = $matches;
                     $errno = intval($errno);
-                } elseif (eregi('^Location: (.*)$', rtrim($line), $matches)) {
+                } elseif (preg_match('/^Location: (.*)$/i', rtrim($line), $matches)) {
                     $header_newlocation = $matches[1];
                 }
                 if ($isHeader && ($line == "\r\n")) {
@@ -677,7 +677,7 @@ class phpthumb_functions {
     }
 
     function CleanUpURLencoding($url, $queryseperator='&') {
-        if (!eregi('^http', $url)) {
+        if (!preg_match('/^http/i', $url)) {
             return $url;
         }
         $parse_url = phpthumb_functions::ParseURLbetter($url);
@@ -740,7 +740,7 @@ class phpthumb_functions {
         while (true) {
             $tryagain = false;
             $rawData = phpthumb_functions::URLreadFsock(@$parsed_url['host'], @$parsed_url['path'].'?'.@$parsed_url['query'], $errstr, true, (@$parsed_url['port'] ? @$parsed_url['port'] : 80), $timeout);
-            if (eregi('302 [a-z ]+; Location\\: (http.*)', $errstr, $matches)) {
+            if (preg_match('/302 [a-z ]+; Location\\: (http.*)/i', $errstr, $matches)) {
                 $matches[1] = trim(@$matches[1]);
                 if (!@$alreadyLookedAtURLs[$matches[1]]) {
                     // loop through and examine new URL
@@ -817,9 +817,9 @@ class phpthumb_functions {
     function EnsureDirectoryExists($dirname) {
         $directory_elements = explode(DIRECTORY_SEPARATOR, $dirname);
         $startoffset = (!$directory_elements[0] ? 2 : 1);  // unix with leading "/" then start with 2nd element; Windows with leading "c:\" then start with 1st element
-        $open_basedirs = split('[;:]', ini_get('open_basedir'));
+        $open_basedirs = preg_split('/[;:]/', ini_get('open_basedir'));
         foreach ($open_basedirs as $key => $open_basedir) {
-            if (ereg('^'.preg_quote($open_basedir), $dirname) && (strlen($dirname) > strlen($open_basedir))) {
+            if (preg_match('/^'.preg_quote($open_basedir).'/', $dirname) && (strlen($dirname) > strlen($open_basedir))) {
                 $startoffset = count(explode(DIRECTORY_SEPARATOR, $open_basedir));
                 break;
             }
@@ -881,7 +881,7 @@ class phpthumb_functions {
 
 
     function SanitizeFilename($filename) {
-        $filename = ereg_replace('[^'.preg_quote(' !#$%^()+,-.;<>=@[]_{}').'a-zA-Z0-9]', '_', $filename);
+        $filename = preg_replace('/[^'.preg_quote(' !#$%^()+,-.;<>=@[]_{}').'a-zA-Z0-9]/', '_', $filename);
         if (phpthumb_functions::version_compare_replacement(phpversion(), '4.1.0', '>=')) {
             $filename = trim($filename, '.');
         }
@@ -992,7 +992,7 @@ if (!function_exists('preg_quote')) {
 if (!function_exists('file_get_contents')) {
     // included in PHP v4.3.0+
     function file_get_contents($filename) {
-        if (eregi('^(f|ht)tp\://', $filename)) {
+        if (preg_match('~^(f|ht)tp\://~i', $filename)) {
             return SafeURLread($filename, $error);
         }
         if ($fp = @fopen($filename, 'rb')) {

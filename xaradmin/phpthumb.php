@@ -396,7 +396,7 @@ function images_admin_phpthumb($args)
          $filter = array();
          foreach ($fltr as $id => $info) {
              if (empty($info)) continue;
-             $values = split('\|',$info);
+             $values = preg_split('/\|/',$info);
              $name = array_shift($values);
              // skip invalid filter entries
              if (!isset($filterlist[$name]) || count($values) < $filterlist[$name]) continue;
