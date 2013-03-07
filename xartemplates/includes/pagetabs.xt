@@ -6,18 +6,17 @@
         <xar:set name="tab">''</xar:set>
     </xar:if>
     <xar:set name="index">0</xar:set>
-    <xar:if condition="$settings['allow_translations'] AND !empty($properties['id']->value)">
+    <xar:set name="allow_translations">xarModVars::get('publications', 'multilanguage')</xar:set>
+    <xar:if condition="$allow_translations AND !empty($properties['id']->value)">
         <div style="float:right" id="newtranslation">
-            <xar:if condition="xarModVars::get('publications', 'multilanguage')">
-                <xar:if condition="$layout eq 'publications-admin'">
-                    <a href="#xarModURL('publications','admin','modify',array('itemid' => $itemid, 'name' => $object->name, 'tplmodule' => 'publications','tab' => 'newtranslation'))#">
-                        New Translation
-                    </a>
-                <xar:else/>
-                    <a href="#xarModURL('publications','user','modify',array('itemid' => $itemid, 'name' => $object->name, 'tplmodule' => 'publications','tab' => 'newtranslation'))#">
-                        New Translation
-                    </a>
-                </xar:if>
+            <xar:if condition="$layout eq 'publications-admin'">
+                <a href="#xarModURL('publications','admin','modify',array('itemid' => $itemid, 'name' => $object->name, 'tplmodule' => 'publications','tab' => 'newtranslation'))#">
+                    New Translation
+                </a>
+            <xar:else/>
+                <a href="#xarModURL('publications','user','modify',array('itemid' => $itemid, 'name' => $object->name, 'tplmodule' => 'publications','tab' => 'newtranslation'))#">
+                    New Translation
+                </a>
             </xar:if>
         </div>
     </xar:if>
