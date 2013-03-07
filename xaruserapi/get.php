@@ -91,8 +91,8 @@ function publications_userapi_get($args)
         $bindvars[] = $id;
     } else {
         $wherelist = array();
-        $fieldlist = array('title','summary','owner','pubdate','pubtype_id',
-                           'notes','state','body','locale');
+        $fieldlist = array('title','summary','owner','start_date','pubtype_id',
+                           'notes','state','body1','locale');
         foreach ($fieldlist as $field) {
             if (isset($$field)) {
                 $wherelist[] = "$field = ?";
@@ -115,10 +115,12 @@ function publications_userapi_get($args)
     $query = "SELECT id,
                    title,
                    summary,
-                   body,
+                   body1,
                    owner,
-                   pubdate,
+                   start_date,
                    pubtype_id,
+                   leftpage_id,
+                   rightpage_id,
                    notes,
                    state,
                    locale
@@ -135,7 +137,7 @@ function publications_userapi_get($args)
         return false;
     }
 
-    list($id, $title, $summary, $body, $owner, $pubdate, $pubtype_id, $notes,
+    list($id, $title, $summary, $body, $owner, $start_date, $pubtype_id, $leftpage_id, $rightpage_id, $notes,
          $state, $locale) = $result->fields;
 
     $article = array('id' => $id,
@@ -143,8 +145,10 @@ function publications_userapi_get($args)
                      'summary' => $summary,
                      'body' => $body,
                      'owner' => $owner,
-                     'pubdate' => $pubdate,
+                     'start_date' => $start_date,
                      'pubtype_id' => $pubtype_id,
+                     'leftpage_id' => $leftpage_id,
+                     'rightpage_id' => $rightpage_id,
                      'notes' => $notes,
                      'state' => $state,
                      'locale' => $locale);
