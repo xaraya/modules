@@ -5,7 +5,7 @@
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
         <h2>
-            Modify <xar:data-output property="$properties['itemtype']" value="$ptid"/>
+            Modify <xar:data-output property="$properties['itemtype']" value="$ptid" link="0"/>
         </h2>
         <div style="float:right">
             <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#">
