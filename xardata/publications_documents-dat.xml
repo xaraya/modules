@@ -25,7 +25,7 @@
     <created>1362006069</created>
     <modified>1362006069</modified>
     <process_state>1</process_state>
-    <position>a:4:{i:0;i:1;i:1;i:0;i:2;i:3;i:3;i:4;}</position>
+    <position>a:4:{i:0;i:1;i:1;i:0;i:2;i:7;i:3;i:8;}</position>
     <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
     <redirect_flag>0</redirect_flag>
     <redirect_url></redirect_url>
@@ -41,7 +41,7 @@
     <menu_flag>1</menu_flag>
     <menu_source_flag>1</menu_source_flag>
     <menu_custom_field></menu_custom_field>
-    <sequence>3</sequence>
+    <sequence>7</sequence>
   </publications_documents>
   <publications_documents itemid="2">
     <id>2</id>
@@ -69,7 +69,7 @@
     <created>1362006069</created>
     <modified>1362006069</modified>
     <process_state>1</process_state>
-    <position>a:4:{i:0;i:2;i:1;i:0;i:2;i:5;i:3;i:6;}</position>
+    <position>a:4:{i:0;i:2;i:1;i:0;i:2;i:9;i:3;i:10;}</position>
     <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
     <redirect_flag>0</redirect_flag>
     <redirect_url></redirect_url>
@@ -85,7 +85,7 @@
     <menu_flag>0</menu_flag>
     <menu_source_flag>1</menu_source_flag>
     <menu_custom_field></menu_custom_field>
-    <sequence>5</sequence>
+    <sequence>9</sequence>
   </publications_documents>
   <publications_documents itemid="3">
     <id>3</id>
@@ -113,7 +113,7 @@
     <created>1362006069</created>
     <modified>1362006069</modified>
     <process_state>1</process_state>
-    <position>a:4:{i:0;i:3;i:1;i:0;i:2;i:7;i:3;i:8;}</position>
+    <position>a:4:{i:0;i:3;i:1;i:0;i:2;i:11;i:3;i:12;}</position>
     <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
     <redirect_flag>0</redirect_flag>
     <redirect_url></redirect_url>
@@ -129,7 +129,7 @@
     <menu_flag>0</menu_flag>
     <menu_source_flag>1</menu_source_flag>
     <menu_custom_field></menu_custom_field>
-    <sequence>7</sequence>
+    <sequence>11</sequence>
   </publications_documents>
   <publications_documents itemid="4">
     <id>4</id>
@@ -157,7 +157,7 @@
     <created>1362006069</created>
     <modified>1362006069</modified>
     <process_state>1</process_state>
-    <position>a:4:{i:0;i:4;i:1;i:0;i:2;i:9;i:3;i:10;}</position>
+    <position>a:4:{i:0;i:4;i:1;i:0;i:2;i:13;i:3;i:14;}</position>
     <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
     <redirect_flag>0</redirect_flag>
     <redirect_url></redirect_url>
@@ -173,7 +173,7 @@
     <menu_flag>0</menu_flag>
     <menu_source_flag>1</menu_source_flag>
     <menu_custom_field></menu_custom_field>
-    <sequence>9</sequence>
+    <sequence>13</sequence>
   </publications_documents>
   <publications_documents itemid="5">
     <id>5</id>
@@ -201,7 +201,7 @@
     <created>1362006069</created>
     <modified>1362006069</modified>
     <process_state>1</process_state>
-    <position>a:4:{i:0;i:5;i:1;i:0;i:2;i:11;i:3;i:12;}</position>
+    <position>a:4:{i:0;i:5;i:1;i:0;i:2;i:15;i:3;i:16;}</position>
     <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;s:1:&quot;0&quot;;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
     <redirect_flag>0</redirect_flag>
     <redirect_url></redirect_url>
@@ -217,7 +217,7 @@
     <menu_flag>1</menu_flag>
     <menu_source_flag>1</menu_source_flag>
     <menu_custom_field></menu_custom_field>
-    <sequence>11</sequence>
+    <sequence>15</sequence>
   </publications_documents>
   <publications_documents itemid="6">
     <id>6</id>
@@ -271,7 +271,7 @@
 &lt;p&gt;
 	Each publication type also has configuration fields, which are inherited by its publications unless specifically overridden. These configuration fields can be modified by clicking the &amp;quot;Modify&amp;quot; icon of a publication type &lt;a href=&quot;#xarModURL('publications','admin','view_pubtypes')#&quot;&gt;here&lt;/a&gt;. As an example, one such field defines the publication type&amp;#39;s meta keywords. Unless specifically overridden in a page/publication, all the publication type&amp;#39;s pages will have the same meta keywords. The publication type in turn inherits some of these fields, such as access rules, from the global settings of the publications module.&lt;/p&gt;
 &lt;p&gt;
-	Finally, publication types have some cofiguration settings which apply to all of its pages, such as the sort order of pages in its views. These default values for these settings are inherited from the publication module&amp;#39;s global settings. These configuration setings can be modified by clicking the &amp;quot;Configure&amp;quot; icon of a publication type &lt;a href=&quot;#xarModURL('publications','admin','view_pubtypes')#&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+	Finally, publication types have some configuration settings which apply to all of its pages, such as the sort order of pages in its views. These default values for these settings are inherited from the publication module&amp;#39;s global settings. These configuration setings can be modified by clicking the &amp;quot;Configure&amp;quot; icon of a publication type &lt;a href=&quot;#xarModURL('publications','admin','view_pubtypes')#&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;
 	Publication types are fairly flexible. They can be interchanged (e.g. turning a news article type into a documention type) with the caveat that the content of the pages may change in certain cases as a result, depending on which content fields the old and new publication type have.&lt;/p&gt;
 &lt;p&gt;
@@ -308,7 +308,7 @@
     <created>1362059106</created>
     <modified>1362059106</modified>
     <process_state>1</process_state>
-    <position>a:4:{i:0;i:6;i:1;i:0;i:2;i:1;i:3;i:2;}</position>
+    <position>a:4:{i:0;i:6;i:1;i:0;i:2;i:5;i:3;i:6;}</position>
     <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;N;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;N;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;N;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
     <redirect_flag>0</redirect_flag>
     <redirect_url></redirect_url>
@@ -322,6 +322,128 @@
     <sitemap_source_flag>1</sitemap_source_flag>
     <sitemap_custom_field></sitemap_custom_field>
     <menu_flag>1</menu_flag>
+    <menu_source_flag>1</menu_source_flag>
+    <menu_custom_field></menu_custom_field>
+    <sequence>5</sequence>
+  </publications_documents>
+  <publications_documents itemid="7">
+    <id>7</id>
+    <name>doc_configurations</name>
+    <title>Configuratiion Setings</title>
+    <description>This page describes the different configuration settings in the publications module and how they interact.</description>
+    <body>&lt;p&gt;
+	&lt;strong&gt;Configuring Publications&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;
+	Each page/publication has a settings tab which holds its configuration options. These configuration options are checked when the page is modified or displayed. For instance, one such setting defines from when to when a page is displayed. The settings are the same for all pages, and they apply only to their specific page. In other words, even among translations of a given publication, the appropriate settings can be different for each translation.&lt;/p&gt;
+&lt;p&gt;
+	Many of the page level settings can be inherited from the page&amp;#39;s publication type. In general, if a page setting is left empty or undefined, the setting of its publication type will hold.&lt;/p&gt;
+&lt;p&gt;
+	&lt;strong&gt;Configuring Publication Types&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;
+	Publication types contain two types of configuration settings:&lt;/p&gt;
+&lt;ol&gt;
+	&lt;li&gt;
+		Some settings are default values for the publication type&amp;#39;s pages. These can be overridden by the single pages as described above. These settings can be accessed by clicking the &amp;quot;Modify&amp;quot; icon of a publication type &lt;a href=&quot;#xarModURL('publications','admin','view_pubtypes')#&quot;&gt;here&lt;/a&gt;. As an example, one such field defines the publication type&amp;#39;s meta keywords. Unless specifically overridden in a page/publication, all the publication type&amp;#39;s pages will have the same meta keywords. The publication type in turn inherits some of these fields, such as access rules, from the global settings of the publications module.&lt;/li&gt;
+	&lt;li&gt;
+		Publication types have some configuration settings which apply to all of its pages, such as the sort order of pages in its views. The default values for these settings are inherited from the Publication module&amp;#39;s global settings. These configuration settings can be accessed &lt;a href=&quot;#xarModURL('publications','admin','modifyconfig',array('tab'=&gt;'pubtypes'))#&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;
+	&lt;strong&gt;Global Setings&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;
+	There are a number of global settings which hold for all publication types and pages unless overridden. These can be accessed &lt;a href=&quot;#xarModURL('publications','admin','modifyconfig',array('tab'=&gt;'global'))#&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;
+	N.B. Some of these configuration settings are subject to review and may change in the future.&lt;/p&gt;
+</body>
+    <notes>&lt;br /&gt;
+</notes>
+    <parent>0</parent>
+    <author>6</author>
+    <state>3</state>
+    <pages>1</pages>
+    <locale>en_US.utf-8</locale>
+    <itemtype>2</itemtype>
+    <pagetype>1</pagetype>
+    <start_date>1362177579</start_date>
+    <end_date>1393713579</end_date>
+    <no_end>1</no_end>
+    <version>1</version>
+    <summary_template>0</summary_template>
+    <detail_template>0</detail_template>
+    <page_template></page_template>
+    <theme></theme>
+    <categories></categories>
+    <created>1362177579</created>
+    <modified>1362177579</modified>
+    <process_state>1</process_state>
+    <position>a:4:{i:0;i:7;i:1;i:0;i:2;i:3;i:3;i:4;}</position>
+    <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;N;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;N;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;N;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
+    <redirect_flag>0</redirect_flag>
+    <redirect_url></redirect_url>
+    <proxy_url></proxy_url>
+    <alias_flag>0</alias_flag>
+    <alias></alias>
+    <page_title></page_title>
+    <page_description></page_description>
+    <keywords></keywords>
+    <sitemap_flag>0</sitemap_flag>
+    <sitemap_source_flag>1</sitemap_source_flag>
+    <sitemap_custom_field></sitemap_custom_field>
+    <menu_flag>1</menu_flag>
+    <menu_source_flag>1</menu_source_flag>
+    <menu_custom_field></menu_custom_field>
+    <sequence>3</sequence>
+  </publications_documents>
+  <publications_documents itemid="8">
+    <id>8</id>
+    <name>doc_publications</name>
+    <title>Publications</title>
+    <description>This page describes publications/pages, the fundamental object of the Publications module</description>
+    <body>&lt;p&gt;
+	The basic objects that the Publications module works with are publications or pages.&lt;/p&gt;
+&lt;p&gt;
+	In the simplest case, a publication/page corresponds to a page displayed on a we site. Such pages can take different forms, corresponmding to say articles, FAQ pages, collections of web links, and so on. Each page corresponds to a publication type. For more information on publication types, go &lt;a href=&quot;#xarModURL('publications','user','display',array('itemid'=&gt;6))#&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;
+	Publications, however, need not display content. They can also serve as placeholders or as redirects points to other pages of the Publications module or other modules.&lt;/p&gt;
+&lt;p&gt;
+	&lt;strong&gt;The Publications Tree&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;
+	Pages are arranged in a tree structure,&amp;nbsp; which can be browsed &lt;a href=&quot;#xarModURL('publications','admin','view_pages')#&quot;&gt;here&lt;/a&gt;. The stree strucure defines a naturally ordering for the pages, which is reflected in its menus and sitemap (unless overridden).&lt;/p&gt;
+</body>
+    <notes>&lt;br /&gt;
+</notes>
+    <parent>0</parent>
+    <author>6</author>
+    <state>3</state>
+    <pages>1</pages>
+    <locale>en_US.utf-8</locale>
+    <itemtype>2</itemtype>
+    <pagetype>2</pagetype>
+    <start_date>1362237447</start_date>
+    <end_date>1393773447</end_date>
+    <no_end>1</no_end>
+    <version>1</version>
+    <summary_template>0</summary_template>
+    <detail_template>0</detail_template>
+    <page_template></page_template>
+    <theme></theme>
+    <categories></categories>
+    <created>1362237447</created>
+    <modified>1362237447</modified>
+    <process_state>1</process_state>
+    <position>a:4:{i:0;i:8;i:1;i:0;i:2;i:1;i:3;i:2;}</position>
+    <access>a:3:{s:7:&quot;display&quot;;a:3:{s:5:&quot;group&quot;;N;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;modify&quot;;a:3:{s:5:&quot;group&quot;;N;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}s:6:&quot;delete&quot;;a:3:{s:5:&quot;group&quot;;N;s:5:&quot;level&quot;;s:3:&quot;100&quot;;s:7:&quot;failure&quot;;s:1:&quot;0&quot;;}}</access>
+    <redirect_flag>0</redirect_flag>
+    <redirect_url></redirect_url>
+    <proxy_url></proxy_url>
+    <alias_flag>0</alias_flag>
+    <alias></alias>
+    <page_title></page_title>
+    <page_description></page_description>
+    <keywords></keywords>
+    <sitemap_flag>0</sitemap_flag>
+    <sitemap_source_flag>1</sitemap_source_flag>
+    <sitemap_custom_field></sitemap_custom_field>
+    <menu_flag>0</menu_flag>
     <menu_source_flag>1</menu_source_flag>
     <menu_custom_field></menu_custom_field>
     <sequence>1</sequence>
