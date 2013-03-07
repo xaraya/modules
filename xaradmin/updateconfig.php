@@ -136,7 +136,6 @@ function publications_admin_updateconfig()
                         'show_categories',
                         'show_catcount',
                         'show_prevnext',
-                        'allow_translations',
                        );
         foreach ($boxes as $box) {
             $isvalid = $checkbox->checkInput($box);
