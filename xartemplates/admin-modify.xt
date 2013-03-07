@@ -12,6 +12,23 @@
                 Publications List
             </a>
         </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:if condition="!empty($prevpublication)">
+                    <xar:var name="prev">Previous</xar:var>
+                    <a href="#xarModURL('publications', 'admin', 'modify', array('ptid' => $prevpublication['pubtype_id'], 'itemid' => $prevpublication['id']))#" title="#$prev#">
+                        <xar:img scope="theme" file="icons/go-previous.png" class="xar-icon" alt="$prev"/>
+                    </a>
+                </xar:if>
+                &#160;
+                <xar:if condition="!empty($nextpublication)">
+                    <xar:var name="next">Next</xar:var>
+                    <a href="#xarModURL('publications', 'admin', 'modify', array('ptid' => $nextpublication['pubtype_id'], 'itemid' => $nextpublication['id']))#" title="#$next#">
+                        <xar:img scope="theme" file="icons/go-next.png" class="xar-icon" alt="$next"/>
+                    </a>
+                </xar:if>
+            </div>
+        </div>
         <div style="clear:both">&#160;</div>
         <xar:if condition="!empty($object->upload)">
             <xar:set name="enctype">
