@@ -33,7 +33,7 @@
                     Publication Types
                 </a>
             </li>
-
+<!--
             <xar:if condition="$tab eq 'redirects'">
                 <xar:set name="tabclass">'xar-tab-active'</xar:set>
                 <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
@@ -46,6 +46,7 @@
                     Redirects
                 </a>
             </li>
+-->
         </ul>
 
         <xar:if condition="$tab eq 'global'">
@@ -362,12 +363,6 @@
                     <legend>
                         Display Settings
                     </legend>
-                    <div class="xar-form-input-wrapper">
-                        <label for="allow_translations" class="help xar-form-label" title="#xarML('Allow translations in this publications type')#">                    
-                            Allow translations
-                        </label>
-                        <xar:data-input type="checkbox" name="allow_translations" checked="$settings['allow_translations']" />
-                    </div>
                     <div class="xar-form-input-wrapper">
                         <label for="prevnextart" class="help xar-form-label" title="#xarML('Show link to previous/next item in display.')#">                    
                             Show link to previous/next item in display
