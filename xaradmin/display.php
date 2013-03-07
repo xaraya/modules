@@ -367,6 +367,18 @@ function publications_admin_display($args)
 #
     $data['properties'] =& $data['object']->properties;
     
+# --------------------------------------------------------
+#
+# Get information on next and previous items
+#
+    $data['prevpublication'] = xarModAPIFunc('publications','user','getnext',
+                                 array('id' => $id,
+                                       'ptid' => $ptid,
+                                       'sort' => 'tree',));
+    $data['nextpublication'] = xarModAPIFunc('publications','user','getnext',
+                                 array('id' => $id,
+                                       'ptid' => $ptid,
+                                       'sort' => 'tree',));
     return $data;
 
 
@@ -584,22 +596,6 @@ function publications_admin_display($args)
                                                'id' => $prevart['id']));
         } else {
             $data['prevart'] = '';
-        }
-        $nextart = xarModAPIFunc('publications','user','getnext',
-                                 array('id' => $id,
-                                       'ptid' => $ptid,
-                                       'sort' => $settings['defaultsort'],
-                                       'state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
-                                       'enddate' => time()));
-        if (!empty($nextart['id'])) {
-            //Make all next art info available to template
-            $data['nextartinfo'] = $nextart;
-
-            $data['nextart'] = xarModURL('publications','user','display',
-                                         array('ptid' => $nextart['pubtype_id'],
-                                               'id' => $nextart['id']));
-        } else {
-            $data['nextart'] = '';
         }
     } else {
         $data['prevart'] = '';

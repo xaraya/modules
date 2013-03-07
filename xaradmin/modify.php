@@ -42,7 +42,10 @@ function publications_admin_modify($args)
         $name = $item['name'];
     }
 
-    // Get our object
+# --------------------------------------------------------
+#
+# Get our object
+#
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['object']->getItem(array('itemid' => $data['itemid']));
     $data['ptid'] = $data['object']->properties['itemtype']->value;
@@ -53,7 +56,10 @@ function publications_admin_modify($args)
     // Get the settings of the publication type we are using
     $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
     
-    // If creating a new translation get an empty copy
+# --------------------------------------------------------
+#
+# If creating a new translation get an empty copy
+#
     if ($data['tab'] == 'newtranslation') {
         $data['object']->properties['id']->setValue(0);
         $data['object']->properties['parent']->setValue($data['itemid']);
@@ -63,8 +69,11 @@ function publications_admin_modify($args)
         $data['items'] = array();
     }
 
-    // Get the base document. If this itemid is not the base doc,
-    // then first find the correct itemid
+# --------------------------------------------------------
+#
+# Get the base document. If this itemid is not the base doc,
+# then first find the correct itemid
+#
     $data['object']->getItem(array('itemid' => $data['itemid']));
     $fieldvalues = $data['object']->getFieldValues(array(),1);
     if (!empty($fieldvalues['parent'])) {
@@ -74,7 +83,10 @@ function publications_admin_modify($args)
     }
     $data['items'][$data['itemid']] = $fieldvalues;
 
-    // Get any translations of the base document
+# --------------------------------------------------------
+#
+# Get any translations of the base document
+#
     $data['objectlist'] = DataObjectMaster::getObjectList(array('name' => $name));
     $where = "parent = " . $data['itemid'];
     $items = $data['objectlist']->getItems(array('where' => $where));
@@ -85,6 +97,18 @@ function publications_admin_modify($args)
         $data['items'][$key] = $data['object']->getFieldValues(array(),1);
     }
 
+# --------------------------------------------------------
+#
+# Get information on next and previous items
+#
+    $data['prevpublication'] = xarModAPIFunc('publications','user','getprevious',
+                                 array('id' => $data['itemid'],
+                                       'ptid' => $ptid,
+                                       'sort' => 'tree',));
+    $data['nextpublication'] = xarModAPIFunc('publications','user','getnext',
+                                 array('id' => $data['itemid'],
+                                       'ptid' => $ptid,
+                                       'sort' => 'tree',));
     return $data;
 }
 
