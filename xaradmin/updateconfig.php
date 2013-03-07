@@ -130,12 +130,10 @@ function publications_admin_updateconfig()
                         'show_publinks',
                         'show_pubcount',
                         'show_map',
-                        'prevnextart',
                         'dot_transform',
                         'title_transform',
                         'show_categories',
                         'show_catcount',
-                        'show_prevnext',
                        );
         foreach ($boxes as $box) {
             $isvalid = $checkbox->checkInput($box);

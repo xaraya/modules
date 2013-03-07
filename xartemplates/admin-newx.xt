@@ -57,20 +57,7 @@
                     <xar:data-display object="$object" tplmodule="publications"/>
                 </fieldset>
             </div>
-            <!--
-                <xar:if condition="!empty($prevart) || !empty($nextart)">
-                    <div class="xar-normal xar-overflow-auto">
-                        <xar:if condition="!empty($prevart)">
-                        <a class="xar-floatleft" href="#$prevart#">&lt;
-                        <xar:mlstring>prev</xar:mlstring></a>&#160;</xar:if>
-                        <xar:if condition="!empty($nextart)">
-                            <a class="xar-floatright" href="#$nextart#">
-                            <xar:mlstring>next</xar:mlstring>&gt;</a>
-                        </xar:if>
-                    </div>
-                </xar:if>
-                <xar:template file="navtabs-user" type="module" />
-            -->
+
             <div class="xar-form-input-wrapper">
                 <div class="xar-form-input-wrapper-after">
                     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />

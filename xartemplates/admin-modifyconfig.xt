@@ -364,10 +364,10 @@
                         Display Settings
                     </legend>
                     <div class="xar-form-input-wrapper">
-                        <label for="prevnextart" class="help xar-form-label" title="#xarML('Show link to previous/next item in display.')#">                    
+                        <label for="show_prevnext" class="help xar-form-label" title="#xarML('Show link to previous/next item in display.')#">                    
                             Show link to previous/next item in display
                         </label>
-                        <xar:data-input type="checkbox" name="prevnextart" checked="$settings['prevnextart']" />
+                        <xar:data-input type="checkbox" name="show_prevnext" checked="$settings['show_prevnext']" />
                     </div>
                 </fieldset>
                 <fieldset class="xar-norm">
@@ -535,12 +535,6 @@
                                 </div>
                             </td>
                             <td valign="top" style="width: 50%">
-                                <div class="xar-form-input-wrapper">
-                                    <label for="show_prevnext" class="help xar-form-label" title="#xarML('Show previous/next category.')#">
-                                        Show previous/next category
-                                    </label>
-                                    <xar:data-input type="checkbox" name="show_prevnext" checked="$settings['show_prevnext']" />
-                                </div>
                                 <div class="xar-form-input-wrapper">
                                     <label for="show_comments" class="help xar-form-label" title="#xarML('Show comments on view page.')#">
                                         Show number of comments
