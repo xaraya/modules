@@ -59,18 +59,24 @@
                         </xar:if>
                     </div>
                     -->
-                    <xar:if condition="!empty($prevart) || !empty($nextart)">
-                        <ul id="fullplate-navigation">
-                            <xar:if condition="!empty($prevart)">
-                                <li id="previous"><a href="#$prevart#">&#171;</a></li>
-                            </xar:if>
-                            <xar:if condition="!empty($nextart)">
-                                <li id="next"><a href="#$nextart#">
-                                    <img src="#xarTplGetImage('icons/go-next.png','base')#"/>
-                                </a></li>
-                            </xar:if>
-                        </ul>
-                    </xar:if>
+                    <!-- Link to previous or next -->
+                    <div class="xar-normal xar-align-right xar-padding-thick">
+                        <xar:set name="prevpublication">xarCoreCache::getCached('Publications', 'prevpublication')</xar:set>
+                        <xar:if condition="!empty($prevpublication)">
+                            <xar:var name="prev">Previous</xar:var>
+                            <a href="#xarModURL('publications', 'user', 'display', array('itemid' => $prevpublication['id']))#" title="#$prev#">
+                                <xar:img scope="theme" file="icons/go-previous.png" class="xar-icon" alt="$prev"/>
+                            </a>
+                        </xar:if>
+                        &#160;
+                        <xar:set name="nextpublication">xarCoreCache::getCached('Publications', 'nextpublication')</xar:set>
+                        <xar:if condition="!empty($nextpublication)">
+                            <xar:var name="next">Next</xar:var>
+                            <a href="#xarModURL('publications', 'user', 'display', array('itemid' => $nextpublication['id']))#" title="#$next#">
+                                <xar:img scope="theme" file="icons/go-next.png" class="xar-icon" alt="$next"/>
+                            </a>
+                        </xar:if>
+                    </div>
                 </div>
             </div>
         </div>
