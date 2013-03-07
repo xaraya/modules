@@ -391,7 +391,7 @@ function publications_user_display($args)
 #
     // Now we can cache all this data away for the blocks.
     // The blocks should have access to most of the same data as the page.
-//    xarVarSetCached('Blocks.publications', 'pagedata', $tree);
+//    xarCoreCache::setCached('Blocks.publications', 'pagedata', $tree);
 
     // The 'serialize' hack ensures we have a proper copy of the
     // paga data, which is a self-referencing array. If we don't
@@ -399,9 +399,9 @@ function publications_user_display($args)
     $data = unserialize(serialize($data));
 
     // Save some values. These are used by blocks in 'automatic' mode.
-    xarVarSetCached('Blocks.publications', 'current_id', $id);
-    xarVarSetCached('Blocks.publications', 'ptid', $ptid);
-    xarVarSetCached('Blocks.publications', 'author', $data['object']->properties['author']->value);
+    xarCoreCache::setCached('Blocks.publications', 'current_id', $id);
+    xarCoreCache::setCached('Blocks.publications', 'ptid', $ptid);
+    xarCoreCache::setCached('Blocks.publications', 'author', $data['object']->properties['author']->value);
 
 # --------------------------------------------------------
 #
@@ -409,6 +409,26 @@ function publications_user_display($args)
 #
     $data['properties'] =& $data['object']->properties;
     
+# --------------------------------------------------------
+#
+# Get information on next and previous items
+#
+    if ($data['settings']['show_prevnext']) {
+        $prevpublication = xarModAPIFunc('publications','user','getprevious',
+                                     array('id' => $itemid,
+                                           'ptid' => $data['object']->properties['itemtype']->value,
+                                           'sort' => 'title',));
+        $nextpublication = xarModAPIFunc('publications','user','getnext',
+                                     array('id' => $itemid,
+                                           'ptid' => $data['object']->properties['itemtype']->value,
+                                           'sort' => 'title',));
+    } else {
+        $prevpublication = '';
+        $nextpublication = '';
+    }
+    xarCoreCache::setCached('Publications', 'prevpublication', $prevpublication);
+    xarCoreCache::setCached('Publications', 'nextpublication', $nextpublication);
+
     return $data;
 }
 

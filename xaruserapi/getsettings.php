@@ -63,7 +63,6 @@ function publications_userapi_getglobalsettings()
                 'show_pubcount' => true,
                 'do_transform' => true,
                 'title_transform' => true,
-                'prevnextart' => true,
                 'usealias' => false,                //CHECKME
                 'defaultstate' => 2,
                 'defaultprocessstate' => 0,
