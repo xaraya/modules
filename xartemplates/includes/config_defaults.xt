@@ -22,4 +22,83 @@
             <input name="defaultbackpage" id="defaultbackpage" value="#$value#" size="50"/>
         </div>
     </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="show_pagetree" title="#xarML('The default page to show in the back end.')#" class="xar-form-label">
+                Show page tree view                
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:set name="value">xarModVars::get('publications','show_pagetree')</xar:set>
+            <xar:data-input type="checkbox" name="show_pagetree" checked="$value"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="show_bypubtype" title="#xarML('The default page to show in the back end.')#" class="xar-form-label">
+                Show pages by type view                
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:set name="value">xarModVars::get('publications','show_bypubtype')</xar:set>
+            <xar:data-input type="checkbox" name="show_bypubtype" checked="$value"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label class="help xar-form-label" for="defaultpubtype" title="#xarML('Note: selecting Defaults here implies navigating (by category) across all publication types')#">
+                Default Publication Type
+            </label> 
+        </div>
+        <div class="xar-col">
+            <xar:data-input name="defaultpubtype" type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" />
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label class="help xar-form-label" for="sortpubtypes" title="#xarML('Sort order for Publication Types in menus, publication map etc.')#">
+                Publication Type Sort Order
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:set name="options">
+                array(
+                    array('id' => 'id', 'name' => 'ID'),
+                    array('id' => 'name', 'name' => 'Name'),
+                    array('id' => 'description', 'name' => 'Description'),
+                )
+            </xar:set>
+            <xar:data-input name="sortpubtypes" type="dropdown" options="$options" />&#160;
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label class="help xar-form-label" for="use_process_states" title="#xarML('Enable process states for workflow')#">
+                Enable Process States
+            </label>
+        </div>
+        <div class="xar-col">
+        <div class="xar-col">
+            <xar:set name="value">xarModVars::get('publications','use_process_states')</xar:set>
+            <xar:data-input type="checkbox" name="use_process_states" checked="$value"/>
+        </div>
+        </div>
+    </div>
+    <xar:if condition="xarDB::getType() eq 'mysql'">
+        <div class="xar-row">
+            <div class="xar-col">
+            <!--
+                You can adapt the field list here if you want e.g. to ignore the notes field for full-text search
+            -->
+                <label class="help xar-form-label" for="fulltext" title="#xarML('Enable full-text search in MySQL')#">
+                    Full-text search in MySQL                        
+                </label>
+            </div>
+            <div class="xar-col">
+                <xar:set name="checked">xarModVars::get('publications', 'fulltextsearch')</xar:set>
+                <xar:data-input name="fulltext" type="checkbox" checked="$checked" />&#160;
+                [<a href="http://dev.mysql.com/doc/refman/4.1/en/fulltext-restrictions.html">with restrictions</a>]
+            </div>
+        </div>
+    </xar:if>
 </xar:template>

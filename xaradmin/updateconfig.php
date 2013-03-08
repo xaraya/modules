@@ -42,6 +42,7 @@ function publications_admin_updateconfig()
         if (!xarVarFetch('debugmode',    'checkbox', $debugmode, xarModVars::get('publications', 'debugmode'), XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('defaultfrontpage', 'str', $defaultfrontpage, xarModVars::get('publications', 'defaultfrontpage'), XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('defaultbackpage', 'str', $defaultbackpage, xarModVars::get('publications', 'defaultbackpage'), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('use_process_states',    'checkbox', $use_process_states, xarModVars::get('publications', 'use_process_states'), XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('hide_tree_display',    'checkbox', $hide_tree_display, xarModVars::get('publications', 'hide_tree_display'), XARVAR_NOT_REQUIRED)) return;
 
         xarModVars::set('publications', 'defaultpubtype', $defaultpubtype);
@@ -52,6 +53,7 @@ function publications_admin_updateconfig()
         xarModVars::set('publications', 'usetitleforurl', $usetitleforurl);
         xarModVars::set('publications', 'defaultfrontpage',$defaultfrontpage);
         xarModVars::set('publications', 'defaultbackpage',$defaultbackpage);
+        xarModVars::set('publications', 'use_process_states',$use_process_states);
         xarModVars::set('publications', 'hide_tree_display',$hide_tree_display);
         
         // Allow multilanguage only if the languages property is present
