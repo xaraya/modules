@@ -35,8 +35,9 @@ function publications_userapi_getprevious($args)
     if (empty($ptid)) $ptid = xarModVars::get('publications', 'defaultpubtype');
     if (empty($sort)) $sort = 'date';
     if (!isset($state)) {
-        // frontpage or approved
-        $state = array(3,4,5);
+        // frontpage or approved or placeholder
+        xarMod::load('publications');
+        $state = array(PUBLICATIONS_STATE_ACTIVE,PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_PLACEHOLDER);
     }
 
     // Default fields in publications (for now)
