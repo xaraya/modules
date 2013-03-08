@@ -58,7 +58,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
 
             // see if we're currently displaying an article
             if (xarVarIsCached('Blocks.publications', 'id')) {
-                $curid = xarVarGetCached('Blocks.publications', 'id');
+                $curid = xarCoreCache::getCached('Blocks.publications', 'id');
             } else {
                 $curid = -1;
             }
@@ -87,7 +87,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
                     // Jonn: this currently only works with one category at a time
                     // it could be reworked to support multiple cids
                     if (xarVarIsCached('Blocks.publications', 'cids')) {
-                        $curcids = xarVarGetCached('Blocks.publications', 'cids');
+                        $curcids = xarCoreCache::getCached('Blocks.publications', 'cids');
                         if (!empty($curcids)) {
                             if ($curid == -1) {
                                 //$cid = $curcids[0]['name'];
@@ -142,7 +142,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
                 if ($data['pubtype_id'] == 0)
                 {
                     if (xarVarIsCached('Blocks.publications', 'ptid')) {
-                        $ptid = xarVarGetCached('Blocks.publications', 'ptid');
+                        $ptid = xarCoreCache::getCached('Blocks.publications', 'ptid');
                     }
                     if (empty($ptid)) {
                         // default publication type

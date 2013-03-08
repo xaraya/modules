@@ -271,14 +271,14 @@ function publications_user_view($args)
     }
 
     // Save some variables to (temporary) cache for use in blocks etc.
-    xarVarSetCached('Blocks.publications', 'ptid', $ptid);
-    xarVarSetCached('Blocks.publications', 'cids', $cids);
-    xarVarSetCached('Blocks.publications', 'owner', $owner);
+    xarCoreCache::setCached('Blocks.publications', 'ptid', $ptid);
+    xarCoreCache::setCached('Blocks.publications', 'cids', $cids);
+    xarCoreCache::setCached('Blocks.publications', 'owner', $owner);
     if (isset($data['author'])) {
-        xarVarSetCached('Blocks.publications', 'author', $data['author']);
+        xarCoreCache::setCached('Blocks.publications', 'author', $data['author']);
     }
     if (isset($data['pubdate'])) {
-        xarVarSetCached('Blocks.publications', 'pubdate', $data['pubdate']);
+        xarCoreCache::setCached('Blocks.publications', 'pubdate', $data['pubdate']);
     }
 
     // TODO: add this to publications configuration ?
@@ -307,11 +307,11 @@ function publications_user_view($args)
     }
     $data['cids'] = $cids;
     $data['catid'] = $catid;
-    xarVarSetCached('Blocks.categories', 'module', 'publications');
-    xarVarSetCached('Blocks.categories', 'itemtype', $ptid);
-    xarVarSetCached('Blocks.categories', 'cids', $cids);
+    xarCoreCache::setCached('Blocks.categories', 'module', 'publications');
+    xarCoreCache::setCached('Blocks.categories', 'itemtype', $ptid);
+    xarCoreCache::setCached('Blocks.categories', 'cids', $cids);
     if (!empty($ptid) && !empty($pubtypes[$ptid]['description'])) {
-        xarVarSetCached('Blocks.categories', 'title', $pubtypes[$ptid]['description']);
+        xarCoreCache::setCached('Blocks.categories', 'title', $pubtypes[$ptid]['description']);
         // Note : this gets overriden by the categories navigation if necessary
         xarTplSetPageTitle(xarVarPrepForDisplay($pubtypes[$ptid]['description']));
     }
@@ -324,7 +324,7 @@ function publications_user_view($args)
                 array('state' => $c_posted, 'ptid' => $ptid)
             );
             if (isset($pubcatcount[$ptid])) {
-                xarVarSetCached('Blocks.categories','catcount',$pubcatcount[$ptid]);
+                xarCoreCache::setCached('Blocks.categories','catcount',$pubcatcount[$ptid]);
             }
             unset($pubcatcount);
         } else {
@@ -338,12 +338,12 @@ function publications_user_view($args)
                 foreach ($pubcatcount as $cat => $count) {
                     $catcount[$cat] = $count['total'];
                 }
-                xarVarSetCached('Blocks.categories','catcount',$catcount);
+                xarCoreCache::setCached('Blocks.categories','catcount',$catcount);
             }
             unset($pubcatcount);
         }
     } else {
-        // xarVarSetCached('Blocks.categories','catcount',array());
+        // xarCoreCache::setCached('Blocks.categories','catcount',array());
     }
 
     // retrieve the number of comments for each article
@@ -468,7 +468,7 @@ function publications_user_view($args)
         }
 
         // RSS Processing
-        $current_theme = xarVarGetCached('Themes.name', 'CurrentTheme');
+        $current_theme = xarCoreCache::getCached('Themes.name', 'CurrentTheme');
         if (($current_theme == 'rss') or ($current_theme == 'atom')){
             $article['rsstitle'] = htmlspecialchars($article['title']);
             //$article['rssdate'] = strtotime($article['date']);

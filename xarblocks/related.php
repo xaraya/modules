@@ -62,7 +62,7 @@ class Publications_RelatedBlock extends BasicBlock implements iBlock
                 // Show publication type (for now)
                 $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
                 if (xarVarIsCached('Blocks.publications','ptid')) {
-                    $ptid = xarVarGetCached('Blocks.publications','ptid');
+                    $ptid = xarCoreCache::getCached('Blocks.publications','ptid');
                     if (!empty($ptid) && isset($pubtypes[$ptid]['description'])) {
                         $vars['pubtypelink'] = xarModURL('publications','user','view',
                                                          array('ptid' => $ptid));
@@ -75,7 +75,7 @@ class Publications_RelatedBlock extends BasicBlock implements iBlock
             if ($vars['showcategory']) {
                 // Show categories (for now)
                 if (xarVarIsCached('Blocks.publications','cids')) {
-                    $cids = xarVarGetCached('Blocks.publications','cids');
+                    $cids = xarCoreCache::getCached('Blocks.publications','cids');
                     // TODO: add related links
                 }
             }
@@ -83,7 +83,7 @@ class Publications_RelatedBlock extends BasicBlock implements iBlock
             if ($vars['showauthor']) {
                 // Show author (for now)
                 if (xarVarIsCached('Blocks.publications','author')) {
-                    $author = xarVarGetCached('Blocks.publications','author');
+                    $author = xarCoreCache::getCached('Blocks.publications','author');
                     if (!empty($author)) {
                         $vars['authorlink'] = xarModURL('publications','user','view',
                                                         array('ptid' => (!empty($ptid) ? $ptid : null),

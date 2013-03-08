@@ -62,7 +62,7 @@ function publications_user_display($args)
 # Get the ID of the translation if required
 #
     // First save the "untranslated" id
-    xarVarSetCached('Blocks.publications', 'current_base_id', $id);
+    xarCoreCache::setCached('Blocks.publications', 'current_base_id', $id);
 
     if ($translate)
         $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
@@ -107,7 +107,7 @@ function publications_user_display($args)
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
     // Save this as the current pubtype
-    xarVarSetCached('Publications', 'current_pubtype_object', $pubtypeobject);
+    xarCoreCache::setCached('Publications', 'current_pubtype_object', $pubtypeobject);
     
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
 //    $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));

@@ -72,7 +72,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
     // Get current module
         if (empty($module)) {
             if (xarVarIsCached('Blocks.categories','module')) {
-               $modname = xarVarGetCached('Blocks.categories','module');
+               $modname = xarCoreCache::getCached('Blocks.categories','module');
             }
             if (empty($modname)) {
                 $modname = xarModGetName();
@@ -88,7 +88,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
         // Get current item type (if any)
         if (!isset($itemtype)) {
             if (xarVarIsCached('Blocks.categories','itemtype')) {
-                $itemtype = xarVarGetCached('Blocks.categories','itemtype');
+                $itemtype = xarCoreCache::getCached('Blocks.categories','itemtype');
             } else {
                 // try to get itemtype from input
                 xarVarFetch('itemtype', 'isset', $itemtype, NULL, XARVAR_DONT_SET);
@@ -104,7 +104,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
         // Get current item id (if any)
         if (!isset($itemid)) {
             if (xarVarIsCached('Blocks.categories','itemid')) {
-                $itemid = xarVarGetCached('Blocks.categories','itemid');
+                $itemid = xarCoreCache::getCached('Blocks.categories','itemid');
             } else {
                 // try to get itemid from input
                 xarVarFetch('itemid', 'isset', $itemid, NULL, XARVAR_DONT_SET);
@@ -175,19 +175,19 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
         if (empty($showempty) || !empty($show_catcount)) {
             // A 'deep count' sums the totals at each node with the totals of all descendants.
             if (xarVarIsCached('Blocks.categories', 'deepcount')) {
-                $deepcount = xarVarGetCached('Blocks.categories', 'deepcount');
+                $deepcount = xarCoreCache::getCached('Blocks.categories', 'deepcount');
             } else {
                 $deepcount = xarModAPIFunc(
                     'categories', 'user', 'deepcount',
                     array('modid' => $modid, 'itemtype' => $itemtype)
                 );
-                xarVarSetCached('Blocks.categories','deepcount', $deepcount);
+                xarCoreCache::setCached('Blocks.categories','deepcount', $deepcount);
             }
         }
     
         if (!empty($show_catcount)) {
             if (xarVarIsCached('Blocks.categories', 'catcount')) {
-                $catcount = xarVarGetCached('Blocks.categories', 'catcount');
+                $catcount = xarCoreCache::getCached('Blocks.categories', 'catcount');
             } else {
                 // Get number of items per category (for this module).
                 // If show_catcount == 2 then add in all descendants too.
@@ -203,14 +203,14 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                     $catcount =& $deepcount;
                 }
     
-                xarVarSetCached('Blocks.categories', 'catcount', $catcount);
+                xarCoreCache::setCached('Blocks.categories', 'catcount', $catcount);
             }
         }
     
         // Specify type=... & func = ... arguments for xarModURL()
         if (empty($type)) {
             if (xarVarIsCached('Blocks.categories','type')) {
-                $type = xarVarGetCached('Blocks.categories','type');
+                $type = xarCoreCache::getCached('Blocks.categories','type');
             }
             if (empty($type)) {
                 $type = 'user';
@@ -218,7 +218,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
         }
         if (empty($func)) {
             if (xarVarIsCached('Blocks.categories','func')) {
-                $func = xarVarGetCached('Blocks.categories','func');
+                $func = xarCoreCache::getCached('Blocks.categories','func');
             }
             if (empty($func)) {
                 $func = 'view';
@@ -227,7 +227,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
     
         // Get current categories
         if (xarVarIsCached('Blocks.categories','catid')) {
-           $catid = xarVarGetCached('Blocks.categories','catid');
+           $catid = xarCoreCache::getCached('Blocks.categories','catid');
         }
         if (empty($catid)) {
             // try to get catid from input
@@ -253,10 +253,10 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
             }
         } elseif (empty($cids)) {
             if (xarVarIsCached('Blocks.categories','cids')) {
-                $cids = xarVarGetCached('Blocks.categories','cids');
+                $cids = xarCoreCache::getCached('Blocks.categories','cids');
             }
             if (xarVarIsCached('Blocks.categories','andcids')) {
-                $andcids = xarVarGetCached('Blocks.categories','andcids');
+                $andcids = xarCoreCache::getCached('Blocks.categories','andcids');
             }
             if (empty($cids)) {
                 // try to get cids from input

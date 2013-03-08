@@ -304,12 +304,12 @@ function publications_user_viewmap($args)
     }
 
     // Save some variables to (temporary) cache for use in blocks etc.
-    xarVarSetCached('Blocks.publications','ptid',$ptid);
+    xarCoreCache::setCached('Blocks.publications','ptid',$ptid);
 //if ($shownavigation) {
-    xarVarSetCached('Blocks.categories','module','publications');
-    xarVarSetCached('Blocks.categories','itemtype',$ptid);
+    xarCoreCache::setCached('Blocks.categories','module','publications');
+    xarCoreCache::setCached('Blocks.categories','itemtype',$ptid);
     if (!empty($descr)) {
-        xarVarSetCached('Blocks.categories','title',$descr);
+        xarCoreCache::setCached('Blocks.categories','title',$descr);
         xarTplSetPageTitle( xarML('Map'), xarVarPrepForDisplay($descr));
     }
 //}

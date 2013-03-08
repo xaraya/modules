@@ -335,15 +335,15 @@ function publications_user_archive($args)
     }
 
     // Save some variables to (temporary) cache for use in blocks etc.
-    xarVarSetCached('Blocks.publications','ptid',$ptid);
+    xarCoreCache::setCached('Blocks.publications','ptid',$ptid);
     if (!empty($cids)) {
-        xarVarSetCached('Blocks.publications','cids',$cids);
+        xarCoreCache::setCached('Blocks.publications','cids',$cids);
     }
 //if ($shownavigation) {
-    xarVarSetCached('Blocks.categories','module','publications');
-    xarVarSetCached('Blocks.categories','itemtype',$ptid);
+    xarCoreCache::setCached('Blocks.categories','module','publications');
+    xarCoreCache::setCached('Blocks.categories','itemtype',$ptid);
     if (!empty($ptid) && !empty($pubtypes[$ptid]['description'])) {
-        xarVarSetCached('Blocks.categories','title',$pubtypes[$ptid]['description']);
+        xarCoreCache::setCached('Blocks.categories','title',$pubtypes[$ptid]['description']);
         xarTplSetPageTitle(xarML('Archive'), $pubtypes[$ptid]['description']);
     } else {
         xarTplSetPageTitle(xarML('Archive'));

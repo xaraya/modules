@@ -26,7 +26,7 @@ function publications_userapi_getpubcount($args)
     }
     
     if (xarVarIsCached('Publications.PubCount',$statestring)) {
-        return xarVarGetCached('Publications.PubCount',$statestring);
+        return xarCoreCache::getCached('Publications.PubCount',$statestring);
     }
 
     $pubcount = array();
@@ -48,7 +48,7 @@ function publications_userapi_getpubcount($args)
     if (!$q->run()) return;
     $pubcount = array();
     foreach ($q->output() as $key => $value) $pubcount[$value['pubtype_id']] = $value['count'];
-    xarVarSetCached('Publications.PubCount',$statestring,$pubcount);
+    xarCoreCache::setCached('Publications.PubCount',$statestring,$pubcount);
     return $pubcount;
 }
 

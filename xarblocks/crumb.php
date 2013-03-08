@@ -65,7 +65,7 @@ class Publications_CrumbBlock extends BasicBlock implements iBlock
 
         // Automatic: that means look at the page cache.
         if (xarVarIsCached('Blocks.publications', 'current_id')) {
-            $id = xarVarGetCached('Blocks.publications', 'current_id');
+            $id = xarCoreCache::getCached('Blocks.publications', 'current_id');
             // Make sure it is numeric.
             if (!isset($id) || !is_numeric($id)) {$id = 0;}
         }
@@ -81,7 +81,7 @@ class Publications_CrumbBlock extends BasicBlock implements iBlock
             // The 'serialize' hack ensures we have a proper copy of the
             // paga data, which is a self-referencing array. If we don't
             // do this, then any changes we make will affect the stored version.
-            $pagedata = unserialize(serialize(xarVarGetCached('Blocks.publications', 'pagedata')));
+            $pagedata = unserialize(serialize(xarCoreCache::getCached('Blocks.publications', 'pagedata')));
 
             // If the cached tree does not contain the current page,
             // then we cannot use it.

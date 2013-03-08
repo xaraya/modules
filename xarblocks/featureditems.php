@@ -76,7 +76,7 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
         if ($featuredid > 0) {
         
             if (xarModIsHooked('uploads', 'publications', $data['pubtype_id'])) {
-                xarVarSetCached('Hooks.uploads','ishooked',1);
+                xarCoreCache::setCached('Hooks.uploads','ishooked',1);
             }
         
             if ($featart = xarModAPIFunc('publications','user','getall',
@@ -164,7 +164,7 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
         
                 // See if we're currently displaying an article
                 if (xarVarIsCached('Blocks.publications', 'id')) {
-                    $curid = xarVarGetCached('Blocks.publications', 'id');
+                    $curid = xarCoreCache::getCached('Blocks.publications', 'id');
                 } else {
                     $curid = -1;
                 }

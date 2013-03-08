@@ -96,7 +96,7 @@
         if (empty($data['current_source']) || $data['current_source'] == 'AUTO' || $data['current_source'] == 'AUTODEFAULT') {
             // Automatic: that means look at the page cache.
             if (xarVarIsCached('Blocks.publications', 'current_id')) {
-                $cached_id = xarVarGetCached('Blocks.publications', 'current_id');
+                $cached_id = xarCoreCache::getCached('Blocks.publications', 'current_id');
                 // Make sure it is numeric.
                 if (isset($cached_id) && is_numeric($cached_id)) {
                     $id = $cached_id;
@@ -119,7 +119,7 @@
             // The 'serialize' hack ensures we have a proper copy of the
             // paga data, which is a self-referencing array. If we don't
             // do this, then any changes we make will affect the stored version.
-            $pagedata = unserialize(serialize(xarVarGetCached('Blocks.publications', 'pagedata')));
+            $pagedata = unserialize(serialize(xarCoreCache::getCached('Blocks.publications', 'pagedata')));
             //$pagedata = unserialize(serialize($pagedata));
             // If the cached tree does not contain the current page,
             // then we cannot use it.
@@ -169,7 +169,7 @@
             // tree here, so if any other blocks need it, it contains all possible
             // pages we could need in that tree.
             if (!xarVarIsCached('Blocks.publications', 'pagedata')) {
-                xarVarSetCached('Blocks.publications', 'pagedata', $pagedata);
+                xarCoreCache::setCached('Blocks.publications', 'pagedata', $pagedata);
             }
         }
 

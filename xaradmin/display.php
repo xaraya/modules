@@ -64,7 +64,7 @@ function publications_admin_display($args)
 # Get the ID of the translation if required
 #
     // First save the "untranslated" id
-    xarVarSetCached('Blocks.publications', 'current_base_id', $id);
+    xarCoreCache::setCached('Blocks.publications', 'current_base_id', $id);
 
     if ($translate)
         $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
@@ -349,7 +349,7 @@ function publications_admin_display($args)
 #
     // Now we can cache all this data away for the blocks.
     // The blocks should have access to most of the same data as the page.
-    xarVarSetCached('Blocks.publications', 'pagedata', $tree);
+    xarCoreCache::setCached('Blocks.publications', 'pagedata', $tree);
 
     // The 'serialize' hack ensures we have a proper copy of the
     // paga data, which is a self-referencing array. If we don't
@@ -357,9 +357,9 @@ function publications_admin_display($args)
     $data = unserialize(serialize($data));
 
     // Save some values. These are used by blocks in 'automatic' mode.
-    xarVarSetCached('Blocks.publications', 'current_id', $id);
-    xarVarSetCached('Blocks.publications', 'ptid', $ptid);
-    xarVarSetCached('Blocks.publications', 'author', $data['object']->properties['author']->value);
+    xarCoreCache::setCached('Blocks.publications', 'current_id', $id);
+    xarCoreCache::setCached('Blocks.publications', 'ptid', $ptid);
+    xarCoreCache::setCached('Blocks.publications', 'author', $data['object']->properties['author']->value);
 
 # --------------------------------------------------------
 #
@@ -503,7 +503,7 @@ function publications_admin_display($args)
     }
 */
     // multi-page output for 'body' field (mostly for sections at the moment)
-    $themeName = xarVarGetCached('Themes.name','CurrentTheme');
+    $themeName = xarCoreCache::getCached('Themes.name','CurrentTheme');
     if ($themeName != 'print'){
         if (strstr($publication->properties['body']->value,'<!--pagebreak-->')) {
             if ($preview) {
@@ -533,7 +533,7 @@ function publications_admin_display($args)
 
                 if ($page > 1) {
                     // Don't count page hits after the first page.
-                    xarVarSetCached('Hooks.hitcount','nocount',1);
+                    xarCoreCache::setCached('Hooks.hitcount','nocount',1);
                 }
 
                 // Pass in the pager info so a complete custom pager
@@ -571,35 +571,6 @@ function publications_admin_display($args)
         $publication['body'] = preg_replace('/<!--pagebreak-->/',
                                         '',
                                         $publication['body']);
-    }
-
-    // TEST
-    if (isset($prevnextart)) {
-        $settings['prevnextart'] = $prevnextart;
-    }
-    if (!empty($settings['prevnextart']) && ($preview == 0)) {
-        if(!array_key_exists('defaultsort',$settings)) {
-            $settings['defaultsort'] = 'id';
-        }
-        $prevart = xarModAPIFunc('publications','user','getprevious',
-                                 array('id' => $id,
-                                       'ptid' => $ptid,
-                                       'sort' => $settings['defaultsort'],
-                                       'state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
-                                       'enddate' => time()));
-        if (!empty($prevart['id'])) {
-            //Make all previous publication info available to template
-            $data['prevartinfo'] = $prevart;
-
-            $data['prevart'] = xarModURL('publications','user','display',
-                                         array('ptid' => $prevart['pubtype_id'],
-                                               'id' => $prevart['id']));
-        } else {
-            $data['prevart'] = '';
-        }
-    } else {
-        $data['prevart'] = '';
-        $data['nextart'] = '';
     }
 
     // Display publication
@@ -662,7 +633,7 @@ function publications_admin_display($args)
         xarTplSetPageTitle(xarVarPrepForDisplay($title), xarVarPrepForDisplay($pubtypes[$data['itemtype']]['description']));
 
         // Save some variables to (temporary) cache for use in blocks etc.
-        xarVarSetCached('Comments.title','title',$data['title']);
+        xarCoreCache::setCached('Comments.title','title',$data['title']);
     }
 
 /*
@@ -706,7 +677,7 @@ function publications_admin_display($args)
     // Tell the hitcount hook not to display the hitcount, but to save it
     // in the variable cache.
     if (xarModIsHooked('hitcount','publications',$pubtype_id)) {
-        xarVarSetCached('Hooks.hitcount','save',1);
+        xarCoreCache::setCached('Hooks.hitcount','save',1);
         $data['dohitcount'] = 1;
     } else {
         $data['dohitcount'] = 0;
@@ -714,7 +685,7 @@ function publications_admin_display($args)
 
     // Tell the ratings hook to save the rating in the variable cache.
     if (xarModIsHooked('ratings','publications',$pubtype_id)) {
-        xarVarSetCached('Hooks.ratings','save',1);
+        xarCoreCache::setCached('Hooks.ratings','save',1);
         $data['doratings'] = 1;
     } else {
         $data['doratings'] = 0;
@@ -723,20 +694,20 @@ function publications_admin_display($args)
 
     // Retrieve the current hitcount from the variable cache
     if ($data['dohitcount'] && xarVarIsCached('Hooks.hitcount','value')) {
-        $data['counter'] = xarVarGetCached('Hooks.hitcount','value');
+        $data['counter'] = xarCoreCache::getCached('Hooks.hitcount','value');
     } else {
         $data['counter'] = '';
     }
 
     // Retrieve the current rating from the variable cache
     if ($data['doratings'] && xarVarIsCached('Hooks.ratings','value')) {
-        $data['rating'] = intval(xarVarGetCached('Hooks.ratings','value'));
+        $data['rating'] = intval(xarCoreCache::getCached('Hooks.ratings','value'));
     } else {
         $data['rating'] = '';
     }
 
     // Save some variables to (temporary) cache for use in blocks etc.
-    xarVarSetCached('Blocks.publications','title',$data['title']);
+    xarCoreCache::setCached('Blocks.publications','title',$data['title']);
 
     // Generating keywords from the API now instead of setting the entire
     // body into the cache.
@@ -745,26 +716,26 @@ function publications_admin_display($args)
                               'generatekeywords',
                               array('incomingkey' => $data['body']));
 
-    xarVarSetCached('Blocks.publications','body',$keywords);
-    xarVarSetCached('Blocks.publications','summary',$data['summary']);
-    xarVarSetCached('Blocks.publications','id',$id);
-    xarVarSetCached('Blocks.publications','ptid',$ptid);
-    xarVarSetCached('Blocks.publications','cids',$cids);
-    xarVarSetCached('Blocks.publications','owner',$owner);
+    xarCoreCache::setCached('Blocks.publications','body',$keywords);
+    xarCoreCache::setCached('Blocks.publications','summary',$data['summary']);
+    xarCoreCache::setCached('Blocks.publications','id',$id);
+    xarCoreCache::setCached('Blocks.publications','ptid',$ptid);
+    xarCoreCache::setCached('Blocks.publications','cids',$cids);
+    xarCoreCache::setCached('Blocks.publications','owner',$owner);
     if (isset($data['author'])) {
-        xarVarSetCached('Blocks.publications','author',$data['author']);
+        xarCoreCache::setCached('Blocks.publications','author',$data['author']);
     }
 // TODO: add this to publications configuration ?
 //if ($shownavigation) {
     $data['id'] = $id;
     $data['cids'] = $cids;
-    xarVarSetCached('Blocks.categories','module','publications');
-    xarVarSetCached('Blocks.categories','itemtype',$ptid);
-    xarVarSetCached('Blocks.categories','itemid',$id);
-    xarVarSetCached('Blocks.categories','cids',$cids);
+    xarCoreCache::setCached('Blocks.categories','module','publications');
+    xarCoreCache::setCached('Blocks.categories','itemtype',$ptid);
+    xarCoreCache::setCached('Blocks.categories','itemid',$id);
+    xarCoreCache::setCached('Blocks.categories','cids',$cids);
 
     if (!empty($ptid) && !empty($pubtypes[$ptid]['description'])) {
-        xarVarSetCached('Blocks.categories','title',$pubtypes[$ptid]['description']);
+        xarCoreCache::setCached('Blocks.categories','title',$pubtypes[$ptid]['description']);
     }
 
     // optional category count
@@ -776,10 +747,10 @@ function publications_admin_display($args)
                                     array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
                                           'ptid' => $ptid));
         if (!empty($pubcatcount[$ptid])) {
-            xarVarSetCached('Blocks.categories','catcount',$pubcatcount[$ptid]);
+            xarCoreCache::setCached('Blocks.categories','catcount',$pubcatcount[$ptid]);
         }
     } else {
-    //    xarVarSetCached('Blocks.categories','catcount',array());
+    //    xarCoreCache::setCached('Blocks.categories','catcount',array());
     }
 //}
 

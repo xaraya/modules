@@ -323,14 +323,14 @@ function publications_admin_view($args)
     }
     $data['newurl'] = $newurl;
 // TODO: Hook category block someday ?
-    xarVarSetCached('Blocks.categories','module','publications');
-    xarVarSetCached('Blocks.categories','type','admin');
-    xarVarSetCached('Blocks.categories','func','view');
-    xarVarSetCached('Blocks.categories','itemtype',$ptid);
+    xarCoreCache::setCached('Blocks.categories','module','publications');
+    xarCoreCache::setCached('Blocks.categories','type','admin');
+    xarCoreCache::setCached('Blocks.categories','func','view');
+    xarCoreCache::setCached('Blocks.categories','itemtype',$ptid);
     if (!empty($ptid) && !empty($pubtypes[$ptid]['description'])) {
-        xarVarSetCached('Blocks.categories','title',$pubtypes[$ptid]['description']);
+        xarCoreCache::setCached('Blocks.categories','title',$pubtypes[$ptid]['description']);
     }
-    xarVarSetCached('Blocks.categories','cids',$cids);
+    xarCoreCache::setCached('Blocks.categories','cids',$cids);
 
     if (!empty($ptid)) {
         $template = $pubtypes[$ptid]['name'];
