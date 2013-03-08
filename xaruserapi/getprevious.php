@@ -36,7 +36,7 @@ function publications_userapi_getprevious($args)
     if (empty($sort)) $sort = 'date';
     if (!isset($state)) {
         // frontpage or approved
-        $state = array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED,PUBLICATIONS_STATE_CHECKEDOUT,PUBLICATIONS_STATE_PLACEHOLDER);
+        $state = array(3,4,5);
     }
 
     // Default fields in publications (for now)
