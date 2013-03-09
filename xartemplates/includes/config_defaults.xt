@@ -73,15 +73,24 @@
     </div>
     <div class="xar-row">
         <div class="xar-col">
+            <label class="help xar-form-label" for="use_revisions" title="#xarML('Enable automatic saving of revisions')#">
+                Enable Revisions
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:set name="value">xarModVars::get('publications','use_revisions')</xar:set>
+            <xar:data-input type="checkbox" name="use_revisions" checked="$value"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
             <label class="help xar-form-label" for="use_process_states" title="#xarML('Enable process states for workflow')#">
                 Enable Process States
             </label>
         </div>
         <div class="xar-col">
-        <div class="xar-col">
             <xar:set name="value">xarModVars::get('publications','use_process_states')</xar:set>
             <xar:data-input type="checkbox" name="use_process_states" checked="$value"/>
-        </div>
         </div>
     </div>
     <xar:if condition="xarDB::getType() eq 'mysql'">

@@ -108,6 +108,20 @@ function publications_init()
             PRIMARY KEY(id))";
     if (!$q->run($query)) return;
 
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_publications_revisions";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_publications_revisions (
+      id                integer unsigned NOT NULL auto_increment,
+      page_id           integer unsigned default 0,
+      owner             integer unsigned default 0,
+      revision_number   integer default NULL,
+      revision_date     integer default NULL,
+      operation         varchar(254) default '',
+      content           text,
+      PRIMARY KEY  (id)
+    ) TYPE=MyISAM";
+    if (!$q->run($query)) return;
+
 # --------------------------------------------------------
 #
 # Create DD objects
@@ -128,6 +142,7 @@ function publications_init()
                      'publications_publications',
                      'publications_blog',
                      'publications_catalogue',
+                     'publications_revisions',
                      );
 
     if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
@@ -172,6 +187,7 @@ function publications_init()
     xarModVars::get('publications', 'multilanguage', true);
     xarModVars::set('publications', 'defaultfrontpage','[publications:user:display]&id=1');
     xarModVars::set('publications', 'defaultbackpage','[publications:admin:view_pages]');
+    xarModVars::set('publications', 'use_process_states',0);
     xarModVars::set('publications', 'hide_tree_display',0);
     
     // Save publications settings for each publication type

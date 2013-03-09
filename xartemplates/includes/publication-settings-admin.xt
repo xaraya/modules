@@ -46,15 +46,20 @@
                 </xar:if>
             </div>
         </div>
-        <div class="xar-row">
-            <div class="xar-col">
-                <xar:var name="label">Current Version</xar:var>
-                <xar:data-label property="$properties['version']" for="id" label="$label" />
+        <xar:set name="revisions">xarModVars::get('publications', 'use_revisions')</xar:set>
+        <xar:if condition="$revisions">
+            <div class="xar-row">
+                <div class="xar-col">
+                    <xar:var name="label">Current Version</xar:var>
+                    <xar:data-label property="$properties['version']" for="id" label="$label" />
+                </div>
+                <div class="xar-col">
+                    <xar:data-input property="$properties['version']" />
+                </div>
             </div>
-            <div class="xar-col">
-                <xar:data-input property="$properties['version']" />
-            </div>
-        </div>
+        <xar:else/>
+            <xar:data-input property="$properties['version']" hidden="hidden"/>
+        </xar:if>
         <div class="xar-row">
             <div class="xar-col">
                 <xar:var name="label">Author</xar:var>
@@ -136,6 +141,8 @@
                     <xar:data-input property="$properties['process_state']" />
                 </div>
             </div>
+        <xar:else/>
+            <xar:data-input property="$properties['process_state']" hidden="hidden"/>
         </xar:if>
         <div class="xar-row">
             <div class="xar-col">
