@@ -60,7 +60,11 @@
                                 <a href="#xarModURL('publications','user','display',array('itemid' => $loop->item['id']))#" title="#$loop->item['title']#">
                                     <xar:set name="source_flag">$loop->item['sitemap_source_flag']</xar:set>
                                     <xar:if condition="$source_flag eq 1">
-                                        <xar:set name="source_flag">$typeinfo[$page['itemtype']]['menu_source_flag']</xar:set>
+                                        <xar:if condition="isset($typeinfo[$loop->item['pubtype_id']]['menu_source_flag'])">
+                                            <xar:set name="source_flag">$typeinfo[$loop->item['pubtype_id']]['menu_source_flag']</xar:set>
+                                        <xar:else/>
+                                            <xar:set name="source_flag">2</xar:set>
+                                        </xar:if>
                                     </xar:if>
                                     <xar:if condition="$source_flag eq 2">
                                         #xarVarPrepForDisplay($loop:item.title)#
@@ -68,6 +72,8 @@
                                         #xarVarPrepForDisplay($loop:item.description)#
                                     <xar:elseif condition="$source_flag eq 4"/>
                                         #xarVarPrepForDisplay($loop:item.sitemap_alias)#
+                                    <xar:else/>
+                                        #xarVarPrepForDisplay($loop:item.title)#
                                     </xar:if>
                                 </a>
                             </td>
