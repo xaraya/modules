@@ -108,14 +108,14 @@ function publications_init()
             PRIMARY KEY(id))";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_publications_revisions";
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_publications_versions";
     if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_publications_revisions (
+    $query = "CREATE TABLE " . $prefix . "_publications_versions (
       id                integer unsigned NOT NULL auto_increment,
       page_id           integer unsigned default 0,
       owner             integer unsigned default 0,
-      revision_number   integer default NULL,
-      revision_date     integer default NULL,
+      version_number    integer default NULL,
+      version_date      integer default NULL,
       operation         varchar(254) default '',
       content           text,
       PRIMARY KEY  (id)
@@ -142,7 +142,7 @@ function publications_init()
                      'publications_publications',
                      'publications_blog',
                      'publications_catalogue',
-                     'publications_revisions',
+                     'publications_versions',
                      );
 
     if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
@@ -188,6 +188,7 @@ function publications_init()
     xarModVars::set('publications', 'defaultfrontpage','[publications:user:display]&id=1');
     xarModVars::set('publications', 'defaultbackpage','[publications:admin:view_pages]');
     xarModVars::set('publications', 'use_process_states',0);
+    xarModVars::set('publications', 'use_versions',0);
     xarModVars::set('publications', 'hide_tree_display',0);
     
     // Save publications settings for each publication type
