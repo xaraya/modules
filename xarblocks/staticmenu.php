@@ -157,7 +157,7 @@
             $menusource = $ndata['menu_source_flag'];
             if ($menusource == 1) $menusource = $typeinfo[$ndata['pubtype_id']]['menu_source_flag'];
             switch ($menusource) {
-                case 2: $label = 'title'; break;
+                case 2: default: $label = 'title'; break;
                 case 3: $label = 'description'; break;
                 case 4: $label = 'menu_alias'; break;
             }
