@@ -37,7 +37,7 @@
             </xar:if>
 
             <!-- We set a link only if this node is not empty and not redirected or proxied -->
-            <xar:if condition="$node['redirect'] eq 0 OR $node['state'] eq 5">
+            <xar:if condition="$node['redirect_flag'] OR $node['state'] eq 5">
                 <li style="margin-right: 5px" class="rootVoice #$hilite# {menu: '#$nodename#'}">#$node['label']#</li>
             <xar:else/>
                 <li style="margin-right: 5px" class="rootVoice #$hilite# {menu: '#$nodename#'}"><a href="#xarModURL('publications','user','display',array('itemid' => $node['id']))#">#$node['label']#</a></li>
