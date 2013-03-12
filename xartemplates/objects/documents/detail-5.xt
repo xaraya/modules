@@ -48,7 +48,7 @@
 
         <!-- Load the pages for this map -->
         <xar:set name="pages">xarMod::apiFunc('publications','user','get_sitemap_pages')</xar:set>
-        <div style="margin-top: 20px">
+        <div class="xar-publications-sitemap-detail-text">
             <table border="0" width="100%" cellspacing="0" cellpadding="0">
                 <xar:loop name="$pages">
                     <xar:if condition="$loop:index ge 0">

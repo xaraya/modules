@@ -9,6 +9,8 @@
                                                     'id' => $node_id,
                                                     'name' => $node_name,
                                                     'label' => $node_label,
+                                                    'redirect_flag' => $node_redirect_flag,
+                                                    'state' => $node_state,
                                                   ) 
         $menuindex is a number that designates the top level menu or a submenu
             - $menuarray[0] contains the top level of the menu

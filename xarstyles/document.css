@@ -30,3 +30,8 @@
     border: 0 none;
     line-height: 1.9em;
 }
+
+.xar-publications-document-detail-text {
+    font-size: 10pt;
+    margin-bottom: 10px;
+}

@@ -11,6 +11,11 @@
     line-height: 1.9em;
 }
 
+.xar-publications-sitemap-detail-text {
+    font-size: 10pt;
+    margin-bottom: 10px;
+}
+
 .xar-publications-sitemap-level-1 {
     font-size: 12pt;
     margin: .5em 0 .25em 0;
