@@ -48,6 +48,7 @@
 
         <!-- Load the pages for this map -->
         <xar:set name="pages">xarMod::apiFunc('publications','user','get_sitemap_pages')</xar:set>
+        <xar:set name="xxx">var_dump($pages)</xar:set>
         <div style="margin-top: 20px">
             <table border="0" width="100%" cellspacing="0" cellpadding="0">
                 <xar:loop name="$pages">
@@ -57,7 +58,7 @@
                                 <xar:for start="$i = 0" test="$i lt $loop->item['depth']" iter="$i++">
                                     &#160;&#160;&#160;&#160;
                                 </xar:for>
-                                <a href="#xarModURL('publications','user','display',array('itemid' => $loop->item['id']))#" title="#$loop->item['title']#">
+                                <xar:if condition="$loop->item['redirect'] eq 0 OR $loop->item['state'] eq 5">
                                     <xar:set name="source_flag">$loop->item['sitemap_source_flag']</xar:set>
                                     <xar:if condition="$source_flag eq 1">
                                         <xar:if condition="isset($typeinfo[$loop->item['pubtype_id']]['menu_source_flag'])">
@@ -75,7 +76,27 @@
                                     <xar:else/>
                                         #xarVarPrepForDisplay($loop:item.title)#
                                     </xar:if>
-                                </a>
+                                <xar:else/>
+                                    <a href="#xarModURL('publications','user','display',array('itemid' => $loop->item['id']))#" title="#$loop->item['title']#">
+                                        <xar:set name="source_flag">$loop->item['sitemap_source_flag']</xar:set>
+                                        <xar:if condition="$source_flag eq 1">
+                                            <xar:if condition="isset($typeinfo[$loop->item['pubtype_id']]['menu_source_flag'])">
+                                                <xar:set name="source_flag">$typeinfo[$loop->item['pubtype_id']]['menu_source_flag']</xar:set>
+                                            <xar:else/>
+                                                <xar:set name="source_flag">2</xar:set>
+                                            </xar:if>
+                                        </xar:if>
+                                        <xar:if condition="$source_flag eq 2">
+                                            #xarVarPrepForDisplay($loop:item.title)#
+                                        <xar:elseif condition="$source_flag eq 3"/>
+                                            #xarVarPrepForDisplay($loop:item.description)#
+                                        <xar:elseif condition="$source_flag eq 4"/>
+                                            #xarVarPrepForDisplay($loop:item.sitemap_alias)#
+                                        <xar:else/>
+                                            #xarVarPrepForDisplay($loop:item.title)#
+                                        </xar:if>
+                                    </a>
+                                </xar:if>
                             </td>
                         </tr>
                     </xar:if>

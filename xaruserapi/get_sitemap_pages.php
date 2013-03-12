@@ -77,6 +77,7 @@ function publications_userapi_get_sitemap_pages($args)
     $q->addfield('p.sitemap_alias AS sitemap_alias');
     $q->addfield('p.pubtype_id AS pubtype_id');
     $q->addfield('p.rightpage_id AS rightpage_id');
+    $q->addfield('p.redirect_flag AS redirect_flag');
     
     // Add any fiters we found
     foreach ($filters as $k => $v) $q->eq('p.'.$k, $v);
