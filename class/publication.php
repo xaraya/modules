@@ -89,11 +89,29 @@ class Publication extends DataObject
         }
         $this->fieldlist = array();
 
-        return parent::createItem($args);
+        $id = parent::createItem($args);
+
+/*
+        // Call any hooked modules
+        $extraInfo = array(
+            'object' => $this->name,
+            'content' => serialize($this->getFieldVAlues(array(), 1)),
+        );
+        xarModCallHooks('item', 'create', $id, $extraInfo, 'publications', $ptid);
+*/
+        return true;
     }
 
     function updateItem(Array $args = array())
     {
+        if (xarModVars::get('publications', 'use_versions')) {
+            $pageobject = clone($this);
+            $pageobject->getItem(array('itemid' => $this->properties['id']->value));
+            $operation = xarML('Update');var_dump($this->getFieldValues());exit;
+            xarMod::apiFunc('publications', 'admin', 'save_version', array('object' => $pageobject, 'operation' => $operation));
+            $this->properties['version']->value++;
+        }
+
         // Save the access property
         $this->properties['access']->setInputStatus(DataPropertyMaster::DD_INPUTSTATE_ADDMODIFY);
         
@@ -105,7 +123,18 @@ class Publication extends DataObject
         }
         $this->fieldlist = array();
         
-        return parent::updateItem($args);
+        // Save the item
+        $id = parent::updateItem($args);
+        
+/*
+        // Call any hooked modules
+        $extraInfo = array(
+            'object' => $this->name,
+            'content' => serialize($this->getFieldVAlues(array(), 1)),
+        );
+        xarModCallHooks('item', 'update', $id, $extraInfo, 'publications', $ptid);
+*/
+        return true;
     }
 }
 ?>

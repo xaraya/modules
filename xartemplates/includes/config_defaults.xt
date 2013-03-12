@@ -73,13 +73,13 @@
     </div>
     <div class="xar-row">
         <div class="xar-col">
-            <label class="help xar-form-label" for="use_revisions" title="#xarML('Enable automatic saving of revisions')#">
-                Enable Revisions
+            <label class="help xar-form-label" for="use_versions" title="#xarML('Enable automatic saving of versions')#">
+                Enable Versions
             </label>
         </div>
         <div class="xar-col">
-            <xar:set name="value">xarModVars::get('publications','use_revisions')</xar:set>
-            <xar:data-input type="checkbox" name="use_revisions" checked="$value"/>
+            <xar:set name="value">xarModVars::get('publications','use_versions')</xar:set>
+            <xar:data-input type="checkbox" name="use_versions" checked="$value"/>
         </div>
     </div>
     <div class="xar-row">

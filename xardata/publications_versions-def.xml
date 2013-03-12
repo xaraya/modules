@@ -1,6 +1,6 @@
-<object name="publications_revisions">
+<object name="publications_versions">
   <objectid>63</objectid>
-  <label>Publication Revisions</label>
+  <label>Publication Versions</label>
   <module_id>182</module_id>
   <itemtype>30</itemtype>
   <connection>0</connection>
@@ -12,7 +12,7 @@
   <isalias>true</isalias>
   <datastore>relational</datastore>
   <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>
-  <sources>a:1:{s:9:&quot;revisions&quot;;a:2:{i:0;s:26:&quot;xar_publications_revisions&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <sources>a:1:{s:8:&quot;versions&quot;;a:2:{i:0;s:25:&quot;xar_publications_versions&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
   <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
   <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
   <category></category>
@@ -22,7 +22,7 @@
       <label>ID</label>
       <type>static</type>
       <defaultvalue></defaultvalue>
-      <source>revisions.id</source>
+      <source>versions.id</source>
       <status>65</status>
       <seq>1</seq>
       <configuration>a:0:{}</configuration>
@@ -32,7 +32,7 @@
       <label>Page ID</label>
       <type>integerbox</type>
       <defaultvalue>1</defaultvalue>
-      <source>revisions.page_id</source>
+      <source>versions.page_id</source>
       <status>33</status>
       <seq>2</seq>
       <configuration>a:0:{}</configuration>
@@ -42,27 +42,27 @@
       <label>Owner</label>
       <type>username</type>
       <defaultvalue>xarUser::getVar('id')</defaultvalue>
-      <source>revisions.owner</source>
+      <source>versions.owner</source>
       <status>33</status>
       <seq>3</seq>
       <configuration>a:0:{}</configuration>
     </property>
-    <property name="revision">
+    <property name="version">
       <id>3074</id>
-      <label>Revision</label>
+      <label>Version</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
-      <source>revisions.revision_number</source>
+      <source>versions.version_number</source>
       <status>33</status>
       <seq>4</seq>
       <configuration>a:0:{}</configuration>
     </property>
-    <property name="revision_date">
+    <property name="version_date">
       <id>3075</id>
-      <label>Revision Date</label>
+      <label>Version Date</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
-      <source>revisions.revision_date</source>
+      <source>versions.version_date</source>
       <status>33</status>
       <seq>5</seq>
       <configuration>a:0:{}</configuration>
@@ -72,7 +72,7 @@
       <label>Operation</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>revisions.operation</source>
+      <source>versions.operation</source>
       <status>33</status>
       <seq>6</seq>
       <configuration>a:0:{}</configuration>
@@ -82,7 +82,7 @@
       <label>Content</label>
       <type>textarea_large</type>
       <defaultvalue></defaultvalue>
-      <source>revisions.content</source>
+      <source>versions.content</source>
       <status>35</status>
       <seq>7</seq>
       <configuration>a:0:{}</configuration>
