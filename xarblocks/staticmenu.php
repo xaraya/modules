@@ -81,7 +81,7 @@
 #------------------------------------------------------------
 # Connect the nodes according to which page has which ancestor
 #
-        $allnodes =& $g->getNodes();
+        $allnodes =& $g->getNodes();var_dump($allnodes);
         foreach ($allnodes as $k => $n) {
             $ndata = $n->getData();
             $thisparent = $ndata['parentpage_id'];
@@ -164,11 +164,11 @@
             
             // Assemble the menu item
             $data['menuarray'][$ndata['parentpage_id']][] = array(
-                                                        'id'        => $ndata['id'],
-                                                        'name'      => $ndata['name'],
-                                                        'label'     => !empty($ndata[$label]) ? $ndata[$label] : $ndata['name'],
-                                                        'state'     => $ndata['state'],
-                                                        'redirect'  => $ndata['redirect_flag'],
+                                                        'id'             => $ndata['id'],
+                                                        'name'           => $ndata['name'],
+                                                        'label'          => !empty($ndata[$label]) ? $ndata[$label] : $ndata['name'],
+                                                        'state'          => $ndata['state'],
+                                                        'redirect_flag'  => $ndata['redirect_flag'],
                                                     );
         }
         return $data;
