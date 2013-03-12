@@ -81,7 +81,7 @@
 #------------------------------------------------------------
 # Connect the nodes according to which page has which ancestor
 #
-        $allnodes =& $g->getNodes();var_dump($allnodes);
+        $allnodes =& $g->getNodes();
         foreach ($allnodes as $k => $n) {
             $ndata = $n->getData();
             $thisparent = $ndata['parentpage_id'];
