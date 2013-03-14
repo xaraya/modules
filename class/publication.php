@@ -105,10 +105,11 @@ class Publication extends DataObject
     function updateItem(Array $args = array())
     {
         if (xarModVars::get('publications', 'use_versions')) {
-            $pageobject = clone($this);
-            $pageobject->getItem(array('itemid' => $this->properties['id']->value));
-            $operation = xarML('Update');var_dump($this->getFieldValues());exit;
-            xarMod::apiFunc('publications', 'admin', 'save_version', array('object' => $pageobject, 'operation' => $operation));
+            $temp = $this->getFieldValues(array(), 1);
+            $this->getItem(array('itemid' => $this->properties['id']->value));
+            $operation = xarML('Update');
+            xarMod::apiFunc('publications', 'admin', 'save_version', array('object' => $this, 'operation' => $operation));
+            $this->setFieldValues($temp, 1);
             $this->properties['version']->value++;
         }
 
