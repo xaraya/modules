@@ -57,7 +57,7 @@
                                 <xar:for start="$i = 0" test="$i lt $loop->item['depth']" iter="$i++">
                                     &#160;&#160;&#160;&#160;
                                 </xar:for>
-                                <xar:if condition="$loop->item['redirect_flag'] OR $loop->item['state'] eq 5">
+                                <xar:if condition="$loop->item['redirect_flag'] eq 0 AND $loop->item['state'] eq 5">
                                     <xar:set name="source_flag">$loop->item['sitemap_source_flag']</xar:set>
                                     <xar:if condition="$source_flag eq 1">
                                         <xar:if condition="isset($typeinfo[$loop->item['pubtype_id']]['menu_source_flag'])">
