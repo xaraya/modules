@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:style scope="module" file="admin-style"/>
+    
+    <!-- Load the stylesheet for the diff application -->
+    <xar:style method="import" scope="module" module="publications" file="difflib" title="Diff Stylesheet"/>
+
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>Compare Publications Versions</h2>
+        <xar:if condition="empty($versions)">
+            There are no versions previous to the current version
+        <xar:else />
+            <form method="post" action="#xarServer::getCurrentURL()#">
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <a href="#xarModURL('publications', 'admin', 'modify', array('name' => $objectname, 'itemid' => $page_id))#" title="#xarML('Modify this item')#" style="margin-right: 5px">
+                            <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
+                        </a>
+                        &#160;
+                        &#160;
+                        Version <xar:data-input type="dropdown" name="version_1" options="$options" value="$version_1"/>
+                        &#160;
+                        &#160;
+                        Version <xar:data-input type="dropdown" name="version_2" options="$options" value="$version_2"/>
+                        &#160;
+                        &#160;
+                        <xar:var name="label">Submit</xar:var>
+                        <xar:button type="submit" label="$label"/>
+                    </div>
+                </div>
+                <hr/>
+                <div>
+                    <xar:if condition="empty($diffresult)">
+                        The two versions are identical
+                        <br/>
+                        #$content#
+                    <xar:else />
+                        #$diffresult#
+                    </xar:if>
+                </div>
+            </form>
+        </xar:if>
+    </div>
+</xar:template>

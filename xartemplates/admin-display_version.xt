@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:style scope="module" file="admin-style"/>
+    
+    <!-- Load the stylesheet for the diff application -->
+    <xar:style method="import" scope="module" module="publications" file="difflib" title="Diff Stylesheet"/>
+
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>Display Publication Version</h2>
+        <xar:if condition="empty($versions)">
+            There are no versions previous to the current version
+        <xar:else />
+            <div class="xar-row">
+                <div class="xar-col">
+                    <form method="post" action="#xarServer::getCurrentURL()#">
+                        <a href="#xarModURL('publications', 'admin', 'modify', array('name' => $objectname, 'itemid' => $page_id))#" title="#xarML('Modify this item')#" style="margin-right: 5px">
+                            <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
+                        </a>
+                        &#160;
+                        &#160;
+                        Version <xar:data-input type="dropdown" name="version_1" options="$options" value="$version_1"/>
+                        &#160;
+                        &#160;
+                        <xar:var name="label">Submit</xar:var>
+                        <xar:button type="submit" label="$label"/>
+                        <input type="hidden" name="confirm" value="1"/>
+                    </form>
+                </div>
+                <div class="xar-col">
+                    <form method="post" action="#xarServer::getCurrentURL()#">
+                        <xar:var name="label">Make Current</xar:var>
+                        <xar:button type="submit" label="$label"/>
+                        <input type="hidden" name="confirm" value="2"/>
+                        <xar:data-input type="dropdown" name="version_1" options="$options" value="$version_1" hidden="hidden"/>
+                    </form>
+                </div>
+            </div>
+            <hr/>
+            <div>
+                #$content#
+            </div>
+        </xar:if>
+    </div>
+</xar:template>
