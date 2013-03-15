@@ -3,7 +3,10 @@
     <xar:set name="dummy">
         xarVarFetch('pageName', 'str:1', $pageName, '', XARVAR_NOT_REQUIRED)
     </xar:set>
-    <xar:if condition="$pageName ne 'module'">
+    <xar:set name="info">
+        xarController::$request->getInfo()
+    </xar:set>
+    <xar:if condition="($pageName ne 'module') AND ($info[2] ne 'display_version') AND ($info[2] ne 'manage_versions')">
         <xar:sec mask="ManagePublications" catch="false">
             <a href="#xarModURL('publications', 'admin', 'new',array('name' => $object->name))#" style="float:right; margin-right: 10px">
                 <img src="#xarTplGetImage('icons/document-new.png','base')#"/>

@@ -22,14 +22,14 @@
                         Version <xar:data-input type="dropdown" name="version_1" options="$options" value="$version_1"/>
                         &#160;
                         &#160;
-                        <xar:var name="label">Submit</xar:var>
+                        <xar:var name="label">Show</xar:var>
                         <xar:button type="submit" label="$label"/>
                         <input type="hidden" name="confirm" value="1"/>
                     </form>
                 </div>
                 <div class="xar-col">
                     <form method="post" action="#xarServer::getCurrentURL()#">
-                        <xar:var name="label">Make Current</xar:var>
+                        <xar:var name="label">Make This Version Current</xar:var>
                         <xar:button type="submit" label="$label"/>
                         <input type="hidden" name="confirm" value="2"/>
                         <xar:data-input type="dropdown" name="version_1" options="$options" value="$version_1" hidden="hidden"/>
