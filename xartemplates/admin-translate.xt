@@ -8,6 +8,7 @@
        <xar:template type="module" file="admin-menu"/>
 
     <xar:template type="module" file="druidbar"/>
+    <xar:template type="module" file="opbar"/>
 
     <h4>Choose the items to translate?</h4>
 
