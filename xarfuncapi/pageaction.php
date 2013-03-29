@@ -5,7 +5,7 @@
  * custom page function for 'pageaction' page type
  *
  * this is called as result of a submit
- * - puts POST vars into object, 
+ * - puts POST vars into object,
  * - checks input (built-in validation)
  * - check required fields
  * - validate form (user php)
@@ -30,7 +30,7 @@ function xarpages_funcapi_pageaction($args)
     xarModAPIfunc('xarpages', 'custom', 'pageform_helpers');
 
     // incoming post vars
-    if (!xarVarFetch('pf','str', $pf,'',XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('pf','str', $pf,'',XARVAR_NOT_REQUIRED)) return;
 
     // STANDARD ARGS
     $pages = $args['pages'];
@@ -51,7 +51,7 @@ function xarpages_funcapi_pageaction($args)
 			$pf = _pageform_newkey();
 		else
 			$pf = xarUserGetVar('uid');
-	}    
+	}
     // reuse (append) existing object if one
 	$in_object = _pageform_getobject( $pf, $pages[$form_pid]['name'] );
 
@@ -63,7 +63,7 @@ function xarpages_funcapi_pageaction($args)
     else {
         // clear invalids, we'll be checking them again now
         _pageform_resetinvalids( $in_object );
-    }   
+    }
     if (empty($in_object)) {
         // error
         // should redirect back to form
@@ -71,13 +71,13 @@ function xarpages_funcapi_pageaction($args)
         $args['message'] = 'error: no object';
         return $args;
     }
-    
+
     // VALIDATION
     // check the input values using xar validation
     $isvalid = $in_object->checkInput();
 
     // check for required fields
-    if (($isvalid || !empty($dd['batch_validations'])) && 
+    if (($isvalid || !empty($dd['batch_validations'])) &&
             !empty($pages[$form_pid]['dd']['required']))
     {
         $required = explode(',', $pages[$form_pid]['dd']['required']);
@@ -93,14 +93,14 @@ function xarpages_funcapi_pageaction($args)
     //      validation php exists, AND
     //      isvalid, or we're batching the validations, AND
     //      we're executing (in debug mode)
-    if (($isvalid || !empty($dd['batch_validations'])) && 
+    if (($isvalid || !empty($dd['batch_validations'])) &&
             !empty($dd['validation_php']) &&
-            !($dd['debug'] == 1 && $dd['dont_execute'] == 1)) 
+            !($dd['debug'] == 1 && $dd['dont_execute'] == 1))
     {
         // now call user validation
         $isvalid = _pageform_validation( $in_object, $dd['validation_php'] );
     }
-        
+
     /* validation_function field contains name of the function
         first we load the file containing the functions (aka library :)
         named xarpages/xarcustomapi/PAGENAME.php with function xarpages_customapi_PAGENAME
@@ -110,21 +110,21 @@ function xarpages_funcapi_pageaction($args)
     //      validation function specified and exists, AND
     //      isvalid, or we're batching the validations, AND
     //      we're executing (in debug mode)
-    if (($isvalid  || !empty($dd['batch_validations'])) && 
-            !empty($dd['validation_func'])) 
+    if (($isvalid  || !empty($dd['batch_validations'])) &&
+            !empty($dd['validation_func']))
     {
         $validation_func = 'pageform_'.$current_page['name'].'_'.$dd['validation_func'];
 
         if (!($dd['debug'] == 1 && $dd['dont_execute'] == 1)) {
             // load the functions (library)
-            xarModApiFunc('xarpages','custom',$current_page['name'] );      
+            xarModApiFunc('xarpages','custom',$current_page['name'] );
             if (function_exists($validation_func)) {
                 $isvalid = $validation_func( $in_object );
             }
         }
     }
 
-    if (!$isvalid) {        
+    if (!$isvalid) {
         // save and redirect back to previous page
         _pageform_setobject( $pf, $pages[$form_pid]['name'], $in_object );
         if ($dd['debug'] != 1) {
@@ -132,11 +132,11 @@ function xarpages_funcapi_pageaction($args)
         }
         // else return
     }
-    
+
     if ($isvalid) { // only not-valid if debugging so we can drop to bottom
         // start an object for next form (if one)
 		if (!empty($nextform_pid) && !empty($pages[$nextform_pid])) {
-	        // reuse (append) existing object if one 
+	        // reuse (append) existing object if one
 	        if (!empty($pf)) {
 	            $out_object = _pageform_getobject( $pf, $pages[$nextform_pid]['name'] );
 	        }
@@ -145,27 +145,27 @@ function xarpages_funcapi_pageaction($args)
 	            $objectid = $pages[$nextform_pid]['dd']['data'];
 	            //$out_object = xarModApiFunc('dynamicdata','user','getobject', array('module'=>'dynamicdata', 'itemtype'=>$itemtype ));
 				$out_object = xarModApiFunc('dynamicdata','user','getobject', array('objectid'=>$objectid ));
-	        }   
-    
+	        }
+
 	        // copy any common named values from in to out (especially if they're the same object ids!)
 	        foreach ($in_object->properties as $prop) {
 	            if (isset($out_object->properties[$prop->name])) {
 	                $out_object->properties[$prop->name]->value = $prop->value;
 	            }
 	        }
-			_pageform_resetinvalids( & $out_object );
+			_pageform_resetinvalids( $out_object );
 		}
 
         // PROCESSING
         // now call user processing
         /* processing_php : call in database code
         */
-        if ($isvalid && !empty($dd['processing_php']) && 
+        if ($isvalid && !empty($dd['processing_php']) &&
             !($dd['debug'] == 1 && $dd['dont_execute'] == 1)) {
             // now call user validation
             $isvalid = _pageform_processing( $in_object, $out_object, $dd['processing_php'] );
         }
-    
+
         /* processing_function field contains name of the function
             first we load the file containing the functions (aka library :)
             named xarpages/xarcustomapi/PAGENAME.php with function xarpages_customapi_PAGENAME
@@ -177,14 +177,14 @@ function xarpages_funcapi_pageaction($args)
         if ($isvalid && !empty($dd['processing_func']) &&
             !($dd['debug'] == 1 && $dd['dont_execute'] == 1)) {
             // load the functions (library)
-            xarModApiFunc('xarpages','custom',$current_page['name'] );      
+            xarModApiFunc('xarpages','custom',$current_page['name'] );
             if (function_exists($processing_func)) {
                 $isvalid = $processing_func( $in_object, $out_object );
             }
         }
 
         // processing can also prove invalid
-        if (!$isvalid) {        
+        if (!$isvalid) {
             // save input and redirect back to previous page (current form)
             _pageform_setobject( $pf, $pages[$form_pid]['name'], $in_object );
             if ($dd['debug'] != 1) {
@@ -220,10 +220,10 @@ function xarpages_funcapi_pageaction($args)
     if (!empty($processing_func)) $args['pageaction']['processing_func'] = $processing_func;
     $args['pageaction']['isvalid'] = $isvalid;
 	$args['pageaction']['nav'] = $nav;
-	
+
     return $args;
 }
-        
+
 /* eval the validation_php snippet
 */
 function _pageform_validation( &$inobj, $php )
@@ -238,7 +238,7 @@ function _pageform_validation( &$inobj, $php )
     }
     // return reslults and double check validation
     $isvalid = $isvalid && pageform_arrays2obj( $values, $invalids, $inobj );
-    
+
     return $isvalid;
 }
 
