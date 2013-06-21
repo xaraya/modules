@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'SIGMApersonnel';
 $modversion['id']             = '418';
-$modversion['version']        = '0.1.4';
+$modversion['version']        = '0.1.5';
 $modversion['displayname']    = xarML('SIGMA personnel');
 $modversion['description']    = 'Module to manage data of a team of SIGMA personnel';
 $modversion['credits']        = 'xardocs/credits.txt';

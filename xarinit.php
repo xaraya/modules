@@ -397,9 +397,12 @@ function sigmapersonnel_upgrade($oldversion)
 
             return sigmapersonnel_upgrade('0.1.1');
         case '0.1.1':
-            xarModSetVar('sigmapersonnel', 'OnCallID', $OnCallID);
-            return sigmapersonnel_upgrade('0.1.2');
         case '0.1.2':
+        case '0.1.3':
+        case '0.1.4':
+            xarModSetVar('sigmapersonnel', 'OnCallID', 1);
+            return sigmapersonnel_upgrade('0.1.5');
+        case '0.1.5':
             // Code to upgrade from version 1.0 goes here
             break;
     }
