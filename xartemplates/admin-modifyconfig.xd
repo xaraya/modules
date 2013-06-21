@@ -74,12 +74,12 @@
     <fieldset>
       <legend><xar:mlstring>Data options</xar:mlstring></legend>
       <div class="xar-form-input-wrapper">
-        <label for="aliasname" class="xar-form-label" title="#xarML('The presence item that denotes an on call status.')#">
+        <label for="OnCallID" class="xar-form-label" title="#xarML('The presence item that denotes an on call status.')#">
           <xar:mlstring>
-            TODO: On Call status name:
+            On Call Status ID
           </xar:mlstring>
         </label>
-        <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('example', 'aliasname')#" size="32" maxlength="100" />
+        <input type="text" name="OnCallID" id="OnCallID" value="#xarModGetVar('sigmapersonnel', 'OnCallID')#" size="2" maxlength="5" />
       </div>
     </fieldset>
 

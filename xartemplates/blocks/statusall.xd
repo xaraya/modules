@@ -11,15 +11,10 @@
         </xar:foreach>
     </xar:if>
 </p>
-<p>get statusnrs</p>
-Inzetbaar: #$amountstatus['Inzetbaar']#
-Niet Inzetbaar: #$amountstatus['Niet Inzetbaar']#
+<xar:foreach in="$statusses" value="$status">
 
-<p> Presence: #$presence#</p>
-<xar:comment><p> #$types[1]['type']# #$presence1#</p>
-<p> #$types[2]['type']# #$presence2#</p></xar:comment>
+    #$status['statustype']#:  #$status['count']#<br />
 
-<p> Status: #$tstatus#</p>
-<xar:comment><p> #$persstatusses[1]['statustype']# #$tstatus1#</p>
-<p> #$persstatusses[2]['statustype']# #$tstatus2#</p></xar:comment>
+</xar:foreach>
+Total persons:
 

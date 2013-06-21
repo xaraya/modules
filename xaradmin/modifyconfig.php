@@ -32,7 +32,8 @@ function sigmapersonnel_admin_modifyconfig()
     // Specify some labels and values for display
 
     $data['boldchecked'] = xarModGetVar('sigmapersonnel', 'bold') ? true : false;
-    $data['itemsvalue'] = xarModGetVar('sigmapersonnel', 'itemsperpage');
+    // ID of item being on call
+    $data['OnCallID'] = xarModGetVar('sigmapersonnel', 'OnCallID');
     // Note : if you don't plan on providing encode/decode functions for
     // short URLs (see xaruserapi.php), you should remove these from your
     // admin-modifyconfig.xard template !

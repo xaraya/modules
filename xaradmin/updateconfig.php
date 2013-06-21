@@ -20,13 +20,14 @@ function sigmapersonnel_admin_updateconfig()
     if (!xarVarFetch('bold', 'checkbox', $bold, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, 10, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('OnCallID', 'id', $OnCallID, 1, XARVAR_NOT_REQUIRED)) return;
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
     // Update module variables.
     xarModSetVar('sigmapersonnel', 'bold', $bold);
     xarModSetVar('sigmapersonnel', 'itemsperpage', $itemsperpage);
     xarModSetVar('sigmapersonnel', 'SupportShortURLs', $shorturls);
-
+    xarModSetVar('sigmapersonnel', 'OnCallID', $OnCallID);
     xarModCallHooks('module','updateconfig','sigmapersonnel',
                    array('module' => 'sigmapersonnel'));
 

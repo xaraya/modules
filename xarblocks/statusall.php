@@ -96,22 +96,19 @@ function sigmapersonnel_statusallblock_display($blockinfo)
     //echo $nrstatus;
 
     foreach ($statusses as $status) {
+        // Count the number of persons having this status
         $countstatus = xarModApiFunc('sigmapersonnel', 'user', 'countitems',
                                       array('persstatus' => $status['statusid']));
         if(!empty($countstatus)) {
+            $status['count'] = $countstatus;
+
             $data['amountstatus'][$status['statustype']] = $countstatus;
         } else {
+            $status['count'] = 0;
             $data['amountstatus'][$status['statustype']] = 0;
         }
+        $data['statusses'][]=$status;
     }
-    $tstatus=0;
-    $tstatus1=0;
-    $tstatus2=0;
-    $tstatus3=0;
-
-    $presence = 0;
-    $presence1 = 0;
-    $presence2 = 0;
 
     if (is_array($items)) {
         foreach ($items as $item) {
@@ -129,54 +126,12 @@ function sigmapersonnel_statusallblock_display($blockinfo)
                 $item['link'] = '';
             }
 
-            // Add one to the appropriate statustype
-            if($item['persstatus'] == 1) {
-                $tstatus1++;
-            } elseif ($item['persstatus'] == 2) {
-                $tstatus2++;
-            } elseif ($item['persstatus'] == 3) {
-                $tstatus3++;
-            } else {
-                $tstatus++;
-            }
-            $data['persstatusses'] = xarModAPIFunc('sigmapersonnel', 'user', 'gets',
-                                              array('itemtype' => 6));
-
-            // See what his presence is
-            $personpresence = xarModApiFunc('sigmapersonnel', 'user', 'presencenow', array('personid' => $item['personid']));
-            // Add one to the presence type
-            // TODO: Make this independent and relate to presencetypes
-            if ($personpresence == 1) {
-                $presence1++;
-            } elseif ($personpresence == 2) {
-                $presence2++;
-            } else {
-                $presence++;
-            }
-
-            // Get the presencetypes
-            // TODO: what if there are no types defined?
-            $data['types'] = xarModAPIFunc('sigmapersonnel', 'user', 'gets',
-                                              array('itemtype' => 5));
-
-/*
-$array = array (1, "hello", 1, "world", "hello");
-
-array_count_values ($array); // returns array (1=>2, "hello"=>2, "world"=>1)
-*/
-
             // Add this item to the list of items to be displayed
             $data['items'][] = $item;
         }
     }
     $data['blockid'] = $blockinfo['bid'];
-    $data['presence'] = $presence;
-    $data['presence1'] = $presence1;
-    $data['presence2'] = $presence2;
-    $data['tstatus'] = $tstatus;
-    $data['tstatus1'] = $tstatus1;
-    $data['tstatus2'] = $tstatus2;
-    $data['tstatus3'] = $tstatus3;
+
 
     // Now we need to send our output to the template.
     // Just return the template data.

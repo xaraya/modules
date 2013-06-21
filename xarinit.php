@@ -211,6 +211,7 @@ function sigmapersonnel_init()
     // Set up an initial value for a module variable.
     xarModSetVar('sigmapersonnel', 'defaultstatus', 1);
     xarModSetVar('sigmapersonnel', 'itemsperpage', 10);
+    xarModSetVar('sigmapersonnel', 'OnCallID', 1);
     // If your module supports short URLs, the website administrator should
     // be able to turn it on or off in your module administration
     xarModSetVar('sigmapersonnel', 'SupportShortURLs', 0);
@@ -396,6 +397,9 @@ function sigmapersonnel_upgrade($oldversion)
 
             return sigmapersonnel_upgrade('0.1.1');
         case '0.1.1':
+            xarModSetVar('sigmapersonnel', 'OnCallID', $OnCallID);
+            return sigmapersonnel_upgrade('0.1.2');
+        case '0.1.2':
             // Code to upgrade from version 1.0 goes here
             break;
     }

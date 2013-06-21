@@ -27,6 +27,7 @@ function sigmapersonnel_userapi_countitems($args)
     extract($args);
     if (!xarVarFetch('catid', 'int:1:', $catid, '',XARVAR_NOT_REQUIRED)) return; // 0 is nothing
     if (!xarVarFetch('persstatus', 'int:1:', $persstatus, '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('oncall', 'enum:ONCALL:NOTONCALL', $oncall, 'ONCALL', XARVAR_NOT_REQUIRED)) return;
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -43,18 +44,21 @@ function sigmapersonnel_userapi_countitems($args)
                                        array('modid' => xarModGetIDFromName('sigmapersonnel'),
                                              'catid' => $catid));
 
-        $query .= " FROM ($sigmapersonneltable
+        $query .= " FROM ( $sigmapersonneltable
                     LEFT JOIN $categoriesdef[table]
                     ON $categoriesdef[field] = xar_personid )
                     $categoriesdef[more]
                     WHERE $categoriesdef[where]";
-                    if(!empty($persstatus)) {
-                        $query .= " AND ";
-                    }
+
     } else {
         $query .= " FROM $sigmapersonneltable
-                    WHERE ";
+                    ";
     }
+    if(!empty($persstatus)) {
+        $query .= " AND ";
+    }
+
+    // Status asked is not empty
     if (!empty($persstatus) && empty($catid)) {
         $query .= " xar_persstatus = $persstatus";
     } elseif (!empty($persstatus) && !empty($catid)) {
