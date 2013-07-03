@@ -54,7 +54,7 @@ function publications_admin_view_pages($args)
         $accessproperty->component = 'Page';
         foreach($data['pages'] as $key => $page) {
 
-            $thisinstance = $page['name'] . ':' . $page['ptid']['name'];
+            $thisinstance = $page['name'] . ':' . $page['pubtype_name'];
 
             // Do we have admin access?
             $args = array(

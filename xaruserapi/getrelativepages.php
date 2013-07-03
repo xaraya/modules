@@ -27,6 +27,7 @@ function publications_userapi_getrelativepages($args)
     if (empty($args['scope'])) $args['scope'] = 'descendants';
     if (($args['itemid'] == 0) && ($args['scope'] == 'descendants')) $args['scope'] = 'all';
     if (empty($args['sort'])) $args['sort'] = 0;
+    if (empty($args['no_fallback_locale'])) $args['no_fallback_locale'] = 0;
 
     // Make sure we have the base translation id
     if (!empty($args['itemid'])) {
@@ -78,17 +79,25 @@ function publications_userapi_getrelativepages($args)
     }
     if (!empty($args['itemtype'])) $q->eq('p.pubtype_id', $args['itemtype']);
     
-    // We need to grab all the pages if we are looking for trnaslations, because the translation might have a valid stte
+    // We need to grab all the pages if we are looking for translations, because the translation might have a valid state
     if (xarModVars::get('publications', 'defaultlanguage') == xarUserGetNavigationLocale()) {
-        $q->gt('p.state', 2);
+        // Allow filtering on state nonetheless
+        if (!empty($args['state'])) {
+            if (!is_array($args['state'])) $state = array($args['state']);
+            else $state = $args['state'];
+            $q->in('p.state', $state);
+        } else {
+            $q->gt('p.state', 2);
+        }
     }
-        
+
     $q->addfield('p.id AS id');
     $q->addfield('p.name AS name');
     $q->addfield('p.title AS title');
     $q->addfield('p.state AS state');
     $q->addfield('p.description AS description');
     $q->addfield('p.summary AS summary');
+    $q->addfield('p.locale AS locale');
     $q->addfield('p.rightpage_id AS rightpage_id');
     
     // Add any fiters we found
@@ -100,6 +109,7 @@ function publications_userapi_getrelativepages($args)
     } else {
         $q->setorder('p.leftpage_id');
     }
+        
 //    $q->qecho();
     $q->run();
     $pages = $q->output();
@@ -126,10 +136,10 @@ function publications_userapi_getrelativepages($args)
         // in admin pages and reports.
         $pages[$key]['namepath'] = $pathstack;
     }
-    
+
     // If we are looking for translations rather than base documents, then find what translations are available and substitute them
     // CHECKME: is there a better way?
-    // If there is no translation the base document remains. Is this desired outcome?
+    // If there is no translation the base document remains, unless $args['no_fallback_locale'] is true;
     
     if (!empty($pages) && xarModVars::get('publications', 'defaultlanguage') != xarUserGetNavigationLocale()) {
         $indexedpages = array();
@@ -144,9 +154,17 @@ function publications_userapi_getrelativepages($args)
         $q->addfield('title');
         $q->addfield('description');
         $q->addfield('summary');
+        $q->addfield('locale');
         $q->addfield('state');
         $q->in('parent_id',$ids);
         $q->eq('locale',xarUserGetNavigationLocale());
+
+        // Allow state filter, if there is one
+        if (!empty($args['state'])) {
+            if (!is_array($args['state'])) $state = array($args['state']);
+            else $state = $args['state'];
+            $q->in('state', $state);
+        }
 
         // Add any fiters we found
         foreach ($filters as $k => $v) $q->eq($k, $v);
@@ -167,6 +185,10 @@ function publications_userapi_getrelativepages($args)
         // Now go through the remaining pages and check for no-show states
         foreach ($indexedpages as $key => $page) {
             if ($page['state'] < 3) unset($indexedpages[$key]);
+            // Special case: we ignore pages that have no translation in the current locale
+            if (!empty($args['no_fallback_locale']) && ($page['locale'] != xarUserGetNavigationLocale())) {
+                unset($indexedpages[$key]);
+            }
         }
         
         // Now sort by title if we need to

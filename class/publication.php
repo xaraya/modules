@@ -99,7 +99,7 @@ class Publication extends DataObject
         );
         xarModCallHooks('item', 'create', $id, $extraInfo, 'publications', $ptid);
 */
-        return true;
+        return $id;
     }
 
     function updateItem(Array $args = array())
@@ -135,7 +135,7 @@ class Publication extends DataObject
         );
         xarModCallHooks('item', 'update', $id, $extraInfo, 'publications', $ptid);
 */
-        return true;
+        return $id;
     }
 }
 ?>

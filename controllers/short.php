@@ -52,7 +52,11 @@ class PublicationsShortController extends ShortActionController
                 $data['func'] = 'update';
             break;
 
-            case 'view':
+            case 'delete':
+                $data['func'] = 'delete';
+            break;
+
+           case 'view':
                 $data['func'] = 'view';
                 
                 // Get the pubtype
@@ -248,6 +252,11 @@ class PublicationsShortController extends ShortActionController
 
             case 'update':
                 $path[] = 'update';
+                $path = array_merge($path,$params);
+            break;
+
+            case 'delete':
+                $path[] = 'delete';
                 $path = array_merge($path,$params);
             break;
 

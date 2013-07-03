@@ -122,10 +122,20 @@ function publications_user_display($args)
     $allow = $access->check($accessconstraints['display']);
     $nopublish = (time() < $data['object']->properties['start_date']->value) || ((time() > $data['object']->properties['end_date']->value) && !$data['object']->properties['no_end']->value);
     
-    // If no access, then bail showing a forbidden or an empty page
+    // If no access, then bail showing a forbidden or the "no permission" page or an empty page
+    $nopermissionpage_id = xarModVars::get('publications', 'noprivspage');
     if (!$allow || $nopublish) {
         if ($accessconstraints['display']['failure']) return xarResponse::Forbidden();
+        elseif ($nopermissionpage_id) xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
         else return xarTplModule('publications', 'user', 'empty');
+    }
+    
+    // If we use process states, then also check that
+    if (xarModVars::get('publications', 'use_process_states')) {
+        if ($data['object']->properties['process_state']->value < 3)
+            if ($accessconstraints['display']['failure']) return xarResponse::Forbidden();
+            elseif ($nopermissionpage_id) xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+            else return xarTplModule('publications', 'user', 'empty');            
     }
 
 # --------------------------------------------------------
@@ -245,7 +255,6 @@ function publications_user_display($args)
 #
 # If this is a blocklayout page, then process it
 #
-
     if ($data['object']->properties['pagetype']->value == 2) {
         // Get a copy of the compiler
         sys::import('xaraya.templating.compiler');

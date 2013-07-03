@@ -55,14 +55,16 @@
                 </div>
                 <div class="xar-col">
                     <xar:data-input property="$properties['version']" />
-                    &#160;
-                    <a href="#xarModURL('publications', 'admin' ,'display_version', array('itemid' => $itemid, 'name' => $object->name))#" title="#xarML('Display version')#">
-                        Display versions
-                    </a>
-                    &#160;
-                    <a href="#xarModURL('publications', 'admin' ,'manage_versions', array('itemid' => $itemid, 'name' => $object->name))#" title="#xarML('Manage versions')#">
-                        Manage versions
-                    </a>
+                    <xar:if condition="!empty($itemid)">
+                        &#160;
+                        <a href="#xarModURL('publications', 'admin' ,'display_version', array('itemid' => $itemid, 'name' => $object->name))#" title="#xarML('Display version')#">
+                            Display versions
+                        </a>
+                        &#160;
+                        <a href="#xarModURL('publications', 'admin' ,'manage_versions', array('itemid' => $itemid, 'name' => $object->name))#" title="#xarML('Manage versions')#">
+                            Manage versions
+                        </a>
+                    </xar:if>
                 </div>
             </div>
         <xar:else/>

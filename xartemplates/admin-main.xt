@@ -129,141 +129,87 @@
             4. Categories
         </h4>
         <p>
-            
-                Publications (of any type) can be organised into categories. You could use one or more common categories across different publication types, or use specific categories for each type of article, or any combination that you might prefer for your site.
-            
+            Publications (of any type) can be organised into categories. You could use one or more common categories across different publication types, or use specific categories for each type of article, or any combination that you might prefer for your site.
         </p>
         <p>
-            
-                Before you start specifying which article types will be using what categories, you should create the categorization you want via the <a href="index.php?module=categories&amp;type=admin">Categories</a> administration menu. A default set of categories has been defined for publications when you installed this module, as an example to get you started. (You can adapt the categories later on, of course.)
-            
+            Before you start specifying which article types will be using what categories, you should create the categorization you want via the <a href="index.php?module=categories&amp;type=admin">Categories</a> administration menu. A default set of categories has been defined for publications when you installed this module, as an example to get you started. (You can adapt the categories later on, of course.)
         </p>
         <p>
-            
-                Once you have a set of categories you would like to use for your publications, you can go to <strong>Publications Configuration</strong>, and specify the number of categories that can be used for each publication type, and the 'base categories' to be used.
-            
+            Once you have a set of categories you would like to use for your publications, you can go to <strong>Publications Configuration</strong>, and specify the number of categories that can be used for each publication type, and the 'base categories' to be used.
         </p>
         <p>
-            
-                A 'base category' is any starting point somewhere in your tree of categories, below which you will have the actual list (or subtree) of categories people can choose from when they submit or view publications. For example, you could have a 'base category' called Topics, with a list of different topics relevant to your site below it, and another 'base category' called Cities, with a list of cities or places that you would provide regional news for.
-            
+            A 'base category' is any starting point somewhere in your tree of categories, below which you will have the actual list (or subtree) of categories people can choose from when they submit or view publications. For example, you could have a 'base category' called Topics, with a list of different topics relevant to your site below it, and another 'base category' called Cities, with a list of cities or places that you would provide regional news for.
         </p>
         <p>
-            
-                One topic might be 'Good Restaurants', and one city might 'Brussels', so people would be able to browse through any publications about good restaurants in Brussels, for instance.
-            
+            One topic might be 'Good Restaurants', and one city might 'Brussels', so people would be able to browse through any publications about good restaurants in Brussels, for instance.
         </p>
         <h3>
-            
-                3. Submitting or adding publications
-            
+            3. Submitting or adding publications
         </h3>
         <p>
-            
-                state = submitted, rejected, approved or on frontpage (for those pubtypes that use it !)
-            
+            state = submitted, rejected, approved or on frontpage (for those pubtypes that use it !)
         </p>
         <h3>
-            
-                4. Managing the overview and display of publications per publication type
-            
+            4. Managing the overview and display of publications per publication type
         </h3>
         <p>
-            
-                In <strong>Publications Configuration</strong>, set start view (list/browse), ## of columns and items, show category links + ## of comments (+ performance impact)
-            
+            In <strong>Publications Configuration</strong>, set start view (list/browse), ## of columns and items, show category links + ## of comments (+ performance impact)
         </p>
         <p>
-            
-                + adapt specific templates!
-            
+            + adapt specific templates!
         </p>
         <h3>
-            
-                5. Managing your 'front page'
-            
+            5. Managing your 'front page'
         </h3>
         <p>
-            
-                cfr. frontpage state and ## of columns and items - needs to be extended
-            
+            cfr. frontpage state and ## of columns and items - needs to be extended
         </p>
         <h3>
-            
-                6. Adding counters, ratings, comments, smilies, bb-code etc.
-            
+            6. Adding counters, ratings, comments, smilies, bb-code etc.
         </h3>
         <p>
-            
-                cfr. hooks + special note on counters
-            
+            cfr. hooks + special note on counters
         </p>
         <h3>
-            
-                7. Organising permissions
-            
+            7. Organising permissions
         </h3>
         <p>
-            
-                this really needs a permissions wizard
-            
+            this really needs a permissions wizard
         </p>
         <h3>
-            
-                8. Short URL support
-            
+            8. Short URL support
         </h3>
         <p>
-            
-                overall enable/disable in 'base' admin + specific enable/disable in 'publications' admin + use of module aliases
-            
+            overall enable/disable in 'base' admin + specific enable/disable in 'publications' admin + use of module aliases
         </p>
         <p>
-            
-                Module aliases seem to be disabled at the moment - uncomment the line in includes/xarServer.php if you want to try it out
-            
+            Module aliases seem to be disabled at the moment - uncomment the line in includes/xarServer.php if you want to try it out
         </p>
         <h3>
-            
-                Included Blocks
-            
+            Included Blocks
         </h3>
         <ul>
             <li>
-                
-                    featured items
-                
+                featured items
             </li>
             <li>
-                
-                    glossary
-                
+                glossary
             </li>
             <li>
-                
-                    random
-                
+                random
             </li>
             <li>
-                
-                    related
-                
+                related
             </li>
             <li>
-                
-                    top items
-                
+                top items
             </li>
         </ul>
         <h3>
-            
-                Included Hooks
-            
+            Included Hooks
         </h3>
         <p>
-            
-                Search hook which provides the functionality to search your individual publications.
-            
+            Search hook which provides the functionality to search your individual publications.
         </p>
     </div>
 </xar:template>
