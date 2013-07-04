@@ -18,7 +18,7 @@
  * $partiallocale: 1 if locales are of the form de_DE, else 0
  * $locale: a partial or full locale that we want the page ID of
  *
- * N.B. set $local to xarModVars::get('publications', 'defaultlanguage') to force returning the base translation ID
+ * N.B. set $locale to xarModVars::get('publications', 'defaultlanguage') to force returning the base translation ID
  */
 function publications_userapi_gettranslationid($args)
 {
@@ -45,16 +45,26 @@ function publications_userapi_gettranslationid($args)
     
     if (empty($args['locale'])) {
         // Return the id of the translation if it exists, or else the base document 
-        $q = new Query('SELECT',$xartable['publications']);
-        $q->addfield('id');
-        $q->eq('locale',$locale);
-        $c[] = $q->peq('id',$args['id']);
-        $c[] = $q->peq('parent_id',$args['id']);
+        // Strategy: don't filter on locale in the SQL, so that we are assured of a non-empty result.
+        $q = new Query('SELECT');
+        $q->addtable($xartable['publications'], 't1');
+        $q->addtable($xartable['publications'], 't2');
+        $q->join('t1.parent_id', 't2.parent_id');
+        $q->addfield('t2.id AS id');
+        $q->addfield('t2.parent_id AS parent_id');
+        $q->addfield('t2.locale AS locale');
+        $c[] = $q->peq('t1.id',(int)$args['id']);
+        $c[] = $q->peq('t1.parent_id',(int)$args['id']);
         $q->qor($c);
-        if (!$q->run()) return $args['id'];
-        $result = $q->row();
-        if (empty($result)) return $args['id'];
-        return $result['id']; 
+        if (!$q->run()) return (int)$args['id'];
+        $result = $q->output();
+        // Go through the results for the (first) one with the correct locale
+        foreach ($q->output() as $row) {
+            if ($locale == $row['locale']) return $row['id'];
+        }
+        // If nothing was returned it means either the base document has the correct locale, 
+        // or no document in this group has it. Either way we need to return the base document.
+        return $row['parent_id']; 
     } elseif ($args['locale'] == xarUserGetNavigationLocale()) {
         // No need to look further
         return $args['id'];
@@ -62,12 +72,12 @@ function publications_userapi_gettranslationid($args)
         // Force getting the base document
         $q = new Query('SELECT',$xartable['publications']);
         $q->addfield('parent_id');
-        $q->eq('id',$args['id']);
+        $q->eq('id',(int)$args['id']);
         if (!$q->run()) return $args['id'];
         $result = $q->row();
         if (empty($result)) return $args['id'];
         // If this was already the base document, return its ID
-        if (empty($result['parent_id'])) return $args['id'];
+        if (empty($result['parent_id'])) return (int)$args['id'];
         // Else return the parent ID
         return $result['parent_id']; 
     } else {
@@ -78,10 +88,10 @@ function publications_userapi_gettranslationid($args)
         $q->join('p2.parent_id','p1.parent_id');
         $q->addfield('p2.id');
         $q->eq('p2.locale',$locale);
-        $q->eq('p1.id',$args['id']);
+        $q->eq('p1.id',(int)$args['id']);
         if (!$q->run()) return $args['id'];
         $result = $q->row();
-        if (empty($result)) return $args['id'];
+        if (empty($result)) return (int)$args['id'];
         return $result['id']; 
     }
 
