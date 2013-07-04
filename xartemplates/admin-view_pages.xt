@@ -79,6 +79,7 @@
             </xar:set>
             <table border="0" width="100%" cellspacing="0" cellpadding="0">
                 <tr>
+                    <th>ID</th>
                     <th>Name</th>
                     <th style="text-align: center">M</th>
                     <th style="text-align: center">S</th>
