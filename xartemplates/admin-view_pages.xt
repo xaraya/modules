@@ -95,7 +95,10 @@
                         </xar:if>
 
                         <tr>
-                            <td align="left" class="#$row_class#">
+                            <td class="#$row_class#" style="text-align: center">
+                                #$loop:item.id#
+                            </td>
+                            <td class="#$row_class#" style="text-align: left">
                                 #$loop:item.xar_map#
                                 #xarVarPrepForDisplay($loop:item.name)#
                             </td>
