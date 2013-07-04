@@ -72,72 +72,49 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
         $data['feature'] = array();
         $data['items'] = array();
 
-        // Setup featured item
-        if ($featuredid > 0) {
+        // Load the query class and the publications tables
+        sys::import('xaraya.structures.query');
+        xarMod::apiLoad('publications');
+        $tables = xarDB::getTables();
         
-            if (xarModIsHooked('uploads', 'publications', $data['pubtype_id'])) {
-                xarCoreCache::setCached('Hooks.uploads','ishooked',1);
-            }
+        // Get all the publications types
+        sys::import('modules.dynamicdata.class.objects.master');
+        $pubtypeobject = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
+        $types = $pubtypeobject->getItems();
+
+# ------------------------------------------------------------
+# Set up the featured item
+#
+        if ($data['featuredid'] > 0) {
         
-            if ($featart = xarModAPIFunc('publications','user','getall',
-                array(
-                    'ids' => array($featuredid),
-                    'extra' => array('cids','dynamicdata')))
-                ) {
-
-                foreach($featart as $featuredart) {
-
-                    $fieldlist = array('id', 'title', 'summary', 'owner', 'pubdate',
-                                   'pubtype_id', 'notes', 'state', 'body', 'cids');
+            // Get the database entry of the featured item
+            $q = new Query('SELECT', $tables['publications']);
+            $q->eq('id', $data['featuredid']);
+            $q->run();
+            $result = $q->row();
             
-                    $featuredlink = xarModURL(
-                        'publications', 'user', 'display',
-                        array(
-                            'id' => $featuredart['id'],
-                            'itemtype' => (!empty($data['linkpubtype']) ? $featuredart['pubtype_id'] : NULL),
-                            'catid' => ((!empty($data['linkcat']) && !empty($data['catfilter'])) ? $data['catfilter'] : NULL)
-                        )
-                    );
-                    if (empty($data['showfeaturedbod'])) {$data['showfeaturedbod'] = false;}
-                    if(!isset($featuredart['cids'])) $featuredart['cids'] = "";
+            // Use that information to get the featured item as an object
+            $featuredtype = $types[$result['pubtype_id']]['name'];
+            $data['featured'] = DataObjectMaster::getObject(array('name' => $featuredtype));
+            $data['featured']->getItem(array('itemid' => $data['featuredid']));
+            $data['properties'] =& $data['featured']->properties;
 
-                    $feature= array(
-                        'featuredname'      => $featuredart['name'],
-                        'featuredlabel'     => $featuredart['title'],
-                        'featuredlink'      => $featuredlink,
-                        'alttitle'          => $data['alttitle'],
-                        'altsummary'        => $data['altsummary'],
-                        'showfeaturedsum'   => $data['showfeaturedsum'],
-                        'showfeaturedbod'   => $data['showfeaturedbod'],
-                        'featureddesc'      => $featuredart['summary'],
-//                        'featuredbody'      => $featuredart['body'],
-                        'featuredcids'      => $featuredart['cids'],
-                        'pubtype_id'        => $featuredart['pubtype_id'],
-                        'featuredid'        => $featuredart['id'],
-                        'featureddate'      => $featuredart['start_date']
-                    );
-        
-                    // Get rid of the default fields so all we have left are the DD ones
-                    foreach ($fieldlist as $field) {
-                        if (isset($featuredart[$field])) {
-                            unset($featuredart[$field]);
-                        }
-                    }
-        
-                    // now add the DD fields to the featuredart
-                    $feature = array_merge($featuredart, $feature);
-                    $data['feature'][] = $feature;
-                }
-            }
+            $data['featured_link'] = xarModURL('publications', 'user', 'display',
+                                        array(
+                                            'itemid' => $data['properties']['id']->value,
+                                        )
+                                    );
+            $data['featured_alttitle']   = $data['alttitle'];
+            $data['featured_altsummary'] = $data['altsummary'];
+            $data['featured_showfeaturedsum'] = $data['showfeaturedsum'];
+            $data['featured_showfeaturedbod'] = $data['showfeaturedbod'];
+        }
 
-            // Setup additional items
-            $fields = array('id', 'title', 'pubtype_id', 'cids');
-        
-            // Added the 'summary' field to the field list.
-            if (!empty($data['showsummary'])) {
-                $fields[] = 'summary';
-            }
-        
+# ------------------------------------------------------------
+# Set up additional items
+#
+        if (!empty($data['moreitems'])) {
+
             if ($data['toptype'] == 'rating') {
                 $fields[] = 'rating';
                 $sort = 'rating';
@@ -151,149 +128,55 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
                $sort = $data['toptype'];
             }
 
-            if (!empty($data['moreitems'])) {
-                $publications = xarModAPIFunc(
-                    'publications', 'user', 'getall',
-                    array(
-                        'ids' => $data['moreitems'],
-                        'enddate' => time(),
-                        'fields' => $fields,
-                        'sort' => $sort
-                    )
-                );
-        
-                // See if we're currently displaying an article
-                if (xarVarIsCached('Blocks.publications', 'id')) {
-                    $curid = xarCoreCache::getCached('Blocks.publications', 'id');
-                } else {
-                    $curid = -1;
-                }
-        
-                foreach ($publications as $article) {
-                    if ($article['id'] != $curid) {
-                        $link = xarModURL(
-                            'publications', 'user', 'display',
-                            array (
-                                'id' => $article['id'],
-                                'itemtype' => (!empty($vars['linkpubtype']) ? $article['pubtype_id'] : NULL),
-                                'catid' => ((!empty($data['linkcat']) && !empty($data['catfilter'])) ? $data['catfilter'] : NULL)
-                            )
-                        );
-                    } else {
-                        $link = '';
-                    }
-        
-                    $count = '';
-                    // TODO: find a nice clean way to show all sort types
-                    if ($data['showvalue']) {
-                        if ($data['toptype'] == 'rating') {
-                            $count = intval($article['rating']);
-                        } elseif ($data['toptype'] == 'hits') {
-                            $count = $article['counter'];
-                        } elseif ($data['toptype'] == 'date') {
-                            // TODO: make user-dependent
-                            if (!empty($article['pubdate'])) {
-                                $count = strftime("%Y-%m-%d", $article['pubdate']);
-                            } else {
-                                $count = 0;
-                            }
-                        } else {
-                            $count = 0;
-                        }
-                    } else {
-                        $count = 0;
-                    }
-                    if (isset($article['cids'])) {
-                       $cids=$article['cids'];
-                    }else{
-                       $cids='';
-                    }
-                    if (isset($article['pubdate'])) {
-                       $pubdate=$article['pubdate'];
-                    }else{
-                       $pubdate='';
-                    }
-                    // Pass $desc to items[] array so that the block template can render it
-                    $data['items'][] = array(
-                        'label' => $article['title'],
-                        'link' => $link,
-                        'count' => $count,
-                        'cids' => $cids,
-                        'pubdate' => $pubdate,
-                        'desc' => ((!empty($data['showsummary']) && !empty($article['summary'])) ? $article['summary'] : ''),
-                        'id' => $article['id']
+            $publications = xarMod::apiFunc('publications', 'user', 'getall',
+                array(
+                    'ids' => $data['moreitems'],
+                    'enddate' => time(),
+                    'fields' => $fields,
+                    'sort' => $sort
+                )
+            );
+    
+            // See if we're currently displaying a publication
+            // We do this to remove a link form a featured item if that item is already being displayed
+            if (xarVarIsCached('Blocks.publications', 'id')) {
+                $curid = xarVarGetCached('Blocks.publications', 'id');
+            } else {
+                $curid = -1;
+            }
+    
+            // Since each item could potentially be a different publication type
+            // we need to go through a loop.
+            $data['items'] = array();
+            foreach ($publications as $publication) {
+                $itemname = $types[$publication['pubtype_id']]['name'];
+                $object = DataObjectMaster::getObject(array('name' => $itemname));
+                $object->getItem(array('itemid' => $publication['id']));
+                $itemvalues = $object->getFieldValues(array(), 1);
+
+                if ($publication['id'] != $curid) {
+                    $link = xarModURL('publications', 'user', 'display',
+                        array (
+                            'itemid' => $publication['id'],
+                        )
                     );
+                } else {
+                    $link = '';
                 }
-            }}
-            if (empty($data['feature']) && empty($data['items'])) {
-                // Nothing to display.
+                $itemvalues['featured_link'] = $link;
+                if(empty($data['showsummary'])) $itemvalue['description'] = '';
+                $data['items'][$publication['id']] = $itemvalues;
+            }
+        }
+        
+# ------------------------------------------------------------
+# Suppress the block and its title if there is nothing to display
+#
+        if (empty($data['featuredid']) && empty($data['items'])) {
                 return;
-            }
-            return $data;
         }
-/*
-        public function modify(Array $data=array())
-        {
-            $data = parent::modify($data);
-
-            $data['fields'] = array('id', 'title');
-
-            if (!is_array($data['state'])) $statearray = array($data['state']);
-            else $statearray = $data['state'];
-
-            if(!empty($data['catfilter'])) $cidsarray = array($data['catfilter']);
-            else $cidsarray = array();
-
-            // Create array based on modifications
-            $article_args = array();
-
-            // Only include pubtype if a specific pubtype is selected
-            if (!empty($data['pubtype_id'])) $article_args['ptid'] = $data['pubtype_id'];
-
-            // Add the rest of the arguments
-            $article_args['cids'] = $cidsarray;
-            $article_args['enddate'] = time();
-            $article_args['state'] = $statearray;
-            $article_args['fields'] = $data['fields'];
-            $article_args['sort'] = $data['toptype'];
-
-            $data['filtereditems'] = xarModAPIFunc(
-                'publications', 'user', 'getall', $article_args );
-
-            // Try to keep the additional headlines select list width less than 50 characters
-            for ($idx = 0; $idx < count($data['filtereditems']); $idx++) {
-                if (strlen($data['filtereditems'][$idx]['title']) > 50) {
-                    $data['filtereditems'][$idx]['title'] = substr($data['filtereditems'][$idx]['title'], 0, 47) . '...';
-                }
-                $data['filtereditems'][$idx]['name'] = $data['filtereditems'][$idx]['title'];
-            }
-
-            //Put together the additional featured publications list
-            for($idx=0; $idx < count($data['filtereditems']); ++$idx) {
-                $data['filtereditems'][$idx]['selected'] = '';
-                for($mx=0; $mx < count($data['moreitems']); ++$mx) {
-                    if (($data['moreitems'][$mx]) == ($data['filtereditems'][$idx]['id'])) {
-                        $data['filtereditems'][$idx]['selected'] = 'selected';
-                    }
-                }
-            }
-            $data['morepublications'] = $data['filtereditems'];
-
-            return $data;
-        }
-
-        public function update(Array $data=array())
-        {
-            xarVarFetch('featuredid', 'id', $vars['featuredid'], 0, XARVAR_NOT_REQUIRED);
-            xarVarFetch('alttitle', 'str', $vars['alttitle'], '', XARVAR_NOT_REQUIRED);
-            xarVarFetch('altsummary', 'str', $vars['altsummary'], '', XARVAR_NOT_REQUIRED);
-            xarVarFetch('moreitems', 'list:id', $vars['moreitems'], NULL, XARVAR_NOT_REQUIRED);
-            xarVarFetch('showfeaturedbod', 'checkbox', $vars['showfeaturedbod'], false, XARVAR_NOT_REQUIRED);
-            xarVarFetch('showfeaturedsum', 'checkbox', $vars['showfeaturedsum'], false, XARVAR_NOT_REQUIRED);
-
-            return parent::update($data);
-        }
-        */
+        return $data;
     }
+}
 
 ?>
