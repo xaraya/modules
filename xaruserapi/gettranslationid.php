@@ -47,19 +47,25 @@ function publications_userapi_gettranslationid($args)
         // Return the id of the translation if it exists, or else the base document 
         // Strategy: don't filter on locale in the SQL, so that we are assured of a non-empty result.
         $q = new Query('SELECT');
+        $q->setdistinct('id');
         $q->addtable($xartable['publications'], 't1');
         $q->addtable($xartable['publications'], 't2');
         $q->join('t1.parent_id', 't2.parent_id');
         $q->addfield('t2.id AS id');
         $q->addfield('t2.parent_id AS parent_id');
         $q->addfield('t2.locale AS locale');
+        $d[] = $q->peq('t1.parent_id',(int)$args['id']);
         $c[] = $q->peq('t1.id',(int)$args['id']);
-        $c[] = $q->peq('t1.parent_id',(int)$args['id']);
-        $q->qor($c);
+        $c[] = $q->pne('t1.parent_id',0);
+        $d[] = $q->qand($c);
+        $q->qor($d);
+        // The query fails: return the input value
         if (!$q->run()) return (int)$args['id'];
         $result = $q->output();
+        // The result is empty (no children): return the input value
+        if (empty($result)) return (int)$args['id'];
         // Go through the results for the (first) one with the correct locale
-        foreach ($q->output() as $row) {
+        foreach ($result as $row) {
             if ($locale == $row['locale']) return $row['id'];
         }
         // If nothing was returned it means either the base document has the correct locale, 
