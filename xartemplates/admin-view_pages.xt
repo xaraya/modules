@@ -116,7 +116,7 @@
                                 <xar:data-output type="icondropdown" icon_directory="set1" icon_options="$state" value="$value"/>&#160;
                                 <span class="xar-publications-status-#$state[$loop->item['status']]['id']#">#xarVarPrepForDisplay($loop:item.pubtype_name)#: #xarVarPrepForDisplay($loop:item.title)#</span>
                             </td>
-                            <td align="left" class="#$row_class#">
+                            <td style="text-align: left" class="#$row_class#">
                                 <xar:set name="translations">implode(',',$loop->item['translations'])</xar:set>
                                 #$translations#
                             </td>
