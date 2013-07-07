@@ -70,7 +70,7 @@ function publications_userapi_gettranslationid($args)
         }
         // If nothing was returned it means either the base document has the correct locale, 
         // or no document in this group has it. Either way we need to return the base document.
-        return $row['parent_id']; 
+        return (int)$row['parent_id']; 
     } elseif ($args['locale'] == xarUserGetNavigationLocale()) {
         // No need to look further
         return $args['id'];
