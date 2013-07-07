@@ -64,8 +64,12 @@ function publications_user_display($args)
     // First save the "untranslated" id
     xarCoreCache::setCached('Blocks.publications', 'current_base_id', $id);
 
-    if ($translate)
-        $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
+    if ($translate) {
+        $newid = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
+        if ($newid != $id) {
+            xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $newid, 'translate' => false)));
+        }
+    }
     
 # --------------------------------------------------------
 #
