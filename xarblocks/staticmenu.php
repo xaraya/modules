@@ -40,13 +40,6 @@
         public $func_update         = 'menublock_update';
         public $notes               = "no notes";
 
-
-/**
- * Display func.
- * @param $blockinfo array
- * @returns $blockinfo array
- */
-
 /**
  * Display func.
  * @param $blockinfo array
