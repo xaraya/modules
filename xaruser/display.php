@@ -73,8 +73,8 @@ function publications_user_display($args)
             // anything working off the itemid of the page to be displayed will automatically 
             // use the new one
             xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $newid, 'translate' => 0)));
-        */
         }
+        */
     }
     
 # --------------------------------------------------------
