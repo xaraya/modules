@@ -65,12 +65,15 @@ function publications_user_display($args)
     xarCoreCache::setCached('Blocks.publications', 'current_base_id', $id);
 
     if ($translate) {
+        $id = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
+        /*
         $newid = xarMod::apiFunc('publications','user','gettranslationid',array('id' => $id));
         if ($newid != $id) {
             // We do a full redirect rather than just continuing with the new id so that 
             // anything working off the itemid of the page to be displayed will automatically 
             // use the new one
             xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $newid, 'translate' => 0)));
+        */
         }
     }
     
