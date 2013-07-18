@@ -80,7 +80,7 @@
                                                 </a>
                                             </xar:if>
                                         </td>
-                                        <td style="line-height: 10px;text-align: right"><xar:data-output type="formattedtime" value="$entry['start_time']"/></td>
+                                        <td style="line-height: 10px;text-align: right"><xar:data-output type="time" value="$entry['start_time']"/></td>
                                     </tr>
                                 </xar:foreach>
                             </table>

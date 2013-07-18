@@ -62,7 +62,7 @@ function calendar_user_delete($args)
             file_exists('code/modules/' . $data['tplmodule'] . '/xartemplates/admin-delete-' . $data['template'] . '.xd')) {
             return xarTplModule($data['tplmodule'],'user','delete',$data,$data['template']);
         } else {
-            return xarTplModule('dynamicdata','admin','delete',$data,$data['template']);
+            return xarTplModule('calendar','user','delete',$data,$data['template']);
         }
     }
 

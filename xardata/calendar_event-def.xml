@@ -47,7 +47,7 @@
     <property name="start_time">
       <id>12460</id>
       <label>Start Time</label>
-      <type>static</type>
+      <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>event.start_time</source>
       <status>33</status>
@@ -57,7 +57,7 @@
     <property name="duration">
       <id>12461</id>
       <label>Duration</label>
-      <type>static</type>
+      <type>timeperiod</type>
       <defaultvalue>xarModVars::get('calendar','event_duration')</defaultvalue>
       <source>event.duration</source>
       <status>34</status>
@@ -67,7 +67,7 @@
     <property name="end_time">
       <id>12462</id>
       <label>End Time</label>
-      <type>static</type>
+      <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>event.end_time</source>
       <status>34</status>
@@ -128,7 +128,7 @@
       <id>12468</id>
       <label>Module</label>
       <type>module</type>
-      <defaultvalue>xarMod::getID('calendar')</defaultvalue>
+      <defaultvalue>xarMod::getRegID('calendar')</defaultvalue>
       <source>event.module_id</source>
       <status>35</status>
       <seq>12</seq>
@@ -187,7 +187,7 @@
     <property name="timestamp">
       <id>12474</id>
       <label>Timestamp</label>
-      <type>static</type>
+      <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>event.timestamp</source>
       <status>66</status>
