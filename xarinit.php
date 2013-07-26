@@ -55,8 +55,21 @@
 
     # --------------------------------------------------------
     #
-    # Set up hooks
+    # Set up events
     #
+        // Unregister all mapper event subjects 
+        xarMapperEvents::unregisterSubject('PreDispatch');
+        xarMapperEvents::unregisterSubject('PostDispatch');
+        // Unregister all mapper event observers
+        xarMapperEvents::unregisterObserver('PreDispatch');
+        xarMapperEvents::unregisterObserver('PostDispatch');  
+
+        // Register wurfl mapper event subjects 
+        xarMapperEvents::registerSubject('PreDispatch', 'mapper', 'wurfl');
+        xarMapperEvents::registerSubject('PostDispatch', 'mapper', 'wurfl');
+        // Register wurfl mapper event observers
+        xarMapperEvents::registerObserver('PreDispatch', 'wurfl');
+        xarMapperEvents::registerObserver('PostDispatch', 'wurfl');             
 
         return true;
     }
@@ -69,7 +82,23 @@
     function wurfl_delete()
     {
         $this_module = 'wurfl';
-        return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => $this_module));
+        xarModAPIFunc('modules','admin','standarddeinstall',array('module' => $this_module));
+        
+        // Unregister all mapper event subjects 
+        xarMapperEvents::unregisterSubject('PreDispatch');
+        xarMapperEvents::unregisterSubject('PostDispatch');
+        // Unregister all mapper event observers
+        xarMapperEvents::unregisterObserver('PreDispatch');
+        xarMapperEvents::unregisterObserver('PostDispatch');  
+
+        // Register default mapper event subjects 
+        xarMapperEvents::registerSubject('PreDispatch', 'mapper', 'themes');
+        xarMapperEvents::registerSubject('PostDispatch', 'mapper', 'themes');
+        // Register default mapper event observers
+        xarMapperEvents::registerObserver('PreDispatch', 'themes');
+        xarMapperEvents::registerObserver('PostDispatch', 'themes');  
+        
+        return true;
     }
 
 ?>
