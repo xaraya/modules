@@ -2,37 +2,27 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div>
     <p class="xar-cm-note xar-sub">
-
-            Note: Comments are owned by the poster. We are not responsible for their content.
-
+        Note: Comments are owned by the poster. We are not responsible for their content.
     </p>
     <xar:set name="showoptions">xarModVars::get('comments','showoptions')</xar:set>
     <xar:if condition="empty($showoptions)">
         <xar:if condition="xarModIsHooked('comments','roles', 0) and xarUserIsLoggedIn()">
             <p class="xar-cm-note xar-sub">
-
-                    Change Your Comments Rendering Settings
-
+                Change Your Comments Rendering Settings
                 <a href="#xarModURL('roles', 'user', 'account')#">
-
-                        here
-
+                    here
                 </a>.
             </p>
         </xar:if>
     <xar:else />
     <h4>
-
-            Comments Settings
-
+        Comments Settings
     </h4>
     <div class="xar-cm-wrapper xar-accent xar-norm-outline">
         <form action="#$receipt['returnurl']['decoded']#" method="post">
             <div class="xar-cm-settings">
                 <label for="depth">
-
-                        Depth
-
+                    Depth
                 </label>
                 <br />
                 <select name="depth" id="depth">
@@ -51,169 +41,121 @@
             </div>
             <div class="xar-cm-settings">
                 <label for="render">
-
-                        Style
-
+                    Style
                 </label>
                 <br />
                 <select name="render" id="render">
                     <xar:if condition="$package['settings']['render'] eq 'nested'">
                         <option value="nested" selected="selected">
-
-                                Nested
-
+                            Nested
                         </option>
                         <xar:else />
                         <option value="nested">
-
-                                Nested
-
+                            Nested
                         </option>
                     </xar:if>
                     <xar:if condition="$package['settings']['render'] eq 'flat'">
                         <option value="flat" selected="selected">
-
-                                Flat
-
+                            Flat
                         </option>
                         <xar:else />
                         <option value="flat">
-
-                                Flat
-
+                            Flat
                         </option>
                     </xar:if>
                     <xar:if condition="$package['settings']['render'] eq 'threaded'">
                         <option value="threaded" selected="selected">
-
-                                Threaded
-
+                            Threaded
                         </option>
                         <xar:else />
                         <option value="threaded">
-
-                                Threaded
-
+                            Threaded
                         </option>
                     </xar:if>
 <!-- thinking about omitting this setting from the theme - i caanot believe that anyone would miss this option in RL -->
                     <xar:if condition="$package['settings']['render'] eq 'nocomments'">
                         <option value="nocomments" selected="selected">
-
-                                No Comments
-
+                            No Comments
                         </option>
                         <xar:else />
                         <option value="nocomments">
-
-                                No Comments
-
+                            No Comments
                         </option>
                     </xar:if>
                 </select>
             </div>
             <div class="xar-cm-settings">
                 <label for="sortby">
-
-                        Sort by
-
+                    Sort by
                 </label>
                 <br />
                 <select name="sortby" id="sortby">
                     <xar:if condition="$package['settings']['sortby'] eq 1">
                         <option value="1" selected="selected">
-
-                                Author
-
+                            Author
                         </option>
                         <xar:else />
                         <option value="1">
-
-                                Author
-
+                            Author
                         </option>
                     </xar:if>
                     <xar:if condition="$package['settings']['sortby'] eq 2">
                         <option value="2" selected="selected">
-
-                                Date
-
+                            Date
                         </option>
                         <xar:else />
                         <option value="2">
-
-                                Date
-
+                            Date
                         </option>
                     </xar:if>
                     <xar:if condition="$package['settings']['sortby'] eq 3">
                         <option value="3" selected="selected">
-
-                                Thread
-
+                            Thread
                         </option>
                         <xar:else />
                         <option value="3">
-
-                                Thread
-
+                            Thread
                         </option>
                     </xar:if>
                     <xar:if condition="$package['settings']['sortby'] eq 4">
                         <option value="4" selected="selected">
-
-                                Title
-
+                            Title
                         </option>
                         <xar:else />
                         <option value="4">
-
-                                Title
-
+                            Title
                         </option>
                     </xar:if>
                 </select>
             </div>
             <div class="xar-cm-settings">
                 <label for="order">
-
-                        Order
-
+                    Order
                 </label>
                 <br />
                 <select name="order" id="order">
                     <xar:if condition="$package['settings']['order'] eq 1">
                         <option value="1" selected="selected">
-
-                                Ascending
-
+                            Ascending
                         </option>
                         <xar:else />
                         <option value="1">
-
-                                Ascending
-
+                            Ascending
                         </option>
                     </xar:if>
                     <xar:if condition="$package['settings']['order'] eq 2">
                         <option value="2" selected="selected">
-
-                                Descending
-
+                            Descending
                         </option>
                         <xar:else />
                         <option value="2">
-
-                                Descending
-
+                            Descending
                         </option>
                     </xar:if>
                 </select>
             </div>
             <div class="xar-cm-settings">
-
                         Action
-
                 <br />
                 <input type="hidden" id="header-modid" name="header[modid]" value="#$header['modid']#"/>
                 <input type="hidden" id="header-objectid" name="header[objectid]" value="#$header['objectid']#"/>
@@ -227,7 +169,7 @@
                 </xar:if>
                 <!--<input type="hidden" id="receipt-returnurl-encoded" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#"/>
                 <input type="hidden" id="receipt-returnurl-decoded" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#"/>
-                 --><input type="submit" value="#xarML('Refresh')#"/>
+                --><input type="submit" value="#xarML('Refresh')#"/>
             </div>
         </form>
     </div>

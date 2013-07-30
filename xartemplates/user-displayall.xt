@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<!-- DISPLAY WHERE THE COMMENTS ARE COMING FROM  -->
+<!-- DISPLAY WHERE THE COMMENTS ARE COMING FROM -->
   <span class="xar-title">
     Showing comments n.
-    &amp;nbsp;#$first# - #$first+$howmany-1#&amp;nbsp;
+    &#160;#$first# - #$first+$howmany-1#&#160;
     <xar:if condition="$modarray[0]!='all'">
       from
       <xar:foreach in="$modarray" key="$i">
@@ -16,29 +16,27 @@
     <xar:else />
       from all modules
     </xar:if>
-    <!-- NEXT COMMENTS LINK  -->
+    <!-- NEXT COMMENTS LINK -->
     (<a href="#$decoded_nexturl#">next</a>)
   </span>
   <p />
   <span class="xar-sub">
-
       Comments are owned by the poster. We are not responsible for their content.
-
     <br />
   </span>
   <p />
-  <!-- DISPLAY COMMENTS  -->
+  <!-- DISPLAY COMMENTS -->
     <xar:if condition="count($commentlist)">
       <xar:foreach in="$commentlist" key="$daylabel" value="$commentsthisday">
         <xar:if condition="$adddaysep=='on'">
           <xar:if condition="$daylabel">
-            <!-- DAY SEPARATOR  -->
+            <!-- DAY SEPARATOR -->
               <span class="xar-title"><b>#$daylabel#</b></span>
           </xar:if>
         </xar:if>
         <ul>
           <xar:foreach in="$commentsthisday" value="$comment">
-            <!-- CHECK PERMISSION  -->
+            <!-- CHECK PERMISSION -->
             <li>
               <span class="xar-title">
                 <a href="#xarModURL('comments','user','display',array('id' => $comment['id']))#">
@@ -46,7 +44,7 @@
               </span>
               <xar:if condition="!empty($comment['title'])">
                 <xar:if condition="$addobject ge 20">
-                  <!-- OBJECT TITLE  -->
+                  <!-- OBJECT TITLE -->
                   in
                   <span class="xar-title">
                     <xar:if condition="$addobject ge 21">
@@ -66,7 +64,7 @@
                 </xar:if>
                 <span class="xar-normal">
                   <xar:if condition="$addauthor ge 1">
-                    <!-- AUTHOR NAME  -->
+                    <!-- AUTHOR NAME -->
                     <br />by
                     <xar:if condition="$comment['postanon'] eq 0 or xarModVars::get('comments','AllowPostAsAnon') eq 0">
                       <xar:if condition="$addauthor ge 2">
@@ -81,7 +79,7 @@
                     </xar:if>
                   </xar:if>
                   <xar:if condition="$adddate=='on'">
-                    <!-- DATE  -->
+                    <!-- DATE -->
                     on #xarLocaleFormatDate("%B %d, %Y %I:%M %p",$comment['date'])#
                   </xar:if>
                 </span>
@@ -94,16 +92,16 @@
       <p />
     </xar:if>
     <p />
-    <!-- FORM SELECTING DISPLAY OPTIONS (should add a module variable here)  -->
+    <!-- FORM SELECTING DISPLAY OPTIONS (should add a module variable here) -->
     <br />
       <form action="" method="post">
-        <!-- CHOOSE HOW MANY TO DISPLAY  -->
+        <!-- CHOOSE HOW MANY TO DISPLAY -->
         <span class="xar-normal">
           Show
         </span>
         <input type="text" size="2" maxlength="3" name="howmany" value="#$howmany#"/>
         comments
-        <!-- SELECT FROM WHICH MODULES  -->
+        <!-- SELECT FROM WHICH MODULES -->
         <xar:if condition="sizeof($modlist) ge 2">
           from
           <select name="modid[]" tabindex="3" multiple="multiple" size="3">
@@ -117,7 +115,7 @@
           </select>
         </xar:if>
         <p />
-        <!-- CHOOSE SORTING ORDER  -->
+        <!-- CHOOSE SORTING ORDER -->
         sorted by
         <select name="order">
           <xar:if condition="$order eq 'ASC'">
@@ -131,9 +129,9 @@
             <option value="DESC">Descending</option>
           </xar:if>
         </select> date
-        &amp;nbsp;&amp;nbsp;
+        &#160;&#160;
         <input type="submit" value="#xarML('Refresh')#"/>
         <br />
       </form>
-  <!-- END OF FORM SELECTING DISPLAY OPTIONS  -->
+  <!-- END OF FORM SELECTING DISPLAY OPTIONS -->
 </xar:template>

@@ -32,8 +32,8 @@
                    <div id="info_msg">
                    The comment has one or more replies.
                    </div>
-                       <input type="radio" name="deletebranch" value="false" checked="checked" id="deletebranch_false" />&amp;nbsp;<label for="deletebranch_false">Do not delete the replies</label><br />
-                       <input type="radio" name="deletebranch" value="true" id="deletebranch_true" />&amp;nbsp;<label for="deletebranch_true">Delete the comment and all replies</label><br />
+                       <input type="radio" name="deletebranch" value="false" checked="checked" id="deletebranch_false" />&#160;<label for="deletebranch_false">Do not delete the replies</label><br />
+                       <input type="radio" name="deletebranch" value="true" id="deletebranch_true" />&#160;<label for="deletebranch_true">Delete the comment and all replies</label><br />
                     <xar:else />
                             <input type="hidden"  name="deletebranch" value="false"/>
                     </xar:if>

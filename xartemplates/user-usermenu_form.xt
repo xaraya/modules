@@ -3,29 +3,21 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-
-                Comments
-
+            Comments
         </span>
     </div>
     <div class="xar-mod-body">
         <h2>
-
-                Comments Module User Configuration
-
+            Comments Module User Configuration
         </h2>
-        <form action="#xarModURL('comments', 'user', 'usermenu')#" method="post" enctype="application/x-www-form-urlencoded">
+        <form action="&xar-modurl-comments-user-usermenu;" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset>
             <legend>
-
-                    Comment Options
-
+                Comment Options
             </legend>
                 <div class="xar-form-input-wrapper">
                     <label for="settings[depth]" class="xar-form-label" title="#xarML('Default rendering depth')#">
-
-                            Default rendering depth
-
+                        Default rendering depth
                     </label>
                     <select name="settings[depth]" id="settings-depth">
                         <xar:for start="$i = 1" test="$i le $settings['max_depth']" iter="$i++">
@@ -43,157 +35,134 @@
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="settings[render]" class="xar-form-label" title="#xarML('Default Rendering Style')#">
-
-                                Default Rendering Style
-
+                        Default Rendering Style
                     </label>
                         <select name="settings[render]" id="settings-render">
                             <xar:if condition="$settings['render'] eq 'nested'">
                                 <option value="nested" selected="selected">
-
-                                        Nested
-
+                                    Nested
                                 </option>
                             <xar:else />
                                 <option value="nested">
-
-                                            Nested
-
+                                        Nested
                                 </option>
                             </xar:if>
                             <xar:if condition="$settings['render'] eq 'flat'">
                                 <option value="flat" selected="selected">
-
-                                        Flat
-
+                                    Flat
                                 </option>
                             <xar:else />
                                     <option value="flat">
-
-                                                Flat
-
+                                            Flat
                                         </option>
                             </xar:if>
                             <xar:if condition="$settings['render'] eq 'threaded'">
                                         <option value="threaded" selected="selected">
-
-                                                Threaded
-
+                                            Threaded
                                         </option>
                                         <xar:else />
                                         <option value="threaded">
-
-                                                Threaded
-
+                                            Threaded
                                         </option>
                             </xar:if>
                             <xar:if condition="$settings['render'] eq 'nocomments'">
                                         <option value="nocomments" selected="selected">
-
-                                                No Comments
-
+                                            No Comments
                                         </option>
                                         <xar:else />
                                         <option value="nocomments">
-
-                                                No Comments
-
+                                            No Comments
                                         </option>
                             </xar:if>
                         </select>
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="settings[sortby]" class="xar-form-label" title="#xarML('Default Sorting Mode')#">
-
-                                    Default Sorting Mode
-
+                            Default Sorting Mode
                         </label>
                         <select name="settings[sortby]" id="settings-sortby">
                                 <xar:if condition="$settings['sortby'] eq 1">
                                     <option value="1" selected="selected">
-
-                                            Author
-
+                                        Author
                                     </option>
                                 <xar:else />
                                     <option value="1">
-
                                             Author
-
+                                        
                                     </option>
                                 </xar:if>
                                 <xar:if condition="$settings['sortby'] eq 2">
                                     <option value="2" selected="selected">
-
+                                        
                                             Date
-
+                                        
                                     </option>
                                 <xar:else />
                                     <option value="2">
-
+                                        
                                             Date
-
+                                        
                                     </option>
                                 </xar:if>
                                 <xar:if condition="$settings['sortby'] eq 3">
                                     <option value="3" selected="selected">
-
+                                        
                                             Thread
-
+                                        
                                     </option>
                                     <xar:else />
                                     <option value="3">
-
+                                        
                                             Thread
-
+                                        
                                     </option>
                                 </xar:if>
                                 <xar:if condition="$settings['sortby'] eq 4">
                                     <option value="4" selected="selected">
-
+                                        
                                             Title
-
+                                        
                                     </option>
                                     <xar:else />
                                     <option value="4">
-
+                                        
                                             Title
-
+                                        
                                     </option>
                                 </xar:if>
                         </select>
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="settings[order]" class="xar-form-label" title="#xarML('Default Sorting Mode')#">
-
+                                
                                     Default Sorting Order
-
+                                
                         </label>
                         <select name="settings[order]" id="settings-order">
                                 <xar:if condition="$settings['order'] eq 1">
                                     <option value="1" selected="selected">
-
+                                        
                                             Ascending
-
+                                        
                                     </option>
                                     <xar:else />
                                     <option value="1">
-
+                                        
                                             Ascending
-
+                                        
                                     </option>
                                 </xar:if>
                                 <xar:if condition="$settings['order'] eq 2">
                                     <option value="2" selected="selected">
-
+                                        
                                             Descending
-
+                                        
                                     </option>
                                     <xar:else />
                                     <option value="2">
-
+                                        
                                             Descending
-
+                                        
                                     </option>
                             </xar:if>
                         </select>

@@ -36,7 +36,7 @@ function comments_admin_modifyconfig()
     // Get the object we'll be working with for common configuration settings
     $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'comments'));
     // Decide which fields are configurable in this module
-    $data['module_settings']->setFieldList('items_per_page');
+    $data['module_settings']->setFieldList('items_per_page, enable_user_menu, user_menu_link');
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
     $data['module_settings']->getItem();
 

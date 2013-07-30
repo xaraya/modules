@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- common admin menu for this module - remove link to the current function -->
-    <xar:style scope="module" module="comments" file="modifyconfig" />
+    <xar:style scope="module" module="comments" file="comments" />
     <div class="xar-mod-head">
       <span class="xar-mod-title">Comments Administration</span>
     </div>

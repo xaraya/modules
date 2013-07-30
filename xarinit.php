@@ -156,8 +156,8 @@ function comments_init()
 #
 # Set up modvars
 #
-    xarModVars::set('comments','render',_COM_VIEW_FLAT);
-    xarModVars::set('comments','sortby',_COM_SORTBY_DATE);
+    xarModVars::set('comments','render',_COM_VIEW_THREADED);
+    xarModVars::set('comments','sortby',_COM_SORTBY_THREAD);
     xarModVars::set('comments','order',_COM_SORT_ASC);
     xarModVars::set('comments','depth', _COM_MAX_DEPTH);
     xarModVars::set('comments','AllowPostAsAnon',1);
@@ -205,14 +205,16 @@ function comments_init()
     // module delete hook
     if (!xarModRegisterHook('module', 'remove', 'API','comments', 'admin', 'remove_module'))
         return false;
-
-    if (!xarModRegisterHook('module', 'modifyconfig', 'GUI',  'comments', 'admin', 'modifyconfighook')) {
+/*
+    if (!xarModRegisterHook('module', 'modifyconfig', 'GUI',
+                            'comments', 'admin', 'modifyconfighook')) {
         return false;
     }
-    if (!xarModRegisterHook('module', 'updateconfig', 'API',  'comments', 'admin', 'updateconfighook')) {
+    if (!xarModRegisterHook('module', 'updateconfig', 'API',
+                            'comments', 'admin', 'updateconfighook')) {
         return false;
     }
-
+*/
     /**
      * Define instances for this module
      * Format is
@@ -378,6 +380,7 @@ function comments_upgrade($oldversion)
             if (!$result)
                 return;
         case '1.3.0':
+        /*
             if (!xarModRegisterHook('module', 'modifyconfig', 'GUI',
                                     'comments', 'admin', 'modifyconfighook')) {
                 return false;
@@ -386,6 +389,7 @@ function comments_upgrade($oldversion)
                                     'comments', 'admin', 'updateconfighook')) {
                 return false;
             }
+        */
             xarModVars::set('comments', 'allowhookoverride', false);
             xarModVars::set('comments', 'edittimelimit', 0);
         case '2.0':

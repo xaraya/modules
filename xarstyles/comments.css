@@ -1,8 +1,15 @@
 /* * {outline:thin red solid;} */
 /* Classes for Overridden Templates for Comments module */
 
-.permalink {
-margin: 8px 0 0 0;
+
+fieldset.mod_settings, div#mod_settings fieldset {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+    margin-bottom: 7px;
+    border-top: none;
+}
+fieldset#mod_settings_last {
+    border-bottom: 1px solid transparent;
 }
 
 #info_msg {
@@ -41,8 +48,7 @@ margin: 8px 0 0 0;
 /*     font-size: 10px; */
     line-height: 110%;
     margin-bottom: .15em;
-    padding-top: .5em;
-    padding-bottom: .5em;
+    padding: .5em;
 }
 
 .xar-cm-comment p {

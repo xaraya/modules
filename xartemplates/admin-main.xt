@@ -6,12 +6,12 @@
     </div>
     <div class="xar-mod-body">
         <xar:template type="module" file="admin-menu"/>
-
+       <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon"/>
         <h2>
             Overview
         </h2>
         <h3>
-                What is it?
+            What is it?
         </h3>
             <p><em>Comments is a Xaraya Utility Module.</em>
                 It is currently responsible for accomplishing these tasks:
@@ -24,7 +24,7 @@
            </h3>
             <p>Simply enable the comments hook to any content module, and on the display pages, comments will be available to be used.
             </p>
-        <!--      <h3>
+             <h3>
                 Included Blocks
             </h3>
             <p>
@@ -32,7 +32,7 @@
                 recent comments made on your site. The number of comments, date of
                 comment, comments from which modules, comment author and other configuration
                 variables can be set.
-            </p> -->
+            </p>
             <h3>
                 Included Hooks
         </h3>
@@ -52,6 +52,9 @@
                   <li>Related tutorials and documentation on Comments Module found at <a href="http://www.xaraya.com/index.php/keywords/comments/" title="#xarML('Related documentation on Comments')#">Xaraya Documentation.</a>
                   </li>
              </ul>
+             <p class="xar-sub">
+                 <strong>&#160;Comments Module Overview</strong><br />&#160;Version 1.0.2&#160; 2006-03-26
+             </p>
 
     </div>
 </xar:template>

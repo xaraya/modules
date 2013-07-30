@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <!--  lets link module related stylesheet to theme - have to do it via xar:set atm, cuz it returns 1 [andyv]  -->
+    <!-- lets link module related stylesheet to theme - have to do it via xar:set atm, cuz it returns 1 [andyv] -->
     <xar:style scope="module" module="comments" file="comments"/>
     <!--
         [andyv] i see that we have at least 3 possible situations here,
@@ -38,13 +38,13 @@
                 </xar:if>
             -->
             <xar:if condition="$number_of_comments eq 0">
-                    <p class="comments_display_msg">
+                    <p>
                         There are no comments attached to this item.
                     </p>
                 <xar:if condition="!isset($header['selected_id'])">
                     <xar:template file="input-box" type="module"/>
                 <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
-                    <p class="comments_display_msg">
+                    <p>
                         Return to
                         <a href="#$header['objectlink']#">#$header['objecttitle']#</a>
                     </p>
@@ -63,14 +63,14 @@
                 <xar:if condition="!isset($header['selected_id'])">
                     <xar:template file="input-box" type="module"/>
                 <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
-                    <p class="comments_display_msg">
+                    <p>
                         Return to
                         <a href="#$header['objectlink']#">#$header['objecttitle']#</a>
                     </p>
                 </xar:if>
             </xar:if>
         <xar:else />
-            <p class="comments_display_msg">
+            <p>
                 Comments display and submission are currently disabled.
                 <xar:if condition="$number_of_comments ne 0">
                     Total number of attached comments: #$number_of_comments#

@@ -48,9 +48,9 @@ class CommentsProperty extends DataProperty
 
         // TODO: now clean up the rest :-)
 
-        $header   = xarController::getVar('header');
-        $package   = xarController::getVar('package');
-        $receipt   = xarController::getVar('receipt');
+        $header   = xarController::getVar('header');var_dump($header);
+        $package  = xarController::getVar('package');
+        $receipt  = xarController::getVar('receipt');
 
         // Fetch the module ID
         if (isset($data['modid'])) {

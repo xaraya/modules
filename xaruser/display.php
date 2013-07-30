@@ -55,9 +55,9 @@ function comments_user_display($args)
         }
     }
 
-    $header   =  xarController::getVar('header');
-    $package  =  xarController::getVar('package');
-    $receipt  =  xarController::getVar('receipt');
+    $header   = xarController::getVar('header');
+    $package  = xarController::getVar('package');
+    $receipt  = xarController::getVar('receipt');
 
     if (isset($args['modid'])) {
         $header['modid'] = $args['modid'];
@@ -171,8 +171,7 @@ function comments_user_display($args)
             $comment['transform'] = array('text');
             // call the item transform hooks
             // Note : we need to tell Xaraya explicitly that we want to invoke the hooks for 'comments' here (last argument)
-            // Don't call transforms for now, this needs reviewing
-            //$package['comments'][$key] = xarModCallHooks('item', 'transform', $comment['id'], $comment, 'comments');
+            $package['comments'][$key] = xarModCallHooks('item', 'transform', $comment['id'], $comment, 'comments');
         }
     }
     $header['input-title']            = xarML('Post a new comment');
@@ -188,7 +187,6 @@ function comments_user_display($args)
     $receipt['post_url']              = xarModURL('comments', 'user', 'reply');
     $receipt['action']                = 'display';
 
-    // form hooks are currently not working, we need to find a better way to do this
     $hooks = xarMod::apiFunc('comments','user','formhooks');
 
     if (!empty($package['comments'])) {

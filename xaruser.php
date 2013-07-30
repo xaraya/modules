@@ -37,9 +37,9 @@ sys::import('modules.comments.xarincludes.defines');
 function comments_userapi_collapse( )
 {
 
-    $headers = xarRequest::getVar('headers');
-    $package = xarRequest::getVar('package');
-    $receipt = xarRequest::getVar('receipt');
+    $headers = xarController::getVar('headers');
+    $package = xarController::getVar('package');
+    $receipt = xarController::getVar('receipt');
     $package['settings'] = xarMod::apiFunc('comments','user','getoptions');
 
     if (!isset($header['itemtype'])) {
@@ -92,9 +92,9 @@ function comments_userapi_collapse( )
 function comments_userapi_expand( )
 {
 
-    $headers = xarRequest::getVar('headers');
-    $package = xarRequest::getVar('package');
-    $receipt = xarRequest::getVar('receipt');
+    $headers = xarController::getVar('headers');
+    $package = xarController::getVar('package');
+    $receipt = xarController::getVar('receipt');
     $package['settings'] = xarMod::apiFunc('comments','user','getoptions');
 
     if (!isset($header['itemtype'])) {

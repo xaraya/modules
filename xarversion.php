@@ -17,7 +17,7 @@
  */
 $modversion['name'] = 'comments';
 $modversion['id'] = '14';
-$modversion['version'] = '2.2.0';
+$modversion['version'] = '2.4.0';
 $modversion['displayname']    = 'Comments';
 $modversion['description'] = 'Allows users to post comments on items';
 $modversion['credits'] = 'xardocs/credits.txt';
@@ -32,6 +32,7 @@ $modversion['user'] = 0;
 $modversion['class'] = 'Utility';
 $modversion['category'] = 'Content';
 $modversion['dependencyinfo'] = array(
-        0 => array('name' => 'core', 'version_ge' => '2.2.0', 'version_le' => '2.2.9')
+                            0 => array('name' => 'core', 
+                            'version_ge' => '2.4.0', 
     );
 ?>

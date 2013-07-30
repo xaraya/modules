@@ -32,9 +32,9 @@ function comments_user_reply()
     if (!xarSecurityCheck('PostComments'))
         return;
 
-    $header   = xarController::getVar('header');
-    $package   = xarController::getVar('package');
-    $receipt   = xarController::getVar('receipt');
+    $header                       = xarController::getVar('header');
+    $package                      = xarController::getVar('package');
+    $receipt                      = xarController::getVar('receipt');
     $receipt['post_url']          = xarModURL('comments','user','reply');
     $header['input-title']        = xarML('Post a reply');
     xarVarFetch('objecturl', 'str', $data['objecturl'], '', XARVAR_NOT_REQUIRED);
@@ -53,19 +53,15 @@ function comments_user_reply()
 
     switch (strtolower($receipt['action'])) {
         case 'submit':
-
+            if (empty($package['title'])) {
+                $msg = xarML('Missing [#(1)] field on new #(2)','title','comment');
+                throw new BadParameterException($msg);
+            }
             xarVarFetch('id', 'int:1:', $id, 0, XARVAR_NOT_REQUIRED);
 
-            if (isset($package['title'])) {
-                $package['title'] = trim($package['title']);
-            }
-            $package['text'] = trim($package['text']);
-
             if (empty($package['text'])) {
-                /*$msg = xarML('Missing [#(1)] field on new #(2)','body','comment');
-                throw new BadParameterException($msg);*/
-                xarResponse::redirect($data['objecturl'].'#comment');
-                return true;
+                $msg = xarML('Missing [#(1)] field on new #(2)','body','comment');
+                throw new BadParameterException($msg);
             }
             // call transform input hooks
             // should we look at the title as well?
@@ -79,24 +75,20 @@ function comments_user_reply()
                 $status = _COM_STATUS_OFF;
             }
 
-            $args = array();
-            $args['modid'] = $header['modid'];
-            $args['itemtype'] =  $header['itemtype'];
-            $args['objectid'] =  $header['objectid'];
-            $args['pid'] = $header['pid'];
-            $args['comment'] = $package['text'];
-            if (!isset($package['title'])) {
-                $args['title'] = '';
-            }
-            $args['postanon'] =  $package['postanon'];
-            $args['objecturl'] =  $data['objecturl'];
-            $args['status'] = $status;
-
-            $newid = xarMod::apiFunc('comments','user','add', $args);
+            $newid = xarMod::apiFunc('comments','user','add',
+                                       array('modid'    => $header['modid'],
+                                             'itemtype' => $header['itemtype'],
+                                             'objectid' => $header['objectid'],
+                                             'pid'      => $header['pid'],
+                                             'comment'  => $package['text'],
+                                             'title'    => $package['title'],
+                                             'postanon' => $package['postanon'],
+                                            'objecturl' => $data['objecturl'],
+                                             'status' => $status
+            ));
 
             xarResponse::redirect($data['objecturl'].'#'.$newid);
             return true;
-
         case 'reply':
 
             $comments = xarMod::apiFunc('comments','user','get_one',
