@@ -145,9 +145,9 @@ function comments_init()
 
     $module = 'comments';
     $objects = array(
-                'comments',
+                'comments_comments',
                 'comments_module_settings',
-                'blacklist'
+                'comments_blacklist'
                 );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
@@ -180,7 +180,6 @@ function comments_init()
 #
 # Set up configuration modvars (general)
 #
-
         $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'comments'));
         $module_settings->initialize();
 
@@ -290,108 +289,6 @@ function comments_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case '1.0':
-            // Code to upgrade from version 1.0 goes here
-            // Register blocks
-        if (!xarMod::apiFunc('blocks', 'admin', 'block_type_exists',
-                               array('modName'  => 'comments',
-                                     'blockType'=> 'latestcomments'))) {
-                 if (!xarMod::apiFunc('blocks', 'admin', 'register_block_type',
-                               array('modName'  => 'comments',
-                                     'blockType'=> 'latestcomments'))) return;
-        }
-            // fall through to the next upgrade
-        case '1.1':
-            // Code to upgrade from version 1.1 goes here
-            if (xarModIsAvailable('articles')) {
-                // load API for table definition etc.
-                if (!xarModAPILoad('articles','user')) return;
-            }
-
-            $dbconn =& xarDB::getConn();
-            $xartable =& xarDB::getTables();
-            $commentstable = $xartable['comments'];
-
-            sys::import('xaraya.tableddl');
-
-            // add the xar_itemtype column
-            $query = xarDBAlterTable($commentstable,
-                                     array('command' => 'add',
-                                           'field' => 'xar_itemtype',
-                                           'type' => 'integer',
-                                           'null' => false,
-                                           'default' => '0'));
-            $result = &$dbconn->Execute($query);
-            if (!$result) return;
-
-            // make sure all current records have an itemtype 0 (just in case)
-            $query = "UPDATE $commentstable SET xar_itemtype = 0";
-            $result =& $dbconn->Execute($query);
-            if (!$result) return;
-
-            // update the itemtype field for all articles
-            if (xarModIsAvailable('articles')) {
-                $modid = xarMod::getRegID('articles');
-                $articlestable = $xartable['articles'];
-
-                $query = "SELECT xar_aid, xar_pubtypeid FROM $articlestable";
-                $result =& $dbconn->Execute($query);
-                if (!$result) return;
-
-                while (!$result->EOF) {
-                    list($aid,$ptid) = $result->fields;
-                    $update = "UPDATE $commentstable SET xar_itemtype = $ptid WHERE xar_objectid = '$aid' AND xar_modid = $modid";
-                    $test =& $dbconn->Execute($update);
-                    if (!$test) return;
-
-                    $result->MoveNext();
-                }
-                $result->Close();
-            }
-
-            // TODO: any other modules where we need to insert the right itemtype here ?
-
-            // add an index for the xar_itemtype column
-            $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_itemtype',
-                           'fields'    => array('xar_itemtype'),
-                           'unique'    => FALSE);
-            $query = xarDBCreateIndex($commentstable,$index);
-            $result =& $dbconn->Execute($query);
-            if (!$result) return;
-
-            // fall through to the next upgrade
-        case '1.2':
-        case '1.2.0':
-            $dbconn =& xarDB::getConn();
-            $xartable =& xarDB::getTables();
-            sys::import('xaraya.tableddl');
-            // Create blacklist tables
-            $btable = $xartable['blacklist'];
-            $bbtable = &$xartable['blacklist_column'];
-
-            $fields = array(
-                'xar_id'       => array('type'=>'integer',  'null'=>FALSE,  'increment'=> TRUE, 'primary_key'=>TRUE),
-                'xar_domain'   => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255)
-            );
-
-            $query = xarDBCreateTable($xartable['blacklist'], $fields);
-
-            $result =& $dbconn->Execute($query);
-            if (!$result)
-                return;
-        case '1.3.0':
-        /*
-            if (!xarModRegisterHook('module', 'modifyconfig', 'GUI',
-                                    'comments', 'admin', 'modifyconfighook')) {
-                return false;
-            }
-            if (!xarModRegisterHook('module', 'updateconfig', 'API',
-                                    'comments', 'admin', 'updateconfighook')) {
-                return false;
-            }
-        */
-            xarModVars::set('comments', 'allowhookoverride', false);
-            xarModVars::set('comments', 'edittimelimit', 0);
         case '2.0':
             // Code to upgrade from version 2.0 goes here
             // fall through to the next upgrade
