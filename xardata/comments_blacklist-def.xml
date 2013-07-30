@@ -1,4 +1,4 @@
-object name="comments_blacklist">
+<object name="comments_blacklist">
   <objectid>456</objectid>
   <label>Blacklist</label>
   <module_id>182</module_id>
