@@ -32,7 +32,9 @@ $modversion['user'] = 0;
 $modversion['class'] = 'Utility';
 $modversion['category'] = 'Content';
 $modversion['dependencyinfo'] = array(
-                            0 => array('name' => 'core', 
-                            'version_ge' => '2.4.0', 
+                                0 => array(
+                                        'name' => 'Xaraya Core',
+                                        'version_ge' => '2.2.0'
+                                     ),
     );
 ?>
