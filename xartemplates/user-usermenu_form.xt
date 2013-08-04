@@ -171,7 +171,8 @@
             <div class="xar-form-input-wrapper">
                 <input type="hidden" name="authid" id="authid" value="#$authid#"/>
                 <input type="hidden" name="phase" id="phase" value="update"/>
-                <input type="submit" value="#xarML('Update Configuration')#" align="middle" tabindex="3"/>
+                <xar:var name="label">Update Configuration</xar:var>
+                <xar:button type="submit" value="$label"/>
             </div>
         </form>
     </div>

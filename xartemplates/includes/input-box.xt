@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <!-- for this module specific css rules look at comments/xarstyles/comments.css file [andyv] -->
-    <script type="text/javascript" src="modules/base/xartemplates/includes/submitonce.js"></script>
     <xar:sec mask="ReplyComments" catch="false">
-      <h3>#$header['input-title']#</h3>
 <!--      <form action="#$receipt['post_url']#" method="post" name="post" id="post" onSubmit="submitonce(this)" #$hooks['formaction']# >-->
       <form action="#$receipt['post_url']#" method="post" name="post" id="post" onSubmit="submitonce(this)">
         <div class="xar-ib-wrapper xar-accent-outline">
           <xar:if condition="$hooks['formdisplay'] ne ''">
+<!--              Hooks call               -->
             <div class="xar-ib-actionpanel xar-accent">
               <span>
                   BBCode Actions
@@ -19,17 +17,13 @@
             </div>
             <div class="xar-ib-leftpanelshort">
               <p>
-
                   Name
-
                 :
                 <xar:if condition="strtolower(xarUserGetVar('uname')) ne 'anonymous'">
                   <a href="#xarModURL('roles', 'user', 'display', array('id' => $package['role_id']))#">#$package['name']#</a>
                   <xar:if condition="$receipt['action'] ne 'modify' and xarUserIsLoggedIn()">
                     [ <a class="xar-norm" href="#xarModURL('authsystem', 'user', 'logout')#">
-
                         Logout
-
                     </a> ]
                   </xar:if>
                   <xar:if condition="xarModVars::get('comments','AllowPostAsAnon') eq '1'">
@@ -70,108 +64,46 @@
                   </xar:foreach>
                 </xar:if>
               -->
-              <input type="hidden" name="header[modid]" id="header-modid" value="#$header['modid']#"/>
-              <input type="hidden" name="header[objectid]" id="header-objectid" value="#$header['objectid']#"/>
+              <input type="hidden" name="header[moduleid]" id="header-moduleid" value="#$header['moduleid']#"/>
+              <input type="hidden" name="header[itemid]" id="header-itemid" value="#$header['itemid']#"/>
               <input type="hidden" name="header[itemtype]" id="header-itemtype" value="#$header['itemtype']#"/>
-              <xar:if condition="!isset($header['pid']) or empty($header['pid'])">
-                <input type="hidden" name="header[pid]" id="header-pid" value="0"/>
+              <xar:if condition="!isset($header['parent_id']) or empty($header['parent_id'])">
+                <input type="hidden" name="header[parent_id]" id="header-parent_id" value="0"/>
               <xar:else />
-                <input type="hidden" name="header[pid]" id="header-pid" value="#$header['pid']#"/>
+                <input type="hidden" name="header[parent_id]" id="header-parent_id" value="#$header['parent_id']#"/>
               </xar:if>
-              <xar:if condition="isset($receipt['action']) and $receipt['action'] eq 'modify'">
+              <xar:if condition="isset($comment_action) and $comment_action eq 'modify'">
                 <input type="hidden" name="header[id]" id="header-id" value="#$header['id']#"/>
               </xar:if>
-              <input type="hidden" name="receipt[action]" id="receipt-action"/>
-          <xar:if condition="isset($objecturl)">
-        <input type="hidden" name="objecturl" value="#$objecturl#" />
-          <xar:else />
-        <input type="hidden" name="objecturl" value="#xarServer::getCurrentURL()#" />
-          </xar:if>
-              <input type="submit" id="receipt-action-preview" onclick="document.getElementById('receipt-action').value='preview'" value="#xarML('Preview')#"/>
-              <input type="submit" id="receipt-action-submit" onclick="document.getElementById('receipt-action').value='submit'" value="#xarML('Submit')#"/>
+              <input type="hidden" name="comment_action" id="receipt-action" value="#$comment_action#"/>
+              <xar:if condition="isset($parent_url)">
+                <input type="hidden" name="parent_url" value="#$parent_url#" />
+              <xar:else />
+                <input type="hidden" name="parent_url" value="#xarServer::getCurrentURL()#" />
+              </xar:if>
+              <xar:var name="label"></xar:var>
+              <xar:button type="submPreviewit" id="receipt-action-preview" onclick="document.getElementById('receipt-action').value='preview'" value="$label"/>
+              <xar:var name="label">Submit</xar:var>
+              <xar:button type="submit" id="receipt-action-submit" onclick="document.getElementById('receipt-action').value='submit'" value="$label"/>
             </div>
           <xar:else/><!--$hooks['formdisplay'] eq ''-->
+
+<!--              Tag or Property call               -->
             <div class="xar-ib-leftpanel">
               <p>
-                  Name
-                :
-                <xar:if condition="strtolower(xarUserGetVar('uname')) ne 'anonymous'">
-                  <a href="&xar-modurl-roles-user-display;&#38;role_id=#$package['role_id']#"> #$package['name']# </a>
-                  <xar:if condition="$receipt['action'] ne 'modify' and xarUserIsLoggedIn()">
-                    [ <a class="xar-norm" href="&xar-modurl-authsystem-user-logout;">
-                        Logout
-                    </a> ]
-                  </xar:if>
-                    <!--Psspl:Added the code for anonomous comment -->
-                    <xar:if condition="xarModVars::get('comments','AllowPostAsAnon') eq '1' and $receipt['action'] ne 'modify'">
-                    <xar:if condition="isset($package['postanon']) and $package['postanon'] eq '1'">
-                      <input type="checkbox" name="package[postanon]" id="package-postanon" checked="checked"/>
-                    <xar:else />
-                      <input type="checkbox" name="package[postanon]" id="package-postanon"/>
-                    </xar:if>
-                      Post anonymously
-                    <br />
-                  </xar:if>
-                  <xar:if condition="$receipt['action'] eq 'modify'">
-                    <xar:if condition="isset($package['postanon']) and $package['postanon'] eq '1'">
-                      <input type="checkbox" name="package[postanon]" id="package-postanon" checked="checked"/>
-                    <xar:else />
-                      <input type="checkbox" name="package[postanon]" id="package-postanon"/>
-                    </xar:if>
-                      Post anonymously
-                    <br />
-                  </xar:if>
-                <xar:else />
-                  #$package['name']#
-                </xar:if>
+                <xar:data-form object="$object"/>
               </p>
-              <label for="package-title">
-                  Title:
-              </label>
-              <xar:if condition="isset($package['new_title'])">
-                <input class="xar-ib-field" type="text" name="package[title]" id="package-title" value="#$package['new_title']#" tabindex="1"/>
-              <xar:elseif condition="!empty($package['title'])"/>
-                <input class="xar-ib-field" type="text" name="package[title]" id="package-title" value="#$package['title']#" tabindex="1"/>
-              <xar:else />
-                <input class="xar-ib-field" type="text" name="package[title]" id="package-title" value="" tabindex="1"/>
+              <input type="hidden" name="comment_id" id="comment_id" value="#$comment_id#"/>
+              <input type="hidden" name="comment_action" id="receipt-action" value="#$comment_action#"/>
+              <xar:if condition="isset($adminreturn)">
+                <input type="hidden" name="adminreturn" value="yes" />
               </xar:if>
-              <label for="package-text">
-                  Comment:
-              </label>
-              <xar:if condition="isset($package['text'])">
-                <textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2">#$package['text']#</textarea>
-              <xar:else />
-                <textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2">&#160;</textarea>
-              </xar:if>
-              <!-- TODO: show item new/modify hook here somehow
-                <xar:if condition="!empty($hooks['iteminput'])">
-                  <xar:foreach in="$hooks['iteminput']" key="$hookmodule">
-                    #$hooks.iteminput.$hookmodule#
-                  </xar:foreach>
-                </xar:if>
-              -->
-              <input type="hidden" name="header[modid]" id="header-modid" value="#$header['modid']#"/>
-              <input type="hidden" name="header[objectid]" id="header-objectid" value="#$header['objectid']#"/>
-              <input type="hidden" name="header[itemtype]" id="header-itemtype" value="#$header['itemtype']#"/>
-              <xar:if condition="!isset($header['pid']) or empty($header['pid'])">
-                <input type="hidden" name="header[pid]" id="header-pid" value="0"/>
-              <xar:else />
-                <input type="hidden" name="header[pid]" id="header-pid" value="#$header['pid']#"/>
-              </xar:if>
-              <xar:if condition="isset($receipt['action']) and $receipt['action'] eq 'modify'">
-                <input type="hidden" name="header[id]" id="header-id" value="#$header['id']#"/>
-              </xar:if>
-              <input type="hidden" name="receipt[action]" id="receipt-action"/>
-          <xar:if condition="isset($adminreturn)">
-        <input type="hidden" name="adminreturn" value="yes" />
-          </xar:if>
-          <xar:if condition="isset($objecturl)">
-        <input type="hidden" name="objecturl" value="#$objecturl#" />
-          <xar:else />
-        <input type="hidden" name="objecturl" value="#xarServer::getCurrentURL()#" />
-          </xar:if>
-              <input type="submit" id="receipt-action-preview" onclick="document.getElementById('receipt-action').value='preview'" value="#xarML('Preview')#"/>
-              <input type="submit" id="receipt-action-submit" onclick="document.getElementById('receipt-action').value='submit'" value="#xarML('Submit')#"/>
+              <xar:var name="label">Cancel</xar:var>
+              <xar:button type="cancel" name="cancel" value="$label"/>
+              <xar:var name="label">Preview</xar:var>
+              <xar:button type="submit" name="receipt-action-preview" id="receipt-action-preview" onclick="document.getElementById('receipt-action').value='preview'" value="$label"/>
+              <xar:var name="label">Submit</xar:var>
+              <xar:button type="submit" name="receipt-action-submit" id="receipt-action-submit" onclick="document.getElementById('receipt-action').value='submit'" value="$label"/>
             </div>
           </xar:if>
         </div>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <!-- lets link module related stylesheet to theme - have to do it via xar:set atm, cuz it returns 1 [andyv] -->
     <xar:style scope="module" module="comments" file="comments"/>
     <!--
         [andyv] i see that we have at least 3 possible situations here,
@@ -33,15 +32,16 @@
             -->
             <!--
                 <xar:if condition="xarModIsAvailable('pubsub') and xarModIsHooked('pubsub','comments')">
-                    <xar:set name="extrainfo">array('module' => 'comments', 'id' => 0, 'extra' => $header['modid'].'-'.$header['itemtype'].'-'.$header['objectid'])</xar:set>
+                    <xar:set name="extrainfo">array('module' => 'comments', 'id' => 0, 'extra' => $header['moduleid'].'-'.$header['itemtype'].'-'.$header['objectid'])</xar:set>
                     <xar:module main="false" module="pubsub" func="displayicon" extrainfo="$extrainfo" layout="text"/>
                 </xar:if>
             -->
             <xar:if condition="$number_of_comments eq 0">
-                    <p>
-                        There are no comments attached to this item.
-                    </p>
+                <p>
+                    There are no comments attached to this item yet.
+                </p>
                 <xar:if condition="!isset($header['selected_id'])">
+                    <h3>Post a comment</h3>
                     <xar:template file="input-box" type="module"/>
                 <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
                     <p>
@@ -61,6 +61,7 @@
                     <xar:template file="view-flat" type="module"/>
                 </xar:if>
                 <xar:if condition="!isset($header['selected_id'])">
+                    <h3>Post a comment</h3>
                     <xar:template file="input-box" type="module"/>
                 <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
                     <p>

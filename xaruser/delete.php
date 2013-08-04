@@ -1,13 +1,13 @@
 <?php
 /**
- * Comments module - Allows users to post comments on items
+ * Comments Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
  * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -29,7 +29,10 @@ function comments_user_delete()
     $header = xarController::getVar('header');
     //$receipt = xarController::getVar('receipt');
 
-    xarVarFetch('objecturl', 'str', $data['objecturl'], '', XARVAR_NOT_REQUIRED);
+    if (empty($header))    
+        return xarTpl::module('comments','user','errors',array('layout' => 'no_direct_access'));
+
+    xarVarFetch('parent_url', 'str', $data['parent_url'], '', XARVAR_NOT_REQUIRED);
 
     // Make sure some action was submitted
     /*if (!array_key_exists('action', $receipt))
@@ -69,13 +72,13 @@ function comments_user_delete()
         if ($deletebranch) {
             xarMod::apiFunc('comments','admin','delete_branch',
                               array('node' => $header['id']));
-               xarResponse::redirect($data['objecturl']);
+               xarController::redirect($data['parent_url']);
                 return true;
         } else {
                 xarMod::apiFunc('comments','admin','delete_node',
                               array('node' => $header['id'],
-                                    'pid'  => $header['pid']));
-                xarResponse::redirect($data['objecturl']);
+                                    'parent_id'  => $header['parent_id']));
+                xarController::redirect($data['parent_url']);
                 return true;
         }
     }

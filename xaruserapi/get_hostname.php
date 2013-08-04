@@ -9,23 +9,20 @@
  * @copyright see the html/credits.html file in this release
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
- * @author Carl P. Corliss <rabbitt@xaraya.com>
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
- * Overview Menu
+ * Retrieves the host name of the commentor
+ *
  */
-function comments_admin_main()
+function comments_userapi_get_hostname()
 {
-    if(!xarSecurityCheck('AdminComments')) {
-        return;
-    }
-
-    if (xarModVars::get('modules', 'disableoverview') == 0){
-        return array();
+    $forwarded = xarServer::getVar('HTTP_X_FORWARDED_FOR');
+    if (!empty($forwarded)) {
+        $hostname = preg_replace('/,.*/', '', $forwarded);
     } else {
-        xarController::redirect(xarModURL('comments', 'admin', 'view'));
+        $hostname = xarServer::getVar('REMOTE_ADDR');
     }
-    return true;
+    return $hostname;
 }
 ?>

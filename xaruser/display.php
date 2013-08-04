@@ -1,15 +1,16 @@
 <?php
 /**
- * Comments module - Allows users to post comments on items
+ * Comments Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
  * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * Displays a comment or set of comments
@@ -37,85 +38,64 @@ function comments_user_display($args)
 {
     if (!xarSecurityCheck('ReadComments', 0)) return;
 
-    // check if we're coming via a hook call
-    if (isset($args['objectid'])) {
-        $ishooked = 1;
+    // Check if an object was passed
+    if (isset($args['object'])) {
+        $fields['moduleid'] = $args['object']->moduleid;
+        $fields['itemtype'] = $args['object']->itemtype;
+        $fields['itemid'] = $args['object']->properties['id']->value;
+        $fields['parent_url'] = xarServer::getCurrentURL();
     } else {
-        // if we're not coming via a hook call
+        // Check for required args
         $ishooked = 0;
         // then check for a 'id' parameter
         if (!empty($args['id'])) {
-            $id = $args['id'];
+            $comment_id = $args['id'];
         } else {
-            xarVarFetch('id', 'int:1:', $id, 0, XARVAR_NOT_REQUIRED);
+            xarVarFetch('comment_id', 'int:1:', $data['comment_id'], 0, XARVAR_NOT_REQUIRED);
         }
         // and set the selected id to this one
-        if (!empty($id) && !isset($args['selected_id'])) {
-            $args['selected_id'] = $id;
+        if (!empty($data['comment_id']) && !isset($data['selected_id'])) {
+            $data['selected_id'] = $data['comment_id'];
         }
     }
-
-    $header   = xarController::getVar('header');
-    $package  = xarController::getVar('package');
+    
+# --------------------------------------------------------
+# Bail if the proper args were not passed
+#
+    if (empty($fields))    
+        return xarTpl::module('comments','user','errors',array('layout' => 'no_direct_access'));
+        
     $receipt  = xarController::getVar('receipt');
+    
 
-    if (isset($args['modid'])) {
-        $header['modid'] = $args['modid'];
-    } elseif (isset($header['modid'])) {
-        $args['modid'] = $header['modid'];
-    } elseif (!empty($args['extrainfo']) && !empty($args['extrainfo']['module'])) {
-        if (is_numeric($args['extrainfo']['module'])) {
-            $modid = $args['extrainfo']['module'];
-        } else {
-            $modid = xarMod::getRegID($args['extrainfo']['module']);
-        }
-        $args['modid'] = $modid;
-        $header['modid'] = $modid;
-    } else {
-        xarVarFetch('modid', 'isset', $modid, NULL, XARVAR_NOT_REQUIRED);
-        if (empty($modid)) {
-            $modid = xarMod::getRegID(xarModGetName());
-        }
-        $args['modid'] = $modid;
-        $header['modid'] = $modid;
-    }
-    $header['modname'] = xarModGetNameFromID($header['modid']);
+//    $header['modname'] = xarModGetNameFromID($header['moduleid']);
 
-    // Fetch the itemtype
-    if (isset($args['itemtype'])) {
-        $header['itemtype'] = $args['itemtype'];
-    } elseif (isset($header['itemtype'])) {
-        $args['itemtype'] = $header['itemtype'];
-    } elseif (!empty($args['extrainfo']) && isset($args['extrainfo']['itemtype'])) {
-        $args['itemtype'] = $args['extrainfo']['itemtype'];
-        $header['itemtype'] = $args['extrainfo']['itemtype'];
-    } else {
-        xarVarFetch('itemtype', 'isset', $itemtype, NULL, XARVAR_NOT_REQUIRED);
-        $args['itemtype'] = $itemtype;
-        $header['itemtype'] = $itemtype;
+# --------------------------------------------------------
+# Try and get a selectee ID if we don't have one yet
+#
+    if (empty($data['selected_id'])) {
+        xarVarFetch('selected_id', 'int', $data['selected_id'], 0, XARVAR_NOT_REQUIRED);
     }
 
-    $package['settings'] = xarMod::apiFunc('comments','user','getoptions',$header);
+# --------------------------------------------------------
+# Get the current comment
+#
+    sys::import('modules.dynamicdata.class.objects.master');
+    $data['object'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
+    if (!empty($data['selected_id'])) $data['object']->getItem(array('itemid' => $data['selected_id']));
+    $data['selected_id'] = $data['object']->properties['id']->value;
 
-    if (isset($args['objectid'])) {
-        $header['objectid'] = $args['objectid'];
-    } elseif (isset($header['objectid'])) {
-        $args['objectid'] = $header['objectid'];
-    } else {
-        xarVarFetch('objectid','int', $objectid, 1, XARVAR_NOT_REQUIRED);
-        $args['objectid'] = $objectid;
-        $header['objectid'] = $objectid;
-    }
+# --------------------------------------------------------
+# Load the comment object with what we know about the environment
+#
+    $data['object']->setFieldValues($fields);
+    $fields = $data['object']->getFieldValues();
 
-    if (isset($args['selected_id'])) {
-        $header['selected_id'] = $args['selected_id'];
-    } elseif (isset($header['selected_id'])) {
-        $args['selected_id'] = $header['selected_id'];
-    } else {
-        xarVarFetch('selected_id', 'isset', $selected_id, NULL, XARVAR_NOT_REQUIRED);
-        $args['selected_id'] = $selected_id;
-        $header['selected_id'] = $selected_id;
-    }
+# --------------------------------------------------------
+# Get the viewing options: depth, render style, order, and sortby
+#
+    $package['settings'] = xarMod::apiFunc('comments','user','getoptions');
+
     if (!isset($args['thread'])) {
         xarVarFetch('thread', 'isset', $thread, NULL, XARVAR_NOT_REQUIRED);
     }
@@ -128,8 +108,8 @@ function comments_user_display($args)
         throw new BadParameterException($msg);
     }
 
-    if (!isset($header['selected_id']) || isset($thread)) {
-        $package['comments'] = xarMod::apiFunc('comments','user','get_multiple',$header);
+    if (empty($data['selected_id']) || isset($thread)) {
+        $package['comments'] = xarMod::apiFunc('comments','user','get_multiple',$fields);var_dump($fields);
         if (count($package['comments']) > 1) {
             $package['comments'] = comments_renderer_array_sort(
                 $package['comments'],
@@ -138,11 +118,10 @@ function comments_user_display($args)
             );
         }
     } else {
-        $header['id'] = $header['selected_id'];
         $package['settings']['render'] = _COM_VIEW_FLAT;
-        $package['comments'] = xarMod::apiFunc('comments','user','get_one', $header);
+        $package['comments'] = xarMod::apiFunc('comments','user','get_one', $fields);
         if (!empty($package['comments'][0])) {
-            $header['modid'] = $package['comments'][0]['modid'];
+            $header['moduleid'] = $package['comments'][0]['moduleid'];
             $header['itemtype'] = $package['comments'][0]['itemtype'];
             $header['objectid'] = $package['comments'][0]['objectid'];
         }
@@ -152,9 +131,9 @@ function comments_user_display($args)
         array(
             'array_list'    => $package['comments'],
             'cutoff'        => $package['settings']['depth'],
-            'modid'         => $header['modid'],
-            'itemtype'      => $header['itemtype'],
-            'objectid'      => $header['objectid'],
+            'moduleid'      => $fields['moduleid'],
+            'itemtype'      => $fields['itemtype'],
+            'itemid'        => $fields['itemid'],
         )
     );
 
@@ -174,33 +153,29 @@ function comments_user_display($args)
             $package['comments'][$key] = xarModCallHooks('item', 'transform', $comment['id'], $comment, 'comments');
         }
     }
-    $header['input-title']            = xarML('Post a new comment');
 
     $package['settings']['max_depth'] = _COM_MAX_DEPTH;
-    $package['role_id']               = xarUserGetVar('id');
-    $package['uname']                 = xarUserGetVar('uname');
-    $package['name']                  = xarUserGetVar('name');
     // Bug 6175: removed xarVarPrepForDisplay() from the title, as articles already
     // does this *but* maybe needs fixing in articles instead?
     $package['new_title']             = xarVarGetCached('Comments.title', 'title');
 
     $receipt['post_url']              = xarModURL('comments', 'user', 'reply');
-    $receipt['action']                = 'display';
+    if (!xarVarFetch('comment_action', 'str', $data['comment_action'], 'submit', XARVAR_NOT_REQUIRED)) return;
 
     $hooks = xarMod::apiFunc('comments','user','formhooks');
 
     if (!empty($package['comments'])) {
         $baseurl = xarServer::getCurrentURL();
         foreach($package['comments'] as $key => $val) {
-            $package['comments'][$key]['objecturl'] = str_replace($baseurl, '',$package['comments'][$key]['objecturl']);
+            $package['comments'][$key]['parent_url'] = str_replace($baseurl, '',$package['comments'][$key]['parent_url']);
         }
     }
 
     $data['hooks']   = $hooks;
-    $data['header']  = $header;
     $data['package'] = $package;
     $data['receipt'] = $receipt;
 
+    $data['comment_id'] = $data['selected_id'];
     return $data;
 }
 ?>

@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<!-- DISPLAY WHERE THE COMMENTS ARE COMING FROM -->
-  <span class="xar-title">
-    Showing comments n.
-    &#160;#$first# - #$first+$howmany-1#&#160;
-    <xar:if condition="$modarray[0]!='all'">
-      from
-      <xar:foreach in="$modarray" key="$i">
-        #$modlist[$modarray[$i]]#
-        <xar:if condition= "($i ge 0) and ($i lt count($modarray)-1)">
-          ,
-        </xar:if>
-      </xar:foreach>
-    <xar:else />
-      from all modules
-    </xar:if>
-    <!-- NEXT COMMENTS LINK -->
-    (<a href="#$decoded_nexturl#">next</a>)
-  </span>
-  <p />
-  <span class="xar-sub">
-      Comments are owned by the poster. We are not responsible for their content.
-    <br />
-  </span>
-  <p />
-  <!-- DISPLAY COMMENTS -->
+  <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+  <!-- DISPLAY WHERE THE COMMENTS ARE COMING FROM -->
     <xar:if condition="count($commentlist)">
+      <span class="xar-title">
+        Showing comments n.
+        <xar:set name="last">$first+$howmany-1</xar:set>
+        &#160;#$first# - #$last#&#160;
+        <xar:if condition="$modarray[0]!='all'">
+          from
+          <xar:foreach in="$modarray" key="$i">
+            #$modlist[$modarray[$i]]#
+            <xar:if condition= "($i ge 0) and ($i lt count($modarray)-1)">
+              ,
+            </xar:if>
+          </xar:foreach>
+        <xar:else />
+          from all modules
+        </xar:if>
+        <!-- NEXT COMMENTS LINK -->
+        (<a href="#$decoded_nexturl#">next</a>)
+      </span>
+      <p />
+      <span class="xar-sub">
+          Comments are owned by the poster. We are not responsible for their content.
+        <br />
+      </span>
+      <p />
+  <!-- DISPLAY COMMENTS -->
       <xar:foreach in="$commentlist" key="$daylabel" value="$commentsthisday">
         <xar:if condition="$adddaysep=='on'">
           <xar:if condition="$daylabel">
@@ -87,51 +88,52 @@
           </xar:foreach>
         </ul>
       </xar:foreach>
+        <p />
+        <!-- FORM SELECTING DISPLAY OPTIONS (should add a module variable here) -->
+        <br />
+          <form action="" method="post">
+            <!-- CHOOSE HOW MANY TO DISPLAY -->
+            <span class="xar-normal">
+              Show
+            </span>
+            <input type="text" size="2" maxlength="3" name="howmany" value="#$howmany#"/>
+            comments
+            <!-- SELECT FROM WHICH MODULES -->
+            <xar:if condition="sizeof($modlist) ge 2">
+              from
+              <select name="modid[]" tabindex="3" multiple="multiple" size="3">
+                <xar:foreach in="$modlist" key="$key" value="$value">
+                  <xar:if condition="in_array($key,$modarray)">
+                    <option value="#$key#" selected="selected">#$value#</option>
+                  <xar:else/>
+                    <option value="#$key#">#$value#</option>
+                  </xar:if>
+                </xar:foreach>
+              </select>
+            </xar:if>
+            <p />
+            <!-- CHOOSE SORTING ORDER -->
+            sorted by
+            <select name="order">
+              <xar:if condition="$order eq 'ASC'">
+                <option value="ASC" selected="selected">Ascending</option>
+              <xar:else />
+                <option value="ASC">Ascending</option>
+              </xar:if>
+              <xar:if condition="$order eq 'DESC'">
+                <option value="DESC" selected="selected">Descending</option>
+              <xar:else />
+                <option value="DESC">Descending</option>
+              </xar:if>
+            </select> date
+            &#160;&#160;
+            <xar:var name="label">Refresh</xar:var>
+            <xar:button type="submit" value="$label"/>
+            <br />
+          </form>
+      <!-- END OF FORM SELECTING DISPLAY OPTIONS -->
     <xar:else />
       <p>There are no comments</p>
       <p />
     </xar:if>
-    <p />
-    <!-- FORM SELECTING DISPLAY OPTIONS (should add a module variable here) -->
-    <br />
-      <form action="" method="post">
-        <!-- CHOOSE HOW MANY TO DISPLAY -->
-        <span class="xar-normal">
-          Show
-        </span>
-        <input type="text" size="2" maxlength="3" name="howmany" value="#$howmany#"/>
-        comments
-        <!-- SELECT FROM WHICH MODULES -->
-        <xar:if condition="sizeof($modlist) ge 2">
-          from
-          <select name="modid[]" tabindex="3" multiple="multiple" size="3">
-            <xar:foreach in="$modlist" key="$key" value="$value">
-              <xar:if condition="in_array($key,$modarray)">
-                <option value="#$key#" selected="selected">#$value#</option>
-              <xar:else/>
-                <option value="#$key#">#$value#</option>
-              </xar:if>
-            </xar:foreach>
-          </select>
-        </xar:if>
-        <p />
-        <!-- CHOOSE SORTING ORDER -->
-        sorted by
-        <select name="order">
-          <xar:if condition="$order eq 'ASC'">
-            <option value="ASC" selected="selected">Ascending</option>
-          <xar:else />
-            <option value="ASC">Ascending</option>
-          </xar:if>
-          <xar:if condition="$order eq 'DESC'">
-            <option value="DESC" selected="selected">Descending</option>
-          <xar:else />
-            <option value="DESC">Descending</option>
-          </xar:if>
-        </select> date
-        &#160;&#160;
-        <input type="submit" value="#xarML('Refresh')#"/>
-        <br />
-      </form>
-  <!-- END OF FORM SELECTING DISPLAY OPTIONS -->
 </xar:template>

@@ -169,7 +169,9 @@
                 </xar:if>
                 <!--<input type="hidden" id="receipt-returnurl-encoded" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#"/>
                 <input type="hidden" id="receipt-returnurl-decoded" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#"/>
-                --><input type="submit" value="#xarML('Refresh')#"/>
+                -->
+                <xar:var name="label">Refresh</xar:var>
+                <xar:button type="submit" value="$label"/>
             </div>
         </form>
     </div>

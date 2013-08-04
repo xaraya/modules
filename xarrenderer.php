@@ -1,11 +1,13 @@
 <?php
 /**
- * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * Comments Module
  *
+ * @package modules
  * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -118,7 +120,7 @@ function comments_renderer_array_markdepths_bychildren(&$comments_list)
 /**
  * Takes a an array of related (parent -> child) values and assigns a depth to each one
  *
- * Requires that each node in the array has the 'pid' (parent id) field
+ * Requires that each node in the array has the parent id field
  * List passed as argument MUST be an ordered list - in the order of
  * Parent1 -> child2-> child3 -> child4 -> subchild5 -> sub-subchild6-> subchild7-> child8-> child9-> subchild10 -> Parent11 ->....
  * This function is exactly like comments_display_array_markdepths but tailored for
@@ -145,7 +147,7 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
 
     // Initialize parents array and make the first key in it equal
     // to the first node in the array's parentid
-    $parents['PID_' . $comments_list[0]['pid']] = $depth;
+    $parents['PID_' . $comments_list[0]['parent_id']] = $depth;
 
     // setup the keys for each comment so that we can
     // easily reference them further down
@@ -167,31 +169,31 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
         // if the current node's parent isn't yet
         // defined, then add it to the list of parents
         // and give it a depth equal to it's parent's depth + 1
-        if (!array_key_exists("PID_".$node['pid'],$parents)) {
-            if (!array_key_exists($node['pid'], $comments_list)) {
-                $comments_list[$node['pid']]['pid'] = 0;
-                $comments_list[$node['pid']]['id'] = 0;
-                $comments_list[$node['pid']]['remove'] = 'remove';
-                $parents["PID_".$node['pid']] = -1;
+        if (!array_key_exists("PID_".$node['parent_id'],$parents)) {
+            if (!array_key_exists($node['parent_id'], $comments_list)) {
+                $comments_list[$node['parent_id']]['parent_id'] = 0;
+                $comments_list[$node['parent_id']]['id'] = 0;
+                $comments_list[$node['parent_id']]['remove'] = 'remove';
+                $parents["PID_".$node['parent_id']] = -1;
             }
-            $ppidkey = "PID_".$comments_list[$node['pid']]['pid'];
+            $ppidkey = "PID_".$comments_list[$node['parent_id']]['parent_id'];
 
             // CHECKME: when we start with a category 2+ levels deep, $parents['PID_0'] is undefined here
             if (!isset($parents[$ppidkey])) {
                 $parents[$ppidkey] = -1;
             }
-            $parents["PID_".$node['pid']] = $parents[$ppidkey] + 1;
+            $parents["PID_".$node['parent_id']] = $parents[$ppidkey] + 1;
         }
 
         // if the current nodes parent already has
         // has a defined depth and that depth is
         // zero, then reset the $depth counter to zero
-        if (0 == $parents['PID_'.$node['pid']]) {
+        if (0 == $parents['PID_'.$node['parent_id']]) {
             $depth = 0;
         }
 
         $prep_list[$key] = $node;
-        $prep_list[$key]['depth'] = $parents["PID_".$node['pid']];
+        $prep_list[$key]['depth'] = $parents["PID_".$node['parent_id']];
     }
 
     // now we go through and find all the nodes that were marked
@@ -253,9 +255,9 @@ function comments_renderer_array_prune_excessdepth($args)
         array(
             'left' => $left,
             'right' => $right,
-            'modid' => $modid,
+            'moduleid' => $moduleid,
             'itemtype' => $itemtype,
-            'objectid' => $objectid
+            'itemid' => $itemid
         )
     );
 
@@ -360,7 +362,7 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
     // if comments in the list don't have depth then we can't generate
     // the visual image -- so, in that case, see if the comments
     // have a children field. If they do, setup the depths for each
-    // comment based on that -- if not, check for a pid field and
+    // comment based on that -- if not, check for a parent_id field and
     // then set up the depth fields for each if that is present,
     // otherwise -- raise an exception.  Also, sort them after
     // assigning depths.
@@ -661,7 +663,7 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
                 $key = $node['id'];
                 $index[$node['id']] = $key;
             } else {
-                $key = $index[$node['pid']] .":".$node['id'];
+                $key = $index[$node['parent_id']] .":".$node['id'];
                 $index[$node['id']] = $key;
             }
             $new_list[$key] = $node;

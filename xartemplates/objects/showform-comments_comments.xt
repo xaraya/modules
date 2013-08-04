@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- for this module specific css rules look at comments/xarstyles/comments.css file [andyv] -->
+    <script type="text/javascript" src="modules/base/xartemplates/includes/submitonce.js"></script>
+
+    <div class="xar-row">
+            <xar:var name="label">Name:</xar:var>
+            <xar:data-label property="$properties['author']" label="$label"/>
+            <xar:if condition="xarUserIsLoggedIn()">
+                <a href="#xarModURL('roles', 'user', 'display', array('role_id' => xarUserGetVar('id')))#">
+                    <xar:data-output property="$properties['author']"/>
+                </a>
+                <xar:set name="newpost">!$properties['id']->value</xar:set>
+                <xar:if condition="$newpost">
+                    &#160;
+                    [ <a class="xar-norm" href="#xarModURL('authsystem', 'user', 'logout')#">
+                        Logout
+                    </a> ]
+                </xar:if>
+                <xar:if condition="xarModVars::get('comments','AllowPostAsAnon') eq '1'">
+                    &#160;
+                    <xar:data-input property="$properties['anonpost']"/>
+                    <xar:var name="label">Post anonymously</xar:var>
+                    <xar:data-label property="$properties['anonpost']" label="$label"/>
+                </xar:if>
+            <xar:else/>
+                <xar:data-output property="$properties['author']"/>
+            </xar:if>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="label">Title:</xar:var>
+            <xar:data-label property="$properties['title']" label="$label"/>
+        </div>
+        <div class="xar-col-condensed">
+            <xar:var name="label">Title:</xar:var>
+            <xar:data-input property="$properties['title']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
+            <xar:var name="label">Comment:</xar:var>
+            <xar:data-label property="$properties['text']" label="$label"/>
+        </div>
+        <div class="xar-col-condensed">
+            <xar:data-input property="$properties['text']"/>
+        </div>
+    </div>
+    <xar:data-input property="$properties['id']"        hidden="hidden"/>
+    <xar:data-input property="$properties['parent_id']" hidden="hidden"/>
+    <xar:data-input property="$properties['moduleid']"  hidden="hidden"/>
+    <xar:data-input property="$properties['itemtype']"  hidden="hidden"/>
+    <xar:data-input property="$properties['itemid']"    hidden="hidden"/>
+    <xar:data-input property="$properties['parent_url']" hidden="hidden"/>
+    <xar:data-input property="$properties['date']"      hidden="hidden"/>
+    <xar:data-input property="$properties['author']"    hidden="hidden"/>
+    <xar:data-input property="$properties['position']" />
+    <xar:data-input property="$properties['hostname']"  hidden="hidden"/>
+    <xar:data-input property="$properties['status']"    hidden="hidden"/>
+</xar:template>

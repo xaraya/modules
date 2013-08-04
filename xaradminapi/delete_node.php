@@ -1,13 +1,13 @@
 <?php
 /**
- * Comments module - Allows users to post comments on items
+ * Comments Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
  * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -17,7 +17,7 @@
  * @author Carl P. Corliss (aka rabbitt)
  * @access  private
  * @param   integer     $node   the id of the node to delete
- * @param   integer     $pid    the deletion node's parent id (used to reassign the children)
+ * @param   integer     $parent_id    the deletion node's parent id (used to reassign the children)
  * @returns bool true on success, false otherwise
  */
 function comments_adminapi_delete_node( $args )
@@ -30,7 +30,7 @@ function comments_adminapi_delete_node( $args )
         throw new BadParameterException($msg);
     }
 
-    if (empty($pid)) {
+    if (empty($parent_id)) {
         $msg = xarML('Missing or Invalid parent id!');
         throw new BadParameterException($msg);
     }
@@ -62,9 +62,9 @@ function comments_adminapi_delete_node( $args )
     // reset all parent id's == deletion node's id to that of
     // the deletion node's parent id
     $sql2 = "UPDATE $xartable[comments]
-                SET pid = ?
-              WHERE pid = ?";
-              $bindvars2 = array($pid, $node);
+                SET parent_id = ?
+              WHERE parent_id = ?";
+              $bindvars2 = array($parent_id, $node);
     if (!$dbconn->Execute($sql,$bindvars1))
         return;
 

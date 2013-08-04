@@ -66,7 +66,7 @@ class CommentTreeProperty extends DataProperty
         } else {
             $this->options = xarMod::apiFunc('categories','user','getchildren',array('id' => 0));
         }
-die(var_dump($this->options));
+
         $trees = array();
         $totalcount = 0;
         foreach ($this->options as $entry) {

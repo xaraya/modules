@@ -1,13 +1,13 @@
 <?php
 /**
- * Comments module - Allows users to post comments on items
+ * Comments Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
  * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -39,7 +39,7 @@ function comments_userapi_get_one( $args )
 
     sys::import('modules.dynamicdata.class.objects.master');
     $object = DataObjectMaster::getObject(array(
-                            'name' => 'comments'
+                            'name' => 'comments_comments'
         ));
 
     if (!is_object($object)) return;
@@ -56,7 +56,7 @@ function comments_userapi_get_one( $args )
     $values['datetime'] = $values['date'];
     $values['role_id'] = $values['author'];
     //comments_renderer_wrap_words($values['text'],80);
-    $values['author'] = xarUserGetVar('name',$values['author']);
+//    $values['author'] = xarUserGetVar('name',$values['author']);
 
     $arr[0] = $values;
     $values = $arr;
@@ -70,12 +70,12 @@ function comments_userapi_get_one( $args )
                     author AS author,
                     author AS role_id,
                     id AS id,
-                    pid AS pid,
+                    parent_id AS parent_id,
                     status AS status,
                     left_id AS left_id,
                     right_id AS right_id,
                     anonpost AS postanon,
-                    modid AS modid,
+                    moduleid AS moduleid,
                     itemtype AS itemtype,
                     objectid AS objectid
               FROM  $xartable[comments]

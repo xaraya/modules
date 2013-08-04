@@ -1,13 +1,13 @@
 <?php
 /**
- * Comments module - Allows users to post comments on items
+ * Comments Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
  * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -49,6 +49,6 @@ define('_COM_MAX_DEPTH', 10);
 // Status of comment nodes
 define('_COM_STATUS_DELETED', 0);
 define('_COM_STATUS_OFF', 1);
-define('_COM_STATUS_ON', 2);
-define('_COM_STATUS_ROOT_NODE', 3);
+define('_COM_STATUS_ON', 3);
+define('_COM_STATUS_ROOT_NODE', 4);
 ?>

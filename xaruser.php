@@ -1,11 +1,13 @@
 <?php
 /**
- * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * Comments Module
  *
+ * @package modules
  * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -78,7 +80,7 @@ function comments_userapi_collapse( )
         $url .= "&#38;$k=$v";
     }
 
-    xarResponse::redirect($url);
+    xarController::redirect($url);
 }
 
 
@@ -132,7 +134,7 @@ r
         $url .= "&#38;$k=$v";
     }
 
-    xarResponse::redirect($url);
+    xarController::redirect($url);
 }
 
 */

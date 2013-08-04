@@ -1,25 +1,25 @@
 <?php
 /**
- * Comments module - Allows users to post comments on items
+ * Comments Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
  * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
 /**
- * Adds a comment to the database based on the objectid/modid pair
+ * Adds a comment to the database based on the itemid/moduleid pair
  *
  * @author   Carl P. Corliss (aka rabbitt)
  * @access   public
- * @param    integer     $args['modid']      the module id
+ * @param    integer     $args['moduleid']   the module id
  * @param    integer     $args['itemtype']   the item type
- * @param    string      $args['objectid']   the item id
- * @param    integer     $args['pid']        the parent id
+ * @param    string      $args['itemid']     the item id
+ * @param    integer     $args['parent_id']        the parent id
  * @param    string      $args['title']    the title (title) of the comment
  * @param    string      $args['comment']    the text (body) of the comment
  * @param    integer     $args['postanon']   whether or not this post is gonna be anonymous
@@ -33,25 +33,21 @@ function comments_userapi_add($args)
 {
     extract($args);
 
-    if (!isset($modid) || empty($modid)) {
+    if (!isset($moduleid) || empty($moduleid)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
-                                 'modid', 'userapi', 'add', 'comments');
+                                 'moduleid', 'userapi', 'add', 'comments');
         throw new BadParameterException($msg);
     }
 
-    if (empty($itemtype) || !is_numeric($itemtype)) {
-        $itemtype = 0;
-    }
+    if (empty($itemtype) || !is_numeric($itemtype)) $itemtype = 0;
 
-    if (!isset($objectid) || empty($objectid)) {
+    if (!isset($itemid) || empty($itemid)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
-                                 'objectid', 'userapi', 'add', 'comments');
+                                 'itemid', 'userapi', 'add', 'comments');
         throw new BadParameterException($msg);
     }
 
-    if (!isset($pid) || empty($pid)) {
-        $pid = 0;
-    }
+    if (!isset($parent_id) || empty($parent_id)) $parent_id = 0;
 
     if (!isset($title) || empty($title)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
@@ -65,13 +61,8 @@ function comments_userapi_add($args)
         throw new BadParameterException($msg);
     }
 
-    if (!isset($postanon) || empty($postanon)) {
-        $postanon = 0;
-    }
-
-    if (!isset($author)) {
-        $author = xarUserGetVar('id');
-    }
+    if (!isset($postanon) || empty($postanon)) $postanon = 0;
+    if (!isset($author)) $author = xarUserGetVar('id');
 
     if (!isset($hostname)) {
         $forwarded = xarServer::getVar('HTTP_X_FORWARDED_FOR');
@@ -102,34 +93,34 @@ function comments_userapi_add($args)
     // parentid == zero then we need to find the root nodes
     // left and right values cuz we're adding the new comment
     // as a top level comment
-    if ($pid == 0) {
+    if ($parent_id == 0) {
         $root_lnr = xarMod::apiFunc('comments','user','get_node_root',
-                                   array('modid' => $modid,
-                                         'objectid' => $objectid,
+                                   array('moduleid' => $moduleid,
+                                         'itemid'   => $itemid,
                                          'itemtype' => $itemtype));
 
         // ok, if the there was no root left and right values then
         // that means this is the first comment for this particular
-        // modid/objectid combo -- so we need to create a dummy (root)
+        // moduleid/itemid combo -- so we need to create a dummy (root)
         // comment from which every other comment will branch from
         if (!count($root_lnr)) {
-            $pid = xarMod::apiFunc('comments','user','add_rootnode',
-                                  array('modid'    => $modid,
-                                        'objectid' => $objectid,
+            $parent_id = xarMod::apiFunc('comments','user','add_rootnode',
+                                  array('moduleid' => $moduleid,
+                                        'itemid'   => $itemid,
                                         'itemtype' => $itemtype));
         } else {
-            $pid = $root_lnr['id'];
+            $parent_id = $root_lnr['id'];
         }
     }
 
-    // pid should now always have a value
-    assert($pid!=0 && !empty($pid));
+    // parent_id should now always have a value
+    assert($parent_id!=0 && !empty($parent_id));
 
     // grab the left and right values from the parent
     $parent_lnr = xarMod::apiFunc('comments',
                                 'user',
                                 'get_node_lrvalues',
-                                 array('id' => $pid));
+                                 array('id' => $parent_id));
 
     // there should be -at-least- one affected row -- if not
     // then raise an exception. btw, at the very least,
@@ -138,8 +129,8 @@ function comments_userapi_add($args)
                        'user',
                        'create_gap',
                         array('startpoint' => $parent_lnr['right_id'],
-                              'modid'      => $modid,
-                              'objectid'   => $objectid,
+                              'moduleid'   => $moduleid,
+                              'itemid'     => $itemid,
                               'itemtype'   => $itemtype))) {
 
             $msg  = xarML('Unable to create gap in tree for comment insertion! Comments table has possibly been corrupted.');
@@ -150,7 +141,7 @@ function comments_userapi_add($args)
     $cdate    = time();
     $left     = $parent_lnr['right_id'];
     $right    = $left + 1;
-    if($modid == xarMod::getID('comments')) {
+    if($moduleid == xarMod::getID('comments')) {
         $status   = xarModVars::get('comments','AuthorizeComments') ? _COM_STATUS_OFF : _COM_STATUS_ON;
     } elseif (!isset($status) || !is_numeric($status)) {
         // no reasonable default for this, so we'll throw an error
@@ -165,23 +156,23 @@ function comments_userapi_add($args)
 
     sys::import('modules.dynamicdata.class.objects.master');
     $object = DataObjectMaster::getObject(array(
-                            'name' => 'comments'
+                            'name' => 'comments_comments'
         ));
 
     if (!is_object($object)) return;
 
     $fields = array(
                  'text',
-                 'modid',
+                 'module_id',
                  'itemtype',
-                 'objectid',
+                 'itemid',
                  'author',
                  'title',
                  'hostname',
                  'left_id',
                  'right_id',
-                'objecturl',
-                 'pid',
+                 'parent_url',
+                 'parent_id',
                  'status');
 
     $text = $comment;
@@ -200,9 +191,9 @@ function comments_userapi_add($args)
 
     /*$sql = "INSERT INTO $xartable[comments]
                 (id,
-                 modid,
+                 module_id,
                  itemtype,
-                 objectid,
+                 itemid,
                  author,
                  title,
                  date,
@@ -210,13 +201,13 @@ function comments_userapi_add($args)
                  text,
                  left_id,
                  right_id,
-                 pid,
+                 parent_id,
                  status,
                  anonpost)
           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     $bdate = (isset($date)) ? $date : $cdate;
     $bpostanon = (empty($postanon)) ? 0 : 1;
-    $bindvars = array($id, $modid, $itemtype, $objectid, $author, $title, $bdate, $hostname, $comment, $left, $right, $pid, $status, $bpostanon);
+    $bindvars = array($id, $moduleid, $itemtype, $itemid, $author, $title, $bdate, $hostname, $comment, $left, $right, $parent_id, $status, $bpostanon);
 
     $result = &$dbconn->Execute($sql,$bindvars);*/
 
@@ -227,7 +218,7 @@ function comments_userapi_add($args)
         // CHECKME: find some cleaner way to update the page cache if necessary
         if (function_exists('xarOutputFlushCached') &&
             xarModVars::get('xarcachemanager','FlushOnNewComment')) {
-            $modinfo = xarModGetInfo($modid);
+            $modinfo = xarModGetInfo($moduleid);
             xarOutputFlushCached("$modinfo[name]-");
             xarOutputFlushCached("comments-block");
         }
@@ -238,10 +229,10 @@ function comments_userapi_add($args)
         // pass along the current module & itemtype for pubsub (urgh)
 // FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
         $args['id'] = 0; // dummy category
-        $modinfo = xarModGetInfo($modid);
+        $modinfo = xarModGetInfo($moduleid);
         $args['current_module'] = $modinfo['name'];
         $args['current_itemtype'] = $itemtype;
-        $args['current_itemid'] = $objectid;
+        $args['current_itemid'] = $itemid;
         xarModCallHooks('item', 'create', $id, $args);
         return $id;
     }

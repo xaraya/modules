@@ -5,6 +5,7 @@
     <xar:style module="comments" file="comments" scope="module"/>
     <xar:sec mask="ReplyComments">
         <xar:template file="view-flat" type="module"/>
+        <h3>Post a reply</h3>
         <xar:template file="input-box" type="module"/>
         <xar:if condition="!empty($header['objectlink']) and !empty($header['objecttitle'])">
             <p>Return to <a href="#$header['objectlink']#">#$header['objecttitle']#</a></p>

@@ -47,14 +47,14 @@
             <xar:if condition="isset($package['transformed-text'])">
                 #$package['transformed-text']#
                 <p>
-                    <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('objecturl')#" rel="bookmark">
+                    <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('parent_url')#" rel="bookmark">
                         #
                     </a>
                 </p>
                 <xar:else />
                 #$loop:item['text']#
                 <p>
-                    <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('objecturl')#" rel="bookmark">
+                    <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('parent_url')#" rel="bookmark">
                         #
                     </a>
                 </p>

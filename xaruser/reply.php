@@ -1,19 +1,20 @@
 <?php
 /**
- * Comments module - Allows users to post comments on items
+ * Comments Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
  * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * processes comment replies and then redirects back to the
- * appropriate module/objectid (aka page)
+ * appropriate module/object itemid (aka page)
  *
  * @author   Carl P. Corliss (aka rabbitt)
  * @access   public
@@ -25,44 +26,42 @@
     $package = the comment data
     $header = info describing the item that we're commenting on
     $receipt = particulars of the form submission
+    $parent_url = the url of the parent of these comments
  */
 
 function comments_user_reply()
 {
-    if (!xarSecurityCheck('PostComments'))
-        return;
+    if (!xarSecurityCheck('PostComments')) return;
 
-    $header                       = xarController::getVar('header');
-    $package                      = xarController::getVar('package');
-    $receipt                      = xarController::getVar('receipt');
+# --------------------------------------------------------
+# Get all the relevant info from the submitted comments form
+#
+    xarVarFetch('receipt',   'array', $receipt,           array(), XARVAR_NOT_REQUIRED);
     $receipt['post_url']          = xarModURL('comments','user','reply');
-    $header['input-title']        = xarML('Post a reply');
-    xarVarFetch('objecturl', 'str', $data['objecturl'], '', XARVAR_NOT_REQUIRED);
 
-    if (!isset($package['postanon'])) {
-        $package['postanon'] = 0;
-    }
-    xarVarValidate('checkbox', $package['postanon']);
-    if (!isset($header['itemtype'])) {
-        $header['itemtype'] = 0;
-    }
+# --------------------------------------------------------
+# Bail if the proper args were not passed
+#
+//    if (empty(!$valid))    
+//        return xarTpl::module('comments','user','errors',array('layout' => 'no_direct_access'));
 
-    if (empty($receipt['action'])) {
-        $receipt['action'] = 'reply';
-    }
+# --------------------------------------------------------
+# Create the comment object
+#
+    sys::import('modules.dynamicdata.class.objects.master');
+    $data['object'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
 
-    switch (strtolower($receipt['action'])) {
+# --------------------------------------------------------
+# Take appropriate action
+#
+    if (!xarVarFetch('comment_action', 'str', $data['comment_action'], 'submit', XARVAR_NOT_REQUIRED)) return;
+    switch (strtolower($data['comment_action'])) {
         case 'submit':
-            if (empty($package['title'])) {
-                $msg = xarML('Missing [#(1)] field on new #(2)','title','comment');
-                throw new BadParameterException($msg);
-            }
-            xarVarFetch('id', 'int:1:', $id, 0, XARVAR_NOT_REQUIRED);
+# --------------------------------------------------------
+# Get the values from the form
+#
+            $valid = $data['object']->checkInput();
 
-            if (empty($package['text'])) {
-                $msg = xarML('Missing [#(1)] field on new #(2)','body','comment');
-                throw new BadParameterException($msg);
-            }
             // call transform input hooks
             // should we look at the title as well?
             $package['transform'] = array('text');
@@ -75,24 +74,25 @@ function comments_user_reply()
                 $status = _COM_STATUS_OFF;
             }
 
-            $newid = xarMod::apiFunc('comments','user','add',
-                                       array('modid'    => $header['modid'],
-                                             'itemtype' => $header['itemtype'],
-                                             'objectid' => $header['objectid'],
-                                             'pid'      => $header['pid'],
-                                             'comment'  => $package['text'],
-                                             'title'    => $package['title'],
-                                             'postanon' => $package['postanon'],
-                                            'objecturl' => $data['objecturl'],
-                                             'status' => $status
-            ));
+# --------------------------------------------------------
+# If something is wrong, do what?
+#
+            if (!$valid) {
+            }
 
-            xarResponse::redirect($data['objecturl'].'#'.$newid);
+# --------------------------------------------------------
+# Everything is go: update and go to the next page
+#
+            $data['comment_id'] = $data['object']->createItem();
+            xarController::redirect($data['object']->properties['parent_url']->value.'#'.$data['comment_id']);
             return true;
+
         case 'reply':
 
+            xarVarFetch('comment_id', 'int', $data['comment_id'], 0, XARVAR_NOT_REQUIRED);
+            $data['object']->getItem(array('itemid' => $data['comment_id']));
             $comments = xarMod::apiFunc('comments','user','get_one',
-                                       array('id' => $header['pid']));
+                                       array('id' => $data['object']->properties['id']->value));
 
             // replace the deprecated eregi stuff below
             $comments[0]['title'] = preg_replace('/^re:/i','',$comments[0]['title']);
@@ -117,21 +117,21 @@ function comments_user_reply()
                 $new_title = 'Re: '.$comments[0]['title'];
             }*/
 
-            $header['modid'] = $comments[0]['modid'];
+            $header['moduleid'] = $comments[0]['moduleid'];
             $header['itemtype'] = $comments[0]['itemtype'];
-            $header['objectid'] = $comments[0]['objectid'];
+            $header['itemid']   = $comments[0]['itemid'];
 
             // get the title and link of the original object
-            $modinfo = xarModGetInfo($header['modid']);
+            $modinfo = xarModGetInfo($header['moduleid']);
             try{
                 $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
                                            array('itemtype' => $header['itemtype'],
-                                                 'itemids' => array($header['objectid'])));
+                                                 'itemids' => array($header['itemid'])));
             } catch (Exception $e) {}
-            if (!empty($itemlinks) && !empty($itemlinks[$header['objectid']])) {
-                $url = $itemlinks[$header['objectid']]['url'];
-                $header['objectlink'] = $itemlinks[$header['objectid']]['url'];
-                $header['objecttitle'] = $itemlinks[$header['objectid']]['label'];
+            if (!empty($itemlinks) && !empty($itemlinks[$header['itemid']])) {
+                $url = $itemlinks[$header['itemid']]['url'];
+                $header['objectlink'] = $itemlinks[$header['itemid']]['url'];
+                $header['objecttitle'] = $itemlinks[$header['itemid']]['label'];
             } else {
                 $url = xarModURL($modinfo['name'],'user','main');
             }
@@ -144,7 +144,7 @@ function comments_user_reply()
                  $comments[0]['title']) =
                         xarModCallHooks('item',
                                         'transform',
-                                         $header['pid'],
+                                         $header['parent_id'],
                                          array($comments[0]['text'],
                                                $comments[0]['title']));
 
@@ -164,7 +164,7 @@ function comments_user_reply()
             list($package['transformed-text'],
                  $package['transformed-title']) = xarModCallHooks('item',
                                                       'transform',
-                                                      $header['pid'],
+                                                      $header['parent_id'],
                                                       array($package['text'],
                                                             $package['title']));
 
@@ -175,10 +175,10 @@ function comments_user_reply()
 
             $comments[0]['text']      = $package['text'];
             $comments[0]['title']     = $package['title'];
-            $comments[0]['modid']     = $header['modid'];
+            $comments[0]['moduleid']  = $header['moduleid'];
             $comments[0]['itemtype']  = $header['itemtype'];
-            $comments[0]['objectid']  = $header['objectid'];
-            $comments[0]['pid']       = $header['pid'];
+            $comments[0]['itemid']    = $header['itemid'];
+            $comments[0]['parent_id'] = $header['parent_id'];
             $comments[0]['author']    = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
             $comments[0]['id']       = 0;
             $comments[0]['postanon']  = $package['postanon'];
@@ -204,13 +204,16 @@ function comments_user_reply()
     // pass along the current module & itemtype for pubsub (urgh)
 // FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
     $args['id'] = 0; // dummy category
-    $modinfo = xarModGetInfo($header['modid']);
+    $modinfo = xarModGetInfo($header['moduleid']);
     $args['current_module'] = $modinfo['name'];
     $args['current_itemtype'] = $header['itemtype'];
-    $args['current_itemid'] = $header['objectid'];
+    $args['current_itemid'] = $header['itemid'];
     $hooks['iteminput'] = xarModCallHooks('item', 'new', 0, $args);
 */
 
+# --------------------------------------------------------
+# Pass args to the form template
+#
     $anonuid = xarConfigVars::get(null,'Site.User.AnonymousUID');
     $data['hooks']              = $hooks;
     $data['header']             = $header;

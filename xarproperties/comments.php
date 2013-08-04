@@ -48,7 +48,7 @@ class CommentsProperty extends DataProperty
 
         // TODO: now clean up the rest :-)
 
-        $header   = xarController::getVar('header');var_dump($header);
+        $header   = xarController::getVar('header');
         $package  = xarController::getVar('package');
         $receipt  = xarController::getVar('receipt');
 

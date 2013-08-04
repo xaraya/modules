@@ -1,13 +1,13 @@
 <?php
 /**
- * Comments module - Allows users to post comments on items
+ * Comments Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
  * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -17,7 +17,7 @@
  * @access public
  * @param integer  $left the left limit for the list of comment ids
  * @param integer  $right the right limit for the list of comment ids
- * @param integer  $modid/$itemtype/$objectid of the module selected
+ * @param integer  $moduleid/$itemtype/$itemid of the module selected
  * @returns array  the number of child comments for each comment id,
  *                   or raise an exception and return false.
  */
@@ -34,15 +34,15 @@ function comments_userapi_get_childcountlist($args)
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
 
-    $bind = array((int)$left, (int)$right, _COM_STATUS_ON, (int)$modid, (int)$objectid, (int)$itemtype);
+    $bind = array((int)$left, (int)$right, _COM_STATUS_ON, (int)$moduleid, (int)$itemid, (int)$itemtype);
 
     $sql = "SELECT P1.id, COUNT(P2.id) AS numitems"
         . " FROM $xartable[comments] AS P1, $xartable[comments] AS P2"
-        . " WHERE P1.modid = P2.modid AND P1.itemtype = P2.itemtype AND P1.objectid = P2.objectid"
+        . " WHERE P1.module_id = P2.module_id AND P1.itemtype = P2.itemtype AND P1.itemid = P2.itemid"
         . " AND P2.left_id >= P1.left_id AND P2.left_id <= P1.right_id"
         . " AND P1.left_id >= ? AND P1.right_id <= ?"
         . " AND P2.status = ?"
-        . " AND P1.modid = ? AND P1.objectid = ? AND P1.itemtype = ?"
+        . " AND P1.module_id = ? AND P1.itemid = ? AND P1.itemtype = ?"
         . " GROUP BY P1.id";
 
     $result =& $dbconn->Execute($sql, $bind);

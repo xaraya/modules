@@ -1,13 +1,13 @@
 <?php
 /**
- * Comments module - Allows users to post comments on items
+ * Comments Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
  * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -21,7 +21,7 @@
  *
  * @author Carl P. Corliss (aka rabbitt)
  * @access public
- * @param integer    $modid     the id of the module that these nodes belong to
+ * @param integer    $moduleid  the id of the module that these nodes belong to
  * @param integer    $itemtype  the item type that these nodes belong to
  * @param integer    $objectid  (optional) the id of the item that these nodes belong to
  * @param integer    $id        (optional) the id of a comment
@@ -37,15 +37,15 @@ function comments_userapi_get_multiple($args)
 
     extract($args);
 
-    if ( !isset($modid) || empty($modid) ) {
+    if ( !isset($moduleid) || empty($moduleid) ) {
         $msg = xarML('Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
-                                 'modid', $modid, 'userapi', 'get_multiple', 'comments');
+                                 'moduleid', $moduleid, 'userapi', 'get_multiple', 'comments');
         throw new Exception($msg);
     }
 
-    if ( (!isset($objectid) || empty($objectid)) && !isset($author) ) {
+    if ( (!isset($itemid) || empty($itemid)) && !isset($author) ) {
         $msg = xarML('Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
-                                 'objectid', $objectid, 'userapi', 'get_multiple', 'comments');
+                                 'itemid', $itemid, 'userapi', 'get_multiple', 'comments');
         throw new Exception($msg);
     } else
         if (!isset($objectid) && isset($author)) {
@@ -64,12 +64,8 @@ function comments_userapi_get_multiple($args)
 
     // Optional argument for Pager -
     // for those modules that use comments and require this
-     if (!isset($startnum)) {
-        $startnum = 1;
-    }
-    if (!isset($numitems)) {
-        $numitems = -1;
-    }
+    if (!isset($startnum)) $startnum = 1;
+    if (!isset($numitems)) $numitems = -1;
 
     if (!isset($status) || !is_numeric($status)) {
         $status = _COM_STATUS_ON;
@@ -95,12 +91,12 @@ function comments_userapi_get_multiple($args)
 
     $arr = array();
 
-    foreach ($commentlist as $val) {
-        $val['postanon'] = $val['anonpost'];
-        $val['datetime'] = $val['date'];
-        $val['role_id'] = $val['author'];
-        $val['author'] = xarUserGetVar('name',$val['author']);
-        $arr[] = $val;
+    foreach ($commentlist as $row) {
+        $row['postanon'] = $row['anonpost'];
+        $row['datetime'] = $row['date'];
+        $row['role_id'] = $row['author'];
+        $row['author'] = xarUserGetVar('name',$row['author']);
+        $arr[] = $row;
     }
 
     $commentlist = $arr;
@@ -115,7 +111,7 @@ function comments_userapi_get_multiple($args)
                     author AS author,
                     author AS role_id,
                     id AS id,
-                    pid AS pid,
+                    parent_id AS parent_id,
                     status AS status,
                     left_id AS left_id,
                     right_id AS right_id,

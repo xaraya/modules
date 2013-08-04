@@ -72,7 +72,7 @@
 </xar:if>
 
 
-&amp;nbsp;  <a href="#$fields['objecturl']####$id#"><img src="#sys::code()#modules/base/xarimages/icons/display.png" width="16" height="16" alt="Display" /></a>
+&amp;nbsp;  <a href="#$fields['parent_url']####$id#"><img src="#sys::code()#modules/base/xarimages/icons/display.png" width="16" height="16" alt="Display" /></a>
                         </td>
                     </xar:if>
                 </tr>

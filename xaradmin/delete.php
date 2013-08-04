@@ -1,11 +1,13 @@
 <?php
 /**
- * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * Comments Module
  *
+ * @package modules
  * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -110,7 +112,7 @@ function comments_admin_delete()
             if (!empty($data['items'])) {
                 foreach($data['items'] as $val) {
                     $object = DataObjectMaster::getObject(array(
-                                    'name' => 'comments'
+                                    'name' => 'comments_comments'
                     ));
                     if (!is_object($object)) return;
                     $object->deleteItem(array('itemid' => $val['id']));
@@ -125,7 +127,7 @@ function comments_admin_delete()
             if ($deletebranch) {
                 xarMod::apiFunc('comments','admin','delete_branch',array('node' => $id));
             } else {
-                xarMod::apiFunc('comments','admin','delete_node',array('node' => $id, 'pid' =>$values['pid']));
+                xarMod::apiFunc('comments','admin','delete_node',array('node' => $id, 'parent_id' =>$values['parent_id']));
             }
         } else {
             $comments = xarMod::apiFunc('comments','user','get_one',
@@ -144,11 +146,11 @@ function comments_admin_delete()
 
     if ($data['confirm'] && !empty($data['redirect'])) {
         if ($data['redirect'] == 'view') {
-            xarResponse::redirect(xarModURL('comments','admin','view'));
+            xarController::redirect(xarModURL('comments','admin','view'));
         } elseif ($data['redirect'] == 'stats') {
-            xarResponse::redirect(xarModURL('comments','admin','stats'));
+            xarController::redirect(xarModURL('comments','admin','stats'));
         } elseif (is_numeric($data['redirect'])) {
-            xarResponse::redirect(xarModURL('comments','admin','module_stats', array('modid' => $data['redirect'])));
+            xarController::redirect(xarModURL('comments','admin','module_stats', array('modid' => $data['redirect'])));
         }
     }
 

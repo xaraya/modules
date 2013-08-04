@@ -1,13 +1,13 @@
 <?php
 /**
- * Comments module - Allows users to post comments on items
+ * Comments Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
  * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -23,33 +23,15 @@ function comments_user_displayall($args)
     if (!xarVarFetch('howmany','id',$args['howmany'],20,XARVAR_GET_OR_POST)) {return;};
     if (!xarVarFetch('first','id',$args['first'],1,XARVAR_GET_OR_POST)) {return;};
 
-    if (empty($args['block_is_calling'])) {
-        $args['block_is_calling']=0;
-    }
-    if (empty($args['truncate'])) {
-        $args['truncate']='';
-    }
-    if (!isset($args['addmodule'])) {
-        $args['addmodule']='off';
-    }
-    if (!isset($args['addobject'])) {
-        $args['addobject']=21;
-    }
-    if (!isset($args['addcomment'])) {
-        $args['addcomment']=20;
-    }
-    if (!isset($args['adddate'])) {
-        $args['adddate']='on';
-    }
-    if (!isset($args['adddaysep'])) {
-        $args['adddaysep']='on';
-    }
-    if (!isset($args['addauthor'])) {
-        $args['addauthor']=1;
-    }
-    if (!isset($args['addprevious'])) {
-        $args['addprevious']=0;
-    }
+    if (empty($args['block_is_calling'])) $args['block_is_calling'] = 0;
+    if (empty($args['truncate']))         $args['truncate'] = '';
+    if (!isset($args['addmodule']))       $args['addmodule'] = 'off';
+    if (!isset($args['addobject']))       $args['addobject'] = 21;
+    if (!isset($args['addcomment']))      $args['addcomment'] = 20;
+    if (!isset($args['adddate']))         $args['adddate'] = 'on';
+    if (!isset($args['adddaysep']))       $args['adddaysep'] = 'on';
+    if (!isset($args['addauthor']))       $args['addauthor'] = 1;
+    if (!isset($args['addprevious']))     $args['addprevious'] = 0;
 
     /*$args['returnurl'] = '';*/
     $modarray = $args['modid'];

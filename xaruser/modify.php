@@ -1,13 +1,16 @@
 <?php
 /**
- * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * Comments Module
  *
+ * @package modules
  * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * Modify a comment
@@ -24,56 +27,55 @@
  */
 function comments_user_modify()
 {
-    $header                       = xarController::getVar('header');
-    $package                      = xarController::getVar('package');
-    $receipt                      = xarController::getVar('receipt');
     $receipt['post_url']          = xarModURL('comments','user','modify');
-    $header['input-title']        = xarML('Modify Comment');
 
-    if (!xarVarFetch('objecturl', 'str', $objecturl, 0, XARVAR_NOT_REQUIRED)) return;
+//    if (empty($header))    
+//        return xarTpl::module('comments','user','errors',array('layout' => 'no_direct_access'));
+
+    if (!xarVarFetch('parent_url', 'str', $parent_url, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('adminreturn', 'str', $data['adminreturn'], NULL, XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('id', 'int:1:', $id, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!empty($id)) {
-        $header['id'] = $id;
-    }
+# --------------------------------------------------------
+# Bail if the proper args were not passed
+#
+    if (!xarVarFetch('comment_id', 'int:1:', $data['comment_id'], 0, XARVAR_NOT_REQUIRED)) return;
+    if (empty($data['comment_id'])) return xarResponse::NotFound();    
+        
+# --------------------------------------------------------
+# Create the comment object and get the item to modify
+#
+    sys::import('modules.dynamicdata.class.objects.master');
+    $data['object'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
+    $data['object']->getItem(array('itemid' => $data['comment_id']));
 
-    $comments = xarMod::apiFunc('comments','user','get_one', array('id' => $header['id']));
+# --------------------------------------------------------
+# Get the pertinent part of the comments tree
+#
+    $data['comments'] = xarMod::apiFunc('comments','user','get_one', array('id' => $data['comment_id']));
 
-    $author_id = $comments[0]['role_id'];
-
-    if ($author_id != xarUserGetVar('id')) {
+# --------------------------------------------------------
+# Check that this user can modify this comment
+#
+    if ($data['object']->properties['author']->value != xarUserGetVar('id')) {
         if (!xarSecurityCheck('EditComments'))
             return;
     }
 
-    if (!isset($package['postanon'])) {
-        $package['postanon'] = 0;
-    }
-    xarVarValidate('checkbox', $package['postanon']);
-    if (!isset($header['itemtype'])) {
-        $header['itemtype'] = 0;
-    }
-
-    $header['modid'] = $comments[0]['modid'];
-    $header['itemtype'] = $comments[0]['itemtype'];
-    $header['objectid'] = $comments[0]['objectid'];
-
-    if (empty($receipt['action'])) {
-        $receipt['action'] = 'modify';
-    }
+    $header['moduleid'] = $data['object']->properties['moduleid']->value;
+    $header['itemtype'] = $data['object']->properties['itemtype']->value;
+    $header['itemid']   = $data['object']->properties['itemid']->value;
 
     // get the title and link of the original object
-    $modinfo = xarModGetInfo($header['modid']);
+    $modinfo = xarModGetInfo($data['object']->properties['author']->value);
     try{
         $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
                                    array('itemtype' => $header['itemtype'],
-                                         'itemids' => array($header['objectid'])));
+                                         'itemids' => array($header['itemid'])));
     } catch (Exception $e) {}
-    if (!empty($itemlinks) && !empty($itemlinks[$header['objectid']])) {
-        $url = $itemlinks[$header['objectid']]['url'];
-        $header['objectlink'] = $itemlinks[$header['objectid']]['url'];
-        $header['objecttitle'] = $itemlinks[$header['objectid']]['label'];
+    if (!empty($itemlinks) && !empty($itemlinks[$header['itemid']])) {
+        $url = $itemlinks[$header['itemid']]['url'];
+        $header['objectlink'] = $itemlinks[$header['itemid']]['url'];
+        $header['objecttitle'] = $itemlinks[$header['itemid']]['label'];
     } else {
         $url = xarModURL($modinfo['name'],'user','main');
     }
@@ -84,17 +86,17 @@ function comments_user_modify()
 
     $package['settings'] = xarMod::apiFunc('comments','user','getoptions',$header);
 
-    switch (strtolower($receipt['action'])) {
+# --------------------------------------------------------
+# Take appropriate action
+#
+    if (!xarVarFetch('comment_action', 'str', $data['comment_action'], 'modify', XARVAR_NOT_REQUIRED)) return;
+    switch ($data['comment_action']) {
         case 'submit':
-            if (empty($package['title'])) {
-                $msg = xarML('Missing [#(1)] field on new #(2)','title','comment');
-                throw new BadParameterException($msg);
-            }
+# --------------------------------------------------------
+# Get the values from the form
+#
+            $valid = $data['object']->checkInput();
 
-            if (empty($package['text'])) {
-                $msg = xarML('Missing [#(1)] field on new #(2)','text','comment');
-                throw new BadParameterException($msg);
-            }
             // call transform input hooks
             // should we look at the title as well?
             $package['transform'] = array('text');
@@ -103,47 +105,43 @@ function comments_user_modify()
                or (time() <= ($package['comments'][0]['xar_date'] + ($package['settings']['edittimelimit'] * 60)))
                or xarSecurityCheck('AdminComments')) {
 
-            $package = xarModCallHooks('item', 'transform-input', 0, $package,
+                $package = xarModCallHooks('item', 'transform-input', 0, $package,
                                        'comments', 0);
-            xarMod::apiFunc('comments','user','modify',
-                                        array('id'      => $header['id'],
-                                              'text'     => $package['text'],
-                                              'title'    => $package['title'],
-                                              'postanon' => $package['postanon'],
-                                              'authorid' => $author_id));
-            }
+# --------------------------------------------------------
+# If something is wrong, redisplay the form
+#
+                if (!$valid) {
+                    return xarTpl::module('comments','user','modify',$data);
+                }
 
+# --------------------------------------------------------
+# Everything is go: update and go to the next page
+#
+                $data['comment_id'] = $data['object']->updateItem();
+            }
+            
             if (isset($data['adminreturn']) && $data['adminreturn'] == 'yes') { // if we got here via the admin side
-                xarResponse::redirect(xarModURL('comments','admin','view'));
+                xarController::redirect(xarModURL('comments','admin','view'));
             } else {
-                xarResponse::redirect($comments[0]['objecturl'].'#'.$header['id']);
+                xarController::redirect($data['object']->properties['parent_url']->value . '#' . $data['comment_id']);
             }
             return true;
         case 'modify':
-            list($comments[0]['transformed-text'],
-                 $comments[0]['transformed-title']) =
+            $title =& $data['object']->properties['title']->value;
+            $text  =& $data['object']->properties['text']->value;
+            list($transformed_text,
+                 $transformed_title) =
                         xarModCallHooks('item',
                                         'transform',
-                                         $header['id'],
-                                         array($comments[0]['text'],
-                                               $comments[0]['title']));
+                                         $data['comment_id'],
+                                         array($text,
+                                               $title));
 
-            $comments[0]['transformed-text']    = xarVarPrepHTMLDisplay($comments[0]['transformed-text']);
-            $comments[0]['transformed-title']   = xarVarPrepForDisplay($comments[0]['transformed-title']);
-            $comments[0]['text']            = xarVarPrepHTMLDisplay($comments[0]['text']);
-            $comments[0]['title']           = xarVarPrepForDisplay($comments[0]['title']);
-
-            $package['comments']                = $comments;
-            $package['title']                   = $comments[0]['title'];
-            $package['text']                    = $comments[0]['text'];
-            //Psspl:Added the field for post anonomous messages.
-            $package['postanon']                    = $comments[0]['postanon'];
-            $package['comments'][0]['id']  = $header['id'];
-            $receipt['action']                  = 'modify';
-
-            $data['header']                   = $header;
-            $data['package']                  = $package;
-            $data['receipt']                  = $receipt;
+            $data['transformed_text']    = xarVarPrepHTMLDisplay($transformed_text);
+            $data['transformed_title']   = xarVarPrepForDisplay($transformed_title);
+            $data['text']                = xarVarPrepHTMLDisplay($text);
+            $data['title']               = xarVarPrepForDisplay($title);
+            $data['comment_action']      = 'submit';
 
             break;
         case 'preview':
@@ -151,7 +149,7 @@ function comments_user_modify()
             list($package['transformed-text'],
                  $package['transformed-title']) = xarModCallHooks('item',
                                                                   'transform',
-                                                                  $header['pid'],
+                                                                  $header['parent_id'],
                                                                   array($package['text'],
                                                                         $package['title']));
 
@@ -162,10 +160,10 @@ function comments_user_modify()
 
             $comments[0]['text']     = $package['text'];
             $comments[0]['title']    = $package['title'];
-            $comments[0]['modid']    = $header['modid'];
+            $comments[0]['moduleid']    = $header['moduleid'];
             $comments[0]['itemtype'] = $header['itemtype'];
-            $comments[0]['objectid'] = $header['objectid'];
-            $comments[0]['pid']      = $header['pid'];
+            $comments[0]['itemid'] = $header['itemid'];
+            $comments[0]['parent_id']      = $header['parent_id'];
             $comments[0]['author']   = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
             $comments[0]['id']      = 0;
             $comments[0]['postanon'] = $package['postanon'];
@@ -182,7 +180,7 @@ function comments_user_modify()
 
             $comments[0]['hostname'] = $hostname;
             $package['comments']         = $comments;
-            $receipt['action']           = 'modify';
+            $data['comment_action']      = 'modify';
 
             break;
 
@@ -197,20 +195,15 @@ function comments_user_modify()
     // pass along the current module & itemtype for pubsub (urgh)
 // FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
     $args['id'] = 0; // dummy category
-    $modinfo = xarModGetInfo($header['modid']);
+    $modinfo = xarModGetInfo($header['moduleid']);
     $args['current_module'] = $modinfo['name'];
     $args['current_itemtype'] = $header['itemtype'];
-    $args['current_itemid'] = $header['objectid'];
+    $args['current_itemid'] = $header['itemid'];
     $hooks['iteminput'] = xarModCallHooks('item', 'modify', $header['id'], $args);
 */
 
     $data['hooks']              = $hooks;
     $data['header']             = $header;
-    $data['package']            = $package;
-    $data['package']['date']    = time();
-    $data['package']['role_id']     = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('id') : 2);
-    $data['package']['uname']   = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('uname') : 'anonymous');
-    $data['package']['name']    = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
     $data['receipt']            = $receipt;
     return $data;
 

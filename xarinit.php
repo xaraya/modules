@@ -1,11 +1,13 @@
 <?php
 /**
- * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * Comments Module
  *
+ * @package modules
  * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -33,21 +35,20 @@ function comments_init()
     //Psspl:Added the code for anonpost_to field.
     $fields = array(
         'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-//        'id'       => array('type'=>'integer',  'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
-        'pid'       => array('type'=>'integer',  'null'=>FALSE),
-        'modid'     => array('type'=>'integer',  'null'=>TRUE),
-        'itemtype'  => array('type'=>'integer',  'null'=>false),
-        'objectid'  => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
         'date'      => array('type'=>'integer',  'null'=>FALSE),
         'author'    => array('type'=>'integer',  'null'=>FALSE,  'size'=>'medium','default'=>1),
         'title'     => array('type'=>'varchar',  'null'=>FALSE,  'size'=>100),
-        'objecturl'     => array('type'=>'text',  'null'=>FALSE,  'size'=>'medium'),
-        'hostname'  => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
         'text'      => array('type'=>'text',     'null'=>TRUE,   'size'=>'medium'),
-        'left_id'      => array('type'=>'integer',  'null'=>FALSE),
-        'right_id'     => array('type'=>'integer',  'null'=>FALSE),
-        'status'    => array('type'=>'integer',  'null'=>FALSE,  'size'=>'tiny'),
+        'parent_id' => array('type'=>'integer',  'null'=>FALSE),
+        'parent_url'=> array('type'=>'text',     'null'=>FALSE,  'size'=>'medium'),
+        'module_id' => array('type'=>'integer',  'null'=>TRUE),
+        'itemtype'  => array('type'=>'integer',  'null'=>false),
+        'itemid'    => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
+        'hostname'  => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
+        'left_id'   => array('type'=>'integer',  'null'=>FALSE),
+        'right_id'  => array('type'=>'integer',  'null'=>FALSE),
         'anonpost'  => array('type'=>'integer',  'null'=>TRUE,   'size'=>'tiny', 'default'=>0),
+        'status'    => array('type'=>'integer',  'null'=>FALSE,  'size'=>'tiny'),
     );
 
     $query = xarDBCreateTable($xartable['comments'], $fields);
@@ -74,8 +75,8 @@ function comments_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_pid',
-                   'fields'    => array('pid'),
+    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_parent_id',
+                   'fields'    => array('parent_id'),
                    'unique'    => FALSE);
 
     $query = xarDBCreateIndex($xartable['comments'],$index);
@@ -83,8 +84,8 @@ function comments_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_modid',
-                   'fields'    => array('modid'),
+    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_moduleid',
+                   'fields'    => array('module_id'),
                    'unique'    => FALSE);
 
     $query = xarDBCreateIndex($xartable['comments'],$index);
@@ -101,8 +102,8 @@ function comments_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_objectid',
-                   'fields'    => array('objectid'),
+    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_itemid',
+                   'fields'    => array('itemid'),
                    'unique'    => FALSE);
 
     $query = xarDBCreateIndex($xartable['comments'],$index);
@@ -156,27 +157,27 @@ function comments_init()
 #
 # Set up modvars
 #
-    xarModVars::set('comments','render',_COM_VIEW_THREADED);
-    xarModVars::set('comments','sortby',_COM_SORTBY_THREAD);
-    xarModVars::set('comments','order',_COM_SORT_ASC);
-    xarModVars::set('comments','depth', _COM_MAX_DEPTH);
-    xarModVars::set('comments','AllowPostAsAnon',1);
-    xarModVars::set('comments','AuthorizeComments',0);
-    xarModVars::set('comments','AllowCollapsableThreads',1);
-    xarModVars::set('comments','CollapsedBranches',serialize(array()));
-    xarModVars::set('comments','editstamp',1);
-    xarModVars::set('comments','usersetrendering',false);
+    xarModVars::set('comments', 'render',_COM_VIEW_THREADED);
+    xarModVars::set('comments', 'sortby',_COM_SORTBY_THREAD);
+    xarModVars::set('comments', 'order',_COM_SORT_ASC);
+    xarModVars::set('comments', 'depth', _COM_MAX_DEPTH);
+    xarModVars::set('comments', 'AllowPostAsAnon',1);
+    xarModVars::set('comments', 'AuthorizeComments',0);
+    xarModVars::set('comments', 'AllowCollapsableThreads',1);
+    xarModVars::set('comments', 'CollapsedBranches',serialize(array()));
+    xarModVars::set('comments', 'editstamp',1);
+    xarModVars::set('comments', 'usersetrendering',false);
     xarModVars::set('comments', 'allowhookoverride', false);
     xarModVars::set('comments', 'edittimelimit', 0);
-    xarModVars::set('comments','numstats',100);
-    xarModVars::set('comments','rssnumitems',25);
+    xarModVars::set('comments', 'numstats',100);
+    xarModVars::set('comments', 'rssnumitems',25);
     xarModVars::set('comments', 'wrap', false);
     xarModVars::set('comments', 'showtitle', false);
     xarModVars::set('comments', 'useblacklist', false);
-    xarModVars::set('comments','enable_filters',1);
-    xarModVars::set('comments','filters_min_item_count',3);
+    xarModVars::set('comments', 'enable_filters',1);
+    xarModVars::set('comments', 'filters_min_item_count',3);
 
-    # --------------------------------------------------------
+# --------------------------------------------------------
 #
 # Set up configuration modvars (general)
 #
@@ -190,38 +191,24 @@ function comments_init()
     // TODO: add delete hook
 
     // display hook
-    if (!xarModRegisterHook('item', 'display', 'GUI','comments', 'user', 'display'))
-        return false;
+    if (!xarModRegisterHook('item', 'display', 'GUI','comments', 'user', 'display')) return false;
 
     // usermenu hook
-    if (!xarModRegisterHook('item', 'usermenu', 'GUI','comments', 'user', 'usermenu'))
-        return false;
+    if (!xarModRegisterHook('item', 'usermenu', 'GUI','comments', 'user', 'usermenu')) return false;
 
     // search hook
-    if (!xarModRegisterHook('item', 'search', 'GUI','comments', 'user', 'search'))
-        return false;
+    if (!xarModRegisterHook('item', 'search', 'GUI','comments', 'user', 'search')) return false;
 
     // module delete hook
-    if (!xarModRegisterHook('module', 'remove', 'API','comments', 'admin', 'remove_module'))
-        return false;
-/*
-    if (!xarModRegisterHook('module', 'modifyconfig', 'GUI',
-                            'comments', 'admin', 'modifyconfighook')) {
-        return false;
-    }
-    if (!xarModRegisterHook('module', 'updateconfig', 'API',
-                            'comments', 'admin', 'updateconfighook')) {
-        return false;
-    }
-*/
-    /**
-     * Define instances for this module
-     * Format is
-     * setInstance(Module, Type, ModuleTable, IDField, NameField,
-     *             ApplicationVar, LevelTable, ChildIDField, ParentIDField)
-     *
-     */
+    if (!xarModRegisterHook('module', 'remove', 'API','comments', 'admin', 'remove_module')) return false;
 
+# --------------------------------------------------------
+#
+# Define instances for this module
+# Format is
+#  setInstance(Module, Type, ModuleTable, IDField, NameField,
+#             ApplicationVar, LevelTable, ChildIDField, ParentIDField)
+#
     $ctable = $xartable['comments'];
     $query1 = "SELECT DISTINCT $xartable[modules].name
                           FROM $ctable
@@ -259,24 +246,18 @@ function comments_init()
     xarRegisterMask('ReplyComments',    'All','comments', 'All','All:All:All','ACCESS_COMMENT',   'Reply to a Comment');
     xarRegisterMask('ModerateComments', 'All','comments', 'All','All:All:All','ACCESS_MODERATE',  'Moderate Comments');
     xarRegisterMask('EditComments',     'All','comments', 'All','All:All:All','ACCESS_EDIT',      'Edit Comments');
-    xarRegisterMask('AddComments',     'All','comments', 'All','All:All:All','ACCESS_ADD',      'Add Comments');
-    xarRegisterMask('DeleteComments',   'All','comments', 'All','All:All:All','ACCESS_DELETE',    'Delete a Comment or Comments');
+    xarRegisterMask('AddComments',      'All','comments', 'All','All:All:All','ACCESS_ADD',      'Add Comments');
+    xarRegisterMask('ManageComments',   'All','comments', 'All','All:All:All','ACCESS_DELETE',    'Delete a Comment or Comments');
     xarRegisterMask('AdminComments',    'All','comments', 'All','All:All:All','ACCESS_ADMIN',     'Administrate Comments');
 
-    /*xarRegisterPrivilege('ViewComments','All','comments','All','All','ACCESS_OVERVIEW');
+    xarRegisterPrivilege('ViewComments','All','comments','All','All','ACCESS_OVERVIEW');
     xarRegisterPrivilege('ReadComments','All','comments','All','All','ACCESS_READ');
     xarRegisterPrivilege('CommmentComments','All','comments','All','All','ACCESS_COMMENT');
     xarRegisterPrivilege('ModerateComments','All','comments','All','All','ACCESS_MODERATE');
     xarRegisterPrivilege('EditComments','All','comments','All','All','ACCESS_EDIT');
     xarRegisterPrivilege('AddComments','All','comments','All','All','ACCESS_ADD');
     xarRegisterPrivilege('ManageComments','All','comments','All','All:All','ACCESS_DELETE');
-    xarRegisterPrivilege('AdminComments','All','comments','All','All','ACCESS_ADMIN');*/
-
-    // Register blocks
-    /*if (!xarMod::apiFunc('blocks', 'admin', 'register_block_type',
-                       array('modName'  => 'comments',
-                             'blockType'=> 'latestcomments'))) return;*/
-    // TODO: define blocks mask & instances here, or re-use some common one ?
+    xarRegisterPrivilege('AdminComments','All','comments','All','All','ACCESS_ADMIN');
 
     // Initialisation successful
     return true;
@@ -305,7 +286,6 @@ function comments_upgrade($oldversion)
 function comments_delete()
 {
     return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => 'comments'));
-
 }
 
 ?>

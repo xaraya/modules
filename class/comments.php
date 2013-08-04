@@ -1,4 +1,16 @@
 <?php
+/**
+ * Comments Module
+ *
+ * @package modules
+ * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Marc Lutolf <mfl@netspan.ch>
+ */
     sys::import('xaraya.structures.tree');
 
     class Comments extends Object
@@ -9,7 +21,7 @@
             $xartable = xarDB::getTables();
 
             $SQLquery = "SELECT id,
-                                pid,
+                                parent_id,
                                 modid,
                                 itemtype,
                                 objectid,
@@ -28,7 +40,7 @@
             if (!$result) return;
 
             $c = new CommentTreeNode();
-            list($c->id, $c->pid, $c->modid, $c->itemtype, $c->objectid, $c->date, $c->author,  $c->title,
+            list($c->id, $c->parent_id, $c->modid, $c->itemtype, $c->objectid, $c->date, $c->author,  $c->title,
             $c->hostname, $c->text, $c->left, $c->right,$c->status, $c->anonpost) = $result->fields;
             return $c;
         }
@@ -36,7 +48,7 @@
 
     class CommentTreeNode extends TreeNode
     {
-        public $pid = 0;
+        public $parent_id = 0;
         public $modid;
         public $itemtype;
         public $objectid;
@@ -61,7 +73,7 @@
             $xartable = xarDB::getTables();
 
             $SQLquery = "SELECT id,
-                                pid,
+                                parent_id,
                                 modid,
                                 itemtype,
                                 objectid,
@@ -83,7 +95,7 @@
             $set = new BasecSet();
             while (!$result->EOF) {
                 $c = new CommentTreeNode();
-                list($c->id, $c->pid, $c->modid, $c->itemtype, $c->objectid, $c->date, $c->author,  $c->title,
+                list($c->id, $c->parent_id, $c->modid, $c->itemtype, $c->objectid, $c->date, $c->author,  $c->title,
                 $c->hostname, $c->text, $c->left, $c->right,$c->status, $c->anonpost) = $result->fields;
                 $collection->add($c);
             }
@@ -105,7 +117,7 @@
             $dbconn = xarDB::getConn();
             $xartable = xarDB::getTables();
 
-            $SQLquery = "SELECT COUNT(*) FROM " . $xartable['comments'] . " WHERE pid = ? ORDER BY left_id";
+            $SQLquery = "SELECT COUNT(*) FROM " . $xartable['comments'] . " WHERE parent_id = ? ORDER BY left_id";
             $bindvars = array($this->id);
             $result = $dbconn->Execute($SQLquery,$bindvars);
             if (!$result) return;

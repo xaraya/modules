@@ -1,15 +1,15 @@
 <?php
 /**
- * Sorting
+ * Comments Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Content Module
- * @link http://xaraya.com/index.php/release/1118.html
- * @author potion <ryan@webcommunicate.net>
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
 /**
  * Sorting

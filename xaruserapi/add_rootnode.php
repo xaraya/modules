@@ -1,13 +1,13 @@
 <?php
 /**
- * Comments module - Allows users to post comments on items
+ * Comments Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
  * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -69,7 +69,7 @@ function comments_userapi_add_rootnode( $args )
     $nextId = $dbconn->GenId($commenttable);
 
     $sql = "INSERT INTO $xartable[comments]
-              (id, pid, text,
+              (id, parent_id, text,
                title, author, left_id,
                right_id, status, objectid,
                modid, itemtype,

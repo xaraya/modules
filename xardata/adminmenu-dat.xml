@@ -1,0 +1,50 @@
+<adminmenu>
+    <menuitems>
+        <menuitem>
+			<mask>ManageComments</mask>
+            <includes>
+                <includeitem>main</includeitem>
+                <includeitem>overview</includeitem>
+            </includes>
+            <target>main</target>
+			<title>Module Overview</title>
+            <label>Overview</label>
+        </menuitem>
+        <menuitem>
+			<mask>ManageComments</mask>
+            <includes>
+                <includeitem>view</includeitem>
+            </includes>
+            <target>view</target>
+			<title>View and Edit comments</title>
+            <label>View Comments</label>
+        </menuitem>
+        <menuitem>
+			<mask>AdminComments</mask>
+            <includes>
+                <includeitem>stats</includeitem>
+            </includes>
+            <target>stats</target>
+			<title>View comment statistics per module</title>
+            <label>View Statistics</label>
+        </menuitem>
+        <menuitem>
+			<mask>AdminComments</mask>
+            <includes>
+                <includeitem>hooks</includeitem>
+            </includes>
+            <target>hooks</target>
+			<title>Configure categories hooks for other modules</title>
+            <label>Manage Hooks</label>
+        </menuitem>		
+        <menuitem>
+			<mask>AdminComments</mask>
+            <includes>
+                <includeitem>modifyconfig</includeitem>
+            </includes>
+            <target>modifyconfig</target>
+			<title>Configure the Categories module</title>
+            <label>Modify Config</label>
+        </menuitem>	
+	</menuitems>
+</adminmenu>

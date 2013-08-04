@@ -1,11 +1,13 @@
 <?php
 /**
- * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * Comments Module
  *
+ * @package modules
  * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -84,7 +86,7 @@ function comments_admin_delete( )
         // if choice isn't set or it has an incorrect value,
         // redirect back to the choice page
         if (!isset($choice) || !eregi('^(yes|no|true|false)$',$choice)) {
-            xarResponse::redirect(xarModURL('comments','admin','delete',$delete_args));
+            xarController::redirect(xarModURL('comments','admin','delete',$delete_args));
         }
 
         if($choice == 'yes' || $choice == 'true') {
@@ -126,20 +128,20 @@ function comments_admin_delete( )
             }
         } else {
             if ( isset($modid) )  {
-                xarResponse::redirect(xarModURL('comments','admin','module_stats',
+                xarController::redirect(xarModURL('comments','admin','module_stats',
                                               array('modid' => $modid,
                                                     'itemtype' => empty($itemtype) ? null : $itemtype)));
             } else {
-                xarResponse::redirect(xarModURL('comments','admin','stats'));
+                xarController::redirect(xarModURL('comments','admin','stats'));
             }
         }
 
         if (isset($modid) && strtolower($dtype) == 'object') {
-            xarResponse::redirect(xarModURL('comments','admin','module_stats',
+            xarController::redirect(xarModURL('comments','admin','module_stats',
                                           array('modid' => $modid,
                                                 'itemtype' => empty($itemtype) ? null : $itemtype)));
         } else {
-            xarResponse::redirect(xarModURL('comments','admin','stats'));
+            xarController::redirect(xarModURL('comments','admin','stats'));
         }
     }
     // If we're here, then we haven't received authorization

@@ -1,13 +1,13 @@
 <?php
 /**
- * Comments module - Allows users to post comments on items
+ * Comments Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The copyright-placeholder
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
  * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -32,11 +32,11 @@ function comments_adminapi_celko_reconstruct()
     // if the depth is zero then we
     // only want one comment
     $sql = "SELECT  id AS id,
-                    pid AS pid,
+                    parent_id AS parent_id,
                     left_id AS left_id,
                     right_id AS right_id
               FROM  $xartable[comments]
-          ORDER BY  pid DESC";
+          ORDER BY  parent_id DESC";
 
     $result =& $dbconn->Execute($sql);
     if (!$result) return;
@@ -57,11 +57,11 @@ function comments_adminapi_celko_reconstruct()
 
     krsort($tree);
 
-    foreach ($tree as $pid => $node) {
+    foreach ($tree as $parent_id => $node) {
         $newNode = $tree[$node['id']];
 
-        $tree[$node['pid']]['children'][$node['id']] = $newNode;
-        if ($pid) {
+        $tree[$node['parent_id']]['children'][$node['id']] = $newNode;
+        if ($parent_id) {
             unset($tree[$node['id']]);
         }
     }

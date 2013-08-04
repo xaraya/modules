@@ -1,14 +1,15 @@
 <?php
 /**
- * Modify config
+ * Comments Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage comments Module
- * @link http://www.xaraya.com/index.php/release/14.html
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
  sys::import('modules.comments.xarincludes.defines');
 /**
@@ -124,7 +125,7 @@ function comments_admin_modifyconfig()
 
                 $item = $object->updateItem(array('itemid' => 0));
 
-                xarResponse::redirect(xarModURL('comments','admin','modifyconfig'));
+                xarController::redirect(xarModURL('comments','admin','modifyconfig'));
 
             # --------------------------------------------------------
             #

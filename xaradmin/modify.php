@@ -1,14 +1,15 @@
 <?php
 /**
- * Modify an item
+ * Comments Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @subpackage comments
+ * @category Third Party Xaraya Module
+ * @version 2.4.0
+ * @copyright see the html/credits.html file in this release
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Comments Module
  * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
 /**
  * modify an item
@@ -20,7 +21,7 @@
 function comments_admin_modify()
 {
     if(!xarVarFetch('id',       'id',    $id,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('objecturl',       'str',    $objecturl,   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('parent_url',       'str',    $parent_url,   NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('view',    'str',   $data['view'], '',       XARVAR_NOT_REQUIRED)) return;
 
@@ -51,7 +52,7 @@ function comments_admin_modify()
     $data['pathval'] = '';
 
     // Get the object we'll be working with
-    $object = DataObjectMaster::getObject(array('name' => 'comments'));
+    $object = DataObjectMaster::getObject(array('name' => 'comments_comments'));
     $data['object'] = $object; // save for later
 
     $data['label'] = $object->label;
@@ -81,9 +82,9 @@ function comments_admin_modify()
             $values = $data['object']->getFieldValues();
 
             if (!empty($data['view'])) {
-                xarResponse::redirect($values['objecturl']);
+                xarController::redirect($values['parent_url']);
             } else {
-                xarResponse::redirect(xarModURL('comments','admin','modify', array('id'=>$id)));
+                xarController::redirect(xarModURL('comments','admin','modify', array('id'=>$id)));
             }
             return true;
         }

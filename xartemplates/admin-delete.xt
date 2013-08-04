@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:style scope="module" module="comments" file="comments"/>
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">
-            Comments Administration
-        </span>
-    </div>
+    <xar:style scope="module" module="comments" file="comments"/>
+    <xar:template file="admin-mod-head"/>
 
     <div class="xar-mod-body">
-        <xar:template type="module" file="admin-menu"/>
-
         <h2>
             Delete Comments
         </h2>
@@ -71,7 +65,8 @@
         <xar:else />
             <input type="hidden" name="redirect" value="view"/>
         </xar:if>
-                <input type="submit" name="submitted" id="submitted" value="Delete"/>
+                <xar:var name="label">Delete</xar:var>
+                <xar:button type="submit" name="submitted" id="submitted" value="$label"/>
             </div>
 
         </form>
