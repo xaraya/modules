@@ -91,12 +91,14 @@ function comments_user_reply()
 
             xarVarFetch('comment_id', 'int', $data['comment_id'], 0, XARVAR_NOT_REQUIRED);
             $data['object']->getItem(array('itemid' => $data['comment_id']));
-            $comments = xarMod::apiFunc('comments','user','get_one',
+            $data['comments'] = xarMod::apiFunc('comments','user','get_one',
                                        array('id' => $data['object']->properties['id']->value));
 
             // replace the deprecated eregi stuff below
-            $comments[0]['title'] = preg_replace('/^re:/i','',$comments[0]['title']);
-            $new_title = 'Re: '.$comments[0]['title'];
+            $title =& $data['object']->properties['title']->value;
+            $text  =& $data['object']->properties['text']->value;
+            $title = preg_replace('/^re:/i','',$title);
+            $new_title = 'Re: ' . $title;
 
             /*if (eregi('^(re\:|re\([0-9]+\))',$comments[0]['title'])) {
                 if (eregi('^re\:',$comments[0]['title'])) {
@@ -117,21 +119,17 @@ function comments_user_reply()
                 $new_title = 'Re: '.$comments[0]['title'];
             }*/
 
-            $header['moduleid'] = $comments[0]['moduleid'];
-            $header['itemtype'] = $comments[0]['itemtype'];
-            $header['itemid']   = $comments[0]['itemid'];
-
             // get the title and link of the original object
-            $modinfo = xarModGetInfo($header['moduleid']);
+            $modinfo = xarModGetInfo($data['object']->properties['moduleid']->value);
             try{
                 $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
-                                           array('itemtype' => $header['itemtype'],
-                                                 'itemids' => array($header['itemid'])));
+                                           array('itemtype' => $data['object']->properties['itemtype']->value,
+                                                 'itemids' => array($data['object']->properties['itemid']->value)));
             } catch (Exception $e) {}
-            if (!empty($itemlinks) && !empty($itemlinks[$header['itemid']])) {
+            if (!empty($itemlinks) && !empty($itemlinks[$data['object']->properties['itemid']->value])) {
                 $url = $itemlinks[$header['itemid']]['url'];
-                $header['objectlink'] = $itemlinks[$header['itemid']]['url'];
-                $header['objecttitle'] = $itemlinks[$header['itemid']]['label'];
+                $header['objectlink'] = $itemlinks[$data['object']->properties['itemid']->value]['url'];
+                $header['objecttitle'] = $itemlinks[$data['object']->properties['itemid']->value]['label'];
             } else {
                 $url = xarModURL($modinfo['name'],'user','main');
             }
@@ -140,24 +138,27 @@ function comments_user_reply()
                                               'decoded' => $url);
             }*/
 
-            list($comments[0]['text'],
-                 $comments[0]['title']) =
+            list($text,
+                 $title) =
                         xarModCallHooks('item',
                                         'transform',
-                                         $header['parent_id'],
-                                         array($comments[0]['text'],
-                                               $comments[0]['title']));
+                                         $data['object']->properties['parent_id']->value,
+                                         array($text,
+                                               $title));
 
-            $comments[0]['text']         = xarVarPrepHTMLDisplay($comments[0]['text']);
-            $comments[0]['title']        = xarVarPrepForDisplay($comments[0]['title']);
+            $text         = xarVarPrepHTMLDisplay($text);
+            $title        = xarVarPrepForDisplay($title);
 
-            $package['comments']             = $comments;
             $package['new_title']            = xarVarPrepForDisplay($new_title);
             $receipt['action']               = 'reply';
-            $data['header']                = $header;
             $data['package']               = $package;
             $data['receipt']               = $receipt;
 
+            // Create an object itme for the reply
+            $data['object'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
+            $data['object']->properties['title']->value = $new_title;
+            $data['object']->properties['position']->reference_id = $data['comment_id'];
+            $data['object']->properties['position']->position = 3;
             break;
         case 'preview':
         default:
@@ -216,12 +217,11 @@ function comments_user_reply()
 #
     $anonuid = xarConfigVars::get(null,'Site.User.AnonymousUID');
     $data['hooks']              = $hooks;
-    $data['header']             = $header;
     $data['package']            = $package;
     $data['package']['date']    = time();
-    $data['package']['role_id']     = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('id') : $anonuid);
-    $data['package']['uname']   = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('uname') : 'anonymous');
-    $data['package']['name']    = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
+    $data['package']['role_id']     = ((xarUserIsLoggedIn() && !$data['object']->properties['anonpost']->value) ? xarUserGetVar('id') : $anonuid);
+    $data['package']['uname']   = ((xarUserIsLoggedIn() && !$data['object']->properties['anonpost']->value) ? xarUserGetVar('uname') : 'anonymous');
+    $data['package']['name']    = ((xarUserIsLoggedIn() && !$data['object']->properties['anonpost']->value) ? xarUserGetVar('name') : 'Anonymous');
     $data['receipt']            = $receipt;
 
     return $data;
