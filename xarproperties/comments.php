@@ -214,7 +214,6 @@ class CommentsProperty extends DataProperty
         $data['header']  = $header;
         $data['package'] = $package;
         $data['receipt'] = $receipt;
-//        var_dump($data);exit;
 
         return parent::showInput($data);
     }

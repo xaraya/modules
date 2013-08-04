@@ -109,7 +109,7 @@ function comments_user_display($args)
     }
 
     if (empty($data['selected_id']) || isset($thread)) {
-        $package['comments'] = xarMod::apiFunc('comments','user','get_multiple',$fields);var_dump($fields);
+        $package['comments'] = xarMod::apiFunc('comments','user','get_multiple',$fields);
         if (count($package['comments']) > 1) {
             $package['comments'] = comments_renderer_array_sort(
                 $package['comments'],
