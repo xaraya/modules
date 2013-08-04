@@ -54,7 +54,7 @@
     <xar:data-input property="$properties['parent_url']" hidden="hidden"/>
     <xar:data-input property="$properties['date']"      hidden="hidden"/>
     <xar:data-input property="$properties['author']"    hidden="hidden"/>
-    <xar:data-input property="$properties['position']" />
+    <xar:data-input property="$properties['position']"  hidden="hidden"/>
     <xar:data-input property="$properties['hostname']"  hidden="hidden"/>
     <xar:data-input property="$properties['status']"    hidden="hidden"/>
 </xar:template>
