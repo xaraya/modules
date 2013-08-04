@@ -33,7 +33,6 @@
             <xar:data-label property="$properties['title']" label="$label"/>
         </div>
         <div class="xar-col-condensed">
-            <xar:var name="label">Title:</xar:var>
             <xar:data-input property="$properties['title']"/>
         </div>
     </div>
@@ -54,7 +53,7 @@
     <xar:data-input property="$properties['parent_url']" hidden="hidden"/>
     <xar:data-input property="$properties['date']"      hidden="hidden"/>
     <xar:data-input property="$properties['author']"    hidden="hidden"/>
-    <xar:data-input property="$properties['position']"  hidden="hidden"/>
+    <xar:data-input property="$properties['position']"  />
     <xar:data-input property="$properties['hostname']"  hidden="hidden"/>
     <xar:data-input property="$properties['status']"    hidden="hidden"/>
 </xar:template>
