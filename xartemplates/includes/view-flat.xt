@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
      <xar:loop name="$comments">
-        <div class="xar-accent-outline xar-cm-comment">
+        <div class="xar-accent-outline xar-comments-comment">
              <a name="#$loop:item['id']#"></a>
                 <xar:set name="item">#$loop:item#</xar:set>
                 <xar:if condition="count($comments) gt 1">
@@ -24,35 +24,16 @@
                     </xar:if>
                 </xar:sec>
                 <!-- end changelog -->
-                <span class="xar-sub">
-                    Posted by:
-                    <xar:if condition="$loop:item['postanon'] eq 0">
-                        #$loop:item['author']#
-                        <xar:else />
-                        <xar:sec catch="false" mask="ModerateComments">
-                            Anonymous
-                            (#$loop:item['author']#)
-                            <xar:else />
-                                Anonymous
-                        </xar:sec>
-                    </xar:if>
-                    <xar:sec mask="AdminComments" catch="false">
-                        [ip: #$loop:item['hostname']#]
-                    </xar:sec>
-                        on
-                    #xarLocaleFormatDate("%B %d, %Y %I:%M %p",$loop:item['date'])#
-                </span>
             </div>
-            <div class="xar-accent xar-cm-comment">
+            <xar:data-display object="$object"/>
+            <div class="xar-accent xar-comments-comment">
                 <xar:if condition="isset($transformed_text)">
-                    #$transformed_text#
                     <p>
                         <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('parent_url')#" rel="bookmark">
                             #
                         </a>
                     </p>
                 <xar:else />
-                    #$loop:item['text']#
                     <p>
                         <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('parent_url')#" rel="bookmark">
                             #

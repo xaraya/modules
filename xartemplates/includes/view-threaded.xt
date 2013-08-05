@@ -155,7 +155,7 @@
     <!-- CHECKME: no text or buttons in search results -->
           <xar:if condition="isset($loop:item['text'])">
             <div class="xar-tr-collapsed" id="comment_#$loop:item['id']#">
-                <div class="xar-cm-comment xar-accent xar-accent-outline">
+                <div class="xar-comments-comment xar-accent xar-accent-outline">
                     <xar:set name="item">#$loop:item#</xar:set>
                     <xar:template file="action_buttons"/>
 

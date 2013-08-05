@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:loop name="$package['comments']">
-    <div class="xar-accent-outline xar-cm-comment" style="margin-left: #$loop:item['depth']*20#px;">
+    <div class="xar-accent-outline xar-comments-comment" style="margin-left: #$loop:item['depth']*20#px;">
         <div>
             <a name="#$loop:item['id']#"></a>
             <xar:set name="item">#$loop:item#</xar:set>
@@ -43,7 +43,7 @@
             </span>
 
         </div>
-        <div class="xar-cm-comment xar-accent">
+        <div class="xar-comments-comment xar-accent">
             <xar:if condition="isset($package['transformed-text'])">
                 #$package['transformed-text']#
                 <p>

@@ -21,13 +21,13 @@ fieldset#mod_settings_last {
     width: 100%;
     padding-bottom: 7px;
 }
-.xar-cm-wrapper {
+.xar-comments-wrapper {
     height: 3.5em;
     padding-bottom:10px;
     margin-bottom: 5px;
 }
 
-.xar-cm-settings {
+.xar-comments-settings {
     float: left;
     width: 19%;
     font-size: 90%;
@@ -36,14 +36,20 @@ fieldset#mod_settings_last {
     padding: 0px;
 }
 
-.xar-cm-note {
+.xar-comments-note {
     text-align: right;
     line-height: 1em;
     margin:0;
     padding:0;
 }
 
-.xar-cm-comment {
+.xar-comments-title {
+    line-height: 110%;
+    margin-bottom: .15em;
+    font-weight: bold;
+}
+
+.xar-comments-comment {
 /*     color: #15506E !important; */
 /*     font-size: 10px; */
     line-height: 110%;
@@ -51,20 +57,20 @@ fieldset#mod_settings_last {
     padding: .5em;
 }
 
-.xar-cm-comment p {
+.xar-comments-comment p {
 /*     font-size: 10px; */
 /*     line-height: 130%; */
     padding: 0;
 }
 
-form.xar-cm-actions {
+form.xar-comments-actions {
     float: right;
     width:auto;
     padding:0;
     margin:0;
 }
 
-form.xar-cm-actions > input {
+form.xar-comments-actions > input {
     width:auto;
     padding-left:.25em;
 }
