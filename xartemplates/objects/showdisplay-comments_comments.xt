@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-comments-title">
+        <h4><xar:data-output property="$properties['title']"/></h4>
+    </div>
     <span class="xar-sub">
         Posted by:
         <xar:set name="anonpost">$properties['anonpost']->value</xar:set>
@@ -18,9 +21,6 @@
         </xar:sec>
             on <xar:data-output property="$properties['date']"/>
     </span>
-    <div class="xar-comments-title">
-        <xar:data-output property="$properties['title']"/>
-    </div>
     <div class="xar-comments-comment">
         <xar:if condition="isset($transformed_text)">
             #$transformed_text#
