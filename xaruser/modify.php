@@ -27,11 +27,6 @@
  */
 function comments_user_modify()
 {
-    $receipt['post_url']          = xarModURL('comments','user','modify');
-
-//    if (empty($header))    
-//        return xarTpl::module('comments','user','errors',array('layout' => 'no_direct_access'));
-
     if (!xarVarFetch('parent_url', 'str', $parent_url, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('adminreturn', 'str', $data['adminreturn'], NULL, XARVAR_NOT_REQUIRED)) return;
 
@@ -47,11 +42,6 @@ function comments_user_modify()
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
     $data['object']->getItem(array('itemid' => $data['comment_id']));
-
-# --------------------------------------------------------
-# Get the pertinent part of the comments tree
-#
-    $data['comments'] = xarMod::apiFunc('comments','user','get_one', array('id' => $data['comment_id']));
 
 # --------------------------------------------------------
 # Check that this user can modify this comment
@@ -203,8 +193,6 @@ function comments_user_modify()
 */
 
     $data['hooks']              = $hooks;
-    $data['header']             = $header;
-    $data['receipt']            = $receipt;
     return $data;
 
 }

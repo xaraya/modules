@@ -2,13 +2,27 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- lets link module related stylesheet to theme - have to do it via xar:set atm, cuz it returns 1 [andyv] -->
-    <xar:style module="comments" file="comments" scope="module"/>
-    <xar:sec mask="ReplyComments">
-        <xar:template file="view-flat" type="module"/>
-        <h3>Post a reply</h3>
-        <xar:template file="input-box" type="module"/>
-        <xar:if condition="!empty($header['objectlink']) and !empty($header['objecttitle'])">
-            <p>Return to <a href="#$header['objectlink']#">#$header['objecttitle']#</a></p>
-        </xar:if>
-    </xar:sec>
+    <xar:style scope="module" module="comments" file="comments"/>
+
+    <xar:data-display object="$object"/>
+    <h3>Post a reply</h3>
+    <form action="#xarModURL('comments', 'user', 'reply')#" method="post">
+        <div class="xar-ib-leftpanel">
+            <xar:data-form object="$reply"/>
+          <input type="hidden" name="comment_id" id="comment_id" value="#$comment_id#"/>
+          <input type="hidden" name="comment_action" id="comment_action" value="submit"/>
+          <xar:if condition="isset($adminreturn)">
+            <input type="hidden" name="adminreturn" value="yes" />
+          </xar:if>
+          <xar:var name="label">Cancel</xar:var>
+          <xar:button type="cancel" name="cancel" value="$label"/>
+          <xar:var name="label">Preview</xar:var>
+          <xar:button type="submit" name="comment_action-preview" id="comment_action-preview" onclick="document.getElementById('receipt-action').value='preview'" value="$label"/>
+          <xar:var name="label">Submit</xar:var>
+          <xar:button type="submit" name="comment_action-submit" id="comment_action-submit" onclick="document.getElementById('receipt-action').value='submit'" value="$label"/>
+        </div>
+    </form>
+    <xar:if condition="!empty($header['objectlink']) and !empty($header['objecttitle'])">
+        <p>Return to <a href="#$header['objectlink']#">#$header['objecttitle']#</a></p>
+    </xar:if>
 </xar:template>

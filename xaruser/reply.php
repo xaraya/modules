@@ -33,38 +33,28 @@ function comments_user_reply()
 {
     if (!xarSecurityCheck('PostComments')) return;
 
+
 # --------------------------------------------------------
 # Get all the relevant info from the submitted comments form
 #
-    xarVarFetch('receipt',   'array', $receipt,           array(), XARVAR_NOT_REQUIRED);
-    $receipt['post_url']          = xarModURL('comments','user','reply');
 
-# --------------------------------------------------------
-# Bail if the proper args were not passed
-#
-//    if (empty(!$valid))    
-//        return xarTpl::module('comments','user','errors',array('layout' => 'no_direct_access'));
-
-# --------------------------------------------------------
-# Create the comment object
-#
-    sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
 
 # --------------------------------------------------------
 # Take appropriate action
 #
-    if (!xarVarFetch('comment_action', 'str', $data['comment_action'], 'submit', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('comment_action', 'str', $data['comment_action'], 'reply', XARVAR_NOT_REQUIRED)) return;
     switch (strtolower($data['comment_action'])) {
         case 'submit':
 # --------------------------------------------------------
 # Get the values from the form
 #
-            $valid = $data['object']->checkInput();
+            $data['reply'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
+            $valid = $data['reply']->checkInput();
 
             // call transform input hooks
             // should we look at the title as well?
             $package['transform'] = array('text');
+
             $package = xarModCallHooks('item', 'transform-input', 0, $package,
                                        'comments', 0);
 
@@ -75,49 +65,38 @@ function comments_user_reply()
             }
 
 # --------------------------------------------------------
-# If something is wrong, do what?
+# If something is wrong, represent the form
 #
             if (!$valid) {
+                return xarTpl::module('comments','user','reply',$data);
             }
 
 # --------------------------------------------------------
 # Everything is go: update and go to the next page
 #
-            $data['comment_id'] = $data['object']->createItem();
+            $data['comment_id'] = $data['reply']->createItem();
             xarController::redirect($data['object']->properties['parent_url']->value.'#'.$data['comment_id']);
             return true;
 
         case 'reply':
+# --------------------------------------------------------
+# Bail if the proper args were not passed
+#
+            if (!xarVarFetch('comment_id', 'int:1:', $data['comment_id'], 0, XARVAR_NOT_REQUIRED)) return;
+            if (empty($data['comment_id'])) return xarResponse::NotFound();    
 
-            xarVarFetch('comment_id', 'int', $data['comment_id'], 0, XARVAR_NOT_REQUIRED);
+# --------------------------------------------------------
+# Create the comment object
+#
+            sys::import('modules.dynamicdata.class.objects.master');
+            $data['object'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
             $data['object']->getItem(array('itemid' => $data['comment_id']));
-            $data['comments'] = xarMod::apiFunc('comments','user','get_one',
-                                       array('id' => $data['object']->properties['id']->value));
 
             // replace the deprecated eregi stuff below
             $title =& $data['object']->properties['title']->value;
             $text  =& $data['object']->properties['text']->value;
             $title = preg_replace('/^re:/i','',$title);
             $new_title = 'Re: ' . $title;
-
-            /*if (eregi('^(re\:|re\([0-9]+\))',$comments[0]['title'])) {
-                if (eregi('^re\:',$comments[0]['title'])) {
-                    $new_title = preg_replace("'re\:'i",
-                                              'Re(1):',
-                                              $comments[0]['title'],
-                                              1
-                                             );
-                } else {
-                    preg_match("/^re\(([0-9]+)?/i",$comments[0]['title'], $matches);
-                    $new_title = preg_replace("'re\([0-9]+\)\:'i",
-                                              'Re('.($matches[1] + 1).'):',
-                                              $comments[0]['title'],
-                                              1
-                                             );
-                }
-            } else {
-                $new_title = 'Re: '.$comments[0]['title'];
-            }*/
 
             // get the title and link of the original object
             $modinfo = xarModGetInfo($data['object']->properties['moduleid']->value);
@@ -133,11 +112,7 @@ function comments_user_reply()
             } else {
                 $url = xarModURL($modinfo['name'],'user','main');
             }
-            /*if (empty($receipt['returnurl'])) {
-                $receipt['returnurl'] = array('encoded' => rawurlencode($url),
-                                              'decoded' => $url);
-            }*/
-
+/*
             list($text,
                  $title) =
                         xarModCallHooks('item',
@@ -145,20 +120,22 @@ function comments_user_reply()
                                          $data['object']->properties['parent_id']->value,
                                          array($text,
                                                $title));
-
+*/
             $text         = xarVarPrepHTMLDisplay($text);
             $title        = xarVarPrepForDisplay($title);
 
             $package['new_title']            = xarVarPrepForDisplay($new_title);
-            $receipt['action']               = 'reply';
             $data['package']               = $package;
-            $data['receipt']               = $receipt;
 
-            // Create an object itme for the reply
-            $data['object'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
-            $data['object']->properties['title']->value = $new_title;
-            $data['object']->properties['position']->reference_id = $data['comment_id'];
-            $data['object']->properties['position']->position = 3;
+            // Create an object item for the reply
+            $data['reply'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
+            $data['reply']->properties['title']->value = $new_title;
+            $data['reply']->properties['position']->reference_id = $data['comment_id'];
+            $data['reply']->properties['position']->position = 3;
+            $data['reply']->properties['moduleid']->value = $data['object']->properties['moduleid']->value;
+            $data['reply']->properties['itemtype']->value = $data['object']->properties['itemtype']->value;
+            $data['reply']->properties['itemid']->value = $data['object']->properties['itemid']->value;
+            $data['reply']->properties['parent_url']->value = $data['object']->properties['parent_url']->value;
             break;
         case 'preview':
         default:
@@ -222,7 +199,6 @@ function comments_user_reply()
     $data['package']['role_id']     = ((xarUserIsLoggedIn() && !$data['object']->properties['anonpost']->value) ? xarUserGetVar('id') : $anonuid);
     $data['package']['uname']   = ((xarUserIsLoggedIn() && !$data['object']->properties['anonpost']->value) ? xarUserGetVar('uname') : 'anonymous');
     $data['package']['name']    = ((xarUserIsLoggedIn() && !$data['object']->properties['anonpost']->value) ? xarUserGetVar('name') : 'Anonymous');
-    $data['receipt']            = $receipt;
 
     return $data;
 }
