@@ -109,7 +109,7 @@
     <property name="itemid">
       <id>5126</id>
       <label>Item ID</label>
-      <type>textbox</type>
+      <type>integerbox</type>
       <defaultvalue></defaultvalue>
       <source>comments.itemid</source>
       <status>66</status>
