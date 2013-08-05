@@ -6,7 +6,7 @@
         <label class="xar-tr-date">Date-Time</label>
     </div>
 
-    <xar:loop name="$package['comments']">
+    <xar:loop name="$comments">
 
     <xar:set name="id">#$loop:item['id']#</xar:set>
 

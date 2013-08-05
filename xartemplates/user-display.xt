@@ -25,7 +25,7 @@
     -->
 
     <xar:sec mask="ReadComments" catch="false">
-        <xar:set name="number_of_comments">count($package['comments'])</xar:set>
+        <xar:set name="number_of_comments">count($comments)</xar:set>
         <xar:if condition="$package['settings']['render'] ne 'nocomments'">
             <!--
                 If pubsub is hooked to comments, allow subscribing here to be informed of new comments

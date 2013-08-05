@@ -94,6 +94,7 @@ function comments_user_display($args)
 # --------------------------------------------------------
 # Get the viewing options: depth, render style, order, and sortby
 #
+    $data['emptyobject'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
     $package['settings'] = xarMod::apiFunc('comments','user','getoptions');
 
     if (!isset($args['thread'])) {
@@ -109,27 +110,27 @@ function comments_user_display($args)
     }
 
     if (empty($data['selected_id']) || isset($thread)) {
-        $package['comments'] = xarMod::apiFunc('comments','user','get_multiple',$fields);
-        if (count($package['comments']) > 1) {
-            $package['comments'] = comments_renderer_array_sort(
-                $package['comments'],
+        $data['comments'] = xarMod::apiFunc('comments','user','get_multiple',$fields);
+        if (count($data['comments']) > 1) {
+            $data['comments'] = comments_renderer_array_sort(
+                $data['comments'],
                 $package['settings']['sortby'],
                 $package['settings']['order']
             );
         }
     } else {
         $package['settings']['render'] = _COM_VIEW_FLAT;
-        $package['comments'] = xarMod::apiFunc('comments','user','get_one', $fields);
-        if (!empty($package['comments'][0])) {
-            $header['moduleid'] = $package['comments'][0]['moduleid'];
-            $header['itemtype'] = $package['comments'][0]['itemtype'];
-            $header['objectid'] = $package['comments'][0]['objectid'];
+        $data['comments'] = xarMod::apiFunc('comments','user','get_one', $fields);
+        if (!empty($data['comments'][0])) {
+            $header['moduleid'] = $data['comments'][0]['moduleid'];
+            $header['itemtype'] = $data['comments'][0]['itemtype'];
+            $header['objectid'] = $data['comments'][0]['objectid'];
         }
     }
 
-    $package['comments'] = comments_renderer_array_prune_excessdepth(
+    $data['comments'] = comments_renderer_array_prune_excessdepth(
         array(
-            'array_list'    => $package['comments'],
+            'array_list'    => $data['comments'],
             'cutoff'        => $package['settings']['depth'],
             'moduleid'      => $fields['moduleid'],
             'itemtype'      => $fields['itemtype'],
@@ -138,19 +139,19 @@ function comments_user_display($args)
     );
 
     if ($package['settings']['render'] == _COM_VIEW_THREADED) {
-        $package['comments'] = comments_renderer_array_maptree($package['comments']);
+        $data['comments'] = comments_renderer_array_maptree($data['comments']);
     }
 
     // run text and title through transform hooks
-    if (!empty($package['comments'])) {
-        foreach ($package['comments'] as $key => $comment) {
+    if (!empty($data['comments'])) {
+        foreach ($data['comments'] as $key => $comment) {
             $comment['text'] = xarVarPrepHTMLDisplay($comment['text']);
             $comment['title'] = xarVarPrepForDisplay($comment['title']);
             // say which pieces of text (array keys) you want to be transformed
             $comment['transform'] = array('text');
             // call the item transform hooks
             // Note : we need to tell Xaraya explicitly that we want to invoke the hooks for 'comments' here (last argument)
-            $package['comments'][$key] = xarModCallHooks('item', 'transform', $comment['id'], $comment, 'comments');
+            $data['comments'][$key] = xarModCallHooks('item', 'transform', $comment['id'], $comment, 'comments');
         }
     }
 
@@ -164,10 +165,10 @@ function comments_user_display($args)
 
     $hooks = xarMod::apiFunc('comments','user','formhooks');
 
-    if (!empty($package['comments'])) {
+    if (!empty($data['comments'])) {
         $baseurl = xarServer::getCurrentURL();
-        foreach($package['comments'] as $key => $val) {
-            $package['comments'][$key]['parent_url'] = str_replace($baseurl, '',$package['comments'][$key]['parent_url']);
+        foreach($data['comments'] as $key => $val) {
+            $data['comments'][$key]['parent_url'] = str_replace($baseurl, '',$data['comments'][$key]['parent_url']);
         }
     }
 
