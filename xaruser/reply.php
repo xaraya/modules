@@ -75,7 +75,7 @@ function comments_user_reply()
 # Everything is go: update and go to the next page
 #
             $data['comment_id'] = $data['reply']->createItem();
-            xarController::redirect($data['object']->properties['parent_url']->value.'#'.$data['comment_id']);
+            xarController::redirect($data['reply']->properties['parent_url']->value.'#'.$data['comment_id']);
             return true;
 
         case 'reply':
