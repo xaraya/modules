@@ -6,26 +6,28 @@
         <label class="xar-tr-date">Date-Time</label>
     </div>
 
-    <xar:loop name="$comments">
+    <xar:set name="index">0</xar:set>
+    <xar:foreach in="$comments" value="$comment">
+        <xar:set name="index">$index+1</xar:set>
 
-    <xar:set name="id">#$loop:item['id']#</xar:set>
+        <xar:set name="id">#$comment['id']#</xar:set>
 
-        <xar:if condition="(($loop:index + 1) % 2)">
+        <xar:if condition="(($index + 1) % 2)">
             <div class="xar-tr-wrapper">
                 <span class="xar-tr-title">
-                    <xar:foreach in="$loop:item['map']" value="$map">
+                    <xar:foreach in="$comment['map']" value="$map">
                         <img class="xar-tr-image" height="21" src="#$map#" width="9" alt=""/>
                     </xar:foreach>
-                    <xar:if condition="$loop:item['branchout'] eq 0">
+                    <xar:if condition="$comment['branchout'] eq 0">
     <!-- CHECKME: no text or buttons in search results -->
-                      <xar:if condition="isset($loop:item['text'])">
-                        <a href="#" id="collapser" name="collapser" onclick="document.getElementById('comment_#$loop:item['id']#').style.display = (document.getElementById('comment_#$loop:item['id']#').style.display == 'block') ? 'none' : 'block'; return false;" title="#xarML('Toggle the full view of comment..')#">
-                            #$loop:item['title']#
-                        </a><a name="comment#$loop:item['id']#" class="anchor">&#160;</a>
+                      <xar:if condition="isset($comment['text'])">
+                        <a href="#" id="collapser" name="collapser" onclick="document.getElementById('comment_#$comment['id']#').style.display = (document.getElementById('comment_#$comment['id']#').style.display == 'block') ? 'none' : 'block'; return false;" title="#xarML('Toggle the full view of comment..')#">
+                            #$comment['title']#
+                        </a><a name="comment#$comment['id']#" class="anchor">&#160;</a>
                       <xar:elseif condition="!empty($receipt['directurl'])"/>
-                          <a href="#xarModURL('comments','user','display',array('id' => $loop:item['id']))#"> #$loop:item['title']# </a>
+                          <a href="#xarModURL('comments','user','display',array('id' => $comment['id']))#"> #$comment['title']# </a>
                       <xar:else/>
-                          <a href=""> #$loop:item['title']# </a>
+                          <a href=""> #$comment['title']# </a>
                       </xar:if>
                     <xar:else />
 
@@ -42,48 +44,48 @@
                 <xar:set name="newurl">$start . 'header[id]='.$id</xar:set>
             </xar:if>
 
-                        <a href="#$newurl#">#$loop:item['title']# #$loop:item['thread_text']#</a>
+                        <a href="#$newurl#">#$comment['title']# #$comment['thread_text']#</a>
 
                     </xar:if>
                 </span>
                 <span class="xar-tr-author">
-                    <xar:if condition="$loop:item['postanon'] eq 0 and strtolower($loop:item['author']) ne 'anonymous'">
-                        #$loop:item['author']#
+                    <xar:if condition="$comment['postanon'] eq 0 and strtolower($comment['author']) ne 'anonymous'">
+                        #$comment['author']#
                     <xar:else />
                         Anonymous
                     </xar:if>
                 </span>
                 <span class="xar-tr-date">
-                    #xarLocaleFormatDate("%B %d, %Y %I:%M %p",$loop:item['date'])#
+                    #xarLocaleFormatDate("%B %d, %Y %I:%M %p",$comment['date'])#
                 </span>
             </div>
 
     <!-- CHECKME: no text or buttons in search results -->
-          <xar:if condition="isset($loop:item['text'])">
-            <div class="xar-tr-collapsed" id="comment_#$loop:item['id']#">
+          <xar:if condition="isset($comment['text'])">
+            <div class="xar-tr-collapsed" id="comment_#$comment['id']#">
                 <div class="xar-accent-outline">
-                    <xar:set name="item">#$loop:item#</xar:set>
+                    <xar:set name="item">#$comment#</xar:set>
                     <xar:template file="action_buttons"/>
 
-    <!-- FIXME: $package['transformed-text'] vs. $loop:item['text'] can't be right here -->
+    <!-- FIXME: $package['transformed-text'] vs. $comment['text'] can't be right here -->
                     <xar:if condition="isset($package['transformed-text'])">
                         #$package['transformed-text']#
                         <p>
-                            <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('parent_url')#" rel="bookmark">
+                            <a href="#xarServer::getCurrentURL()###comment#$comment['id']#" title="#xarML('parent_url')#" rel="bookmark">
                 #
                             </a>
                         </p>
                         <xar:else />
-                        #$loop:item['text']#
+                        #$comment['text']#
                         <p>
-                            <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('parent_url')#" rel="bookmark">
+                            <a href="#xarServer::getCurrentURL()###comment#$comment['id']#" title="#xarML('parent_url')#" rel="bookmark">
                 #
                             </a>
                         </p>
     <!-- FIXME: nested if's don't seem right here -->
-                        <xar:if condition="isset($loop:item['branchout']) and $loop:item['branchout'] eq 1">
+                        <xar:if condition="isset($comment['branchout']) and $comment['branchout'] eq 1">
                             <br />
-                            <a href=""> #$loop:item['nested_text']# </a>&#160;
+                            <a href=""> #$comment['nested_text']# </a>&#160;
                         </xar:if>
                     </xar:if>
                     <!-- show changelog -->
@@ -91,7 +93,7 @@
                     <xar:if condition="xarModIsHooked('changelog','comments')">
                        <br />
                         <span class="xar-sub">
-                            <a href="#xarModURL('changelog','admin','showlog',array('modid' => 14, 'itemid'=> $loop:item['id']))#" title="#xarML('View Changes')#">
+                            <a href="#xarModURL('changelog','admin','showlog',array('modid' => 14, 'itemid'=> $comment['id']))#" title="#xarML('View Changes')#">
                                 View changes
                             </a>
                         </span>
@@ -104,20 +106,20 @@
         <xar:else />
             <div class="xar-tr-wrapper xar-accent">
                 <span class="xar-tr-title">
-                    <xar:foreach in="$loop:item['map']" value="$map">
+                    <xar:foreach in="$comment['map']" value="$map">
                         <img class="xar-tr-image" height="21" src="#$map#" width="9" alt=""/>
                     </xar:foreach>
 
-                    <xar:if condition="$loop:item['branchout'] eq 0">
+                    <xar:if condition="$comment['branchout'] eq 0">
     <!-- CHECKME: no text or buttons in search results -->
-                      <xar:if condition="isset($loop:item['text'])">
-                        <a href="#" id="collapser" name="collapser" onclick="document.getElementById('comment_#$loop:item['id']#').style.display = (document.getElementById('comment_#$loop:item['id']#').style.display == 'block') ? 'none' : 'block'; return false;" title="#xarML('Toggle the full view of comment..')#">
-                            #$loop:item['title']#
-                        </a><a name="comment#$loop:item['id']#" class="anchor">&#160;</a>
+                      <xar:if condition="isset($comment['text'])">
+                        <a href="#" id="collapser" name="collapser" onclick="document.getElementById('comment_#$comment['id']#').style.display = (document.getElementById('comment_#$comment['id']#').style.display == 'block') ? 'none' : 'block'; return false;" title="#xarML('Toggle the full view of comment..')#">
+                            #$comment['title']#
+                        </a><a name="comment#$comment['id']#" class="anchor">&#160;</a>
                       <xar:elseif condition="!empty($receipt['directurl'])"/>
-                          <a href="#xarModURL('comments','user','display',array('id' => $loop:item['id']))#"> #$loop:item['title']# </a>
+                          <a href="#xarModURL('comments','user','display',array('id' => $comment['id']))#"> #$comment['title']# </a>
                       <xar:else/>
-                          <a href=""> #$loop:item['title']# </a>
+                          <a href=""> #$comment['title']# </a>
                       </xar:if>
                     <xar:else />
 
@@ -134,50 +136,50 @@
                 <xar:set name="newurl">$start . 'header[id]='.$id</xar:set>
             </xar:if>
 
-                        <a href="#$newurl#">#$loop:item['title']# #$loop:item['thread_text']#</a>
+                        <a href="#$newurl#">#$comment['title']# #$comment['thread_text']#</a>
 
                     </xar:if>
                 </span>
 
                 <span class="xar-tr-author">
-                    <xar:if condition="$loop:item['postanon'] eq 0 and strtolower($loop:item['author']) ne 'anonymous'">
-                        #$loop:item['author']#
+                    <xar:if condition="$comment['postanon'] eq 0 and strtolower($comment['author']) ne 'anonymous'">
+                        #$comment['author']#
                     <xar:else />
                         Anonymous
                     </xar:if>
                 </span>
 
                 <span class="xar-tr-date">
-                    #xarLocaleFormatDate("%B %d, %Y %I:%M %p",$loop:item['date'])#
+                    #xarLocaleFormatDate("%B %d, %Y %I:%M %p",$comment['date'])#
                 </span>
             </div>
 
     <!-- CHECKME: no text or buttons in search results -->
-          <xar:if condition="isset($loop:item['text'])">
-            <div class="xar-tr-collapsed" id="comment_#$loop:item['id']#">
+          <xar:if condition="isset($comment['text'])">
+            <div class="xar-tr-collapsed" id="comment_#$comment['id']#">
                 <div class="xar-comments-comment xar-accent xar-accent-outline">
-                    <xar:set name="item">#$loop:item#</xar:set>
+                    <xar:set name="item">#$comment#</xar:set>
                     <xar:template file="action_buttons"/>
 
-                    <!-- FIXME: $package['transformed-text'] vs. $loop:item['xar_text'] can't be right here -->
+                    <!-- FIXME: $package['transformed-text'] vs. $comment['xar_text'] can't be right here -->
                     <xar:if condition="isset($package['transformed-text'])">
                         #$package['transformed-text']#
                         <p>
-                            <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('parent_url')#" rel="bookmark">
+                            <a href="#xarServer::getCurrentURL()###comment#$comment['id']#" title="#xarML('parent_url')#" rel="bookmark">
                                 #
                             </a>
                         </p>
                     <xar:else />
-                        #$loop:item['text']#
+                        #$comment['text']#
                         <p>
-                            <a href="#xarServer::getCurrentURL()###comment#$loop:item['id']#" title="#xarML('parent_url')#" rel="bookmark">
+                            <a href="#xarServer::getCurrentURL()###comment#$comment['id']#" title="#xarML('parent_url')#" rel="bookmark">
                                 #
                             </a>
                         </p>
     <!-- FIXME: nested if's don't seem right here -->
-                        <xar:if condition="isset($loop:item['branchout']) and $loop:item['branchout'] eq 1">
+                        <xar:if condition="isset($comment['branchout']) and $comment['branchout'] eq 1">
                             <br />
-                            <a href=""> #$loop:item['nested_text']#</a>&#160;
+                            <a href=""> #$comment['nested_text']#</a>&#160;
                         </xar:if>
                     </xar:if>
                     <!-- show changelog -->
@@ -185,7 +187,7 @@
                     <xar:if condition="xarModIsHooked('changelog','comments')">
                     <br />
                         <span class="xar-sub">
-                            <a href="#xarModURL('changelog','admin','showlog',array('modid' => 14, 'itemid'=> $loop:item['id']))#" title="#xarML('View Changes')#">
+                            <a href="#xarModURL('changelog','admin','showlog',array('modid' => 14, 'itemid'=> $comment['id']))#" title="#xarML('View Changes')#">
                                  View changes
                             </a>
                         </span>
@@ -196,5 +198,5 @@
             </div>
           </xar:if>
         </xar:if>
-    </xar:loop>
+    </xar:foreach>
 </xar:template>
