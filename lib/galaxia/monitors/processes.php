@@ -10,7 +10,7 @@ class ProcessMonitor extends Base
     function monitor_stats() 
     {
         $res = array();
-        $res['active_processes'] = $this->getOne("SELECT count(*) FROM ".self::tbl('processes')." where `isActive`=?",array('y'));
+        $res['active_processes'] = $this->getOne("SELECT count(*) FROM ".self::tbl('processes')." where `isActive`=?",array(1));
         $res['processes'] = $this->getOne("SELECT count(*) FROM ".self::tbl('processes'));
         $result = $this->query("SELECT distinct(`pId`) FROM ".self::tbl('instances')."where `status`=?",array('active'));
         $res['running_processes'] = $result->numRows();

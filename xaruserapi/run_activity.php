@@ -24,7 +24,7 @@ function workflow_userapi_run_activity($args)
 
     // Common setup for Galaxia environment (possibly include more than once here !)
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = array();
+    $data = array();
 
     // Adapted from tiki-g-run_activity.php
     include (GALAXIA_LIBRARY.'/api.php');
@@ -57,11 +57,10 @@ function workflow_userapi_run_activity($args)
     // Existing variables here:
     // $process, $activity, $instance (if not standalone)
 
+//--------------------------------------------- Execute the PHP code of the activity
     // Include the shared code
-    include($shared);
-
-    // Now do whatever you have to do in the activity
-    include($source);
+    if (file_exists($shared)) include_once ($shared);
+    if (file_exists($source)) require ($source);
 
     return true;
 }

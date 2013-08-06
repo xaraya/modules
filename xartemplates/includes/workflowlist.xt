@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <xar:if condition="!empty($items) and count($items) gt 0">
     <xar:set name="fieldlabel">array('procname'   => 'Process',
@@ -97,7 +98,7 @@
                   <!-- Get an input image for the action -->
                   <xar:set name="info">array('action' => $action)</xar:set>
                   <xar:if condition="$action eq 'run'">
-                    <xar:if condition="$item['isInteractive'] eq 'y' and $item['status'] eq 'active' and $item['user'] eq $userId">
+                    <xar:if condition="$item['isInteractive'] eq 1 and $item['status'] eq 'active' and $item['user'] eq $userId">
                       <input type="hidden" name="activityId" value="#$item['activityId']#"/>
                       <xar:template file="action_input_image" subdata="$info"/>
                     </xar:if>

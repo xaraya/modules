@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head"><span class="xar-mod-title">User Error</span></div>
+    <div class="xar-mod-body">
+        <fieldset>
+            <legend>Workflow Problem</legend>
+            <xar:var name="label">System Message</xar:var>
+            <img src="#xarTplGetImage('user-error.png','base')#" alt="#$label#" width="96" height="96" class="xar-module-icon"/>
+            <xar:if condition="!isset($layout)">
+                <div style="margin-top: 20px; margin-left: 20px">
+                    <xar:if condition="isset($msg)">
+                        #$msg#
+                    <xar:else />
+                        No error message is available.
+                        <br />
+                        Please contact the system administrator.
+                    </xar:if>
+                </div>                    
+            <xar:elseif condition="$layout eq 'no_cookies'"/>
+                <div style="margin-top: 20px; margin-left: 20px">
+                    You must enable cookies on your browser to run Xaraya.
+                    <br />
+                    Check the browser configuration options to make sure cookies are enabled.
+            <xar:elseif condition="$layout eq 'unknown_activity'"/>
+                <div style="margin-top: 20px; margin-left: 20px">
+                    Sorry! A page could not be found
+                    <br />
+                    <xar:set name="seedetail">xarSession::getVar('role_id') == xarModVars::get('roles','admin')</xar:set>
+                    <xar:if condition="!empty($id) AND $seedetail">
+                    Activity ID couldn not be matched: #$id#
+                    <xar:else/>
+                        Please contact the system administrator.
+                    </xar:if>
+                </div>
+                </div>
+            <xar:else />
+                <div style="margin-top: 20px; margin-left: 20px">
+                    No error message is available.
+                    <br />
+                    Please contact the system administrator.
+                </div>                    
+            </xar:if>                
+        </fieldset>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <xar:var name="label">Go back</xar:var>
+                <xar:button type="cancel" label="$label"/>
+            </div>
+        </fieldset>
+    </div>
+</xar:template>

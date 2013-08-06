@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <input type="hidden" name="activityId" value="#$properties['id']->value#"/>          
+    <input type="hidden" name="pid" value="#$properties['process_id']->value#"/>          
+    <xar:data-input property="$properties['id']" hidden="hidden"/>          
+    <xar:data-input property="$properties['process_id']" hidden="hidden"/>          
+    <xar:data-input property="$properties['normalized_name']" hidden="hidden"/>          
+    <xar:data-input property="$properties['flow_number']" hidden="hidden"/>          
+    <xar:data-input property="$properties['last_modified']" hidden="hidden"/>          
+    <div class="xar-form-input-wrapper">
+        <xar:data-label property="$properties['name']" for="id" class="xar-form-label"/>          
+        <xar:data-input property="$properties['name']"/>          
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:data-label property="$properties['description']" for="id" class="xar-form-label"/>          
+        <xar:data-input property="$properties['description']"/>          
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:data-label property="$properties['type']" for="id" class="xar-form-label"/>          
+        <xar:data-input property="$properties['type']"/>          
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:data-label property="$properties['interactive']" for="id" class="xar-form-label"/>          
+        <xar:data-input property="$properties['interactive']"/>          
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Automatically routed</xar:var>
+        <xar:data-label property="$properties['autorouted']" label="$label" for="id" class="xar-form-label"/>          
+        <xar:data-input property="$properties['autorouted']"/>          
+    </div>
+</xar:template>

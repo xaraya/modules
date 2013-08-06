@@ -25,7 +25,7 @@ function workflow_userapi_getitemtypes($args)
     include(GALAXIA_LIBRARY.'/processmonitor.php');
 
     // get all active processes
-    $processes = $processMonitor->monitor_list_all_processes('name_asc', "isActive = 'y'");
+    $processes = $processMonitor->monitor_list_all_processes('name_asc', "isActive = 1");
 
     foreach ($processes as $process) {
         $itemtypes[$process['pId']] = array('label' => xarVarPrepForDisplay($process['name'] . ' ' . $process['version']),

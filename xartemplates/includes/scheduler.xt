@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <p><b>Description:</b> in order to execute time-based activities (e.g. escalation in the workflow process, status change after a certain time, ...), you need to install the 'scheduler' module first.
       Then you can specify here which workflow activities should be executed, and how often. Only non-interactive stand-alone activities can be used here...</p>

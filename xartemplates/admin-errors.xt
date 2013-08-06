@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
@@ -7,8 +8,9 @@
     </div>
     <div class="xar-mod-body">
         <fieldset>
-            <legend>Error Encountered</legend>
-            <img src="#xarTplGetImage('sysmessage.jpg','base')#" alt="#xarML('System Message')#" width="96" height="96" class="xar-module-icon"/>
+            <legend>Workflow Problem</legend>
+            <xar:var name="label">System Message</xar:var>
+            <img src="#xarTplGetImage('user-error.png','base')#" alt="#$label#" width="96" height="96" class="xar-module-icon"/>
             <xar:if condition="!isset($layout)">
                 <div style="margin-top: 20px; margin-left: 20px">
                     <xar:if condition="isset($msg)">

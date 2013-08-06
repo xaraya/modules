@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
   <span class="xar-mod-title">
@@ -67,15 +68,15 @@
                       <xar:else/>
                       <option value="">All</option>
                     </xar:if>
-                    <xar:if condition="'y' eq $filter_isInteractive">
-                      <option value="y" selected="selected">Interactive</option>
+                    <xar:if condition="1 eq $filter_isInteractive">
+                      <option value="1" selected="selected">Interactive</option>
                       <xar:else/>
-                      <option value="y">Interactive</option>
+                      <option value="1">Interactive</option>
                   </xar:if>
-                  <xar:if condition="'n' eq $filter_isInteractive">
-                    <option value="n" selected="selected">Automatic</option>
+                  <xar:if condition="0 eq $filter_isInteractive">
+                    <option value="0" selected="selected">Automatic</option>
                     <xar:else/>
-                    <option value="n">Automatic</option>
+                    <option value="0">Automatic</option>
                   </xar:if>
                 </select>
               </td>
@@ -86,15 +87,15 @@
                     <xar:else/>
                     <option value="">All</option>
                   </xar:if>
-                  <xar:if condition="'n' eq $filter_isAutoRouted">
-                    <option value="n" selected="selected">Manual</option>
+                  <xar:if condition="0 eq $filter_isAutoRouted">
+                    <option value="0" selected="selected">Manual</option>
                     <xar:else/>
-                    <option value="n">Manual</option>
+                    <option value="0">Manual</option>
                   </xar:if>
-                  <xar:if condition="'y' eq $filter_isAutoRouted">
-                    <option value="y" selected="selected">Automatic</option>
+                  <xar:if condition="1 eq $filter_isAutoRouted">
+                    <option value="1" selected="selected">Automatic</option>
                     <xar:else/>
-                    <option value="y">Automatic</option>
+                    <option value="1">Automatic</option>
                   </xar:if>
                 </select>
               </td>

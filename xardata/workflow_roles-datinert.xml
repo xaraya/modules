@@ -1,0 +1,23 @@
+<items>
+  <workflow_roles itemid="1">
+    <id>1</id>
+    <pid></pid>
+    <modified></modified>
+    <name>Anonymous</name>
+    <description></description>
+  </workflow_roles>
+  <workflow_roles itemid="2">
+    <id>2</id>
+    <pid></pid>
+    <modified></modified>
+    <name>Admin</name>
+    <description>Generic administrator role</description>
+  </workflow_roles>
+  <workflow_roles itemid="3">
+    <id>3</id>
+    <pid></pid>
+    <modified></modified>
+    <name>User</name>
+    <description>Generic user roles</description>
+  </workflow_roles>
+</items>

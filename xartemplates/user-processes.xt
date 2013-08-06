@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div class="xar-mod-head">
       <span class="xar-mod-title">
@@ -59,7 +60,7 @@
                   <td style="text-align:right;"><a href="&xar-modurl-workflow-user-instances;&amp;filter_process=#$items[$ix]['pId']#">#$items[$ix]['instances']#</a></td>
                 </tr>
               </xar:foreach>
-              <xar:else/>
+            <xar:else/>
               <tr><td colspan="3">No processes found</td>
               </tr>
             </xar:if>

@@ -1,115 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div class="xar-mod-head"><span class="xar-mod-title">Workflow Administration</span></div>
-<div class="xar-mod-body">
-    <!-- xar:style scope="module" module="workflow" file="codemirror/docs"/-->
-    <xar:javascript module="workflow" filename="codemirror/codemirror.js" position="head"/>
-    <xar:template module="workflow" type="module" file="admin-menu"/>
-    <!-- Process navigation bar -->
-    <xar:template file="proc_bar"/>
+    <div class="xar-mod-head"><span class="xar-mod-title">Workflow Administration</span></div>
+    <div class="xar-mod-body">
+        <!-- xar:style scope="module" module="workflow" file="codemirror/docs"/-->
+        <!-- <xar:javascript module="workflow" filename="codemirror/codemirror.js" position="head"/>-->
+        <xar:template module="workflow" type="module" file="admin-menu"/>
+        <!-- Process navigation bar -->
+        <xar:template file="proc_bar"/>
 
-  <form id='editsource' action="#xarModURL('workflow','admin','shared_source')#" method="post">
+      <form id='editsource' action="#xarModURL('workflow','admin','shared_source')#" method="post">
 
-    <fieldset>
-       <xar:if condition="$template != 'y'">
-          <legend>Edit Activity Code</legend>
-       <xar:else/>
-          <legend>Edit Activity Template</legend>
-       </xar:if>
-          <div class="xar-form-input-wrapper-before">
-              <label class="xar-form-label">
-                  Activity: 
-              </label>
-              <select name="activityId" onchange="document.getElementById('editsource').submit();">
-              <xar:if condition="$activityId eq 0">
-                  <option value="" selected="selected">Shared code</option>
-              <xar:else/>
-                  <option value="">Shared code</option>
-              </xar:if>
-
-              <xar:foreach in="$items" key="$ix">
-              <xar:if condition="$activityId eq $items[$ix]['activityId']">
-                <option value="#$items[$ix]['activityId']#" selected="selected">#$items[$ix]['name']# [#$items[$ix]['type']#]</option>
-                <xar:else/>
-                <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']# [#$items[$ix]['type']#]</option>
-              </xar:if>
-              </xar:foreach>
-              </select>
-        </div>
-       <div class="xar-form-input-wrapper-before">
-          <xar:if condition="$activityId gt 0 and $act_info['isInteractive'] eq 'y' and $template eq 'n'">
-            <input type="submit" name='template' value="#xarML('Save and Switch to Template')#"/>
-          </xar:if>
-          <xar:if condition="$activityId gt 0 and $act_info['isInteractive'] eq 'y' and $template eq 'y'">
-            <input type="submit" name='code' value="#xarML('Save and Switch to Code')#"/>
-          </xar:if>
-          &#160;
-        </div>
-        <div class="xar-form-input-wrapper-before">
-           <!--
-               This is the area where templating and code is editted
-           -->
-           <textarea style="font-family: monospace; white-space: pre; width: 100%" id="src" name="source" rows="20" cols="80">#$data#</textarea>
-           <!--
-               End of it
-           -->
-        </div>
-        <xar:if condition="$template != 'y'">
-            <script type="text/javascript">
-            <![CDATA[
-              var editor = CodeMirror.fromTextArea('src', {
-                //height: "350px",
-                //width: "600px",
-                parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js",
-                             "tokenizephp.js", "parsephp.js", "parsephphtmlmixed.js"],
-                stylesheet: ["#sys::code()#modules/workflow/xarstyles/codemirror/xmlcolors.css", "#sys::code()#modules/workflow/xarstyles/codemirror/jscolors.css", "#sys::code()#modules/workflow/xarstyles/codemirror/csscolors.css", "#sys::code()#modules/workflow/xarstyles/codemirror/phpcolors.css"],
-                path: "#sys::code()#modules/workflow/xartemplates/includes/codemirror/",
-                continuousScanning: 500
-              });
-            ]]>
-            </script>
-        <xar:else/>
-            <script type="text/javascript">
-            <![CDATA[
-              var editor = CodeMirror.fromTextArea('src', {
-                //height: "350px",
-                //width: "600px",
-                parserfile: ["parsexml.js"],
-                stylesheet: ["#sys::code()#modules/workflow/xarstyles/codemirror/xmlcolors.css"],
-                path: "#sys::code()#modules/workflow/xartemplates/includes/codemirror/",
-                continuousScanning: 500,
-                reindentOnLoad: true
-              });
-            ]]>
-            </script>
-        </xar:if>
-        <xar:if condition="$template != 'y'">
-            <div class="xar-form-input-wrapper-before">
-               <p>
-                <strong>Function wizard: </strong>
-                  <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'$instance->setNextUser(&quot;thisuser&quot;);');">Set next user</a> &#160;
-                  <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'$instance->get(&quot;thisprop&quot;);');">Get property</a>&#160;
-                  <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'$instance->set(&quot;thisprop&quot;,&quot;thisval&quot;);');">Set property</a>&#160;
-                  <xar:if condition="$act_info['isInteractive'] eq 'y'">
-                    <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'$instance->complete();');">Complete</a>&#160;
-                    <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'if(isset($_REQUEST[&quot;save&quot;])){\n  $instance->complete();\n}');">Process form</a>&#160;
+        <fieldset>
+         <legend>Admin process sources</legend>
+              <div class="xar-form-input-wrapper-before">
+                  <label class="xar-form-label">
+                      Activity: 
+                  </label>
+                  <select name="activityId" onchange="document.getElementById('editsource').submit();">
+                  <xar:if condition="$activityId eq 0">
+                      <option value="" selected="selected">Shared code</option>
+                  <xar:else/>
+                      <option value="">Shared code</option>
                   </xar:if>
-                  <xar:if condition="$act_info['type'] eq 'switch'">
-                    <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'$instance->setNextActivity(&quot;thisact&quot;);');">Set Next act</a>&#160;
-                    <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'if(true) {\n    $instance->setNextActivity(&quot;thisact&quot;);\n}');">If:SetNextact</a>&#160;
-                    <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'switch($instance->get(&quot;thisprop&quot;)){\n  case &quot;thisval&quot;:\n  $instance->setNextActivity(&quot;thisact&quot;);\n  break;\n}');">Switch construct</a>&#160;
+
+                  <xar:foreach in="$items" key="$ix">
+                  <xar:if condition="$activityId eq $items[$ix]['activityId']">
+                    <option value="#$items[$ix]['activityId']#" selected="selected">#$items[$ix]['name']#</option>
+                    <xar:else/>
+                    <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
                   </xar:if>
-                </p>
+                  </xar:foreach>
+                  </select>
             </div>
-        </xar:if>
-    </fieldset>
-         <div class="xar-form-input-wrapper-after">
-            <input type="hidden" name="pid" value="#$pid#"/>
-            <input type="hidden" name="source_name" value="#$source_name#"/>
-            <input type="submit" name='save' value="#xarML('Save')#"/>
-            <input type="submit" name='cancel' value="#xarML('Cancel')#"/>
-        </div>
-  </form>
-  <!-- Show a courtesy footer -->
-  <xar:template file="galaxfooter"/>
-</div>
+           <div class="xar-form-input-wrapper-before">
+              <xar:if condition="$activityId gt 0 and $act_info['isInteractive'] eq 1 and $template eq 0">
+                <input type="submit" name='template' value="#xarML('Switch to template')#"/>
+              </xar:if>
+              <xar:if condition="$activityId gt 0 and $act_info['isInteractive'] eq 1 and $template eq 1">
+                <input type="submit" name='save' value="#xarML('Switch to code')#"/>
+              </xar:if>
+              &#160;
+            </div>
+            <div class="xar-form-input-wrapper-before">
+                <xar:data-input type="codemirror" name="source_data" value="$data"/>
+            </div>
+            <xar:if condition="$template != 1">
+                <div class="xar-form-input-wrapper-before">
+                   <p>
+                    <strong>Function wizard: </strong>
+                      <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'$instance->setNextUser(&quot;thisuser&quot;);');">Set next user</a> &#160;
+                      <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'$instance->get(&quot;thisprop&quot;);');">Get property</a>&#160;
+                      <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'$instance->set(&quot;thisprop&quot;,&quot;thisval&quot;);');">Set property</a>&#160;
+                      <xar:if condition="$act_info['isInteractive'] eq 1">
+                        <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'$instance->complete();');">Complete</a>&#160;
+                        <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'if(isset($_REQUEST[&quot;save&quot;])){\n  $instance->complete();\n}');">Process form</a>&#160;
+                      </xar:if>
+                      <xar:if condition="$act_info['type'] eq 'switch'">
+                        <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'$instance->setNextActivity(&quot;thisact&quot;);');">Set Next act</a>&#160;
+                        <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'if(true) {\n    $instance->setNextActivity(&quot;thisact&quot;);\n}');">If:SetNextact</a>&#160;
+                        <a href="javascript:pos=editor.cursorPosition(true);editor.setLineContent(pos.line,'switch($instance->get(&quot;thisprop&quot;)){\n  case &quot;thisval&quot;:\n  $instance->setNextActivity(&quot;thisact&quot;);\n  break;\n}');">Switch construct</a>&#160;
+                      </xar:if>
+                    </p>
+                </div>
+            </xar:if>
+        </fieldset>
+             <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="pid" value="#$pid#"/>
+                <input type="hidden" name="source_name" value="#$source_name#"/>
+                <input type="submit" name='save' value="#xarML('Save')#"/>&#160;
+                <input type="submit" name='cancel' value="#xarML('Cancel')#"/>
+            </div>
+      </form>
+      <!-- Show a courtesy footer -->
+      <xar:template file="galaxfooter"/>
+    </div>
 </xar:template>

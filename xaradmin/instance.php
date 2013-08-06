@@ -34,7 +34,7 @@ function workflow_admin_instance()
 
     if (!isset($_REQUEST['iid'])) {
         $tplData['msg'] =  xarML("No instance indicated");
-        return xarTplModule('workflow', 'admin', 'error', $tplData);
+        return xarTplModule('workflow', 'admin', 'errors', $tplData);
     }
     $tplData['iid'] =  $_REQUEST['iid'];
 

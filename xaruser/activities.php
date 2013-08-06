@@ -24,14 +24,14 @@ function workflow_user_activities()
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = array();
+    $data = array();
 
     // Adapted from tiki-g-user_activities.php
     include_once (GALAXIA_LIBRARY.'/gui.php');
 
     // Initialize some stuff
     $user = xarUserGetVar('id');
-    $maxRecords = xarModVars::get('workflow','itemsperpage');
+    $maxRecords = xarModVars::get('workflow','items_per_page');
 
     // Filtering data to be received by request and
     // used to build the where part of a query
@@ -61,7 +61,7 @@ function workflow_user_activities()
         $offset = $_REQUEST["offset"];
     }
 
-    $tplData['offset'] =&  $offset;
+    $data['offset'] =&  $offset;
 
     if (isset($_REQUEST["find"])) {
         $find = $_REQUEST["find"];
@@ -69,43 +69,43 @@ function workflow_user_activities()
         $find = '';
     }
 
-    $tplData['find'] =  $find;
-    $tplData['where'] =  $where;
-    $tplData['sort_mode'] =&  $sort_mode;
+    $data['find'] =  $find;
+    $data['where'] =  $where;
+    $data['sort_mode'] =&  $sort_mode;
 
     $items = $GUI->gui_list_user_activities($user, $offset - 1, $maxRecords, $sort_mode, $find, $where);
-    $tplData['cant'] =  $items['cant'];
+    $data['cant'] =  $items['cant'];
 
     $cant_pages = ceil($items["cant"] / $maxRecords);
-    $tplData['cant_pages'] =&  $cant_pages;
-    $tplData['actual_page'] =  1 + (($offset - 1) / $maxRecords);
+    $data['cant_pages'] =&  $cant_pages;
+    $data['actual_page'] =  1 + (($offset - 1) / $maxRecords);
 
     if ($items["cant"] >= ($offset + $maxRecords)) {
-        $tplData['next_offset'] =  $offset + $maxRecords;
+        $data['next_offset'] =  $offset + $maxRecords;
     } else {
-        $tplData['next_offset'] =  -1;
+        $data['next_offset'] =  -1;
     }
 
     if ($offset > 1) {
-        $tplData['prev_offset'] =  $offset - $maxRecords;
+        $data['prev_offset'] =  $offset - $maxRecords;
     } else {
-        $tplData['prev_offset'] =  -1;
+        $data['prev_offset'] =  -1;
     }
 
-    $tplData['items'] =&  $items["data"];
+    $data['items'] =&  $items["data"];
 
     $processes = $GUI->gui_list_user_processes($user, 0, -1, 'procname_asc', '', '');
-    $tplData['all_procs'] =&  $processes['data'];
-    if (count($tplData['all_procs']) == 1 && empty($_REQUEST['filter_process'])) {
-        $_REQUEST['filter_process'] = $tplData['all_procs'][0]['pId'];
+    $data['all_procs'] =&  $processes['data'];
+    if (count($data['all_procs']) == 1 && empty($_REQUEST['filter_process'])) {
+        $_REQUEST['filter_process'] = $data['all_procs'][0]['pId'];
     }
 
     if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
         $actid2item = array();
-        foreach (array_keys($tplData['items']) as $index) {
-            $actid2item[$tplData['items'][$index]['activityId']] = $index;
+        foreach (array_keys($data['items']) as $index) {
+            $actid2item[$data['items'][$index]['activityId']] = $index;
         }
-        foreach ($tplData['all_procs'] as $info) {
+        foreach ($data['all_procs'] as $info) {
             if ($info['pId'] == $_REQUEST['filter_process'] && !empty($info['normalized_name'])) {
                 $graph = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".png";
                 $mapfile = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".map";
@@ -117,13 +117,13 @@ function workflow_user_activities()
                         $actid = $matches[1];
                         if (!isset($actid2item[$actid])) continue;
                         $index = $actid2item[$actid];
-                        $item = $tplData['items'][$index];
+                        $item = $data['items'][$index];
                         if ($item['instances'] > 0) {
                             $url = xarModURL('workflow','user','instances',
                                              array('filter_process' => $info['pId']));
                             $mapline = preg_replace('/href=".*?activityId/', 'href="' . $url . '&amp;filter_activity', $mapline);
                             $map .= $mapline;
-                        } elseif ($item['isInteractive'] == 'y' && ($item['type'] == 'start' || $item['type'] == 'standalone')) {
+                        } elseif ($item['isInteractive'] && ($item['type'] == 'start' || $item['type'] == 'standalone')) {
                             $url = xarModURL('workflow','user','run_activity');
                             $mapline = preg_replace('/href=".*?activityId/', 'href="' . $url . '&amp;activityId', $mapline);
                             $map .= $mapline;
@@ -132,11 +132,11 @@ function workflow_user_activities()
                     // Darn graphviz does not close the area tags
                     $map = preg_replace('#<area (.*[^/])>#','<area $1/>',$map);
 
-                    $tplData['graph'] = $graph;
-                    $tplData['map'] = $map;
-                    $tplData['procname'] = $info['procname'];
+                    $data['graph'] = $graph;
+                    $data['map'] = $map;
+                    $data['procname'] = $info['procname'];
                 } else {
-                    $tplData['graph'] = '';
+                    $data['graph'] = '';
                 }
                 break;
             }
@@ -158,18 +158,18 @@ function workflow_user_activities()
         'filter_process'
     );
 
-    $tplData['mid'] =  'tiki-g-user_activities.tpl';
+    $data['mid'] =  'tiki-g-user_activities.tpl';
 
     // Missing variable
-    $tplData['filter_process'] = isset($_REQUEST['filter_process']) ? $_REQUEST['filter_process'] : '';
+    $data['filter_process'] = isset($_REQUEST['filter_process']) ? $_REQUEST['filter_process'] : '';
 
-/*        $tplData['pager'] = xarTplGetPager($tplData['offset'],
+/*        $data['pager'] = xarTplGetPager($data['offset'],
                                            $items['cant'],
                                            $url,
                                            $maxRecords);*/
-        $tplData['maxRecords'] = $maxRecords;
-        $tplData['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
-        return $tplData;
+        $data['maxRecords'] = $maxRecords;
+        $data['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+        return $data;
 }
 
 ?>

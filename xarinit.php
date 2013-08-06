@@ -65,9 +65,9 @@ function workflow_init()
         $qte.'normalized_name'.$qte   => array('type'=>'varchar','size'=>80,'null'=>TRUE),
         $qte.'pId'.$qte               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
         $qte.'type'.$qte              => array('type'=>'varchar','size'=>20,'null'=>TRUE),
-        $qte.'isAutoRouted'.$qte      => array('type'=>'char','size'=>1,'null'=>TRUE),
+        $qte.'isAutoRouted'.$qte      => array('type'=>'integer','size'=>1,'null'=>TRUE),
         $qte.'flowNum'.$qte           => array('type'=>'integer','null'=>TRUE),
-        $qte.'isInteractive'.$qte     => array('type'=>'char','size'=>1,'null'=>TRUE),
+        $qte.'isInteractive'.$qte     => array('type'=>'integer','size'=>1,'null'=>TRUE),
         $qte.'lastModif'.$qte         => array('type'=>'integer','null'=>TRUE),
         $qte.'description'.$qte       => array('type'=>'text','null'=>TRUE)
     );
@@ -121,6 +121,7 @@ function workflow_init()
     $table = $xartable['workflow_instance_activities'];
 
     $fields = array(
+        $qte.'id'.$qte                => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         $qte.'instanceId'.$qte        => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE),
         $qte.'activityId'.$qte        => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE),
         $qte.'started'.$qte           => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
@@ -237,8 +238,9 @@ function workflow_init()
     $fields = array(
         $qte.'pId'.$qte               => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         $qte.'name'.$qte              => array('type'=>'varchar','size'=>80,'null'=>TRUE),
-        $qte.'isValid'.$qte           => array('type'=>'char','size'=>1,'null'=>TRUE),
-        $qte.'isActive'.$qte          => array('type'=>'char','size'=>1,'null'=>TRUE),
+        $qte.'isValid'.$qte           => array('type'=>'integer','size'=>1,'null'=>TRUE),
+        $qte.'isActive'.$qte          => array('type'=>'integer','size'=>1,'null'=>TRUE),
+        $qte.'isSingleton'.$qte       => array('type'=>'integer','size'=>1,'null'=>TRUE),
         $qte.'version'.$qte           => array('type'=>'varchar','size'=>12,'null'=>TRUE),
         $qte.'description'.$qte       => array('type'=>'text','null'=>TRUE),
         $qte.'lastModif'.$qte         => array('type'=>'integer','null'=>TRUE),
@@ -378,16 +380,38 @@ function workflow_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // set default activityId for create, update and delete hooks
+# --------------------------------------------------------
+#
+# Create DD objects
+#
+    $module = 'workflow';
+    $objects = array(
+                     'workflow_roles',
+                     'workflow_processes',
+                     'workflow_activities',
+                     'workflow_instances',
+                     'workflow_instance_activities',
+                     );
+
+    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+
+# --------------------------------------------------------
+#
+# Set up modvars
+#
     xarModVars::set('workflow','default.create',0);
     xarModVars::set('workflow','default.update',0);
     xarModVars::set('workflow','default.delete',0);
 
     xarModVars::set('workflow','SupportShortURLs',0);
-    xarModVars::set('workflow','itemsperpage',20);
+    xarModVars::set('workflow','items_per_page',20);
     xarModVars::set('workflow','seenlist','');
 
-    if (!xarModRegisterHook('item', 'create', 'API',
+# --------------------------------------------------------
+#
+# Set up hooks
+#
+if (!xarModRegisterHook('item', 'create', 'API',
                            'workflow', 'admin', 'createhook')) {
         return false;
     }
@@ -420,9 +444,31 @@ function workflow_init()
                     );
     xarDefineInstance('workflow', 'Item', $instances);
 
-// TODO: tweak this - allow viewing workflow of "your own items" someday ?
-    xarRegisterMask('ReadWorkflow', 'All', 'workflow', 'Item', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('AdminWorkflow', 'All', 'workflow', 'Item', 'All:All:All', 'ACCESS_ADMIN');
+# --------------------------------------------------------
+#
+# Set up masks
+#
+    xarRegisterMask('ViewWorkflow','All','workflow','All','All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadWorkflow','All','workflow','All','All','ACCESS_READ');
+    xarRegisterMask('SubmitWorkflow','All','workflow','All','All','ACCESS_COMMENT');
+    xarRegisterMask('ModerateWorkflow','All','workflow','All','All','ACCESS_MODERATE');
+    xarRegisterMask('EditWorkflow','All','workflow','All','All','ACCESS_EDIT');
+    xarRegisterMask('AddWorkflow','All','workflow','All','All','ACCESS_ADD');
+    xarRegisterMask('ManageWorkflow','All','workflow','All','All','ACCESS_DELETE');
+    xarRegisterMask('AdminWorkflow','All','workflow','All','All','ACCESS_ADMIN');
+
+# --------------------------------------------------------
+#
+# Set up privileges
+#
+    xarRegisterPrivilege('ViewWorkflow','All','workflow','All','All','ACCESS_OVERVIEW');
+    xarRegisterPrivilege('ReadWorkflow','All','workflow','All','All','ACCESS_READ');
+    xarRegisterPrivilege('SubmitWorkflow','All','workflow','All','All','ACCESS_COMMENT');
+    xarRegisterPrivilege('ModerateWorkflow','All','workflow','All','All','ACCESS_MODERATE');
+    xarRegisterPrivilege('EditWorkflow','All','workflow','All','All','ACCESS_EDIT');
+    xarRegisterPrivilege('AddWorkflow','All','workflow','All','All','ACCESS_ADD');
+    xarRegisterPrivilege('ManageWorkflow','All','workflow','All','All','ACCESS_DELETE');
+    xarRegisterPrivilege('AdminWorkflow','All','workflow','All','All','ACCESS_ADMIN');
 
     // Initialisation successful
     return true;

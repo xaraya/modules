@@ -1,53 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:style scope="module" module="base" file="navtabs"/>
-    <xar:set name="func">xarRequest::getVar('func')</xar:set>
+    <xar:set name="func">xarController::getVar('func')</xar:set>
 
-    <dl class="xar-tabs">
-      <dt class="help">View</dt>
-
-      <xar:set name="classstring">''</xar:set>
-      <xar:if condition="$func eq 'main' or !isset($func) or $func eq ''">
-        <xar:set name="classstring">'active'</xar:set>
-      </xar:if>
-
-      <dd class="#$classstring#">
-        <a href="&xar-modurl-workflow-user-main;">
-          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/home.gif" alt="#xarML('workflows')#" title="#xarML('my workflows')#"/>
+      <ul class="xar-tabs">
+        <xar:if condition="$func eq 'main' or !isset($func) or $func eq ''">
+          <xar:set name="tabclass">'xar-tab-active'</xar:set>
+          <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+          <xar:set name="tabclass">'xar-tab'</xar:set>
+          <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+          <a href="#xarModURL('workflow','user','main')#" class="#$linkclass#">
+            <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/home.gif" alt="#xarML('workflows')#" title="#xarML('my workflows')#"/>
             My Workflow
-        </a>
-      </dd>
-
-      <xar:set name="classstring">''</xar:set>
-      <xar:if condition="$func eq 'processes'">
-        <xar:set name="classstring">'active'</xar:set>
-      </xar:if>
-      <dd class="#$classstring#">
-        <a href="&xar-modurl-workflow-user-processes;">
-          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/process.gif" alt="#xarML('processes')#" title="#xarML('user processes')#"/>
+          </a>
+        </li>
+        
+        <xar:if condition="$func eq 'processes'">
+          <xar:set name="tabclass">'xar-tab-active'</xar:set>
+          <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+          <xar:set name="tabclass">'xar-tab'</xar:set>
+          <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+          <a href="#xarModURL('workflow','user','processes')#" class="#$linkclass#">
+            <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/process.gif" alt="#xarML('processes')#" title="#xarML('user processes')#"/>
             Processes
-        </a>
-      </dd>
+          </a>
+        </li>
 
-      <xar:set name="classstring">''</xar:set>
-      <xar:if condition="$func eq 'activities'">
-        <xar:set name="classstring">'active'</xar:set>
-      </xar:if>
-      <dd class="#$classstring#">
-        <a href="&xar-modurl-workflow-user-activities;">
-          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/activity.gif" alt="#xarML('activities')#" title="#xarML('user activities')#"/>
+        <xar:if condition="$func eq 'activities'">
+          <xar:set name="tabclass">'xar-tab-active'</xar:set>
+          <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+          <xar:set name="tabclass">'xar-tab'</xar:set>
+          <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+          <a href="#xarModURL('workflow','user','activities')#" class="#$linkclass#">
+            <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/activity.gif" alt="#xarML('activities')#" title="#xarML('user activities')#"/>
             Activities
-        </a>
-      </dd>
+          </a>
+        </li>
 
-      <xar:set name="classstring">''</xar:set>
-      <xar:if condition="$func eq 'instances'">
-        <xar:set name="classstring">'active'</xar:set>
-      </xar:if>
-      <dd class="#$classstring#">
-        <a href="&xar-modurl-workflow-user-instances;">
-          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/instance.gif" alt="#xarML('instances')#" title="#xarML('user instances')#"/>
+        <xar:if condition="$func eq 'instances'">
+          <xar:set name="tabclass">'xar-tab-active'</xar:set>
+          <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+          <xar:set name="tabclass">'xar-tab'</xar:set>
+          <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+          <a href="#xarModURL('workflow','user','instances')#" class="#$linkclass#">
+            <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/instance.gif" alt="#xarML('instances')#" title="#xarML('user instances')#"/>
             Instances
-        </a>
-      </dd>
-    </dl>
+          </a>
+        </li>
+      </ul>
 </xar:template>

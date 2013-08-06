@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            Workflow
+        </span>
+    </div>
+
+
+    <div>
+        <h3>
+            Workflow activities
+        </h3>
+        <h4>
+            Start a new process
+        </h4>
+        <table style="width: 90%">
+            <tr>
+                <th style="width: 10%">
+                    Name
+                </th>
+                <th>
+                    Description
+                </th>
+            </tr>
+            <xar:foreach in="$activities" value="$activity">
+                <!--  Only start activities for now -->
+                <xar:if condition="$activity['type'] ne 'start' AND $activity['type'] ne 'standalone'">
+                    <xar:continue/>
+                </xar:if>
+                <!--  Only activities where I am the owner or user, or which are open to all -->
+                <xar:if condition="!empty($activity['roles']) AND (in_array(xarSession::getVar('role_id'),$activity['roles']) OR in_array('*',$activity['roles']))">
+                    <xar:continue/>
+                </xar:if>
+                <tr>
+                    <td>
+                        <a href="#xarModURL('workflow','user','run_activity',array('activityId'=>$activity['id']))#">#$activity['name']#</a>
+                    </td>
+                    <td>
+                        #$activity['description']#
+                    </td>
+                </tr>
+            </xar:foreach>
+        </table>
+        <xar:if condition="!empty($items)">
+            <h4>
+                Complete a begun process
+            </h4>
+            <table style="width: 300px">
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Instance
+                    </th>
+                </tr>
+                <xar:foreach in="$items" value="$item">
+                    <tr>
+                        <td>
+                            <a href="#xarModURL('workflow','user','run_activity',array('activityId'=>$item['activity'],'iid'=>$item['instance_id']))#">
+                                <input type="image" name="run" value="1" title="#xarML('run instance')#" src="#sys::code()#modules/workflow/lib/galaxia/img/icons/next.gif"/>
+                                <xar:data-output property="$properties['activity']" value="$item['activity']" link=""/>
+                            </a>
+                        </td>
+                        <td>
+                            <xar:data-output property="$properties['instance_id']" value="$item['instance_id']"/>
+                        </td>
+                    </tr>
+                </xar:foreach>
+            </table>
+        </xar:if>
+    </div>
+</xar:template>

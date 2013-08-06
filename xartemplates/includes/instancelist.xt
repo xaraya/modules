@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <xar:if condition="!empty($items) and count($items) gt 0">
     <xar:if condition="!isset($offset)"><xar:set name="offset">0</xar:set></xar:if>
@@ -107,12 +108,12 @@
                   <!-- Get an input image for the action -->
                   <xar:set name="info">array('action' => $action)</xar:set>
                   <xar:if condition="$action eq 'run'">
-                    <xar:if condition="$item['isInteractive'] eq 'y' and $item['status'] eq 'active'">
+                    <xar:if condition="$item['isInteractive'] eq 1 and $item['status'] eq 'active'">
                       <input type="hidden" name="activityId" value="#$item['activityId']#"/>
                       <xar:template file="action_input_image" subdata="$info"/>
                     </xar:if>
                   <xar:elseif condition="$action eq 'send'"/>
-                    <xar:if condition="$item['isAutoRouted'] eq 'n' and $item['actstatus'] eq 'completed'">
+                    <xar:if condition="$item['isAutoRouted'] eq 0 and $item['actstatus'] eq 'completed'">
                       <xar:template file="action_input_image" subdata="$info"/>
                     </xar:if>
                   <xar:elseif condition="$action eq 'exception'"/>

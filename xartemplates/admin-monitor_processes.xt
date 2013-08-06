@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div class="xar-mod-head"><span class="xar-mod-title">Workflow Administration</span></div>
     <div class="xar-mod-body">
@@ -44,15 +45,15 @@
                         <xar:else/>
                         <option value="">All</option>
                       </xar:if>
-                      <xar:if condition="'y' eq $filter_active">
-                        <option value="y" selected="selected">Active</option>
+                      <xar:if condition="1 eq $filter_active">
+                        <option value="1" selected="selected">Active</option>
                         <xar:else/>
-                        <option value="y">Active</option>
+                        <option value="1">Active</option>
                       </xar:if>
-                      <xar:if condition="'n' eq $filter_active">
-                        <option value="n" selected="selected">Inactive</option>
+                      <xar:if condition="0 eq $filter_active">
+                        <option value="0" selected="selected">Inactive</option>
                         <xar:else/>
-                        <option value="n">Inactive</option>
+                        <option value="0">Inactive</option>
                       </xar:if>
                     </select>
                   </td>
@@ -63,15 +64,15 @@
                         <xar:else/>
                         <option value="">All</option>
                       </xar:if>
-                      <xar:if condition="'y' eq $filter_valid">
-                        <option selected="selected" value="y">Valid</option>
+                      <xar:if condition="1 eq $filter_valid">
+                        <option selected="selected" value="1">Valid</option>
                         <xar:else/>
-                        <option value="y">Valid</option>
+                        <option value="1">Valid</option>
                       </xar:if>
-                      <xar:if condition="'n' eq $filter_valid">
-                        <option selected="selected" value="n">Invalid</option>
+                      <xar:if condition="0 eq $filter_valid">
+                        <option selected="selected" value="0">Invalid</option>
                         <xar:else/>
-                        <option value="n">Invalid</option>
+                        <option value="0">Invalid</option>
                       </xar:if>
                     </select>
                   </td>
@@ -99,14 +100,14 @@
                         <a href="#xarModURL('workflow','admin','monitor_activities',array('filter_process' => $items[$ix]['pId']))#" class="link">#$items[$ix]['activities']#</a>
                       </td>
                       <td style="text-align:center;">
-                        <xar:if condition="$items[$ix]['isActive'] eq 'y'">
+                        <xar:if condition="$items[$ix]['isActive']">
                           <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/refresh2.gif" alt=" (#xarML('active')#) " title="#xarML('active process')#"/>
                           <xar:else/>
                           &#160;
                         </xar:if>
                       </td>
                       <td style="text-align:center;">
-                        <xar:if condition="$items[$ix]['isValid'] eq 'n'">
+                        <xar:if condition="$items[$ix]['isValid'] eq 0">
                           <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/red_dot.gif" alt="(#xarML('invalid')#)" title="#xarML('invalid process')#"/>
                           <xar:else/>
                           <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/green_dot.gif" alt="(#xarML('valid')#)" title="#xarML('valid process')#"/>

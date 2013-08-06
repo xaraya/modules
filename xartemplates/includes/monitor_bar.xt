@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:style scope="module" module="base" file="tabs"/>
-    <xar:set name="func">xarRequest::getVar('func')</xar:set>
+    <xar:set name="func">xarController::getVar('func')</xar:set>
 
     <ul class="xar-tabs">
       <xar:if condition="$func eq 'monitor_processes'">

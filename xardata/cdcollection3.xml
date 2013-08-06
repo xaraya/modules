@@ -1,12 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<process>
+<?xml version="1.0"?><process>
   <name>Music CD Loans 3</name>
   <isValid>y</isValid>
   <version>1.0</version>
-  <isActive>y</isActive>
+  <isActive>1</isActive>
    <description>Borrow CD's, browse CDs, etc...</description>
-  <lastModif>17/04/2010 [03:28:25]</lastModif>
+  <lastModif>21/03/2010 [04:04:52]</lastModif>
   <sharedCode><![CDATA[<?php
+
+
 
 ?>  ]]></sharedCode>
   <activities>
@@ -14,291 +15,474 @@
       <name>end</name>
       <type>end</type>
       <description>default end activity</description>
-      <lastModif>17/04/2010 [03:17:43]</lastModif>
-      <isInteractive>n</isInteractive>
-      <isAutoRouted>y</isAutoRouted>
+      <lastModif>21/03/2010 [04:04:52]</lastModif>
+      <isInteractive>0</isInteractive>
+      <isAutoRouted>1</isAutoRouted>
       <roles>
       </roles>
       <code><![CDATA[<?php
+
 // Nothing to do here...
+
 ?>      ]]></code>
     </activity>
     <activity>
       <name>Browse CDs</name>
       <type>standalone</type>
       <description>The user can browse CDs. The title and status is displayed for each CD. A button to request a CD is displayed.</description>
-      <lastModif>17/04/2010 [03:17:43]</lastModif>
-      <isInteractive>y</isInteractive>
-      <isAutoRouted>n</isAutoRouted>
+      <lastModif>21/03/2010 [04:04:52]</lastModif>
+      <isInteractive>1</isInteractive>
+      <isAutoRouted>0</isAutoRouted>
       <roles>
         <role>user</role>
         <role>admin</role>
       </roles>
       <code><![CDATA[<?php
 
+
+
 // Check if the current user has the 'admin' role
+
 $isadmin = $activity->checkUserRole($user,'admin');
+
 $tplData['isadmin'] = $isadmin;
 
+
+
 // Change the status of CDs if allowed
+
 if ($isadmin && isset($_REQUEST['status'])) {
+
     // get the CD item
+
     $cd = DataObjectMaster::getObject(array('name' => 'cdcollection'));
+
     $itemid = $cd->getItem(array('itemid' => $_REQUEST['cdId']));
+
     // update the CD status and user
+
     if ($_REQUEST['status']=='available') {
+
         $cd->updateItem(array('status' => 'not available',
-                              'user' => $user));
+
+                                           'user' => $user));
+
     } elseif ($_REQUEST['status'] == 'not available') {
+
         $cd->updateItem(array('status' => 'available',
-                              'user' => 0));
+
+                                           'user' => 0));
+
     }
+
 }
+
+
 
 // Get the CD list
+
 $cdlist = DataObjectMaster::getObjectList(array('name' => 'cdcollection'));
+
 $items = $cdlist->getItems();
+
 foreach (array_keys($items) as $index) {
+
     // show the user name instead of the user id
+
     if (empty($items[$index]['user'])) {
+
         $items[$index]['user'] = '-';
+
     } elseif (is_numeric($items[$index]['user'])) {
+
         $items[$index]['user'] = xarUserGetVar('name', $items[$index]['user']);
+
     }
+
 }
+
+
 
 // Put the CD list in a template variable
+
 $tplData['cds'] = $items;
 
+
+
 // Find the activity id for requesting CDs
+
 $actinfo = $process->getActivityByName('Request CD');
+
 if ($actinfo) {
+
     $tplData['requestId'] = $actinfo['activityId'];
+
 } else {
+
     $tplData['requestId'] = 0;
+
 }
+
+
 
 // Note: current activityId, iid and return_url are automatically available in the template
 
+
+
 ?>      ]]></code>
       <template><![CDATA[<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <h3>Listing CDs</h3>
-  <table class="normal">
-    <tr>
-      <td class="heading">Title</td>
-      <td class="heading">Status</td>
-      <td class="heading">Loaner</td>
-      <td class="heading" colspan="2">Action</td>
-    </tr>
-    <xar:if condition="!empty($cds) and count($cds) gt 0">
-      <xar:foreach in="$cds" value="$cd">
-        <tr>
-          <td class="odd">#$cd['title']#</td>
-          <td class="odd">#$cd['status']#</td>
-          <td class="odd">#$cd['user']#</td>
-          <td class="odd">
-            <xar:if condition="$isadmin">
-              <form method="post" action="&xar-modurl-workflow-user-run_activity;">
-                <input type="hidden" name="activityId" value="#$activityId#"/>
-                <input type="hidden" name="cdId" value="#$cd['cdid']#"/>
-                <input type="hidden" name="status" value="#$cd['status']#"/>
-                <input type="image" name="whatever" src="#sys::code()#modules/workflow/lib/galaxia/img/icons/refresh2.gif" title="Change Status"/>
-              </form>
-            </xar:if>
-          </td>
-          <td class="odd">
-            <xar:if condition="$cd['status'] eq 'available'">
-              <!-- cfr. Request CD template -->
-              <form method="post" action="&xar-modurl-workflow-user-run_activity;">
-                <input type="hidden" name="activityId" value="#$requestId#"/>
-                <input type="hidden" name="cd" value="#$cd['cdid']#"/>
-                <input type="hidden" name="request" value="1"/>
-                <input type="image" name="whatever" src="#sys::code()#modules/workflow/lib/galaxia/img/icons/next.gif" title="Request CD"/>
-                <input type="hidden" name="return_url" value="#$return_url#"/>
-              </form>
-            </xar:if>
-          </td>
-        </tr>
-      </xar:foreach>
-    </xar:if>
-  </table>
+
+<h3>Listing CDs</h3>
+
+<table class="normal">
+
+  <tr>
+
+    <td class="heading">Title</td>
+
+    <td class="heading">Status</td>
+
+    <td class="heading">Loaner</td>
+
+    <td class="heading">Action</td>
+
+  </tr>
+
+<xar:if condition="!empty($cds) and count($cds) gt 0">
+
+<xar:foreach in="$cds" value="$cd">
+
+  <tr>
+
+<form method="post" action="&xar-modurl-workflow-user-run_activity;">
+
+    <td class="odd">#$cd['title']#</td>
+
+    <td class="odd">#$cd['status']#</td>
+
+    <td class="odd">#$cd['user']#</td>
+
+    <td class="odd">
+
+<input type="hidden" name="return_url" value="#$return_url#"/>
+
+<xar:if condition="$isadmin">
+
+<input type="hidden" name="activityId" value="#$activityId#"/>
+
+<input type="hidden" name="cdId" value="#$cd['cdid']#"/>
+
+<input type="hidden" name="status" value="#$cd['status']#"/>
+
+<input type="image" name="whatever" src="#sys::code()#modules/workflow/lib/galaxia/img/icons/refresh2.gif" title="Change Status"/>
+
+</xar:if>
+
+<xar:if condition="$cd['status'] eq 'available'">
+
+<input type="hidden" name="activityId" value="#$requestId#"/>
+
+<input type="hidden" name="cd" value="#$cd['cdid']#"/>
+
+<input type="hidden" name="request" value="1"/>
+
+<input type="image" name="whatever" src="#sys::code()#modules/workflow/lib/galaxia/img/icons/next.gif" title="Request CD"/>
+
+</xar:if>
+
+    </td>
+
+</form>
+
+  </tr>
+
+</xar:foreach>
+
+</xar:if>
+
+</table>
+
 </xar:template>      ]]></template>
     </activity>
     <activity>
       <name>Request CD</name>
       <type>start</type>
       <description>The user requests a CD</description>
-      <lastModif>17/04/2010 [03:17:43]</lastModif>
-      <isInteractive>y</isInteractive>
-      <isAutoRouted>y</isAutoRouted>
+      <lastModif>21/03/2010 [04:04:52]</lastModif>
+      <isInteractive>1</isInteractive>
+      <isAutoRouted>1</isAutoRouted>
       <roles>
         <role>user</role>
         <role>admin</role>
       </roles>
       <code><![CDATA[<?php
 
+
+
 // Get the CDs with status 'available'
+
 $cdlist = DataObjectMaster::getObjectList(array('name' => 'cdcollection'));
+
 $items = $cdlist->getItems(array('where' => "status eq 'available'"));
 
+
+
 // Put the CD list in a template variable
+
 $tplData['cds'] = $items;
 
+
+
 // Execute the request for this CD
+
 if(!empty($_REQUEST['request']) && !empty($_REQUEST['cd'])) {
+
     $instance->set('user',$user);
+
     $instance->set('cdId',$_REQUEST['cd']);
+
     $instance->complete();
+
 }
 
+
+
 // Put the pre-selected CD (if any) in a template variable
+
 $tplData['cdId'] = isset($_REQUEST['cdId']) ? $_REQUEST['cdId'] : '';
+
+
 
 // Note: current activityId, iid and return_url are automatically available in the template
 
+
+
 ?>      ]]></code>
-      <template><![CDATA[<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <h3>Request a CD</h3>
-  <form method="post" action="&xar-modurl-workflow-user-run_activity;">
-    <input type="hidden" name="activityId" value="#$activityId#"/>
-    <input type="hidden" name="return_url" value="#$return_url#"/>
-    CD to request:
-    <xar:if condition="!empty($cds) and count($cds) gt 0">
-      <select name="cd">
-        <xar:foreach in="$cds" value="$cd">
-          <xar:if condition="$cd['cdid'] eq $cdId">
-            <option value="#$cd['cdid']#" selected="selected">#$cd['title']#</option>
-            <xar:else/>
-            <option value="#$cd['cdid']#">#$cd['title']#</option>
-          </xar:if>
-        </xar:foreach>
-      </select>
-      <input type="submit" name="request" value="request"/>
-      <xar:else/>
-      There are no CDs available at the moment...
-    </xar:if>
-  </form>
+      <template><![CDATA[<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"><h3>Request a CD</h3>
+
+<form method="post" action="&xar-modurl-workflow-user-run_activity;">
+
+<input type="hidden" name="activityId" value="#$activityId#"/>
+
+<input type="hidden" name="return_url" value="#$return_url#"/>
+
+CD to request:
+
+<xar:if condition="!empty($cds) and count($cds) gt 0">
+
+<select name="cd">
+
+<xar:foreach in="$cds" value="$cd">
+
+<xar:if condition="$cd['cdid'] eq $cdId">
+
+<option value="#$cd['cdid']#" selected="selected">#$cd['title']#</option>
+
+<xar:else/>
+
+<option value="#$cd['cdid']#">#$cd['title']#</option>
+
+</xar:if>
+
+</xar:foreach>
+
+</select>
+
+<input type="submit" name="request" value="request"/>
+
+<xar:else/>
+
+There are no CDs available at the moment...
+
+</xar:if>
+
+</form>
+
 </xar:template>      ]]></template>
     </activity>
     <activity>
       <name>Approve CD Request</name>
       <type>switch</type>
       <description>Approve or reject the CD request</description>
-      <lastModif>17/04/2010 [03:17:43]</lastModif>
-      <isInteractive>y</isInteractive>
-      <isAutoRouted>y</isAutoRouted>
+      <lastModif>21/03/2010 [04:04:52]</lastModif>
+      <isInteractive>1</isInteractive>
+      <isAutoRouted>1</isAutoRouted>
       <roles>
         <role>admin</role>
       </roles>
       <code><![CDATA[<?php
 
+
+
 // Get the CD that was requested
+
 $cd = DataObjectMaster::getObject(array('name' => 'cdcollection'));
+
 $cd->getItem(array('itemid' => $instance->get('cdId')));
+
 $cdinfo = $cd->getFieldValues();
 
+
+
 // Save the CD title in the instance for later in the process
+
 $instance->set('title',$cdinfo['title']);
 
+
+
 // Put the CD information in a template variable
+
 $tplData['info'] = $cdinfo;
+
 $tplData['requestedby'] = xarUserGetVar('name',$instance->get('user'));
 
+
+
 // Approve the CD request
+
 if(isset($_REQUEST['approved'])) {
+
     // save the reason in the instance for later in the process
+
     $instance->set('reason',$_REQUEST['reason']);
+
     // set the next activity
+
     $instance->setNextActivity('Approve CD');
+
     // this activity is completed
+
     $instance->complete();
+
 }
 
+
+
 // Reject the CD request
+
 if(isset($_REQUEST['rejected'])) {
+
     // save the reason in the instance for later in the process
+
     $instance->set('reason',$_REQUEST['reason']);
+
     // set the next activity
+
     $instance->setNextActivity('Reject CD');
+
     // this activity is completed
+
     $instance->complete();
+
 }
+
+
 
 // Note: current activityId, iid and return_url are automatically available in the template
 
+
+
 ?>      ]]></code>
-      <template><![CDATA[<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <h3>Approve or reject CD loan</h3>
-  CD: #$info['title']# <br/>
-  Requested by: #$requestedby# <br/>
-  Status: #$info['status']# <br/>
-  <form method="post" action="&xar-modurl-workflow-user-run_activity;">
-    <input type="hidden" name="activityId" value="#$activityId#"/>
-    <input type="hidden" name="iid" value="#$iid#"/>
-    <input type="hidden" name="return_url" value="#$return_url#"/>
-    <textarea name="reason" cols="40" rows="4">&#160;</textarea>
-    <br/><br/>
-    <input type="submit" name="rejected" value="rejected"/>
-    <xar:if condition="$info['status'] eq 'available'">
-      <input type="submit" name="approved" value="approved"/>
-      <xar:else/>
-      <input type="submit" name="approved" value="approved" disabled="disabled"/>
-    </xar:if>
-  </form>
+      <template><![CDATA[<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"><h3>Approve or reject CD loan</h3>
+CD: #$info['title']# <br/>
+Requested by: #$requestedby# <br/>
+Status: #$info['status']# <br/>
+<form method="post" action="&xar-modurl-workflow-user-run_activity;">
+<input type="hidden" name="activityId" value="#$activityId#"/>
+<input type="hidden" name="iid" value="#$iid#"/>
+<input type="hidden" name="return_url" value="#$return_url#"/>
+<textarea name="reason" cols="40" rows="4"></textarea>
+<br/><br/>
+<input type="submit" name="rejected" value="rejected"/>
+<input type="submit" name="approved" value="approved"/>
+</form>
 </xar:template>      ]]></template>
     </activity>
     <activity>
       <name>Approve CD</name>
       <type>activity</type>
       <description>Approve the request</description>
-      <lastModif>17/04/2010 [03:17:43]</lastModif>
-      <isInteractive>n</isInteractive>
-      <isAutoRouted>y</isAutoRouted>
+      <lastModif>21/03/2010 [04:04:52]</lastModif>
+      <isInteractive>0</isInteractive>
+      <isAutoRouted>1</isAutoRouted>
       <roles>
       </roles>
       <code><![CDATA[<?php
 
+
+
 // Save the status in the instance for later
+
 $instance->set('status','approved');
 
+
+
 // Specify who should get the next activity for this instance
+
 $sendto = $instance->get('user');
+
 if (!empty($sendto)) {
+
     $instance->setNextUser($sendto);
+
 } else {
+
     $sendto = 0;
+
 }
 
+
+
 // Get the CD that was requested
+
 $cd = DataObjectMaster::getObject(array('name' => 'cdcollection'));
+
 $cd->getItem(array('itemid' => $instance->get('cdId')));
 
+
+
 // Update the CD status and user
+
 $cd->updateItem(array('status' => 'not available',
+
                       'user' => $sendto));
+
 ?>      ]]></code>
     </activity>
     <activity>
       <name>Reject CD</name>
       <type>activity</type>
       <description>Reject the loan request</description>
-      <lastModif>17/04/2010 [03:17:43]</lastModif>
-      <isInteractive>n</isInteractive>
-      <isAutoRouted>y</isAutoRouted>
+      <lastModif>21/03/2010 [04:04:52]</lastModif>
+      <isInteractive>0</isInteractive>
+      <isAutoRouted>1</isAutoRouted>
       <roles>
       </roles>
       <code><![CDATA[<?php
 
+
+
 // Save the status in the instance for later
+
 $instance->set('status','rejected');
 
+
+
 // Specify who should get the next activity for this instance
+
 $sendto = $instance->get('user');
+
 if (!empty($sendto)) {
+
     $instance->setNextUser($sendto);
+
 }
 
+
+
 // No need to update the CD information here
+
+
 
 ?>      ]]></code>
     </activity>
@@ -306,47 +490,64 @@ if (!empty($sendto)) {
       <name>Ack result</name>
       <type>activity</type>
       <description>The user gets the response</description>
-      <lastModif>17/04/2010 [03:17:43]</lastModif>
-      <isInteractive>y</isInteractive>
-      <isAutoRouted>y</isAutoRouted>
+      <lastModif>21/03/2010 [04:04:52]</lastModif>
+      <isInteractive>1</isInteractive>
+      <isAutoRouted>1</isAutoRouted>
       <roles>
         <role>user</role>
         <role>admin</role>
       </roles>
       <code><![CDATA[<?php
 
+
+
 // Handle the acknowledgement from the user
+
 if(isset($_REQUEST['ack'])) {
+
     // this activity is completed
+
     $instance->complete();
+
 }
 
+
+
 // Get the CD title, status and reason from the instance
+
 $tplData['title'] = $instance->get('title');
+
 $tplData['status'] = $instance->get('status');
+
 $tplData['reason'] = $instance->get('reason');
 
+
+
 // See if we escalated this instance
+
 $tplData['escalated'] = $instance->get('escalated');
+
+
 
 // Note: current activityId, iid and return_url are automatically available in the template
 
+
+
 ?>      ]]></code>
-      <template><![CDATA[<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <h3>Loan result</h3>
-  Your request for #$title# was #$status#
-  <xar:if condition="!empty($reason)">
-    <p>Reason: #$reason#</p>
-  </xar:if>
-  <xar:if condition="!empty($escalated)">
-    <p>Escalated: #xarLocaleFormatDate('%x %X %z', $escalated)#</p>
-  </xar:if>
-  <form method="post" action="&xar-modurl-workflow-user-run_activity;">
-    <input type="hidden" name="activityId" value="#$activityId#"/>
-    <input type="hidden" name="iid" value="#$iid#"/>
-    <input type="hidden" name="return_url" value="#$return_url#"/>
-    <input type="submit" name="ack" value="OK"/>
-  </form>
+      <template><![CDATA[<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"><h3>Loan result</h3>
+Your request for #$title# was #$status#
+<xar:if condition="!empty($reason)">
+<p>Reason: #$reason#</p>
+</xar:if>
+<xar:if condition="!empty($escalated)">
+<p>Escalated: #xarLocaleFormatDate('%x %X %z', $escalated)#</p>
+</xar:if>
+<form method="post" action="&xar-modurl-workflow-user-run_activity;">
+<input type="hidden" name="activityId" value="#$activityId#"/>
+<input type="hidden" name="iid" value="#$iid#"/>
+<input type="hidden" name="return_url" value="#$return_url#"/>
+<input type="submit" name="ack" value="OK"/>
+</form>
 </xar:template>      ]]></template>
     </activity>
     <activity>
@@ -355,50 +556,89 @@ $tplData['escalated'] = $instance->get('escalated');
       <description>When the normal delay for approval has expired, and the scheduler is executing scheduled workflow activities, we end up here. You could for instance assign another role (e.g. manager) to this activity, and let other people handle escalated requests in different ways.
 
 Note that we need to specify a transition from Approve CD Request here, even though that transition will never be followed by regular users, because the scheduled Escalate activity needs to be able to move the instance from there to here.</description>
-      <lastModif>17/04/2010 [03:17:44]</lastModif>
-      <isInteractive>y</isInteractive>
-      <isAutoRouted>y</isAutoRouted>
+      <lastModif>21/03/2010 [04:04:52]</lastModif>
+      <isInteractive>1</isInteractive>
+      <isAutoRouted>1</isAutoRouted>
       <roles>
         <role>admin</role>
       </roles>
       <code><![CDATA[<?php
 
+
+
 // See when we escalated this instance
+
 $tplData['escalated'] = $instance->get('escalated');
 
+
+
 // Get the CD that was requested
+
 $cd = DataObjectMaster::getObject(array('name' => 'cdcollection'));
+
 $cd->getItem(array('itemid' => $instance->get('cdId')));
+
 $cdinfo = $cd->getFieldValues();
 
+
+
 // Save the CD title in the instance for later in the process
+
 $instance->set('title',$cdinfo['title']);
 
+
+
 // Put the CD information in a template variable
+
 $tplData['info'] = $cdinfo;
+
 $tplData['requestedby'] = xarUserGetVar('name',$instance->get('user'));
 
+
+
 // Approve the CD request
+
 if(isset($_REQUEST['approved'])) {
+
     // save the reason in the instance for later in the process
+
     $instance->set('reason',$_REQUEST['reason']);
+
     // set the next activity
+
     $instance->setNextActivity('Approve CD');
+
     // this activity is completed
+
     $instance->complete();
+
 }
+
+
 
 // Reject the CD request
+
 if(isset($_REQUEST['rejected'])) {
+
     // save the reason in the instance for later in the process
+
     $instance->set('reason',$_REQUEST['reason']);
+
     // set the next activity
+
     $instance->setNextActivity('Reject CD');
+
     // this activity is completed
+
     $instance->complete();
+
 }
 
+
+
 // Note: current activityId, iid and return_url are automatically available in the template
+
+
 
 ?>      ]]></code>
       <template><![CDATA[<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"><h3>Approve or reject CD loan</h3>
@@ -411,7 +651,7 @@ Escalated: #xarLocaleFormatDate('%x %X %z', $escalated)# <br/>
 <input type="hidden" name="activityId" value="#$activityId#"/>
 <input type="hidden" name="iid" value="#$iid#"/>
 <input type="hidden" name="return_url" value="#$return_url#"/>
-<textarea name="reason" cols="40" rows="4">&#160;</textarea>
+<textarea name="reason" cols="40" rows="4"></textarea>
 <br/><br/>
 <input type="submit" name="rejected" value="rejected"/>
 <input type="submit" name="approved" value="approved"/>
@@ -424,71 +664,131 @@ Escalated: #xarLocaleFormatDate('%x %X %z', $escalated)# <br/>
       <description>Escalate a CD request when a certain time has elapsed before the request was approved or rejected. This activity will be called by the scheduler module, so we associate a specific scheduler role to it - you can e.g. map the anonymous user to that role.
 
 If you want to test this activity manually -without the scheduler- you can make it interactive and then run it like other stand-alone activities.</description>
-      <lastModif>17/04/2010 [03:17:44]</lastModif>
-      <isInteractive>n</isInteractive>
-      <isAutoRouted>n</isAutoRouted>
+      <lastModif>21/03/2010 [04:04:52]</lastModif>
+      <isInteractive>0</isInteractive>
+      <isAutoRouted>0</isAutoRouted>
       <roles>
         <role>scheduler</role>
       </roles>
       <code><![CDATA[<?php
 
+
+
 // We cannot use the $ instance object here, because this is a stand-alone activity
 
+
+
 // Specify the deadline for escalation - adapt as you want
+
 $now = time();
+
 $deadline = 24*60*60;
 
+
+
 // Find the activity id for approving CD requests in this process
+
 $actinfo = $process->getActivityByName('Approve CD Request');
+
 if (empty($actinfo) || empty($actinfo['activityId'])) {
+
     return;
+
 }
+
 $checkId = $actinfo['activityId'];
 
+
+
 // Find all instances that have been waiting for approval for a certain time
+
 $findinstances = xarModAPIFunc('workflow','user','findinstances',
-                               array('activityId' => $checkId,
-                                     'max_started' => $now - $deadline));
+
+                                    array('activityId' => $checkId,
+
+                                             'max_started' => $now - $deadline));
+
 if (empty($findinstances) || count($findinstances) < 1) {
+
     return;
+
 }
 
+
+
 $curinstance = new Instance($activity->db);
+
 foreach ($findinstances as $info) {
+
     // get this particular instance
+
     $curinstance->getInstance($info['instanceId']);
+
     // see when we last escalated this instance
+
     $lastescalated = $curinstance->get('escalated');
+
     // if we stay in this activity to e.g. send a mail at escalation, skip any
+
     // second escalation unless we hit the deadline again - adapt as needed
+
     if (!empty($lastescalated) && $lastescalated > $now - $deadline) {
+
         continue;
+
     }
+
      $curinstance->set('escalated',$now);
 
+
+
     // set the next activity for this instance (since we're at a switch activity)
+
     // and mark the current activity as completed
+
     $curinstance->setNextActivity('Handle Escalated Request');
+
     $curinstance->complete($checkId);
 
+
+
     // or automatically reject the request with the reason "Out of Office" :-)
+
     // $curinstance->set('reason',xarML('Out of Office'));
+
     // $curinstance->setNextActivity('Reject CD');
+
     // $curinstance->complete($checkId);
 
+
+
     // or set the status of this instance to "exception"
+
     // $curinstance->setStatus('exception');
 
+
+
     // or abort the instance altogether
+
     // $curinstance->abort($checkId);
+
+
 
     // or send a mail to $info['user'] if there is one
 
+
+
     // or send a mail to all users assigned to the role(s) for this activity
+
     // $roles = $activity->getRoles();
 
+
+
     // or ...
+
 }
+
+
 
 ?>      ]]></code>
     </activity>

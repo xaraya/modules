@@ -102,10 +102,10 @@ function workflow_admin_modifyconfig()
     include_once (GALAXIA_LIBRARY.'/processmonitor.php');
 
     // get all start activities that are not interactive
-    $activities = $processMonitor->monitor_list_activities(0, -1, 'pId_asc', '', "type='start' and isInteractive='n'");
+    $activities = $processMonitor->monitor_list_activities(0, -1, 'pId_asc', '', "type='start' and isInteractive=0");
 
     // get the name of all processes
-    $all_procs = $processMonitor->monitor_list_all_processes('pId_asc', "isActive='y'");
+    $all_procs = $processMonitor->monitor_list_all_processes('pId_asc', "isActive=1");
     $pid2name = array();
     foreach ($all_procs as $info) {
         $pid2name[$info['pId']] = $info['name'] . ' ' . $info['version'];
@@ -121,7 +121,7 @@ function workflow_admin_modifyconfig()
     }
 
     // get all stand-alone activities that are not interactive
-    $activities = $processMonitor->monitor_list_activities(0, -1, 'pId_asc', '', "type='standalone' and isInteractive='n'");
+    $activities = $processMonitor->monitor_list_activities(0, -1, 'pId_asc', '', "type='standalone' and isInteractive=0");
 
     // build a list of activity ids and names
     $data['standalone'] = array();

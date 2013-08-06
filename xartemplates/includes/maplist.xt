@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div>
       <fieldset>
@@ -73,12 +74,15 @@
                   </td>
                 </tr>
               </xar:foreach>
-              <tr><td colspan="2"><input type="submit" name="delete_map" value="#xarML('Delete selected')# "/></td></tr>
             <xar:else/>
               <tr><td colspan="3">No mappings defined yet</td>
               </tr>
             </xar:if>
           </table>
+          <div class="xar-form-input-wrapper-after">
+              <xar:var name="label">Delete selected</xar:var>
+              <xar:button type="submit" name="delete_map" label="$label"/>
+          </div>
         </form>
       </fieldset>
       <!-- Show the pager -->

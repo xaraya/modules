@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div>
       <fieldset>
@@ -37,12 +38,11 @@
                 </select>
               </td>
             </tr>
-            <tr>
-              <td colspan="3">
-                <input type="submit" name="mapg" value="#xarML('Map')#"/>
-              </td>
-            </tr>
           </table>
+          <div class="xar-form-input-wrapper-after">
+              <xar:var name="label">Map</xar:var>
+              <xar:button type="submit" name="mapg" label="$label"/>
+          </div>
         </form>
       </fieldset>
     </div>

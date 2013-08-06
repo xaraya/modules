@@ -1,0 +1,4 @@
+database "e:/portableapps/msys/home/Marc Lutolf/modules.db"
+  branch "com.xaraya.modules.workflow.unstable"
+     key "mfl@netspan.ch"
+  keydir "/Users/marclutolf/.monotone/keys"

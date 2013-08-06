@@ -25,7 +25,7 @@ function workflow_user_instances()
 
     // Initialize some stuff
     $user = xarUserGetVar('id');
-    $maxRecords = xarModVars::get('workflow','itemsperpage');
+    $maxRecords = xarModVars::get('workflow','items_per_page');
 
     if (isset($_REQUEST['run']) || isset($_REQUEST['run_x'])) {
         return xarModFunc('workflow','user','run_activity');
@@ -51,7 +51,7 @@ function workflow_user_instances()
                 }
             }
             if (!empty($return_url)) {
-                xarResponse::Redirect($return_url);
+                xarController::redirect($return_url);
                 return true;
             }
         }
@@ -59,7 +59,7 @@ function workflow_user_instances()
 
 // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = array();
+    $data = array();
 
 // Adapted from tiki-g-user_instances.php
 
@@ -92,7 +92,7 @@ if (isset($_REQUEST['send']) || isset($_REQUEST['send_x'])) {
 }
 
 if ($action && !empty($_REQUEST['return_url'])) {
-    xarResponse::Redirect($_REQUEST['return_url']);
+    xarController::redirect($_REQUEST['return_url']);
     return true;
 }
 
@@ -131,7 +131,7 @@ if (!isset($_REQUEST["offset"])) {
     $offset = $_REQUEST["offset"];
 }
 
-$tplData['offset'] =&  $offset;
+$data['offset'] =&  $offset;
 
 if (isset($_REQUEST["find"])) {
     $find = $_REQUEST["find"];
@@ -139,33 +139,33 @@ if (isset($_REQUEST["find"])) {
     $find = '';
 }
 
-$tplData['find'] =  $find;
-$tplData['where'] =  $where;
-$tplData['sort_mode'] =&  $sort_mode;
+$data['find'] =  $find;
+$data['where'] =  $where;
+$data['sort_mode'] =&  $sort_mode;
 
 $items = $GUI->gui_list_user_instances($user, $offset - 1, $maxRecords, $sort_mode, $find, $where);
-$tplData['cant'] =  $items['cant'];
+$data['cant'] =  $items['cant'];
 
 $cant_pages = ceil($items["cant"] / $maxRecords);
-$tplData['cant_pages'] =&  $cant_pages;
-$tplData['actual_page'] =  1 + (($offset - 1) / $maxRecords);
+$data['cant_pages'] =&  $cant_pages;
+$data['actual_page'] =  1 + (($offset - 1) / $maxRecords);
 
 if ($items["cant"] >= ($offset + $maxRecords)) {
-    $tplData['next_offset'] =  $offset + $maxRecords;
+    $data['next_offset'] =  $offset + $maxRecords;
 } else {
-    $tplData['next_offset'] =  -1;
+    $data['next_offset'] =  -1;
 }
 
 if ($offset > 1) {
-    $tplData['prev_offset'] =  $offset - $maxRecords;
+    $data['prev_offset'] =  $offset - $maxRecords;
 } else {
-    $tplData['prev_offset'] =  -1;
+    $data['prev_offset'] =  -1;
 }
 
-$tplData['items'] =&  $items["data"];
+$data['items'] =&  $items["data"];
 
 $processes = $GUI->gui_list_user_processes($user, 0, -1, 'procname_asc', '', '');
-$tplData['all_procs'] =&  $processes['data'];
+$data['all_procs'] =&  $processes['data'];
 
 $all_statuses = array(
     'aborted',
@@ -173,7 +173,7 @@ $all_statuses = array(
     'exception'
 );
 
-$tplData['statuses'] =  $all_statuses;
+$data['statuses'] =  $all_statuses;
 
 //$section = 'workflow';
 //include_once ('tiki-section_options.php');
@@ -193,23 +193,23 @@ $sameurl_elements = array(
     'filter_activity'
 );
 
-$tplData['mid'] =  'tiki-g-user_instances.tpl';
+$data['mid'] =  'tiki-g-user_instances.tpl';
 
 // Missing variables
-$tplData['filter_process'] = isset($_REQUEST['filter_process']) ? $_REQUEST['filter_process'] : '';
-$tplData['filter_status'] = isset($_REQUEST['filter_status']) ? $_REQUEST['filter_status'] : '';
-$tplData['filter_act_status'] = isset($_REQUEST['filter_act_status']) ? $_REQUEST['filter_act_status'] : '';
-$tplData['filter_user'] = isset($_REQUEST['filter_user']) ? $_REQUEST['filter_user'] : '';
-$tplData['userId'] = $user;
-$tplData['user'] = xarUserGetVar('name', $user);
+$data['filter_process'] = isset($_REQUEST['filter_process']) ? $_REQUEST['filter_process'] : '';
+$data['filter_status'] = isset($_REQUEST['filter_status']) ? $_REQUEST['filter_status'] : '';
+$data['filter_act_status'] = isset($_REQUEST['filter_act_status']) ? $_REQUEST['filter_act_status'] : '';
+$data['filter_user'] = isset($_REQUEST['filter_user']) ? $_REQUEST['filter_user'] : '';
+$data['userId'] = $user;
+$data['user'] = xarUserGetVar('name', $user);
 
-/*    $tplData['pager'] = xarTplGetPager($tplData['offset'],
+/*    $data['pager'] = xarTplGetPager($data['offset'],
                                        $items['cant'],
                                        $url,
                                        $maxRecords);*/
-    $tplData['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
-    $tplData['maxRecords'] = $maxRecords;
-    return $tplData;
+    $data['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+    $data['maxRecords'] = $maxRecords;
+    return $data;
 }
 
 ?>

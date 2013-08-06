@@ -26,7 +26,7 @@ function workflow_admin_graph()
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
     $tplData = array();
-$maxRecords = xarModVars::get('workflow','itemsperpage');
+$maxRecords = xarModVars::get('workflow','items_per_page');
     // Adapted from tiki-g-admin_processes.php
 
     include_once(GALAXIA_LIBRARY.'/processmanager.php');
@@ -70,7 +70,7 @@ $maxRecords = xarModVars::get('workflow','itemsperpage');
                       'name' => '',
                       'description' => '',
                       'version' => '1.0',
-                      'isActive' => 'n',
+                      'isActive' => 0,
                       'pId' => 0
                       );
     }

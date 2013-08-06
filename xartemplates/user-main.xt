@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -7,19 +8,21 @@
   <div class="xar-mod-body">
     <xar:template file="user_bar" type="module"/>
     <div style="margin: auto;">
-      <p>
-      <xar:set name="concepts">sys::code() . 'modules/workflow/xardocs/concepts.htm'</xar:set>
-      <xar:set name="manual">sys::code() . 'modules/workflow/xardocs/manual.htm'</xar:set>
-      See the <a href="#$concepts#">introduction</a> and <a href="#$manual#">user manual</a> of
-      Galaxia for more details on what this module is all about, and how to use it.
-    </p>
-<!-- Show the tasklist for this user -->
-      <xar:workflow-instances/>
-<!-- Show the on-going processes that the user started -->
-      <xar:workflow-status notstatus="completed,aborted" title="On-going workflow processes initiated by me" sort_mode="started_desc"/>
-<!-- Show the completed processes that the user started, with customized fieldlist and empty actionlist -->
-      <xar:workflow-status status="completed,aborted" title="Completed workflow processes initiated by me" sort_mode="started_desc" fieldlist="procname,version,instanceId,started,status,ended" actionlist=""/>
-      <xar:template file="galaxfooter"/>
+        <h3>Available Processes</h3>
+        <xar:data-input type="listing" objectname="workflow_processes" fieldlist="name,version,valid,active,last_modified"/>
+        <p>
+          <xar:set name="concepts">sys::code() . 'modules/workflow/xardocs/concepts.htm'</xar:set>
+          <xar:set name="manual">sys::code() . 'modules/workflow/xardocs/manual.htm'</xar:set>
+          See the <a href="#$concepts#">introduction</a> and <a href="#$manual#">user manual</a> of
+          Galaxia for more details on what this module is all about, and how to use it.
+        </p>
+    <!-- Show the tasklist for this user -->
+          <xar:workflow-instances/>
+    <!-- Show the on-going processes that the user started -->
+          <xar:workflow-status notstatus="completed,aborted" title="On-going workflow processes initiated by me" sort_mode="started_desc"/>
+    <!-- Show the completed processes that the user started, with customized fieldlist and empty actionlist -->
+          <xar:workflow-status status="completed,aborted" title="Completed workflow processes initiated by me" sort_mode="started_desc" fieldlist="procname,version,instanceId,started,status,ended" actionlist=""/>
+          <xar:template file="galaxfooter"/>
     </div>
   </div>
 </xar:template>

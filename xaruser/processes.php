@@ -24,14 +24,14 @@ function workflow_user_processes()
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $tplData = array();
+    $data = array();
 
     // Adapted from tiki-g-user_processes.php
     include_once (GALAXIA_LIBRARY.'/gui.php');
 
     // Initialize some stuff
     $user = xarUserGetVar('id');
-    $maxRecords = xarModVars::get('workflow','itemsperpage');
+    $maxRecords = xarModVars::get('workflow','items_per_page');
 
     // Filtering data to be received by request and
     // used to build the where part of a query
@@ -58,7 +58,7 @@ function workflow_user_processes()
         $offset = $_REQUEST["offset"];
     }
 
-    $tplData['offset'] =&  $offset;
+    $data['offset'] =&  $offset;
 
     if (isset($_REQUEST["find"])) {
         $find = $_REQUEST["find"];
@@ -66,30 +66,30 @@ function workflow_user_processes()
         $find = '';
     }
 
-    $tplData['find'] =  $find;
-    $tplData['where'] =  $where;
-    $tplData['sort_mode'] =&  $sort_mode;
+    $data['find'] =  $find;
+    $data['where'] =  $where;
+    $data['sort_mode'] =&  $sort_mode;
 
     $items = $GUI->gui_list_user_processes($user, $offset - 1, $maxRecords, $sort_mode, $find, $where);
-    $tplData['cant'] =  $items['cant'];
+    $data['cant'] =  $items['cant'];
 
     $cant_pages = ceil($items["cant"] / $maxRecords);
-    $tplData['cant_pages'] =&  $cant_pages;
-    $tplData['actual_page'] =  1 + (($offset - 1) / $maxRecords);
+    $data['cant_pages'] =&  $cant_pages;
+    $data['actual_page'] =  1 + (($offset - 1) / $maxRecords);
 
     if ($items["cant"] >= ($offset + $maxRecords)) {
-        $tplData['next_offset'] =  $offset + $maxRecords;
+        $data['next_offset'] =  $offset + $maxRecords;
     } else {
-        $tplData['next_offset'] =  -1;
+        $data['next_offset'] =  -1;
     }
 
     if ($offset > 1) {
-        $tplData['prev_offset'] =  $offset - $maxRecords;
+        $data['prev_offset'] =  $offset - $maxRecords;
     } else {
-        $tplData['prev_offset'] =  -1;
+        $data['prev_offset'] =  -1;
     }
 
-    $tplData['items'] =&  $items["data"];
+    $data['items'] =&  $items["data"];
 
     //$section = 'workflow';
     //include_once ('tiki-section_options.php');
@@ -105,16 +105,16 @@ function workflow_user_processes()
         'processId'
     );
 
-    $tplData['mid'] =  'tiki-g-user_processes.tpl';
+    $data['mid'] =  'tiki-g-user_processes.tpl';
 
 
-/*        $tplData['pager'] = xarTplGetPager($tplData['offset'],
+/*        $data['pager'] = xarTplGetPager($data['offset'],
                                            $items['cant'],
                                            $url,
                                            $maxRecords);*/
-        $tplData['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
-        $tplData['maxRecords'] = $maxRecords;
-        return $tplData;
+        $data['url'] = xarServer::getCurrentURL(array('offset' => '%%'));
+        $data['maxRecords'] = $maxRecords;
+        return $data;
 }
 
 ?>

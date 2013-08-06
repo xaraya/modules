@@ -1,7 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <xar:if condition="$pid gt 0">
     <h4>
-      <xar:if condition="$proc_info['isValid'] eq 'y'">
+      <xar:if condition="$proc_info['isValid']">
         <xar:var name="validtext">
           valid
         </xar:var>

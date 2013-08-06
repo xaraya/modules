@@ -25,19 +25,24 @@ function workflow_userapi_getmenulinks()
     if (xarSecurityCheck('ReadWorkflow',0)) {
         $menulinks[] = Array('url'   => xarModURL('workflow',
                                                   'user',
+                                                  'display'),
+                              'title' => xarML('Links to all the available interactive processes'),
+                              'label' => xarML('Runnable Activities'));
+        $menulinks[] = Array('url'   => xarModURL('workflow',
+                                                  'user',
                                                   'processes'),
                               'title' => xarML('View your workflow processes'),
-                              'label' => xarML('View Processes'));
+                              'label' => xarML('Processes'));
         $menulinks[] = Array('url'   => xarModURL('workflow',
                                                   'user',
                                                   'activities'),
                               'title' => xarML('View your workflow activities'),
-                              'label' => xarML('View Activities'));
+                              'label' => xarML('Activities'));
         $menulinks[] = Array('url'   => xarModURL('workflow',
                                                   'user',
                                                   'instances'),
                               'title' => xarML('View your workflow instances'),
-                              'label' => xarML('View Instances'));
+                              'label' => xarML('sInstances'));
     }
 
     return $menulinks;

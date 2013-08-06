@@ -25,7 +25,6 @@ function workflow_user_main()
     // Security Check
     if (!xarSecurityCheck('ReadWorkflow')) return;
 
-    // Return the output
     return array();
 }
 

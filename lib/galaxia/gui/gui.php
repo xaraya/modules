@@ -27,7 +27,7 @@ class GUI extends Base
     $sort_mode = str_replace("_"," ",$sort_mode);
 
     $mid = "where gp.isActive=? and gur.user=?";
-    $bindvars = array('y',$user);
+    $bindvars = array(1,$user);
     if($find) {
       $findesc = '%'.$find.'%';
       $mid .= " and ((gp.name like ?) or (gp.description like ?))";
@@ -59,6 +59,7 @@ class GUI extends Base
     $result = $this->query($query,$bindvars,$maxRecords,$offset);
     $cant = $this->getOne($query_cant,$bindvars);
     $ret = Array();
+
     while($res = $result->fetchRow()) {
       // Get instances per activity
       $pId=$res['pId'];
@@ -93,7 +94,7 @@ class GUI extends Base
     $sort_mode = str_replace("_"," ",$sort_mode);
 
     $mid = "where gp.isActive=? and gur.user=?";
-    $bindvars = array('y',$user);
+    $bindvars = array(1,$user);
     if($find) {
       $findesc = '%'.$find.'%';
       $mid .= " and ((ga.name like ?) or (ga.description like ?))";

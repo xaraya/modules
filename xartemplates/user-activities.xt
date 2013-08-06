@@ -1,12 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div class="xar-mod-head">
       <span class="xar-mod-title">
         Workflow Module
       </span>
+      <xar:template file="user_bar" type="module"/>
     </div>
 
     <div class="xar-mod-body">
-      <xar:template file="user_bar" type="module"/>
 
       <div style="margin: auto;">
         <fieldset>
@@ -85,8 +86,8 @@
                         <a href="&xar-modurl-workflow-user-instances;&amp;filter_process=#$items[$ix]['pId']#&amp;filter_activity=#$items[$ix]['activityId']#">#$items[$ix]['name']#</a>
                         <xar:else/>
                         #$items[$ix]['name']#
-                      </xar:if>
-                      <xar:if condition="$items[$ix]['isInteractive'] eq 'y' and ($items[$ix]['type'] eq 'start' or $items[$ix]['type'] eq 'standalone')">
+                      </xar:if>&#160;
+                      <xar:if condition="$items[$ix]['isInteractive'] OR ($items[$ix]['type'] eq 'start') OR ($items[$ix]['type'] eq 'standalone')">
                         <a href="#xarModURL('workflow','user','run_activity',array('activityId' => $items[$ix]['activityId']))#">
                           <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/next.gif" alt="#xarML('run')#" title="#xarML('run activity')#"/>
                         </a>

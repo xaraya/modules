@@ -108,9 +108,9 @@ function workflow_userapi_showactivity($args)
     $tplData['return_url'] = xarServer::getCurrentURL();
 
     if ($activity->isInteractive()) {
-        $template = $activity->getNormalizedName(). '.tpl';
+        $template = $activity->getNormalizedName(). '.xt';
         // not very clean way, but it works :)
-        $output = xarTpl__executeFromFile(GALAXIA_PROCESSES . '/' . $process->getNormalizedName(). '/code/templates/' . $template, $tplData);
+        $output = xarTplFile(GALAXIA_PROCESSES . '/' . $process->getNormalizedName(). '/code/templates/' . $template, $tplData);
         return $output;
     } else {
         $instance->getInstance($instance->instanceId);

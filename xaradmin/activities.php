@@ -12,6 +12,7 @@
  * @author Workflow Module Development Team
  */
 sys::import('modules.workflow.lib.galaxia.api');
+sys::import('modules.dynamicdata.class.objects.master');
 /**
  * the activities administration function
  *
@@ -25,17 +26,22 @@ function workflow_admin_activities()
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    sys::import('modules.workflow.lib.galaxia.config');
     $data = array();
 
     // Adapted from tiki-g-admin_activities.php
     include_once(GALAXIA_LIBRARY.'/processmanager.php');
 
-    if (!isset($_REQUEST['pid'])) {
+
+    if (!xarVarFetch('pid',   'int', $data['pid'],     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (empty($data['pid'])) {
         $data['msg'] =  xarML("No process indicated");
-        return xarTplModule('workflow', 'admin', 'error', $data);
+        return xarTplModule('workflow', 'admin', 'errors', $data);
     }
-    $data['pid'] =  $_REQUEST['pid'];
+
+    // Create a dataobject of this activity for displaying, saving etc.
+    $data['activity'] = DataObjectMaster::getObject(array('name' => 'workflow_activities'));
+    $data['activity']->properties['process_id']->value = $data['pid'];
+    
     // Create a process object
     $process = new Process($data['pid']);
 
@@ -45,45 +51,46 @@ function workflow_admin_activities()
 
     // Retrieve activity info if we are editing, assign to
     // default values when creating a new activity
-    if (!isset($_REQUEST['activityId']))
-        $_REQUEST['activityId'] = 0;
+    if (!xarVarFetch('activityId',   'int', $data['activityId'],     0, XARVAR_NOT_REQUIRED)) {return;}
+    if (!empty($data['activityId'])) $data['activity']->getItem(array('itemid' => $data['activityId']));
 
-    if ($_REQUEST["activityId"]) {
-        $act  = WorkFlowActivity::get($_REQUEST['activityId']);
-        $info = array('name'            => $act->getName(),
-                      'description'     => $act->getDescription(),
-                      'activityId'      => $act->getActivityId(),
-                      'isInteractive'   => $act->isInteractive() ? 'y' : 'n',
-                      'isAutoRouted'    => $act->isAutoRouted() ? 'y' :'n',
-                      'type'            => $act->getType()
+    $activity  = WorkFlowActivity::get($data['activityId']);
+/*    if ($_REQUEST["activityId"]) {
+        $info = array('name'            => $activity->getName(),
+                      'description'     => $activity->getDescription(),
+                      'activityId'      => $activity->getActivityId(),
+                      'isInteractive'   => $activity->isInteractive() ? 1 : 0,
+                      'isAutoRouted'    => $activity->isAutoRouted() ? 1 :0,
+                      'type'            => $activity->getType()
                       );
 
     } else {
         $info = array('name' => '',
                       'description' => '',
                       'activityId' => 0,
-                      'isInteractive' => 'y',
-                      'isAutoRouted' => 'n',
+                      'isInteractive' => 1,
+                      'isAutoRouted' => 0,
                       'type' => 'activity'
                       );
     }
 
-    $data['activityId'] =  $_REQUEST['activityId'];
     $data['info'] =  $info;
-
+*/
     // Remove a role from the activity
-    if (isset($_REQUEST['remove_role']) && $_REQUEST['activityId']) {
-        $act->removeRole($_REQUEST['remove_role']);
+    if (isset($_REQUEST['remove_role']) && $data['activityId']) {
+        $activity->removeRole($_REQUEST['remove_role']);
     }
 
     $role_to_add = 0;
     // Add a role to the process
-    if (isset($_REQUEST['addrole'])) {
-        $isInteractive = (isset($_REQUEST['isInteractive']) && $_REQUEST['isInteractive'] == 'on') ? 'y' : 'n';
-        $isAutoRouted = (isset($_REQUEST['isAutoRouted']) && $_REQUEST['isAutoRouted'] == 'on') ? 'y' : 'n';
+    if (!xarVarFetch('addrole',   'int', $data['addrole'],     0, XARVAR_NOT_REQUIRED)) {return;}
+    if (isset($addrole)) {
+        $data['activity']->checkInput();
+        $isInteractive = (isset($_REQUEST['isInteractive']) && $_REQUEST['isInteractive'] == 'on') ? 1 : 0;
+        $isAutoRouted = (isset($_REQUEST['isAutoRouted']) && $_REQUEST['isAutoRouted'] == 'on') ? 1 : 0;
         $info = array('name' => $_REQUEST['name'],
                       'description' => $_REQUEST['description'],
-                      'activityId' => $_REQUEST['activityId'],
+                      'activityId' => $data['activityId'],
                       'isInteractive' => $isInteractive,
                       'isAutoRouted' => $isAutoRouted,
                       'type' => $_REQUEST['act_type'],
@@ -92,10 +99,10 @@ function workflow_admin_activities()
         $vars = array('name' => $_REQUEST['rolename'],'description' => '');
 
         if (isset($_REQUEST["userole"]) && $_REQUEST["userole"]) {
-            $act->addRole($_REQUEST['userole']);
+            $activity->addRole($_REQUEST['userole']);
         } else {
             $rid = $roleManager->replace_role($data['pid'], 0, $vars);
-            $act->addRole($rid);
+            $activity->addRole($rid);
         }
     }
 
@@ -106,56 +113,73 @@ function workflow_admin_activities()
         }
     }
 
+    //--------------------------------------------- 
+
     // If we are adding an activity then add it!
     if (isset($_REQUEST['save_act'])) {
-        $isInteractive = (isset($_REQUEST['isInteractive']) && $_REQUEST['isInteractive'] == 'on') ? 'y' : 'n';
-        $isAutoRouted = (isset($_REQUEST['isAutoRouted']) && $_REQUEST['isAutoRouted'] == 'on') ? 'y' : 'n';
+        if (!empty($data['activityId'])) {
+            $oldname = $activity->getNormalizedName();
+        } else {
+            $oldname = '';
+        }
+        $data['activity']->checkInput();
+
+/*        $isInteractive = (isset($_REQUEST['isInteractive']) && $_REQUEST['isInteractive'] == 'on') ? 1 : 0;
+        $isAutoRouted = (isset($_REQUEST['isAutoRouted']) && $_REQUEST['isAutoRouted'] == 'on') ? 1 : 0;
         $vars = array('name' => $_REQUEST['name'],
                       'description' => $_REQUEST['description'],
-                      'activityId' => $_REQUEST['activityId'],
+                      'activityId' => $data['activityId'],
                       'isInteractive' => $isInteractive,
                       'isAutoRouted' => $isAutoRouted,
                       'type' => $_REQUEST['act_type'],
                       );
-
-        if ($process->hasActivity($_REQUEST['name']) && $_REQUEST['activityId'] == 0) {
+*/
+        $name = $data['activity']->properties['name']->value;
+        if ($process->hasActivity($name) && $data['activityId'] == 0) {
             $data['msg'] =  xarML("Activity name already exists");
-            return xarTplModule('workflow', 'admin', 'error', $data);
+            return xarTplModule('workflow', 'admin', 'errors', $data);
         }
 
-        $newaid = $activityManager->replace_activity($data['pid'], $_REQUEST['activityId'], $vars);
-        $act = WorkFlowActivity::get($newaid);
+    //--------------------------------------------- Save or create the item
+
+        if (!empty($data['activityId'])) {
+            $newaid = $data['activity']->updateItem(array('oldname' => $oldname));
+        } else {
+            $newaid = $data['activity']->createItem();
+        }
+        
+        // FIXME: we already do this in the createItem and updateItem methods
+        $activity = WorkFlowActivity::get($newaid);
 
         $rid = 0;
         if (isset($_REQUEST['userole']) && $_REQUEST['userole'])
             $rid = $_REQUEST['userole'];
 
         if (!empty($_REQUEST['rolename'])) {
-            $vars = array('name' => $_REQUEST['rolename'],
-                          'description' => ''
-                          );
+            $data['activity']->properties['name']->value = $_REQUEST['rolename'];
+            $data['activity']->properties['description']->value = '';
             $rid = $roleManager->replace_role($data['pid'], 0, $vars);
         }
 
         if ($rid) {
-            $act->addRole($rid);
+            $activity->addRole($rid);
         }
 
-        // Reget
-        $info = array('name'        => $act->getName(),
-                      'description' => $act->getDescription(),
-                      'activityId'  => $act->getActivityId(),
-                      'isInteractive' => $act->isInteractive() ? 'y' : 'n',
-                      'isAutoRouted' => $act->isAutoRouted() ? 'y' :'n',
-                      'type' => $act->getType()
+/*        // Reget
+        $info = array('name'        => $activity->getName(),
+                      'description' => $activity->getDescription(),
+                      'activityId'  => $activity->getActivityId(),
+                      'isInteractive' => $activity->isInteractive() ? 1 : 0,
+                      'isAutoRouted' => $activity->isAutoRouted() ? 1 : 0,
+                      'type' => $activity->getType()
                       );
 
 
-        $_REQUEST['activityId'] = $newaid;
+        $data['activityId'] = $newaid;
         $data['info'] =  $info;
-
+*/
         // remove transitions ????
-        $act->removeTransitions();
+        $activity->removeTransitions();
         if (isset($_REQUEST["add_tran_from"])) {
             foreach ($_REQUEST["add_tran_from"] as $actfrom) {
                 $activityManager->add_transition($data['pid'], $actfrom, $newaid);
@@ -167,6 +191,7 @@ function workflow_admin_activities()
             }
         }
     }
+    //--------------------------------------------- 
 
     // Get all the process roles
     $all_roles = $roleManager->list_roles($data['pid'], 0, -1, 'name_asc', '');
@@ -174,8 +199,8 @@ function workflow_admin_activities()
 
     // Get activity roles
     $data['roles'] = array();
-    if ($_REQUEST['activityId']) {
-        $data['roles'] = $act->getRoles();
+    if ($data['activityId']) {
+        $data['roles'] = $activity->getRoles();
     }
 
     $where = '';
@@ -216,31 +241,34 @@ function workflow_admin_activities()
     $activities = $activityManager->list_activities($data['pid'], 0, -1,  $data['sort_mode'], $data['find'], $data['where']);
 
     //Now check if the activity is or not part of a transition
-    if (isset($_REQUEST['activityId'])) {
+    if (isset($data['activityId'])) {
         for ($i=0, $na=count($activities['data']); $i < $na; $i++) {
             $id = $activities["data"][$i]['activityId'];
 
             $activities["data"][$i]['to']
-                = $activityManager->transition_exists($data['pid'], $_REQUEST['activityId'], $id) ? 'y' : 'n';
+                = $activityManager->transition_exists($data['pid'], $data['activityId'], $id) ? 1 : 0;
             $activities["data"][$i]['from']
-                = $activityManager->transition_exists($data['pid'], $id, $_REQUEST['activityId']) ? 'y' : 'n';
+                = $activityManager->transition_exists($data['pid'], $id, $data['activityId']) ? 1 : 0;
         }
     }
 
-    // Set activities
-    if (isset($_REQUEST['update_act'])) {
+// ---------------------------------------
+// Update all activities at once
+
+    if (!xarVarFetch('update_act',   'isset', $update_act,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if ($update_act) {
         for ($i=0, $na=count($activities['data']); $i < $na; $i++) {
             // Make id a bit more accessible
             $id = $activities["data"][$i]['activityId'];
             $activity = WorkflowActivity::get($id);
 
             // Is activity interactive?
-            $ia = isset($_REQUEST['activity_inter'][$id]);
-            $activities["data"][$i]['isInteractive'] = $ia ? 'y' : 'n';
+            $ia = isset($_REQUEST['activity_inter'][$id]) ? 1 : 0;
+            $activities["data"][$i]['isInteractive'] = $ia;
             $activity->setInteractive($ia);
 
             // Is activity autorouted?
-            $ar = isset($_REQUEST['activity_route'][$id]) ? 'y' : 'n';
+            $ar = isset($_REQUEST['activity_route'][$id]) ? 1 : 0;
             $activities["data"][$i]['isAutoRouted'] = $ar;
             $activityManager->set_autorouting($data['pid'], $id, $ar);
         }
@@ -249,16 +277,22 @@ function workflow_admin_activities()
 
     // Validate the process
     $valid = $activityManager->validate_process_activities($data['pid']);
-    $proc_info['isValid'] = $valid ? 'y' : 'n';
+    $proc_info['isValid'] = $valid ? 1 : 0;
 
-    // If its valid and requested to activate, do so
-    if ($valid && isset($_REQUEST['activate_proc'])) {
-        $process->activate();
-    }
-
-    // If its not valid or requested to deactivate, deactivate the process
-    if (!$valid || isset($_REQUEST['deactivate_proc'])) {
-        $process->deactivate();
+    // If its valid and requested to activate or deactivate, do so
+    if ($valid) {
+        xarVarFetch('activate_proc', 'int', $activate_proc, 0, XARVAR_NOT_REQUIRED);
+        if ($activate_proc) {
+            $process->activate();
+            xarController::redirect(xarModURL('workflow','admin','activities',array('pid' => $data['pid'])));
+            return true;
+        }
+        xarVarFetch('deactivate_proc', 'int', $deactivate_proc, 0, XARVAR_NOT_REQUIRED);
+        if ($deactivate_proc) {
+            $process->deactivate();
+            xarController::redirect(xarModURL('workflow','admin','activities',array('pid' => $data['pid'])));
+            return true;
+        }
     }
 
     // @todo migrate proc_info into $process

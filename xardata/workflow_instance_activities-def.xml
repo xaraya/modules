@@ -1,0 +1,84 @@
+<object name="workflow_instance_activities">
+  <objectid>23</objectid>
+  <label>Workflow Instance Activities</label>
+  <module_id>182</module_id>
+  <itemtype>18</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:0:{}</config>
+  <isalias>true</isalias>
+  <properties>
+    <property name="id">
+      <id>180</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_workflow_instance_activities.id</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="instance_id">
+      <id>181</id>
+      <label>Instance ID</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_workflow_instance_activities.instanceId</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="activity">
+      <id>182</id>
+      <label>Activity</label>
+      <type>objectref</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_workflow_instance_activities.activityId</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:19:"workflow_activities";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";}</configuration>
+    </property>
+    <property name="started">
+      <id>183</id>
+      <label>Started</label>
+      <type>datetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>xar_workflow_instance_activities.started</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration></configuration>
+    </property>
+    <property name="ended">
+      <id>184</id>
+      <label>Ended</label>
+      <type>datetime</type>
+      <defaultvalue>0</defaultvalue>
+      <source>xar_workflow_instance_activities.ended</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
+    <property name="user">
+      <id>185</id>
+      <label>User</label>
+      <type>username</type>
+      <defaultvalue>xarUserGetVar('uname')</defaultvalue>
+      <source>xar_workflow_instance_activities.user</source>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration></configuration>
+    </property>
+    <property name="status">
+      <id>186</id>
+      <label>Status</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_workflow_instance_activities.status</source>
+      <status>33</status>
+      <seq>7</seq>
+      <configuration></configuration>
+    </property>
+  </properties>
+</object>
