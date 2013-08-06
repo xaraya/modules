@@ -109,15 +109,8 @@
                         <xar:data-input type="textarea" name="submit_custom_urls" rows="5" value="" />
                     </div>
                 </fieldset>
-                <fieldset>
-                    <div class="xar-form-input-wrapper-after">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
-                        <input type="hidden" name="phase" id="phase" value="update"/>
-                        <input type="hidden" name="tab" id="tab" value="#$tab#"/>
-                        <xar:var name="label">Update</xar:var>
-                        <xar:button type="submit" label="$label"/>
-                    </div>
-                </fieldset>
+                <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+                <xar:template file="update-button" module="base" />
             </form>
             <xar:comment>
                  - - - - - - - - - - - - - - - - - - - Begin Tab2 Options  - - - - - - - - - - - - - - - - - - -
