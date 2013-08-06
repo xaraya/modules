@@ -12,28 +12,26 @@
  * @author XarayaGeek
  * @author Ryan Walker
  */
-$modversion['name']         = 'messages';
-$modversion['id']           = '6';
-$modversion['version']      = '1.9.1';
-$modversion['displayname']  = xarML('Messages');
-$modversion['description']  = 'Xaraya Messages module';
-$modversion['credits']      = 'docs/credits.txt';
-$modversion['help']         = 'docs/help.txt';
-$modversion['changelog']    = 'docs/changelog.txt';
-$modversion['license']      = 'docs/license.txt';
-$modversion['official']     = 1;
-$modversion['author']       = 'XarayaGeek';
-$modversion['contact']      = 'http://www.XarayaGeek.com/';
-$modversion['admin']        = 1;
-$modversion['user']         = 1;
-$modversion['class']        = 'Complete';
-$modversion['category']     = 'Miscellaneous';
-$modversion['dependencyinfo'] = array(
+    $modversion['name']         = 'messages';
+    $modversion['id']           = '6';
+    $modversion['version']      = '1.9.1';
+    $modversion['displayname']  = xarML('Messages');
+    $modversion['description']  = 'Xaraya Messages module';
+    $modversion['credits']      = 'docs/credits.txt';
+    $modversion['help']         = 'docs/help.txt';
+    $modversion['changelog']    = 'docs/changelog.txt';
+    $modversion['license']      = 'docs/license.txt';
+    $modversion['official']     = 1;
+    $modversion['author']       = 'XarayaGeek';
+    $modversion['contact']      = 'http://www.XarayaGeek.com/';
+    $modversion['admin']        = 1;
+    $modversion['user']         = 1;
+    $modversion['class']        = 'Admin';
+    $modversion['category']     = 'Content';
+    $modversion['dependencyinfo'] = array(
                                     0 => array(
-                                            'name' => 'Xaraya Core',
-                                            'version_ge' => '2.1.0',
-                                            'version_le' => '2.1.99',
-                                         ),
-                                      );
-
+                                    'name' => 'Xaraya Core',
+                                    'version_ge' => '2.1.0',
+                                    ),
+                                );
 ?>

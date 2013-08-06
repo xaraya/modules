@@ -3,14 +3,13 @@
  * Messages Module
  *
  * @package modules
+ * @subpackage messages module
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Messages Module
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
  * @author Ryan Walker
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * This is a standard function to modify and update the configuration parameters of the
@@ -23,25 +22,21 @@ function messages_admin_modifyconfig()
     // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('AdminMessages')) return;
 
-    $data['groups'] = xarMod::apiFunc('roles', 'user', 'getallgroups');
+	$data['groups'] = xarMod::apiFunc('roles', 'user', 'getallgroups');
 
     // Check if this template has been submitted, or if we just got here
     if (!xarVarFetch('phase',        'str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return; 
 
+    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'banks'));
+    $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls');
+    $data['module_settings']->getItem();
+
     // Load the DD master object class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.objects.master');
     // Get the object we'll be working with for content-specific configuration
-    $object = DataObjectMaster::getObject(array('name' => 'messages_module_settings'));
+    $data['object'] = DataObjectMaster::getObject(array('name' => 'messages_module_settings'));
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
-    $object->getItem(array('itemid' => 0));
-    $data['object'] = $object;
-
-    // Get the object we'll be working with for common configuration settings
-    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'messages'));
-    // Decide which fields are configurable in this module
-    $data['module_settings']->setFieldList('items_per_page, use_module_alias, enable_short_urls,enable_user_menu');
-    // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
-    $data['module_settings']->getItem();
+    $data['object']->getItem();
 
     // Run the appropriate code depending on whether the template was submitted or not
     switch (strtolower($phase)) {
@@ -80,16 +75,13 @@ function messages_admin_modifyconfig()
                 $itemid = $data['module_settings']->updateItem();
             }
 
-            //sys::import('modules.dynamicdata.class.properties.master');
-                        
-
-            foreach ($data['groups'] as $key => $value) {
-                //$property = DataPropertyMaster::getProperty(array('name' => 'roleid_'.$key)); 
-                //$property->checkInput('roleid_'.$key); 
-                $the_key = $value['id'];
-                if (!xarVarFetch('roleid_'.$the_key,  'array',    $roleid_{$the_key}, 0, XARVAR_NOT_REQUIRED)) return; 
-                xarModItemVars::set('messages', "allowedsendmessages", serialize($roleid_{$the_key}),$the_key);
-            }
+			foreach ($data['groups'] as $key => $value) {
+				//$property = DataPropertyMaster::getProperty(array('name' => 'roleid_'.$key)); 
+				//$property->checkInput('roleid_'.$key); 
+				$the_key = $value['id'];
+				if (!xarVarFetch('roleid_'.$the_key,  'array',    $roleid_{$the_key}, 0, XARVAR_NOT_REQUIRED)) return; 
+				xarModItemVars::set('messages', "allowedsendmessages", serialize($roleid_{$the_key}),$the_key);
+			}
 
             # --------------------------------------------------------
             #
@@ -134,11 +126,11 @@ function messages_admin_modifyconfig()
                 // Get the data from the form
                 $isvalid = $object->checkInput();
                 // Update the item with itemid = 0
-                 
-                
+				 
+				
                 $item = $object->updateItem(array('itemid' => 0));
 
-                xarResponse::redirect(xarModURL('messages','admin','modifyconfig'));
+				xarResponse::redirect(xarModURL('messages','admin','modifyconfig'));
 
             # --------------------------------------------------------
             #

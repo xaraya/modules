@@ -13,7 +13,7 @@
  */ 
 /**
  * Get the list of groups this user can send to
- * @return array        $sendtogroups the IDs of groups this user can send to
+ * @return array		$sendtogroups the IDs of groups this user can send to
  */
 
 sys::import('modules.messages.xarincludes.defines');
@@ -42,13 +42,13 @@ sys::import('modules.messages.xarincludes.defines');
         $sendtogroups = array();  
         foreach ($parents as $parent) {
             $allowedgroups = unserialize(xarModItemVars::get('messages',"allowedsendmessages",$parent['parent_id'])); 
-            if (!empty($allowedgroups)) {
-                foreach ($allowedgroups as $allowedgroup) {
-                    $sendtogroups[$allowedgroup] = $allowedgroup;
-                }
-            }
+			if (!empty($allowedgroups)) {
+				foreach ($allowedgroups as $allowedgroup) {
+					$sendtogroups[$allowedgroup] = $allowedgroup;
+				}
+			}
         }                
-     
+	 
         return $sendtogroups;
     }
 ?>

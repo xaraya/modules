@@ -3,13 +3,13 @@
  * Messages Module
  *
  * @package modules
+ * @subpackage messages module
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Messages Module
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
+ * @author Ryan Walker
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
  * Delete a message
@@ -17,12 +17,12 @@
  * @author Carl P. Corliss (aka rabbitt)
  * @access  public
  */
-
+ 
 sys::import('modules.messages.xarincludes.defines');
 
 function messages_user_markunread()
 {
-    if (!xarSecurityCheck('AddMessages')) return;
+    if (!xarSecurityCheck('ManageMessages')) return;
 
     if (!xarVarFetch('id', 'int:1', $id, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox', XARVAR_NOT_REQUIRED)) return;
@@ -30,7 +30,7 @@ function messages_user_markunread()
     $data['object'] = DataObjectMaster::getObject(array('name' => 'messages_messages'));
     $data['object']->getItem(array('itemid' => $id));
 
-    $folder = xarSession::getVar('messages_currentfolder');
+	$folder = xarSession::getVar('messages_currentfolder');
 
     // Check the folder, and that the current user is either author or recipient
     switch ($folder) {
@@ -38,15 +38,15 @@ function messages_user_markunread()
             if ($data['object']->properties['to']->value != xarSession::getVar('role_id')) {
                 return xarTplModule('messages','user','message_errors',array('layout' => 'bad_id'));
             } else {
-                $data['object']->properties['recipient_status']->setValue(MESSAGES_STATUS_UNREAD);
-            }
+				$data['object']->properties['recipient_status']->setValue(MESSAGES_STATUS_UNREAD);
+			}
             break;
         case 'sent':
             if ($data['object']->properties['from']->value != xarSession::getVar('role_id')) {
                 return xarTplModule('messages','user','message_errors',array('layout' => 'bad_id'));
             } else {
-                $data['object']->properties['author_status']->setValue(MESSAGES_STATUS_UNREAD);
-            }
+				$data['object']->properties['author_status']->setValue(MESSAGES_STATUS_UNREAD);
+			}
             break;
     }
 
@@ -56,7 +56,7 @@ function messages_user_markunread()
 
     xarResponse::redirect(xarModURL('messages','user','view',array('folder' => $folder)));
          
-    return true;
+	return true;
 
 }
 

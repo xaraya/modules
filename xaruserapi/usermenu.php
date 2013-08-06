@@ -55,9 +55,9 @@ function messages_userapi_usermenu($args)
     $fieldlist = array();
     $settings = explode(',',xarModVars::get('roles', 'duvsettings'));
     $fieldlist[] = 'user_sendemail';
-    $fieldlist[] = 'enable_autoreply';
-    $fieldlist[] = 'autoreply';
-    $fieldlist[] = 'user_send_redirect';
+	$fieldlist[] = 'enable_autoreply';
+	$fieldlist[] = 'autoreply';
+	$fieldlist[] = 'user_send_redirect';
     
     $object->setFieldList(join(',',$fieldlist));
     switch (strtolower($phase)) {
@@ -106,9 +106,9 @@ function messages_userapi_usermenu($args)
         **/
         case 'checkinput':
             $isvalid = $object->checkInput();
-    
-            //$user_sendemail = $object->properties['user_sendemail']->value;
-            //xarModItemVars::set('messages', "user_sendemail", $user_sendemail ,$id); 
+	
+			//$user_sendemail = $object->properties['user_sendemail']->value;
+			//xarModItemVars::set('messages', "user_sendemail", $user_sendemail ,$id); 
 
             /*if (!empty($object->properties['userhome']) && (bool)xarModVars::get('roles','allowuserhomeedit')) {
                $home = $object->properties['userhome']->getValue();

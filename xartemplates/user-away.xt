@@ -1,5 +1,6 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:style scope="module" module="messages" file="messages"/>
+    <xar:template file="user-mod-head"/>
     <div class="xar-mod-head">
         <span class="xar-mod-title">
             Away Message
@@ -7,14 +8,14 @@
     </div>
     <!--Psspl:Modifided the code for adding return action -->
     <div class="xar-mod-body">
-    <form action="#xarModURL('messages','user','view')#" method="post">    
-        <span class="xar-accent">
-            <xar:ml><xar:mlstring>#(1) is away</xar:mlstring><xar:mlvar>#xarUserGetVar('name',$recipient)#</xar:mlvar></xar:ml>
-        </span>
-        <span class="xar-norm">
-            <p>#xarVarPrepHTMLDisplay($away_message)#</p>
-        </span>
-        <input type="submit" value="#xarML('Return')#" class="xar-margin-thickleft"/>
-    </form>
+        <form action="#xarModURL('messages','user','view')#" method="post">    
+            <span class="xar-accent">
+                <xar:ml><xar:mlstring>#(1) is away</xar:mlstring><xar:mlvar>#xarUserGetVar('name',$recipient)#</xar:mlvar></xar:ml>
+            </span>
+            <span class="xar-norm">
+                <p>#xarVarPrepHTMLDisplay($away_message)#</p>
+            </span>
+            <input type="submit" value="#xarML('Return')#" class="xar-margin-thickleft"/>
+        </form>
     </div>
 </xar:template>

@@ -1,5 +1,5 @@
 <object name="messages_module_settings">
-  <objectid>118</objectid>
+  <objectid>143</objectid>
   <label>Messages Module Settings</label>
   <module_id>6</module_id>
   <itemtype>2</itemtype>
@@ -7,11 +7,16 @@
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
-  <config>a:0:{}</config>
+  <access>a:0:{}</access>
   <isalias>false</isalias>
+  <datastore>module_variables</datastore>
+  <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>
+  <sources>a:1:{s:0:&quot;&quot;;a:2:{i:0;s:0:&quot;&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
+  <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
   <properties>
     <property name="sendemail">
-      <id>857</id>
+      <id>1627</id>
       <label>Enable email delivery</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -21,7 +26,7 @@
       <configuration></configuration>
     </property>
     <property name="allowanonymous">
-      <id>858</id>
+      <id>1628</id>
       <label>Allow anonymous messages</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -31,7 +36,7 @@
       <configuration></configuration>
     </property>
     <property name="allowautoreply">
-      <id>859</id>
+      <id>1629</id>
       <label>Autoreply</label>
       <type>checkbox</type>
       <defaultvalue></defaultvalue>
@@ -41,7 +46,7 @@
       <configuration></configuration>
     </property>
     <property name="allowedsendmessages">
-      <id>860</id>
+      <id>1630</id>
       <label>allowedsendmessages</label>
       <type>array</type>
       <defaultvalue></defaultvalue>
@@ -51,7 +56,7 @@
       <configuration></configuration>
     </property>
     <property name="strip_tags">
-      <id>861</id>
+      <id>1631</id>
       <label>Strip tags from autoreplies</label>
       <type>checkbox</type>
       <defaultvalue>1</defaultvalue>
@@ -61,7 +66,7 @@
       <configuration></configuration>
     </property>
     <property name="send_redirect">
-      <id>862</id>
+      <id>1632</id>
       <label>Default tab to open after send</label>
       <type>dropdown</type>
       <defaultvalue></defaultvalue>
@@ -71,7 +76,7 @@
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:38:"1,Inbox;2,Sent;3,Drafts;4,New Message;";}</configuration>
     </property>
     <property name="allowusersendredirect">
-      <id>863</id>
+      <id>1633</id>
       <label>Tab to open after send</label>
       <type>checkbox</type>
       <defaultvalue>0</defaultvalue>

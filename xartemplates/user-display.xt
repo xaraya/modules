@@ -1,48 +1,44 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
  <xar:style scope="module" module="messages" file="messages"/>
  
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">Private Messages</span>
-    </div>
-
-<xar:template type="module" file="user-menu"/>
+    <xar:template file="user-mod-head"/>
     
     <div class="xar-mod-body">
 
-    <h2>#$input_title#</h2>
-
-    <div id="message_display">
-
-        <xar:data-display object="$object" tplmodule="messages" action="$action" folder="$folder" replyto="$replyto" />
- 
-
-    <xar:set name="folder">xarSession::getVar('messages_currentfolder')</xar:set>
+        <h2>#$input_title#</h2>
     
-    <div class="user-display-buttons">
+        <div id="message_display">
     
-    <form class="button" action="#xarModURL('messages','user','view',array('folder' => $folder))#">
-     <input type="submit" value="Close" title="#xarML('Close')#" />
-    </form>
-
-            
-            <xar:if condition="$folder ne 'sent' and xarSecurityCheck('AddMessages', 0)">
-                <form class="button" action="#xarModURL('messages','user','reply',array('folder' => $folder, 'replyto' => $id))#">
-         <input type="submit" value="Reply" title="#xarML('Reply')#" />
+            <xar:data-display object="$object" tplmodule="messages" action="$action" folder="$folder" replyto="$replyto" />
+     
+    
+        <xar:set name="folder">xarSession::getVar('messages_currentfolder')</xar:set>
+        
+        <div class="user-display-buttons">
+        
+        <form class="button" action="#xarModURL('messages','user','view',array('folder' => $folder))#">
+         <input type="submit" value="Close" title="#xarML('Close')#" />
         </form>
-            </xar:if> 
-
-    <form class="button" action="#xarModURL('messages','user','markunread',array('id' => $id, 'folder' => $folder))#">
-     <input type="submit" value="Mark as Unread" title="#xarML('Mark as Unread')#" id="markunread" />
-    </form>
-            
-         
-            <xar:if condition="xarSecurityCheck('ManageMessages', 0)">
-        <form class="button" action="#xarModURL('messages','user','delete',array('id' => $id, 'folder' => $folder))#">
-         <input type="submit" value="Delete" title="#xarML('Delete Message')#" />
+    
+                
+                <xar:if condition="$folder ne 'sent' and xarSecurityCheck('AddMessages', 0)">
+                    <form class="button" action="#xarModURL('messages','user','reply',array('folder' => $folder, 'replyto' => $id))#">
+             <input type="submit" value="Reply" title="#xarML('Reply')#" />
+            </form>
+                </xar:if> 
+    
+        <form class="button" action="#xarModURL('messages','user','markunread',array('id' => $id, 'folder' => $folder))#">
+         <input type="submit" value="Mark as Unread" title="#xarML('Mark as Unread')#" id="markunread" />
         </form>
-            </xar:if>
-            </div>
- 
-    </div>
+                
+             
+                <xar:if condition="xarSecurityCheck('ManageMessages', 0)">
+            <form class="button" action="#xarModURL('messages','user','delete',array('id' => $id, 'folder' => $folder))#">
+             <input type="submit" value="Delete" title="#xarML('Delete Message')#" />
+            </form>
+                </xar:if>
+                </div>
+     
+        </div>
     </div>
 </xar:template>

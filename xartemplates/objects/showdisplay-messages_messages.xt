@@ -55,11 +55,11 @@
         <span class="xar-form-label">
             To:
         </span>
-    <xar:if condition="is_numeric($replyto) and xarMod::apiFunc('messages','user','checkanonymous',array('id' => $replyto))">
-    Anonymous
-    <xar:else />
+	<xar:if condition="is_numeric($replyto) and xarMod::apiFunc('messages','user','checkanonymous',array('id' => $replyto))">
+	Anonymous
+	<xar:else />
          #xarUserGetVar('name',$recipient)# 
-     </xar:if>
+	 </xar:if>
     </div>
 
     <div class="xar-form-input-wrapper">

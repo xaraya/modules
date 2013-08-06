@@ -13,90 +13,72 @@
  * @author Ryan Walker
  */
 /**
- * initialise the messages module
+ * Initialise the messages module
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
 
-sys::import('modules.dynamicdata.class.objects.master');
+sys::import('xaraya.structures.query');
 
 function messages_init()
 {
-    //Load Table Maintenance API
-    sys::import('xaraya.tableddl');
+    $q = new Query();
+    $prefix = xarDB::getPrefix();
 
-    $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+# --------------------------------------------------------
+#
+# Table structure for table messages
+#
 
-    $sql = "DROP TABLE IF EXISTS " . $xartable['messages'];
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_messages";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_messages (
+      id                integer unsigned NOT NULL auto_increment,
+      from_id           integer unsigned NOT NULL default 0,
+      to_id             integer unsigned NOT NULL default 0,
+      time              integer unsigned NOT NULL default 0,
+      from_status       tinyint unsigned NOT NULL default 0,
+      to_status         tinyint unsigned NOT NULL default 0,
+      from_delete       tinyint unsigned NOT NULL default 0,
+      to_delete         tinyint unsigned NOT NULL default 0,
+      anonpost          tinyint unsigned NOT NULL default 0,
+      replyto           integer unsigned NOT NULL default 0,
+      subject           varchar(254) default NULL,
+      body              text,
+      state             tinyint unsigned NOT NULL default 3,
+      PRIMARY KEY  (id),
+      KEY `messages_from_id` (`from_id`)
+    ) TYPE=MyISAM";
+    if (!$q->run($query)) return;
 
-    $result =& $dbconn->Execute($sql);
-    if (!$result)
-        return;
-
-    //Psspl:Added the code for anonpost_to field.
-    $fields = array(
-        'id'                     => array('type'=> 'integer', 'unsigned'=>true, 'null'=>false, 'increment'=>true, 'primary_key'=>true),     
-        /*'pid'                    => array('type'=>'integer', 'unsigned'=>true, 'null'=>FALSE),*/
-        'date'                   => array('type'=>'integer', 'unsigned'=>true, 'null'=>FALSE),
-        'author'                 => array('type'=>'integer', 'unsigned'=>true, 'null'=>FALSE, 'size'=>'medium', 'default'=>5),
-        'recipient'              => array('type'=>'integer', 'unsigned'=>true, 'null'=>FALSE, 'size'=>'medium', 'default'=>5),
-        /*'left_id'                => array('type'=>'integer', 'unsigned'=>true, 'null'=>FALSE, 'default'=>1),
-        'right_id'               => array('type'=>'integer', 'unsigned'=>true, 'null'=>FALSE, 'default'=>1),*/
-        'author_status'          => array('type'=>'integer', 'null'=>FALSE, 'size'=>'tiny'),
-        'recipient_status'       => array('type'=>'integer', 'null'=>FALSE, 'size'=>'tiny'),
-        'author_delete'          => array('type'=>'integer', 'null'=>FALSE, 'size'=>'tiny', 'default'=>'0'),
-        'recipient_delete'       => array('type'=>'integer', 'null'=>FALSE, 'size'=>'tiny', 'default'=>'0'),
-        'anonpost'               => array('type'=>'integer', 'unsigned'=>true, 'null'=>TRUE, 'size'=>'tiny', 'default'=>'0'),
-        'replyto'                   => array('type'=>'integer', 'unsigned'=>true, 'null'=>FALSE, 'default' => '0'),
-        'title'                  => array('type'=>'varchar', 'null'=>FALSE, 'size'=>'100'),
-        'text'                   => array('type'=>'text', 'null'=>TRUE, 'size'=>'medium')
-    );
-
-    $query = xarDBCreateTable($xartable['messages'], $fields);
-
-    $result =& $dbconn->Execute($query);
-    if (!$result)
-        return;
-
-    /*$index = array('name'      => 'i_' . xarDB::getPrefix() . '_messages_left',
-                   'fields'    => array('left_id'),
-                   'unique'    => FALSE);
-
-    $query = xarDBCreateIndex($xartable['messages'],$index);
-
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;*/
-
-
-    # --------------------------------------------------------
-    #
-    # Create DD objects
-    #
+	# --------------------------------------------------------
+	#
+	# Create DD objects
+	#
     $module = 'messages';
     $objects = array(
-                    'messages_user_settings',
-                    'messages_module_settings',
-                    'messages_messages'
+					'messages_user_settings',
+					'messages_module_settings',
+					'messages_messages'
                      );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
-    xarModVars::set('messages', 'sendemail', false); // Note the 'e' in 'sendemail'
+	xarModVars::set('messages', 'sendemail', false); // Note the 'e' in 'sendemail'
     xarModVars::set('messages', 'allowautoreply', true );
-    xarModVars::set('messages', 'allowanonymous', false);
-    xarModVars::set('messages', 'allowedsendmessages', serialize(array()));
-    xarModVars::set('messages', 'strip_tags', true);
-    xarModVars::set('messages', 'send_redirect', 1);
-    xarModVars::set('messages', 'allowusersendredirect', false);
+	xarModVars::set('messages', 'allowanonymous', false);
+	xarModVars::set('messages', 'allowedsendmessages', serialize(array()));
+	xarModVars::set('messages', 'strip_tags', true);
+	xarModVars::set('messages', 'send_redirect', 1);
+	xarModVars::set('messages', 'allowusersendredirect', false);
 
-    // not sure if the following are needed?
-    xarModVars::set('messages', 'user_sendemail', true); // Note the 'e' in 'user_sendemail'
-    xarModVars::set('messages', 'enable_autoreply', false);
-    xarModVars::set('messages', 'autoreply', '');
-    xarModVars::set('messages', 'user_send_redirect', 1);
+	// not sure if the following are needed?
+	xarModVars::set('messages', 'user_sendemail', true); // Note the 'e' in 'user_sendemail'
+	xarModVars::set('messages', 'enable_autoreply', false);
+	xarModVars::set('messages', 'autoreply', '');
+	xarModVars::set('messages', 'user_send_redirect', 1);
 
-    //xarModVars::set('messages', 'buddylist', 0);
+	//xarModVars::set('messages', 'buddylist', 0);
     //xarModVars::set('messages', 'limitsaved', 12);
     //xarModVars::set('messages', 'limitout', 10);
     //xarModVars::set('messages', 'limitinbox', 10);
@@ -110,13 +92,13 @@ function messages_init()
     //xarModVars::set('messages', 'serverpath', '/home/yourdir/public_html/modules/messages');
     //xarModVars::set('messages', 'away_message', '');
 
-    # --------------------------------------------------------
-    #
-    # Set up configuration modvars (general)
-    #
+	# --------------------------------------------------------
+	#
+	# Set up configuration modvars (general)
+	#
 
-    $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'messages'));
-    $module_settings->initialize();
+	$module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'messages'));
+	$module_settings->initialize();
 
 
     /*
@@ -163,8 +145,8 @@ function messages_init()
 # Create privilege instances
 #
 
-    xarDefineInstance('messages', 'Block', array());
-    xarDefineInstance('messages', 'Item', array());
+	xarDefineInstance('messages', 'Block', array());
+	xarDefineInstance('messages', 'Item', array());
 
     /*
      * REGISTER MASKS
@@ -223,23 +205,23 @@ function messages_upgrade($oldversion)
         case '1.9':
         case '1.9.0':
 
-            xarMod::apiFunc('dynamicdata','util','import', array(
-                        'file' => sys::code() . 'modules/messages/xardata/messages_module_settings-def.xml',
-                        'overwrite' => true
-                        ));
-             
-            // new module vars
-            xarModVars::set('messages', 'allowautoreply', true);
-            xarModVars::set('messages', 'send_redirect', true);
-            xarModVars::set('messages', 'allowusersendredirect', false);
+			xarMod::apiFunc('dynamicdata','util','import', array(
+						'file' => sys::code() . 'modules/messages/xardata/messages_module_settings-def.xml',
+						'overwrite' => true
+						));
+			 
+			// new module vars
+			xarModVars::set('messages', 'allowautoreply', true);
+			xarModVars::set('messages', 'send_redirect', true);
+			xarModVars::set('messages', 'allowusersendredirect', false);
 
-            xarMod::apiFunc('dynamicdata','util','import', array(
-                        'file' => sys::code() . 'modules/messages/xardata/messages_user_settings-def.xml',
-                        'overwrite' => true
-                        ));
-            
-            // new user vars
-            xarModVars::set('messages', 'user_send_redirect', 1);
+			xarMod::apiFunc('dynamicdata','util','import', array(
+						'file' => sys::code() . 'modules/messages/xardata/messages_user_settings-def.xml',
+						'overwrite' => true
+						));
+			
+			// new user vars
+			xarModVars::set('messages', 'user_send_redirect', 1);
 
             break;
         case '2.0.0':
@@ -267,6 +249,8 @@ function messages_delete()
                        'unregister_block_type',
                        array('modName'  => 'messages',
                              'blockType'=> 'newmessages'))) return;
+
+//	xarRemovePrivileges('messages');
 
     return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => 'messages'));
 }
