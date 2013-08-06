@@ -65,11 +65,6 @@ function comments_user_display($args)
     if (empty($fields))    
         return xarTpl::module('comments','user','errors',array('layout' => 'no_direct_access'));
         
-    $receipt  = xarController::getVar('receipt');
-    
-
-//    $header['modname'] = xarModGetNameFromID($header['moduleid']);
-
 # --------------------------------------------------------
 # Try and get a selectee ID if we don't have one yet
 #
@@ -100,9 +95,6 @@ function comments_user_display($args)
     if (!isset($args['thread'])) {
         xarVarFetch('thread', 'isset', $thread, NULL, XARVAR_NOT_REQUIRED);
     }
-    if (isset($thread) && $thread == 1) {
-        $header['cid'] = $cid;
-    }
 
     if (!xarModLoad('comments','renderer')) {
         $msg = xarML('Unable to load #(1) #(2)', 'comments', 'renderer');
@@ -121,11 +113,6 @@ function comments_user_display($args)
     } else {
         $package['settings']['render'] = _COM_VIEW_FLAT;
         $data['comments'] = xarMod::apiFunc('comments','user','get_one', $fields);
-        if (!empty($data['comments'][0])) {
-            $header['moduleid'] = $data['comments'][0]['moduleid'];
-            $header['itemtype'] = $data['comments'][0]['itemtype'];
-            $header['objectid'] = $data['comments'][0]['objectid'];
-        }
     }
 
     $data['comments'] = comments_renderer_array_prune_excessdepth(
@@ -160,7 +147,6 @@ function comments_user_display($args)
     // does this *but* maybe needs fixing in articles instead?
     $package['new_title']             = xarVarGetCached('Comments.title', 'title');
 
-    $receipt['post_url']              = xarModURL('comments', 'user', 'reply');
     if (!xarVarFetch('comment_action', 'str', $data['comment_action'], 'submit', XARVAR_NOT_REQUIRED)) return;
 
     $hooks = xarMod::apiFunc('comments','user','formhooks');
@@ -174,7 +160,6 @@ function comments_user_display($args)
 
     $data['hooks']   = $hooks;
     $data['package'] = $package;
-    $data['receipt'] = $receipt;
 
     $data['comment_id'] = $data['selected_id'];
     return $data;

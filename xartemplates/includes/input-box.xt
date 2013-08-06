@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:sec mask="ReplyComments" catch="false">
-<!--      <form action="#$receipt['post_url']#" method="post" name="post" id="post" onSubmit="submitonce(this)" #$hooks['formaction']# >-->
-      <form action="#$receipt['post_url']#" method="post" name="post" id="post" onSubmit="submitonce(this)">
+      <form action="#xarModURL('comments', 'user', 'reply')#" method="post" name="post" id="post" onSubmit="submitonce(this)">
         <div class="xar-ib-wrapper xar-accent-outline">
           <xar:if condition="$hooks['formdisplay'] ne ''">
 <!--              Hooks call               -->

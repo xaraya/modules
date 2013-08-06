@@ -20,7 +20,7 @@
                 </xar:sec>
                 <!-- end changelog -->
             </div>
-            <xar:set name="dummy">$emptyobject->setFieldValues($comment)</xar:set>
+            <xar:set name="dummy">$emptyobject->setFieldValues($comment,1)</xar:set>
             <xar:data-display object="$emptyobject"/>
             <div class="xar-accent xar-comments-comment">
                 <xar:if condition="isset($transformed_text)">
