@@ -11,7 +11,7 @@
  * @link http://www.xaraya.com/index.php/release/eid/999
  * @author Carl Corliss <rabbitt@xaraya.com>
  */
-$modversion['name']           = 'MIME API';
+$modversion['name']           = 'mime';
 $modversion['id']             = '999';
 $modversion['version']        = '1.1.0';
 $modversion['displayname']    = xarML('Mime');

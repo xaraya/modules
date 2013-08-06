@@ -30,6 +30,12 @@ function mime_userapi_get_rev_mimetype( $args )
         // if not found return 0 for the id of both type / subtype
         return array('typeId' => 0, 'subtypeId' => 0);
     }
+    if (is_numeric($mimeType)) {
+        // Do a lookup
+        $types = DataObjectMaster::getObject(array('name' => 'mime_types'));
+        $types->getItem(array('itemid' => $mimeType));
+        $mimeType = $types->properties['name']->value;
+    }
     
     $mimeType = explode('/', $mimeType);
 

@@ -41,25 +41,20 @@ function mime_userapi_analyze_file( $args )
 
     // Start off trying mime_content_type
     if (function_exists('mime_content_type') && ini_get('mime_magic.magicfile')) {
-
         $ftype = mime_content_type($fileName);
-
-        if (isset($ftype) && strlen($ftype)) {
-            return $ftype;
-        }
+        if (isset($ftype) && strlen($ftype)) return $ftype;
     }
 
-            //try to use if disponible pecl fileinfo extension
+    // Try to use if disponible pecl fileinfo extension
+    // Note: as of PHP 5.3 this is included in the PHP distribution. Leave the if condition here, doesn't do any harm.
     if(extension_loaded('fileinfo')) {
         $res = finfo_open(FILEINFO_MIME);
         $mime_type = finfo_file($res, $fileName);
         finfo_close($res);
-        if (isset($mime_type) && strlen($mime_type)) {
-            return $mime_type;
-        }
+        if (isset($mime_type) && strlen($mime_type)) return $mime_type;
      }
 
-    // if that didn't work, try getimagesize to see if the file is an image
+    // If that didn't work, try getimagesize to see if the file is an image
     $fileInfo = @getimagesize($fileName);
     if (is_array($fileInfo) && isset($fileInfo['mime'])) {
         return $fileInfo['mime'];
@@ -167,8 +162,7 @@ function mime_userapi_analyze_file( $args )
             $mime_type = 'text/plain';
         }
 
-        if ($fp)
-            fclose($fp);
+        if ($fp) fclose($fp);
 
         return $mime_type;
     }

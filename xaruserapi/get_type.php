@@ -60,7 +60,7 @@ function mime_userapi_get_type( $args )
 
     $row = $result->GetRowAssoc(false);
 
-    return array('typeId'   => $row['id'],
+    return array('typeId'   => (int)$row['id'],
                  'typeName' => $row['name']);
 }
 
