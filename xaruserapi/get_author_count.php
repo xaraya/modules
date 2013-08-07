@@ -16,7 +16,7 @@
  *
  * @author mikespub
  * @access public
- * @param integer    $modid     the id of the module that these nodes belong to
+ * @param integer    $moduleid     the id of the module that these nodes belong to
  * @param integer    $itemtype  the item type that these nodes belong to
  * @param integer    $author      the id of the author you want to count comments for
  * @param integer    $status    (optional) the status of the comments to tally up
@@ -29,7 +29,7 @@ function comments_userapi_get_author_count($args)
 
     $exception = false;
 
-    if ( !isset($modid) || empty($modid) ) {
+    if ( !isset($moduleid) || empty($moduleid) ) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                                  'modid', 'userapi', 'get_count', 'comments');
         throw new BadParameterException($msg);
@@ -47,38 +47,19 @@ function comments_userapi_get_author_count($args)
     }
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
-
-    $sql = "SELECT  COUNT(id) as numitems
-              FROM  $xartable[comments]
-             WHERE  author=? AND modid=?
-               AND  status=?";
-    $bindvars = array((int) $author, (int) $modid, (int) $status);
-
+    $tables = xarDB::getTables();
+    $q = new Query('SELECT', $tables['comments_comments']);
+    $q->addfield('COUNT(id) AS numitems');
+    $q->eq('module_id', $moduleid);
+    $q->eq('author', $author);
+    $q->eq('status', $status);
     if (isset($itemtype) && is_numeric($itemtype)) {
-        $sql .= " AND itemtype=?";
-        $bindvars[] = (int) $itemtype;
+        $q->eq('itemtype', $itemtype);
     }
-
-// cfr. xarcachemanager - this approach might change later
-    $expire = xarModVars::get('comments','cache.userapi.get_author_count');
-    if (!empty($expire)){
-        $result =& $dbconn->CacheExecute($expire,$sql,$bindvars);
-    } else {
-        $result =& $dbconn->Execute($sql,$bindvars);
-    }
-    if (!$result)
-        return;
-
-    if ($result->EOF) {
-        return 0;
-    }
-
-    list($numitems) = $result->fields;
-
-    $result->Close();
-
-    return $numitems;
+    $q->run();
+    $result = $q->row();
+    
+    return $result['numitems'];
 }
 
 ?>
