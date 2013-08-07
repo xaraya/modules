@@ -9,17 +9,23 @@
     <form action="#xarModURL('comments', 'user', 'reply')#" method="post">
         <div class="xar-ib-leftpanel">
             <xar:data-form object="$reply"/>
-          <input type="hidden" name="comment_id" id="comment_id" value="#$comment_id#"/>
-          <input type="hidden" name="comment_action" id="comment_action" value="submit"/>
-          <xar:if condition="isset($adminreturn)">
-            <input type="hidden" name="adminreturn" value="yes" />
-          </xar:if>
-          <xar:var name="label">Cancel</xar:var>
-          <xar:button type="cancel" name="cancel" value="$label"/>
-          <xar:var name="label">Preview</xar:var>
-          <xar:button type="submit" name="comment_action-preview" id="comment_action-preview" onclick="document.getElementById('receipt-action').value='preview'" value="$label"/>
-          <xar:var name="label">Submit</xar:var>
-          <xar:button type="submit" name="comment_action-submit" id="comment_action-submit" onclick="document.getElementById('receipt-action').value='submit'" value="$label"/>
+            <div class="xar-row">
+                <div class="xar-col">
+                </div>
+                <div class="xar-col">
+                  <input type="hidden" name="comment_id" id="comment_id" value="#$comment_id#"/>
+                  <input type="hidden" name="comment_action" id="comment_action" value="submit"/>
+                  <xar:if condition="isset($adminreturn)">
+                    <input type="hidden" name="adminreturn" value="yes" />
+                  </xar:if>
+                  <xar:var name="label">Cancel</xar:var>
+                  <xar:button type="cancel" name="cancel" value="$label"/>
+                  <xar:var name="label">Preview</xar:var>
+                  <xar:button type="submit" name="comment_action-preview" id="comment_action-preview" onclick="document.getElementById('receipt-action').value='preview'" value="$label"/>
+                  <xar:var name="label">Submit</xar:var>
+                  <xar:button type="submit" name="comment_action-submit" id="comment_action-submit" onclick="document.getElementById('receipt-action').value='submit'" value="$label"/>
+                </div>
+            </div>
         </div>
     </form>
     <xar:if condition="!empty($header['objectlink']) and !empty($header['objecttitle'])">

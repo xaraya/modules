@@ -40,7 +40,6 @@
                         &#160;
                     </xar:if>
                 </xar:if>
-
         </div>
     </xar:foreach>
 </xar:template>
