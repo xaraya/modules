@@ -218,7 +218,7 @@ function comments_userapi_add($args)
         // CHECKME: find some cleaner way to update the page cache if necessary
         if (function_exists('xarOutputFlushCached') &&
             xarModVars::get('xarcachemanager','FlushOnNewComment')) {
-            $modinfo = xarModGetInfo($moduleid);
+            $modinfo = xarMod::getInfo($moduleid);
             xarOutputFlushCached("$modinfo[name]-");
             xarOutputFlushCached("comments-block");
         }
@@ -229,7 +229,7 @@ function comments_userapi_add($args)
         // pass along the current module & itemtype for pubsub (urgh)
 // FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
         $args['id'] = 0; // dummy category
-        $modinfo = xarModGetInfo($moduleid);
+        $modinfo = xarMod::getInfo($moduleid);
         $args['current_module'] = $modinfo['name'];
         $args['current_itemtype'] = $itemtype;
         $args['current_itemid'] = $itemid;

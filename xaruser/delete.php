@@ -51,7 +51,7 @@ function comments_user_delete()
         $header['objectid'] = $comments[0]['objectid'];
 
         // get the title and link of the original object
-        $modinfo = xarModGetInfo($header['modid']);
+        $modinfo = xarMod::getInfo($header['modid']);
         try{
             $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
                                        array('itemtype' => $header['itemtype'],

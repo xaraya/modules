@@ -184,7 +184,7 @@ class CommentsProperty extends DataProperty
         }*/
 
         // get the title and link of the original object
-        $modinfo = xarModGetInfo($header['modid']);
+        $modinfo = xarMod::getInfo($header['modid']);
         try{
             $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
                 array('itemtype' => $header['itemtype'], 'itemids' => array($header['objectid'])));

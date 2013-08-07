@@ -56,7 +56,7 @@ function comments_admin_delete( )
                 if (empty($itemtype)) {
                     $itemtype = 0;
                 }
-                $modinfo = xarModGetInfo($modid);
+                $modinfo = xarMod::getInfo($modid);
                 $output['modname']    = $modinfo['name'];
                 $delete_args['modid'] = $modid;
                 $delete_args['itemtype'] = $itemtype;

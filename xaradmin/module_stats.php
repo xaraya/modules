@@ -24,7 +24,7 @@ function comments_admin_module_stats( )
         throw new BadParameterException($msg);
     }
 
-    $modinfo = xarModGetInfo($modid);
+    $modinfo = xarMod::getInfo($modid);
     $data['modname'] = ucwords($modinfo['displayname']);
     if (empty($urlitemtype)) {
         $urlitemtype = -1;

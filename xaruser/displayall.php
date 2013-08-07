@@ -117,7 +117,7 @@ function comments_user_displayall($args)
         }
         // for each module and itemtype, retrieve the item links (if available)
         foreach ($items as $modid => $itemtypes) {
-            $modinfo = xarModGetInfo($modid);
+            $modinfo = xarMod::getInfo($modid);
             foreach ($itemtypes as $itemtype => $itemlist) {
                 try{
                     $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',

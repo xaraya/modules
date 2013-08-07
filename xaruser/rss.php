@@ -83,7 +83,7 @@ function comments_user_rss($args)
 
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
-        $modinfo = xarModGetInfo($item['modid']);
+        $modinfo = xarMod::getInfo($item['modid']);
         $items[$i]['rsstitle']      = htmlspecialchars($item['subject']);
         try {
             $linkarray                  = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',

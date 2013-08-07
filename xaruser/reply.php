@@ -99,7 +99,7 @@ function comments_user_reply()
             $new_title = 'Re: ' . $title;
 
             // get the title and link of the original object
-            $modinfo = xarModGetInfo($data['object']->properties['moduleid']->value);
+            $modinfo = xarMod::getInfo($data['object']->properties['moduleid']->value);
             try{
                 $itemlinks = xarMod::apiFunc($modinfo['name'],'user','getitemlinks',
                                            array('itemtype' => $data['object']->properties['itemtype']->value,
@@ -182,7 +182,7 @@ function comments_user_reply()
     // pass along the current module & itemtype for pubsub (urgh)
 // FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
     $args['id'] = 0; // dummy category
-    $modinfo = xarModGetInfo($header['moduleid']);
+    $modinfo = xarMod::getInfo($header['moduleid']);
     $args['current_module'] = $modinfo['name'];
     $args['current_itemtype'] = $header['itemtype'];
     $args['current_itemid'] = $header['itemid'];

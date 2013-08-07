@@ -99,7 +99,7 @@ function comments_admin_delete()
             $filters['where'] = 'status ne 3';
         } else {
             $filters['where'] .= ' and status ne 3';
-            $modinfo = xarModGetInfo($modid);
+            $modinfo = xarMod::getInfo($modid);
             $data['modname'] = $modinfo['displayname'];
         }
         $countitems = $countlist->getItems($filters);
