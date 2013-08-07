@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:foreach in="$comments" value="$comment">
-        <div class="xar-accent-outline xar-comments-comment" style="margin-left: #$comment['depth']*20#px;">
+        <div class="xar-accent-outline xar-comments-comment" style="border-bottom: 1px solid; margin-left: #$comment['depth']*20#px;">
             <div>
                 <a name="#$comment['id']#"></a>
                 <xar:set name="item">$comment</xar:set>
@@ -9,13 +9,13 @@
 
                 <!-- show changelog -->
                 <xar:sec mask="ModerateComments" catch="false">
-                <xar:if condition="xarModIsHooked('changelog','comments')">
-                <span class="xar-sub" style="float:right;">
-                    <a href="#xarModURL('changelog','admin','showlog',array('modid' => 14, 'itemid'=> $comment['id']))#" title="#xarML('View Changes')#">
-                        View changes
-                    </a>
-                </span>
-                </xar:if>
+                    <xar:if condition="xarModIsHooked('changelog','comments')">
+                        <span class="xar-sub" style="float:right;">
+                            <a href="#xarModURL('changelog','admin','showlog',array('modid' => 14, 'itemid'=> $comment['id']))#" title="#xarML('View Changes')#">
+                                View changes
+                            </a>
+                        </span>
+                    </xar:if>
                 </xar:sec>
                 <!-- end changelog -->
                 <xar:set name="dummy">$emptyobject->setFieldValues($comment,1)</xar:set>
