@@ -31,14 +31,14 @@ function comments_userapi_get_author_count($args)
 
     if ( !isset($moduleid) || empty($moduleid) ) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                                 'modid', 'userapi', 'get_count', 'comments');
+                                 'moduleid', 'userapi', 'get_author_count', 'comments');
         throw new BadParameterException($msg);
     }
 
 
     if ( !isset($author) || empty($author) ) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                                 'author', 'userapi', 'get_count', 'comments');
+                                 'author', 'userapi', 'get_author_count', 'comments');
         throw new BadParameterException($msg);
     }
 
