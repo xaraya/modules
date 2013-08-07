@@ -42,12 +42,10 @@ function comments_userapi_get_author_count($args)
         throw new BadParameterException($msg);
     }
 
-    if (!isset($status) || !is_numeric($status)) {
-        $status = _COM_STATUS_ON;
-    }
+    if (!isset($status) || !is_numeric($status)) $status = _COM_STATUS_ON;
 
     $tables = xarDB::getTables();
-    $q = new Query('SELECT', $tables['comments_comments']);
+    $q = new Query('SELECT', $tables['comments']);
     $q->addfield('COUNT(id) AS numitems');
     $q->eq('module_id', $moduleid);
     $q->eq('author', $author);
