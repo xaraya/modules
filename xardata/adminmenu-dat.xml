@@ -1,4 +1,4 @@
-<adminmenu>
+<menu>
     <menuitems>
         <menuitem>
 			<mask>ManageComments</mask>
@@ -47,4 +47,4 @@
             <label>Modify Config</label>
         </menuitem>	
 	</menuitems>
-</adminmenu>
+</menu>
