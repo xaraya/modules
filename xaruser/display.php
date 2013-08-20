@@ -88,9 +88,8 @@ function comments_user_display($args)
 # --------------------------------------------------------
 # Load the comment object with what we know about the environment
 #
-    $data['object']->setFieldValues($fields);
-    $fields = $data['object']->getFieldValues();
-
+    $data['object']->setFieldValues($fields,1);
+    $fields = $data['object']->getFieldValues(array(), 1);
 
 # --------------------------------------------------------
 # Create an empty object for display and add any attributes passed
@@ -101,9 +100,6 @@ function comments_user_display($args)
 # --------------------------------------------------------
 # Get the viewing options: depth, render style, order, and sortby
 #
-    $data['object']->setFieldValues($fields);
-    $fields = $data['object']->getFieldValues();
-
     $package['settings'] = xarMod::apiFunc('comments','user','getoptions');
 
     if (!isset($args['thread'])) {
