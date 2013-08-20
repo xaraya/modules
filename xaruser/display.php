@@ -37,7 +37,7 @@
 function comments_user_display($args)
 {
     if (!xarSecurityCheck('ReadComments', 0)) return;
-
+var_dump($args['tplmodule']);
     // Check if an object was passed
     if (isset($args['object'])) {
         $fields['moduleid'] = $args['object']->moduleid;
@@ -81,15 +81,29 @@ function comments_user_display($args)
     $data['selected_id'] = $data['object']->properties['id']->value;
 
 # --------------------------------------------------------
+# Add any attributes passed
+#
+    if (isset($args['tplmodule'])) $data['object']->tplmodule = $args['tplmodule'];
+
+# --------------------------------------------------------
 # Load the comment object with what we know about the environment
 #
     $data['object']->setFieldValues($fields);
     $fields = $data['object']->getFieldValues();
 
+
+# --------------------------------------------------------
+# Create an empty object for display and add any attributes passed
+#
+    $data['emptyobject'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
+    if (isset($args['tplmodule'])) $data['object']->tplmodule = $args['tplmodule'];
+
 # --------------------------------------------------------
 # Get the viewing options: depth, render style, order, and sortby
 #
-    $data['emptyobject'] = DataObjectMaster::getObject(array('name' => 'comments_comments'));
+    $data['object']->setFieldValues($fields);
+    $fields = $data['object']->getFieldValues();
+
     $package['settings'] = xarMod::apiFunc('comments','user','getoptions');
 
     if (!isset($args['thread'])) {
