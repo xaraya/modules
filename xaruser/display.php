@@ -37,7 +37,7 @@
 function comments_user_display($args)
 {
     if (!xarSecurityCheck('ReadComments', 0)) return;
-var_dump($args['tplmodule']);
+
     // Check if an object was passed
     if (isset($args['object'])) {
         $fields['moduleid'] = $args['object']->moduleid;
