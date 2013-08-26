@@ -47,7 +47,7 @@ function publications_admin_importpages()
         $data['basedir'] = realpath($basedir);
     }
 
-    $data['filelist'] = xarModAPIFunc('publications','admin','browse',
+    $data['filelist'] = xarMod::apiFunc('publications','admin','browse',
                                       array('basedir' => $data['basedir'],
                                             'filetype' => 'html?'));
 
@@ -62,7 +62,7 @@ function publications_admin_importpages()
 #
 # Get the current publication types
 #
-    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+    $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
 
     $data['pubtypes'] = $pubtypes;
     $data['fields'] = array();
@@ -70,9 +70,9 @@ function publications_admin_importpages()
     if (!empty($ptid)) {
         $data['ptid'] = $ptid;
 
-        $pubfields = xarModAPIFunc('publications','user','getpubfields');
-        $pubfieldtypes = xarModAPIFunc('publications','user','getpubfieldtypes');
-        $pubfieldformats = xarModAPIFunc('publications','user','getpubfieldformats');
+        $pubfields = xarMod::apiFunc('publications','user','getpubfields');
+        $pubfieldtypes = xarMod::apiFunc('publications','user','getpubfieldtypes');
+        $pubfieldformats = xarMod::apiFunc('publications','user','getpubfieldformats');
         foreach ($pubfields as $field => $dummy) {
             if (($pubfieldtypes[$field] == 'text' || $pubfieldtypes[$field] == 'string') &&
                 !empty($pubtypes[$ptid]['config'][$field]['label']) &&
@@ -83,7 +83,7 @@ function publications_admin_importpages()
         }
 /*
         $catlist = array();
-        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $ptid));
+        $rootcats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $ptid));
         foreach ($rootcats as $catid) {
             $catlist[$catid['category_id']] = 1;
         }
@@ -97,7 +97,7 @@ function publications_admin_importpages()
         }
         $cids = array_keys($seencid);
         foreach (array_keys($catlist) as $catid) {
-            $data['cats'][] = xarModAPIFunc('categories',
+            $data['cats'][] = xarMod::apiFunc('categories',
                                             'visual',
                                             'makeselect',
                                             Array('cid' => $catid,
@@ -228,7 +228,7 @@ function publications_admin_importpages()
                                               array('article' => $article, 'preview' => true));
                 break;
             } else {
-                $id = xarModAPIFunc('publications', 'admin', 'create', $article);
+                $id = xarMod::apiFunc('publications', 'admin', 'create', $article);
                 if (empty($id)) {
                     return; // throw back
                 } else {

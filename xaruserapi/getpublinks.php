@@ -52,14 +52,14 @@ function publications_userapi_getpublinks($args)
     }
 
     // Get publication types
-    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+    $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
 
     if ($count) {
         if (isset($state)) {
-            $pubcount = xarModAPIFunc('publications','user','getpubcount',
+            $pubcount = xarMod::apiFunc('publications','user','getpubcount',
                                      array('state' => $state));
         } else {
-            $pubcount = xarModAPIFunc('publications','user','getpubcount');
+            $pubcount = xarMod::apiFunc('publications','user','getpubcount');
         }
     }
 

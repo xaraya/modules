@@ -40,7 +40,7 @@ function publications_admin_modifyconfig()
 
     // get root categories for this publication type
     if (!empty($id)) {
-        $catlinks = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $data['ptid']));
+        $catlinks = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $data['ptid']));
     // Note: if you want to use a *combination* of categories here, you'll
     //       need to use something like 'c15+32'
         foreach ($catlinks as $catlink) {
@@ -66,7 +66,7 @@ function publications_admin_modifyconfig()
     }
 
     // Module alias for short URLs
-    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+    $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
     if (!empty($id)) {
         $data['alias'] = $pubtypes[$id]['name'];
     } else {

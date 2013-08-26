@@ -57,7 +57,7 @@ function publications_user_view($args)
     // Override if needed from argument array (e.g. ptid, numitems etc.)
     extract($args);
 
-    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+    $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
 
     // We need a valid pubtype number here
     if (!is_numeric($ptid) || !isset($pubtypes[$ptid])) return xarResponse::NotFound();
@@ -119,7 +119,7 @@ function publications_user_view($args)
     // TODO: show this *after* category list when we start from categories :)
     // Navigation links
     $data['publabel'] = xarML('Publication');
-    $data['publinks'] = xarModAPIFunc('publications', 'user', 'getpublinks',
+    $data['publinks'] = xarMod::apiFunc('publications', 'user', 'getpublinks',
         array(
             'ptid' => $ishome ? '' : $ptid,
             'state' => $c_posted,
@@ -231,7 +231,7 @@ function publications_user_view($args)
     }
 /*
     // Get publications
-    $publications = xarModAPIFunc(
+    $publications = xarMod::apiFunc(
         'publications', 'user', 'getall',
         array(
             'startnum' => $startnum,
@@ -319,7 +319,7 @@ function publications_user_view($args)
     // optional category count
     if ($data['settings']['show_catcount']) {
         if (!empty($ptid)) {
-            $pubcatcount = xarModAPIFunc('publications', 'user', 'getpubcatcount',
+            $pubcatcount = xarMod::apiFunc('publications', 'user', 'getpubcatcount',
                 // frontpage or approved
                 array('state' => $c_posted, 'ptid' => $ptid)
             );
@@ -328,7 +328,7 @@ function publications_user_view($args)
             }
             unset($pubcatcount);
         } else {
-            $pubcatcount = xarModAPIFunc('publications', 'user', 'getpubcatcount',
+            $pubcatcount = xarMod::apiFunc('publications', 'user', 'getpubcatcount',
                 // frontpage or approved
                 array('state' => $c_posted, 'reverse' => 1)
             );
@@ -353,7 +353,7 @@ function publications_user_view($args)
             foreach ($publications as $article) {
                 $idlist[] = $article['id'];
             }
-            $numcomments = xarModAPIFunc('comments', 'user', 'get_countlist',
+            $numcomments = xarMod::apiFunc('comments', 'user', 'get_countlist',
                 array('modid' => $c_modid, 'objectids' => $idlist)
             );
         }
@@ -367,7 +367,7 @@ function publications_user_view($args)
                 $idlist[] = $article['id'];
             }
     
-            $keywords = xarModAPIFunc('keywords', 'user', 'getmultiplewords',
+            $keywords = xarMod::apiFunc('keywords', 'user', 'getmultiplewords',
                 array(
                     'modid' => $c_modid,
                     'objectids' =>  $idlist,
@@ -389,10 +389,10 @@ function publications_user_view($args)
             }
         }
         if (count($cidlist) > 0) {
-            $catinfo = xarModAPIFunc('categories','user','getcatinfo', array('cids' => array_keys($cidlist)));
+            $catinfo = xarMod::apiFunc('categories','user','getcatinfo', array('cids' => array_keys($cidlist)));
             // get root categories for this publication type
             // get base categories for all if needed
-            $catroots = xarModAPIFunc('publications', 'user', 'getrootcats',
+            $catroots = xarMod::apiFunc('publications', 'user', 'getrootcats',
                 array('ptid' => $ptid, 'all' => true)
             );
         }

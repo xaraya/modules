@@ -47,7 +47,7 @@ function publications_userapi_getchildcats($args)
     if (!xarModAPILoad('categories', 'visual')) return;
 
 // TODO: make sure permissions are taken into account here !
-    $list = xarModAPIFunc('categories',
+    $list = xarMod::apiFunc('categories',
                          'visual',
                          'listarray',
                          array('cid' => $cid));
@@ -66,7 +66,7 @@ function publications_userapi_getchildcats($args)
             $andcids = true;
         }
 
-        $pubcatcount = xarModAPIFunc('publications',
+        $pubcatcount = xarMod::apiFunc('publications',
                                     'user',
                                     'getpubcatcount',
                                     // frontpage or approved

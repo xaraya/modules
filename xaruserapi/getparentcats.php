@@ -47,7 +47,7 @@ function publications_userapi_getparentcats($args)
 
     // get the counts for all child categories
     if ($count) {
-        $pubcatcount = xarModAPIFunc('publications',
+        $pubcatcount = xarMod::apiFunc('publications',
                                     'user',
                                     'getpubcatcount',
                                     array('state' => $state,
@@ -67,7 +67,7 @@ function publications_userapi_getparentcats($args)
         $trailitem = array();
         $trailitem['cid'] = $cid;
 // TODO : retrieve all parents in 1 call ?
-        $trail = xarModAPIFunc('categories',
+        $trail = xarMod::apiFunc('categories',
                               'user',
                               'getcat',
                               array('cid' => $cid,

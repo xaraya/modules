@@ -54,7 +54,7 @@ function publications_admin_modify($args)
     $data['properties'] = $data['object']->getProperties();
     
     // Get the settings of the publication type we are using
-    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
+    $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
     
 # --------------------------------------------------------
 #
@@ -101,11 +101,11 @@ function publications_admin_modify($args)
 #
 # Get information on next and previous items
 #
-    $data['prevpublication'] = xarModAPIFunc('publications','user','getprevious',
+    $data['prevpublication'] = xarMod::apiFunc('publications','user','getprevious',
                                  array('id' => $data['itemid'],
                                        'ptid' => $ptid,
                                        'sort' => 'tree',));
-    $data['nextpublication'] = xarModAPIFunc('publications','user','getnext',
+    $data['nextpublication'] = xarMod::apiFunc('publications','user','getnext',
                                  array('id' => $data['itemid'],
                                        'ptid' => $ptid,
                                        'sort' => 'tree',));

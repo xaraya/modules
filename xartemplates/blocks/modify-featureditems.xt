@@ -6,7 +6,7 @@
         </label> 
         <xar:var name="firstline">All</xar:var>
         <xar:set name="firstline">array('id' => 0, 'name' => $firstline)</xar:set>
-        <xar:set name="options">xarModAPIFunc('publications', 'user', 'get_pubtypes')</xar:set>        
+        <xar:set name="options">xarMod::apiFunc('publications', 'user', 'get_pubtypes')</xar:set>        
         <xar:data-input type="dropdown" name="pubtype_id" firstline="$firstline" options="$options" value="$pubtype_id"/>
     </div>
     <div class="xar-form-input-wrapper-after">
@@ -22,7 +22,7 @@
             </label>
             <xar:var name="firstline">All / Current</xar:var>
             <xar:set name="firstline">array('id' => 0, 'name' => $firstline)</xar:set>
-            <xar:set name="options">xarModAPIFunc('categories', 'user', 'getcat')</xar:set>        
+            <xar:set name="options">xarMod::apiFunc('categories', 'user', 'getcat')</xar:set>        
             <xar:data-input type="dropdown" name="catfilter" firstline="$firstline" options="$options" value="$catfilter"/>
         </div>
         <xar:if condition="empty($includechildren) and $catfilter gt 0">

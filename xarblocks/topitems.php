@@ -116,7 +116,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
                 if (!empty($cid)) {
                     // if we're viewing all items below a certain category, i.e. catid = _NN
                     $cid = str_replace('_', '', $cid);
-                    $thiscategory = xarModAPIFunc(
+                    $thiscategory = xarMod::apiFunc(
                         'categories','user','getcat',
                         array('cid' => $cid, 'return_itself' => 'return_itself')
                     );
@@ -128,7 +128,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
 
             // Get publication types
             // MarieA - moved to always get pubtypes.
-            $publication_types = xarModAPIFunc('publications', 'user', 'get_pubtypes');
+            $publication_types = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
 
             if (!empty($data['nopublimit'])) {
                 //don't limit by publication type
@@ -191,7 +191,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
                 array_push($fields, 'dynamicdata');
             }
 
-            $publications = xarModAPIFunc(
+            $publications = xarMod::apiFunc(
                 'publications','user','getall',
                 array(
                     'ptid' => $ptid,

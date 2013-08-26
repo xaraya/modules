@@ -34,7 +34,7 @@ function publications_userapi_getrootcats($args)
         $rootcats = unserialize(xarModVars::get('publications','basecids'));
     } else {
         // Get publication types
-        $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+        $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
         // get base categories for all publication types here
         $publist = array_keys($pubtypes);
         // add the defaults too, in case we have other base categories there
@@ -70,7 +70,7 @@ function publications_userapi_getrootcats($args)
 
     $isfirst = 1;
     $catlinks = array();
-    $catlist = xarModAPIFunc('categories',
+    $catlist = xarMod::apiFunc('categories',
                             'user',
                             'getcatinfo',
                             array('cids' => $rootcats));

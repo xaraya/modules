@@ -36,7 +36,7 @@ function publications_admin_view($args)
     }
     xarSession::setVar('publications_current_pubtype', $ptid);
 
-    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+    $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
 
     // Default parameters
     if (!isset($ptid)) {
@@ -111,7 +111,7 @@ function publications_admin_view($args)
 
     /*
     // Get item information
-    $publications = xarModAPIFunc('publications',
+    $publications = xarMod::apiFunc('publications',
                              'user',
                              'getall',
                              array('startnum' => $startnum,
@@ -143,7 +143,7 @@ function publications_admin_view($args)
             $labels[$field] = $value['label'];
         }
     } else {
-        $pubfields = xarModAPIFunc('publications','user','getpubfields');
+        $pubfields = xarMod::apiFunc('publications','user','getpubfields');
         foreach ($pubfields as $field => $value) {
             $labels[$field] = $value['label'];
         }
@@ -160,7 +160,7 @@ function publications_admin_view($args)
                   //&& (!is_array($state) || !isset($state[0]));
     $data['showstate'] = $showstate;
 
-    $data['states'] = xarModAPIFunc('publications','user','getstates');
+    $data['states'] = xarMod::apiFunc('publications','user','getstates');
 
     $items = array();
     /*
@@ -197,7 +197,7 @@ function publications_admin_view($args)
             $input = array();
             $input['article'] = $article;
             $input['mask'] = 'ManagePublications';
-            if (xarModAPIFunc('publications','user','checksecurity',$input)) {
+            if (xarMod::apiFunc('publications','user','checksecurity',$input)) {
                 $item['deleteurl'] = xarModURL('publications',
                                               'admin',
                                               'delete',
@@ -215,7 +215,7 @@ function publications_admin_view($args)
                 $item['deleteurl'] = '';
 
                 $input['mask'] = 'EditPublications';
-                if (xarModAPIFunc('publications','user','checksecurity',$input)) {
+                if (xarMod::apiFunc('publications','user','checksecurity',$input)) {
                     $item['editurl'] = xarModURL('publications',
                                                 'admin',
                                                 'modify',
@@ -229,7 +229,7 @@ function publications_admin_view($args)
                     $item['editurl'] = '';
 
                     $input['mask'] = 'ReadPublications';
-                    if (xarModAPIFunc('publications','user','checksecurity',$input)) {
+                    if (xarMod::apiFunc('publications','user','checksecurity',$input)) {
                         $item['viewurl'] = xarModURL('publications',
                                                     'user',
                                                     'display',
@@ -253,7 +253,7 @@ function publications_admin_view($args)
 /*
     // Add pager
     $data['pager'] = xarTplGetPager($startnum,
-                            xarModAPIFunc('publications', 'user', 'countitems',
+                            xarMod::apiFunc('publications', 'user', 'countitems',
                                           array('ptid' => $ptid,
                                                 'owner' => $owner,
                                                 'locale' => $lang,

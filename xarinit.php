@@ -145,20 +145,20 @@ function publications_init()
                      'publications_versions',
                      );
 
-    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
         $categories = array();
     // Create publications categories
     $cids = array();
     foreach ($categories as $category) {
-        $cid[$category['name']] = xarModAPIFunc('categories',
+        $cid[$category['name']] = xarMod::apiFunc('categories',
                                                'admin',
                                                'create',
                         Array('name' => $category['name'],
                               'description' => $category['description'],
                               'parent_id' => 0));
         foreach ($category['children'] as $child) {
-            $cid[$child] = xarModAPIFunc('categories',
+            $cid[$child] = xarMod::apiFunc('categories',
                                         'admin',
                                         'create',
                         Array('name' => $child,
@@ -261,27 +261,27 @@ function publications_init()
 
     // Enable publications hooks for search
     if (xarModIsAvailable('search')) {
-        xarModAPIFunc('modules','admin','enablehooks',
+        xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'search', 'hookModName' => 'publications'));
     }
 
     // Enable categories hooks for publications
-/*    xarModAPIFunc('modules','admin','enablehooks',
+/*    xarMod::apiFunc('modules','admin','enablehooks',
                   array('callerModName' => 'publications', 'hookModName' => 'categories'));
 */
     // Enable comments hooks for publications
     if (xarModIsAvailable('comments')) {
-        xarModAPIFunc('modules','admin','enablehooks',
+        xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'publications', 'hookModName' => 'comments'));
     }
     // Enable hitcount hooks for publications
     if (xarModIsAvailable('hitcount')) {
-        xarModAPIFunc('modules','admin','enablehooks',
+        xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'publications', 'hookModName' => 'hitcount'));
     }
     // Enable ratings hooks for publications
     if (xarModIsAvailable('ratings')) {
-        xarModAPIFunc('modules','admin','enablehooks',
+        xarMod::apiFunc('modules','admin','enablehooks',
                       array('callerModName' => 'publications', 'hookModName' => 'ratings'));
     }
 
@@ -368,7 +368,7 @@ function publications_upgrade($oldversion)
 function publications_delete()
 {
     $module = 'publications';
-    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => $module));
+    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
 }
 
 ?>

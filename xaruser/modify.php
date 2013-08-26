@@ -51,7 +51,7 @@ function publications_user_modify($args)
     $data['properties'] = $data['object']->getProperties();
     
     // Get the settings of the publication type we are using
-    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
+    $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
     
     // If creating a new translation get an empty copy
     if ($data['tab'] == 'newtranslation') {

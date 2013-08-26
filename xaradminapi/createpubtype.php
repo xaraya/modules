@@ -53,7 +53,7 @@ function publications_adminapi_createpubtype($args)
     if (!xarModAPILoad('publications', 'user')) return;
 
     // Make sure we have all the configuration fields we need
-    $pubfields = xarModAPIFunc('publications','user','getpubfields');
+    $pubfields = xarMod::apiFunc('publications','user','getpubfields');
     foreach ($pubfields as $field => $value) {
         if (!isset($config[$field])) {
             $config[$field] = '';

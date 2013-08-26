@@ -18,7 +18,7 @@ function publications_admin_waitingcontent()
 
     // Get publication types
     unset($publinks);
-    $publinks = xarModAPIFunc('publications', 'user', 'getpublinks',
+    $publinks = xarMod::apiFunc('publications', 'user', 'getpublinks',
                           array('state' => array(0),
                                 'typemod' => 'admin'));
 

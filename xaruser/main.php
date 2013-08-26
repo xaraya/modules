@@ -36,7 +36,7 @@ function publications_user_main($args)
         $redirect = xarModVars::get('publications','defaultfrontpage');
         if (!empty($redirect)) {
             $truecurrenturl = xarServer::getCurrentURL(array(), false);
-            $urldata = xarModAPIFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+            $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
             xarController::redirect($urldata['redirecturl']);
             return true;
         } else {

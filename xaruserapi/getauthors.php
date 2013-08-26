@@ -32,13 +32,13 @@ function publications_userapi_getauthors($args)
     // Get the field names and LEFT JOIN ... ON ... parts from publications
     // By passing on the $args, we can let leftjoin() create the WHERE for
     // the publications-specific columns too now
-    $publicationsdef = xarModAPIFunc('publications','user','leftjoin',$args);
+    $publicationsdef = xarMod::apiFunc('publications','user','leftjoin',$args);
 
     // Load API
     if (!xarModAPILoad('roles', 'user')) return;
 
     // Get the field names and LEFT JOIN ... ON ... parts from users
-    $usersdef = xarModAPIFunc('roles','user','leftjoin');
+    $usersdef = xarMod::apiFunc('roles','user','leftjoin');
 
 // TODO: make sure this is SQL standard
     // Start building the query
@@ -64,7 +64,7 @@ function publications_userapi_getauthors($args)
         if (isset($args['ptid']) && !isset($args['itemtype'])) {
             $args['itemtype'] = $args['ptid'];
         }
-        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',$args);
+        $categoriesdef = xarMod::apiFunc('categories','user','leftjoin',$args);
 
         $query .= ' LEFT JOIN ' . $categoriesdef['table'];
         $query .= ' ON ' . $categoriesdef['field'] . ' = '

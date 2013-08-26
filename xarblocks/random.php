@@ -87,7 +87,7 @@ class Publications_RandomBlock extends BasicBlock implements iBlock
 
             if (empty($data['numitems'])) $data['numitems'] = 1;
 
-            $publications = xarModAPIFunc('publications','user','getrandom',
+            $publications = xarMod::apiFunc('publications','user','getrandom',
                                       array('ptid'     => $data['pubtype_id'],
                                             'cids'     => $cidsarray,
                                             'andcids'  => false,

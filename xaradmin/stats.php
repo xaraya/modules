@@ -33,10 +33,10 @@ function publications_admin_stats($args = array())
 
     $data = array();
     $data['group'] = $group;
-    $data['stats'] = xarModAPIFunc('publications','admin','getstats',
+    $data['stats'] = xarMod::apiFunc('publications','admin','getstats',
                                    array('group' => $group));
-    $data['pubtypes'] = xarModAPIFunc('publications','user','get_pubtypes');
-    $data['statelist'] = xarModAPIFunc('publications','user','getstates');
+    $data['pubtypes'] = xarMod::apiFunc('publications','user','get_pubtypes');
+    $data['statelist'] = xarMod::apiFunc('publications','user','getstates');
     $data['fields'] = array('pubtype_id'     => xarML('Publication Type'),
                             'state'        => xarML('Status'),
                             'owner'      => xarML('Author'),

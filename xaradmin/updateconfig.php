@@ -152,7 +152,7 @@ function publications_admin_updateconfig()
         $pubtypeobject->properties['configuration']->setValue(serialize($settings));
         $pubtypeobject->updateItem(array('itemid' => $ptid));
 
-        $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+        $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
         if ($usealias) {
             xarModSetAlias($pubtypes[$ptid]['name'],'publications');
         } else {

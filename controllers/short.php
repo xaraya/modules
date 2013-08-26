@@ -63,7 +63,7 @@ class PublicationsShortController extends ShortActionController
                 $token2 = $this->nextToken();
                 if ($token2) {
                     // Get all publication types present
-                    if (empty($this->pubtypes)) $this->pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+                    if (empty($this->pubtypes)) $this->pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
                     
                     if (xarModVars::get('publications', 'usetitleforurl')) {
                         // Match the first token
@@ -159,7 +159,7 @@ class PublicationsShortController extends ShortActionController
             default:
                 // Here we are dealing with publications/pubtype[/publication] or publications/itemid
                 // Get all publication types present
-                if (empty($this->pubtypes)) $this->pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+                if (empty($this->pubtypes)) $this->pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
                 
                 $token2 = $this->nextToken();
 
@@ -265,7 +265,7 @@ class PublicationsShortController extends ShortActionController
                 if (isset($params['ptid'])) {
                     if (xarModVars::get('publications', 'usetitleforurl')) {
                         // Get all publication types present
-                        if (empty($this->pubtypes)) $this->pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+                        if (empty($this->pubtypes)) $this->pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
                         // Match to the function token
                         foreach ($this->pubtypes as $id => $pubtype) {
                             if ($params['ptid'] == $id) {
@@ -300,7 +300,7 @@ class PublicationsShortController extends ShortActionController
                     $result = $q->row();
                     if (xarModVars::get('publications', 'usetitleforurl')) {
                         // Get all publication types present
-                        if (empty($this->pubtypes)) $this->pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+                        if (empty($this->pubtypes)) $this->pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
                         if (!empty($result['pubtype_id'])) $path[] = strtolower($this->pubtypes[$result['pubtype_id']]['description']);
                         if (!empty($result['name'])) $path[] = strtolower($result['name']);
                     } else {

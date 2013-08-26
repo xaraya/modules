@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:set name="ptid">$properties['itemtype']->value</xar:set>
-    <xar:set name="context">xarModAPIFunc('publications','user','getsettings',array('ptid' => $ptid))</xar:set>
+    <xar:set name="context">xarMod::apiFunc('publications','user','getsettings',array('ptid' => $ptid))</xar:set>
 
     <xar:set name="colwidth">
         100

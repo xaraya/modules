@@ -51,7 +51,7 @@ function publications_admin_modify_pubtype($args)
                             );
 
     // Get the settings of the publication type we are using
-    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['itemid']));
+    $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $data['itemid']));
     
     // Send the publication type and the object properties to the template 
     $data['properties'] = $data['object']->getProperties();

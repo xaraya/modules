@@ -88,7 +88,7 @@ function publications_user_viewmap($args)
 
     // TODO: re-evaluate this after user feedback...
         // *trick* Use the 'default' categories here, instead of all rootcats
-        $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'publications'));
+        $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'publications'));
 
         $catlist = array();
         foreach ($basecats as $basecat) {
@@ -102,7 +102,7 @@ function publications_user_viewmap($args)
             if (empty($val)) {
                 continue;
             }
-            $data['cattree'][$cid] = xarModAPIFunc('publications',
+            $data['cattree'][$cid] = xarMod::apiFunc('publications',
                                                    'user',
                                                    'getchildcats',
                                                          // frontpage or approved
@@ -120,9 +120,9 @@ function publications_user_viewmap($args)
 
         // Get the base categories
         if (!empty($ptid)) {
-            $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $ptid));
+            $rootcats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $ptid));
         } else {
-            $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => 0));
+            $rootcats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => 0));
             $ptid = null;
         }
 
@@ -142,7 +142,7 @@ function publications_user_viewmap($args)
                 if (empty($val)) {
                     continue;
                 }
-                $cattree[$cid] = xarModAPIFunc('publications',
+                $cattree[$cid] = xarMod::apiFunc('publications',
                                                'user',
                                                'getchildcats',
                                                    // frontpage or approved
@@ -196,7 +196,7 @@ function publications_user_viewmap($args)
             }
 
             // Get the counts for all groups of (N) categories
-            $pubcatcount = xarModAPIFunc('publications',
+            $pubcatcount = xarMod::apiFunc('publications',
                                          'user',
                                          'getpubcatcount',
                                          // frontpage or approved
@@ -236,7 +236,7 @@ function publications_user_viewmap($args)
         $data['maplink'] = xarModURL('publications','user','viewmap',array('by' => 'pub'));
 
         // get the links and counts for all publication types
-        $publinks = xarModAPIFunc('publications','user','getpublinks',
+        $publinks = xarMod::apiFunc('publications','user','getpublinks',
                                   array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
                                         'all' => 1));
 
@@ -264,7 +264,7 @@ function publications_user_viewmap($args)
             // for each root category of this publication type
             foreach ($publinks[$i]['rootcats'] as $cid) {
                 // add the category tree to the list of categories to show
-                $childcats =  xarModAPIFunc('publications',
+                $childcats =  xarMod::apiFunc('publications',
                                             'user',
                                             'getchildcats',
                                             // frontpage or approved

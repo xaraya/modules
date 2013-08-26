@@ -76,7 +76,7 @@ function publications_userapi_get($args)
         }
         if (isset($where))
             $args['where'] = $where;
-        $arts = xarModApiFunc('publications','user','getall', $args );
+        $arts = xarMod::apiFunc('publications','user','getall', $args );
         if (!empty($arts))
             return current($arts);
         else
@@ -159,7 +159,7 @@ function publications_userapi_get($args)
 
         $info = xarMod::getBaseInfo('publications');
         $regid = $info['systemid'];
-        $articlecids = xarModAPIFunc('categories',
+        $articlecids = xarMod::apiFunc('categories',
                                     'user',
                                     'getlinks',
                                     array('iids' => Array($id),
@@ -188,7 +188,7 @@ function publications_userapi_get($args)
 
 /*
     if (xarModIsHooked('dynamicdata','publications')) {
-        $values = xarModAPIFunc('dynamicdata','user','getitem',
+        $values = xarMod::apiFunc('dynamicdata','user','getitem',
                                  array('module'   => 'publications',
                                        'itemtype' => $pubtype_id,
                                        'itemid'   => $id));

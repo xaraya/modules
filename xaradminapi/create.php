@@ -11,7 +11,7 @@
  */
 /**
  * Create a new article
- * Usage : $id = xarModAPIFunc('publications', 'admin', 'create', $article);
+ * Usage : $id = xarMod::apiFunc('publications', 'admin', 'create', $article);
  *
  * @param string $args['title'] name of the item (this is the only mandatory argument)
  * @param string $args['summary'] summary for this item
@@ -75,7 +75,7 @@ function publications_adminapi_create($args)
     if (!xarModAPILoad('publications', 'user')) return;
 
     $args['mask'] = 'SubmitPublications';
-    if (!xarModAPIFunc('publications','user','checksecurity',$args)) {
+    if (!xarMod::apiFunc('publications','user','checksecurity',$args)) {
         $msg = xarML('Not authorized to add #(1) items',
                     'Publication');
         throw new ForbiddenOperationException(null, $msg);

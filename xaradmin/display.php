@@ -306,7 +306,7 @@ function publications_admin_display($args)
     $data['layout'] = $layout;
 
     // Get the settings for this publication type;
-    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $ptid));
+    $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $ptid));
     
     // The name of this object
     $data['objectname'] = $data['object']->name;
@@ -371,11 +371,11 @@ function publications_admin_display($args)
 #
 # Get information on next and previous items
 #
-    $data['prevpublication'] = xarModAPIFunc('publications','user','getnext',
+    $data['prevpublication'] = xarMod::apiFunc('publications','user','getnext',
                                  array('id' => $id,
                                        'ptid' => $ptid,
                                        'sort' => 'tree',));
-    $data['nextpublication'] = xarModAPIFunc('publications','user','getnext',
+    $data['nextpublication'] = xarMod::apiFunc('publications','user','getnext',
                                  array('id' => $id,
                                        'ptid' => $ptid,
                                        'sort' => 'tree',));
@@ -409,7 +409,7 @@ function publications_admin_display($args)
 
 /*    // Get publication
     if (!$preview) {
-        $publication = xarModAPIFunc('publications',
+        $publication = xarMod::apiFunc('publications',
                                 'user',
                                 'get',
                                 array('id' => $id,
@@ -421,7 +421,7 @@ function publications_admin_display($args)
         throw new DataNotFoundException(null, $msg);
     }
     // Get publication types
-    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+    $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
 
     // Check that the publication type is valid, otherwise use the publication's pubtype
     if (!empty($ptid) && !isset($pubtypes[$ptid])) {
@@ -475,7 +475,7 @@ function publications_admin_display($args)
     /*
     if (count($cids) > 0) {
         if (!xarModAPILoad('categories', 'user')) return;
-        $catlist = xarModAPIFunc('categories',
+        $catlist = xarMod::apiFunc('categories',
                                 'user',
                                 'getcatinfo',
                                 array('cids' => $cids));
@@ -578,7 +578,7 @@ function publications_admin_display($args)
 
     // temp. fix to include dynamic data fields without changing templates
     if (xarModIsHooked('dynamicdata','publications',$pubtype_id)) {
-        list($properties) = xarModAPIFunc('dynamicdata','user','getitemfordisplay',
+        list($properties) = xarMod::apiFunc('dynamicdata','user','getitemfordisplay',
                                           array('module'   => 'publications',
                                                 'itemtype' => $pubtype_id,
                                                 'itemid'   => $id,
@@ -647,7 +647,7 @@ function publications_admin_display($args)
 
     // Navigation links
     $data['publabel'] = xarML('Publication');
-    $data['publinks'] = array(); //xarModAPIFunc('publications','user','getpublinks',
+    $data['publinks'] = array(); //xarMod::apiFunc('publications','user','getpublinks',
                                  //    array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
                                  //          'count' => $show_pubcount));
     if (isset($show_map)) {
@@ -711,7 +711,7 @@ function publications_admin_display($args)
 
     // Generating keywords from the API now instead of setting the entire
     // body into the cache.
-    $keywords = xarModAPIFunc('publications',
+    $keywords = xarMod::apiFunc('publications',
                               'user',
                               'generatekeywords',
                               array('incomingkey' => $data['body']));
@@ -740,7 +740,7 @@ function publications_admin_display($args)
 
     // optional category count
     if ($show_catcount && !empty($ptid)) {
-        $pubcatcount = xarModAPIFunc('publications',
+        $pubcatcount = xarMod::apiFunc('publications',
                                     'user',
                                     'getpubcatcount',
                                     // frontpage or approved

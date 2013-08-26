@@ -54,7 +54,7 @@ function publications_userapi_getnext($args)
     $q->in('state', $state);
     
     // Get the current article
-    $current = xarModAPIFunc('publications','user','get',array('id' => $id));
+    $current = xarMod::apiFunc('publications','user','get',array('id' => $id));
 
     // Add the ordering
     switch($sort) {

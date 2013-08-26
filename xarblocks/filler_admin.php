@@ -33,10 +33,10 @@ class Publications_FillerBlockAdmin extends Publications_FillerBlock
         // Add the rest of the arguments
         $article_args['state'] = $statearray;
 
-        $data['filtereditems'] = xarModAPIFunc(
+        $data['filtereditems'] = xarMod::apiFunc(
             'publications', 'user', 'getall', $article_args );
 
-        $data['pubtypes'] = xarModAPIFunc('publications', 'user', 'get_pubtypes');
+        $data['pubtypes'] = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
         $data['stateoptions'] = array(
             array('id' => '', 'name' => xarML('All Published')),
             array('id' => '3', 'name' => xarML('Frontpage')),

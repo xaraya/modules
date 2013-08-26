@@ -9,7 +9,7 @@
         <div class="xar-col">
             <xar:var name="firstline">All</xar:var>
             <xar:set name="firstline">array('id' => 0, 'name' => $firstline)</xar:set>
-            <xar:set name="options">xarModAPIFunc('publications', 'user', 'get_pubtypes')</xar:set>        
+            <xar:set name="options">xarMod::apiFunc('publications', 'user', 'get_pubtypes')</xar:set>        
             <xar:data-input type="dropdown" name="pubtype_id" firstline="$firstline" options="$options" value="$pubtype_id"/>
         </div>
     </div>

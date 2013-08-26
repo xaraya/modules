@@ -5,7 +5,7 @@
         <xar:set name="layout">'default'</xar:set>
     </xar:if>
 
-    <xar:set name="settings">xarModAPIFunc('publications','user','getsettings',array('ptid' => $properties['itemtype']->value))</xar:set>
+    <xar:set name="settings">xarMod::apiFunc('publications','user','getsettings',array('ptid' => $properties['itemtype']->value))</xar:set>
 
     <!-- Get the name of the publication type. It is supposed to be "publications_something" -->
     <xar:if condition="strlen($object->name) le 13">

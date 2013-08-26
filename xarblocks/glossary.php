@@ -57,7 +57,7 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
         }
 
         // Attempt to find an article with this title and optional category/pubtype.
-        $article = xarModAPIfunc('publications', 'user', 'get', $articlecriteria);
+        $article = xarMod::apiFunc('publications', 'user', 'get', $articlecriteria);
 
         if (!empty($vars['cid']) && array_search($vars['cid'], $article['cids']) === NULL) {
             // Category not assigned to article.
@@ -89,10 +89,10 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
     {
         $vars = $this->getContent();
         // Pub type drop-down list values.
-        $vars['pubtypes'] = xarModAPIFunc('publications', 'user', 'get_pubtypes');
+        $vars['pubtypes'] = xarMod::apiFunc('publications', 'user', 'get_pubtypes');
 
         // Categories drop-down list values.
-        $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
+        $vars['categorylist'] = xarMod::apiFunc('categories', 'user', 'getcat');
 
         // Defaults.
         if (empty($vars['ptid'])) {

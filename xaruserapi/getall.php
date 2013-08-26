@@ -109,6 +109,7 @@ function publications_userapi_getall($args)
     // mandatory fields for security
     $required['id'] = 1;
     $required['title'] = 1;
+
     $required['locale'] = 1;
     $required['pubtype_id'] = 1;
     $required['create_date'] = 1;
@@ -126,7 +127,7 @@ function publications_userapi_getall($args)
     // Get the field names and LEFT JOIN ... ON ... parts from publications
     // By passing on the $args, we can let leftjoin() create the WHERE for
     // the publications-specific columns too now
-    $publicationsdef = xarModAPIFunc('publications','user','leftjoin',$args);
+    $publicationsdef = xarMod::apiFunc('publications','user','leftjoin',$args);
 
 // TODO : how to handle the case where name is empty, but uname isn't
 
@@ -135,7 +136,7 @@ function publications_userapi_getall($args)
         if (!xarModAPILoad('roles', 'user')) return;
 
         // Get the field names and LEFT JOIN ... ON ... parts from users
-        $usersdef = xarModAPIFunc('roles','user','leftjoin');
+        $usersdef = xarMod::apiFunc('roles','user','leftjoin');
         if (empty($usersdef)) return;
     }
 
@@ -146,7 +147,7 @@ function publications_userapi_getall($args)
         if (!xarModAPILoad('categories', 'user')) return;
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
-        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
+        $categoriesdef = xarMod::apiFunc('categories','user','leftjoin',
                                       array('cids' => $cids,
                                             'andcids' => $andcids,
                                             'itemtype' => isset($ptid) ? $ptid : null,
@@ -159,7 +160,7 @@ function publications_userapi_getall($args)
         if (!xarModAPILoad('hitcount', 'user')) return;
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from hitcount
-        $hitcountdef = xarModAPIFunc('hitcount','user','leftjoin',
+        $hitcountdef = xarMod::apiFunc('hitcount','user','leftjoin',
                                     array('modid' => $regid,
                                           'itemtype' => isset($ptid) ? $ptid : null));
     }
@@ -169,7 +170,7 @@ function publications_userapi_getall($args)
         if (!xarModAPILoad('ratings', 'user')) return;
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from ratings
-        $ratingsdef = xarModAPIFunc('ratings','user','leftjoin',
+        $ratingsdef = xarMod::apiFunc('ratings','user','leftjoin',
                                     array('modid' => $regid,
                                           'itemtype' => isset($ptid) ? $ptid : null));
     }
@@ -386,7 +387,7 @@ function publications_userapi_getall($args)
         if (!xarModAPILoad('categories', 'user')) return;
 
         // Get the links for the Array of iids we have
-        $cids = xarModAPIFunc('categories',
+        $cids = xarMod::apiFunc('categories',
                              'user',
                              'getlinks',
                              array('iids' => $ids,
@@ -434,7 +435,7 @@ function publications_userapi_getall($args)
             if (!xarModIsHooked('dynamicdata','publications',$pubtype)) {
                 continue;
             }
-            list($properties,$items) = xarModAPIFunc('dynamicdata','user','getitemsforview',
+            list($properties,$items) = xarMod::apiFunc('dynamicdata','user','getitemsforview',
                                                      array('module'   => 'publications',
                                                            'itemtype' => $pubtype,
                                                            'itemids'  => $itemids,

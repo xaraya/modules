@@ -80,7 +80,7 @@ function publications_admin_update()
         if ($data['preview']) $data['tab'] = 'preview';
         $data['items'] = $itemsdata;
         // Get the settings of the publication type we are using
-        $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
+        $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
 
         return xarTplModule('publications','admin','modify', $data);
     }

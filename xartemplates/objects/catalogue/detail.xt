@@ -105,7 +105,7 @@
                 retrieve the file information. For dynamic extra fields, you can use [fieldname]_output
                 directly to access the file information.
             </xar:comment>
-            <xar:set name="fileupload_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $fields['fileupload'], 'multiple' => true))</xar:set>
+            <xar:set name="fileupload_output">xarMod::apiFunc('uploads','user','showoutput',array('value' => $fields['fileupload'], 'multiple' => true))</xar:set>
             <xar:foreach in="$fileupload_output" key="$fileid" value="$fileinfo">
                 <p>
                     <a href="#$fileinfo['fileDownload']#">

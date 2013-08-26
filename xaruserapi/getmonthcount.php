@@ -24,7 +24,7 @@ function publications_userapi_getmonthcount($args)
     // Get the field names and LEFT JOIN ... ON ... parts from publications
     // By passing on the $args, we can let leftjoin() create the WHERE for
     // the publications-specific columns too now
-    $publicationsdef = xarModAPIFunc('publications','user','leftjoin',$args);
+    $publicationsdef = xarMod::apiFunc('publications','user','leftjoin',$args);
 
     // Bug 1590 - Create custom query supported by each database.
     $dbtype = xarDB::getType();

@@ -27,7 +27,7 @@ function publications_adminapi_importpubtype($args)
         throw new BadParameterException(null,$msg);
     }
 
-    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+    $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
 
     $proptypes = DataPropertyMaster::getPropertyTypes();
     $name2id = array();
@@ -223,7 +223,7 @@ function publications_adminapi_importpubtype($args)
                 }
 
                 // 3. create the pubtype
-                $ptid = xarModAPIFunc('publications','admin','createpubtype',
+                $ptid = xarMod::apiFunc('publications','admin','createpubtype',
                                       array('name' => $object['name'],
                                             'descr' => $object['label'],
                                             'config' => $fields));
@@ -239,7 +239,7 @@ function publications_adminapi_importpubtype($args)
                     $object['itemtype'] = $ptid;
                     $object['config'] = '';
                     $object['isalias'] = 0;
-                    $objectid = xarModAPIFunc('dynamicdata','admin','createobject',
+                    $objectid = xarMod::apiFunc('dynamicdata','admin','createobject',
                                               $object);
                     if (!isset($objectid)) {
                         if (!empty($file)) fclose($fp);
@@ -252,7 +252,7 @@ function publications_adminapi_importpubtype($args)
                         $property['moduleid'] = $object['moduleid'];
                         $property['itemtype'] = $object['itemtype'];
 
-                        $prop_id = xarModAPIFunc('dynamicdata','admin','createproperty',
+                        $prop_id = xarMod::apiFunc('dynamicdata','admin','createproperty',
                                                  $property);
                         if (!isset($prop_id)) {
                             if (!empty($file)) fclose($fp);
@@ -262,7 +262,7 @@ function publications_adminapi_importpubtype($args)
 
                     // 7. check if we need to enable DD hooks for this pubtype
                     if (!xarModIsHooked('dynamicdata','publications')) {
-                        xarModAPIFunc('modules','admin','enablehooks',
+                        xarMod::apiFunc('modules','admin','enablehooks',
                                       array('callerModName' => 'publications',
                                             'callerItemType' => $ptid,
                                             'hookModName' => 'dynamicdata'));

@@ -30,13 +30,13 @@ function publications_admin_updatestate()
         $msg = xarML('No publications selected');
         throw new DataNotFoundException(null, $msg);
     }
-    $states = xarModAPIFunc('publications','user','getstates');
+    $states = xarMod::apiFunc('publications','user','getstates');
     if (!isset($state) || !is_numeric($state) || $state < -1 || ($state != -1 && !isset($states[$state]))) {
         $msg = xarML('Invalid state');
         throw new BadParameterException(null,$msg);
     }
 
-    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+    $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
     if (!empty($ptid)) {
         $descr = $pubtypes[$ptid]['description'];
     } else {
@@ -54,7 +54,7 @@ function publications_admin_updatestate()
             continue;
         }
         // Get original article information
-        $article = xarModAPIFunc('publications',
+        $article = xarMod::apiFunc('publications',
                                  'user',
                                  'get',
                                  array('id' => $id,
@@ -73,7 +73,7 @@ function publications_admin_updatestate()
         } else {
             $input['mask'] = 'EditPublications';
         }
-        if (!xarModAPIFunc('publications','user','checksecurity',$input)) {
+        if (!xarMod::apiFunc('publications','user','checksecurity',$input)) {
             $msg = xarML('You have no permission to modify #(1) item #(2)',
                          $descr, xarVarPrepForDisplay($id));
             throw new ForbiddenOperationException(null, $msg);
@@ -81,7 +81,7 @@ function publications_admin_updatestate()
 
         if ($state < 0) {
             // Pass to API
-            if (!xarModAPIFunc('publications', 'admin', 'delete', $article)) {
+            if (!xarMod::apiFunc('publications', 'admin', 'delete', $article)) {
                 return; // throw back
             }
         } else {
@@ -89,7 +89,7 @@ function publications_admin_updatestate()
             $article['state'] = $state;
 
             // Pass to API
-            if (!xarModAPIFunc('publications', 'admin', 'update', $article)) {
+            if (!xarMod::apiFunc('publications', 'admin', 'update', $article)) {
                 return; // throw back
             }
         }

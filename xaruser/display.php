@@ -336,7 +336,7 @@ function publications_user_display($args)
     $data['layout'] = $layout;
 
     // Get the settings for this publication type
-    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $ptid));
+    $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $ptid));
     
     // The name of this object
     $data['objectname'] = $data['object']->name;
@@ -433,11 +433,11 @@ function publications_user_display($args)
 # Get information on next and previous items
 #
     if ($data['settings']['show_prevnext']) {
-        $prevpublication = xarModAPIFunc('publications','user','getprevious',
+        $prevpublication = xarMod::apiFunc('publications','user','getprevious',
                                      array('id' => $itemid,
                                            'ptid' => $data['object']->properties['itemtype']->value,
                                            'sort' => 'title',));
-        $nextpublication = xarModAPIFunc('publications','user','getnext',
+        $nextpublication = xarMod::apiFunc('publications','user','getnext',
                                      array('id' => $itemid,
                                            'ptid' => $data['object']->properties['itemtype']->value,
                                            'sort' => 'title',));

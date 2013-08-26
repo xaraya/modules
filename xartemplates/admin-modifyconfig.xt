@@ -433,7 +433,7 @@
                     <legend>
                         Publication States
                     </legend>
-                    <xar:set name="states">xarModAPIFunc('publications','user','getstates')</xar:set>
+                    <xar:set name="states">xarMod::apiFunc('publications','user','getstates')</xar:set>
                     <table class="xar-fullwidth">
                         <tr>
                             <td valign="top" style="width: 50%">

@@ -33,7 +33,7 @@ function publications_admin_create()
     
     $isvalid = $data['object']->checkInput();
     
-    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
+    $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
     
     if ($data['preview'] || !$isvalid) {
         // Show debug info if called for

@@ -60,7 +60,7 @@ class Publications_RelatedBlock extends BasicBlock implements iBlock
             
             if ($vars['showpubtype']) {
                 // Show publication type (for now)
-                $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
+                $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
                 if (xarVarIsCached('Blocks.publications','ptid')) {
                     $ptid = xarCoreCache::getCached('Blocks.publications','ptid');
                     if (!empty($ptid) && isset($pubtypes[$ptid]['description'])) {
@@ -90,7 +90,7 @@ class Publications_RelatedBlock extends BasicBlock implements iBlock
                                                               'owner' => $author));
                         $vars['authorid'] = $author;
                         if (!empty($vars['showvalue'])) {
-                            $vars['authorcount'] = xarModAPIFunc('publications','user','countitems',
+                            $vars['authorcount'] = xarMod::apiFunc('publications','user','countitems',
                                                                  array('ptid' => (!empty($ptid) ? $ptid : null),
                                                                        'owner' => $author,
                                                                        // limit to approved / frontpage publications
