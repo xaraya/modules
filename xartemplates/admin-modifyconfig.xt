@@ -525,19 +525,8 @@
                     </legend>
                     <xar:data-input type="array" name="redirects" column_titles="From,To" addremove="1" value="$redirects"/>
                 </fieldset>
-                <div class="xar-form-input-wrapper">
-                    <div class="xar-form-container-after">
-                        <xar:var name="label">Update</xar:var>
-                        <xar:button type="submit" label="$label" />
-                        <!--
-                        &#160;
-                        <xar:set name="label">xarML('Reset')</xar:set>
-                        <xar:button type="cancel" label="$label" />
-                        -->
-                        <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" /> 
-                    </div>
-                </div>
+                <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+                <xar:template file="update-button" module="base" />
            </form>
         </xar:if>
     </div>

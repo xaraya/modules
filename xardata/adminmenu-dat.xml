@@ -1,4 +1,4 @@
-<adminmenu>
+<menu>
     <menuitems>
         <menuitem>
             <mask>ManagePublications</mask>
@@ -91,4 +91,4 @@
             <label>Overview</label>
         </menuitem>
     </menuitems>
-</adminmenu>
+</menu>
