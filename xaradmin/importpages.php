@@ -37,6 +37,10 @@ function publications_admin_importpages()
     // Initialise the template variables
     $data = array();
 
+# --------------------------------------------------------
+#
+# Get the base directory where the html files to be imported are located
+#
     if (empty($basedir)) {
         $data['basedir'] = realpath(sys::code() . 'modules/publications');
     } else {
@@ -54,7 +58,10 @@ function publications_admin_importpages()
 
     $data['authid'] = xarSecGenAuthKey();
 
-    // Get current publication types
+# --------------------------------------------------------
+#
+# Get the current publication types
+#
     $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
 
     $data['pubtypes'] = $pubtypes;
@@ -74,7 +81,7 @@ function publications_admin_importpages()
                                           $pubfieldformats[$pubtypes[$ptid]['config'][$field]['format']] . ']';
             }
         }
-
+/*
         $catlist = array();
         $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $ptid));
         foreach ($rootcats as $catid) {
@@ -99,8 +106,13 @@ function publications_admin_importpages()
                                                   'values' => &$seencid,
                                                   'multiple' => 1));
         }
+        */
     }
 
+# --------------------------------------------------------
+#
+# Get the data from the form
+#
     $data['selected'] = array();
     if (!isset($refresh) && isset($filelist) && is_array($filelist) && count($filelist) > 0) {
         foreach ($filelist as $file) {
@@ -152,6 +164,10 @@ function publications_admin_importpages()
         }
     }
 
+# --------------------------------------------------------
+#
+# Perform the import
+#
     if (isset($data['ptid']) && isset($data['content']) && count($data['selected']) > 0
         && (isset($test) || isset($import))) {
 
@@ -206,7 +222,7 @@ function publications_admin_importpages()
                 $article[$data['title']] = $title;
             }
             $article[$data['content']] = $page;
-            if (isset($test)) {
+            if (isset($test)) {die("X");
                 // preview the first file as a test
                 $data['preview'] = xarModFunc('publications','user','display',
                                               array('article' => $article, 'preview' => true));
