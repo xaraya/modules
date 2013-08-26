@@ -1,0 +1,29 @@
+<menu>
+    <menutitle>
+        <label>Areas</label>
+        <title>Choose a utility to perform</title>
+        <variable>activetab</variable>
+    </menutitle>
+    <menuitems>
+        <menuitem>
+            <value>stats</value>
+            <target>stats</target>
+            <label>Statistics</label>
+        </menuitem>
+        <menuitem>
+            <value>importpictures</value>
+            <target>importpictures</target>
+            <label>Import Pictures</label>
+        </menuitem>
+        <menuitem>
+            <value>importpages</value>
+            <target>importpages</target>
+            <label>Import Local Pages</label>
+        </menuitem>
+        <menuitem>
+            <value>importwebpage</value>
+            <target>importwebpage</target>
+            <label>Import Web Page</label>
+        </menuitem>
+    </menuitems>
+</menu>
