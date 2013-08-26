@@ -20,9 +20,9 @@ function publications_admin_importpages()
     if(!xarVarFetch('basedir',    'isset', $basedir,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('filelist',   'isset', $filelist,    NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('refresh',    'isset', $refresh,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('ptid',       'isset', $ptid,        NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('content',    'isset', $content,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('title',      'isset', $title,       NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('ptid',       'int',   $data['ptid'],0,    XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('contentfield',    'str', $data['contentfield'],     '', XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('titlefield',      'str', $data['titlefield'],       '', XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('cids',       'isset', $cids,        NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('filterhead', 'isset', $filterhead,  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('filtertail', 'isset', $filtertail,  NULL, XARVAR_DONT_SET)) {return;}
@@ -32,10 +32,6 @@ function publications_admin_importpages()
     if(!xarVarFetch('replace',    'isset', $replace,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('test',       'isset', $test,        NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('import',     'isset', $import,      NULL, XARVAR_DONT_SET)) {return;}
-
-
-    // Initialise the template variables
-    $data = array();
 
 # --------------------------------------------------------
 #
@@ -64,26 +60,32 @@ function publications_admin_importpages()
 #
     $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
 
-    $data['pubtypes'] = $pubtypes;
+    $data['pubtypes'] = array();
+    foreach ($pubtypes as $pubtype) {
+        $data['pubtypes'][] = array('id' => $pubtype['id'], 'name' => $pubtype['description']);
+    }
     $data['fields'] = array();
     $data['cats'] = array();
-    if (!empty($ptid)) {
-        $data['ptid'] = $ptid;
+    if (!empty($data['ptid'])) {
 
-        $pubfields = xarMod::apiFunc('publications','user','getpubfields');
-        $pubfieldtypes = xarMod::apiFunc('publications','user','getpubfieldtypes');
-        $pubfieldformats = xarMod::apiFunc('publications','user','getpubfieldformats');
-        foreach ($pubfields as $field => $dummy) {
-            if (($pubfieldtypes[$field] == 'text' || $pubfieldtypes[$field] == 'string') &&
-                !empty($pubtypes[$ptid]['config'][$field]['label']) &&
-                $pubtypes[$ptid]['config'][$field]['format'] != 'fileupload') {
-                $data['fields'][$field] = $pubtypes[$ptid]['config'][$field]['label'] . ' [' .
-                                          $pubfieldformats[$pubtypes[$ptid]['config'][$field]['format']] . ']';
+# --------------------------------------------------------
+#
+# Get the fields of hte chosen pubtype
+#
+        sys::import('modules.dynamicdata.class.objects.master');
+        $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
+        $pubtypeobject->getItem(array('itemid' => $data['ptid']));
+        $objectname = $pubtypeobject->properties['name']->value;
+        $pageobject = DataObjectMaster::getObject(array('name' => $objectname));
+    
+        foreach ($pageobject->properties as $name => $property) {
+            if ($property->basetype == 'string') {
+                $data['fields'][] = array('id' => $name, 'name' => $property->label);
             }
         }
 /*
         $catlist = array();
-        $rootcats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $ptid));
+        $rootcats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $data['ptid']));
         foreach ($rootcats as $catid) {
             $catlist[$catid['category_id']] = 1;
         }
@@ -120,13 +122,6 @@ function publications_admin_importpages()
                 $data['selected'][$file] = 1;
             }
         }
-    }
-
-    if (isset($title) && isset($data['fields'][$title])) {
-        $data['title'] = $title;
-    }
-    if (isset($content) && isset($data['fields'][$content])) {
-        $data['content'] = $content;
     }
 
     if (!isset($filterhead)) {
@@ -168,7 +163,7 @@ function publications_admin_importpages()
 #
 # Perform the import
 #
-    if (isset($data['ptid']) && isset($data['content']) && count($data['selected']) > 0
+    if (isset($data['ptid']) && isset($data['contentfield']) && count($data['selected']) > 0
         && (isset($test) || isset($import))) {
 
         $mysearch = array();
@@ -206,29 +201,18 @@ function publications_admin_importpages()
                 $page = preg_replace($mysearch,$myreplace,$page);
             }
 
-            $article = array('title' => ' ',
-                             'summary' => '',
-                             'body' => '',
-                             'notes' => '',
-                             'pubdate' => filemtime($curfile),
-                             'state' => 2,
-                             'ptid' => $data['ptid'],
-                             'cids' => $cids,
-                          // for preview
-                             'pubtype_id' => $data['ptid'],
-                             'owner' => xarUserGetVar('id'),
-                             'id' => 0);
-            if (!empty($data['title']) && !empty($title)) {
-                $article[$data['title']] = $title;
-            }
-            $article[$data['content']] = $page;
-            if (isset($test)) {die("X");
+            $args[$data['contentfield']] = $page;
+            if (!empty($data['titlefield'])) $fields[$data['titlefield']] = $title;
+            $pageobject = DataObjectMaster::getObject(array('name' => $objectname));
+            $pageobject->setFieldValues($args, 1);
+
+            if (isset($test)) {
                 // preview the first file as a test
-                $data['preview'] = xarModFunc('publications','user','display',
-                                              array('article' => $article, 'preview' => true));
+                $data['preview'] = xarModFunc('publications','user','preview',
+                                              array('object' => $pageobject));
                 break;
             } else {
-                $id = xarMod::apiFunc('publications', 'admin', 'create', $article);
+                $id = $pageobject->createItem();
                 if (empty($id)) {
                     return; // throw back
                 } else {
@@ -251,7 +235,6 @@ function publications_admin_importpages()
         }
     }
 
-    // Return the template variables defined in this function
     return $data;
 }
 

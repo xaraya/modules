@@ -50,16 +50,9 @@
                         </label>
                     </div>
                     <div class="xar-col">
-                        <select name="ptid" id="ptid" onchange="javascript:this.form.submit();">
-                            <option value=""></option>
-                            <xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
-                                <xar:if condition="!empty($ptid) and $pubid eq $ptid">
-                                    <option value="#$pubid#" selected="selected">#$pubtype['description']#</option>
-                                <xar:else />
-                                    <option value="#$pubid#">#$pubtype['description']#</option>
-                                </xar:if>
-                            </xar:foreach>
-                        </select>
+                        <xar:var name="firstline">Choose a publication type</xar:var>
+                        <xar:set name="firstline">"0,$firstline"</xar:set>
+                        <xar:data-input type="dropdown" name="ptid" value="$ptid" firstline="$firstline" options="$pubtypes" onchange="javascript:this.form.submit();"/>
                     </div>
                 </div>
                 <xar:if condition="count($fields) gt 0">
@@ -70,16 +63,9 @@
                             </label>
                         </div>
                         <div class="xar-col">
-                            <select name="title" id="title">
-                                <option value=""></option>
-                                <xar:foreach in="$fields" key="$field" value="$label">
-                                    <xar:if condition="!empty($title) and $title eq $field">
-                                        <option value="#$field#" selected="selected">#$label#</option>
-                                        <xar:else />
-                                        <option value="#$field#">#$label#</option>
-                                    </xar:if>
-                                </xar:foreach>
-                            </select>
+                            <xar:var name="firstline">Choose a field</xar:var>
+                            <xar:set name="firstline">",$firstline"</xar:set>
+                            <xar:data-input type="dropdown" name="titlefield" value="$titlefield" firstline="$firstline" options="$fields"/>
                         </div>
                     </div>
                     <div class="xar-row">
@@ -89,16 +75,7 @@
                             </label>
                         </div>
                         <div class="xar-col">
-                            <select name="content" id="content">
-                                <option value=""></option>
-                                <xar:foreach in="$fields" key="$field" value="$label">
-                                    <xar:if condition="!empty($content) and $content eq $field">
-                                        <option value="#$field#" selected="selected">#$label#</option>
-                                        <xar:else />
-                                        <option value="#$field#">#$label#</option>
-                                    </xar:if>
-                                </xar:foreach>
-                            </select>
+                            <xar:data-input type="dropdown" name="contentfield" value="$contentfield" firstline="$firstline" options="$fields"/>
                         </div>
                     </div>
                 </xar:if>

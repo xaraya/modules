@@ -6,7 +6,7 @@
     <xar:set name="info">
         xarController::$request->getInfo()
     </xar:set>
-    <xar:if condition="($pageName ne 'module') AND ($info[2] ne 'display_version') AND ($info[2] ne 'manage_versions')">
+    <xar:if condition="($pageName ne 'module') AND ($info[2] ne 'display_version') AND ($info[2] ne 'manage_versions') AND !empty($preview)">
         <xar:sec mask="ManagePublications" catch="false">
             <xar:var name="label">Create a new publication</xar:var>
             <a href="#xarModURL('publications', 'admin', 'new',array('name' => $object->name))#" style="float:right; margin-right: 10px" title="#$label#">
