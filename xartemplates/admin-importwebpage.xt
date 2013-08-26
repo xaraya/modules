@@ -7,42 +7,22 @@
             Utilities
         </h2>
           <xar:template type="module" file="util-menu" />
-        <h3>Import Local Web Pages</h3>
+        <h3>Import Web Page</h3>
             <xar:if condition="!empty($logfile)">
                 <div>
                     <span class="warning">#$logfile#</span>
                 </div>
             </xar:if>
-            <form method="post" action="#xarModURL('publications','admin','importpages')#">
+            <form method="post" action="#xarModURL('publications','admin','importwebpage')#">
                 <div class="xar-row">
                     <div class="xar-col">
                         <label for="basedir">
-                            Base Directory
+                            Page URL
                         </label>
                     </div>
                     <div class="xar-col">
-                        <input type="text" name="basedir" id="basedir" value="#$basedir#" size="50" maxlength="250" />
+                        <input type="text" name="url" id="url" value="#$url#" size="50" maxlength="250" />
                         <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                        <input type="submit" name="refresh" id="refresh" value="Refresh" />
-                    </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="filelist[]">
-                            Available HTML Pages
-                        </label>
-                    </div>
-                    <div class="xar-col">
-                        <select name="filelist[]" id="filelist[]" multiple="multiple">
-                            <option value=""></option>
-                            <xar:foreach in="$filelist" value="$file">
-                                <xar:if condition="!empty($selected[$file])">
-                                    <option value="#$file#" selected="selected">#$file#</option>
-                                    <xar:else />
-                                    <option value="#$file#">#$file#</option>
-                                </xar:if>
-                            </xar:foreach>
-                        </select>
                     </div>
                 </div>
                 <div class="xar-row">
@@ -157,7 +137,7 @@
                     <div class="xar-col">
                         <xar:var name="label">Test Import</xar:var>
                         <xar:button type="submit" name="test" id="test" label="$label" />
-                        <xar:var name="label">Import Webpages</xar:var>
+                        <xar:var name="label">Import Webpage</xar:var>
                         <xar:button type="submit" name="import" id="import" label="$label" />
                     </div>
                 </div>

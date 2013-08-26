@@ -12,13 +12,12 @@
 /**
  * manage publication types (all-in-one function for now)
  */
-function publications_admin_importpages()
+function publications_admin_importwebpage()
 {
     if (!xarSecurityCheck('AdminPublications')) return;
 
     // Get parameters
-    if(!xarVarFetch('basedir',    'isset', $basedir,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('filelist',   'isset', $filelist,    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('url',        'str',   $data['url'], '', XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('refresh',    'isset', $refresh,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('ptid',       'int',   $data['ptid'],0,    XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('contentfield',    'str', $data['contentfield'],     '', XARVAR_DONT_SET)) {return;}
@@ -35,18 +34,8 @@ function publications_admin_importpages()
 
 # --------------------------------------------------------
 #
-# Get the base directory where the html files to be imported are located
+# Get the URL of the web page to import
 #
-    if (empty($basedir)) {
-        $data['basedir'] = realpath(sys::code() . 'modules/publications');
-    } else {
-        $data['basedir'] = realpath($basedir);
-    }
-
-    $data['filelist'] = xarMod::apiFunc('publications','admin','browse',
-                                      array('basedir' => $data['basedir'],
-                                            'filetype' => 'html?'));
-
     if (isset($refresh) || isset($test) || isset($import)) {
         // Confirm authorisation code
         if (!xarSecConfirmAuthKey()) return;
@@ -115,15 +104,6 @@ function publications_admin_importpages()
 #
 # Get the data from the form
 #
-    $data['selected'] = array();
-    if (!isset($refresh) && isset($filelist) && is_array($filelist) && count($filelist) > 0) {
-        foreach ($filelist as $file) {
-            if (!empty($file) && in_array($file,$data['filelist'])) {
-                $data['selected'][$file] = 1;
-            }
-        }
-    }
-
     if (!isset($filterhead)) {
         $data['filterhead'] = '#^.*<body[^>]*>#is';
     } else {
@@ -163,7 +143,7 @@ function publications_admin_importpages()
 #
 # Perform the import
 #
-    if (!empty($data['ptid']) && isset($data['contentfield']) && count($data['selected']) > 0
+    if (!empty($data['ptid']) && isset($data['contentfield']) 
         && (isset($test) || isset($import))) {
 
         $mysearch = array();
@@ -180,48 +160,61 @@ function publications_admin_importpages()
         }
 
         $data['logfile'] = '';
-        foreach (array_keys($data['selected']) as $file) {
-            $curfile = realpath($basedir . '/' . $file);
-            if (!file_exists($curfile) || !is_file($curfile)) {
-                continue;
-            }
-            $page = @join('', file($curfile));
-            if (!empty($data['findtitle']) && preg_match($data['findtitle'],$page,$matches)) {
-                $title = $matches[1];
-            } else {
-                $title = '';
-            }
-            if (!empty($data['filterhead'])) {
-                $page = preg_replace($filterhead,'',$page);
-            }
-            if (!empty($data['filtertail'])) {
-                $page = preg_replace($filtertail,'',$page);
-            }
-            if (count($mysearch) > 0) {
-                $page = preg_replace($mysearch,$myreplace,$page);
-            }
 
-            $args[$data['contentfield']] = $page;
+# --------------------------------------------------------
+#
+# Get the page
+#
+        $crl = curl_init();
+        $timeout = 5;
+        curl_setopt ($crl, CURLOPT_URL,$data['url']);
+        curl_setopt ($crl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt ($crl, CURLOPT_CONNECTTIMEOUT, $timeout);
+        $page = curl_exec($crl);
+        curl_close($crl);
+        if (empty($page)) return $data; 
+# --------------------------------------------------------
+#
+# Manipulate the contents
+#
+        if (!empty($data['findtitle']) && preg_match($data['findtitle'],$page,$matches)) {
+            $title = $matches[1];
+        } else {
+            $title = '';
+        }
+        if (!empty($data['filterhead'])) {
+            $page = preg_replace($filterhead,'',$page);
+        }
+        if (!empty($data['filtertail'])) {
+            $page = preg_replace($filtertail,'',$page);
+        }
+        if (count($mysearch) > 0) {
+            $page = preg_replace($mysearch,$myreplace,$page);
+        }
+
+        $args[$data['contentfield']] = $page;
             if (!empty($data['titlefield'])) {
                 $args[$data['titlefield']] = $title;
                 $args['name'] = str_replace(' ', '_', trim(strtolower($title)));
             }
-            $pageobject = DataObjectMaster::getObject(array('name' => $objectname));
-            $pageobject->setFieldValues($args, 1);
+        $pageobject = DataObjectMaster::getObject(array('name' => $objectname));
+        $pageobject->setFieldValues($args, 1);
 
-            if (isset($test)) {
-                // preview the first file as a test
-                $data['preview'] = xarModFunc('publications','user','preview',
-                                              array('object' => $pageobject));
-                break;
+# --------------------------------------------------------
+#
+# Show or save the contents
+#
+        if (isset($test)) {
+            // preview the first file as a test
+            $data['preview'] = xarModFunc('publications','user','preview',
+                                          array('object' => $pageobject));
+        } else {
+            $id = $pageobject->createItem();
+            if (empty($id)) {
+                return; // throw back
             } else {
-                $id = $pageobject->createItem();
-                if (empty($id)) {
-                    return; // throw back
-                } else {
-                    $data['logfile'] .= xarML('File #(1) was imported as #(2) #(3)',$curfile,$pubtypes[$data['ptid']]['description'],$id);
-                    $data['logfile'] .= '<br />';
-                }
+                $data['logfile'] .= xarML('URL #(1) was imported as #(2) with ID #(3)',$data['url'],$pubtypes[$data['ptid']]['description'],$id);
+                $data['logfile'] .= '<br />';
             }
         }
     }
@@ -237,7 +230,6 @@ function publications_admin_importpages()
             $data['replace'][$i] = xarVarPrepForDisplay($data['replace'][$i]);
         }
     }
-
     return $data;
 }
 
