@@ -137,18 +137,6 @@ function publications_admin_view($args)
     xarSession::setVar('Publications.LastView',serialize($lastview));
 
     $labels = array();
-/*
-    if (!empty($ptid)) {
-        foreach ($pubtypes[$ptid]['config'] as $field => $value) {
-            $labels[$field] = $value['label'];
-        }
-    } else {
-        $pubfields = xarMod::apiFunc('publications','user','getpubfields');
-        foreach ($pubfields as $field => $value) {
-            $labels[$field] = $value['label'];
-        }
-    }
-    */
     $data['labels'] = $labels;
 
     // only show the date if this publication type has one

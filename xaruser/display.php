@@ -106,14 +106,6 @@ function publications_user_display($args)
     // An empty publication type means the page does not exist
     if (empty($ptid)) return xarResponse::NotFound();
     
-/*    if(empty($ptid)) {
-        $publication_type = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
-        $where = 'name = ' . $name;
-        $items = $publication_type->getItems(array('where' => $where));
-        $item = current($items);
-        $ptid = $item['id'];
-    }
-*/
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
     // Save this as the current pubtype
