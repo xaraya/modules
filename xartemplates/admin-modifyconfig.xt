@@ -6,49 +6,9 @@
         <h2>        
             Modify Configuration        
         </h2>
+        <xar:set name="xmldata">'modifyconfig'</xar:set>
+        <xar:template type="module" module="base" file="admin-menu-skel"/>
         
-        <ul class="xar-tabs">
-            <xar:if condition="$tab eq 'global'">
-                <xar:set name="tabclass">'xar-tab-active'</xar:set>
-                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
-            <xar:else />
-                <xar:set name="tabclass">'xar-tab'</xar:set>
-                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
-            </xar:if>
-            <li class="#$tabclass#">
-                <a class="#$linkclass#" href="#xarModURL('publications', 'admin', 'modifyconfig', array('tab' => 'global'))#">
-                    Global
-                </a>
-            </li>
-
-            <xar:if condition="$tab eq 'pubtypes'">
-                <xar:set name="tabclass">'xar-tab-active'</xar:set>
-                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
-            <xar:else />
-                <xar:set name="tabclass">'xar-tab'</xar:set>
-                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
-            </xar:if>
-            <li class="#$tabclass#">
-                <a class="#$linkclass#" href="#xarModURL('publications', 'admin', 'modifyconfig', array('tab' => 'pubtypes'))#">
-                    Publication Types
-                </a>
-            </li>
-<!--
-            <xar:if condition="$tab eq 'redirects'">
-                <xar:set name="tabclass">'xar-tab-active'</xar:set>
-                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
-            <xar:else />
-                <xar:set name="tabclass">'xar-tab'</xar:set>
-                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
-            </xar:if>
-            <li class="#$tabclass#">
-                <a class="#$linkclass#" href="#xarModURL('publications', 'admin', 'modifyconfig', array('tab' => 'redirects'))#">
-                    Redirects
-                </a>
-            </li>
--->
-        </ul>
-
         <xar:if condition="$tab eq 'global'">
            <form class="xar-formwidget" action="&xar-modurl-publications-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
                 <xar:data-form object="$module_settings"/>

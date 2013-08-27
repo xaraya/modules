@@ -14,143 +14,145 @@
                 </div>
             </xar:if>
             <form method="post" action="#xarModURL('publications','admin','importpages')#">
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="basedir">
-                            Base Directory
-                        </label>
-                    </div>
-                    <div class="xar-col">
-                        <input type="text" name="basedir" id="basedir" value="#$basedir#" size="50" maxlength="250" />
-                        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                        <input type="submit" name="refresh" id="refresh" value="Refresh" />
-                    </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="filelist[]">
-                            Available HTML Pages
-                        </label>
-                    </div>
-                    <div class="xar-col">
-                        <select name="filelist[]" id="filelist[]" multiple="multiple">
-                            <option value=""></option>
-                            <xar:foreach in="$filelist" value="$file">
-                                <xar:if condition="!empty($selected[$file])">
-                                    <option value="#$file#" selected="selected">#$file#</option>
-                                    <xar:else />
-                                    <option value="#$file#">#$file#</option>
-                                </xar:if>
-                            </xar:foreach>
-                        </select>
-                    </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="ptid">
-                            Publication Type
-                        </label>
-                    </div>
-                    <div class="xar-col">
-                        <xar:var name="firstline">Choose a publication type</xar:var>
-                        <xar:set name="firstline">"0,$firstline"</xar:set>
-                        <xar:data-input type="dropdown" name="ptid" value="$ptid" firstline="$firstline" options="$pubtypes" onchange="javascript:this.form.submit();"/>
-                    </div>
-                </div>
-                <xar:if condition="count($fields) gt 0">
+                <fieldset>
                     <div class="xar-row">
                         <div class="xar-col">
-                            <label for="content">
-                                Insert Page Title into Field
+                            <label for="basedir">
+                                Base Directory
                             </label>
                         </div>
                         <div class="xar-col">
-                            <xar:var name="firstline">Choose a field</xar:var>
-                            <xar:set name="firstline">",$firstline"</xar:set>
-                            <xar:data-input type="dropdown" name="titlefield" value="$titlefield" firstline="$firstline" options="$fields"/>
+                            <input type="text" name="basedir" id="basedir" value="#$basedir#" size="50" maxlength="250" />
+                            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                            <input type="submit" name="refresh" id="refresh" value="Refresh" />
                         </div>
                     </div>
                     <div class="xar-row">
                         <div class="xar-col">
-                            <label for="content">
-                                Insert Content into Field
+                            <label for="filelist[]">
+                                Available HTML Pages
                             </label>
                         </div>
                         <div class="xar-col">
-                            <xar:data-input type="dropdown" name="contentfield" value="$contentfield" firstline="$firstline" options="$fields"/>
+                            <select name="filelist[]" id="filelist[]" multiple="multiple">
+                                <option value=""></option>
+                                <xar:foreach in="$filelist" value="$file">
+                                    <xar:if condition="!empty($selected[$file])">
+                                        <option value="#$file#" selected="selected">#$file#</option>
+                                        <xar:else />
+                                        <option value="#$file#">#$file#</option>
+                                    </xar:if>
+                                </xar:foreach>
+                            </select>
                         </div>
                     </div>
-                </xar:if>
-                <xar:if condition="count($cats) gt 0">
                     <div class="xar-row">
                         <div class="xar-col">
                             <label for="ptid">
-                                Initial Categories
+                                Publication Type
                             </label>
                         </div>
                         <div class="xar-col">
-                            <xar:foreach in="$cats" key="$catid">#$cats[$catid]#</xar:foreach>
+                            <xar:var name="firstline">Choose a publication type</xar:var>
+                            <xar:set name="firstline">"0,$firstline"</xar:set>
+                            <xar:data-input type="dropdown" name="ptid" value="$ptid" firstline="$firstline" options="$pubtypes" onchange="javascript:this.form.submit();"/>
                         </div>
                     </div>
-                </xar:if>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="filterhead">
-                            Filter Start of Page
-                        </label>
-                    </div>
-                    <div class="xar-col">
-                        <input type="text" name="filterhead" id="filterhead" value="#$filterhead#" size="30" maxlength="100" />
-                    </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="filtertail">
-                            Filter End of Page
-                        </label>
-                    </div>
-                    <div class="xar-col">
-                        <input type="text" name="filtertail" id="filtertail" value="#$filtertail#" size="30" maxlength="100" />
-                    </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="findtitle">
-                            Find Page Title
-                        </label>
-                    </div>
-                    <div class="xar-col">
-                        <input type="text" name="findtitle" id="findtitle" value="#$findtitle#" size="30" maxlength="100" />
-                    </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="filtertail">
-                            Replacement Rules
-                        </label>
-                        <input type="hidden" name="numrules" value="3" />
-                    </div>
-                    <div class="xar-col">
-                    </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        Search for
-                    </div>
-                    <div class="xar-col">
-                        Replace with
-                    </div>
-                </div>
-                <xar:foreach in="$search" key="$id">
+                    <xar:if condition="count($fields) gt 0">
+                        <div class="xar-row">
+                            <div class="xar-col">
+                                <label for="content">
+                                    Insert Page Title into Field
+                                </label>
+                            </div>
+                            <div class="xar-col">
+                                <xar:var name="firstline">Choose a field</xar:var>
+                                <xar:set name="firstline">",$firstline"</xar:set>
+                                <xar:data-input type="dropdown" name="titlefield" value="$titlefield" firstline="$firstline" options="$fields"/>
+                            </div>
+                        </div>
+                        <div class="xar-row">
+                            <div class="xar-col">
+                                <label for="content">
+                                    Insert Content into Field
+                                </label>
+                            </div>
+                            <div class="xar-col">
+                                <xar:data-input type="dropdown" name="contentfield" value="$contentfield" firstline="$firstline" options="$fields"/>
+                            </div>
+                        </div>
+                    </xar:if>
+                    <xar:if condition="count($cats) gt 0">
+                        <div class="xar-row">
+                            <div class="xar-col">
+                                <label for="ptid">
+                                    Initial Categories
+                                </label>
+                            </div>
+                            <div class="xar-col">
+                                <xar:foreach in="$cats" key="$catid">#$cats[$catid]#</xar:foreach>
+                            </div>
+                        </div>
+                    </xar:if>
                     <div class="xar-row">
                         <div class="xar-col">
-                            <input type="text" name="search[#$id#]" id="search[#$id#]" value="#$search[$id]#" size="20" />
+                            <label for="filterhead">
+                                Filter Start of Page
+                            </label>
                         </div>
                         <div class="xar-col">
-                            <input type="text" name="replace[#$id#]" id="replace[#$id#]" value="#$replace[$id]#" size="20" />
+                            <input type="text" name="filterhead" id="filterhead" value="#$filterhead#" size="30" maxlength="100" />
                         </div>
                     </div>
-                </xar:foreach>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label for="filtertail">
+                                Filter End of Page
+                            </label>
+                        </div>
+                        <div class="xar-col">
+                            <input type="text" name="filtertail" id="filtertail" value="#$filtertail#" size="30" maxlength="100" />
+                        </div>
+                    </div>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label for="findtitle">
+                                Find Page Title
+                            </label>
+                        </div>
+                        <div class="xar-col">
+                            <input type="text" name="findtitle" id="findtitle" value="#$findtitle#" size="30" maxlength="100" />
+                        </div>
+                    </div>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            <label for="filtertail">
+                                Replacement Rules
+                            </label>
+                            <input type="hidden" name="numrules" value="3" />
+                        </div>
+                        <div class="xar-col">
+                        </div>
+                    </div>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            Search for
+                        </div>
+                        <div class="xar-col">
+                            Replace with
+                        </div>
+                    </div>
+                    <xar:foreach in="$search" key="$id">
+                        <div class="xar-row">
+                            <div class="xar-col">
+                                <input type="text" name="search[#$id#]" id="search[#$id#]" value="#$search[$id]#" size="20" />
+                            </div>
+                            <div class="xar-col">
+                                <input type="text" name="replace[#$id#]" id="replace[#$id#]" value="#$replace[$id]#" size="20" />
+                            </div>
+                        </div>
+                    </xar:foreach>
+                </fieldset>
                 <div class="xar-row">
                     <div class="xar-col">
                     </div>

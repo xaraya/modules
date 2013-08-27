@@ -22,7 +22,7 @@ function publications_admin_importpictures()
     if(!xarVarFetch('thumbnail',    'isset', $thumbnail,    NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('filelist',     'isset', $filelist,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('refresh',      'isset', $refresh,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('ptid',         'isset', $ptid,         NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('ptid',         'int',   $data['ptid'], 5,    XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('title',        'isset', $title,        NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('summary',      'isset', $summary,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('content',      'isset', $content,      NULL, XARVAR_DONT_SET)) {return;}
@@ -31,9 +31,10 @@ function publications_admin_importpictures()
     if(!xarVarFetch('test',         'isset', $test,         NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('import',       'isset', $import,       NULL, XARVAR_DONT_SET)) {return;}
 
-    // Initialise the template variables
-    $data = array();
-
+# --------------------------------------------------------
+#
+# Get the base directory where the html files to be imported are located
+#
     if (!isset($baseurl)) {
         $data['baseurl'] = sys::code() . 'modules/publications/xarimages/';
     } else {
@@ -103,34 +104,39 @@ function publications_admin_importpictures()
     // Get current publication types
     $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
 
-    // Set default pubtype to Pictures (if it exists)
-    if (!isset($ptid) && isset($pubtypes[5])) {
-        $ptid = 5;
-        $title = 'title';
-        $summary = 'summary';
-        $content = 'body';
+    $data['pubtypes'] = array();
+    foreach ($pubtypes as $pubtype) {
+        $data['pubtypes'][] = array('id' => $pubtype['id'], 'name' => $pubtype['description']);
     }
 
-    $data['pubtypes'] = $pubtypes;
+    // Set default pubtype to Pictures (if it exists)
+        $data['titlefield'] = 'title';
+        $data['summaryfield'] = 'summary';
+        $data['contentfield'] = 'body';
+
     $data['fields'] = array();
     $data['cats'] = array();
-    if (!empty($ptid)) {
-        $data['ptid'] = $ptid;
+    if (!empty($data['ptid'])) {
 
-        $pubfields = xarMod::apiFunc('publications','user','getpubfields');
-        $pubfieldtypes = xarMod::apiFunc('publications','user','getpubfieldtypes');
-        $pubfieldformats = xarMod::apiFunc('publications','user','getpubfieldformats');
-        foreach ($pubfields as $field => $dummy) {
-            if (($pubfieldtypes[$field] == 'text' || $pubfieldtypes[$field] == 'string') &&
-                !empty($pubtypes[$ptid]['config'][$field]['label']) &&
-                $pubtypes[$ptid]['config'][$field]['format'] != 'fileupload') {
-                $data['fields'][$field] = $pubtypes[$ptid]['config'][$field]['label'] . ' [' .
-                                          $pubfieldformats[$pubtypes[$ptid]['config'][$field]['format']] . ']';
+# --------------------------------------------------------
+#
+# Get the fields of hte chosen pubtype
+#
+        sys::import('modules.dynamicdata.class.objects.master');
+        $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
+        $pubtypeobject->getItem(array('itemid' => $data['ptid']));
+        $objectname = $pubtypeobject->properties['name']->value;
+        $pageobject = DataObjectMaster::getObject(array('name' => $objectname));
+    
+        foreach ($pageobject->properties as $name => $property) {
+            if ($property->basetype == 'string') {
+                $data['fields'][] = array('id' => $name, 'name' => $property->label);
             }
         }
 
+/*
         $catlist = array();
-        $rootcats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $ptid));
+        $rootcats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $data['ptid']));
         foreach ($rootcats as $catid) {
             $catlist[$catid['category_id']] = 1;
         }
@@ -152,7 +158,7 @@ function publications_admin_importpictures()
                                                   'select_itself' => true,
                                                   'values' => &$seencid,
                                                   'multiple' => 1));
-        }
+        }*/
     }
 
     $data['selected'] = array();
@@ -164,15 +170,10 @@ function publications_admin_importpictures()
         }
     }
 
-    if (isset($title) && isset($data['fields'][$title])) {
-        $data['title'] = $title;
-    }
-    if (isset($summary) && isset($data['fields'][$summary])) {
-        $data['summary'] = $summary;
-    }
-    if (isset($content) && isset($data['fields'][$content])) {
-        $data['content'] = $content;
-    }
+    if (isset($title) && isset($data['fields'][$titlefield])) $data['title'] = $title;
+    if (isset($summary) && isset($data['fields'][$summaryfield])) $data['summary'] = $summary;
+    if (isset($content) && isset($data['fields'][$contentfield])) $data['content'] = $content;
+
     if (empty($usefilemtime)) {
         $data['usefilemtime'] = 0;
     } else {
