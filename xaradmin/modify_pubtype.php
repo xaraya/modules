@@ -41,15 +41,16 @@ function publications_admin_modify_pubtype($args)
     }
 
     // Unpack the access data
-    $data['access'] = unserialize($data['object']->properties['access']->getValue());
-    if (empty($data['access']))
+    $data['access'] = unserialize($data['object']->properties['access']->value);
+    if (empty($data['access'])) {
         $data['access'] = array(
                             'add' => array(),
                             'display' => array(),
                             'modify' => array(),
                             'delete' => array(),
                             );
-
+        $data['object']->properties['access']->value =serialize($data['access']);
+    }
     // Get the settings of the publication type we are using
     $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $data['itemid']));
     
@@ -86,7 +87,7 @@ function publications_admin_modify_pubtype($args)
             'modify' => $modifyaccess,
             'delete' => $deleteaccess,
         );
-        $data['object']->properties['access']->setValue(serialize($allaccess));
+        $data['object']->properties['access']->value = serialize($allaccess);
 
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
@@ -100,7 +101,7 @@ function publications_admin_modify_pubtype($args)
             return true;
         }
     }
-        
+
     return $data;
 }
 
