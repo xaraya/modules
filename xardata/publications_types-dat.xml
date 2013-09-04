@@ -5,7 +5,7 @@
     <description>News Publication</description>
     <template>news</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:15:"show_categories";s:1:"0";s:13:"show_catcount";s:1:"0";s:13:"show_prevnext";s:1:"1";s:13:"show_comments";s:1:"0";s:13:"show_hitcount";s:1:"0";s:12:"show_ratings";s:1:"0";s:13:"show_archives";s:1:"0";s:8:"show_map";s:1:"0";s:13:"show_publinks";s:1:"0";s:13:"show_pubcount";s:1:"1";s:12:"do_transform";s:1:"0";s:15:"title_transform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:13:"show_keywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:18:"allow_translations";s:1:"1";}</configuration>
-    <access>a:0:{}</access>
+    <access>a:4:{s:3:"add";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-6";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:7:"display";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"modify";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"delete";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"0";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="2">
@@ -14,7 +14,7 @@
     <description>Document</description>
     <template>document</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:15:"show_categories";s:1:"0";s:13:"show_catcount";s:1:"0";s:13:"show_prevnext";s:1:"1";s:13:"show_comments";s:1:"0";s:13:"show_hitcount";s:1:"0";s:12:"show_ratings";s:1:"0";s:13:"show_archives";s:1:"0";s:8:"show_map";s:1:"0";s:13:"show_publinks";s:1:"0";s:13:"show_pubcount";s:1:"1";s:12:"do_transform";s:1:"0";s:15:"title_transform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:13:"show_keywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:18:"allow_translations";s:1:"1";}</configuration>
-    <access>a:0:{}</access>
+    <access>a:4:{s:3:"add";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-6";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:7:"display";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"modify";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"delete";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"0";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="3">
@@ -23,7 +23,7 @@
     <description>Review</description>
     <template>review</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:15:"show_categories";s:1:"0";s:13:"show_catcount";s:1:"0";s:13:"show_prevnext";s:1:"1";s:13:"show_comments";s:1:"0";s:13:"show_hitcount";s:1:"0";s:12:"show_ratings";s:1:"0";s:13:"show_archives";s:1:"0";s:8:"show_map";s:1:"0";s:13:"show_publinks";s:1:"0";s:13:"show_pubcount";s:1:"1";s:12:"do_transform";s:1:"0";s:15:"title_transform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:13:"show_keywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:18:"allow_translations";s:1:"1";}</configuration>
-    <access>a:0:{}</access>
+    <access>a:4:{s:3:"add";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-6";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:7:"display";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"modify";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"delete";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"0";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="4">
@@ -32,7 +32,7 @@
     <description>FAQ</description>
     <template>faq</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:15:"show_categories";s:1:"0";s:13:"show_catcount";s:1:"0";s:13:"show_prevnext";s:1:"1";s:13:"show_comments";s:1:"0";s:13:"show_hitcount";s:1:"0";s:12:"show_ratings";s:1:"0";s:12:"show_archives";s:1:"0";s:8:"show_map";s:1:"0";s:13:"show_publinks";s:1:"0";s:13:"show_pubcount";s:1:"1";s:12:"do_transform";s:1:"0";s:15:"title_transform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:13:"show_keywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:18:"allow_translations";s:1:"1";}</configuration>
-    <access>a:0:{}</access>
+    <access>a:4:{s:3:"add";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-6";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:7:"display";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"modify";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"delete";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"0";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="5">
@@ -41,7 +41,7 @@
     <description>Picture</description>
     <template>picture</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:15:"show_categories";s:1:"0";s:13:"show_catcount";s:1:"0";s:13:"show_prevnext";s:1:"1";s:13:"show_comments";s:1:"0";s:13:"show_hitcount";s:1:"0";s:12:"show_ratings";s:1:"0";s:13:"show_archives";s:1:"0";s:8:"show_map";s:1:"0";s:13:"show_publinks";s:1:"0";s:13:"show_pubcount";s:1:"1";s:12:"do_transform";s:1:"0";s:15:"title_transform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:13:"show_keywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:18:"allow_translations";s:1:"1";}</configuration>
-    <access>a:0:{}</access>
+    <access>a:4:{s:3:"add";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-6";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:7:"display";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"modify";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"delete";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"0";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="6">
@@ -50,7 +50,7 @@
     <description>Web Link</description>
     <template>weblink</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:15:"show_categories";s:1:"0";s:13:"show_catcount";s:1:"0";s:13:"show_prevnext";s:1:"1";s:13:"show_comments";s:1:"0";s:13:"show_hitcount";s:1:"0";s:12:"show_ratings";s:1:"0";s:13:"show_archives";s:1:"0";s:8:"show_map";s:1:"0";s:13:"show_publinks";s:1:"0";s:13:"show_pubcount";s:1:"1";s:12:"do_transform";s:1:"0";s:15:"title_transform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:13:"show_keywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:18:"allow_translations";s:1:"1";}</configuration>
-    <access>a:0:{}</access>
+    <access>a:4:{s:3:"add";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-6";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:7:"display";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"modify";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"delete";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"0";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="7">
@@ -59,7 +59,7 @@
     <description>Quote</description>
     <template>quote</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:15:"show_categories";s:1:"0";s:13:"show_catcount";s:1:"0";s:13:"show_prevnext";s:1:"1";s:13:"show_comments";s:1:"0";s:13:"show_hitcount";s:1:"0";s:12:"show_ratings";s:1:"0";s:13:"show_archives";s:1:"0";s:8:"show_map";s:1:"0";s:13:"show_publinks";s:1:"0";s:13:"show_pubcount";s:1:"1";s:12:"do_transform";s:1:"0";s:15:"title_transform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:13:"show_keywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:18:"allow_translations";s:1:"1";}</configuration>
-    <access>a:0:{}</access>
+    <access>a:4:{s:3:"add";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-6";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:7:"display";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"modify";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"delete";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"0";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="8">
@@ -68,7 +68,7 @@
     <description>Download</description>
     <template>download</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:15:"show_categories";s:1:"0";s:13:"show_catcount";s:1:"0";s:13:"show_prevnext";s:1:"1";s:13:"show_comments";s:1:"0";s:13:"show_hitcount";s:1:"0";s:12:"show_ratings";s:1:"0";s:13:"show_archives";s:1:"0";s:8:"show_map";s:1:"0";s:13:"show_publinks";s:1:"0";s:13:"show_pubcount";s:1:"1";s:12:"do_transform";s:1:"0";s:15:"title_transform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:13:"show_keywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:18:"allow_translations";s:1:"1";}</configuration>
-    <access>a:0:{}</access>
+    <access>a:4:{s:3:"add";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-6";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:7:"display";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"modify";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"delete";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"0";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="9">
@@ -77,7 +77,7 @@
     <description>Translation</description>
     <template>translation</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:15:"show_categories";s:1:"0";s:13:"show_catcount";s:1:"0";s:13:"show_prevnext";s:1:"1";s:13:"show_comments";s:1:"0";s:13:"show_hitcount";s:1:"0";s:12:"show_ratings";s:1:"0";s:13:"show_archives";s:1:"0";s:8:"show_map";s:1:"0";s:13:"show_publinks";s:1:"0";s:13:"show_pubcount";s:1:"1";s:12:"do_transform";s:1:"0";s:15:"title_transform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:13:"show_keywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:18:"allow_translations";s:1:"1";}</configuration>
-    <access>a:0:{}</access>
+    <access>a:4:{s:3:"add";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-6";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:7:"display";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"modify";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"delete";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"0";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="10">
@@ -86,7 +86,7 @@
     <description>Generic Publication</description>
     <template>publication</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:15:"show_categories";s:1:"0";s:13:"show_catcount";s:1:"0";s:13:"show_prevnext";s:1:"1";s:13:"show_comments";s:1:"0";s:13:"show_hitcount";s:1:"0";s:12:"show_ratings";s:1:"0";s:13:"show_archives";s:1:"0";s:8:"show_map";s:1:"0";s:13:"show_publinks";s:1:"0";s:13:"show_pubcount";s:1:"1";s:12:"do_transform";s:1:"0";s:15:"title_transform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:3:"show_keywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:18:"allow_translations";s:1:"1";}</configuration>
-    <access>a:0:{}</access>
+    <access>a:4:{s:3:"add";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-6";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:7:"display";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"modify";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"delete";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"0";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="11">
@@ -95,7 +95,7 @@
     <description>Blog</description>
     <template>blog</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:15:"show_categories";s:1:"0";s:13:"show_catcount";s:1:"0";s:13:"show_prevnext";s:1:"1";s:13:"show_comments";s:1:"0";s:13:"show_hitcount";s:1:"0";s:12:"show_ratings";s:1:"0";s:13:"show_archives";s:1:"0";s:8:"show_map";s:1:"0";s:13:"show_publinks";s:1:"0";s:13:"show_pubcount";s:1:"1";s:12:"do_transform";s:1:"0";s:15:"title_transform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:3:"show_keywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:18:"allow_translations";s:1:"1";}</configuration>
-    <access>a:0:{}</access>
+    <access>a:4:{s:3:"add";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-6";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:7:"display";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"modify";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"delete";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"0";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="12">
@@ -104,7 +104,7 @@
     <description>Catalogue</description>
     <template>catalogue</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:15:"show_categories";s:1:"0";s:13:"show_catcount";s:1:"0";s:13:"show_prevnext";s:1:"1";s:13:"show_comments";s:1:"0";s:13:"show_hitcount";s:1:"0";s:12:"show_ratings";s:1:"0";s:13:"show_archives";s:1:"0";s:8:"show_map";s:1:"0";s:13:"show_publinks";s:1:"0";s:13:"show_pubcount";s:1:"1";s:12:"do_transform";s:1:"0";s:15:"title_transform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:3:"show_keywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:18:"allow_translations";s:1:"1";}</configuration>
-    <access>a:0:{}</access>
+    <access>a:4:{s:3:"add";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-6";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:7:"display";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"modify";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"delete";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"0";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}}</access>
     <state>3</state>
   </publications_types>
   <publications_types itemid="13">
@@ -113,7 +113,7 @@
     <description>Events</description>
     <template>events</template>
     <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:14:"items_per_page";s:2:"20";s:11:"defaultview";s:8:"Sections";s:15:"show_categories";s:1:"0";s:13:"show_catcount";s:1:"0";s:13:"show_prevnext";s:1:"1";s:13:"show_comments";s:1:"0";s:13:"show_hitcount";s:1:"0";s:12:"show_ratings";s:1:"0";s:13:"show_archives";s:1:"0";s:8:"show_map";s:1:"0";s:13:"show_publinks";s:1:"0";s:13:"show_pubcount";s:1:"1";s:12:"do_transform";s:1:"0";s:15:"title_transform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:3:"show_keywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:18:"allow_translations";s:1:"1";}</configuration>
-    <access>a:0:{}</access>
+    <access>a:4:{s:3:"add";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-6";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:7:"display";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"modify";a:3:{s:5:"group";s:19:"a:1:{i:0;s:2:"-5";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}s:6:"delete";a:3:{s:5:"group";s:18:"a:1:{i:0;s:1:"0";}";s:5:"level";s:3:"100";s:7:"failure";s:1:"0";}}</access>
     <state>3</state>
   </publications_types>
 </items>
