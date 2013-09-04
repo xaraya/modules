@@ -89,6 +89,9 @@ function publications_user_view($args)
     $data['pubtypeobject'] = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $data['pubtypeobject']->getItem(array('itemid' => $ptid));
 
+    // A non-active publication type means the page does not exist
+    if ($pubtypeobject->properties['state']->value < PUBLICATIONS_STATE_ACTIVE) return xarResponse::NotFound();
+
     // Get the settings of this publication type
     $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $ptid));
 

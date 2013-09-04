@@ -108,6 +108,10 @@ function publications_user_display($args)
     
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
+
+    // A non-active publication type means the page does not exist
+    if ($pubtypeobject->properties['state']->value < PUBLICATIONS_STATE_ACTIVE) return xarResponse::NotFound();
+
     // Save this as the current pubtype
     xarCoreCache::setCached('Publications', 'current_pubtype_object', $pubtypeobject);
     

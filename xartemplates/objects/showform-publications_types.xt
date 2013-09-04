@@ -6,12 +6,21 @@
     <xar:data-input property="$properties['template']" hidden="hidden"/>
     <xar:data-input property="$properties['configuration']" hidden="hidden"/>
     <xar:data-input property="$properties['access']" hidden="hidden"/>
-    <xar:data-input property="$properties['state']" hidden="hidden"/>
     <xar:set name="access">unserialize($properties['access']->value)</xar:set>
             <fieldset>
                 <legend>
                     Presentation
                 </legend>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label for="summary_template" class="help xar-form-label" title="#xarML('The state of this publication type')#">                    
+                            Publication Type State
+                        </label>
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input property="$properties['state']"/>
+                    </div>
+                </div>
                 <div class="xar-row">
                     <div class="xar-col">
                         <label for="summary_template" class="help xar-form-label" title="#xarML('Define the summary template for this publication type')#">                    
