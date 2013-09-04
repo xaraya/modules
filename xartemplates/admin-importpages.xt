@@ -24,7 +24,8 @@
                         <div class="xar-col">
                             <input type="text" name="basedir" id="basedir" value="#$basedir#" size="50" maxlength="250" />
                             <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                            <input type="submit" name="refresh" id="refresh" value="Refresh" />
+                            <xar:var name="label">Refresh</xar:var>
+                            <xar:button type="submit" name="refresh" label="$label" />
                         </div>
                     </div>
                     <div class="xar-row">

@@ -13,7 +13,8 @@
             &#160;
             <xar:data-input type="categories" bases="$basecids" />
             &#160; 
-            <input type="submit" name="go" value="Go" />
+            <xar:var name="label">Go</xar:var>
+            <xar:button type="submit" name="go" label="$label" />
         </div>
     </form>
     <br />

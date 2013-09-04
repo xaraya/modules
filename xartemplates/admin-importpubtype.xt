@@ -25,7 +25,8 @@
             </select>
             <br />
             <br />
-            <input type="submit" value="#xarML('Import Definition')#" />
+            <xar:var name="label">Import Definition</xar:var>
+            <xar:button type="submit" label="$label" />
             <br />
             <br />
             Select a file in the list above, or paste the definition in here:

@@ -13,7 +13,9 @@
             <xar:foreach in="$catfilter" key="$cid">
                 &#160;&#160;&#160;#$catfilter[$cid]#
             </xar:foreach>
-            &#160;&#160;&#160; <input type="submit" name="go" value="Go" />
+            &#160;&#160;&#160;
+            <xar:var name="label">Go</xar:var>
+            <xar:button type="submit" name="go" label="$label" />
         </div>
     </form>
     <br />

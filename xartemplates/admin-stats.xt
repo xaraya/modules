@@ -27,7 +27,8 @@
                     </xar:foreach>
                 </select>
             </xar:for>
-            <input type="submit" value="#xarML('Select')#" />
+            <xar:var name="label">Select</xar:var>
+            <xar:button type="submit" label="$label" />
         </form>
         <xar:set name="pubtype_id">
             null

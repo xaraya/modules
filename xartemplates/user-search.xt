@@ -15,7 +15,9 @@
               <td><label for="q">Search for</label></td>
               <td><input type="text" name="q" id="q" value="#$q#" size="20" />
                 <xar:var name="search">Search</xar:var>
-                &#160;&#160;&#160; <input type="submit" name="search" value="#$search#" /></td>
+                &#160;&#160;&#160;
+                <xar:button type="submit" name="search" label="$search" />
+              </td>
             </tr>
             <tr>
               <td><label for="author">By author</label></td>

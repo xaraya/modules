@@ -96,7 +96,7 @@
                     </tr>
                     <tr>
                         <td colspan="2" align="center">
-                            <input type="submit" value="#$refreshlabel#" />
+                            <xar:button type="submit" label="$refreshlabel" />
                         </td>
                     </tr>
                 </table>
@@ -110,7 +110,8 @@
                 <br />(Instance Definition #$extinstance#)
                 <br />
                 <br />
-                <input type="submit" name="apply" value="#$applylabel#" /></div>
+                <xar:button type="submit" name="apply" label="$applylabel" />
+                </div>
             </form>
             <br />
             Some examples : (assuming your users have read access by default)
