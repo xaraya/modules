@@ -41,7 +41,7 @@
                 </xar:if>
             </xar:if>
         </xar:if>
-        <xar:sec catch="false" mask="DeleteComments" instance="$header[moduleid]:$header[itemid]:$item[id]">
+        <xar:sec catch="false" mask="ManageComments" instance="$header[moduleid]:$header[itemid]:$item[id]">
             <form action="#xarModURL('comments', 'user', 'delete')#" method="post" class="xar-comments-actions">
                 <div>
 
