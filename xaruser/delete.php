@@ -21,7 +21,7 @@
 function comments_user_delete()
 {
 
-    if (!xarSecurityCheck('DeleteComments'))
+    if (!xarSecurityCheck('ManageComments'))
         return;
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('deletebranch',    'bool',   $deletebranch, false,       XARVAR_NOT_REQUIRED)) return;
@@ -89,7 +89,7 @@ function comments_user_delete()
 
     $comments = xarMod::apiFunc('comments','user','get_one',
                                        array('id' => $header['id']));
-    if ($comments[0]['right_id'] == $comments[0]['left_id'] + 1) {
+    if ($comments[0]['position_atomic']['right'] == $comments[0]['position_atomic']['left'] + 1) {
         $data['package']['haschildren'] = false;
     } else {
         $data['package']['haschildren'] = true;

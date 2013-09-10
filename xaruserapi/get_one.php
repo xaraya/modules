@@ -38,17 +38,10 @@ function comments_userapi_get_one( $args )
     $commentlist = array();
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $object = DataObjectMaster::getObject(array(
-                            'name' => 'comments_comments'
-        ));
-
-    if (!is_object($object)) return;
-
+    $object = DataObjectMaster::getObject(array('name' => 'comments_comments'));
     $object->getItem(array('itemid' => $id));
-
-    if (!is_object($object)) return array();
-
     $values = $object->getFieldValues();
+    $values['position_atomic'] = $object->properties['position']->atomic_value;
 
     if ($values['status'] != _COM_STATUS_ON) return array();
 

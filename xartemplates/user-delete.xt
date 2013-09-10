@@ -34,9 +34,9 @@
             </fieldset>
             <div class="xar-form-input-wrapper">
                 <input type="hidden" name="confirm" value="true" />
-                <input type="hidden" name="header[modid]" id="header-modid" value="#$header['modid']#"/>
+                <input type="hidden" name="header[moduleid]" id="header-modid" value="#$header['moduleid']#"/>
                 <input type="hidden" name="header[itemtype]" id="header-itemtype" value="#$header['itemtype']#"/>
-                <input type="hidden" name="header[objectid]" id="header-objectid" value="#$header['objectid']#"/>
+                <input type="hidden" name="header[itemid]" id="header-objectid" value="#$header['itemid']#"/>
                 <input type="hidden" name="parent_url" value="#$parent_url#"/>
                 <input type="hidden" name="header[id]" id="header-id" value="#$header['id']#"/>
                 <input type="hidden" name="header[parent_id]" id="header-parent_id" value="#$header['parent_id']#"/>

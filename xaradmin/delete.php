@@ -20,33 +20,30 @@
 function comments_admin_delete()
 {
 
-    if (!xarSecurityCheck('DeleteComments')) return;
+    if (!xarSecurityCheck('ManageComments')) return;
 
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('deletebranch',    'bool',   $deletebranch, false,       XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('redirect',    'str',   $data['redirect'], '',       XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemtype',    'str',   $data['itemtype'], NULL,       XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('dtype', 'str:1:', $dtype)) return;
+    if (!xarVarFetch('dtype', 'str', $data['dtype'], "",      XARVAR_NOT_REQUIRED)) return;
 
-    $data['dtype'] = $dtype;
+    if (empty($data['dtype'])) return xarResponse::NotFound();
 
     sys::import('modules.dynamicdata.class.objects.master');
 
-    switch (strtolower($dtype)) {
+    switch (strtolower($data['dtype'])) {
         case 'item': // delete just one comment
-            if (!xarVarFetch('id', 'int', $id)) return;
+            if (!xarVarFetch('itemid', 'int', $itemid)) return;
 
-            $object = DataObjectMaster::getObject(array(
-                            'name' => 'comments'
-            ));
-            if (!is_object($object)) return;
-            $object->getItem(array('itemid' => $id));
+            $object = DataObjectMaster::getObject(array('name' => 'comments_comments'));
+            $object->getItem(array('itemid' => $itemid));
             $values = $object->getFieldValues();
             foreach ($values as $key => $val) {
                 $data[$key] = $val;
             }
 
-            $delete_args['id'] = $id;
+            $delete_args['id'] = $itemid;
 
             break;
         case 'object': // delete all comments for a content item
@@ -85,7 +82,7 @@ function comments_admin_delete()
             break;
     }
 
-    if ($dtype != 'item') { // multiple items
+    if ($data['dtype'] != 'item') { // multiple items
 
         $list = DataObjectMaster::getObjectList(array(
                             'name' => 'comments'
@@ -95,7 +92,7 @@ function comments_admin_delete()
         $countlist = DataObjectMaster::getObjectList(array(
                             'name' => 'comments'
             ));
-        if ($dtype == 'all') {
+        if ($data['dtype'] == 'all') {
             $filters['where'] = 'status ne 3';
         } else {
             $filters['where'] .= ' and status ne 3';
@@ -121,7 +118,7 @@ function comments_admin_delete()
 
         }
 
-    } else { // $dtype == 'item'
+    } else { // $data['dtype'] == 'item'
         if ($data['confirm']) {
             if (!xarSecConfirmAuthKey()) return;
             if ($deletebranch) {
@@ -130,9 +127,9 @@ function comments_admin_delete()
                 xarMod::apiFunc('comments','admin','delete_node',array('node' => $id, 'parent_id' =>$values['parent_id']));
             }
         } else {
-            $comments = xarMod::apiFunc('comments','user','get_one',
-                                       array('id' => $id));
-            if ($comments[0]['right_id'] == $comments[0]['left_id'] + 1) {
+            $comments = xarMod::apiFunc('comments','user','get_one', array('id' => $itemid));
+
+            if ($comments[0]['position_atomic']['right'] == $comments[0]['position_atomic']['left'] + 1) {
                 $data['haschildren'] = false;
             } else {
                 $data['haschildren'] = true;
