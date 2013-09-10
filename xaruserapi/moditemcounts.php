@@ -26,9 +26,9 @@ function comments_userapi_moditemcounts($args)
     sys::import('modules.dynamicdata.class.objects.master');
 
     foreach($items as $item) {
-        if(!isset($objectid) || $objectid != $item['objectid']) {
+        if(!isset($itemid) || $itemid != $item['itemid']) {
 
-            $filters['where'] = 'objectid eq ' . $item['objectid'];
+            $filters['where'] = 'itemid eq ' . $item['itemid'];
             if (isset($itemtype)) {
                 $filters['where'] .= ' and itemtype eq ' . $itemtype;
             }
@@ -43,7 +43,7 @@ function comments_userapi_moditemcounts($args)
                             ));
             $items = $list->getItems($filters);
             $count = count($items);
-            $id = $item['objectid'];
+            $id = $item['itemid'];
             $itemtype = $item['itemtype'];
 
             $moditemcounts[$id] = array('count' => $count, 'itemtype' => $itemtype);

@@ -19,10 +19,18 @@
  */
 function comments_admin_view()
 {
-    // Security Check
-    if(!xarSecurityCheck('AdminComments')) {
-        return;
-    }
+    if (!xarSecurityCheck('ManageComments')) return;
+
+    // Only show top level documents, not translations
+    sys::import('xaraya.structures.query');
+    $q = new Query();
+    $q->ne('status',_COM_STATUS_ROOT_NODE);
+    
+    // Suppress deleted items if not an admin
+    // Remove this once listing property works with dataobject access
+    if (!xarIsParent('Administrators',xarUserGetVar('uname'))) $q->ne('status',0);
+    $data['conditions'] = $q;
+    return $data;
 
     if(!xarVarFetch('startnum', 'int', $startnum, 1, XARVAR_NOT_REQUIRED)) {return;}
 

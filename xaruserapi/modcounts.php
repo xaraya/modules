@@ -50,7 +50,7 @@ function comments_userapi_modcounts($args)
             $where_status = "status != ". _COM_STATUS_ROOT_NODE;
     }
     if (!empty($modid)) {
-        $where_mod = " AND modid = $modid";
+        $where_mod = " AND module_id = $moduleid";
         if (isset($itemtype)) {
             $where_mod .= " AND itemtype = $itemtype";
         }
@@ -59,10 +59,10 @@ function comments_userapi_modcounts($args)
     }
 
     // Get items
-    $sql = "SELECT modid, itemtype, COUNT(*), COUNT(DISTINCT objectid)
+    $sql = "SELECT module_id, itemtype, COUNT(*), COUNT(DISTINCT itemid)
             FROM $commentstable
             WHERE $where_status $where_mod
-            GROUP BY modid, itemtype";
+            GROUP BY module_id, itemtype";
 
     $result = $dbconn->Execute($sql);
     if (!$result) return;
