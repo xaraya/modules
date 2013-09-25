@@ -1,0 +1,110 @@
+<object name="eav_attributes">
+  <objectid>537</objectid>
+  <label>Attributes</label>
+  <module_id>182</module_id>
+  <itemtype>201</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <access>a:0:{}</access>
+  <isalias>true</isalias>
+  <datastore>relational</datastore>
+  <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>
+  <sources>a:1:{s:10:&quot;attributes&quot;;a:2:{i:0;s:18:&quot;xar_eav_attributes&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
+  <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
+  <category></category>
+  <properties>
+    <property name="id">
+      <id>5813</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.id</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="name">
+      <id>5814</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.name</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="label">
+      <id>5815</id>
+      <label>Label</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.label</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="property_id">
+      <id>5816</id>
+      <label>Property</label>
+      <type>fieldtype</type>
+      <defaultvalue>1</defaultvalue>
+      <source>attributes.property_id</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:5:"label";s:24:"initialization_refobject";s:10:"properties";}</configuration>
+    </property>
+    <property name="default_value">
+      <id>5821</id>
+      <label>Default Value</label>
+      <type>static</type>
+      <defaultvalue></defaultvalue>
+      <source></source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="configuration">
+      <id>5817</id>
+      <label>Configuration</label>
+      <type>configuration</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.configuration</source>
+      <status>34</status>
+      <seq>6</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="time_created">
+      <id>5818</id>
+      <label>Time Created</label>
+      <type>datetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>attributes.timecreated</source>
+      <status>65</status>
+      <seq>7</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="time_updated">
+      <id>5819</id>
+      <label>Time Updated</label>
+      <type>datetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>attributes.timeupdated</source>
+      <status>65</status>
+      <seq>8</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="state">
+      <id>5820</id>
+      <label>State</label>
+      <type>dropdown</type>
+      <defaultvalue>3</defaultvalue>
+      <source>attributes.state</source>
+      <status>33</status>
+      <seq>9</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:30:"0,Deleted;1,Inactive;3,Active;";}</configuration>
+    </property>
+  </properties>
+</object>

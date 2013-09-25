@@ -1,0 +1,40 @@
+<menu>
+    <menuitems>
+        <menuitem>
+            <includes>
+                <includeitem>main</includeitem>
+                <includeitem>overview</includeitem>
+            </includes>
+            <target>main</target>
+            <title>Short documentation of this module</title>
+            <label>EAV Overview</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageEAV</mask>
+            <includes>
+                <includeitem>view_attributes</includeitem>
+            </includes>
+            <target>view_attributes</target>
+            <title>Manage attributes</title>
+            <label>Attributes</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminEAV</mask>
+            <includes>
+                <includeitem>view</includeitem>
+            </includes>
+            <target>view</target>
+            <title>Manage the master tables of this module</title>
+            <label>Master Tables</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminEAV</mask>
+            <includes>
+                <includeitem>modifyconfig</includeitem>
+            </includes>
+            <target>modifyconfig</target>
+            <title>Modify the configuration settings of this module</title>
+            <label>Modify Configuration</label>
+        </menuitem>
+    </menuitems>
+</menu>
