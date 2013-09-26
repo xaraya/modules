@@ -33,7 +33,7 @@
                     </xar:if>
                 </a>
             </xar:access>
-        <xar:if condition="$objectname eq 'eav_attributes'">
+        <xar:elseif condition="$objectname eq 'eav_attributes'"/>
             <xar:access level="200">
                 <a href="#xarModURL('eav','admin','display_attribute',array('id' => $loopitem[$primaryalias]))#"
                 title="Display this attribute">
