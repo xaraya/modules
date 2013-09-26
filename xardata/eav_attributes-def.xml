@@ -3,8 +3,8 @@
   <label>Attributes</label>
   <module_id>182</module_id>
   <itemtype>201</itemtype>
-  <class>DataObject</class>
-  <filepath>auto</filepath>
+  <class>Attribute</class>
+  <filepath>modules/eav/class/attribute.php</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <access>a:0:{}</access>
@@ -56,14 +56,54 @@
       <seq>4</seq>
       <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:5:"label";s:24:"initialization_refobject";s:10:"properties";}</configuration>
     </property>
-    <property name="default_value">
+    <property name="default_tinyint">
       <id>5821</id>
-      <label>Default Value</label>
-      <type>static</type>
+      <label>Default Tinyint</label>
+      <type>integerbox</type>
       <defaultvalue></defaultvalue>
-      <source></source>
-      <status>33</status>
+      <source>attributes.default_tinyint</source>
+      <status>32</status>
       <seq>5</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="default_integer">
+      <id>5822</id>
+      <label>Default Integer</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.default_integer</source>
+      <status>32</status>
+      <seq>6</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="default_decimal">
+      <id>5823</id>
+      <label>Default Decimal</label>
+      <type>floatbox</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.default_decimal</source>
+      <status>32</status>
+      <seq>7</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="default_string">
+      <id>5824</id>
+      <label>Default String</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.default_string</source>
+      <status>32</status>
+      <seq>8</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="default_text">
+      <id>5825</id>
+      <label>Default Text</label>
+      <type>textarea_medium</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.default_text</source>
+      <status>32</status>
+      <seq>9</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="configuration">
@@ -73,7 +113,7 @@
       <defaultvalue></defaultvalue>
       <source>attributes.configuration</source>
       <status>34</status>
-      <seq>6</seq>
+      <seq>10</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="time_created">
@@ -83,7 +123,7 @@
       <defaultvalue>time()</defaultvalue>
       <source>attributes.timecreated</source>
       <status>65</status>
-      <seq>7</seq>
+      <seq>11</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="time_updated">
@@ -93,7 +133,7 @@
       <defaultvalue>time()</defaultvalue>
       <source>attributes.timeupdated</source>
       <status>65</status>
-      <seq>8</seq>
+      <seq>12</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="state">
@@ -103,7 +143,7 @@
       <defaultvalue>3</defaultvalue>
       <source>attributes.state</source>
       <status>33</status>
-      <seq>9</seq>
+      <seq>13</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:30:"0,Deleted;1,Inactive;3,Active;";}</configuration>
     </property>
   </properties>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:data-input property="$properties['id']" hidden="hidden" />
+    <xar:data-input property="$properties['time_created']" hidden="hidden"/>
+    <xar:data-input property="$properties['time_updated']" hidden="hidden"/>
+    <div class="xar-row">
+        <div class="xar-col">
+            Name
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['name']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            Label
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['label']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            Property
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['property_id']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            Default Value
+        </div>
+        <div class="xar-col">
+            <!-- <xar:set name="XX">var_dump($properties['default_string']->getDisplayStatus())</xar:set> -->
+            1<xar:data-input property="$properties['default_tinyint']"/>2
+            <xar:data-input property="$properties['default_integer']"/>3
+            <xar:data-input property="$properties['default_decimal']"/>4
+            <xar:data-input property="$properties['default_string']"/>5
+            <xar:data-input property="$properties['default_text']"/>6
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            Configuration
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['configuration']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            State
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['state']"/>
+        </div>
+    </div>
+</xar:template>
