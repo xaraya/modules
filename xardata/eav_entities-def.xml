@@ -19,7 +19,7 @@
     <property name="id">
       <id>5826</id>
       <label>ID</label>
-      <type>ledgervendor</type>
+      <type>itemid</type>
       <defaultvalue></defaultvalue>
       <source>entities.id</source>
       <status>65</status>
