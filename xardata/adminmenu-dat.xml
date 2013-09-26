@@ -12,6 +12,15 @@
         <menuitem>
             <mask>ManageEAV</mask>
             <includes>
+                <includeitem>view_entities</includeitem>
+            </includes>
+            <target>view_entities</target>
+            <title>Manage entities</title>
+            <label>Entities</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageEAV</mask>
+            <includes>
                 <includeitem>view_attributes</includeitem>
             </includes>
             <target>view_attributes</target>

@@ -28,6 +28,22 @@
         $q = new Query();
         $prefix = xarDB::getPrefix();
         
+        $query = "DROP TABLE IF EXISTS " . $prefix . "_eav_entities";
+        if (!$q->run($query)) return;
+        $query = "CREATE TABLE " . $prefix . "_eav_entities (
+            id                integer unsigned NOT NULL auto_increment,
+            object_id         integer unsigned NOT NULL default 0, 
+            module_id         integer unsigned NOT NULL default 0, 
+            timecreated       integer unsigned NOT NULL default 0, 
+            timeupdated       integer unsigned NOT NULL default 0, 
+            state             tinyint(3) NOT NULL default 3, 
+            PRIMARY KEY  (id), 
+            KEY i_tag_ids (object_id,module_id)
+        )";
+        if (!$q->run($query)) return;
+        $q = new Query();
+        $prefix = xarDB::getPrefix();
+        
         $query = "DROP TABLE IF EXISTS " . $prefix . "_eav_attributes";
         if (!$q->run($query)) return;
         $query = "CREATE TABLE " . $prefix . "_eav_attributes (
@@ -99,6 +115,8 @@
     #
         $module = 'eav';
         $objects = array(
+                        'eav_entities',
+                        'eav_attributes',
                          );
 
         if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;

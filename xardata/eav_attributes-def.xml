@@ -62,7 +62,7 @@
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
       <source>attributes.default_tinyint</source>
-      <status>32</status>
+      <status>34</status>
       <seq>5</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -72,7 +72,7 @@
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
       <source>attributes.default_integer</source>
-      <status>32</status>
+      <status>34</status>
       <seq>6</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -82,7 +82,7 @@
       <type>floatbox</type>
       <defaultvalue></defaultvalue>
       <source>attributes.default_decimal</source>
-      <status>32</status>
+      <status>34</status>
       <seq>7</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -92,7 +92,7 @@
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>attributes.default_string</source>
-      <status>32</status>
+      <status>34</status>
       <seq>8</seq>
       <configuration>a:0:{}</configuration>
     </property>
@@ -102,7 +102,7 @@
       <type>textarea_medium</type>
       <defaultvalue></defaultvalue>
       <source>attributes.default_text</source>
-      <status>32</status>
+      <status>34</status>
       <seq>9</seq>
       <configuration>a:0:{}</configuration>
     </property>
