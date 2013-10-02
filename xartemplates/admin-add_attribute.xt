@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:javascript scope="theme" filename="toggle.js"/>
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>Add Attributes to #$object->label#</h2>
+        <!-- This is where the list of properties shown starts -->
+        <!-- TODO: distinguish between 'protected' and 'private' ? -->
+        <xar:if condition="!isset($layout)">
+            <xar:set name="layout">'default'</xar:set>
+        </xar:if>
+        <form method="post" action="#xarModURL('eav','admin','update_attributes')#">
+            <xar:template file="proplist-$layout"/>
+        </form>
+    </div>
+</xar:template>

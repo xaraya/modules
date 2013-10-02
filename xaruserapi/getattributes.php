@@ -1,0 +1,46 @@
+<?php
+/**
+ * EAV Module
+ *
+ * @package modules
+ * @subpackage eav
+ * @category Third Party Xaraya Module
+ * @version 1.0.0
+ * @copyright (C) 2013 Netspan AG
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Marc Lutolf <mfl@netspan.ch>
+ */
+/**
+ * Get attributes for a specific object
+ */
+function eav_userapi_getattributes(Array $args=array())
+{
+    sys::import('xaraya.structures.query');
+    $tables = xarDB::getTables();
+
+    $q = new Query('SELECT', $tables['eav_attributes']);
+    $q->eq('object_id', $args['object_id']);
+    $q->run();
+    
+    sys::import('modules.dynamicdata.class.properties.master');
+    $properties = array();
+    $attributes = array();
+    foreach ($q->output() as $row) {
+        if (in_array($row['property_id'], array_keys($properties))) {
+            $propobject = $properties[$row['property_id']];
+        } else {
+            $propobject = DataPropertyMaster::getProperty(array('type' => $row['property_id']));
+            $properties[$row['property_id']] = $propobject;
+        }
+        $row['value'] = xarMod::apiFunc('eav', 'admin', 'getvalue', array('property' => $propobject, 'values' => $row));
+        unset($row['default_tinyint']);
+        unset($row['default_integer']);
+        unset($row['default_decimal']);
+        unset($row['default_string']);
+        unset($row['default_text']);
+        $attributes[$row['name']] = $row;
+    }
+    return $attributes;
+}
+
+?>

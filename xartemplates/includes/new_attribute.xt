@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <fieldset>
+        <legend>New Attribute</legend>
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="eav_label_0" class="xar-form-label">
+                    Label:
+                </label>
+            </div>
+            <div class="xar-col">
+                <input type="text" name="eav_label[0]" id="eav_label_0" class="xar-form-text-medium"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="eav_type_0" class="xar-form-label">
+                    Property:
+                </label>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$fieldtypeprop" name="eav_property_id[0]" id="eav_property_id_0" value="1"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="eav_default_0" class="xar-form-label">
+                    Default Value:
+                </label>
+            </div>
+            <div class="xar-col">
+                <input type="text" name="eav_default[0]" id="eav_default_0" class="xar-form-textmedium"/>
+            </div>
+        </div>
+<!-- Uncomment this to show the configuration
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="eav_configuration_0" class="xar-form-label">
+                  Configuration:
+                </label>
+            </div>
+            <div class="xar-col">
+                <input type="text" name="eav_configuration[0]" id="eav_validation_0" class="xar-form-textmedium"/>
+            </div>
+        </div>
+-->
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="eav_status_0" class="xar-form-label">
+                    Status:
+                </label>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$fieldstatusprop" name="eav_status[0]" id="eav_status_0" value="1"/>
+            </div>
+        </div>
+    </fieldset>
+</xar:template>

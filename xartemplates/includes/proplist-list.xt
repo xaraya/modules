@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <p>Hint: empty the Label field to delete a property for all items.</p>
+    <table class="xar-table xar-fullwidth">
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Order
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Label
+            </th>
+            <th>
+                Property
+            </th>
+            <th>
+                Default
+            </th>
+            <th>
+                Configuration
+            </th>
+        </tr>
+        <xar:set name="index">0</xar:set>
+        <xar:set name="numprops">count($fields)</xar:set>
+        <xar:foreach in="$fields" value="$item">
+            <!-- Include the edit-part for a property -->
+            <xar:set name="field">$item</xar:set>
+            <xar:set name="index">$index+1</xar:set>
+            <xar:if condition="(($index + 1) % 2)">
+                <xar:set name="displayclass">'xar-alt'</xar:set>
+            <xar:else/>
+                <xar:set name="displayclass">'xar-norm'</xar:set>
+            </xar:if>
+            <tr style="height: 35px">
+                <td class="#$displayclass#">
+                    #$field.id#
+                </td>
+                <td class="#$displayclass#">
+                    <input type="text" name="eav_seq[#$field['id']#]" id="eav_seq_#$field['id']#" value="#$field['seq']#" class="xar-form-textshort"/>
+                </td>
+                <td class="#$displayclass#">
+                    <input type="text" name="eav_name[#$field['id']#]" id="eav_name_#$field['id']#" value="#$field['name']#" class="xar-form-textmedium"/>
+                </td>
+                <td class="#$displayclass#">
+                    <input type="text" name="eav_label[#$field['id']#]" id="eav_label_#$field['id']#" value="#$field['label']#" class="xar-form-textmedium"/>
+                </td>
+                <td class="#$displayclass#">
+                    <xar:set name="name">'eav_property_id['.$field['id'].']'</xar:set>
+                    <xar:set name="id">'old_eav_property_id_'.$field['id']</xar:set>
+                    <xar:data-input property="$fieldtypeprop" name="$name" id="$id" value="$field['property_id']"/>
+                </td>
+                <td class="#$displayclass#">
+                    <input type="text" name="eav_default[#$field['id']#]" id="eav_default_#$field['id']#" value="#xarVarPrepForDisplay($field['value'])#" class="xar-form-textmedium"/>
+                </td>
+                <td class="#$displayclass#">
+                    <xar:if condition="xarModVars::get('dynamicdata','use_module_icons')">
+                        <xar:set name="title">xarML('Edit configuration for property \"#(1)\"',$field['name'])</xar:set>
+                        <xar:set name="link">
+                            xarModURL('dynamicdata', 'admin', 'showpropval', array('itemid' => $field['id']))
+                        </xar:set>
+                        <xar:set name="icon">
+                            xarTpl::getImage('icons/modify.png', 'theme')
+                        </xar:set>
+                        <xar:data-output type="urlicon" link="$link" icon="$icon" title="$title"/>
+                        &#160;
+
+                        <xar:set name="title">xarML('Move property up')</xar:set>
+                        <xar:set name="icon">
+                            xarTpl::getImage('icons/go-up.png', 'theme')
+                        </xar:set>
+                        <xar:if condition="$index gt 1 and $numprops gt 1">
+                            <xar:set name="link">
+                                xarModURL('dynamicdata', 'admin', 'orderprops', array('objectid' => $objectid, 'itemid' => $field['id'], 'direction' => 'up', 'authid' => $authid))
+                            </xar:set>
+                            <xar:data-output type="urlicon" link="$link" icon="$icon" title="$title"/>
+                        <xar:else />
+                            <img class="xar-icon-disabled" src="#$icon#" alt="up" title="#$title#"/>
+                        </xar:if>
+                        &#160;
+
+                        <xar:set name="title">xarML('Move property down')</xar:set>
+                        <xar:set name="icon">
+                            xarTpl::getImage('icons/go-down.png', 'theme')
+                        </xar:set>
+                        <xar:if condition="$index lt $numprops and $numprops ne 1">
+                            <xar:set name="link">
+                                xarModURL('dynamicdata', 'admin', 'orderprops', array('objectid' => $objectid, 'itemid' => $field['id'], 'direction' => 'down', 'authid' => $authid))
+                            </xar:set>
+                            <xar:data-output type="urlicon" link="$link" icon="$icon" title="$title"/>
+                        <xar:else />
+                            <img class="xar-icon-disabled" src="#$icon#" alt="down" title="#$title#"/>
+                        </xar:if>
+                        &#160;
+                    <xar:else />
+                        <xar:set name="link">
+                            xarModURL('dynamicdata', 'admin', 'showpropval', array('itemid' => $field['id']))
+                        </xar:set>
+                        <a href="#$link#">
+                            Edit Configuration
+                        </a>
+                        &#160;
+                        <xar:set name="link">
+                            xarModURL('dynamicdata', 'admin', 'orderprops', array('objectid' => $objectid, 'itemid' => $field['id'], 'direction' => 'up', 'authid' => $authid))
+                        </xar:set>
+                        <xar:if condition="$index gt 1 and $numprops gt 1">
+                            <a href="#$link#">
+                                Move Up
+                            </a>
+                            &#160;
+                        </xar:if>
+                        <xar:set name="link">
+                            xarModURL('dynamicdata', 'admin', 'orderprops', array('objectid' => $objectid, 'itemid' => $field['id'], 'direction' => 'down', 'authid' => $authid))
+                        </xar:set>
+                        <xar:if condition="$index lt $numprops and $numprops ne 1">
+                            <a href="#$link#">
+                                Move Down
+                            </a>
+                        </xar:if>
+                    </xar:if>
+                </td>
+            </tr>
+            <tr style="height: 35px">
+                <td class="#$displayclass#">
+                    &#160;
+                </td>
+                <td colspan="5" class="#$displayclass#">
+                    Status:&#160;
+                    <xar:set name="name">'eav_status['.$field['id'].']'</xar:set>
+                    <xar:set name="id">'eav_status_'.$field['id']</xar:set>
+                    <xar:data-input property="$fieldstatusprop" name="$name" id="$id" size="15" value="$field['status']"/>
+                </td>
+                <td class="#$displayclass#">
+                    &#160;
+                </td>
+            </tr>
+        </xar:foreach>
+    </table>
+    <!-- Include the part for creating a new property -->
+    <xar:template file="new_attribute" module="eav"/>
+    <div class="xar-form-actions">
+        <div class="xar-row">
+            <div class="xar-col"></div>
+            <div class="xar-col">
+                <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+                <input type="hidden" name="objectid" id="objectid" value="#$objectid#"/>
+                <xar:var name="label">Update Attributes</xar:var>
+                <xar:button type="submit" label="$label"/>
+            </div>
+        </div>
+    </div>
+</xar:template>

@@ -44,6 +44,29 @@
         $q = new Query();
         $prefix = xarDB::getPrefix();
         
+        $query = "DROP TABLE IF EXISTS " . $prefix . "_eav_attributes_def";
+        if (!$q->run($query)) return;
+        $query = "CREATE TABLE " . $prefix . "_eav_attributes_def (
+            id                integer unsigned NOT NULL auto_increment,
+//            object_id         integer unsigned NOT NULL default 0, 
+            module_id         integer unsigned NOT NULL default 0, 
+            name              varchar(254) NOT NULL default '', 
+            label             varchar(254) NOT NULL default '', 
+            property_id       integer unsigned NOT NULL default 0, 
+            configuration     text, 
+            default_tinyint   tinyint unsigned default NULL, 
+            default_integer   integer unsigned default NULL, 
+            default_decimal   decimal(15,5) default NULL,
+            default_string    varchar(254) default NULL, 
+            default_text      text default NULL, 
+            timecreated       integer unsigned NOT NULL default 0, 
+            timeupdated       integer unsigned NOT NULL default 0, 
+            status            tinyint(3) NOT NULL default 3, 
+            PRIMARY KEY  (id), 
+            KEY i_tag_name (name)
+        )";
+        if (!$q->run($query)) return;
+  
         $query = "DROP TABLE IF EXISTS " . $prefix . "_eav_attributes";
         if (!$q->run($query)) return;
         $query = "CREATE TABLE " . $prefix . "_eav_attributes (
@@ -61,7 +84,8 @@
             default_text      text default NULL, 
             timecreated       integer unsigned NOT NULL default 0, 
             timeupdated       integer unsigned NOT NULL default 0, 
-            state             tinyint(3) NOT NULL default 3, 
+            seq               tinyint(3) NOT NULL default 0, 
+            status            tinyint(3) NOT NULL default 3, 
             PRIMARY KEY  (id), 
             KEY i_tag_name (name)
         )";

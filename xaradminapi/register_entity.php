@@ -19,6 +19,11 @@
     {
         extract($args);
         if (!isset($object) || !isset($module)) throw new Exception(xarML('Missing object or module for eav_adminapi_register_entity'));
+        
+        $module_id = xarMod::getRegID($module);
+        $object = DataObjectMaster::getObject(array('name' => $object));
+        $object_id = $object->objectid;
+        
         $tables = xarDB::getTables();
         sys::import('xaraya.structures.query');
         $q = new Query('SELECT', $tables['entities']);

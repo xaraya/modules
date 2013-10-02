@@ -32,12 +32,11 @@
             Default Value
         </div>
         <div class="xar-col">
-            <!-- <xar:set name="XX">var_dump($properties['default_string']->getDisplayStatus())</xar:set> -->
-            1<xar:data-input property="$properties['default_tinyint']"/>2
-            <xar:data-input property="$properties['default_integer']"/>3
-            <xar:data-input property="$properties['default_decimal']"/>4
-            <xar:data-input property="$properties['default_string']"/>5
-            <xar:data-input property="$properties['default_text']"/>6
+            <xar:data-input property="$properties['default_tinyint']"/>
+            <xar:data-input property="$properties['default_integer']"/>
+            <xar:data-input property="$properties['default_decimal']"/>
+            <xar:data-input property="$properties['default_string']"/>
+            <xar:data-input property="$properties['default_text']"/>
         </div>
     </div>
     <div class="xar-row">
