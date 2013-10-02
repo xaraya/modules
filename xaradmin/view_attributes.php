@@ -18,7 +18,7 @@
     {
         if (!xarSecurityCheck('ManageEAV')) return;
 
-        $data['object'] = DataObjectMaster::getObjectList(array('name' => 'eav_attributes'));
+        $data['object'] = DataObjectMaster::getObjectList(array('name' => 'eav_attributes_def'));
 
         if (!isset($data['object'])) {return;}
         if (!$data['object']->checkAccess('view'))

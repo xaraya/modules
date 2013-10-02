@@ -22,7 +22,7 @@
 
         if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
 
-        $data['object'] = DataObjectMaster::getObject(array('name' => 'eav_attributes'));
+        $data['object'] = DataObjectMaster::getObject(array('name' => 'eav_attributes_def'));
         if ($data['confirm']) {
     
             // we only retrieve 'preview' from the input here - the rest is handled by checkInput()

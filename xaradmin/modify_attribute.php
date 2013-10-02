@@ -23,7 +23,7 @@
         if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
 
-        $data['object'] = DataObjectMaster::getObject(array('name' => 'eav_attributes'));
+        $data['object'] = DataObjectMaster::getObject(array('name' => 'eav_attributes_def'));
         $data['object']->getItem(array('itemid' => $data['itemid']));
 
         if ($data['confirm']) {

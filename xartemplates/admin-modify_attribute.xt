@@ -3,11 +3,11 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <h2>Modify Attribute</h2>
+        <h2>Modify Attribute Definition</h2>
 
         <form method="post" action="#xarServer::getCurrentURL()#">
           <fieldset>
-            <legend>Modify attribute details</legend>
+            <legend>Modify attribute definition details</legend>
             <xar:data-form object="$object" tplmodule="eav"/>
           </fieldset>
           <div class="xar-row">

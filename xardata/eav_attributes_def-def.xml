@@ -1,8 +1,8 @@
-<object name="eav_attributes">
-  <objectid>537</objectid>
-  <label>Attributes</label>
+<object name="eav_attributes_def">
+  <objectid>544</objectid>
+  <label>Attribute Definitions</label>
   <module_id>182</module_id>
-  <itemtype>201</itemtype>
+  <itemtype>207</itemtype>
   <class>Attribute</class>
   <filepath>modules/eav/class/attribute.php</filepath>
   <urlparam>itemid</urlparam>
@@ -11,137 +11,137 @@
   <isalias>true</isalias>
   <datastore>relational</datastore>
   <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>
-  <sources>a:1:{s:10:&quot;attributes&quot;;a:2:{i:0;s:18:&quot;xar_eav_attributes&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <sources>a:1:{s:14:&quot;attributes_def&quot;;a:2:{i:0;s:22:&quot;xar_eav_attributes_def&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
   <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
   <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
   <category></category>
   <properties>
     <property name="id">
-      <id>5813</id>
+      <id>5838</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
-      <source>attributes.id</source>
+      <source>attributes_def.id</source>
       <status>65</status>
       <seq>1</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="name">
-      <id>5814</id>
+      <id>5839</id>
       <label>Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>attributes.name</source>
+      <source>attributes_def.name</source>
       <status>33</status>
       <seq>2</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="label">
-      <id>5815</id>
+      <id>5840</id>
       <label>Label</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>attributes.label</source>
+      <source>attributes_def.label</source>
       <status>33</status>
       <seq>3</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="property_id">
-      <id>5816</id>
+      <id>5841</id>
       <label>Property</label>
       <type>fieldtype</type>
       <defaultvalue>1</defaultvalue>
-      <source>attributes.property_id</source>
+      <source>attributes_def.property_id</source>
       <status>33</status>
       <seq>4</seq>
       <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:5:"label";s:24:"initialization_refobject";s:10:"properties";}</configuration>
     </property>
     <property name="default_tinyint">
-      <id>5821</id>
+      <id>5842</id>
       <label>Default Tinyint</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
-      <source>attributes.default_tinyint</source>
+      <source>attributes_def.default_tinyint</source>
       <status>34</status>
       <seq>5</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="default_integer">
-      <id>5822</id>
+      <id>5843</id>
       <label>Default Integer</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
-      <source>attributes.default_integer</source>
+      <source>attributes_def.default_integer</source>
       <status>34</status>
       <seq>6</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="default_decimal">
-      <id>5823</id>
+      <id>5844</id>
       <label>Default Decimal</label>
       <type>floatbox</type>
       <defaultvalue></defaultvalue>
-      <source>attributes.default_decimal</source>
+      <source>attributes_def.default_decimal</source>
       <status>34</status>
       <seq>7</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="default_string">
-      <id>5824</id>
+      <id>5845</id>
       <label>Default String</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>attributes.default_string</source>
+      <source>attributes_def.default_string</source>
       <status>34</status>
       <seq>8</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="default_text">
-      <id>5825</id>
+      <id>5846</id>
       <label>Default Text</label>
       <type>textarea_medium</type>
       <defaultvalue></defaultvalue>
-      <source>attributes.default_text</source>
+      <source>attributes_def.default_text</source>
       <status>34</status>
       <seq>9</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="configuration">
-      <id>5817</id>
+      <id>5847</id>
       <label>Configuration</label>
       <type>configuration</type>
       <defaultvalue></defaultvalue>
-      <source>attributes.configuration</source>
+      <source>attributes_def.configuration</source>
       <status>34</status>
       <seq>10</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="time_created">
-      <id>5818</id>
+      <id>5848</id>
       <label>Time Created</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
-      <source>attributes.timecreated</source>
+      <source>attributes_def.timecreated</source>
       <status>65</status>
       <seq>11</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="time_updated">
-      <id>5819</id>
+      <id>5849</id>
       <label>Time Updated</label>
       <type>datetime</type>
       <defaultvalue>time()</defaultvalue>
-      <source>attributes.timeupdated</source>
+      <source>attributes_def.timeupdated</source>
       <status>65</status>
       <seq>12</seq>
       <configuration>a:0:{}</configuration>
     </property>
     <property name="state">
-      <id>5820</id>
+      <id>5850</id>
       <label>State</label>
       <type>dropdown</type>
       <defaultvalue>3</defaultvalue>
-      <source>attributes.state</source>
+      <source>attributes_def.status</source>
       <status>33</status>
       <seq>13</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:30:"0,Deleted;1,Inactive;3,Active;";}</configuration>
