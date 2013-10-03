@@ -1,4 +1,4 @@
-<adminmenu>
+<menu>
     <menuitems>
     <!--
         <menuitem>
@@ -20,4 +20,4 @@
             <label>Master Tables</label>
         </menuitem>
   </menuitems>
-</adminmenu>
+</menu>
