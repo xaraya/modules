@@ -16,7 +16,7 @@
 
         if (!xarSecConfirmAuthKey()) return;
 
-        $myobject = & DataObjectMaster::getObject(array('objectid' => $objectid,
+        $myobject = DataObjectMaster::getObject(array('objectid' => $objectid,
                                              'itemid'   => $itemid));
         $isvalid = $myobject->checkInput();
 
