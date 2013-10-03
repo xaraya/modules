@@ -17,7 +17,7 @@
 function publications_userapi_getpubtypeaccess($args)
 {
     if (empty($args['name']))
-        throw new MissingParameterException('name');
+        throw new BadParameterException('name');
         
     sys::import('xaraya.structures.query');
     $xartables = xarDB::getTables();
