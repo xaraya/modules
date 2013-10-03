@@ -1,4 +1,4 @@
-<adminmenu>
+<menu>
     <menuitems>
         <menuitem>
             <includes>
@@ -19,4 +19,4 @@
             <label>Test</label>
         </menuitem>
     </menuitems>
-</adminmenu>
+</menu>
