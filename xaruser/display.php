@@ -13,7 +13,7 @@
 /**
  * Display publication
  *
- * @param int itemid
+ * @param int itemid or id
  * @param str name
  * @param int page
  * @param int ptid The publication type ID
@@ -48,7 +48,7 @@ function publications_user_display($args)
     // Override xarVarFetch
     extract ($args);
     
-    //The itemid var takes precedence if it exiata
+    // The itemid var takes precedence if it exiata
     if (isset($itemid)) $id = $itemid;
     
 # --------------------------------------------------------
