@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
-    <xar:set name="adminIcon">xarTplGetImage('admin.gif', 'calendar')</xar:set>
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body" style="display:block;">
         <h2>Overview</h2>
         <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
             <div style="float:right;display:block;background-color:#ffffff;padding:10px;">
-                <img src="#$adminIcon#" alt="official icon" width="96" height="96"/>
+                <img src="#xarTplGetImage('module-generic.png', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon"/>
             </div>
             <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
                 Battle plan (see file xartemplates/includes/plan.xd)
