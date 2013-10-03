@@ -1,20 +1,17 @@
 <?php
 /**
- * Update the dynamic properties for a module + itemtype
+ * EAV Module
  *
  * @package modules
- * @subpackage dynamicdata module
- * @category Xaraya Web Applications Framework
- * @version 2.4.0
- * @copyright see the html/credits.html file in this release
+ * @subpackage eav
+ * @category Third Party Xaraya Module
+ * @version 1.0.0
+ * @copyright (C) 2013 Netspan AG
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- * @link http://xaraya.com/index.php/release/182.html
- *
- * @author mikespub <mikespub@xaraya.com>
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 /**
- * Re-order the dynamic properties for a module + itemtype
+ * Re-order the attributes of an object
  *
  * @param int objectid
  * @param int modid
@@ -22,17 +19,14 @@
  * @throws BAD_PARAM
  * @return boolean true on success and redirect to modifyprop
  */
-function dynamicdata_admin_orderprops()
+function eav_admin_order_attributes()
 {
     // Security
-    if(!xarSecurityCheck('EditDynamicData')) return;
+    if(!xarSecurityCheck('EditEAV')) return;
 
     // Get parameters from whatever input we need.  All arguments to this
     // function should be obtained from xarVarFetch()
     if(!xarVarFetch('objectid',          'isset', $objectid,          NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('module_id',         'isset', $module_id,         NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemtype',          'int:1:', $itemtype,         0, XARVAR_DONT_SET)) {return;}
-
     if(!xarVarFetch('itemid',        'isset', $itemid,         NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('direction',     'isset', $direction,      NULL, XARVAR_DONT_SET)) {return;}
 
@@ -52,25 +46,17 @@ function dynamicdata_admin_orderprops()
         //return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
     }
 
+    sys::import('modules.dynamicdata.class.objects.master');
+    $object = DataObjectMaster::getObject(array('objectid' => $objectid));
     $objectinfo = DataObjectMaster::getObjectInfo(
                                     array(
                                     'objectid' => $objectid,
                                     ));
 
     $objectid = $objectinfo['objectid'];
-    $module_id = $objectinfo['moduleid'];
-    $itemtype = $objectinfo['itemtype'];
 
-    if (empty($module_id)) {
-        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('module id', 'admin', 'updateprop', 'dynamicdata');
-        throw new BadParameterException($vars,$msg);
-    }
-
-    $fields = xarMod::apiFunc('dynamicdata','user','getprop',
+    $fields = xarMod::apiFunc('eav','user','getattributes',
                                    array('objectid' => $objectid,
-                                            'module_id' => $module_id,
-                                            'itemtype' => $itemtype,
                                          'allprops' => true));
     $orders = array();
     $currentpos = null;
@@ -97,30 +83,20 @@ function dynamicdata_admin_orderprops()
     }
 
     if (isset($swappos)) {
-        if (!xarMod::apiFunc('dynamicdata','admin','updateprop',
-                          array('id' => $itemid,
-                                'label' => $fields[$move_prop]['label'],
-                                'type' => $fields[$move_prop]['type'],
-                                'seq' => $fields[$swapwith]['seq']))) {
-            return;
-        }
+            $q = new Query('UPDATE', $tables['eav_attributes']);
+            $q->addfield('seq', $fields[$swapwith]['seq']);
+            $q->eq('id', $itemid);
+            if(!$q->run()) return;
 
-        if (!xarMod::apiFunc('dynamicdata','admin','updateprop',
-                          array('id' => $fields[$swapwith]['id'],
-                                'label' => $fields[$swapwith]['label'],
-                                'type' => $fields[$swapwith]['type'],
-                                'seq' => $fields[$move_prop]['seq']))) {
-            return;
-        }
+            $q = new Query('UPDATE', $tables['eav_attributes']);
+            $q->addfield('seq', $fields[$swapwith]['seq']);
+            $q->eq('id', $fields[$move_prop]['seq']);
+            if(!$q->run()) return;
     }
 
-    xarController::redirect(xarModURL('dynamicdata', 'admin', 'modifyprop',
-                        array('module_id'    => $module_id,
-                              'itemtype' => $itemtype,
+    xarController::redirect(xarModURL('eav', 'admin', 'add_attribute',
+                        array('objectid'    => $objectid,
         )));
-
-
-    // Return
     return true;
 }
 

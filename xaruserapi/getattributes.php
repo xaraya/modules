@@ -15,6 +15,8 @@
  */
 function eav_userapi_getattributes(Array $args=array())
 {
+    if (!isset($args['object_id'])) throw new BadParameterException('object_id');
+    
     sys::import('xaraya.structures.query');
     $tables = xarDB::getTables();
 

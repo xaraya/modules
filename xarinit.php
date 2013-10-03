@@ -48,7 +48,6 @@
         if (!$q->run($query)) return;
         $query = "CREATE TABLE " . $prefix . "_eav_attributes_def (
             id                integer unsigned NOT NULL auto_increment,
-//            object_id         integer unsigned NOT NULL default 0, 
             module_id         integer unsigned NOT NULL default 0, 
             name              varchar(254) NOT NULL default '', 
             label             varchar(254) NOT NULL default '', 
@@ -140,7 +139,7 @@
         $module = 'eav';
         $objects = array(
                         'eav_entities',
-                        'eav_attributes',
+                        'eav_attributes_def',
                          );
 
         if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
@@ -155,7 +154,7 @@
         // Add variables like this next one when creating utility modules
         // This variable is referenced in the xaradmin/modifyconfig-utility.php file
         // This variable is referenced in the xartemplates/includes/defaults.xd file
-        xarModVars::set('eav', 'defaultmastertable','eav_attributes');
+        xarModVars::set('eav', 'defaultmastertable','eav_attributes_def');
 
     # --------------------------------------------------------
     #
