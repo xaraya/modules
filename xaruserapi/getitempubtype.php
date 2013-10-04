@@ -20,7 +20,7 @@ function publications_userapi_getitempubtype($args)
         throw new BadParameterException('itemid');
         
     sys::import('xaraya.structures.query');
-    $xartables = xarDB::getTables();
+    $xartables =& xarDB::getTables();
     $q = new Query('SELECT',$xartables['publications']);
     $q->addfield('pubtype_id');
     $q->eq('id',$args['itemid']);

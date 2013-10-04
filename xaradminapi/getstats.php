@@ -101,7 +101,7 @@ function publications_adminapi_getstats($args)
 
     // Database information
     $dbconn = xarDB::getConn();
-    $xartables = xarDB::getTables();
+    $xartables =& xarDB::getTables();
 
     $query = 'SELECT ' . join(', ', $newfields) . ', COUNT(*)
               FROM ' . $xartables['publications'] . '

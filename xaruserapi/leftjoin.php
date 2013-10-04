@@ -61,7 +61,7 @@ function publications_userapi_leftjoin($args)
     // Note : no security checks here
 
     // Table definition
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     $dbconn   = xarDB::getConn();
     $publicationstable = $xartable['publications'];
 

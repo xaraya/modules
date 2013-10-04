@@ -23,7 +23,7 @@ function publications_userapi_getitemlinks($args)
     $itemlinks = array();
     
     sys::import('xaraya.structures.query');
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     $q = new Query('SELECT', $xartable['publications']);
     $q->addfield('id');
     $q->addfield('title');

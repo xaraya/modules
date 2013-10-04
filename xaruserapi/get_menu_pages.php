@@ -42,7 +42,7 @@ function publications_userapi_get_menu_pages($args)
         }
     }
 
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     sys::import('xaraya.structures.query');
     $q = new Query();
     $q->addtable($xartable['publications'],'p');

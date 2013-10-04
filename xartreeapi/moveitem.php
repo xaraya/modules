@@ -15,7 +15,7 @@ function publications_treeapi_moveitem($args)
     extract($args);
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     // Obtain current information on the reference item
     $refitem = xarMod::apiFunc('publications', 'user', 'getpage', array('pid' => $refid));

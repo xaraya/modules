@@ -15,7 +15,7 @@ function publications_treeapi_getsiblings($args)
     extract($args);
 
     // Database.
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDBGetConn();
 
     if ($id <> 0) {
         // Insert point is a real item.

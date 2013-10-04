@@ -202,7 +202,7 @@ class PublicationsShortController extends ShortActionController
                     if (!isset($data['ptid'])) $data['ptid'] = 0;
                     sys::import('xaraya.structures.query');
                     xarModLoad('publications');
-                    $xartables = xarDB::getTables();
+                    $xartables =& xarDB::getTables();
                     $q = new Query('SELECT',$xartables['publications']);
                     $q->eq('pubtype_id',$data['ptid']);
                     if (xarModVars::get('publications', 'usetitleforurl')) {
@@ -290,7 +290,7 @@ class PublicationsShortController extends ShortActionController
                 if (isset($params['itemid'])) {
                     sys::import('xaraya.structures.query');
                     xarModLoad('publications');
-                    $xartables = xarDB::getTables();
+                    $xartables =& xarDB::getTables();
                     $q = new Query('SELECT',$xartables['publications']);
                     $q->eq('id',$params['itemid']);
                     $q->addfield('pubtype_id');

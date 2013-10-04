@@ -108,7 +108,7 @@ function publications_userapi_get($args)
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     $publicationstable = $xartable['publications'];
 
     // Get item

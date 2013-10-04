@@ -20,7 +20,7 @@ function publications_userapi_getpubtypeaccess($args)
         throw new BadParameterException('name');
         
     sys::import('xaraya.structures.query');
-    $xartables = xarDB::getTables();
+    $xartables =& xarDB::getTables();
     $q = new Query('SELECT',$xartables['publications_types']);
     $q->addfield('access');
     $q->eq('name',$args['name']);
