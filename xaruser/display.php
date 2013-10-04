@@ -379,9 +379,11 @@ function publications_user_display($args)
         $data['page_title'] = $pubtypeobject->properties['page_title']->value;
     }
     // It can be overridden by the page itself
-    if (!empty($data['object']->properties['page_template']->value)) {
+    if (!empty($data['object']->properties['page_title']->value)) {
         $data['page_title'] = $data['object']->properties['page_title']->value;
     }
+    // If nothing then get the setting from the themes module
+    if (empty($data['page_title'])) $data['page_title'] = $data['object']->properties['title']->value;
 
     // Page description
     if (!empty($pubtypeobject->properties['page_description']->value)) {
