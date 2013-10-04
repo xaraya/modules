@@ -382,7 +382,7 @@ function publications_user_display($args)
     if (!empty($data['object']->properties['page_title']->value)) {
         $data['page_title'] = $data['object']->properties['page_title']->value;
     }
-    // If nothing then get the setting from the themes module
+    // If nothing then the setting from the themes module will be used, so we pass this page's title
     if (empty($data['page_title'])) $data['page_title'] = $data['object']->properties['title']->value;
 
     // Page description
