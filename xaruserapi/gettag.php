@@ -38,7 +38,7 @@ function html_userapi_gettag($args)
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     $htmltable = $xartable['html'];
     $htmltypestable = $xartable['htmltypes'];
 

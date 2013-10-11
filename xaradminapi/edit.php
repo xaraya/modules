@@ -58,7 +58,7 @@ function html_adminapi_edit($args)
 
     // Get datbase setup
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     $htmltable = $xartable['html'];
 
     // Make sure $tag is lowercase

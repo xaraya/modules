@@ -57,7 +57,7 @@ function html_adminapi_edittype($args)
 
     // Get datbase setup
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     $htmltypestable = $xartable['htmltypes'];
 
     // Make sure tag type is lowercase

@@ -49,7 +49,7 @@ function html_adminapi_delete($args)
     if(!xarSecurityCheck('ManageHTML')) return;
     // Get datbase setup
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     $htmltable = $xartable['html'];
 
     // Delete the tag

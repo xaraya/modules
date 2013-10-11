@@ -31,7 +31,7 @@ function html_init()
 
     // Set up database tables
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     // Create html table
     $htmltable = $xartable['html'];
@@ -277,7 +277,7 @@ function html_upgrade($oldversion)
 
     // Set up database tables
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     $htmltable = $xartable['html'];
     $htmltypestable = $xartable['htmltypes'];
@@ -443,7 +443,7 @@ function html_delete()
 
     // Get the database information
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     sys::import('xaraya.tableddl');
 
     // Generate the SQL to drop the table using the API

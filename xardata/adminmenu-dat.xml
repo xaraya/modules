@@ -1,4 +1,4 @@
-<adminmenu>
+<menu>
     <menuitems>
         <menuitem>
             <mask>ManageHTML</mask>
@@ -61,4 +61,4 @@
             <label>Overview</label>
         </menuitem>
     </menuitems>
-</adminmenu>
+</menu>

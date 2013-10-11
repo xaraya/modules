@@ -35,7 +35,7 @@ function html_userapi_getalltypes($args)
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     // Set table names
     $htmltypestable = $xartable['htmltypes'];

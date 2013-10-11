@@ -49,7 +49,7 @@ function html_adminapi_deletetype($args)
 
     // Get datbase setup
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     // Set table name
     $htmltable = $xartable['html'];
