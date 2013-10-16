@@ -24,7 +24,7 @@ class PublicationsShortController extends ShortActionController
 {
     public $pubtypes = array();
     
-    function decode(Array $data=array())
+    public function decode(Array $data=array())
     {
         $token1 = $this->firstToken();
         switch ($token1) {
@@ -38,6 +38,10 @@ class PublicationsShortController extends ShortActionController
 
             case 'new':
                 $data['func'] = 'new';
+
+                // Get the pubtype
+                $token2 = $this->nextToken();
+                if ($token2) $data['ptid'] = $this->decode_pubtype($token2);
             break;
 
             case 'create':
@@ -61,22 +65,7 @@ class PublicationsShortController extends ShortActionController
                 
                 // Get the pubtype
                 $token2 = $this->nextToken();
-                if ($token2) {
-                    // Get all publication types present
-                    if (empty($this->pubtypes)) $this->pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
-                    
-                    if (xarModVars::get('publications', 'usetitleforurl')) {
-                        // Match the first token
-                        foreach ($this->pubtypes as $id => $pubtype) {
-                            if (strtolower($token2) == strtolower($pubtype['description'])) {
-                                $data['ptid'] = $id;
-                                break;
-                            }
-                        }
-                    } else {
-                        $data['ptid'] = $token2;
-                    }
-                }
+                if ($token2) $data['ptid'] = $this->decode_pubtype($token2);
             break;
             
             case 'display':
@@ -190,7 +179,7 @@ class PublicationsShortController extends ShortActionController
 
                 // We now have the pubtype; check for the publication
                 if (!$token2) {
-                    // No more tokens; set this as a view or display, depending on whether the token was an id or not
+                    // No more tokens; set this as a view or display, depending on whether the previous token was an id or not
                     if (xarModVars::get('publications', 'usetitleforurl')) {
                         $data['func'] = 'view';
                     } else {
@@ -205,10 +194,44 @@ class PublicationsShortController extends ShortActionController
                     $xartables =& xarDB::getTables();
                     $q = new Query('SELECT',$xartables['publications']);
                     $q->eq('pubtype_id',$data['ptid']);
-                    if (xarModVars::get('publications', 'usetitleforurl')) {
-                        $q->eq('name',$token2);
-                    } else {
-                        $q->eq('id',(int)$token2);
+                    switch ((int)xarModVars::get('publications', 'usetitleforurl')) {
+                        case 0:
+                            $q->eq('id',(int)$token2);
+                        break;
+                        case 1:
+                            $q->eq('name',(int)$token2);
+                            $token3 = $this->nextToken();
+                            $date = date_parse($token3);
+                            $q->eq('start_date',$date);
+                        break;
+                        case 2:
+                            $q->eq('name',(int)$token2);
+                            $token3 = $this->nextToken();
+                            $q->eq('id',(int)$token3);
+                        break;
+                        case 3:
+                            $q->eq('id',(int)$token2);
+                        break;
+                        case 4:
+                            $q->eq('name',(int)$token2);
+                        break;
+                        case 5:
+                            $q->eq('title',(int)$token2);
+                            $token3 = $this->nextToken();
+                            $date = date_parse($token3);
+                            $q->eq('start_date',$date);
+                        break;
+                        case 6:
+                            $q->eq('title',(int)$token2);
+                            $token3 = $this->nextToken();
+                            $q->eq('id',(int)$token3);
+                        break;
+                        case 7:
+                            $q->eq('id',(int)$token2);
+                        break;
+                        case 8:
+                            $q->eq('title',(int)$token2);
+                        break;
                     }
                     $q->addfield('id');
                     $q->run();
@@ -286,7 +309,6 @@ class PublicationsShortController extends ShortActionController
             break;
 
             case 'display':
-                
                 if (isset($params['itemid'])) {
                     sys::import('xaraya.structures.query');
                     xarModLoad('publications');
@@ -295,16 +317,80 @@ class PublicationsShortController extends ShortActionController
                     $q->eq('id',$params['itemid']);
                     $q->addfield('pubtype_id');
                     $q->addfield('name');
+                    $q->addfield('title');
+                    $q->addfield('start_date');
                     $q->addfield('id');
                     $q->run();
                     $result = $q->row();
-                    if (xarModVars::get('publications', 'usetitleforurl')) {
-                        // Get all publication types present
-                        if (empty($this->pubtypes)) $this->pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
-                        if (!empty($result['pubtype_id'])) $path[] = strtolower($this->pubtypes[$result['pubtype_id']]['description']);
-                        if (!empty($result['name'])) $path[] = strtolower($result['name']);
-                    } else {
-                        if (!empty($result['id'])) $path[] = $result['id'];
+                    if (!empty($result['id'])) {
+                        $usetitles = xarModVars::get('publications', 'usetitleforurl');
+                        if ($usetitles == 0) {
+                            // We're not using names: just use the ID
+                            $path[] = $result['id'];
+                        } elseif ($usetitles == 4) {
+                            // We're ignoring duplicates: just slap in the name
+                            if (!empty($result['name'])) $path[] = $result['name'];
+                        } elseif ($usetitles == 8) {
+                            // We're ignoring duplicates: just slap in the title
+                            if (!empty($result['title'])) $path[] = $result['title'];
+                        } elseif (!empty($result['name']) && in_array($usetitles, array(1,2,3))) {
+                            // Now come the cases where we distinguish duplicates in the URL
+                            // For this we need to do another SELECT on the name to see if there are actually duplicates
+                            $q = new Query('SELECT',$xartables['publications']);
+                            $q->eq('name',$result['name']);
+                            $q->eq('pubtype_id',$result['pubtype_id']);
+                            $q->addfield('pubtype_id');
+                            $q->addfield('name');
+                            $q->addfield('start_date');
+                            $q->addfield('id');
+                            $q->run();
+                            $duplicates = $q->output();
+                            
+                            if (count($duplicates) == 1) {
+                                // No duplicates, so we just put the name
+                                $path[] = $result['name'];
+                            } elseif ($usetitles == 1) {
+                                // We will add the publication start date to distinguish duplicates
+                                $path[] = $result['name'];
+                                $path[] = date('Y-m-d H:i',$result['start_date']);
+                            } elseif ($usetitles == 2) {
+                                // We will add the publication ID to distinguish duplicates
+                                $path[] = $result['name'];
+                                $path[] = $result['id'];
+                            } elseif ($usetitles == 3) {
+                                // We will use just the publication ID to distinguish duplicates
+                                $path[] = $result['id'];
+                            }
+                        } elseif (!empty($result['title']) && in_array($usetitles, array(5,6,7))) {
+                            // Now come the cases where we distinguish duplicates in the URL
+                            // For this we need to do another SELECT on the name to see if there are actually duplicates
+                            $q = new Query('SELECT',$xartables['publications']);
+                            $q->eq('title',$result['title']);
+                            $q->eq('pubtype_id',$result['pubtype_id']);
+                            $q->addfield('pubtype_id');
+                            $q->addfield('title');
+                            $q->addfield('start_date');
+                            $q->addfield('id');
+                            $q->run();
+                            $duplicates = $q->output();
+                            
+                            if (count($duplicates) == 1) {
+                                // No duplicates, so we just put the name
+                                $path[] = $result['title'];
+                            } elseif ($usetitles == 5) {
+                                // We will add the publication start date to distinguish duplicates
+                                $path[] = $result['title'];
+                                $path[] = date('Y-m-d H:i',$result['start_date']);
+                            } elseif ($usetitles == 6) {
+                                // We will add the publication ID to distinguish duplicates
+                                $path[] = $result['title'];
+                                $path[] = $result['id'];
+                            } elseif ($usetitles == 7) {
+                                // We will use just the publication ID to distinguish duplicates
+                                $path[] = $result['id'];
+                            }
+                                
+                        }
                     }
                 }
                 $params = array();
@@ -404,5 +490,22 @@ class PublicationsShortController extends ShortActionController
         $request->setFunctionArgs($params);
         return parent::encode($request);
     }    
+    
+    private function decode_pubtype($token='')
+    {
+        if (xarModVars::get('publications', 'usetitleforurl')) {
+            // Get all publication types present
+            if (empty($this->pubtypes)) $this->pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
+            // Match the first token
+            foreach ($this->pubtypes as $id => $pubtype) {
+                if (strtolower($token) == strtolower($pubtype['description'])) {
+                    return $id;
+                    break;
+                }
+            }
+        } else {
+            return $token;
+        }
+    }
 }
 ?>

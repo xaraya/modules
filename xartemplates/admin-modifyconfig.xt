@@ -156,10 +156,14 @@
                             <xar:set name="options">
                                 array(
                                     array('id' => 0, 'name' => 'No'),
-                                    array('id' => 1, 'name' => 'Yes, and append date for duplicates'),
-                                    array('id' => 2, 'name' => 'Yes, and append publication id for duplicates'),
-                                    array('id' => 3, 'name' => 'Yes, but use publication ids for duplicates'),
-                                    array('id' => 4, 'name' => 'Yes, and ignore duplicates (faster)'),
+                                    array('id' => 1, 'name' => 'Use name and append date for duplicates'),
+                                    array('id' => 2, 'name' => 'Use name and append publication ID for duplicates'),
+                                    array('id' => 3, 'name' => 'Use name but use publication IDs for duplicates'),
+                                    array('id' => 4, 'name' => 'Use name ignore duplicates (faster)'),
+                                    array('id' => 5, 'name' => 'Use title and append date for duplicates'),
+                                    array('id' => 6, 'name' => 'Use title and append publication ID for duplicates'),
+                                    array('id' => 7, 'name' => 'Use title but use publication IDs for duplicates'),
+                                    array('id' => 8, 'name' => 'Use title ignore duplicates (faster)'),
                                 )
                             </xar:set>
                             <xar:set name="value">xarModVars::get('publications', 'usetitleforurl')</xar:set>
