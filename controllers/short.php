@@ -150,29 +150,23 @@ class PublicationsShortController extends ShortActionController
                 // Get all publication types present
                 if (empty($this->pubtypes)) $this->pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
                 
-                $token2 = $this->nextToken();
+                $token2 = urldecode($this->nextToken());
 
                 // A single numeric token is an id
                 if (!$token2 && is_numeric($token1) && !xarModVars::get('publications', 'usetitleforurl')) {
                     $data['itemid'] = $token1;
                 } else {
-                
                     // Match the first token
-                    foreach ($this->pubtypes as $id => $pubtype) {
-                        if (xarModVars::get('publications', 'usetitleforurl')) {
-                            if (strtolower($token1) == strtolower($pubtype['description'])) {
+                    if (xarModVars::get('publications', 'usetitleforurl')) {
+                        if ($token1) $data['ptid'] = $this->decode_pubtype($token1);
+                    } else {
+                        if ($token1 == $id) {
+                            if ($token2) {
                                 $data['ptid'] = $id;
-                                break;
+                            } else {
+                                $data['itemid'] = $id; // This should neve happen. should be taken care of above
                             }
-                        } else {
-                            if ($token1 == $id) {
-                                if ($token2) {
-                                    $data['ptid'] = $id;
-                                } else {
-                                    $data['itemid'] = $id; // This should neve happen. should be taken care of above
-                                }
-                                break;
-                            }
+                            break;
                         }
                     }
                 }
@@ -199,49 +193,51 @@ class PublicationsShortController extends ShortActionController
                             $q->eq('id',(int)$token2);
                         break;
                         case 1:
-                            $q->eq('name',(int)$token2);
-                            $token3 = $this->nextToken();
-                            $date = date_parse($token3);
-                            $q->eq('start_date',$date);
+                            $q->eq('name', $token2);
+                            $token3 = urldecode($this->nextToken());
+                            $timestamp = strtotime($token3);var_dump($timestamp);
+                            $q->ge('start_date',$timestamp);
+                            $q->le('start_date',$timestamp + 100);
                         break;
                         case 2:
-                            $q->eq('name',(int)$token2);
-                            $token3 = $this->nextToken();
-                            $q->eq('id',(int)$token3);
+                            $q->eq('name',$token2);
+                            $token3 = (int)$this->nextToken();
+                            $q->eq('id', $token3);
                         break;
                         case 3:
-                            $q->eq('id',(int)$token2);
+                            $q->eq('id', (int)$token2);
                         break;
                         case 4:
-                            $q->eq('name',(int)$token2);
+                            $q->eq('name', $token2);
                         break;
                         case 5:
-                            $q->eq('title',(int)$token2);
-                            $token3 = $this->nextToken();
-                            $date = date_parse($token3);
-                            $q->eq('start_date',$date);
+                            $q->eq('title', $token2);
+                            $token3 = urldecode($this->nextToken());
+                            $timestamp = strtotime($token3);var_dump($timestamp);
+                            $q->ge('start_date',$timestamp);
+                            $q->le('start_date',$timestamp + 100);
                         break;
                         case 6:
-                            $q->eq('title',(int)$token2);
-                            $token3 = $this->nextToken();
-                            $q->eq('id',(int)$token3);
+                            $q->eq('title', $token2);
+                            $token3 = (int)$this->nextToken();
+                            $q->eq('id', $token3);
                         break;
                         case 7:
-                            $q->eq('id',(int)$token2);
+                            $q->eq('id', (int)$token2);
                         break;
                         case 8:
-                            $q->eq('title',(int)$token2);
+                            $q->eq('title', $token2);
                         break;
                     }
                     $q->addfield('id');
-                    $q->run();
+                    $q->run();$q->qecho();
                     $result = $q->row();
                     if (!empty($result['id'])) $data['id'] = $result['id'];
                     else $data['id'] = 0;
                     $data['func'] = 'display';
                 }
             break;
-        }
+        }var_dump($data);
         return $data;
     }
 
@@ -287,15 +283,7 @@ class PublicationsShortController extends ShortActionController
                 $path[] = 'view';
                 if (isset($params['ptid'])) {
                     if (xarModVars::get('publications', 'usetitleforurl')) {
-                        // Get all publication types present
-                        if (empty($this->pubtypes)) $this->pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
-                        // Match to the function token
-                        foreach ($this->pubtypes as $id => $pubtype) {
-                            if ($params['ptid'] == $id) {
-                                $path[] = strtolower($pubtype['description']);
-                                break;
-                            }
-                        }
+                        $path[] = $this->encode_pubtype($params['ptid']);
                     } else {
                         $path[] = $params['ptid'];
                     }
@@ -328,10 +316,12 @@ class PublicationsShortController extends ShortActionController
                             // We're not using names: just use the ID
                             $path[] = $result['id'];
                         } elseif ($usetitles == 4) {
-                            // We're ignoring duplicates: just slap in the name
+                            // We're ignoring duplicates: just slap in the pubtype and name
+                            $path[] = $this->encode_pubtype($result['pubtype_id']);
                             if (!empty($result['name'])) $path[] = $result['name'];
                         } elseif ($usetitles == 8) {
-                            // We're ignoring duplicates: just slap in the title
+                            // We're ignoring duplicates: just slap in the pubtype and title
+                            $path[] = $this->encode_pubtype($result['pubtype_id']);
                             if (!empty($result['title'])) $path[] = $result['title'];
                         } elseif (!empty($result['name']) && in_array($usetitles, array(1,2,3))) {
                             // Now come the cases where we distinguish duplicates in the URL
@@ -346,6 +336,7 @@ class PublicationsShortController extends ShortActionController
                             $q->run();
                             $duplicates = $q->output();
                             
+                            $path[] = $this->encode_pubtype($result['pubtype_id']);
                             if (count($duplicates) == 1) {
                                 // No duplicates, so we just put the name
                                 $path[] = $result['name'];
@@ -374,6 +365,7 @@ class PublicationsShortController extends ShortActionController
                             $q->run();
                             $duplicates = $q->output();
                             
+                            $path[] = $this->encode_pubtype($result['pubtype_id']);
                             if (count($duplicates) == 1) {
                                 // No duplicates, so we just put the name
                                 $path[] = $result['title'];
@@ -493,6 +485,7 @@ class PublicationsShortController extends ShortActionController
     
     private function decode_pubtype($token='')
     {
+        $token = urldecode($token);
         if (xarModVars::get('publications', 'usetitleforurl')) {
             // Get all publication types present
             if (empty($this->pubtypes)) $this->pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
@@ -506,6 +499,20 @@ class PublicationsShortController extends ShortActionController
         } else {
             return $token;
         }
+    }
+    
+    private function encode_pubtype($ptid=0)
+    {
+        // Get all publication types present
+        if (empty($this->pubtypes)) $this->pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
+        // Match to the function token
+        foreach ($this->pubtypes as $id => $pubtype) {
+            if ($ptid == $id) {
+                return strtolower($pubtype['description']);
+                break;
+            }
+        }
+        return 0;
     }
 }
 ?>
