@@ -195,7 +195,7 @@ class PublicationsShortController extends ShortActionController
                         case 1:
                             $q->eq('name', $token2);
                             $token3 = urldecode($this->nextToken());
-                            $timestamp = strtotime($token3);var_dump($timestamp);
+                            $timestamp = strtotime($token3);
                             $q->ge('start_date',$timestamp);
                             $q->le('start_date',$timestamp + 100);
                         break;
@@ -213,7 +213,7 @@ class PublicationsShortController extends ShortActionController
                         case 5:
                             $q->eq('title', $token2);
                             $token3 = urldecode($this->nextToken());
-                            $timestamp = strtotime($token3);var_dump($timestamp);
+                            $timestamp = strtotime($token3);
                             $q->ge('start_date',$timestamp);
                             $q->le('start_date',$timestamp + 100);
                         break;
@@ -237,7 +237,7 @@ class PublicationsShortController extends ShortActionController
                     $data['func'] = 'display';
                 }
             break;
-        }var_dump($data);
+        }
         return $data;
     }
 
