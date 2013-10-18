@@ -21,9 +21,19 @@
  *
  * Display:
  * /publications/page_id
- * /publications/pubtype_name/page_name[/page_start_date]
  * /publications/pubtype_name/page_name[/page_id]
+ * /publications/pubtype_name/page_name[/page_start_date]
  * /publications/display/pubtype_name/page_name[/page_id]
+ *
+ * New
+ * /publications/new/pubtype_name
+ * /publications/new/pubtype_id
+ *
+ * Modify
+ * /publications/modify/page_id
+ * /publications/modify/pubtype_name/page_id
+ * /publications/modify/pubtype_name/page_name[/page_start_date]
+ * /publications/modify/pubtype_name/page_name[/page_id]
 **/
 
 sys::import('xaraya.mapper.controllers.short');
@@ -34,7 +44,7 @@ class PublicationsShortController extends ShortActionController
     
     public function decode(Array $data=array())
     {
-        $token1 = $this->firstToken();
+        $token1 = urldecode($this->firstToken());
         switch ($token1) {
             case 'admin':
                 return parent::decode($data);
@@ -57,7 +67,28 @@ class PublicationsShortController extends ShortActionController
             break;
 
             case 'modify':
+                // Here we are dealing with publications/modify/pubtype[/publication] or publications/modify/itemid
                 $data['func'] = 'modify';
+
+                $token2 = urldecode($this->nextToken());
+                $token3 = urldecode($this->nextToken());
+
+                if (!$token3 && is_numeric($token2) && !xarModVars::get('publications', 'usetitleforurl')) {
+                    // A single numeric token is a page id
+                    $data['itemid'] = $token2;
+                } else {
+                    // Match the first token
+                    if (xarModVars::get('publications', 'usetitleforurl')) {
+                        if ($token2) $data['ptid'] = $this->decode_pubtype($token2);
+                    }
+                }
+                // We now have the pubtype; check for the publication
+                if (!$token3) {
+                    // No more tokens; this should not happen
+                } else {
+                    // This is a publication display; find which publication
+                    $data['itemid'] = $this->decode_page($token3, $data['ptid']);
+                }
             break;
 
             case 'update':
@@ -155,8 +186,6 @@ class PublicationsShortController extends ShortActionController
 
             default:
                 // Here we are dealing with publications/pubtype[/publication] or publications/itemid
-                // Get all publication types present
-                if (empty($this->pubtypes)) $this->pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
                 
                 $token2 = urldecode($this->nextToken());
 
@@ -184,57 +213,7 @@ class PublicationsShortController extends ShortActionController
                     // This is a publication display; find which publication
                     // Bail if we don't have a valid pubtype 
                     if (!isset($data['ptid'])) $data['ptid'] = 0;
-                    sys::import('xaraya.structures.query');
-                    xarModLoad('publications');
-                    $xartables =& xarDB::getTables();
-                    $q = new Query('SELECT',$xartables['publications']);
-                    $q->eq('pubtype_id',$data['ptid']);
-                    switch ((int)xarModVars::get('publications', 'usetitleforurl')) {
-                        case 0:
-                            $q->eq('id',(int)$token2);
-                        break;
-                        case 1:
-                            $q->eq('name', $token2);
-                            $token3 = urldecode($this->nextToken());
-                            $timestamp = strtotime($token3);
-                            $q->ge('start_date',$timestamp);
-                            $q->le('start_date',$timestamp + 100);
-                        break;
-                        case 2:
-                            $q->eq('name',$token2);
-                            $token3 = (int)$this->nextToken();
-                            $q->eq('id', $token3);
-                        break;
-                        case 3:
-                            $q->eq('id', (int)$token2);
-                        break;
-                        case 4:
-                            $q->eq('name', $token2);
-                        break;
-                        case 5:
-                            $q->eq('title', $token2);
-                            $token3 = urldecode($this->nextToken());
-                            $timestamp = strtotime($token3);
-                            $q->ge('start_date',$timestamp);
-                            $q->le('start_date',$timestamp + 100);
-                        break;
-                        case 6:
-                            $q->eq('title', $token2);
-                            $token3 = (int)$this->nextToken();
-                            $q->eq('id', $token3);
-                        break;
-                        case 7:
-                            $q->eq('id', (int)$token2);
-                        break;
-                        case 8:
-                            $q->eq('title', $token2);
-                        break;
-                    }
-                    $q->addfield('id');
-                    $q->run();
-                    $result = $q->row();
-                    if (!empty($result['id'])) $data['id'] = $result['id'];
-                    else $data['id'] = 0;
+                    $data['id'] = $this->decode_page($token2, $data['ptid']);
                     $data['func'] = 'display';
                 }
             break;
@@ -502,6 +481,61 @@ class PublicationsShortController extends ShortActionController
         }
     }
     
+    private function decode_page($token2='', $ptid)
+    {
+        sys::import('xaraya.structures.query');
+        xarModLoad('publications');
+        $xartables =& xarDB::getTables();
+        $q = new Query('SELECT',$xartables['publications']);
+        $q->eq('pubtype_id',$ptid);
+        switch ((int)xarModVars::get('publications', 'usetitleforurl')) {
+            case 0:
+                $q->eq('id',(int)$token2);
+            break;
+            case 1:
+                $q->eq('name', $token2);
+                $token3 = urldecode($this->nextToken());
+                $timestamp = strtotime($token3);
+                $q->ge('start_date',$timestamp);
+                $q->le('start_date',$timestamp + 100);
+            break;
+            case 2:
+                $q->eq('name',$token2);
+                $token3 = (int)$this->nextToken();
+                $q->eq('id', $token3);
+            break;
+            case 3:
+                $q->eq('id', (int)$token2);
+            break;
+            case 4:
+                $q->eq('name', $token2);
+            break;
+            case 5:
+                $q->eq('title', $token2);
+                $token3 = urldecode($this->nextToken());
+                $timestamp = strtotime($token3);
+                $q->ge('start_date',$timestamp);
+                $q->le('start_date',$timestamp + 100);
+            break;
+            case 6:
+                $q->eq('title', $token2);
+                $token3 = (int)$this->nextToken();
+                $q->eq('id', $token3);
+            break;
+            case 7:
+                $q->eq('id', (int)$token2);
+            break;
+            case 8:
+                $q->eq('title', $token2);
+            break;
+        }
+        $q->addfield('id');
+        $q->run();
+        $result = $q->row();
+        if (!empty($result['id'])) return (int)$result['id'];
+        else return 0;
+    }
+
     private function encode_pubtype($ptid=0)
     {
         // Get all publication types present

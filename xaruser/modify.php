@@ -26,13 +26,15 @@ function publications_user_modify($args)
     extract($args);
 
     // Get parameters
-    if (!xarVarFetch('itemid',     'isset', $data['itemid'], NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('itemid',     'id',    $data['itemid'],    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('id',         'id',    $data['id'],    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('ptid',       'isset', $ptid, NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('returnurl',  'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('name',       'str:1', $name, '', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
     
     if (empty($name) && empty($ptid)) return xarResponse::NotFound();
+    if (empty($data['itemid']) && empty($data['id'])) return xarResponse::NotFound();
 
     if(!empty($ptid)) {
         $publication_type = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
@@ -41,6 +43,9 @@ function publications_user_modify($args)
         $item = current($items);
         $name = $item['name'];
     }
+
+    // The itemid var takes precedence if it exiata
+    if (isset($data['itemid'])) $data['id'] = $data['itemid'];
 
     // Get our object
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));

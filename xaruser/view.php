@@ -560,6 +560,9 @@ function publications_user_view($args)
 //    $data['settings']['pubtypeobject'] = $data['pubtypeobject']->properties['configuration']->getValue();
 //    xarCore::setCached('publications', 'context' . $ptid, $data['settings']);
 
+    // Flag this as the current list view
+    xarSession::setVar('publications_current_listview', xarServer::getCurrentURL(array('ptid' => $data['ptid'])));
+    
     return xarTplModule('publications', 'user', 'view', $data, $data['template']);
 }
 
