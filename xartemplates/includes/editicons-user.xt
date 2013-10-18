@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">        
+    <xar:set name="itemtype">$fields['itemtype']</xar:set>
+    <xar:if condition="!empty($itemtype)">
+        <a href="#xarModURL('publications', 'user', 'new', array('ptid' => $itemtype))#" style="float:right; margin-right: 10px">
+            <img src="#xarTplGetImage('icons/document-new.png','base')#"/>
+        </a>
+    <xar:else />
+        <a href="#xarModURL('publications', 'user', 'new')#" style="float:right; margin-right: 10px">
+            <img src="#xarTplGetImage('icons/document-new.png','base')#"/>
+        </a>
+    </xar:if>
+    &#160;
+    <a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
+        <img src="#xarTplGetImage('icons/modify.png','base')#"/>
+    </a>
+    &#160;
+    <a href="#xarModURL('publications', 'user', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
+        <img src="#xarTplGetImage('icons/delete.png','base')#"/>
+    </a>
+</xar:template>
