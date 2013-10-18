@@ -6,7 +6,7 @@
     <xar:set name="info">
         xarController::$request->getInfo()
     </xar:set>
-    <xar:if condition="($pageName ne 'module') AND ($info[2] ne 'display_version') AND ($info[2] ne 'manage_versions') AND empty($preview)">
+    <xar:if condition="($pageName eq 'admin') AND ($info[2] ne 'display_version') AND ($info[2] ne 'manage_versions') AND empty($preview)">
         <xar:sec mask="ManagePublications" catch="false">
             <xar:var name="label">Create a new publication</xar:var>
             <a href="#xarModURL('publications', 'admin', 'new',array('name' => $object->name))#" style="float:right; margin-right: 10px" title="#$label#">
@@ -28,5 +28,24 @@
                 <img src="#xarTplGetImage('icons/modify.png','base')#"/>
             </a>
         </xar:sec> 
+    <xar:elseif condition="($pageName ne 'module') AND xarUserIsLoggedIn() AND (xarUserGetVar('id') eq $properties['author']->value)">
+        <xar:set name="itemtype">$fields['itemtype']</xar:set>
+        <xar:if condition="!empty($itemtype)">
+            <a href="#xarModURL('publications', 'user', 'new', array('ptid' => $itemtype))#" style="float:right; margin-right: 10px">
+                <img src="#xarTplGetImage('icons/document-new.png','base')#"/>
+            </a>
+        <xar:else />
+            <a href="#xarModURL('publications', 'user', 'new')#" style="float:right; margin-right: 10px">
+                <img src="#xarTplGetImage('icons/document-new.png','base')#"/>
+            </a>
+        </xar:if>
+        &#160;
+        <a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
+            <img src="#xarTplGetImage('icons/modify.png','base')#"/>
+        </a>
+        &#160;
+        <a href="#xarModURL('publications', 'user', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
+            <img src="#xarTplGetImage('icons/delete.png','base')#"/>
+        </a>
     </xar:if>
 </xar:template>
