@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">        
-    <xar:set name="dummy">
-        xarVarFetch('pageName', 'str:1', $pageName, '', XARVAR_NOT_REQUIRED)
-    </xar:set>
-    <xar:set name="info">
-        xarController::$request->getInfo()
-    </xar:set>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:set name="pageName">xarTpl::getPageTemplateName()</xar:set>
+    <xar:set name="info">xarController::$request->getInfo()</xar:set>
     <xar:if condition="($pageName eq 'admin') AND ($info[2] ne 'display_version') AND ($info[2] ne 'manage_versions') AND empty($preview)">
         <xar:template file="editicons-admin"/>
     <xar:elseif condition="($pageName ne 'module') AND xarUserIsLoggedIn() AND (xarUserGetVar('id') eq $properties['author']->value)"/>
