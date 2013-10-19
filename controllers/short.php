@@ -34,9 +34,17 @@
  * /publications/modify/pubtype_name/page_id
  * /publications/modify/pubtype_name/page_name[/page_start_date]
  * /publications/modify/pubtype_name/page_name[/page_id]
+ *
+ * Delete
+ * /publications/delete/page_id
+ * /publications/delete/pubtype_name/page_id
+ * /publications/delete/pubtype_name/page_name[/page_start_date]
+ * /publications/delete/pubtype_name/page_name[/page_id]
 **/
 
 sys::import('xaraya.mapper.controllers.short');
+sys::import('xaraya.structures.query');
+xarModLoad('publications');
 
 class PublicationsShortController extends ShortActionController
 {
@@ -226,7 +234,7 @@ class PublicationsShortController extends ShortActionController
         if ($request->getType() == 'admin') return parent::encode($request);
 
         $params = $request->getFunctionArgs();
-        $path = array();
+        $path = array();echo $request->getFunction();
         switch($request->getFunction()) {
 
             case 'search':
@@ -236,7 +244,10 @@ class PublicationsShortController extends ShortActionController
 
             case 'new':
                 $path[] = 'new';
-                $path = array_merge($path,$params);
+                if (isset($params['ptid'])) {
+                    $path[] = $this->encode_pubtype($params['ptid']);
+                    unset($params['ptid']);
+                }
             break;
 
             case 'create':
@@ -246,7 +257,13 @@ class PublicationsShortController extends ShortActionController
 
             case 'modify':
                 $path[] = 'modify';
-                $path = array_merge($path,$params);
+                if (isset($params['itemid'])) {
+                    $row = $this->getpage($params['itemid']);
+                    if (!empty($row['id'])) {
+                        $path = array_merge($path,$this->encode_page($row));
+                    }
+                }
+                $params = array();
             break;
 
             case 'update':
@@ -256,19 +273,21 @@ class PublicationsShortController extends ShortActionController
 
             case 'delete':
                 $path[] = 'delete';
-                $path = array_merge($path,$params);
+                if (isset($params['itemid'])) {
+                    $row = $this->getpage($params['itemid']);
+                    if (!empty($row['id'])) {
+                        $path = array_merge($path,$this->encode_page($row));
+                    }
+                }
+                $params = array();
             break;
 
             case 'view':
                 $path[] = 'view';
                 if (isset($params['ptid'])) {
-                    if (xarModVars::get('publications', 'usetitleforurl')) {
-                        $path[] = $this->encode_pubtype($params['ptid']);
-                    } else {
-                        $path[] = $params['ptid'];
-                    }
+                    $path[] = $this->encode_pubtype($params['ptid']);
+                    unset($params['ptid']);
                 }
-                unset($params['ptid']);
             break;
             
             case 'viewmap':
@@ -278,91 +297,9 @@ class PublicationsShortController extends ShortActionController
 
             case 'display':
                 if (isset($params['itemid'])) {
-                    sys::import('xaraya.structures.query');
-                    xarModLoad('publications');
-                    $xartables =& xarDB::getTables();
-                    $q = new Query('SELECT',$xartables['publications']);
-                    $q->eq('id',$params['itemid']);
-                    $q->addfield('pubtype_id');
-                    $q->addfield('name');
-                    $q->addfield('title');
-                    $q->addfield('start_date');
-                    $q->addfield('id');
-                    $q->run();
-                    $result = $q->row();
-                    if (!empty($result['id'])) {
-                        $usetitles = xarModVars::get('publications', 'usetitleforurl');
-                        if ($usetitles == 0) {
-                            // We're not using names: just use the ID
-                            $path[] = $result['id'];
-                        } elseif ($usetitles == 4) {
-                            // We're ignoring duplicates: just slap in the pubtype and name
-                            $path[] = $this->encode_pubtype($result['pubtype_id']);
-                            if (!empty($result['name'])) $path[] = urlencode($result['name']);
-                        } elseif ($usetitles == 8) {
-                            // We're ignoring duplicates: just slap in the pubtype and title
-                            $path[] = $this->encode_pubtype($result['pubtype_id']);
-                            if (!empty($result['title'])) $path[] = urlencode($result['title']);
-                        } elseif (!empty($result['name']) && in_array($usetitles, array(1,2,3))) {
-                            // Now come the cases where we distinguish duplicates in the URL
-                            // For this we need to do another SELECT on the name to see if there are actually duplicates
-                            $q = new Query('SELECT',$xartables['publications']);
-                            $q->eq('name',$result['name']);
-                            $q->eq('pubtype_id',$result['pubtype_id']);
-                            $q->addfield('pubtype_id');
-                            $q->addfield('name');
-                            $q->addfield('start_date');
-                            $q->addfield('id');
-                            $q->run();
-                            $duplicates = $q->output();
-                            
-                            $path[] = $this->encode_pubtype($result['pubtype_id']);
-                            if (count($duplicates) == 1) {
-                                // No duplicates, so we just put the name
-                                $path[] = urlencode($result['name']);
-                            } elseif ($usetitles == 1) {
-                                // We will add the publication start date to distinguish duplicates
-                                $path[] = urlencode($result['name']);
-                                $path[] = date('Y-m-d H:i',urlencode($result['start_date']));
-                            } elseif ($usetitles == 2) {
-                                // We will add the publication ID to distinguish duplicates
-                                $path[] = urlencode($result['name']);
-                                $path[] = $result['id'];
-                            } elseif ($usetitles == 3) {
-                                // We will use just the publication ID to distinguish duplicates
-                                $path[] = $result['id'];
-                            }
-                        } elseif (!empty($result['title']) && in_array($usetitles, array(5,6,7))) {
-                            // Now come the cases where we distinguish duplicates in the URL
-                            // For this we need to do another SELECT on the name to see if there are actually duplicates
-                            $q = new Query('SELECT',$xartables['publications']);
-                            $q->eq('title',$result['title']);
-                            $q->eq('pubtype_id',$result['pubtype_id']);
-                            $q->addfield('pubtype_id');
-                            $q->addfield('title');
-                            $q->addfield('start_date');
-                            $q->addfield('id');
-                            $q->run();
-                            $duplicates = $q->output();
-                            
-                            $path[] = $this->encode_pubtype($result['pubtype_id']);
-                            if (count($duplicates) == 1) {
-                                // No duplicates, so we just put the name
-                                $path[] = urlencode($result['title']);
-                            } elseif ($usetitles == 5) {
-                                // We will add the publication start date to distinguish duplicates
-                                $path[] = urlencode($result['title']);
-                                $path[] = urlencode(date('Y-m-d H:i',$result['start_date']));
-                            } elseif ($usetitles == 6) {
-                                // We will add the publication ID to distinguish duplicates
-                                $path[] = urlencode($result['title']);
-                                $path[] = $result['id'];
-                            } elseif ($usetitles == 7) {
-                                // We will use just the publication ID to distinguish duplicates
-                                $path[] = $result['id'];
-                            }
-                                
-                        }
+                    $row = $this->getpage($params['itemid']);
+                    if (!empty($row['id'])) {
+                        $path = $this->encode_page($row);
                     }
                 }
                 $params = array();
@@ -457,9 +394,10 @@ class PublicationsShortController extends ShortActionController
         }
         // Encode the processed params
         $request->setFunction($this->getFunction($path));
-        
+
         // Send the unprocessed params back
         $request->setFunctionArgs($params);
+if ($path[0] == 'delete' && $row['id'] == 15) {return parent::encode($request,1);}
         return parent::encode($request);
     }    
     
@@ -483,8 +421,6 @@ class PublicationsShortController extends ShortActionController
     
     private function decode_page($token2='', $ptid)
     {
-        sys::import('xaraya.structures.query');
-        xarModLoad('publications');
         $xartables =& xarDB::getTables();
         $q = new Query('SELECT',$xartables['publications']);
         $q->eq('pubtype_id',$ptid);
@@ -536,18 +472,116 @@ class PublicationsShortController extends ShortActionController
         else return 0;
     }
 
+    private function encode_page($row=array())
+    {
+        $usetitles = xarModVars::get('publications', 'usetitleforurl');
+        $path = array();
+        if ($usetitles == 0) {
+            // We're not using names: just use the ID
+            $path[] = $row['id'];
+        } elseif ($usetitles == 4) {
+            // We're ignoring duplicates: just slap in the pubtype and name
+            $path[] = $this->encode_pubtype($row['pubtype_id']);
+            if (!empty($row['name'])) $path[] = urlencode($row['name']);
+        } elseif ($usetitles == 8) {
+            // We're ignoring duplicates: just slap in the pubtype and title
+            $path[] = $this->encode_pubtype($row['pubtype_id']);
+            if (!empty($row['title'])) $path[] = urlencode($row['title']);
+        } elseif (!empty($row['name']) && in_array($usetitles, array(1,2,3))) {
+            // Now come the cases where we distinguish duplicates in the URL
+            // For this we need to do another SELECT on the name to see if there are actually duplicates
+            $xartables =& xarDB::getTables();
+            $q = new Query('SELECT',$xartables['publications']);
+            $q->eq('name',$row['name']);
+            $q->eq('pubtype_id',$row['pubtype_id']);
+            $q->addfield('pubtype_id');
+            $q->addfield('name');
+            $q->addfield('start_date');
+            $q->addfield('id');
+            $q->run();
+            $duplicates = $q->output();
+            
+            $path[] = $this->encode_pubtype($row['pubtype_id']);
+            if (count($duplicates) == 1) {
+                // No duplicates, so we just put the name
+                $path[] = urlencode($row['name']);
+            } elseif ($usetitles == 1) {
+                // We will add the publication start date to distinguish duplicates
+                $path[] = urlencode($row['name']);
+                $path[] = date('Y-m-d H:i',urlencode($row['start_date']));
+            } elseif ($usetitles == 2) {
+                // We will add the publication ID to distinguish duplicates
+                $path[] = urlencode($row['name']);
+                $path[] = $row['id'];
+            } elseif ($usetitles == 3) {
+                // We will use just the publication ID to distinguish duplicates
+                $path[] = $row['id'];
+            }
+        } elseif (!empty($row['title']) && in_array($usetitles, array(5,6,7))) {
+            // Now come the cases where we distinguish duplicates in the URL
+            // For this we need to do another SELECT on the name to see if there are actually duplicates
+            $xartables =& xarDB::getTables();
+            $q = new Query('SELECT',$xartables['publications']);
+            $q->eq('title',$row['title']);
+            $q->eq('pubtype_id', (int)$row['pubtype_id']);
+            $q->addfield('pubtype_id');
+            $q->addfield('title');
+            $q->addfield('start_date');
+            $q->addfield('id');
+            $q->run();
+            $duplicates = $q->output();
+            
+            $path[] = $this->encode_pubtype($row['pubtype_id']);
+            if (count($duplicates) == 1) {
+                // No duplicates, so we just put the name
+                $path[] = urlencode($row['title']);
+            } elseif ($usetitles == 5) {
+                // We will add the publication start date to distinguish duplicates
+                $path[] = urlencode($row['title']);
+                $path[] = urlencode(date('Y-m-d H:i',$row['start_date']));
+            } elseif ($usetitles == 6) {
+                // We will add the publication ID to distinguish duplicates
+                $path[] = urlencode($row['title']);
+                $path[] = $row['id'];
+            } elseif ($usetitles == 7) {
+                // We will use just the publication ID to distinguish duplicates
+                $path[] = $row['id'];
+            }
+                
+        }
+        return $path;
+    }
+
     private function encode_pubtype($ptid=0)
     {
-        // Get all publication types present
-        if (empty($this->pubtypes)) $this->pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
-        // Match to the function token
-        foreach ($this->pubtypes as $id => $pubtype) {
-            if ($ptid == $id) {
-                return urlencode(strtolower($pubtype['description']));
-                break;
+        if (xarModVars::get('publications', 'usetitleforurl')) {
+            // Get all publication types present
+            if (empty($this->pubtypes)) $this->pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
+            // Match to the function token
+            foreach ($this->pubtypes as $id => $pubtype) {
+                if ($ptid == $id) {
+                    return urlencode(strtolower($pubtype['description']));
+                    break;
+                }
             }
+            return 0;
+        } else {
+            return $ptid;
         }
-        return 0;
+    }
+    private function getpage($itemid=0)
+    {
+        $xartables =& xarDB::getTables();
+        $q = new Query('SELECT',$xartables['publications']);
+        $q->eq('id', (int)$itemid);
+        $q->addfield('pubtype_id');
+        $q->addfield('name');
+        $q->addfield('title');
+        $q->addfield('start_date');
+        $q->addfield('id');
+        $q->run();
+        $result = $q->row();
+        return $result;
     }
 }
 ?>
