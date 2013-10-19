@@ -11,11 +11,11 @@
         </a>
     </xar:if>
     &#160;
-    <a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
+    <a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value))#" style="float:right; margin-right: 10px">
         <img src="#xarTplGetImage('icons/modify.png','base')#"/>
     </a>
     &#160;
-    <a href="#xarModURL('publications', 'user', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#" style="float:right; margin-right: 10px">
+    <a href="#xarModURL('publications', 'user', 'delete',array('itemid' => $properties['id']->value))#" style="float:right; margin-right: 10px">
         <img src="#xarTplGetImage('icons/delete.png','base')#"/>
     </a>
 </xar:template>
