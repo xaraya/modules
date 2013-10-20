@@ -77,7 +77,6 @@ class PublicationsShortController extends ShortActionController
             case 'modify':
                 // Here we are dealing with publications/modify/pubtype[/publication] or publications/modify/itemid
                 $data['func'] = 'modify';
-
                 $token2 = urldecode($this->nextToken());
                 $token3 = urldecode($this->nextToken());
 
@@ -105,6 +104,25 @@ class PublicationsShortController extends ShortActionController
 
             case 'delete':
                 $data['func'] = 'delete';
+                $token2 = urldecode($this->nextToken());
+                $token3 = urldecode($this->nextToken());
+
+                if (!$token3 && is_numeric($token2) && !xarModVars::get('publications', 'usetitleforurl')) {
+                    // A single numeric token is a page id
+                    $data['itemid'] = $token2;
+                } else {
+                    // Match the first token
+                    if (xarModVars::get('publications', 'usetitleforurl')) {
+                        if ($token2) $data['ptid'] = $this->decode_pubtype($token2);
+                    }
+                }
+                // We now have the pubtype; check for the publication
+                if (!$token3) {
+                    // No more tokens; this should not happen
+                } else {
+                    // This is a publication display; find which publication
+                    $data['itemid'] = $this->decode_page($token3, $data['ptid']);
+                }
             break;
 
            case 'view':
@@ -234,7 +252,7 @@ class PublicationsShortController extends ShortActionController
         if ($request->getType() == 'admin') return parent::encode($request);
 
         $params = $request->getFunctionArgs();
-        $path = array();echo $request->getFunction();
+        $path = array();
         switch($request->getFunction()) {
 
             case 'search':
@@ -397,7 +415,6 @@ class PublicationsShortController extends ShortActionController
 
         // Send the unprocessed params back
         $request->setFunctionArgs($params);
-if ($path[0] == 'delete' && $row['id'] == 15) {return parent::encode($request,1);}
         return parent::encode($request);
     }    
     
@@ -431,14 +448,18 @@ if ($path[0] == 'delete' && $row['id'] == 15) {return parent::encode($request,1)
             case 1:
                 $q->eq('name', $token2);
                 $token3 = urldecode($this->nextToken());
-                $timestamp = strtotime($token3);
-                $q->ge('start_date',$timestamp);
-                $q->le('start_date',$timestamp + 100);
+                if ($token3) {
+                    $timestamp = strtotime($token3);
+                    $q->ge('start_date',$timestamp);
+                    $q->le('start_date',$timestamp + 100);
+                }
             break;
             case 2:
                 $q->eq('name',$token2);
                 $token3 = (int)$this->nextToken();
-                $q->eq('id', $token3);
+                if ($token3) {
+                    $q->eq('id', $token3);
+                }
             break;
             case 3:
                 $q->eq('id', (int)$token2);
@@ -449,14 +470,18 @@ if ($path[0] == 'delete' && $row['id'] == 15) {return parent::encode($request,1)
             case 5:
                 $q->eq('title', $token2);
                 $token3 = urldecode($this->nextToken());
-                $timestamp = strtotime($token3);
-                $q->ge('start_date',$timestamp);
-                $q->le('start_date',$timestamp + 100);
+                if ($token3) {
+                    $timestamp = strtotime($token3);
+                    $q->ge('start_date',$timestamp);
+                    $q->le('start_date',$timestamp + 100);
+                }
             break;
             case 6:
                 $q->eq('title', $token2);
                 $token3 = (int)$this->nextToken();
-                $q->eq('id', $token3);
+                if ($token3) {
+                    $q->eq('id', $token3);
+                }
             break;
             case 7:
                 $q->eq('id', (int)$token2);
