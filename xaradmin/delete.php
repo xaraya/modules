@@ -17,7 +17,7 @@ function publications_admin_delete()
 
     //$return = xarModURL('publications', 'admin','view',array('ptid' => xarModVars::get('publications', 'defaultpubtype')));
     if(!xarVarFetch('confirmed',  'int', $confirmed,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('itemid',     'str', $itemid,     NULL,  XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('itemid',     'int', $itemid,     NULL,  XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('idlist',     'str', $idlist,     NULL,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('returnurl',  'str', $returnurl,  NULL,  XARVAR_DONT_SET)) {return;}
 

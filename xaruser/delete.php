@@ -6,6 +6,7 @@
  * @subpackage publications module
  * @category Third Party Xaraya Module
  * @version 2.0.0
+ * @copyright (C) 2012 Netspan AG
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author mikespub
  */
@@ -14,11 +15,13 @@
  */
 function publications_user_delete()
 {
+    if (!xarSecurityCheck('ManagePublications')) return;
+
     $return = xarModURL('publications', 'user','view',array('ptid' => xarModVars::get('publications', 'defaultpubtype')));
     if(!xarVarFetch('confirmed',  'int', $confirmed,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('itemid',     'str', $itemid,     NULL,  XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('itemid',     'int', $itemid,     NULL,  XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('idlist',     'str', $idlist,     NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('returnurl',  'str', $data['returnurl'],  $return,  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('returnurl',  'str', $returnurl,  $return,  XARVAR_NOT_REQUIRED)) {return;}
 
     if (!empty($itemid)) $idlist = $itemid;
     $ids = explode(',',trim($idlist,','));
@@ -27,7 +30,7 @@ function publications_user_delete()
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('publications', 'ser','view'));
+            xarController::redirect(xarModURL('publications', 'user','view'));
         }
     }
 
