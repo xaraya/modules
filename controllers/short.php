@@ -31,13 +31,11 @@
  *
  * Modify
  * /publications/modify/page_id
- * /publications/modify/pubtype_name/page_id
  * /publications/modify/pubtype_name/page_name[/page_start_date]
  * /publications/modify/pubtype_name/page_name[/page_id]
  *
  * Delete
  * /publications/delete/page_id
- * /publications/delete/pubtype_name/page_id
  * /publications/delete/pubtype_name/page_name[/page_start_date]
  * /publications/delete/pubtype_name/page_name[/page_id]
 **/
