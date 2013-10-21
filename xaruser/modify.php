@@ -33,8 +33,14 @@ function publications_user_modify($args)
     if (!xarVarFetch('name',       'str:1', $name, '', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
     
-    if (empty($name) && empty($ptid)) return xarResponse::NotFound();
     if (empty($data['itemid']) && empty($data['id'])) return xarResponse::NotFound();
+    // The itemid var takes precedence if it exiats
+    if (!isset($data['itemid'])) $data['itemid'] = $data['id'];
+
+    if (empty($name) && empty($ptid)) {
+        $item = xarMod::apiFunc('publications', 'user', 'get', array('itemid' => $data['itemid']));
+        $ptid = $item['pubtype_id'];
+    }
 
     if(!empty($ptid)) {
         $publication_type = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
@@ -43,9 +49,6 @@ function publications_user_modify($args)
         $item = current($items);
         $name = $item['name'];
     }
-
-    // The itemid var takes precedence if it exiata
-    if (isset($data['itemid'])) $data['id'] = $data['itemid'];
 
     // Get our object
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
