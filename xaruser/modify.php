@@ -49,6 +49,7 @@ function publications_user_modify($args)
         $item = current($items);
         $name = $item['name'];
     }
+    if (empty($data['name'])) return xarResponse::NotFound();
 
     // Get our object
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
