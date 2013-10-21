@@ -86,14 +86,14 @@ class PublicationsShortController extends ShortActionController
                 } else {
                     // Match the first token
                     if (xarModVars::get('publications', 'usetitleforurl')) {
+                        if ($token2) $data['name'] = $this->decode_pubtype($token2);
+                    } else {
                         if ($token2) $data['ptid'] = $this->decode_pubtype($token2);
                     }
                 }
-                // We now have the pubtype; check for the publication
-                if (!$token3) {
-                    // No more tokens; this should not happen
-                } else {
-                    // This is a publication display; find which publication
+                // We now have the pubtype; check for the publication if we have another token
+                if ($token3) {
+                    // This is a publication modify; find which publication
                     $data['itemid'] = $this->decode_page($token3, $data['ptid']);
                 }
             break;
@@ -113,14 +113,14 @@ class PublicationsShortController extends ShortActionController
                 } else {
                     // Match the first token
                     if (xarModVars::get('publications', 'usetitleforurl')) {
+                        if ($token2) $data['name'] = $this->decode_pubtype($token2);
+                    } else {
                         if ($token2) $data['ptid'] = $this->decode_pubtype($token2);
                     }
                 }
-                // We now have the pubtype; check for the publication
-                if (!$token3) {
-                    // No more tokens; this should not happen
-                } else {
-                    // This is a publication display; find which publication
+                // We now have the pubtype; check for the publication if we have another token
+                if ($token3) {
+                    // This is a publication delete; find which publication
                     $data['itemid'] = $this->decode_page($token3, $data['ptid']);
                 }
             break;
