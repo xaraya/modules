@@ -83,11 +83,7 @@ class PublicationsShortController extends ShortActionController
                     $data['itemid'] = $token2;
                 } else {
                     // Match the first token
-                    if (xarModVars::get('publications', 'usetitleforurl')) {
-                        if ($token2) $data['name'] = $this->decode_pubtype($token2);
-                    } else {
-                        if ($token2) $data['ptid'] = $this->decode_pubtype($token2);
-                    }
+                    if ($token2) $data['ptid'] = $this->decode_pubtype($token2);
                 }
                 // We now have the pubtype; check for the publication if we have another token
                 if ($token3) {
@@ -110,11 +106,7 @@ class PublicationsShortController extends ShortActionController
                     $data['itemid'] = $token2;
                 } else {
                     // Match the first token
-                    if (xarModVars::get('publications', 'usetitleforurl')) {
-                        if ($token2) $data['name'] = $this->decode_pubtype($token2);
-                    } else {
-                        if ($token2) $data['ptid'] = $this->decode_pubtype($token2);
-                    }
+                    if ($token2) $data['ptid'] = $this->decode_pubtype($token2);
                 }
                 // We now have the pubtype; check for the publication if we have another token
                 if ($token3) {
