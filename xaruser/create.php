@@ -56,9 +56,11 @@ function publications_user_create()
 
     // Redirect if needed
     if (!xarVarFetch('return_url', 'str',   $return_url, '', XARVAR_NOT_REQUIRED)) {return;}
-    if (!empty($return_url)) 
-        // FIXME: not good for short URLS
-        xarController::redirect($return_url . '&itemid=' . $itemid);
+    if (!empty($return_url)) {
+        // FIXME: this is a hack for short URLS
+        $delimiter = (strpos($return_url, '&')) ? '&' : '?';
+        xarController::redirect($return_url . $delimiter . 'itemid=' . $itemid);
+    }
     
     // Redirect if we came from somewhere else
     $current_listview = xarSession::getVar('publications_current_listview');
