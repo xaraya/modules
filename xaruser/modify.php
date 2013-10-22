@@ -38,7 +38,7 @@ function publications_user_modify($args)
     if (!isset($data['itemid'])) $data['itemid'] = $data['id'];
 
     if (empty($name) && empty($ptid)) {
-        $item = xarMod::apiFunc('publications', 'user', 'get', array('itemid' => $data['itemid']));
+        $item = xarMod::apiFunc('publications', 'user', 'get', array('id' => $data['itemid']));
         $ptid = $item['pubtype_id'];
     }
 
