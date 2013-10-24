@@ -44,7 +44,7 @@ function publications_user_create()
         // Preview or bad data: redisplay the form
         $data['properties'] = $data['object']->getProperties();
         if ($data['preview']) $data['tab'] = 'preview';
-        return xarTplModule('publications','admin','new', $data);    
+        return xarTplModule('publications','user','new', $data);    
     }
     
     // Create the object
