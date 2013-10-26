@@ -202,7 +202,7 @@ class PublicationsShortController extends ShortActionController
 
             default:
                 // Here we are dealing with publications/pubtype[/publication] or publications/itemid
-                
+
                 $token2 = urldecode($this->nextToken());
 
                 // A single numeric token is an id
@@ -304,6 +304,7 @@ class PublicationsShortController extends ShortActionController
             break;
 
             case 'display':
+                $path[] = 'display';
                 if (isset($params['itemid'])) {
                     $row = $this->getpage($params['itemid']);
                     if (!empty($row['id'])) {
