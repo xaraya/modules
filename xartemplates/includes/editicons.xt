@@ -6,7 +6,7 @@
         <xar:template file="editicons-admin"/>
     <xar:elseif condition="($pageName ne 'module') AND xarUserIsLoggedIn() AND (xarUserGetVar('id') eq $properties['author']->value)"/>
         <xar:template file="editicons-user"/>
-    <xar:elseif condition="($pageName ne 'admin') AND (xarIsParent('Administrators', xarUserGetVar('uname')) OR xarIsParent('SiteManagers', xarUserGetVar('uname'))))"/>
+    <xar:elseif condition="($pageName ne 'admin') AND (xarIsParent('Administrators', xarUserGetVar('uname')) OR xarIsParent('SiteManagers', xarUserGetVar('uname')))"/>
         <xar:template file="editicons-user"/>
     </xar:if>
 </xar:template>
