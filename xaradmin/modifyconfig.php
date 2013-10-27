@@ -63,6 +63,11 @@ function publications_admin_modifyconfig()
             $data['settings'] = $globalsettings;
         }
     
+    } elseif ($data['tab'] == 'redirects') {
+        // Redirect configuration
+        // FIXME: remove this?
+        $data['redirects'] = unserialize(xarModVars::get('publications','redirects'));
+    
     } else {
         // Global configuration
         if (!xarSecurityCheck('AdminPublications')) return;
@@ -108,8 +113,6 @@ function publications_admin_modifyconfig()
             $data['usealias'] = false;
         }
 
-        $data['redirects'] = unserialize(xarModVars::get('publications','redirects'));
-    
         // Whether the languages property is loaded
         sys::import('modules.dynamicdata.class.properties.registration');
         $types = PropertyRegistration::Retrieve();
