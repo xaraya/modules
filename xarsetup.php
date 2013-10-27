@@ -305,6 +305,7 @@
 
     // news publications can be in old-style Topics & Categories, and in new Generic1
     $settings[1] = array('number_of_columns'    => 2,
+                         'alias'                => '',
                          'items_per_page'       => 10,
                          'defaultview'          => 1,
                          'show_categories'      => 1,
@@ -331,6 +332,7 @@
 
     // section documents can be in old-style Sections, and in new Generic1
     $settings[2] = array('number_of_columns'    => 0,
+                         'alias'                => '',
                          'items_per_page'       => 20,
                          // category name - will be replaced by 'c' . cid in xarinit.php
                          'defaultview'          => 'Sections',
@@ -357,6 +359,7 @@
 
     // reviews can be in new Generic1 (no categories in old-style reviews ?)
     $settings[3] = array('number_of_columns'    => 2,
+                         'alias'                => '',
                          'items_per_page'       => 20,
                          'defaultview'          => 1,
                          'show_categories'      => 1,
@@ -381,6 +384,7 @@
 
     // faqs can be in old-style FAQs, and in new Generic1
     $settings[4] = array('number_of_columns'    => 0,
+                         'alias'                => '',
                          'items_per_page'       => 20,
                          // category name - will be replaced by 'c' . cid in xarinit.php
                          'defaultview'          => 'FAQ',
@@ -407,6 +411,7 @@
 
     // pictures can be in Gallery and new Generic1
     $settings[5] = array('number_of_columns'    => 3,
+                         'alias'                => '',
                          'items_per_page'       => 12,
                          'defaultview'          => 1,
                          'show_categories'      => 0,
@@ -432,6 +437,7 @@
 
     // weblinks can be in old-style Web Links, and in new Generic1
     $settings[6] = array('number_of_columns'    => 0,
+                         'alias'                => '',
                          'items_per_page'       => 20,
                          'defaultview'          => 1,
                          'show_categories'      => 1,
@@ -457,6 +463,7 @@
 
     // quotes can be in Random Quotes and in new Generic1
     $settings[7] = array('number_of_columns'    => 0,
+                         'alias'                => '',
                          'items_per_page'       => 20,
                          'defaultview'          => 1,
                          'show_categories'      => 1,
@@ -482,6 +489,7 @@
 
     // downloads can be in Downloads and in new Generic1
     $settings[8] = array('number_of_columns'    => 0,
+                         'alias'                => '',
                          'items_per_page'       => 20,
                          'defaultview'          => 1,
                          'show_categories'      => 1,
@@ -507,6 +515,7 @@
 
     // default settings
     $settings[0] = array('number_of_columns'    => 0,
+                         'alias'                => '',
                          'items_per_page'       => 20,
                          'defaultview'          => 1,
                          'show_categories'      => 1,

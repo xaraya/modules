@@ -289,6 +289,16 @@
                     <div class="xar-row">
                         <div class="xar-col" style="width: 20%">
                             <label for="show_prevnext" class="help xar-form-label" title="#xarML('Show link to previous/next item in display.')#">                    
+                                Alias
+                            </label>
+                        </div>
+                        <div class="xar-col" style="width: 25%">
+                            <input type="text" name="settings[alias]" id="settings_alias" size="1" maxlength="100" value="#$settings['alias']#" />
+                        </div>
+                        <div class="xar-col" style="width: 10%">
+                        </div>
+                        <div class="xar-col" style="width: 20%">
+                            <label for="show_prevnext" class="help xar-form-label" title="#xarML('Show link to previous/next item in display.')#">                    
                                 Show link to previous/next item in display
                             </label>
                         </div>
