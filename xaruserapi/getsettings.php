@@ -47,7 +47,6 @@ function publications_userapi_getglobalsettings()
 {
     $settings = array(
                 'number_of_columns'     => 1,
-                'alias'                 => '',
                 'items_per_page'        => 20,
                 'defaultview'           => "Sections",
                 'defaultsort'           => "name",
