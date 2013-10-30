@@ -2,7 +2,6 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:data-input property="$properties['id']" hidden="hidden"/>
     <xar:data-input property="$properties['name']" hidden="hidden"/>
-    <xar:data-input property="$properties['description']" hidden="hidden"/>
     <xar:data-input property="$properties['template']" hidden="hidden"/>
     <xar:data-input property="$properties['configuration']" hidden="hidden"/>
     <xar:data-input property="$properties['access']" hidden="hidden"/>
@@ -11,6 +10,16 @@
                 <legend>
                     Presentation
                 </legend>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label for="description" class="help xar-form-label" title="#xarML('The display name of this publication type')#">                    
+                            Publication Description
+                        </label>
+                    </div>
+                    <div class="xar-col">
+                        <xar:data-input property="$properties['description']"/>
+                    </div>
+                </div>
                 <div class="xar-row">
                     <div class="xar-col">
                         <label for="summary_template" class="help xar-form-label" title="#xarML('The state of this publication type')#">                    
