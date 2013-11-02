@@ -74,7 +74,7 @@
             module_id         integer unsigned NOT NULL default 0, 
             name              varchar(254) NOT NULL default '', 
             label             varchar(254) NOT NULL default '', 
-            property_id       integer unsigned NOT NULL default 0, 
+            type              integer unsigned NOT NULL default 0, 
             configuration     text, 
             default_tinyint   tinyint unsigned default NULL, 
             default_integer   integer unsigned default NULL, 
@@ -140,6 +140,7 @@
         $objects = array(
                         'eav_entities',
                         'eav_attributes_def',
+                        'eav_empty',
                          );
 
         if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;

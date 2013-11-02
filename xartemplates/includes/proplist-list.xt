@@ -50,9 +50,9 @@
                     <input type="text" name="eav_label[#$field['id']#]" id="eav_label_#$field['id']#" value="#$field['label']#" class="xar-form-textmedium"/>
                 </td>
                 <td class="#$displayclass#">
-                    <xar:set name="name">'eav_property_id['.$field['id'].']'</xar:set>
-                    <xar:set name="id">'old_eav_property_id_'.$field['id']</xar:set>
-                    <xar:data-input property="$fieldtypeprop" name="$name" id="$id" value="$field['property_id']"/>
+                    <xar:set name="name">'eav_type['.$field['id'].']'</xar:set>
+                    <xar:set name="id">'old_eav_type_'.$field['id']</xar:set>
+                    <xar:data-input property="$fieldtypeprop" name="$name" id="$id" value="$field['type']"/>
                 </td>
                 <td class="#$displayclass#">
                     <input type="text" name="eav_default[#$field['id']#]" id="eav_default_#$field['id']#" value="#xarVarPrepForDisplay($field['value'])#" class="xar-form-textmedium"/>
