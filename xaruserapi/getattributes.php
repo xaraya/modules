@@ -18,21 +18,22 @@ function eav_userapi_getattributes(Array $args=array())
     if (!isset($args['object_id'])) throw new BadParameterException('object_id');
     
     sys::import('xaraya.structures.query');
-    $tables = xarDB::getTables();
+    $tables =& xarDB::getTables();
 
     $q = new Query('SELECT', $tables['eav_attributes']);
-    $q->eq('object_id', $args['object_id']);
+    $q->eq('object_id', (int)$args['object_id']);
+    $q->setorder('seq');
     $q->run();
     
     sys::import('modules.dynamicdata.class.properties.master');
     $properties = array();
     $attributes = array();
     foreach ($q->output() as $row) {
-        if (in_array($row['property_id'], array_keys($properties))) {
-            $propobject = $properties[$row['property_id']];
+        if (in_array($row['type'], array_keys($properties))) {
+            $propobject = $properties[$row['type']];
         } else {
-            $propobject = DataPropertyMaster::getProperty(array('type' => $row['property_id']));
-            $properties[$row['property_id']] = $propobject;
+            $propobject = DataPropertyMaster::getProperty(array('type' => $row['type']));
+            $properties[$row['type']] = $propobject;
         }
         $row['value'] = xarMod::apiFunc('eav', 'admin', 'getvalue', array('property' => $propobject, 'values' => $row));
         unset($row['default_tinyint']);
