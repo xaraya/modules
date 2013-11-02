@@ -24,6 +24,7 @@
         $xartable['eav_attributes_def']    = xarDB::getPrefix() . '_eav_attributes_def';
         $xartable['eav_attributes']        = xarDB::getPrefix() . '_eav_attributes';
         $xartable['eav_entities']          = xarDB::getPrefix() . '_eav_entities';
+        $xartable['eav_data']          = xarDB::getPrefix() . '_eav_data';
 
         // Return the table information
         return $xartable;
