@@ -26,7 +26,7 @@ function eav_admin_order_attributes()
 
     // Get parameters from whatever input we need.  All arguments to this
     // function should be obtained from xarVarFetch()
-    if(!xarVarFetch('objectid',          'isset', $objectid,          NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('objectid',          'isset', $object_id,          NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('itemid',        'isset', $itemid,         NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('direction',     'isset', $direction,      NULL, XARVAR_DONT_SET)) {return;}
 
@@ -42,21 +42,8 @@ function eav_admin_order_attributes()
         throw new BadParameterException($vars,$msg);
     }
 
-    if (!xarSecConfirmAuthKey()) {
-        //return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
-    }
-
-    sys::import('modules.dynamicdata.class.objects.master');
-    $object = DataObjectMaster::getObject(array('objectid' => $objectid));
-    $objectinfo = DataObjectMaster::getObjectInfo(
-                                    array(
-                                    'objectid' => $objectid,
-                                    ));
-
-    $objectid = $objectinfo['objectid'];
-
     $fields = xarMod::apiFunc('eav','user','getattributes',
-                                   array('objectid' => $objectid,
+                                   array('object_id' => $object_id,
                                          'allprops' => true));
     $orders = array();
     $currentpos = null;
@@ -82,20 +69,20 @@ function eav_admin_order_attributes()
         $i++;
     }
 
-    if (isset($swappos)) {
-            $q = new Query('UPDATE', $tables['eav_attributes']);
-            $q->addfield('seq', $fields[$swapwith]['seq']);
-            $q->eq('id', $itemid);
-            if(!$q->run()) return;
+    sys::import('xaraya.structures.query');
+    $tables =& xarDB::getTables();
+    $q = new Query('UPDATE', $tables['eav_attributes']);
+    $q->addfield('seq', (int)$fields[$swapwith]['seq']);
+    $q->eq('id', (int)$itemid);
+    if(!$q->run()) return;
 
-            $q = new Query('UPDATE', $tables['eav_attributes']);
-            $q->addfield('seq', $fields[$swapwith]['seq']);
-            $q->eq('id', $fields[$move_prop]['seq']);
-            if(!$q->run()) return;
-    }
+    $q = new Query('UPDATE', $tables['eav_attributes']);
+    $q->addfield('seq', (int)$fields[$move_prop]['seq']);
+    $q->eq('id', (int)$fields[$swapwith]['seq']);
+    if(!$q->run()) return;
 
     xarController::redirect(xarModURL('eav', 'admin', 'add_attribute',
-                        array('objectid'    => $objectid,
+                        array('objectid'    => $object_id,
         )));
     return true;
 }
