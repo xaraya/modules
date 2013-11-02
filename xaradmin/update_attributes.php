@@ -15,15 +15,16 @@
  */
 function eav_admin_update_attributes()
 {
-    if(!xarVarFetch('objectid',           'isset', $objectid,          1, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('eav_name',           'isset', $eav_name,           NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('eav_label',          'isset', $eav_label,          NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('eav_property_id',    'isset', $eav_property_id,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('eav_default',        'isset', $eav_defaultvalue,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('eav_seq',            'isset', $eav_seq,            NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('display_eav_status', 'isset', $display_eav_status, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('input_eav_status',   'isset', $input_eav_status,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('eav_configuration',  'isset', $eav_configuration,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('objectid',             'isset', $objectid,          1, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('eav_name',             'isset', $eav_name,           NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('eav_label',            'isset', $eav_label,          NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('eav_type',             'isset', $eav_type,           NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('eav_default',          'isset', $eav_defaultvalue,   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('eav_seq',              'isset', $eav_seq,            NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('display_eav_status',   'isset', $display_eav_status, NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('input_eav_status',     'isset', $input_eav_status,   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('eav_configuration',    'isset', $eav_configuration,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('attribute_definition', 'int', $attribute_definition,  0, XARVAR_DONT_SET)) {return;}
 
     // Security
     if(!xarSecurityCheck('AdminEAV')) return;
@@ -38,7 +39,7 @@ function eav_admin_update_attributes()
     $fields = xarMod::apiFunc('eav','user','getattributes', array('object_id' => $objectid));
 
     sys::import('xaraya.structures.query');
-    $tables = xarDB::getTables();
+    $tables =& xarDB::getTables();
     
     $i = 0;
     # --------------------------------------------------------
@@ -74,13 +75,13 @@ function eav_admin_update_attributes()
             }
             $eav_status[$id] = $display_eav_status[$id] + $input_eav_status[$id];
 
-            $valuefield = xarMod::apiFunc('eav', 'admin', 'getvaluefield', array('property_id' => (int)$eav_property_id[$id]));
+            $valuefield = xarMod::apiFunc('eav', 'admin', 'getvaluefield', array('property_id' => (int)$eav_type[$id]));
 
             $q = new Query('UPDATE', $tables['eav_attributes']);
             $q->addfield('name', $eav_name[$id]);
             $q->addfield('label', $eav_label[$id]);
             $q->addfield('object_id', (int)$objectid);
-            $q->addfield('property_id', (int)$eav_property_id[$id]);
+            $q->addfield('type', (int)$eav_type[$id]);
             $q->addfield($valuefield, $eav_defaultvalue[$id]);
             $q->addfield('status', (int)$eav_status[$id]);
             $q->addfield('seq', $eav_seq[$id]);
@@ -94,32 +95,70 @@ function eav_admin_update_attributes()
     # --------------------------------------------------------
     # Insert a new attribute
     #
-    if (!empty($eav_label[0]) && !empty($eav_property_id[0])) {
-        // create new property in xaradminapi.php
-        $name = strtolower($eav_label[0]);
-        $name = preg_replace('/[^a-z0-9_]+/','_',$name);
-        $name = preg_replace('/_$/','',$name);
-        if (!isset($display_eav_status[0])) {
-            $display_eav_status[0] = DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE;
-        }
-        if (!isset($input_eav_status[0])) {
-            $input_eav_status[0] = DataPropertyMaster::DD_INPUTSTATE_ADDMODIFY;
-        }
-        $eav_status[0] = $display_eav_status[0] + $input_eav_status[0];
-
-        $valuefield = xarMod::apiFunc('eav', 'admin', 'getvaluefield', array('property_id' => $eav_property_id[0]));
-
+    if (!empty($attribute_definition)) {
+        // User chose a definition from the dropdown
+        // Get the definition
+        $q = new Query('SELECT', $tables['eav_attributes_def']);
+        $q->addfield('name');
+        $q->addfield('label');
+        $q->addfield('property_id');
+        $q->addfield('configuration');
+        $q->addfield('default_tinyint');
+        $q->addfield('default_integer');
+        $q->addfield('default_decimal');
+        $q->addfield('default_string');
+        $q->addfield('default_text');
+        $q->eq('id', $attribute_definition);
+        if(!$q->run()) return;
+        $definition = $q->row();
+        
+        // Insert it in the attributes table
         $q = new Query('INSERT', $tables['eav_attributes']);
-        $q->addfield('name', $name);
-        $q->addfield('label', $eav_label[0]);
+        $q->addfield('name', $definition['name']);
+        $q->addfield('label', $definition['label']);
         $q->addfield('object_id', (int)$objectid);
-        $q->addfield('property_id', (int)$eav_property_id[0]);
-        $q->addfield($valuefield, $eav_defaultvalue[0]);
-        $q->addfield('status', (int)$eav_status[0]);
+        $q->addfield('type', $definition['property_id']);
+        $q->addfield('configuration', $definition['configuration']);
+        $q->addfield('default_tinyint', $definition['default_tinyint']);
+        $q->addfield('default_integer', $definition['default_integer']);
+        $q->addfield('default_decimal', $definition['default_decimal']);
+        $q->addfield('default_string', $definition['default_string']);
+        $q->addfield('default_text', $definition['default_text']);
+        $q->addfield('status', 3);
         $q->addfield('seq', $i);
         $q->addfield('timecreated', time());
         $q->addfield('timeupdated', time());
         if(!$q->run()) return;
+        
+    } else {
+        // No efinition chosen. Check if we are entering a property manually
+        if (!empty($eav_label[0]) && !empty($eav_property_id[0])) {
+            // create new property in xaradminapi.php
+            $name = strtolower($eav_label[0]);
+            $name = preg_replace('/[^a-z0-9_]+/','_',$name);
+            $name = preg_replace('/_$/','',$name);
+            if (!isset($display_eav_status[0])) {
+                $display_eav_status[0] = DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE;
+            }
+            if (!isset($input_eav_status[0])) {
+                $input_eav_status[0] = DataPropertyMaster::DD_INPUTSTATE_ADDMODIFY;
+            }
+            $eav_status[0] = $display_eav_status[0] + $input_eav_status[0];
+
+            $valuefield = xarMod::apiFunc('eav', 'admin', 'getvaluefield', array('property_id' => $eav_type[0]));
+
+            $q = new Query('INSERT', $tables['eav_attributes']);
+            $q->addfield('name', $name);
+            $q->addfield('label', $eav_label[0]);
+            $q->addfield('object_id', (int)$objectid);
+            $q->addfield('type', (int)$eav_property_id[0]);
+            $q->addfield($valuefield, $eav_defaultvalue[0]);
+            $q->addfield('status', (int)$eav_status[0]);
+            $q->addfield('seq', $i);
+            $q->addfield('timecreated', time());
+            $q->addfield('timeupdated', time());
+            if(!$q->run()) return;
+        }
     }
 
     xarController::redirect(xarModURL('eav', 'admin', 'add_attribute',
