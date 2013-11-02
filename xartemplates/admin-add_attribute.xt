@@ -11,7 +11,7 @@
             <xar:set name="layout">'default'</xar:set>
         </xar:if>
         <form method="post" action="#xarModURL('eav','admin','update_attributes')#">
-            <xar:template file="proplist-$layout"/>
+            <xar:template file="proplist-list"/>
         </form>
     </div>
 </xar:template>
