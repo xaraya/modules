@@ -24,7 +24,7 @@
         $object = DataObjectMaster::getObject(array('name' => $object));
         $object_id = $object->objectid;
         
-        $tables = xarDB::getTables();
+        $tables =& xarDB::getTables();
         sys::import('xaraya.structures.query');
         $q = new Query('SELECT', $tables['entities']);
         $q->eq('object_id', $object_id);
