@@ -5,6 +5,18 @@
         <div class="xar-row">
             <div class="xar-col">
                 <label for="eav_label_0" class="xar-form-label">
+                    Attribute Definition:
+                </label>
+            </div>
+            <div class="xar-col">
+                <xar:var name="firstline">Choose a definition</xar:var>
+                <xar:set name="firstline">array('id'=>0,'name'=>$firstline)</xar:set>
+                <xar:data-input name="attribute_definition" type="objectref" refobject="eav_attributes_def" store_prop="id" firstline="$firstline"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="eav_label_0" class="xar-form-label">
                     Label:
                 </label>
             </div>
@@ -19,7 +31,7 @@
                 </label>
             </div>
             <div class="xar-col">
-                <xar:data-input property="$fieldtypeprop" name="eav_property_id[0]" id="eav_property_id_0" value="1"/>
+                <xar:data-input property="$fieldtypeprop" name="eav_type[0]" id="eav_type_0" value="1"/>
             </div>
         </div>
         <div class="xar-row">
