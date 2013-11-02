@@ -14,7 +14,7 @@
                 </a>
             </xar:access>
             <xar:access level="500">
-                <a href="#xarModURL('eav','admin','modify_entitiy',array('itemid' => $loopitem[$primaryalias]))#"
+                <a href="#xarModURL('eav','admin','modify_entity',array('itemid' => $loopitem[$primaryalias]))#"
                 title="Modify this entity">
                     <xar:if condition = "xarModVars::get('eav','use_module_icons')">
                         <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
@@ -33,7 +33,17 @@
                     </xar:if>
                 </a>
             </xar:access>
-        <xar:elseif condition="$objectname eq 'eav_attributes'"/>
+            <xar:access level="700">
+                <a href="#xarModURL('eav','admin','add_attribute',array('objectid' => $loopitem['object']))#"
+                title="Add attributes to this entity">
+                    <xar:if condition = "xarModVars::get('eav','use_module_icons')">
+                        <img src="#xarTplGetImage('icons/'.'modify-config.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
+                    <xar:else />
+                        <b style="margin-right: 5px">Attributes</b>
+                    </xar:if>
+                </a>
+            </xar:access>
+        <xar:elseif condition="$objectname eq 'eav_attributes_def'"/>
             <xar:access level="200">
                 <a href="#xarModURL('eav','admin','display_attribute',array('id' => $loopitem[$primaryalias]))#"
                 title="Display this attribute">
