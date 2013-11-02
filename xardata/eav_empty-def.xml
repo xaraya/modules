@@ -1,0 +1,20 @@
+<object name="eav_empty">
+  <objectid>557</objectid>
+  <label>Empty Object</label>
+  <module_id>182</module_id>
+  <itemtype>210</itemtype>
+  <class>Entity</class>
+  <filepath>modules/eav/class/entity.php</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <access>a:0:{}</access>
+  <isalias>true</isalias>
+  <datastore>none</datastore>
+  <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>
+  <sources>a:1:{s:0:&quot;&quot;;a:2:{i:0;s:0:&quot;&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
+  <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
+  <category></category>
+  <properties>
+  </properties>
+</object>
