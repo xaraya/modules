@@ -15,8 +15,6 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_new($args)
 {
-    if (!xarSecurityCheck('ModeratePublications')) return;
-
     extract($args);
 
     // Get parameters
@@ -28,8 +26,28 @@ function publications_user_new($args)
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
-    $data['properties'] = $data['object']->getProperties();
     
+# --------------------------------------------------------
+#
+# Are we allowed to add a page?
+#
+    $accessconstraints = unserialize($data['object']->properties['access']->value);
+    $access = DataPropertyMaster::getProperty(array('name' => 'access'));
+    $allow = $access->check($accessconstraints['add']);
+var_dump($allow);exit;
+    // If no access, then bail showing a forbidden or the "no permission" page or an empty page
+    $nopermissionpage_id = xarModVars::get('publications', 'noprivspage');
+    if (!$allow) {
+        if ($accessconstraints['add']['failure']) return xarResponse::Forbidden();
+        elseif ($nopermissionpage_id) xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+        else return xarTplModule('publications', 'user', 'empty');
+    }
+    
+# --------------------------------------------------------
+#
+# Good to go. Continue
+#
+    $data['properties'] = $data['object']->getProperties();
 
     if (!empty($data['ptid'])) {
         $template = $pubtypeobject->properties['template']->value;

@@ -21,8 +21,6 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_modify($args)
 {
-    if (!xarSecurityCheck('ModeratePublications')) return;
-
     extract($args);
 
     // Get parameters
@@ -32,7 +30,7 @@ function publications_user_modify($args)
     if (!xarVarFetch('returnurl',  'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('name',       'str:1', $name, '', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
-    
+   
     if (empty($data['itemid']) && empty($data['id'])) return xarResponse::NotFound();
     // The itemid var takes precedence if it exiats
     if (!isset($data['itemid'])) $data['itemid'] = $data['id'];
@@ -54,6 +52,27 @@ function publications_user_modify($args)
     // Get our object
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['object']->getItem(array('itemid' => $data['itemid']));
+    
+# --------------------------------------------------------
+#
+# Are we allowed to modify this page?
+#
+    $accessconstraints = unserialize($data['object']->properties['access']->value);
+    $access = DataPropertyMaster::getProperty(array('name' => 'access'));
+    $allow = $access->check($accessconstraints['modify']);
+
+    // If no access, then bail showing a forbidden or the "no permission" page or an empty page
+    $nopermissionpage_id = xarModVars::get('publications', 'noprivspage');
+    if (!$allow) {
+        if ($accessconstraints['modify']['failure']) return xarResponse::Forbidden();
+        elseif ($nopermissionpage_id) xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+        else return xarTplModule('publications', 'user', 'empty');
+    }
+    
+# --------------------------------------------------------
+#
+# Good to go. Continue
+#
     $data['ptid'] = $data['object']->properties['itemtype']->value;
 
     // Send the publication type and the object properties to the template 
