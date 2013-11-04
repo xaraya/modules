@@ -109,7 +109,7 @@
       <id>258</id>
       <label>State</label>
       <type>dropdown</type>
-      <defaultvalue>3</defaultvalue>
+      <defaultvalue>13</defaultvalue>
       <source>publication.state</source>
       <status>33</status>
       <seq>21</seq>
