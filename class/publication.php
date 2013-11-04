@@ -46,9 +46,9 @@ class Publication extends DataObject
             // Only ignore the prefix if we are CREATING the base document
             // A translation would have a prefix of 0, which is valid
             if (empty($prefix) && $prefix !== '0') {
-                $name = "dd_" . $this->properties['access']->id;
+                $name = $this->propertyprefix . $this->properties['access']->id;
             } else {
-                $name = $prefix . "_dd_" . $this->properties['access']->id;
+                $name = $prefix . "_" . $this->propertyprefix . $this->properties['access']->id;
             }
             $validprop = $access->checkInput($name . "_display");
             $displayaccess = $access->value;
