@@ -34,7 +34,7 @@ function publications_user_new($args)
     $accessconstraints = unserialize($data['object']->properties['access']->value);
     $access = DataPropertyMaster::getProperty(array('name' => 'access'));
     $allow = $access->check($accessconstraints['add']);
-var_dump($allow);exit;
+
     // If no access, then bail showing a forbidden or the "no permission" page or an empty page
     $nopermissionpage_id = xarModVars::get('publications', 'noprivspage');
     if (!$allow) {
