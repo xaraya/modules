@@ -6,148 +6,148 @@
     <xar:data-input property="$properties['configuration']" hidden="hidden"/>
     <xar:data-input property="$properties['access']" hidden="hidden"/>
     <xar:set name="access">unserialize($properties['access']->value)</xar:set>
-            <fieldset>
-                <legend>
-                    Presentation
-                </legend>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="description" class="help xar-form-label" title="#xarML('The display name of this publication type')#">                    
-                            Publication Description
-                        </label>
-                    </div>
-                    <div class="xar-col">
-                        <xar:data-input property="$properties['description']"/>
-                    </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="summary_template" class="help xar-form-label" title="#xarML('The state of this publication type')#">                    
-                            Publication Type State
-                        </label>
-                    </div>
-                    <div class="xar-col">
-                        <xar:data-input property="$properties['state']"/>
-                    </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="summary_template" class="help xar-form-label" title="#xarML('Define the summary template for this publication type')#">                    
-                            Summary Template
-                        </label>
-                    </div>
-                    <div class="xar-col">
-                        <xar:data-input property="$properties['summary_template']"/>
-                        &#160;
-                        <a href="#xarModURL('publications','admin','templates_type',array('file' => 'summary','ptid' => $properties['id']->value))#">
-                            Edit template
-                        </a>
-                    </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="detail_template" class="help xar-form-label" title="#xarML('Define the detail template for this publication type')#">                    
-                            Detail Template
-                        </label>
-                    </div>
-                    <div class="xar-col">
-                        <xar:data-input property="$properties['detail_template']"/>
-                        &#160;
-                        <a href="#xarModURL('publications','admin','templates_type',array('file' => 'detail','ptid' => $properties['id']->value))#">
-                            Edit template
-                        </a>
-                    </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="page_template" class="help xar-form-label" title="#xarML('Define the page template for this publication type')#">                    
-                            Page Template Override
-                        </label>
-                    </div>
-                    <div class="xar-col">
-                        <xar:data-input property="$properties['page_template']"/>
-                    </div>
-                </div>
-               <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="theme" class="help xar-form-label" title="#xarML('Define the theme for this publication type')#">                    
-                            Theme Override
-                        </label>
-                    </div>
-                    <div class="xar-col">
-                        <xar:data-input property="$properties['theme']"/>
-                    </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <xar:var name="label">HTML Page Title</xar:var>
-                        <xar:data-label property="$properties['page_title']" for="id" label="$label" />
-                    </div>
-                    <div class="xar-col">
-                        <xar:data-input property="$properties['page_title']" />
-                    </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <xar:var name="label">HTML Page Description</xar:var>
-                        <xar:data-label property="$properties['page_description']" for="id" label="$label" />
-                    </div>
-                    <div class="xar-col">
-                        <xar:data-input property="$properties['page_description']" />
-                    </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <xar:var name="label">HTML Keywords</xar:var>
-                        <xar:data-label property="$properties['keywords']" for="id" label="$label" />
-                    </div>
-                    <div class="xar-col">
-                        <xar:data-input property="$properties['keywords']" />
-                    </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="sitemap_source_flag" class="help xar-form-label" title="#xarML('Where publications of this type get their site map text')#">                    
-                            Site Map Source
-                        </label>
-                    </div>
-                    <div class="xar-col">
-                        <xar:data-input property="$properties['sitemap_source_flag']" />
-                    </div>
-                </div>
-                <div class="xar-row">
-                    <div class="xar-col">
-                        <label for="menu_source_flag" class="help xar-form-label" title="#xarML('Where publications of this type get their menu text')#">                    
-                            Menu Source
-                        </label>
-                    </div>
-                    <div class="xar-col">
-                        <xar:data-input property="$properties['menu_source_flag']" />
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <legend>
-                    Access
-                </legend>
-                <legend>
-                    Add Access
-                </legend>
-                <xar:data-input type="access" name="access_add" value="$access['add']" group_multiselect="1"/>
-                <hr/>
-                <legend>
-                    Display Access
-                </legend>
-                <xar:data-input type="access" name="access_display" value="$access['display']" group_multiselect="1"/>
-                <hr/>
-                <legend>
-                    Modify Access
-                </legend>
-                <xar:data-input type="access" name="access_modify" value="$access['modify']" group_multiselect="1"/>
-                <hr/>
-                <legend>
-                    Delete Access
-                </legend>
-                <xar:data-input type="access" name="access_delete" value="$access['delete']" group_multiselect="1"/>
-            </fieldset>
+    <fieldset>
+        <legend>
+            Presentation
+        </legend>
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="description" class="help xar-form-label" title="#xarML('The display name of this publication type')#">                    
+                    Publication Description
+                </label>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['description']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="summary_template" class="help xar-form-label" title="#xarML('The state of this publication type')#">                    
+                    Publication Type State
+                </label>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['state']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="summary_template" class="help xar-form-label" title="#xarML('Define the summary template for this publication type')#">                    
+                    Summary Template
+                </label>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['summary_template']"/>
+                &#160;
+                <a href="#xarModURL('publications','admin','templates_type',array('file' => 'summary','ptid' => $properties['id']->value))#">
+                    Edit template
+                </a>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="detail_template" class="help xar-form-label" title="#xarML('Define the detail template for this publication type')#">                    
+                    Detail Template
+                </label>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['detail_template']"/>
+                &#160;
+                <a href="#xarModURL('publications','admin','templates_type',array('file' => 'detail','ptid' => $properties['id']->value))#">
+                    Edit template
+                </a>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="page_template" class="help xar-form-label" title="#xarML('Define the page template for this publication type')#">                    
+                    Page Template Override
+                </label>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['page_template']"/>
+            </div>
+        </div>
+       <div class="xar-row">
+            <div class="xar-col">
+                <label for="theme" class="help xar-form-label" title="#xarML('Define the theme for this publication type')#">                    
+                    Theme Override
+                </label>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['theme']"/>
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">HTML Page Title</xar:var>
+                <xar:data-label property="$properties['page_title']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['page_title']" />
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">HTML Page Description</xar:var>
+                <xar:data-label property="$properties['page_description']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['page_description']" />
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <xar:var name="label">HTML Keywords</xar:var>
+                <xar:data-label property="$properties['keywords']" for="id" label="$label" />
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['keywords']" />
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="sitemap_source_flag" class="help xar-form-label" title="#xarML('Where publications of this type get their site map text')#">                    
+                    Site Map Source
+                </label>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['sitemap_source_flag']" />
+            </div>
+        </div>
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="menu_source_flag" class="help xar-form-label" title="#xarML('Where publications of this type get their menu text')#">                    
+                    Menu Source
+                </label>
+            </div>
+            <div class="xar-col">
+                <xar:data-input property="$properties['menu_source_flag']" />
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>
+            Access
+        </legend>
+        <legend>
+            Add Access
+        </legend>
+        <xar:data-input type="access" name="access_add" value="$access['add']" group_multiselect="1"/>
+        <hr/>
+        <legend>
+            Display Access
+        </legend>
+        <xar:data-input type="access" name="access_display" value="$access['display']" group_multiselect="1"/>
+        <hr/>
+        <legend>
+            Modify Access
+        </legend>
+        <xar:data-input type="access" name="access_modify" value="$access['modify']" group_multiselect="1"/>
+        <hr/>
+        <legend>
+            Delete Access
+        </legend>
+        <xar:data-input type="access" name="access_delete" value="$access['delete']" group_multiselect="1"/>
+    </fieldset>
 </xar:template>
