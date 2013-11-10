@@ -22,73 +22,63 @@
  */
 function pubsub_init()
 {
-    // Get database information
-    $dbconn =& xarDB::getConn();
+    sys::import('xaraya.structures.query');
     $xartable =& xarDB::getTables();
+
+    $q = new Query();
     $prefix = xarDB::getPrefix();
 
-    // Create tables
-    $pubsubeventstable = $xartable['pubsub_events'];
-    $eventsfields = array(
-        'xar_eventid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_modid'=>array('type'=>'integer','null'=>FALSE),
-        'xar_itemtype'=>array('type'=>'integer','null'=>FALSE),
-        'xar_cid'=>array('type'=>'integer','null'=>FALSE),
-    // TODO: support other types of grouping later on
-        'xar_extra'=>array('type'=>'varchar','size'=>254,'null'=>FALSE,'default'=>''),
-        'xar_groupdescr'=>array('type'=>'varchar','size'=>64,'null'=>FALSE,'default'=>'')
-    );
-    $query = xarDBCreateTable($pubsubeventstable,$eventsfields);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $pubsubregtable = $xartable['pubsub_reg'];
-    $regfields = array(
-        'xar_pubsubid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_eventid'=>array('type'=>'integer','null'=>FALSE),
-        'xar_userid'=>array('type'=>'integer','null'=>FALSE),
-        'xar_actionid'=>array('type'=>'varchar','size'=>100,'null'=>FALSE,'default'=>'0'),
-        'xar_subdate'=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'xar_email'=>array('type'=>'varchar','size'=>255,'null'=>TRUE, 'default'=>'')
-    );
-    $query = xarDBCreateTable($pubsubregtable,$regfields);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $pubsubprocesstable = $xartable['pubsub_process'];
-    $processfields = array(
-        'xar_handlingid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_pubsubid'=>array('type'=>'integer','null'=>FALSE),
-        'xar_objectid'=>array('type'=>'integer','null'=>FALSE),
-        'xar_templateid'=>array('type'=>'integer','null'=>FALSE),
-        'xar_status'=>array('type'=>'varchar','size'=>100,'null'=>FALSE)
-    );
-    $query = xarDBCreateTable($pubsubprocesstable,$processfields);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $pubsubtemplatestable = $xartable['pubsub_templates'];
-    $templatesfields = array(
-        'xar_templateid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_name'=>array('type'=>'varchar','size'=>64,'null'=>FALSE,'default'=>''),
-        'xar_template'=>array('type'=>'text'),
-        'xar_compiled'=>array('type'=>'text')
-    );
-    $query = xarDBCreateTable($pubsubtemplatestable,$templatesfields);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    // template names must be unique (to avoid confusion)
-    $index = array(
-        'name'      => 'i_' . $prefix . '_pubsub_templatename',
-        'fields'    => array('xar_name'),
-        'unique'    => true
-    );
-    $query = xarDBCreateIndex($pubsubtemplatestable,$index);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $nextId = $dbconn->GenId($pubsubtemplatestable);
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_pubsub_events";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_pubsub_events (
+            eventid             integer unsigned NOT NULL auto_increment,
+            modid               integer unsigned NOT NULL DEFAULT '0',
+            itemtype            integer unsigned NOT NULL DEFAULT '0',
+            cid                 integer unsigned NOT NULL DEFAULT '0',
+            extra               varchar(255) NOT NULL DEFAULT '',
+            groupdescr          varchar(64) NOT NULL DEFAULT '',
+            PRIMARY KEY(eventid)
+            )";
+    if (!$q->run($query)) return;
+    
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_pubsub_reg";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_pubsub_reg (
+            pubsubid             integer unsigned NOT NULL auto_increment,
+            eventid               integer unsigned NOT NULL DEFAULT '0',
+            userid            integer unsigned NOT NULL DEFAULT '0',
+            actionid                 integer unsigned NOT NULL DEFAULT '0',
+            subdate                 integer unsigned NOT NULL DEFAULT '0',
+            email               varchar(255) NOT NULL DEFAULT '',
+            PRIMARY KEY(pubsubid)
+            )";
+    if (!$q->run($query)) return;
+    
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_pubsub_process";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_pubsub_process (
+            handlingid             integer unsigned NOT NULL auto_increment,
+            pubsubid               integer unsigned NOT NULL DEFAULT '0',
+            objectid            integer unsigned NOT NULL DEFAULT '0',
+            templateid                 integer unsigned NOT NULL DEFAULT '0',
+            status               varchar(100) NOT NULL DEFAULT '',
+            PRIMARY KEY(handlingid)
+            )";
+    if (!$q->run($query)) return;
+    
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_pubsub_templates";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_pubsub_templates (
+            templateid             integer unsigned NOT NULL auto_increment,
+            name          varchar(64) NOT NULL DEFAULT '',
+            template               text,
+            compiled            text,
+            PRIMARY KEY(templateid),
+            KEY templatename (name)
+            )";
+    if (!$q->run($query)) return;
+    
+/*    $nextId = $dbconn->GenId($pubsubtemplatestable);
     $name = 'default';
     $template = '<xar:ml>
 <xar:mlstring>A new item #(1) was created in module #(2).<br/>
@@ -106,7 +96,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
               VALUES (?,?,?,?)";
     $bindvars=array($nextId, $name, $template, $compiled);
     $result =& $dbconn->Execute($query,$bindvars);
-    if (!$result) return;
+    if (!$result) return; */
 /*
     // Set up module hooks
     if (!xarModRegisterHook('item',
@@ -155,7 +145,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
 */
 // TODO: review this :-)
 
-    // Define instances for this module
+/*    // Define instances for this module
     $query1 = "SELECT DISTINCT xar_pubsubid FROM " . $pubsubregtable;
     $query2 = "SELECT DISTINCT xar_eventid FROM " . $pubsubeventstable;
     $query3 = "SELECT DISTINCT xar_handlingid FROM " . $pubsubprocesstable;
@@ -174,7 +164,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
                                 'limit' => 20
                             )
                     );
-    xarDefineInstance('pubsub','Item',$instances);
+    xarDefineInstance('pubsub','Item',$instances);*/
 
     // Define mask definitions for security checks
     xarRegisterMask('OverviewPubSub','All','pubsub','All','All','ACCESS_OVERVIEW');
@@ -185,7 +175,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
     xarRegisterMask('AdminPubSub','All','pubsub','All','All','ACCESS_ADMIN');
 
     // Initialisation successful
-    return pubsub_upgrade('1.5.0');
+    return true;
 }
 
 /**
@@ -198,198 +188,13 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
  */
 function pubsub_upgrade($oldversion)
 {
-    xarDBLoadTableMaintenanceAPI();
-
     switch ($oldversion) {
-        case '1.0':
-            $dbconn =& xarDB::getConn();
-            $prefix = xarDB::getPrefix();
-
-            $xarTables =& xarDB::getTables();
-            $pubsubregtable = $xarTables['pubsub_reg'];
-            $pubsubtemplatetable = $prefix.'_pubsub_template';
-
-            // Drop the template table
-            $query = xarDBDropTable($pubsubtemplatetable);
-            $result =& $dbconn->Execute($query);
-
-            // Add a column to the register table
-            $query = xarDBAlterTable($pubsubregtable,
-                                     array('command' => 'add',
-                                           'field' => 'xar_subdate',
-                                           'type' => 'integer',
-                                           'null' => false));
-            $result = &$dbconn->Execute($query);
-            if (!$result) return;
-
-            $sql = "UPDATE $pubsubregtable
-                       SET xar_subdate = ".time()."";
-            $result =& $dbconn->Execute($sql);
-            if (!$result) return;
-
-        case 1.1:
-            $dbconn =& xarDB::getConn();
-            $xartable =& xarDB::getTables();
-            $prefix = xarDB::getPrefix();
-
-            $pubsubtemplatestable = $xartable['pubsub_templates'];
-            $templatesfields = array(
-                'xar_templateid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-                'xar_name'=>array('type'=>'varchar','size'=>64,'null'=>FALSE,'default'=>''),
-                'xar_template'=>array('type'=>'text'),
-                'xar_compiled'=>array('type'=>'text')
-            );
-            $query = xarDBCreateTable($pubsubtemplatestable,$templatesfields);
-            $result =& $dbconn->Execute($query);
-            if (!$result) return;
-
-            // template names must be unique (to avoid confusion)
-            $index = array(
-                'name'      => 'i_' . $prefix . '_pubsub_templatename',
-                'fields'    => array('xar_name'),
-                'unique'    => true
-            );
-            $query = xarDBCreateIndex($pubsubtemplatestable,$index);
-            $result =& $dbconn->Execute($query);
-            if (!$result) return;
-
-            $name = 'default';
-            $template = '<xar:ml>
-<xar:mlstring>A new item #(1) was created in module #(2).<br/>
-Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
-<xar:mlvar>#$itemid#</xar:mlvar>
-<xar:mlvar>#$module#</xar:mlvar>
-<xar:mlvar>#$link#</xar:mlvar>
-<xar:mlvar>#$title#</xar:mlvar>
-</xar:ml>';
-            // compile the template now
-            $compiled = xarTplCompileString($template);
-            $nextId = $dbconn->GenId($pubsubtemplatestable);
-
-            $query = "INSERT INTO $pubsubtemplatestable (xar_templateid, xar_name, xar_template, xar_compiled)
-                      VALUES (?, ?, ?, ?)";
-            $bindvars=array($nextId, $name, $template, $compiled);
-            $result =& $dbconn->Execute($query,$bindvars);
-            if (!$result) return;
-
-            // fall through to the next upgrade
-
-        case 1.2:
-            $dbconn =& xarDB::getConn();
-            $xartable =& xarDB::getTables();
-            $prefix = xarDB::getPrefix();
-
-            $query = xarDBDropTable($xartable['pubsub_eventcids']);
-            if (empty($query)) return; // throw back
-
-            // Drop the table and send exception if returns false.
-            $result =& $dbconn->Execute($query);
-            if (!$result) return;
-
-            // Add xar_cid to the events table
-            $query = xarDBAlterTable($xartable['pubsub_events'],
-                                     array('command' => 'add',
-                                           'field' => 'xar_cid',
-                                           'type' => 'integer',
-                                           'null' => false));
-            $result = &$dbconn->Execute($query);
-            if (!$result) return;
-
-        // TODO: support other types of grouping later on
-            // Add xar_extra to the events table
-            $query = xarDBAlterTable($xartable['pubsub_events'],
-                                     array('command' => 'add',
-                                           'field' => 'xar_extra',
-                                           'type' => 'varchar',
-                                           'size' => 254,
-                                           'null' => false,
-                                           'default' => ''));
-            $result = &$dbconn->Execute($query);
-            if (!$result) return;
-
-            // Add xar_templateid to the process table
-            $query = xarDBAlterTable($xartable['pubsub_process'],
-                                     array('command' => 'add',
-                                           'field' => 'xar_templateid',
-                                           'type' => 'integer',
-                                           'null' => false));
-            $result = &$dbconn->Execute($query);
-            if (!$result) return;
-
-            // Remove the delsubscriptions hook
-            if (!xarModUnregisterHook('item',
-                                      'delete',
-                                      'API',
-                                      'pubsub',
-                                      'user',
-                                      'delsubscriptions')) {
-                return false;
-            }
-
-            // Add the update hook
-            if (!xarModRegisterHook('item',
-                                    'update',
-                                    'API',
-                                    'pubsub',
-                                    'admin',
-                                    'updatehook')) {
-                return false;
-            }
-
-        // used by roles only
-            if (!xarModRegisterHook('item',
-                                    'usermenu',
-                                    'GUI',
-                                    'pubsub',
-                                    'user',
-                                    'usermenu')) {
-                return false;
-            }
-
-            // Let's start over with all this events stuff, shall we ?
-            $query = "DELETE FROM $xartable[pubsub_events]";
-            $result = &$dbconn->Execute($query);
-            if (!$result) return;
-
-            // Let's start over with all this registration stuff, shall we ?
-            $query = "DELETE FROM $xartable[pubsub_reg]";
-            $result = &$dbconn->Execute($query);
-            if (!$result) return;
-
-            // Let's start over with all this processing stuff, shall we ?
-            $query = "DELETE FROM $xartable[pubsub_process]";
-            $result = &$dbconn->Execute($query);
-            if (!$result) return;
-
-            // You also need to go through Configure Hooks for pubsub again, to refresh the hooklist
-
-            // fall through to the next upgrade
-        case '1.3':
-            $modversion['user'] = 0;
-        case '1.4.0':
-            $dbconn =& xarDB::getConn();
-            $prefix = xarDB::getPrefix();
-
-            $xarTables =& xarDB::getTables();
-            $pubsubregtable = $xarTables['pubsub_reg'];
-
-            // Add a column to the register table
-            $query = xarDBAlterTable($pubsubregtable,
-                                     array('command' => 'add',
-                                           'field' => 'xar_email',
-                                           'type' => 'varchar',
-                                           'size' => 255,
-                                           'null' => TRUE,
-                                           'default' => ''));
-
-            $result = &$dbconn->Execute($query);
-            if (!$result) return;
-        case '1.5.0':
+        case '2.0.0':
             // We can now use local templates in the pubsub/xartemplates dir
             xarModSetVar('pubsub','usetemplateids',1);
         default:
             break;
-    } // END switch
+    }
 
     return true;
 }
@@ -403,7 +208,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
  * @throws DATABASE_ERROR
  */
 function pubsub_delete()
-{
+{/*
     // Remove module hooks
     if (!xarModUnregisterHook('item',
                            'create',
@@ -445,43 +250,9 @@ function pubsub_delete()
                            'usermenu')) {
         xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
     }
-
-    // Get database information
-    $dbconn =& xarDB::getConn();
-    $xartable =& xarDB::getTables();
-
-
-    // Generate the SQL to drop the table using the API
-    $query = xarDB::dropTable($xartable['pubsub_events']);
-    if (empty($query)) return; // throw back
-
-    // Drop the table and send exception if returns false.
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $query = xarDB::dropTable($xartable['pubsub_reg']);
-    if (empty($query)) return; // throw back
-
-    // Drop the table and send exception if returns false.
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $query = xarDB::dropTable($xartable['pubsub_process']);
-    if (empty($query)) return; // throw back
-
-    // Drop the table and send exception if returns false.
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $query = xarDB::dropTable($xartable['pubsub_templates']);
-    if (empty($query)) return; // throw back
-
-    // Drop the table and send exception if returns false.
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    // Deletion successful
-    return true;
+*/
+    $module = 'pubsub';
+    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
 }
 
 ?>
