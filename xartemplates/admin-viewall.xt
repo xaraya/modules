@@ -83,7 +83,7 @@
                 <select name="sub_category">
                         <xar:foreach in="$categories" value="$category">
                             <xar:set name="indent">$category['indentation'] - 1</xar:set>
-                            <xar:set name="indent">str_repeat("&nbsp;&nbsp;&nbsp;", $indent)</xar:set>
+                            <xar:set name="indent">str_repeat("&#160;&#160;&#160;", $indent)</xar:set>
 
                             <option value="#$category['cid']#">#$indent# #$category['name']#</option>
                         </xar:foreach>
