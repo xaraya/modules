@@ -1,67 +1,68 @@
-<xar:comment>http://www.gnu.org/licenses/gpl.html</xar:comment>
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Publish/Subscribe Administration</xar:mlstring></span></div>
+    <div class="xar-mod-body">
+        <xar:template type="module" module="pubsub" file="admin-menu" />
+        <h2><xar:mlstring>Subscriber Summary</xar:mlstring></h2>
 
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Publish/Subscribe Administration</xar:mlstring></span></div>
-<div class="xar-mod-body">
-    <xar:template type="module" module="pubsub" file="admin-menu" />
-    <h2><xar:mlstring>Subscriber Summary</xar:mlstring></h2>
-
-    <fieldset>
-        <legend>
-        <xar:ml>
-        <xar:mlstring>Subscriber Summary for #(1) [#(2)]</xar:mlstring>
-        <xar:mlvar>
-          #$modname#
-        </xar:mlvar>
-        <xar:mlvar>
-          #$catname#
-        </xar:mlvar>
-        </xar:ml>
-        </legend>
+        <fieldset>
+            <legend>
+            <xar:ml>
+            <xar:mlstring>Subscriber Summary for #(1) [#(2)]</xar:mlstring>
+            <xar:mlvar>
+              #$modname#
+            </xar:mlvar>
+            <xar:mlvar>
+              #$catname#
+            </xar:mlvar>
+            </xar:ml>
+            </legend>
 
 
-    <div class="xar-align-center">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2">
-    <tr>
-        <th>
-            <xar:mlstring>User Name</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Date Subscribed</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Action</xar:mlstring>
-        </th>
-    </tr>
-    <xar:if condition="count($items) gt 0">
-    <xar:foreach in="$items" value="$item">
-    <tr>
-        <td>
-            <xar:if condition="$item['displayname'] == ''">
-                #$item['username']#
-            <xar:else />
-                #$item['displayname']# (#$item['username']#)
-            </xar:if>
-        </td>
-        <td>
-            #xarLocaleFormatDate("%a, %d-%B-%Y", $item['subdate'])#
-        </td>
-        <td>
-            <a href="#xarModURL('pubsub','admin','viewsubscribers',array('eventid'=>$eventid,'pubsubid'=>$item['pubsubid'],'unsub'=>1))#">Remove</a>
-        </td>
-     </tr>
-     </xar:foreach>
-    <xar:else />
-    <tr>
-      <td colspan="3" align="left">
-      <br />
-      <strong><xar:mlstring>No subscriptions found for this category</xar:mlstring></strong>
-      </td>
-    </tr>
-    </xar:if>
-</table>
-</div>
-</div>
-<div class="xar-form-input-after">
-<!-- add the pager here -->
-#$pager#
-</div>
+        <div class="xar-align-center">
+        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+        <tr>
+            <th>
+                <xar:mlstring>User Name</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Date Subscribed</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Action</xar:mlstring>
+            </th>
+        </tr>
+        <xar:if condition="count($items) gt 0">
+        <xar:foreach in="$items" value="$item">
+        <tr>
+            <td>
+                <xar:if condition="$item['displayname'] == ''">
+                    #$item['username']#
+                <xar:else />
+                    #$item['displayname']# (#$item['username']#)
+                </xar:if>
+            </td>
+            <td>
+                #xarLocaleFormatDate("%a, %d-%B-%Y", $item['subdate'])#
+            </td>
+            <td>
+                <a href="#xarModURL('pubsub','admin','viewsubscribers',array('eventid'=>$eventid,'pubsubid'=>$item['pubsubid'],'unsub'=>1))#">Remove</a>
+            </td>
+         </tr>
+         </xar:foreach>
+        <xar:else />
+        <tr>
+          <td colspan="3" align="left">
+          <br />
+          <strong><xar:mlstring>No subscriptions found for this category</xar:mlstring></strong>
+          </td>
+        </tr>
+        </xar:if>
+    </table>
+    </div>
+    </div>
+    <div class="xar-form-input-after">
+    <!-- add the pager here -->
+    #$pager#
+    </div>
+</xar:template>

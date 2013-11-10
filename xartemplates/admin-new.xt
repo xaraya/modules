@@ -1,2 +1,5 @@
-<table cellspacing="0" cellpadding="1" width="100%" border="0">
-</table>
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <table cellspacing="0" cellpadding="1" width="100%" border="0">
+    </table>
+</xar:template>

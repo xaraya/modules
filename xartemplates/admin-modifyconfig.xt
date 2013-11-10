@@ -1,169 +1,171 @@
-<xar:comment>license GPL http://www.gnu.org/licenses/gpl.html</xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Publish / Subscribe Administration</xar:mlstring></span></div>
-<div class="xar-mod-body">
-    <xar:template type="module" module="pubsub" file="admin-menu" />
-    <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
-    <form method="post" action="&xar-modurl-pubsub-admin-updateconfig;" enctype="application/x-www-form-urlencoded" >
-    <fieldset>
-        <legend>
-            <xar:mlstring>Global Configuration</xar:mlstring>
-        </legend>
-        <xar:comment>
-        <div class="xar-form-input-wrapper">
-        <label for="SupportShortURLs" class="xar-form-label"><xar:mlstring>Enable Short URLs :</xar:mlstring></label>
-            <xar:if condition="!empty($SupportShortURLs)">
-                <input type="checkbox" name="SupportShortURLs" id="SupportShortURLs" value="1" checked="checked" />
-            <xar:else/>
-                <input type="checkbox" name="SupportShortURLs" id="SupportShortURLs" value="1" />
-            </xar:if>
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Publish / Subscribe Administration</xar:mlstring></span></div>
+    <div class="xar-mod-body">
+        <xar:template type="module" module="pubsub" file="admin-menu" />
+        <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
+        <form method="post" action="&xar-modurl-pubsub-admin-updateconfig;" enctype="application/x-www-form-urlencoded" >
+        <fieldset>
+            <legend>
+                <xar:mlstring>Global Configuration</xar:mlstring>
+            </legend>
+            <xar:comment>
+            <div class="xar-form-input-wrapper">
+            <label for="SupportShortURLs" class="xar-form-label"><xar:mlstring>Enable Short URLs :</xar:mlstring></label>
+                <xar:if condition="!empty($SupportShortURLs)">
+                    <input type="checkbox" name="SupportShortURLs" id="SupportShortURLs" value="1" checked="checked" />
+                <xar:else/>
+                    <input type="checkbox" name="SupportShortURLs" id="SupportShortURLs" value="1" />
+                </xar:if>
 
-        </div>
-        </xar:comment>
-       <div class="xar-form-input-wrapper">
-          <label for="numitems" class="xar-form-label"><xar:mlstring>Items per Page :</xar:mlstring></label>
-          <input type="text" name="numitems" id="numitems" value="#$numitems#" size="4" />
-       </div>
-       <div class="xar-form-input-wrapper-after">
-          <xar:if condition="!empty($subjecttitle)">
-              <input type="checkbox" name="subjecttitle" id="subjecttitle" value="1" checked="checked" />
-          <xar:else/>
-              <input type="checkbox" name="subjecttitle" id="subjecttitle" value="1" />
-          </xar:if>
-          <label for="subjecttitle"><xar:mlstring>Use Content's Title for EMail Subject</xar:mlstring></label>
-       </div>
-       <div class="xar-form-input-wrapper-after">
-          <xar:if condition="!empty($usetemplateids)">
-              <input type="checkbox" name="usetemplateids" id="usetemplateids" value="1" checked="checked" />
-          <xar:else/>
-              <input type="checkbox" name="usetemplateids" id="usetemplateids" value="1" />
-          </xar:if>
-          <label for="usetemplateids"><xar:mlstring>Use the template id for templates</xar:mlstring></label>
-       </div>
-       <div class="xar-form-input-wrapper-after">
-          <xar:if condition="!empty($includechildren)">
-              <input type="checkbox" name="includechildren" id="includechildren" value="1" checked="checked" />
-          <xar:else/>
-              <input type="checkbox" name="includechildren" id="includechildren" value="1" />
-          </xar:if>
-          <label for="includechildren"><xar:mlstring> Include Child Categories in Subscriptions:</xar:mlstring></label>
-       </div>
-       <div class="xar-form-input-wrapper-after">
-          <xar:if condition="!empty($allindigest)">
-              <input type="checkbox" name="allindigest" id="allindigest" value="1" checked="checked" />
+            </div>
+            </xar:comment>
+           <div class="xar-form-input-wrapper">
+              <label for="numitems" class="xar-form-label"><xar:mlstring>Items per Page :</xar:mlstring></label>
+              <input type="text" name="numitems" id="numitems" value="#$numitems#" size="4" />
+           </div>
+           <div class="xar-form-input-wrapper-after">
+              <xar:if condition="!empty($subjecttitle)">
+                  <input type="checkbox" name="subjecttitle" id="subjecttitle" value="1" checked="checked" />
+              <xar:else/>
+                  <input type="checkbox" name="subjecttitle" id="subjecttitle" value="1" />
+              </xar:if>
+              <label for="subjecttitle"><xar:mlstring>Use Content's Title for EMail Subject</xar:mlstring></label>
+           </div>
+           <div class="xar-form-input-wrapper-after">
+              <xar:if condition="!empty($usetemplateids)">
+                  <input type="checkbox" name="usetemplateids" id="usetemplateids" value="1" checked="checked" />
+              <xar:else/>
+                  <input type="checkbox" name="usetemplateids" id="usetemplateids" value="1" />
+              </xar:if>
+              <label for="usetemplateids"><xar:mlstring>Use the template id for templates</xar:mlstring></label>
+           </div>
+           <div class="xar-form-input-wrapper-after">
+              <xar:if condition="!empty($includechildren)">
+                  <input type="checkbox" name="includechildren" id="includechildren" value="1" checked="checked" />
+              <xar:else/>
+                  <input type="checkbox" name="includechildren" id="includechildren" value="1" />
+              </xar:if>
+              <label for="includechildren"><xar:mlstring> Include Child Categories in Subscriptions:</xar:mlstring></label>
+           </div>
+           <div class="xar-form-input-wrapper-after">
+              <xar:if condition="!empty($allindigest)">
+                  <input type="checkbox" name="allindigest" id="allindigest" value="1" checked="checked" />
+                    <xar:else />
+                  <input type="checkbox" name="allindigest" id="allindigest" value="1"  />
+              </xar:if>
+              <label for="includechildren"><xar:mlstring>Send only one email per user</xar:mlstring>
+                  <xar:mlstring>(you may create a template, call it 'wrapper', with a variable called # $contents #</xar:mlstring>
+              </label>
+           </div>
+        </fieldset>
+        <fieldset>
+            <legend>
+                <xar:mlstring>Configuration of Hooked Modules</xar:mlstring>
+            </legend>
+
+           <p class="xar-form-input-wrapper-before">
+               <xar:mlstring><strong>Description:</strong> first enable pubsub hooks for a particular module+itemtype,
+               then specify here which template should be used when an item is created, updated or deleted for that module+itemtype.
+               Setting a template to 'not supported' means that your users will not receive any notifications for that event.</xar:mlstring>
+           </p>
+
+        <xar:foreach in="$settings" key="$modname" value="$config">
+            <h4 class="xar-form-input-wrapper-before">
+                <strong>#$config['label']#</strong>
+            </h4>
+            <xar:if condition="substr($modname,0,8) eq 'articles'">
+              <div class="xar-form-input-wrapper-before">
+                <input type="hidden" name="settings[#$modname#.createwithstatus]" value="0"  />
+                <xar:if condition="!empty($config['createwithstatus'])">
+                  <input type="checkbox" name="settings[#$modname#.createwithstatus]" id="settings_#$modname#_createwithstatus" value="1" checked="checked" />
                 <xar:else />
-              <input type="checkbox" name="allindigest" id="allindigest" value="1"  />
-          </xar:if>
-          <label for="includechildren"><xar:mlstring>Send only one email per user</xar:mlstring>
-              <xar:mlstring>(you may create a template, call it 'wrapper', with a variable called # $contents #</xar:mlstring>
-          </label>
-       </div>
-    </fieldset>
-    <fieldset>
-        <legend>
-            <xar:mlstring>Configuration of Hooked Modules</xar:mlstring>
-        </legend>
-
-       <p class="xar-form-input-wrapper-before">
-           <xar:mlstring><strong>Description:</strong> first enable pubsub hooks for a particular module+itemtype,
-           then specify here which template should be used when an item is created, updated or deleted for that module+itemtype.
-           Setting a template to 'not supported' means that your users will not receive any notifications for that event.</xar:mlstring>
-       </p>
-
-    <xar:foreach in="$settings" key="$modname" value="$config">
-        <h4 class="xar-form-input-wrapper-before">
-            <strong>#$config['label']#</strong>
-        </h4>
-        <xar:if condition="substr($modname,0,8) eq 'articles'">
-          <div class="xar-form-input-wrapper-before">
-            <input type="hidden" name="settings[#$modname#.createwithstatus]" value="0"  />
-            <xar:if condition="!empty($config['createwithstatus'])">
-              <input type="checkbox" name="settings[#$modname#.createwithstatus]" id="settings_#$modname#_createwithstatus" value="1" checked="checked" />
-            <xar:else />
-              <input type="checkbox" name="settings[#$modname#.createwithstatus]" id="settings_#$modname#_createwithstatus" value="1"  />
+                  <input type="checkbox" name="settings[#$modname#.createwithstatus]" id="settings_#$modname#_createwithstatus" value="1"  />
+                </xar:if>
+                <label for="settings_#$modname#_createwithstatus" >
+                  <xar:mlstring>Use create hook only when status is approved or frontpage (applicable only if the pubtype has a status field)</xar:mlstring>
+                </label>
+              </div>
             </xar:if>
-            <label for="settings_#$modname#_createwithstatus" >
-              <xar:mlstring>Use create hook only when status is approved or frontpage (applicable only if the pubtype has a status field)</xar:mlstring>
-            </label>
-          </div>
-        </xar:if>
-        <div class="xar-form-input-wrapper">
-            <label for="settings_#$modname#_create" class="xar-form-label">
-                <xar:mlstring>Template for Create Hook</xar:mlstring>
-            </label>
-            <select name="settings[#$modname#.create]" id="settings_#$modname#_create">
-            <xar:foreach in="$templates" key="$id" value="$name">
-                <xar:if condition="$config['create'] eq $id">
-                    <option value="#$id#" selected="selected">#$name#</option>
-                <xar:else/>
-                    <option value="#$id#">#$name#</option>
-                </xar:if>
-            </xar:foreach>
-            </select>
-        </div>
-        <div class="xar-form-input-wrapper">
-            <label for="settings_#$modname#_update" class="xar-form-label">
-                <xar:mlstring>Template for Update Hook</xar:mlstring>
-            </label>
-            <select name="settings[#$modname#.update]" id="settings_#$modname#_update">
-            <xar:foreach in="$templates" key="$id" value="$name">
-                <xar:if condition="$config['update'] eq $id">
-                    <option value="#$id#" selected="selected">#$name#</option>
-                <xar:else/>
-                    <option value="#$id#">#$name#</option>
-                </xar:if>
-            </xar:foreach>
-            </select>
-        </div>
-        <div class="xar-form-input-wrapper">
-            <label for="settings_#$modname#_delete" class="xar-form-label">
-                <xar:mlstring>Template for Delete Hook</xar:mlstring>
-            </label>
-            <select name="settings[#$modname#.delete]" id="settings_#$modname#_delete">
-            <xar:foreach in="$templates" key="$id" value="$name">
-                <xar:if condition="$config['delete'] eq $id">
-                    <option value="#$id#" selected="selected">#$name#</option>
-                <xar:else/>
-                    <option value="#$id#">#$name#</option>
-                </xar:if>
-            </xar:foreach>
-            </select>
-        </div>
-    </xar:foreach>
-
-
-    </fieldset>
-
-   <fieldset>
-        <legend>
-            <xar:mlstring>Configuration of Scheduled Processing</xar:mlstring>
-        </legend>
-        <p class="xar-form-input-wrapper-before">
-            <xar:mlstring><strong>Description:</strong> in order to process queued events, you need to install the 'scheduler' module first.
-            Then you can specify here how often the event queue should be processed.</xar:mlstring>
-        </p>
-
-        <div class="xar-form-input-wrapper">
-            <label for="interval" class="xar-form-input"><xar:mlstring>Run Scheduler Job : </xar:mlstring></label>
-            <select name="interval" id="interval">
-                <option value=""><xar:mlstring>disabled</xar:mlstring></option>
-                <xar:foreach in="$intervals" key="$id" value="$name">
-                    <xar:if condition="!empty($interval) and $interval eq $id">
+            <div class="xar-form-input-wrapper">
+                <label for="settings_#$modname#_create" class="xar-form-label">
+                    <xar:mlstring>Template for Create Hook</xar:mlstring>
+                </label>
+                <select name="settings[#$modname#.create]" id="settings_#$modname#_create">
+                <xar:foreach in="$templates" key="$id" value="$name">
+                    <xar:if condition="$config['create'] eq $id">
                         <option value="#$id#" selected="selected">#$name#</option>
                     <xar:else/>
                         <option value="#$id#">#$name#</option>
                     </xar:if>
                 </xar:foreach>
-            </select>
-        </div>
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="settings_#$modname#_update" class="xar-form-label">
+                    <xar:mlstring>Template for Update Hook</xar:mlstring>
+                </label>
+                <select name="settings[#$modname#.update]" id="settings_#$modname#_update">
+                <xar:foreach in="$templates" key="$id" value="$name">
+                    <xar:if condition="$config['update'] eq $id">
+                        <option value="#$id#" selected="selected">#$name#</option>
+                    <xar:else/>
+                        <option value="#$id#">#$name#</option>
+                    </xar:if>
+                </xar:foreach>
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="settings_#$modname#_delete" class="xar-form-label">
+                    <xar:mlstring>Template for Delete Hook</xar:mlstring>
+                </label>
+                <select name="settings[#$modname#.delete]" id="settings_#$modname#_delete">
+                <xar:foreach in="$templates" key="$id" value="$name">
+                    <xar:if condition="$config['delete'] eq $id">
+                        <option value="#$id#" selected="selected">#$name#</option>
+                    <xar:else/>
+                        <option value="#$id#">#$name#</option>
+                    </xar:if>
+                </xar:foreach>
+                </select>
+            </div>
+        </xar:foreach>
 
-        <p class="xar-form-input-wrapper-before">
-            <xar:mlstring>Please note that if you stop the scheduler or if it isn't triggered, queued events will not be processed.</xar:mlstring>
-        </p>
-    </fieldset>
-        <div class="xar-form-input-wrapper-after">
-            <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="submit" value="Update Pubsub Configuration" />
-        </div>
-</form>
 
-</div>
+        </fieldset>
+
+       <fieldset>
+            <legend>
+                <xar:mlstring>Configuration of Scheduled Processing</xar:mlstring>
+            </legend>
+            <p class="xar-form-input-wrapper-before">
+                <xar:mlstring><strong>Description:</strong> in order to process queued events, you need to install the 'scheduler' module first.
+                Then you can specify here how often the event queue should be processed.</xar:mlstring>
+            </p>
+
+            <div class="xar-form-input-wrapper">
+                <label for="interval" class="xar-form-input"><xar:mlstring>Run Scheduler Job : </xar:mlstring></label>
+                <select name="interval" id="interval">
+                    <option value=""><xar:mlstring>disabled</xar:mlstring></option>
+                    <xar:foreach in="$intervals" key="$id" value="$name">
+                        <xar:if condition="!empty($interval) and $interval eq $id">
+                            <option value="#$id#" selected="selected">#$name#</option>
+                        <xar:else/>
+                            <option value="#$id#">#$name#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </div>
+
+            <p class="xar-form-input-wrapper-before">
+                <xar:mlstring>Please note that if you stop the scheduler or if it isn't triggered, queued events will not be processed.</xar:mlstring>
+            </p>
+        </fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" value="Update Pubsub Configuration" />
+            </div>
+    </form>
+
+    </div>
+</xar:template>

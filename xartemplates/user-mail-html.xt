@@ -1,19 +1,22 @@
-<p>
-   #$htmlcontent#
-</p>
-<p>
-    <xar:mlstring>Link to the item:</xar:mlstring>
-    <a href="#$link#">#$title#</a>
-</p>
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <p>
+       #$htmlcontent#
+    </p>
+    <p>
+        <xar:mlstring>Link to the item:</xar:mlstring>
+        <a href="#$link#">#$title#</a>
+    </p>
 
-<xar:comment>
-You have the following paramaters available:
-$userid
-$name;
-$modname;
-$itemtype;
-$objectid;
-If the itemlinks did work:
-$title = $itemlinks[$objectid]['label'];
-$link =  $itemlinks[$objectid]['url'];
-</xar:comment>
+    <xar:comment>
+    You have the following paramaters available:
+    $userid
+    $name;
+    $modname;
+    $itemtype;
+    $objectid;
+    If the itemlinks did work:
+    $title = $itemlinks[$objectid]['label'];
+    $link =  $itemlinks[$objectid]['url'];
+    </xar:comment>
+</xar:template>

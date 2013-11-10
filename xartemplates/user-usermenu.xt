@@ -1,69 +1,72 @@
-<xar:if condition="empty($action)">
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:set name="compare">xarServerGetCurrentURL()</xar:set>
-<xar:set name="current">xarModURL('roles', 'user', 'account', array('moduleload' => 'pubsub'))</xar:set>
-<xar:if condition="$compare eq $current">
-    <dd class="active">
-        <a href="#xarServerGetCurrentURL()#">
-            <xar:mlstring>
-                Subscriptions
-            </xar:mlstring>
-        </a>
-    </dd>    
-<xar:else />
-    <dd>
-        <a href="#xarModURL('roles', 'user', 'account', array('moduleload' => 'pubsub'))#">
-            <xar:mlstring>
-                Subscriptions
-            </xar:mlstring>
-        </a>
-    </dd>    
-</xar:if>
-<xar:elseif condition="$action eq 'list'"/>
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>Publish / Subscribe</xar:mlstring>
-    </span>
-</div>
-<div class="xar-mod-body">
-    <div align="center">
-        <h2>
-            <xar:mlstring>
-                Your Subscriptions
-            </xar:mlstring>
-        </h2>
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="empty($action)">
+    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <xar:set name="compare">xarServerGetCurrentURL()</xar:set>
+    <xar:set name="current">xarModURL('roles', 'user', 'account', array('moduleload' => 'pubsub'))</xar:set>
+    <xar:if condition="$compare eq $current">
+        <dd class="active">
+            <a href="#xarServerGetCurrentURL()#">
+                <xar:mlstring>
+                    Subscriptions
+                </xar:mlstring>
+            </a>
+        </dd>    
+    <xar:else />
+        <dd>
+            <a href="#xarModURL('roles', 'user', 'account', array('moduleload' => 'pubsub'))#">
+                <xar:mlstring>
+                    Subscriptions
+                </xar:mlstring>
+            </a>
+        </dd>    
+    </xar:if>
+    <xar:elseif condition="$action eq 'list'"/>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Publish / Subscribe</xar:mlstring>
+        </span>
     </div>
-    <br />
-<xar:if condition="!empty($items) and count($items) gt 0">
-    <table border="0" cellpadding="4" cellspacing="0">
-      <tr>
-        <th><xar:mlstring>Category</xar:mlstring></th>
-        <th><xar:mlstring>Module</xar:mlstring></th>
-        <th><xar:mlstring>Itemtype</xar:mlstring></th>
-        <th><xar:mlstring>Action</xar:mlstring></th>
-        <th><xar:mlstring>Options</xar:mlstring></th>
-      </tr>
-    <xar:foreach in="$items" value="$item">
-      <tr>
-        <td>#$item['catname']#</td>
-        <td>#$item['modname']#</td>
-        <td>#$item['itemtype']#</td>
-      <xar:if condition="$item['actionid'] eq 1">
-        <td><xar:mlstring>Send Text Mail</xar:mlstring></td>
-      <xar:elseif condition="$item['actionid'] eq 2"/>
-        <td><xar:mlstring>Send HTML Mail</xar:mlstring></td>
-      <xar:else/>
-        <td>#$item['actionid']#</td>
-      </xar:if>
-        <td><a href="#xarModURL('pubsub','user','usermenu',array('action' => 'unsub', 'pubsubid' => $item['pubsubid']))#"><xar:mlstring>Unsubscribe</xar:mlstring></a></td>
-      </tr>
-    </xar:foreach>
-    </table>
-<xar:else/>
-    <p><b><xar:mlstring>You have no subscriptions</xar:mlstring></b></p>
-</xar:if>
-<br/><a href="#xarModURL('roles','user','account')#"><xar:mlstring>Back to Your Account</xar:mlstring></a>
-</div>
-<xar:else/>
-    <xar:mlstring>Unknown Action</xar:mlstring>
-</xar:if>
+    <div class="xar-mod-body">
+        <div align="center">
+            <h2>
+                <xar:mlstring>
+                    Your Subscriptions
+                </xar:mlstring>
+            </h2>
+        </div>
+        <br />
+    <xar:if condition="!empty($items) and count($items) gt 0">
+        <table border="0" cellpadding="4" cellspacing="0">
+          <tr>
+            <th><xar:mlstring>Category</xar:mlstring></th>
+            <th><xar:mlstring>Module</xar:mlstring></th>
+            <th><xar:mlstring>Itemtype</xar:mlstring></th>
+            <th><xar:mlstring>Action</xar:mlstring></th>
+            <th><xar:mlstring>Options</xar:mlstring></th>
+          </tr>
+        <xar:foreach in="$items" value="$item">
+          <tr>
+            <td>#$item['catname']#</td>
+            <td>#$item['modname']#</td>
+            <td>#$item['itemtype']#</td>
+          <xar:if condition="$item['actionid'] eq 1">
+            <td><xar:mlstring>Send Text Mail</xar:mlstring></td>
+          <xar:elseif condition="$item['actionid'] eq 2"/>
+            <td><xar:mlstring>Send HTML Mail</xar:mlstring></td>
+          <xar:else/>
+            <td>#$item['actionid']#</td>
+          </xar:if>
+            <td><a href="#xarModURL('pubsub','user','usermenu',array('action' => 'unsub', 'pubsubid' => $item['pubsubid']))#"><xar:mlstring>Unsubscribe</xar:mlstring></a></td>
+          </tr>
+        </xar:foreach>
+        </table>
+    <xar:else/>
+        <p><b><xar:mlstring>You have no subscriptions</xar:mlstring></b></p>
+    </xar:if>
+    <br/><a href="#xarModURL('roles','user','account')#"><xar:mlstring>Back to Your Account</xar:mlstring></a>
+    </div>
+    <xar:else/>
+        <xar:mlstring>Unknown Action</xar:mlstring>
+    </xar:if>
+</xar:template>
