@@ -42,40 +42,40 @@ function pubsub_adminapi_getq($args)
     $categoriestable = $xartable['categories'];
 
     // Get all jobs in pending state
-    $query = "SELECT $pubsubprocesstable.xar_handlingid,
-                     $pubsubprocesstable.xar_pubsubid,
-                     $pubsubprocesstable.xar_objectid,
-                     $pubsubprocesstable.xar_templateid,
-                     $pubsubprocesstable.xar_status,
-                     $pubsubregtable.xar_eventid,
-                     $pubsubregtable.xar_userid,
-                     $pubsubregtable.xar_actionid,
-                     $pubsubregtable.xar_subdate,
-                     $pubsubregtable.xar_email,
-                     $pubsubeventstable.xar_modid,
-                     $pubsubeventstable.xar_itemtype,
-                     $pubsubeventstable.xar_cid,
-                     $pubsubeventstable.xar_extra,
-                     $pubsubtemplatestable.xar_name,
-                     $modulestable.xar_name,
-                     $rolestable.xar_uname,
-                     $categoriestable.xar_name
+    $query = "SELECT $pubsubprocesstable.handlingid,
+                     $pubsubprocesstable.pubsubid,
+                     $pubsubprocesstable.objectid,
+                     $pubsubprocesstable.templateid,
+                     $pubsubprocesstable.status,
+                     $pubsubregtable.eventid,
+                     $pubsubregtable.userid,
+                     $pubsubregtable.actionid,
+                     $pubsubregtable.subdate,
+                     $pubsubregtable.email,
+                     $pubsubeventstable.modid,
+                     $pubsubeventstable.itemtype,
+                     $pubsubeventstable.cid,
+                     $pubsubeventstable.extra,
+                     $pubsubtemplatestable.name,
+                     $modulestable.name,
+                     $rolestable.uname,
+                     $categoriestable.name
               FROM $pubsubprocesstable
          LEFT JOIN $pubsubregtable
-                ON $pubsubprocesstable.xar_pubsubid = $pubsubregtable.xar_pubsubid
+                ON $pubsubprocesstable.pubsubid = $pubsubregtable.pubsubid
          LEFT JOIN $pubsubeventstable
-                ON $pubsubregtable.xar_eventid = $pubsubeventstable.xar_eventid
+                ON $pubsubregtable.eventid = $pubsubeventstable.eventid
          LEFT JOIN $pubsubtemplatestable
-                ON $pubsubprocesstable.xar_templateid = $pubsubtemplatestable.xar_templateid
+                ON $pubsubprocesstable.templateid = $pubsubtemplatestable.templateid
          LEFT JOIN $modulestable
-                ON $pubsubeventstable.xar_modid = $modulestable.xar_regid
+                ON $pubsubeventstable.modid = $modulestable.regid
          LEFT JOIN $rolestable
-                ON $pubsubregtable.xar_userid = $rolestable.xar_uid
+                ON $pubsubregtable.userid = $rolestable.id
          LEFT JOIN $categoriestable
-                ON $pubsubeventstable.xar_cid = $categoriestable.xar_cid";
+                ON $pubsubeventstable.cid = $categoriestable.id";
 
     if (!empty($status) && is_string($status)) {
-        $query .= " WHERE $pubsubprocesstable.xar_status = ?";
+        $query .= " WHERE $pubsubprocesstable.status = ?";
         $bindvars = array($status);
         $result = $dbconn->Execute($query,$bindvars);
     } else {

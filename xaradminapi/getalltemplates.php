@@ -26,8 +26,8 @@ function pubsub_adminapi_getalltemplates($args)
     $xartable =& xarDB::getTables();
     $pubsubtemplatestable = $xartable['pubsub_templates'];
 
-    $query = "SELECT xar_templateid,
-                     xar_name
+    $query = "SELECT templateid,
+                     name
                 FROM $pubsubtemplatestable";
 
     $result =& $dbconn->Execute($query);
