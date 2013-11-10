@@ -15,7 +15,7 @@
  */
 $modversion['name']         = 'Pubsub';
 $modversion['id']           = '181';
-$modversion['version']      = '1.5.1';
+$modversion['version']      = '2.0.0';
 $modversion['displayname']  = xarML('Pubsub');
 $modversion['description']  = 'Allow users to subscribe to updates to events';
 $modversion['official']     = 1;
