@@ -26,9 +26,7 @@ function pubsub_init()
     // Get database information
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
-    $prefix = xarDBGetSiteTablePrefix();
-
-    xarDBLoadTableMaintenanceAPI();
+    $prefix = xarDB::getPrefix();
 
     // Create tables
     $pubsubeventstable = $xartable['pubsub_events'];
@@ -110,7 +108,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
     $bindvars=array($nextId, $name, $template, $compiled);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
-
+/*
     // Set up module hooks
     if (!xarModRegisterHook('item',
                            'create',
@@ -155,7 +153,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
                            'usermenu')) {
         return false;
     }
-
+*/
 // TODO: review this :-)
 
     // Define instances for this module
@@ -206,7 +204,7 @@ function pubsub_upgrade($oldversion)
     switch ($oldversion) {
         case '1.0':
             $dbconn =& xarDB::getConn();
-            $prefix = xarDBGetSiteTablePrefix();
+            $prefix = xarDB::getPrefix();
 
             $xarTables =& xarDB::getTables();
             $pubsubregtable = $xarTables['pubsub_reg'];
@@ -233,7 +231,7 @@ function pubsub_upgrade($oldversion)
         case 1.1:
             $dbconn =& xarDB::getConn();
             $xartable =& xarDB::getTables();
-            $prefix = xarDBGetSiteTablePrefix();
+            $prefix = xarDB::getPrefix();
 
             $pubsubtemplatestable = $xartable['pubsub_templates'];
             $templatesfields = array(
@@ -280,7 +278,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
         case 1.2:
             $dbconn =& xarDB::getConn();
             $xartable =& xarDB::getTables();
-            $prefix = xarDBGetSiteTablePrefix();
+            $prefix = xarDB::getPrefix();
 
             $query = xarDBDropTable($xartable['pubsub_eventcids']);
             if (empty($query)) return; // throw back
@@ -371,7 +369,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
             $modversion['user'] = 0;
         case '1.4.0':
             $dbconn =& xarDB::getConn();
-            $prefix = xarDBGetSiteTablePrefix();
+            $prefix = xarDB::getPrefix();
 
             $xarTables =& xarDB::getTables();
             $pubsubregtable = $xarTables['pubsub_reg'];
@@ -453,32 +451,30 @@ function pubsub_delete()
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();
 
-    //Load Table Maintainance API
-    xarDBLoadTableMaintenanceAPI();
 
     // Generate the SQL to drop the table using the API
-    $query = xarDBDropTable($xartable['pubsub_events']);
+    $query = xarDB::dropTable($xartable['pubsub_events']);
     if (empty($query)) return; // throw back
 
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $query = xarDBDropTable($xartable['pubsub_reg']);
+    $query = xarDB::dropTable($xartable['pubsub_reg']);
     if (empty($query)) return; // throw back
 
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $query = xarDBDropTable($xartable['pubsub_process']);
+    $query = xarDB::dropTable($xartable['pubsub_process']);
     if (empty($query)) return; // throw back
 
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $query = xarDBDropTable($xartable['pubsub_templates']);
+    $query = xarDB::dropTable($xartable['pubsub_templates']);
     if (empty($query)) return; // throw back
 
     // Drop the table and send exception if returns false.

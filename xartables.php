@@ -27,32 +27,32 @@ function pubsub_xartables()
     $xartable = array();
 
     // Name for pubsub events database entities
-    $pubsub_events = xarDBGetSiteTablePrefix() . '_pubsub_events';
+    $pubsub_events = xarDB::getPrefix() . '_pubsub_events';
 
     // Table name
     $xartable['pubsub_events'] = $pubsub_events;
 
 // Note : this table is no longer in use - leave in here to handle upgrades
     // Name for pubsub event category ids database entities
-    $pubsub_eventcids = xarDBGetSiteTablePrefix() . '_pubsub_eventcids';
+    $pubsub_eventcids = xarDB::getPrefix() . '_pubsub_eventcids';
 
     // Table name
     $xartable['pubsub_eventcids'] = $pubsub_eventcids;
 
     // Name for pubsub event registration database entities
-    $pubsub_reg = xarDBGetSiteTablePrefix() . '_pubsub_reg';
+    $pubsub_reg = xarDB::getPrefix() . '_pubsub_reg';
 
     // Table name
     $xartable['pubsub_reg'] = $pubsub_reg;
 
     // Name for pubsub event handling database entities
-    $pubsub_process = xarDBGetSiteTablePrefix() . '_pubsub_process';
+    $pubsub_process = xarDB::getPrefix() . '_pubsub_process';
 
     // Table name
     $xartable['pubsub_process'] = $pubsub_process;
 
     // Name for pubsub templates
-    $pubsub_templates = xarDBGetSiteTablePrefix() . '_pubsub_templates';
+    $pubsub_templates = xarDB::getPrefix() . '_pubsub_templates';
 
     // Table name
     $xartable['pubsub_templates'] = $pubsub_templates;
