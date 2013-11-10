@@ -45,6 +45,7 @@
                      <div class="xar-form-input-wrapper xar-clearleft ">
                      <pre>#$template#</pre>
                      </div>
+                 </div>
                  <div class="xar-form-input-wrapper">
                      <label for="preview" class="xar-form-label">
                         <xar:mlstring>Preview:</xar:mlstring>
@@ -67,13 +68,15 @@
                         <label for="template" class="xar-form-label"><xar:mlstring>Template:</xar:mlstring></label>
                         <textarea name="template" id="template" rows="10" cols="55">#$template#</textarea>
                     </div>
-                <div class="xar-form-input-wrapper-after">
                 <xar:elseif condition="$action eq 'confirm'"/>
+                <div class="xar-form-input-wrapper-after">
                     <xar:ml><xar:mlstring>Are you sure you want to delete template '#(1)' ?</xar:mlstring><xar:mlvar>#$name#</xar:mlvar></xar:ml>
-                <xar:else/>
-                    <xar:mlstring>Unknown Action</xar:mlstring>
-                </xar:if>
                 </div>
+                <xar:else/>
+                <div class="xar-form-input-wrapper-after">
+                    <xar:mlstring>Unknown Action</xar:mlstring>
+                </div>
+                </xar:if>
              </fieldset>
                 <div class="xar-form-input-wrapper-after">
                  <input type="hidden" name="authid" id="authid" value="#$authid#" />
