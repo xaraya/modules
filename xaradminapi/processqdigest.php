@@ -24,8 +24,8 @@ function pubsub_adminapi_processqdigest($args)
     extract($args);
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     // Get the wrapper template
     $pubsubtemplatestable = $xartable['pubsub_templates'];
@@ -59,7 +59,7 @@ function pubsub_adminapi_processqdigest($args)
     while (!$result->EOF) {
         list($handlingid,$pubsubid,$objectid,$templateid) = $result->fields;
         // run the job passing it the handling, pubsub and object ids.
-        $message= xarModAPIFunc('pubsub','admin','runjobdigest',
+        $message= xarMod::apiFunc('pubsub','admin','runjobdigest',
                       array('handlingid' => $handlingid,
                             'pubsubid' => $pubsubid,
                             'objectid' => $objectid,
@@ -94,7 +94,7 @@ function pubsub_adminapi_processqdigest($args)
 
     $html = xarTplString($compiled, $tplData);
     $plaintext = strip_tags($html);
-        if (!xarModAPIFunc('mail',
+        if (!xarMod::apiFunc('mail',
                            'admin',
                            'sendmail',
                            array('info'     => $email,
@@ -115,7 +115,7 @@ function pubsub_adminapi_processqdigest($args)
     }
     foreach ($handlecount as $handlingid=> $value) {
 //      if ($value = $handleverify[$handlingid]) {
-           xarModAPIFunc('pubsub','admin','deljob',
+           xarMod::apiFunc('pubsub','admin','deljob',
                          array('handlingid' => $handlingid));
 //        }
     }

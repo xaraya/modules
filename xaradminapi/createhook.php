@@ -112,7 +112,7 @@ function pubsub_adminapi_createhook($args)
 /* */
 
     // process the event (i.e. create a job for each subscriber)
-    if (!xarModAPIFunc('pubsub','admin','processevent',
+    if (!xarMod::apiFunc('pubsub','admin','processevent',
                        array('modid' => $modid,
                              'itemtype' => $itemtype,
                              'cid' => $cid,

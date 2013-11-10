@@ -24,8 +24,8 @@
 function pubsub_init()
 {
     // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $prefix = xarDBGetSiteTablePrefix();
 
     xarDBLoadTableMaintenanceAPI();
@@ -205,10 +205,10 @@ function pubsub_upgrade($oldversion)
 
     switch ($oldversion) {
         case '1.0':
-            $dbconn =& xarDBGetConn();
+            $dbconn =& xarDB::getConn();
             $prefix = xarDBGetSiteTablePrefix();
 
-            $xarTables =& xarDBGetTables();
+            $xarTables =& xarDB::getTables();
             $pubsubregtable = $xarTables['pubsub_reg'];
             $pubsubtemplatetable = $prefix.'_pubsub_template';
 
@@ -231,8 +231,8 @@ function pubsub_upgrade($oldversion)
             if (!$result) return;
 
         case 1.1:
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn =& xarDB::getConn();
+            $xartable =& xarDB::getTables();
             $prefix = xarDBGetSiteTablePrefix();
 
             $pubsubtemplatestable = $xartable['pubsub_templates'];
@@ -278,8 +278,8 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
             // fall through to the next upgrade
 
         case 1.2:
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn =& xarDB::getConn();
+            $xartable =& xarDB::getTables();
             $prefix = xarDBGetSiteTablePrefix();
 
             $query = xarDBDropTable($xartable['pubsub_eventcids']);
@@ -370,10 +370,10 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
         case '1.3':
             $modversion['user'] = 0;
         case '1.4.0':
-            $dbconn =& xarDBGetConn();
+            $dbconn =& xarDB::getConn();
             $prefix = xarDBGetSiteTablePrefix();
 
-            $xarTables =& xarDBGetTables();
+            $xarTables =& xarDB::getTables();
             $pubsubregtable = $xarTables['pubsub_reg'];
 
             // Add a column to the register table
@@ -450,8 +450,8 @@ function pubsub_delete()
     }
 
     // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
 
     //Load Table Maintainance API
     xarDBLoadTableMaintenanceAPI();

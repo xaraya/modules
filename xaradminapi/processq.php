@@ -26,13 +26,13 @@ function pubsub_adminapi_processq($args)
     }
 
     if ($allindigest == 0) {
-        if (!($count = xarModAPIFunc('pubsub','admin','processqnodigest',$args) ) ) {
+        if (!($count = xarMod::apiFunc('pubsub','admin','processqnodigest',$args) ) ) {
             return;
         } else {
             return $count;
         }
     } else {
-        if (!($count = xarModAPIFunc('pubsub','admin','processqdigest',$args) ) ) {
+        if (!($count = xarMod::apiFunc('pubsub','admin','processqdigest',$args) ) ) {
             return;
         } else {
             return $count;

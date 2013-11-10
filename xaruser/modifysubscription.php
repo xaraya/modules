@@ -39,13 +39,13 @@ function pubsub_user_modifysubscription()
     if (xarUserIsLoggedIn()) {
         $userid = xarUserGetVar('uid');
     } else {
-        xarResponseRedirect($returnurl);
+        xarController::redirect($returnurl);
         return true;
     }
 
     switch ($subaction) {
         case 0:
-            xarModAPIFunc('pubsub','user','unsubscribe',
+            xarMod::apiFunc('pubsub','user','unsubscribe',
                           array('modid'   =>$modid
                                ,'itemtype'=>$itemtype
                                ,'cid'     =>$cid
@@ -54,7 +54,7 @@ function pubsub_user_modifysubscription()
                                ));
             break;
         case 1:
-            xarModAPIFunc('pubsub','user','subscribe',
+            xarMod::apiFunc('pubsub','user','subscribe',
                           array('modid'   =>$modid
                                ,'itemtype'=>$itemtype
                                ,'cid'     =>$cid
@@ -68,7 +68,7 @@ function pubsub_user_modifysubscription()
             break;
     } // end switch
 
-    xarResponseRedirect($returnurl);
+    xarController::redirect($returnurl);
     return true;
 
 } // END modifysubscription

@@ -24,8 +24,8 @@ function pubsub_adminapi_getq($args)
     extract($args);
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $pubsubprocesstable = $xartable['pubsub_process'];
     $pubsubregtable = $xartable['pubsub_reg'];
     $pubsubeventstable = $xartable['pubsub_events'];

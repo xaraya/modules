@@ -27,7 +27,7 @@ function pubsub_admin_viewall()
     if (!xarSecurityCheck('AdminPubSub')) return;
 
     // The user API function is called
-    $events = xarModAPIFunc('pubsub',
+    $events = xarMod::apiFunc('pubsub',
                             'admin',
                             'getall');
 

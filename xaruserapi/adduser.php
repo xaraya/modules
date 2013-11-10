@@ -59,8 +59,8 @@ function pubsub_userapi_adduser($args)
     if (!xarSecurityCheck('ReadPubSub', 1, 'item', 'All::$eventid')) return;
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $pubsubregtable = $xartable['pubsub_reg'];
 
     // check not already subscribed

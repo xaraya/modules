@@ -34,8 +34,8 @@ function pubsub_adminapi_getall($args)
         return;
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $modulestable = $xartable['modules'];
     $categoriestable = $xartable['categories'];
     $pubsubeventstable = $xartable['pubsub_events'];

@@ -31,10 +31,10 @@ function pubsub_admin_viewq($args)
         switch ($action)
         {
             case 'process':
-                if (!xarModAPIFunc('pubsub','admin','processq')) {
+                if (!xarMod::apiFunc('pubsub','admin','processq')) {
                     return;
                 }
-                xarResponseRedirect(xarModURL('pubsub', 'admin', 'viewq'));
+                xarController::redirect(xarModURL('pubsub', 'admin', 'viewq'));
                 return true;
                 break;
 
@@ -46,10 +46,10 @@ function pubsub_admin_viewq($args)
 
             case 'delete':
                 if (!empty($handlingid)) {
-                    if (!xarModAPIFunc('pubsub','admin','deljob',array('handlingid' => $handlingid))) {
+                    if (!xarMod::apiFunc('pubsub','admin','deljob',array('handlingid' => $handlingid))) {
                         return;
                     }
-                    xarResponseRedirect(xarModURL('pubsub', 'admin', 'viewq'));
+                    xarController::redirect(xarModURL('pubsub', 'admin', 'viewq'));
                     return true;
                 }
                 break;
@@ -60,7 +60,7 @@ function pubsub_admin_viewq($args)
     }
 
     // The user API function is called
-    $events = xarModAPIFunc('pubsub',
+    $events = xarMod::apiFunc('pubsub',
                             'admin',
                             'getq');
 

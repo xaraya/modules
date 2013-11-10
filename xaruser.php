@@ -46,7 +46,7 @@ function pubsub_user_remove($args)
         return;
     }
 
-    if (!xarModAPIFunc('pubsub',
+    if (!xarMod::apiFunc('pubsub',
                        'user',
                        'deluser',
                         array('eventid' => $eventid)))

@@ -57,8 +57,8 @@ function pubsub_adminapi_processevent($args)
 //    if (!xarSecurityCheck('AddPubSub')) return;
 
     // Get datbase setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $pubsubeventstable  = $xartable['pubsub_events'];
     $pubsubregtable     = $xartable['pubsub_reg'];
     $pubsubprocesstable = $xartable['pubsub_process'];
@@ -69,7 +69,7 @@ function pubsub_adminapi_processevent($args)
     $includechildren = xarModGetVar('pubsub','includechildren');
     if ( !empty($cid) && $includechildren == 1 )
     {
-        $ancestors = xarModAPIFunc('categories','user','getancestors'
+        $ancestors = xarMod::apiFunc('categories','user','getancestors'
                                    , array('cid'=>$cid,'order'=>'self') );
         $ancestors = array_keys($ancestors);
 

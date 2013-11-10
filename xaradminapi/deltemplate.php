@@ -41,8 +41,8 @@ function pubsub_adminapi_deltemplate($args)
     if (!xarSecurityCheck('DeletePubSub')) return;
 
     // Get datbase setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $pubsubtemplatestable = $xartable['pubsub_templates'];
 
     // Delete item

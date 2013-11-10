@@ -49,8 +49,8 @@ function pubsub_adminapi_checkevent($args)
     }
 
     // Get datbase setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $pubsubeventstable = $xartable['pubsub_events'];
 
     // check this event isn't already in the DB

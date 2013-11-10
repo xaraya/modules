@@ -50,8 +50,8 @@ function pubsub_adminapi_runjob($args)
     }
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $pubsubregtable = $xartable['pubsub_reg'];
     $pubsubeventstable = $xartable['pubsub_events'];
 
@@ -150,7 +150,7 @@ function pubsub_adminapi_runjob($args)
         $tplData['templatecontent'] =$templatecontent;
 
         // (try to) retrieve a title and link for this item
-        $itemlinks = xarModAPIFunc($modname,'user','getitemlinks',
+        $itemlinks = xarMod::apiFunc($modname,'user','getitemlinks',
                                    array('itemtype' => $itemtype,
                                          'itemids' => array($objectid)),
                                    0); // don't throw an exception here
@@ -223,7 +223,7 @@ function pubsub_adminapi_runjob($args)
             */
         if ($actionid == 2 ) {
              // Send the mail using the mail module
-             if (!xarModAPIFunc('mail',
+             if (!xarMod::apiFunc('mail',
                                 'admin',
                                 'sendhtmlmail',
                                 array('info'     => $info,
@@ -236,7 +236,7 @@ function pubsub_adminapi_runjob($args)
                                       'usetemplates' => false))) return;
         } else {
              // plaintext mail
-             if (!xarModAPIFunc('mail',
+             if (!xarMod::apiFunc('mail',
                                 'admin',
                                 'sendmail',
                                 array('info'     => $info,
@@ -249,11 +249,11 @@ function pubsub_adminapi_runjob($args)
                                       'usetemplates' => false))) return;
         }
         // delete job from queue now it has run
-        xarModAPIFunc('pubsub','admin','deljob', array('handlingid' => $handlingid));
+        xarMod::apiFunc('pubsub','admin','deljob', array('handlingid' => $handlingid));
 
     } else {
         // invalid action - update queue accordingly
-        xarModAPIFunc('pubsub','admin','updatejob',
+        xarMod::apiFunc('pubsub','admin','updatejob',
                       array('handlingid' => $handlingid,
                             'pubsubid' => $pubsubid,
                             'objectid' => $objectid,

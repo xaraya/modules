@@ -50,8 +50,8 @@ function pubsub_adminapi_updatetemplate($args)
     if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:All:All:$templateid")) return;
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $pubsubtemplatestable = $xartable['pubsub_templates'];
 
     // compile the template now

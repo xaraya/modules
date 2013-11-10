@@ -47,15 +47,15 @@ function pubsub_admin_addsubscriber()
         foreach( $emails as $email )
         {
             $sub_args['email']    = $email;
-            xarModAPIFunc('pubsub','user','subscribe', $sub_args);
+            xarMod::apiFunc('pubsub','user','subscribe', $sub_args);
         }
     } else {
         $sub_args['email']    = $sub_email;
-        xarModAPIFunc('pubsub','user','subscribe', $sub_args);
+        xarMod::apiFunc('pubsub','user','subscribe', $sub_args);
     }
 
 
-    xarResponseRedirect(xarModURL('pubsub', 'admin', 'viewall'));
+    xarController::redirect(xarModURL('pubsub', 'admin', 'viewall'));
 
     return true;
 }

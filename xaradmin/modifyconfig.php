@@ -33,7 +33,7 @@ function pubsub_admin_modifyconfig()
     $data['templates'][0] = xarML('not supported');
 
     // get the list of available templates
-    $templates = xarModAPIFunc('pubsub','admin','getalltemplates');
+    $templates = xarMod::apiFunc('pubsub','admin','getalltemplates');
     foreach ($templates as $id => $name) {
         $data['templates'][$id] = $name;
     }
@@ -41,12 +41,12 @@ function pubsub_admin_modifyconfig()
     $data['settings'] = array();
 
     // get the list of hooked modules
-    $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
+    $hookedmodules = xarMod::apiFunc('modules', 'admin', 'gethookedmodules',
                                    array('hookModName' => 'pubsub'));
     if (isset($hookedmodules) && is_array($hookedmodules)) {
         foreach ($hookedmodules as $modname => $value) {
             // Get the list of all item types for this module (if any)
-            $mytypes = xarModAPIFunc($modname,'user','getitemtypes',
+            $mytypes = xarMod::apiFunc($modname,'user','getitemtypes',
                                      // don't throw an exception if this function doesn't exist
                                      array(), 0);
             // we have hooks for individual item types here
@@ -146,9 +146,9 @@ function pubsub_admin_modifyconfig()
     $data['usetemplateids'] = xarModGetVar('pubsub','usetemplateids');
 
     if (xarModIsAvailable('scheduler')) {
-        $data['intervals'] = xarModAPIFunc('scheduler','user','intervals');
+        $data['intervals'] = xarMod::apiFunc('scheduler','user','intervals');
         // see if we have a scheduler job running to process the pubsub queue
-        $job = xarModAPIFunc('scheduler','user','get',
+        $job = xarMod::apiFunc('scheduler','user','get',
                              array('module' => 'pubsub',
                                    'type' => 'admin',
                                    'func' => 'processq'));

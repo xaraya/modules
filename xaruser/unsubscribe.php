@@ -62,8 +62,8 @@ function pubsub_user_unsubscribe($args)
     }
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $pubsubeventstable = $xartable['pubsub_events'];
     $pubsubregtable = $xartable['pubsub_reg'];
 
@@ -82,7 +82,7 @@ function pubsub_user_unsubscribe($args)
 
     list($pubsubid) = $result->fields;
 
-    if (!xarModAPIFunc('pubsub',
+    if (!xarMod::apiFunc('pubsub',
                        'user',
                        'deluser',
                         array('pubsubid' => $pubsubid))) {
@@ -92,7 +92,7 @@ function pubsub_user_unsubscribe($args)
                        new SystemException($msg));
     }
 
-    xarResponseRedirect($returnurl);
+    xarController::redirect($returnurl);
     return true;
 
 } // END unsubscribe

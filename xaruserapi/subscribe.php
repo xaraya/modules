@@ -64,7 +64,7 @@ function pubsub_userapi_subscribe($args)
         $groupdescr = 'Subscribe';
 
     // check if we already have an event for this, or create it if necessary
-    $eventid = xarModAPIFunc('pubsub','admin','checkevent',
+    $eventid = xarMod::apiFunc('pubsub','admin','checkevent',
                              array('modid' => $modid,
                                    'itemtype' => $itemtype,
                                    'cid' => $cid,
@@ -74,7 +74,7 @@ function pubsub_userapi_subscribe($args)
 
 // TODO: fill in eventid *and* actionid (wherever that is supposed to come from)
 // AM hardcoding actionid to 1 for now, will have to work out options for htmlmail etc. later
-    if (!xarModAPIFunc('pubsub',
+    if (!xarMod::apiFunc('pubsub',
                        'user',
                        'adduser',
                         array('eventid' => $eventid

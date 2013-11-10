@@ -33,7 +33,7 @@ function pubsub_user_usermenu($args)
         case 'form':
         case 'list':
             xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Your Subscriptions')));
-            $items = xarModAPIFunc('pubsub','user','getsubscriptions',
+            $items = xarMod::apiFunc('pubsub','user','getsubscriptions',
                                    array('userid' => xarUserGetVar('uid')));
             if (!isset($items)) return;
             // get the itemtype descriptions if available
@@ -47,7 +47,7 @@ function pubsub_user_usermenu($args)
                 $itemtypes = array();
                 foreach ($todo as $modname => $val) {
                     // Get the list of all item types for this module (if any)
-                    $mytypes = xarModAPIFunc($modname,'user','getitemtypes',
+                    $mytypes = xarMod::apiFunc($modname,'user','getitemtypes',
                                              // don't throw an exception if this function doesn't exist
                                              array(), 0);
                     if (!empty($mytypes)) {
@@ -69,7 +69,7 @@ function pubsub_user_usermenu($args)
 
         case 'unsub':
             if (!xarVarFetch('pubsubid','int:1:',$pubsubid)) return;
-            $items = xarModAPIFunc('pubsub','user','getsubscriptions',
+            $items = xarMod::apiFunc('pubsub','user','getsubscriptions',
                                    array('userid' => xarUserGetVar('uid')));
             if (!isset($items)) return;
             if (!isset($items[$pubsubid])) {
@@ -79,7 +79,7 @@ function pubsub_user_usermenu($args)
                                  new SystemException($msg));
                  return;
             }
-            if (!xarModAPIFunc('pubsub',
+            if (!xarMod::apiFunc('pubsub',
                                'user',
                                'deluser',
                                array('pubsubid' => $pubsubid))) {
@@ -89,7 +89,7 @@ function pubsub_user_usermenu($args)
                                  new SystemException($msg));
                  return;
              }
-             xarResponseRedirect(xarModURL('pubsub','user','usermenu',
+             xarController::redirect(xarModURL('pubsub','user','usermenu',
                                            array('action' => 'list')));
              return true;
 

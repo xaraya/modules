@@ -26,8 +26,8 @@ function pubsub_adminapi_processqnodigest($args)
     extract($args);
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $pubsubprocesstable = $xartable['pubsub_process'];
 
     // Get all jobs in pending state
@@ -46,7 +46,7 @@ function pubsub_adminapi_processqnodigest($args)
     while (!$result->EOF) {
         list($handlingid,$pubsubid,$objectid,$templateid) = $result->fields;
         // run the job passing it the handling, pubsub and object ids.
-        xarModAPIFunc('pubsub','admin','runjob',
+        xarMod::apiFunc('pubsub','admin','runjob',
                       array('handlingid' => $handlingid,
                             'pubsubid' => $pubsubid,
                             'objectid' => $objectid,

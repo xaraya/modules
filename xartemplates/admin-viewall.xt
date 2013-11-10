@@ -79,7 +79,7 @@
             <label class="xar-form-label">
                 <xar:mlstring>Category</xar:mlstring>
             </label>
-            <xar:set name="categories">xarModAPIFunc('categories','user','getcat')</xar:set>
+            <xar:set name="categories">xarMod::apiFunc('categories','user','getcat')</xar:set>
             <select name="sub_category">
                     <xar:foreach in="$categories" value="$category">
                         <xar:set name="indent">$category['indentation'] - 1</xar:set>

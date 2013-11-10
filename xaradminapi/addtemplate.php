@@ -43,8 +43,8 @@ function pubsub_adminapi_addtemplate($args)
     if (!xarSecurityCheck('AddPubSub')) return;
 
     // Get datbase setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $pubsubtemplatestable = $xartable['pubsub_templates'];
 
     // check this template isn't already in the DB

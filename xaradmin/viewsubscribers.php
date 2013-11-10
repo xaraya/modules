@@ -32,7 +32,7 @@ function pubsub_admin_viewsubscribers()
     }
 
     if ($unsub && $pubsubid) {
-        if (!xarModAPIFunc('pubsub',
+        if (!xarMod::apiFunc('pubsub',
                            'user',
                            'deluser',
                             array('pubsubid' => $pubsubid))) {
@@ -44,7 +44,7 @@ function pubsub_admin_viewsubscribers()
         }
     }
 
-    $info = xarModAPIFunc('pubsub','admin','getevent',
+    $info = xarMod::apiFunc('pubsub','admin','getevent',
                           array('eventid' => $eventid));
     if (empty($info)) {
         $msg = xarML('Invalid #(1) for function #(2)() in module #(3)',
@@ -70,7 +70,7 @@ function pubsub_admin_viewsubscribers()
     if (!xarSecurityCheck('AdminPubSub')) return;
 
     // The user API function is called
-    $subscribers = xarModAPIFunc('pubsub'
+    $subscribers = xarMod::apiFunc('pubsub'
                                 ,'admin'
                                 ,'getsubscribers'
                                 ,array('eventid'=>$eventid));

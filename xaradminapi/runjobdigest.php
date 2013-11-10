@@ -51,8 +51,8 @@ function pubsub_adminapi_runjobdigest($args)
     }
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn =& xarDB::getConn();
+    $xartable =& xarDB::getTables();
     $pubsubregtable = $xartable['pubsub_reg'];
     $pubsubeventstable = $xartable['pubsub_events'];
 
@@ -149,7 +149,7 @@ function pubsub_adminapi_runjobdigest($args)
         $tplData['itemid'] = $objectid;
 
         // (try to) retrieve a title and link for this item
-        $itemlinks = xarModAPIFunc($modname,'user','getitemlinks',
+        $itemlinks = xarMod::apiFunc($modname,'user','getitemlinks',
                                    array('itemtype' => $itemtype,
                                          'itemids' => array($objectid)),
                                    0); // don't throw an exception here
@@ -198,7 +198,7 @@ function pubsub_adminapi_runjobdigest($args)
         $piece = array('email'=>$info,'content'=>$message,'name'=>$name);
       } else {
             // invalid action - update queue accordingly
-            xarModAPIFunc('pubsub','admin','updatejob',
+            xarMod::apiFunc('pubsub','admin','updatejob',
                           array('handlingid' => $handlingid,
                                 'pubsubid' => $pubsubid,
                                 'objectid' => $objectid,
