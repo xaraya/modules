@@ -40,24 +40,24 @@ function pubsub_adminapi_getall($args)
     $pubsubeventstable = $xartable['pubsub_events'];
     $pubsubregtable = $xartable['pubsub_reg'];
 
-    $query = "SELECT $pubsubeventstable.xar_eventid
-                    ,$modulestable.xar_name
-                    ,$pubsubeventstable.xar_itemtype
-                    ,$categoriestable.xar_name
-                    ,$categoriestable.xar_cid
-                    ,COUNT($pubsubregtable.xar_userid) AS numsubscribers
+    $query = "SELECT $pubsubeventstable.eventid
+                    ,$modulestable.name
+                    ,$pubsubeventstable.itemtype
+                    ,$categoriestable.name
+                    ,$categoriestable.id
+                    ,COUNT($pubsubregtable.userid) AS numsubscribers
                 FROM $pubsubeventstable
            LEFT JOIN $modulestable
-                  ON $pubsubeventstable.xar_modid = $modulestable.xar_regid
+                  ON $pubsubeventstable.modid = $modulestable.regid
            LEFT JOIN $categoriestable
-                  ON $pubsubeventstable.xar_cid = $categoriestable.xar_cid
+                  ON $pubsubeventstable.cid = $categoriestable.id
            LEFT JOIN $pubsubregtable
-                  ON $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
-            GROUP BY $pubsubeventstable.xar_eventid
-                    ,$modulestable.xar_name
-                    ,$pubsubeventstable.xar_itemtype
-                    ,$categoriestable.xar_name
-                    ,$categoriestable.xar_cid";
+                  ON $pubsubeventstable.eventid = $pubsubregtable.eventid
+            GROUP BY $pubsubeventstable.eventid
+                    ,$modulestable.name
+                    ,$pubsubeventstable.itemtype
+                    ,$categoriestable.name
+                    ,$categoriestable.id";
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
