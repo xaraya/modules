@@ -36,8 +36,7 @@ function pubsub_adminapi_getq($args)
     // Load categories API
     if (!xarModAPILoad('categories', 'user')) {
         $msg = xarML('Unable to load #(1) #(2) API','categories','user');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
     $categoriestable = $xartable['categories'];
 

@@ -32,9 +32,7 @@ function pubsub_adminapi_checkevent($args)
     if (empty($modid) || !is_numeric($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'module', 'admin', 'checkevent', 'Pubsub');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
     if (empty($itemtype) || !is_numeric($itemtype)) {
         $itemtype = 0;
@@ -42,9 +40,7 @@ function pubsub_adminapi_checkevent($args)
     if (!isset($cid) || !is_numeric($cid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'category', 'admin', 'checkevent', 'Pubsub');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     // Get datbase setup

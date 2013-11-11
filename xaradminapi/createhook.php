@@ -30,16 +30,12 @@ function pubsub_adminapi_createhook($args)
     if (empty($objectid)) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
                      'object ID', 'createhook', 'pubsub');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
     if (!isset($extrainfo)) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
                      'extrainfo', 'createhook', 'pubsub');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     // When called via hooks, the module name may be empty, so we get it from

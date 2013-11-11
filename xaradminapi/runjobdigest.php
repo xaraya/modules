@@ -44,9 +44,7 @@ function pubsub_adminapi_runjobdigest($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     join(', ',$invalid), 'runjob', 'Pubsub');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     // Database information
@@ -92,9 +90,7 @@ function pubsub_adminapi_runjobdigest($args)
     if (empty($modinfo['name'])) {
         $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     'module', 'runjob', 'Pubsub');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     } else {
         $modname = $modinfo['name'];
     }
@@ -125,9 +121,7 @@ function pubsub_adminapi_runjobdigest($args)
         if ($result->EOF) {
             $msg = xarML('Invalid #(1) template',
                          'Pubsub');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                     new SystemException($msg));
-            return;
+            throw new Exception($msg);
         }
 
         $compiled = $result->fields[0];
@@ -135,9 +129,7 @@ function pubsub_adminapi_runjobdigest($args)
         if (empty($compiled)) {
             $msg = xarML('Invalid #(1) template',
                          'Pubsub');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                     new SystemException($msg));
-            return;
+            throw new Exception($msg);
         }
 
         $tplData = array();
@@ -205,9 +197,7 @@ function pubsub_adminapi_runjobdigest($args)
                                 'status' => 'error'));
             $msg = xarML('Invalid #(1) action',
                          'Pubsub');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                     new SystemException($msg));
-            return;
+            throw new Exception($msg);
         }
         return $piece;
 

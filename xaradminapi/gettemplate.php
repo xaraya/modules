@@ -32,9 +32,7 @@ function pubsub_adminapi_gettemplate($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for function #(2)() in module #(3)',
                     join(', ',$invalid), 'gettemplate', 'Pubsub');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     // Security check

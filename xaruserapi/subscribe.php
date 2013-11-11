@@ -39,9 +39,7 @@ function pubsub_userapi_subscribe($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
         join(', ',$invalid), 'subscribe', 'Pubsub');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     if( !isset($userid) && isset($email) && !empty($email) )
@@ -83,8 +81,7 @@ function pubsub_userapi_subscribe($args)
                               ))) {
         $msg = xarML('Bad return from #(1) in function #(2)() in module #(3)',
                      'adduser', 'subscribe', 'Pubsub');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        throw new Exception($msg);
     }
 
     return true;

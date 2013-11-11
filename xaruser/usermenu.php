@@ -74,9 +74,7 @@ function pubsub_user_usermenu($args)
             if (!isset($items[$pubsubid])) {
                  $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
                               'pubsubid', 'usermenu', 'Pubsub');
-                 xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                                 new SystemException($msg));
-                 return;
+                 throw new Exception($msg);
             }
             if (!xarMod::apiFunc('pubsub',
                                'user',
@@ -84,9 +82,7 @@ function pubsub_user_usermenu($args)
                                array('pubsubid' => $pubsubid))) {
                  $msg = xarML('Bad return from #(1) in function #(2)() in module #(3)',
                               'deluser', 'usermenu', 'Pubsub');
-                 xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                                 new SystemException($msg));
-                 return;
+                 throw new Exception($msg);
              }
              xarController::redirect(xarModURL('pubsub','user','usermenu',
                                            array('action' => 'list')));

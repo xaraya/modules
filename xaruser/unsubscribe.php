@@ -55,9 +55,7 @@ function pubsub_user_unsubscribe($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(3)() in module #(4)',
         join(', ',$invalid), 'unsubscribe', 'Pubsub');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     // Database information
@@ -87,8 +85,7 @@ function pubsub_user_unsubscribe($args)
                         array('pubsubid' => $pubsubid))) {
         $msg = xarML('Bad return from #(1) in function #(2)() in module #(3)',
                      'deluser', 'unsubscribe', 'Pubsub');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        throw new Exception($msg);
     }
 
     xarController::redirect($returnurl);

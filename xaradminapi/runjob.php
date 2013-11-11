@@ -43,9 +43,7 @@ function pubsub_adminapi_runjob($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     join(', ',$invalid), 'runjob', 'Pubsub');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     // Database information
@@ -89,9 +87,7 @@ function pubsub_adminapi_runjob($args)
     if (empty($modinfo['name'])) {
         $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     'module', 'runjob', 'Pubsub');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     } else {
         $modname = $modinfo['name'];
     }
@@ -122,9 +118,7 @@ function pubsub_adminapi_runjob($args)
         if ($result->EOF) {
             $msg = xarML('Invalid #(1) template',
                          'Pubsub');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                     new SystemException($msg));
-            return;
+            throw new Exception($msg);
         }
 
         $compiled = $result->fields[0];
@@ -133,9 +127,7 @@ function pubsub_adminapi_runjob($args)
         if (empty($compiled)) {
             $msg = xarML('Invalid #(1) template',
                          'Pubsub');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                     new SystemException($msg));
-            return;
+            throw new Exception($msg);
         }
         // Close the result
         $result->Close();
@@ -260,9 +252,7 @@ function pubsub_adminapi_runjob($args)
                             'status' => 'error'));
         $msg = xarML('Invalid #(1) action',
                      'Pubsub');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                 new SystemException($msg));
-        return false;
+        throw new Exception($msg);
     }
     return true;
 }

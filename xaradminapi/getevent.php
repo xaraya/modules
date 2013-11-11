@@ -27,9 +27,7 @@ function pubsub_adminapi_getevent($args)
     if (empty($eventid) || !is_numeric($eventid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'event id', 'admin', 'getevent', 'Pubsub');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     if (!xarModAPILoad('categories','user')) return;

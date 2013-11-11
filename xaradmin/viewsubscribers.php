@@ -25,9 +25,7 @@ function pubsub_admin_viewsubscribers()
     if (empty($eventid)) {
         $msg = xarML('Invalid #(1) for function #(2)() in module #(3)',
                     'event id', 'viewsubscribers', 'Pubsub');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     if ($unsub && $pubsubid) {
@@ -37,9 +35,7 @@ function pubsub_admin_viewsubscribers()
                             array('pubsubid' => $pubsubid))) {
             $msg = xarML('Bad return from #(1) in function #(2)() in module #(3)',
                          'deluser', 'viewsubscribers', 'Pubsub');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                           new SystemException($msg));
-            return;
+            throw new Exception($msg);
         }
     }
 
@@ -48,9 +44,7 @@ function pubsub_admin_viewsubscribers()
     if (empty($info)) {
         $msg = xarML('Invalid #(1) for function #(2)() in module #(3)',
                     'event id', 'viewsubscribers', 'Pubsub');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     $data['items'] = array();
