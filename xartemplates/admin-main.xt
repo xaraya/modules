@@ -4,7 +4,7 @@
     <div class="xar-mod-body">
         <xar:template type="module" module="pubsub" file="admin-menu" />
         <h2>Overview</h2>
-           <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+           <img src="#xarTplGetImage('module-generic.png', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon"/>
            <h2>
                 What is it?
             </h2>
