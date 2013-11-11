@@ -3,7 +3,7 @@
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
         <xar:template type="module" module="pubsub" file="admin-menu" />
-        <h2><xar:mlstring>Event Queue</xar:mlstring></h2>
+        <h2>Event Queue</h2>
 
         <form method="POST" action="&xar-modurl-pubsub-admin-viewq;">
             <input type="hidden" name="authid" value="#$authid#" />
@@ -15,25 +15,25 @@
         <thead>
             <tr>
                 <th>
-                    <xar:mlstring>Module Name</xar:mlstring>
+                    Module Name
                 </th>
                 <th>
-                    <xar:mlstring>Item Type</xar:mlstring>
+                    Item Type
                 </th>
                 <th>
-                    <xar:mlstring>Category</xar:mlstring>
+                    Category
                 </th>
                 <th>
-                    <xar:mlstring>Object ID</xar:mlstring>
+                    Object ID
                 </th>
                 <th>
-                    <xar:mlstring>Subscriber</xar:mlstring>
+                    Subscriber
                 </th>
                 <th>
-                    <xar:mlstring>Status</xar:mlstring>
+                    Status
                 </th>
                 <th>
-                    <xar:mlstring>Action</xar:mlstring>
+                    Action
                 </th>
             </tr>
         </thead>
@@ -60,7 +60,7 @@
                         #$item['status']#
                     </td>
                     <td>
-                        <a href="#xarModURL('pubsub','admin','viewq',array('handlingid'=>$item['handlingid'],'action' => 'delete','authid' => $authid))#"><xar:mlstring>Delete</xar:mlstring></a>
+                        <a href="#xarModURL('pubsub','admin','viewq',array('handlingid'=>$item['handlingid'],'action' => 'delete','authid' => $authid))#">Delete</a>
                     </td>
                  </tr>
              </xar:foreach>
@@ -68,7 +68,7 @@
             <tr>
               <td colspan="5" align="left">
               <br />
-              <strong><xar:mlstring>No subscriptions found</xar:mlstring></strong>
+              <strong>No subscriptions found</strong>
               </td>
             </tr>
         </xar:if>

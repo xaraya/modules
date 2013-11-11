@@ -5,25 +5,25 @@
         <xar:template type="module" module="pubsub" file="admin-menu" />
         <fieldset>
             <legend>
-                <xar:mlstring>Add Subscribers</xar:mlstring>
+                Add Subscribers
             </legend>
 
             <table width="100%" border="0" cellspacing="0" cellpadding="2">
                 <tr>
                     <th>
-                        <xar:mlstring>Module Name</xar:mlstring>
+                        Module Name
                     </th>
                     <th>
-                        <xar:mlstring>Item Type</xar:mlstring>
+                        Item Type
                     </th>
                     <th>
-                        <xar:mlstring>Category</xar:mlstring>
+                        Category
                     </th>
                     <th>
-                        <xar:mlstring>Subscribers</xar:mlstring>
+                        Subscribers
                     </th>
                     <th>
-                        <xar:mlstring>Action</xar:mlstring>
+                        Action
                     </th>
                 </tr>
                 <xar:if condition="count($items) gt 0">
@@ -42,7 +42,7 @@
                                 #$item['numsubscribers']#
                             </td>
                             <td>
-                                <a href="&xar-modurl-pubsub-admin-viewsubscribers;&amp;eventid=#$item['eventid']#"><xar:mlstring>Subscribers</xar:mlstring></a>
+                                <a href="&xar-modurl-pubsub-admin-viewsubscribers;&amp;eventid=#$item['eventid']#">Subscribers</a>
                             </td>
                         </tr>
                     </xar:foreach>
@@ -50,7 +50,7 @@
                     <tr>
                       <td colspan="5" align="left">
                       <br />
-                      <strong><xar:mlstring>No subscriptions found</xar:mlstring></strong>
+                      <strong>No subscriptions found</strong>
                       </td>
                     </tr>
                 </xar:if>
@@ -60,24 +60,24 @@
         <form action="&xar-modurl-pubsub-admin-addsubscriber;" method="post">
         <fieldset>
             <legend>
-                <xar:mlstring>Add Subscribers</xar:mlstring>
+                Add Subscribers
             </legend>
 
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label">
-                   <xar:mlstring>Module Name</xar:mlstring>
+                   Module Name
                 </label>
                 <xar:data-input name="sub_module" type="19" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label">
-                    <xar:mlstring>Item Type</xar:mlstring>
+                    Item Type
                 </label>
                 <input type="text" name="sub_itemtype"/>
             </div>
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label">
-                    <xar:mlstring>Category</xar:mlstring>
+                    Category
                 </label>
                 <xar:set name="categories">xarMod::apiFunc('categories','user','getcat')</xar:set>
                 <select name="sub_category">
@@ -91,13 +91,13 @@
             </div>
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label">
-                    <xar:mlstring>Send HTML email?</xar:mlstring>
+                    Send HTML email?
                 </label>
                 <input type="checkbox" name="sub_htmlmail" checked="checked" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label">
-                    <xar:mlstring>EMail Addresses</xar:mlstring>
+                    EMail Addresses
                 </label>
                 <textarea name="sub_email" cols="55" rows="6"></textarea>
             </div>

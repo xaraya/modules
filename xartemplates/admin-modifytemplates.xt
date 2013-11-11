@@ -3,27 +3,27 @@
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
         <xar:template type="module" module="pubsub" file="admin-menu" />
-        <h2><xar:mlstring>Modify Templates</xar:mlstring></h2>
+        <h2>Modify Templates</h2>
 
         <table>
         <thead>
         <tr>
-          <th><xar:mlstring>ID</xar:mlstring></th>
-          <th><xar:mlstring>Name</xar:mlstring></th>
-          <th><xar:mlstring>Options</xar:mlstring></th>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Options</th>
         </tr>
         </thead>
         <xar:foreach in="$templates" key="$id" value="$info">
         <tr>
           <td>#$id#</td>
           <td>#$info['name']#</td>
-          <td><a href="#$info['view']#"><xar:mlstring>View</xar:mlstring></a> | <a href="#$info['edit']#"><xar:mlstring>Edit</xar:mlstring></a> | <a href="#$info['delete']#"><xar:mlstring>Delete</xar:mlstring></a></td>
+          <td><a href="#$info['view']#">View</a> | <a href="#$info['edit']#">Edit</a> | <a href="#$info['delete']#">Delete</a></td>
         </tr>
         </xar:foreach>
         <tr>
           <td>&#160;</td>
           <td>&#160;</td>
-          <td><a href="#$new#"><xar:mlstring>New</xar:mlstring></a> | <a href="#$recompile#"><xar:mlstring>Recompile All</xar:mlstring></a></td>
+          <td><a href="#$new#">New</a> | <a href="#$recompile#">Recompile All</a></td>
         </tr>
         </table>
 
@@ -31,16 +31,16 @@
             <xar:if condition="$action eq 'display'">
            <div class="xar-form-input-wrapper">
              <fieldset>
-             <legend><xar:mlstring>View Template</xar:mlstring></legend>
+             <legend>View Template</legend>
                  <div class="xar-form-input-wrapper">
                      <label for="name" class="xar-form-label">
-                         <xar:mlstring>Name:</xar:mlstring>
+                         Name:
                      </label>
                      #$name#
                  </div>
                  <div class="xar-form-input-wrapper">
                      <label for="template" class="xar-form-label">
-                         <xar:mlstring>Template:</xar:mlstring>
+                         Template:
                      </label>
                      <div class="xar-form-input-wrapper xar-clearleft ">
                      <pre>#$template#</pre>
@@ -48,7 +48,7 @@
                  </div>
                  <div class="xar-form-input-wrapper">
                      <label for="preview" class="xar-form-label">
-                        <xar:mlstring>Preview:</xar:mlstring>
+                        Preview:
                      </label>
                      #$preview#
                   </div>
@@ -61,20 +61,20 @@
              <legend>#$actionname#</legend>
                 <xar:if condition="$action eq 'create' or $action eq 'update'">
                    <div class="xar-form-input-wrapper">
-                        <label for="name" class="xar-form-label"><xar:mlstring>Name:</xar:mlstring></label>
+                        <label for="name" class="xar-form-label">Name:</label>
                         <input type="text" name="name" id="name" value="#$name#" />
                    </div>
                    <div class="xar-form-input-wrapper">
-                        <label for="template" class="xar-form-label"><xar:mlstring>Template:</xar:mlstring></label>
+                        <label for="template" class="xar-form-label">Template:</label>
                         <textarea name="template" id="template" rows="10" cols="55">#$template#</textarea>
                     </div>
                 <xar:elseif condition="$action eq 'confirm'"/>
                 <div class="xar-form-input-wrapper-after">
-                    <xar:ml><xar:mlstring>Are you sure you want to delete template '#(1)' ?</xar:mlstring><xar:mlvar>#$name#</xar:mlvar></xar:ml>
+                    <xar:ml>Are you sure you want to delete template '#(1)' ?<xar:mlvar>#$name#</xar:mlvar></xar:ml>
                 </div>
                 <xar:else/>
                 <div class="xar-form-input-wrapper-after">
-                    <xar:mlstring>Unknown Action</xar:mlstring>
+                    Unknown Action
                 </div>
                 </xar:if>
              </fieldset>

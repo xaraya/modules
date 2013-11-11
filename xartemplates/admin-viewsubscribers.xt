@@ -3,7 +3,7 @@
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
         <xar:template type="module" module="pubsub" file="admin-menu" />
-        <h2><xar:mlstring>Subscriber Summary</xar:mlstring></h2>
+        <h2>Subscriber Summary</h2>
 
         <fieldset>
             <legend>
@@ -23,13 +23,13 @@
         <table width="100%" border="0" cellspacing="0" cellpadding="2">
         <tr>
             <th>
-                <xar:mlstring>User Name</xar:mlstring>
+                User Name
             </th>
             <th>
-                <xar:mlstring>Date Subscribed</xar:mlstring>
+                Date Subscribed
             </th>
             <th>
-                <xar:mlstring>Action</xar:mlstring>
+                Action
             </th>
         </tr>
         <xar:if condition="count($items) gt 0">
@@ -54,12 +54,13 @@
         <tr>
           <td colspan="3" align="left">
           <br />
-          <strong><xar:mlstring>No subscriptions found for this category</xar:mlstring></strong>
+          <strong>No subscriptions found for this category</strong>
           </td>
         </tr>
         </xar:if>
     </table>
     </div>
+    </fieldset>
     </div>
     <div class="xar-form-input-after">
     <!-- add the pager here -->

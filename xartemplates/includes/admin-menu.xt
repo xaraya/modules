@@ -6,7 +6,7 @@
     <div>
       <dl class="xar-tabs">
         <dt class="help" title="Choose an action to perform">
-          <xar:mlstring>Actions:</xar:mlstring>
+          Actions:
         </dt>
         <xar:sec mask="AdminPubSub" catch="false">
             <xar:if condition="$activetab eq 'viewall' or $activetab eq 'viewsubscribers'">
@@ -16,34 +16,34 @@
             </xar:if>
             <dd class="#$tabclass#">
               <a href="&xar-modurl-pubsub-admin-viewall;">
-                <xar:mlstring>View Subscriptions</xar:mlstring>
+                View Subscriptions
               </a>
             </dd>
 
             <xar:set name="tabclass">$activetab=='viewq'?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-pubsub-admin-viewq;" >
-                    <xar:mlstring>View Event Queue</xar:mlstring>
+                    View Event Queue
                 </a>
             </dd>
             <xar:set name="tabclass">$activetab=='modifytemplates'?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-pubsub-admin-modifytemplates;" >
-                    <xar:mlstring>Modify Templates</xar:mlstring>
+                    Modify Templates
                 </a>
             </dd>
 
             <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
             <dd class="#$tabclass#">
               <a href="&xar-modurl-pubsub-admin-modifyconfig;">
-                <xar:mlstring>Modify Config</xar:mlstring>
+                Modify Config
               </a>
             </dd>
 
             <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-pubsub-admin-overview;">
-                    <xar:mlstring>Overview</xar:mlstring>
+                    Overview
                 </a>
             </dd>
         </xar:sec>
