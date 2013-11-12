@@ -25,11 +25,11 @@ function publications_adminapi_getpageaccessconstraints($args)
     );
 
     if (empty($args['property']->value)) return $constraints;
-    
     try {
-        $constraints = unserialize($args['property']->value);
-    } catch (Exception $e) {
-    }
+        $temp = unserialize($args['property']->value);
+        // Check the array structure
+        if (isset($temp['display'])) $constraints = $temp;
+    } catch (Exception $e) {}
 
     return $constraints;
 }
