@@ -57,7 +57,7 @@ function publications_user_modify($args)
 #
 # Are we allowed to modify this page?
 #
-    $accessconstraints = unserialize($data['object']->properties['access']->value);
+    $accessconstraints = xarMod::apiFunc('publications', 'admin', 'getpageaccessconstraints', array('property' => $data['object']->properties['access']));
     $access = DataPropertyMaster::getProperty(array('name' => 'access'));
     $allow = $access->check($accessconstraints['modify']);
 

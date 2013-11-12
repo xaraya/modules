@@ -123,7 +123,7 @@ function publications_user_display($args)
 #
 # Are we allowed to see this page?
 #
-    $accessconstraints = unserialize($data['object']->properties['access']->value);
+    $accessconstraints = xarMod::apiFunc('publications', 'admin', 'getpageaccessconstraints', array('property' => $data['object']->properties['access']));
     $access = DataPropertyMaster::getProperty(array('name' => 'access'));
     $allow = $access->check($accessconstraints['display']);
     $nopublish = (time() < $data['object']->properties['start_date']->value) || ((time() > $data['object']->properties['end_date']->value) && !$data['object']->properties['no_end']->value);
