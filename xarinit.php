@@ -17,9 +17,8 @@
 
 function publications_init()
 {
-    $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
     sys::import('xaraya.structures.query');
+    $xartable =& xarDB::getTables();
 
 # --------------------------------------------------------
 #
