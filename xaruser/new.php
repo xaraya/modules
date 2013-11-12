@@ -31,7 +31,7 @@ function publications_user_new($args)
 #
 # Are we allowed to add a page?
 #
-    $accessconstraints = xarMod::apiFunc('publications', 'admin', getpageaccessconstraints', array('property' => $data['object']->properties['access']));
+    $accessconstraints = xarMod::apiFunc('publications', 'admin', 'getpageaccessconstraints', array('property' => $data['object']->properties['access']));
     $access = DataPropertyMaster::getProperty(array('name' => 'access'));
     $allow = $access->check($accessconstraints['add']);
 
