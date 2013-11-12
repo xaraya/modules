@@ -15,8 +15,6 @@
  */
 function publications_user_delete()
 {
-    if (!xarSecurityCheck('ManagePublications')) return;
-
     $return = xarModURL('publications', 'user','view',array('ptid' => xarModVars::get('publications', 'defaultpubtype')));
     if(!xarVarFetch('confirmed',  'int', $confirmed,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('itemid',     'int', $itemid,     NULL,  XARVAR_DONT_SET)) {return;}
@@ -41,6 +39,9 @@ function publications_user_delete()
 
     sys::import('modules.dynamicdata.class.objects.master');
     $publication = DataObjectMaster::getObject(array('name' => 'publications_documents'));
+    $access = DataPropertyMaster::getProperty(array('name' => 'access'));
+    $nopermissionpage_id = xarModVars::get('publications', 'noprivspage');
+
     if (!isset($confirmed)) {
         $data['idlist'] = $idlist;
         if (count($ids) > 1) {
@@ -53,6 +54,26 @@ function publications_user_delete()
         foreach ($ids as $i) {
             $publication->getItem(array('itemid' => $i));
             $item = $publication->getFieldValues();
+
+# --------------------------------------------------------
+#
+# Are we allowed to delete the page(s)?
+#
+            $accessconstraints = xarMod::apiFunc('publications', 'admin', 'getpageaccessconstraints', array('property' => $publication->properties['access']));
+            $allow = $access->check($accessconstraints['delete']);
+
+            if (count($ids) == 1) {
+                // If no access, then bail showing a forbidden or the "no permission" page or an empty page
+                if (!$allow) {
+                    if ($accessconstraints['delete']['failure']) return xarResponse::Forbidden();
+                    elseif ($nopermissionpage_id) xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+                    else return xarTplModule('publications', 'user', 'empty');
+                }
+            } else {
+                // More than one page to delete: just ignore the ones we can't
+                continue;
+            }
+
             $items[] = $item;
         }
         $data['items'] = $items;
@@ -62,6 +83,27 @@ function publications_user_delete()
         if (!xarSecConfirmAuthKey()) return;
         
         foreach ($ids as $id) {
+            $publication->getItem(array('itemid' => $i));
+
+# --------------------------------------------------------
+#
+# Are we allowed to delete the page(s)?
+#
+            $accessconstraints = xarMod::apiFunc('publications', 'admin', 'getpageaccessconstraints', array('property' => $publication->properties['access']));
+            $allow = $access->check($accessconstraints['delete']);
+
+            if (count($ids) == 1) {
+                // If no access, then bail showing a forbidden or the "no permission" page or an empty page
+                if (!$allow) {
+                    if ($accessconstraints['delete']['failure']) return xarResponse::Forbidden();
+                    elseif ($nopermissionpage_id) xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+                    else return xarTplModule('publications', 'user', 'empty');
+                }
+            } else {
+                // More than one page to delete: just ignore the ones we can't
+                continue;
+            }
+
             // Delete the publication
             $itemid = $publication->deleteItem(array('itemid' => $id));
             $data['message'] = "Publication deleted [ID $id]";
