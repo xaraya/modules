@@ -28,9 +28,14 @@
     
     <!-- We want to display each item in its summary template -->
     <xar:foreach in="$items" key="$itemid" value="$fields">
+
+    <!-- Load the values -->
+        <xar:set name="dummy">$object->setFieldValues($fields,1)</xar:set>
     
     <!-- Get this item's access constraints for display -->
-        <xar:set name="accessconstraints">unserialize($fields['access'])</xar:set>
+        <xar:set name="accessconstraints">
+            xarMod::apiFunc('publications', 'admin', 'getpageaccessconstraints', array('property' => $object->properties['access']))
+        </xar:set>
         <xar:set name="allowed">$access->check($accessconstraints['display'])</xar:set>
     
     <!-- If no access, then just move on -->
@@ -39,7 +44,6 @@
         </xar:if>
         
     <!-- Access allowed; now figure out which template to use -->
-        <xar:set name="dummy">$object->setFieldValues($fields,1)</xar:set>
         <xar:set name="includepath">"objects/$pubtype"</xar:set>
         <xar:set name="filename">'summary'</xar:set>
         <xar:if condition="$fields['summary_template'] AND !empty($fields['id'])">
