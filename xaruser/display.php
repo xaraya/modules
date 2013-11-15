@@ -347,8 +347,8 @@ function publications_user_display($args)
 #
 # Set the page template from the pubtype if needed
 #
-    if (!empty($pubtypeobject->properties['page_template']->value)) {
-        $pagename = $pubtypeobject->properties['page_template']->value;
+    $pagename = $pubtypeobject->properties['page_template']->value;
+    if (!empty($pagename)  && ($pagename != 'admin.xt')){
         $position = strpos($pagename,'.');
         if ($position === false) {
             $pagetemplate = $pagename;
@@ -358,8 +358,8 @@ function publications_user_display($args)
         xarTpl::setPageTemplateName($pagetemplate);
     }
     // It can be overridden by the page itself
-    if (!empty($data['object']->properties['page_template']->value)) {
-        $pagename = $data['object']->properties['page_template']->value;
+    $pagename = $data['object']->properties['page_template']->value;
+    if (!empty($pagename)  && ($pagename != 'admin.xt')){
         $position = strpos($pagename,'.');
         if ($position === false) {
             $pagetemplate = $pagename;
