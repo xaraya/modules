@@ -126,7 +126,7 @@ function publications_user_update()
         if (!empty($return_url)) {
             // FIXME: this is a hack for short URLS
             $delimiter = (strpos($return_url, '&')) ? '&' : '?';
-            xarController::redirect($return_url . $delimiter . 'itemid=' . $itemid);
+            xarController::redirect($return_url . $delimiter . 'itemid=' . $data['itemid']);
         }
     
         // Redirect if we came from somewhere else
