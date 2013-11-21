@@ -4,7 +4,7 @@
     <xar:javascript scope="theme" filename="toggle.js"/>
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <h2>Add Attributes to #$object->label#</h2>
+        <h2>Add Attributes to the Object "#$object->label#"</h2>
         <!-- This is where the list of properties shown starts -->
         <!-- TODO: distinguish between 'protected' and 'private' ? -->
         <xar:if condition="!isset($layout)">

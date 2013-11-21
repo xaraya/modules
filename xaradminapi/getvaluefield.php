@@ -28,9 +28,9 @@
         switch ($type) {
             case 'string': $field = 'default_string'; break;
             case 'text'  : $field = 'default_text'; break;
-            case 'number': $field = 'default_decimal'; break;
+            case 'decimal': $field = 'default_decimal'; break;
+            case 'integer': $field = 'default_integer'; break;
             case 'number': $field = 'default_tinyint'; break;
-            case 'number': $field = 'default_integer'; break;
         }
         
         return $field;

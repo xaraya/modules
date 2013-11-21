@@ -13,7 +13,7 @@
 
 /**
  * This extension lets you use the usual Query notation on an EAV structure
- * It uses the multi join method shown here
+ * It uses the multi join method discussed here
  * http://stackoverflow.com/questions/8764290/what-is-best-performance-for-retrieving-mysql-eav-results-as-relational-table
  */
 
@@ -91,7 +91,7 @@ class EAVQuery extends Query
         // Now instantiate the query object we'll actually be using
         parent::__construct();
 
-        // The query will get its data from the dynamic_data table
+        // The query will get its data from the eav_data table
         // whose fields are known
         $this->initalias = "init".time();
         $init = $this->initalias;

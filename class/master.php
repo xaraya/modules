@@ -15,7 +15,7 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 /**
  * This is the pendant to DD's DataObjectMaster
- * It creates an object that has as properties the attributes assigned to an EAV entity object
+ * It creates an object or objectlist that has as properties the attributes assigned to an EAV entity object
  *
  */
 
@@ -28,11 +28,25 @@ class EAVObjectMaster extends DataObjectMaster
             $info = self::getObjectInfo($args);
             $args['objectid'] = $info['objectid'];
         }
-        $args['parent_id'] = $args['objectid'];
+        $args['parent_id'] = (int)$args['objectid'];
         unset($args['objectid']);
 
         $args['name'] = 'eav_empty';
         return parent::getObject($args);
+    }
+
+    static function getObjectList(Array $args=array())
+    {
+        $args['propertyprefix'] = 'eav_';
+        if (!isset($args['objectid'])) {
+            $info = self::getObjectInfo($args);
+            $args['objectid'] = $info['objectid'];
+        }
+        $args['parent_id'] = (int)$args['objectid'];
+        unset($args['objectid']);
+
+        $args['name'] = 'eav_empty';
+        return parent::getObjectList($args);
     }
 }
 ?>

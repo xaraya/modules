@@ -94,6 +94,7 @@
         if (!$q->run($query)) return;
         $query = "CREATE TABLE " . $prefix . "_eav_data (
             id                integer unsigned NOT NULL auto_increment,
+            object_id         integer unsigned NOT NULL default 0, 
             item_id           integer unsigned NOT NULL default 0, 
             attribute_id      integer unsigned NOT NULL default 0, 
             value_tinyint     tinyint unsigned default NULL, 

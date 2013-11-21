@@ -15,7 +15,7 @@ sys::import('modules.dynamicdata.class.objects.base');
 
 class Entity extends DataObject
 {
-    public $parent_id;
+    public $parent_id = 0;
 
     public function loader(DataObjectDescriptor $descriptor)
     {
@@ -29,7 +29,47 @@ class Entity extends DataObject
 
     public function getItem(Array $args = array())
     {
-        $itemid = parent::getItem($args);
+        if (!isset($args['itemid'])) throw new MissingParameterException('itemid');
+        xarMod::apiLoad('eav');
+        $tables = xarDB::getTables();
+        $q = new Query('SELECT', $tables['eav_data']);
+        $q->eq('item_id', $args['itemid']);
+        $q->eq('object_id', $this->parent_id);
+        if (!$q->run()) return false;
+        $result = $q->output();
+        foreach ($this->properties as $key => $attribute) {
+            foreach ($result as $k => $row) {
+                if ($attribute->id == $row['attribute_id']) {
+                    $this->properties[$key]->value = $row['value_' . $this->properties[$key]->basetype];
+                    unset($result[$k]);
+                }
+            }
+        }
+        return true;
+    }
+    
+    public function getItems(Array $args = array())
+    {
+        xarMod::apiLoad('eav');
+        $tables = xarDB::getTables();
+        $q = new Query('SELECT', $tables['eav_data']);
+        if (isset($args['itemids'])) $q->in('item_id', $args['itemids']);
+        $q->eq('object_id', $this->parent_id);
+        if (!$q->run()) return false;
+        foreach ($q->output() as $row) {
+            foreach ($this->properties as $key => $attribute) {
+                if ((int)$attribute->id == (int)$row['attribute_id']) {
+                    $row['value'] = $row['value_' . $this->properties[$key]->basetype];
+                    unset($row['value_tinyint']);
+                    unset($row['value_integer']);
+                    unset($row['value_decimal']);
+                    unset($row['value_string']);
+                    unset($row['value_text']);
+                }
+            }
+            $this->items[$row['item_id']][$row['attribute_id']] = $row;
+        }
+        return $this->items;
     }
     
     public function createItem(Array $args = array())
@@ -39,10 +79,11 @@ class Entity extends DataObject
         $tables = xarDB::getTables();
         $q = new Query('INSERT', $tables['eav_data']);
         foreach ($this->properties as $property) {
+            $q->addfield('object_id', $this->parent_id);
             $q->addfield('item_id', $args['itemid']);
             $valuefield = 'value_' . $property->basetype;
             $q->addfield($valuefield, $property->value);
-            $q->addfield('attribute_id', $property->id);
+            $q->addfield('attribute_id', (int)$property->id);
             if (!$q->run()) return false;
             $q->clearfields();
         }
@@ -56,21 +97,34 @@ class Entity extends DataObject
         $tables = xarDB::getTables();
         foreach ($this->properties as $property) {
             $q = new Query('UPDATE', $tables['eav_data']);
+            $q->addfield('object_id', $this->parent_id);
             $q->addfield('item_id', $args['itemid']);
             $valuefield = 'value_' . $property->basetype;
             $q->addfield($valuefield, $property->value);
-            $q->addfield('attribute_id', $property->id);
+            $q->eq('attribute_id', (int)$property->id);
             if (!$q->run()) {
                 $q = new Query('INSERT', $tables['eav_data']);
                 $q->addfield('item_id', $args['itemid']);
                 $valuefield = 'value_' . $property->basetype;
                 $q->addfield($valuefield, $property->value);
-                $q->addfield('attribute_id', $property->id);
+                $q->eq('attribute_id', $property->id);
                 if (!$q->run()) return false;
             }
+            $q->clearfields();
         }
         return true;
     }
     
+    public function deleteItem(Array $args = array())
+    {
+        if (!isset($args['itemid'])) throw new MissingParameterException('itemid');
+        xarMod::apiLoad('eav');
+        $tables = xarDB::getTables();
+        $q = new Query('DELETE', $tables['eav_data']);
+        $q->eq('object_id', $this->parent_id);
+        $q->eq('item_id', $args['itemid']);
+        if (!$q->run()) return false;
+        return true;
+    }
 }
 ?>

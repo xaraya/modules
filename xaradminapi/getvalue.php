@@ -26,9 +26,9 @@
         switch ($type) {
             case 'string': $value = $values['default_string']; break;
             case 'text': $value = $values['default_text']; break;
-            case 'number': $value = $values['default_decimal']; break;
+            case 'decimal': $value = $values['default_decimal']; break;
+            case 'integer': $value = $values['default_integer']; break;
             case 'number': $value = $values['default_tinyint']; break;
-            case 'number': $value = $values['default_integer']; break;
         }
         
         return $value;
