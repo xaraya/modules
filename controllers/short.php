@@ -205,9 +205,13 @@ class PublicationsShortController extends ShortActionController
 
                 $token2 = urldecode($this->nextToken());
 
-                // A single numeric token is an id
-                if (!$token2 && is_numeric($token1) && !xarModVars::get('publications', 'usetitleforurl')) {
+                if (!$token2 && is_numeric($token1)) {
+                // A single numeric token is an id. We keep this decode option: publications/itemid
+                // irrespective of the encoding scheme
+                // We do this for folks who are creating hard links in pages so that they can use the convenient publications/itemid
                     $data['itemid'] = $token1;
+                    $data['func'] = 'display';
+                    return $data;
                 } else {
                     // Match the first token
                     if (xarModVars::get('publications', 'usetitleforurl')) {
