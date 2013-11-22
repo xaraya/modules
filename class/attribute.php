@@ -54,6 +54,12 @@ class Attribute extends DataObject
         return parent::updateItem($args);
     }
     
+    public function deleteItem(Array $args = array())
+    {
+        $this->adjustStates();
+        return parent::deleteItem($args);
+    }
+    
     private function adjustStates($propertytype=0)
     {
         if (empty($propertytype)) $propertytype = $this->properties['property_id']->value;
