@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:comment>
-        License: GPL http://www.gnu.org/copyleft/gpl.html
-    </xar:comment>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->>
     <xar:style scope="module" module="base" file="navtabs"/>
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">
-            <xar:if condition="xarModVars::get('xarayatesting','use_module_alias')">
-                <xar:var scope="module" module="xarayatesting" name="module_alias_name"/>
-            <xar:else />
-                <xar:mlstring>Xarayatesting Administration</xar:mlstring>
-            </xar:if>
-        </span>
-    </div>
+    <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
         <h2>
             <xar:mlstring>
@@ -85,15 +75,8 @@
         <xar:if condition="$tab eq 'general'">
             <form method="post" action="&xar-modurl-xarayatesting-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
                 <xar:data-form object="$module_settings"/>
-                <fieldset>
-                    <div class="xar-form-input-wrapper-after">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
-                        <input type="hidden" name="phase" id="phase" value="update"/>
-                        <input type="hidden" name="tab" id="tab" value="#$tab#"/>
-                        <xar:var name="label">Update</xar:var>
-                        <xar:button type="submit" label="$label"/>
-                    </div>
-                </fieldset>
+                <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+                <xar:template file="update-button" module="base" />
             </form>
             <xar:comment>
                  - - - - - - - - - - - - - - - - - - - Begin Tab2 Options  - - - - - - - - - - - - - - - - - - -

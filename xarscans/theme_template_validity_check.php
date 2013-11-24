@@ -6,8 +6,12 @@
         if (!xarVarFetch('confirm','int',$data['confirm'],0,XARVAR_NOT_REQUIRED)) return;
 
         $items = xarMod::apiFunc('themes', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_ACTIVE)));
+        
         if (!$data['confirm']) {
-            $data['items'] = $items;
+            $data['items'] = array();
+            foreach ($items as $item) {
+                $data['items'][] = array('id' => $item['regid'], 'name' => $item['name']);
+            }
         } else {
             if ($item != 0) {
                 $items = array(xarThemeGetInfo($item));
@@ -25,6 +29,9 @@
             $reader->close();
             $data['items'] = $checked_themes;
         }
+        
+        // We want to use the admin page template
+        xarTpl::setPageTemplateName('admin');
         return $data; 
     }
 
@@ -37,6 +44,9 @@
 
          // if the path is not valid or is not a directory ...
          if(!file_exists($directory) || !is_dir($directory)) return array();
+
+         // Directories called abeyance are to be ignored
+         if(basename($directory) == 'abeyance') return array();
 
          if(is_readable($directory)) {
              // we open the directory

@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">
-            <xar:if condition="xarModVars::get('xarayatesting','use_module_alias')">
-                <xar:var scope="module" module="xarayatesting" name="module_alias_name"/>
-            <xar:else />
-                <xar:mlstring>Xarayatesting Administration</xar:mlstring>
-            </xar:if>
-        </span>
-    </div>
+    <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <img src="#xarTplGetImage('admin.gif', 'xarayatesting')#" alt="official icon" width="96" height="96" class="xar-module-icon"/>
+        <img src="#xarTplGetImage('module-generic.png', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon"/>
 
         <h2>
             <xar:mlstring>Overview</xar:mlstring>

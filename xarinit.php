@@ -38,7 +38,7 @@
           state                tinyint unsigned default 0 NOT NULL,
           timestamp            integer default 0 NOT NULL,
         PRIMARY KEY  (id)
-        ) TYPE=MyISAM";
+        )";
         if (!$q->run($query)) return;
 
     # --------------------------------------------------------

@@ -14,6 +14,7 @@
             }
             $data['items'] = array(array('name' => 'core files in the xaraya directory'));
         }
+        xarTpl::setPageTemplateName('admin');
         return $data; 
     }
 
@@ -26,6 +27,9 @@
 
          // if the path is not valid or is not a directory ...
          if(!file_exists($directory) || !is_dir($directory)) return array();
+
+         // Directories called abeyance are to be ignored
+         if(basename($directory) == 'abeyance') return array();
 
          if(is_readable($directory)) {
              // we open the directory

@@ -25,29 +25,29 @@
                     'core.testxarvar'        => 'xarVar',
                 )
             </xar:set>
-            <xar:foreach in="$core" key="$key" value="$value">
-                <xar:if condition="$tab eq $key">
-                    <dd class="active">
-                        <a href="&xar-modurl-xarayatesting-user-testpage;&amp;tab=#$key#">
-                            #$value#
-                        </a>
-                    </dd>
+
+            <ul class="xar-tabs xar-alt xar-norm-outline">
+                <xar:foreach in="$core" key="$key" value="$value">
+                    <xar:if condition="$tab eq $key">
+                        <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                        <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
                     <xar:else />
-                    <dd>
-                        <a href="&xar-modurl-xarayatesting-user-testpage;&amp;tab=#$key#">
+                        <xar:set name="tabclass">'xar-tab'</xar:set>
+                        <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+                    </xar:if>
+                    <li class="#$tabclass#">
+                        <a href="#xarModURL('xarayatesting','admin','testpage',array('tab'=>$key))#" class="#$linkclass#">
                             #$value#
                         </a>
-                    </dd>
-                </xar:if>
-            </xar:foreach>
+                    </li>
+                </xar:foreach>
+            </ul>
         </dl>
     </div>
     <div>
         <dl class="xar-tabs">
             <dt class="help">
-                <xar:mlstring>
-                    Libraries:
-                </xar:mlstring>
+                Libraries:
             </dt>
             <xar:set name="libraries">
                 array(
@@ -55,73 +55,72 @@
                     'libraries.testcreole'      => 'Creole',
                 )
             </xar:set>
-            <xar:foreach in="$libraries" key="$key" value="$value">
-                <xar:if condition="$tab eq $key">
-                    <dd class="active">
-                        <a href="&xar-modurl-xarayatesting-user-testpage;&amp;tab=#$key#">
-                            #$value#
-                        </a>
-                    </dd>
+            <ul class="xar-tabs xar-alt xar-norm-outline">
+                <xar:foreach in="$libraries" key="$key" value="$value">
+                    <xar:if condition="$tab eq $key">
+                        <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                        <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
                     <xar:else />
-                    <dd>
-                        <a href="&xar-modurl-xarayatesting-user-testpage;&amp;tab=#$key#">
+                        <xar:set name="tabclass">'xar-tab'</xar:set>
+                        <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+                    </xar:if>
+                    <li class="#$tabclass#">
+                        <a href="#xarModURL('xarayatesting','admin','testpage',array('tab'=>$key))#" class="#$linkclass#">
                             #$value#
                         </a>
-                    </dd>
-                </xar:if>
-            </xar:foreach>
+                    </li>
+                </xar:foreach>
+            </ul>
         </dl>
     </div>
     <div>
         <dl class="xar-tabs">
             <dt class="help">
-                <xar:mlstring>
-                    Core Modules:
-                </xar:mlstring>
+                Core Modules:
             </dt>
-            <xar:foreach in="$coremodules" key="$key" value="$value">
-                <xar:set name="modulename">#$value['name']#</xar:set>
-                <xar:set name="ucmodulename">ucfirst($modulename)</xar:set>
-                <xar:if condition="$tab eq $modulename">
-                    <dd class="active">
-                        <a href="&xar-modurl-xarayatesting-user-testpage;&amp;tab=#$key#">
-                            #$ucmodulename#
-                        </a>
-                    </dd>
+            <ul class="xar-tabs xar-alt xar-norm-outline">
+                <xar:foreach in="$coremodules" key="$key" value="$value">
+                    <xar:set name="modulename">#$value['name']#</xar:set>
+                    <xar:set name="ucmodulename">ucfirst($modulename)</xar:set>
+                    <xar:if condition="$tab eq $modulename">
+                        <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                        <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
                     <xar:else />
-                    <dd>
-                        <a href="&xar-modurl-xarayatesting-user-testpage;&amp;tab=#$key#">
+                        <xar:set name="tabclass">'xar-tab'</xar:set>
+                        <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+                    </xar:if>
+                    <li class="#$tabclass#">
+                        <a href="#xarModURL('xarayatesting','admin','testpage',array('tab'=>$key))#" class="#$linkclass#">
                             #$ucmodulename#
                         </a>
-                    </dd>
-                </xar:if>
-            </xar:foreach>
+                    </li>
+                </xar:foreach>
+            </ul>
         </dl>
     </div>
     <div>
         <dl class="xar-tabs">
             <dt class="help">
-                <xar:mlstring>
-                    Other Modules:
-                </xar:mlstring>
+                Other Modules:
             </dt>
-            <xar:foreach in="$modules" key="$key" value="$value">
-                <xar:set name="modulename">#$value['name']#</xar:set>
-                <xar:set name="ucmodulename">ucfirst($modulename)</xar:set>
-                <xar:if condition="$tab eq $modulename">
-                    <dd class="active">
-                        <a href="&xar-modurl-xarayatesting-user-testpage;&amp;tab=#$key#">
-                            #$ucmodulename#
-                        </a>
-                    </dd>
+            <ul class="xar-tabs xar-alt xar-norm-outline">
+                <xar:foreach in="$modules" key="$key" value="$value">
+                    <xar:set name="modulename">#$value['name']#</xar:set>
+                    <xar:set name="ucmodulename">ucfirst($modulename)</xar:set>
+                    <xar:if condition="$tab eq $modulename">
+                        <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                        <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
                     <xar:else />
-                    <dd>
-                        <a href="&xar-modurl-xarayatesting-user-testpage;&amp;tab=#$key#">
+                        <xar:set name="tabclass">'xar-tab'</xar:set>
+                        <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+                    </xar:if>
+                    <li class="#$tabclass#">
+                        <a href="#xarModURL('xarayatesting','admin','testpage',array('tab'=>$key))#" class="#$linkclass#">
                             #$ucmodulename#
                         </a>
-                    </dd>
-                </xar:if>
-            </xar:foreach>
+                    </li>
+                </xar:foreach>
+            </ul>
         </dl>
     </div>
 </xar:template>

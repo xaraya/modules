@@ -1,4 +1,4 @@
-<adminmenu>
+<menu>
     <menuitems>
         <menuitem>
             <includes>
@@ -8,8 +8,9 @@
             <target>main</target>
             <label>Overview</label>
         </menuitem>
+        <!--
         <menuitem>
-            <mask>EditXarayatesting</mask>
+            <mask>ManageXarayatesting</mask>
             <includes>
                 <includeitem>view</includeitem>
             </includes>
@@ -17,8 +18,9 @@
             <title>Display the site test suites</title>
             <label>Site Tests</label>
         </menuitem>
+        -->
         <menuitem>
-            <mask>EditXarayatesting</mask>
+            <mask>ManageXarayatesting</mask>
             <includes>
                 <includeitem>view</includeitem>
             </includes>
@@ -27,37 +29,10 @@
             <label>Run Xaraya Unit Tests</label>
         </menuitem>
         <menuitem>
-            <mask>ManageRoles</mask>
-            <includes>
-                <includeitem>purge</includeitem>
-            </includes>
-            <target>purge</target>
-            <title>Undelete or permanently remove users/groups</title>
-            <label>Recall/Purge</label>
-        </menuitem>
-        <menuitem>
-            <mask>EditXarayatesting</mask>
+            <mask>ManageXarayatesting</mask>
             <target>othertests</target>
             <title>Run installation scans</title>
             <label>Run Other Xaraya Tests</label>
         </menuitem>
-        <menuitem>
-            <mask>ManageXarayatesting</mask>
-            <includes>
-                <includeitem>view</includeitem>
-            </includes>
-            <target>view</target>
-            <title>Manage the master tables of thsi module</title>
-            <label>Master Tables</label>
-        </menuitem>
-        <menuitem>
-            <mask>AdminXarayatesting</mask>
-            <includes>
-                <includeitem>modifyconfig</includeitem>
-            </includes>
-            <target>modifyconfig</target>
-            <title>Modify the configuration of this module</title>
-            <label>Modify Configuration</label>
-        </menuitem>
     </menuitems>
-</adminmenu>
+</menu>
