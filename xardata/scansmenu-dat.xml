@@ -1,0 +1,38 @@
+<menu>
+    <menuitems>
+        <menuitem>
+            <includes>
+                <includeitem>main</includeitem>
+                <includeitem>overview</includeitem>
+            </includes>
+            <target>main</target>
+            <label>Overview</label>
+        </menuitem>
+        <!--
+        <menuitem>
+            <mask>ManageXarayatesting</mask>
+            <includes>
+                <includeitem>view</includeitem>
+            </includes>
+            <target>sitetests</target>
+            <title>Display the site test suites</title>
+            <label>Site Tests</label>
+        </menuitem>
+        -->
+        <menuitem>
+            <mask>ManageXarayatesting</mask>
+            <includes>
+                <includeitem>view</includeitem>
+            </includes>
+            <target>testpage</target>
+            <title>Run the unit test suites</title>
+            <label>Run Xaraya Unit Tests</label>
+        </menuitem>
+        <menuitem>
+            <mask>ManageXarayatesting</mask>
+            <target>othertests</target>
+            <title>Run installation scans</title>
+            <label>Run Other Xaraya Tests</label>
+        </menuitem>
+    </menuitems>
+</menu>
