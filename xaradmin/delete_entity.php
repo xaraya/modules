@@ -10,8 +10,6 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <mfl@netspan.ch>
  */
-    // Load the EAV master object class.
-    sys::import('modules.eav.class.entity');
     sys::import('modules.dynamicdata.class.objects.master');
     function eav_admin_delete_entity()
     {
@@ -22,15 +20,13 @@
         if (!xarVarFetch('confirm',    'str:1',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
 
         $data['object'] = DataObjectMaster::getObject(array('name' => "eav_entities"));
-        $data['eavobject'] = Entity::getObject(array('name' => "eav_entities")); 
 		
         // Get that specific item of the object
     	$data['object']->getItem(array('itemid' => $data['itemid']));
-    	$data['eavobject']->getItem(array('itemid' => $data['itemid']));
 		
         $data['tplmodule'] = 'eav';
         $data['authid'] = xarSecGenAuthKey('eav');
-		//print_r($data);exit;
+
         if ($data['confirm']) {
         
             // Check for a valid confirmation key
@@ -38,10 +34,9 @@
 
              //Delete the item
              $item = $data['object']->deleteItem();
-             $item = $data['eavobject']->deleteItem();
             
             // Jump to the next page
-            xarController::redirect(xarModURL('eav','admin','view'));
+            xarController::redirect(xarModURL('eav','admin','view_entities'));
             return true;
         }
         return $data;

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:access level="600">
+        <xar:set name="returnurl">xarModURL($module,'user','view')</xar:set>
+        <xar:if condition="$objectname eq 'eav_entities'"> 
+        	<a style="font-weight:bold;" href ="#xarModURL($module,'admin','new_entity')#">Add A New Item</a>
+        <xar:elseif condition="$objectname eq 'eav_attributes_def'"/>
+ 			<a style="font-weight:bold;" href ="#xarModURL($module,'admin','new_attribute')#">Add A New Item</a>       
+        <xar:else/>
+        </xar:if>
+    </xar:access>
+</xar:template>
