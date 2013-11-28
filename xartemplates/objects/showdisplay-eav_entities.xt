@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['id']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-output property="$properties['id']"/>
+        </div>
+    </div>
+            <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['object']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-output property="$properties['object']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['module']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-output property="$properties['module']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['time_created']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-output property="$properties['time_created']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['time_updated']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-output property="$properties['time_updated']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['state']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-output property="$properties['state']"/>
+        </div>
+    </div>
+</xar:template>

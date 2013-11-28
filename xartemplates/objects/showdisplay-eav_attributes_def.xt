@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['id']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-output property="$properties['id']"/>
+        </div>
+    </div>
+            <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['name']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-output property="$properties['name']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['label']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-output property="$properties['label']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['property_id']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-output property="$properties['property_id']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['configuration']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-output property="$properties['configuration']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['time_created']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-output property="$properties['time_created']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['time_updated']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-output property="$properties['time_updated']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['state']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-output property="$properties['state']"/>
+        </div>
+    </div>
+</xar:template>

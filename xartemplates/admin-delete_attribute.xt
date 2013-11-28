@@ -17,16 +17,20 @@
         <xar:data-display object="$object"/>
 
         <form method="post" action="#xarServer::getCurrentURL()#">
-            <div class="xar-align-center">
-                <input type="hidden" name="authid" id="authid" value="#$authid#"/>
-                <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#"/>
-                <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#"/>
-                <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#"/>
-
-                <xar:var name="label">Delete</xar:var>
-                <xar:button type="submit" name="confirm" id="confirm" value="$label" class="xar-margin-thickright"/>
-                <xar:var name="label">Cancel</xar:var>
-                <xar:button type="button" name="noconfirm" id="noconfirm" value="$label" class="xar-margin-thickleft" onclick="history.go(-1)"/>
+            <div class="xar-row">
+            	<div class="xar-col">
+                </div>
+                <div class="xar-col">
+	                <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+	                <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#"/>
+	                <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#"/>
+	                <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#"/>
+	
+	                <xar:var name="label">Delete</xar:var>
+	                <xar:button type="submit" name="confirm" id="confirm" value="$label" class="xar-margin-thickright"/>
+	                <xar:var name="label">Cancel</xar:var>
+	                <xar:button type="cancel" name="noconfirm" id="noconfirm" value="$label" class="xar-margin-thickleft" onclick="history.go(-1)"/>
+                </div>
             </div>
         </form>
     </div>

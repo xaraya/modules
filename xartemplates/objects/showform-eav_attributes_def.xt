@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:data-input property="$properties['id']" hidden="hidden" />
+    <xar:data-input property="$properties['time_created']" hidden="hidden"/>
+    <xar:data-input property="$properties['time_updated']" hidden="hidden"/>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['name']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['name']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['label']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['label']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['property_id']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['property_id']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            Default Value
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['default_tinyint']"/>
+            <xar:data-input property="$properties['default_integer']"/>
+            <xar:data-input property="$properties['default_decimal']"/>
+            <xar:data-input property="$properties['default_string']"/>
+            <xar:data-input property="$properties['default_text']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['configuration']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['configuration']"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:data-label property="$properties['state']"/>
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['state']"/>
+        </div>
+    </div>
+</xar:template>

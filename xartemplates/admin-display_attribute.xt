@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:if condition="xarModVars::get('eav','use_module_alias')">
+                <xar:var scope="module" module="eav" name="module_alias_name"/>
+            <xar:else />
+                Display Item
+            </xar:if>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+
+        <h2><xar:data-label object="$object"/></h2>
+        <xar:data-display object="$object" tplmodule="eav" layout="eav_attributes_def" />
+    </div>
+    <xar:var name="label">Back</xar:var>
+    <xar:button type="cancel" value="$label" class="xar-margin-thickleft" onclick="history.go(-1)"/>
+    
+</xar:template>
