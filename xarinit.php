@@ -150,6 +150,7 @@
     #
     # Set up modvars
     #
+        xarModVars::set('eav', 'use_module_icons', true);
         $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'eav'));
         $module_settings->initialize();
 
