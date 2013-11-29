@@ -25,7 +25,7 @@
         if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
 
         $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'eav'));
-        $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls');
+        $data['module_settings']->setFieldList('items_per_page, use_module_alias, use_module_icons, enable_short_urls');
         $data['module_settings']->getItem();
 
         switch (strtolower($phase)) {
