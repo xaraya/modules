@@ -47,8 +47,10 @@ function eav_utilapi_export(Array $args=array())
     }
 
     // get the list of properties for a Dynamic Object
-    $object_properties = DataPropertyMaster::getProperties(array('objectid' => 1));
-       
+    //$object_properties = DataPropertyMaster::getProperties(array('objectid' => 1));
+    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'eav_entities'));
+    $object_properties = $data['object']->getItems();
+      
 	$property_properties = xarMod::apiFunc('eav','user','getattributes', array('object_id' => $objectid));
 	
 	$proptypes = DataPropertyMaster::getPropertyTypes();
@@ -57,27 +59,17 @@ function eav_utilapi_export(Array $args=array())
     $prefix .= '_';
 
     $xml = '';
-
+    //Entity defination
     $xml .= '<object name="'.$myobject->properties['name']->value.'">'."\n";
-    foreach (array_keys($object_properties) as $name) {
-        if ($name != 'name' && isset($myobject->properties[$name]->value)) {
-            if (is_array($myobject->properties[$name]->value)) {
-                $xml .= "  <$name>\n";
-                foreach ($myobject->$name as $field => $value) {
-                    $xml .= "    <$field>" . xarVarPrepForDisplay($value) . "</$field>\n";
-                }
-                $xml .= "  </$name>\n";
-            } elseif ($name == 'config') {
-                // don't replace anything in the serialized value
-                $value = $myobject->properties[$name]->value;
-                $xml .= "  <$name>" . $value . "</$name>\n";
-            } else {
-                $value = $myobject->properties[$name]->value;
-                $xml .= "  <$name>" . xarVarPrepForDisplay($value) . "</$name>\n";
-            }
-        }
+    foreach ($object_properties as $objectProperties) {
+    	if($objectProperties['object'] == $objectid) {
+    		foreach ($objectProperties as $name => $value) {    		
+    			$xml .= " <$name>".$value."</$name>\n";
+    		}	 
+    	}	
     }
 
+    //Attribute defination
     $xml .= "  <properties>\n";
     $properties = DataPropertyMaster::getProperties(array('objectid' => $myobject->properties['objectid']->value));
     foreach ($property_properties as $key => $value) {
@@ -92,5 +84,4 @@ function eav_utilapi_export(Array $args=array())
     $xml .= "</object>\n";
     return $xml;
 }
-
 ?>

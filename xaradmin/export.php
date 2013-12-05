@@ -38,6 +38,10 @@ function eav_admin_export(Array $args=array())
 	//Fill object dropdown
 	$data['object'] = DataObjectMaster::getObjectList(array('name' => 'eav_entities'));
     $items = $data['object']->getItems();
+    if(empty($items)) {
+    	$data['errormessage'] = xarML('No entitites exist.');
+    	return $data;
+    }
     $options = array();
     foreach ($items as $item) {
     	$object = DataObjectMaster::getObjectInfo(
@@ -45,8 +49,10 @@ function eav_admin_export(Array $args=array())
                                       'objectid' => $item['object']));
         $objectname = $object['name'];
         array_push($options, array('id' => $item['object'], 'name' => $objectname));
-    }    
-    $data['options'] = $options; 
+    }
+    if (!empty($options) && count($options) >= 0 ) {
+    	$data['options'] = $options;
+    } 
 
     //get the first item id in array if object id is null 
     if (empty($objectid)) {
