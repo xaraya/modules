@@ -46,8 +46,7 @@ function eav_utilapi_export(Array $args=array())
         return;
     }
 
-    // get the list of properties for a Dynamic Object
-    //$object_properties = DataPropertyMaster::getProperties(array('objectid' => 1));
+    // get the list of properties for a EAV
     $data['object'] = DataObjectMaster::getObjectList(array('name' => 'eav_entities'));
     $object_properties = $data['object']->getItems();
       
@@ -62,11 +61,16 @@ function eav_utilapi_export(Array $args=array())
     //Entity defination
     $xml .= '<object name="'.$myobject->properties['name']->value.'">'."\n";
     foreach ($object_properties as $objectProperties) {
-    	if($objectProperties['object'] == $objectid) {
-    		foreach ($objectProperties as $name => $value) {    		
-    			$xml .= " <$name>".$value."</$name>\n";
-    		}	 
-    	}	
+	    foreach ($objectProperties as $name => $value) {  
+	    	$args=array();
+	    	$args['objectid'] = $objectProperties['object'];
+	    	$info = $data['object']->getObjectInfo($args);
+	    	if($name == "object") {
+	    		$xml .= " <$name>".$info['name']."</$name>\n";
+	    	} else {
+	    		$xml .= " <$name>".$value."</$name>\n";
+	    	}
+	    }
     }
 
     //Attribute defination
@@ -75,7 +79,16 @@ function eav_utilapi_export(Array $args=array())
     foreach ($property_properties as $key => $value) {
         $xml .= '    <property name="'.$value['name'].'">' . "\n";
         foreach ($value as $subkey => $subvalue) {
-        	$xml .= "      <$subkey>".$subvalue."</$subkey>\n";
+    		$args=array();
+    		$args['objectid'] = $value['object_id'];
+    		$info = $data['object']->getObjectInfo($args);
+            if($subkey == "object_id") {
+    			$xml .= "		<$subkey>".$info['name']."</$subkey>\n";
+    		} elseif($subkey == "module_id")  {
+    			$xml .= "		<$subkey>".$info['moduleid']."</$subkey>\n";
+    		}else {
+    			$xml .= "		<$subkey>".$subvalue."</$subkey>\n";
+    		}
         }
         $xml .= "    </property>\n";
     }

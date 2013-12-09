@@ -70,7 +70,7 @@ function eav_admin_import(Array $args=array())
                 throw new FileNotFoundException($basedir,'No files were found to import in directory "#(1)"');
             }
             try {
-                $objectid = xarMod::apiFunc('eav','util','import',
+                $objectname = xarMod::apiFunc('eav','util','import',
                                       array('file' => $basedir . '/' . $file,
                                             'keepitemid' => $keepitemid,
                                             'overwrite' =>  $overwrite,
@@ -83,7 +83,7 @@ function eav_admin_import(Array $args=array())
             }
         } else {
             try {
-                $objectid = xarMod::apiFunc('eav','util','import',
+                $objectname = xarMod::apiFunc('eav','util','import',
                                       array('xml' => $xml,
                                             'keepitemid' => $keepitemid,
                                             'overwrite' =>  $overwrite,
@@ -95,10 +95,10 @@ function eav_admin_import(Array $args=array())
                 return xarTplModule('dynamicdata', 'user', 'errors',array('layout' => 'bad_definition', 'name' => $e->getMessage()));
             }
         }
-        if (empty($objectid)) return;
+        if (empty($objectname)) return;
 
         xarController::redirect(xarModURL('eav', 'admin', 'add_attribute',
-                                      array('objectid' => $objectid)));
+                                      array('objectname' => $objectname)));
         return true;
     }
 
