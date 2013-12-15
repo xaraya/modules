@@ -22,7 +22,7 @@ function crispbb_userapi_gethookmodules($args)
     extract($args);
 
     // Database information
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     $hookstable = $tables['crispbb_hooks'];
 

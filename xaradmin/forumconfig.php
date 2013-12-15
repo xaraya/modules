@@ -355,7 +355,7 @@ function crispbb_admin_forumconfig($args)
             'current_sublink' => $sublink
         ));
 
-    xarTPLSetPageTitle(xarVarPrepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
 
     return $data;
 }

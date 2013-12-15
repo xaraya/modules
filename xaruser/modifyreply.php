@@ -47,7 +47,7 @@ function crispbb_user_modifyreply($args)
             $errorMsg['return_url'] = xarModURL('crispbb', 'user', 'display', array('tid' => $tid));
             $errorMsg['pageTitle'] = xarML('Flood control');
             $errorMsg['type'] = 'FLOOD_CONTROL';
-            xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
+            xarTpl::setPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
             return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
         }
     }
@@ -218,7 +218,7 @@ function crispbb_user_modifyreply($args)
                 xarVarSetCached('Meta.refresh','url', $return_url);
                 xarVarSetCached('Meta.refresh','time', $data['postbuffer']);
                 $pageTitle = xarML('Reply Updated');
-                xarTPLSetPageTitle(xarVarPrepForDisplay($pageTitle));
+                xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
                 $data['pageTitle'] = $pageTitle;
                 $data['pid'] = $pid;
                 $data['message'] = xarML('Reply to #(1) was updated successfully', $data['ttitle']);
@@ -243,7 +243,7 @@ function crispbb_user_modifyreply($args)
     $data['levels'] = $presets['privleveloptions'];
     $data['invalid'] = $invalid;
     $data['powner'] = $uid;
-    xarTplSetPageTitle(xarVarPrepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
     // call hooks
     $item = array();
     $item['module'] = 'crispbb';

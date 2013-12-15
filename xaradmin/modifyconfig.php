@@ -141,7 +141,7 @@ function crispbb_admin_modifyconfig()
     // store function name for use by admin-main as an entry point
     xarSessionSetVar('crispbb_adminstartpage', 'modifyconfig');
     /* Return the template variables defined in this function */
-    xarTPLSetPageTitle(xarVarPrepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
     return $data;
 }
 ?>

@@ -103,7 +103,7 @@ function crispbb_userapi_updatetopic($args)
         return;
     }
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $topicstable = $xartable['crispbb_topics'];
     $set = array();

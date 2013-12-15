@@ -43,7 +43,7 @@ function crispbb_adminapi_removehook($args)
         $itemtype = $extrainfo['itemtype'];
     }
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $hookstable = $xartable['crispbb_hooks'];
 

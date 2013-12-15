@@ -35,7 +35,7 @@ function crispbb_adminapi_delete($args)
 
     //if (!xarSecurityCheck('DeleteExample', 1, 'Item', "$item[name]:All:$exid")) return;
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $forumstable = $xartable['crispbb_forums'];
     $topicstable = $xartable['crispbb_topics'];

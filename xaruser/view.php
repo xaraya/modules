@@ -416,7 +416,7 @@ function crispbb_user_view($args)
         xarSessionSetVar('crispbb_return_url', xarServer::getCurrentURL());
     }
 
-    xarTPLSetPageTitle(xarVarPrepForDisplay(xarML($pageTitle)));
+    xarTpl::setPageTitle(xarVarPrepForDisplay(xarML($pageTitle)));
     if (!xarVarFetch('theme', 'enum:rss:atom:xml:json', $theme, '', XARVAR_NOT_REQUIRED)) return;
     if (!empty($theme)) {
         return xarTPLModule('crispbb', 'user', 'view-' . $theme, $data);

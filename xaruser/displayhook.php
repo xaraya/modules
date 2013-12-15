@@ -68,7 +68,7 @@ function crispbb_user_displayhook($args)
 
     $data = array();
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $hookstable = $xartable['crispbb_hooks'];
 

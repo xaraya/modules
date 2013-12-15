@@ -67,7 +67,7 @@
                     <td class="foruminfo xar-valign-top">
                         <xar:if condition="!empty($forum['modtopicsurl'])">
                             <span class="xar-floatright xar-nowrap">
-                                <a href="#$forum['modtopicsurl']#" title="#xarML('Topics Awaiting Approval')#"><img src="#xarTPLGetImage('icons/comment_warning.png')#" alt="Submitted" />
+                                <a href="#$forum['modtopicsurl']#" title="#xarML('Topics Awaiting Approval')#"><img src="#xarTpl::getImage('icons/comment_warning.png')#" alt="Submitted" />
                                 </a>
                             </span>
                         </xar:if>
@@ -93,7 +93,7 @@
                             <p>
                                 <span class="xar-sub"><xar:template type="module" module="crispbb" file="user-timestamp" subdata="array('timestamp' =&gt; $forum['ptime'])" /></span>
                                 <xar:if condition="!empty($forum['lastreplyurl'])">
-                                    <a href="#$forum['lastreplyurl']#" title="#xarML('Go to the last post in this topic')#"><img src="#xarTPLGetImage('icons/resultset_last.png', 'crispbb')#" alt="Last Post" /></a>
+                                    <a href="#$forum['lastreplyurl']#" title="#xarML('Go to the last post in this topic')#"><img src="#xarTpl::getImage('icons/resultset_last.png', 'crispbb')#" alt="Last Post" /></a>
                                 </xar:if>
                             </p>
                             <p>
@@ -192,21 +192,21 @@
     <div class="xar-accent-outline xar-margin-thick xar-padding-thick">
         <xar:if condition="!empty($readurl)">
             <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('timeimages/folder.png', 'crispbb')#" alt="#xarML('No Replies')#" title="#xarML('Forum has no new replies')#" />
+                <img src="#xarTpl::getImage('timeimages/folder.png', 'crispbb')#" alt="#xarML('No Replies')#" title="#xarML('Forum has no new replies')#" />
                 No Replies
             </span>
             <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('timeimages/folder_comments.png', 'crispbb')#" alt="#xarML('New Replies')#" title="#xarML('Forum has new replies')#" />
+                <img src="#xarTpl::getImage('timeimages/folder_comments.png', 'crispbb')#" alt="#xarML('New Replies')#" title="#xarML('Forum has new replies')#" />
                 New Replies
             </span>
         <xar:else />
             <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('timeimages/folder.png', 'crispbb')#" alt="#xarML('Open')#" title="#xarML('Open forum')#" />
+                <img src="#xarTpl::getImage('timeimages/folder.png', 'crispbb')#" alt="#xarML('Open')#" title="#xarML('Open forum')#" />
                 Open
             </span>
         </xar:if>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('timeimages/folder_lock.png', 'crispbb')#" alt="#xarML('Closed')#" title="#xarML('Closed forum')#" />
+            <img src="#xarTpl::getImage('timeimages/folder_lock.png', 'crispbb')#" alt="#xarML('Closed')#" title="#xarML('Closed forum')#" />
             Closed
         </span>
     </div>

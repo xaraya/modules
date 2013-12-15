@@ -99,7 +99,7 @@ function crispbb_userapi_createhook($args)
 
     if (empty($tid)) return $extrainfo;
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $hookstable = $xartable['crispbb_hooks'];
 

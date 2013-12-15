@@ -38,27 +38,27 @@
             <span class="xar-floatright xar-nowrap">
                 <!-->
                 <xar:if condition="!empty($addforumurl)">
-                    <a href="#$addforumurl#" title="#xarML('View information about this forum')#"><img src="#xarTPLGetImage('icons/info.png', 'base')#" alt="#xarML('Information')#" title="#xarML('View information about this forum')#" /></a>
+                    <a href="#$addforumurl#" title="#xarML('View information about this forum')#"><img src="#xarTpl::getImage('icons/info.png', 'base')#" alt="#xarML('Information')#" title="#xarML('View information about this forum')#" /></a>
                 </xar:if>
                 -->
                 <xar:if condition="!empty($modtopicsurl)">
-                <a href="#$modtopicsurl#" title="#xarML('Topics Awaiting Approval')#"><img src="#xarTPLGetImage('icons/comment_warning.png')#" alt="Submitted" />
+                <a href="#$modtopicsurl#" title="#xarML('Topics Awaiting Approval')#"><img src="#xarTpl::getImage('icons/comment_warning.png')#" alt="Submitted" />
                 </a>
                 </xar:if>
                 <xar:if condition="!empty($modtrashcanurl)">
-                <a href="#$modtrashcanurl#" title="#xarML('Deleted Topics')#"><img src="#xarTPLGetImage('icons/bin.png')#" alt="Deleted" />
+                <a href="#$modtrashcanurl#" title="#xarML('Deleted Topics')#"><img src="#xarTpl::getImage('icons/bin.png')#" alt="Deleted" />
                 </a>
                 </xar:if>
-                <a href="#$modforumurl#" title="#xarML('Moderate topics')#"><img src="#xarTPLGetImage('icons/comments_wrench_orange.png')#" alt="Moderate" />
+                <a href="#$modforumurl#" title="#xarML('Moderate topics')#"><img src="#xarTpl::getImage('icons/comments_wrench_orange.png')#" alt="Moderate" />
                 </a>
                 <xar:if condition="!empty($editforumurl)">
-                    <a href="#$editforumurl#"><img src="#xarTPLGetImage('icons/modify.png', 'base')#" alt="#xarML('Modify')#" title="#xarML('Modify this forum')#" /></a>
+                    <a href="#$editforumurl#"><img src="#xarTpl::getImage('icons/modify.png', 'base')#" alt="#xarML('Modify')#" title="#xarML('Modify this forum')#" /></a>
                 </xar:if>
                 <xar:if condition="!empty($hooksforumurl)">
-                    <a href="#$hooksforumurl#"><img src="#xarTPLGetImage('icons/hooks.png', 'base')#" alt="#xarML('Hooks')#" title="#xarML('Modify forum hooks configuration')#" /></a>
+                    <a href="#$hooksforumurl#"><img src="#xarTpl::getImage('icons/hooks.png', 'base')#" alt="#xarML('Hooks')#" title="#xarML('Modify forum hooks configuration')#" /></a>
                 </xar:if>
                 <xar:if condition="!empty($privsforumurl)">
-                    <a href="#$privsforumurl#"><img src="#xarTPLGetImage('icons/privileges.png', 'base')#" alt="#xarML('Privileges')#" title="#xarML('Modify privileges for this forum')#" /></a>
+                    <a href="#$privsforumurl#"><img src="#xarTpl::getImage('icons/privileges.png', 'base')#" alt="#xarML('Privileges')#" title="#xarML('Modify privileges for this forum')#" /></a>
                 </xar:if>
             </span>
         </xar:if>
@@ -257,40 +257,40 @@
     <div class="xar-accent-outline xar-align-center xar-margin-thick xar-padding-thick">
         <xar:if condition="!empty($forumreadurl)">
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('timeimages/comment.png', 'crispbb')#" alt="#xarML('No Replies')#" title="#xarML('Topic with no new replies')#" />
+            <img src="#xarTpl::getImage('timeimages/comment.png', 'crispbb')#" alt="#xarML('No Replies')#" title="#xarML('Topic with no new replies')#" />
             No Replies
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('timeimages/comments.png', 'crispbb')#" alt="#xarML('New Replies')#" title="#xarML('Topic with new replies')#" />
+            <img src="#xarTpl::getImage('timeimages/comments.png', 'crispbb')#" alt="#xarML('New Replies')#" title="#xarML('Topic with new replies')#" />
             New Replies
         </span>
         <xar:else />
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('timeimages/comment.png', 'crispbb')#" alt="#xarML('Topic')#" title="#xarML('Forum topic')#" />
+            <img src="#xarTpl::getImage('timeimages/comment.png', 'crispbb')#" alt="#xarML('Topic')#" title="#xarML('Forum topic')#" />
             Topic
         </span>
         </xar:if>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('timeimages/comment_red.png', 'crispbb')#" alt="#xarML('Hot Topic')#" title="#xarML('Hot topic')#" />
+            <img src="#xarTpl::getImage('timeimages/comment_red.png', 'crispbb')#" alt="#xarML('Hot Topic')#" title="#xarML('Hot topic')#" />
             Hot Topic
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('timeimages/comment_go.png', 'crispbb')#" alt="#xarML('Moved')#" title="#xarML('Moved topic')#" />
+            <img src="#xarTpl::getImage('timeimages/comment_go.png', 'crispbb')#" alt="#xarML('Moved')#" title="#xarML('Moved topic')#" />
             Moved
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('timeimages/comment_lock.png', 'crispbb')#" alt="#xarML('Closed')#" title="#xarML('Closed topic')#" />
+            <img src="#xarTpl::getImage('timeimages/comment_lock.png', 'crispbb')#" alt="#xarML('Closed')#" title="#xarML('Closed topic')#" />
             Closed
         </span>
         <xar:if condition="!empty($privs['approvetopics'])">
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('timeimages/comment_warning.png', 'crispbb')#" alt="#xarML('Submitted')#" title="#xarML('Topic Awaiting Approval')#" />
+            <img src="#xarTpl::getImage('timeimages/comment_warning.png', 'crispbb')#" alt="#xarML('Submitted')#" title="#xarML('Topic Awaiting Approval')#" />
             Submitted
         </span>
         </xar:if>
         <xar:if condition="!empty($privs['locktopics'])">
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('tango/lock.png', 'crispbb')#" alt="#xarML('Locked')#" title="#xarML('Locked topic')#" />
+            <img src="#xarTpl::getImage('tango/lock.png', 'crispbb')#" alt="#xarML('Locked')#" title="#xarML('Locked topic')#" />
             Locked
         </span>
         </xar:if>

@@ -63,7 +63,7 @@ class Forums extends DataObject
         $tids = !empty($topics) ? array_keys($topics) : array();
         $posts = xarMod::apiFunc('crispbb', 'user', 'getposts', array('fid' => $this->itemid));
         $pids = !empty($posts) ? array_keys($posts) : array();
-        $dbconn =& xarDB::getConn();
+        $dbconn = xarDB::getConn();
         $xartable =& xarDB::getTables();
         $topicstable = $xartable['crispbb_topics'];
         $poststable = $xartable['crispbb_posts'];

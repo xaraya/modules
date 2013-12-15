@@ -1,5 +1,5 @@
-<object name="crispbb_forums"> 
-  <objectid>16</objectid>
+<object name="crispbb_forums">
+  <objectid>598</objectid>
   <label>crispBB Forums</label>
   <module_id>970</module_id>
   <itemtype>1</itemtype>
@@ -7,27 +7,27 @@
   <filepath>modules/crispbb/class/objects/Forums.php</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
-  <config>a:0:{}</config>
+  <access>a:3:{s:14:&quot;display_access&quot;;s:58:&quot;a:3:{s:5:&quot;group&quot;;i:0;s:5:&quot;level&quot;;i:100;s:7:&quot;failure&quot;;i:0;}&quot;;s:13:&quot;modify_access&quot;;s:58:&quot;a:3:{s:5:&quot;group&quot;;i:0;s:5:&quot;level&quot;;i:100;s:7:&quot;failure&quot;;i:0;}&quot;;s:13:&quot;delete_access&quot;;s:58:&quot;a:3:{s:5:&quot;group&quot;;i:0;s:5:&quot;level&quot;;i:100;s:7:&quot;failure&quot;;i:0;}&quot;;}</access>
   <isalias>true</isalias>
   <datastore>relational</datastore>
-  <access>a:3:{s:14:&quot;display_access&quot;;s:58:&quot;a:3:{s:5:&quot;group&quot;;i:0;s:5:&quot;level&quot;;i:100;s:7:&quot;failure&quot;;i:0;}&quot;;s:13:&quot;modify_access&quot;;s:58:&quot;a:3:{s:5:&quot;group&quot;;i:0;s:5:&quot;level&quot;;i:100;s:7:&quot;failure&quot;;i:0;}&quot;;s:13:&quot;delete_access&quot;;s:58:&quot;a:3:{s:5:&quot;group&quot;;i:0;s:5:&quot;level&quot;;i:100;s:7:&quot;failure&quot;;i:0;}&quot;;}</access>
   <config>a:0:{}</config>
-  <sources>a:1:{s:6:"forums";a:2:{i:0;s:18:"xar_crispbb_forums";i:1;s:8:"internal";}}</sources>
+  <sources>a:1:{s:6:&quot;forums&quot;;a:2:{i:0;s:18:&quot;xar_crispbb_forums&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
   <relations>a:0:{}</relations>
   <objects>a:0:{}</objects>
+  <category></category>
   <properties>
     <property name="id">
-      <id>107</id>
-      <label>id</label>
+      <id>6471</id>
+      <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
       <source>forums.id</source>
-      <status>35</status>
+      <status>65</status>
       <seq>1</seq>
       <configuration></configuration>
     </property>
     <property name="fstatus">
-      <id>108</id>
+      <id>6472</id>
       <label>Forum Status</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
@@ -37,7 +37,7 @@
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:16:"0,Open;1,Closed;";}</configuration>
     </property>
     <property name="fowner">
-      <id>109</id>
+      <id>6473</id>
       <label>Forum Owner</label>
       <type>username</type>
       <defaultvalue>0</defaultvalue>
@@ -47,7 +47,7 @@
       <configuration></configuration>
     </property>
     <property name="forder">
-      <id>110</id>
+      <id>6474</id>
       <label>Order</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
@@ -57,7 +57,7 @@
       <configuration></configuration>
     </property>
     <property name="lasttid">
-      <id>111</id>
+      <id>6475</id>
       <label>Last Topic ID</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
@@ -67,7 +67,7 @@
       <configuration></configuration>
     </property>
     <property name="ftype">
-      <id>112</id>
+      <id>6476</id>
       <label>Forum Type</label>
       <type>dropdown</type>
       <defaultvalue>0</defaultvalue>
@@ -77,7 +77,7 @@
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:34:"0,Normal Forum;1,Redirected Forum;";}</configuration>
     </property>
     <property name="numtopics">
-      <id>113</id>
+      <id>6477</id>
       <label>Total Topics</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
@@ -87,7 +87,7 @@
       <configuration></configuration>
     </property>
     <property name="numreplies">
-      <id>114</id>
+      <id>6478</id>
       <label>Total Replies</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
@@ -97,7 +97,7 @@
       <configuration></configuration>
     </property>
     <property name="numtopicsubs">
-      <id>115</id>
+      <id>6479</id>
       <label>Topics Awaiting Approval</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
@@ -107,7 +107,7 @@
       <configuration></configuration>
     </property>
     <property name="numreplysubs">
-      <id>116</id>
+      <id>6480</id>
       <label>Replies Awaiting Approval</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
@@ -117,7 +117,7 @@
       <configuration></configuration>
     </property>
     <property name="numtopicdels">
-      <id>117</id>
+      <id>6481</id>
       <label>Deleted Topics</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
@@ -127,7 +127,7 @@
       <configuration></configuration>
     </property>
     <property name="numreplydels">
-      <id>118</id>
+      <id>6482</id>
       <label>Deleted Replies</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
@@ -137,7 +137,7 @@
       <configuration></configuration>
     </property>
     <property name="fname">
-      <id>119</id>
+      <id>6483</id>
       <label>Forum Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -147,7 +147,7 @@
       <configuration>a:5:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"100";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"1";s:21:"validation_max_length";s:3:"100";}</configuration>
     </property>
     <property name="fdesc">
-      <id>120</id>
+      <id>6484</id>
       <label>Forum Description</label>
       <type>textarea_medium</type>
       <defaultvalue></defaultvalue>
@@ -157,7 +157,7 @@
       <configuration>a:3:{s:12:"display_rows";s:1:"8";s:15:"display_columns";s:2:"50";s:14:"display_layout";s:7:"default";}</configuration>
     </property>
     <property name="fsettings">
-      <id>121</id>
+      <id>6485</id>
       <label>Forum Settings</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
@@ -167,7 +167,7 @@
       <configuration></configuration>
     </property>
     <property name="fprivileges">
-      <id>122</id>
+      <id>6486</id>
       <label>Forum Permissions</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
@@ -177,7 +177,7 @@
       <configuration></configuration>
     </property>
     <property name="category">
-      <id>123</id>
+      <id>6487</id>
       <label>Category</label>
       <type>categories</type>
       <defaultvalue></defaultvalue>

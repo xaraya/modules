@@ -39,7 +39,7 @@ function crispbb_userapi_getforums($args)
     }
     */
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $forumstable = $xartable['crispbb_forums'];
     $fields = array('id', 'fname', 'fdesc', 'fstatus', 'ftype', 'fowner', 'forder', 'lasttid', 'fsettings', 'fprivileges', 'numtopics', 'numreplies');

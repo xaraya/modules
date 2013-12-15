@@ -69,7 +69,7 @@ function crispbb_user_newreply($args)
                 $errorMsg['return_url'] = xarModURL('crispbb', 'user', 'view', array('fid' => $data['fid']));
                 $errorMsg['type'] = 'FLOOD_CONTROL';
                 $errorMsg['pageTitle'] = xarML('Flood Control');
-                xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
+                xarTpl::setPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
                 return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
             }
         }
@@ -342,7 +342,7 @@ function crispbb_user_newreply($args)
                 }
                 xarVarSetCached('Meta.refresh','url', $return_url);
                 xarVarSetCached('Meta.refresh','time', $data['postbuffer']);
-                xarTPLSetPageTitle(xarVarPrepForDisplay($pageTitle));
+                xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
                 $data['pageTitle'] = $pageTitle;
                 $data['message'] = $message;
                 return xarTPLModule('crispbb', 'user', 'return', $data);
@@ -408,7 +408,7 @@ function crispbb_user_newreply($args)
         $data['withupload'] = 0;
     }
 
-    xarTplSetPageTitle(xarVarPrepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
 
     return $data;
 }

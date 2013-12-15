@@ -44,8 +44,8 @@ function crispbb_admin_new($args)
     // @CHECKME: is this necessary?
     // Load the DD master property class. This line will likely disappear in future versions
     sys::import('modules.dynamicdata.class.properties.master');
-    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'crispbb'));
-    $basecid = count($basecats) > 0 ? $basecats[0]['category_id'] : null;
+    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('object' => 'crispbb_forums', 'property' => 'category'));
+    $basecid = count($basecats) > 0 ? $basecats[0] : null;
     if (!empty($basecid)) {
         $categories = xarMod::apiFunc('categories', 'user', 'getchildren',
             array('cid' => $basecid));
@@ -218,7 +218,7 @@ function crispbb_admin_new($args)
         $data['withupload'] = 0;
     }
     // set page title
-    xarTPLSetPageTitle(xarVarPrepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
 
     return $data;
 

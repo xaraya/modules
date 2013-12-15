@@ -34,7 +34,7 @@ function crispbb_adminapi_deletetopic($args)
         $errorMsg['return_url'] = xarModURL('crispbb', 'user', 'main');
         $errorMsg['type'] = 'NO_PRIVILEGES';
         $errorMsg['pageTitle'] = xarML('No Privileges');
-        xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
+        xarTpl::setPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
         return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
     }
 
@@ -42,7 +42,7 @@ function crispbb_adminapi_deletetopic($args)
     $pids = !empty($posts) ? array_keys($posts) : array();
 
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $topicstable = $xartable['crispbb_topics'];
     $poststable = $xartable['crispbb_posts'];

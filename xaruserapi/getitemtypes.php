@@ -20,7 +20,7 @@
 function crispbb_userapi_getitemtypes($args)
 {
     extract($args);
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $itemtypestable = $xartable['crispbb_itemtypes'];
     $fields = array('id', 'fid', 'component');

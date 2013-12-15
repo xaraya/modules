@@ -451,7 +451,7 @@ function crispbb_user_moderate($args)
                     $errorMsg['return_url'] = xarServer::getBaseURL();
                     $errorMsg['type'] = $ertype;
                     $errorMsg['pageTitle'] = $pageTitle;
-                    xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
+                    xarTpl::setPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
                     return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
                 }
 
@@ -1033,7 +1033,7 @@ function crispbb_user_moderate($args)
                     $errorMsg['return_url'] = xarServer::getBaseURL();
                     $errorMsg['type'] = $ertype;
                     $errorMsg['pageTitle'] = $pageTitle;
-                    xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
+                    xarTpl::setPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
                     return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
                 }
 
@@ -1317,7 +1317,7 @@ function crispbb_user_moderate($args)
     $data['order'] = $order;
     $data['return_url'] = $return_url;
 
-    xarTplSetPageTitle(xarVarPrepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
 
 
 

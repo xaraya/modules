@@ -60,7 +60,7 @@ function crispbb_userapi_deletehook($args)
        return $extrainfo;
     }
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $hookstable = $xartable['crispbb_hooks'];
 

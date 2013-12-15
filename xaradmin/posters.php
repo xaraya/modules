@@ -71,7 +71,7 @@ function crispbb_admin_posters($args)
         $numitems);
     $pageTitle = xarML('Forum Posters');
     $data['pageTitle'] = $pageTitle;
-    xarTplSetPageTitle(xarVarPrepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
 
     $data['menulinks'] = xarMod::apiFunc('crispbb', 'admin', 'getmenulinks',
         array(

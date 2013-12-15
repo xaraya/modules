@@ -79,7 +79,7 @@ function crispbb_userapi_createtopic($args)
         $tsettings = array();
     }
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $topicstable = $xartable['crispbb_topics'];
 

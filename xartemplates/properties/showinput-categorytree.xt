@@ -13,13 +13,13 @@
         </tr>
         </thead>
         <tbody>
-        <xar:set name="modifyicon">xarTPLGetImage('icons/modify.png', 'base')</xar:set>
-        <xar:set name="deleteicon">xarTPLGetImage('icons/delete.png', 'base')</xar:set>
+        <xar:set name="modifyicon">xarTpl::getImage('icons/modify.png', 'base')</xar:set>
+        <xar:set name="deleteicon">xarTpl::getImage('icons/delete.png', 'base')</xar:set>
         <xar:var name="modcattitle">Modify this category</xar:var>
         <xar:var name="delcattitle">Delete this category</xar:var>
         <!--
-        <xar:set name="upicon">xarTPLGetImage('icons/go-up.png', 'base')</xar:set>
-        <xar:set name="downicon">xarTPLGetImage('icons/go-down.png', 'base')</xar:set>
+        <xar:set name="upicon">xarTpl::getImage('icons/go-up.png', 'base')</xar:set>
+        <xar:set name="downicon">xarTpl::getImage('icons/go-down.png', 'base')</xar:set>
         <xar:var name="upcattitle">Move this category up</xar:var>
         <xar:var name="downcattitle">Move this category down</xar:var>
         -->
@@ -52,7 +52,7 @@
                 <tr>
                     <td class="#$displayclass#" style="text-align: left; margin-left: 5px">
                         <xar:for start="$i = 1" test="$i le $level" iter="$i++">
-                            <img src="#xarTplGetImage('blank.png','categories')#" />
+                            <img src="#xarTpl::getImage('blank.png','categories')#" />
                         </xar:for>
                        #$name#
                     </td>

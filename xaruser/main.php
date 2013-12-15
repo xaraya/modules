@@ -169,7 +169,7 @@ function crispbb_user_main()
     }
 
     $data['viewstatsurl'] = !empty($seenLevels[$minLevel]['readforum']) ? xarModURL('crispbb', 'user', 'stats') : '';
-    xarTPLSetPageTitle(xarVarPrepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
     if (!xarVarFetch('theme', 'enum:rss:atom:xml:json', $theme, '', XARVAR_NOT_REQUIRED)) return;
     if (!empty($theme)) {
         return xarTPLModule('crispbb', 'user', 'main-' . $theme, $data);

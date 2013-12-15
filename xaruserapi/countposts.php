@@ -19,7 +19,7 @@
 function crispbb_userapi_countposts($args)
 {
     extract($args);
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $forumstable = $xartable['crispbb_forums'];
     $topicstable = $xartable['crispbb_topics'];

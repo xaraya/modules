@@ -95,7 +95,7 @@ function crispbb_userapi_updatepost($args)
         return;
     }
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $poststable = $xartable['crispbb_posts'];
     $set = array();

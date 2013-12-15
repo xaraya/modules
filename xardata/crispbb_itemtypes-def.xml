@@ -1,23 +1,24 @@
 <object name="crispbb_itemtypes">
-  <objectid>24</objectid>
-  <label>crispBB Itemtypes</label> 
+  <objectid>599</objectid>
+  <label>crispBB Itemtypes</label>
   <module_id>970</module_id>
   <itemtype>2</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
+  <access>a:3:{s:14:&quot;display_access&quot;;s:58:&quot;a:3:{s:5:&quot;group&quot;;i:0;s:5:&quot;level&quot;;i:100;s:7:&quot;failure&quot;;i:0;}&quot;;s:13:&quot;modify_access&quot;;s:58:&quot;a:3:{s:5:&quot;group&quot;;i:0;s:5:&quot;level&quot;;i:100;s:7:&quot;failure&quot;;i:0;}&quot;;s:13:&quot;delete_access&quot;;s:58:&quot;a:3:{s:5:&quot;group&quot;;i:0;s:5:&quot;level&quot;;i:100;s:7:&quot;failure&quot;;i:0;}&quot;;}</access>
   <isalias>true</isalias>
   <datastore>relational</datastore>
-  <access>a:3:{s:14:&quot;display_access&quot;;s:58:&quot;a:3:{s:5:&quot;group&quot;;i:0;s:5:&quot;level&quot;;i:100;s:7:&quot;failure&quot;;i:0;}&quot;;s:13:&quot;modify_access&quot;;s:58:&quot;a:3:{s:5:&quot;group&quot;;i:0;s:5:&quot;level&quot;;i:100;s:7:&quot;failure&quot;;i:0;}&quot;;s:13:&quot;delete_access&quot;;s:58:&quot;a:3:{s:5:&quot;group&quot;;i:0;s:5:&quot;level&quot;;i:100;s:7:&quot;failure&quot;;i:0;}&quot;;}</access>
   <config>a:0:{}</config>
-  <sources>a:1:{s:9:"itemtypes";a:2:{i:0;s:21:"xar_crispbb_itemtypes";i:1;s:8:"internal";}}</sources>
+  <sources>a:1:{s:9:&quot;itemtypes&quot;;a:2:{i:0;s:21:&quot;xar_crispbb_itemtypes&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
   <relations>a:0:{}</relations>
   <objects>a:0:{}</objects>
+  <category></category>
   <properties>
     <property name="id">
-      <id>222</id>
-      <label>id</label>
+      <id>6488</id>
+      <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
       <source>itemtypes.id</source>
@@ -26,8 +27,8 @@
       <configuration></configuration>
     </property>
     <property name="fid">
-      <id>223</id>
-      <label>fid</label>
+      <id>6489</id>
+      <label>Forum ID</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
       <source>itemtypes.fid</source>
@@ -36,8 +37,8 @@
       <configuration></configuration>
     </property>
     <property name="component">
-      <id>224</id>
-      <label>component</label>
+      <id>6490</id>
+      <label>Component</label>
       <type>dropdown</type>
       <defaultvalue></defaultvalue>
       <source>itemtypes.component</source>

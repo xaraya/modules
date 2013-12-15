@@ -6,7 +6,7 @@
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" module="crispbb" file="admin-menu" />
-    <img src="#xarTplGetImage('crispbb.png','crispbb')#" class="xar-module-icon" alt="official icon" width="96" height="96" title="crispBB" />
+    <img src="#xarTpl::getImage('crispbb.png','crispbb')#" class="xar-module-icon" alt="official icon" width="96" height="96" title="crispBB" />
     <h3>What is it?</h3>
     crispBB is a feature-rich forum module for Xaraya
 

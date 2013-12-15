@@ -37,7 +37,7 @@ function crispbb_adminapi_createitemtype($args)
         return;
     }
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $itemtypestable = $xartable['crispbb_itemtypes'];
     $nextId = $dbconn->GenId($itemtypestable);

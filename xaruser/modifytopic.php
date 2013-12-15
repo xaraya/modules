@@ -260,7 +260,7 @@ function crispbb_user_modifytopic($args)
                 xarVarSetCached('Meta.refresh','url', $return_url);
                 xarVarSetCached('Meta.refresh','time', $data['postbuffer']);
                 $pageTitle = xarML('Topic Updated');
-                xarTPLSetPageTitle(xarVarPrepForDisplay($pageTitle));
+                xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
                 $data['pageTitle'] = $pageTitle;
                 $data['tid'] = $tid;
                 $data['ttitle'] = $ttitle;
@@ -321,7 +321,7 @@ function crispbb_user_modifytopic($args)
         $data['withupload'] = 0;
     }
 
-    xarTplSetPageTitle(xarVarPrepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
 
     return $data;
 }

@@ -27,7 +27,7 @@ function crispbb_userapi_getposters($args)
     if (empty($numitems) || !is_numeric($numitems)) $numitems = 20;
     if (empty($startnum) || !is_numeric($startnum)) $startnum = 1;
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $forumstable = $xartable['crispbb_forums'];
     $topicstable = $xartable['crispbb_topics'];

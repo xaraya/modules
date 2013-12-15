@@ -29,7 +29,7 @@ function crispbb_userapi_gettopics($args)
     // get hitcount unless asked not to
     $nohitcount = isset($nohitcount) ? 1 : 0;
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $topicstable = $xartable['crispbb_topics'];
     $trequired = array('id', 'fid', 'tstatus');

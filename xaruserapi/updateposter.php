@@ -33,7 +33,7 @@ function crispbb_userapi_updateposter($args)
     // TODO : do we want to keep track of deleted and submitted topics and replies?
     // (I think submitted might be useful at least)
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $posterstable = $xartable['crispbb_posters'];
 

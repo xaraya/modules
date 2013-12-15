@@ -34,11 +34,11 @@ function crispbb_adminapi_deletepost($args)
         $errorMsg['return_url'] = xarModURL('crispbb', 'user', 'main');
         $errorMsg['type'] = 'NO_PRIVILEGES';
         $errorMsg['pageTitle'] = xarML('No Privileges');
-        xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
+        xarTpl::setPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
         return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
     }
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $poststable = $xartable['crispbb_posts'];
 

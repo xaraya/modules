@@ -75,7 +75,7 @@ function crispbb_admin_delete($args)
             'secLevels' => $secLevels
         ));
     // set page title
-    xarTPLSetPageTitle(xarVarPrepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
 
     return $data;
 }

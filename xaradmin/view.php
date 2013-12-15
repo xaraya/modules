@@ -29,8 +29,8 @@ function crispbb_admin_view($args)
 
     // get forum categories
     $mastertype = xarMod::apiFunc('crispbb', 'user', 'getitemtype', array('fid' => 0, 'component' => 'forum'));
-    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('module' => 'crispbb'));
-    $parentcat = count($basecats) > 0 ? $basecats[0]['category_id'] : null;
+    $basecats = xarMod::apiFunc('categories','user','getallcatbases',array('object' => 'crispbb_forums', 'property' => 'category'));
+    $parentcat = count($basecats) > 0 ? $basecats[0] : null;
     if (!empty($catid)) {
         $categories[$catid] = xarMod::apiFunc('categories', 'user', 'getcatinfo',
             array('cid' => $catid));
@@ -101,8 +101,7 @@ function crispbb_admin_view($args)
     $pageTitle = xarML('Manage Forums');
     // store function name for use by admin-main as an entry point
     xarSessionSetVar('crispbb_adminstartpage', 'view');
-    xarTPLSetPageTitle(xarVarPrepForDisplay($pageTitle));
-
+    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
 
     return $data;
 

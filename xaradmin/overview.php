@@ -37,7 +37,7 @@ function crispbb_admin_overview()
 
     // store function name for use by admin-main as an entry point
     xarSessionSetVar('crispbb_adminstartpage', 'overview');
-    xarTPLSetPageTitle(xarVarPrepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
     return $data;
 }
 

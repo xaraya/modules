@@ -112,7 +112,7 @@ function crispbb_user_stats($args)
     $data['pageTitle'] = $pageTitle;
 
 
-    xarTplSetPageTitle(xarVarPrepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
 
     return $data;
 }

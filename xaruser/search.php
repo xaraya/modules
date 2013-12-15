@@ -449,7 +449,7 @@ function crispbb_user_search()
     if ($data['searchactive']) {
         return xarTPLModule('crispbb', 'user', 'searchhook', $data);
     } else {
-        xarTPLSetPageTitle(xarVarPrepForDisplay(xarML('Search Forums')));
+        xarTpl::setPageTitle(xarVarPrepForDisplay(xarML('Search Forums')));
         $data['totalunanswered'] = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('noreplies' => true, 'tstatus' => array(0,1,2,4)));
         $data['forumoptions'] = xarMod::apiFunc('crispbb', 'user', 'getmenulinks');
         $data['condition'] = xarVarPrepForDisplay(xarML($condition));

@@ -30,7 +30,7 @@ function crispbb_init()
 #
 # Create tables
 #
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     $prefix = xarDB::getPrefix();
     //Load Table Maintenance API
@@ -290,13 +290,13 @@ function crispbb_init()
 #
     $objects = array(
                 'crispbb_forums',
-                //'crispbb_topics',
-                //'crispbb_posts',
+                'crispbb_topics',
+                'crispbb_posts',
                 'crispbb_itemtypes',
                 //'crispbb_hooks',
                 //'crispbb_user_settings',
                 'crispbb_forum_settings',
-                //'crispbb_posters',
+                'crispbb_posters',
                 );
 
     if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
@@ -308,9 +308,10 @@ function crispbb_init()
 
     $itemtypes = DataObjectMaster::getObject(array('name' => 'crispbb_itemtypes'));
     $components = array('forum', 'topics', 'posts');
-    foreach ($components as $component)
+    foreach ($components as $component) {
+        $itemtypes->properties['id']->value = 0;
         $basetypes[$component] = $itemtypes->createItem(array('fid' => 0, 'component' => $component));
-
+    }
 # --------------------------------------------------------
 #
 # Create Base Category
@@ -323,7 +324,7 @@ function crispbb_init()
     } catch (Exception $e) {
         $basecid = 0;
     }
-    if (empty($basecid)) {
+/*    if (empty($basecid)) {
         $basecid = xarMod::apiFunc('categories', 'admin', 'create',
             array(
                 'name' => $catName,
@@ -332,7 +333,7 @@ function crispbb_init()
             ));
     }
     if (!xarMod::apiFunc('categories', 'admin', 'setcatbases',
-        array('module' => $module, 'cids' => array($basecid)))) return;
+        array('module' => $module, 'cids' => array($basecid)))) return;*/
 
 
 # --------------------------------------------------------
@@ -495,7 +496,7 @@ function crispbb_init()
 function crispbb_upgrade($oldversion)
 {
     $module = 'crispbb';
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     $prefix = xarDB::getPrefix();
     //Load Table Maintenance API
@@ -531,7 +532,7 @@ function crispbb_upgrade($oldversion)
 function crispbb_delete()
 {
     $module = 'crispbb';
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     $prefix = xarDB::getPrefix();
     //Load Table Maintenance API

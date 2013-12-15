@@ -74,7 +74,7 @@ function crispbb_adminapi_create($args)
         $fowner = xarModVars::get('roles', 'admin');
     }
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $forumstable = $xartable['crispbb_forums'];
 

@@ -34,7 +34,7 @@ function crispbb_user_displayreply($args)
         $errorMsg['return_url'] = xarModURL('crispbb', 'user', 'main');
         $errorMsg['type'] = 'NO_PRIVILEGES';
         $errorMsg['pageTitle'] = xarML('No Privileges');
-        xarTPLSetPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
+        xarTpl::setPageTitle(xarVarPrepForDisplay($errorMsg['pageTitle']));
         return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
     }
 
@@ -216,7 +216,7 @@ function crispbb_user_displayreply($args)
         $pageTitle .= xarML(' - Page #(1)',$pageNumber);
     }
     $data['forumoptions'] = xarMod::apiFunc('crispbb', 'user', 'getitemlinks');
-    xarTplSetPageTitle(xarVarPrepForDisplay($pageTitle));
+    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
 
     $data['viewstatsurl'] = xarModURL('crispbb', 'user', 'stats');
 

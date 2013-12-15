@@ -48,7 +48,7 @@ function crispbb_userapi_gethooklist($args)
     }
 
     $dbconn  = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     // TODO: allow finer selection of hooks based on type etc., and
     //       filter out irrelevant ones (like module remove, search...)
