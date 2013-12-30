@@ -118,7 +118,7 @@ function publications_init()
       operation         varchar(254) default '',
       content           text,
       PRIMARY KEY  (id)
-    ) TYPE=MyISAM";
+    )";
     if (!$q->run($query)) return;
 
 # --------------------------------------------------------
