@@ -15,6 +15,8 @@
  */
 function publications_user_delete()
 {
+    if (!xarSecurityCheck('ModeratePublications')) return;
+
     $return = xarModURL('publications', 'user','view',array('ptid' => xarModVars::get('publications', 'defaultpubtype')));
     if(!xarVarFetch('confirmed',  'int', $confirmed,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('itemid',     'int', $itemid,     NULL,  XARVAR_DONT_SET)) {return;}
