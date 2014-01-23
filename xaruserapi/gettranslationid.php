@@ -100,27 +100,5 @@ function publications_userapi_gettranslationid($args)
         if (empty($result)) return (int)$args['id'];
         return $result['id']; 
     }
-
-
-if (xarUserGetVar('uname') == 'random') {
-    $xartable =& xarDB::getTables();
-    $q = new Query('SELECT');
-    $q->addtable($xartable['publications'],'p1');
-    $q->addtable($xartable['publications'],'p2');
-    $q->join('p2.id','p1.parent_id');
-    $q->addfield('p1.id');
-    $c[] = $q->peq('p1.id',$args['id']);
-    $c[] = $q->peq('p1.parent_id',$args['id']);
-    $c[] = $q->peq('p2.id',$args['id']);
-    $q->qor($c);
-    $d[] = $q->peq('p1.locale',$args['locale']);
-    $d[] = $q->peq('p2.locale',$args['locale']);
-    $q->qor($d);
-    if (!$q->run()) return $args['id'];
-    $q->qecho();
-    $result = $q->row();
-    if (empty($result)) return $args['id'];
-    return $result['id']; 
-    }
 }
 ?>
