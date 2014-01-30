@@ -14,14 +14,7 @@
                     <xar:data-form object="$module_settings"/>
                 </fieldset>
             </xar:if>
-            <fieldset>
-                <div class="xar-form-input-wrapper-after">
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
-                    <input type="hidden" name="phase" id="phase" value="update"/>
-                    <xar:var name="label">Update</xar:var>
-                    <xar:button type="submit" label="$label"/>
-                </div>
-            </fieldset>
+            <xar:template file="update-button" module="base" />
         </form>
     </div>
 </xar:template>

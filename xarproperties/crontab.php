@@ -30,7 +30,7 @@ class CrontabProperty extends DataProperty
 
     public function checkInput($name = '', $value = null)
     {
-        $name = empty($name) ? 'dd_'.$this->id : $name;
+        $name = empty($name) ? $this->propertyprefix . $this->id : $name;
         // store the fieldname for validations who need them (e.g. file uploads)
         $this->fieldname = $name;
         if (!isset($value)) {
@@ -99,8 +99,8 @@ class CrontabProperty extends DataProperty
     
     function showHidden(Array $data = array())
     {
-        $data['name']     = !empty($data['name']) ? $data['name'] : 'dd_'.$this->id;
-        $data['id']       = !empty($data['id'])   ? $data['id']   : 'dd_'.$this->id;
+        $data['name']     = !empty($data['name']) ? $data['name'] : $this->propertyprefix . $this->id;
+        $data['id']       = !empty($data['id'])   ? $data['id']   : $this->propertyprefix . $this->id;
 
         $data['invalid']  = !empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) :'';
         $value = $this->getValue();
