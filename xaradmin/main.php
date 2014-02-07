@@ -16,7 +16,12 @@
 function scheduler_admin_main()
 {
     if (!xarSecurityCheck('AdminScheduler')) return;
-    xarController::redirect(xarModURL('scheduler', 'admin', 'view'));
+
+    if (xarModVars::get('modules', 'disableoverview') == 0){
+        return array();
+    } else {
+        xarController::redirect(xarModURL('scheduler', 'admin', 'view'));
+    }
     return true;
 }
 
