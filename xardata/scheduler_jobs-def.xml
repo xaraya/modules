@@ -63,7 +63,7 @@
       <source>jobs.job_trigger</source>
       <status>33</status>
       <seq>5</seq>
-      <configuration>a:11:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:0:"";s:20:"validation_notequals";s:0:"";s:17:"validation_equals";s:0:"";s:24:"initialization_firstline";s:0:"";s:23:"initialization_function";s:44:"xarModAPIFunc('scheduler','user','triggers')";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:0:"";s:25:"initialization_other_rule";s:0:"";}</configuration>
+      <configuration>a:11:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:0:"";s:20:"validation_notequals";s:0:"";s:17:"validation_equals";s:0:"";s:24:"initialization_firstline";s:0:"";s:23:"initialization_function";s:44:"xarMod::apiFunc('scheduler','user','triggers')";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:0:"";s:25:"initialization_other_rule";s:0:"";}</configuration>
     </property>
     <property name="source_type">
       <id>7777</id>
@@ -73,7 +73,7 @@
       <source>jobs.sourcetype</source>
       <status>33</status>
       <seq>6</seq>
-      <configuration>a:11:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:0:"";s:20:"validation_notequals";s:0:"";s:17:"validation_equals";s:0:"";s:24:"initialization_firstline";s:0:"";s:23:"initialization_function";s:43:"xarModAPIFunc('scheduler','user','sources')";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:0:"";s:25:"initialization_other_rule";s:0:"";}</configuration>
+      <configuration>a:11:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:0:"";s:20:"validation_notequals";s:0:"";s:17:"validation_equals";s:0:"";s:24:"initialization_firstline";s:0:"";s:23:"initialization_function";s:43:"xarMod::apiFunc('scheduler','user','sources')";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:0:"";s:25:"initialization_other_rule";s:0:"";}</configuration>
     </property>
     <property name="source">
       <id>7778</id>
@@ -153,7 +153,7 @@
       <source>jobs.job_interval</source>
       <status>33</status>
       <seq>14</seq>
-      <configuration>a:11:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:0:"";s:20:"validation_notequals";s:0:"";s:17:"validation_equals";s:0:"";s:24:"initialization_firstline";s:0:"";s:23:"initialization_function";s:45:"xarModAPIFunc('scheduler','user','intervals')";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:0:"";s:25:"initialization_other_rule";s:0:"";}</configuration>
+      <configuration>a:11:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:0:"";s:20:"validation_notequals";s:0:"";s:17:"validation_equals";s:0:"";s:24:"initialization_firstline";s:0:"";s:23:"initialization_function";s:45:"xarMod::apiFunc('scheduler','user','intervals')";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:0:"";s:25:"initialization_other_rule";s:0:"";}</configuration>
     </property>
   </properties>
 </object>

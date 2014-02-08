@@ -35,7 +35,7 @@ function scheduler_admin_new()
         $isvalid = $data['object']->checkInput();
 
         /*if ($job_interval == '0c' && !empty($config['crontab'])) {
-            $config['crontab']['nextrun'] = xarModAPIFunc('scheduler','user','nextrun',
+            $config['crontab']['nextrun'] = xarMod::apiFunc('scheduler','user','nextrun',
                                                           $config['crontab']);
         }
         $job['config'] = $config;*/

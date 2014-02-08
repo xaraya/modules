@@ -134,7 +134,7 @@ function scheduler_init()
                    'scheduler_jobs',
                      );
 
-    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
     // Initialisation successful
     return true;
 }
@@ -159,8 +159,8 @@ function scheduler_upgrade($oldversion)
 
         case '1.2.0':
 
-            $triggers = xarModAPIFunc('scheduler','user','triggers');
-            $checktypes = xarModAPIFunc('scheduler','user','sources');
+            $triggers = xarMod::apiFunc('scheduler','user','triggers');
+            $checktypes = xarMod::apiFunc('scheduler','user','sources');
 
             // fetch modvars
             $checktype = xarModVars::get('scheduler', 'checktype');
@@ -259,7 +259,7 @@ function scheduler_upgrade($oldversion)
  */
 function scheduler_delete()
 {
-    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'scheduler'));
+    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => 'scheduler'));
 }
 
 ?>

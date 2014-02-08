@@ -41,7 +41,7 @@ function scheduler_admin_delete()
         }
 
         $data['authid'] = xarSecGenAuthKey();
-        $data['triggers'] = xarModAPIFunc('scheduler','user','triggers');
+        $data['triggers'] = xarMod::apiFunc('scheduler','user','triggers');
         $data['job'] = $job;
         $data['properties'] = $job->properties;
         $data['itemid'] = $itemid;

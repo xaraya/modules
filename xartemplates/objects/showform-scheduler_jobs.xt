@@ -113,7 +113,7 @@
                 </div>
                 <div class="xar-col">
                     <xar:if condition="empty($config['crontab']['nextrun'])">
-                        <xar:set name="nextrun">xarModAPIFunc('scheduler','user','nextrun',$config['crontab'])</xar:set>
+                        <xar:set name="nextrun">xarMod::apiFunc('scheduler','user','nextrun',$config['crontab'])</xar:set>
                         #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$nextrun)#
                     <xar:else/>
                         #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$config['crontab']['nextrun'])#

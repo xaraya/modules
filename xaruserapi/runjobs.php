@@ -21,7 +21,7 @@ function scheduler_userapi_runjobs($args)
 {
     extract($args);
 /*    
-    $triggers = xarModAPIFunc('scheduler','user','triggers');
+    $triggers = xarMod::apiFunc('scheduler','user','triggers');
 
     if(!isset($trigger) || !isset($triggers[$trigger])) {
         return xarML('Trigger not specified');
@@ -31,7 +31,7 @@ function scheduler_userapi_runjobs($args)
     }
 */
     if(!empty($itemid)) {
-        $job = xarModAPIFunc('scheduler','user','get',$args);
+        $job = xarMod::apiFunc('scheduler','user','get',$args);
 
         if(empty($job)) {
             return xarML('Invalid job ID');
@@ -42,7 +42,7 @@ function scheduler_userapi_runjobs($args)
 
         $jobs[$job['id']] = $job;
     } else {
-        $jobs = xarModAPIFunc('scheduler','user','getall',$args);
+        $jobs = xarMod::apiFunc('scheduler','user','getall',$args);
     }
 
     // let's run without interruptions for a while :)
@@ -153,11 +153,11 @@ function scheduler_userapi_runjobs($args)
                                 $skip = 1; // in fact, this case is already handled above
                             } else {
                                 // run it now, and calculate the next run for this job
-                                $jobs[$id]['crontab']['nextrun'] = xarModAPIFunc('scheduler','user','nextrun',$job['crontab']);
+                                $jobs[$id]['crontab']['nextrun'] = xarMod::apiFunc('scheduler','user','nextrun',$job['crontab']);
                             }
                         } else {
                             // run it now, and calculate the next run for this job
-                            $jobs[$id]['crontab']['nextrun'] = xarModAPIFunc('scheduler','user','nextrun',$job['crontab']);
+                            $jobs[$id]['crontab']['nextrun'] = xarMod::apiFunc('scheduler','user','nextrun',$job['crontab']);
                         }
                         break;
                 }
