@@ -17,16 +17,28 @@
  * command line interface (CLI) : php run_scheduler.php
  */
 
-// CHECKME: change this to your Xaraya html directory !
-    $homedir = 'd:/backup/xaraya/html';
+/**
+ * Redefine the paths to the Xaraya directories
+ */
+$systemConfiguration = array();
+$systemConfiguration['rootDir'] = '../../../';          // The path from here to the Xaraya root directory
+$systemConfiguration['libDir'] = 'lib/';                // The path to the lib directory relative to root
+$systemConfiguration['webDir'] = '';                    // The path to the web directory relative to root
+$systemConfiguration['codeDir'] = 'code/';              // The path to the code directory relative to root
+$GLOBALS['systemConfiguration'] = $systemConfiguration;
 
-    if (!chdir($homedir)) {
-        die('Please check that the $homedir variable in this script is set to your Xaraya html directory');
-    }
+/**
+ * Load the Xaraya configuration files so we can get started
+ * This needs to be hard coded. Everything else works off the system configuration paths above
+ */
+ include '../../../bootstrap.php';
 
-    // initialize the Xaraya core
-    include 'includes/xarCore.php';
-    xarCoreInit(XARCORE_SYSTEM_ALL);
+/**
+ * Load the Xaraya core
+ */
+sys::import('xaraya.core');
+    xarCoreInit(xarCore::SYSTEM_ALL);
+    $homedir = xarServer::getBaseURL();
 
     // update the last run time
     xarModVars::set('scheduler','lastrun',time());
