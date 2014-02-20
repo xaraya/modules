@@ -29,7 +29,7 @@ function comments_adminapi_count_comments( $args )
 {
     extract($args);
     $dbconn         = xarDB::getConn();
-    $xartable       = xarDB::getTables();
+    $xartable       =& xarDB::getTables();
     $total          = 0;
     $status         = strtolower($status);
     $type           = strtolower($type);

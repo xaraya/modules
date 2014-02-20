@@ -110,7 +110,7 @@ function comments_admin_delete( )
                     break;
                 case 'all':
                     $dbconn = xarDB::getConn();
-                    $xartable = xarDB::getTables();
+                    $xartable =& xarDB::getTables();
 
                     $sql = "DELETE
                               FROM  $xartable[comments]";

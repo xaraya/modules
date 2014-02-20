@@ -32,7 +32,7 @@ function comments_userapi_get_object_list( $args )
     }
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     $sql     = "SELECT DISTINCT objectid AS pageid
                            FROM $xartable[comments]
                           WHERE modid = $modid";

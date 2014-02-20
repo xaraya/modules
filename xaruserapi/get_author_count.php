@@ -44,7 +44,7 @@ function comments_userapi_get_author_count($args)
 
     if (!isset($status) || !is_numeric($status)) $status = _COM_STATUS_ON;
 
-    $tables = xarDB::getTables();
+    $tables =& xarDB::getTables();
     $q = new Query('SELECT', $tables['comments']);
     $q->addfield('COUNT(id) AS numitems');
     $q->eq('module_id', $moduleid);

@@ -32,7 +32,7 @@ function comments_userapi_get_childcountlist($args)
     }
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     $bind = array((int)$left, (int)$right, _COM_STATUS_ON, (int)$moduleid, (int)$itemid, (int)$itemtype);
 

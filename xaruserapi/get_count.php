@@ -46,7 +46,7 @@ function comments_userapi_get_count($args)
     }
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     $sql = "SELECT  COUNT(id) as numitems
               FROM  $xartable[comments]

@@ -40,7 +40,7 @@ function comments_adminapi_delete_object_nodes( $args )
     }
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     $sql = "DELETE
               FROM  $xartable[comments]

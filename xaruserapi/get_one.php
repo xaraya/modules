@@ -32,7 +32,7 @@ function comments_userapi_get_one( $args )
     }
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     // initialize the commentlist array
     $commentlist = array();

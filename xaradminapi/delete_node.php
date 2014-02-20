@@ -52,7 +52,7 @@ function comments_adminapi_delete_node( $args )
 
     //Now delete the item ....
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     // delete the node
     $sql = "DELETE

@@ -64,7 +64,7 @@ function comments_userapi_getitems($args)
 
     // Database information
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     $commentstable = $xartable['comments'];
 
     $where = '';
@@ -116,7 +116,7 @@ function comments_userapi_getitems($args)
 //    return $items;
 
     sys::import('xaraya.structures.query');
-    $tables = xarDB::getTables();
+    $tables =& xarDB::getTables();
     $q = new Query('SELECT', $tables['comments']);
     $q->eq('module_id', $moduleid);
     $q->eq('itemtype', $itemtype);

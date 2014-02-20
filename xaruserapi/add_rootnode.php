@@ -50,7 +50,7 @@ function comments_userapi_add_rootnode( $args )
     }
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     $commenttable = $xartable['comments'];
 

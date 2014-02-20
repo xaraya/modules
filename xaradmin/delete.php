@@ -39,9 +39,7 @@ function comments_admin_delete()
             $object = DataObjectMaster::getObject(array('name' => 'comments_comments'));
             $object->getItem(array('itemid' => $itemid));
             $values = $object->getFieldValues();
-            foreach ($values as $key => $val) {
-                $data[$key] = $val;
-            }
+            foreach ($values as $key => $val) $data[$key] = $val;
 
             $delete_args['id'] = $itemid;
 

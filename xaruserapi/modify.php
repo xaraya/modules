@@ -85,7 +85,7 @@ function comments_userapi_modify($args)
     $adminid = xarModVars::get('roles','admin');
 
     /*$dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();*/
+    $xartable =& xarDB::getTables();*/
 
     // Let's leave a link for the changelog module if it is hooked to track comments
     /* jojodee: good idea. I'll move it direct to comments template and then can add it to

@@ -72,7 +72,7 @@ function comments_userapi_get_multiple($args)
     }
 
     //$dbconn = xarDB::getConn();
-    //$xartable = xarDB::getTables();
+    //$xartable =& xarDB::getTables();
 
     // initialize the commentlist array
     $commentlist = array();

@@ -24,7 +24,7 @@ function comments_adminapi_celko_reconstruct()
 {
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     // initialize the commentlist array
     $commentlist = array();

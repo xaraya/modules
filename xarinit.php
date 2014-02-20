@@ -31,7 +31,7 @@ function comments_init()
     sys::import('xaraya.tableddl');
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     //Psspl:Added the code for anonpost_to field.
     $fields = array(
         'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),

@@ -24,7 +24,7 @@ function comments_adminapi_import_blacklist( $args )
     extract($args);
     sys::import('xaraya.tableddl');
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     $btable = $xartable['blacklist'];
     $bbtable = &$xartable['blacklist_column'];
     $feedfile = 'http://www.jayallen.org/comment_spam/blacklist.txt';

@@ -25,7 +25,7 @@ function comments_userapi_search($args)
     extract($args);
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     $where = '';
 

@@ -51,7 +51,7 @@ function comments_userapi_get_node_root( $args )
     }
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     // grab the root node's id, left and right values
     // based on the objectid/modid pair

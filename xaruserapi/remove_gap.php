@@ -44,7 +44,7 @@ function comments_userapi_remove_gap( $args )
     }
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     $sql_left  = "UPDATE $xartable[comments]
                      SET left_id = (left_id - $gapsize)

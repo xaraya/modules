@@ -39,7 +39,7 @@ function comments_adminapi_delete_branch( $args )
     $objectid = $comments[0]['objectid'];
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     $sql = "DELETE
               FROM  $xartable[comments]

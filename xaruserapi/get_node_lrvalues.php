@@ -32,7 +32,7 @@ function comments_userapi_get_node_lrvalues( $args )
     }
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     $sql = "SELECT  left_id, right_id
               FROM  $xartable[comments]

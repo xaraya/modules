@@ -35,7 +35,7 @@ function comments_userapi_get_module_lrvalues( $args )
     }
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     $sql = "SELECT  objectid AS objectid,
                     MIN(left_id) AS left_id,

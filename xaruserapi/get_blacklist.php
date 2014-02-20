@@ -47,7 +47,7 @@ function comments_userapi_get_blacklist($args)
 
    /* // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     $btable = $xartable['blacklist'];
     $query = "SELECT id,
                      domain

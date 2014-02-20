@@ -35,7 +35,7 @@ function comments_userapi_modcounts($args)
 
     // Database information
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     $commentstable = $xartable['comments'];
 
     switch ($status) {
