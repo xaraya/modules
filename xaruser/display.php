@@ -24,6 +24,7 @@
  * @param    integer    [$args['selected_id']]      optional: the cid of the comment to view (only for displaying single comments)
  * @param    integer    [$args['thread']]           optional: display the entire thread following cid
  * @param    integer    [$args['preview']]          optional: an array containing a single (preview) comment used with adding/editing comments
+ * @param    bool       [$args['noposting']]        optional: a boolean to define whether posting is enabled
  * @return   array      returns whatever needs to be parsed by the BlockLayout engine
  */
 
@@ -172,6 +173,11 @@ function comments_user_display($args)
     $data['package'] = $package;
 
     $data['comment_id'] = $data['selected_id'];
+
+    // Pass posting parameter to the template
+    if (isset($args['noposting'])) $data['noposting'] = $args['noposting'];
+    else $data['noposting'] = false;
+
     return $data;
 }
 ?>

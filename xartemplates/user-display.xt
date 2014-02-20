@@ -61,8 +61,10 @@
                     <xar:template file="view-flat" type="module"/>
                 </xar:if>
                 <xar:if condition="!isset($header['selected_id'])">
-                    <h3>Post a comment</h3>
-                    <xar:template file="input-box" type="module"/>
+                    <xar:if condition="!$noposting">
+                        <h3>Post a comment</h3>
+                        <xar:template file="input-box" type="module"/>
+                    </xar:if>
                 <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
                     <p>
                         Return to
