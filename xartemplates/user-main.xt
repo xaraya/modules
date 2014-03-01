@@ -3,8 +3,10 @@
     <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <xar:if condition="">
-            #$output#
+        <xar:if condition="!empty($output)">
+            <xar:foreach in="$output" value="$row">
+                #$row#<br/>
+            </xar:foreach>
         </xar:if>
     </div>
 </xar:template>

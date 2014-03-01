@@ -107,7 +107,7 @@ function scheduler_init()
     xarModVars::set('scheduler', 'trigger', 'disabled');
     xarModVars::set('scheduler', 'lastrun', 0);
     xarModVars::set('scheduler', 'items_per_page', 20);
-
+    xarModVars::set('scheduler', 'interval', 5*60);
 # --------------------------------------------------------
 #
 # Register masks

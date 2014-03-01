@@ -13,6 +13,37 @@
                     </legend>
                     <xar:data-form object="$module_settings"/>
                 </fieldset>
+                <fieldset>
+                    <div class="xar-row">
+                        <div class="xar-col">
+                            Force interval between triggers
+                        </div>
+                        <div class="xar-col">
+                            <xar:set name="options">
+                                array(
+                                    array('id' => 0, 'name' => xarML('None')),
+                                    array('id' => 1, 'name' => xarML('1 second')),
+                                    array('id' => 30, 'name' => xarML('30 seconds')),
+                                    array('id' => 60, 'name' => xarML('1 minute')),
+                                    array('id' => 120, 'name' => xarML('2 minutes')),
+                                    array('id' => 300, 'name' => xarML('5 minutes')),
+                                    array('id' => 600, 'name' => xarML('10 minutes')),
+                                    array('id' => 900, 'name' => xarML('15 minutes')),
+                                    array('id' => 1800, 'name' => xarML('30 minutes')),
+                                    array('id' => 2700, 'name' => xarML('45 minutes')),
+                                    array('id' => 3600, 'name' => xarML('1 hour')),
+                                    array('id' => 3600*2, 'name' => xarML('2 hours')),
+                                    array('id' => 3600*6, 'name' => xarML('2 hours')),
+                                    array('id' => 3600*24, 'name' => xarML('1 day')),
+                                )
+                            </xar:set>
+                            <xar:set name="value">
+                                xarModVars::get('scheduler', 'interval')
+                            </xar:set>
+                            <xar:data-input type="dropdown" name="interval" value="$value" options="$options"/>
+                        </div>
+                    </div>
+                </fieldset>
             </xar:if>
             <xar:template file="update-button" module="base" />
         </form>

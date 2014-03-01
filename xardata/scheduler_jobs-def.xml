@@ -79,7 +79,7 @@
       <id>7778</id>
       <label>Source</label>
       <type>textbox</type>
-      <defaultvalue></defaultvalue>
+      <defaultvalue>127.0.0.1</defaultvalue>
       <source>jobs.source</source>
       <status>33</status>
       <seq>7</seq>

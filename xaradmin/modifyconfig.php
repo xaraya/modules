@@ -48,6 +48,9 @@ function scheduler_admin_modifyconfig()
                     } else {
                         $itemid = $data['module_settings']->updateItem();
                     }
+                    
+                    if (!xarVarFetch('interval', 'str', $interval, '5t', XARVAR_NOT_REQUIRED)) return;
+                    xarModVars::set('scheduler', 'interval', $interval);
                 break;
             }
         break;
