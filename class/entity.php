@@ -29,7 +29,7 @@ class Entity extends DataObject
 
     public function getItem(Array $args = array())
     {
-        if (!isset($args['itemid'])) throw new MissingParameterException('itemid');
+        if (!isset($args['itemid'])) throw new EmptyParameterException('itemid');
         xarMod::apiLoad('eav');
         $tables = xarDB::getTables();
         $q = new Query('SELECT', $tables['eav_data']);
