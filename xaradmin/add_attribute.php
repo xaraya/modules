@@ -15,12 +15,19 @@
  */
 function eav_admin_add_attribute(Array $args=array())
 {
+	if(!xarVarFetch('objectname',   'isset', $data['objectname'],   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('objectid',   'isset', $data['objectid'],   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('details',  'isset', $details,  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('layout',   'str:1', $data['layout'],   'default', XARVAR_NOT_REQUIRED)) {return;}
 
-    if (empty($data['objectid'])) return xarResponse::NotFound();
-
+    //if (empty($data['objectid'])) return xarResponse::NotFound();
+    sys::import('modules.dynamicdata.class.objects.master');
+	
+	if (!empty($data['objectname'])) {
+    	$info = DataObjectMaster::getObjectInfo(array('name' => $data['objectname']));
+    	$data['objectid'] = $info['objectid'];
+	}
+	
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('objectid' => $data['objectid']));
 
