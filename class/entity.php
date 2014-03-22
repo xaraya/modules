@@ -50,10 +50,11 @@ class Entity extends DataObject
     
     public function getItems(Array $args = array())
     {
+        if (empty($args['itemids'])) return array();
         xarMod::apiLoad('eav');
         $tables = xarDB::getTables();
         $q = new Query('SELECT', $tables['eav_data']);
-        if (isset($args['itemids'])) $q->in('item_id', $args['itemids']);
+        $q->in('item_id', $args['itemids']);
         $q->eq('object_id', $this->parent_id);
         if (!$q->run()) return false;
         foreach ($q->output() as $row) {
