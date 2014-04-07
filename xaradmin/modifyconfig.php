@@ -62,7 +62,8 @@ function publications_admin_modifyconfig()
         } else {
             $data['settings'] = $globalsettings;
         }
-    
+        $data['pubtypename'] = $pubtypeobject->properties['name']->getValue();
+
     } elseif ($data['tab'] == 'redirects') {
         // Redirect configuration
         // FIXME: remove this?
