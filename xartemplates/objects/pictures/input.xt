@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:data-input property="$properties['id']" hidden="hidden" />
     <div class="xar-row">
-        <div class="xar-col">
+        <div class="xar-col-condensed">
             <xar:var name="label">Name</xar:var>
             <xar:data-label property="$properties['name']" for="id" label="$label" />
         </div>
@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="xar-row">
-        <div class="xar-col">
+        <div class="xar-col-condensed">
             <xar:var name="label">Title</xar:var>
             <xar:data-label property="$properties['title']" for="id" label="$label" />
         </div>
@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="xar-row">
-        <div class="xar-col">
+        <div class="xar-col-condensed">
             <xar:var name="label">Description</xar:var>
             <xar:data-label property="$properties['description']" for="id" label="$label" />
         </div>
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="xar-row">
-        <div class="xar-col">
+        <div class="xar-col-condensed">
             <xar:var name="label">Thumbnail</xar:var>
             <xar:data-label property="$properties['thumbnail']" for="id" label="$label" />
         </div>
@@ -38,7 +38,7 @@
         </div>
     </div>
     <div class="xar-row">
-        <div class="xar-col">
+        <div class="xar-col-condensed">
             <xar:var name="label">Picture</xar:var>
             <xar:data-label property="$properties['picture']" for="id" label="$label" />
         </div>
@@ -47,7 +47,7 @@
         </div>
     </div>
     <div class="xar-row">
-        <div class="xar-col">
+        <div class="xar-col-condensed">
             <xar:var name="label">Notes</xar:var>
             <xar:data-label property="$properties['notes']" for="id" label="$label" />
         </div>

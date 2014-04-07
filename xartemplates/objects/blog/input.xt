@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:data-input property="$properties['id']" hidden="hidden" />
     <div class="xar-row">
-        <div class="xar-col">
+        <div class="xar-col-condensed">
             <xar:var name="label">Name</xar:var>
             <xar:data-label property="$properties['name']" for="id" label="$label" />
         </div>
@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="xar-row">
-        <div class="xar-col">
+        <div class="xar-col-condensed">
             <xar:var name="label">Title</xar:var>
             <xar:data-label property="$properties['title']" for="id" label="$label" />
         </div>
@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="xar-row">
-        <div class="xar-col">
+        <div class="xar-col-condensed">
             <xar:var name="label">Description</xar:var>
             <xar:data-label property="$properties['description']" for="id" label="$label" />
         </div>
@@ -29,25 +29,25 @@
         </div>
     </div>
     <div class="xar-row">
-        <div class="xar-col">
+        <div class="xar-col-condensed">
             <xar:var name="label">Introduction</xar:var>
             <xar:data-label property="$properties['introduction']" for="id" label="$label" />
         </div>
         <div class="xar-col">
-            <xar:data-input property="$properties['introduction']" />
+            <xar:data-input property="$properties['introduction']" style="width: 700px" />
         </div>
     </div>
     <div class="xar-row">
-        <div class="xar-col">
+        <div class="xar-col-condensed">
             <xar:var name="label">Body</xar:var>
             <xar:data-label property="$properties['body']" for="id" label="$label" />
         </div>
         <div class="xar-col">
-            <xar:data-input property="$properties['body']" />
+            <xar:data-input property="$properties['body']" style="width: 700px" />
         </div>
     </div>
     <div class="xar-row">
-        <div class="xar-col">
+        <div class="xar-col-condensed">
             <xar:var name="label">Notes</xar:var>
             <xar:data-label property="$properties['notes']" for="id" label="$label" />
         </div>
