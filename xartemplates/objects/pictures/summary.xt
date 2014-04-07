@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+    <!-- Load the stylesheet for this publication type -->
+    <xar:style method="import" module="publications" file="picture" title="Picture Stylesheet"/>
+    
     <xar:set name="fields">$object->getFieldValues(array(),1)</xar:set>
 
-    <!-- Title -->
-    <xar:if condition="!empty($categories) and count($categories) gt 0">
-        <p>
-            [
-            <xar:foreach in="$categories" value="$cat">
-                #$cat['cjoin']#
-                <a href="#$cat['clink']#">
-                    #$cat['cname']#
-                </a>
-            </xar:foreach>
-            ]
-        </p>
+    <xar:if condition="!empty($categories) and count($categories) gt 0">[
+        <xar:foreach in="$categories" value="$cat">#$cat['cjoin']#
+            <a href="#$cat['clink']#">#$cat['cname']#</a>
+        </xar:foreach>]
     </xar:if>
+
     <div id="main-content">
         <ul>
             <xar:if condition="xarModIsHooked('uploads','publications',$fields['itemtype']) and substr($body,0,1) eq ';'">

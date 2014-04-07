@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+    <!-- Load the stylesheet for this publication type -->
+    <xar:style method="import" module="publications" file="review" title="Review Stylesheet"/>
+    
     <li>
         <xar:if condition="!empty($categories) and count($categories) gt 0">
             [ <xar:foreach in="$categories" value="$cat">

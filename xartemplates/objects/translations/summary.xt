@@ -2,8 +2,11 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
+    <!-- Get the settings of this publication type -->
+    <xar:set name="settings">xarCoreCache::getCached('publications', 'settings_' . $object->properties['itemtype']->value)</xar:set>
+    
     <!-- Load the stylesheet for this publication type -->
-    <xar:style method="import" module="publications" file="document" title="Document Stylesheet"/>
+    <xar:style method="import" module="publications" file="translation" title="Translation Stylesheet"/>
     
     <div class="xar-norm xar-standard-box-padding">
         <xar:if condition="!empty($categories) and count($categories) gt 0">[
@@ -14,7 +17,7 @@
         
         <xar:template file="editicons"/>
         
-        <span class="xar-publications-document-summary-title">
+        <span class="xar-publications-translation-summary-title">
             <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
                 <xar:data-output property="$properties['title']" />
             </a>
@@ -25,7 +28,20 @@
                 reads)</xar:if>
             </xar:if>
         </span>
-        <div class="xar-publications-document-summary-keywords">
+        <xar:set name="locales">explode(',', $settings['custom_displayed_locales'])</xar:set>
+        <xar:if condition="empty($locales)">
+            <xar:set name="col_width">100</xar:set>
+        <xar:else/>
+            <xar:set name="col_width">100/count($locales)</xar:set>
+        </xar:if>
+        <div class="xar-row">
+            <xar:foreach in="$locales" value="$locale">
+                <div class="xar-col" style="width: #$col_width#%">
+#$locale#
+                </div>
+            </xar:foreach>
+        </div>
+        <div class="xar-publications-translation-summary-keywords">
             <xar:if condition="!empty($keywords)">
                 Keywords:
                 <xar:loop name="$keywords">

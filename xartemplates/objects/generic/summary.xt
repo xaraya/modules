@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+    <!-- Load the stylesheet for this publication type -->
+    <xar:style method="import" module="publications" file="generic" title="Generic Stylesheet"/>
+    
     <div class="xar-norm xar-standard-box-padding">
         <xar:if condition="!empty($categories) and count($categories) gt 0">[
-        <xar:foreach in="$categories" value="$cat">#$cat['cjoin']#
-        <a href="#$cat['clink']#">#$cat['cname']#</a></xar:foreach>]</xar:if>
+            <xar:foreach in="$categories" value="$cat">#$cat['cjoin']#
+                <a href="#$cat['clink']#">#$cat['cname']#</a>
+            </xar:foreach>]
+        </xar:if>
         
         <xar:template file="editicons"/>
         
