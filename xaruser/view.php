@@ -556,9 +556,8 @@ function publications_user_view($args)
         xarTpl::setPageTemplateName($pagetemplate);
     }
 
-    // Throw all the relevant settings we are using into the cache
-//    $data['settings']['pubtypeobject'] = $data['pubtypeobject']->properties['configuration']->getValue();
-//    xarCore::setCached('publications', 'context' . $ptid, $data['settings']);
+// Throw all the settings we are using into the cache
+    xarCore::setCached('publications', 'settings_' . $data['ptid'], $data['settings']);
 
     // Flag this as the current list view
     xarSession::setVar('publications_current_listview', xarServer::getCurrentURL(array('ptid' => $data['ptid'])));
