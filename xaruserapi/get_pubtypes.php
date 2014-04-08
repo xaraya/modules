@@ -23,9 +23,11 @@
  
 function publications_userapi_get_pubtypes($args)
 {
+    if (xarCoreCache::isCached('Publications.Data', 'producttypes'))
+        return xarCoreCache::getCached('Publications.Data', 'producttypes');
     $object = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
     $items = $object->getItems();
-
+    xarCoreCache::setCached('Publications.Data', 'producttypes', $items);
     return $items;
 }
 
