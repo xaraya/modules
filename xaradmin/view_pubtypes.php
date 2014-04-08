@@ -10,9 +10,8 @@
  * @author mikespub
  */
 /**
- * manage publication types (all-in-one function for now)
+ * Manage publication types (all-in-one function for now)
  */
-sys::import('xaraya.structures.query');
 
 function publications_admin_view_pubtypes()
 {
