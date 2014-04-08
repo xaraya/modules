@@ -12,7 +12,7 @@
 /**
  * view items
  */
-function publications_admin_view($args)
+function publications_admin_view($args=array())
 {
     if (!xarSecurityCheck('EditPublications')) return;
 
