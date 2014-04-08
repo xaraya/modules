@@ -144,7 +144,7 @@
             </xar:sec>
             -->
             <xar:sec mask="AdminPublications" catch="false">
-                <a href="#xarModURL('publications','admin','templates_type',array('ptid' => $ptid, 'tab' => 'pubtypes'))#" title="#xarML('Manage templates of this publications')#" style="margin-right: 5px">                    
+                <a href="#xarModURL('publications','admin','templates_type',array('ptid' => $ptid, 'tab' => 'pubtypes'))#" title="#xarML('Manage templates of this publication type')#" style="margin-right: 5px">                    
                     <img src="#xarTplGetImage('template.png','publications')#" alt="#xarML('Manage Templates')#"/>
                 </a>
             <xar:else />                
