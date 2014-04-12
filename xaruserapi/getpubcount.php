@@ -31,7 +31,6 @@ function publications_userapi_getpubcount($args)
 
     $pubcount = array();
 
-    $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     sys::import('xaraya.structures.query');
     $q = new Query('SELECT', $tables['publications']);
