@@ -13,7 +13,7 @@
         <div class="xar-row">
             <div class="xar-col">
                 <label for="description" class="help xar-form-label" title="#xarML('The display name of this publication type')#">                    
-                    Publication Description
+                    Publication Type Description
                 </label>
             </div>
             <div class="xar-col">
