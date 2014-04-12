@@ -27,7 +27,7 @@ function publications_admin_delete_pubtype()
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('publications', 'admin','view'));
+            xarController::redirect(xarModURL('publications', 'admin','view_pubtypes'));
         }
     }
 
