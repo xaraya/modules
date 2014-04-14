@@ -147,9 +147,9 @@ function publications_user_view($args)
     }
     if (empty($numitems)) {
         if (!empty($settings['items_per_page'])) {
-            $numitems = $settings['items_per_page'];
+            $numitems = (int)$settings['items_per_page'];
         } else {
-            $numitems = xarModVars::get('publications', 'items_per_page');
+            $numitems = (int)xarModVars::get('publications', 'items_per_page');
         }
     }
 
@@ -541,6 +541,7 @@ function publications_user_view($args)
 // Settings for the pager
     $data['numitems'] = (int)$numitems;
     $data['startnum'] = (int)$startnum;
+    $data['object']->dataquery->setrowstodo($numitems);
     
     // Set the page template if needed
     // Page template for frontpage or depending on publication type (optional)
