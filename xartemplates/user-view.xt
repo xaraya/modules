@@ -26,7 +26,7 @@
 
     <!-- Get the list of object items we want -->
     <!-- Note: itemtype is already defined in the code -->
-    <xar:data-getitems properties="$properties" values="$items" object="$object" param="xarServer::getCurrentURL()" numitems="$numitems" startnum="$startnum">
+    <xar:data-getitems properties="$properties" values="$items" object="$object" param="xarServer::getCurrentURL()" numitems="$numitems" startnum="$startnum" count="count">
       <xar:select>
         <xar:andconditions>
           <xar:condition operator="in" property="state">array(3,4)</xar:condition>
