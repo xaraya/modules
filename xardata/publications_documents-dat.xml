@@ -265,7 +265,7 @@
 	&lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;
-	Each publication type defines a set of pages with common features. A pubtlication ype will typically a number of content fields, such as title, decription etc. that refer to the content of its pages. These fields will be defined in accordance with the publication types specific requirements. For instance, a web link publiction type icludes a field for web URLS, a FAQ publication type includes fields fro question and answer, and so on.&lt;/p&gt;
+	Each publication type defines a set of pages with common features. A pubtlication type will typically have a number of content fields, such as title, decription etc. that refer to the content of its pages. These fields will be defined in accordance with the publication types specific requirements. For instance, a web link publiction type icludes a field for web URLS, a FAQ publication type includes fields fro question and answer, and so on.&lt;/p&gt;
 &lt;p&gt;
 	The definition of each publication type includes a series of configuration fields, that define the &amp;quot;background&amp;quot; properties of its publications. Examples of such fields are start and end publication times, access rules, language etc. These can be set for each document. For instance, one such setting defines whether a publication will be included in the pulbication modules sitemap page. For more information on these settings go here. In general you should not attempt to change the definition of any of the configuration fields.&lt;/p&gt;
 &lt;p&gt;
