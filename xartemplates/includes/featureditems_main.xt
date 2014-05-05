@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+        <xar:if condition="!empty($item['title'])">
+            <h2>
+                <xar:if condition="!empty($item['alttitle'])">
+                    <a href="#$item['link']#">#$item['alttitle']#</a>
+                <xar:else />
+                    <a href="#$item['link']#">#xarVarPrepForDisplay($item['title'])#</a>
+                </xar:if>
+            </h2>
+            <xar:if condition="$item['showfeaturedsum'] eq true">
+                <div>
+                    <xar:if condition="!empty($item['altsummary'])">
+                        #$item['altsummary']#
+                    <xar:else />
+                        <xar:if condition="!empty($item['description'])">
+                            #xarVarPrepHTMLDisplay($item['description'])#
+                        </xar:if>
+                    </xar:if>
+                </div>
+            </xar:if>
+            <!--
+            <xar:if condition="$item['showfeaturedbod'] eq true">
+                    <div>#$item['featuredbody']#</div>
+           </xar:if>
+           -->
+        </xar:if>
+</xar:template>

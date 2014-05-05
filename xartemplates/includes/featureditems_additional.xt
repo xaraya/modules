@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-block-title">
+        More Featured Headlines:
+    </div>
+    <ul>
+        <xar:foreach in="$items" value="$item">
+          <li>
+            <xar:if condition="empty($item.link)">
+                #xarVarPrepForDisplay($item.title)#
+            <xar:else />
+                <xar:if condition="!empty($item.count)">
+                    <a href="#$item.link#">#xarVarPrepForDisplay($item.title)# (#$item.count#)</a>
+                <xar:else />
+                    <a href="#$item.link#">#xarVarPrepForDisplay($item.title)#</a>
+                </xar:if>
+            </xar:if>
+            <xar:if condition="!empty($item.description)">
+                #xarVarPrepHTMLDisplay($item.description)#
+            </xar:if>
+          </li>
+        </xar:foreach>
+    </ul>
+</xar:template>

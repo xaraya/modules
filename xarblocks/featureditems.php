@@ -69,7 +69,6 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
         $fields[] = 'dynamicdata';
         
         // Initialize arrays
-        $data['feature'] = array();
         $data['items'] = array();
 
         // Load the query class and the publications tables
@@ -97,17 +96,19 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
             $featuredtype = $types[$result['pubtype_id']]['name'];
             $data['featured'] = DataObjectMaster::getObject(array('name' => $featuredtype));
             $data['featured']->getItem(array('itemid' => $data['featuredid']));
+            $feature = $data['featured']->getFieldValues(array(),1);
             $data['properties'] =& $data['featured']->properties;
 
-            $data['featured_link'] = xarModURL('publications', 'user', 'display',
+            $feature['link'] = xarModURL('publications', 'user', 'display',
                                         array(
                                             'itemid' => $data['properties']['id']->value,
                                         )
                                     );
-            $data['featured_alttitle']   = $data['alttitle'];
-            $data['featured_altsummary'] = $data['altsummary'];
-            $data['featured_showfeaturedsum'] = $data['showfeaturedsum'];
-            $data['featured_showfeaturedbod'] = $data['showfeaturedbod'];
+            $feature['alttitle']   = $data['alttitle'];
+            $feature['altsummary'] = $data['altsummary'];
+            $feature['showfeaturedsum'] = $data['showfeaturedsum'];
+            $feature['showfeaturedbod'] = $data['showfeaturedbod'];
+            $data['feature'] = $feature;
         }
 
 # ------------------------------------------------------------
