@@ -1,29 +1,29 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-        <xar:if condition="!empty($item['title'])">
-            <h2>
-                <xar:if condition="!empty($item['alttitle'])">
-                    <a href="#$item['link']#">#$item['alttitle']#</a>
-                <xar:else />
-                    <a href="#$item['link']#">#xarVarPrepForDisplay($item['title'])#</a>
-                </xar:if>
-            </h2>
-            <xar:if condition="$item['showfeaturedsum'] eq true">
-                <div>
-                    <xar:if condition="!empty($item['altsummary'])">
-                        #$item['altsummary']#
-                    <xar:else />
-                        <xar:if condition="!empty($item['description'])">
-                            #xarVarPrepHTMLDisplay($item['description'])#
-                        </xar:if>
-                    </xar:if>
-                </div>
+    <xar:if condition="!empty($feature['title'])">
+        <h2>
+            <xar:if condition="!empty($feature['alttitle'])">
+                <a href="#$feature['link']#">#$feature['alttitle']#</a>
+            <xar:else />
+                <a href="#$feature['link']#">#xarVarPrepForDisplay($feature['title'])#</a>
             </xar:if>
-            <!--
-            <xar:if condition="$item['showfeaturedbod'] eq true">
-                    <div>#$item['featuredbody']#</div>
-           </xar:if>
-           -->
+        </h2>
+        <xar:if condition="$feature['showfeaturedsum'] eq true">
+            <div>
+                <xar:if condition="!empty($feature['altsummary'])">
+                    #$feature['altsummary']#
+                <xar:else />
+                    <xar:if condition="!empty($feature['description'])">
+                        #xarVarPrepHTMLDisplay($feature['description'])#
+                    </xar:if>
+                </xar:if>
+            </div>
         </xar:if>
+        <!--
+        <xar:if condition="$feature['showfeaturedbod'] eq true">
+            <div>#$feature['featuredbody']#</div>
+       </xar:if>
+       -->
+    </xar:if>
 </xar:template>
