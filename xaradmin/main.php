@@ -23,8 +23,21 @@
 */
 function translations_admin_main()
 {
-    xarController::redirect(xarModURL('translations', 'admin', 'start'));
-    return array();
+    if(!xarSecurityCheck('AdminTranslations')) return;
+
+    if (xarModVars::get('modules', 'disableoverview') == 0){
+        return array();
+    } else {
+        $redirect = xarModVars::get('translations','defaultbackpage');
+        if (!empty($redirect)) {
+            $truecurrenturl = xarServer::getCurrentURL(array(), false);
+            $urldata = xarModAPIFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+            xarController::redirect($urldata['redirecturl']);
+        } else {
+            xarController::redirect(xarModURL('translations', 'admin', 'start'));
+        }
+    }
+    return true;
 }
 
 ?>
