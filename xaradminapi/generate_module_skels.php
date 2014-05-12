@@ -75,7 +75,7 @@ function translations_adminapi_generate_module_skels($args)
     }
 
     $dirnames = xarMod::apiFunc('translations','admin','get_module_dirs',array('moddir'=>$moddir));
-    xarLogVariable('dirnames',$dirnames);
+    xarLog::variable('dirnames',$dirnames);
     foreach ($dirnames as $dirname) {
         ${$dirname . "names"} = array();
         if (!preg_match('!^templates!i', $dirname, $matches)) {
@@ -88,7 +88,7 @@ function translations_adminapi_generate_module_skels($args)
         }
         $subnames = xarMod::apiFunc('translations','admin','get_module_files',
                          array('moddir'=>sys::code() . "modules/$moddir/xar$dirname",'pattern'=>$pattern));
-        xarLogVariable('subnames',$subnames);
+        xarLog::variable('subnames',$subnames);
         foreach ($subnames as $subname) {
             $module_contexts_list[] = 'modules:'.$modname.':'.$dirname.':'.$subname;
             if ($xtype == 'xt') $parser = new TPLParser();

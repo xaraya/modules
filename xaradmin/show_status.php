@@ -68,7 +68,7 @@ function translations_admin_show_status()
 
     // properties
     xarMod::apiLoad('dynamicdata');
-    $tables = xarDB::getTables();
+    $tables =& xarDB::getTables();
     sys::import('xaraya.structures.query');
     $q = new Query('SELECT',$tables['dynamic_properties_def']);
     $q->eq('modid', 0);

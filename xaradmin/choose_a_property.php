@@ -17,7 +17,7 @@ function translations_admin_choose_a_property()
     if(!xarSecurityCheck('AdminTranslations')) return;
     
     xarMod::apiLoad('dynamicdata');
-    $tables = xarDB::getTables();
+    $tables =& xarDB::getTables();
     sys::import('xaraya.structures.query');
     $q = new Query('SELECT',$tables['dynamic_properties_def']);
     $q->eq('modid', 0);

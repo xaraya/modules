@@ -76,7 +76,7 @@ function translations_adminapi_generate_block_skels($args)
     }
 
     $dirnames = xarMod::apiFunc('translations','admin','get_block_dirs',array('blockdir'=>$blockdir));
-    xarLogVariable('dirnames',$dirnames);
+    xarLog::variable('dirnames',$dirnames);
     foreach ($dirnames as $dirname) {
         ${$dirname . "names"} = array();
         if (!preg_match('!^templates!i', $dirname, $matches)) {
@@ -89,7 +89,7 @@ function translations_adminapi_generate_block_skels($args)
         }
         $subnames = xarMod::apiFunc('translations','admin','get_block_files',
                          array('blockdir'=>sys::code() . "blocks/$blockdir/xar$dirname",'pattern'=>$pattern));
-        xarLogVariable('subnames',$subnames);
+        xarLog::variable('subnames',$subnames);
         foreach ($subnames as $subname) {
             $block_contexts_list[] = 'blocks:'.$blockname.':'.$dirname.':'.$subname;
             if ($xtype == 'xt') $parser = new TPLParser();

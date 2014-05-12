@@ -29,15 +29,15 @@ function translations_adminapi_create_backend_instance($args)
     if (!$bt) return;
     switch ($bt) {
     case 'php':
-        xarLogMessage("MLS: Creating PHP backend");
+        xarLog::message("MLS: Creating PHP backend");
         sys::import('xaraya.mlsbackends.php');
         return new xarMLS__PHPTranslationsBackend(array($locale));
     case 'xml':
-        xarLogMessage("MLS: Creating XML backend");
+        xarLog::message("MLS: Creating XML backend");
         sys::import('xaraya.mlsbackends.xml');
         return new xarMLS__XMLTranslationsBackend(array($locale));
     case 'xml2php':
-        xarLogMessage("MLS: Creating XML2PHP backend");
+        xarLog::message("MLS: Creating XML2PHP backend");
         sys::import('xaraya.mlsbackends.xml2php');
         return new xarMLS__XML2PHPTranslationsBackend(array($locale));
     }

@@ -12,7 +12,6 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
  */
 
-
 function translations_admin_update_info()
 {
     // Security Check

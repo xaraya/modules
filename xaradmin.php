@@ -311,7 +311,7 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
         case XARMLS_DNTYPE_PROPERTY:
 
         xarMod::apiLoad('dynamicdata');
-        $tables = xarDB::getTables();
+        $tables =& xarDB::getTables();
         sys::import('xaraya.structures.query');
         $q = new Query('SELECT',$tables['dynamic_properties_def']);
         $q->eq('id', $extid);

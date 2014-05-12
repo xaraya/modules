@@ -29,7 +29,7 @@ function translations_adminapi_generate_property_skels($args)
     assert('isset($propertyid) && isset($locale)');
 
     xarMod::apiLoad('dynamicdata');
-    $tables = xarDB::getTables();
+    $tables =& xarDB::getTables();
     sys::import('xaraya.structures.query');
     $q = new Query('SELECT',$tables['dynamic_properties_def']);
     $q->eq('id', $propertyid);
@@ -82,7 +82,7 @@ function translations_adminapi_generate_property_skels($args)
     }
 
     $dirnames = xarMod::apiFunc('translations','admin','get_property_dirs',array('propertydir'=>$propertydir));
-    xarLogVariable('dirnames',$dirnames);
+    xarLog::variable('dirnames',$dirnames);
     foreach ($dirnames as $dirname) {
         ${$dirname . "names"} = array();
         if (!preg_match('!^templates!i', $dirname, $matches)) {
@@ -95,7 +95,7 @@ function translations_adminapi_generate_property_skels($args)
         }
         $subnames = xarMod::apiFunc('translations','admin','get_property_files',
                          array('propertydir'=>sys::code() . "properties/$propertydir/xar$dirname",'pattern'=>$pattern));
-        xarLogVariable('subnames',$subnames);
+        xarLog::variable('subnames',$subnames);
         foreach ($subnames as $subname) {
             $property_contexts_list[] = 'properties:'.$propertyname.':'.$dirname.':'.$subname;
             if ($xtype == 'xt') $parser = new TPLParser();
