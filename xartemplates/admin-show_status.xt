@@ -1,4 +1,291 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="admin-mod-head"/>
+    <div class="xar-mod-body">
+       <xar:template type="module" module="translations" file="admin-nav"/>
+       <h2>    Translation progress report for locale 
+        #xarSessionGetVar('translations_working_locale')#
+      </h2>
+
+        <xar:set name="total_entries">$coreentries['numEntries']+$mod_totalentries+$theme_totalentries</xar:set>
+        <xar:set name="total_untranslated">$coreentries['numEmptyEntries']+$mod_untranslated+$theme_untranslated</xar:set>
+        <xar:set name="total_keyentries">$coreentries['numKeyEntries']+$mod_keytotalentries+$theme_keytotalentries</xar:set>
+        <xar:set name="total_keyuntranslated">$coreentries['numEmptyKeyEntries']+$mod_keyuntranslated+$theme_keyuntranslated</xar:set>
+        <h3>Executive summary</h3>
+        <table class="xar-fullwidth">
+        <tfoot>
+          <tr class="xar-accent xar-accent-outline">
+            <td class="xar-accent xar-accent-outline">Totals:</td>
+            <td class="xar-accent xar-accent-outline">#$total_entries#</td>
+            <td class="xar-accent xar-accent-outline">#$total_untranslated#</td>
+            <td class="xar-accent xar-accent-outline">#$total_keyentries#</td>
+            <td class="xar-accent xar-accent-outline">#$total_keyuntranslated#</td>
+          </tr>
+        </tfoot>
+        <th class="xar-norm-outline" style="width: 20%">Context</th>
+        <th class="xar-norm-outline">Strings total</th>
+        <th class="xar-norm-outline">Strings untranslated</th>
+        <th class="xar-norm-outline">Keys total</th>
+        <th  class="xar-norm-outline">Keys untranslated</th>
+        <xar:set name="class">'xar-norm-outline'</xar:set>
+          <tr class="#$class#">
+            <td class="#$class#">Core</td>
+            <td class="#$class#">#$coreentries['numEntries']#</td>
+            <td class="#$class#">#$coreentries['numEmptyEntries']#</td>
+            <td class="#$class#">#$coreentries['numKeyEntries']#</td>
+            <td class="#$class#">#$coreentries['numEmptyKeyEntries']#</td>
+          </tr>
+          <tr class="#$class#">
+            <td class="#$class#">Modules</td>
+            <td class="#$class#">#$mod_totalentries#</td>
+            <td class="#$class#">#$mod_untranslated#</td>
+            <td class="#$class#">#$mod_keytotalentries#</td>
+            <td class="#$class#">#$mod_keyuntranslated#</td>
+          </tr>
+          <tr class="#$class#">
+            <td class="#$class#">Properties</td>
+            <td class="#$class#">#$property_totalentries#</td>
+            <td class="#$class#">#$property_untranslated#</td>
+            <td class="#$class#">#$property_keytotalentries#</td>
+            <td class="#$class#">#$property_keyuntranslated#</td>
+          </tr>
+          <tr class="#$class#">
+            <td class="#$class#">Blocks</td>
+            <td class="#$class#">#$block_totalentries#</td>
+            <td class="#$class#">#$block_untranslated#</td>
+            <td class="#$class#">#$block_keytotalentries#</td>
+            <td class="#$class#">#$block_keyuntranslated#</td>
+          </tr>
+          <tr class="#$class#">
+            <td class="#$class#">Themes</td>
+            <td class="#$class#">#$theme_totalentries#</td>
+            <td class="#$class#">#$theme_untranslated#</td>
+            <td class="#$class#">#$theme_keytotalentries#</td>
+            <td class="#$class#">#$theme_keyuntranslated#</td>
+          </tr>
+        </table>
+
+        <xar:set name="scale">500</xar:set>
+
+        <xar:if condition="$coreentries['numEntries'] eq 0">
+            <xar:set name="core_progress">0</xar:set>
+        <xar:else />
+            <xar:set name="core_progress">round((($coreentries['numEntries'] - $coreentries['numEmptyEntries'])/$coreentries['numEntries'])*$scale)</xar:set>
+        </xar:if>
+
+        <xar:if condition="$mod_totalentries eq 0">
+            <xar:set name="mod_progress">0</xar:set>
+        <xar:else />
+            <xar:set name="mod_progress">round((($mod_totalentries-$mod_untranslated)/$mod_totalentries)*$scale)</xar:set>
+        </xar:if>
+
+        <xar:if condition="$property_totalentries eq 0">
+            <xar:set name="property_progress">0</xar:set>
+        <xar:else />
+            <xar:set name="property_progress">round((($property_totalentries-$property_untranslated)/$property_totalentries)*$scale)</xar:set>
+        </xar:if>
+
+        <xar:if condition="$block_totalentries eq 0">
+            <xar:set name="block_progress">0</xar:set>
+        <xar:else />
+            <xar:set name="block_progress">round((($block_totalentries-$block_untranslated)/$block_totalentries)*$scale)</xar:set>
+        </xar:if>
+
+        <xar:if condition="$theme_totalentries eq 0">
+            <xar:set name="theme_progress">0</xar:set>
+        <xar:else />
+            <xar:set name="theme_progress">round((($theme_totalentries-$theme_untranslated)/$theme_totalentries)*$scale)</xar:set>
+        </xar:if>
+
+        <xar:if condition="$total_entries eq 0">
+            <xar:set name="total_progress">0</xar:set>
+        <xar:else />
+            <xar:set name="total_progress">round((($total_entries-$total_untranslated)/$total_entries)*$scale)</xar:set>
+        </xar:if>
+
+        <h3>Chart</h3>
+        <table style="width:95%">
+          <tr>
+            <td>Core</td><td>#$core_progress*100/$scale#%</td>
+            <td><div class="xar-alt" style="width:#$core_progress#px; min-width:1px; display:inline; float:left;">&#160;</div></td>
+          </tr>
+          <tr>
+            <td>Modules</td><td> #$mod_progress*100/$scale#%</td>
+            <td><div class="xar-alt" style="width:#$mod_progress#px; min-width:1px; display:inline; float:left;">&#160;</div></td>
+          </tr>
+          <tr>
+            <td>Properties</td><td> #$property_progress*100/$scale#%</td>
+            <td><div class="xar-alt" style="width:#$property_progress#px; min-width:1px; display:inline; float:left;">&#160;</div></td>
+          </tr>
+          <tr>
+            <td>Blocks</td><td> #$block_progress*100/$scale#%</td>
+            <td><div class="xar-alt" style="width:#$block_progress#px; min-width:1px; display:inline; float:left;">&#160;</div></td>
+          </tr>
+          <tr>
+            <td>Themes</td><td> #$theme_progress*100/$scale#%</td>
+            <td><div class="xar-alt" style="width:#$theme_progress#px; min-width:1px; display:inline; float:left;">&#160;</div></td>
+          </tr>
+          <tr>
+            <td>Total</td><td>#$total_progress*100/$scale#%</td>
+            <td><div class="xar-alt" style="width:#$total_progress#px; min-width:1px; display:inline; float:left;">&#160;</div></td>
+          </tr>
+        </table>
+
+        <h3>Core</h3>
+        <table style="width: 95%">
+        <tfoot>
+          <tr class="xar-accent xar-accent-outline">
+            <td class="xar-accent xar-accent-outline">Totals:</td>
+            <td class="xar-accent xar-accent-outline">#$coreentries['numEntries']#</td>
+            <td class="xar-accent xar-accent-outline">#$coreentries['numEmptyEntries']#</td>
+            <td class="xar-accent xar-accent-outline">#$coreentries['numKeyEntries']#</td>
+            <td class="xar-accent xar-accent-outline">#$coreentries['numEmptyKeyEntries']#</td>
+          </tr>
+        </tfoot>
+        <th class="xar-norm-outline" style="width: 20%">Core</th>
+        <th class="xar-norm-outline">Strings total</th>
+        <th class="xar-norm-outline">Strings untranslated</th>
+        <th class="xar-norm-outline">Keys total</th>
+        <th  class="xar-norm-outline">Keys untranslated</th>
+        <xar:loop name="array($coreentries)">
+          <xar:set name="class">'xar-norm-outline'</xar:set>
+          <xar:if condition="$loop:index % 2 eq 0">
+            <xar:set name="class">'xar-norm-outline xar-alt'</xar:set>
+          </xar:if>
+          <tr class="#$class#">
+            <td class="#$class#">Core</td>
+            <td class="#$class#">#$loop:item['numEntries']#</td>
+            <td class="#$class#">#$loop:item['numEmptyEntries']#</td>
+            <td class="#$class#">#$loop:item['numKeyEntries']#</td>
+            <td class="#$class#">#$loop:item['numEmptyKeyEntries']#</td>
+          </tr>
+        </xar:loop>
+        </table>
+
+        <h3>Modules</h3>
+        <table style="width: 95%">
+        <tfoot>
+          <tr class="xar-accent xar-accent-outline">
+            <td class="xar-accent xar-accent-outline">Totals:</td>
+            <td class="xar-accent xar-accent-outline">#$mod_totalentries#</td>
+            <td class="xar-accent xar-accent-outline">#$mod_untranslated#</td>
+            <td class="xar-accent xar-accent-outline">#$mod_keytotalentries#</td>
+            <td class="xar-accent xar-accent-outline">#$mod_keyuntranslated#</td>
+          </tr>
+        </tfoot>
+        <th class="xar-norm-outline" style="width: 20%">Module</th>
+        <th class="xar-norm-outline">Strings total</th>
+        <th class="xar-norm-outline">Strings untranslated</th>
+        <th class="xar-norm-outline">Keys total</th>
+        <th class="xar-norm-outline">Keys untranslated</th>
+
+        <xar:loop name="$modentries">
+          <xar:set name="class">'xar-norm-outline'</xar:set>
+          <xar:if condition="$loop:index % 2 eq 0">
+            <xar:set name="class">'xar-norm-outline xar-alt'</xar:set>
+          </xar:if>
+          <tr class="#$class#">
+            <td class="#$class#">#$loop:key#</td>
+            <td class="#$class#"><xar:if condition="$loop:item['numEntries'] eq -1">N/A<xar:else />#$loop:item['numEntries']#</xar:if></td>
+            <td class="#$class#"><xar:if condition="$loop:item['numEmptyEntries'] eq -1">N/A<xar:else />#$loop:item['numEmptyEntries']#</xar:if></td>
+            <td class="#$class#"><xar:if condition="$loop:item['numKeyEntries'] eq -1">N/A<xar:else />#$loop:item['numKeyEntries']#</xar:if></td>
+            <td class="#$class#"><xar:if condition="$loop:item['numEmptyKeyEntries'] eq -1">N/A<xar:else />#$loop:item['numEmptyKeyEntries']#</xar:if></td>
+          </tr>
+        </xar:loop>
+        </table>
+
+        <h3>Properties</h3>
+        <table style="width: 95%">
+        <tfoot>
+          <tr class="xar-accent xar-accent-outline">
+            <td class="xar-accent xar-accent-outline">Totals:</td>
+            <td class="xar-accent xar-accent-outline">#$property_totalentries#</td>
+            <td class="xar-accent xar-accent-outline">#$property_untranslated#</td>
+            <td class="xar-accent xar-accent-outline">#$property_keytotalentries#</td>
+            <td class="xar-accent xar-accent-outline">#$property_keyuntranslated#</td>
+          </tr>
+        </tfoot>
+        <th class="xar-norm-outline" style="width: 20%">Property</th>
+        <th class="xar-norm-outline">Strings total</th>
+        <th class="xar-norm-outline">Strings untranslated</th>
+        <th class="xar-norm-outline">Keys total</th>
+        <th  class="xar-norm-outline">Keys untranslated</th>
+        <xar:loop name="$propertyentries">
+          <xar:set name="class">'xar-norm-outline'</xar:set>
+          <xar:if condition="$loop:index % 2 eq 0">
+            <xar:set name="class">'xar-norm-outline xar-alt'</xar:set>
+          </xar:if>
+          <tr class="#$class#">
+            <td class="#$class#">#$loop:key#</td>
+            <td class="#$class#"><xar:if condition="$loop:item['numEntries'] eq -1">N/A<xar:else />#$loop:item['numEntries']#</xar:if></td>
+            <td class="#$class#"><xar:if condition="$loop:item['numEmptyEntries'] eq -1">N/A<xar:else />#$loop:item['numEmptyEntries']#</xar:if></td>
+            <td class="#$class#"><xar:if condition="$loop:item['numKeyEntries'] eq -1">N/A<xar:else />#$loop:item['numKeyEntries']#</xar:if></td>
+            <td class="#$class#"><xar:if condition="$loop:item['numEmptyKeyEntries'] eq -1">N/A<xar:else />#$loop:item['numEmptyKeyEntries']#</xar:if></td>
+          </tr>
+        </xar:loop>
+        </table>
+
+        <h3>Blocks</h3>
+        <table style="width: 95%">
+        <tfoot>
+          <tr class="xar-accent xar-accent-outline">
+            <td class="xar-accent xar-accent-outline">Totals:</td>
+            <td class="xar-accent xar-accent-outline">#$block_totalentries#</td>
+            <td class="xar-accent xar-accent-outline">#$block_untranslated#</td>
+            <td class="xar-accent xar-accent-outline">#$block_keytotalentries#</td>
+            <td class="xar-accent xar-accent-outline">#$block_keyuntranslated#</td>
+          </tr>
+        </tfoot>
+        <th class="xar-norm-outline" style="width: 20%">Block</th>
+        <th class="xar-norm-outline">Strings total</th>
+        <th class="xar-norm-outline">Strings untranslated</th>
+        <th class="xar-norm-outline">Keys total</th>
+        <th  class="xar-norm-outline">Keys untranslated</th>
+        <xar:loop name="$blockentries">
+          <xar:set name="class">'xar-norm-outline'</xar:set>
+          <xar:if condition="$loop:index % 2 eq 0">
+            <xar:set name="class">'xar-norm-outline xar-alt'</xar:set>
+          </xar:if>
+          <tr class="#$class#">
+            <td class="#$class#">#$loop:key#</td>
+            <td class="#$class#"><xar:if condition="$loop:item['numEntries'] eq -1">N/A<xar:else />#$loop:item['numEntries']#</xar:if></td>
+            <td class="#$class#"><xar:if condition="$loop:item['numEmptyEntries'] eq -1">N/A<xar:else />#$loop:item['numEmptyEntries']#</xar:if></td>
+            <td class="#$class#"><xar:if condition="$loop:item['numKeyEntries'] eq -1">N/A<xar:else />#$loop:item['numKeyEntries']#</xar:if></td>
+            <td class="#$class#"><xar:if condition="$loop:item['numEmptyKeyEntries'] eq -1">N/A<xar:else />#$loop:item['numEmptyKeyEntries']#</xar:if></td>
+          </tr>
+        </xar:loop>
+        </table>
+        
+        <h3>Themes</h3>
+        <table style="width: 95%">
+        <tfoot>
+          <tr class="xar-accent xar-accent-outline">
+            <td class="xar-accent xar-accent-outline">Totals:</td>
+            <td class="xar-accent xar-accent-outline">#$theme_totalentries#</td>
+            <td class="xar-accent xar-accent-outline">#$theme_untranslated#</td>
+            <td class="xar-accent xar-accent-outline">#$theme_keytotalentries#</td>
+            <td class="xar-accent xar-accent-outline">#$theme_keyuntranslated#</td>
+          </tr>
+        </tfoot>
+        <th class="xar-norm-outline" style="width: 20%">Theme</th>
+        <th class="xar-norm-outline">Strings total</th>
+        <th class="xar-norm-outline">Strings untranslated</th>
+        <th class="xar-norm-outline">Keys total</th>
+        <th  class="xar-norm-outline">Keys untranslated</th>
+        <xar:loop name="$themeentries">
+          <xar:set name="class">'xar-norm-outline'</xar:set>
+          <xar:if condition="$loop:index % 2 eq 0">
+            <xar:set name="class">'xar-norm-outline xar-alt'</xar:set>
+          </xar:if>
+          <tr class="#$class#">
+            <td class="#$class#">#$loop:key#</td>
+            <td class="#$class#"><xar:if condition="$loop:item['numEntries'] eq -1">N/A<xar:else />#$loop:item['numEntries']#</xar:if></td>
+            <td class="#$class#"><xar:if condition="$loop:item['numEmptyEntries'] eq -1">N/A<xar:else />#$loop:item['numEmptyEntries']#</xar:if></td>
+            <td class="#$class#"><xar:if condition="$loop:item['numKeyEntries'] eq -1">N/A<xar:else />#$loop:item['numKeyEntries']#</xar:if></td>
+            <td class="#$class#"><xar:if condition="$loop:item['numEmptyKeyEntries'] eq -1">N/A<xar:else />#$loop:item['numEmptyKeyEntries']#</xar:if></td>
+          </tr>
+        </xar:loop>
+        </table>
+    </div>
 </xar:template>
