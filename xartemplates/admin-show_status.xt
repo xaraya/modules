@@ -3,7 +3,6 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-       <xar:template type="module" module="translations" file="admin-nav"/>
        <h2>    Translation progress report for locale 
         #xarSessionGetVar('translations_working_locale')#
       </h2>
