@@ -5,9 +5,8 @@
     <xar:style file="navtabs" module="base" scope="module"/>
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-       <xar:template type="module" module="translations" file="admin-nav"/>
-       <h2>Modify Translations Configuration</h2>
-       <xar:template file="admin-menu" type="module"/>
+        <h2>Modify Translations Configuration</h2>
+        <xar:template file="admin-settings" type="module"/>
 
         <dl class="xar-tabs">
             <dt class="help" title="#xarML('Choose a set of configuration options')#">

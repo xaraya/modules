@@ -3,9 +3,8 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-       <xar:template type="module" module="translations" file="admin-nav"/>
         <h2>Generate Skels</h2>
-       <xar:template type="module" file="admin-menu"/>
+        <xar:template file="admin-settings" type="module"/>
 
         <!-- Show progress -->
         <xar:template type="module" file="druidbar"/>

@@ -75,7 +75,6 @@ function translations_admin_show_status()
     $q->run();
     $properties = $q->output();
     
-
     $propertyentries = array();
     $property_totalentries = 0; $property_untranslated =0; $property_keytotalentries = 0; $property_keyuntranslated = 0;
     foreach($properties as $property) {

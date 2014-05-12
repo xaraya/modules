@@ -2,9 +2,8 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-       <xar:template type="module" module="translations" file="admin-nav"/>
-       <h2>Translate Properties</h2>
-       <xar:template file="admin-menu" type="module"/>
+        <h2>Translate Properties</h2>
+        <xar:template file="admin-settings" type="module"/>
 
         <xar:template type="module" file="druidbar"/>
         Property name: #$name#<br />

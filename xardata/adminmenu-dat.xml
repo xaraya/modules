@@ -1,0 +1,49 @@
+<menu>
+    <menuitems>
+        <menuitem>
+            <includes>
+                <includeitem>main</includeitem>
+                <includeitem>overview</includeitem>
+            </includes>
+            <target>main</target>
+            <title>Display summary documentation for this module</title>
+            <label>Overview</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminTranslations</mask>
+            <includes>
+                <includeitem>start</includeitem>
+            </includes>
+            <target>start</target>
+            <title>Work on translations</title>
+            <label>Translate</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminTranslations</mask>
+            <includes>
+                <includeitem>bulk</includeitem>
+            </includes>
+            <target>bulk</target>
+            <title>Perform bulk operations</title>
+            <label>Bulk Operations</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminTranslations</mask>
+            <includes>
+                <includeitem>show_status</includeitem>
+            </includes>
+            <target>show_status</target>
+            <title>Show the progress status of the locale currently being translated</title>
+            <label>Progress report</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminTranslations</mask>
+            <includes>
+                <includeitem>modifyconfig</includeitem>
+            </includes>
+            <target>modifyconfig</target>
+            <title>Modify the configuration of this module</title>
+            <label>Modify Configuration</label>
+        </menuitem>
+    </menuitems>
+</menu>
