@@ -16,6 +16,7 @@ function translations_user_main($args)
 {
     // Security Check
     if(!xarSecurityCheck('ReadTranslations')) return;
+    if (!xarUser::IsLoggedIn()) return xarResponse::notFound();
 
     $redirect = xarModVars::get('translations','defaultfrontpage');
     if (!empty($redirect)) {
