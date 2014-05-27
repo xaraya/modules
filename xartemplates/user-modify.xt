@@ -20,7 +20,7 @@
                   </xar:if>
                   <xar:var name="label">Cancel</xar:var>
                   <xar:button type="cancel" name="cancel" value="$label"/>
-                  <xar:var name="label">Preview</xar:var>
+                  <xar:var name="label">Preview</xar:var>&#160;
                   <xar:button type="submit" name="comment_action-preview" id="comment_action-preview" onclick="document.getElementById('receipt-action').value='preview'" value="$label"/>
                   <xar:var name="label">Submit</xar:var>
                   <xar:button type="submit" name="comment_action-submit" id="comment_action-submit" onclick="document.getElementById('receipt-action').value='submit'" value="$label"/>

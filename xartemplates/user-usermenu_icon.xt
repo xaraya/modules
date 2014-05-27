@@ -6,17 +6,13 @@
     <xar:if condition="$compare eq $current">
         <dd class="active">
             <a href="#xarServer::getCurrentUrl()#">
-
-                    Comments
-
+                Comments
             </a>
         </dd>
     <xar:else />
         <dd>
             <a href="#xarModURL('roles', 'user', 'account', array('moduleload' => 'comments'))#">
-
-                    Comments
-
+                Comments
             </a>
         </dd>
     </xar:if>
