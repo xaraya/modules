@@ -24,7 +24,7 @@ function eav_userapi_getattributes(Array $args=array())
     $q->eq('object_id', (int)$args['object_id']);
     $q->setorder('seq');
     $q->run();
-    
+
     sys::import('modules.dynamicdata.class.properties.master');
     $properties = array();
     $attributes = array();

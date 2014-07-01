@@ -12,10 +12,12 @@
         </xar:comment>
         <xar:if condition="$tab eq 'general'">
             <form method="post" action="&xar-modurl-eav-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
-                <h3>
-                    General Options
-                </h3>
-                <xar:data-form object="$module_settings"/>
+                <fieldset>
+                    <legend>
+                        General Options                
+                    </legend>
+                    <xar:data-form object="$module_settings"/>
+                </fieldset>
                 <input type="hidden" name="tab" id="tab" value="#$tab#"/>
                 <xar:template file="update-button" module="base" />
             </form>

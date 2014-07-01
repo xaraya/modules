@@ -54,7 +54,7 @@ function eav_utilapi_import(Array $args=array())
 
     if (!empty($file)) {
         $xmlobject = simplexml_load_file($file);
-        xarLogMessage('DD: import file ' . $file);
+        xarLog::message('DD: import file ' . $file);
         
     } elseif (!empty($xml)) {
         // remove garbage from the end
@@ -75,7 +75,7 @@ function eav_utilapi_import(Array $args=array())
         // Get the object's name
         $args['name'] = (string)($xmlobject->attributes()->name);
         $args['objectid'] = $value = (string)$xmlobject->{'object'}[0];
-        xarLogMessage('DD: importing ' . $args['name']);
+        xarLog::message('DD: importing ' . $args['name']);
 
         // check if the object exists
         $data['object'] = DataObjectMaster::getObjectList(array('name' => 'eav_entities'));
