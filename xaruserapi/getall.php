@@ -111,6 +111,7 @@ function publications_userapi_getall($args)
     $required['title'] = 1;
 
     $required['locale'] = 1;
+    $required['parent_id'] = 1;
     $required['pubtype_id'] = 1;
     $required['create_date'] = 1;
     $required['owner'] = 1; // not to be confused with author (name) :-)
