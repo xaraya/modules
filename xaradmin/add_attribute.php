@@ -15,6 +15,8 @@
  */
 function eav_admin_add_attribute(Array $args=array())
 {
+    if (!xarSecurityCheck('ManageEAV')) return;
+
 	if(!xarVarFetch('objectname',   'isset', $data['objectname'],   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('objectid',   'isset', $data['objectid'],   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('details',  'isset', $details,  NULL, XARVAR_DONT_SET)) {return;}
