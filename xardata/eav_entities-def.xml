@@ -3,8 +3,8 @@
   <label>Entities</label>
   <module_id>182</module_id>
   <itemtype>206</itemtype>
-  <class>DataObject</class>
-  <filepath>auto</filepath>
+  <class>Entity</class>
+  <filepath>modules/eav/class/entity.php</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <access>a:0:{}</access>
