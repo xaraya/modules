@@ -17,10 +17,10 @@ function eav_admin_add_attribute(Array $args=array())
 {
     if (!xarSecurityCheck('ManageEAV')) return;
 
-	if(!xarVarFetch('objectname',   'isset', $data['objectname'],   NULL, XARVAR_DONT_SET)) {return;}
+	if(!xarVarFetch('objectname', 'isset', $data['objectname'],   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('objectid',   'isset', $data['objectid'],   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('details',  'isset', $details,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('layout',   'str:1', $data['layout'],   'default', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('details',    'isset', $details,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('layout',     'str:1', $data['layout'],   'default', XARVAR_NOT_REQUIRED)) {return;}
 
     //if (empty($data['objectid'])) return xarResponse::NotFound();
     sys::import('modules.dynamicdata.class.objects.master');

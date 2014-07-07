@@ -1,0 +1,180 @@
+<object name="eav_attributes">
+  <objectid>713</objectid>
+  <label>EAV Attributes</label>
+  <module_id>182</module_id>
+  <itemtype>286</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <access>a:0:{}</access>
+  <isalias>true</isalias>
+  <datastore>relational</datastore>
+  <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>
+  <sources>a:1:{s:10:&quot;attributes&quot;;a:2:{i:0;s:18:&quot;xar_eav_attributes&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
+  <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
+  <category></category>
+  <properties>
+    <property name="id">
+      <id>8590</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.id</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="object_id">
+      <id>8591</id>
+      <label>Object ID</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.object_id</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="module_id">
+      <id>8592</id>
+      <label>Module ID</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.module_id</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="name">
+      <id>8593</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.name</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="label">
+      <id>8594</id>
+      <label>Label</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.label</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="type">
+      <id>8595</id>
+      <label>Type</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.type</source>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="configuration">
+      <id>8596</id>
+      <label>Configuration</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.configuration</source>
+      <status>33</status>
+      <seq>7</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="default_tinyint">
+      <id>8597</id>
+      <label>Default TinyInt</label>
+      <type>checkbox</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.default_tinyint</source>
+      <status>33</status>
+      <seq>8</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="default_integer">
+      <id>8598</id>
+      <label>Default Integer</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.default_integer</source>
+      <status>33</status>
+      <seq>9</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="default_decimal">
+      <id>8599</id>
+      <label>Default Decimal</label>
+      <type>floatbox</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.default_decimal</source>
+      <status>33</status>
+      <seq>10</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="default_string">
+      <id>8600</id>
+      <label>Default String</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.default_string</source>
+      <status>33</status>
+      <seq>11</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="default_text">
+      <id>8601</id>
+      <label>Default Text</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.default_text</source>
+      <status>33</status>
+      <seq>12</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="time_created">
+      <id>8602</id>
+      <label>Time Created</label>
+      <type>datetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>attributes.timecreated</source>
+      <status>33</status>
+      <seq>13</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="time_updated">
+      <id>8603</id>
+      <label>Time Updated</label>
+      <type>datetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>attributes.timeupdated</source>
+      <status>33</status>
+      <seq>14</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="seq">
+      <id>8604</id>
+      <label>Seq</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>attributes.seq</source>
+      <status>33</status>
+      <seq>15</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="state">
+      <id>8605</id>
+      <label>State</label>
+      <type>dropdown</type>
+      <defaultvalue>3</defaultvalue>
+      <source>attributes.status</source>
+      <status>33</status>
+      <seq>16</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:44:"modules/base/xardata/dropdown_values-dat.xml";}</configuration>
+    </property>
+  </properties>
+</object>

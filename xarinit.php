@@ -141,6 +141,7 @@
         $objects = array(
                         'eav_entities',
                         'eav_attributes_def',
+                        'eav_attributes',
                         'eav_empty',
                          );
 

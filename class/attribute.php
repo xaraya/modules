@@ -38,7 +38,7 @@ class Attribute extends DataObject
         $this->adjustStates($this->properties['property_id']->value);
         foreach($this->properties as $key => $value) {
             echo $key . $value->getDisplayStatus() . "<br/>";
-        }//exit;
+        }
         return parent::checkInput();
     }
 
