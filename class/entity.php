@@ -109,7 +109,7 @@ class Entity extends DataObject
                 $q->addfield('item_id', $args['itemid']);
                 $valuefield = 'value_' . $property->basetype;
                 $q->addfield($valuefield, $property->value);
-                $q->addfield('attribute_id', (int)$property->id);//$q->qecho();exit;
+                $q->addfield('attribute_id', (int)$property->id);
                 if (!$q->run()) return false;
             }
             $q->clearfields();
