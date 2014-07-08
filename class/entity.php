@@ -48,7 +48,7 @@ class Entity extends DataObject
         return true;
     }
     
-    public function getItems(Array $args = array())
+    public function getItems_inert(Array $args = array())
     {
         if (empty($args['itemids'])) return array();
         xarMod::apiLoad('eav');
