@@ -24,12 +24,6 @@
         if (!$data['object']->checkAccess('view'))
             return xarResponse::Forbidden(xarML('View #(1) is forbidden', $data['object']->label));
 
-        // Count the number of items matching the preset arguments - do this before getItems()
-        $data['object']->countItems();
-
-        // Get the selected items using the preset arguments
-        $data['object']->getItems();
-
         return $data;
     }
 ?>
