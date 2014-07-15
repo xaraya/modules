@@ -25,7 +25,7 @@ function mime_init()
     sys::import('xaraya.tableddl');
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     $fields['mime_type'] = array(
         'id'          => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
@@ -137,8 +137,8 @@ function mime_upgrade($oldversion)
 {
     // Set up database objects
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $xartable =& xarDB::getTables();
+    $datadict = xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
     // Upgrade dependent on old version number
     switch($oldversion) {

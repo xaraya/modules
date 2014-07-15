@@ -40,7 +40,7 @@ function mime_userapi_getall_magic( $args )
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable     = xarDB::getTables();
+    $xartable     =& xarDB::getTables();
 
     // table and column definitions
     $magic_table =& $xartable['mime_magic'];

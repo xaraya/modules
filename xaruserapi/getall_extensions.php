@@ -40,7 +40,7 @@ function mime_userapi_getall_extensions( $args )
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable     = xarDB::getTables();
+    $xartable     =& xarDB::getTables();
 
     // table and column definitions
     $extension_table =& $xartable['mime_extension'];

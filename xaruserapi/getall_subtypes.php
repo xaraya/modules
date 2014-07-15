@@ -64,7 +64,7 @@ function mime_userapi_getall_subtypes($args)
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
 
     // table and column definitions
     $subtype_table =& $xartable['mime_subtype'];

@@ -28,7 +28,7 @@ function mime_userapi_add_type( $args )
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable     = xarDB::getTables();
+    $xartable     =& xarDB::getTables();
 
     if (!isset($typeName) || empty($typeName)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',

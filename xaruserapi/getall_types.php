@@ -27,7 +27,7 @@ function mime_userapi_getall_types( /* VOID */ )
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable     = xarDB::getTables();
+    $xartable     =& xarDB::getTables();
 
     // table and column definitions
     $type_table =& $xartable['mime_type'];

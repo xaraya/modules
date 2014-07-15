@@ -34,7 +34,7 @@ function mime_userapi_get_type( $args )
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable     = xarDB::getTables();
+    $xartable     =& xarDB::getTables();
 
     $where = ' WHERE ';
 

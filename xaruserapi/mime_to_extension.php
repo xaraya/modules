@@ -39,7 +39,7 @@ function mime_userapi_mime_to_extension( $args )
         throw new Exception($msg);
     }
 
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     sys::import('xaraya.structures.query');
     $q = new Query();
     $q->addtable($xartable['mime_type'], 'mt');
