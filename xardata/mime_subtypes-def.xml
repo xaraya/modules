@@ -1,21 +1,23 @@
 <object name="mime_subtypes">
-  <objectid>929</objectid>
+  <objectid>21</objectid>
   <label>Mime Subtypes</label>
   <module_id>182</module_id>
-  <itemtype>289</itemtype>
+  <itemtype>16</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>215</maxid>
+  <access>a:0:{}</access>
   <isalias>true</isalias>
   <datastore>relational</datastore>
   <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>
   <sources>a:1:{s:8:&quot;subtypes&quot;;a:2:{i:0;s:16:&quot;xar_mime_subtype&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
   <relations>a:0:{}</relations>
   <objects>a:0:{}</objects>
+  <category></category>
   <properties>
     <property name="id">
-      <id>12477</id>
+      <id>159</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -25,7 +27,7 @@
       <configuration></configuration>
     </property>
     <property name="name">
-      <id>12478</id>
+      <id>160</id>
       <label>Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -35,7 +37,7 @@
       <configuration></configuration>
     </property>
     <property name="type">
-      <id>12479</id>
+      <id>161</id>
       <label>Type</label>
       <type>objectref</type>
       <defaultvalue></defaultvalue>
@@ -45,7 +47,7 @@
       <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:10:"mime_types";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";}</configuration>
     </property>
     <property name="description">
-      <id>12480</id>
+      <id>162</id>
       <label>Description</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
@@ -53,6 +55,16 @@
       <status>34</status>
       <seq>4</seq>
       <configuration></configuration>
+    </property>
+    <property name="state">
+      <id>1096</id>
+      <label>state</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>subtypes.state</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:44:"modules/base/xardata/dropdown_values-dat.xml";}</configuration>
     </property>
   </properties>
 </object>
