@@ -30,6 +30,7 @@ function mime_init()
     $fields['mime_type'] = array(
         'id'          => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
         'name'        => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
+        'state'       => array('type' => 'integer', 'null' => false, 'default' => 3),
     );
 
     $fields['mime_subtype'] = array(
@@ -37,6 +38,7 @@ function mime_init()
         'name'          => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
         'type_id'       => array('type'=>'integer',  'null'=>FALSE),
         'description'   => array('type'=>'varchar',  'null'=>TRUE,  'size'=>255),
+        'state'         => array('type' => 'integer', 'null' => false, 'default' => 3),
     );
 
     $fields['mime_extension'] = array(
@@ -59,7 +61,6 @@ function mime_init()
     // some tables created and some not.
     foreach ($fields as $table => $data) {
         $query = xarDBCreateTable($xartable[$table], $data);
-
         $result =& $dbconn->Execute($query);
         if (!$result) {
             $tables[$table] = FALSE;

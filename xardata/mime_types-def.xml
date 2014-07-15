@@ -1,21 +1,23 @@
 <object name="mime_types">
-  <objectid>928</objectid>
+  <objectid>20</objectid>
   <label>Mime Types</label>
   <module_id>182</module_id>
-  <itemtype>288</itemtype>
+  <itemtype>15</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>11</maxid>
+  <access>a:0:{}</access>
   <isalias>true</isalias>
   <datastore>relational</datastore>
   <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>
   <sources>a:1:{s:5:&quot;types&quot;;a:2:{i:0;s:13:&quot;xar_mime_type&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
   <relations>a:0:{}</relations>
   <objects>a:0:{}</objects>
+  <category></category>
   <properties>
     <property name="id">
-      <id>12475</id>
+      <id>157</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -25,7 +27,7 @@
       <configuration></configuration>
     </property>
     <property name="name">
-      <id>12476</id>
+      <id>158</id>
       <label>Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -33,6 +35,16 @@
       <status>33</status>
       <seq>2</seq>
       <configuration></configuration>
+    </property>
+    <property name="state">
+      <id>1095</id>
+      <label>state</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>types.state</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:44:"modules/base/xardata/dropdown_values-dat.xml";}</configuration>
     </property>
   </properties>
 </object>
