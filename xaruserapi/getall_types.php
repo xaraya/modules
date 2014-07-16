@@ -22,8 +22,9 @@
   *  returns array      An array of (typeId, typeName) or an empty array
   */
 
-function mime_userapi_getall_types( /* VOID */ )
+function mime_userapi_getall_types($args)
 {
+    extract($args);
 
     // Get database setup
     $dbconn = xarDB::getConn();
@@ -32,10 +33,17 @@ function mime_userapi_getall_types( /* VOID */ )
     // table and column definitions
     $type_table =& $xartable['mime_type'];
 
+    if (isset($state) && is_array($state)) {
+        $where = 'state in (' . implode(', ', $state) . ')';
+    }
+    if (isset($state) && !is_array($state)) {
+        $where = 'state = ' . (int)$state;
+    }
     $sql = "SELECT id,
                    name
-              FROM $type_table
-          ORDER BY name";
+              FROM $type_table";
+    $sql .= (isset($where) ? ' WHERE ' . $where : '');
+    $sql .=   " ORDER BY name";
 
     $result = $dbconn->Execute($sql);
 
@@ -59,7 +67,5 @@ function mime_userapi_getall_types( /* VOID */ )
 
     $result->Close();
     return $typeInfo;
-
 }
-
 ?>
