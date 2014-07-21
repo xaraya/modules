@@ -62,6 +62,18 @@ function mime_userapi_getall_subtypes($args)
         $bind[] = strtolower($typeName);
     }
 
+    if (isset($typeName) && is_string($typeName)) {
+        $where[] = 'type_tab.name = ?';
+        $bind[] = strtolower($typeName);
+    }
+    if (isset($state) && !is_array($state)) {
+        $where[] = 'subtype_tab.state = ?';
+        $bind[] = (int)$state;
+    }
+    if (isset($state) && is_array($state)) {
+        $where[] = 'subtype_tab.state in (' . implode(', ', $state) . ')';
+        $bind[] = $state;
+    }
     // Get database setup
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
@@ -99,5 +111,4 @@ function mime_userapi_getall_subtypes($args)
 
     return $subtypeInfo;
 }
-
 ?>
