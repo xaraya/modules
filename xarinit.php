@@ -27,9 +27,9 @@ function calendar_init()
       id          integer unsigned NOT NULL auto_increment,
       name        varchar(60) default '' NOT NULL,
       description text,
-      module_id       integer unsigned default null,
+      module_id   integer unsigned default null,
       itemtype    integer unsigned default null,
-      item_id      integer unsigned default null,
+      item_id     integer unsigned default null,
     PRIMARY KEY  (id)
     )";
     if (!$q->run($query)) return;
