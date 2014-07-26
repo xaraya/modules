@@ -1,5 +1,17 @@
 <?php
 /**
+ * Calendar Module
+ *
+ * @package modules
+ * @subpackage calendar module
+ * @category Third Party Xaraya Module
+ * @version 1.0.0
+ * @copyright (C) 2014 Netspan AG
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Marc Lutolf <mfl@netspan.ch>
+ */
+
+/**
  *  Factory method that allows the creation of new objects
  *  @version $Id: factory.php,v 1.5 2003/06/24 21:30:30 roger Exp $
  *  @param string $class the name of the object to create

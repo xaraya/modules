@@ -1,15 +1,16 @@
 <?php
-
 /**
- * Table definition file
- * @package calendar
- * @copyright (C) 2002 by the Xaraya Calendar Team
+ * Calendar Module
+ *
+ * @package modules
+ * @subpackage calendar module
+ * @category Third Party Xaraya Module
+ * @version 1.0.0
+ * @copyright (C) 2014 Netspan AG
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-/**
- * This function is called internally by the core
- * whenever the module is loaded.
- */
 function calendar_xartables()
 {
     $xartables = array();

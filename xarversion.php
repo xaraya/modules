@@ -1,9 +1,20 @@
 <?php
-//$Id: xarversion.php,v 1.4 2003/06/24 16:31:36 roger Exp $
+/**
+ * Calendar Module
+ *
+ * @package modules
+ * @subpackage calendar module
+ * @category Third Party Xaraya Module
+ * @version 1.0.0
+ * @copyright (C) 2014 Netspan AG
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Marc Lutolf <mfl@netspan.ch>
+ */
+
 
 $modversion['name']           = 'calendar';
 $modversion['id']             = '7';
-$modversion['version']        = '0.2.0';
+$modversion['version']        = '1.0.0';
 $modversion['displayname']    = xarML('Calendar');
 $modversion['description']    = 'Calendar System';
 $modversion['credits']        = 'credits.txt';

@@ -1,5 +1,17 @@
 <?php
 /**
+ * Calendar Module
+ *
+ * @package modules
+ * @subpackage calendar module
+ * @category Third Party Xaraya Module
+ * @version 1.0.0
+ * @copyright (C) 2014 Netspan AG
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Marc Lutolf <mfl@netspan.ch>
+ */
+
+/**
  *  calendar_userapi_getDayLink
  *  Create a valid link to a particluar day
  *  @version $Id: getdaylink.php,v 1.1 2003/06/24 20:01:14 roger Exp $
