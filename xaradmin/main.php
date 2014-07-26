@@ -13,14 +13,21 @@
 
 function calendar_admin_main()
 {
-    if(!xarSecurityCheck('AdminCalendar')) return;
+    // Xaraya security
+    if(!xarSecurityCheck('ManageCalendar')) return;
 
-    if (xarModVars::get('modules', 'disableoverview') == 0) {
+    if (xarModVars::get('modules', 'disableoverview') == 0){
         return array();
     } else {
-       xarController::redirect(xarModURL('calendar','admin', 'view'));
+        $redirect = xarModVars::get('calendar','defaultbackpage');
+        if (!empty($redirect)) {
+            $truecurrenturl = xarServer::getCurrentURL(array(), false);
+            $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+            xarController::redirect($urldata['redirecturl']);
+        } else {
+            xarController::redirect(xarModURL('calendar', 'admin', 'view'));
+        }
     }
-
     return true;
 }
 ?>

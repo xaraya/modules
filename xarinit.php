@@ -123,7 +123,6 @@ function calendar_init()
     xarModVars::set('calendar','default_cal',serialize($data['icsfiles']));
 
     // Other variables from phpIcalendar config.inc.php
-//    xarModVars::set('calendar','default_view'           , 'week');
     xarModVars::set('calendar','minical_view'           , 'week');
 //    xarModVars::set('calendar','cal_sdow'               , 0);   // 0=sunday $week_start_day in phpIcalendar
 //    xarModVars::set('calendar','day_start'              , '0700');
@@ -155,7 +154,6 @@ function calendar_init()
     xarModVars::set('calendar','minutesperunit', 15);
     xarModVars::set('calendar','unitheight', 12);
 
-    xarModVars::set('calendar','default_view', 'week');
     xarModVars::set('calendar','event_duration', 60*60);
     xarModVars::set('calendar','cal_sdow', 0);
     xarModVars::set('calendar','day_start', 25200);
@@ -281,39 +279,6 @@ function calendar_delete()
         if (!xarMod::apiFunc('blocks', 'admin', 'unregister_block_type', array('modName'  => 'calendar', 'blockType'=> 'month'))) return;
 
     return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => 'calendar'));
-/*
-    // Remove all tables (see example module for comments)
-    $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
-    sys::import('xaraya.tableddl');
-
-    $query = xarDBDropTable($xartable['calendars']);
-    if (empty($query)) return;
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $query = xarDBDropTable($xartable['calendars_files']);
-    if (empty($query)) return;
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $query = xarDBDropTable($xartable['calfiles']);
-    if (empty($query)) return;
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    // remove all module vars
-    xarModVars::delete_all('calendar');
-
-    // Remove Masks and Instances
-    xarRemoveMasks('calendar');
-    xarRemoveInstances('calendar');
-
-    // remove registered template tags
-//    xarTplUnregisterTag('calendar-decorator');
-
-    return true;
-    */
 }
 
 ?>

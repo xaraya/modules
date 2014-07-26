@@ -13,6 +13,17 @@
 
 function calendar_user_main()
 {
-    xarController::redirect(xarModURL('calendar','user',xarModUserVars::get('calendar','default_view')));
+    // Xaraya security
+    if(!xarSecurityCheck('ReadCalendar')) return;
+
+    $redirect = xarModVars::get('calendar','defaultfrontpage');
+    if (!empty($redirect)) {
+        $truecurrenturl = xarServer::getCurrentURL(array(), false);
+        $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+        xarController::redirect($urldata['redirecturl']);
+    } else {
+        xarController::redirect(xarModURL('calendar', 'user', 'week'));
+    }
+    return true;
 }
 ?>
