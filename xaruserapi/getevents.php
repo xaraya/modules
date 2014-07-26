@@ -5,7 +5,7 @@
     function calendar_userapi_getevents($args)
     {
         extract($args);
-        $xartable = xarDB::getTables();
+        $xartable =& xarDB::getTables();
 
         $q = new Query('SELECT');
         $q->addtable($xartable['calendar_event']);
