@@ -1,13 +1,16 @@
 <?php 
 /**
- *  Module Initialisation Function
- *  @version $Id: xarinit.php,v 1.7 2003/06/24 20:08:10 roger Exp $
- *  @author Roger Raymond, Andrea Moro
- *  @todo determine DB Table schema
- *  @todo determine all module vars
- *  @todo determine permissions masks
- *  @todo determine blocklayout tags
+ * Calendar Module
+ *
+ * @package modules
+ * @subpackage calendar module
+ * @category Third Party Xaraya Module
+ * @version 1.0.0
+ * @copyright (C) 2014 Netspan AG
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
+
 function calendar_init()
 {
 # --------------------------------------------------------
@@ -28,7 +31,7 @@ function calendar_init()
       itemtype    integer unsigned default null,
       item_id      integer unsigned default null,
     PRIMARY KEY  (id)
-    ) TYPE=MyISAM";
+    )";
     if (!$q->run($query)) return;
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_calendar_event";
@@ -55,7 +58,7 @@ function calendar_init()
       PRIMARY KEY (id),
       KEY i_start (start_time),
       KEY i_end   (end_time)
-    ) TYPE=MyISAM";
+    )";
     if (!$q->run($query)) return;
 
 /*    $query = "DROP TABLE IF EXISTS " . $prefix . "_bookings_repeat";
@@ -76,7 +79,7 @@ function calendar_init()
       rep_num_weeks smallint NULL,
 
       PRIMARY KEY (id)
-    ) TYPE=MyISAM";
+    )";
     if (!$q->run($query)) return;
 */
 
@@ -219,7 +222,7 @@ function calendar_upgrade($oldversion)
             // Start creating the tables
 
             $dbconn = xarDB::getConn();
-            $xartable = xarDB::getTables();
+            $xartable =& xarDB::getTables();
             $calfilestable = $xartable['calendars_files'];
             sys::import('xaraya.tableddl');
             $fields = array(
@@ -281,7 +284,7 @@ function calendar_delete()
 /*
     // Remove all tables (see example module for comments)
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     sys::import('xaraya.tableddl');
 
     $query = xarDBDropTable($xartable['calendars']);

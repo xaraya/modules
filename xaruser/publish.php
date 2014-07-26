@@ -73,12 +73,12 @@ function calendar_user_publish($args)
                              */
                              @fclose($fp);
                          } else {
-                             xarLogMessage('failed opening standard input');
+                             xarLog::message('failed opening standard input');
                          }
 
                          if(!empty($data))
                          {
-                             //xarLogMessage($data);
+                             //xarLog::message($data);
                              // write to file
                              if($fp = fopen($curfile,'w+'))
                              {
@@ -87,10 +87,10 @@ function calendar_user_publish($args)
                              }
                              else
                              {
-                                 xarLogMessage( 'couldnt open file '.$curfile );
+                                 xarLog::message( 'couldnt open file '.$curfile );
                              }
                          } else {
-                             xarLogMessage('failed getting any data');
+                             xarLog::message('failed getting any data');
                          }
                      }
                      // we're done here

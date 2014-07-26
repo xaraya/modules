@@ -25,7 +25,7 @@ function calendar_userapi_getall($args)
 //    if (!xarSecurityCheck('ViewCalendars')) return;
 
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     $caltable = $xartable['calendars'];
     $cal_filestable = $xartable['calendars_files'];
     $filestable = $xartable['calfiles'];

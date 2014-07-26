@@ -51,7 +51,7 @@ function calendar_adminapi_delete_calendar($args)
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $xartable =& xarDB::getTables();
     $calendarstable = $xartable['calendars'];
     $cal_filestable = $xartable['calendars_files'];
     $calfiles = $xartable['calfiles'];

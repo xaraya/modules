@@ -124,7 +124,7 @@ class CalendarDisplayProperty extends DataProperty
     public function getEvents($start_time, $end_time, $role_id)
     {
         // get all the events. need to improve this query and combine it with the query in the template
-        $xartable = xarDB::getTables();
+        $xartable =& xarDB::getTables();
         $q = new Query('SELECT', $xartable['calendar_event']);
         $q->ge('start_time', $start_time);
         $q->lt('start_time', $end_time);

@@ -1,23 +1,28 @@
 <?php
+/**
+ * Calendar Module
+ *
+ * @package modules
+ * @subpackage calendar module
+ * @category Third Party Xaraya Module
+ * @version 1.0.0
+ * @copyright (C) 2014 Netspan AG
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Marc Lutolf <mfl@netspan.ch>
+ */
+
 function calendar_admin_modifyconfig()
 {
     $data = xarMod::apiFunc('calendar', 'admin', 'menu');
     $data = array_merge($data,xarMod::apiFunc('calendar', 'admin', 'get_calendars'));
     if (!xarSecurityCheck('AdminCalendar')) return;
+    
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'calendar_general', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('tabmodule', 'str:1:100', $tabmodule, 'calendar', XARVAR_NOT_REQUIRED)) return;
-    $hooks = xarModCallHooks('module', 'getconfig', 'calendar');
-    if (!empty($hooks) && isset($hooks['tabs'])) {
-        foreach ($hooks['tabs'] as $key => $row) {
-            $configarea[$key]  = $row['configarea'];
-            $configtitle[$key] = $row['configtitle'];
-            $configcontent[$key] = $row['configcontent'];
-        }
-        array_multisort($configtitle, SORT_ASC, $hooks['tabs']);
-    } else {
-        $hooks['tabs'] = array();
-    }
+    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+
+    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'calendar'));
+    $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls','use_module_icons, frontend_page, backend_page');
+    $data['module_settings']->getItem();
 
     switch (strtolower($phase)) {
         case 'modify':
@@ -34,16 +39,19 @@ function calendar_admin_modifyconfig()
         case 'update':
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
-            if (!xarVarFetch('items_per_page', 'str:1:4:', $items_per_page, '20', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-            if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('calendar', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('calendar', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('windowwidth', 'int:1', $windowwidth, xarModVars::get('calendar', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('minutesperunit', 'int:1', $minutesperunit, xarModVars::get('calendar', 'minutesperunit'), XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('unitheight', 'int:1', $unitheight, xarModVars::get('calendar', 'unitheight'), XARVAR_NOT_REQUIRED)) return;
 
             if (!xarVarFetch('default_view', 'str:1', $default_view, xarModVars::get('calendar', 'default_view'), XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('cal_sdow', 'str:1', $cal_sdow, xarModVars::get('calendar', 'cal_sdow'), XARVAR_NOT_REQUIRED)) return;
+
+            $isvalid = $data['module_settings']->checkInput();
+            if (!$isvalid) {
+                return xarTplModule('calendar','admin','modifyconfig', $data);        
+            } else {
+                $itemid = $data['module_settings']->updateItem();
+            }
 
             sys::import('modules.dynamicdata.class.properties.master');
             $timeproperty = DataPropertyMaster::getProperty(array('type' => 'formattedtime'));
@@ -74,10 +82,9 @@ function calendar_admin_modifyconfig()
             xarModItemVars::set('calendar', 'day_start', $day_start, $regid);
             xarModItemVars::set('calendar', 'day_end', $day_end, $regid);
 
-            xarController::redirect(xarModURL('calendar', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+            xarController::redirect(xarModURL('calendar', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
             return true;
             break;
-
     }
 
     // Initialise the $data variable that will hold the data to be used in
@@ -162,8 +169,6 @@ function calendar_admin_modifyconfig()
         $data['hooks'] = $hooks;
     }
 */
-    $data['hooks'] = $hooks;
-    $data['tabmodule'] = $tabmodule;
     $data['authid'] = xarSecGenAuthKey();
     return $data;
 }
