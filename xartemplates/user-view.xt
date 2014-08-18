@@ -44,6 +44,7 @@
     <xar:if condition="$debug">
         <xar:set name="dummy">$object->dataquery->qecho()</xar:set>
     </xar:if>
+
     <!-- For debugging
     <xar:set name="dummy">var_dump($items)</xar:set>
     <xar:set name="dummy">var_dump(xarLocaleGetFormattedDate('long',$now))</xar:set>
