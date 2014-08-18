@@ -124,6 +124,9 @@ class Publication extends DataObject
         }
         $this->fieldlist = array();
         
+        // Set the time modified
+            $this->properties['modified']->value = time();
+        
         // Save the item
         $id = parent::updateItem($args);
         
