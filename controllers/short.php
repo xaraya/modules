@@ -50,7 +50,7 @@ class PublicationsShortController extends ShortActionController
     
     public function decode(Array $data=array())
     {
-        $token1 = urldecode($this->firstToken());
+        $token1 = $this->shorturl_decode($this->firstToken());
         switch ($token1) {
             case 'admin':
                 return parent::decode($data);
@@ -75,8 +75,8 @@ class PublicationsShortController extends ShortActionController
             case 'modify':
                 // Here we are dealing with publications/modify/pubtype[/publication] or publications/modify/itemid
                 $data['func'] = 'modify';
-                $token2 = urldecode($this->nextToken());
-                $token3 = urldecode($this->nextToken());
+                $token2 = $this->shorturl_decode($this->nextToken());
+                $token3 = $this->shorturl_decode($this->nextToken());
 
                 if (!$token3 && is_numeric($token2) && !xarModVars::get('publications', 'usetitleforurl')) {
                     // A single numeric token is a page id
@@ -98,8 +98,8 @@ class PublicationsShortController extends ShortActionController
 
             case 'delete':
                 $data['func'] = 'delete';
-                $token2 = urldecode($this->nextToken());
-                $token3 = urldecode($this->nextToken());
+                $token2 = $this->shorturl_decode($this->nextToken());
+                $token3 = $this->shorturl_decode($this->nextToken());
 
                 if (!$token3 && is_numeric($token2) && !xarModVars::get('publications', 'usetitleforurl')) {
                     // A single numeric token is a page id
@@ -203,7 +203,7 @@ class PublicationsShortController extends ShortActionController
             default:
                 // Here we are dealing with publications/pubtype[/publication] or publications/itemid
 
-                $token2 = urldecode($this->nextToken());
+                $token2 = $this->shorturl_decode($this->nextToken());
 
                 if (!$token2 && is_numeric($token1)) {
                 // A single numeric token is an id. We keep this decode option: publications/itemid
@@ -415,7 +415,7 @@ class PublicationsShortController extends ShortActionController
     
     private function decode_pubtype($token='')
     {
-        $token = urldecode($token);
+        $token = $this->shorturl_decode($token);
         if (xarModVars::get('publications', 'usetitleforurl')) {
             // Get all publication types present
             if (empty($this->pubtypes)) $this->pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
@@ -442,7 +442,7 @@ class PublicationsShortController extends ShortActionController
             break;
             case 1:
                 $q->eq('name', $token2);
-                $token3 = urldecode($this->nextToken());
+                $token3 = $this->shorturl_decode($this->nextToken());
                 if ($token3) {
                     $timestamp = strtotime($token3);
                     $q->ge('start_date',$timestamp);
@@ -464,7 +464,7 @@ class PublicationsShortController extends ShortActionController
             break;
             case 5:
                 $q->eq('title', $token2);
-                $token3 = urldecode($this->nextToken());
+                $token3 = $this->shorturl_decode($this->nextToken());
                 if ($token3) {
                     $timestamp = strtotime($token3);
                     $q->ge('start_date',$timestamp);
@@ -502,11 +502,11 @@ class PublicationsShortController extends ShortActionController
         } elseif ($usetitles == 4) {
             // We're ignoring duplicates: just slap in the pubtype and name
             $path[] = $this->encode_pubtype($row['pubtype_id']);
-            if (!empty($row['name'])) $path[] = urlencode($row['name']);
+            if (!empty($row['name'])) $path[] = $this->shorturl_encode($row['name']);
         } elseif ($usetitles == 8) {
             // We're ignoring duplicates: just slap in the pubtype and title
             $path[] = $this->encode_pubtype($row['pubtype_id']);
-            if (!empty($row['title'])) $path[] = urlencode($row['title']);
+            if (!empty($row['title'])) $path[] = $this->shorturl_encode($row['title']);
         } elseif (!empty($row['name']) && in_array($usetitles, array(1,2,3))) {
             // Now come the cases where we distinguish duplicates in the URL
             // For this we need to do another SELECT on the name to see if there are actually duplicates
@@ -524,14 +524,14 @@ class PublicationsShortController extends ShortActionController
             $path[] = $this->encode_pubtype($row['pubtype_id']);
             if (count($duplicates) == 1) {
                 // No duplicates, so we just put the name
-                $path[] = urlencode($row['name']);
+                $path[] = $this->shorturl_encode($row['name']);
             } elseif ($usetitles == 1) {
                 // We will add the publication start date to distinguish duplicates
-                $path[] = urlencode($row['name']);
-                $path[] = date('Y-m-d H:i',urlencode($row['start_date']));
+                $path[] = $this->shorturl_encode($row['name']);
+                $path[] = date('Y-m-d H:i',$this->shorturl_encode($row['start_date']));
             } elseif ($usetitles == 2) {
                 // We will add the publication ID to distinguish duplicates
-                $path[] = urlencode($row['name']);
+                $path[] = $this->shorturl_encode($row['name']);
                 $path[] = $row['id'];
             } elseif ($usetitles == 3) {
                 // We will use just the publication ID to distinguish duplicates
@@ -554,14 +554,14 @@ class PublicationsShortController extends ShortActionController
             $path[] = $this->encode_pubtype($row['pubtype_id']);
             if (count($duplicates) == 1) {
                 // No duplicates, so we just put the name
-                $path[] = urlencode($row['title']);
+                $path[] = $this->shorturl_encode($row['title']);
             } elseif ($usetitles == 5) {
                 // We will add the publication start date to distinguish duplicates
-                $path[] = urlencode($row['title']);
-                $path[] = urlencode(date('Y-m-d H:i',$row['start_date']));
+                $path[] = $this->shorturl_encode($row['title']);
+                $path[] = $this->shorturl_encode(date('Y-m-d H:i',$row['start_date']));
             } elseif ($usetitles == 6) {
                 // We will add the publication ID to distinguish duplicates
-                $path[] = urlencode($row['title']);
+                $path[] = $this->shorturl_encode($row['title']);
                 $path[] = $row['id'];
             } elseif ($usetitles == 7) {
                 // We will use just the publication ID to distinguish duplicates
@@ -580,7 +580,7 @@ class PublicationsShortController extends ShortActionController
             // Match to the function token
             foreach ($this->pubtypes as $id => $pubtype) {
                 if ($ptid == $id) {
-                    return urlencode(strtolower($pubtype['description']));
+                    return $this->shorturl_encode(strtolower($pubtype['description']));
                     break;
                 }
             }
@@ -602,6 +602,22 @@ class PublicationsShortController extends ShortActionController
         $q->run();
         $result = $q->row();
         return $result;
+    }
+
+    private function shorturl_encode($string)
+    {   
+        $string = urlencode($string);
+        $allows_slashes = xarConfigVars::get(null, 'Site.Core.WebserverAllowsSlashes');
+        if (empty($allows_slashes)) $string = urlencode($string);
+        return $string;
+    }
+    
+    private function shorturl_decode($string)
+    {   
+        $string = urldecode($string);
+        $allows_slashes = xarConfigVars::get(null, 'Site.Core.WebserverAllowsSlashes');
+        if (empty($allows_slashes)) $string = urldecode($string);
+        return $string;
     }
 }
 ?>
