@@ -51,13 +51,13 @@ class Publication extends DataObject
                 $name = $prefix . "_" . $this->propertyprefix . $this->properties['access']->id;
             }
             $validprop = $access->checkInput($name . "_display");
-            $displayaccess = $access->value;
+            $displayaccess = $access->getValue();
             $isvalid = $isvalid && $validprop;
             $validprop = $access->checkInput($name . "_modify");
-            $modifyaccess = $access->value;
+            $modifyaccess = $access->getValue();
             $isvalid = $isvalid && $validprop;
             $validprop = $access->checkInput($name . "_delete");
-            $deleteaccess = $access->value;
+            $deleteaccess = $access->getValue();
             $isvalid = $isvalid && $validprop;
             $allaccess = array(
                 'display' => $displayaccess,
