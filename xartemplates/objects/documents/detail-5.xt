@@ -12,7 +12,7 @@
         $properties['state']->value
     </xar:set>
 
-    <xar:if condition="$publication_state lt PUBLICATIONS_STATE_ACTIVE AND !xarSecurityCheck('ManagePublications',0)">
+    <xar:if condition="($publication_state lt PUBLICATIONS_STATE_ACTIVE) AND (!xarSecurityCheck('ManagePublications',0))">
         This item cannot be viewed
     <xar:else />
 
