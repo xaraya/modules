@@ -13,7 +13,7 @@
                 <label for="contains">Select tree:</label>&#160;
 
                 <xar:var name="firstline">-- All --</xar:var>
-                <xar:set name="firstline">array('id'=>0,'name'=>$firstline</xar:set>
+                <xar:set name="firstline">array('id'=>0,'name'=>$firstline)</xar:set>
                 <xar:data-input type="dropdown" nme="root_id" value="$root_id" options="$root_pages" firstline="$firstline"/>
                 <!--
                 <select name="root_id" id="root_id">
