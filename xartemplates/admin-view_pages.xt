@@ -6,14 +6,18 @@
     <div class="xar-mod-body">
         <h2>View Publications Trees</h2>
 
-        <xar:set name="root_pages">#xarMod::apiFunc('publications', 'user', 'getpages', array('parent'=&gt;0))#</xar:set>
+        <xar:set name="root_pages">xarMod::apiFunc('publications', 'user', 'getpages', array('parent'=>0))</xar:set>
         <xar:if condition="!empty($root_pages)">
             <xar:set name="method">'get'</xar:set>
             <form method="post" action="#xarModURL('publications','admin','view_pages')#">
                 <label for="contains">Select tree:</label>&#160;
 
+                <xar:var name="firstline">-- All --</xar:var>
+                <xar:set name="firstline">array('id'=>0,'name'=>$firstline</xar:set>
+                <xar:data-input type="dropdown" nme="root_id" value="$root_id" options="$root_pages" firstline="$firstline"/>
+                <!--
                 <select name="root_id" id="root_id">
-                    <option value="0">-- All --</option>
+                    <option value="0"></option>
                     <xar:loop name="$root_pages">
                         <xar:if condition="$loop:item.id eq $root_id">
                             <option value="#$loop:item.id#" selected="selected">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.pubtype_name)#)</option>
@@ -22,6 +26,7 @@
                         </xar:if>
                     </xar:loop>
                 </select>
+                -->
                 &#160;
                 <xar:var name="label">Refresh</xar:var>
                 <xar:button type="submit" label="$label"/>
@@ -50,7 +55,7 @@
             <xar:if condition="!empty($add_allowed)">
                 <div><a href="#xarModURL('publications','admin','new')#">Add Page</a></div>
             </xar:if>
-            <!-- Define alpahnumeric states here -->
+            <!-- Define alphanumeric states here -->
             <xar:set name="stateoptions">
                 array(
                     array('id' => 0, 'name' => 'Deleted'),
