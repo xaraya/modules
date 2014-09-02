@@ -98,10 +98,10 @@ class Entity extends DataObject
         $tables = xarDB::getTables();
         foreach ($this->properties as $property) {
             $q = new Query('UPDATE', $tables['eav_data']);
-            $q->addfield('object_id', $this->parent_id);
-            $q->addfield('item_id', $args['itemid']);
             $valuefield = 'value_' . $property->basetype;
             $q->addfield($valuefield, $property->value);
+            $q->eq('object_id', $this->parent_id);
+            $q->eq('item_id', $args['itemid']);
             $q->eq('attribute_id', (int)$property->id);
             if (!$q->run()) return false;
             if (!$q->affected()) {
