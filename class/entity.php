@@ -103,6 +103,7 @@ class Entity extends DataObject
             $valuefield = 'value_' . $property->basetype;
             $q->addfield($valuefield, $property->value);
             $q->eq('attribute_id', (int)$property->id);
+            if (!$q->run()) return false;
             if (!$q->affected()) {
                 $q = new Query('INSERT', $tables['eav_data']);
                 $q->addfield('object_id', $this->parent_id);
