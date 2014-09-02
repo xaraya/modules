@@ -100,11 +100,12 @@ class Entity extends DataObject
             $q = new Query('UPDATE', $tables['eav_data']);
             $valuefield = 'value_' . $property->basetype;
             $q->addfield($valuefield, $property->value);
-            $q->eq('object_id', $this->parent_id);
-            $q->eq('item_id', $args['itemid']);
+            $q->eq('object_id',    (int)$this->parent_id);
+            $q->eq('item_id',      (int)$args['itemid']);
             $q->eq('attribute_id', (int)$property->id);
-            if (!$q->run()) return false;
-            if (!$q->affected()) {
+            try {
+                $q->run();
+            } catch (Exception $e) {
                 $q = new Query('INSERT', $tables['eav_data']);
                 $q->addfield('object_id', $this->parent_id);
                 $q->addfield('item_id', $args['itemid']);
@@ -114,6 +115,7 @@ class Entity extends DataObject
                 if (!$q->run()) return false;
             }
             $q->clearfields();
+            $q->clearconditions();
         }
         return true;
     }
