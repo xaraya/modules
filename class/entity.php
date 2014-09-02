@@ -103,16 +103,24 @@ class Entity extends DataObject
             $q->eq('object_id',    (int)$this->parent_id);
             $q->eq('item_id',      (int)$args['itemid']);
             $q->eq('attribute_id', (int)$property->id);
-            try {
-                $q->run();
-            } catch (Exception $e) {
-                $q = new Query('INSERT', $tables['eav_data']);
-                $q->addfield('object_id', $this->parent_id);
-                $q->addfield('item_id', $args['itemid']);
-                $valuefield = 'value_' . $property->basetype;
-                $q->addfield($valuefield, $property->value);
-                $q->addfield('attribute_id', (int)$property->id);
+            if (!$q->run()) return false;
+            if (!$q->affected()) {
+                // Either the value didn't change, or the record was not found
+                // CHECKME: is there a better way of doing this?
+                $q = new Query('SELECT', $tables['eav_data']);
+                $q->eq('object_id',    (int)$this->parent_id);
+                $q->eq('item_id',      (int)$args['itemid']);
+                $q->eq('attribute_id', (int)$property->id);
                 if (!$q->run()) return false;
+                if (empty($q->row()) {
+                    $q = new Query('INSERT', $tables['eav_data']);
+                    $q->addfield('object_id',    (int)$this->parent_id);
+                    $q->addfield('item_id',      (int)$args['itemid']);
+                    $q->addfield('attribute_id', (int)$property->id);
+                    $valuefield = 'value_' . $property->basetype;
+                    $q->addfield($valuefield, $property->value);
+                    if (!$q->run()) return false;
+                }
             }
             $q->clearfields();
             $q->clearconditions();
