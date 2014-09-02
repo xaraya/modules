@@ -103,7 +103,7 @@
             value_string      varchar(254) default NULL, 
             value_text        text default NULL, 
             PRIMARY KEY  (id), 
-            KEY i_tag_ids (item_id,attribute_id)
+            UNIQUE KEY `i_tag_ids` (`item_id`,`attribute_id`,`object_id`)
         )";
         if (!$q->run($query)) return;
 
