@@ -107,7 +107,7 @@ function publications_admin_modifyconfig()
         } else {
             $data['alias'] = 'frontpage';
         }
-        $modname = xarModGetAlias($data['alias']);
+        $modname = xarModAlias::resolve($data['alias']);
         if ($modname == 'publications') {
             $data['usealias'] = true;
         } else {

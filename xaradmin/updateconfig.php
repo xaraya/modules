@@ -36,15 +36,16 @@ function publications_admin_updateconfig()
     if (!xarSecurityCheck('AdminPublications',1,'Publication',"$ptid:All:All:All")) return;
 
     if ($data['tab'] == 'global') {
-        if(!xarVarFetch('defaultpubtype',    'isset', $defaultpubtype,    1,  XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('sortpubtypes',      'isset', $sortpubtypes,   'id',  XARVAR_NOT_REQUIRED)) {return;}
-        if (!xarVarFetch('defaultlanguage', 'str:1:100', $defaultlanguage, xarModVars::get('publications', 'defaultlanguage'), XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('debugmode',    'checkbox', $debugmode, xarModVars::get('publications', 'debugmode'), XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('defaultfrontpage', 'str', $defaultfrontpage, xarModVars::get('publications', 'defaultfrontpage'), XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('defaultbackpage', 'str', $defaultbackpage, xarModVars::get('publications', 'defaultbackpage'), XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('use_process_states',    'checkbox', $use_process_states, xarModVars::get('publications', 'use_process_states'), XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('use_versions',    'checkbox', $use_versions, xarModVars::get('publications', 'use_versions'), XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('hide_tree_display',    'checkbox', $hide_tree_display, xarModVars::get('publications', 'hide_tree_display'), XARVAR_NOT_REQUIRED)) return;
+        if(!xarVarFetch('defaultpubtype',      'isset', $defaultpubtype,    1,  XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('sortpubtypes',        'isset', $sortpubtypes,   'id',  XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVarFetch('defaultlanguage',    'str:1:100', $defaultlanguage, xarModVars::get('publications', 'defaultlanguage'), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('debugmode',          'checkbox', $debugmode, xarModVars::get('publications', 'debugmode'), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('defaultfrontpage',   'str', $defaultfrontpage, xarModVars::get('publications', 'defaultfrontpage'), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('defaultbackpage',    'str', $defaultbackpage, xarModVars::get('publications', 'defaultbackpage'), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('use_process_states', 'checkbox', $use_process_states, xarModVars::get('publications', 'use_process_states'), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('use_versions',       'checkbox', $use_versions, xarModVars::get('publications', 'use_versions'), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('hide_tree_display',  'checkbox', $hide_tree_display, xarModVars::get('publications', 'hide_tree_display'), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('admin_override',     'int', $admin_override, xarModVars::get('publications', 'admin_override'), XARVAR_NOT_REQUIRED)) return;
 
         xarModVars::set('publications', 'defaultpubtype', $defaultpubtype);
         xarModVars::set('publications', 'sortpubtypes', $sortpubtypes);
@@ -57,6 +58,7 @@ function publications_admin_updateconfig()
         xarModVars::set('publications', 'use_process_states',$use_process_states);
         xarModVars::set('publications', 'use_versions',$use_versions);
         xarModVars::set('publications', 'hide_tree_display',$hide_tree_display);
+        xarModVars::set('publications', 'admin_override',$admin_override);
         
         // Allow multilanguage only if the languages property is present
         sys::import('modules.dynamicdata.class.properties.registration');
@@ -144,10 +146,13 @@ function publications_admin_updateconfig()
             if ($isvalid) $settings[$box] = $checkbox->value;
         }
 
-//        foreach ($configsettings as $key => $value)
-//            if (!isset($settings[$key])) $settings[$key] = 0;
-
         $isvalid = true;
+
+        foreach ($_POST as $name => $field) {
+            if (strpos($name, 'custom_') === 0) {
+                $settings[$name] = $field;
+            }
+        }
         
         $pubtypeobject->properties['configuration']->setValue(serialize($settings));
         $pubtypeobject->updateItem(array('itemid' => $ptid));

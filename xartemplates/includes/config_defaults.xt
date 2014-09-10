@@ -110,4 +110,22 @@
             </div>
         </div>
     </xar:if>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label class="help xar-form-label" for="admin_override" title="#xarML('Sort order for Publication Types in menus, publication map etc.')#">
+               Allow edit/delete by
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:set name="options">
+                array(
+                    array('id' => 0, 'name' => xarML('Only owner')),
+                    array('id' => 1, 'name' => xarML('Owner or administrators')),
+                    array('id' => 2, 'name' => xarML('Owner or designated site administrator')),
+                )
+            </xar:set>
+            <xar:set name="value">xarModVars::get('publications', 'admin_override')</xar:set>
+            <xar:data-input name="admin_override" type="dropdown" options="$options" value="$value"/>
+        </div>
+    </div>
 </xar:template>

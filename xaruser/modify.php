@@ -60,6 +60,21 @@ function publications_user_modify($args)
     $accessconstraints = xarMod::apiFunc('publications', 'admin', 'getpageaccessconstraints', array('property' => $data['object']->properties['access']));
     $access = DataPropertyMaster::getProperty(array('name' => 'access'));
     $allow = $access->check($accessconstraints['modify']);
+    
+    // If not allowed, check if admins or the designated site admin can modify even if not the owner
+    if (!$allowed) {
+        $admin_override = xarModVars::get('publications', 'admin_override');
+        switch ($admin_override) {
+            case 0:
+            break;
+            case 1:
+                $allowed = xarIsParent('Administrators',xarUser::getVar('uname'));
+            break;
+            case 1:
+                $allowed = xarModVars::get('roles', 'admin') == xarUser::getVar('id');
+            break;
+        }
+    }
 
     // If no access, then bail showing a forbidden or the "no permission" page or an empty page
     $nopermissionpage_id = xarModVars::get('publications', 'noprivspage');

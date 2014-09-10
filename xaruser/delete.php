@@ -64,6 +64,21 @@ function publications_user_delete()
             $accessconstraints = xarMod::apiFunc('publications', 'admin', 'getpageaccessconstraints', array('property' => $publication->properties['access']));
             $allow = $access->check($accessconstraints['delete']);
 
+            // If not allowed, check if admins or the designated site admin can modify even if not the owner
+            if (!$allow) {
+                $admin_override = xarModVars::get('publications', 'admin_override');
+                switch ($admin_override) {
+                    case 0:
+                    break;
+                    case 1:
+                        $allow = xarIsParent('Administrators',xarUser::getVar('uname'));
+                    break;
+                    case 1:
+                        $allow = xarModVars::get('roles', 'admin') == xarUser::getVar('id');
+                    break;
+                }
+            }
+
             if (count($ids) == 1) {
                 // If no access, then bail showing a forbidden or the "no permission" page or an empty page
                 if (!$allow) {
@@ -93,6 +108,21 @@ function publications_user_delete()
 #
             $accessconstraints = xarMod::apiFunc('publications', 'admin', 'getpageaccessconstraints', array('property' => $publication->properties['access']));
             $allow = $access->check($accessconstraints['delete']);
+
+            // If not allowed, check if admins or the designated site admin can modify even if not the owner
+            if (!$allow) {
+                $admin_override = xarModVars::get('publications', 'admin_override');
+                switch ($admin_override) {
+                    case 0:
+                    break;
+                    case 1:
+                        $allow = xarIsParent('Administrators',xarUser::getVar('uname'));
+                    break;
+                    case 1:
+                        $allow = xarModVars::get('roles', 'admin') == xarUser::getVar('id');
+                    break;
+                }
+            }
 
             if (count($ids) == 1) {
                 // If no access, then bail showing a forbidden or the "no permission" page or an empty page

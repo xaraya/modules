@@ -189,7 +189,7 @@ function publications_init()
     xarModVars::set('publications', 'use_process_states',0);
     xarModVars::set('publications', 'use_versions',0);
     xarModVars::set('publications', 'hide_tree_display',0);
-    
+    xarModVars::set('publications', 'admin_override', 0);    
     // Save publications settings for each publication type
     /*
     foreach ($settings as $id => $values) {

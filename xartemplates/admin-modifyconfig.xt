@@ -11,7 +11,10 @@
         
         <xar:if condition="$tab eq 'global'">
            <form class="xar-formwidget" action="#xarModURL('publications', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
-                <xar:data-form object="$module_settings"/>
+                <fieldset>
+                    <legend>General Settings</legend>
+                    <xar:data-form object="$module_settings"/>
+                </fieldset>
                 <fieldset>
                     <legend>                    
                         Global Configuration
@@ -494,6 +497,24 @@
                             </xar:if>
                         </div>
                     </div>
+                </fieldset>
+                <fieldset class="xar-norm">
+                    <legend>
+                        Custom Settings
+                    </legend>
+                        <!-- Get the name of the publication type. It is supposed to be "publications_something" -->
+                        <xar:if condition="strlen($pubtypename) le 13">
+                            <xar:set name="pubtypename">'generic'</xar:set>
+                        <xar:else/>
+                            <xar:set name="pubtypename">substr($pubtypename,13)</xar:set>
+                        </xar:if>
+
+                        <!-- Figure out which template to use -->
+                        <xar:set name="includepath">"objects/$pubtypename"</xar:set>
+                        <xar:set name="filename">'settings'</xar:set>
+
+                        <!-- Display -->
+                        <xar:template type="module" module="publications" file="$filename" includepath="$includepath"/>
                 </fieldset>
                 <div class="xar-row">
                     <div class="xar-col">
