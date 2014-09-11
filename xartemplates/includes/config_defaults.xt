@@ -112,7 +112,7 @@
     </xar:if>
     <div class="xar-row">
         <div class="xar-col">
-            <label class="help xar-form-label" for="admin_override" title="#xarML('Sort order for Publication Types in menus, publication map etc.')#">
+            <label class="help xar-form-label" for="admin_override" title="#xarML('Defines who apart from the owner can manage members')#">
                Allow edit/delete by
             </label>
         </div>

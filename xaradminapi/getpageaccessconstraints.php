@@ -24,11 +24,11 @@ function publications_adminapi_getpageaccessconstraints($args)
         'delete'  => array('level' => 800, 'group' => 0, 'failure' => 1),
     );
 
-    if (empty($args['property']->value)) return $constraints;
+    $unpacked_constraints = $args['property']->getValue();
+    if (empty($unpacked_constraints)) return $constraints;
     try {
-        $temp = unserialize($args['property']->value);
         // Check the array structure
-        if (isset($temp['display'])) $constraints = $temp;
+        if (isset($unpacked_constraints['display'])) $constraints = $unpacked_constraints;
     } catch (Exception $e) {}
 
     return $constraints;
