@@ -79,13 +79,8 @@ class Entity extends DataObject
 
         /* 
          * This is analogous to the createItem method in dynamicdata/class/objects
+         * Also cater to properties with their own createItem method
          */
-        foreach ($this->getFieldList() as $fieldname) {
-            if (!empty($this->properties[$fieldname]->source) &&
-                method_exists($this->properties[$fieldname],'createvalue')) {
-                $this->properties[$fieldname]->createValue($this->itemid);
-            }
-        }
 
         xarMod::apiLoad('eav');
         $tables = xarDB::getTables();
@@ -101,8 +96,7 @@ class Entity extends DataObject
         }
         
         foreach ($this->getFieldList() as $fieldname) {
-            if (empty($this->properties[$fieldname]->source) &&
-                method_exists($this->properties[$fieldname],'createvalue')) {
+            if (method_exists($this->properties[$fieldname],'createvalue')) {
                 $this->properties[$fieldname]->createValue($this->itemid);
             }
         }
@@ -116,13 +110,8 @@ class Entity extends DataObject
 
         /* 
          * This is analogous to the updateItem method in dynamicdata/class/objects
+         * Also cater to properties with their own updateItem method
          */
-        foreach ($this->getFieldList() as $fieldname) {
-            if (!empty($this->properties[$fieldname]->source) &&
-                method_exists($this->properties[$fieldname],'updatevalue')) {
-                $this->properties[$fieldname]->updateValue($this->itemid);
-            }
-        }
 
         xarMod::apiLoad('eav');
         $tables = xarDB::getTables();
@@ -158,8 +147,7 @@ class Entity extends DataObject
         }
 
         foreach ($this->getFieldList() as $fieldname) {
-            if (empty($this->properties[$fieldname]->source) &&
-                method_exists($this->properties[$fieldname],'updatevalue')) {
+            if (method_exists($this->properties[$fieldname],'updatevalue')) {
                 $this->properties[$fieldname]->updateValue($this->itemid);
             }
         }
