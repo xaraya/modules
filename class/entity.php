@@ -76,6 +76,17 @@ class Entity extends DataObject
     public function createItem(Array $args = array())
     {
         if (!isset($args['itemid'])) throw new MissingParameterException('itemid');
+
+        /* 
+         * This is analogous to the createItem method in dynamicdata/class/objects
+         */
+        foreach ($this->getFieldList() as $fieldname) {
+            if (!empty($this->properties[$fieldname]->source) &&
+                method_exists($this->properties[$fieldname],'createvalue')) {
+                $this->properties[$fieldname]->createValue($this->itemid);
+            }
+        }
+
         xarMod::apiLoad('eav');
         $tables = xarDB::getTables();
         $q = new Query('INSERT', $tables['eav_data']);
@@ -88,12 +99,31 @@ class Entity extends DataObject
             if (!$q->run()) return false;
             $q->clearfields();
         }
+        
+        foreach ($this->getFieldList() as $fieldname) {
+            if (empty($this->properties[$fieldname]->source) &&
+                method_exists($this->properties[$fieldname],'createvalue')) {
+                $this->properties[$fieldname]->createValue($this->itemid);
+            }
+        }
+
         return true;
     }
     
     public function updateItem(Array $args = array())
     {
         if (!isset($args['itemid'])) throw new MissingParameterException('itemid');
+
+        /* 
+         * This is analogous to the updateItem method in dynamicdata/class/objects
+         */
+        foreach ($this->getFieldList() as $fieldname) {
+            if (!empty($this->properties[$fieldname]->source) &&
+                method_exists($this->properties[$fieldname],'updatevalue')) {
+                $this->properties[$fieldname]->updateValue($this->itemid);
+            }
+        }
+
         xarMod::apiLoad('eav');
         $tables = xarDB::getTables();
         foreach ($this->properties as $property) {
@@ -125,6 +155,14 @@ class Entity extends DataObject
             $q->clearfields();
             $q->clearconditions();
         }
+
+        foreach ($this->getFieldList() as $fieldname) {
+            if (empty($this->properties[$fieldname]->source) &&
+                method_exists($this->properties[$fieldname],'updatevalue')) {
+                $this->properties[$fieldname]->updateValue($this->itemid);
+            }
+        }
+
         return true;
     }
     
