@@ -143,7 +143,7 @@ class Entity extends DataObject
                 $q->eq('attribute_id', (int)$property->id);
                 if (!$q->run()) return false;
                 $result = $q->row();
-                if (empty($result) {
+                if (empty($result)) {
                     $q = new Query('INSERT', $tables['eav_data']);
                     $q->addfield('object_id',    (int)$this->parent_id);
                     $q->addfield('item_id',      (int)$args['itemid']);
