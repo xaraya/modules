@@ -97,7 +97,7 @@ class Entity extends DataObject
         
         foreach ($this->getFieldList() as $fieldname) {
             if (method_exists($this->properties[$fieldname],'createvalue')) {
-                $this->properties[$fieldname]->createValue($this->itemid);
+                $this->properties[$fieldname]->createValue($args['itemid']);
             }
         }
 
@@ -148,7 +148,7 @@ class Entity extends DataObject
 
         foreach ($this->getFieldList() as $fieldname) {
             if (method_exists($this->properties[$fieldname],'updatevalue')) {
-                $this->properties[$fieldname]->updateValue($this->itemid);
+                $this->properties[$fieldname]->updateValue($args['itemid']);
             }
         }
 
