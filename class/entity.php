@@ -30,6 +30,8 @@ class Entity extends DataObject
     public function getItem(Array $args = array())
     {
         if (!isset($args['itemid'])) throw new EmptyParameterException('itemid');
+        
+        // Load the value for each property from the database
         xarMod::apiLoad('eav');
         $tables = xarDB::getTables();
         $q = new Query('SELECT', $tables['eav_data']);
@@ -45,6 +47,9 @@ class Entity extends DataObject
                 }
             }
         }
+        
+        // This will pass the itemid value to any other properties (e.g. virtual source properties)
+        $this->itemid = $args['itemid'];
         return true;
     }
     
