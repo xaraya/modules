@@ -336,6 +336,10 @@ function publications_user_display($args)
     
     // The name of this object
     $data['objectname'] = $data['object']->name;
+
+    // Pass the access rules of the publication type to the template
+    $data['pubtype_access'] = $pubtypeobject->properties['access']->getValue();
+    xarCoreCache::setCached('Publications', 'pubtype_access', $data['pubtype_access']);
     
 # --------------------------------------------------------
 #

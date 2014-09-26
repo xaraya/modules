@@ -2,6 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:set name="pageName">xarTpl::getPageTemplateName()</xar:set>
     <xar:set name="info">xarController::$request->getInfo()</xar:set>
+    <xar:set name="pubtype_access">xarCoreCache::getCached('Publications', 'pubtype_access')</xar:set>
     <xar:if condition="($pageName eq 'admin') AND ($info[2] ne 'display_version') AND ($info[2] ne 'manage_versions') AND empty($preview)">
         <xar:template file="editicons-admin"/>
     <xar:elseif condition="($pageName ne 'module') AND xarUserIsLoggedIn() AND (xarUserGetVar('id') eq $properties['author']->value)"/>
