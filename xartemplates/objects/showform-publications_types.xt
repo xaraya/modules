@@ -126,7 +126,6 @@
     </fieldset>
     <fieldset>
         <xar:set name="access">$properties['access']->getValue()</xar:set>
-        <xar:set name="xxx">var_dump($access)</xar:set>
         <legend>
             Access
         </legend>
