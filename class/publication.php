@@ -33,6 +33,7 @@ class Publication extends DataObject
     
     public function checkInput(Array $args = array(), $suppress=0, $priority='dd')
     {
+        // The access property is ignored here
         $isvalid = parent::checkInput($args,$suppress,$priority);
 
         // If the rest of the publication is valid, then do the access part
@@ -65,7 +66,7 @@ class Publication extends DataObject
                 'delete'  => $deleteaccess,
             );
             $this->properties['access']->setValue($allaccess);
-       }
+        }
         return $isvalid;
     }
 
