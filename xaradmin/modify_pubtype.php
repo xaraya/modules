@@ -65,30 +65,6 @@ function publications_admin_modify_pubtype($args)
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
         
-        // Get the default access rules
-        $access = DataPropertyMaster::getProperty(array('name' => 'access'));
-        $access->initialization_group_multiselect = true;
-        $access->validation_override = true;
-        $validprop = $access->checkInput("access_add");
-        $addaccess = $access->value;
-        $isvalid = $isvalid && $validprop;
-        $validprop = $access->checkInput("access_display");
-        $displayaccess = $access->value;
-        $isvalid = $isvalid && $validprop;
-        $validprop = $access->checkInput("access_modify");
-        $modifyaccess = $access->value;
-        $isvalid = $isvalid && $validprop;
-        $validprop = $access->checkInput("access_delete");
-        $deleteaccess = $access->value;
-        $isvalid = $isvalid && $validprop;
-        $allaccess = array(
-            'add' => $addaccess,
-            'display' => $displayaccess,
-            'modify' => $modifyaccess,
-            'delete' => $deleteaccess,
-        );
-        $data['object']->properties['access']->value = serialize($allaccess);
-
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
             return xarTplModule('publications','admin','modify_pubtype', $data);        

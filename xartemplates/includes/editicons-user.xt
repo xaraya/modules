@@ -3,19 +3,17 @@
     <xar:set name="itemtype">$properties['itemtype']->value</xar:set>
     <xar:set name="allowed">$properties['access']->getValue()</xar:set>
     <xar:var name="label">Create a new publication</xar:var>
-    <xar:if condition="isset($pubtype_access)">
-        <xar:access group="$pubtype_access['add']['group']">
-            <xar:if condition="!empty($itemtype)">
-                <a href="#xarModURL('publications', 'user', 'new', array('ptid' => $itemtype))#" style="float:right; margin-right: 10px" title="#$label#">
-                    <img src="#xarTplGetImage('icons/document-new.png','base')#"/>
-                </a>
-            <xar:else />
-                <a href="#xarModURL('publications', 'user', 'new')#" style="float:right; margin-right: 10px" title="#$label#">
-                    <img src="#xarTplGetImage('icons/document-new.png','base')#"/>
-                </a>
-            </xar:if>
-        </xar:access>
-    </xar:if>
+    <xar:access group="$pubtype_access['add']['group']">
+        <xar:if condition="!empty($itemtype)">
+            <a href="#xarModURL('publications', 'user', 'new', array('ptid' => $itemtype))#" style="float:right; margin-right: 10px" title="#$label#">
+                <img src="#xarTplGetImage('icons/document-new.png','base')#"/>
+            </a>
+        <xar:else />
+            <a href="#xarModURL('publications', 'user', 'new')#" style="float:right; margin-right: 10px" title="#$label#">
+                <img src="#xarTplGetImage('icons/document-new.png','base')#"/>
+            </a>
+        </xar:if>
+    </xar:access>
     <xar:access group="$allowed['modify']['group']">
         &#160;
         <xar:var name="label">Modify this publication</xar:var>
