@@ -159,7 +159,7 @@
     <property name="access">
       <id>6511</id>
       <label>Access</label>
-      <type>textarea</type>
+      <type>access</type>
       <defaultvalue></defaultvalue>
       <source>pubtypes.access</source>
       <status>34</status>
