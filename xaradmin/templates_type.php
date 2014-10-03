@@ -53,7 +53,8 @@ function publications_admin_templates_type($args)
     }
     
     $data['source_data'] = trim(xarMod::apiFunc('publications', 'admin', 'read_file', array('file' => $filepath)));
-
+    $data['filepath'] = $filepath;
+    
     // Initialize the template
     if (empty($data['source_data'])) {
         $source_dist = $basepath . "/" . $data['file'] . "_dist.xt";

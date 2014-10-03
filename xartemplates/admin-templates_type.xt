@@ -40,7 +40,24 @@
                 </form>
             </div>
         </div>
-        <div style="clear:both">&#160;</div>
+        <div class="xar-row" style="margin-bottom: 10px">
+            <div class="xar-col">
+                <label title="#xarML('The location of the template in the file system')#" class="xar-form-label">
+                    Template path:
+                </label>
+            </div>
+            <div class="xar-col">
+                #$filepath#&#160;
+                 <a href="#xarModURL('publications','user','download',array('filepath' => urlencode($filepath)))#"
+                 title="Download this file">
+                    <xar:if condition = "xarModVars::get('grader','use_module_icons')">
+                        <img src="#xarTpl::getImage('icons/'.'document-save.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
+                    <xar:else />
+                        <b style="margin-right: 5px">Download</b>
+                    </xar:if>
+                 </a>
+            </div>
+        </div>
         <form method="post" id="post" action="#xarServer::getCurrentURL()#" enctype="application/x-www-form-urlencoded" >
             <xar:data-input type="codemirror" name="source_data" value="$source_data"/>
             <div class="xar-row" style="margin-top: 10px">
