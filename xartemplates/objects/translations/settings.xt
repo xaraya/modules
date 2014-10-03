@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="languages" class="help xar-form-label" title="#xarML('The languages shown in the translation display')#">                    
+                Languages Displayed
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:if condition="!isset($settings['custom_displayed_locales'])">
+                <xar:set name="value">''</xar:set>
+            <xar:else/>
+                <xar:set name="value">$settings['custom_displayed_locales']</xar:set>
+            </xar:if>
+            <xar:data-input name="custom_displayed_locales" type="textbox" value="$value"/>
+        </div>
+    </div>
+</xar:template>
