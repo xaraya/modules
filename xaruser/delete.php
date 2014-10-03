@@ -53,8 +53,8 @@ function publications_user_delete()
         }
         $data['authid'] = xarSecGenAuthKey();
         $items = array();
-        foreach ($ids as $i) {
-            $publication->getItem(array('itemid' => $i));
+        foreach ($ids as $id) {
+            $publication->getItem(array('itemid' => $id));
             $item = $publication->getFieldValues();
 
 # --------------------------------------------------------
@@ -100,7 +100,7 @@ function publications_user_delete()
         if (!xarSecConfirmAuthKey()) return;
         
         foreach ($ids as $id) {
-            $publication->getItem(array('itemid' => $i));
+            $publication->getItem(array('itemid' => $id));
 
 # --------------------------------------------------------
 #
