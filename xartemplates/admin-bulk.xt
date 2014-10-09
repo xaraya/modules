@@ -21,7 +21,8 @@
             <input type="hidden" name="dnName" value="modules"/>
             <input type="hidden" name="extid" value="1"/>
             <input type="hidden" name="dnTypeAll" value="true"/>
-            <input type="submit" value="#xarML('Generate all module skeletons')#"/>
+            <xar:var name="label">Generate all module skeletons</xar:var>
+            <xar:button type="submit" label="$label"/>
         </form>
     </div>
 </xar:template>

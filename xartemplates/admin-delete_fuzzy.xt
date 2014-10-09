@@ -23,7 +23,8 @@
         <input type="hidden" name="dnType" value="#$dnType#"/>
         <input type="hidden" name="dnName" value="#$dnName#"/>
         <input type="hidden" name="extid" value="#$extid#"/>
-        <input type="submit" value="#xarML('GO')#"/>
+            <xar:var name="label">Go</xar:var>
+            <xar:button type="submit" label="$label"/>
         </form>
         <br />
         <xar:template type="module" file="opbar"/>

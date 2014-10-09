@@ -15,7 +15,7 @@ function translations_admin_modifyconfig()
 {
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'locales', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'display', XARVAR_NOT_REQUIRED)) return;
 
    $localehome = sys::varpath().'/locales';
     if (!file_exists($localehome)) {

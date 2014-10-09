@@ -32,8 +32,8 @@
               </xar:for>
             </select>
             &#160;
-           <xar:var name="select_locale">Select this locale</xar:var>
-            <xar:button type="submit" label="$select_locale"/>
+            <xar:var name="label">Select this locale</xar:var>
+            <xar:button type="submit" label="$label"/>
           </p>
           </fieldset>
         </form>

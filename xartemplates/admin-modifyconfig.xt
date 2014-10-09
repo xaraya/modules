@@ -4,43 +4,15 @@
     <xar:base-include-javascript module="base" filename="formcheck.js"/>
     <xar:style file="navtabs" module="base" scope="module"/>
     <xar:template file="admin-mod-head"/>
-    <div class="xar-mod-body">
+    <div class="xar-mod-page-head">
         <h2>Modify Translations Configuration</h2>
+    </div>
+    <div class="xar-mod-body">
         <xar:template file="admin-settings" type="module"/>
+        <xar:set name="xmldata">'modifyconfig'</xar:set>
+        <xar:template type="module" module="base" file="admin-menu-skel"/>
 
-        <dl class="xar-tabs">
-            <dt class="help" title="#xarML('Choose a set of configuration options')#">
-                Actions : 
-            </dt>
-            <xar:if condition="$tab eq 'display'">
-                <dd class="active">
-                    <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'display'))#" class="active">
-                        Translations Display
-                    </a>
-                </dd>
-            <xar:else />
-                <dd>
-                    <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'display'))#">    
-                        Translations Display
-                    </a>
-                </dd>    
-            </xar:if>
-            <xar:if condition="$tab eq 'release'">
-                <dd class="active">
-                    <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'release'))#" class="active">
-                        Translations Release
-                    </a>
-                </dd>
-            <xar:else />
-                <dd>
-                    <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'release'))#">    
-                        Translations Release
-                    </a>
-                </dd>    
-            </xar:if>
-        </dl>
-
-        <xar:comment> Begin Display Options </xar:comment>
+        <!-- Begin Display Options -->
         <xar:if condition="$tab eq 'display'">
             <form action="#xarModURL('translations','admin','updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded">
                 <fieldset>
@@ -78,11 +50,11 @@
                 <div class="xar-form-input-wrapper-after">
                     <input type="hidden" name="authid" id="authid" value="#$authid#"/>
                     <input type="hidden" name="tab" id="tab" value="#$tab#"/>
-                    <input type="submit" value="#$updatelabel#"/>
+                    <xar:template file="update-button" module="base" />
                 </div>
             </form>
 
-        <xar:comment> Begin Release Options </xar:comment>
+        <!-- Begin Release Options -->
         <xar:elseif condition="$tab eq 'release'"/>
             <form action="#xarModURL('translations','admin','updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded">
                 <fieldset>

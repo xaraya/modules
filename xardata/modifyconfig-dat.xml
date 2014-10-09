@@ -2,13 +2,18 @@
     <menutitle>
         <label>Configure</label>
         <title>Choose a set of configuration options to modify</title>
-        <variable></variable>
+        <variable>tab</variable>
     </menutitle>
     <menuitems>
         <menuitem>
-            <value>general</value>
+            <value>display</value>
             <target>modifyconfig</target>
-            <label>General</label>
+            <label>Translations Display</label>
+        </menuitem>
+        <menuitem>
+            <value>release</value>
+            <target>modifyconfig</target>
+            <label>Translations Release</label>
         </menuitem>
     </menuitems>
 </menu>
