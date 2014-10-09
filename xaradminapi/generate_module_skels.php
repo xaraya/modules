@@ -60,6 +60,7 @@ function translations_adminapi_generate_module_skels($args)
 
     $subnames = xarMod::apiFunc('translations','admin','get_module_phpfiles',array('moddir'=>$moddir));
 
+    $module_contexts_list = array();
     foreach ($subnames as $subname) {
         $module_contexts_list[] = 'modules:'.$modname.'::'.$subname;
         $filename = sys::code() . "modules/$moddir/xar$subname.php";

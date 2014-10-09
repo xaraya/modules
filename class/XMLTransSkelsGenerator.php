@@ -26,14 +26,14 @@ class XMLTranslationsSkelsGenerator
     function bindDomain($dnType, $dnName='xaraya')
     {
         $varDir = sys::varpath();
-        $locales_dir = "$varDir/locales";
-        $locale_dir = "$locales_dir/{$this->locale}";
-        $xml_dir = "$locale_dir/xml";
-        $modules_dir = "$xml_dir/modules";
+        $locales_dir    = "$varDir/locales";
+        $locale_dir     = "$locales_dir/{$this->locale}";
+        $xml_dir        = "$locale_dir/xml";
+        $core_dir       = "$xml_dir/core";
+        $modules_dir    = "$xml_dir/modules";
+        $themes_dir     = "$xml_dir/themes";
         $properties_dir = "$xml_dir/properties";
-        $blocks_dir = "$xml_dir/blocks";
-        $themes_dir = "$xml_dir/themes";
-        $core_dir = "$xml_dir/core";
+        $blocks_dir     = "$xml_dir/blocks";
 
         $canWrite = 1;
         if (file_exists($locales_dir)) {

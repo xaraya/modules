@@ -30,13 +30,15 @@ class PHPTranslationsGenerator
 
     function bindDomain($dnType, $dnName='xaraya')
     {
-        $varDir = sys::varpath();
-        $locales_dir = "$varDir/locales";
-        $locale_dir = "$locales_dir/{$this->locale}";
-        $php_dir = "$locale_dir/php";
-        $modules_dir = "$php_dir/modules";
-        $themes_dir = "$php_dir/themes";
-        $core_dir = "$php_dir/core";
+        $varDir         = sys::varpath();
+        $locales_dir    = "$varDir/locales";
+        $locale_dir     = "$locales_dir/{$this->locale}";
+        $php_dir        = "$locale_dir/php";
+        $core_dir       = "$php_dir/core";
+        $modules_dir    = "$php_dir/modules";
+        $themes_dir     = "$php_dir/themes";
+        $properties_dir = "$php_dir/properties";
+        $blocks_dir     = "$php_dir/blocks";
 
         $canWrite = 1;
         if (file_exists($locales_dir)) {
