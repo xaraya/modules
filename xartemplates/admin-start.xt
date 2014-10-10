@@ -16,7 +16,7 @@
               items while you are working on a translation.</p>
           <p class="xar-form-input-wrapper-before">
             If you don't see the locale you want to translate in the dropdown below, you will need to create it (in your var/locale directory) and activate it on <em>Languages and Locales</em> in the <em>Modify Config</em> section of the 
-            <a href="#xarModURL('translations','admin','modifyconfig',array('tab'=>'locales'))#">
+            <a href="#xarModURL('base','admin','modifyconfig',array('tab'=>'locales'))#">
                 Base module.
             </a>  
           </p>
