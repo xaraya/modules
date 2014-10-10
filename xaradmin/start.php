@@ -30,15 +30,14 @@ function translations_admin_start()
             if ($l['charset'] != 'utf-8') continue;
             $list[] = $locale;
         }
-        $tplData['locales'] = $list;
+        $data['locales'] = $list;
     } else {
-        $tplData['locales'] = $GLOBALS['xarMLS_allowedLocales'];
+        $data['locales'] = $GLOBALS['xarMLS_allowedLocales'];
     }
 
-    $tplData['working_locale'] = translations_working_locale();
-    $tplData['dnType'] = XARMLS_DNTYPE_CORE;
-
-    return $tplData;
+    $data['working_locale'] = translations_working_locale();
+    $data['dnType'] = XARMLS_DNTYPE_CORE;
+    return $data;
 }
 
 ?>
