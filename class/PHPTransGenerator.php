@@ -44,7 +44,10 @@ class PHPTranslationsGenerator
         if (file_exists($locales_dir)) {
             if (file_exists($locale_dir)) {
                 if (file_exists($php_dir)) {
-                    if (file_exists($modules_dir) && file_exists($properties_dir) && file_exists($blocks_dir) && file_exists($themes_dir) &&
+                    if (file_exists($modules_dir) && 
+                        file_exists($properties_dir) && 
+                        file_exists($blocks_dir) && 
+                        file_exists($themes_dir) &&
                         file_exists($core_dir)) {
                         if (!is_writeable($modules_dir)) $canWrite = 0;
                         if (!is_writeable($properties_dir)) $canWrite = 0;

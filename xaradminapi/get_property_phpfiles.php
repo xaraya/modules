@@ -12,7 +12,7 @@
  */
 
 //  This function returns an array containing all the php files
-//  in a given directory that start with "xar"
+//  in a given property directory
 
 function translations_adminapi_get_property_phpfiles($args)
 {

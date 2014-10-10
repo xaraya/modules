@@ -14,6 +14,7 @@
 
 //  This function returns an array containing all the php files
 //  in a given directory that start with "xar"
+
 function translations_adminapi_get_module_phpfiles($args)
 {
     // Get arguments
