@@ -43,8 +43,6 @@ function translations_admin_modifyconfig()
     $data['maxreferences'] = xarModVars::get('translations', 'maxreferences');
     $data['maxcodelines'] = xarModVars::get('translations', 'maxcodelines');
 
-    $data['authid'] = xarSecGenAuthKey();
-    $data['updatelabel'] = xarML('Update Translations Configuration');
     return $data;
 
 }

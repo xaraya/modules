@@ -4,10 +4,10 @@
     
     <xar:if condition="isset($dnType)">
     <xar:if condition="$dnType == XARMLS_DNTYPE_CORE"><xar:set name="menu_dntypetext">'core'</xar:set></xar:if>
+    <xar:if condition="$dnType == XARMLS_DNTYPE_MODULE"><xar:set name="menu_dntypetext">'module'</xar:set></xar:if>
+    <xar:if condition="$dnType == XARMLS_DNTYPE_THEME"><xar:set name="menu_dntypetext">'theme'</xar:set></xar:if>
     <xar:if condition="$dnType == XARMLS_DNTYPE_PROPERTY"><xar:set name="menu_dntypetext">'property'</xar:set></xar:if>
     <xar:if condition="$dnType == XARMLS_DNTYPE_BLOCK"><xar:set name="menu_dntypetext">'block'</xar:set></xar:if>
-    <xar:if condition="$dnType == XARMLS_DNTYPE_THEME"><xar:set name="menu_dntypetext">'theme'</xar:set></xar:if>
-    <xar:if condition="$dnType == XARMLS_DNTYPE_MODULE"><xar:set name="menu_dntypetext">'module'</xar:set></xar:if>
     <xar:else />
         <xar:set name="menu_dntypetext">''</xar:set>
     </xar:if>
