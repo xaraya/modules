@@ -23,8 +23,8 @@ function translations_admin_generate_skels_info()
 
     $druidbar = translations_create_druidbar(GENSKELS, $dnType, $dnName, $extid);
     $opbar = translations_create_opbar(GEN_SKELS, $dnType, $dnName, $extid);
-    $tplData = array_merge($druidbar, $opbar);
-    $tplData['dnType'] = $dnType;
+    $data = array_merge($druidbar, $opbar);
+    $data['dnType'] = $dnType;
 
     if ($dnType == XARMLS_DNTYPE_CORE) $dnTypeText = 'core';
     elseif ($dnType == XARMLS_DNTYPE_THEME) $dnTypeText = 'theme';
@@ -32,12 +32,12 @@ function translations_admin_generate_skels_info()
     elseif ($dnType == XARMLS_DNTYPE_PROPERTY) $dnTypeText = 'property';
     elseif ($dnType == XARMLS_DNTYPE_BLOCK) $dnTypeText = 'block';
     else $dnTypeText = '';
-    $tplData['dnTypeText'] = $dnTypeText;
+    $data['dnTypeText'] = $dnTypeText;
 
-    $tplData['dnName'] = $dnName;
-    $tplData['extid'] = $extid;
+    $data['dnName'] = $dnName;
+    $data['extid'] = $extid;
 
-    return $tplData;
+    return $data;
 }
 
 ?>

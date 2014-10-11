@@ -73,14 +73,14 @@ function translations_admin_generate_skels_result()
     }
     if (!isset($res)) return;
 
-    $tplData = $res;
-    if ($tplData == NULL) {
+    $data = $res;
+    if ($data == NULL) {
         xarController::redirect(xarModURL('translations', 'admin', 'generate_skels_info'));
     }
 
     $druidbar = translations_create_druidbar(GENSKELS, $dnType, $dnName, $extid);
     $opbar = translations_create_opbar(GEN_SKELS, $dnType, $dnName, $extid);
-    $tplData['dnType'] = $dnType;
+    $data['dnType'] = $dnType;
 
     if ($dnType == XARMLS_DNTYPE_CORE) $dnTypeText = 'core';
     elseif ($dnType == XARMLS_DNTYPE_THEME) $dnTypeText = 'theme';
@@ -88,13 +88,13 @@ function translations_admin_generate_skels_result()
     elseif ($dnType == XARMLS_DNTYPE_PROPERTY) $dnTypeText = 'property';
     elseif ($dnType == XARMLS_DNTYPE_BLOCK) $dnTypeText = 'block';
     else $dnTypeText = '';
-    $tplData['dnTypeText'] = $dnTypeText;
-    $tplData['dnTypeAll']= $dnTypeAll;
-    $tplData['dnName'] = $dnName;
-    $tplData['extid'] = $extid;
-    $tplData = array_merge($tplData, $druidbar, $opbar);
+    $data['dnTypeText'] = $dnTypeText;
+    $data['dnTypeAll']= $dnTypeAll;
+    $data['dnName'] = $dnName;
+    $data['extid'] = $extid;
+    $data = array_merge($data, $druidbar, $opbar);
 
-    return $tplData;
+    return $data;
 }
 
 ?>
