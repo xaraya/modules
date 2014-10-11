@@ -28,6 +28,7 @@ function translations_admin_update_release_locale()
         'dnType' => $dnType,
         'dnName' => $dnName,
         'extid'  => $extid)));
+    return true;
 }
 
 ?>
