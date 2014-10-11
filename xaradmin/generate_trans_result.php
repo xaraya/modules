@@ -34,31 +34,40 @@ function translations_admin_generate_trans_result()
         case XARMLS_DNTYPE_THEME:
         $args['themeid'] = $extid;
         $res = xarMod::apiFunc('translations','admin','generate_theme_trans',$args);
+        case XARMLS_DNTYPE_PROPERTY:
+        $args['propertyid'] = $extid;
+        $res = xarMod::apiFunc('translations','admin','generate_property_trans',$args);
+        case XARMLS_DNTYPE_BLOCK:
+        $args['blockid'] = $extid;
+        $res = xarMod::apiFunc('translations','admin','generate_block_trans',$args);
         break;
     }
 
     if (!isset($res)) return;
-    $tplData = $res;
-    if ($tplData == NULL) {
+    $data = $res;
+    if ($data == NULL) {
         xarController::redirect(xarModURL('translations', 'admin', 'generate_trans_info'));
+        return true;
     }
 
     $druidbar = translations_create_druidbar(GENTRANS, $dnType, $dnName, $extid);
     $opbar = translations_create_opbar(GEN_TRANS, $dnType, $dnName, $extid);
-    $tplData = array_merge($tplData, $druidbar, $opbar);
+    $data = array_merge($data, $druidbar, $opbar);
 
-    $tplData['dnType'] = $dnType;
+    $data['dnType'] = $dnType;
 
-    if ($dnType == XARMLS_DNTYPE_CORE) $dnTypeText = 'core';
-    elseif ($dnType == XARMLS_DNTYPE_THEME) $dnTypeText = 'theme';
-    elseif ($dnType == XARMLS_DNTYPE_MODULE) $dnTypeText = 'module';
+    if ($dnType == XARMLS_DNTYPE_CORE)         $dnTypeText = 'core';
+    elseif ($dnType == XARMLS_DNTYPE_THEME)    $dnTypeText = 'theme';
+    elseif ($dnType == XARMLS_DNTYPE_MODULE)   $dnTypeText = 'module';
+    elseif ($dnType == XARMLS_DNTYPE_PROPERTY) $dnTypeText = 'property';
+    elseif ($dnType == XARMLS_DNTYPE_BLOCK)    $dnTypeText = 'block';
     else $dnTypeText = '';
-    $tplData['dnTypeText'] = $dnTypeText;
+    $data['dnTypeText'] = $dnTypeText;
 
-    $tplData['dnName'] = $dnName;
-    $tplData['extid'] = $extid;
+    $data['dnName'] = $dnName;
+    $data['extid'] = $extid;
 
-    return $tplData;
+    return $data;
 }
 
 ?>
