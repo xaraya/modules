@@ -92,16 +92,17 @@ function translations_admin_translate_update()
         }
     }
 
+    // Finish writing the file, close it and rename it from extension swp to xt
     $gen->close();
 
-    // voll
-    // xarController::redirect(xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>$subtype, 'subname'=>$subname)));
+    // Jump to the next page
     xarController::redirect(xarModURL('translations', 'admin', 'translate_subtype',
        array(
            'dnType' => $dnType,
            'dnName' => $dnName,
            'extid' => $extid,
            'defaultcontext'=>$subtype.':'.$subname)));
+    return true;
 }
 
 ?>

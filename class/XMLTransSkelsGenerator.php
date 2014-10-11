@@ -18,7 +18,7 @@ class XMLTranslationsSkelsGenerator
     var $fileName;
     var $baseDir;
 
-    function XMLTranslationsSkelsGenerator($locale)
+    function __construct($locale)
     {
         $this->locale = $locale;
     }
