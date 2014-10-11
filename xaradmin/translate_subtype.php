@@ -63,26 +63,25 @@ function translations_admin_translate_subtype()
     $entries['fuzzyNumKeyEntries'] = $fuzzyEntries['numKeyEntries'];
     $entries['fuzzyNumEmptyKeyEntries'] = $fuzzyEntries['numEmptyKeyEntries'];
 
-    $tplData = $entries;
-    $action = xarModURL('translations', 'admin', 'translate_update', array('subtype'=>$subtype, 'subname'=>$subname, 'numEntries'=>$entries['numEntries'], 'numKeyEntries'=>$entries['numKeyEntries'], 'numEmptyEntries'=>$entries['numEmptyEntries'], 'numEmptyKeyEntries'=>$entries['numEmptyKeyEntries']));
-    $tplData['action'] = $action;
+    $data = $entries;
+    $data['action'] = xarModURL('translations', 'admin', 'translate_update', array('subtype'=>$subtype, 'subname'=>$subname, 'numEntries'=>$entries['numEntries'], 'numKeyEntries'=>$entries['numKeyEntries'], 'numEmptyEntries'=>$entries['numEmptyEntries'], 'numEmptyKeyEntries'=>$entries['numEmptyKeyEntries']));
 
     $opbar = translations_create_opbar(TRANSLATE, $dnType, $dnName, $extid);
     $trabar = translations_create_trabar($dnType, $dnName, $extid, $subtype,$subname);
     $druidbar = translations_create_druidbar(TRAN, $dnType, $dnName, $extid);
-    $tplData = array_merge($tplData, $opbar, $trabar, $druidbar);
-    $tplData['dnType'] = $dnType;
+    $data = array_merge($data, $opbar, $trabar, $druidbar);
+    $data['dnType'] = $dnType;
 
     if ($dnType == XARMLS_DNTYPE_CORE) $dnTypeText = 'core';
     elseif ($dnType == XARMLS_DNTYPE_THEME) $dnTypeText = 'theme';
     elseif ($dnType == XARMLS_DNTYPE_MODULE) $dnTypeText = 'module';
     else $dnTypeText = '';
-    $tplData['dnTypeText'] = $dnTypeText;
+    $data['dnTypeText'] = $dnTypeText;
 
-    $tplData['dnName'] = $dnName;
-    $tplData['extid'] = $extid;
+    $data['dnName'] = $dnName;
+    $data['extid'] = $extid;
 
-    return $tplData;
+    return $data;
 }
 
 ?>
