@@ -20,43 +20,43 @@
         <xar:template type="module" file="trabar"/>
         <form method="post" action="#$action#">
     
-        <input type="hidden" name="dnType" value="#$dnType#"/>
-        <input type="hidden" name="dnName" value="#$dnName#"/>
-        <input type="hidden" name="extid" value="#$extid#"/>
+            <input type="hidden" name="dnType" value="#$dnType#"/>
+            <input type="hidden" name="dnName" value="#$dnName#"/>
+            <input type="hidden" name="extid" value="#$extid#"/>
     
-        <h5>Strings:</h5>
-        <xar:loop id="entries" name="$entries">
-          <div>
-            <xar:template type="module" file="translate-string-item" subdata="$loop:item"/>
-          </div>
-        </xar:loop>
+            <h5>Strings:</h5>
+            <xar:loop id="entries" name="$entries">
+              <div>
+                <xar:template type="module" file="translate-string-item" subdata="$loop:item"/>
+              </div>
+            </xar:loop>
     
     
-        <h5>Keys:</h5>
-        <xar:loop id="keyEntries" name="$keyEntries">
-          <div>
-            <xar:template type="module" file="translate-key-item" subdata="$loop:item"/>
-          </div>
-        </xar:loop>
+            <h5>Keys:</h5>
+            <xar:loop id="keyEntries" name="$keyEntries">
+              <div>
+                <xar:template type="module" file="translate-key-item" subdata="$loop:item"/>
+              </div>
+            </xar:loop>
     
-        <p>
-        <xar:var name="label">Save Translations</xar:var>
-        <xar:button type="submit" name="sbt" id="sbt" value="$label"/>
-        </p>
+            <p>
+            <xar:var name="label">Save Translations</xar:var>
+            <xar:button type="submit" name="sbt" id="sbt" value="$label"/>
+            </p>
     
-        <h5>Fuzzy Strings:</h5>
-        <xar:loop id="fuzzyEntries" name="$fuzzyEntries">
-          <div>
-            <xar:template type="module" file="fuzzy-string-item" subdata="$loop:item"/>
-          </div>
-        </xar:loop>
+            <h5>Fuzzy Strings:</h5>
+            <xar:loop id="fuzzyEntries" name="$fuzzyEntries">
+              <div>
+                <xar:template type="module" file="fuzzy-string-item" subdata="$loop:item"/>
+              </div>
+            </xar:loop>
     
-        <h5>Fuzzy Keys:</h5>
-        <xar:loop id="fuzzyKeyEntries" name="$fuzzyKeyEntries">
-          <div>
-            <xar:template type="module" file="fuzzy-key-item" subdata="$loop:item"/>
-          </div>
-        </xar:loop>
+            <h5>Fuzzy Keys:</h5>
+            <xar:loop id="fuzzyKeyEntries" name="$fuzzyKeyEntries">
+              <div>
+                <xar:template type="module" file="fuzzy-key-item" subdata="$loop:item"/>
+              </div>
+            </xar:loop>
     
         </form>
         <br />
