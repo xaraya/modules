@@ -75,6 +75,8 @@ function translations_admin_translate_subtype()
     if ($dnType == XARMLS_DNTYPE_CORE) $dnTypeText = 'core';
     elseif ($dnType == XARMLS_DNTYPE_THEME) $dnTypeText = 'theme';
     elseif ($dnType == XARMLS_DNTYPE_MODULE) $dnTypeText = 'module';
+    elseif ($dnType == XARMLS_DNTYPE_PROPERTY) $dnTypeText = 'propety';
+    elseif ($dnType == XARMLS_DNTYPE_BLOCK) $dnTypeText = 'block';
     else $dnTypeText = '';
     $data['dnTypeText'] = $dnTypeText;
 

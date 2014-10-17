@@ -8,12 +8,23 @@
         <h2>Modify Translations Configuration</h2>
     </div>
     <div class="xar-mod-body">
-        <xar:template file="admin-settings" type="module"/>
         <xar:set name="xmldata">'modifyconfig'</xar:set>
         <xar:template type="module" module="base" file="admin-menu-skel"/>
 
         <!-- Begin Display Options -->
-        <xar:if condition="$tab eq 'display'">
+        <xar:if condition="$tab eq 'general'">
+            <form action="#xarServer::getCurrentURL()#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded">
+                <h3>
+                    General Options
+                </h3>
+                <fieldset>
+                    <legend>General Settings</legend>
+                    <xar:data-form object="$module_settings" />
+                </fieldset>
+                <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+                <xar:template file="update-button" module="base" />
+            </form>
+        <xar:elseif condition="$tab eq 'display'"/>
             <form action="#xarModURL('translations','admin','updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded">
                 <fieldset>
                     <legend>Display during translation</legend>
@@ -47,10 +58,8 @@
                     <input type="text" name="maxcodelines" value="#$maxcodelines#" size="3" maxlength="3"/>
                 </div>
                 </fieldset>
-                <div class="xar-form-input-wrapper-after">
-                    <input type="hidden" name="tab" id="tab" value="#$tab#"/>
-                    <xar:template file="update-button" module="base" />
-                </div>
+                <input type="hidden" name="tab" id="tab" value="#$tab#"/>
+                <xar:template file="update-button" module="base" />
             </form>
 
         <!-- Begin Release Options -->

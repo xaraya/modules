@@ -6,6 +6,11 @@
     </menutitle>
     <menuitems>
         <menuitem>
+            <value>general</value>
+            <target>modifyconfig</target>
+            <label>General</label>
+        </menuitem>
+        <menuitem>
             <value>display</value>
             <target>modifyconfig</target>
             <label>Translations Display</label>
