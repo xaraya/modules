@@ -26,7 +26,7 @@ function scheduler_admin_overview()
      * else just call the main function that displays the overview
      */
 
-    return xarTplModule('scheduler', 'admin', 'main', $data,'main');
+    return xarTpl::module('scheduler', 'admin', 'main', $data,'main');
 }
 
 ?>
