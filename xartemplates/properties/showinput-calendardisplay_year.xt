@@ -4,18 +4,17 @@
     <xar:style scope="module" module="calendar" file="user-year"/>
 
     <xar:calendar-decorator object="$Year" decorator="Xaraya" name="YearURI"/>
-    <xar:var name="prevYearTitle">Previous Year</xar:var>
     <xar:set name="prevYearURL">$YearURI->prev('year')</xar:set>
-
-    <xar:var name="nextYearTitle">Next Year</xar:var>
     <xar:set name="nextYearURL">$YearURI->next('year')</xar:set>
 
     <table id="cal-calendar">
         <tr>
             <th class="cal-navigation">
-                <a href="#$prevYearURL#" title="#$prevYearTitle#">&#60;</a>
+                <xar:var name="label">Previous Year</xar:var>
+                <xar:button type="link" target="$prevYearURL" label="$label"/>
                 #xarLocaleFormatDate('%Y',$Year->getTimeStamp())#
-                <a href="#$nextYearURL#" title="#$nextYearTitle#">&#62;</a>
+                <xar:var name="label">Next Year</xar:var>
+                <xar:button type="link" target="$nextYearURL" label="$label"/>
             </th>
         </tr>
     </table>

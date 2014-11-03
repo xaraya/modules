@@ -14,7 +14,7 @@
 
 $modversion['name']           = 'calendar';
 $modversion['id']             = '7';
-$modversion['version']        = '1.0.0';
+$modversion['version']        = '2.0.0';
 $modversion['displayname']    = xarML('Calendar');
 $modversion['description']    = 'Calendar System';
 $modversion['credits']        = 'credits.txt';
@@ -24,16 +24,21 @@ $modversion['license']        = 'license.txt';
 $modversion['official']       = 0;
 $modversion['author']         = 'Roger Raymond and Xaraya calendar team';
 $modversion['contact']        = 'http://xaraya.simiansynapse.com/';
-$modversion['admin']          = 1;
-$modversion['user']           = 1;
+$modversion['admin']          = true;
+$modversion['user']           = true;
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
-$modversion['dependency']     = array(
-//                                        8,
-                                     ); // we need the icalendar module installed
 $modversion['dependencyinfo'] = array(
-//                                    8 => 'icalendar',
-                                     );
+                                    0 => array(
+                                            'name' => 'Xaraya Core',
+                                            'version_ge' => '2.24.0'
+                                         ),
+                                    8 => array(
+                                            'name' => 'icalendar',
+                                            'displayname' => 'icalendar',
+                                            'minversion' => '1.0.0'
+                                         ),
+                                );
 $modversion['securityschema'] = array('calendar::event'     => 'Event Title::Event ID',
                                       'calendar::category'  => 'Category Name::Category ID',
                                       'calendar::topic'     => 'Topic Name::Topic ID',

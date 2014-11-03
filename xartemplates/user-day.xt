@@ -11,16 +11,11 @@
     -->
     <xar:calendar-decorator object="$Day" decorator="Xaraya" name="DayURI"/>
 
-    <xar:var name="prevYearTitle">Previous Year</xar:var>
     <xar:set name="prevYearURL">$DayURI->prev('year')</xar:set>
-
-    <xar:var name="prevDayTitle">Previous Day</xar:var>
+    <xar:set name="prevMonthURL">$DayURI->prev('month')</xar:set>
     <xar:set name="prevDayURL">$DayURI->prev('day')</xar:set>
-
-    <xar:var name="nextDayTitle">Next Day</xar:var>
     <xar:set name="nextDayURL">$DayURI->next('day')</xar:set>
-
-    <xar:var name="nextYearTitle">Next Year</xar:var>
+    <xar:set name="nextMonthURL">$DayURI->next('month')</xar:set>
     <xar:set name="nextYearURL">$DayURI->next('year')</xar:set>
 
     <!--
@@ -39,11 +34,19 @@
     <table id="cal-calendar" style="width: #$titlewidth#px">
         <tr>
             <th colspan="3" class="cal-navigation">
-                <a href="#$prevYearURL#" title="#$prevYearTitle#">&#60;&#60;</a>
-                <a href="#$prevDayURL#" title="#$prevDayTitle#">&#60;</a>
+                <xar:var name="label">Previous Year</xar:var>
+                <xar:button type="link" target="$prevYearURL" label="$label"/>
+                <xar:var name="label">Previous Month</xar:var>
+                <xar:button type="link" target="$prevMonthURL" label="$label"/>
+                <xar:var name="label">Previous Day</xar:var>
+                <xar:button type="link" target="$prevDayURL" label="$label"/>
                 #xarLocaleFormatDate('%B %d %Y',$Day->getTimeStamp())#
-                <a href="#$nextDayURL#" title="#$nextDayTitle#">&#62;</a>
-                <a href="#$nextYearURL#" title="#$nextYearTitle#">&#62;&#62;</a>
+                <xar:var name="label">Next Day</xar:var>
+                <xar:button type="link" target="$nextDayURL" label="$label"/>
+                <xar:var name="label">Next Month</xar:var>
+                <xar:button type="link" target="$nextMonthURL" label="$label"/>
+                <xar:var name="label">Next Year</xar:var>
+                <xar:button type="link" target="$nextYearURL" label="$label"/>
             </th>
         </tr>
     </table>

@@ -54,7 +54,18 @@
         </div>
         <div class="xar-col">
             <xar:set name="value">xarModVars::get('calendar', 'cal_sdow')</xar:set>
-            <xar:data-input type="dropdown" name="cal_sdow" id="cal_sdow" validation="$weekdays" value="$value"/>
+            <xar:set name="options">
+                array(
+                    array('id' => 0, 'name' => xarML('Sunday')),
+                    array('id' => 1, 'name' => xarML('Monday')),
+                    array('id' => 2, 'name' => xarML('Tuesday')),
+                    array('id' => 3, 'name' => xarML('Wednesday')),
+                    array('id' => 4, 'name' => xarML('Thursday')),
+                    array('id' => 5, 'name' => xarML('Friday')),
+                    array('id' => 6, 'name' => xarML('Saturday')),
+                )
+            </xar:set>
+            <xar:data-input type="dropdown" name="cal_sdow" id="cal_sdow" options="$options" value="$value"/>
         </div>
     </div>
 
@@ -70,6 +81,7 @@
                                     array('id' => 'week', 'name' => 'Week'),
                                     array('id' => 'month', 'name' => 'Month'),
                                     array('id' => 'year', 'name' => 'Year'),
+                                    array('id' => 'customview', 'name' => 'Customized'),
                                     )
             </xar:set>
             <xar:set name="value">xarModVars::get('calendar', 'default_view')</xar:set>

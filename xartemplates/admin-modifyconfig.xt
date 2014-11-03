@@ -52,85 +52,6 @@
     -->
         <input type="hidden" name="authid" id="authid" value="#$authid#"/>
 
-        <tr>
-            <td colspan="2" style="text-align: center; font-weight: 600; font-size: 120%"> OPTIONS THAT SHOULD WORK </td>
-        </tr>
-        <tr>
-            <td><label for="default_view">Default view</label></td>
-            <td><select name="default_view" id="default_view">
-                    <xar:if condition="$default_view eq 'day'">
-                        <option value="day" selected="selected">Day</option>
-                    <xar:else />
-                        <option value="day">Day</option>
-                    </xar:if>
-                    <xar:if condition="$default_view eq 'week'">
-                        <option value="week" selected="selected">Week</option>
-                    <xar:else />
-                        <option value="week">Week</option>
-                    </xar:if>
-                    <xar:if condition="$default_view eq 'month'">
-                        <option value="month" selected="selected">Month</option>
-                    <xar:else />
-                        <option value="month">Month</option>
-                    </xar:if>
-                    <xar:if condition="$default_view eq 'year'">
-                        <option value="year" selected="selected">Year</option>
-                    <xar:else />
-                        <option value="year">Year</option>
-                    </xar:if>
-
-                    <!-- adapt to your own preferred custom view-->
-                    <xar:if condition="$default_view eq 'customview'">
-                        <option disabled="disabled" value="customview" selected="selected">Customized</option>
-                    <xar:else />
-                        <option disabled="disabled" value="customview">Customized</option>
-                    </xar:if>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td><label for="cal_sdow">Day of the week your week starts on</label></td>
-            <td><select name="cal_sdow" id="cal_sdow">
-                    <xar:if condition="$cal_sdow eq 0">
-                        <option value="0" selected="selected">Sunday</option>
-                    <xar:else />
-                        <option value="0">Sunday</option>
-                    </xar:if>
-                    <xar:if condition="$cal_sdow eq 1">
-                        <option value="1" selected="selected">Monday</option>
-                    <xar:else />
-                        <option value="1">Monday</option>
-                    </xar:if>
-                    <xar:if condition="$cal_sdow eq 2">
-                        <option value="2" selected="selected">Tuesday</option>
-                    <xar:else />
-                        <option value="2">Tuesday</option>
-                    </xar:if>
-                    <xar:if condition="$cal_sdow eq 3">
-                        <option value="2" selected="selected">Wednesday</option>
-                    <xar:else />
-                        <option value="2">Wednesday</option>
-                    </xar:if>
-                    <xar:if condition="$cal_sdow eq 4">
-                        <option value="4" selected="selected">Thursday</option>
-                    <xar:else />
-                        <option value="4">Thursday</option>
-                    </xar:if>
-                    <xar:if condition="$cal_sdow eq 5">
-                        <option value="5" selected="selected">Friday</option>
-                    <xar:else />
-                        <option value="5">Friday</option>
-                    </xar:if>
-                    <xar:if condition="$cal_sdow eq 6">
-                        <option value="6" selected="selected">Saturday</option>
-                    <xar:else />
-                        <option value="6">Saturday</option>
-                    </xar:if>
-
-                </select>
-            </td>
-        </tr>
-
 
         <tr>
             <td colspan="2" style="text-align: center; font-weight: 600; font-size: 120%"> OPTIONS THAT MAY NOT WORK (BUT CAN BE SET) </td>
@@ -159,35 +80,30 @@
         </tr>
 
         <tr>
-            <td><label for="minical_view">Minical view (where do the mini-calendars go when clicked)?</label></td>
-            <td><select name="minical_view" id="minical_view">
-                    <xar:if condition="$minical_view eq 'day'">
-                        <option value="day" selected="selected">Day</option>
-                    <xar:else />
-                        <option value="day">Day</option>
-                    </xar:if>
-                    <xar:if condition="$minical_view eq 'week'">
-                        <option value="week" selected="selected">Week</option>
-                    <xar:else />
-                        <option value="week">week</option>
-                    </xar:if>
-                    <xar:if condition="$minical_view eq 'month'">
-                        <option value="month" selected="selected">Month</option>
-                    <xar:else />
-                        <option value="month">month</option>
-                    </xar:if>
-                    <xar:if condition="$minical_view eq 'year'">
-                        <option value="year" selected="selected">Year</option>
-                    <xar:else />
-                        <option value="year">year</option>
-                    </xar:if>
-                    <!-- adapt to your own preferred custom view-->
-                    <xar:if condition="$minical_view eq 'customview'">
-                        <option value="customview" selected="selected" disabled="disabled">Customized</option>
-                    <xar:else />
-                        <option value="customview" disabled="disabled">Customized</option>
-                    </xar:if>
-                </select>
+            <td><label for="minical_view"></label></td>
+            <td>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="cal_sdow" title="#xarML('Where do the mini-calendars go when clicked?')#">
+                Minical view       
+            </label>
+        </div>
+        <div class="xar-col">
+            <xar:set name="value">xarModVars::get('calendar', 'cal_sdow')</xar:set>
+            <xar:set name="options">
+                array(
+                    array('id' => 0, 'name' => xarML('Sunday')),
+                    array('id' => 1, 'name' => xarML('Monday')),
+                    array('id' => 2, 'name' => xarML('Tuesday')),
+                    array('id' => 3, 'name' => xarML('Wednesday')),
+                    array('id' => 4, 'name' => xarML('Thursday')),
+                    array('id' => 5, 'name' => xarML('Friday')),
+                    array('id' => 6, 'name' => xarML('Saturday')),
+                )
+            </xar:set>
+            <xar:data-input type="dropdown" name="minical_view" id="minical_view" options="$options" value="$value"/>
+        </div>
+    </div>
             </td>
         </tr>
         <tr>

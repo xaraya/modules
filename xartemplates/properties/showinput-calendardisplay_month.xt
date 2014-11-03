@@ -4,26 +4,23 @@
     <xar:style scope="module" module="calendar" file="user-month"/>
 
     <xar:calendar-decorator object="$Month" decorator="Xaraya" name="MonthURI"/>
-    <xar:var name="prevYearTitle">Previous Year</xar:var>
     <xar:set name="prevYearURL">$MonthURI->prev('year')</xar:set>
-
-    <xar:var name="prevMonthTitle">Previous Month</xar:var>
     <xar:set name="prevMonthURL">$MonthURI->prev('month')</xar:set>
-
-    <xar:var name="nextMonthTitle">Next Month</xar:var>
     <xar:set name="nextMonthURL">$MonthURI->next('month')</xar:set>
-
-    <xar:var name="nextYearTitle">Next Year</xar:var>
     <xar:set name="nextYearURL">$MonthURI->next('year')</xar:set>
 
     <table id="cal-calendar">
         <tr>
             <th class="cal-navigation" colspan="8">
-                <a href="#$prevYearURL#" title="#$prevYearTitle#">&#60;&#60;</a>
-                <a href="#$prevMonthURL#" title="#$prevMonthTitle#">&#60;</a>
+                <xar:var name="label">Previous Year</xar:var>
+                <xar:button type="link" target="$prevYearURL" label="$label"/>
+                <xar:var name="label">Previous Month</xar:var>
+                <xar:button type="link" target="$prevMonthURL" label="$label"/>
                 #xarLocaleFormatDate('%B %Y',$Month->getTimeStamp())#
-                <a href="#$nextMonthURL#" title="#$nextMonthTitle#">&#62;</a>
-                <a href="#$nextYearURL#" title="#$nextYearTitle#">&#62;&#62;</a>
+                <xar:var name="label">Next Month</xar:var>
+                <xar:button type="link" target="$nextMonthURL" label="$label"/>
+                <xar:var name="label">Next Year</xar:var>
+                <xar:button type="link" target="$nextYearURL" label="$label"/>
             </th>
         </tr>
 
