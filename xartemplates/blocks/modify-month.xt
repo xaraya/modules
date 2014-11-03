@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-row">
+        <div class="xar-col">
+            <label class="xar-form-label help" title="#xarML('Choose a module for the target URL')#" for="targetmodule#$blockid#"> 
+                Module
+            </label> 
+        </div>
+        <div class="xar-col">
+            <xar:var name="firstline">Choose a module</xar:var>
+            <xar:set name="firstline">array('id' => '', 'name' => $firstline)</xar:set>
+            <xar:data-input type="module" name="targetmodule" firstline="$firstline" value="$targetmodule" store_prop="name"/>&#160;
+            (if none chosen, the the current URL is redisplayed)
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="targettype#$blockid#" class="help xar-form-label" title="#xarML('Enter the type for the target URL')#">
+                Type       
+           :</label> 
+        </div>
+        <div class="xar-col">
+           <input type="text" name="targettype" id="targettype#$blockid#" value="#$targettype#" />
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <label for="targetfunc#$blockid#" class="help xar-form-label" title="#xarML('Enter the function for the target URL')#">
+                Function       
+           :</label> 
+        </div>
+        <div class="xar-col">
+           <input type="text" name="targetfunc" id="targetfunc#$blockid#" value="#$targetfunc#" />
+        </div>
+    </div>
+</xar:template>

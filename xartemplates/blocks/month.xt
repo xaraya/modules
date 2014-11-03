@@ -31,11 +31,23 @@
                             <tr>
                                 <xar:while condition="1">                        
                                     <xar:if condition="$Day:isSelected()">
-                                        <td class="selected" style="text-align: center"><a href="#xarServer::getCurrentURL(array('cal_date'=>$WeekDate))#">#$Day:thisDay()#</a></td>
+                                        <td class="selected" style="text-align: center">
+                                            <xar:if condition="empty($targetmodule)">
+                                                <a href="#xarServer::getCurrentURL(array('cal_date'=>$WeekDate))#">#$Day:thisDay()#</a>
+                                            <xar:else/>
+                                                <a href="#xarModURL($targetmodule, $targettype, $targetfunc, array('cal_date'=>$WeekDate))#">#$Day:thisDay()#</a>
+                                            </xar:if>
+                                        </td>
                                     <xar:elseif condition="$Day:isEmpty()"/>
                                         <td>&#160;</td>
                                     <xar:else />
-                                        <td class="xar-accent" style="text-align: center"><a href="#xarServer::getCurrentURL(array('cal_date'=>$WeekDate))#">#$Day:thisDay()#</a></td>
+                                        <td class="xar-accent" style="text-align: center">
+                                            <xar:if condition="empty($targetmodule)">
+                                                <a href="#xarServer::getCurrentURL(array('cal_date'=>$WeekDate))#">#$Day:thisDay()#</a>
+                                            <xar:else/>
+                                                <a href="#xarModURL($targetmodule, $targettype, $targetfunc, array('cal_date'=>$WeekDate))#">#$Day:thisDay()#</a>
+                                            </xar:if>
+                                        </td>
                                     </xar:if>
                                     <xar:if condition="$Day:isLast()">
                                         <xar:break />
