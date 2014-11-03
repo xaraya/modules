@@ -158,7 +158,7 @@
             </label> 
         </div>
         <div class="xar-col">
-            <xar:data-input type="multiselect" name="moreitems" options="$morefeatured" value="$moreitems" size="10"/>
+            <xar:data-input type="multiselect" name="moreitems" options="$morepublications" value="$moreitems" size="10"/>
         </div>
     </div>
     <div class="xar-row">
