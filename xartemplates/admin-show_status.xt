@@ -4,7 +4,7 @@
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
        <h2>    Translation progress report for locale 
-        #xarSessionGetVar('translations_working_locale')#
+        #xarSession::getVar('translations_working_locale')#
       </h2>
 
         <xar:set name="total_entries">$coreentries['numEntries']+$mod_totalentries+$theme_totalentries</xar:set>

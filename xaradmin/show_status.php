@@ -38,7 +38,7 @@ function translations_admin_show_status()
     $coreentries =& count_entries($tmp['entrydata']);
     unset($tmp);
 
-    // modules
+    // Get the modules
     if (!($mods = xarMod::apiFunc('modules','admin','getlist', array('filter' => array('State' => XARMOD_STATE_ANY))))) return;
     $modentries = array();
     $mod_totalentries = 0; $mod_untranslated = 0; $mod_keytotalentries = 0; $mod_keyuntranslated =0;
@@ -66,7 +66,7 @@ function translations_admin_show_status()
         unset($testbackend);
     }
 
-    // properties
+    // Get the properties
     xarMod::apiLoad('dynamicdata');
     $tables =& xarDB::getTables();
     sys::import('xaraya.structures.query');
@@ -101,7 +101,7 @@ function translations_admin_show_status()
         unset($testbackend);
     }
 
-    // blocks
+    // Get the blocks
     $blocks = xarMod::apiFunc('blocks','types','getitems',array('module_id' => 0, 'type_state' => xarBlock::TYPE_STATE_ACTIVE));
 
     $blockentries = array();
@@ -130,7 +130,7 @@ function translations_admin_show_status()
         unset($testbackend);
     }
 
-    // themes
+    // Get the themes
     if (!($themes = xarMod::apiFunc('themes','admin','getthemelist', array('filter' => array('State' => XARTHEME_STATE_ANY))))) return;
 
     $themeentries = array();
