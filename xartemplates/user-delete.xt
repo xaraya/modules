@@ -17,33 +17,40 @@
                 <legend>
                     Confirm Comment Deletion
                 </legend>
-                <div class="xar-form-input-wrapper" id="confirm_msg">
-                    <label for="commentdelete" class="xar-form-label" title="#xarML('Confirm deletion of this comment')#">
-                       Are you sure you want to delete this comment?
-                   </label>
-                   <xar:if condition="$package['haschildren']">
-           <div id="info_msg">
-           The comment has one or more replies.
-           </div>
-               <input type="radio" name="deletebranch" value="false" checked="checked" id="deletebranch_false" />&#160;<label for="deletebranch_false">Do not delete the replies</label><br />
-               <input type="radio"  name="deletebranch" value="true" id="deletebranch_true"/>&#160;<label for="deletebranch_true">Delete the comment and all replies</label><br />
-           <xar:else />
-            <input type="hidden" name="deletebranch" value="false" />
-           </xar:if>
-                   </div>
+                <div class="xar-row">
+                    <div class="xar-col">
+                   <xar:data-display object="$object"/>
+                    </div>
+                </div>
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <label for="commentdelete" title="#xarML('Confirm deletion of this comment')#">
+                           Are you sure you want to delete this comment?
+                       </label>
+                    </div>
+                </div>
+                <xar:if condition="$package['haschildren']">
+                    <div id="info_msg">
+                        The comment has one or more replies.
+                    </div>
+                   <input type="radio" name="deletebranch" value="false" checked="checked" id="deletebranch_false" />&#160;<label for="deletebranch_false">Do not delete the replies</label><br />
+                   <input type="radio"  name="deletebranch" value="true" id="deletebranch_true"/>&#160;<label for="deletebranch_true">Delete the comment and all replies</label><br />
+               <xar:else />
+                   <input type="hidden" name="deletebranch" value="false" />
+               </xar:if>
             </fieldset>
-            <div class="xar-form-input-wrapper">
-                <input type="hidden" name="confirm" value="true" />
-                <input type="hidden" name="header[moduleid]" id="header-modid" value="#$header['moduleid']#"/>
-                <input type="hidden" name="header[itemtype]" id="header-itemtype" value="#$header['itemtype']#"/>
-                <input type="hidden" name="header[itemid]" id="header-objectid" value="#$header['itemid']#"/>
-                <input type="hidden" name="parent_url" value="#$parent_url#"/>
-                <input type="hidden" name="header[id]" id="header-id" value="#$header['id']#"/>
-                <input type="hidden" name="header[parent_id]" id="header-parent_id" value="#$header['parent_id']#"/>
-                <xar:var name="label">Delete</xar:var>
-                <xar:button type="submit" name="submit" value="$label"/>
-                <xar:var name="label">Cancel</xar:var>
-                <xar:button type="cancel" value="$label"/>
+            <div class="xar-row">
+                <div class="xar-col">
+                </div>
+                <div class="xar-col">
+                    <input type="hidden" name="confirm" value="true" />
+                    <input type="hidden" name="id" id="id" value="#$id#"/>
+                    <input type="hidden" name="parent_url" value="#$parent_url#"/>
+                    <xar:var name="label">Cancel</xar:var>
+                    <xar:button type="cancel" value="$label"/>&#160;
+                    <xar:var name="label">Delete</xar:var>
+                    <xar:button type="submit" name="submit" value="$label"/>
+                </div>
             </div>
         </form>
         <xar:if condition="!empty($header['objectlink']) and !empty($header['objecttitle'])">
