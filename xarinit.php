@@ -21,90 +21,41 @@ function keywords_init()
 {
     $module = 'keywords';
 
-/*********************************************************************
- * Create Module Tables
- *********************************************************************/
-
-    $dbconn = xarDB::getConn();
-    $tables =& xarDB::getTables();
-    $prefix = xarDB::getPrefix();
-    $indextable = $tables['keywords_index'];
-    $keywordstable = $tables['keywords'];
-
     // Create tables inside transaction
     try {
-        $dbconn->begin();
+        $q = new Query();
+        $prefix = xarDB::getPrefix();
 
-        // keywords_index table
-        //
-        // CREATE TABLE {$prefix}_keywords_index (
-        //   id         integer NOT NULL auto_increment,
-        //   module_id  integer default 0,
-        //   itemtype   integer default 0,
-        //   itemid     integer default 0
-        //   PRIMARY KEY (id)
-        // )
-        //
-        $fields = array(
-            'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-            'module_id' => array('type' => 'integer', 'size' => 11, 'unsigned' => true, 'null' => false, 'default' => '0'),
-            'itemtype' => array('type' => 'integer', 'size' => 11, 'unsigned' => true, 'null' => false, 'default' => '0'),
-            'itemid' => array('type' => 'integer', 'size' => 11, 'unsigned' => true, 'null' => false, 'default' => '0'),
-        );
-        // Create the index table
-        $query = xarDBCreateTable($indextable, $fields);
-        $dbconn->Execute($query);
+# --------------------------------------------------------
+#
+# Table structures
+#
+        $query = "DROP TABLE IF EXISTS " . $prefix . "_keywords";
+        if (!$q->run($query)) return;
+        $query = "CREATE TABLE " . $prefix . "_keywords (
+          id                integer unsigned NOT NULL auto_increment,
+          module_id         integer unsigned NOT NULL default 0,
+          itemtype          integer unsigned NOT NULL default 0,
+          itemid            integer unsigned NOT NULL default 0,
+          keyword_id        integer unsigned NOT NULL default 0,
+          PRIMARY KEY  (id),
+          UNIQUE KEY `i_xar_keywords_index` (`module_id`,`itemtype`,`itemid`),
+          KEY `keyword_id` (`keyword_id`)
+        )";
+        if (!$q->run($query)) return;
 
-        // Create indices
-        // unique entries
-        $index = array(
-            'name'   => 'i_'.$prefix.'_keywords_index',
-            'fields' => array('module_id', 'itemtype', 'itemid'),
-            'unique' => true
-        );
-        $query = xarDBCreateIndex($indextable,$index);
-        $dbconn->Execute($query);
-
-        // keywords table
-        //
-        // CREATE TABLE {$prefix}_keywords (
-        //   id         integer NOT NULL auto_increment,
-        //   index_id   integer default 0,
-        //   keyword    varchar(254) default ''
-        //   PRIMARY KEY (id)
-        // )
-        //
-        $fields = array(
-            'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-            'index_id' => array('type' => 'integer', 'size' => 11, 'unsigned' => true, 'null' => false, 'default' => '0'),
-             'keyword' => array('type' => 'varchar', 'size' => 254,'null' => false,'default' => ''),
-        );
-        // Create the keywords table
-        $query = xarDBCreateTable($keywordstable, $fields);
-        $dbconn->Execute($query);
-
-        // Create indices
-        $index = array(
-            'name'   => 'i_'.$prefix.'_keywords_keyword',
-            'fields' => array('keyword'),
-            'unique' => false
-        );
-        $query = xarDBCreateIndex($keywordstable,$index);
-        $dbconn->Execute($query);
-        $index = array(
-            'name'   => 'i_'.$prefix.'_keywords_index_id',
-            'fields' => array('index_id'),
-            'unique' => false
-        );
-        $query = xarDBCreateIndex($keywordstable,$index);
-        $dbconn->Execute($query);
-
-        // Let's commit this, since we're gonna do some other stuff
-        $dbconn->commit();
+        $query = "DROP TABLE IF EXISTS " . $prefix . "_keywords_index";
+        if (!$q->run($query)) return;
+        $query = "CREATE TABLE " . $prefix . "_keywords_index (
+          id                integer unsigned NOT NULL auto_increment,
+          keyword           varchar(64),
+          PRIMARY KEY  (id),
+          UNIQUE KEY `keyword` (`keyword`)
+        )";
+        if (!$q->run($query)) return;
 
     } catch (Exception $e) {
-        $dbconn->rollback();
-        throw $e;
+        throw new Exception(xarML('Could not create module tables'));
     }
 
 /*********************************************************************
