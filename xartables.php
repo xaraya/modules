@@ -23,18 +23,9 @@ function keywords_xartables()
 {
     // Initialise table array
     $xarTables = array();
-    // Get the name for the keywords item table.  This is not necessary
-    // but helps in the following statements and keeps them readable
-
-    $keywordsTable = xarDB::getPrefix() . '_keywords';
-    // Set the table name
-    $xarTables['keywords'] = $keywordsTable;
-
-    $keywordsTable_restr = xarDB::getPrefix() . '_keywords_restr';
-    // Set the table name
-    $xarTables['keywords_restr'] = $keywordsTable_restr;
+    $xarTables['keywords'] = xarDB::getPrefix() . '_keywords';
+    $xarTables['keywords_restr'] = xarDB::getPrefix() . '_keywords_restr';
     $xarTables['keywords_index'] = xarDB::getPrefix() . '_keywords_index';
-
 
     // Return the table information
     return $xarTables;
