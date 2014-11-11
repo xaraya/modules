@@ -39,48 +39,26 @@ function keywords_userapi_getwords($args)
         return;
     }
 
-    $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
-    $keywordstable = $xartable['keywords'];
-    $bindvars = array();
-    $bindvars[] = $modid;
-
-    // Get words for this module item
-    $query = "SELECT id, keyword
-              FROM $keywordstable
-              WHERE module_id = ?";
-
+    $table =& xarDB::getTables();
+    $q = new Query('SELECT', $table['keywords_index']);
+    $q->addtable($table['keywords'], 'k');
+    $q->addtable($table['keywords_index'], 'i');
+    $q->join('k.keyword_id', 'i.id');
+    $q->addfield('k.id AS id');
+    $q->addfield('i.keyword AS keyword');
+    $q->eq('k.module_id', $modid);
+    $q->eq('k.itemid', $itemid);
     if (!empty($itemtype)) {
         if (is_array($itemtype)) {
-            $query .= ' AND itemtype IN (?' . str_repeat(',?', count($itemtype)-1) . ')';
-            $bindvars = array_merge($bindvars, $itemtype);
+            $q->in('k.itemtype', $itemtype);
         } else {
-            $query .= ' AND itemtype = ?';
-            $bindvars[] = (int)$itemtype;
+            $q->eq('k.itemtype', (int)$itemtype);
         }
     }
-    $query .= " AND itemid = ?";
-    $bindvars[] = $itemid;
-
-    $query .= " ORDER BY keyword ASC";
-
-    if (isset($numitems) && is_numeric($numitems)) {
-        if (empty($startnum)) {
-            $startnum = 1;
-        }
-        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
-    } else {
-         $result =& $dbconn->Execute($query,$bindvars);
-    }
-    if (!$result) return;
-
-    $words = array();
-    while (!$result->EOF) {
-        list($id, $word) = $result->fields;
-        $words[$id] = $word;
-        $result->MoveNext();
-    }
-    $result->Close();
+    $q->addorder('keyword', 'ASC');
+//    $q->qecho();
+    $q->run();
+    $words = $q->output();
 
     return $words;
 }
