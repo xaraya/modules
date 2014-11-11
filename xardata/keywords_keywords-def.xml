@@ -1,21 +1,23 @@
 <object name="keywords_keywords">
-  <objectid>837</objectid>
+  <objectid>770</objectid>
   <label>Keywords</label>
   <module_id>182</module_id>
-  <itemtype>267</itemtype>
+  <itemtype>312</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
+  <access>a:0:{}</access>
   <isalias>true</isalias>
   <datastore>relational</datastore>
   <config>a:1:{s:0:"";a:1:{i:0;s:0:"";}}</config>
-  <sources>a:1:{s:8:&quot;keywords&quot;;a:2:{i:0;s:12:&quot;xar_keywords&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
-  <relations>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</relations>
+  <sources>a:2:{s:8:&quot;keywords&quot;;a:2:{i:0;s:12:&quot;xar_keywords&quot;;i:1;s:8:&quot;internal&quot;;}s:5:&quot;index&quot;;a:2:{i:0;s:18:&quot;xar_keywords_index&quot;;i:1;s:8:&quot;internal&quot;;}}</sources>
+  <relations>a:1:{i:0;a:2:{i:0;s:19:&quot;keywords.keyword_id&quot;;i:1;s:8:&quot;index.id&quot;;}}</relations>
   <objects>a:1:{i:0;a:2:{i:0;s:0:&quot;&quot;;i:1;s:0:&quot;&quot;;}}</objects>
+  <category></category>
   <properties>
     <property name="id">
-      <id>11554</id>
+      <id>9519</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -25,17 +27,17 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="keyword">
-      <id>11555</id>
+      <id>9520</id>
       <label>Keyword</label>
       <type>dropdown</type>
       <defaultvalue></defaultvalue>
-      <source>keywords.keyword</source>
+      <source>index.keyword</source>
       <status>33</status>
       <seq>2</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:42:"xarModAPIFunc('keywords','user','getlist')";}</configuration>
     </property>
     <property name="module">
-      <id>11556</id>
+      <id>9521</id>
       <label>Module</label>
       <type>module</type>
       <defaultvalue></defaultvalue>
@@ -45,7 +47,7 @@
       <configuration>a:5:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:7:"modules";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";}</configuration>
     </property>
     <property name="itemtype">
-      <id>11557</id>
+      <id>9522</id>
       <label>Itemtype</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
@@ -55,7 +57,7 @@
       <configuration>a:0:{}</configuration>
     </property>
     <property name="itemid">
-      <id>11558</id>
+      <id>9523</id>
       <label>Itemid</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>

@@ -39,7 +39,7 @@ function keywords_init()
           itemid            integer unsigned NOT NULL default 0,
           keyword_id        integer unsigned NOT NULL default 0,
           PRIMARY KEY  (id),
-          UNIQUE KEY `i_xar_keywords_index` (`module_id`,`itemtype`,`itemid`),
+          UNIQUE KEY `i_xar_keywords_index` (`module_id`,`itemtype`,`itemid`,`keyword_id`),
           KEY `keyword_id` (`keyword_id`)
         )";
         if (!$q->run($query)) return;
@@ -85,7 +85,7 @@ function keywords_init()
  * Create Module DD Objects
  *********************************************************************/
 
-    $objects = array();
+    $objects = array('keywords_keywords');
     if(!xarMod::apiFunc('modules','admin','standardinstall',
         array('module' => $module, 'objects' => $objects))) return;
 
