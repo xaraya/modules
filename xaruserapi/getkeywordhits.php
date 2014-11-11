@@ -29,7 +29,7 @@ function keywords_userapi_getkeywordhits($args)
     $q->addfield('COUNT(k.id) AS count');
 
     if ($args['cloudtype'] == 2) {
-        xarModAPILoad('hitcount');
+        xarMod::apiLoad('hitcount');
         $xartable =& xarDB::getTables();
         $q->addtable($xartable['hitcount'],'h');
         $q->join('k.module_id','h.module_id');
