@@ -40,7 +40,7 @@ function keywords_userapi_getitems($args)
         }
     }
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords'];
     $bindvars = array();

@@ -37,7 +37,7 @@ function keywords_userapi_getmultiplewords($args)
         return;
     }
     $keywords = array();
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords'];
 

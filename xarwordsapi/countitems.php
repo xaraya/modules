@@ -47,7 +47,7 @@ function keywords_wordsapi_countitems(Array $args=array())
     }
 
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     $wordstable = $tables['keywords'];
     $idxtable = $tables['keywords_index'];

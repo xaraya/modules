@@ -27,7 +27,7 @@ function keywords_userapi_search($args)
         return;
     }
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords'];
 

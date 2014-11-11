@@ -45,7 +45,7 @@ function keywords_wordsapi_getwordcounts(Array $args=array())
     // optionally by module/itemtype
     // sort on name or count
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     $wordstable = $tables['keywords'];
     $idxtable = $tables['keywords_index'];

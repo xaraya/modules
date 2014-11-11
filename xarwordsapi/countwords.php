@@ -24,7 +24,7 @@ function keywords_wordsapi_countwords(Array $args=array())
     // count of unique keywords
     // optionally by module/itemtype
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     $wordstable = $tables['keywords'];
     $idxtable = $tables['keywords_index'];

@@ -30,7 +30,7 @@ function keywords_adminapi_getallkey($args)
     }
 
     if (!xarSecurityCheck('AdminKeywords')) return;
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords_restr'];
     // Get restricted keywords for this module item

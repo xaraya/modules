@@ -24,7 +24,7 @@ function keywords_userapi_getlist($args)
 
     extract($args);
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords'];
 

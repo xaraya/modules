@@ -28,7 +28,7 @@ function keywords_adminapi_getwordslimited($args)
         return;
     }
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords_restr'];
     $bindvars = array();

@@ -46,7 +46,7 @@ function keywords_wordsapi_getitemcounts(Array $args=array())
         throw new BadParameterException($vars, $msg);
     }
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     $wordstable = $tables['keywords'];
     $idxtable = $tables['keywords_index'];

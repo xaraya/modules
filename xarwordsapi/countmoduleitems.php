@@ -3,7 +3,7 @@ function keywords_wordsapi_countmoduleitems(Array $args=array())
 {
     extract($args);
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     $wordstable = $tables['keywords'];
     $idxtable = $tables['keywords_index'];

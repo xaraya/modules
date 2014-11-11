@@ -35,7 +35,7 @@ function keywords_userapi_getwordslimited($args)
     }
 
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords_restr'];
     $bindvars = array();

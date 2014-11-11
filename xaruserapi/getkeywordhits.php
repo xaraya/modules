@@ -20,7 +20,7 @@ function keywords_userapi_getkeywordhits($args)
 
     sys::import('xaraya.structures.query');
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
 
     $q = new Query('SELECT');
