@@ -46,9 +46,8 @@ function keywords_admin_modifyconfig()
     }
 
     if ($modname == 'keywords') {
-        $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',
-            array('module' => 'keywords'));
-        $data['module_settings']->setFieldList('use_module_alias, module_alias_name, enable_short_urls, use_module_icons');
+        $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings', array('module' => 'keywords'));
+        $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls, use_module_icons, frontend_page, backend_page');
         $data['module_settings']->getItem();
     }
 
