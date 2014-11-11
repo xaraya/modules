@@ -24,13 +24,20 @@
 function keywords_admin_main()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminKeywords')) return;
+    if (!xarSecurityCheck('EditKeywords')) return;
 
-    if (xarModVars::get('modules', 'disableoverview') == 0) {
+    if (xarModVars::get('modules', 'disableoverview') == 0){
         return array();
     } else {
-        xarController::redirect(xarModURL('keywords', 'admin', 'view'));
+        $redirect = xarModVars::get('keywords','defaultbackpage');
+        if (!empty($redirect)) {
+            $truecurrenturl = xarServer::getCurrentURL(array(), false);
+            $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+            xarController::redirect($urldata['redirecturl']);
+        } else {
+            xarController::redirect(xarModURL('keywords', 'admin', 'view'));
+        }
     }
-    return array();
+    return true;
 }
 ?>
