@@ -108,7 +108,7 @@ class KeywordsProperty extends TextBoxProperty
         // Make sure we have the keywords table
         xarModAPILoad('keywords');
 
-        $dbconn =& xarDB::getConn();
+        $dbconn = xarDB::getConn();
         $xartable =& xarDB::getTables();
         $keywordstable = $xartable['keywords'];
         foreach ($this->value as $word) {
@@ -169,7 +169,7 @@ class KeywordsProperty extends TextBoxProperty
         // Make sure we have the keywords table
         xarModAPILoad('keywords');
 
-        $dbconn =& xarDB::getConn();
+        $dbconn = xarDB::getConn();
         $xartable =& xarDB::getTables();
         $keywordstable = $xartable['keywords'];
 

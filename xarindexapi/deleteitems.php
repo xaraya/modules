@@ -28,7 +28,7 @@ function keywords_indexapi_deleteitems(Array $args=array())
         throw new BadParameterException($vars, $msg);
     }
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     $idxtable = $tables['keywords_index'];
 

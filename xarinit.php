@@ -25,7 +25,7 @@ function keywords_init()
  * Create Module Tables
  *********************************************************************/
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     $prefix = xarDB::getPrefix();
     $indextable = $tables['keywords_index'];
@@ -176,6 +176,7 @@ function keywords_init()
 // TODO: tweak this - allow viewing keywords of "your own items" someday ?
 // MichelV: Why not have an add privilege in here? Admin to add keywords seems way overdone
     xarRegisterMask('ReadKeywords',   'All', $module, 'Item', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('EditKeywords',   'All', $module, 'Item', 'All:All:All', 'ACCESS_EDIT');
     xarRegisterMask('AddKeywords',    'All', $module, 'Item', 'All:All:All', 'ACCESS_COMMENT');
     xarRegisterMask('ManageKeywords', 'All', $module, 'Item', 'All:All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdminKeywords',  'All', $module, 'Item', 'All:All:All', 'ACCESS_ADMIN');
@@ -191,7 +192,7 @@ function keywords_init()
  */
 function keywords_upgrade($oldversion)
 {
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     $prefix = xarDB::getPrefix();
 
@@ -203,7 +204,7 @@ function keywords_upgrade($oldversion)
                 xarModVars::set('keywords', 'restricted', 0);
                 xarModVars::set('keywords', 'default', 'xaraya');
 
-                $dbconn =& xarDB::getConn();
+                $dbconn = xarDB::getConn();
                 $xartable =& xarDB::getTables();
                 $query = xarDBCreateTable($xartable['keywords_restr'],
                              array('id'         => array('type'        => 'integer',
@@ -234,7 +235,7 @@ function keywords_upgrade($oldversion)
         case '1.0.2':
             //Alter table restr to add itemtype
             // Get database information
-            $dbconn =& xarDB::getConn();
+            $dbconn = xarDB::getConn();
             $xartable =& xarDB::getTables();
 
             // Add column 'itemtype' to table
@@ -287,7 +288,7 @@ function keywords_delete()
     // hooks are removed automatically
     // blocks are removed automatically
     sys::import('xaraya.structures.query');
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     $indextable = $tables['keywords_index'];
     $keywordstable = $tables['keywords'];
@@ -310,7 +311,7 @@ function keywords_upgrade_200()
 {
     // upgrade to 2.0.0, normalise tables
     sys::import('xaraya.structures.query');
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     $prefix = xarDB::getPrefix();
     $charset = xarSystemVars::get(sys::CONFIG, 'DB.Charset');

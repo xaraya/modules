@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        Keywords
+    </span>
+</div>
+<div class="xar-mod-body">
+    <xar:if condition="!empty($keyword)">
+        <xar:var name="displaylabel">Display</xar:var>
+        <xar:var name="displaytitle">Display item</xar:var>
+        <xar:if condition="!empty($use_icons)">
+            <xar:set name="displayicon">xarTpl::getImage('icons/display.png','theme')</xar:set>
+        </xar:if>
+        <h2>Keywords: #$keyword#</h2>
+        <xar:pager startnum="$startnum" itemsperpage="$items_per_page" total="$total"/>
+        <table class="xar-fullwidth">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th class="xar-align-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <xar:if condition="!empty($items)">
+                    <xar:foreach in="$items" value="$item">
+                        <tr>
+                            <td>
+                                #$modules[$item['module']]['itemlinks'][$item['itemtype']][$item['itemid']]['label']#
+                            </td>
+                            <td class="xar-align-right">
+                                    <xar:if condition="empty($use_icons)">
+                                    <a href="#$modules[$item['module']]['itemlinks'][$item['itemtype']][$item['itemid']]['url']#" title="#$displaytitle#: #$modules[$item['module']]['itemlinks'][$item['itemtype']][$item['itemid']]['title']#">#$displaylabel#</a>
+                                    <xar:else/>
+                                    <a href="#$modules[$item['module']]['itemlinks'][$item['itemtype']][$item['itemid']]['url']#" title="#$displaytitle#: #$modules[$item['module']]['itemlinks'][$item['itemtype']][$item['itemid']]['title']#" class="xar-icon"><img src="#$displayicon#" alt="#$displaylabel#" class="xar-icon"/></a>
+                                    </xar:if>
+                            </td>
+                        </tr>
+                    </xar:foreach>
+                <xar:else/>
+                    <tr>
+                        <td colspan="2"><p class="xar-note">No items associated with this word</p></td>
+                    </tr>
+                </xar:if>
+            </tbody>
+        </table>
+        <xar:pager startnum="$startnum" itemsperpage="$items_per_page" total="$total"/>
+        <p class="xar-align-center">
+            <xar:if condition="xarController::isLocalReferer()">
+                <a href="#xarServer::getVar('HTTP_REFERER')#" onclick="history.go(-1);return false;">Click here to go back</a>
+            <xar:else/>
+                <a href="#xarModURL('keywords', 'user', 'main')#">Click here to view keywords list</a>
+            </xar:if>
+        </p>
+
+    <xar:else/>
+        <xar:if condition="$user_layout eq 'list'">
+            <h2>Keywords List</h2>
+            <div class="keywords-list">
+                <xar:if condition="!empty($items)">
+                    <xar:pager startnum="$startnum" itemsperpage="$items_per_page" total="$total"/>
+                    <xar:set name="colwidth">round(95/$cols_per_page, 2)</xar:set>
+                    <xar:set name="itemcount">count($items)</xar:set>
+                    <xar:set name="itemspercol">round($itemcount/$cols_per_page)</xar:set>
+                    <xar:set name="nextindex">0</xar:set>
+                    <xar:for start="$i=0" test="$i lt $cols_per_page" iter="$i++">
+                        <xar:set name="j">0</xar:set>
+                        <div style="width: #$colwidth#%;" class="xar-floatleft">
+                            <ul>
+                                <xar:for start="$k=$nextindex" test="$j lt $itemspercol and isset($items[$k])" iter="$k++">
+                                    <li>
+                                        <a href="#xarModURL('keywords', 'user', 'main', array('keyword' => $items[$k]['keyword']))#">#$items[$k]['keyword']#</a>
+                                    </li>
+                                    <xar:set name="j">$j+1</xar:set>
+                                </xar:for>
+                                <xar:set name="nextindex">$k++</xar:set>
+                            </ul>
+                        </div>
+                    </xar:for>
+                    <br class="xar-clearboth"/>
+                    <xar:pager startnum="$startnum" itemsperpage="$items_per_page" total="$total"/>
+                <xar:else/>
+                    <p class="xar-note">No keywords to display</p>
+                </xar:if>
+            </div>
+        <xar:elseif condition="$user_layout eq 'cloud'"/>
+            <h2>Keywords Cloud</h2>
+            <xar:if condition="!empty($items)">
+                <div class="keywords-cloud">
+                    <xar:foreach in="$items" value="$item">
+                        <a href="#xarModURL('keywords', 'user', 'main', array('keyword' => $item['keyword']))#" style="font-size: #$item['weight']##$unit#;">#$item['keyword']#</a>&#160;
+                    </xar:foreach>
+                </div>
+            <xar:else/>
+                <p class="xar-note">No keywords to display</p>
+            </xar:if>
+        </xar:if>
+    </xar:if>
+</div>
+</xar:template>

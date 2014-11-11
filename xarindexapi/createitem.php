@@ -31,7 +31,7 @@ function keywords_indexapi_createitem(Array $args=array())
             'itemid' => $itemid,
         ))) return $item;
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     $idxtable = $tables['keywords_index'];
 
