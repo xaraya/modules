@@ -27,7 +27,7 @@ function keywords_wordsapi_deleteitems(Array $args=array())
     // we may have been given a list of words to delete
     if (isset($keyword)) {
         if (is_string($keyword))
-            $keyword = xarModAPIFunc('keywords','admin','separekeywords',
+            $keyword = xarModAPIFunc('keywords','admin','separatekeywords',
                 array(
                     'keywords' => $keyword,
                 ));

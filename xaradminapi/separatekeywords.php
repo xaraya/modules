@@ -14,7 +14,7 @@
  * Now using 'strlist' validation to do the hard work.
  * @return array
  */
-function keywords_adminapi_separekeywords($args)
+function keywords_adminapi_separatekeywords($args)
 {
     extract($args);
 

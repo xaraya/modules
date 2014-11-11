@@ -39,7 +39,7 @@ function keywords_adminapi_limited($args)
 
     $key = xarModAPIFunc('keywords',
                          'admin',
-                         'separekeywords',
+                         'separatekeywords',
                           array('keywords' => $keyword));
 
     foreach ($key as $keyres) {
