@@ -151,15 +151,9 @@
                 </fieldset>
 
                 <xar:if condition="!empty($submitLabel)">
-                    <fieldset>
-                        <div class="xar-align-center">
-                            <input type="hidden" name="phase" id="phase" value="update"/>
-                            <input type="hidden" name="module_id" id="module_id" value="#$module_id#"/>
-                            <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#"/>
-                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
-                            <input type="submit" value="#$submitLabel#"/>
-                        </div>
-                    </fieldset>
+                    <input type="hidden" name="module_id" id="module_id" value="#$module_id#"/>
+                    <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#"/>
+                    <xar:template file="update-button" module="base" />
                 </xar:if>
             </form>
         </div>

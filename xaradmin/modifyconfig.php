@@ -27,14 +27,10 @@ function keywords_admin_modifyconfig()
 {
     if (!xarSecurityCheck('AdminKeywords')) return;
 
-    if (!xarVarFetch('module_id', 'id',
-        $module_id, null, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('itemtype', 'int:0:',
-        $itemtype, null, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('phase', 'pre:trim:lower:enum:update',
-        $phase, 'form', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('return_url', 'pre:trim:str:1:',
-        $return_url, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('module_id', 'id', $module_id, null, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('itemtype', 'int:0:', $itemtype, null, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('phase', 'pre:trim:lower:enum:update', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('return_url', 'pre:trim:str:1:', $return_url, '', XARVAR_NOT_REQUIRED)) return;
 
     $data = array();
 
@@ -58,33 +54,24 @@ function keywords_admin_modifyconfig()
             $isvalid = $data['module_settings']->checkInput();
             if ($isvalid) {
                 $itemid = $data['module_settings']->updateItem();
-                if (!xarVarFetch('delimiters', 'pre:trim:str:1:',
-                    $delimiters, xarModVars::get('keywords', 'delimiters', ','), XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('stats_per_page', 'int:0:',
-                    $stats_per_page, xarModVars::get('keywords', 'stats_per_page',100), XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('items_per_page', 'int:0:',
-                    $items_per_page, xarModVars::get('keywords', 'items_per_page',20), XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('user_layout', 'pre:trim:lower:enum:list:cloud',
-                    $user_layout, xarModVars::get('keywords', 'user_layout','list'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('delimiters', 'pre:trim:str:1:', $delimiters, xarModVars::get('keywords', 'delimiters', ','), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('stats_per_page', 'int:0:', $stats_per_page, xarModVars::get('keywords', 'stats_per_page',100), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('items_per_page', 'int:0:', $items_per_page, xarModVars::get('keywords', 'items_per_page',20), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('user_layout', 'pre:trim:lower:enum:list:cloud', $user_layout, xarModVars::get('keywords', 'user_layout','list'), XARVAR_NOT_REQUIRED)) return;
                 xarModVars::set('keywords', 'delimiters', $delimiters);
                 xarModVars::set('keywords', 'stats_per_page', $stats_per_page);
                 xarModVars::set('keywords', 'items_per_page', $items_per_page);
                 xarModVars::set('keywords', 'user_layout', $user_layout);
                 //if ($user_layout == 'list') {
-                    if (!xarVarFetch('cols_per_page', 'int:0:',
-                        $cols_per_page, xarModVars::get('keywords', 'cols_per_page', 2), XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('words_per_page', 'int:0:',
-                        $words_per_page, xarModVars::get('keywords', 'words_per_page', 50), XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('cols_per_page', 'int:0:', $cols_per_page, xarModVars::get('keywords', 'cols_per_page', 2), XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('words_per_page', 'int:0:', $words_per_page, xarModVars::get('keywords', 'words_per_page', 50), XARVAR_NOT_REQUIRED)) return;
                     xarModVars::set('keywords', 'cols_per_page', $cols_per_page);
                     xarModVars::set('keywords', 'words_per_page', $words_per_page);
                 //} else {
                     // the cloudy stuff
-                    if (!xarVarFetch('cloud_font_min', 'int:1:',
-                        $cloud_font_min, xarModVars::get('keywords', 'cloud_font_min', 1), XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('cloud_font_max', 'int:1:',
-                        $cloud_font_max, xarModVars::get('keywords', 'cloud_font_max', 1), XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('cloud_font_unit', 'pre:trim:lower:enum:em:pt:px:%',
-                        $cloud_font_unit, xarModVars::get('keywords', 'cloud_font_unit', 'em'), XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('cloud_font_min', 'int:1:', $cloud_font_min, xarModVars::get('keywords', 'cloud_font_min', 1), XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('cloud_font_max', 'int:1:', $cloud_font_max, xarModVars::get('keywords', 'cloud_font_max', 1), XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('cloud_font_unit', 'pre:trim:lower:enum:em:pt:px:%', $cloud_font_unit, xarModVars::get('keywords', 'cloud_font_unit', 'em'), XARVAR_NOT_REQUIRED)) return;
                     xarModVars::set('keywords', 'cloud_font_min', $cloud_font_min);
                     xarModVars::set('keywords', 'cloud_font_max', $cloud_font_max);
                     xarModVars::set('keywords', 'cloud_font_unit', $cloud_font_unit);
