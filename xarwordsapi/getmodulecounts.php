@@ -28,7 +28,7 @@ function keywords_wordsapi_getmodulecounts(Array $args=array())
     $from['words'] = "$wordstable words";
 
     $where[] = 'mods.regid = idx.module_id';
-    $where[] = 'idx.id = words.index_id';
+    $where[] = 'idx.keyword_id = words.id';
 
     if (!empty($skip_restricted)) {
         $where[] = 'idx.itemid != 0';

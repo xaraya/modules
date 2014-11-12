@@ -6,9 +6,6 @@ function keywords_wordsapi_getitemcounts(Array $args=array())
     if (isset($id) && (empty($id) || !is_numeric($id)))
         $invalid[] = 'id';
 
-    if (isset($index_id) && (empty($index_id) || !is_numeric($index_id)))
-        $invalid[] = 'index_id';
-
     if (isset($keyword)) {
         // we may have been given a string list
         if (!empty($keyword) && !is_array($keyword)) {
@@ -71,7 +68,7 @@ function keywords_wordsapi_getitemcounts(Array $args=array())
     $from['words'] = "$wordstable words";
 
     $where[] = 'mods.regid = idx.module_id';
-    $where[] = 'idx.id = words.index_id';
+    $where[] = 'idx.id = words.id';
 
 
     if (!empty($id)) {
@@ -79,9 +76,9 @@ function keywords_wordsapi_getitemcounts(Array $args=array())
         $bindvars[] = $id;
     }
 
-    if (!empty($index_id)) {
-        $where[] = 'words.index_id = ?';
-        $bindvars[] = $index_id;
+    if (!empty($id)) {
+        $where[] = 'words.id = ?';
+        $bindvars[] = $id;
     }
 
     if (!empty($keyword)) {

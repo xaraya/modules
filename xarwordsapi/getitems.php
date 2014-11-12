@@ -12,7 +12,7 @@ function keywords_wordsapi_getitems(Array $args=array())
     if (isset($keyword)) {
         // we may have been given a string list
         if (!empty($keyword) && !is_array($keyword)) {
-            $keyword = xarModAPIFunc('keywords','admin','separekeywords',
+            $keyword = xarModAPIFunc('keywords','admin','separatekeywords',
                 array(
                     'keywords' => $keyword,
                 ));
@@ -46,7 +46,7 @@ function keywords_wordsapi_getitems(Array $args=array())
         throw new BadParameterException($vars, $msg);
     }
 
-    $dbconn =& xarDB::getConn();
+    $dbconn = xarDB::getConn();
     $tables =& xarDB::getTables();
     $wordstable = $tables['keywords'];
     $idxtable = $tables['keywords_index'];
@@ -106,7 +106,8 @@ function keywords_wordsapi_getitems(Array $args=array())
 
     if (!empty($skip_restricted)) {
         $from['idx'] = "$idxtable idx";
-        $where[] = 'idx.itemid != 0';
+        $where[] = '(idx.module_id != ? OR idx.itemid != 0)';
+        $bindvars[] = xarMod::getRegId('keywords');
     }
 
     if (!empty($from['idx'])) {
