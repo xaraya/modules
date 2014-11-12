@@ -29,12 +29,12 @@
     <property name="keyword">
       <id>9520</id>
       <label>Keyword</label>
-      <type>dropdown</type>
+      <type>text</type>
       <defaultvalue></defaultvalue>
       <source>index.keyword</source>
       <status>33</status>
       <seq>2</seq>
-      <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:19:"initialization_file";s:42:"xarModAPIFunc('keywords','user','getlist')";}</configuration>
+      <configuration>a:0:{}</configuration>
     </property>
     <property name="module">
       <id>9521</id>
