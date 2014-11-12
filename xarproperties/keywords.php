@@ -26,10 +26,10 @@ class KeywordsProperty extends TextBoxProperty
     {
         parent::__construct($descriptor);
         $this->filepath   = 'modules/keywords/xarproperties';
-        // we want a reference to the object here
+        // We want a reference to the object here
         $this->include_reference = 1;
 
-        // Force setting for datastore
+        // Force setting of the datastore to NONE
         $this->source = '';
     }
 
@@ -37,13 +37,9 @@ class KeywordsProperty extends TextBoxProperty
     {
         if (!parent::validateValue($value)) return false;
 
-        $words = xarModAPIFunc('keywords',
-                             'admin',
-                             'separekeywords',
-                              array('keywords' => $value));
+        $words = xarModAPIFunc('keywords', 'admin', 'separatekeywords', array('keywords' => $value));
         $cleanwords = array();
         foreach ($words as $word) {
-            $word = trim($word);
             if (empty($word)) continue;
             $cleanwords[] = $word;
         }
@@ -63,159 +59,165 @@ class KeywordsProperty extends TextBoxProperty
 
     public function showInput(Array $data = array())
     {
-        $data['value'] = $this->getKeywords($data);
+        // The virtual datastore will use the itemid as value for this property
+        $words = $this->getKeywords($data);
+        $keywords = array();
+        foreach ($words as $word) $keywords[] = $word['keyword'];
+        $data['value'] = implode(',', $keywords);
         return parent::showInput($data);
     }
 
     public function showOutput(Array $data = array())
     {
-        // the dummy datastore will use the itemid as value for this property !
-        $data['value'] = $this->getKeywords($data);
+        // The virtual datastore will use the itemid as value for this property
+        $words = $this->getKeywords($data);
+        $keywords = array();
+        foreach ($words as $word) $keywords[] = $word['keyword'];
+        $data['value'] = implode(',', $keywords);
         return parent::showOutput($data);
     }
 
-    private function getKeywords(Array $data = array(), $update = 0)
-    {
-        // if we don't have an objectref, return the value as is
-        if (empty($this->objectref) || empty($this->objectref->objectid)) {
-            if (isset($data['value'])) {
-                return $data['value'];
-            } else {
-                return $this->value;
-            }
-        }
-
-        // we're dealing with a single item here
-        if (!empty($this->_itemid)) {
-            if (!isset($this->wordcache)) {
-                $this->wordcache = xarMod::apiFunc('keywords', 'user', 'getwords',
-                                                  array('modid'  => $this->objectref->moduleid,
-                                                        'itemtype' => $this->objectref->itemtype,
-                                                        'itemid' => $this->objectref->itemid));
-                if (empty($this->wordcache)) {
-                    $this->wordcache = '';
-                } else {
-                    $this->wordcache = implode(',',$this->wordcache);
-                }
-            }
-            return $this->wordcache;
-        }
-
-    }
-
-    public function createValue($itemid=0)
+    private function getKeywords(Array $data = array())
     {
         // Make sure we have the keywords table
-        xarModAPILoad('keywords');
+        xarMod::apiLoad('keywords');
 
-        $dbconn = xarDB::getConn();
-        $xartable =& xarDB::getTables();
-        $keywordstable = $xartable['keywords'];
-        foreach ($this->value as $word) {
-            // Get a new keywords ID
-            $nextId = $dbconn->GenId($keywordstable);
-            // Create new keyword
-            $query = "INSERT INTO $keywordstable (id,
-                                               keyword,
-                                               module_id,
-                                               itemtype,
-                                               itemid)
-                                        VALUES (?,
-                                                ?,
-                                                ?,
-                                                ?,
-                                                ?)";
-            $result =& $dbconn->Execute($query,array($nextId, $word, $this->objectref->moduleid, $this->objectref->itemtype, $itemid));
-        }
-        return true;
+        $table =& xarDB::getTables();
+        $q = new Query('SELECT');
+        $q->addtable($table['keywords'], 'k');
+        $q->addtable($table['keywords_index'], 'i');
+        $q->join('i.keyword_id', 'k.id');
+        $q->addfield('i.id AS id');
+        $q->addfield('k.keyword AS keyword');
+        $q->eq('i.module_id', $this->objectref->moduleid);
+        $q->eq('i.itemtype', $this->objectref->itemtype);
+        $q->eq('i.itemid', $this->_itemid);
+        $q->addorder('keyword', 'ASC');
+//        $q->qecho();
+        $q->run();
+        $words = $q->output();
+        return $words;
+    }
+
+    function createValue($itemid=0)
+    {
+        $words = $this->value;
+        $keyword_ids = $this->updateKeywords($words);
+        $this->updateAssociations($itemid, $keyword_ids);
+        return $itemid;
     }
 
     public function updateValue($itemid=0)
     {
-        if (empty($itemid) || empty($this->objectref) || empty($this->objectref->objectid)) {
-            return;
-        }
-
-        // get the current keywords for this item
-        $oldwords = xarModAPIFunc('keywords','user','getwords',
-                                  array('modid' => $this->objectref->moduleid,
-                                        'itemtype' => $this->objectref->itemtype,
-                                        'itemid' => $itemid));
-
-        $delete = array();
-        $keep = array();
-        $new = array();
-        // check what we need to delete, what we can keep, and what's new
-        if (isset($oldwords) && count($oldwords) > 0) {
-            foreach ($oldwords as $id => $word) {
-                if (!in_array($word,$this->value)) {
-                    $delete[$id] = $word;
-                } else {
-                    $keep[] = $word;
-                }
-            }
-            foreach ($this->value as $word) {
-                if (!in_array($word,$keep)) {
-                    $new[] = $word;
-                }
-            }
-            if (count($delete) == 0 && count($new) == 0) {
-                return true;
-            }
-        } else {
-            $new = $this->value;
-        }
-
-        // Make sure we have the keywords table
-        xarModAPILoad('keywords');
-
-        $dbconn = xarDB::getConn();
-        $xartable =& xarDB::getTables();
-        $keywordstable = $xartable['keywords'];
-
-        if (count($delete) > 0) {
-            // Delete old words for this module item
-            $idlist = array_keys($delete);
-            $query = "DELETE FROM $keywordstable
-                      WHERE id IN (" . join(', ',$idlist) . ")";
-
-            $result =& $dbconn->Execute($query);
-        }
-
-        if (count($new) > 0) {
-            foreach ($new as $word) {
-                // Get a new keywords ID
-                $nextId = $dbconn->GenId($keywordstable);
-                // Create new keywords
-                $query = "INSERT INTO $keywordstable (id,
-                                                   keyword,
-                                                   module_id,
-                                                   itemtype,
-                                                   itemid)
-                        VALUES (?,
-                                ?,
-                                ?,
-                                ?,
-                                ?)";//echo $query;var_dump($word);var_dump($this->objectref->moduleid);var_dump($this->objectref->itemtype);var_dump($itemid);exit;
-
-                $result =& $dbconn->Execute($query,array($nextId, $word, $this->objectref->moduleid, $this->objectref->itemtype, $itemid));
-            }
-        }
-        return true;
+        return $this->createValue($itemid);
     }
 
     public function deleteValue($itemid=0)
     {
-        if (empty($itemid) || empty($this->objectref) || empty($this->objectref->objectid)) {
-            return;
-        }
-        // delete hitcount entry
-        xarMod::apiFunc('hitcount', 'admin', 'delete',
-                        array('modname'  => xarMod::getName($this->objectref->moduleid),
-                              'itemtype' => $this->objectref->itemtype,
-                              'objectid' => $itemid));
+        $associations = $this->getAssociations($itemid);
+        $this->deleteAssociations($itemid, array_keys($associations));
         return true;
     }
+
+#----------------------------------------------------------------
+# Check if we have the words in the database and add those missing
+#
+    private function updateKeywords($words) 
+    {        
+        if (empty($words)) return array();
+        
+        // Make sure we have the keywords table
+        xarMod::apiLoad('keywords');
+
+        $table =& xarDB::getTables();
+        $q = new Query('SELECT', $table['keywords']);
+        $q->in('keyword', $words);
+        $q->run();
+        $keywords = array();
+        $keyword_ids = array();
+        
+        // Reshuffle the results. This may be overkill as we don't (for now) pass it back
+        foreach($q->output() as $row) {
+            $keywords[$row['keyword']] = $row;
+            $keyword_ids[$row['id']] = $row;
+        }
+
+        $q = new Query('INSERT', $table['keywords']);
+        foreach ($this->value as $word) {
+        
+            // If we already have this keyword in the database, move on
+            if (isset($keywords[$word])) continue;
+            
+            // Thiis is a new keyword; add it to the index
+            $q->addfield('keyword', $word);
+            $q->run();
+            $keyword_id = $q->lastid($table['keywords'], 'id');
+            $keywords[$word] = array('id' => $keyword_id, 'keyword' => $word);
+            $keyword_ids[$keyword_id] = array('id' => $keyword_id, 'keyword' => $word);
+            $q->clearfields();
+        }
+        $ids = array_keys($keyword_ids);
+        return $ids;
+    }
+
+#----------------------------------------------------------------
+# After saving one or more keyword entries, update the associations table
+#
+    private function updateAssociations($itemid, $keyword_ids=array()) 
+    {
+        // Check if we are in an object or not
+        $moduleid = isset($this->objectref->moduleid) ? $this->objectref->moduleid : null;
+        if (!empty($moduleid) && !empty($itemid)) {
+            sys::import('modules.keywords.class.association');
+            $association = new Association();
+            $association->sync_associations($moduleid, $this->objectref->itemtype, $itemid, $keyword_ids);
+        }
+        return true;
+    }
+
+#----------------------------------------------------------------
+# Get the associations of this item
+#
+    private function getAssociations($itemid) 
+    {
+        $associations = array();
+        // Check if we are in an object or not
+        $moduleid = isset($this->objectref->moduleid) ? $this->objectref->moduleid : null;
+        if (!empty($moduleid) && !empty($itemid)) {
+            sys::import('modules.keywords.class.association');
+            $association = new Association();
+            $args = array(
+                    'module_id'    => $moduleid,
+                    'itemtype'     => $this->objectref->itemtype,
+                    'property_id'  => (int)$this->id,
+                    'itemid'       => $itemid,
+            );
+            $associations = $association->get_associations($args);
+        }
+        return $associations;
+    }
+#----------------------------------------------------------------
+# After creating a keyword entry, add the required association
+#
+    private function addAssociation($itemid, $keyword_id=0) 
+    {
+        // Check if we are in an object or not
+        $moduleid = isset($this->objectref->moduleid) ? $this->objectref->moduleid : null;
+        if (!empty($moduleid) && !empty($itemid)) {
+            sys::import('modules.keywords.class.association');
+            $association = new Association();
+            $args = array(
+                    'keyword_id'  => $keyword_id,
+                    'module_id'    => $moduleid,
+                    'itemtype'     => $this->objectref->itemtype,
+                    'property_id'  => (int)$this->id,
+                    'itemid'       => $itemid,
+            );
+            $association->add_association($args);
+        }
+        return true;
+    }
+
 }
 
 ?>

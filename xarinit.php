@@ -30,9 +30,9 @@ function keywords_init()
 #
 # Table structures
 #
-        $query = "DROP TABLE IF EXISTS " . $prefix . "_keywords";
+        $query = "DROP TABLE IF EXISTS " . $prefix . "_keywords_index";
         if (!$q->run($query)) return;
-        $query = "CREATE TABLE " . $prefix . "_keywords (
+        $query = "CREATE TABLE " . $prefix . "_keywords_index (
           id                integer unsigned NOT NULL auto_increment,
           module_id         integer unsigned NOT NULL default 0,
           itemtype          integer unsigned NOT NULL default 0,
@@ -44,9 +44,9 @@ function keywords_init()
         )";
         if (!$q->run($query)) return;
 
-        $query = "DROP TABLE IF EXISTS " . $prefix . "_keywords_index";
+        $query = "DROP TABLE IF EXISTS " . $prefix . "_keywords";
         if (!$q->run($query)) return;
-        $query = "CREATE TABLE " . $prefix . "_keywords_index (
+        $query = "CREATE TABLE " . $prefix . "_keywords (
           id                integer unsigned NOT NULL auto_increment,
           keyword           varchar(64),
           PRIMARY KEY  (id),
