@@ -40,19 +40,19 @@ function keywords_userapi_getwords($args)
     }
 
     $table =& xarDB::getTables();
-    $q = new Query('SELECT', $table['keywords_index']);
+    $q = new Query('SELECT');
     $q->addtable($table['keywords'], 'k');
     $q->addtable($table['keywords_index'], 'i');
-    $q->join('k.keyword_id', 'i.id');
-    $q->addfield('k.id AS id');
-    $q->addfield('i.keyword AS keyword');
-    $q->eq('k.module_id', $modid);
-    $q->eq('k.itemid', $itemid);
+    $q->join('i.keyword_id', 'k.id');
+    $q->addfield('i.id AS id');
+    $q->addfield('k.keyword AS keyword');
+    $q->eq('i.module_id', $modid);
+    $q->eq('i.itemid', $itemid);
     if (!empty($itemtype)) {
         if (is_array($itemtype)) {
-            $q->in('k.itemtype', $itemtype);
+            $q->in('i.itemtype', $itemtype);
         } else {
-            $q->eq('k.itemtype', (int)$itemtype);
+            $q->eq('i.itemtype', (int)$itemtype);
         }
     }
     $q->addorder('keyword', 'ASC');
