@@ -88,7 +88,7 @@ function keywords_wordsapi_getwordcounts(Array $args=array())
     }
 
     if (!empty($from['idx'])) {
-        $where[] = 'words.index_id = idx.id';
+        $where[] = 'words.id = idx.keyword_id';
     }
 
     $groupby['keyword'] = 'words.keyword';
