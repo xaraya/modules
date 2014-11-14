@@ -18,10 +18,6 @@ function keywords_adminapi_separatekeywords($args)
 {
     extract($args);
 
-    //if (!xarSecurityCheck('AdminKeywords')) return;
-    // @checkme: add privs just to parse a string?
-    if (!xarSecurityCheck('AddKeywords')) return;
-
     $delimiters = xarModVars::get('keywords', 'delimiters');
 
     // Colons are the only character we can't use (ATM).
@@ -30,10 +26,7 @@ function keywords_adminapi_separatekeywords($args)
     str_replace(':', '', $delimiters);
 
     // Ensure we can fall back to a default.
-    if (empty($delimiters)) {
-        // Provide a default.
-        $delimiters = ';';
-    }
+    if (empty($delimiters)) $delimiters = ';';
 
     // Get first delimiter for creating the array.
     $first = substr($delimiters, 0, 1);
