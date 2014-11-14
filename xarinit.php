@@ -48,9 +48,11 @@ function keywords_init()
         if (!$q->run($query)) return;
         $query = "CREATE TABLE " . $prefix . "_keywords (
           id                integer unsigned NOT NULL auto_increment,
+          index_id          integer unsigned NOT NULL default 0,
           keyword           varchar(64),
           PRIMARY KEY  (id),
-          UNIQUE KEY `keyword` (`keyword`)
+          UNIQUE KEY `keyword` (`keyword`),
+          KEY `index_id` (`index_id`)
         )";
         if (!$q->run($query)) return;
 
@@ -200,12 +202,12 @@ function keywords_upgrade($oldversion)
             if (!$result) return;
 
             // Register blocks
-            if (!xarModAPIFunc('blocks',
+            if (!xarMod::apiFunc('blocks',
                     'admin',
                     'register_block_type',
                     array('modName'  => 'keywords',
                             'blockType'=> 'keywordsarticles'))) return;
-            if (!xarModAPIFunc('blocks',
+            if (!xarMod::apiFunc('blocks',
                     'admin',
                     'register_block_type',
                     array('modName'  => 'keywords',
@@ -255,7 +257,7 @@ function keywords_delete()
     xarRemoveMasks('keywords');
     xarRemoveInstances('keywords');
 
-    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'keywords'));
+    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => 'keywords'));
 }
 
 function keywords_upgrade_200()
