@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<h2>Display Keyword Assignment</h2>
-<xar:if condition="!empty($id) and is_numeric($id)">
-    <xar:data-display module="keywords" itemid="$id" />
-    <xar:if condition="!empty($url)">
-        <br />
-        <xar:if condition="!empty($label)">
-            This entry refers to [#$modname#] <a href="#$url#">#$label#</a>
-        <xar:else/>
-            This entry refers to [#$modname#] <a href="#$url#">item #$itemid#</a>
+    <xar:template file="user-mod-head"/>
+    <div class="xar-mod-body">
+        <h2>Display Keyword Assignment</h2>
+        <xar:if condition="!empty($id) and is_numeric($id)">
+            <xar:data-display module="keywords" itemid="$id" />
+            <xar:if condition="!empty($url)">
+                <br />
+                <xar:if condition="!empty($label)">
+                    This entry refers to [#$modname#] <a href="#$url#">#$label#</a>
+                <xar:else/>
+                    This entry refers to [#$modname#] <a href="#$url#">item #$itemid#</a>
+                </xar:if>
+            </xar:if>
+        <xar:else />
+            Unable to find corresponding item
         </xar:if>
-    </xar:if>
-<xar:else />
-    Unable to find corresponding item
-</xar:if>
+    </div>
 </xar:template>
