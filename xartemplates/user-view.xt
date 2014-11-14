@@ -25,11 +25,11 @@
                                     #$modules[$item['module']]['itemlinks'][$item['itemtype']][$item['itemid']]['label']#
                                 </td>
                                 <td class="xar-align-right">
-                                        <xar:if condition="empty($use_icons)">
+                                    <xar:if condition="empty($use_icons)">
                                         <a href="#$modules[$item['module']]['itemlinks'][$item['itemtype']][$item['itemid']]['url']#" title="#$displaytitle#: #$modules[$item['module']]['itemlinks'][$item['itemtype']][$item['itemid']]['title']#">#$displaylabel#</a>
-                                        <xar:else/>
+                                    <xar:else/>
                                         <a href="#$modules[$item['module']]['itemlinks'][$item['itemtype']][$item['itemid']]['url']#" title="#$displaytitle#: #$modules[$item['module']]['itemlinks'][$item['itemtype']][$item['itemid']]['title']#" class="xar-icon"><img src="#$displayicon#" alt="#$displaylabel#" class="xar-icon"/></a>
-                                        </xar:if>
+                                    </xar:if>
                                 </td>
                             </tr>
                         </xar:foreach>
@@ -43,9 +43,14 @@
             <xar:pager startnum="$startnum" itemsperpage="$items_per_page" total="$total"/>
             <p class="xar-align-center">
                 <xar:if condition="xarController::isLocalReferer()">
+                    <xar:var name="label">Go back</xar:var>
+                    <xar:button type="cancel" label="$label"/>
                     <a href="#xarServer::getVar('HTTP_REFERER')#" onclick="history.go(-1);return false;">Click here to go back</a>
                 <xar:else/>
-                    <a href="#xarModURL('keywords', 'user', 'main')#">Click here to view keywords list</a>
+                    <xar:var name="label">View keywords</xar:var>
+                    <xar:set name="target">xarModURL('keywords', 'user', 'main')</xar:set>
+                    <xar:button type="link" label="$label" target="$target"/>
+                    <a href="#)#">Click here to view keywords list</a>
                 </xar:if>
             </p>
 
